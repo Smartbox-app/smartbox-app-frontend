@@ -1,0 +1,72 @@
+@import "../../../config/variables.scss";
+@import "../../../config/mixins.scss";
+
+.input-container {
+  position: relative;
+  margin-bottom: $main-spacing * 2;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+
+  ::placeholder {
+    color: rgba($color-text-light, 0.5);
+  }
+  &.nomargin {
+    margin-bottom: 0;
+  }
+
+  &.hidden {
+    display: none;
+  }
+  label {
+    color: $color-text-light;
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin-bottom: $main-spacing / 4;
+  }
+  .input {
+    background: transparent;
+    color: $color-text-light;
+    border: none;
+    border-bottom: 1px solid $color-text-light;
+    padding: $main-spacing * 1.5;
+    padding-left: 2rem;
+    font-size: 1rem;
+    font-family: $font-primary;
+    font-weight: 300;
+    box-shadow: $box-shadow-input rgba($color-text-main, 0.25);
+
+    &:focus {
+      background: rgba($color-text-light, 0.1);
+      box-shadow: $box-shadow-small rgba($color-text-main, 0.25);
+    }
+
+    &:-webkit-autofill,
+    &:-webkit-autofill:hover,
+    &:-webkit-autofill:focus {
+      -webkit-text-fill-color: $color-text-light !important;
+      -webkit-box-shadow: 0 0 0px 1000px $color-primary inset !important;
+      box-shadow: 0 0 0px 1000px $color-primary inset !important;
+      transition: background-color 5000s ease-in-out 0s !important;
+    }
+  }
+}
+
+.input-wrapper {
+  position: relative;
+  margin-bottom: $main-spacing / 4;
+}
+
+.input-icon {
+  position: absolute;
+  left: $main-spacing/2;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1.2rem;
+  height: 1.2rem;
+}
+
+.text-danger {
+  color: lighten($color-danger, 20%);
+  font-size: 0.8rem;
+}
