@@ -1,0 +1,36 @@
+@import "../../../config/variables";
+@import "../../../config/mixins.scss";
+
+.buttons-container {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  align-items: center;
+
+  &.max {
+    justify-content: stretch;
+    .button {
+      flex: 1;
+    }
+  }
+}
+
+@include lt-xs {
+  .buttons-container {
+    .button {
+      margin-bottom: $main-spacing / 4;
+
+      &:not(:first-child) {
+        margin-top: 0;
+      }
+    }
+  }
+}
+
+@include gt-xs {
+  .buttons-container {
+    .button:not(:first-child) {
+      margin-left: 5px;
+    }
+  }
+}
