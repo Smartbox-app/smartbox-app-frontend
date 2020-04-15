@@ -1,0 +1,49 @@
+@import "../../../config/variables";
+
+.alert:not(.alert-simple) {
+  font-family: "Roboto", sans-serif;
+  margin: $main-spacing 0;
+  outline: none;
+  font-weight: 400;
+  padding: $main-spacing / 1.5;
+  text-align: center;
+  text-decoration: none;
+  width: 100%;
+  color: #fff;
+
+  &.alert-error {
+    background: rgba($color-danger, 0.95);
+  }
+
+  &.alert-notice {
+    background: rgba($color-notice, 0.95);
+  }
+
+  &.alert-warning {
+    background: rgba($color-warning, 0.95);
+  }
+
+  &.alert-success {
+    background: rgba($color-success, 0.95);
+  }
+
+  &.alert-disabled {
+    background: rgba($color-disabled, 0.95);
+  }
+}
+
+.alert {
+  &.alert-simple {
+    &.alert-error {
+      color: $color-danger;
+    }
+
+    &.alert-notice {
+      color: $color-notice;
+    }
+
+    &.alert-success {
+      color: $color-success;
+    }
+  }
+}

@@ -1,0 +1,37 @@
+@import "./variables.scss";
+
+@mixin lt-sm {
+  @media screen and(max-width: map-get($breakpoints, sm) - 1) {
+    @content;
+  }
+}
+
+@mixin lt-md {
+  @media screen and(max-width: map-get($breakpoints, md) - 1) {
+    @content;
+  }
+}
+
+@mixin gt-xs {
+  @media screen and(min-width: map-get($breakpoints, xs)) {
+    @content;
+  }
+}
+
+@mixin gt-sm {
+  @media screen and(min-width: map-get($breakpoints, sm)) {
+    @content;
+  }
+}
+
+@mixin gt-md {
+  @media screen and(min-width: map-get($breakpoints, md)) {
+    @content;
+  }
+}
+
+@mixin gt-lg {
+  @media screen and(min-width: map-get($breakpoints, lg)) {
+    @content;
+  }
+}

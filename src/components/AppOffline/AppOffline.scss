@@ -1,0 +1,29 @@
+@import "../../config/variables.scss";
+
+.app-status {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 9999999;
+  background-color: $color-primary;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  padding: $main-spacing;
+
+  .app-status-title {
+    font-size: 1.5rem;
+    margin-bottom: $main-spacing;
+  }
+}
+
+.nowifi-icon {
+  fill: #fff;
+  width: 80px;
+  height: 80px;
+  margin: $main-spacing * 2 0;
+}
