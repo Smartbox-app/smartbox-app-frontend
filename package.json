@@ -20,8 +20,7 @@
     "body-scroll-lock": "^2.6.4",
     "customize-cra": "^0.9.1",
     "history": "^4.10.1",
-    "application-tables": "application-tables.git",
-    "application-types": "application-types.git",
+    "itf_formbuilder_react": "git+https://gitlab.com/IT.focus/itf_formbuilder_react.git",
     "node-polyglot": "^2.4.0",
     "node-sass": "^4.13.0",
     "react": "^16.12.0",
@@ -35,6 +34,8 @@
     "redux": "^4.0.5",
     "redux-devtools-extension": "^2.13.8",
     "redux-thunk": "^2.3.0",
+    "smartbox-tables": "git+https://gitlab.com/itdotfocus/smartbox/smartbox-tables.git",
+    "smartbox-types": "git+https://gitlab.com/itdotfocus/smartbox/smartbox-types.git",
     "typescript": "~3.7.2"
   },
   "scripts": {
@@ -43,7 +44,8 @@
     "test": "react-app-rewired test",
     "eject": "react-scripts eject",
     "lint:fix": "eslint './src/**/*.{ts,tsx}'",
-    "upr": "yarn upgrade application-types application-tables"
+    "trans-form-errors": "node node_modules/itf_formbuilder_translation_tool",
+    "upr": "yarn upgrade smartbox-types smartbox-tables && yarn trans-form-errors"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -71,6 +73,7 @@
     "eslint-plugin-prefer-arrow": "^1.1.7",
     "eslint-plugin-prettier": "^3.1.2",
     "eslint-plugin-react": "^7.17.0",
+    "itf_formbuilder_translation_tool": "git+https://gitlab.com/IT.focus/itf_formbuilder_translation_tool.git",
     "prettier": "^1.19.1"
   }
 }

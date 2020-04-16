@@ -1,0 +1,23 @@
+{
+  "pl": {
+    "Invalid e-mail address.": "Nieprawidłowy e-mail adres.",
+    "Invalid NIP.": "Nieprawidłowy NIP.",
+    "Invalid color hash.": "Invalid color hash.",
+    "Invalid absolute URL.": "Invalid absolute URL.",
+    "Both new passwords have to be identical.": "Oba hasła muszą być identyczne.",
+    "Invalid type of value: {0} expected.": "Invalid type of value: {0} expected.",
+    "Date too low. Min. {0}.": "Date too low. Min. {0}.",
+    "Date too high. Max. {0}.": "Date too high. Max. {0}.",
+    "Value too low. Min. {0}.": "Value too low. Min. {0}.",
+    "Value too high. Max. {0}.": "Value too high. Max. {0}.",
+    "Invalid option: {0}.": "Invalid option: {0}.",
+    "Value too short (min. {0})": "Value too short (min. {0})",
+    "Value too long (max. {0})": "Value too long (max. {0})",
+    "Cannot decode this type of data when using FormData.": "Cannot decode this type of data when using FormData.",
+    "Field required.": "To pole jest wymagane.",
+    "Invalid Zip code.": "Błędny kod pocztowy.",
+    "Invalid email.": "Nieprawidłowy e-mail adres.",
+    "Invalid bank account number": "Invalid bank account number",
+    "Invalid phone number": "Invalid phone number"
+  }
+}
