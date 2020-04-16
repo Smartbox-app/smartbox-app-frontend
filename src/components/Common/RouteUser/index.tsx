@@ -11,15 +11,16 @@ interface Props {
   path?: string;
 }
 
-const RouteCustomer = ({ user, exact, path, component }: Props) => (
-  // if (!user || user.role !== UserRole.customer) {
-  //   return <Route render={() => <Redirect to="/" />} />;
-  // }
-  // rememberRedirect(UserRole.customer);
-  <Route exact={exact} path={path} component={component} />
-);
+const RouteUser = ({ user, exact, path, component }: Props) => {
+  if (!user || user.role !== UserRole.user) {
+    return <Route render={() => <Redirect to="/" />} />;
+  }
+  rememberRedirect(UserRole.user);
+  return <Route exact={exact} path={path} component={component} />;
+};
+
 const mapStateToProps = (state: any) => ({
   user: state.user.details,
 });
 
-export default connect(mapStateToProps)(RouteCustomer);
+export default connect(mapStateToProps)(RouteUser);

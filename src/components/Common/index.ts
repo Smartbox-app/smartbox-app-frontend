@@ -5,7 +5,7 @@ import OfflineContent from './OfflineContent';
 import UpdateInfoBar from './UpdateInfoBar';
 import RouteAdmin from './RouteAdmin';
 import RouteWorker from './RouteWorker';
-import RouteCustomer from './RouteCustomer';
+import RouteUser from './RouteUser';
 import Button from './Button';
 import CheckBox from './CheckBox';
 import Icon from './Icon';
@@ -18,7 +18,7 @@ export {
   OnlineContent,
   OfflineContent,
   UpdateInfoBar,
-  RouteCustomer,
+  RouteUser,
   RouteWorker,
   RouteAdmin,
   Button,
