@@ -9,12 +9,12 @@
 
   &.light {
     svg {
-      fill: $color-text-light;
+      fill: $color-text;
     }
   }
   &:not(.no-wrapper) {
     padding: $main-spacing/1.5;
-    background: $color-text-light;
+    background: $color-text;
     width: $main-spacing * 4;
     height: $main-spacing * 4;
   }

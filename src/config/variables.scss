@@ -5,6 +5,10 @@ $color-primary: #0674BD;
 $color-secoundary: #003E67;
 $color-tertiary: #FBB03B;
 
+$color-text-alter: #fff;
+$color-text: #000;
+$color-text-button: #fff;
+
 $color-background: #ffffff;
 
 $color-danger: #a51727;
@@ -14,9 +18,14 @@ $color-inactive: #e8e8e8;
 $color-disabled: #aaa;
 
 $color-warning: #ec8628;
+// $box-shadow-input: lighten($color-primary, 10%);
+$box-shadow-small: 0 5px 20px -5px;
+$box-shadow-input: 0 10px 20px -20px;
 
 //SPACING
 $main-spacing: 10px;
+$page-header-width: 500px;
+
 
 $transition-time: 0.3s;
 

@@ -18,7 +18,7 @@ export const login = (userData: AuthLoginRequest) => async (dispatch: any) => {
 
       const redirect = getRememberedRedirect();
 
-      if (redirect && redirect.role === response.user.role) {
+      if (redirect && redirect.role === response.role) {
         history.push(redirect.to);
         clearRememberedRedirect();
       }

@@ -1,5 +1,11 @@
 @import "./variables.scss";
 
+@mixin lt-xs {
+  @media screen and(max-width: map-get($breakpoints, xs) - 1) {
+    @content;
+  }
+}
+
 @mixin lt-sm {
   @media screen and(max-width: map-get($breakpoints, sm) - 1) {
     @content;

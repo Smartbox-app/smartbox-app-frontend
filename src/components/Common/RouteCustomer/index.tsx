@@ -11,14 +11,13 @@ interface Props {
   path?: string;
 }
 
-const RouteCustomer = ({ user, exact, path, component }: Props) => {
-  if (!user || user.role !== UserRole.customer) {
-    return <Route render={() => <Redirect to="/" />} />;
-  }
-  rememberRedirect(UserRole.customer);
-  return <Route exact={exact} path={path} component={component} />;
-};
-
+const RouteCustomer = ({ user, exact, path, component }: Props) => (
+  // if (!user || user.role !== UserRole.customer) {
+  //   return <Route render={() => <Redirect to="/" />} />;
+  // }
+  // rememberRedirect(UserRole.customer);
+  <Route exact={exact} path={path} component={component} />
+);
 const mapStateToProps = (state: any) => ({
   user: state.user.details,
 });

@@ -5,7 +5,7 @@
   padding: $main-spacing $main-spacing * 2;
   margin: $main-spacing / 2 0;
   background: lighten($color-background, 10%);
-  color: $color-text-main;
+  color: $color-text;
   border: none;
   display: flex;
   cursor: pointer;
@@ -19,14 +19,14 @@
   font-family: $font-primary;
 
   transition: $transition-time background-color, $transition-time border-color;
-  box-shadow: $box-shadow-small rgba($color-text-main, 0.25);
+  box-shadow: $box-shadow-small rgba($color-text, 0.25);
 
   &:link {
-    color: $color-text-main;
+    color: $color-text;
   }
 
   &:visited {
-    color: $color-text-main;
+    color: $color-text;
   }
 
   &:hover {
@@ -100,7 +100,7 @@
 
       &:hover {
         background: #aaa;
-        color: $color-sidebar;
+        color: $color-text-button;
       }
     }
   }
@@ -108,12 +108,12 @@
   &.disabled,
   &:disabled {
     background: #aaa;
-    color: $color-sidebar;
+    color: $color-text-button;
     cursor: not-allowed;
 
     &:hover {
       background: #aaa;
-      color: $color-sidebar;
+      color: $color-text-button;
     }
   }
 }

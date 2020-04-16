@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { UserEntity } from 'ideapv-types';
+import { UserEntity } from 'smartbox-types';
 
 import './DashboardContainer.scss';
 // import { Spinner } from '../../Common';
