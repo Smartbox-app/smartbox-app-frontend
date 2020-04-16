@@ -1,5 +1,5 @@
 import uuidv4 from 'uuid/v4';
-import { ApiErrorCode } from 'application-types';
+import { ApiErrorCode } from 'smartbox-types';
 import { SingleNotification } from '../types/notifications';
 
 interface HideNotification {

@@ -1,4 +1,4 @@
-import { UserRole } from 'application-types';
+import { UserRole } from 'smartbox-types';
 import { history } from '../App';
 
 export const rememberRedirect = (role: UserRole) => {

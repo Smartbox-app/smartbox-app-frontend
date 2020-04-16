@@ -10052,7 +10052,7 @@ slice-ansi@^2.1.0:
 
 "smartbox-types@git+https://gitlab.com/itdotfocus/smartbox/smartbox-types.git":
   version "1.0.0"
-  resolved "git+https://gitlab.com/itdotfocus/smartbox/smartbox-types.git#627c4e5227713b62e954891030e7df7a40881fbe"
+  resolved "git+https://gitlab.com/itdotfocus/smartbox/smartbox-types.git#be22ab85bae47c331159b3d3e3d9ec1c234a58c2"
 
 snapdragon-node@^2.0.1:
   version "2.1.1"

@@ -1,4 +1,4 @@
-import { AuthLoginRequest, AuthLoginResult } from 'application-types';
+import { AuthLoginRequest, AuthLoginResult } from 'smartbox-types';
 import ApiService from '../services/api-service';
 import { notifications } from '../actions';
 import { history } from '../App';

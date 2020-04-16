@@ -1,4 +1,4 @@
-import { ApiErrorCode } from 'application-types';
+import { ApiErrorCode } from 'smartbox-types';
 
 export const successNotification = (text: string) => ({
   type: 'SUCCESS_NOTIFICATION',

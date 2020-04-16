@@ -1,4 +1,4 @@
-import { ApiErrorCode, ApiResult } from 'application-types';
+import { ApiErrorCode, ApiResult } from 'smartbox-types';
 import { auth, notifications } from '../actions';
 import SessionService from './session-service';
 import { store, history } from '../App';
