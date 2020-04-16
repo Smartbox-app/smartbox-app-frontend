@@ -986,7 +986,7 @@
   dependencies:
     regenerator-runtime "^0.13.4"
 
-"@babel/runtime@^7.0.0", "@babel/runtime@^7.1.2", "@babel/runtime@^7.1.5", "@babel/runtime@^7.3.4", "@babel/runtime@^7.4.0", "@babel/runtime@^7.4.5", "@babel/runtime@^7.5.1", "@babel/runtime@^7.5.5", "@babel/runtime@^7.7.2", "@babel/runtime@^7.7.4", "@babel/runtime@^7.8.4", "@babel/runtime@^7.8.7":
+"@babel/runtime@^7.0.0", "@babel/runtime@^7.1.2", "@babel/runtime@^7.1.5", "@babel/runtime@^7.3.4", "@babel/runtime@^7.4.0", "@babel/runtime@^7.4.5", "@babel/runtime@^7.5.1", "@babel/runtime@^7.5.5", "@babel/runtime@^7.7.2", "@babel/runtime@^7.7.4", "@babel/runtime@^7.8.4", "@babel/runtime@^7.8.7", "@babel/runtime@^7.9.2":
   version "7.9.2"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.9.2.tgz#d90df0583a3a252f09aaa619665367bae518db06"
   integrity sha512-NE2DtOdufG7R5vnfQUTehdTfNycfUANEtCa9PssN9O/xmTzP4E08UI797ixaei6hBEVL9BI/PsdJS5x7mWoB9Q==
@@ -1354,6 +1354,13 @@
     "@svgr/plugin-jsx" "^4.3.3"
     "@svgr/plugin-svgo" "^4.3.1"
     loader-utils "^1.2.3"
+
+"@tanem/svg-injector@^8.0.47":
+  version "8.0.48"
+  resolved "https://registry.yarnpkg.com/@tanem/svg-injector/-/svg-injector-8.0.48.tgz#c316eb3b78d08452713fde21869418564a4e3a39"
+  integrity sha512-+jFyiUxopc03Jf6B3rHLC3oMnJCT/oK+htMBpWXOiWAyQv4vv03ukYdF5PfkxKte6+TiwMlASPNrOupbBXjX0g==
+  dependencies:
+    "@babel/runtime" "^7.9.2"
 
 "@testing-library/dom@^6.15.0":
   version "6.16.0"
@@ -9231,6 +9238,15 @@ react-scripts@3.3.0:
   optionalDependencies:
     fsevents "2.1.2"
 
+react-svg@^11.0.11:
+  version "11.0.18"
+  resolved "https://registry.yarnpkg.com/react-svg/-/react-svg-11.0.18.tgz#d8f5cdc4644f02a6dfda864db6816559907c12e6"
+  integrity sha512-2JgC7NWr37TDC3BHV9JiQ8NwPO6CSzW5UY5vuxzinKGVAGrzRAJlwy/bag5XKCXZNaoMPAnhNpPz/U406svvZg==
+  dependencies:
+    "@babel/runtime" "^7.9.2"
+    "@tanem/svg-injector" "^8.0.47"
+    prop-types "^15.7.2"
+
 react-workbox@^0.5.9:
   version "0.5.9"
   resolved "https://registry.yarnpkg.com/react-workbox/-/react-workbox-0.5.9.tgz#b4746c5fa993588fd6f2bb52d38bac599665c307"
@@ -10048,11 +10064,11 @@ slice-ansi@^2.1.0:
 
 "smartbox-tables@git+https://gitlab.com/itdotfocus/smartbox/smartbox-tables.git":
   version "1.0.0"
-  resolved "git+https://gitlab.com/itdotfocus/smartbox/smartbox-tables.git#6b73770f9a669752192d459edecb1f089ba0309f"
+  resolved "git+https://gitlab.com/itdotfocus/smartbox/smartbox-tables.git#581f1660bef7eb5cbcec85beb76154f5c5496437"
 
 "smartbox-types@git+https://gitlab.com/itdotfocus/smartbox/smartbox-types.git":
   version "1.0.0"
-  resolved "git+https://gitlab.com/itdotfocus/smartbox/smartbox-types.git#be22ab85bae47c331159b3d3e3d9ec1c234a58c2"
+  resolved "git+https://gitlab.com/itdotfocus/smartbox/smartbox-types.git#9efe22b03524ee586a42292b3d1ce7db40161fdd"
 
 snapdragon-node@^2.0.1:
   version "2.1.1"
