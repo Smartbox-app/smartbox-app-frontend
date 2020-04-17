@@ -30,7 +30,7 @@
   }
 
   &:hover {
-    background: darken($color-background, 20%);
+    // background: darken($color-background, 20%);
   }
 
   &.auto {
@@ -45,7 +45,7 @@
     background: $color-primary;
     color: $color-text-button;
     &:hover {
-      background: lighten($color-primary, 10%);
+      background: lighten($color-primary, 2%);
     }
   }
 

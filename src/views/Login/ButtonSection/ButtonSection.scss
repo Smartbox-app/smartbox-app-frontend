@@ -6,8 +6,9 @@
 
   .button {
     width: 360px;
-    min-height: 52px;
-    font-size: 1rem;
+    min-height: 60px;
+    border-radius: 30px;
+    font-size: 1.2rem;
     margin-bottom: $main-spacing * 2;
   }
 }
