@@ -7,7 +7,7 @@ import { Route, Router, Switch, Redirect } from 'react-router-dom';
 import { WorkBoxProvider } from 'react-workbox';
 import { createBrowserHistory } from 'history';
 import reducers from './reducers';
-import { Home, Page404 } from './views';
+import { Home, Page404, Login } from './views';
 import { OnlineContent, OfflineContent, UpdateInfoBar, Spinner } from './components/Common';
 import { NotificationContainer } from './components/Notifications';
 import AppOffline from './components/AppOffline';
@@ -46,7 +46,8 @@ const App = () => {
           <NotificationContainer />
           <Router history={history}>
             <Switch>
-              <Route exact path="/" render={() => <Redirect to="/home" />} />
+              <Route exact path="/" render={() => <Redirect to="/login" />} />
+              <Route path="/login" component={Login} />
               <Route path="/home" component={Home} />
               <Route path="/404" component={Page404} />
               <Route render={() => <Redirect to="/404" />} />
