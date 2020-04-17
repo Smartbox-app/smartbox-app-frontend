@@ -18,6 +18,7 @@ interface ButtonProps {
   small?: boolean;
   className?: string;
   blank?: boolean;
+  rounded?: boolean;
 }
 
 enum ButtonType {
@@ -42,6 +43,7 @@ const Button = (props: ButtonProps): any => {
     blank,
     click,
     text,
+    rounded,
   } = props;
 
   const setButtonType = (userinput = 'button'): any => {
@@ -60,7 +62,7 @@ const Button = (props: ButtonProps): any => {
     ${danger ? 'button-danger' : ''} ${success ? 'button-success' : ''}
     ${outline ? 'button-outline' : ''} ${big ? 'button-big' : ''}
     ${small ? 'button-small' : ''} ${auto ? 'auto' : ''}
-    ${disabled ? 'disabled' : ''}`;
+    ${disabled ? 'disabled' : ''} ${rounded ? 'rounded' : ''}`;
 
   if (to) {
     if (disabled) {

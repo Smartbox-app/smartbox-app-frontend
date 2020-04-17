@@ -37,6 +37,10 @@
     align-self: flex-start;
   }
 
+  &.rounded {
+    border-radius: 26px;
+  }
+
   &.button-primary {
     background: $color-primary;
     color: $color-text-button;
@@ -68,7 +72,6 @@
 
   &.button-big {
     font-size: 1.2rem;
-    color: darken($color-primary, 20%);
     padding: $main-spacing * 1.5;
     font-weight: 500;
 
@@ -83,10 +86,11 @@
 
   &.button-outline {
     text-transform: none;
-    border: 1px solid $color-primary;
+    border: 2px solid $color-primary;
     color: $color-primary;
     background: transparent;
     padding: 9px 20px;
+    font-weight: 500;
 
     &:hover {
       box-shadow: inset 0 -1px 1px -1px $color-primary;
