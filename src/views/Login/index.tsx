@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { Redirect } from 'react-router-dom';
 import { ItfApiForm } from 'itf_formbuilder_react';
 import { UserRole, AuthLoginRequest, UserEntity, AuthLoginResult } from 'smartbox-types';
-import { Spinner, Input, Logo } from '../../components/Common';
+import { Spinner, Input } from '../../components/Common';
 import { auth, notifications } from '../../actions';
 import ApiService from '../../services/api-service';
 import { getRememberedRedirect, clearRememberedRedirect } from '../../utils/remeber-redirect';
@@ -12,6 +12,8 @@ import { store } from '../../App';
 import { formOnTranslateString } from '../../utils/trans-form';
 import { FormContainer, PageContent, LogoContainer } from '../../components/Layout';
 import ButtonsSection from './ButtonSection';
+
+import './Login.scss';
 
 interface Props {
   user: UserEntity;

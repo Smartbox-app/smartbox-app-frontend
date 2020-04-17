@@ -2,9 +2,12 @@
 @import '../../../config/mixins.scss';
 
 .login-buttons-section {
+  margin-bottom: $main-spacing * 2;
+
   .button {
     width: 360px;
     min-height: 52px;
     font-size: 1rem;
+    margin-bottom: $main-spacing * 2;
   }
 }
