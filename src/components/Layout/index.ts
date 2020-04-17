@@ -5,5 +5,6 @@ import Footer from './Footer';
 import PageContent from './PageContent';
 import PageHeader from './PageHeader';
 import FormContainer from './FormContainer';
+import LogoContainer from './LogoContainer';
 
-export { Main, ButtonsContainer, DashboardContainer, Footer, PageContent, PageHeader, FormContainer };
+export { Main, ButtonsContainer, DashboardContainer, Footer, PageContent, PageHeader, FormContainer, LogoContainer };
