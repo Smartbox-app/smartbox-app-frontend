@@ -1,0 +1,34 @@
+@import "../../../config/variables";
+@import "../../../config/mixins.scss";
+
+.logo-container {
+  order: 0;
+  display: flex;
+  justify-content: center;
+  padding: $main-spacing * 2;
+
+  img {
+    display: block;
+    height: $main-logo-size * 0.75;
+    width: auto;
+  }
+
+  &.small {
+    img {
+      height: 40px;
+    }
+  }
+
+  &.only-bottom-margin {
+    padding: 0;
+    margin-bottom: $main-spacing * 2;
+  }
+}
+
+@include gt-md {
+  .logo-container {
+    img {
+      height: $main-logo-size;
+    }
+  }
+}
