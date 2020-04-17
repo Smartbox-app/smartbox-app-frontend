@@ -5,8 +5,9 @@ import { Button } from '../../../components/Common';
 
 const ButtonsSection = () => (
   <div className="login-buttons-section">
-    <ButtonsContainer max>
+    <ButtonsContainer max column>
       <Button text="Zaloguj się" big type="submit" />
+      <Button text="Zarejestruj się" big type="submit" />
     </ButtonsContainer>
     {/* <div className="remember-me">
       <CheckBox

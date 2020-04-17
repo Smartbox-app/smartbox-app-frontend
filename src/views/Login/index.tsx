@@ -10,7 +10,7 @@ import ApiService from '../../services/api-service';
 import { getRememberedRedirect, clearRememberedRedirect } from '../../utils/remeber-redirect';
 import { store } from '../../App';
 import { formOnTranslateString } from '../../utils/trans-form';
-import { FormContainer } from '../../components/Layout';
+import { FormContainer, PageContent } from '../../components/Layout';
 import ButtonsSection from './ButtonSection';
 
 interface Props {
@@ -54,7 +54,7 @@ class Login extends React.Component<Props> {
     const { user, saveUser, successNotification } = this.props;
     if (user) return this.getRedirect();
     return (
-      <>
+      <PageContent>
         <FormContainer className="login-form">
           <ItfApiForm
             formId="loginForm"
@@ -94,7 +94,7 @@ class Login extends React.Component<Props> {
             onTranslateString={formOnTranslateString}
           />
         </FormContainer>
-      </>
+      </PageContent>
     );
   }
 }
