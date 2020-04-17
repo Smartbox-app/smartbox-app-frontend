@@ -4,7 +4,7 @@ import SessionService from './session-service';
 import { store, history } from '../App';
 
 export default class ApiService {
-  static url = process.env.NODE_ENV === 'production' ? 'prod.address/' : 'test.address/';
+  static url = process.env.NODE_ENV === 'production' ? 'prod.address/' : 'http://localhost:3001/';
 
   static call = async (
     dispatch: any,
