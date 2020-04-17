@@ -1,0 +1,10 @@
+@import '../../../config/variables.scss';
+@import '../../../config/mixins.scss';
+
+.login-buttons-section {
+  .button {
+    width: 360px;
+    min-height: 52px;
+    font-size: 1rem;
+  }
+}

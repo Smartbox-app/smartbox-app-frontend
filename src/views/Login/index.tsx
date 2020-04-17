@@ -4,13 +4,13 @@ import { bindActionCreators } from 'redux';
 import { Redirect } from 'react-router-dom';
 import { ItfApiForm } from 'itf_formbuilder_react';
 import { UserRole, AuthLoginRequest, UserEntity, AuthLoginResult } from 'smartbox-types';
-import { Spinner, Input } from '../../components/Common';
+import { Spinner, Input, Logo } from '../../components/Common';
 import { auth, notifications } from '../../actions';
 import ApiService from '../../services/api-service';
 import { getRememberedRedirect, clearRememberedRedirect } from '../../utils/remeber-redirect';
 import { store } from '../../App';
 import { formOnTranslateString } from '../../utils/trans-form';
-import { FormContainer, PageContent } from '../../components/Layout';
+import { FormContainer, PageContent, LogoContainer } from '../../components/Layout';
 import ButtonsSection from './ButtonSection';
 
 interface Props {
@@ -55,6 +55,7 @@ class Login extends React.Component<Props> {
     if (user) return this.getRedirect();
     return (
       <PageContent>
+        <LogoContainer />
         <FormContainer className="login-form">
           <ItfApiForm
             formId="loginForm"
