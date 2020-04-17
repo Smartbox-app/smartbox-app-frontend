@@ -3,12 +3,16 @@ import appStatusReducer from './app-status-reducer';
 import modalReducer from './modal-reducer';
 import notificationsReducer from './notifications-reducer';
 import langReducer from './lang-reducer';
+import userReducer from './user-reducer';
+import spinnerReducer from './spinner-reducer';
 
 const appReducer = combineReducers({
   appStatus: appStatusReducer,
   lang: langReducer,
   modal: modalReducer,
   notifications: notificationsReducer,
+  user: userReducer,
+  spinner: spinnerReducer,
 });
 
 const rootReducer = (state: any, action: any) => appReducer(state, action);
