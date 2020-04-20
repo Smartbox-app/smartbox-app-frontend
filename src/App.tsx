@@ -7,8 +7,16 @@ import { Route, Router, Switch, Redirect } from 'react-router-dom';
 import { WorkBoxProvider } from 'react-workbox';
 import { createBrowserHistory } from 'history';
 import reducers from './reducers';
-import { Home, Page404, Login } from './views';
-import { OnlineContent, OfflineContent, UpdateInfoBar, Spinner } from './components/Common';
+import { Home, Page404, Login, DashboardAdmin, DashboardWorker, DashboardUser } from './views';
+import {
+  OnlineContent,
+  OfflineContent,
+  UpdateInfoBar,
+  Spinner,
+  RouteAdmin,
+  RouteUser,
+  RouteWorker,
+} from './components/Common';
 import { NotificationContainer } from './components/Notifications';
 import AppOffline from './components/AppOffline';
 import { i18n } from './helpers/i18n';
@@ -50,6 +58,9 @@ const App = () => {
               <Route path="/login" component={Login} />
               <Route path="/home" component={Home} />
               <Route path="/404" component={Page404} />
+              <RouteAdmin path="/admin" component={DashboardAdmin} />
+              <RouteWorker path="/worker" component={DashboardWorker} />
+              <RouteUser path="/user" component={DashboardUser} />
               <Route render={() => <Redirect to="/404" />} />
             </Switch>
           </Router>
