@@ -77,7 +77,7 @@ const Button = (props: ButtonProps): any => {
       return (
         <a className={buttonClass}>
           {icon && imgComponent}
-          {text}
+          {!onlyIcon && text}
         </a>
       );
     }
@@ -85,14 +85,14 @@ const Button = (props: ButtonProps): any => {
       return (
         <a target="_blank" rel="noopener noreferrer" className={buttonClass} href={to}>
           {icon && imgComponent}
-          {text}
+          {!onlyIcon && text}
         </a>
       );
     }
     return (
       <Link className={buttonClass} to={to}>
         {icon && imgComponent}
-        {text}
+        {!onlyIcon && text}
       </Link>
     );
   }
@@ -100,7 +100,7 @@ const Button = (props: ButtonProps): any => {
   return (
     <button type={setButtonType(type) || 'button'} disabled={disabled} onClick={click} className={buttonClass}>
       {icon && imgComponent}
-      {text}
+      {!onlyIcon && text}
     </button>
   );
 };

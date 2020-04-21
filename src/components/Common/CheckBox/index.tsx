@@ -3,7 +3,7 @@ import React from 'react';
 interface Props {
   label?: string;
   name: string;
-  checked: Date;
+  checked: boolean;
   handleChange: (checked: boolean) => void;
 }
 
