@@ -120,6 +120,18 @@
       color: $color-text-button;
     }
   }
+
+  &.with-icon {
+
+    .button-img {
+      width: 20px;
+      height: 20px;
+      margin-right: 10px;
+      margin-left: -5px;
+    }
+  }
+
+
 }
 
 @include gt-xs {
