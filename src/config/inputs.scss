@@ -160,6 +160,7 @@ textarea {
   font-weight: 600;
   padding-left: 2rem;
 }
+
 [type="checkbox"]:checked + label:before,
 [type="checkbox"]:not(:checked) + label:before {
   content: "";
@@ -174,35 +175,40 @@ textarea {
   width: $main-spacing * 2;
   height: $main-spacing * 2;
   background: #fff;
-  border: 1px solid $color-primary;
-  padding: 2px;
+  border: 2px solid $color-primary;
+  // padding: 1px;
 }
+
 [type="checkbox"]:checked + label:after,
 [type="checkbox"]:not(:checked) + label:after {
   content: "";
-  width: ($main-spacing * 2) - 2px;
-  height: ($main-spacing * 2) - 2px;
+  width: ($main-spacing * 2);
+  height: ($main-spacing * 2);
   background: $color-primary;
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  left: 4px;
+  left: 2px;
   transition: background-color 0.2s ease, opacity 0.2s ease;
 }
 [type="checkbox"]:not(:checked) + label:after {
   opacity: 0;
   -webkit-transform: translateY(-50%) scale(0);
   transform: scale(0);
+  &:hover {
+    background: red;
+  }
 }
 [type="checkbox"]:checked + label:after {
   opacity: 1;
   transform: translateY(-50%) scale(1);
   background: $color-primary;
+  background-image: url('/public/assets/icons/arrow-down.svg');
 }
 
 [type="checkbox"]:hover + label:after {
   opacity: 1;
-  transform: translateY(-50%) scale(1);
+  // transform: translateY(-50%) scale(1);
   background: lighten($color-primary, 10%);
 }
 

@@ -45,7 +45,7 @@
     background: $color-primary;
     color: $color-text-button;
     &:hover {
-      background: lighten($color-primary, 2%);
+      background: lighten($color-primary, 10%);
     }
   }
 
@@ -77,10 +77,6 @@
 
     @include gt-md {
       font-size: 1.5rem;
-    }
-
-    &:hover {
-      background: darken($color-background, 1%);
     }
   }
 
