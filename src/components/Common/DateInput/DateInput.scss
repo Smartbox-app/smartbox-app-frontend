@@ -1,0 +1,27 @@
+@import '../../../config/variables.scss';
+@import '../../../config/mixins.scss';
+
+.date-input-style {
+  width: 165px;
+  &:hover {
+    cursor: pointer;
+  }
+
+  .react-date-picker__wrapper {
+    border: 2px solid $color-primary;
+    width: 100%;
+    border-radius: $main-spacing /2;
+  }
+
+  .react-date-picker__inputGroup {
+    padding: 2px $main-spacing /2;
+  }
+
+  .react-calendar__tile--now {
+    background-color: $color-primary-light;
+
+    &:hover {
+      background-color: $color-primary-light;
+    }
+  }
+}

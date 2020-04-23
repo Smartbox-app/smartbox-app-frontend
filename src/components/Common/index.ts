@@ -11,6 +11,7 @@ import CheckBox from './CheckBox';
 import Icon from './Icon';
 import Input from './Input';
 import Logo from './Logo';
+import DateInput from './DateInput';
 
 export {
   Alert,
@@ -26,4 +27,5 @@ export {
   Icon,
   Input,
   Logo,
+  DateInput,
 };
