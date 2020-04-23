@@ -1,0 +1,17 @@
+@import '../../../config/variables.scss';
+@import '../../../config/mixins.scss';
+
+.progress-indicator-wrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+  .single-stamp {
+    display: flex;
+    flex: 0 0 25%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    position: relative;
+    justify-content: center;
+  }
+}

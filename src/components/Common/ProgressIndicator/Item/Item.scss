@@ -1,0 +1,23 @@
+@import '../../../../config/variables.scss';
+@import '../../../../config/mixins.scss';
+
+.ittem-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  z-index: 10;
+
+  .item-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    background: $color-primary;
+    color: #fff;
+    border: 2px solid darken($color-primary, 10%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}

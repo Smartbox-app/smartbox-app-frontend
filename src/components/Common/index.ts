@@ -13,6 +13,7 @@ import Input from './Input';
 import Logo from './Logo';
 import DateInput from './DateInput';
 import SliderInput from './SliderInput';
+import ProgressIndicator from './ProgressIndicator';
 
 export {
   Alert,
@@ -30,4 +31,5 @@ export {
   Logo,
   DateInput,
   SliderInput,
+  ProgressIndicator,
 };

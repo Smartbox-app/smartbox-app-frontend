@@ -4,7 +4,7 @@ import React from 'react';
 import DatePicker from 'react-date-picker';
 import { Main, ButtonsContainer, FormContainer } from '../../components/Layout';
 import { __ } from '../../helpers/i18n';
-import { Button, Spinner, Input, CheckBox, DateInput, SliderInput } from '../../components/Common';
+import { Button, Spinner, Input, CheckBox, DateInput, SliderInput, ProgressIndicator } from '../../components/Common';
 
 import './Home.scss';
 
@@ -102,6 +102,27 @@ class Home extends React.Component {
             <DateInput name="test-name" />
             <SliderInput name="test-name" step={10} min={20} max={120} value={100} onChange={() => {}} />
           </FormContainer>
+          <ProgressIndicator
+            current={2}
+            data={[
+              {
+                value: 1,
+                desc: 'Zadanie 1',
+              },
+              {
+                value: 2,
+                desc: 'Zadanie 2',
+              },
+              {
+                value: 3,
+                desc: 'Zadanie 3',
+              },
+              {
+                value: 4,
+                desc: 'Zadanie 4',
+              },
+            ]}
+          />
         </Main>
       </div>
     );

@@ -1,0 +1,22 @@
+@import '../../../../config/variables.scss';
+@import '../../../../config/mixins.scss';
+
+.bar-wrapper {
+  width: 100%;
+  position: absolute;
+
+  .bar {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: red;
+    height: 16px;
+    margin-top: 10px;
+  }
+
+  .bar-done {
+    background: green;
+  }
+}
+
