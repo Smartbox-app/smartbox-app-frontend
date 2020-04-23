@@ -12,6 +12,7 @@ import Icon from './Icon';
 import Input from './Input';
 import Logo from './Logo';
 import DateInput from './DateInput';
+import SliderInput from './SliderInput';
 
 export {
   Alert,
@@ -28,4 +29,5 @@ export {
   Input,
   Logo,
   DateInput,
+  SliderInput,
 };
