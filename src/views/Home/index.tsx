@@ -106,19 +106,19 @@ class Home extends React.Component {
             data={[
               {
                 value: 1,
-                desc: 'Zadanie 1',
+                desc: 'Etap 1',
               },
               {
                 value: 2,
-                desc: 'Zadanie 2',
+                desc: 'Etap 2',
               },
               {
                 value: 3,
-                desc: 'Zadanie 3',
+                desc: 'Etap 3',
               },
               {
                 value: 4,
-                desc: 'Zadanie 4',
+                desc: 'Etap 4',
               },
             ]}
           />
