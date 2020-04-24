@@ -35,7 +35,7 @@ class SliderInput extends Component<Props> {
       <input
         type="range"
         className={className}
-        value={value || min}
+        value={currentValue || value || min}
         min={min}
         max={max}
         step={step}

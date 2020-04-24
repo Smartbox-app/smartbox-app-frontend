@@ -63,8 +63,9 @@ class Home extends React.Component {
             <Button text="Potwierdz" outline big />
             <Button text="Potwierdz" outline rounded />
           </ButtonsContainer>
-          <Spinner />
+          {/* <Spinner /> */}
           <FormContainer>
+            Formularz
             <Input
               type="text"
               input={{
@@ -95,12 +96,10 @@ class Home extends React.Component {
               }}
               onChange={() => {}}
             />
-
             <CheckBox name="test" checked label="Potwierdzam" handleChange={() => {}} />
             <CheckBox name="test" checked={false} label="Potwierdzam" handleChange={() => {}} />
-
             <DateInput name="test-name" />
-            <SliderInput name="test-name" step={10} min={20} max={120} value={100} onChange={() => {}} />
+            <SliderInput name="test-name" step={10} min={20} max={120} value={100} />
           </FormContainer>
           <ProgressIndicator
             current={2}
