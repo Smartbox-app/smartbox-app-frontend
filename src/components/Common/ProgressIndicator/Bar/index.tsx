@@ -12,7 +12,7 @@ class Bar extends Component<Props> {
     const { current, done } = this.props;
     return (
       <div className="bar-wrapper">
-        <div className={`bar ${done ? 'bar-done' : ''}`} />
+        <div className={`bar ${done ? 'bar-done' : ''} ${current ? 'bar-current' : ''}`} />
       </div>
     );
   }

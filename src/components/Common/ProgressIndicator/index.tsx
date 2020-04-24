@@ -23,8 +23,8 @@ class ProgressIndicator extends Component<Props> {
       <div className="progress-indicator-wrapper">
         {data.map((data: RenderData) => (
           <div className="single-stamp">
-            <Item value={data.desc} order={data.value} current={data.value === current} done={data.value > current} />
-            <Bar done={data.value > current} />
+            <Item value={data.desc} order={data.value} current={data.value === current} done={data.value < current} />
+            <Bar done={data.value < current} current={data.value === current} />
           </div>
         ))}
       </div>

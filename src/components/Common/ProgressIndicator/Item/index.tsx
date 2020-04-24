@@ -11,10 +11,12 @@ interface Props {
 
 class Item extends Component<Props> {
   render() {
-    const { value, order } = this.props;
+    const { value, order, done, current } = this.props;
     return (
       <div className="ittem-wrapper">
-        <div className="item-icon">{order}</div>
+        <div className={`item-icon ${done ? 'item-done' : ''} ${current ? 'item-current' : ''}`}>
+          {done ? <span className="fa fa-check" /> : order}
+        </div>
         <div className="item-description">{value}</div>
       </div>
     );
