@@ -1,4 +1,5 @@
 import React from 'react';
+import { Footer } from '..';
 
 interface Props {
   children: React.ReactNode;
@@ -6,7 +7,13 @@ interface Props {
 
 const Main = (props: Props) => {
   const { children } = props;
-  return <main> {children} </main>;
+  return (
+    <main>
+      {' '}
+      {children}
+      <Footer />
+    </main>
+  );
 };
 
 export default Main;
