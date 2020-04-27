@@ -1,0 +1,32 @@
+@import '../../../../config/variables.scss';
+
+.main-menu-item {
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 25%;
+  border-bottom: 2px solid $color-inactive;
+  color: $color-inactive;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  padding: $main-spacing;
+
+  &:hover {
+    background-color: lighten($color-background, 30%);
+    border-bottom: 2px solid lighten($color-primary, 10%);
+    color: lighten($color-primary, 10%);
+  }
+
+  &.active {
+    border-bottom: 2px solid lighten($color-primary, 10%);
+    color: $color-primary;
+    // box-shadow: $box-shadow-small rgba(0, 0, 0, 0.25);
+  }
+
+  .main-menu-item_logo {
+    width: 40px;
+    height: 40px;
+    background: red;
+  }
+
+}

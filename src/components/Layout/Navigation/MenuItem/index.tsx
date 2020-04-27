@@ -1,0 +1,62 @@
+import React from 'react';
+import { NavLink } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { ReactSVG } from 'react-svg';
+import { MenuItemType } from '../../../../types/menuItem';
+
+import './MenuItem.scss';
+
+type Props = MenuItemType;
+
+class MenuItem extends React.Component<Props> {
+  private handleItemClick = (): void => {
+    // eslint-disable-next-line react/destructuring-assignment
+    if (this.props.onClick) this.props.onClick();
+    else {
+      setTimeout(() => {
+        const offset = (document.querySelector('#root') as any).offsetTop;
+        window.scrollTo({
+          top: offset,
+          behavior: 'smooth',
+        });
+      });
+    }
+  };
+
+  render(): any {
+    const { address, icon, text, badge, customClass } = this.props;
+    const itemClass = `main-menu-item ${!icon ? 'sub-menu-item' : ''} ${customClass || ''}`;
+    if (address) {
+      return (
+        <NavLink
+          to={address}
+          title={text}
+          className={itemClass}
+          activeClassName="active"
+          onClick={this.handleItemClick}
+        >
+          {badge && <span className="menu-item-badge fa fa-exclamation-circle" />}
+          {icon !== null && <ReactSVG src={icon} className="main-menu-item_logo menu-icon" />}
+          <span className="main-menu-item_text">{text}</span>
+        </NavLink>
+      );
+    } else {
+      return (
+        <a role="button" tabIndex={0} title={text} className={itemClass} onClick={this.handleItemClick}>
+          {badge && <span className="menu-item-badge fa fa-exclamation-circle" />}
+          {icon !== null && <ReactSVG src={icon} className="main-menu-item_logo menu-icon" />}
+          <span className="main-menu-item_text">{text}</span>
+        </a>
+      );
+    }
+  }
+}
+
+const mapStateToProps = (state: any): any => ({
+  mainMenuShow: state.navigation,
+});
+
+const mapDispatchToProps = (dispatch: any): any => bindActionCreators({}, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(MenuItem);
