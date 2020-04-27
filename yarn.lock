@@ -10132,11 +10132,11 @@ slice-ansi@^2.1.0:
 
 "smartbox-tables@git+https://gitlab.com/itdotfocus/smartbox/smartbox-tables.git":
   version "1.0.0"
-  resolved "git+https://gitlab.com/itdotfocus/smartbox/smartbox-tables.git#581f1660bef7eb5cbcec85beb76154f5c5496437"
+  resolved "git+https://gitlab.com/itdotfocus/smartbox/smartbox-tables.git#633265dc477d1c7066e12113684242faf2ba4dd7"
 
 "smartbox-types@git+https://gitlab.com/itdotfocus/smartbox/smartbox-types.git":
   version "1.0.0"
-  resolved "git+https://gitlab.com/itdotfocus/smartbox/smartbox-types.git#9efe22b03524ee586a42292b3d1ce7db40161fdd"
+  resolved "git+https://gitlab.com/itdotfocus/smartbox/smartbox-types.git#cf59f3525ce20ab209ee8916786cc94d24bce0d4"
 
 snapdragon-node@^2.0.1:
   version "2.1.1"

@@ -1,9 +1,9 @@
-import { UserEntity, UserRole, AuthLoginResult } from 'smartbox-types';
+import { IUser, UserRole, AuthLoginResult } from 'smartbox-types';
 import { TableResponse } from 'smartbox-tables';
 import SessionService from '../services/session-service';
 
 interface State {
-  details: UserEntity;
+  details: IUser;
   list: TableResponse<any>;
   singleUser: any;
 }

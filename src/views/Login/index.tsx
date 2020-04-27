@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Redirect } from 'react-router-dom';
 import { ItfApiForm } from 'itf_formbuilder_react';
-import { UserRole, AuthLoginRequest, UserEntity, AuthLoginResult } from 'smartbox-types';
+import { UserRole, AuthLoginRequest, IUser, AuthLoginResult } from 'smartbox-types';
 import { Spinner, Input } from '../../components/Common';
 import { auth, notifications } from '../../actions';
 import ApiService from '../../services/api-service';
@@ -16,7 +16,7 @@ import ButtonsSection from './ButtonSection';
 import './Login.scss';
 
 interface Props {
-  user: UserEntity;
+  user: IUser;
   login: (userData: AuthLoginRequest) => void;
   saveUser: (userData: AuthLoginResult) => void;
   successNotification: (text: string) => void;

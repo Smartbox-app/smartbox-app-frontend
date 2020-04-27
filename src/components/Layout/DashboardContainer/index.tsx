@@ -1,14 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { UserEntity } from 'smartbox-types';
+import { IUser } from 'smartbox-types';
 
 import './DashboardContainer.scss';
 // import { Spinner } from '../../Common';
 
 interface Props {
   children: React.ReactNode;
-  user?: UserEntity;
+  user?: IUser;
 }
 
 const DashboardContainer = ({ user, children }: Props) => (
