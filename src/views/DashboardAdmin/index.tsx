@@ -5,6 +5,7 @@ import DashboardContainer from '../../components/Layout/DashboardContainer';
 // import { Orders, Subcontractor, Products, Profile, Payment, Calendar } from '../DashboardCommon';
 // import Users from './Users';
 import Home from '../Home';
+import Navigation from '../../components/Layout/Navigation';
 
 class DashboardAdmin extends React.Component {
   private menuItems: any[];
@@ -18,13 +19,18 @@ class DashboardAdmin extends React.Component {
     this.menuItems = [
       {
         icon: '/assets/icons/iconmonstr-user-23.svg',
-        text: 'Klienci',
-        address: '/admin/customers',
+        text: 'Strona główna',
+        address: '/admin/main',
       },
       {
         icon: '/assets/icons/iconmonstr-note-20.svg',
-        text: 'Umowy',
-        address: '/admin/orders',
+        text: 'Pracownicy',
+        address: '/admin/workers',
+      },
+      {
+        icon: '/assets/icons/iconmonstr-note-20.svg',
+        text: 'Konto',
+        address: '/admin/account',
       },
     ];
   };
@@ -34,11 +40,12 @@ class DashboardAdmin extends React.Component {
     return (
       <DashboardContainer>
         <Main>
+          <Navigation menuItems={this.menuItems} />
           <Switch>
-            <Route exact path="/admin" render={() => <Redirect to="/admin/payment" />} />
-            <Route path="/admin/profile" component={Home} />
-            <Route path="/admin/payment" component={Home} />
-            <Route path="/admin/users/:userRole" component={Home} />
+            <Route exact path="/admin" render={() => <Redirect to="/admin/main" />} />
+            <Route path="/admin/main" component={Home} />
+            <Route path="/admin/contact" component={Home} />
+            <Route path="/admin/account" component={Home} />
           </Switch>
         </Main>
       </DashboardContainer>
