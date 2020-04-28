@@ -18,17 +18,17 @@ class DashboardAdmin extends React.Component {
   private setMenuItems = () => {
     this.menuItems = [
       {
-        icon: '/assets/icons/iconmonstr-user-23.svg',
+        icon: '/assets/icons/dashboard.svg',
         text: 'Strona główna',
         address: '/admin/main',
       },
       {
-        icon: '/assets/icons/iconmonstr-note-20.svg',
+        icon: '/assets/icons/dashboard.svg',
         text: 'Pracownicy',
         address: '/admin/workers',
       },
       {
-        icon: '/assets/icons/iconmonstr-note-20.svg',
+        icon: '/assets/icons/account.svg',
         text: 'Konto',
         address: '/admin/account',
       },

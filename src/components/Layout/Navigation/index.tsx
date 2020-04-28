@@ -15,7 +15,7 @@ interface Props {
 class Navigation extends Component<Props> {
   private basicItems: MenuItemType[] = [
     {
-      icon: '/assets/icons/iconmonstr-log-out-16.svg',
+      icon: '/assets/icons/logout.svg',
       text: 'Wyloguj',
       onClick: () => this.props.logout(),
       customClass: 'logout-button',
