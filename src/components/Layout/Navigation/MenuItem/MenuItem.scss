@@ -9,14 +9,7 @@
   justify-content: center;
   align-items: center;
   padding: $main-spacing;
-    color: $color-inactive !important;
-
-  // .main-menu-item_text {
-
-  //   &:hover {
-  //     color: $color-primary-light;
-  //   }
-  // }
+  color: $color-inactive !important;
 
   &:hover {
     background-color: lighten($color-background, 30%);
@@ -46,8 +39,8 @@
   }
 
   .main-menu-item_logo {
-    width: 30px;
-    height: 30px;
+    width: 20px;
+    height: 20px;
     margin-bottom: $main-spacing;
     fill: $color-inactive;
   }

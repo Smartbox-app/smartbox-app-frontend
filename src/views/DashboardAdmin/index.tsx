@@ -19,7 +19,7 @@ class DashboardAdmin extends React.Component {
     this.menuItems = [
       {
         icon: '/assets/icons/dashboard.svg',
-        text: 'Strona główna',
+        text: 'Home',
         address: '/admin/main',
       },
       {

@@ -1,17 +1,29 @@
 @import '../../../config/variables.scss';
+@import '../../../config/mixins.scss';
 
 body {
   background-color: $color-primary;
+  margin: 0;
 }
 
 main {
-  width: 1024px;
-  margin: 0 auto;
   background-color: #fff;
   min-height: 100vh;
+  display: flex;
+  flex: 0 0 100%;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
 
   footer {
     justify-self: flex-end;
     align-self: flex-end;
+  }
+}
+
+@include gt-sm {
+  main {
+    margin: 0 auto;
+    max-width: map-get($breakpoints, sm);
   }
 }
