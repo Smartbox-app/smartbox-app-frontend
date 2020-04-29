@@ -15,6 +15,7 @@
     background-color: lighten($color-background, 30%);
     border-bottom: 2px solid $color-primary-light;
     color: $color-primary-light;
+    cursor: pointer;
 
     .main-menu-item_text {
       color: $color-primary;
