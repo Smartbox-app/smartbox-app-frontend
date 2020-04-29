@@ -14,6 +14,10 @@ const Welcome = () => {
         <SectionHeader title="Historia" />
         <p>Tutaj powinny się pojawiać historia</p>
       </Section>
+      <Section>
+        <SectionHeader title="Oferta" />
+        <p>Tutaj pojawi się karuzela</p>
+      </Section>
     </div>
   );
 };
