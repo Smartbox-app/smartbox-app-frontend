@@ -1,10 +1,9 @@
 @import '../../../config/variables.scss';
+@import '../../../config/mixins.scss';
 
 .slider-wrapper {
   position: relative;
   padding: $main-spacing * 2;
-  display: flex;
-  flex: 0 0 100%;
 }
 
 .slick-slide img {
@@ -22,4 +21,14 @@
 
 .slick-dots li.slick-active button::before {
   color: $color-primary;
+}
+
+@include gt-sm {
+  .slick-slider {
+    width: 100%;
+    min-height: 500px;
+  }
+  .slick-slide img {
+    min-height: 500px;
+  }
 }

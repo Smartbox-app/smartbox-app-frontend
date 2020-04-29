@@ -4,3 +4,10 @@
 .section-wrapper {
   width: 100vw;
 }
+
+@include gt-sm {
+  .section-wrapper {
+    width: map-get($breakpoints, sm);
+    margin: 0 auto;
+  }
+}
