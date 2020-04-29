@@ -8,7 +8,7 @@ interface Props {
 
 const Section = (props: Props) => {
   const { children } = props;
-  return <section>{children}</section>;
+  return <section className="section-wrapper">{children}</section>;
 };
 
 export default Section;
