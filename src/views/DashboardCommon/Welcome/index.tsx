@@ -1,10 +1,11 @@
 import React from 'react';
 import { Section, SectionHeader } from '../../../components/Layout';
+import { Carousel } from '../../../components/Common';
 
 const Welcome = () => {
   console.log('Home');
   return (
-    <div>
+    <>
       <p>Cześć, Userze</p>
       <Section>
         <SectionHeader title="Promocje" />
@@ -16,9 +17,9 @@ const Welcome = () => {
       </Section>
       <Section>
         <SectionHeader title="Oferta" />
-        <p>Tutaj pojawi się karuzela</p>
+        <Carousel imagesList={[]} />
       </Section>
-    </div>
+    </>
   );
 };
 

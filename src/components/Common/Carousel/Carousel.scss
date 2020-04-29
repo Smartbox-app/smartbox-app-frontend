@@ -1,0 +1,38 @@
+@import '../../../config/variables.scss';
+
+.slider-wrapper {
+  position: relative;
+  padding: $main-spacing * 2;
+  border: 1px solid red;
+  display: flex;
+  flex: 0 0 100%;
+
+}
+
+.slick-slide img {
+  margin: auto;
+}
+
+.slick-list {
+  position: relative;
+  width: 300px;
+}
+
+// .slick-arrow {
+//   background: red;
+//   color: red;
+// }
+
+.slick-next {
+  right: -$main-spacing;
+  &::before {
+    color: pink;
+  }
+}
+
+.slick-prev {
+  left: -$main-spacing;
+  &::before {
+    color: pink;
+  }
+}
