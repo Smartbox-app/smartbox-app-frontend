@@ -57,7 +57,6 @@ const App = () => {
               <Route exact path="/" render={() => <Redirect to="/login" />} />
               <Route path="/login" component={Login} />
               <Route path="/home" component={Home} />
-              <Route path="/404" component={Page404} />
               <RouteAdmin path="/admin" component={DashboardAdmin} />
               <RouteWorker path="/worker" component={DashboardWorker} />
               <RouteUser path="/user" component={DashboardUser} />
