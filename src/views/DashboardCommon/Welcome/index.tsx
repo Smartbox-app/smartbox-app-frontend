@@ -17,7 +17,13 @@ const Welcome = () => {
       </Section>
       <Section>
         <SectionHeader title="Oferta" />
-        <Carousel imagesList={[]} />
+        <Carousel
+          imagesList={[
+            'http://placedog.net/200/300?random',
+            'http://placedog.net/200/300?random',
+            'http://placedog.net/200/300?random',
+          ]}
+        />
       </Section>
     </>
   );

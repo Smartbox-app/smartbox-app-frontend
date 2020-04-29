@@ -11,6 +11,13 @@ interface Props {
 }
 
 class Carousel extends Component<Props> {
+  private dataToDisplay = this.props.imagesList.map((data: string) => (
+    <div>
+      {' '}
+      <img src={data} alt="offer-screen" />
+    </div>
+  ));
+
   render() {
     const settings = {
       dots: true,
@@ -25,20 +32,7 @@ class Carousel extends Component<Props> {
     console.log('asd');
     return (
       <div className="slider-wrapper">
-        <Slider {...settings}>
-          <div>
-            {' '}
-            <img src="http://placedog.net/200/300?random" />
-          </div>
-          <div>
-            {' '}
-            <img src="http://placedog.net/200/300?random" />
-          </div>
-          <div>
-            {' '}
-            <img src="http://placedog.net/200/300?random" />
-          </div>
-        </Slider>
+        <Slider {...settings}>{this.dataToDisplay}</Slider>
       </div>
     );
   }
