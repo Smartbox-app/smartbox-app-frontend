@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Slider from 'react-slick';
+import CustomeArrow from './CustomArrow';
 
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -14,9 +15,11 @@ class Carousel extends Component<Props> {
     const settings = {
       dots: true,
       infinite: true,
-      speed: 500,
+      speed: 300,
       slidesToShow: 1,
       slidesToScroll: 1,
+      nextArrow: <CustomeArrow right />,
+      prevArrow: <CustomeArrow left />,
     };
 
     console.log('asd');
@@ -25,15 +28,15 @@ class Carousel extends Component<Props> {
         <Slider {...settings}>
           <div>
             {' '}
-            <img src="http://placekitten.com/g/200/300" />
+            <img src="http://placedog.net/200/300?random" />
           </div>
           <div>
             {' '}
-            <img src="http://placekitten.com/g/200/300" />
+            <img src="http://placedog.net/200/300?random" />
           </div>
           <div>
             {' '}
-            <img src="http://placekitten.com/g/200/300" />
+            <img src="http://placedog.net/200/300?random" />
           </div>
         </Slider>
       </div>

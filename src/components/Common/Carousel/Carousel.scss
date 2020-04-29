@@ -3,10 +3,8 @@
 .slider-wrapper {
   position: relative;
   padding: $main-spacing * 2;
-  border: 1px solid red;
   display: flex;
   flex: 0 0 100%;
-
 }
 
 .slick-slide img {
@@ -15,24 +13,13 @@
 
 .slick-list {
   position: relative;
-  width: 300px;
 }
 
-// .slick-arrow {
-//   background: red;
-//   color: red;
-// }
-
-.slick-next {
-  right: -$main-spacing;
-  &::before {
-    color: pink;
-  }
+.slick-slider {
+  width: 100%;
+  min-height: 300px;
 }
 
-.slick-prev {
-  left: -$main-spacing;
-  &::before {
-    color: pink;
-  }
+.slick-dots li.slick-active button::before {
+  color: $color-primary;
 }
