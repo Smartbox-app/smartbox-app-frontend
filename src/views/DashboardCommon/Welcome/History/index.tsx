@@ -5,6 +5,7 @@ interface SingleHistory {
   endData: Date | string;
   size: number;
   location: string;
+  isActive: boolean;
 }
 
 interface Props {
@@ -16,7 +17,7 @@ const History = ({ data }: Props) => {
   const dataToDisplay =
     data &&
     data.map((single: SingleHistory) => (
-      <li className="history-line">
+      <li className={`history-line ${single.isActive ? 'active' : ''}`}>
         <span>
           {single.startData}-{single.endData}
         </span>
@@ -26,7 +27,7 @@ const History = ({ data }: Props) => {
     ));
   return (
     <div className="history-wrapper">
-      <ul>{dataToDisplay}</ul>
+      <ul className="history-list">{dataToDisplay}</ul>
     </div>
   );
 };

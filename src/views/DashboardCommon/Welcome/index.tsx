@@ -21,18 +21,21 @@ const Welcome = () => {
               endData: new Date().toLocaleTimeString(),
               size: 12,
               location: 'Warszawa, Mokotów',
+              isActive: true,
             },
             {
               startData: new Date().toLocaleTimeString(),
               endData: new Date().toLocaleTimeString(),
               size: 3,
               location: 'Wrocław, Fabryczna',
+              isActive: false,
             },
             {
               startData: new Date().toLocaleTimeString(),
               endData: new Date().toLocaleTimeString(),
               size: 6,
               location: 'Poznań, Jeżyce',
+              isActive: false,
             },
           ]}
         />
