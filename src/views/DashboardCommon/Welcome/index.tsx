@@ -16,7 +16,26 @@ const Welcome = () => {
       </Section>
       <Section>
         <SectionHeader title="Zarządaj magazynami" />
-        <StorageInfo storageList={[]} />
+        <StorageInfo
+          storageList={[
+            {
+              size: 12,
+              location: 'Warszawa, Mokotów',
+            },
+            {
+              size: 6,
+              location: 'Wrocław, Fabryczna',
+            },
+            {
+              size: 6,
+              location: 'Wrocław, Fabryczna',
+            },
+            {
+              size: 6,
+              location: 'Wrocław, Fabryczna',
+            },
+          ]}
+        />
       </Section>
       <Section>
         <SectionHeader title="Historia" />

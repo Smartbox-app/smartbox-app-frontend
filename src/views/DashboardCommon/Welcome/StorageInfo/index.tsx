@@ -1,4 +1,5 @@
 import React from 'react';
+import { Button } from '../../../../components/Common';
 
 import './StorageInfo.scss';
 
@@ -13,15 +14,17 @@ interface Props {
 
 const StorageInfo = ({ storageList }: Props) => {
   const ButtonForNew = (
-    <div>
-      <h1>Wynajmij Magazyn</h1>
+    <div className="new-storage single-wrapper">
+      <Button text="Wynajmij Magazyn" outline icon="" />
     </div>
   );
 
-  const dataToDisplay = storageList.map(() => (
-    <div className="storage">
-      <p className="main-info">12m2</p>
-      <p className="sec-info">Katowice, Ligota</p>
+  const dataToDisplay = storageList.map((single: SingleSotrage) => (
+    <div className="single-wrapper">
+      <div className="storage">
+        <p className="main-info">{single.size}m2</p>
+        <p className="sec-info">{single.location}</p>
+      </div>
     </div>
   ));
 
