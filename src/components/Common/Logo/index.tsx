@@ -1,5 +1,5 @@
 import React from 'react';
 
-const Logo = (): any => <img src="/assets/images/demo_logo.png" alt="idea PV" />;
+const Logo = (): any => <img src="/assets/images/logo.png" alt="SmartBox" />;
 
 export default Logo;
