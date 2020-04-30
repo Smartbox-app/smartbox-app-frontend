@@ -3,6 +3,7 @@ import { Section, SectionHeader } from '../../../components/Layout';
 import { Carousel } from '../../../components/Common';
 import History from './History';
 import Discounts from './Discounts';
+import StorageInfo from './StorageInfo';
 
 const Welcome = () => {
   console.log('Home');
@@ -15,7 +16,7 @@ const Welcome = () => {
       </Section>
       <Section>
         <SectionHeader title="Zarządaj magazynami" />
-        <p>Tutaj powinny się pojawic magazyny</p>
+        <StorageInfo storageList={[]} />
       </Section>
       <Section>
         <SectionHeader title="Historia" />
