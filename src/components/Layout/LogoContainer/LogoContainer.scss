@@ -26,14 +26,16 @@
 
 @include gt-xs {
   .logo-container {
+    margin-top: $main-spacing * 4;
     img {
-      height: $main-logo-size /1.8 ;
+      height: $main-logo-size;
     }
   }
 }
 
 @include gt-md {
   .logo-container {
+    margin-top: $main-spacing * 6;
     img {
       height: $main-logo-size;
     }
