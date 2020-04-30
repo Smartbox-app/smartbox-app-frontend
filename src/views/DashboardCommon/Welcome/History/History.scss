@@ -2,7 +2,7 @@
 @import '../../../../config/mixins.scss';
 
 .history-wrapper {
-  margin: $main-spacing;
+  margin: $main-spacing 0;
   display: flex;
   flex: 0 0 100%;
   flex-direction: column;

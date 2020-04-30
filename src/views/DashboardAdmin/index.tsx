@@ -39,8 +39,8 @@ class DashboardAdmin extends React.Component {
     this.setMenuItems();
     return (
       <DashboardContainer>
+        <Navigation menuItems={this.menuItems} />
         <Main>
-          <Navigation menuItems={this.menuItems} />
           <Switch>
             <Route exact path="/admin" render={() => <Redirect to="/admin/main" />} />
             <Route path="/admin/main" component={Welcome} />
