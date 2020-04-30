@@ -2,6 +2,7 @@ import React from 'react';
 import { Section, SectionHeader } from '../../../components/Layout';
 import { Carousel } from '../../../components/Common';
 import History from './History';
+import Discounts from './Discounts';
 
 const Welcome = () => {
   console.log('Home');
@@ -10,11 +11,11 @@ const Welcome = () => {
       <p>Cześć, Userze</p>
       <Section>
         <SectionHeader title="Promocje" />
-        <p>Tutaj powinny się pojawic promocje</p>
+        <Discounts discounts={['-10% na pierwszy magazyn', 'Pierwszy tydzień za 1zł']} />
       </Section>
       <Section>
         <SectionHeader title="Zarządaj magazynami" />
-        <p>Tutaj powinny się pojawic promocje</p>
+        <p>Tutaj powinny się pojawic magazyny</p>
       </Section>
       <Section>
         <SectionHeader title="Historia" />
