@@ -1,8 +1,10 @@
 import React from 'react';
 
+import './History.scss';
+
 interface SingleHistory {
-  startData: Date | string;
-  endData: Date | string;
+  startData: Date;
+  endData: Date;
   size: number;
   location: string;
   isActive: boolean;
@@ -14,20 +16,28 @@ interface Props {
 
 const History = ({ data }: Props) => {
   console.log('data', data);
+
+  const getDate = (x: Date) => x.toLocaleDateString();
+  const getShortDate = (x: Date) => x.toLocaleDateString().slice(0, 5);
+
   const dataToDisplay =
     data &&
     data.map((single: SingleHistory) => (
       <li className={`history-line ${single.isActive ? 'active' : ''}`}>
-        <span>
-          {single.startData}-{single.endData}
+        <span className="line-cell">
+          {getShortDate(single.startData)}-{getDate(single.endData)}
         </span>
-        <span>{single.size}m2</span>
-        <span>{single.location}</span>
+        <span className="line-cell small">{single.size}m2</span>
+        <span className="line-cell">{single.location}</span>
       </li>
     ));
   return (
     <div className="history-wrapper">
       <ul className="history-list">{dataToDisplay}</ul>
+      <div className="history-legend">
+        <span className="legend-color" />
+        <p className="legend-desc">Aktywne magazyny</p>
+      </div>
     </div>
   );
 };

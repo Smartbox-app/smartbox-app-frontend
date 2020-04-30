@@ -13,26 +13,30 @@ const Welcome = () => {
         <p>Tutaj powinny się pojawic promocje</p>
       </Section>
       <Section>
+        <SectionHeader title="Zarządaj magazynami" />
+        <p>Tutaj powinny się pojawic promocje</p>
+      </Section>
+      <Section>
         <SectionHeader title="Historia" />
         <History
           data={[
             {
-              startData: new Date().toLocaleTimeString(),
-              endData: new Date().toLocaleTimeString(),
+              startData: new Date(),
+              endData: new Date(),
               size: 12,
               location: 'Warszawa, Mokotów',
               isActive: true,
             },
             {
-              startData: new Date().toLocaleTimeString(),
-              endData: new Date().toLocaleTimeString(),
+              startData: new Date(),
+              endData: new Date(),
               size: 3,
               location: 'Wrocław, Fabryczna',
               isActive: false,
             },
             {
-              startData: new Date().toLocaleTimeString(),
-              endData: new Date().toLocaleTimeString(),
+              startData: new Date(),
+              endData: new Date(),
               size: 6,
               location: 'Poznań, Jeżyce',
               isActive: false,

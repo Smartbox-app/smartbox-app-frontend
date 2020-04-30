@@ -1,0 +1,59 @@
+@import '../../../../config/variables.scss';
+@import '../../../../config/mixins.scss';
+
+.history-wrapper {
+  margin: $main-spacing;
+  display: flex;
+  flex: 0 0 100%;
+  flex-direction: column;
+}
+
+.history-list {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  color: $color-inactive;
+  font-weight: 600;
+  font-size: .8rem;
+}
+
+.active {
+  color: $color-active;
+}
+
+.history-line {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  width: 100%;
+  padding: $main-spacing/2  0;
+  border-bottom: 1px solid $color-inactive;
+}
+
+.line-cell {
+  flex: 0 0 40%;
+}
+
+.line-cell.small {
+  flex: 0 0 20%;
+}
+
+.history-legend {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: $main-spacing /4;
+
+  .legend-color {
+    display:block;
+    width: 15px;
+    height: 15px;
+    background-color: $color-active;
+    border-radius: 3px;
+    margin-right: $main-spacing /2;
+  }
+  .legend-desc {
+    margin: 0;
+    font-size: .7rem;
+  }
+}
