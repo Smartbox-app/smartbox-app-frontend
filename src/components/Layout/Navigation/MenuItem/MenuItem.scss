@@ -55,6 +55,20 @@
     margin-bottom: $main-spacing;
     fill: $color-inactive;
   }
+  .main-menu-item {
+    border-top: none;
+    border-bottom: 2px solid $color-inactive;
+  
+    &:hover {
+      border-top: none;
+      border-bottom: 2px solid $color-primary-light;
+    }
+  
+    &.active {
+      border-top: none;
+      border-bottom: 2px solid $color-primary;
+    }
+  }
 }
 
 @include gt-md {
@@ -62,4 +76,5 @@
     width: 30px;
     height: 30px;
   }
+
 }
