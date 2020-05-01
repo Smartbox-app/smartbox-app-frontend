@@ -1,15 +1,27 @@
 import React from 'react';
+import { connect } from 'react-redux';
+
 import { Section, SectionHeader } from '../../../components/Layout';
 import { Carousel } from '../../../components/Common';
+
 import History from './History';
 import Discounts from './Discounts';
 import StorageInfo from './StorageInfo';
 
-const Welcome = () => {
-  console.log('Home');
+import './Welcome.scss';
+
+interface Props {
+  userName: string;
+}
+
+const Welcome = ({ userName }: Props) => {
+  console.log('Home', userName);
   return (
     <>
-      <p>Cześć, Userze</p>
+      <Section>
+        {/* <SectionHeader title={`Cześć ${userName}`} noMargin /> */}
+        <h3 className="no-margin welcome">Cześć, {userName}!</h3>
+      </Section>
       <Section>
         <SectionHeader title="Promocje" />
         <Discounts discounts={['-10% na pierwszy magazyn', 'Pierwszy tydzień za 1zł']} />
@@ -79,4 +91,8 @@ const Welcome = () => {
   );
 };
 
-export default Welcome;
+const mapStateToProps = (state: any) => ({
+  userName: state.user.details.firstName,
+});
+
+export default connect(mapStateToProps)(Welcome);
