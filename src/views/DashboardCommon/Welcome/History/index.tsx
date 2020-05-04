@@ -18,7 +18,7 @@ const History = ({ data }: Props) => {
   console.log('data', data);
 
   const getDate = (x: Date) => x.toLocaleDateString();
-  const getShortDate = (x: Date) => x.toLocaleDateString().slice(0, 5);
+  const getShortDate = (x: Date) => x.toLocaleDateString().slice(0, 4);
 
   const dataToDisplay =
     data &&
