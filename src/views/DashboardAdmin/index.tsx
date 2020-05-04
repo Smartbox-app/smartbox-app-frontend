@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Redirect, Switch } from 'react-router-dom';
 import { Main } from '../../components/Layout';
 import DashboardContainer from '../../components/Layout/DashboardContainer';
-import { Welcome } from '../DashboardCommon';
+import { Welcome, Order } from '../DashboardCommon';
 // import Users from './Users';
 import Home from '../Home';
 import Navigation from '../../components/Layout/Navigation';
@@ -44,7 +44,7 @@ class DashboardAdmin extends React.Component {
           <Switch>
             <Route exact path="/admin" render={() => <Redirect to="/admin/main" />} />
             <Route path="/admin/main" component={Welcome} />
-            <Route path="/admin/contact" component={Home} />
+            <Route path="/admin/order" component={Order} />
             <Route path="/admin/account" component={Home} />
           </Switch>
         </Main>
