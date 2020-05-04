@@ -1,18 +1,27 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { order } from '../../../../../actions';
 
-const Step1 = (props: any) => {
+interface Props {
+  history: any;
+  UpdateFormData: (data: any) => void;
+}
+
+const Step1 = ({ history, UpdateFormData }: any) => {
   const { register, handleSubmit } = useForm();
 
   const onSubmit = (data: any) => {
     console.log('StepOne', data);
-    props.history.push('./step2');
+    UpdateFormData(data);
+    history.push('/admin/order/step2');
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <h2>Step 1</h2>
+      <h2>Step 1 - totaj pojawi się radio input z rodzajami</h2>
       <label>
         First Name:
         <input name="firstName" ref={register} />
@@ -26,4 +35,12 @@ const Step1 = (props: any) => {
   );
 };
 
-export default withRouter(Step1);
+const mapDispatchToProps = (dispatch: any) =>
+  bindActionCreators(
+    {
+      ...order,
+    },
+    dispatch,
+  );
+
+export default withRouter(connect(null, mapDispatchToProps)(Step1));
