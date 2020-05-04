@@ -14,6 +14,7 @@ import Logo from './Logo';
 import DateInput from './DateInput';
 import SliderInput from './SliderInput';
 import ProgressIndicator from './ProgressIndicator';
+import Carousel from './Carousel';
 
 export {
   Alert,
@@ -32,4 +33,5 @@ export {
   DateInput,
   SliderInput,
   ProgressIndicator,
+  Carousel,
 };

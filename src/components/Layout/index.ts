@@ -6,5 +6,18 @@ import PageContent from './PageContent';
 import PageHeader from './PageHeader';
 import FormContainer from './FormContainer';
 import LogoContainer from './LogoContainer';
+import Section from './Section';
+import SectionHeader from './SectionHeader';
 
-export { Main, ButtonsContainer, DashboardContainer, Footer, PageContent, PageHeader, FormContainer, LogoContainer };
+export {
+  Main,
+  ButtonsContainer,
+  DashboardContainer,
+  Footer,
+  PageContent,
+  PageHeader,
+  FormContainer,
+  LogoContainer,
+  Section,
+  SectionHeader,
+};

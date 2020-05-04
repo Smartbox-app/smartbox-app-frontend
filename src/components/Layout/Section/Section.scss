@@ -1,0 +1,18 @@
+@import '../../../config/variables.scss';
+@import '../../../config/mixins.scss';
+
+.section-wrapper {
+  width: 100%;
+  padding: $main-spacing;
+  padding-left: $main-spacing * 1;
+  padding-right: $main-spacing * 1;
+}
+
+@include gt-sm {
+  .section-wrapper {
+    width: map-get($breakpoints, sm);
+    margin: 0 auto;
+    padding-left: $main-spacing * 2;
+    padding-right: $main-spacing * 2;
+  }
+}

@@ -1,0 +1,34 @@
+@import '../../../config/variables.scss';
+@import '../../../config/mixins.scss';
+
+.slider-wrapper {
+  position: relative;
+  padding: $main-spacing * 2;
+}
+
+.slick-slide img {
+  margin: auto;
+}
+
+.slick-list {
+  position: relative;
+}
+
+.slick-slider {
+  width: 100%;
+  min-height: 300px;
+}
+
+.slick-dots li.slick-active button::before {
+  color: $color-primary;
+}
+
+@include gt-sm {
+  .slick-slider {
+    width: 100%;
+    min-height: 500px;
+  }
+  .slick-slide img {
+    min-height: 500px;
+  }
+}

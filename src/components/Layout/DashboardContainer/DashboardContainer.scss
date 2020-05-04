@@ -3,12 +3,12 @@
 
 .dashboard-container {
     display: flex;
-    flex-direction: column;
+    flex-direction: column-reverse;
     min-height: 100vh;
 }
 
 @include gt-sm {
     .dashboard-container {
-        flex-direction: row;
+        flex-direction: column;
     }
 }

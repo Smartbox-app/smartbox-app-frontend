@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Redirect, Switch } from 'react-router-dom';
 import { Main } from '../../components/Layout';
 import DashboardContainer from '../../components/Layout/DashboardContainer';
-// import { Orders, Subcontractor, Products, Profile, Payment, Calendar } from '../DashboardCommon';
+import { Welcome } from '../DashboardCommon';
 // import Users from './Users';
 import Home from '../Home';
 import Navigation from '../../components/Layout/Navigation';
@@ -39,11 +39,11 @@ class DashboardAdmin extends React.Component {
     this.setMenuItems();
     return (
       <DashboardContainer>
+        <Navigation menuItems={this.menuItems} />
         <Main>
-          <Navigation menuItems={this.menuItems} />
           <Switch>
             <Route exact path="/admin" render={() => <Redirect to="/admin/main" />} />
-            <Route path="/admin/main" component={Home} />
+            <Route path="/admin/main" component={Welcome} />
             <Route path="/admin/contact" component={Home} />
             <Route path="/admin/account" component={Home} />
           </Switch>

@@ -60,6 +60,7 @@ export default (state: State = initialState, action: Action): any => {
     case 'LOGIN_SUCCESS': {
       const { user } = action.payload;
       SessionService.setUser(user);
+      console.log('Login success', action.payload);
       return {
         ...state,
         details: user,

@@ -1,0 +1,46 @@
+@import '../../../../config/variables.scss';
+@import '../../../../config/mixins.scss';
+
+.storage-info-wrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.new-storage {
+  button {
+    width: 100px;
+    height: 100px;
+  }
+}
+.single-wrapper {
+  padding: $main-spacing/2;
+}
+.storage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  width: 100px;
+  height: 100px;
+  cursor: pointer;
+  margin: $main-spacing/2 0;
+
+  background: $color-primary;
+  color: #fff;
+  font-size: 600;
+  border: 2px solid darken($color-primary, 10%)
+}
+
+.main-info {
+  font-size: 1.1rem;
+}
+
+.sec-info {
+  font-size: 0.7rem;
+}
+
+.sec-info, .main-info {
+  text-align: center;
+}
