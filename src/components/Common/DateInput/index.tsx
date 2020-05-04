@@ -4,31 +4,19 @@ import DatePicker from 'react-date-picker';
 import './DateInput.scss';
 
 interface Props {
-  name: string;
+  name?: string;
   value?: Date[] | Date;
+  register?: any;
+  required?: boolean;
+  errors?: any;
+  label?: string;
+  onChange?: any;
 }
 
 export default class DateInput extends Component<Props> {
-  state = {
-    date: new Date(),
-  };
-
-  onChange = (date: any) => {
-    console.log(date);
-    this.setState({ date });
-  };
-
   render() {
-    const { name, value } = this.props;
-    const { date } = this.state;
-    return (
-      <DatePicker
-        onChange={this.onChange}
-        value={value || date}
-        className="date-input-style"
-        format="dd-MM-y"
-        name={name}
-      />
-    );
+    const { name, value, errors, register, required, onChange } = this.props;
+
+    return <DatePicker onChange={onChange} value={value} className="date-input-style" format="dd-MM-y" name={name} />;
   }
 }
