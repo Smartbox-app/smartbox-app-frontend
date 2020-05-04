@@ -17,6 +17,18 @@ export default class DateInput extends Component<Props> {
   render() {
     const { name, value, errors, register, required, onChange } = this.props;
 
-    return <DatePicker onChange={onChange} value={value} className="date-input-style" format="dd-MM-y" name={name} />;
+    return (
+      <div>
+        <DatePicker
+          onChange={onChange}
+          value={value}
+          className="date-input-style"
+          format="dd-MM-y"
+          name={name}
+          required
+        />
+        {console.log('dateInput', errors)}
+      </div>
+    );
   }
 }
