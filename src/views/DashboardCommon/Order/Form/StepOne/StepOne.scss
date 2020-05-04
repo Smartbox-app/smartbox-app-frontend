@@ -1,0 +1,20 @@
+@import "../../../../../config/variables.scss";
+
+.radio-img {
+  display: block;
+  width: 100px;
+  height: 200px;
+  background-color: red;
+  flex: 0 0 25%;
+}
+
+.step-one-wrapper {
+  .options-wrapper {
+    display: flex;
+    flex-direction: row;
+
+    label {
+      width: 25%;
+    }
+  }
+}

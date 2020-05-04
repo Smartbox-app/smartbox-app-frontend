@@ -4,6 +4,9 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { order } from '../../../../../actions';
+import { FormContainer } from '../../../../../components/Layout';
+
+import './StepOne.scss';
 
 interface Props {
   history: any;
@@ -20,18 +23,31 @@ const Step1 = ({ history, UpdateFormData }: any) => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <FormContainer className="step-one-wrapper">
       <h2>Step 1 - totaj pojawi się radio input z rodzajami</h2>
-      <label>
-        First Name:
-        <input name="firstName" ref={register} />
-      </label>
-      <label>
-        Last Name:
-        <input name="lastName" ref={register} />
-      </label>
-      <input type="submit" />
-    </form>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="options-wrapper">
+          <label htmlFor="option1">
+            <div className="radio-img" />
+            <input name="Wybór" type="radio" value="3m2" id="option1" ref={register({ required: true })} />
+          </label>
+          <label htmlFor="option2">
+            <div className="radio-img" />
+            <input name="Wybór" type="radio" value="6m2" id="option2" ref={register({ required: true })} />
+          </label>
+          <label htmlFor="option3">
+            <div className="radio-img" />
+            <input name="Wybór" type="radio" value="9m2" id="option3" ref={register({ required: true })} />
+          </label>
+          <label htmlFor="option4">
+            <div className="radio-img" />
+            <input name="Wybór" type="radio" value="12m2" id="option4" ref={register({ required: true })} />
+          </label>
+        </div>
+
+        <input type="submit" />
+      </form>
+    </FormContainer>
   );
 };
 
