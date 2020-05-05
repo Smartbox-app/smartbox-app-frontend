@@ -18,7 +18,7 @@ export default class DateInput extends Component<Props> {
     const { name, value, errors, register, required, onChange } = this.props;
 
     return (
-      <div>
+      <div className="data-picker-wrapper">
         <DatePicker
           onChange={onChange}
           value={value}

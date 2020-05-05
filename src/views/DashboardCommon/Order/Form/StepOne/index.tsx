@@ -4,21 +4,24 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { order } from '../../../../../actions';
-import { FormContainer } from '../../../../../components/Layout';
+import { FormContainer, ButtonsContainer } from '../../../../../components/Layout';
 
 import './StepOne.scss';
+import { Button } from '../../../../../components/Common';
 
 interface Props {
   history: any;
   UpdateFormData: (data: any) => void;
+  FormGoNextStep: (data: number) => void;
 }
 
-const Step1 = ({ history, UpdateFormData }: any) => {
+const Step1 = ({ history, UpdateFormData, FormGoNextStep }: any) => {
   const { register, handleSubmit } = useForm();
 
   const onSubmit = (data: any) => {
     console.log('StepOne', data);
     UpdateFormData(data);
+    FormGoNextStep(2);
     history.push('/admin/order/step2');
   };
 
@@ -45,7 +48,10 @@ const Step1 = ({ history, UpdateFormData }: any) => {
           </label>
         </div>
 
-        <input type="submit" />
+        <ButtonsContainer max>
+          <Button disabled text="Wróć" to="/admin/order/step1" />
+          <Button type="submit" primary text="Dalej" />
+        </ButtonsContainer>
       </form>
     </FormContainer>
   );

@@ -7,16 +7,17 @@ import Form from './Form/Index';
 
 interface Props {
   userName: string;
+  formStep: number;
 }
 
-const Order = ({ userName }: Props) => {
+const Order = ({ userName, formStep }: Props) => {
   console.log('Order', userName);
   return (
     <>
       <Section>
         <h3 className="welcome">Nowe zamówienie:</h3>
         <ProgressIndicator
-          current={1}
+          current={formStep}
           data={[
             {
               value: 1,
@@ -44,6 +45,7 @@ const Order = ({ userName }: Props) => {
 
 const mapStateToProps = (state: any) => ({
   userName: state.user.details.firstName,
+  formStep: state.order.formStep,
 });
 
 export default connect(mapStateToProps)(Order);
