@@ -29,19 +29,19 @@ const Step1 = ({ history, UpdateFormData }: any) => {
         <div className="options-wrapper">
           <label htmlFor="option1">
             <div className="radio-img" />
-            <input name="Wybór" type="radio" value="3m2" id="option1" ref={register({ required: true })} />
+            <input name="Wybór" type="radio" value="3" id="option1" ref={register({ required: true })} />
           </label>
           <label htmlFor="option2">
             <div className="radio-img" />
-            <input name="Wybór" type="radio" value="6m2" id="option2" ref={register({ required: true })} />
+            <input name="Wybór" type="radio" value="6" id="option2" ref={register({ required: true })} />
           </label>
           <label htmlFor="option3">
             <div className="radio-img" />
-            <input name="Wybór" type="radio" value="9m2" id="option3" ref={register({ required: true })} />
+            <input name="Wybór" type="radio" value="9" id="option3" ref={register({ required: true })} />
           </label>
           <label htmlFor="option4">
             <div className="radio-img" />
-            <input name="Wybór" type="radio" value="12m2" id="option4" ref={register({ required: true })} />
+            <input name="Wybór" type="radio" value="12" id="option4" ref={register({ required: true })} />
           </label>
         </div>
 

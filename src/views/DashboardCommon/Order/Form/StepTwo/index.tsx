@@ -6,6 +6,8 @@ import { connect } from 'react-redux';
 import { DateInput } from '../../../../../components/Common';
 import { order } from '../../../../../actions';
 
+import './StepTwo.scss';
+
 interface Props {
   formData: {};
   UpdateFormData: (data: any) => void;
