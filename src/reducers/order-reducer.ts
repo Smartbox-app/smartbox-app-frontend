@@ -1,5 +1,7 @@
 interface State {
   formData: {};
+  formStep: number;
+  countedPrice: number;
 }
 
 interface FormStepSuccess {
@@ -7,7 +9,12 @@ interface FormStepSuccess {
   payload: any;
 }
 
-type Action = FormStepSuccess;
+interface FormGoNextStep {
+  type: 'FORM_GO_NEXT_STEP_SUCCESS';
+  payload: any;
+}
+
+type Action = FormStepSuccess | FormGoNextStep;
 
 const initialState = {
   formData: {
@@ -16,6 +23,8 @@ const initialState = {
     size: 3,
     isFirstRent: true,
   },
+  formStep: 1,
+  countedPrice: 0,
 };
 
 export default (state: State = initialState, action: Action): any => {
@@ -26,6 +35,14 @@ export default (state: State = initialState, action: Action): any => {
         formData: { ...state.formData, ...action.payload },
       };
     }
+
+    case 'FORM_GO_NEXT_STEP_SUCCESS': {
+      return {
+        ...state,
+        formStep: action.payload,
+      };
+    }
+
     default:
       return state;
   }
