@@ -2,13 +2,13 @@
 @import '../../../config/mixins.scss';
 
 body {
-  background-color: #fff;
+  background-color: palegreen;
   margin: 0;
 }
 
 main {
   background-color: #fff;
-  min-height: 100vh;
+  min-height: calc(100vh - 120px);
   display: flex;
   flex: 0 0 100%;
   flex-direction: column;

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Redirect, Switch } from 'react-router-dom';
-import { Main } from '../../components/Layout';
+import { Main, Footer } from '../../components/Layout';
 import DashboardContainer from '../../components/Layout/DashboardContainer';
 import { Welcome, Order } from '../DashboardCommon';
 // import Users from './Users';
@@ -48,6 +48,7 @@ class DashboardAdmin extends React.Component {
             <Route path="/admin/account" component={Home} />
           </Switch>
         </Main>
+        <Footer />
       </DashboardContainer>
     );
   }

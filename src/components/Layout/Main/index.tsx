@@ -1,5 +1,4 @@
 import React from 'react';
-import { Footer } from '..';
 
 import './Main.scss';
 
@@ -9,12 +8,7 @@ interface Props {
 
 const Main = (props: Props) => {
   const { children } = props;
-  return (
-    <main>
-      {children}
-      <Footer />
-    </main>
-  );
+  return <main>{children}</main>;
 };
 
 export default Main;
