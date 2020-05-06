@@ -3,14 +3,6 @@
 .calendars-picker-wrapper {
   display: flex;
 
-  .data-picker-wrapper {
-    flex: 0 0 50%;
-    margin-bottom: $main-spacing * 2;
-
-    .date-input-style {
-      width: 100%;
-    }
-  }
 }
 
 .form-step-two {

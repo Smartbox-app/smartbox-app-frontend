@@ -1,3 +1,4 @@
+import { addDays } from 'date-fns';
 import { BoxGroupAvailability } from 'smartbox-types';
 
 export interface Form {
@@ -5,6 +6,8 @@ export interface Form {
   discount: number;
   size: string;
   isFirstRent: boolean;
+  dateStart: Date;
+  dateEnd: Date;
 }
 interface State {
   formData: Form;
@@ -35,6 +38,8 @@ const initialState = {
     discount: 0,
     size: '3',
     isFirstRent: true,
+    dateStart: new Date(),
+    dateEnd: addDays(new Date(), 14),
   },
   formStep: 1,
   countedPrice: 0,
@@ -45,6 +50,7 @@ export default (state: State = initialState, action: Action): any => {
   switch (action.type) {
     case 'FORM_STEP_SUCCESS': {
       console.log('FORM_STEP_SUCCESS', { ...state.formData, ...action.payload });
+      console.log('action.payload', { ...action.payload });
       return {
         ...state,
         formData: { ...state.formData, ...action.payload },

@@ -12,9 +12,10 @@ interface Props {
   label?: string;
   onChange?: any;
   minDate?: any;
+  maxDate?: any;
 }
 
-const DateInput = ({ name, value, register, required, onChange, label, minDate }: Props) => {
+const DateInput = ({ name, value, register, required, onChange, label, minDate, maxDate }: Props) => {
   const { errors } = useForm();
   return (
     <div className="data-picker-wrapper">
@@ -27,6 +28,7 @@ const DateInput = ({ name, value, register, required, onChange, label, minDate }
         name={name}
         required
         minDate={minDate || new Date()}
+        maxDate={maxDate || null}
       />
       <span>{errors[name]}</span>
     </div>
