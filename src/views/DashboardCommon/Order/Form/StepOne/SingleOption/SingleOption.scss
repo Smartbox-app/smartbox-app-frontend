@@ -1,0 +1,34 @@
+@import '../../../../../../config/variables.scss';
+
+.single-option {
+  cursor: pointer;
+  position: relative;
+}
+
+input[type=radio] {
+  display: none;
+}
+
+/* radio */
+input[type=radio] + label:before {
+  border-radius: 50%;
+}
+
+input[type=radio] + label:before {
+  position: absolute;
+  content: "";
+  display: block; 
+  width: 10px;
+  height: 10px;
+  top: 0; 
+  left: 0;
+  cursor: pointer;
+  transition: all .4s ease;
+-webkit-transition: all .4s ease;
+background-color: #cccccc;
+  border: 3px solid #cccccc;
+}
+
+input[type=radio]:checked + label:before {
+  background-color: $color-primary;
+}

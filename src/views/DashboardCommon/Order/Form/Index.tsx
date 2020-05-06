@@ -5,6 +5,7 @@ import { Switch, Route, Redirect } from 'react-router';
 import { order } from '../../../../actions';
 import StepOne from './StepOne';
 import StepTwo from './StepTwo';
+import StepThree from './StepThree';
 
 interface Props {
   formData: {};
@@ -15,6 +16,7 @@ const Form = (props: Props) => (
   <Switch>
     <Route exact path="/admin/order" component={StepOne} />
     <Route path="/admin/order/step2" component={StepTwo} />
+    <Route path="/admin/order/step3" component={StepThree} />
     <Route path="/admin/order/result" component={StepTwo} />
   </Switch>
 );

@@ -8,6 +8,8 @@ import { FormContainer, ButtonsContainer } from '../../../../../components/Layou
 
 import './StepOne.scss';
 import { Button } from '../../../../../components/Common';
+import SingleOption from './SingleOption';
+import { history } from '../../../../../App';
 
 interface Props {
   history: any;
@@ -16,7 +18,7 @@ interface Props {
 }
 
 const Step1 = ({ history, UpdateFormData, FormGoNextStep }: any) => {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, watch } = useForm();
 
   const onSubmit = (data: any) => {
     console.log('StepOne', data);
@@ -25,27 +27,17 @@ const Step1 = ({ history, UpdateFormData, FormGoNextStep }: any) => {
     history.push('/admin/order/step2');
   };
 
+  console.log(watch('choose'));
+
   return (
     <FormContainer className="step-one-wrapper">
       <h2>Step 1 - totaj pojawi się radio input z rodzajami</h2>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="options-wrapper">
-          <label htmlFor="option1">
-            <div className="radio-img" />
-            <input name="Wybór" type="radio" value="3" id="option1" ref={register({ required: true })} />
-          </label>
-          <label htmlFor="option2">
-            <div className="radio-img" />
-            <input name="Wybór" type="radio" value="6" id="option2" ref={register({ required: true })} />
-          </label>
-          <label htmlFor="option3">
-            <div className="radio-img" />
-            <input name="Wybór" type="radio" value="9" id="option3" ref={register({ required: true })} />
-          </label>
-          <label htmlFor="option4">
-            <div className="radio-img" />
-            <input name="Wybór" type="radio" value="12" id="option4" ref={register({ required: true })} />
-          </label>
+          <SingleOption key={1} name="choose" value="1" id="option1" refOption={{ required: true }} />
+          <SingleOption key={2} name="choose" value="2" id="option2" refOption={{ required: true }} />
+          <SingleOption key={3} name="choose" value="3" id="option3" refOption={{ required: true }} />
+          <SingleOption key={4} name="choose" value="4" id="option4" refOption={{ required: true }} />
         </div>
 
         <ButtonsContainer max>
