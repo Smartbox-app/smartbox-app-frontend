@@ -1,3 +1,5 @@
+import { BoxGroupAvailability } from 'smartbox-types';
+
 interface State {
   formData: {};
   formStep: number;
@@ -14,7 +16,12 @@ interface FormGoNextStep {
   payload: any;
 }
 
-type Action = FormStepSuccess | FormGoNextStep;
+interface BoxGroup {
+  type: 'FETCH_BOX_AVAILABILITY_SUCCESS';
+  payload: BoxGroupAvailability[];
+}
+
+type Action = FormStepSuccess | FormGoNextStep | BoxGroup;
 
 const initialState = {
   formData: {
@@ -25,6 +32,7 @@ const initialState = {
   },
   formStep: 1,
   countedPrice: 0,
+  boxGroup: [],
 };
 
 export default (state: State = initialState, action: Action): any => {

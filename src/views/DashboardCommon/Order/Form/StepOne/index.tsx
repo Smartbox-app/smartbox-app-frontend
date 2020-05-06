@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -19,9 +19,14 @@ interface RouteComponentProps<RouteProps> {
   history: any;
   UpdateFormData: (data: any) => void;
   FormGoNextStep: (data: number) => void;
+  fetchBoxAvailability: () => void;
 }
 
-const Step1 = ({ history, UpdateFormData, FormGoNextStep, match }: any) => {
+const Step1 = ({ history, UpdateFormData, FormGoNextStep, match, fetchBoxAvailability }: any) => {
+  useEffect(() => {
+    fetchBoxAvailability();
+  });
+
   const { register, handleSubmit, watch } = useForm();
   console.log('step1', match);
 
@@ -36,13 +41,53 @@ const Step1 = ({ history, UpdateFormData, FormGoNextStep, match }: any) => {
 
   return (
     <FormContainer className="step-one-wrapper">
-      <h2>Step 1 - totaj pojawi się radio input z rodzajami</h2>
+      <h3>Proszę wybrać rozmiar magazynu:</h3>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="options-wrapper">
-          <SingleOption key={1} name="choose" value="1" id="option1" refOption={{ required: true }} />
-          <SingleOption key={2} name="choose" value="2" id="option2" refOption={{ required: true }} />
-          <SingleOption key={3} name="choose" value="3" id="option3" refOption={{ required: true }} />
-          <SingleOption key={4} name="choose" value="4" id="option4" refOption={{ required: true }} />
+          <SingleOption
+            key={1}
+            name="choose"
+            value="3"
+            id="option1"
+            refOption={{ required: true }}
+            imgAddress="/assets/images/dummy_box2.png"
+            sizeX={1}
+            sizeY={1}
+            sizeZ={2.6}
+          />
+          <SingleOption
+            key={2}
+            name="choose"
+            value="6"
+            id="option2"
+            refOption={{ required: true }}
+            imgAddress="/assets/images/dummy_box2.png"
+            sizeX={1}
+            sizeY={1}
+            sizeZ={2.6}
+          />
+          <SingleOption
+            key={3}
+            name="choose"
+            value="9"
+            id="option3"
+            refOption={{ required: true }}
+            imgAddress="/assets/images/dummy_box2.png"
+            sizeX={1}
+            sizeY={1}
+            sizeZ={2.6}
+          />
+          <SingleOption
+            key={4}
+            name="choose"
+            value="12"
+            id="option4"
+            refOption={{ required: true }}
+            imgAddress="/assets/images/dummy_box2.png"
+            sizeX={1}
+            sizeY={1}
+            sizeZ={2.6}
+          />
         </div>
 
         <ButtonsContainer max>

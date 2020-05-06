@@ -1,5 +1,8 @@
 @import '../../../../../../config/variables.scss';
 
+$single-option-width: map-get($breakpoints, sm )/4; 
+$single-option-height: 230px; 
+
 .single-option {
   cursor: pointer;
   position: relative;
@@ -10,9 +13,6 @@ input[type=radio] {
 }
 
 /* radio */
-input[type=radio] + label:before {
-  border-radius: 50%;
-}
 
 input[type=radio] + label:before {
   position: absolute;
@@ -20,15 +20,49 @@ input[type=radio] + label:before {
   display: block; 
   width: 10px;
   height: 10px;
-  top: 0; 
-  left: 0;
-  cursor: pointer;
-  transition: all .4s ease;
--webkit-transition: all .4s ease;
-background-color: #cccccc;
-  border: 3px solid #cccccc;
 }
 
 input[type=radio]:checked + label:before {
-  background-color: $color-primary;
+  // background-color: $color-primary;
+}
+
+input[type=radio]:checked + label:after {
+  content: '';
+  display:block;
+  width: $single-option-width - 10px;
+  height: $single-option-height - 10px;
+  border: 5px solid $color-primary;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: $main-spacing;
+}
+
+.radio-img {
+  position: relative;
+  display: block;
+  width: $single-option-width;
+  height: $single-option-height;
+  // background-color: red;
+  flex: 0 0 25%;
+}
+
+.img-description {
+  text-align: center;
+}
+
+.single-option {
+  width: $single-option-width;
+  position: relative;
+}
+
+.img-value {
+  position: absolute;
+  top: 40%;
+  transform: translateY(-50%);
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1.5rem;
+  color: $color-primary;
+  font-weight: 600;
 }
