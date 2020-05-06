@@ -11,20 +11,25 @@ import { Button } from '../../../../../components/Common';
 import SingleOption from './SingleOption';
 import { history } from '../../../../../App';
 
-interface Props {
+interface RouteProps {
+  step: string;
+}
+
+interface RouteComponentProps<RouteProps> {
   history: any;
   UpdateFormData: (data: any) => void;
   FormGoNextStep: (data: number) => void;
 }
 
-const Step1 = ({ history, UpdateFormData, FormGoNextStep }: any) => {
+const Step1 = ({ history, UpdateFormData, FormGoNextStep, match }: any) => {
   const { register, handleSubmit, watch } = useForm();
+  console.log('step1', match);
 
   const onSubmit = (data: any) => {
     console.log('StepOne', data);
     UpdateFormData(data);
     FormGoNextStep(2);
-    history.push('/admin/order/step2');
+    history.push('/admin/order/step/2');
   };
 
   console.log(watch('choose'));
@@ -41,7 +46,7 @@ const Step1 = ({ history, UpdateFormData, FormGoNextStep }: any) => {
         </div>
 
         <ButtonsContainer max>
-          <Button disabled text="Wróć" to="/admin/order/step1" />
+          <Button disabled text="Wróć" />
           <Button type="submit" primary text="Dalej" />
         </ButtonsContainer>
       </form>

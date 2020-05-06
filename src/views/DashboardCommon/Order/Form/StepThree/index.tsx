@@ -33,12 +33,12 @@ const StepThree = (props: Props) => {
   const onSubmit = (data: any) => {
     props.UpdateFormData(data);
     props.FormGoNextStep(4);
-    history.push('/admin/order/step4');
+    history.push('/admin/order/step/4');
   };
 
   const onBack = () => {
     props.FormGoNextStep(2);
-    history.push('/admin/order/step2');
+    history.push('/admin/order/step/2');
   };
 
   return (

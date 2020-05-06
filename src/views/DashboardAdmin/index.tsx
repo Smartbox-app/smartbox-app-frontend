@@ -44,7 +44,7 @@ class DashboardAdmin extends React.Component {
           <Switch>
             <Route exact path="/admin" render={() => <Redirect to="/admin/main" />} />
             <Route path="/admin/main" component={Welcome} />
-            <Route path="/admin/order" component={Order} />
+            <Route path="/admin/order/:step" component={Order} />
             <Route path="/admin/account" component={Home} />
           </Switch>
         </Main>

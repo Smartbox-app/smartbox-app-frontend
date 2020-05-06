@@ -14,10 +14,10 @@ interface Props {
 
 const Form = (props: Props) => (
   <Switch>
-    <Route exact path="/admin/order" component={StepOne} />
-    <Route path="/admin/order/step2" component={StepTwo} />
-    <Route path="/admin/order/step3" component={StepThree} />
-    <Route path="/admin/order/result" component={StepTwo} />
+    <Route path="/admin/order/step/1" component={StepOne} />
+    <Route path="/admin/order/step/2" component={StepTwo} />
+    <Route path="/admin/order/step/3" component={StepThree} />
+    <Route path="/admin/order/step/4" component={StepThree} />
   </Switch>
 );
 
