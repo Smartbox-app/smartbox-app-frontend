@@ -1,19 +1,17 @@
 import React, { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { withRouter } from 'react-router-dom';
-
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { addDays, differenceInCalendarDays } from 'date-fns';
-import { usePricing } from 'smartbox-types';
 import { DateInput, Button } from '../../../../../components/Common';
 import { order } from '../../../../../actions';
 import { ButtonsContainer } from '../../../../../components/Layout';
 import { formatPrice } from '../../../../../utils/format-price';
 import { history } from '../../../../../App';
+import { Form } from '../../../../../reducers/order-reducer';
 
 import './StepTwo.scss';
-import { Form } from '../../../../../reducers/order-reducer';
 
 interface Props {
   history: any;
@@ -45,10 +43,6 @@ const StepTwo = ({ formData, countedPrice, UpdateFormData, FormGoNextStep }: Pro
     history.push('/admin/order/step/1');
   };
 
-  const { calculate } = usePricing();
-  const price = calculate(10, 1, 3, false);
-  console.log('price', price);
-
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="form-step-two" onChange={(data) => console.log(data)}>
       <div className="calendars-picker-wrapper">
@@ -62,8 +56,8 @@ const StepTwo = ({ formData, countedPrice, UpdateFormData, FormGoNextStep }: Pro
           minDate={dateStartMin}
           maxDate={addDays(new Date(), 7)}
           onChange={([selected]) => {
-            setDateStart(selected);
-            setDateEnd(addDays(selected, 14));
+            // setDateStart(selected);
+            setDateEnd(addDays(selected, 13));
             return selected;
           }}
         />
@@ -76,7 +70,7 @@ const StepTwo = ({ formData, countedPrice, UpdateFormData, FormGoNextStep }: Pro
           label="Wybierz datę rozpoczęcia wynajmu:"
           minDate={dateEndMin}
           onChange={([selected]) => {
-            setDateEnd(selected);
+            // setDateEnd(selected);
             UpdateFormData({ durationInDays: differenceInCalendarDays(selected, dateStartMin) });
             return selected;
           }}
