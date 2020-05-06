@@ -1,33 +1,38 @@
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { withRouter } from 'react-router-dom';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { order } from '../../../../../actions';
 import { FormContainer, ButtonsContainer } from '../../../../../components/Layout';
-
-import './StepOne.scss';
 import { Button } from '../../../../../components/Common';
 import SingleOption from './SingleOption';
-import { history } from '../../../../../App';
+import { Form } from '../../../../../reducers/order-reducer';
+
+import './StepOne.scss';
 
 interface RouteProps {
   step: string;
 }
 
-interface RouteComponentProps<RouteProps> {
+interface Props extends RouteComponentProps<RouteProps> {
   history: any;
+  formData: Form;
   UpdateFormData: (data: any) => void;
   FormGoNextStep: (data: number) => void;
   fetchBoxAvailability: () => void;
 }
 
-const Step1 = ({ history, UpdateFormData, FormGoNextStep, match, fetchBoxAvailability }: any) => {
+const Step1 = ({ history, UpdateFormData, FormGoNextStep, match, fetchBoxAvailability, formData }: Props) => {
   useEffect(() => {
     fetchBoxAvailability();
   });
 
-  const { register, handleSubmit, watch } = useForm();
+  const defaultValues = {
+    size: formData.size,
+  };
+
+  const { register, handleSubmit, watch } = useForm({ defaultValues });
 
   const onSubmit = (data: any) => {
     console.log('StepOne', data);
@@ -43,8 +48,8 @@ const Step1 = ({ history, UpdateFormData, FormGoNextStep, match, fetchBoxAvailab
         <div className="options-wrapper">
           <SingleOption
             key={1}
-            name="choose"
-            value="3"
+            name="size"
+            value={3}
             id="option1"
             imgAddress="/assets/images/dummy_box2.png"
             sizeX={1}
@@ -54,8 +59,8 @@ const Step1 = ({ history, UpdateFormData, FormGoNextStep, match, fetchBoxAvailab
           />
           <SingleOption
             key={2}
-            name="choose"
-            value="6"
+            name="size"
+            value={6}
             id="option2"
             imgAddress="/assets/images/dummy_box2.png"
             sizeX={1}
@@ -65,8 +70,8 @@ const Step1 = ({ history, UpdateFormData, FormGoNextStep, match, fetchBoxAvailab
           />
           <SingleOption
             key={3}
-            name="choose"
-            value="9"
+            name="size"
+            value={9}
             id="option3"
             imgAddress="/assets/images/dummy_box2.png"
             sizeX={1}
@@ -76,8 +81,8 @@ const Step1 = ({ history, UpdateFormData, FormGoNextStep, match, fetchBoxAvailab
           />
           <SingleOption
             key={4}
-            name="choose"
-            value="12"
+            name="size"
+            value={12}
             id="option4"
             imgAddress="/assets/images/dummy_box2.png"
             sizeX={1}
@@ -96,6 +101,11 @@ const Step1 = ({ history, UpdateFormData, FormGoNextStep, match, fetchBoxAvailab
   );
 };
 
+const mapStateToProps = (state: any) => ({
+  formData: state.order.formData,
+  countedPrice: state.order.countedPrice,
+});
+
 const mapDispatchToProps = (dispatch: any) =>
   bindActionCreators(
     {
@@ -104,4 +114,4 @@ const mapDispatchToProps = (dispatch: any) =>
     dispatch,
   );
 
-export default withRouter(connect(null, mapDispatchToProps)(Step1));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Step1));

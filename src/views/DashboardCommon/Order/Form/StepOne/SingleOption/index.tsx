@@ -5,7 +5,7 @@ import './SingleOption.scss';
 
 interface Props {
   name: string;
-  value: any;
+  value: number;
   id: string;
   imgAddress?: string;
   sizeX: number;

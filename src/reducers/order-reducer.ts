@@ -1,7 +1,13 @@
 import { BoxGroupAvailability } from 'smartbox-types';
 
+export interface Form {
+  durationInDays: number;
+  discount: number;
+  size: string;
+  isFirstRent: boolean;
+}
 interface State {
-  formData: {};
+  formData: Form;
   formStep: number;
   countedPrice: number;
 }
@@ -27,7 +33,7 @@ const initialState = {
   formData: {
     durationInDays: 0,
     discount: 0,
-    size: 3,
+    size: '3',
     isFirstRent: true,
   },
   formStep: 1,
@@ -38,6 +44,7 @@ const initialState = {
 export default (state: State = initialState, action: Action): any => {
   switch (action.type) {
     case 'FORM_STEP_SUCCESS': {
+      console.log('FORM_STEP_SUCCESS', { ...state.formData, ...action.payload });
       return {
         ...state,
         formData: { ...state.formData, ...action.payload },
