@@ -1,7 +1,7 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Switch, Route, Redirect } from 'react-router';
+import { Switch, Route } from 'react-router';
 import { order } from '../../../../actions';
 import StepOne from './StepOne';
 import StepTwo from './StepTwo';

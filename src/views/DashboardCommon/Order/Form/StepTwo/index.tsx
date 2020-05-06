@@ -51,7 +51,6 @@ const StepTwo = (props: Props) => {
           register
           required
           value={date}
-          errors={errors}
           label="Wybierz datę rozpoczęcia wynajmu"
         />
         <Controller
@@ -61,7 +60,6 @@ const StepTwo = (props: Props) => {
           register
           required
           value={date}
-          errors={errors}
           label="Wybierz datę rozpoczęcia wynajmu"
         />
       </div>

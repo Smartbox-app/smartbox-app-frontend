@@ -7,7 +7,7 @@ import { Route, Router, Switch, Redirect } from 'react-router-dom';
 import { WorkBoxProvider } from 'react-workbox';
 import { createBrowserHistory } from 'history';
 import reducers from './reducers';
-import { Home, Page404, Login, DashboardAdmin, DashboardWorker, DashboardUser } from './views';
+import { Home, Login, DashboardAdmin, DashboardWorker, DashboardUser } from './views';
 import {
   OnlineContent,
   OfflineContent,
