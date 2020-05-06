@@ -1,15 +1,30 @@
 @import "../../../../../config/variables.scss";
-
+@import "../../../../../config/mixins.scss";
 
 .step-one-wrapper {
 
   form {
-    width: map-get($breakpoints, sm );
+    width: map-get($breakpoints, xs );
     margin-left: -$main-spacing * 2;
   }
 
   .options-wrapper {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+@include gt-sm {
+  .options-wrapper {
+    flex-direction: row;
+  }
+
+  .step-one-wrapper {
+    form {
+      width: map-get($breakpoints, sm );
+    }
   }
 }

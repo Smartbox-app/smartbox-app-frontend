@@ -1,7 +1,9 @@
 @import '../../../../../../config/variables.scss';
+@import "../../../../../../config/mixins.scss";
 
-$single-option-width: map-get($breakpoints, sm )/4; 
-$single-option-height: 230px; 
+$single-option-width: map-get($breakpoints, xs )/2;
+$single-option-width-big: map-get($breakpoints, lg )/4; 
+$single-option-height: 230px;
 
 .single-option {
   cursor: pointer;
@@ -13,14 +15,6 @@ input[type=radio] {
 }
 
 /* radio */
-
-input[type=radio] + label:before {
-  position: absolute;
-  content: "";
-  display: block; 
-  width: 10px;
-  height: 10px;
-}
 
 input[type=radio]:checked + label:before {
   // background-color: $color-primary;
@@ -54,6 +48,7 @@ input[type=radio]:checked + label:after {
 .single-option {
   width: $single-option-width;
   position: relative;
+
 }
 
 .img-value {
@@ -65,4 +60,21 @@ input[type=radio]:checked + label:after {
   font-size: 1.5rem;
   color: $color-primary;
   font-weight: 600;
+}
+
+@include gt-sm {
+  input[type=radio]:checked + label:after {
+    width: $single-option-width-big - 10px;
+    height: 300px;
+  }
+
+  .radio-img {
+    width: $single-option-width-big;
+    height: auto;
+  }
+
+  .single-option {
+    width: $single-option-width-big;
+    height: 300px;
+  }
 }
