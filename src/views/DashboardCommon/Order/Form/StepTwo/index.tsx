@@ -3,13 +3,15 @@ import { useForm, Controller } from 'react-hook-form';
 import { withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+
 import { addDays, differenceInCalendarDays } from 'date-fns';
 import { DateInput, Button } from '../../../../../components/Common';
 import { order } from '../../../../../actions';
 import { ButtonsContainer } from '../../../../../components/Layout';
-import { formatPrice } from '../../../../../utils/format-price';
 import { history } from '../../../../../App';
 import { Form } from '../../../../../reducers/order-reducer';
+
+import Price from './Price';
 
 import './StepTwo.scss';
 
@@ -23,7 +25,7 @@ interface Props {
 
 const StepTwo = ({ formData, countedPrice, UpdateFormData, FormGoNextStep }: Props) => {
   const [dateStartMin, setDateStart] = useState(new Date());
-  const [dateEndMin, setDateEnd] = useState(addDays(new Date(), 14));
+  const [dateEndMin, setDateEnd] = useState(addDays(new Date(), 13));
 
   const defaultValues = {
     dateStart: formData.dateStart,
@@ -44,7 +46,7 @@ const StepTwo = ({ formData, countedPrice, UpdateFormData, FormGoNextStep }: Pro
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="form-step-two" onChange={(data) => console.log(data)}>
+    <form onSubmit={handleSubmit(onSubmit)} className="form-step-two">
       <div className="calendars-picker-wrapper">
         <Controller
           name="dateStart"
@@ -76,9 +78,7 @@ const StepTwo = ({ formData, countedPrice, UpdateFormData, FormGoNextStep }: Pro
           }}
         />
       </div>
-      <div className="price-wrapper">
-        <p>Cena za wybrany okres to: {formatPrice(countedPrice)}</p>
-      </div>
+      <Price countedPrice={countedPrice} />
       <ButtonsContainer max>
         <Button outline text="Wróć" click={() => onBack()} />
         <Button type="submit" primary text="Dalej" />

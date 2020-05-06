@@ -3,8 +3,33 @@
 .calendars-picker-wrapper {
   display: flex;
 
+
+  .react-date-picker {
+    display: flex;
+    flex-direction: column;
+  }
+
+  //TODO poprawić - ewentualnie zmienić bibliotekę od kalendarza
+  .react-date-picker__calendar {
+    position: relative !important;
+    top: 10px !important;
+    left: -55% !important;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .react-date-picker__calendar--closed {
+    position: relative;
+  }
 }
 
-.form-step-two {
-  height: 400px;
+.data-picker-wrapper {
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 50%;
+  align-items: center;
+
+  label {
+    margin-bottom: $main-spacing;
+  }
 }

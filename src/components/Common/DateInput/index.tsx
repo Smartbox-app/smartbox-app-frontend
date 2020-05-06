@@ -27,6 +27,9 @@ const DateInput = ({ name, value, register, required, onChange, label, minDate, 
         format="dd-MM-y"
         name={name}
         required
+        isOpen
+        // closeCalendar={false}
+        showLeadingZeros
         minDate={minDate || new Date()}
         maxDate={maxDate || null}
       />
