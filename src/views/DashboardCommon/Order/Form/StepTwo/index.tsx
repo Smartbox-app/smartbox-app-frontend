@@ -69,7 +69,7 @@ const StepTwo = ({ formData, countedPrice, UpdateFormData, FormGoNextStep }: Pro
           as={DateInput}
           register={register}
           required
-          label="Wybierz datę rozpoczęcia wynajmu:"
+          label="Wybierz datę zakończenia wynajmu:"
           minDate={dateEndMin}
           onChange={([selected]) => {
             // setDateEnd(selected);
