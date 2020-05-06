@@ -1,8 +1,8 @@
 import React from 'react';
 import DatePicker from 'react-date-picker';
+import { useForm } from 'react-hook-form';
 
 import './DateInput.scss';
-import { useForm } from 'react-hook-form';
 
 interface Props {
   name: string;
@@ -11,9 +11,10 @@ interface Props {
   required?: boolean;
   label?: string;
   onChange?: any;
+  minDate?: any;
 }
 
-const DateInput = ({ name, value, register, required, onChange, label }: Props) => {
+const DateInput = ({ name, value, register, required, onChange, label, minDate }: Props) => {
   const { errors } = useForm();
   return (
     <div className="data-picker-wrapper">
@@ -25,6 +26,7 @@ const DateInput = ({ name, value, register, required, onChange, label }: Props) 
         format="dd-MM-y"
         name={name}
         required
+        minDate={minDate || new Date()}
       />
       <span>{errors[name]}</span>
     </div>

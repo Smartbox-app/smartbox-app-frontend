@@ -48,19 +48,21 @@ const StepTwo = (props: Props) => {
           name="dateStart"
           control={control}
           as={DateInput}
-          register
+          register={register}
           required
           value={date}
           label="Wybierz datę rozpoczęcia wynajmu"
+          minDate={new Date()}
         />
         <Controller
           name="dateEnd"
           control={control}
           as={DateInput}
-          register
+          register={register}
           required
           value={date}
           label="Wybierz datę rozpoczęcia wynajmu"
+          minDate={new Date()}
         />
       </div>
       <div className="price-wrapper">
