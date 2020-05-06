@@ -1,34 +1,34 @@
-import React, { Component } from 'react';
+import React from 'react';
 import DatePicker from 'react-date-picker';
 
 import './DateInput.scss';
+import { useForm } from 'react-hook-form';
 
 interface Props {
-  name?: string;
+  name: string;
   value?: Date[] | Date;
   register?: any;
   required?: boolean;
-  errors?: any;
   label?: string;
   onChange?: any;
 }
 
-export default class DateInput extends Component<Props> {
-  render() {
-    const { name, value, errors, register, required, onChange } = this.props;
+const DateInput = ({ name, value, register, required, onChange, label }: Props) => {
+  const { errors } = useForm();
+  return (
+    <div className="data-picker-wrapper">
+      {label && <label htmlFor={name}>{label}</label>}
+      <DatePicker
+        onChange={onChange}
+        value={value}
+        className="date-input-style"
+        format="dd-MM-y"
+        name={name}
+        required
+      />
+      <span>{errors[name]}</span>
+    </div>
+  );
+};
 
-    return (
-      <div className="data-picker-wrapper">
-        <DatePicker
-          onChange={onChange}
-          value={value}
-          className="date-input-style"
-          format="dd-MM-y"
-          name={name}
-          required
-        />
-        {console.log('dateInput', errors)}
-      </div>
-    );
-  }
-}
+export default DateInput;
