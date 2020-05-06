@@ -28,7 +28,6 @@ const Step1 = ({ history, UpdateFormData, FormGoNextStep, match, fetchBoxAvailab
   });
 
   const { register, handleSubmit, watch } = useForm();
-  console.log('step1', match);
 
   const onSubmit = (data: any) => {
     console.log('StepOne', data);
@@ -36,8 +35,6 @@ const Step1 = ({ history, UpdateFormData, FormGoNextStep, match, fetchBoxAvailab
     FormGoNextStep(2);
     history.push('/admin/order/step/2');
   };
-
-  console.log(watch('choose'));
 
   return (
     <FormContainer className="step-one-wrapper">
@@ -49,44 +46,44 @@ const Step1 = ({ history, UpdateFormData, FormGoNextStep, match, fetchBoxAvailab
             name="choose"
             value="3"
             id="option1"
-            refOption={{ required: true }}
             imgAddress="/assets/images/dummy_box2.png"
             sizeX={1}
             sizeY={1}
             sizeZ={2.6}
+            register={register}
           />
           <SingleOption
             key={2}
             name="choose"
             value="6"
             id="option2"
-            refOption={{ required: true }}
             imgAddress="/assets/images/dummy_box2.png"
             sizeX={1}
             sizeY={1}
             sizeZ={2.6}
+            register={register}
           />
           <SingleOption
             key={3}
             name="choose"
             value="9"
             id="option3"
-            refOption={{ required: true }}
             imgAddress="/assets/images/dummy_box2.png"
             sizeX={1}
             sizeY={1}
             sizeZ={2.6}
+            register={register}
           />
           <SingleOption
             key={4}
             name="choose"
             value="12"
             id="option4"
-            refOption={{ required: true }}
             imgAddress="/assets/images/dummy_box2.png"
             sizeX={1}
             sizeY={1}
             sizeZ={2.6}
+            register={register}
           />
         </div>
 
