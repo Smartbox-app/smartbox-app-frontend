@@ -76,14 +76,20 @@ input[type=radio]:checked + label:before {
 }
 
 @include gt-sm {
-  input[type=radio]:checked + label:after {
-    width: $single-option-width-big - 10px;
-    height: 300px;
-  }
+  .single-option-wrapper {
+    margin-top: $main-spacing * 2;
+    margin-bottom: $main-spacing * 2;
 
-  .radio-img {
-    width: 100%;
-    height: auto;
+    input[type=radio]:checked + label:before {
+      width: $single-option-width-big;
+      height: $single-option-height-big;
+    }
+    .radio-img {
+      width: $single-option-width-big;
+      height: $single-option-height-big;
+    }
   }
-
+  .img-value {
+    font-size: 2rem;
+  }
 }

@@ -20,10 +20,4 @@
   .options-wrapper {
     flex-direction: row;
   }
-
-  .step-one-wrapper {
-    form {
-      width: map-get($breakpoints, sm );
-    }
-  }
 }

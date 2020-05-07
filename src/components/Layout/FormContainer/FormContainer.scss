@@ -6,6 +6,7 @@
   display: flex;
   flex-direction: column;
   width: 100%;
+  overflow: hidden;
 
   form {
     flex: 1;
@@ -18,11 +19,5 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-  }
-}
-
-@include gt-sm {
-  .form-container {
-    width: 500px;
   }
 }
