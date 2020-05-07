@@ -4,47 +4,17 @@
 .calendars-picker-wrapper {
   display: flex;
   flex-direction: column;
- 
-
-  .react-date-picker {
-    display: flex;
-    flex-direction: column;
-    // height: 350px;
-  }
-
-  //TODO poprawić - ewentualnie zmienić bibliotekę od kalendarza
-  .react-date-picker__calendar {
-    position: relative !important;
-    top: 10px !important;
-    left: -55% !important;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .react-date-picker__calendar--closed {
-    position: relative;
-  }
-}
-
-.data-picker-wrapper {
-  display: flex;
-  flex-direction: column;
-  flex: 0 0 50%;
+  justify-content: center;
   align-items: center;
-  // height: 350px;
 
-  label {
-    margin-bottom: $main-spacing;
+  .data-picker-wrapper {
+    margin-bottom: $main-spacing * 2;
   }
 }
 
-.react-calendar {
-  position: relative !important;
-  display: block !important;
-}
-
-@include gt-xs {
+@include gt-sm {
   .calendars-picker-wrapper {
     flex-direction: row;
+    justify-content: space-around;
   }
 }

@@ -47,6 +47,7 @@ const StepTwo = ({ formData, countedPrice, UpdateFormData, FormGoNextStep }: Pro
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="form-step-two">
+      {console.log('StepTwo', formData)}
       <div className="calendars-picker-wrapper">
         <Controller
           name="dateStart"
@@ -58,8 +59,7 @@ const StepTwo = ({ formData, countedPrice, UpdateFormData, FormGoNextStep }: Pro
           minDate={dateStartMin}
           maxDate={addDays(new Date(), 7)}
           onChange={([selected]) => {
-            // setDateStart(selected);
-            setDateEnd(addDays(selected, 13));
+            setDateEnd(addDays(selected[0], 13));
             return selected;
           }}
         />
@@ -72,8 +72,8 @@ const StepTwo = ({ formData, countedPrice, UpdateFormData, FormGoNextStep }: Pro
           label="Wybierz datę zakończenia wynajmu:"
           minDate={dateEndMin}
           onChange={([selected]) => {
-            // setDateEnd(selected);
-            UpdateFormData({ durationInDays: differenceInCalendarDays(selected, dateStartMin) });
+            setDateEnd(selected[0]);
+            UpdateFormData({ durationInDays: differenceInCalendarDays(selected[0], dateStartMin) });
             return selected;
           }}
         />

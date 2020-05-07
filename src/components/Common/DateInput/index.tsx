@@ -1,8 +1,14 @@
 import React from 'react';
-import DatePicker from 'react-date-picker';
+import Flatpickr from 'react-flatpickr';
 import { useForm } from 'react-hook-form';
+import flatpickr from 'flatpickr'; // Check out other cool Themes: https://flatpickr.js.org/themes/
+import 'flatpickr/dist/themes/airbnb.css';
 
 import './DateInput.scss';
+import { Polish } from 'flatpickr/dist/l10n/pl';
+
+flatpickr.localize(Polish);
+flatpickr.defaultConfig.time_24hr = true;
 
 interface Props {
   name: string;
@@ -20,18 +26,19 @@ const DateInput = ({ name, value, register, required, onChange, label, minDate, 
   return (
     <div className="data-picker-wrapper">
       {label && <label htmlFor={name}>{label}</label>}
-      <DatePicker
-        onChange={onChange}
+      <Flatpickr
+        onChange={(data: any) => {
+          onChange(data);
+        }}
         value={value}
-        className="date-input-style"
-        format="dd-MM-y"
-        name={name}
-        required
-        isOpen
-        // closeCalendar={false}
-        showLeadingZeros
-        minDate={minDate || new Date()}
-        maxDate={maxDate || null}
+        options={{
+          allowInput: false,
+          inline: true,
+          enableTime: false,
+          locale: 'pl',
+          minDate,
+          maxDate,
+        }}
       />
       <span>{errors[name]}</span>
     </div>
