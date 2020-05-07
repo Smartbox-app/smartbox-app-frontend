@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { Section } from '../../../components/Layout';
+import { Section, SectionHeader } from '../../../components/Layout';
 import { ProgressIndicator } from '../../../components/Common';
 import Form from './Form/Index';
 
@@ -13,7 +13,7 @@ interface Props {
 const Order = ({ userName, formStep }: Props) => (
   <>
     <Section>
-      <h3 className="welcome">Nowe zamówienie:</h3>
+      <SectionHeader title="Nowe zamówienie:" />
       <ProgressIndicator
         current={formStep}
         data={[
