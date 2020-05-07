@@ -15,7 +15,7 @@ interface Props {
 }
 
 const SingleOption = (props: Props) => (
-  <div className="single-option">
+  <div className="single-option-wrapper">
     <input name={props.name} type="radio" value={props.value} id={props.id} ref={props.register({ required: true })} />
     <label htmlFor={props.id} className="single-option">
       <div className="radio-img">

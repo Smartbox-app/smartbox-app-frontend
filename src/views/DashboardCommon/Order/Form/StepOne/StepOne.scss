@@ -4,8 +4,7 @@
 .step-one-wrapper {
 
   form {
-    width: map-get($breakpoints, xs );
-    margin-left: -$main-spacing * 2;
+    width: 100%;
   }
 
   .options-wrapper {

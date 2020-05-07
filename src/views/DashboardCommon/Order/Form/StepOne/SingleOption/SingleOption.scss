@@ -1,14 +1,10 @@
 @import '../../../../../../config/variables.scss';
 @import "../../../../../../config/mixins.scss";
 
-$single-option-width: map-get($breakpoints, xs )/2;
-$single-option-width-big: map-get($breakpoints, lg )/4; 
-$single-option-height: 230px;
-
-.single-option {
-  cursor: pointer;
-  position: relative;
-}
+$single-option-width: 150px;
+$single-option-width-big: 200px; 
+$single-option-height: 165px;
+$single-option-height-big: 230px;
 
 input[type=radio] {
   display: none;
@@ -17,49 +13,66 @@ input[type=radio] {
 /* radio */
 
 input[type=radio]:checked + label:before {
-  // background-color: $color-primary;
-}
-
-input[type=radio]:checked + label:after {
   content: '';
-  display:block;
-  width: $single-option-width - 10px;
-  height: $single-option-height - 10px;
-  border: 5px solid $color-primary;
-  position: absolute;
-  top: 0;
-  left: 0;
-  border-radius: $main-spacing;
-}
-
-.radio-img {
-  position: relative;
   display: block;
-  width: $single-option-width;
+  width: $single-option-width - 20px;
   height: $single-option-height;
-  // background-color: red;
-  flex: 0 0 25%;
+  background-color: lighten($color-primary, 30%);
+  position: absolute;
+  top: 10px;
+  border-radius: $main-spacing;
 }
 
 .img-description {
   text-align: center;
 }
 
-.single-option {
-  width: $single-option-width;
-  position: relative;
+.single-option-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  flex: 0 0 100%;
+  justify-content: center;
+  align-items: center;
 
+  .radio-img {
+    margin: $main-spacing;
+    position: relative;
+    display: block;
+    width: 100%;
+    height: $single-option-height;
+    width: $single-option-width - 20px;
+    box-shadow: $box-shadow-small;
+    border-radius: $main-spacing;
+  }
+
+  .single-option {
+    cursor: pointer;
+    position: relative;
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+  }
 }
+
 
 .img-value {
   position: absolute;
-  top: 40%;
+  top: 50%;
   transform: translateY(-50%);
   left: 50%;
   transform: translateX(-50%);
   font-size: 1.5rem;
-  color: $color-primary;
+  color: darken($color-primary, 15%);
   font-weight: 600;
+  padding: 0 10px;
+  // background: rgba(0,0,0,.1);
+}
+
+@include gt-xs {
+  .single-option-wrapper {
+    flex: 0 0 50%;
+  }
 }
 
 @include gt-sm {
@@ -69,12 +82,8 @@ input[type=radio]:checked + label:after {
   }
 
   .radio-img {
-    width: $single-option-width-big;
+    width: 100%;
     height: auto;
   }
 
-  .single-option {
-    width: $single-option-width-big;
-    height: 300px;
-  }
 }
