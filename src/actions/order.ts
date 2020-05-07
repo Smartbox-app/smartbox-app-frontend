@@ -11,6 +11,6 @@ export const fetchBoxAvailability = () => async (dispatch: any) => {
     'FETCH_BOX_AVAILABILITY_FAILED',
     null,
     null,
-    'box/group/availability',
+    'rent/box-group/availability',
   );
 };
