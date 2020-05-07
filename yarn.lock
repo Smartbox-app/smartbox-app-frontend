@@ -1533,6 +1533,14 @@
   dependencies:
     "@types/react" "*"
 
+"@types/react-flatpickr@^3.8.1":
+  version "3.8.1"
+  resolved "https://registry.yarnpkg.com/@types/react-flatpickr/-/react-flatpickr-3.8.1.tgz#9bdda7fdbee5fb2c2770c01eb720082789bc5bb8"
+  integrity sha512-+f4Cw3K+jaxHVcqsJXfsEyS9ps+9L8qZclJzZp7Si1+Vj26IufF+BMYU83FBMKLR66Hsq68xTpt3w0i2GHOldA==
+  dependencies:
+    "@types/react" "*"
+    flatpickr "^4.0.6"
+
 "@types/react-redux@^7.1.5":
   version "7.1.7"
   resolved "https://registry.yarnpkg.com/@types/react-redux/-/react-redux-7.1.7.tgz#12a0c529aba660696947384a059c5c6e08185c7a"
@@ -4790,6 +4798,11 @@ flat-cache@^2.0.1:
     flatted "^2.0.0"
     rimraf "2.6.3"
     write "1.0.3"
+
+flatpickr@^4.0.6, flatpickr@^4.5.7:
+  version "4.6.3"
+  resolved "https://registry.yarnpkg.com/flatpickr/-/flatpickr-4.6.3.tgz#15a8b76b6e34e3a072861250503a5995b9d3bc60"
+  integrity sha512-007VucCkqNOMMb9ggRLNuJowwaJcyOh4sKAFcdGfahfGc7JQbf94zSzjdBq/wVyHWUEs5o3+idhFZ0wbZMRmVQ==
 
 flatted@^2.0.0:
   version "2.0.2"
@@ -8979,7 +8992,7 @@ prompts@^2.0.1:
     kleur "^3.0.3"
     sisteransi "^1.0.4"
 
-prop-types@^15.6.0, prop-types@^15.6.2, prop-types@^15.7.2:
+prop-types@^15.5.10, prop-types@^15.6.0, prop-types@^15.6.2, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
@@ -9234,6 +9247,14 @@ react-fit@^1.0.3:
   dependencies:
     detect-element-overflow "^1.2.0"
     prop-types "^15.6.0"
+
+react-flatpickr@^3.10.0:
+  version "3.10.0"
+  resolved "https://registry.yarnpkg.com/react-flatpickr/-/react-flatpickr-3.10.0.tgz#a14c15e2f8c8badebfe652510db7f7a4203cb8e4"
+  integrity sha512-eeU5OlUZgWDyp2XvIeZ4+rI4T4VkqU1MdZUb+cXtTHfHYfLV+gpP0lAhRrij+QXlbPXTJFAbPerihohlOeTJ0A==
+  dependencies:
+    flatpickr "^4.5.7"
+    prop-types "^15.5.10"
 
 react-hook-form@^5.6.1:
   version "5.6.1"
