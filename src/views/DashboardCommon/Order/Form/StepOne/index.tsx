@@ -35,7 +35,6 @@ const Step1 = ({ history, UpdateFormData, FormGoNextStep, match, fetchBoxAvailab
   const { register, handleSubmit, watch } = useForm({ defaultValues });
 
   const onSubmit = (data: any) => {
-    console.log('StepOne', data);
     UpdateFormData(data);
     FormGoNextStep(2);
     history.push('/admin/order/step/2');

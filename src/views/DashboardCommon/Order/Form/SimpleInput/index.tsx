@@ -14,7 +14,6 @@ const SimpleInput = ({ label, register, required, errors, fieldName }: Props) =>
     <input name={fieldName} ref={register({ required })} />
     {/* {errors[label] && <p>{errors[label].message}</p>} */}
     {errors[label] && <p>Pole jest wymagane</p>}
-    {console.log(errors[fieldName])}
   </>
 );
 

@@ -36,7 +36,7 @@ const initialState = {
   formData: {
     durationInDays: 13,
     discount: 0,
-    size: '3',
+    size: '',
     isFirstRent: true,
     dateStart: new Date(),
     dateEnd: addDays(new Date(), 13),
@@ -50,12 +50,14 @@ export default (state: State = initialState, action: Action): any => {
   switch (action.type) {
     case 'FORM_STEP_SUCCESS': {
       const newFormData: Form = { ...state.formData, ...action.payload };
+      console.log('FORM_STEP_SUCCESS', action.payload, newFormData);
       const { calculate } = usePricing();
 
       if (newFormData.durationInDays !== 0) {
         const price = calculate(newFormData.durationInDays, 1, Number(newFormData.size), false);
         return {
           ...state,
+          formData: newFormData,
           countedPrice: price,
         };
       }

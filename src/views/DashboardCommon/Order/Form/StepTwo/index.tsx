@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useForm, Controller, FormContext, useFormContext } from 'react-hook-form';
 import { withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
@@ -24,6 +24,12 @@ interface Props {
 }
 
 const StepTwo = ({ formData, countedPrice, UpdateFormData, FormGoNextStep }: Props) => {
+  useEffect(() => {
+    if (formData.size.length === 0) {
+      history.push('/admin/order/step/1');
+    }
+  });
+
   const [dateStartMin, setDateStart] = useState(new Date());
   const [dateEndMin, setDateEnd] = useState(addDays(new Date(), 13));
 

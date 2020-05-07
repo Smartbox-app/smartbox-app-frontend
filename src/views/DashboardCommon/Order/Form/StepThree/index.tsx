@@ -1,26 +1,32 @@
-import React, { useState } from 'react';
-import { useForm, Controller } from 'react-hook-form';
+import React, { useState, useEffect } from 'react';
+import { useForm } from 'react-hook-form';
 import { withRouter } from 'react-router-dom';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { DateInput, Button } from '../../../../../components/Common';
+import { Button } from '../../../../../components/Common';
 import { order } from '../../../../../actions';
 import { ButtonsContainer } from '../../../../../components/Layout';
-import { formatPrice } from '../../../../../utils/format-price';
 import { history } from '../../../../../App';
+import { Form } from '../../../../../reducers/order-reducer';
 
 import './StepThree.scss';
 
 interface Props {
   history: any;
-  formData: {};
+  formData: Form;
   countedPrice: number;
   UpdateFormData: (data: any) => void;
   FormGoNextStep: (data: number) => void;
 }
 
-const StepThree = (props: Props) => {
+const StepThree = ({ formData, countedPrice, UpdateFormData, FormGoNextStep }: Props) => {
+  useEffect(() => {
+    if (formData.size.length === 0) {
+      history.push('/admin/order/step/1');
+    }
+  });
+
   const [date, setDate] = useState(new Date());
 
   const defaultValues = {
@@ -31,13 +37,13 @@ const StepThree = (props: Props) => {
   const { register, handleSubmit, watch, errors, control } = useForm({ defaultValues });
 
   const onSubmit = (data: any) => {
-    props.UpdateFormData(data);
-    props.FormGoNextStep(4);
+    UpdateFormData(data);
+    FormGoNextStep(4);
     history.push('/admin/order/step/4');
   };
 
   const onBack = () => {
-    props.FormGoNextStep(2);
+    FormGoNextStep(2);
     history.push('/admin/order/step/2');
   };
 
