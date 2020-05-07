@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm, Controller, FormContext, useFormContext } from 'react-hook-form';
 import { withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -33,6 +33,7 @@ const StepTwo = ({ formData, countedPrice, UpdateFormData, FormGoNextStep }: Pro
   };
 
   const { register, handleSubmit, watch, errors, control } = useForm({ defaultValues });
+  const methods = useForm();
 
   const onSubmit = (data: any) => {
     UpdateFormData({ durationInDays: differenceInCalendarDays(data.dateEnd, data.dateStart) });
@@ -46,44 +47,43 @@ const StepTwo = ({ formData, countedPrice, UpdateFormData, FormGoNextStep }: Pro
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="form-step-two">
-      {console.log('StepTwo', formData)}
-      <div className="calendars-picker-wrapper">
-        <Controller
-          name="dateStart"
-          control={control}
-          as={DateInput}
-          register={register}
-          required
-          label="Wybierz datę rozpoczęcia wynajmu:"
-          minDate={dateStartMin}
-          maxDate={addDays(new Date(), 7)}
-          onChange={([selected]) => {
-            setDateEnd(addDays(selected[0], 13));
-            return selected;
-          }}
-        />
-        <Controller
-          name="dateEnd"
-          control={control}
-          as={DateInput}
-          register={register}
-          required
-          label="Wybierz datę zakończenia wynajmu:"
-          minDate={dateEndMin}
-          onChange={([selected]) => {
-            setDateEnd(selected[0]);
-            UpdateFormData({ durationInDays: differenceInCalendarDays(selected[0], dateStartMin) });
-            return selected;
-          }}
-        />
-      </div>
-      <Price countedPrice={countedPrice} />
-      <ButtonsContainer max>
-        <Button outline text="Wróć" click={() => onBack()} />
-        <Button type="submit" primary text="Dalej" />
-      </ButtonsContainer>
-    </form>
+    <FormContext {...methods}>
+      <form onSubmit={handleSubmit(onSubmit)} className="form-step-two">
+        <div className="calendars-picker-wrapper">
+          <Controller
+            name="dateStart"
+            control={control}
+            as={DateInput}
+            register={register({ required: true })}
+            label="Wybierz datę rozpoczęcia wynajmu:"
+            minDate={dateStartMin}
+            maxDate={addDays(new Date(), 7)}
+            onChange={([selected]) => {
+              setDateStart(selected[0]);
+              return selected;
+            }}
+          />
+          <Controller
+            name="dateEnd"
+            control={control}
+            as={DateInput}
+            register={register({ required: true })}
+            label="Wybierz datę zakończenia wynajmu:"
+            minDate={addDays(dateStartMin, 13)}
+            onChange={([selected]) => {
+              setDateEnd(selected[0]);
+              UpdateFormData({ durationInDays: differenceInCalendarDays(selected[0], dateStartMin) });
+              return selected;
+            }}
+          />
+        </div>
+        <Price countedPrice={countedPrice} />
+        <ButtonsContainer max>
+          <Button outline text="Wróć" click={() => onBack()} />
+          <Button type="submit" primary text="Dalej" />
+        </ButtonsContainer>
+      </form>
+    </FormContext>
   );
 };
 
