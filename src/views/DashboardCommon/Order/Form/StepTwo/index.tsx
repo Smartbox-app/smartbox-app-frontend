@@ -31,7 +31,7 @@ const StepTwo = ({ formData, countedPrice, UpdateFormData, FormGoNextStep }: Pro
   });
 
   const [dateStartMin, setDateStart] = useState(new Date());
-  const [dateEndMin, setDateEnd] = useState(addDays(new Date(), 14));
+  const [dateEndMin, setDateEnd] = useState(addDays(new Date(), 7));
 
   const defaultValues = {
     dateStart: formData.dateStart,
@@ -66,6 +66,7 @@ const StepTwo = ({ formData, countedPrice, UpdateFormData, FormGoNextStep }: Pro
             maxDate={addDays(new Date(), 7)}
             onChange={([selected]) => {
               setDateStart(selected[0]);
+              UpdateFormData({ durationInDays: differenceInCalendarDays(dateEndMin, selected[0]) });
               return selected;
             }}
           />
@@ -75,7 +76,7 @@ const StepTwo = ({ formData, countedPrice, UpdateFormData, FormGoNextStep }: Pro
             as={DateInput}
             register={register({ required: true })}
             label="Wybierz datę zakończenia wynajmu:"
-            minDate={addDays(dateStartMin, 14)}
+            minDate={addDays(dateStartMin, 7)}
             onChange={([selected]) => {
               setDateEnd(selected[0]);
               UpdateFormData({ durationInDays: differenceInCalendarDays(selected[0], dateStartMin) });

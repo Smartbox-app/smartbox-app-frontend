@@ -34,12 +34,12 @@ type Action = FormStepSuccess | FormGoNextStep | BoxGroup;
 
 const initialState = {
   formData: {
-    durationInDays: 13,
+    durationInDays: 7,
     discount: 0,
     size: '',
     isFirstRent: true,
     dateStart: new Date(),
-    dateEnd: addDays(new Date(), 13),
+    dateEnd: addDays(new Date(), 7),
   },
   formStep: 1,
   countedPrice: 0,
