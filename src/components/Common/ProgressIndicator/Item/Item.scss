@@ -16,8 +16,8 @@
     height: 40px;
     border-radius: 20px;
     background: #fff;
-    color: $color-text;
-    border: 2px solid darken($color-primary, 10%);
+    color: $color-disabled;
+    border: 2px solid $color-disabled;
     display: flex;
     justify-content: center;
     align-items: center;
