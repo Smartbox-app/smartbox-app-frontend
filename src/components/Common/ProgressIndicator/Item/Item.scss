@@ -30,13 +30,17 @@
 
     &::after {
       display: block;
-      content: '>';
-      width: 24px;
-      height: 24px;
+      content: '';
+      background-image: url('/assets/icons/bar-marker.svg');
+      background-size: contain;
+      background-repeat: no-repeat;
+      fill: #aaa;
+      width: 16px;
+      height: 16px;
       color: $color-disabled;
-      top: -15px;
+      top: -16px;
       left: 50%;
-      transform: translateX(-50%) rotateZ(90deg);
+      transform: translateX(-50%);
       position: absolute;
     }
   }
