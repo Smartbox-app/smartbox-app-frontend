@@ -2,9 +2,9 @@
 @import "../../../../../../config/mixins.scss";
 
 $single-option-width: 150px;
-$single-option-width-big: 200px; 
+$single-option-width-big: 300px; 
 $single-option-height: 165px;
-$single-option-height-big: 230px;
+$single-option-height-big: 300px;
 
 input[type=radio] {
   display: none;
@@ -15,12 +15,11 @@ input[type=radio] {
 input[type=radio]:checked + label:before {
   content: '';
   display: block;
-  width: $single-option-width - 20px;
+  width: $single-option-width;
   height: $single-option-height;
   background-color: lighten($color-primary, 30%);
   position: absolute;
-  top: 10px;
-  border-radius: $main-spacing;
+  border-radius: $main-spacing/4;
 }
 
 .img-description {
@@ -35,14 +34,14 @@ input[type=radio]:checked + label:before {
   align-items: center;
 
   .radio-img {
-    margin: $main-spacing;
+    margin: 0 $main-spacing;
     position: relative;
     display: block;
     width: 100%;
     height: $single-option-height;
-    width: $single-option-width - 20px;
+    width: $single-option-width;
     box-shadow: $box-shadow-small;
-    border-radius: $main-spacing;
+    border-radius: $main-spacing/4;
   }
 
   .single-option {
@@ -77,8 +76,8 @@ input[type=radio]:checked + label:before {
 
 @include gt-sm {
   .single-option-wrapper {
-    margin-top: $main-spacing * 2;
-    margin-bottom: $main-spacing * 2;
+    margin-top: $main-spacing * 1;
+    margin-bottom: $main-spacing * 1;
 
     input[type=radio]:checked + label:before {
       width: $single-option-width-big;

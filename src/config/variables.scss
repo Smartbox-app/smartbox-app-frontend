@@ -22,7 +22,7 @@ $color-disabled: #aaa;
 
 $color-warning: #ec8628;
 $standard-shadow: -1px 0px 1px darken($color-disabled, 10%);
-$box-shadow-small: 0 5px 20px -5px;
+$box-shadow-small: 0 1px 5px 1px darken($color-background, 10%);
 $box-shadow-input: 0 10px 20px -20px;
 
 //SPACING

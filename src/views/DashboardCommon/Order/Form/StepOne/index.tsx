@@ -10,6 +10,7 @@ import SingleOption from './SingleOption';
 import { Form } from '../../../../../reducers/order-reducer';
 
 import './StepOne.scss';
+import FormHeader from '../../../../../components/Layout/FormHeader';
 
 interface RouteProps {
   step: string;
@@ -42,7 +43,7 @@ const Step1 = ({ history, UpdateFormData, FormGoNextStep, match, fetchBoxAvailab
 
   return (
     <FormContainer className="step-one-wrapper">
-      <h3>Proszę wybrać rozmiar magazynu:</h3>
+      <FormHeader title="Proszę wybrać rozmiar magazynu:" />
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="options-wrapper">
           <SingleOption
