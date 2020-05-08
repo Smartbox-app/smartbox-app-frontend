@@ -34,7 +34,11 @@ const DateInput = ({ name, value, onChange, label, minDate, maxDate, register }:
 
   return (
     <div className="data-picker-wrapper">
-      {label && <label htmlFor={name}>{label}</label>}
+      {label && (
+        <label htmlFor={name} className="data-picker-label">
+          {label}
+        </label>
+      )}
       <Flatpickr
         name={name}
         ref={register}
