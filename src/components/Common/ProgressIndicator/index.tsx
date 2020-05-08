@@ -15,15 +15,19 @@ interface Props {
   current: number;
 }
 
-const ProgressIndicator = ({ data, current }: Props) => (
-  <div className="progress-indicator-wrapper">
-    {data.map((data: RenderData, key: number) => (
-      <div className="single-stamp" key={key}>
-        <Item value={data.desc} order={data.value} current={data.value === current} done={data.value < current} />
-        <Bar done={data.value < current} current={data.value === current} />
-      </div>
-    ))}
-  </div>
-);
+const ProgressIndicator = ({ data, current }: Props) => {
+  const dataToDisplay = data.map((data: RenderData, key: number) => (
+    <div className="single-stamp" key={key}>
+      <Item value={data.desc} order={data.value} current={data.value === current} done={data.value < current} />
+      {key !== 3 && <Bar done={data.value} current={current} />}
+    </div>
+  ));
+  return (
+    <div className="progress-indicator-wrapper">
+      {dataToDisplay}
+      {/* <Bar done={data.value - 1} current={data.value} /> */}
+    </div>
+  );
+};
 
 export default ProgressIndicator;
