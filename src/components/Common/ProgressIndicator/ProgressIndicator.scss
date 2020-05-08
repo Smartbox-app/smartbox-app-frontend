@@ -17,3 +17,9 @@
     justify-content: center;
   }
 }
+
+@include gt-xs {
+  .progress-indicator-wrapper {
+    margin-bottom: $main-spacing * 3;
+  }
+}

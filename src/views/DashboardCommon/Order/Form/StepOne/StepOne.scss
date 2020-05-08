@@ -19,5 +19,6 @@
 @include gt-sm {
   .options-wrapper {
     flex-direction: row;
+    margin-bottom: $main-spacing * 2;
   }
 }

@@ -19,19 +19,19 @@ const Order = ({ userName, formStep }: Props) => (
         data={[
           {
             value: 1,
-            desc: 'Etap 1',
+            desc: 'Rozmiar',
           },
           {
             value: 2,
-            desc: 'Etap 2',
+            desc: 'Termin',
           },
           {
             value: 3,
-            desc: 'Etap 3',
+            desc: 'Podsumowanie',
           },
           {
             value: 4,
-            desc: 'Etap 4',
+            desc: 'Płatność',
           },
         ]}
       />
