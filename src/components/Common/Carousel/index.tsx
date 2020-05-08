@@ -29,7 +29,6 @@ class Carousel extends Component<Props> {
       prevArrow: <CustomeArrow left />,
     };
 
-    console.log('asd');
     return (
       <div className="slider-wrapper">
         <Slider {...settings}>{this.dataToDisplay}</Slider>

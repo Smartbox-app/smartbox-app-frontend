@@ -10,8 +10,6 @@ interface Props {
 class Bar extends Component<Props> {
   render() {
     const { current, done } = this.props;
-    console.log('Bar.current', current);
-    console.log('Bar.done', done);
     return (
       <div className="bar-wrapper">
         <div className={`bar ${done <= current ? 'bar-current' : ''} ${done < current ? 'bar-done' : ''}`} />
