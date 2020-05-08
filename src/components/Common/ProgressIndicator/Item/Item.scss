@@ -27,6 +27,18 @@
     background: $color-primary;
     color: #fff;
     border: 2px solid $color-primary;
+
+    &::after {
+      display: block;
+      content: '>';
+      width: 24px;
+      height: 24px;
+      color: $color-disabled;
+      top: -15px;
+      left: 50%;
+      transform: translateX(-50%) rotateZ(90deg);
+      position: absolute;
+    }
   }
 
   .item-done {

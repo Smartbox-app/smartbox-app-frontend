@@ -20,6 +20,7 @@
 
 @include gt-xs {
   .progress-indicator-wrapper {
+    margin-top: $main-spacing * 3;
     margin-bottom: $main-spacing * 3;
   }
 }
