@@ -23,11 +23,11 @@ interface Props {
 }
 
 const StepSummary = ({ formData, countedPrice, UpdateFormData, FormGoNextStep }: Props) => {
-  // useEffect(() => {
-  //   if (formData.size.length === 0) {
-  //     history.push('/admin/order/step/1');
-  //   }
-  // });
+  useEffect(() => {
+    if (formData.size.length === 0) {
+      history.push('/admin/order/step/1');
+    }
+  });
 
   const [date, setDate] = useState(new Date());
 
