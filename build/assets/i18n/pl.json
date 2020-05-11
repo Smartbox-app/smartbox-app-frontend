@@ -1,0 +1,9 @@
+{
+  "locale": "pl",
+  "langNames": "pl",
+  "phrases": {
+    "application": {
+      "welcome": "Hello world"
+    }
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "files": {
+    "main.css": "/static/css/main.76258b7a.chunk.css",
+    "main.js": "/static/js/main.094a60bd.chunk.js",
+    "main.js.map": "/static/js/main.094a60bd.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.4d2a1434.js",
+    "runtime-main.js.map": "/static/js/runtime-main.4d2a1434.js.map",
+    "static/css/2.6fa40987.chunk.css": "/static/css/2.6fa40987.chunk.css",
+    "static/js/2.263251fa.chunk.js": "/static/js/2.263251fa.chunk.js",
+    "static/js/2.263251fa.chunk.js.map": "/static/js/2.263251fa.chunk.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.af589e07aa3236920074c7aaf77edc93.js": "/precache-manifest.af589e07aa3236920074c7aaf77edc93.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/2.6fa40987.chunk.css.map": "/static/css/2.6fa40987.chunk.css.map",
+    "static/css/main.76258b7a.chunk.css.map": "/static/css/main.76258b7a.chunk.css.map",
+    "static/js/2.263251fa.chunk.js.LICENSE.txt": "/static/js/2.263251fa.chunk.js.LICENSE.txt",
+    "static/media/font-awesome.min.css": "/static/media/fontawesome-webfont.fee66e71.woff",
+    "static/media/slick-theme.css": "/static/media/slick.f97e3bbf.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.4d2a1434.js",
+    "static/css/2.6fa40987.chunk.css",
+    "static/js/2.263251fa.chunk.js",
+    "static/css/main.76258b7a.chunk.css",
+    "static/js/main.094a60bd.chunk.js"
+  ]
+}
