@@ -27,3 +27,12 @@ main {
     max-width: map-get($breakpoints, sm);
   }
 }
+
+@include gt-lg {
+  main {
+    display: flex;
+    // margin: 0 auto;
+    max-width: 100vw;
+    flex-direction: row;
+  }
+}

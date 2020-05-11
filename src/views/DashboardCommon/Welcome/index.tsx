@@ -15,15 +15,15 @@ interface Props {
 }
 
 const Welcome = ({ userName }: Props) => (
-  <>
-    <Section>
+  <div className="welcome-wrapper">
+    <Section full>
       <SectionHeader title={`Cześć ${userName}`} noMargin />
     </Section>
-    <Section>
+    <Section full>
       <SectionHeader title="Promocje" />
       <Discounts discounts={['-10% na pierwszy magazyn', 'Pierwszy tydzień za 1zł']} />
     </Section>
-    <Section>
+    <Section full>
       <SectionHeader title="Zarządaj magazynami" />
       <StorageInfo
         storageList={[
@@ -43,10 +43,18 @@ const Welcome = ({ userName }: Props) => (
             size: 6,
             location: 'Wrocław, Fabryczna',
           },
+          {
+            size: 6,
+            location: 'Wrocław, Fabryczna',
+          },
+          {
+            size: 6,
+            location: 'Wrocław, Fabryczna',
+          },
         ]}
       />
     </Section>
-    <Section>
+    <Section half>
       <SectionHeader title="Historia" />
       <History
         data={[
@@ -74,7 +82,7 @@ const Welcome = ({ userName }: Props) => (
         ]}
       />
     </Section>
-    <Section>
+    <Section half>
       <SectionHeader title="Oferta" />
       <Carousel
         imagesList={[
@@ -84,7 +92,7 @@ const Welcome = ({ userName }: Props) => (
         ]}
       />
     </Section>
-  </>
+  </div>
 );
 
 const mapStateToProps = (state: any) => ({

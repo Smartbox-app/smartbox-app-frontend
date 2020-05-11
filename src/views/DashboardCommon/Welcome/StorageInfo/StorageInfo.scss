@@ -47,3 +47,35 @@
 .sec-info, .main-info {
   text-align: center;
 }
+
+@include gt-md {
+  .storage {
+    width: 200px;
+    height: 150px;
+    flex-direction: column-reverse;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding-left: $main-spacing*2;
+    padding-bottom: $main-spacing;
+
+    .main-info {
+      font-size: 1.5rem;
+      font-weight: 500;
+    }
+
+    .sec-info {
+      font-size: .9rem;
+    }
+  }
+
+  .new-storage {
+    .button {
+      width: 200px;
+      height: 150px;
+      font-size: 1.3rem;
+      .button-img {
+        margin-bottom: $main-spacing;
+      }
+    }
+  }
+}
