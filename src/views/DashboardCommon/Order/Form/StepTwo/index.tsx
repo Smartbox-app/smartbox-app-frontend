@@ -38,11 +38,10 @@ const StepTwo = ({ formData, countedPrice, UpdateFormData, FormGoNextStep }: Pro
     dateEnd: formData.dateEnd,
   };
 
-  const { register, handleSubmit, watch, errors, control } = useForm({ defaultValues });
+  const { register, handleSubmit, control } = useForm({ defaultValues });
   const methods = useForm();
 
   const onSubmit = (data: any) => {
-    UpdateFormData({ durationInDays: differenceInCalendarDays(data.dateEnd, data.dateStart) });
     FormGoNextStep(3);
     history.push('/admin/order/step/3');
   };
