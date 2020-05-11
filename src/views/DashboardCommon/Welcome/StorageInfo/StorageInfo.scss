@@ -28,6 +28,9 @@
   margin: $main-spacing/2 0;
 
   background: $color-primary;
+  background-image: url(/assets/icons/storage-background.svg);
+  background-repeat: no-repeat;
+  background-size: contain;
   color: #fff;
   font-size: 600;
   border: 2px solid darken($color-primary, 10%)
