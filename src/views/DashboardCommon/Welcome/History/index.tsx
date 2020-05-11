@@ -16,12 +16,12 @@ interface Props {
 
 const History = ({ data }: Props) => {
   const getDate = (x: Date) => x.toLocaleDateString();
-  const getShortDate = (x: Date) => x.toLocaleDateString().slice(0, 4);
+  const getShortDate = (x: Date) => x.toLocaleDateString().slice(0, 5);
 
   const dataToDisplay =
     data &&
-    data.map((single: SingleHistory) => (
-      <li className={`history-line ${single.isActive ? 'active' : ''}`}>
+    data.map((single: SingleHistory, key: number) => (
+      <li className={`history-line ${single.isActive ? 'active' : ''}`} key={`history-${key}`}>
         <span className="line-cell">
           {getShortDate(single.startData)}-{getDate(single.endData)}
         </span>

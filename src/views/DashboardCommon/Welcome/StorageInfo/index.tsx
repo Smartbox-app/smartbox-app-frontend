@@ -19,8 +19,8 @@ const StorageInfo = ({ storageList }: Props) => {
     </div>
   );
 
-  const dataToDisplay = storageList.map((single: SingleSotrage) => (
-    <div className="single-wrapper">
+  const dataToDisplay = storageList.map((single: SingleSotrage, key: number) => (
+    <div className="single-wrapper" key={`StorageInfo-${key}`}>
       <div className="storage">
         <p className="main-info">{single.size}m2</p>
         <p className="sec-info">{single.location}</p>

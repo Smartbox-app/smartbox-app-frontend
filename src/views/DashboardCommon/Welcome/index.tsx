@@ -17,8 +17,7 @@ interface Props {
 const Welcome = ({ userName }: Props) => (
   <>
     <Section>
-      {/* <SectionHeader title={`Cześć ${userName}`} noMargin /> */}
-      <h3 className="no-margin welcome">Cześć, {userName}!</h3>
+      <SectionHeader title={`Cześć ${userName}`} noMargin />
     </Section>
     <Section>
       <SectionHeader title="Promocje" />
