@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import { addDays, differenceInCalendarDays } from 'date-fns';
+import { IUser } from 'smartbox-types';
 import { DateInput, Button } from '../../../../../components/Common';
 import { order } from '../../../../../actions';
 import { ButtonsContainer } from '../../../../../components/Layout';
@@ -14,19 +15,21 @@ import { Form } from '../../../../../reducers/order-reducer';
 import Price from './Price';
 
 import './StepTwo.scss';
+import UserService from '../../../../../services/user-service';
 
 interface Props {
   history: any;
   formData: Form;
   countedPrice: number;
+  user: IUser;
   UpdateFormData: (data: any) => void;
   FormGoNextStep: (data: number) => void;
 }
 
-const StepTwo = ({ formData, countedPrice, UpdateFormData, FormGoNextStep }: Props) => {
+const StepTwo = ({ formData, countedPrice, UpdateFormData, FormGoNextStep, user }: Props) => {
   useEffect(() => {
     if (formData.size.length === 0) {
-      history.push('/admin/order/step/1');
+      history.push(`/${UserService.getSlugByRole(user.role)}/order/step/1`);
     }
   });
 
@@ -44,12 +47,12 @@ const StepTwo = ({ formData, countedPrice, UpdateFormData, FormGoNextStep }: Pro
   const onSubmit = (data: any) => {
     UpdateFormData({ durationInDays: differenceInCalendarDays(data.dateEnd, data.dateStart) });
     FormGoNextStep(3);
-    history.push('/admin/order/step/3');
+    history.push(`/${UserService.getSlugByRole(user.role)}/order/step/3`);
   };
 
   const onBack = () => {
     FormGoNextStep(1);
-    history.push('/admin/order/step/1');
+    history.push(`/${UserService.getSlugByRole(user.role)}/order/step/1`);
   };
 
   return (
@@ -97,6 +100,7 @@ const StepTwo = ({ formData, countedPrice, UpdateFormData, FormGoNextStep }: Pro
 const mapStateToProps = (state: any) => ({
   formData: state.order.formData,
   countedPrice: state.order.countedPrice,
+  user: state.user.details,
 });
 
 const mapDispatchToProps = (dispatch: any) =>

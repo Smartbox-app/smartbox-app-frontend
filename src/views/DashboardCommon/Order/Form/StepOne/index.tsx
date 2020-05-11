@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { IUser } from 'smartbox-types';
 import { order } from '../../../../../actions';
 import { FormContainer, ButtonsContainer } from '../../../../../components/Layout';
 import { Button } from '../../../../../components/Common';
@@ -11,6 +12,7 @@ import { Form } from '../../../../../reducers/order-reducer';
 
 import './StepOne.scss';
 import FormHeader from '../../../../../components/Layout/FormHeader';
+import UserService from '../../../../../services/user-service';
 
 interface RouteProps {
   step: string;
@@ -19,6 +21,7 @@ interface RouteProps {
 interface Props extends RouteComponentProps<RouteProps> {
   history: any;
   formData: Form;
+  user: IUser;
   UpdateFormData: (data: any) => void;
   FormGoNextStep: (data: number) => void;
   fetchBoxAvailability: () => void;
@@ -38,7 +41,7 @@ const Step1 = ({ history, UpdateFormData, FormGoNextStep, match, fetchBoxAvailab
   const onSubmit = (data: any) => {
     UpdateFormData(data);
     FormGoNextStep(2);
-    history.push('/admin/order/step/2');
+    history.push(`/${UserService.getSlugByRole(user.role)}/order/step/2`);
   };
 
   return (
@@ -104,6 +107,7 @@ const Step1 = ({ history, UpdateFormData, FormGoNextStep, match, fetchBoxAvailab
 const mapStateToProps = (state: any) => ({
   formData: state.order.formData,
   countedPrice: state.order.countedPrice,
+  user: state.user.details,
 });
 
 const mapDispatchToProps = (dispatch: any) =>
