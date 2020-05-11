@@ -27,7 +27,7 @@ interface Props extends RouteComponentProps<RouteProps> {
   fetchBoxAvailability: () => void;
 }
 
-const Step1 = ({ history, UpdateFormData, FormGoNextStep, match, fetchBoxAvailability, formData }: Props) => {
+const Step1 = ({ history, UpdateFormData, FormGoNextStep, match, fetchBoxAvailability, formData, user }: Props) => {
   useEffect(() => {
     fetchBoxAvailability();
   });
