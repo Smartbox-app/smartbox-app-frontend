@@ -15,7 +15,7 @@ interface Props {
 const StorageInfo = ({ storageList }: Props) => {
   const ButtonForNew = (
     <div className="new-storage single-wrapper">
-      <Button text="Wynajmij Magazyn" outline icon="" to="/admin/order/step/1" />
+      <Button text="Wynajmij Magazyn" outline icon="plus.svg" to="/admin/order/step/1" />
     </div>
   );
 
