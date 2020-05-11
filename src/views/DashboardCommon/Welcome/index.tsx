@@ -86,9 +86,10 @@ const Welcome = ({ userName }: Props) => (
       <SectionHeader title="Oferta" />
       <Carousel
         imagesList={[
-          'http://placedog.net/200/300?random',
-          'http://placedog.net/200/300?random',
-          'http://placedog.net/200/300?random',
+          '/assets/images/dummy_box2.png',
+          '/assets/images/dummy_box2.png',
+          '/assets/images/dummy_box2.png',
+          '/assets/images/dummy_box2.png',
         ]}
       />
     </Section>
