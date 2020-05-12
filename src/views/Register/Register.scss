@@ -1,0 +1,12 @@
+@import '../../config/variables.scss';
+@import '../../config/mixins.scss';
+
+.register-form {
+  max-width: 300px;
+}
+
+@include gt-sm {
+  .register-form {
+    max-width: 500px;
+  }
+}
