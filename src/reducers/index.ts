@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import apiTableReducer from './api-table-reducer';
 import appStatusReducer from './app-status-reducer';
 import modalReducer from './modal-reducer';
 import notificationsReducer from './notifications-reducer';
@@ -9,6 +10,7 @@ import orderReducer from './order-reducer';
 
 const appReducer = combineReducers({
   appStatus: appStatusReducer,
+  apiTable: apiTableReducer,
   lang: langReducer,
   modal: modalReducer,
   notifications: notificationsReducer,

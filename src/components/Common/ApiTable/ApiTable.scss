@@ -1,0 +1,31 @@
+@import '../../../config/variables';
+
+.search-box {
+    .search-fields {
+    margin: $main-spacing 0;
+    display: flex;
+    flex-direction: column;
+    }
+
+    .search-field {
+        margin-bottom: $main-spacing;
+    }
+}
+
+@media screen and (min-width: map-get($breakpoints, sm)) {
+    .search-box {
+        .search-fields {
+        flex-direction: row;
+        }
+
+        .search-field {
+            flex: 0 1 300px;
+            margin-bottom: 0;
+            padding-right: $main-spacing;
+        }
+
+        .search-query {
+            flex: 1;
+        }
+    }
+}

@@ -15,9 +15,15 @@ import DateInput from './DateInput';
 import SliderInput from './SliderInput';
 import ProgressIndicator from './ProgressIndicator';
 import Carousel from './Carousel';
+import ApiTable from './ApiTable';
+import Table from './Table';
+import Pagination from './Pagination';
 
 export {
   Alert,
+  ApiTable,
+  Pagination,
+  Table,
   Spinner,
   OnlineContent,
   OfflineContent,
