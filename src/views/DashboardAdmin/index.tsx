@@ -6,6 +6,7 @@ import { Welcome, Order } from '../DashboardCommon';
 // import Users from './Users';
 import Home from '../Home';
 import Navigation from '../../components/Layout/Navigation';
+import WorkersManagement from './WorkersManagement';
 
 class DashboardAdmin extends React.Component {
   private menuItems: any[];
@@ -46,6 +47,7 @@ class DashboardAdmin extends React.Component {
             <Route path="/admin/main" component={Welcome} />
             <Route path="/admin/order/:step" component={Order} />
             <Route path="/admin/account" component={Home} />
+            <Route path="/admin/workers" component={WorkersManagement} />
           </Switch>
         </Main>
         <Footer />
