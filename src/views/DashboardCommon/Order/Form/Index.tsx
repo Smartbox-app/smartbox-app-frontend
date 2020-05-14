@@ -7,6 +7,7 @@ import { order } from '../../../../actions';
 import StepOne from './StepOne';
 import StepTwo from './StepTwo';
 import StepSummary from './StepSummary';
+import StepPayment from './StepPayment';
 import UserService from '../../../../services/user-service';
 
 interface Props {
@@ -20,7 +21,7 @@ const Form = ({ user }: Props) => (
     <Route path={`/${UserService.getSlugByRole(user.role)}/order/step/1`} component={StepOne} />
     <Route path={`/${UserService.getSlugByRole(user.role)}/order/step/2`} component={StepTwo} />
     <Route path={`/${UserService.getSlugByRole(user.role)}/order/step/3`} component={StepSummary} />
-    <Route path={`/${UserService.getSlugByRole(user.role)}/order/step/4`} component={StepSummary} />
+    <Route path={`/${UserService.getSlugByRole(user.role)}/order/step/4`} component={StepPayment} />
   </Switch>
 );
 
