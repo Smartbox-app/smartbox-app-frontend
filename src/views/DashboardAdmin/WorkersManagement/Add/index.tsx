@@ -23,7 +23,7 @@ const Add = ({ successNotification }: Props) => {
   );
 
   const fetchUrl = 'user/form/invite-worker';
-  const sendUrl = 'user/invite-worker';
+  const sendUrl = 'user/invite-user';
 
   return (
     <>
