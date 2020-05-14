@@ -23,10 +23,10 @@ interface Props {
   user: IUser;
   UpdateFormData: (data: any) => void;
   FormGoNextStep: (data: number) => void;
-  sendRentBoxRequest: (data: RentBoxReq | any) => void;
+  sentRentBoxRequest: (data: RentBoxReq | any) => void;
 }
 
-const StepSummary = ({ formData, countedPrice, UpdateFormData, FormGoNextStep, user, sendRentBoxRequest }: Props) => {
+const StepSummary = ({ formData, countedPrice, UpdateFormData, FormGoNextStep, user, sentRentBoxRequest }: Props) => {
   useEffect(() => {
     if (formData.size.length === 0) {
       history.push(`/${UserService.getSlugByRole(user.role)}/order/step/1`);
@@ -37,7 +37,7 @@ const StepSummary = ({ formData, countedPrice, UpdateFormData, FormGoNextStep, u
 
   const onSubmit = (data: any) => {
     UpdateFormData(data);
-    sendRentBoxRequest({
+    sentRentBoxRequest({
       stockId: undefined,
       size: Number(formData.size),
       startAt: formData.dateStart,
