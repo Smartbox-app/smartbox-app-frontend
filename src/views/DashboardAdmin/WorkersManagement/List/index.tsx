@@ -17,8 +17,13 @@ class List extends React.Component<Props> {
       mobile: true,
       buttons: [
         {
-          name: 'Pokaż szczegoły',
+          name: 'Edytuj',
           type: 'primary',
+          click: (data: any) => console.log(data.id),
+        },
+        {
+          name: 'Usuń',
+          type: 'danger',
           click: (data: any) => console.log(data.id),
         },
       ],
