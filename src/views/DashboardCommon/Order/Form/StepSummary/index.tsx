@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { IUser } from 'smartbox-types';
+import { IUser, RentBoxReq } from 'smartbox-types';
 import { Button } from '../../../../../components/Common';
 import { order } from '../../../../../actions';
 import { ButtonsContainer } from '../../../../../components/Layout';
@@ -23,26 +23,27 @@ interface Props {
   user: IUser;
   UpdateFormData: (data: any) => void;
   FormGoNextStep: (data: number) => void;
+  sendRentBoxRequest: (data: RentBoxReq | any) => void;
 }
 
-const StepSummary = ({ formData, countedPrice, UpdateFormData, FormGoNextStep, user }: Props) => {
+const StepSummary = ({ formData, countedPrice, UpdateFormData, FormGoNextStep, user, sendRentBoxRequest }: Props) => {
   useEffect(() => {
     if (formData.size.length === 0) {
       history.push(`/${UserService.getSlugByRole(user.role)}/order/step/1`);
     }
   });
 
-  const [date, setDate] = useState(new Date());
-
-  const defaultValues = {
-    dateStart: date,
-    dateEnd: date,
-  };
-
-  const { register, handleSubmit, watch, errors, control } = useForm({ defaultValues });
+  const { handleSubmit } = useForm();
 
   const onSubmit = (data: any) => {
     UpdateFormData(data);
+    sendRentBoxRequest({
+      stockId: undefined,
+      size: Number(formData.size),
+      startAt: formData.dateStart,
+      finishAt: formData.dateEnd,
+      cost: 1,
+    });
     FormGoNextStep(4);
     history.push(`/${UserService.getSlugByRole(user.role)}/order/step/4`);
   };

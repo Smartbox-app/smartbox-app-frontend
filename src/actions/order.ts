@@ -1,3 +1,4 @@
+import { RentBoxReq } from 'smartbox-types';
 import ApiService from '../services/api-service';
 
 export const UpdateFormData = (data: any) => ({ type: 'FORM_STEP_SUCCESS', payload: data });
@@ -12,5 +13,18 @@ export const fetchBoxAvailability = () => async (dispatch: any) => {
     null,
     null,
     'rent/box-group/availability',
+  );
+};
+
+export const sentRentBoxRequest = (data: RentBoxReq) => async (dispatch: any) => {
+  await ApiService.post(
+    dispatch,
+    'SENT_RENT_BOX_REQUEST_SUCCESS',
+    'SENT_RENT_BOX_REQUEST_FAILED',
+    (data: any) => console.log('SEND_RENT_BOX_REQUEST_SUCCESS', data),
+    null,
+    'rent/new',
+    'LOADING',
+    data,
   );
 };

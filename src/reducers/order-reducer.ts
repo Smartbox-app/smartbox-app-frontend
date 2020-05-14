@@ -9,9 +9,11 @@ export interface Form {
   dateStart: Date;
   dateEnd: Date;
 }
+
 interface State {
   formData: Form;
   formStep: number;
+  paymentId: string;
   countedPrice: number;
 }
 
@@ -25,12 +27,17 @@ interface FormGoNextStep {
   payload: any;
 }
 
+interface SentRentBoxRequestSuccess {
+  type: 'SENT_RENT_BOX_REQUEST_SUCCESS';
+  payload: string;
+}
+
 interface BoxGroup {
   type: 'FETCH_BOX_AVAILABILITY_SUCCESS';
   payload: BoxGroupAvailability[];
 }
 
-type Action = FormStepSuccess | FormGoNextStep | BoxGroup;
+type Action = FormStepSuccess | FormGoNextStep | BoxGroup | SentRentBoxRequestSuccess;
 
 const initialState = {
   formData: {
@@ -42,6 +49,7 @@ const initialState = {
     dateEnd: addDays(new Date(), 7),
   },
   formStep: 1,
+  paymentId: '',
   countedPrice: 0,
   boxGroup: [],
 };
@@ -72,6 +80,13 @@ export default (state: State = initialState, action: Action): any => {
       return {
         ...state,
         formStep: action.payload,
+      };
+    }
+
+    case 'SENT_RENT_BOX_REQUEST_SUCCESS': {
+      return {
+        ...state,
+        paymentId: action.payload,
       };
     }
 
