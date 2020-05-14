@@ -5,11 +5,13 @@
   order: 0;
   display: flex;
   justify-content: center;
-  padding: $main-spacing;
+  padding: $main-spacing * 2;
+  padding-left: 0;
 
   img {
     display: block;
     width: auto;
+    height: 100px;
   }
 
   &.small {
@@ -26,9 +28,10 @@
 
 @include gt-xs {
   .logo-container {
-    margin-top: $main-spacing * 4;
+    margin-top: $main-spacing * 3;
     img {
-      height: $main-logo-size;
+      height: $main-logo-size /2;
+      margin-bottom: $main-spacing *2;
     }
   }
 }
@@ -37,7 +40,7 @@
   .logo-container {
     margin-top: $main-spacing * 6;
     img {
-      height: $main-logo-size;
+      height: $main-logo-size /1.5;
     }
   }
 }

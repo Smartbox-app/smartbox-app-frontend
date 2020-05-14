@@ -5,5 +5,6 @@ import * as notifications from './notifications';
 import * as lang from './lang';
 import * as user from './users';
 import * as order from './order';
+import * as apiTable from './api-table';
 
-export { appStatus, auth, modal, notifications, lang, user, order };
+export { appStatus, apiTable, auth, modal, notifications, lang, user, order };

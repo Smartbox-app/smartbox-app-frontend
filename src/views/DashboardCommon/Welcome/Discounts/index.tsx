@@ -11,7 +11,12 @@ const Discounts = ({ discounts }: Props) => {
   if (discounts.length === 0) {
     dataToDisplay = <p className="no-discounts">Brak promocji do wyświetlenia</p>;
   } else {
-    dataToDisplay = discounts.map((name: string) => <div className="single-discont"> {name}</div>);
+    dataToDisplay = discounts.map((name: string, key: number) => (
+      <div className="single-discont" key={`discounts-${key}`}>
+        {' '}
+        {name}
+      </div>
+    ));
   }
   return <div className="discounts-wrapper">{dataToDisplay}</div>;
 };

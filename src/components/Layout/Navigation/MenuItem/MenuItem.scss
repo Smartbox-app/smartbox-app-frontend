@@ -79,3 +79,35 @@
   }
 
 }
+
+@include gt-lg {
+  .main-menu-item {
+    display: flex;
+    border-top: none;
+    border-bottom: none;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    
+    .main-menu-item_logo {
+      width: 25px;
+      height: 25px;
+      margin-right: 10px;
+    }
+
+    &.active {
+      border-top: none;
+      border-bottom: none;
+    }
+
+    &:hover {
+      border-top: none;
+      border-bottom: none;
+    }
+
+    .main-menu-item_text {
+      font-size: 1.3rem;
+      font-weight: 400;
+    }
+  }
+}

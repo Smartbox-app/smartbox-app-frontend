@@ -21,7 +21,7 @@ $color-active: #FF6500;
 $color-disabled: #aaa;
 
 $color-warning: #ec8628;
-$standard-shadow: -1px 0px 1px darken($color-disabled, 10%);
+$standard-shadow: 0px 0px 8px 8px rgba(0,0,0,0.05);
 $box-shadow-small: 0px 0px 8px 8px darken($color-background, 4%);
 $box-shadow-input: 0 10px 20px -20px;
 

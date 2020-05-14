@@ -9,19 +9,9 @@ const ButtonsSection = () => (
   <div className="login-buttons-section">
     <ButtonsContainer max column>
       <Button text="Zaloguj się" big type="submit" primary rounded />
-      <Button text="Zarejestruj się" big type="submit" outline rounded />
+      <Button text="Zarejestruj się" big to="/register" outline rounded />
     </ButtonsContainer>
-    {/* <div className="remember-me">
-      <CheckBox
-        label="Zapamiętaj mnie"
-        name="remember-me"
-        checked={false}
-        handleChange={() => {}}
-        // handleChange={() => this.setState({})}
-        // checked={rememberMeStatus}
-      />
-    </div> */}
-    <p>
+    <p className="lost-pass">
       Zapomniałeś hasła?{' '}
       <Link className="light" to="/restore-pass">
         Kliknij tutaj

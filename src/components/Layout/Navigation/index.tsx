@@ -6,6 +6,7 @@ import { MenuItemType } from '../../../types/menuItem';
 import { auth } from '../../../actions';
 
 import './Navigation.scss';
+import LogoContainer from '../LogoContainer';
 
 interface Props {
   menuItems: MenuItemType[];
@@ -35,7 +36,13 @@ class Navigation extends Component<Props> {
   ));
 
   render() {
-    return <div className="navigation-wrapper">{this.menu}</div>;
+    const desktop = window.matchMedia('(min-width: 920px)').matches;
+    return (
+      <div className="page-header-wrapper">
+        {desktop && <LogoContainer />}
+        <div className="navigation-wrapper">{this.menu}</div>
+      </div>
+    );
   }
 }
 

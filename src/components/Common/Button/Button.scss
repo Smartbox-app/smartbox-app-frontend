@@ -118,12 +118,16 @@
   }
 
   &.with-icon {
-
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
     .button-img {
       width: 20px;
       height: 20px;
-      margin-right: 10px;
-      margin-left: -5px;
+      // margin-right: 10px;
+      // margin-left: -5px;
     }
   }
 

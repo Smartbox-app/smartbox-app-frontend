@@ -54,7 +54,7 @@ export default (state: State = initialState, action: Action): any => {
       const { calculate } = usePricing();
 
       if (newFormData.durationInDays !== 0) {
-        const price = calculate(newFormData.durationInDays, 1, Number(newFormData.size), false);
+        const price = calculate(newFormData.durationInDays, 0, Number(newFormData.size), false);
         return {
           ...state,
           formData: newFormData,

@@ -4,28 +4,31 @@ import { withRouter } from 'react-router-dom';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Button, Input } from '../../../../../components/Common';
+import { IUser } from 'smartbox-types';
+import { Button } from '../../../../../components/Common';
 import { order } from '../../../../../actions';
-import { ButtonsContainer, Section } from '../../../../../components/Layout';
+import { ButtonsContainer } from '../../../../../components/Layout';
 import { history } from '../../../../../App';
 import { Form } from '../../../../../reducers/order-reducer';
 
 import './StepSummary.scss';
 import FormHeader from '../../../../../components/Layout/FormHeader';
 import { formatPrice } from '../../../../../utils/format-price';
+import UserService from '../../../../../services/user-service';
 
 interface Props {
   history: any;
   formData: Form;
   countedPrice: number;
+  user: IUser;
   UpdateFormData: (data: any) => void;
   FormGoNextStep: (data: number) => void;
 }
 
-const StepSummary = ({ formData, countedPrice, UpdateFormData, FormGoNextStep }: Props) => {
+const StepSummary = ({ formData, countedPrice, UpdateFormData, FormGoNextStep, user }: Props) => {
   useEffect(() => {
     if (formData.size.length === 0) {
-      history.push('/admin/order/step/1');
+      history.push(`/${UserService.getSlugByRole(user.role)}/order/step/1`);
     }
   });
 
@@ -41,12 +44,12 @@ const StepSummary = ({ formData, countedPrice, UpdateFormData, FormGoNextStep }:
   const onSubmit = (data: any) => {
     UpdateFormData(data);
     FormGoNextStep(4);
-    history.push('/admin/order/step/4');
+    history.push(`/${UserService.getSlugByRole(user.role)}/order/step/4`);
   };
 
   const onBack = () => {
     FormGoNextStep(2);
-    history.push('/admin/order/step/2');
+    history.push(`/${UserService.getSlugByRole(user.role)}/order/step/2`);
   };
 
   const desktop = window.matchMedia('(min-width: 920px)').matches;
@@ -86,6 +89,7 @@ const StepSummary = ({ formData, countedPrice, UpdateFormData, FormGoNextStep }:
 const mapStateToProps = (state: any) => ({
   formData: state.order.formData,
   countedPrice: state.order.countedPrice,
+  user: state.user.details,
 });
 
 const mapDispatchToProps = (dispatch: any) =>
