@@ -1,7 +1,7 @@
 import React from 'react';
 import { TableSchema, usersList } from 'smartbox-tables';
-import { PageHeader, Section } from '../../../../components/Layout';
-import { ApiTable } from '../../../../components/Common';
+import { PageHeader, Section, ButtonsContainer } from '../../../../components/Layout';
+import { ApiTable, Button } from '../../../../components/Common';
 import { InteractiveTableSchema } from '../../../../utils/table-schema-utils';
 
 interface Props {}
@@ -34,6 +34,9 @@ class List extends React.Component<Props> {
     return (
       <Section full>
         <PageHeader title="Lista pracowników" />
+        <ButtonsContainer>
+          <Button text="Zaproś pracowników" primary />
+        </ButtonsContainer>
         <ApiTable scheme={this.scheme} apiEndpointSubUrl="user/list" />
       </Section>
     );
