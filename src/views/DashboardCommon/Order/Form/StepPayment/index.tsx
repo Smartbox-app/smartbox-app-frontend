@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { IUser } from 'smartbox-types';
+import { IUser, ExecutePaymentReq } from 'smartbox-types';
 import { Button } from '../../../../../components/Common';
 import { order } from '../../../../../actions';
 import { ButtonsContainer } from '../../../../../components/Layout';
@@ -31,8 +31,16 @@ const StepPayment = ({ formData, FormGoNextStep, user }: Props) => {
   //     history.push(`/${UserService.getSlugByRole(user.role)}/order/step/1`);
   //   }
   // });
+  const defaultValues = {
+    'card-number': '5214 9688 1896 5732',
+    'first-name': 'Krzysiek',
+    'last-name': 'Nowak',
+    month: '05',
+    year: 2021,
+    cvv: 123,
+  };
 
-  const { handleSubmit } = useForm();
+  const { handleSubmit, register, errors } = useForm({ defaultValues });
 
   const onSubmit = (data: any) => {
     console.log('StepPayment', data);
@@ -46,7 +54,7 @@ const StepPayment = ({ formData, FormGoNextStep, user }: Props) => {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="form-step-payment">
       <FormHeader title="Podaj dane:" />
-      <CreditCardInput />
+      <CreditCardInput register={register} errors={errors} />
       <ButtonsContainer max>
         <Button outline text="Wróć" click={() => onBack()} />
         <Button type="submit" primary text="Zapłać" />

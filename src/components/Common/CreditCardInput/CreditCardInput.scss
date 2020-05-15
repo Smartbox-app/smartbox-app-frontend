@@ -1,2 +1,45 @@
 @import '../../../config/variables.scss';
-@import '../../../config/maxins.scss';
+@import '../../../config/mixins.scss';
+
+.credit-card-input-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  background-color: lighten($color-disabled, 10%);
+  border: 1px solid $color-disabled;
+  border-radius: 5px;
+  padding: $main-spacing;
+  width: 330px;
+
+  label {
+    display: flex;
+    flex-direction: column;
+  }
+
+  input {
+    padding: $main-spacing/2 $main-spacing;
+  }
+
+  .card-number-wrapper {
+    width: 100%;
+  }
+
+  .user-wrapper {
+    width: 100%;
+    display: flex;
+
+    label {
+      width: 50%;
+    }
+  }
+
+  .expiration-date-wrapper {
+    width: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+    label {
+      width: 50%;
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+}

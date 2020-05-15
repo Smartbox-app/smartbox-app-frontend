@@ -4,7 +4,7 @@
 .progress-indicator-wrapper {
   display: flex;
   flex-direction: row;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   margin-bottom: $main-spacing * 1;
   width: 100%;
 
