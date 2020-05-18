@@ -34,6 +34,7 @@
 
     .toExplain, .outOfService {
       fill: #000;
+      
       &:hover {
         cursor: pointer;
       }
@@ -47,7 +48,7 @@
     }
 
     .noPaidExtension, .noPaidExtensionWithWarning{
-      fill: $color-success;
+      fill: $color-tertiary;
       &:hover {
         cursor: pointer;
       }

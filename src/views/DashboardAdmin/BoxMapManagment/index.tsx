@@ -5,7 +5,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { BoxListItem } from 'smartbox-types';
+import { BoxListItem, RentStatus } from 'smartbox-types';
 import { ReactComponent as ReactLogo } from './nowa_mapa.svg';
 import { Button } from '../../../components/Common';
 import { ButtonsContainer, PageHeader, Section } from '../../../components/Layout';
@@ -29,13 +29,13 @@ class BoxMapManagment extends React.Component<Props> {
     this.element = React.createRef();
   }
 
-  componentDidMount() {
+  async componentDidMount() {
+    const { fetchBoxStatuses, boxesGroup } = this.props;
     // fetch boxes statuses
-    this.props.fetchBoxStatuses();
-
+    await fetchBoxStatuses();
     const catchElement = this.element.current.querySelectorAll('.storage');
-    catchElement.forEach((singleElement: any) => {
-      console.log('singleElement', singleElement);
+    await catchElement.forEach((singleElement: any) => {
+      this.setBoxStatus(singleElement.parentElement.parentElement.id.slice(1), singleElement);
       singleElement.addEventListener('click', this.handleEventModal, false);
       singleElement.addEventListener('mouseover', this.handleEventMouseOver, false);
       singleElement.addEventListener('mouseout', this.handleEventMouseOut, false);
@@ -50,6 +50,36 @@ class BoxMapManagment extends React.Component<Props> {
       singleElement.addEventListener('mouseout', this.handleEventMouseOut, false);
     });
   }
+
+  private setBoxStatus = (boxId: string, singleElement: any): void => {
+    const { boxesGroup } = this.props;
+    boxesGroup.find((singleBox: BoxListItem): void => {
+      if (singleBox.number === boxId && singleBox.status !== RentStatus.free) {
+        switch (singleBox.status) {
+          case RentStatus.toCheck:
+            singleElement.classList.add('toCheck');
+            break;
+          case RentStatus.rented:
+            singleElement.classList.add('rented');
+            break;
+          case RentStatus.reserved:
+            singleElement.classList.add('reserved');
+            break;
+          case RentStatus.toExplain:
+            singleElement.classList.add('toExplain');
+            break;
+          case RentStatus.noPaidExtension:
+            singleElement.classList.add('noPaidExtension');
+            break;
+          case RentStatus.noPaidExtensionWithWarning:
+            singleElement.classList.add('noPaidExtensionWithWarning');
+            break;
+          default:
+            break;
+        }
+      }
+    });
+  };
 
   handleEventModal = (e: any): any => {
     console.log('e', e);
@@ -80,6 +110,7 @@ class BoxMapManagment extends React.Component<Props> {
   };
 
   render() {
+    console.log('boxesGroup', this.props.boxesGroup);
     return (
       <Section full>
         <PageHeader title="Plan placu" />
