@@ -2,24 +2,69 @@
 @import '../../../config/mixins.scss';
 
 .map-wrapper {
- width: 100%;
- svg {
-   width: 500px;
+  display:felx;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 100%;
 
-   .cls-2 {
-     &:hover {
-       cursor: pointer;
-       fill: $color-primary-light;
-     }
-   }
-   
-   .cls-3 {
-     fill: $color-primary;
-     &:hover {
-      cursor: pointer;
+  svg {
+    width: 4000px;
+
+    .storage {
+      &:hover {
+        cursor: pointer;
+        fill: $color-primary-light;
+      }
     }
-   }
- }
+    
+    .free {
+      fill: $color-success;
+      &:hover {
+        cursor: pointer;
+        fill: lighten($color-success, 5%)
+      }
+    }
 
+    .reserved, .rented {
+      fill: $color-danger;
+      &:hover {
+        cursor: pointer;
+      }
+    }
 
+    .toExplain, .outOfService {
+      fill: #000;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+
+    .toCheck {
+      fill: $color-primary;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+
+    .noPaidExtension, .noPaidExtensionWithWarning{
+      fill: $color-success;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+
+  }
 }
+
+// export enum RentStatus {
+//   reserved = 'zarezerwowany',  // czerwony
+//   rented = 'wynajęty',  // czerwony
+//   noPaidExtension = 'nie opłacone przedłuzenie', // zółty
+//   noPaidExtensionWithWarning = 'nie opłacone przedłuzenie z wykrzyknikiem', // zółty
+//   toCheck = 'do sprawdzenia', // niebieski
+//   toExplain = 'do wyjaśnienia', // czarny
+//   outOfService = 'wyłączony z użytku', // czarny
+//   finished = 'zakończone', // ---
+//   failure = 'zakończone bez wynajęcia', // ---
+//   free = 'wolny', // zielony
+// }

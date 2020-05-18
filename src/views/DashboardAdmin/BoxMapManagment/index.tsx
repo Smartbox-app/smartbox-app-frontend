@@ -5,17 +5,20 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
+import { BoxListItem } from 'smartbox-types';
+import { ReactComponent as ReactLogo } from './nowa_mapa.svg';
 import { Button } from '../../../components/Common';
 import { ButtonsContainer, PageHeader, Section } from '../../../components/Layout';
-import { ReactComponent as ReactLogo } from './Zasob1.svg';
-import { modal } from '../../../actions';
+import { modal, boxes } from '../../../actions';
 
 import BoxDetail from './BoxDetail';
 
 import './BoxMapManagment.scss';
 
 interface Props {
+  boxesGroup: BoxListItem[];
   showModal: (content: React.ReactNode) => void;
+  fetchBoxStatuses: () => void;
 }
 
 class BoxMapManagment extends React.Component<Props> {
@@ -27,8 +30,12 @@ class BoxMapManagment extends React.Component<Props> {
   }
 
   componentDidMount() {
-    const catchElement = this.element.current.querySelectorAll('.single-box');
+    // fetch boxes statuses
+    this.props.fetchBoxStatuses();
+
+    const catchElement = this.element.current.querySelectorAll('.storage');
     catchElement.forEach((singleElement: any) => {
+      console.log('singleElement', singleElement);
       singleElement.addEventListener('click', this.handleEventModal, false);
       singleElement.addEventListener('mouseover', this.handleEventMouseOver, false);
       singleElement.addEventListener('mouseout', this.handleEventMouseOut, false);
@@ -36,7 +43,7 @@ class BoxMapManagment extends React.Component<Props> {
   }
 
   componentWillUnmount() {
-    const catchElement = this.element.current.querySelectorAll('.single-box');
+    const catchElement = this.element.current.querySelectorAll('.storage');
     catchElement.forEach((singleElement: any) => {
       singleElement.addEventListener('click', this.handleEventModal, false);
       singleElement.addEventListener('mouseover', this.handleEventMouseOver, false);
@@ -45,6 +52,7 @@ class BoxMapManagment extends React.Component<Props> {
   }
 
   handleEventModal = (e: any): any => {
+    console.log('e', e);
     let selectedBoxId = 1;
     if (e.target.attributes.class.value === 'cls-2') {
       console.log('e', e.target.parentElement.parentElement.dataset.name);
@@ -74,10 +82,7 @@ class BoxMapManagment extends React.Component<Props> {
   render() {
     return (
       <Section full>
-        <PageHeader title="Lista pracowników" />
-        <ButtonsContainer>
-          <Button text="Zaproś pracowników" primary to="/admin/managment/workers/add" />
-        </ButtonsContainer>
+        <PageHeader title="Plan placu" />
         <div className="map-wrapper" ref={this.element}>
           <ReactLogo id="svg-map" />
         </div>
@@ -85,13 +90,17 @@ class BoxMapManagment extends React.Component<Props> {
     );
   }
 }
+const mapStateToProps = (state: any) => ({
+  boxesGroup: state.boxes.boxesGroup,
+});
 
 const mapDispatchToProps = (dispatch: any) =>
   bindActionCreators(
     {
       ...modal,
+      ...boxes,
     },
     dispatch,
   );
 
-export default connect(null, mapDispatchToProps)(BoxMapManagment);
+export default connect(mapStateToProps, mapDispatchToProps)(BoxMapManagment);
