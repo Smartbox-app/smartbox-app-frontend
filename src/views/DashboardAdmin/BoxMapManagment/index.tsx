@@ -110,7 +110,6 @@ class BoxMapManagment extends React.Component<Props> {
   };
 
   render() {
-    console.log('boxesGroup', this.props.boxesGroup);
     return (
       <Section full>
         <PageHeader title="Plan placu" />
