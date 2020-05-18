@@ -7,6 +7,7 @@ import langReducer from './lang-reducer';
 import userReducer from './user-reducer';
 import spinnerReducer from './spinner-reducer';
 import orderReducer from './order-reducer';
+import boxesReducer from './boxes-reducer';
 
 const appReducer = combineReducers({
   appStatus: appStatusReducer,
@@ -17,6 +18,7 @@ const appReducer = combineReducers({
   user: userReducer,
   spinner: spinnerReducer,
   order: orderReducer,
+  boxes: boxesReducer,
 });
 
 const rootReducer = (state: any, action: any) => appReducer(state, action);
