@@ -16,6 +16,7 @@ import {
   RouteAdmin,
   RouteUser,
   RouteWorker,
+  Modal,
 } from './components/Common';
 import { NotificationContainer } from './components/Notifications';
 import AppOffline from './components/AppOffline';
@@ -64,6 +65,7 @@ const App = () => {
               <Route render={() => <Redirect to="/404" />} />
             </Switch>
           </Router>
+          <Modal />
         </OnlineContent>
         <OfflineContent>
           <AppOffline />
