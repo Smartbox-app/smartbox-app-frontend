@@ -6,6 +6,7 @@ import UserService from '../../../services/user-service';
 import { Tabs } from '../../../components/Common';
 import WorkersManagement from '../WorkersManagement';
 import { Section } from '../../../components/Layout';
+import BoxMapManagment from '../BoxMapManagment';
 
 interface Props {
   user: IUser;
@@ -41,7 +42,7 @@ class Managment extends Component<Props> {
             render={() => <Redirect to={`/${UserService.getSlugByRole(user.role)}/managment/workers`} />}
           />
           <Route path={`/${UserService.getSlugByRole(user.role)}/managment/workers`} component={WorkersManagement} />
-          <Route path={`/${UserService.getSlugByRole(user.role)}/managment/map`} component={WorkersManagement} />
+          <Route path={`/${UserService.getSlugByRole(user.role)}/managment/map`} component={BoxMapManagment} />
         </Switch>
       </Section>
     );

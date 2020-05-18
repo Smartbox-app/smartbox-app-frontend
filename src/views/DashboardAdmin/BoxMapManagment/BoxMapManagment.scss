@@ -1,0 +1,25 @@
+@import '../../../config/variables.scss';
+@import '../../../config/mixins.scss';
+
+.map-wrapper {
+ width: 100%;
+ svg {
+   width: 500px;
+
+   .cls-2 {
+     &:hover {
+       cursor: pointer;
+       fill: $color-primary-light;
+     }
+   }
+   
+   .cls-3 {
+     fill: $color-primary;
+     &:hover {
+      cursor: pointer;
+    }
+   }
+ }
+
+
+}
