@@ -1,9 +1,8 @@
 import React from 'react';
-
 import Item from './Item';
+import Bar from './Bar';
 
 import './ProgressIndicator.scss';
-import Bar from './Bar';
 
 interface RenderData {
   value: number;
@@ -22,12 +21,7 @@ const ProgressIndicator = ({ data, current }: Props) => {
       {key !== 3 && <Bar done={data.value} current={current} />}
     </div>
   ));
-  return (
-    <div className="progress-indicator-wrapper">
-      {dataToDisplay}
-      {/* <Bar done={data.value - 1} current={data.value} /> */}
-    </div>
-  );
+  return <div className="progress-indicator-wrapper">{dataToDisplay}</div>;
 };
 
 export default ProgressIndicator;
