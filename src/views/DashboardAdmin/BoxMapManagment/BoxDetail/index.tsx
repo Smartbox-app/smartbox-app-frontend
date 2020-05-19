@@ -43,7 +43,7 @@ const BoxDetail = ({ selectedBoxId }: Props) => {
           click={() => optionDisplayToogle(!optionDisplayState)}
         />
       </ButtonsContainer>
-      {optionDisplayState && <Edit />}
+      {optionDisplayState && <Edit selectedBoxId={selectedBoxId} />}
     </div>
   );
 };

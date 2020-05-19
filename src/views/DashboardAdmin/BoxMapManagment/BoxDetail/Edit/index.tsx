@@ -1,14 +1,16 @@
 import React from 'react';
 import Status from './Status';
 
-interface Props {}
+interface Props {
+  selectedBoxId: number | string;
+}
 
 function Edit(props: Props) {
-  const {} = props;
+  const { selectedBoxId } = props;
   return (
     <div>
       <p>Poniższe zmiany są nie odwracalne!!</p>
-      <Status />
+      <Status selectedBoxId={selectedBoxId} />
     </div>
   );
 }

@@ -2,32 +2,47 @@ import React, { Component } from 'react';
 import { ItfApiForm } from 'itf_formbuilder_react';
 import ReactSelect from 'react-select';
 import ReactCreatableSelect from 'react-select/creatable';
-import { changeRentStatusForm } from 'smartbox-types';
+import { ChangeStatusReq } from 'smartbox-types';
 import { FormContainer, ButtonsContainer } from '../../../../../../components/Layout';
 import { Spinner, Button } from '../../../../../../components/Common';
 import ApiService from '../../../../../../services/api-service';
 import { formOnTranslateString } from '../../../../../../utils/trans-form';
 import { successNotification } from '../../../../../../actions/notifications';
 
-class Status extends Component {
+import './Status.scss';
+
+interface Props {
+  selectedBoxId: number | string;
+}
+
+class Status extends Component<Props> {
   render() {
     const submitButton = (
       <ButtonsContainer>
-        <Button text="Wyślij zaproszenie" type="submit" primary />
+        <Button text="Zmień status" type="submit" danger />
       </ButtonsContainer>
     );
 
     const fetchUrl = 'rent/form/change-status';
-    const sendUrl = 'user/invite-user';
+    const sendUrl = 'rent/status';
     return (
-      <FormContainer className="login-form">
+      <FormContainer className="box-status-form">
         <ItfApiForm
-          formId="loginForm"
+          formId="box-status-form"
           schemaMayBeDynamic={false}
           schemaCacheEnabled={false}
           loadingInfo={<Spinner transparent />}
           schemaFetcher={() => ApiService.loadForm(fetchUrl)}
-          sendFetcher={(formId: string, values: changeRentStatusForm) => ApiService.sendForm(sendUrl, values)}
+          sendFetcher={(formId: string, values: ChangeStatusReq) =>
+            ApiService.sendForm(
+              sendUrl,
+              {
+                ...values,
+                number: this.props.selectedBoxId,
+              },
+              'PATCH',
+            )
+          }
           submitButton={submitButton}
           onSavedSuccessfully={(data: any) => {
             successNotification('Zalogowano poprawnie');
