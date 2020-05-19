@@ -1,4 +1,5 @@
 import React from 'react';
+import Status from './Status';
 
 interface Props {}
 
@@ -6,7 +7,8 @@ function Edit(props: Props) {
   const {} = props;
   return (
     <div>
-      <p>Tutaj pojawią się opcje do edycji skrzynki przez Administratora</p>
+      <p>Poniższe zmiany są nie odwracalne!!</p>
+      <Status />
     </div>
   );
 }
