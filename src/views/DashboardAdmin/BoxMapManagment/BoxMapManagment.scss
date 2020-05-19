@@ -12,11 +12,13 @@
   svg {
     width: 4000px;
     .st9{
+      z-index: 100;
       &:hover{
         cursor: pointer;
       }
     }
     .storage {
+      background: transparent;
       &:hover {
         cursor: pointer;
       }

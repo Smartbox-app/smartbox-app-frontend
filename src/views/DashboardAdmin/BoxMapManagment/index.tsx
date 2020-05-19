@@ -12,9 +12,9 @@ import { ButtonsContainer, PageHeader, Section } from '../../../components/Layou
 import { modal, boxes } from '../../../actions';
 
 import BoxDetail from './BoxDetail';
+import MapLegend from './MapLegend';
 
 import './BoxMapManagment.scss';
-import MapLegend from './MapLegend';
 
 interface Props {
   boxesGroup: BoxListItem[];
@@ -34,7 +34,9 @@ class BoxMapManagment extends React.Component<Props> {
     const { fetchBoxStatuses, boxesGroup } = this.props;
     // fetch boxes statuses
     await fetchBoxStatuses();
-    const catchElement = this.element.current.querySelectorAll('.storage');
+    const catchElement = this.element.current.querySelectorAll('#kontenery .storage, #kontenery .st9');
+    // const catchElement = this.element.current.querySelectorAll('.st9');
+    console.log('catchElement', catchElement);
     await catchElement.forEach((singleElement: any) => {
       this.setBoxStatus(singleElement.parentElement.parentElement.id.slice(1), singleElement);
       singleElement.addEventListener('click', this.handleEventModal, false);
@@ -83,29 +85,28 @@ class BoxMapManagment extends React.Component<Props> {
   };
 
   handleEventModal = (e: any): any => {
-    console.log('e', e);
-    let selectedBoxId = 1;
-    if (e.target.attributes.class.value === 'cls-2') {
-      console.log('e', e.target.parentElement.parentElement.dataset.name);
-      selectedBoxId = e.target.parentElement.parentElement.dataset.name;
+    const { showModal } = this.props;
+    let selectedBoxId = e.target.parentElement.parentElement.id.slice(1);
+    if (e.target.parentElement.attributes.class && e.target.parentElement.attributes.class.value === 'storage') {
+      selectedBoxId = e.target.parentElement.id.slice(1);
     }
 
-    if (e.target.attributes.class.value === 'cls-3') {
-      console.log('e', e.target.parentElement.dataset.name);
-      selectedBoxId = e.target.parentElement.dataset.name;
+    if (e.target.attributes.class.value === 'st9 st10') {
+      console.log('handleEventModal', e.target.parentElement.id.slice(1));
+      selectedBoxId = e.target.parentElement.id.slice(1);
     }
 
-    this.props.showModal(<BoxDetail selectedBoxId={selectedBoxId} />);
+    showModal(<BoxDetail selectedBoxId={selectedBoxId} />);
   };
 
   handleEventMouseOver = (e: any): any => {
-    if (e.target.attributes.class.value === 'cls-2') {
+    if (e?.target?.attributes?.class?.value === 'cls-2') {
       console.log('handleEventMouseOver', e.target.parentElement.parentElement.dataset.name);
     }
   };
 
   handleEventMouseOut = (e: any): any => {
-    if (e.target.attributes.class.value === 'cls-2') {
+    if (e?.target?.attributes?.class?.value === 'cls-2') {
       console.log('handleEventMouseOut', e.target.parentElement.parentElement.dataset.name);
     }
   };
