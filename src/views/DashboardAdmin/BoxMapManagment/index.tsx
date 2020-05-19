@@ -14,6 +14,7 @@ import { modal, boxes } from '../../../actions';
 import BoxDetail from './BoxDetail';
 
 import './BoxMapManagment.scss';
+import MapLegend from './MapLegend';
 
 interface Props {
   boxesGroup: BoxListItem[];
@@ -111,12 +112,13 @@ class BoxMapManagment extends React.Component<Props> {
 
   render() {
     return (
-      <Section full>
+      <>
         <PageHeader title="Plan placu" />
+        <MapLegend />
         <div className="map-wrapper" ref={this.element}>
           <ReactLogo id="svg-map" />
         </div>
-      </Section>
+      </>
     );
   }
 }

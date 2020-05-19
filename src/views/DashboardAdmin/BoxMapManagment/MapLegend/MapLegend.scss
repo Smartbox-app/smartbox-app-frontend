@@ -1,0 +1,57 @@
+@import '../../../../config/variables.scss';
+@import '../../../../config/mixins.scss';
+
+.map-legend-wrapper {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: $main-spacing;
+
+  .legend-list {
+    display: flex;
+    flex-direction: row;
+    flex: 1 0 100%;
+
+    .single {
+      flex: 0 0 20%;
+      text-align: center;
+      padding: $main-spacing /4;
+      color: #fff;
+      font-weight: 500;
+    }
+  }
+}
+
+.single-free {
+  background-color: $color-success;
+  &:hover {
+    background-color: lighten($color-success, 5%)
+  }
+}
+
+.single-reserved {
+  background-color: $color-danger;
+  &:hover {
+    background-color: lighten($color-danger, 5%)
+  }
+}
+
+.single-toExplain {
+  background-color: #000;
+  &:hover {
+    background-color: lighten(#000, 5%)
+  }
+}
+
+.single-toCheck {
+  background-color: $color-primary;
+  &:hover {
+    background-color: lighten($color-primary, 5%)
+  }
+}
+
+.single-noPaidExtension {
+  background-color: $color-tertiary;
+  &:hover {
+    background-color: lighten($color-tertiary, 5%)
+  }
+}

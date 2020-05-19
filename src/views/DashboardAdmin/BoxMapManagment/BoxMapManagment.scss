@@ -6,21 +6,26 @@
   justify-content: flex-start;
   align-items: flex-start;
   width: 100%;
+  overflow-x: scroll;
+  box-shadow: $standard-shadow;
 
   svg {
     width: 4000px;
-
+    .st9{
+      &:hover{
+        cursor: pointer;
+      }
+    }
     .storage {
       &:hover {
         cursor: pointer;
-        fill: $color-primary-light;
       }
     }
     
     .free {
       fill: $color-success;
+      
       &:hover {
-        cursor: pointer;
         fill: lighten($color-success, 5%)
       }
     }
@@ -28,7 +33,7 @@
     .reserved, .rented {
       fill: $color-danger;
       &:hover {
-        cursor: pointer;
+        fill: lighten($color-danger, 5%)
       }
     }
 
@@ -36,21 +41,21 @@
       fill: #000;
       
       &:hover {
-        cursor: pointer;
+        fill: lighten(#000, 5%)
       }
     }
 
     .toCheck {
       fill: $color-primary;
       &:hover {
-        cursor: pointer;
+        fill: lighten($color-primary, 5%)
       }
     }
 
     .noPaidExtension, .noPaidExtensionWithWarning{
       fill: $color-tertiary;
       &:hover {
-        cursor: pointer;
+        fill: lighten($color-tertiary, 5%)
       }
     }
 
