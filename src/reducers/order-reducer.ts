@@ -1,5 +1,5 @@
 import { addDays } from 'date-fns';
-import { BoxGroupAvailability, usePricing } from 'smartbox-types';
+import { BoxGroupAvailability, usePricing, ICalculateProps } from 'smartbox-types';
 
 export interface Form {
   durationInDays: number;
@@ -50,11 +50,18 @@ export default (state: State = initialState, action: Action): any => {
   switch (action.type) {
     case 'FORM_STEP_SUCCESS': {
       const newFormData: Form = { ...state.formData, ...action.payload };
-      console.log('FORM_STEP_SUCCESS', action.payload, newFormData);
+
       const { calculate } = usePricing();
 
+      const data: ICalculateProps = {
+        durationInDays: newFormData.durationInDays,
+        discount: 0,
+        size: Number(newFormData.size),
+        isFirstRent: false,
+      };
+
       if (newFormData.durationInDays !== 0) {
-        const price = calculate(newFormData.durationInDays, 0, Number(newFormData.size), false);
+        const price = calculate(data);
         return {
           ...state,
           formData: newFormData,
