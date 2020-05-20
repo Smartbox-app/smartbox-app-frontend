@@ -10,9 +10,10 @@ import { Button } from '../../../../../components/Common';
 import SingleOption from './SingleOption';
 import { Form } from '../../../../../reducers/order-reducer';
 
-import './StepOne.scss';
 import FormHeader from '../../../../../components/Layout/FormHeader';
 import UserService from '../../../../../services/user-service';
+
+import './StepSize.scss';
 
 interface RouteProps {
   step: string;
@@ -27,7 +28,7 @@ interface Props extends RouteComponentProps<RouteProps> {
   fetchBoxAvailability: () => void;
 }
 
-const Step1 = ({ history, UpdateFormData, FormGoNextStep, match, fetchBoxAvailability, formData, user }: Props) => {
+const StepSize = ({ history, UpdateFormData, FormGoNextStep, match, fetchBoxAvailability, formData, user }: Props) => {
   useEffect(() => {
     fetchBoxAvailability();
   });
@@ -45,7 +46,7 @@ const Step1 = ({ history, UpdateFormData, FormGoNextStep, match, fetchBoxAvailab
   };
 
   return (
-    <FormContainer className="step-one-wrapper">
+    <FormContainer className="step-size-wrapper">
       <FormHeader title="Proszę wybrać rozmiar magazynu:" />
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="options-wrapper">
@@ -118,4 +119,4 @@ const mapDispatchToProps = (dispatch: any) =>
     dispatch,
   );
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Step1));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(StepSize));
