@@ -42,6 +42,13 @@ export default (state: State = initialState, action: Action): any => {
       };
     }
 
+    case 'FETCH_SINGLE_BOX_DETAILS_SUCCESS': {
+      return {
+        ...state,
+        singleBoxDetail: action.payload,
+      };
+    }
+
     default:
       return state;
   }

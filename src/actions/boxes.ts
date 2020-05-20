@@ -18,6 +18,6 @@ export const fetchSingleBoxDetails = (rentId: string) => async (dispatch: any) =
     'FETCH_SINGLE_BOX_DETAILS_FAILED',
     null,
     null,
-    `rent/details${rentId}`,
+    `rent/details/${rentId}`,
   );
 };
