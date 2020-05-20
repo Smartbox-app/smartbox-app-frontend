@@ -1,4 +1,5 @@
 @import "../../../config/variables";
+@import "../../../config/mixins.scss";
 
 .modal {
   position: fixed;
@@ -76,11 +77,20 @@
   }
 }
 
-@media screen and (min-width: map-get($breakpoints, xs)) {
+@include gt-sm {
   .modal-body {
     max-width: 100%;
   }
   .modal-content {
     min-width: 400px;
+  }
+}
+
+@include gt-lg {
+  .modal-body {
+    max-width: 100%;
+  }
+  .modal-content {
+    min-width: 450px;
   }
 }
