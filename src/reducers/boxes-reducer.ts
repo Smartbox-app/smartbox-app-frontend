@@ -13,8 +13,8 @@ const initialState = {
     finishAt: new Date(),
     status: RentStatus.free,
     owner: {
-      email: '',
-      firstName: '',
+      email: '-',
+      firstName: '---',
       lastName: '',
       rentCount: 0,
     },

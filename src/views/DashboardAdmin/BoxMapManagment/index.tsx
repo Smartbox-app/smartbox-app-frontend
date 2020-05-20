@@ -105,8 +105,8 @@ class BoxMapManagment extends React.Component<Props> {
 
     if (selectedRentId !== '') {
       fetchSingleBoxDetails(selectedRentId);
-      showModal(<BoxDetail selectedBoxId={selectedBoxId} />);
     }
+    showModal(<BoxDetail selectedBoxId={selectedBoxId} rentId={selectedRentId} />);
   };
 
   handleEventMouseOver = (e: any): any => {

@@ -3,28 +3,31 @@ import { RentDetailsRes } from 'smartbox-types';
 import { connect } from 'react-redux';
 import { ButtonsContainer, SectionHeader } from '../../../../components/Layout';
 import { Button } from '../../../../components/Common';
+import { dateOnly } from '../../../../utils/format-date';
 
 import Edit from './Edit';
 
 import './BoxDetail.scss';
-import { dateOnly } from '../../../../utils/format-date';
 
 interface Props {
   singleBoxDetail: RentDetailsRes;
   selectedBoxId: number | string;
+  rentId: string;
 }
 
-const BoxDetail = ({ selectedBoxId, singleBoxDetail }: Props) => {
+const BoxDetail = ({ selectedBoxId, singleBoxDetail, rentId }: Props) => {
   const [optionDisplayState, optionDisplayToogle] = useState(false);
   const dummyMail = 'kontakt@itdotfocus.com';
   const dummyPhone = 333222111;
+  const isThisBoxFree = (data: string): boolean => data === '';
 
+  console.log('asdasdad', isThisBoxFree(rentId));
   return (
     <div className="detail-wrapper">
       <SectionHeader title="Szczegóły wybranej skrytki:" />
       <p className="single">
         <span className="fa fa-lock" />
-        Numer skrytki: <strong>{`${singleBoxDetail.number}`}</strong>
+        Numer skrytki: <strong>{selectedBoxId}</strong>
       </p>
       <p className="single">
         <span className="fa fa-user" />
@@ -32,11 +35,11 @@ const BoxDetail = ({ selectedBoxId, singleBoxDetail }: Props) => {
       </p>
       <p className="single">
         <span className="fa fa-calendar " />
-        Termin wynajęcia: <strong>{`${dateOnly(singleBoxDetail.startAt)}`}</strong>
+        Termin wynajęcia: <strong>{`${isThisBoxFree(rentId) ? '---' : dateOnly(singleBoxDetail.startAt)}`}</strong>
       </p>
       <p className="single">
         <span className="fa fa-calendar " />
-        Termin zwrotu: <strong>{`${dateOnly(singleBoxDetail.finishAt)}`}</strong>
+        Termin zwrotu: <strong>{`${isThisBoxFree(rentId) ? '---' : dateOnly(singleBoxDetail.finishAt)}`}</strong>
       </p>
       <p className="single">
         <span className="fa fa-arrow-right" />
@@ -46,18 +49,26 @@ const BoxDetail = ({ selectedBoxId, singleBoxDetail }: Props) => {
         <span className="fa fa-phone" />
         Telefon:{' '}
         <strong>
-          <a href={`tel:${dummyPhone}`} rel="noopener noreferrer" target="_blank">
-            {dummyPhone}
-          </a>
+          {isThisBoxFree(rentId) ? (
+            '---'
+          ) : (
+            <a href={`tel:${dummyPhone}`} rel="noopener noreferrer" target="_blank">
+              {dummyPhone}
+            </a>
+          )}
         </strong>
       </p>
       <p className="single">
         <span className="fa fa-envelope" />
         Mail:{' '}
         <strong>
-          <a href={`mailto:${dummyMail}`} rel="noopener noreferrer" target="_blank">
-            {dummyMail}
-          </a>
+          {isThisBoxFree(rentId) ? (
+            '---'
+          ) : (
+            <a href={`mailto:${dummyMail}`} rel="noopener noreferrer" target="_blank">
+              {dummyMail}
+            </a>
+          )}
         </strong>
       </p>
       <ButtonsContainer max>
