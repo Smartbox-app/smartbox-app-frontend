@@ -9,16 +9,23 @@
   .legend-list {
     display: flex;
     flex-direction: row;
-    flex: 1 0 100%;
+    flex-wrap: wrap;
+    flex: 0 0 100%;
 
     .single {
-      flex: 0 0 20%;
+      flex: 1 0 50%;
       text-align: center;
-      padding: $main-spacing /4;
+      padding: $main-spacing /2;
       color: #fff;
+      border: 2px solid #fff;
       font-weight: 500;
+      font-size: 0.9rem;
     }
   }
+}
+
+.st9 {
+  fill: #fff;
 }
 
 .single-free {
