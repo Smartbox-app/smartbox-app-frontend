@@ -1,0 +1,37 @@
+@import '../../../../config/variables.scss';
+@import '../../../../config/mixins.scss';
+
+.detail-wrapper {
+  display: flex;
+  flex-direction: column;
+
+  .single {
+    display: flex;
+
+    strong {
+      margin-left: $main-spacing /2;
+    }
+
+    .fa {
+      color: $color-primary;
+      flex: 0 0 12%;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.3rem;
+      display: flex;
+    }
+  }
+  .custome-icon-button {
+    display: flex;
+    flex-direction: row;
+
+    .button-img {
+      margin-right: $main-spacing;
+    }
+  }
+  .rotate {
+    .button-img {
+      transform: rotate(180deg);
+    }
+  }
+}

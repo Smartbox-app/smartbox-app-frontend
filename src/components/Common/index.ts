@@ -19,10 +19,12 @@ import ApiTable from './ApiTable';
 import Table from './Table';
 import Pagination from './Pagination';
 import Tabs from './Tabs';
+import Modal from './Modal';
 
 export {
   Alert,
   ApiTable,
+  Modal,
   Pagination,
   Table,
   Spinner,
