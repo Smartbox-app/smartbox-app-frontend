@@ -14,7 +14,7 @@ import { Form } from '../../../../../reducers/order-reducer';
 
 import Price from './Price';
 
-import './StepTwo.scss';
+import './StepDuration.scss';
 import UserService from '../../../../../services/user-service';
 
 interface Props {
@@ -26,7 +26,7 @@ interface Props {
   FormGoNextStep: (data: number) => void;
 }
 
-const StepTwo = ({ formData, countedPrice, UpdateFormData, FormGoNextStep, user }: Props) => {
+const StepDuration = ({ formData, countedPrice, UpdateFormData, FormGoNextStep, user }: Props) => {
   useEffect(() => {
     if (formData.size.length === 0) {
       history.push(`/${UserService.getSlugByRole(user.role)}/order/step/1`);
@@ -110,4 +110,4 @@ const mapDispatchToProps = (dispatch: any) =>
     dispatch,
   );
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(StepTwo));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(StepDuration));
