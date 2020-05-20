@@ -11,6 +11,7 @@ function Edit(props: Props) {
     <div>
       <p>Poniższe zmiany są nie odwracalne!!</p>
       <Status selectedBoxId={selectedBoxId} />
+      <Edit selectedBoxId={selectedBoxId} />
     </div>
   );
 }

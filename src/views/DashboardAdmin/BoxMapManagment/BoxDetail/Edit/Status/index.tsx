@@ -15,44 +15,42 @@ interface Props {
   selectedBoxId: number | string;
 }
 
-class Status extends Component<Props> {
-  render() {
-    const submitButton = (
-      <ButtonsContainer>
-        <Button text="Zmień status" type="submit" danger />
-      </ButtonsContainer>
-    );
+const Status = ({ selectedBoxId }: Props) => {
+  const submitButton = (
+    <ButtonsContainer>
+      <Button text="Zmień status" type="submit" danger />
+    </ButtonsContainer>
+  );
 
-    const fetchUrl = 'rent/form/change-status';
-    const sendUrl = 'rent/status';
-    return (
-      <FormContainer className="box-status-form">
-        <ItfApiForm
-          formId="box-status-form"
-          schemaMayBeDynamic={false}
-          schemaCacheEnabled={false}
-          loadingInfo={<Spinner transparent />}
-          schemaFetcher={() => ApiService.loadForm(fetchUrl)}
-          sendFetcher={(formId: string, values: ChangeStatusReq) =>
-            ApiService.sendForm(
-              sendUrl,
-              {
-                ...values,
-                number: this.props.selectedBoxId,
-              },
-              'PATCH',
-            )
-          }
-          submitButton={submitButton}
-          onSavedSuccessfully={(data: any) => {
-            successNotification('Zalogowano poprawnie');
-          }}
-          onTranslateString={formOnTranslateString}
-          thirdPartyComponents={{ ReactSelect, ReactCreatableSelect }}
-        />
-      </FormContainer>
-    );
-  }
-}
+  const fetchUrl = 'rent/form/change-status';
+  const sendUrl = 'rent/status';
+  return (
+    <FormContainer className="box-status-form">
+      <ItfApiForm
+        formId="box-status-form"
+        schemaMayBeDynamic={false}
+        schemaCacheEnabled={false}
+        loadingInfo={<Spinner transparent />}
+        schemaFetcher={() => ApiService.loadForm(fetchUrl)}
+        sendFetcher={(formId: string, values: ChangeStatusReq) =>
+          ApiService.sendForm(
+            sendUrl,
+            {
+              ...values,
+              number: selectedBoxId,
+            },
+            'PATCH',
+          )
+        }
+        submitButton={submitButton}
+        onSavedSuccessfully={(data: any) => {
+          successNotification('Zalogowano poprawnie');
+        }}
+        onTranslateString={formOnTranslateString}
+        thirdPartyComponents={{ ReactSelect, ReactCreatableSelect }}
+      />
+    </FormContainer>
+  );
+};
 
 export default Status;

@@ -1,0 +1,57 @@
+import React, { Component } from 'react';
+import { ItfApiForm } from 'itf_formbuilder_react';
+import ReactSelect from 'react-select';
+import ReactCreatableSelect from 'react-select/creatable';
+import { ChangeStatusReq } from 'smartbox-types';
+import { FormContainer, ButtonsContainer } from '../../../../../../components/Layout';
+import { Spinner, Button } from '../../../../../../components/Common';
+import ApiService from '../../../../../../services/api-service';
+import { formOnTranslateString } from '../../../../../../utils/trans-form';
+import { successNotification } from '../../../../../../actions/notifications';
+
+import './Edit.scss';
+
+interface Props {
+  selectedBoxId: number | string;
+  rentId?: string;
+}
+
+const Status = ({ rentId, selectedBoxId }: Props) => {
+  const submitButton = (
+    <ButtonsContainer>
+      <Button text="Przenieś" type="submit" danger />
+    </ButtonsContainer>
+  );
+
+  const fetchUrl = `rent/change-user-box/${rentId}`;
+  const sendUrl = `rent//user-box/${rentId}`;
+
+  return (
+    <FormContainer className="box-status-form">
+      <ItfApiForm
+        formId="change-user-box"
+        schemaMayBeDynamic={false}
+        schemaCacheEnabled={false}
+        loadingInfo={<Spinner transparent />}
+        schemaFetcher={() => ApiService.loadForm(fetchUrl)}
+        sendFetcher={(formId: string, values: ChangeStatusReq) =>
+          ApiService.sendForm(
+            sendUrl,
+            {
+              ...values,
+            },
+            'PATCH',
+          )
+        }
+        submitButton={submitButton}
+        onSavedSuccessfully={(data: any) => {
+          successNotification('Poprawnie przeniesiono użytkownika');
+        }}
+        onTranslateString={formOnTranslateString}
+        thirdPartyComponents={{ ReactSelect, ReactCreatableSelect }}
+      />
+    </FormContainer>
+  );
+};
+
+export default Status;
