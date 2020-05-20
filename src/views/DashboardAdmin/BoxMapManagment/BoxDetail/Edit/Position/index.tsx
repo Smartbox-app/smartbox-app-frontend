@@ -26,25 +26,25 @@ const Position = ({ rentId, selectedBoxId }: Props) => {
   const fetchUrl = `rent/form/change-user-box/${rentId}`;
   const sendUrl = `rent/user-box/${rentId}`;
 
+  const customSendFetcher = (formId: string, values: ChangeStatusReq) =>
+    ApiService.sendForm(
+      sendUrl,
+      {
+        ...values,
+      },
+      'PATCH',
+    );
+
   return (
     <FormContainer className="box-status-form">
       <ItfApiForm
         formId="change-user-box"
         schemaMayBeDynamic={false}
         schemaCacheEnabled={false}
-        loadingInfo={<Spinner transparent />}
         schemaFetcher={() => ApiService.loadForm(fetchUrl)}
-        sendFetcher={(formId: string, values: ChangeStatusReq) =>
-          ApiService.sendForm(
-            sendUrl,
-            {
-              ...values,
-            },
-            'PATCH',
-          )
-        }
+        sendFetcher={customSendFetcher}
         submitButton={submitButton}
-        onSavedSuccessfully={(data: any) => {
+        onSavedSuccessfully={() => {
           successNotification('Poprawnie przeniesiono użytkownika');
         }}
         onTranslateString={formOnTranslateString}

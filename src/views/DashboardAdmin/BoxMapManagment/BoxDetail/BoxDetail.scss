@@ -21,4 +21,17 @@
       display: flex;
     }
   }
+  .custome-icon-button {
+    display: flex;
+    flex-direction: row;
+
+    .button-img {
+      margin-right: $main-spacing;
+    }
+  }
+  .rotate {
+    .button-img {
+      transform: rotate(180deg);
+    }
+  }
 }

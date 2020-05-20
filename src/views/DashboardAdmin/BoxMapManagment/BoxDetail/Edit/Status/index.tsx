@@ -24,26 +24,27 @@ const Status = ({ selectedBoxId }: Props) => {
 
   const fetchUrl = 'rent/form/change-status';
   const sendUrl = 'rent/status';
+
+  const customSendFetcher = (formId: string, values: ChangeStatusReq) =>
+    ApiService.sendForm(
+      sendUrl,
+      {
+        ...values,
+        number: selectedBoxId,
+      },
+      'PATCH',
+    );
+
   return (
     <FormContainer className="box-status-form">
       <ItfApiForm
         formId="box-status-form"
         schemaMayBeDynamic={false}
         schemaCacheEnabled={false}
-        loadingInfo={<Spinner transparent />}
         schemaFetcher={() => ApiService.loadForm(fetchUrl)}
-        sendFetcher={(formId: string, values: ChangeStatusReq) =>
-          ApiService.sendForm(
-            sendUrl,
-            {
-              ...values,
-              number: selectedBoxId,
-            },
-            'PATCH',
-          )
-        }
+        sendFetcher={customSendFetcher}
         submitButton={submitButton}
-        onSavedSuccessfully={(data: any) => {
+        onSavedSuccessfully={() => {
           successNotification('Zalogowano poprawnie');
         }}
         onTranslateString={formOnTranslateString}

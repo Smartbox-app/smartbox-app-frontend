@@ -62,9 +62,11 @@ const BoxDetail = ({ selectedBoxId, singleBoxDetail }: Props) => {
       </p>
       <ButtonsContainer max>
         <Button
+          className={`custome-icon-button ${!optionDisplayState ? '' : 'rotate'}`}
           primary
           text={!optionDisplayState ? 'Pokaż opcje edycji' : 'Ukryj opcje edycji'}
           click={() => optionDisplayToogle(!optionDisplayState)}
+          icon="arrow-down-white.svg"
         />
       </ButtonsContainer>
       {optionDisplayState && <Edit selectedBoxId={selectedBoxId} />}
