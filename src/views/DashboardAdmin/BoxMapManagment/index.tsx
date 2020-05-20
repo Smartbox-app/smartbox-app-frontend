@@ -20,6 +20,7 @@ interface Props {
   boxesGroup: BoxListItem[];
   showModal: (content: React.ReactNode) => void;
   fetchBoxStatuses: () => void;
+  fetchSingleBoxDetails: (rentId: string) => void;
 }
 
 class BoxMapManagment extends React.Component<Props> {
@@ -85,18 +86,27 @@ class BoxMapManagment extends React.Component<Props> {
   };
 
   handleEventModal = (e: any): any => {
-    const { showModal } = this.props;
+    const { showModal, boxesGroup, fetchSingleBoxDetails } = this.props;
     let selectedBoxId = e.target.parentElement.parentElement.id.slice(1);
+    let selectedRentId = '';
     if (e.target.parentElement.attributes.class && e.target.parentElement.attributes.class.value === 'storage') {
       selectedBoxId = e.target.parentElement.id.slice(1);
     }
 
     if (e.target.attributes.class.value === 'st9 st10') {
-      console.log('handleEventModal', e.target.parentElement.id.slice(1));
       selectedBoxId = e.target.parentElement.id.slice(1);
     }
 
-    showModal(<BoxDetail selectedBoxId={selectedBoxId} rentId="" />);
+    boxesGroup.find((singleBox: BoxListItem): void => {
+      if (singleBox.number === selectedBoxId && singleBox.status !== RentStatus.free) {
+        selectedRentId = singleBox.rentId;
+      }
+    });
+
+    if (selectedRentId !== '') {
+      fetchSingleBoxDetails(selectedRentId);
+      showModal(<BoxDetail selectedBoxId={selectedBoxId} />);
+    }
   };
 
   handleEventMouseOver = (e: any): any => {
