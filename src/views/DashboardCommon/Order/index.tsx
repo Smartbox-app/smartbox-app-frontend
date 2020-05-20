@@ -31,6 +31,10 @@ const Order = ({ userName, formStep }: Props) => (
           },
           {
             value: 4,
+            desc: 'Umowa',
+          },
+          {
+            value: 5,
             desc: 'Płatność',
           },
         ]}

@@ -12,9 +12,9 @@
   font-size: 1.1rem;
 
   .item-icon {
-    width: 40px;
-    height: 40px;
-    border-radius: 20px;
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
     background: #fff;
     color: $color-disabled;
     border: 2px solid $color-disabled;
@@ -52,7 +52,23 @@
   }
 
   .item-description {
-    font-size: 1rem;
+    font-size: 0.7rem;
     font-weight: 400;
+  }
+}
+
+@include gt-sm {
+  .ittem-wrapper {
+
+    .item-description {
+      font-size: 1rem;
+      font-weight: 400;
+    }
+
+    .item-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 20px;
+    }
   }
 }

@@ -15,10 +15,10 @@ interface Props {
 }
 
 const ProgressIndicator = ({ data, current }: Props) => {
-  const dataToDisplay = data.map((data: RenderData, key: number) => (
+  const dataToDisplay = data.map((single: RenderData, key: number) => (
     <div className="single-stamp" key={key}>
-      <Item value={data.desc} order={data.value} current={data.value === current} done={data.value < current} />
-      {key !== 3 && <Bar done={data.value} current={current} />}
+      <Item value={single.desc} order={single.value} current={single.value === current} done={single.value < current} />
+      {key !== 4 && <Bar done={single.value} current={current} />}
     </div>
   ));
   return <div className="progress-indicator-wrapper">{dataToDisplay}</div>;

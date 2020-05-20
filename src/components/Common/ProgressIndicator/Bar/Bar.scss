@@ -16,7 +16,7 @@
     background: $color-disabled;
     height: 2px;
     flex: 0 0 100%;
-    margin-top: 20px;
+    margin-top: 15px;
 
     box-shadow:
     0 2.8px 2.2px rgba(0, 0, 0, 0.034),
@@ -36,3 +36,10 @@
   }
 }
 
+@include gt-sm {
+  .bar-wrapper {
+    .bar {
+      margin-top: 20px;
+    }
+  }
+}
