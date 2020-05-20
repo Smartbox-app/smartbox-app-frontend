@@ -10,3 +10,14 @@ export const fetchBoxStatuses = () => async (dispatch: any) => {
     'rent/box-list',
   );
 };
+
+export const fetchSingleBoxDetails = (rentId: string) => async (dispatch: any) => {
+  await ApiService.get(
+    dispatch,
+    'FETCH_SINGLE_BOX_DETAILS_SUCCESS',
+    'FETCH_SINGLE_BOX_DETAILS_FAILED',
+    null,
+    null,
+    `rent/details${rentId}`,
+  );
+};

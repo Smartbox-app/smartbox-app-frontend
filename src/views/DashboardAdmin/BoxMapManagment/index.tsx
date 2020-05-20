@@ -32,10 +32,10 @@ class BoxMapManagment extends React.Component<Props> {
 
   async componentDidMount() {
     const { fetchBoxStatuses, boxesGroup } = this.props;
-    // fetch boxes statuses
+
     await fetchBoxStatuses();
     const catchElement = this.element.current.querySelectorAll('#kontenery .storage, #kontenery .st9');
-    // const catchElement = this.element.current.querySelectorAll('.st9');
+
     console.log('catchElement', catchElement);
     await catchElement.forEach((singleElement: any) => {
       this.setBoxStatus(singleElement.parentElement.parentElement.id.slice(1), singleElement);
@@ -96,7 +96,7 @@ class BoxMapManagment extends React.Component<Props> {
       selectedBoxId = e.target.parentElement.id.slice(1);
     }
 
-    showModal(<BoxDetail selectedBoxId={selectedBoxId} />);
+    showModal(<BoxDetail selectedBoxId={selectedBoxId} rentId="" />);
   };
 
   handleEventMouseOver = (e: any): any => {
