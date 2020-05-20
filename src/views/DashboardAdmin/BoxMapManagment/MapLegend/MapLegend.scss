@@ -13,13 +13,25 @@
     flex: 0 0 100%;
 
     .single {
-      flex: 1 0 50%;
+      flex: 0 0 50%;
       text-align: center;
       padding: $main-spacing /2;
-      color: #fff;
       border: 2px solid #fff;
       font-weight: 500;
       font-size: 0.9rem;
+      height: 40px;
+      line-height: 20px;
+      position: relative;
+
+      span{
+        &::before {
+          position: absolute;
+          display: block;
+          width: 20px;
+          height: 20px;
+          content: '';
+        }
+      }
     }
   }
 }
@@ -29,36 +41,83 @@
 }
 
 .single-free {
-  background-color: $color-success;
-  &:hover {
-    background-color: lighten($color-success, 5%)
+  span{
+    &::before {
+      background-color: $color-success;
+    }
   }
 }
 
 .single-reserved {
-  background-color: $color-danger;
-  &:hover {
-    background-color: lighten($color-danger, 5%)
+  span{
+    &::before {
+      background-color: $color-danger;
+    }
   }
 }
 
 .single-toExplain {
-  background-color: #000;
-  &:hover {
-    background-color: lighten(#000, 5%)
+  span{
+    &::before {
+      background-color: #000;
+    }
   }
 }
 
 .single-toCheck {
-  background-color: $color-primary;
-  &:hover {
-    background-color: lighten($color-primary, 5%)
+  span{
+    &::before {
+      background-color: $color-primary;
+    }
   }
 }
 
 .single-noPaidExtension {
-  background-color: $color-tertiary;
-  &:hover {
-    background-color: lighten($color-tertiary, 5%)
+  span{
+    &::before {
+      background-color: $color-tertiary;
+    }
+  }
+}
+
+@include gt-sm {
+  .map-legend-wrapper {
+
+    .legend-list {
+
+      .single {
+        flex: 0 0 30%;
+        font-size: 1rem;
+        line-height: 30px;
+
+        span{
+          &::before {
+            width: 30px;
+            height: 30px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@include gt-lg {
+  .map-legend-wrapper {
+
+    .legend-list {
+
+      .single {
+        flex: 0 0 20%;
+        font-size: 1rem;
+        line-height: 30px;
+
+        span{
+          &::before {
+            width: 30px;
+            height: 30px;
+          }
+        }
+      }
+    }
   }
 }

@@ -60,10 +60,10 @@ const BoxDetail = ({ selectedBoxId, singleBoxDetail }: Props) => {
           </a>
         </strong>
       </p>
-      <ButtonsContainer>
+      <ButtonsContainer max>
         <Button
           primary
-          text={!optionDisplayState ? 'Pokaż opcję edycji' : 'Ukryj opcje edycji'}
+          text={!optionDisplayState ? 'Pokaż opcje edycji' : 'Ukryj opcje edycji'}
           click={() => optionDisplayToogle(!optionDisplayState)}
         />
       </ButtonsContainer>
