@@ -9,22 +9,22 @@ import ApiService from '../../../../../../services/api-service';
 import { formOnTranslateString } from '../../../../../../utils/trans-form';
 import { successNotification } from '../../../../../../actions/notifications';
 
-import './Edit.scss';
+import './Position.scss';
 
 interface Props {
   selectedBoxId: number | string;
   rentId?: string;
 }
 
-const Status = ({ rentId, selectedBoxId }: Props) => {
+const Position = ({ rentId, selectedBoxId }: Props) => {
   const submitButton = (
     <ButtonsContainer>
       <Button text="Przenieś" type="submit" danger />
     </ButtonsContainer>
   );
 
-  const fetchUrl = `rent/change-user-box/${rentId}`;
-  const sendUrl = `rent//user-box/${rentId}`;
+  const fetchUrl = `rent/form/change-user-box/${rentId}`;
+  const sendUrl = `rent/user-box/${rentId}`;
 
   return (
     <FormContainer className="box-status-form">
@@ -54,4 +54,4 @@ const Status = ({ rentId, selectedBoxId }: Props) => {
   );
 };
 
-export default Status;
+export default Position;
