@@ -12,7 +12,6 @@ import Icon from './Icon';
 import Input from './Input';
 import Logo from './Logo';
 import DateInput from './DateInput';
-import SliderInput from './SliderInput';
 import ProgressIndicator from './ProgressIndicator';
 import Carousel from './Carousel';
 import ApiTable from './ApiTable';
@@ -40,7 +39,6 @@ export {
   Input,
   Logo,
   DateInput,
-  SliderInput,
   ProgressIndicator,
   Carousel,
   Tabs,
