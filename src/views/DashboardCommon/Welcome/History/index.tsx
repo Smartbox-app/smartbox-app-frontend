@@ -2,6 +2,7 @@ import React from 'react';
 import Single, { SingleHistory } from './Single';
 
 import './History.scss';
+import Legend from './Legend';
 
 interface Props {
   data: SingleHistory[];
@@ -14,10 +15,7 @@ const History = ({ data }: Props) => {
   return (
     <div className="history-wrapper">
       <ul className="history-list">{dataToDisplay}</ul>
-      <div className="history-legend">
-        <span className="legend-color" />
-        <p className="legend-desc">Aktywne magazyny</p>
-      </div>
+      <Legend />
     </div>
   );
 };
