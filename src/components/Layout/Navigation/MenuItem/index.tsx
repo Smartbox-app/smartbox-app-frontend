@@ -11,8 +11,8 @@ type Props = MenuItemType;
 
 class MenuItem extends React.Component<Props> {
   private handleItemClick = (): void => {
-    // eslint-disable-next-line react/destructuring-assignment
-    if (this.props.onClick) this.props.onClick();
+    const { onClick } = this.props;
+    if (typeof onClick === 'function') onClick();
     else {
       setTimeout(() => {
         const offset = (document.querySelector('#root') as any).offsetTop;
