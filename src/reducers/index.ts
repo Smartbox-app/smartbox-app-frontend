@@ -4,13 +4,18 @@ import appStatusReducer from './app-status-reducer';
 import modalReducer from './modal-reducer';
 import notificationsReducer from './notifications-reducer';
 import langReducer from './lang-reducer';
-import userReducer from './user-reducer';
-import spinnerReducer from './spinner-reducer';
-import orderReducer from './order-reducer';
+import userReducer, { UserState } from './user-reducer';
+import spinnerReducer, { SpinnerState } from './spinner-reducer';
+import orderReducer, { OrderState } from './order-reducer';
 import boxesReducer, { Boxes } from './boxes-reducer';
+import { Modal } from '../types/modal';
 
 export interface ApplicationState {
   boxes: Boxes;
+  order: OrderState;
+  user: UserState;
+  spinner: SpinnerState;
+  modal: Modal;
 }
 
 const appReducer = combineReducers({

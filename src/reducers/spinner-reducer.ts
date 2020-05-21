@@ -1,8 +1,12 @@
-const initialState = {
+export type SpinnerState = {
+  loading: boolean;
+};
+
+const initialState: SpinnerState = {
   loading: false,
 };
 
-export default (state = initialState, action: any) => {
+export default (state: SpinnerState = initialState, action: any) => {
   switch (action.type) {
     case 'LOADING':
       return { ...state, loading: action.payload };

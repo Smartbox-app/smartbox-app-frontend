@@ -9,11 +9,11 @@ export interface Form {
   dateStart: Date;
   dateEnd: Date;
 }
-interface State {
+export type OrderState = {
   formData: Form;
   formStep: number;
   countedPrice: number;
-}
+};
 
 interface FormStepSuccess {
   type: 'FORM_STEP_SUCCESS';
@@ -32,7 +32,7 @@ interface BoxGroup {
 
 type Action = FormStepSuccess | FormGoNextStep | BoxGroup;
 
-const initialState = {
+const initialState: OrderState = {
   formData: {
     durationInDays: 7,
     discount: 0,
@@ -43,10 +43,9 @@ const initialState = {
   },
   formStep: 1,
   countedPrice: 0,
-  boxGroup: [],
 };
 
-export default (state: State = initialState, action: Action): any => {
+export default (state: OrderState = initialState, action: Action): any => {
   switch (action.type) {
     case 'FORM_STEP_SUCCESS': {
       const newFormData: Form = { ...state.formData, ...action.payload };
