@@ -33,7 +33,7 @@ class Login extends React.Component<Props> {
       case UserRole.worker:
         return <Redirect to="/worker" />;
       default:
-        return <Redirect to="/404" />;
+        return <Redirect to="/" />;
     }
   };
 

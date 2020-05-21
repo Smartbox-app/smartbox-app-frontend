@@ -4,7 +4,6 @@ import SessionService from '../services/session-service';
 
 interface State {
   details: IUser;
-  list: TableResponse<any>;
   singleUser: any;
 }
 
@@ -16,11 +15,6 @@ interface Login {
 interface Logout {
   type: 'LOGOUT';
   payload: any;
-}
-
-interface GetSingleTypeUsers {
-  type: 'GET_SINGEL_TYPE_USERS_SUCCESS';
-  payload: TableResponse<any>;
 }
 
 interface FetchSingleUser {
@@ -37,14 +31,10 @@ interface GeetMyDetails {
   payload: AuthLoginResult;
 }
 
-type Action = Login | Logout | GetSingleTypeUsers | FetchSingleUser | ClearUserSession | GeetMyDetails;
+type Action = Login | Logout | FetchSingleUser | ClearUserSession | GeetMyDetails;
 
 const initialState = {
   details: SessionService.getUser(),
-  list: {
-    countTotal: 0,
-    items: [],
-  },
   singleUser: {
     id: '',
     email: '',
@@ -84,11 +74,6 @@ export default (state: State = initialState, action: Action): any => {
       SessionService.clearSessionStorage();
       SessionService.clearUserSession();
       return { ...state, details: null };
-    case 'GET_SINGEL_TYPE_USERS_SUCCESS':
-      return {
-        ...state,
-        list: action.payload,
-      };
     case 'FETCH_SINGLE_USER_SUCCESS':
       return {
         ...state,
