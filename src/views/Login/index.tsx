@@ -27,7 +27,6 @@ interface Props {
 class Login extends React.Component<Props> {
   private getDefaultUserRedirect = (): React.ReactNode => {
     const { user } = this.props;
-    console.log('user', user);
     switch (user!.role) {
       case UserRole.admin:
         return <Redirect to="/admin" />;
