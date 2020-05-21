@@ -4,19 +4,20 @@ import { IUser } from 'smartbox-types';
 import { Button } from '../../../../components/Common';
 import UserService from '../../../../services/user-service';
 
-import './StorageInfo.scss';
+import './StorageList.scss';
+import SingleStorage from './SingleStorage';
 
-interface SingleSotrage {
+export interface SingleStorageType {
   size: number;
   location: string;
 }
 
 interface Props {
-  storageList: SingleSotrage[];
+  list: SingleStorageType[];
   user: IUser;
 }
 
-const StorageInfo = ({ storageList, user }: Props) => {
+const StorageInfo = ({ list, user }: Props) => {
   const ButtonForNew = (
     <div className="new-storage single-wrapper">
       <Button
@@ -28,13 +29,8 @@ const StorageInfo = ({ storageList, user }: Props) => {
     </div>
   );
 
-  const dataToDisplay = storageList.map((single: SingleSotrage, key: number) => (
-    <div className="single-wrapper" key={`storage-info-${key}`}>
-      <div className="storage">
-        <p className="main-info">{single.size}m2</p>
-        <p className="sec-info">{single.location}</p>
-      </div>
-    </div>
+  const dataToDisplay = list.map((single: SingleStorageType, key: number) => (
+    <SingleStorage key={`storage-info-${key}`} single={single} />
   ));
 
   return (

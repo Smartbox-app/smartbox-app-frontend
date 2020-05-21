@@ -6,7 +6,7 @@ import { Carousel } from '../../../components/Common';
 
 import History from './History';
 import Discounts from './Discounts';
-import StorageInfo from './StorageInfo';
+import StorageList from './StorageList';
 
 import './Welcome.scss';
 
@@ -25,8 +25,8 @@ const Welcome = ({ userName }: Props) => (
     </Section>
     <Section full>
       <SectionHeader title="Zarządaj magazynami" />
-      <StorageInfo
-        storageList={[
+      <StorageList
+        list={[
           {
             size: 12,
             location: 'Warszawa, Mokotów',

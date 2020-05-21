@@ -1,24 +1,8 @@
-@import '../../../../config/variables.scss';
-@import '../../../../config/mixins.scss';
+@import '../../../../../config/variables.scss';
+@import '../../../../../config/mixins.scss';
 
-.storage-info-wrapper {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+$box-size: 100px;
 
-}
-
-
-.new-storage {
-  .button {
-    width: 100px;
-    height: 100px;
-    &:hover {
-      box-shadow: 0 0 3px 3px $color-primary-light;
-    }
-  }
-
-}
 .single-wrapper {
   padding: $main-spacing/2;
 
@@ -28,8 +12,8 @@
     justify-content: center;
     flex-direction: column;
   
-    width: 100px;
-    height: 100px;
+    width: $box-size;
+    height: $box-size;
     cursor: pointer;
     margin: $main-spacing/2 0;
   
@@ -44,20 +28,19 @@
     &:hover {
       box-shadow: 0 0 3px 3px $color-primary-light;
     }
+
+    .main-info {
+      font-size: 1.1rem;
+    }
+    
+    .sec-info {
+      font-size: 0.7rem;
+    }
+    
+    .sec-info, .main-info {
+      text-align: center;
+    }
   }
-}
-
-
-.main-info {
-  font-size: 1.1rem;
-}
-
-.sec-info {
-  font-size: 0.7rem;
-}
-
-.sec-info, .main-info {
-  text-align: center;
 }
 
 @include gt-md {
@@ -79,19 +62,6 @@
       
       .sec-info {
         font-size: .9rem;
-      }
-      
-    }
-    
-  }
-
-  .new-storage {
-    .button {
-      width: 200px;
-      height: 150px;
-      font-size: 1.3rem;
-      .button-img {
-        margin-bottom: $main-spacing;
       }
     }
   }
