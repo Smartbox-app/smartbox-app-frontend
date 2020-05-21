@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Redirect } from 'react-router-dom';
 import { ItfApiForm } from 'itf_formbuilder_react';
-import { UserRole, AuthLoginRequest, IUser, AuthLoginResult } from 'smartbox-types';
+import { UserRole, AuthLoginRequest, IUser, AuthLoginResult, UserRes } from 'smartbox-types';
 import { Spinner, Input } from '../../components/Common';
 import { auth, notifications } from '../../actions';
 import ApiService from '../../services/api-service';
@@ -11,12 +11,14 @@ import { getRememberedRedirect, clearRememberedRedirect } from '../../utils/reme
 import { store } from '../../App';
 import { formOnTranslateString } from '../../utils/trans-form';
 import { FormContainer, PageContent, LogoContainer } from '../../components/Layout';
+import { ApplicationState } from '../../reducers';
+
 import ButtonsSection from './ButtonSection';
 
 import './Login.scss';
 
 interface Props {
-  user: IUser;
+  user: UserRes;
   login: (userData: AuthLoginRequest) => void;
   saveUser: (userData: AuthLoginResult) => void;
   successNotification: (text: string) => void;
@@ -25,6 +27,7 @@ interface Props {
 class Login extends React.Component<Props> {
   private getDefaultUserRedirect = (): React.ReactNode => {
     const { user } = this.props;
+    console.log('user', user);
     switch (user!.role) {
       case UserRole.admin:
         return <Redirect to="/admin" />;
@@ -33,7 +36,7 @@ class Login extends React.Component<Props> {
       case UserRole.worker:
         return <Redirect to="/worker" />;
       default:
-        return <Redirect to="/" />;
+        return null;
     }
   };
 
@@ -102,7 +105,7 @@ class Login extends React.Component<Props> {
   }
 }
 
-const mapStateToProps = (state: any): any => ({
+const mapStateToProps = (state: ApplicationState): any => ({
   user: state.user.details,
   loading: state.spinner.loading,
 });

@@ -1,20 +1,18 @@
-import { IUser, UserRole, AuthLoginResult } from 'smartbox-types';
-import { TableResponse } from 'smartbox-tables';
+import { UserRole, UserRes } from 'smartbox-types';
 import SessionService from '../services/session-service';
 
 export type UserState = {
-  details: IUser;
-  singleUser: any;
+  details: UserRes;
+  singleUser: UserRes;
 };
 
 interface Login {
   type: 'LOGIN_SUCCESS';
-  payload: any;
+  payload: { user: UserRes };
 }
 
 interface Logout {
   type: 'LOGOUT';
-  payload: any;
 }
 
 interface FetchSingleUser {
@@ -28,20 +26,20 @@ interface ClearUserSession {
 
 interface GeetMyDetails {
   type: 'GET_MY_DETAILS_SUCCESS';
-  payload: AuthLoginResult;
+  payload: UserRes;
 }
 
 type Action = Login | Logout | FetchSingleUser | ClearUserSession | GeetMyDetails;
 
-const initialState = {
+const initialState: UserState = {
   details: SessionService.getUser(),
   singleUser: {
+    rentCount: 0,
     id: '',
     email: '',
     firstName: '',
     lastName: '',
     role: UserRole.admin,
-    blocked: true,
   },
 };
 
@@ -50,7 +48,6 @@ export default (state: UserState = initialState, action: Action): any => {
     case 'LOGIN_SUCCESS': {
       const { user } = action.payload;
       SessionService.setUser(user);
-      console.log('Login success', action.payload);
       return {
         ...state,
         details: user,
