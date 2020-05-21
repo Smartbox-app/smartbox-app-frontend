@@ -4,8 +4,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-
 import { BoxListItem, RentStatus } from 'smartbox-types';
+import { ApplicationState } from '../../../reducers';
+
 import { ReactComponent as ReactLogo } from './nowa_mapa.svg';
 import { Button } from '../../../components/Common';
 import { ButtonsContainer, PageHeader, Section } from '../../../components/Layout';
@@ -133,7 +134,7 @@ class BoxMapManagment extends React.Component<Props> {
     );
   }
 }
-const mapStateToProps = (state: any) => ({
+const mapStateToProps = (state: ApplicationState) => ({
   boxesGroup: state.boxes.boxesGroup,
 });
 

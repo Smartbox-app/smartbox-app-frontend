@@ -2,10 +2,10 @@ import { IUser, UserRole, AuthLoginResult } from 'smartbox-types';
 import { TableResponse } from 'smartbox-tables';
 import SessionService from '../services/session-service';
 
-interface State {
+export type UserState = {
   details: IUser;
   singleUser: any;
-}
+};
 
 interface Login {
   type: 'LOGIN_SUCCESS';
@@ -45,7 +45,7 @@ const initialState = {
   },
 };
 
-export default (state: State = initialState, action: Action): any => {
+export default (state: UserState = initialState, action: Action): any => {
   switch (action.type) {
     case 'LOGIN_SUCCESS': {
       const { user } = action.payload;
