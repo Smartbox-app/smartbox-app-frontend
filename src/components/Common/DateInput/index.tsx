@@ -14,7 +14,6 @@ export default class DateInput extends Component<Props> {
   };
 
   onChange = (date: any) => {
-    console.log(date);
     this.setState({ date });
   };
 

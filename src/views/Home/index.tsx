@@ -14,7 +14,6 @@ class Home extends React.Component {
   };
 
   onChange = (date: any) => {
-    console.log(date);
     this.setState({ date });
   };
 
