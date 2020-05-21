@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import MenuItem from './MenuItem';
-import { MenuItemType } from '../../../types/menuItem';
+import { MenuItemType } from '../../../types/menu-item';
 import { auth } from '../../../actions';
 
 import './Navigation.scss';

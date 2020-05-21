@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { ReactSVG } from 'react-svg';
-import { MenuItemType } from '../../../../types/menuItem';
+import { MenuItemType } from '../../../../types/menu-item';
 
 import './MenuItem.scss';
 
