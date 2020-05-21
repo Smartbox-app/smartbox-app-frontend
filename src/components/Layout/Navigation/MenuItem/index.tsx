@@ -57,6 +57,4 @@ const mapStateToProps = (state: any): any => ({
   mainMenuShow: state.navigation,
 });
 
-const mapDispatchToProps = (dispatch: any): any => bindActionCreators({}, dispatch);
-
-export default connect(mapStateToProps, mapDispatchToProps)(MenuItem);
+export default connect(mapStateToProps)(MenuItem);
