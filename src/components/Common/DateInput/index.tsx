@@ -13,7 +13,7 @@ export default class DateInput extends Component<Props> {
     date: new Date(),
   };
 
-  onChange = (date: any) => {
+  onChange = (date: Date[] | Date) => {
     this.setState({ date });
   };
 

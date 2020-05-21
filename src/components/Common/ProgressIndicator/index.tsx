@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 
 import Item from './Item';
+import Bar from './Bar';
 
 import './ProgressIndicator.scss';
-import Bar from './Bar';
 
 interface RenderData {
   value: number;
@@ -17,7 +17,6 @@ interface Props {
 
 class ProgressIndicator extends Component<Props> {
   render() {
-    console.log('ProgressIndicator', this.props);
     const { data, current } = this.props;
     return (
       <div className="progress-indicator-wrapper">
