@@ -5,10 +5,13 @@
   margin-bottom: $main-spacing * 2;
 
   .button {
-    width: 360px;
+    width: 300px;
     min-height: 60px;
     border-radius: 30px;
     font-size: 1.2rem;
     margin-bottom: $main-spacing * 2;
   }
+}
+.lost-pass {
+  text-align: center;
 }

@@ -3,8 +3,8 @@ import React, { Component } from 'react';
 import './Bar.scss';
 
 interface Props {
-  current?: boolean;
-  done?: boolean;
+  current: number;
+  done: number;
 }
 
 class Bar extends Component<Props> {
@@ -12,7 +12,7 @@ class Bar extends Component<Props> {
     const { current, done } = this.props;
     return (
       <div className="bar-wrapper">
-        <div className={`bar ${done ? 'bar-done' : ''} ${current ? 'bar-current' : ''}`} />
+        <div className={`bar ${done <= current ? 'bar-current' : ''} ${done < current ? 'bar-done' : ''}`} />
       </div>
     );
   }

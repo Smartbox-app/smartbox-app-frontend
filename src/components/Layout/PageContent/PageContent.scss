@@ -8,6 +8,7 @@
   flex-direction: column;
   position: relative;
   min-height: 100vh;
+  background-color: #fff;
 }
 
 @include gt-sm {

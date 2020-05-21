@@ -7,8 +7,33 @@
   font-weight: 700;
 }
 
+.welcome-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  box-shadow: $standard-shadow;
+
+}
+
 @include gt-sm {
   .welcome {
     font-size: 1.8rem;
+  }
+
+  .welcome-wrapper {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+@include gt-lg {
+  main {
+    .welcome-wrapper {
+      margin-top: $main-spacing /2;
+      margin-bottom: $main-spacing * 2;
+      flex-direction: row;
+      flex-wrap: wrap;
+      width: map-get($breakpoints, lg);
+    }
   }
 }

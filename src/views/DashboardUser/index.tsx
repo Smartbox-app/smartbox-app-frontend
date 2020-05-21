@@ -5,6 +5,8 @@ import DashboardContainer from '../../components/Layout/DashboardContainer';
 // import { Orders, Subcontractor, Products, Profile, Payment, Calendar } from '../DashboardCommon';
 // import Users from './Users';
 import Home from '../Home';
+import { Welcome, Order } from '../DashboardCommon';
+import Navigation from '../../components/Layout/Navigation';
 
 class DashboardUser extends React.Component {
   private menuItems: any[];
@@ -17,14 +19,14 @@ class DashboardUser extends React.Component {
   private setMenuItems = () => {
     this.menuItems = [
       {
-        icon: '/assets/icons/iconmonstr-user-23.svg',
-        text: 'Klienci',
-        address: '/user/customers',
+        icon: '/assets/icons/dashboard.svg',
+        text: 'Home',
+        address: '/user/main',
       },
       {
-        icon: '/assets/icons/iconmonstr-note-20.svg',
-        text: 'Umowy',
-        address: '/user/orders',
+        icon: '/assets/icons/account.svg',
+        text: 'Konto',
+        address: '/user/main',
       },
     ];
   };
@@ -33,11 +35,12 @@ class DashboardUser extends React.Component {
     this.setMenuItems();
     return (
       <DashboardContainer>
+        <Navigation menuItems={this.menuItems} />
         <Main>
           <Switch>
-            <Route exact path="/user" render={() => <Redirect to="/user/payment" />} />
-            <Route path="/user/profile" component={Home} />
-            <Route path="/user/payment" component={Home} />
+            <Route exact path="/user" render={() => <Redirect to="/user/main" />} />
+            <Route path="/user/main" component={Welcome} />
+            <Route path="/user/order/:step" component={Order} />
           </Switch>
         </Main>
       </DashboardContainer>

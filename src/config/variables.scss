@@ -1,4 +1,4 @@
-$font-primary: "", sans-serif;
+$font-primary: "AzoSans", sans-serif;
 $basic-font-size: 14px;
 
 //COLORS
@@ -21,14 +21,14 @@ $color-active: #FF6500;
 $color-disabled: #aaa;
 
 $color-warning: #ec8628;
-// $box-shadow-input: lighten($color-primary, 10%);
-$box-shadow-small: 0 5px 20px -5px;
+$standard-shadow: 0px 0px 8px 8px rgba(0,0,0,0.05);
+$box-shadow-small: 0px 0px 8px 8px darken($color-background, 4%);
 $box-shadow-input: 0 10px 20px -20px;
 
 //SPACING
 $main-spacing: 10px;
 $page-header-width: 500px;
-$main-logo-size: 100px;
+$main-logo-size: 200px;
 
 // sizing
 $max-form-width: 500px;

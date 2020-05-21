@@ -96,7 +96,7 @@ class Home extends React.Component {
           />
           <CheckBox name="test" checked label="Potwierdzam" handleChange={() => {}} />
           <CheckBox name="test" checked={false} label="Potwierdzam" handleChange={() => {}} />
-          <DateInput name="test-name" />
+          {/* <DateInput name="test-name" /> */}
           <SliderInput name="test-name" step={10} min={20} max={120} value={100} />
         </FormContainer>
         <ProgressIndicator

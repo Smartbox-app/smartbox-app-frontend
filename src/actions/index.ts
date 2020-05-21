@@ -4,5 +4,8 @@ import * as modal from './modal';
 import * as notifications from './notifications';
 import * as lang from './lang';
 import * as user from './users';
+import * as order from './order';
+import * as apiTable from './api-table';
+import * as boxes from './boxes';
 
-export { appStatus, auth, modal, notifications, lang, user };
+export { appStatus, apiTable, auth, boxes, modal, notifications, lang, user, order };

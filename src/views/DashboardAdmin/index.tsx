@@ -1,11 +1,13 @@
 import React from 'react';
 import { Route, Redirect, Switch } from 'react-router-dom';
-import { Main } from '../../components/Layout';
+import { Main, Footer } from '../../components/Layout';
 import DashboardContainer from '../../components/Layout/DashboardContainer';
-import { Welcome } from '../DashboardCommon';
+import { Welcome, Order } from '../DashboardCommon';
 // import Users from './Users';
 import Home from '../Home';
 import Navigation from '../../components/Layout/Navigation';
+import WorkersManagement from './WorkersManagement';
+import Managment from './Managment';
 
 class DashboardAdmin extends React.Component {
   private menuItems: any[];
@@ -24,8 +26,8 @@ class DashboardAdmin extends React.Component {
       },
       {
         icon: '/assets/icons/dashboard.svg',
-        text: 'Pracownicy',
-        address: '/admin/workers',
+        text: 'Zarządzanie',
+        address: '/admin/managment',
       },
       {
         icon: '/assets/icons/account.svg',
@@ -44,10 +46,12 @@ class DashboardAdmin extends React.Component {
           <Switch>
             <Route exact path="/admin" render={() => <Redirect to="/admin/main" />} />
             <Route path="/admin/main" component={Welcome} />
-            <Route path="/admin/contact" component={Home} />
+            <Route path="/admin/order/:step" component={Order} />
             <Route path="/admin/account" component={Home} />
+            <Route path="/admin/managment" component={Managment} />
           </Switch>
         </Main>
+        <Footer />
       </DashboardContainer>
     );
   }
