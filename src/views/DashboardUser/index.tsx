@@ -1,17 +1,17 @@
 import React from 'react';
+
 import { Route, Redirect, Switch } from 'react-router-dom';
 import { Main } from '../../components/Layout';
-import DashboardContainer from '../../components/Layout/DashboardContainer';
-// import { Orders, Subcontractor, Products, Profile, Payment, Calendar } from '../DashboardCommon';
-// import Users from './Users';
-import Home from '../Home';
 import { Welcome, Order } from '../DashboardCommon';
+import { MenuItemType } from '../../types/menu-item';
+
+import DashboardContainer from '../../components/Layout/DashboardContainer';
 import Navigation from '../../components/Layout/Navigation';
 
 class DashboardUser extends React.Component {
-  private menuItems: any[];
+  private menuItems: MenuItemType[];
 
-  constructor(props: any) {
+  constructor(props: {}) {
     super(props);
     this.menuItems = [];
   }
@@ -19,12 +19,12 @@ class DashboardUser extends React.Component {
   private setMenuItems = () => {
     this.menuItems = [
       {
-        icon: '/assets/icons/dashboard.svg',
+        icon: 'dashboard.svg',
         text: 'Home',
         address: '/user/main',
       },
       {
-        icon: '/assets/icons/account.svg',
+        icon: 'account.svg',
         text: 'Konto',
         address: '/user/main',
       },

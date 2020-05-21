@@ -1,7 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import { ReactSVG } from 'react-svg';
 import { MenuItemType } from '../../../../types/menu-item';
 
@@ -26,6 +25,7 @@ class MenuItem extends React.Component<Props> {
 
   render(): any {
     const { address, icon, text, badge, customClass } = this.props;
+    const fullIconLink = `/assets/icons/${icon}`;
     const itemClass = `main-menu-item ${!icon ? 'sub-menu-item' : ''} ${customClass || ''}`;
     if (address) {
       return (
@@ -37,7 +37,7 @@ class MenuItem extends React.Component<Props> {
           onClick={this.handleItemClick}
         >
           {badge && <span className="menu-item-badge fa fa-exclamation-circle" />}
-          {icon !== null && <ReactSVG src={icon} className="main-menu-item_logo menu-icon" />}
+          {icon !== null && <ReactSVG src={fullIconLink} className="main-menu-item_logo menu-icon" />}
           <span className="main-menu-item_text">{text}</span>
         </NavLink>
       );
@@ -45,7 +45,7 @@ class MenuItem extends React.Component<Props> {
       return (
         <a role="button" tabIndex={0} title={text} className={itemClass} onClick={this.handleItemClick}>
           {badge && <span className="menu-item-badge fa fa-exclamation-circle" />}
-          {icon !== null && <ReactSVG src={icon} className="main-menu-item_logo menu-icon" />}
+          {icon !== null && <ReactSVG src={fullIconLink} className="main-menu-item_logo menu-icon" />}
           <span className="main-menu-item_text">{text}</span>
         </a>
       );

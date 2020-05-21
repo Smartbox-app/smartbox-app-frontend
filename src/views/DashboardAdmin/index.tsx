@@ -3,7 +3,6 @@ import { Route, Redirect, Switch } from 'react-router-dom';
 import { Main, Footer } from '../../components/Layout';
 import DashboardContainer from '../../components/Layout/DashboardContainer';
 import { Welcome, Order } from '../DashboardCommon';
-// import Users from './Users';
 import Home from '../Home';
 import Navigation from '../../components/Layout/Navigation';
 import WorkersManagement from './WorkersManagement';
@@ -20,17 +19,17 @@ class DashboardAdmin extends React.Component {
   private setMenuItems = () => {
     this.menuItems = [
       {
-        icon: '/assets/icons/dashboard.svg',
+        icon: 'dashboard.svg',
         text: 'Home',
         address: '/admin/main',
       },
       {
-        icon: '/assets/icons/dashboard.svg',
+        icon: 'dashboard.svg',
         text: 'Zarządzanie',
         address: '/admin/managment',
       },
       {
-        icon: '/assets/icons/account.svg',
+        icon: 'account.svg',
         text: 'Konto',
         address: '/admin/account',
       },
