@@ -7,7 +7,11 @@ import langReducer from './lang-reducer';
 import userReducer from './user-reducer';
 import spinnerReducer from './spinner-reducer';
 import orderReducer from './order-reducer';
-import boxesReducer from './boxes-reducer';
+import boxesReducer, { Boxes } from './boxes-reducer';
+
+export interface ApplicationState {
+  boxes: Boxes;
+}
 
 const appReducer = combineReducers({
   appStatus: appStatusReducer,
