@@ -13,8 +13,7 @@ interface Props {
 class Carousel extends Component<Props> {
   private dataToDisplay = this.props.imagesList.map((data: string) => (
     <div>
-      {' '}
-      <img src={data} alt="offer-screen" />
+      <img src={data} alt="Item stored in the box" />
     </div>
   ));
 
@@ -29,7 +28,6 @@ class Carousel extends Component<Props> {
       prevArrow: <CustomeArrow left />,
     };
 
-    console.log('asd');
     return (
       <div className="slider-wrapper">
         <Slider {...settings}>{this.dataToDisplay}</Slider>
