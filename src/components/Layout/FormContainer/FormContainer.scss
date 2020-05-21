@@ -5,7 +5,7 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  width: 500px;
+  width: $max-form-width;
 
   form {
     flex: 1;

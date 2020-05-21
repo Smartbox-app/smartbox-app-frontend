@@ -7,14 +7,11 @@ interface Props {
   children: React.ReactNode;
 }
 
-const Main = (props: Props) => {
-  const { children } = props;
-  return (
-    <main>
-      {children}
-      <Footer />
-    </main>
-  );
-};
+const Main = ({ children }: Props) => (
+  <main>
+    {children}
+    <Footer />
+  </main>
+);
 
 export default Main;
