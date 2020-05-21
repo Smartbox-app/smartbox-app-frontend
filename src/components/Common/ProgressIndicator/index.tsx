@@ -5,13 +5,13 @@ import Bar from './Bar';
 
 import './ProgressIndicator.scss';
 
-interface RenderData {
+interface SingleStep {
   value: number;
   desc: string;
 }
 
 interface Props {
-  data: RenderData[];
+  data: SingleStep[];
   current: number;
 }
 
@@ -20,7 +20,7 @@ class ProgressIndicator extends Component<Props> {
     const { data, current } = this.props;
     return (
       <div className="progress-indicator-wrapper">
-        {data.map((data: RenderData) => (
+        {data.map((data: SingleStep) => (
           <div className="single-stamp">
             <Item value={data.desc} order={data.value} current={data.value === current} done={data.value < current} />
             <Bar done={data.value < current} current={data.value === current} />
