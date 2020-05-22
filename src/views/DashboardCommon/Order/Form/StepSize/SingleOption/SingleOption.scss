@@ -6,27 +6,6 @@ $single-option-height: 165px;
 $single-option-width-big: 250px; 
 $single-option-height-big: 250px;
 
-input[type=radio] {
-  display: none;
-}
-
-/* radio */
-
-input[type=radio]:checked + label:before {
-  content: '';
-  display: block;
-  width: $single-option-width;
-  height: $single-option-height;
-  background-color: lighten($color-primary, 30%);
-  position: absolute;
-  border-radius: $main-spacing/4;
-  box-shadow: 0px 0px 3px 3px lighten($color-primary, 30%);
-}
-
-.img-description {
-  text-align: center;
-}
-
 .single-option-wrapper {
   display: flex;
   flex-wrap: wrap;
@@ -34,6 +13,21 @@ input[type=radio]:checked + label:before {
   justify-content: center;
   align-items: center;
   margin-bottom: $main-spacing/2;
+
+  input[type=radio] {
+    display: none;
+  }
+  
+  input[type=radio]:checked + label:before {
+    content: '';
+    display: block;
+    width: $single-option-width;
+    height: $single-option-height;
+    background-color: lighten($color-primary, 30%);
+    position: absolute;
+    border-radius: $main-spacing/4;
+    box-shadow: 0px 0px 3px 3px lighten($color-primary, 30%);
+  }
 
   .radio-img {
     margin: 0 $main-spacing;
@@ -53,6 +47,10 @@ input[type=radio]:checked + label:before {
 
     display: flex;
     justify-content: center;
+  }
+
+  .img-description {
+    text-align: center;
   }
 }
 
