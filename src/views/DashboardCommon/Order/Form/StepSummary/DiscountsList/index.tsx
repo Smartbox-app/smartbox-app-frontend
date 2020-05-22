@@ -1,20 +1,24 @@
-import React from 'react';
-import FormHeader from '../../../../../../components/Layout/FormHeader';
-import RadioDiscout from './RadioDiscout';
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
+import FormHeader from '../../../../../../components/Layout/FormHeader';
+import { ButtonsContainer } from '../../../../../../components/Layout';
+import { Button } from '../../../../../../components/Common';
+import { modal } from '../../../../../../actions';
+
+import RadioDiscout from './RadioDiscout';
 import './DiscountsList.scss';
+import DiscoutCode from './DiscountCode';
+import { ApplicationState } from '../../../../../../reducers';
 
 interface Props {
   register: any;
+  discoutsList: any[];
+  showModal: (content: React.ReactNode) => void;
 }
 
-const DiscountsList = ({ register }: Props) => {
-  const discoutsList = [
-    { text: 'Jednorazowy rabat 5%', value: 5 },
-    { text: 'Jednorazowy rabat 10%', value: 10 },
-    { text: 'Kod rabatowy', value: 0 },
-  ];
-
+const DiscountsList = ({ register, showModal, discoutsList }: Props) => {
   const dataToDisplay = discoutsList.map((data: any) => (
     <RadioDiscout text={data.text} value={data.value} register={register} />
   ));
@@ -23,8 +27,23 @@ const DiscountsList = ({ register }: Props) => {
     <div>
       <FormHeader title="Stałe rabaty:" />
       <div className="discounts-list-wrapper">{dataToDisplay}</div>
+      <ButtonsContainer>
+        <Button text="Dodaj kod rabatowy" primary click={() => showModal(<DiscoutCode />)} />
+      </ButtonsContainer>
     </div>
   );
 };
 
-export default DiscountsList;
+const mapStateToProps = (state: ApplicationState) => ({
+  discoutsList: state.order.discountList,
+});
+
+const mapDispatchToProps = (dispatch: any) =>
+  bindActionCreators(
+    {
+      ...modal,
+    },
+    dispatch,
+  );
+
+export default connect(mapStateToProps, mapDispatchToProps)(DiscountsList);

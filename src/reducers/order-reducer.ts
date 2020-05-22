@@ -15,6 +15,7 @@ export type OrderState = {
   paymentId: string;
   countedPrice: number;
   boxAvailability: BoxGroupAvailability[];
+  discountList: any[];
 };
 
 interface FormStepSuccess {
@@ -52,6 +53,10 @@ const initialState: OrderState = {
   paymentId: '',
   countedPrice: 0,
   boxAvailability: [],
+  discountList: [
+    { text: 'Jednorazowy rabat 5%', value: 5 },
+    { text: 'Jednorazowy rabat 10%', value: 10 },
+  ],
 };
 
 export default (state: OrderState = initialState, action: Action): any => {

@@ -3,6 +3,7 @@
 
 .discounts-list-wrapper {
   display: flex;
+  flex: 0 0 100%;
   flex-direction: row;
   margin-left: -$main-spacing *2;
   margin-right: -$main-spacing *2;

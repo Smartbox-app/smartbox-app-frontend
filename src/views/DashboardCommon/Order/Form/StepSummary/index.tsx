@@ -35,7 +35,7 @@ const StepSummary = ({ formData, countedPrice, UpdateFormData, FormGoNextStep, u
   //   }
   // });
 
-  const { handleSubmit, register } = useForm();
+  const { handleSubmit, register, watch } = useForm();
 
   const onSubmit = (data: any) => {
     console.log('onSubmit', data);
