@@ -66,8 +66,6 @@ const StepSummary = ({ formData, countedPrice, UpdateFormData, FormGoNextStep, u
           Termin rozpoczęcia wynajmu: <span>{formData.dateEnd.toLocaleDateString()}</span>
         </div>
         <div className="row">
-          {console.log('formatPrice(countedPrice)', countedPrice)}
-          {console.log('formatPrice(countedPrice)', formatPrice(countedPrice))}
           Opłata za wynajem: <span>{formatPrice(countedPrice)}</span>
         </div>
 
@@ -81,7 +79,7 @@ const StepSummary = ({ formData, countedPrice, UpdateFormData, FormGoNextStep, u
 
       <ButtonsContainer max>
         <Button outline text="Wróć" click={() => onBack()} />
-        <Button type="submit" primary text="Przejdz do płatności" />
+        <Button type="submit" primary text="Przejdź do umowy" />
       </ButtonsContainer>
     </form>
   );

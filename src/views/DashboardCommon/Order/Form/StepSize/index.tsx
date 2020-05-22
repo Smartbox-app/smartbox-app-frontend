@@ -44,7 +44,7 @@ const StepSize = ({ history, UpdateFormData, FormGoNextStep, match, fetchBoxAvai
     FormGoNextStep(2);
     history.push(`/${UserService.getSlugByRole(user.role)}/order/step/2`);
   };
-
+  console.log('watch', watch());
   return (
     <FormContainer className="step-size-wrapper">
       <FormHeader title="Proszę wybrać rozmiar magazynu:" />
@@ -98,7 +98,7 @@ const StepSize = ({ history, UpdateFormData, FormGoNextStep, match, fetchBoxAvai
 
         <ButtonsContainer max>
           <Button disabled text="Wróć" />
-          <Button type="submit" primary text="Dalej" />
+          <Button type="submit" primary text="Dalej" disabled={watch().size === ''} />
         </ButtonsContainer>
       </form>
     </FormContainer>

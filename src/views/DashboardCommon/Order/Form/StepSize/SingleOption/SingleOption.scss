@@ -2,9 +2,9 @@
 @import "../../../../../../config/mixins.scss";
 
 $single-option-width: 150px;
-$single-option-width-big: 300px; 
 $single-option-height: 165px;
-$single-option-height-big: 300px;
+$single-option-width-big: 250px; 
+$single-option-height-big: 250px;
 
 input[type=radio] {
   display: none;
