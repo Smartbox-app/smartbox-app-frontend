@@ -7,6 +7,7 @@ import { Tabs } from '../../../components/Common';
 import WorkersManagement from '../WorkersManagement';
 import { Section } from '../../../components/Layout';
 import BoxMapManagment from '../BoxMapManagment';
+import DiscountCodes from '../DiscountCodes';
 
 interface Props {
   user: IUser;
@@ -33,6 +34,12 @@ class Managment extends Component<Props> {
               to: `/${UserService.getSlugByRole(user.role)}/managment/map`,
               text: 'Skrzynki',
             },
+            {
+              className: 'tab',
+              activeClassName: 'active',
+              to: `/${UserService.getSlugByRole(user.role)}/managment/codes`,
+              text: 'Rabaty',
+            },
           ]}
         />
         <Switch>
@@ -43,6 +50,7 @@ class Managment extends Component<Props> {
           />
           <Route path={`/${UserService.getSlugByRole(user.role)}/managment/workers`} component={WorkersManagement} />
           <Route path={`/${UserService.getSlugByRole(user.role)}/managment/map`} component={BoxMapManagment} />
+          <Route path={`/${UserService.getSlugByRole(user.role)}/managment/codes`} component={DiscountCodes} />
         </Switch>
       </Section>
     );
