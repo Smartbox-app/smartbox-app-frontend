@@ -108,7 +108,6 @@ const StepSize = ({
 
   return (
     <FormContainer className="step-size-wrapper">
-      {console.log('boxAvailability', boxAvailability)}
       <FormHeader title="Proszę wybrać rozmiar magazynu:" />
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="options-wrapper">{options}</div>

@@ -8,6 +8,7 @@ import StepSize from './StepSize';
 import StepDuration from './StepDuration';
 import StepSummary from './StepSummary';
 import StepPayment from './StepPayment';
+import StepAgreement from './StepAgreement';
 import UserService from '../../../../services/user-service';
 
 interface Props {
@@ -21,7 +22,7 @@ const Form = ({ user }: Props) => (
     <Route path={`/${UserService.getSlugByRole(user.role)}/order/step/1`} component={StepSize} />
     <Route path={`/${UserService.getSlugByRole(user.role)}/order/step/2`} component={StepDuration} />
     <Route path={`/${UserService.getSlugByRole(user.role)}/order/step/3`} component={StepSummary} />
-    <Route path={`/${UserService.getSlugByRole(user.role)}/order/step/4`} component={StepPayment} />
+    <Route path={`/${UserService.getSlugByRole(user.role)}/order/step/4`} component={StepAgreement} />
     <Route path={`/${UserService.getSlugByRole(user.role)}/order/step/5`} component={StepPayment} />
   </Switch>
 );

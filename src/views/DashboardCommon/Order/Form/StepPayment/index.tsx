@@ -47,8 +47,8 @@ const StepPayment = ({ formData, FormGoNextStep, user }: Props) => {
   };
 
   const onBack = () => {
-    FormGoNextStep(2);
-    history.push(`/${UserService.getSlugByRole(user.role)}/order/step/2`);
+    FormGoNextStep(4);
+    history.push(`/${UserService.getSlugByRole(user.role)}/order/step/4`);
   };
 
   return (

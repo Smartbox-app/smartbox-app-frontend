@@ -53,8 +53,6 @@ const StepSummary = ({ formData, countedPrice, UpdateFormData, FormGoNextStep, u
     history.push(`/${UserService.getSlugByRole(user.role)}/order/step/2`);
   };
 
-  const desktop = window.matchMedia('(min-width: 920px)').matches;
-
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="form-step-two">
       <FormHeader title="Podsumowanie zamówienia:" />
@@ -68,13 +66,6 @@ const StepSummary = ({ formData, countedPrice, UpdateFormData, FormGoNextStep, u
         <div className="row">
           Opłata za wynajem: <span>{formatPrice(countedPrice)}</span>
         </div>
-
-        {desktop && (
-          <object className="rules-embed" data="/assets/dummy_pdf.pdf" type="application/pdf">
-            Regulamin serwisu
-          </object>
-        )}
-        {!desktop && <h2>Przeczytaj i zaakceptuj regulamin</h2>}
       </div>
 
       <ButtonsContainer max>
