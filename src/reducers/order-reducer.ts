@@ -14,6 +14,7 @@ export type OrderState = {
   formStep: number;
   paymentId: string;
   countedPrice: number;
+  boxAvailability: BoxGroupAvailability[];
 };
 
 interface FormStepSuccess {
@@ -31,12 +32,12 @@ interface SentRentBoxRequestSuccess {
   payload: string;
 }
 
-interface BoxGroup {
+interface FetchBoxAvailability {
   type: 'FETCH_BOX_AVAILABILITY_SUCCESS';
   payload: BoxGroupAvailability[];
 }
 
-type Action = FormStepSuccess | FormGoNextStep | BoxGroup | SentRentBoxRequestSuccess;
+type Action = FormStepSuccess | FormGoNextStep | FetchBoxAvailability | SentRentBoxRequestSuccess;
 
 const initialState: OrderState = {
   formData: {
@@ -50,6 +51,7 @@ const initialState: OrderState = {
   formStep: 1,
   paymentId: '',
   countedPrice: 0,
+  boxAvailability: [],
 };
 
 export default (state: OrderState = initialState, action: Action): any => {
@@ -92,6 +94,13 @@ export default (state: OrderState = initialState, action: Action): any => {
       return {
         ...state,
         paymentId: action.payload,
+      };
+    }
+
+    case 'FETCH_BOX_AVAILABILITY_SUCCESS': {
+      return {
+        ...state,
+        boxAvailability: action.payload,
       };
     }
 

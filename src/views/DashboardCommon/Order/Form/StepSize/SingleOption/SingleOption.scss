@@ -69,6 +69,24 @@ input[type=radio]:checked + label:before {
   padding: 0 10px;
 }
 
+.img-value-disabled {
+  color: $color-danger;
+}
+
+.single-option-disable {
+  cursor: not-allowed !important;
+  &::before {
+    content: '';
+    display: block;
+    width: $single-option-width;
+    height: $single-option-height;
+    background-color: lighten($color-disabled, 1%);
+    position: absolute;
+    border-radius: $main-spacing/4;
+    box-shadow: 0px 0px 3px 3px lighten($color-disabled, 10%);
+  }
+}
+
 @include gt-xs {
   .single-option-wrapper {
     flex: 0 0 50%;
@@ -91,5 +109,11 @@ input[type=radio]:checked + label:before {
   }
   .img-value {
     font-size: 2rem;
+  }
+  .single-option-disable {
+    &::before {
+      width: $single-option-width-big;
+      height: $single-option-height-big;
+    }
   }
 }

@@ -122,13 +122,13 @@ $button-img-size: 20px;
     align-items: center;
     
     .button-img {
-      width: 20px;
-      height: 20px;
+      width: $main-spacing *2;
+      height: $main-spacing *2;
     }
   }
 
   &.only-icon {
-      padding: 10px;
+      padding: $main-spacing;
 
     .button-img {
       width: $button-img-size;
