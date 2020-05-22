@@ -11,10 +11,12 @@ import { ButtonsContainer } from '../../../../../components/Layout';
 import { history } from '../../../../../App';
 import { Form } from '../../../../../reducers/order-reducer';
 
-import './StepSummary.scss';
 import FormHeader from '../../../../../components/Layout/FormHeader';
 import { formatPrice } from '../../../../../utils/format-price';
 import UserService from '../../../../../services/user-service';
+import Discount from './DiscountsList';
+
+import './StepSummary.scss';
 
 interface Props {
   history: any;
@@ -27,25 +29,26 @@ interface Props {
 }
 
 const StepSummary = ({ formData, countedPrice, UpdateFormData, FormGoNextStep, user, sentRentBoxRequest }: Props) => {
-  useEffect(() => {
-    if (formData.size.length === 0) {
-      history.push(`/${UserService.getSlugByRole(user.role)}/order/step/1`);
-    }
-  });
+  // useEffect(() => {
+  //   if (formData.size.length === 0) {
+  //     history.push(`/${UserService.getSlugByRole(user.role)}/order/step/1`);
+  //   }
+  // });
 
-  const { handleSubmit } = useForm();
+  const { handleSubmit, register } = useForm();
 
   const onSubmit = (data: any) => {
-    UpdateFormData(data);
-    sentRentBoxRequest({
-      stockId: undefined,
-      size: Number(formData.size),
-      startAt: formData.dateStart,
-      finishAt: formData.dateEnd,
-      cost: 1,
-    });
-    FormGoNextStep(4);
-    history.push(`/${UserService.getSlugByRole(user.role)}/order/step/4`);
+    console.log('onSubmit', data);
+    // UpdateFormData(data);
+    // sentRentBoxRequest({
+    //   stockId: undefined,
+    //   size: Number(formData.size),
+    //   startAt: formData.dateStart,
+    //   finishAt: formData.dateEnd,
+    //   cost: 1,
+    // });
+    // FormGoNextStep(4);
+    // history.push(`/${UserService.getSlugByRole(user.role)}/order/step/4`);
   };
 
   const onBack = () => {
@@ -55,6 +58,7 @@ const StepSummary = ({ formData, countedPrice, UpdateFormData, FormGoNextStep, u
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="form-step-two">
+      <Discount register={register} />
       <FormHeader title="Podsumowanie zamówienia:" />
       <div className="order-summary-wrapper">
         <div className="row">

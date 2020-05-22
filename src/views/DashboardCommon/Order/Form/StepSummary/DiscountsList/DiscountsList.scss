@@ -1,0 +1,9 @@
+@import '../../../../../../config/variables.scss';
+@import '../../../../../../config/mixins.scss';
+
+.discounts-list-wrapper {
+  display: flex;
+  flex-direction: row;
+  margin-left: -$main-spacing *2;
+  margin-right: -$main-spacing *2;
+}
