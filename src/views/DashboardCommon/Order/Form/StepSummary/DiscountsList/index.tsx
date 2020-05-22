@@ -12,6 +12,7 @@ const DiscountsList = ({ register }: Props) => {
   const discoutsList = [
     { text: 'Jednorazowy rabat 5%', value: 5 },
     { text: 'Jednorazowy rabat 10%', value: 10 },
+    { text: 'Kod rabatowy', value: 0 },
   ];
 
   const dataToDisplay = discoutsList.map((data: any) => (
@@ -20,7 +21,7 @@ const DiscountsList = ({ register }: Props) => {
 
   return (
     <div>
-      <FormHeader title="Radio znizki:" />
+      <FormHeader title="Stałe rabaty:" />
       <div className="discounts-list-wrapper">{dataToDisplay}</div>
     </div>
   );
