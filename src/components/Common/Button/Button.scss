@@ -1,6 +1,8 @@
 @import "../../../config/variables";
 @import "../../../config/mixins.scss";
 
+$button-img-size: 20px;
+
 .button {
   padding: $main-spacing $main-spacing * 2;
   margin: $main-spacing / 2 0;
@@ -27,10 +29,6 @@
 
   &:visited {
     color: $color-text;
-  }
-
-  &:hover {
-    // background: darken($color-background, 20%);
   }
 
   &.auto {
@@ -126,8 +124,6 @@
     .button-img {
       width: 20px;
       height: 20px;
-      // margin-right: 10px;
-      // margin-left: -5px;
     }
   }
 
@@ -135,12 +131,11 @@
       padding: 10px;
 
     .button-img {
-      width: 20px;
-      height: 20px;
+      width: $button-img-size;
+      height: $button-img-size;
       margin: 0;
     }
   }
-
 
 }
 

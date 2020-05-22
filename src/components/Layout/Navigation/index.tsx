@@ -1,29 +1,31 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import MenuItem from './MenuItem';
-import { MenuItemType } from '../../../types/menuItem';
 import { auth } from '../../../actions';
 
-import './Navigation.scss';
+import { MenuItemType } from '../../../types/menu-item';
+
+import MenuItem from './MenuItem';
 import LogoContainer from '../LogoContainer';
+
+import './Navigation.scss';
 
 interface Props {
   menuItems: MenuItemType[];
   logout: () => void;
 }
 
-class Navigation extends Component<Props> {
-  private basicItems: MenuItemType[] = [
+const Navigation = ({ logout, menuItems }: Props) => {
+  const basicItems: MenuItemType[] = [
     {
       icon: '/assets/icons/logout.svg',
       text: 'Wyloguj',
-      onClick: () => this.props.logout(),
+      onClick: logout,
       customClass: 'logout-button',
     },
   ];
 
-  private menu = [...this.props.menuItems, ...this.basicItems].map((item: MenuItemType, index: number) => (
+  const menu = [...menuItems, ...basicItems].map((item: MenuItemType, index: number) => (
     <MenuItem
       key={item.text}
       address={item.address}
@@ -35,16 +37,15 @@ class Navigation extends Component<Props> {
     />
   ));
 
-  render() {
-    const desktop = window.matchMedia('(min-width: 920px)').matches;
-    return (
-      <div className="page-header-wrapper">
-        {desktop && <LogoContainer />}
-        <div className="navigation-wrapper">{this.menu}</div>
-      </div>
-    );
-  }
-}
+  const desktop = window.matchMedia('(min-width: 920px)').matches;
+
+  return (
+    <div className="page-header-wrapper">
+      {desktop && <LogoContainer />}
+      <div className="navigation-wrapper">{menu}</div>
+    </div>
+  );
+};
 
 const mapDispatchToProps = (dispatch: any) =>
   bindActionCreators(

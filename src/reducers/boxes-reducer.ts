@@ -1,11 +1,11 @@
 import { BoxListItem, RentDetailsRes, RentStatus } from 'smartbox-types';
 
-interface State {
+export type Boxes = {
   boxesGroup: BoxListItem[];
   singleBoxDetail: RentDetailsRes;
-}
+};
 
-const initialState = {
+const initialState: Boxes = {
   boxesGroup: [],
   singleBoxDetail: {
     number: '',
@@ -33,7 +33,7 @@ interface FetchSingleBoxDetails {
 
 type Action = FetchBoxStatuses | FetchSingleBoxDetails;
 
-export default (state: State = initialState, action: Action): any => {
+export default (state: Boxes = initialState, action: Action): any => {
   switch (action.type) {
     case 'FETCH_BOX_STATUSES_SUCCESS': {
       return {

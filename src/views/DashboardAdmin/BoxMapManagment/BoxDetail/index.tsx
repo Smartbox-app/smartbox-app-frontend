@@ -21,7 +21,6 @@ const BoxDetail = ({ selectedBoxId, singleBoxDetail, rentId }: Props) => {
   const dummyPhone = 333222111;
   const isThisBoxFree = (data: string): boolean => data === '';
 
-  console.log('asdasdad', isThisBoxFree(rentId));
   return (
     <div className="detail-wrapper">
       <SectionHeader title="Szczegóły wybranej skrytki:" />

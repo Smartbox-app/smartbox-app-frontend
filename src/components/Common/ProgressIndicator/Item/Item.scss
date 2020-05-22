@@ -1,7 +1,9 @@
 @import '../../../../config/variables.scss';
 @import '../../../../config/mixins.scss';
 
-.ittem-wrapper {
+$icon-size: $main-spacing * 4;
+
+.item-wrapper {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -12,9 +14,9 @@
   font-size: 1.1rem;
 
   .item-icon {
-    width: 30px;
-    height: 30px;
-    border-radius: 15px;
+    width: $icon-size;
+    height: $icon-size;
+    border-radius: $icon-size /2;
     background: #fff;
     color: $color-disabled;
     border: 2px solid $color-disabled;

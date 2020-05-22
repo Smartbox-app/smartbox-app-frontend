@@ -1,10 +1,9 @@
 // homepage view - example
 
 import React from 'react';
-import DatePicker from 'react-date-picker';
-import { Main, ButtonsContainer, FormContainer } from '../../components/Layout';
+import { ButtonsContainer, FormContainer } from '../../components/Layout';
 import { __ } from '../../helpers/i18n';
-import { Button, Spinner, Input, CheckBox, DateInput, SliderInput, ProgressIndicator } from '../../components/Common';
+import { Button, Input, CheckBox, ProgressIndicator } from '../../components/Common';
 
 import './Home.scss';
 
@@ -14,7 +13,6 @@ class Home extends React.Component {
   };
 
   onChange = (date: any) => {
-    console.log(date);
     this.setState({ date });
   };
 
@@ -98,7 +96,6 @@ class Home extends React.Component {
           <CheckBox name="test" checked label="Potwierdzam" handleChange={() => {}} />
           <CheckBox name="test" checked={false} label="Potwierdzam" handleChange={() => {}} />
           {/* <DateInput name="test-name" /> */}
-          <SliderInput name="test-name" step={10} min={20} max={120} value={100} />
         </FormContainer>
         <ProgressIndicator
           current={2}

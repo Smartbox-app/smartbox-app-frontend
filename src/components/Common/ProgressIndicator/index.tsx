@@ -4,21 +4,21 @@ import Bar from './Bar';
 
 import './ProgressIndicator.scss';
 
-interface RenderData {
+interface SingleStep {
   value: number;
   desc: string;
 }
 
 interface Props {
-  data: RenderData[];
+  data: SingleStep[];
   current: number;
 }
 
 const ProgressIndicator = ({ data, current }: Props) => {
-  const dataToDisplay = data.map((single: RenderData, key: number) => (
+  const dataToDisplay = data.map((data: SingleStep, key: number) => (
     <div className="single-stamp" key={key}>
-      <Item value={single.desc} order={single.value} current={single.value === current} done={single.value < current} />
-      {key !== 4 && <Bar done={single.value} current={current} />}
+      <Item value={data.desc} order={data.value} current={data.value === current} done={data.value < current} />
+      {key !== 4 && <Bar done={data.value} current={current} />}
     </div>
   ));
   return <div className="progress-indicator-wrapper">{dataToDisplay}</div>;

@@ -2,31 +2,6 @@ import { UserRole } from 'smartbox-types';
 import ApiService from '../services/api-service';
 import { notifications } from '../actions';
 
-export const getSingleTypeUsers = (userRole: UserRole) => async (dispatch: any) => {
-  let urlParam = '';
-  switch (userRole) {
-    case UserRole.admin:
-      urlParam = 'Administrator';
-      break;
-    case UserRole.user:
-      urlParam = 'Klient';
-      break;
-    case UserRole.worker:
-      urlParam = 'Pracownik';
-      break;
-    default:
-      break;
-  }
-  await ApiService.get(
-    dispatch,
-    'GET_SINGEL_TYPE_USERS_SUCCESS',
-    'GET_SINGEL_TYPE_USERS_FAILED',
-    null,
-    null,
-    `user/list/${urlParam}`,
-  );
-};
-
 export const blockUser = (userId: string, userRole: UserRole = UserRole.admin) => async (dispatch: any) => {
   await ApiService.patch(
     dispatch,
@@ -34,7 +9,6 @@ export const blockUser = (userId: string, userRole: UserRole = UserRole.admin) =
     'BLOCK_USER_FAILED',
     () => {
       dispatch(notifications.successNotification('Zablokowano użytkownika!'));
-      dispatch(getSingleTypeUsers(userRole));
     },
     null,
     `user/block/${userId}`,
@@ -50,7 +24,6 @@ export const enableUser = (userId: string, userRole: UserRole = UserRole.admin) 
     'ENABLE_USER_FAILED',
     () => {
       dispatch(notifications.successNotification('Odblokowano użytkownika!'));
-      dispatch(getSingleTypeUsers(userRole));
     },
     null,
     `user/enable/${userId}`,

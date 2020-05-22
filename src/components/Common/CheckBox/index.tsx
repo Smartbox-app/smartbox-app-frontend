@@ -1,10 +1,10 @@
 import React from 'react';
 
 interface Props {
-  label?: string;
   name: string;
   checked: boolean;
   handleChange: (checked: boolean) => void;
+  label?: string;
 }
 
 const CheckBox = ({ label, name, checked, handleChange }: Props) => (

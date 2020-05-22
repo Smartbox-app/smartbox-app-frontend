@@ -17,7 +17,6 @@ interface Props {
 }
 
 const Register = ({ successNotification }: Props) => {
-  console.log('register');
   const subButton = (
     <ButtonsContainer max>
       <Button text="Wyślij" type="submit" big primary rounded />

@@ -13,7 +13,6 @@ interface Props {
 class Carousel extends Component<Props> {
   private dataToDisplay = this.props.imagesList.map((data: string, key: number) => (
     <div key={`carousel-${key}`}>
-      {' '}
       <img src={data} alt="offer-screen" />
     </div>
   ));

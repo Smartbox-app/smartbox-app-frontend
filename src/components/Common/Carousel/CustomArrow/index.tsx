@@ -4,16 +4,16 @@ import './CustomArrow.scss';
 
 interface Props {
   className?: string;
-  onClick?: () => void;
   left?: boolean;
   right?: boolean;
+  onClick?: () => void;
 }
 
 const CustomArrow = ({ className, onClick, left, right }: Props) => (
   <div
     role="button"
     tabIndex={0}
-    className={`${1} custom-arrow ${left ? 'prev' : ''}  ${right ? 'next' : ''}`}
+    className={`custom-arrow ${left ? 'prev' : ''}  ${right ? 'next' : ''}`}
     onClick={onClick}
   >
     {right ? <span className="fa fa-arrow-right" /> : ''}

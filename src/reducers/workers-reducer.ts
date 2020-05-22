@@ -3,11 +3,9 @@ import { UserListRes } from 'smartbox-types';
 
 interface State {
   list: TableResponse<UserListRes>;
-  singleWorker: any;
 }
 
-const initialState = {
-  singleWorker: {},
+const initialState: State = {
   list: {
     countTotal: 0,
     items: [],

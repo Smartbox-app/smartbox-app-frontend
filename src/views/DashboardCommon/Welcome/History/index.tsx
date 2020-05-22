@@ -1,41 +1,21 @@
 import React from 'react';
+import Single, { SingleHistory } from './Single';
 
 import './History.scss';
-
-interface SingleHistory {
-  startData: Date;
-  endData: Date;
-  size: number;
-  location: string;
-  isActive: boolean;
-}
+import Legend from './Legend';
 
 interface Props {
   data: SingleHistory[];
 }
 
 const History = ({ data }: Props) => {
-  const getDate = (x: Date) => x.toLocaleDateString();
-  const getShortDate = (x: Date) => x.toLocaleDateString().slice(0, 5);
-
   const dataToDisplay =
-    data &&
-    data.map((single: SingleHistory, key: number) => (
-      <li className={`history-line ${single.isActive ? 'active' : ''}`} key={`history-${key}`}>
-        <span className="line-cell">
-          {getShortDate(single.startData)}-{getDate(single.endData)}
-        </span>
-        <span className="line-cell small">{single.size}m2</span>
-        <span className="line-cell">{single.location}</span>
-      </li>
-    ));
+    data && data.map((single: SingleHistory, key: number) => <Single single={single} key={`history-${key}`} />);
+
   return (
     <div className="history-wrapper">
       <ul className="history-list">{dataToDisplay}</ul>
-      <div className="history-legend">
-        <span className="legend-color" />
-        <p className="legend-desc">Aktywne magazyny</p>
-      </div>
+      <Legend />
     </div>
   );
 };

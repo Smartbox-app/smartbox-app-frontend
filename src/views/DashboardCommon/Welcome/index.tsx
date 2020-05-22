@@ -6,7 +6,7 @@ import { Carousel } from '../../../components/Common';
 
 import History from './History';
 import Discounts from './Discounts';
-import StorageInfo from './StorageInfo';
+import StorageList from './StorageList';
 
 import './Welcome.scss';
 
@@ -25,8 +25,8 @@ const Welcome = ({ userName }: Props) => (
     </Section>
     <Section full>
       <SectionHeader title="Zarządaj magazynami" />
-      <StorageInfo
-        storageList={[
+      <StorageList
+        list={[
           {
             size: 12,
             location: 'Warszawa, Mokotów',
@@ -59,22 +59,22 @@ const Welcome = ({ userName }: Props) => (
       <History
         data={[
           {
-            startData: new Date(),
-            endData: new Date(),
+            startDate: new Date(),
+            endDate: new Date(),
             size: 12,
             location: 'Warszawa, Mokotów',
             isActive: true,
           },
           {
-            startData: new Date(),
-            endData: new Date(),
+            startDate: new Date(),
+            endDate: new Date(),
             size: 3,
             location: 'Wrocław, Fabryczna',
             isActive: false,
           },
           {
-            startData: new Date(),
-            endData: new Date(),
+            startDate: new Date(),
+            endDate: new Date(),
             size: 6,
             location: 'Poznań, Jeżyce',
             isActive: false,
