@@ -15,8 +15,9 @@ import FormHeader from '../../../../../components/Layout/FormHeader';
 import { formatPrice } from '../../../../../utils/format-price';
 import UserService from '../../../../../services/user-service';
 
-import './StepAgreement.scss';
 import AgreementWrapper from './AgreementWrapper';
+import ScrollPosition from './ScrollPosition';
+import './StepAgreement.scss';
 
 interface Props {
   history: any;
@@ -62,6 +63,7 @@ const StepSummary = ({ formData, countedPrice, UpdateFormData, FormGoNextStep, u
     <form onSubmit={handleSubmit(onSubmit)}>
       <FormHeader title="Umowa zamówienia:" />
       <AgreementWrapper />
+      <ScrollPosition />
       <ButtonsContainer max>
         <Button outline text="Wróć" click={() => onBack()} />
         <Button type="submit" primary text="Przejdź do płatności" />
