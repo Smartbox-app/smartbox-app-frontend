@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { IUser, RentBoxReq } from 'smartbox-types';
+import { IUser, RentBoxReq, UserRole } from 'smartbox-types';
 import { Button } from '../../../../../components/Common';
 import { order } from '../../../../../actions';
 import { ButtonsContainer } from '../../../../../components/Layout';
@@ -12,12 +12,11 @@ import { history } from '../../../../../App';
 import { Form } from '../../../../../reducers/order-reducer';
 
 import FormHeader from '../../../../../components/Layout/FormHeader';
-import { formatPrice } from '../../../../../utils/format-price';
 import UserService from '../../../../../services/user-service';
 import Discount from './DiscountsList';
+import SummaryTable from './SummaryTable';
 
 import './StepSummary.scss';
-import SummaryTable from './SummaryTable';
 
 interface Props {
   history: any;
@@ -26,30 +25,32 @@ interface Props {
   user: IUser;
   UpdateFormData: (data: any) => void;
   FormGoNextStep: (data: number) => void;
-  sentRentBoxRequest: (data: RentBoxReq | any) => void;
+  sentRentBoxRequest: (data: RentBoxReq | any, nextStep: number, role: UserRole) => void;
 }
 
 const StepSummary = ({ formData, countedPrice, UpdateFormData, FormGoNextStep, user, sentRentBoxRequest }: Props) => {
-  // useEffect(() => {
-  //   if (formData.size.length === 0) {
-  //     history.push(`/${UserService.getSlugByRole(user.role)}/order/step/1`);
-  //   }
-  // });
+  useEffect(() => {
+    if (formData.size.length === 0) {
+      history.push(`/${UserService.getSlugByRole(user.role)}/order/step/1`);
+    }
+  });
 
   const { handleSubmit, register, watch } = useForm();
 
   const onSubmit = (data: any) => {
-    console.log('onSubmit', data);
-    // UpdateFormData(data);
-    // sentRentBoxRequest({
-    //   stockId: undefined,
-    //   size: Number(formData.size),
-    //   startAt: formData.dateStart,
-    //   finishAt: formData.dateEnd,
-    //   cost: 1,
-    // });
-    // FormGoNextStep(4);
-    // history.push(`/${UserService.getSlugByRole(user.role)}/order/step/4`);
+    UpdateFormData(data);
+    sentRentBoxRequest(
+      {
+        stockId: undefined,
+        size: Number(formData.size),
+        startAt: formData.dateStart,
+        finishAt: formData.dateEnd,
+        cost: 1,
+        discountCode: '',
+      },
+      4,
+      user.role,
+    );
   };
 
   const onBack = () => {

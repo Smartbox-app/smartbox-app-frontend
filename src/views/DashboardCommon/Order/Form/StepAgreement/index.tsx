@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { IUser, RentBoxReq } from 'smartbox-types';
+import { IUser, RentBoxReq, UserRole } from 'smartbox-types';
 import { Button } from '../../../../../components/Common';
 import { order } from '../../../../../actions';
 import { ButtonsContainer } from '../../../../../components/Layout';
@@ -24,7 +24,7 @@ interface Props {
   user: IUser;
   UpdateFormData: (data: any) => void;
   FormGoNextStep: (data: number) => void;
-  sentRentBoxRequest: (data: RentBoxReq | any) => void;
+  sentRentBoxRequest: (data: RentBoxReq | any, nextStep: number, role: UserRole) => void;
 }
 
 const StepSummary = ({ formData, countedPrice, UpdateFormData, FormGoNextStep, user, sentRentBoxRequest }: Props) => {
@@ -38,15 +38,18 @@ const StepSummary = ({ formData, countedPrice, UpdateFormData, FormGoNextStep, u
 
   const onSubmit = (data: any) => {
     UpdateFormData(data);
-    sentRentBoxRequest({
-      stockId: undefined,
-      size: Number(formData.size),
-      startAt: formData.dateStart,
-      finishAt: formData.dateEnd,
-      cost: 1,
-    });
-    FormGoNextStep(5);
-    history.push(`/${UserService.getSlugByRole(user.role)}/order/step/5`);
+    sentRentBoxRequest(
+      {
+        stockId: undefined,
+        size: Number(formData.size),
+        startAt: formData.dateStart,
+        finishAt: formData.dateEnd,
+        cost: 1,
+        discountCode: '',
+      },
+      5,
+      user.role,
+    );
   };
 
   const onBack = () => {

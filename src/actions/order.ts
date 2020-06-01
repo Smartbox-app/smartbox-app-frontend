@@ -1,5 +1,7 @@
-import { RentBoxReq } from 'smartbox-types';
+import { RentBoxReq, UserRole } from 'smartbox-types';
 import ApiService from '../services/api-service';
+import { history } from '../App';
+import UserService from '../services/user-service';
 
 export const UpdateFormData = (data: any) => ({ type: 'FORM_STEP_SUCCESS', payload: data });
 
@@ -16,12 +18,16 @@ export const fetchBoxAvailability = () => async (dispatch: any) => {
   );
 };
 
-export const sentRentBoxRequest = (data: RentBoxReq) => async (dispatch: any) => {
+export const sentRentBoxRequest = (data: RentBoxReq, nextStep: number, role: UserRole) => async (dispatch: any) => {
   await ApiService.post(
     dispatch,
     'SENT_RENT_BOX_REQUEST_SUCCESS',
     'SENT_RENT_BOX_REQUEST_FAILED',
-    (data: any) => console.log('SEND_RENT_BOX_REQUEST_SUCCESS', data),
+    () => {
+      console.log('nextStep', nextStep);
+      FormGoNextStep(nextStep);
+      history.push(`/${UserService.getSlugByRole(role)}/order/step/${nextStep}`);
+    },
     null,
     'rent/new',
     'LOADING',
