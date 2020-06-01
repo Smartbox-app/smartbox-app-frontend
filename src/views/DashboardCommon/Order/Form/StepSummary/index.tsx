@@ -17,6 +17,7 @@ import UserService from '../../../../../services/user-service';
 import Discount from './DiscountsList';
 
 import './StepSummary.scss';
+import SummaryTable from './SummaryTable';
 
 interface Props {
   history: any;
@@ -60,18 +61,7 @@ const StepSummary = ({ formData, countedPrice, UpdateFormData, FormGoNextStep, u
     <form onSubmit={handleSubmit(onSubmit)} className="form-step-two">
       <Discount register={register} />
       <FormHeader title="Podsumowanie zamówienia:" />
-      <div className="order-summary-wrapper">
-        <div className="row">
-          Termin rozpoczęcia wynajmu: <span>{formData.dateStart.toLocaleDateString()}</span>
-        </div>
-        <div className="row">
-          Termin rozpoczęcia wynajmu: <span>{formData.dateEnd.toLocaleDateString()}</span>
-        </div>
-        <div className="row">
-          Opłata za wynajem: <span>{formatPrice(countedPrice)}</span>
-        </div>
-      </div>
-
+      <SummaryTable dateStart={formData.dateStart} dateEnd={formData.dateEnd} countedPrice={countedPrice} />
       <ButtonsContainer max>
         <Button outline text="Wróć" click={() => onBack()} />
         <Button type="submit" primary text="Przejdź do umowy" />
