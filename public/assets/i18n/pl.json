@@ -3,6 +3,7 @@
   "langNames": "pl",
   "phrases": {
     "application": {
+      "Zarządzanie": "asd",
       "welcome": "Hello world"
     }
   }

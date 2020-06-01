@@ -8,6 +8,7 @@ import Navigation from '../../components/Layout/Navigation';
 import WorkersManagement from './WorkersManagement';
 import { MenuItemType } from '../../types/menu-item';
 import Managment from './Managment';
+import { __ } from '../../helpers/i18n';
 
 const DashboardAdmin = () => {
   const menuItems: MenuItemType[] = [
@@ -18,7 +19,7 @@ const DashboardAdmin = () => {
     },
     {
       icon: 'dashboard.svg',
-      text: 'Zarządzanie',
+      text: __('Zarządzanie'),
       address: '/admin/managment',
     },
     {
