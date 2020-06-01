@@ -16,6 +16,7 @@ import { formatPrice } from '../../../../../utils/format-price';
 import UserService from '../../../../../services/user-service';
 
 import './StepAgreement.scss';
+import AgreementWrapper from './AgreementWrapper';
 
 interface Props {
   history: any;
@@ -28,11 +29,11 @@ interface Props {
 }
 
 const StepSummary = ({ formData, countedPrice, UpdateFormData, FormGoNextStep, user, sentRentBoxRequest }: Props) => {
-  useEffect(() => {
-    if (formData.size.length === 0) {
-      history.push(`/${UserService.getSlugByRole(user.role)}/order/step/1`);
-    }
-  });
+  // useEffect(() => {
+  //   if (formData.size.length === 0) {
+  //     history.push(`/${UserService.getSlugByRole(user.role)}/order/step/1`);
+  //   }
+  // });
 
   const { handleSubmit } = useForm();
 
@@ -57,20 +58,10 @@ const StepSummary = ({ formData, countedPrice, UpdateFormData, FormGoNextStep, u
     history.push(`/${UserService.getSlugByRole(user.role)}/order/step/3`);
   };
 
-  const desktop = window.matchMedia('(min-width: 920px)').matches;
-
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <FormHeader title="Umowa zamówienia:" />
-      <div className="order-agreement-wrapper">
-        {desktop && (
-          <object className="rules-embed" data="/assets/dummy_pdf.pdf" type="application/pdf">
-            Regulamin serwisu
-          </object>
-        )}
-        {!desktop && <h2>Przeczytaj i zaakceptuj regulamin</h2>}
-      </div>
-
+      <AgreementWrapper />
       <ButtonsContainer max>
         <Button outline text="Wróć" click={() => onBack()} />
         <Button type="submit" primary text="Przejdź do płatności" />
