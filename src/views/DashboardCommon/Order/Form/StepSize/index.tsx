@@ -13,6 +13,7 @@ import { ApplicationState } from '../../../../../reducers';
 
 import FormHeader from '../../../../../components/Layout/FormHeader';
 import UserService from '../../../../../services/user-service';
+import { __ } from '../../../../../helpers/i18n';
 
 import './StepSize.scss';
 
@@ -113,13 +114,13 @@ const StepSize = ({
 
   return (
     <FormContainer className="step-size-wrapper">
-      <FormHeader title="Proszę wybrać rozmiar magazynu:" />
+      <FormHeader title={__('application.orderFormPickSize')} />
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="options-wrapper">{options}</div>
 
         <ButtonsContainer max>
-          <Button disabled text="Wróć" />
-          <Button type="submit" primary text="Dalej" disabled={watch().size === ''} />
+          <Button disabled text={__('application.back')} />
+          <Button type="submit" primary text={__('application.next')} disabled={watch().size === ''} />
         </ButtonsContainer>
       </form>
     </FormContainer>

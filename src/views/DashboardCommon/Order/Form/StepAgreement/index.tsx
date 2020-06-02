@@ -58,7 +58,7 @@ const StepSummary = ({
     <form onSubmit={handleSubmit(onSubmit)}>
       <FormHeader title="Umowa zamówienia:" />
       <AgreementWrapper />
-      <ScrollPosition register={register} />
+      <ScrollPosition />
       <ButtonsContainer max>
         <Button outline text="Wróć" click={() => onBack()} />
         <Button type="submit" primary text="Przejdź do płatności" disabled={!isAgreementAccepted} />

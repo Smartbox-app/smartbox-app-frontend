@@ -8,9 +8,12 @@
       "logout": "Wyloguj",
       "home": "Home",
       "edit": "Edytuj",
+      "back": "Wróć",
+      "next": "Dalej",
       "delete": "Usuń",
       "workersList": "Lista pracowników",
       "inviteWorker": "Zaproś pracowników",
+      "orderFormPickSize": "Proszę wybrać rozmiar magazynu:",
       "welcome": "Hello world"
     }
   }
