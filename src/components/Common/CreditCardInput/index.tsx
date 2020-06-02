@@ -27,13 +27,13 @@ const CreditCardInput = ({ register, errors }: Props) => {
 
   return (
     <div className="credit-card-input-wrapper">
-      <div className="card-number-wrapper">
+      <div className="row card-number-wrapper">
         <label htmlFor="card-number">
           <span>Numer karty:</span>
           <input type="text" placeholder="0000 0000 0000 0000" name="cardNumber" ref={register({ required: true })} />
         </label>
       </div>
-      <div className="user-wrapper">
+      <div className="row user-wrapper">
         <label htmlFor="first-name">
           <span>Imię:</span>
           <input type="text" placeholder="First name" name="firstName" ref={register({ required: true })} />
@@ -43,7 +43,7 @@ const CreditCardInput = ({ register, errors }: Props) => {
           <input type="text" placeholder="Last name" name="lastName" ref={register({ required: true })} />
         </label>
       </div>
-      <div className="expiration-date-wrapper">
+      <div className="row expiration-date-wrapper">
         <label htmlFor="month">
           <span>Ważność karty:</span>
           <select name="month" ref={register({ required: true })}>
@@ -61,10 +61,12 @@ const CreditCardInput = ({ register, errors }: Props) => {
           </select>
         </label>
       </div>
-      <label htmlFor="Title">
-        <span>Numer CVV</span>
-        <input type="text" placeholder="CVV" name="cvv" ref={register({ required: true })} />
-      </label>
+      <div className="row cvv-wrapper">
+        <label htmlFor="cvv">
+          <span>Numer CVV</span>
+          <input type="text" placeholder="CVV" name="cvv" ref={register({ required: true })} />
+        </label>
+      </div>
     </div>
   );
 };

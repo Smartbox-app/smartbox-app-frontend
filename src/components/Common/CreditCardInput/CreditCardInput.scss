@@ -4,15 +4,26 @@
 .credit-card-input-wrapper {
   display: flex;
   flex-wrap: wrap;
-  background-color: lighten($color-disabled, 10%);
+  background-color: lighten($color-primary, 10%);
   border: 1px solid $color-disabled;
-  border-radius: 5px;
+  border-radius: $main-spacing;
   padding: $main-spacing;
   width: 330px;
+
+  span {
+    color: #fff;
+    font-weight: 500;
+    margin-bottom: $main-spacing/2;
+    text-transform: uppercase;
+  }
+  .row {
+    margin-bottom: $main-spacing;
+  }
 
   label {
     display: flex;
     flex-direction: column;
+    margin: 0 $main-spacing/2;
   }
 
   input {
@@ -21,14 +32,19 @@
 
   .card-number-wrapper {
     width: 100%;
+    margin-left: -$main-spacing/2;
+    margin-top: $main-spacing;
   }
 
   .user-wrapper {
     width: 100%;
     display: flex;
+    margin-left: -$main-spacing/2;
+    margin-right: -$main-spacing/2;
 
     label {
       width: 50%;
+      margin: 0 $main-spacing/2;
     }
   }
 
@@ -36,10 +52,28 @@
     width: 100%;
     display: flex;
     flex-wrap: nowrap;
+    margin-left: -$main-spacing/2;
+    margin-right: -$main-spacing/2;
     label {
       width: 50%;
       display: flex;
       justify-content: flex-end;
+      margin: 0 $main-spacing/2;
+    }
+  }
+
+  .cvv-wrapper {
+    margin-left: -$main-spacing/2;
+  }
+}
+
+@include gt-sm {
+  .credit-card-input-wrapper {
+    width: 450px;
+    margin: 0 auto;
+
+    .row {
+      margin-bottom: $main-spacing;
     }
   }
 }
