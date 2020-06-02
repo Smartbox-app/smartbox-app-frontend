@@ -5,7 +5,6 @@ import DashboardContainer from '../../components/Layout/DashboardContainer';
 import { Welcome, Order } from '../DashboardCommon';
 import Home from '../Home';
 import Navigation from '../../components/Layout/Navigation';
-import WorkersManagement from './WorkersManagement';
 import { MenuItemType } from '../../types/menu-item';
 import Managment from './Managment';
 import { __ } from '../../helpers/i18n';
@@ -14,17 +13,17 @@ const DashboardAdmin = () => {
   const menuItems: MenuItemType[] = [
     {
       icon: 'dashboard.svg',
-      text: 'Home',
+      text: __('application.home'),
       address: '/admin/main',
     },
     {
       icon: 'dashboard.svg',
-      text: __('Zarządzanie'),
+      text: __('application.managment'),
       address: '/admin/managment',
     },
     {
       icon: 'account.svg',
-      text: 'Konto',
+      text: __('application.account'),
       address: '/admin/account',
     },
   ];

@@ -3,7 +3,14 @@
   "langNames": "pl",
   "phrases": {
     "application": {
-      "Zarządzanie": "asd",
+      "managment": "Zarządzanie",
+      "account": "Konto",
+      "logout": "Wyloguj",
+      "home": "Home",
+      "edit": "Edytuj",
+      "delete": "Usuń",
+      "workersList": "Lista pracowników",
+      "inviteWorker": "Zaproś pracowników",
       "welcome": "Hello world"
     }
   }

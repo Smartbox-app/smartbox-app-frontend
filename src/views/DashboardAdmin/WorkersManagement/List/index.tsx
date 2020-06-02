@@ -3,6 +3,7 @@ import { TableSchema, usersList } from 'smartbox-tables';
 import { PageHeader, Section, ButtonsContainer } from '../../../../components/Layout';
 import { ApiTable, Button } from '../../../../components/Common';
 import { InteractiveTableSchema } from '../../../../utils/table-schema-utils';
+import { __ } from '../../../../helpers/i18n';
 
 interface Props {}
 
@@ -17,12 +18,12 @@ class List extends React.Component<Props> {
       mobile: true,
       buttons: [
         {
-          name: 'Edytuj',
+          name: __('application.edit'),
           type: 'primary',
           click: (data: any) => console.log(data.id),
         },
         {
-          name: 'Usuń',
+          name: __('application.delete'),
           type: 'danger',
           click: (data: any) => console.log(data.id),
         },
@@ -33,9 +34,9 @@ class List extends React.Component<Props> {
   render() {
     return (
       <Section full>
-        <PageHeader title="Lista pracowników" />
+        <PageHeader title={__('application.workersList')} />
         <ButtonsContainer>
-          <Button text="Zaproś pracowników" primary to="/admin/managment/workers/add" />
+          <Button text={__('application.inviteWorker')} primary to="/admin/managment/workers/add" />
         </ButtonsContainer>
         <ApiTable scheme={this.scheme} apiEndpointSubUrl="user/list" />
       </Section>
