@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { IUser, RentBoxReq, UserRole } from 'smartbox-types';
+import { IUser, RentBoxReq, UserRole, ExecutePaymentReq } from 'smartbox-types';
 import { Button } from '../../../../../components/Common';
 import { order } from '../../../../../actions';
 import { ButtonsContainer } from '../../../../../components/Layout';
@@ -30,24 +30,19 @@ interface Props {
   sentRentBoxRequest: (data: RentBoxReq | any, nextStep: number, role: UserRole) => void;
 }
 
-const StepSummary = ({
-  formData,
-  countedPrice,
-  UpdateFormData,
-  FormGoNextStep,
-  user,
-  sentRentBoxRequest,
-  isAgreementAccepted,
-}: Props) => {
+const StepSummary = ({ formData, FormGoNextStep, user, isAgreementAccepted }: Props) => {
   useEffect(() => {
     if (formData.size.length === 0) {
       history.push(`/${UserService.getSlugByRole(user.role)}/order/step/1`);
     }
   });
 
-  const { handleSubmit, register } = useForm();
+  const { handleSubmit } = useForm();
 
-  const onSubmit = (data: any) => {};
+  const onSubmit = (data: any) => {
+    FormGoNextStep(5);
+    history.push(`/${UserService.getSlugByRole(user.role)}/order/step/5`);
+  };
 
   const onBack = () => {
     FormGoNextStep(3);
