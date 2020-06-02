@@ -16,6 +16,7 @@ export type OrderState = {
   countedPrice: number;
   boxAvailability: BoxGroupAvailability[];
   discountList: any[];
+  isAgreementAccepted: boolean;
 };
 
 interface FormStepSuccess {
@@ -57,6 +58,7 @@ const initialState: OrderState = {
     { text: 'Jednorazowy rabat 5%', value: 5 },
     { text: 'Jednorazowy rabat 10%', value: 10 },
   ],
+  isAgreementAccepted: false,
 };
 
 export default (state: OrderState = initialState, action: Action): any => {
@@ -89,6 +91,7 @@ export default (state: OrderState = initialState, action: Action): any => {
     }
 
     case 'FORM_GO_NEXT_STEP_SUCCESS': {
+      console.log('FORM', action.payload);
       return {
         ...state,
         formStep: action.payload,

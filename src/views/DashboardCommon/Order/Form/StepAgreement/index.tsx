@@ -12,11 +12,11 @@ import { history } from '../../../../../App';
 import { Form } from '../../../../../reducers/order-reducer';
 
 import FormHeader from '../../../../../components/Layout/FormHeader';
-import { formatPrice } from '../../../../../utils/format-price';
 import UserService from '../../../../../services/user-service';
 
 import AgreementWrapper from './AgreementWrapper';
 import ScrollPosition from './ScrollPosition';
+
 import './StepAgreement.scss';
 
 interface Props {
@@ -36,23 +36,9 @@ const StepSummary = ({ formData, countedPrice, UpdateFormData, FormGoNextStep, u
   //   }
   // });
 
-  const { handleSubmit } = useForm();
+  const { handleSubmit, register } = useForm();
 
-  const onSubmit = (data: any) => {
-    UpdateFormData(data);
-    sentRentBoxRequest(
-      {
-        stockId: undefined,
-        size: Number(formData.size),
-        startAt: formData.dateStart,
-        finishAt: formData.dateEnd,
-        cost: 1,
-        discountCode: '',
-      },
-      5,
-      user.role,
-    );
-  };
+  const onSubmit = (data: any) => {};
 
   const onBack = () => {
     FormGoNextStep(3);
@@ -63,7 +49,7 @@ const StepSummary = ({ formData, countedPrice, UpdateFormData, FormGoNextStep, u
     <form onSubmit={handleSubmit(onSubmit)}>
       <FormHeader title="Umowa zamówienia:" />
       <AgreementWrapper />
-      <ScrollPosition />
+      <ScrollPosition register={register} />
       <ButtonsContainer max>
         <Button outline text="Wróć" click={() => onBack()} />
         <Button type="submit" primary text="Przejdź do płatności" />
