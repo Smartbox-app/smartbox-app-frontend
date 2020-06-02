@@ -1,8 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { ApplicationState } from '../../../../../../reducers';
+import { order } from '../../../../../../actions';
 
 interface Props {
   register: any;
+  isAgreementAccepted: boolean;
+  formAgreementReaded: () => void;
 }
 
 class ScrollPosition extends Component<Props> {
@@ -12,25 +17,32 @@ class ScrollPosition extends Component<Props> {
   }
 
   private onScroll = (el: any) => {
-    if (el.scrollTop > 1300) {
+    if (el.scrollTop > 1330) {
       console.log(el.scrollTop);
+      this.props.formAgreementReaded();
     }
   };
 
   render() {
-    const { register } = this.props;
+    const { register, isAgreementAccepted } = this.props;
     return (
       <>
         <input
           name="agreement-accepted"
           type="checkbox"
-          // value={true}
+          checked={isAgreementAccepted}
           id="test"
           ref={register({ required: true })}
+          onChange={() => console.log()}
         />
       </>
     );
   }
 }
+const mapStateToPros = (state: ApplicationState) => ({
+  isAgreementAccepted: state.order.isAgreementAccepted,
+});
 
-export default connect()(ScrollPosition);
+const mapDispatchToProps = (dispatch: any) => bindActionCreators({ ...order }, dispatch);
+
+export default connect(mapStateToPros, mapDispatchToProps)(ScrollPosition);

@@ -7,6 +7,8 @@ export const UpdateFormData = (data: any) => ({ type: 'FORM_STEP_SUCCESS', paylo
 
 export const FormGoNextStep = (data: number) => ({ type: 'FORM_GO_NEXT_STEP_SUCCESS', payload: data });
 
+export const formAgreementReaded = () => ({ type: 'FORM_AGREEMENT_READED_SUCCESS' });
+
 export const fetchBoxAvailability = () => async (dispatch: any) => {
   await ApiService.get(
     dispatch,

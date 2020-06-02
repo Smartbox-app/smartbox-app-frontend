@@ -24,17 +24,26 @@ interface Props {
   formData: Form;
   countedPrice: number;
   user: IUser;
+  isAgreementAccepted: boolean;
   UpdateFormData: (data: any) => void;
   FormGoNextStep: (data: number) => void;
   sentRentBoxRequest: (data: RentBoxReq | any, nextStep: number, role: UserRole) => void;
 }
 
-const StepSummary = ({ formData, countedPrice, UpdateFormData, FormGoNextStep, user, sentRentBoxRequest }: Props) => {
-  // useEffect(() => {
-  //   if (formData.size.length === 0) {
-  //     history.push(`/${UserService.getSlugByRole(user.role)}/order/step/1`);
-  //   }
-  // });
+const StepSummary = ({
+  formData,
+  countedPrice,
+  UpdateFormData,
+  FormGoNextStep,
+  user,
+  sentRentBoxRequest,
+  isAgreementAccepted,
+}: Props) => {
+  useEffect(() => {
+    if (formData.size.length === 0) {
+      history.push(`/${UserService.getSlugByRole(user.role)}/order/step/1`);
+    }
+  });
 
   const { handleSubmit, register } = useForm();
 
@@ -52,7 +61,7 @@ const StepSummary = ({ formData, countedPrice, UpdateFormData, FormGoNextStep, u
       <ScrollPosition register={register} />
       <ButtonsContainer max>
         <Button outline text="Wróć" click={() => onBack()} />
-        <Button type="submit" primary text="Przejdź do płatności" />
+        <Button type="submit" primary text="Przejdź do płatności" disabled={!isAgreementAccepted} />
       </ButtonsContainer>
     </form>
   );
@@ -62,6 +71,7 @@ const mapStateToProps = (state: any) => ({
   formData: state.order.formData,
   countedPrice: state.order.countedPrice,
   user: state.user.details,
+  isAgreementAccepted: state.order.isAgreementAccepted,
 });
 
 const mapDispatchToProps = (dispatch: any) =>

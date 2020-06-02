@@ -39,7 +39,11 @@ interface FetchBoxAvailability {
   payload: BoxGroupAvailability[];
 }
 
-type Action = FormStepSuccess | FormGoNextStep | FetchBoxAvailability | SentRentBoxRequestSuccess;
+interface FormReaded {
+  type: 'FORM_AGREEMENT_READED_SUCCESS';
+}
+
+type Action = FormStepSuccess | FormGoNextStep | FetchBoxAvailability | SentRentBoxRequestSuccess | FormReaded;
 
 const initialState: OrderState = {
   formData: {
@@ -91,7 +95,6 @@ export default (state: OrderState = initialState, action: Action): any => {
     }
 
     case 'FORM_GO_NEXT_STEP_SUCCESS': {
-      console.log('FORM', action.payload);
       return {
         ...state,
         formStep: action.payload,
@@ -111,7 +114,12 @@ export default (state: OrderState = initialState, action: Action): any => {
         boxAvailability: action.payload,
       };
     }
-
+    case 'FORM_AGREEMENT_READED_SUCCESS': {
+      return {
+        ...state,
+        isAgreementAccepted: true,
+      };
+    }
     default:
       return state;
   }

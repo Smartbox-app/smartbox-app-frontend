@@ -12,7 +12,7 @@ const AgreementWrapper = () => {
       <div className="order-agreement-wrapper">
         <Content />
       </div>
-      <Controls isAccepted={false} />
+      {/* <Controls isAccepted={false} /> */}
     </>
   );
 };
