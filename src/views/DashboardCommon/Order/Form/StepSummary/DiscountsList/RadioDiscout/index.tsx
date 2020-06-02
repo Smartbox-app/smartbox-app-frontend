@@ -10,7 +10,7 @@ interface Props {
 
 const RadioDiscout = ({ value, text, register }: Props) => (
   <div className="radio-discount-wrapper">
-    <input name="discount" type="radio" value={value} id={text} ref={register({ required: true })} />
+    <input name="discount" type="radio" value={value} id={text} />
     <label htmlFor={text} className="discount-option">
       {text}
     </label>

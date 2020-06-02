@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -6,11 +6,12 @@ import FormHeader from '../../../../../../components/Layout/FormHeader';
 import { ButtonsContainer } from '../../../../../../components/Layout';
 import { Button } from '../../../../../../components/Common';
 import { modal } from '../../../../../../actions';
+import { ApplicationState } from '../../../../../../reducers';
 
 import RadioDiscout from './RadioDiscout';
-import './DiscountsList.scss';
 import DiscoutCode from './DiscountCode';
-import { ApplicationState } from '../../../../../../reducers';
+
+import './DiscountsList.scss';
 
 interface Props {
   register: any;

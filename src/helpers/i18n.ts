@@ -12,8 +12,8 @@ export class I18n {
 
   constructor() {
     this.loaded = false;
-    this.langNames = ['pl', 'en'];
-    this.currentLang = 'pl';
+    this.langNames = [];
+    this.currentLang = null;
   }
 
   private _isLoaded(emitWarn = true) {
