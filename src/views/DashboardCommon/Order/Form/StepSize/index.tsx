@@ -61,8 +61,8 @@ const StepSize = ({
       name: 'size',
       value: 3,
       id: 'option3',
-      sizeX: 1,
-      sizeY: 1,
+      sizeX: 3,
+      sizeY: 2.3,
       sizeZ: 2.6,
       imgAddress: '/assets/images/dummy_box2.png',
     },
@@ -70,8 +70,8 @@ const StepSize = ({
       name: 'size',
       value: 6,
       id: 'option6',
-      sizeX: 1,
-      sizeY: 1,
+      sizeX: 6,
+      sizeY: 2.3,
       sizeZ: 2.6,
       imgAddress: '/assets/images/dummy_box2.png',
     },
@@ -79,8 +79,8 @@ const StepSize = ({
       name: 'size',
       value: 9,
       id: 'option9',
-      sizeX: 1,
-      sizeY: 1,
+      sizeX: 9,
+      sizeY: 2.3,
       sizeZ: 2.6,
       imgAddress: '/assets/images/dummy_box2.png',
     },
@@ -88,22 +88,27 @@ const StepSize = ({
       name: 'size',
       value: 12,
       id: 'option12',
-      sizeX: 1,
-      sizeY: 1,
+      sizeX: 12,
+      sizeY: 2.3,
       sizeZ: 2.6,
       imgAddress: '/assets/images/dummy_box2.png',
     },
   ];
 
   const isThisBoxAvailability = (boxSize: number) => {
-    if (boxSize === 12) {
-      return true;
+    if (boxAvailability.length > 1) {
+      const currentBox = boxAvailability.find((box: BoxGroupAvailability) => box.size === boxSize);
+      return currentBox?.available;
     }
-    return false;
   };
 
   const options = boxList.map((data: SingleOptionType, index: number) => (
-    <SingleOption key={index} singleOptionData={data} register={register} disable={isThisBoxAvailability(data.value)} />
+    <SingleOption
+      key={index}
+      singleOptionData={data}
+      register={register}
+      disable={!isThisBoxAvailability(data.value)}
+    />
   ));
 
   return (
