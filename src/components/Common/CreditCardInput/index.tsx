@@ -30,17 +30,17 @@ const CreditCardInput = ({ register, errors }: Props) => {
       <div className="card-number-wrapper">
         <label htmlFor="card-number">
           <span>Numer karty:</span>
-          <input type="text" placeholder="0000 0000 0000 0000" name="card-number" ref={register({ required: true })} />
+          <input type="text" placeholder="0000 0000 0000 0000" name="cardNumber" ref={register({ required: true })} />
         </label>
       </div>
       <div className="user-wrapper">
         <label htmlFor="first-name">
           <span>Imię:</span>
-          <input type="text" placeholder="First name" name="first-name" ref={register({ required: true })} />
+          <input type="text" placeholder="First name" name="firstName" ref={register({ required: true })} />
         </label>
         <label htmlFor="last-name">
           <span>Nazwisko:</span>
-          <input type="text" placeholder="Last name" name="last-name" ref={register({ required: true })} />
+          <input type="text" placeholder="Last name" name="lastName" ref={register({ required: true })} />
         </label>
       </div>
       <div className="expiration-date-wrapper">

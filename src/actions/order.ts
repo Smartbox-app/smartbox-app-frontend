@@ -25,7 +25,7 @@ export const sentRentBoxRequest = (data: RentBoxReq, nextStep: number, role: Use
     dispatch,
     'SENT_RENT_BOX_REQUEST_SUCCESS',
     'SENT_RENT_BOX_REQUEST_FAILED',
-    () => {
+    (d: any) => {
       dispatch(FormGoNextStep(nextStep));
       history.push(`/${UserService.getSlugByRole(role)}/order/step/${nextStep}`);
     },
@@ -36,19 +36,14 @@ export const sentRentBoxRequest = (data: RentBoxReq, nextStep: number, role: Use
   );
 };
 
-export const sentExecutePaymentRequest = (data: ExecutePaymentReq, nextStep: number, role: UserRole) => async (
-  dispatch: any,
-) => {
+export const sentExecutePaymentRequest = (data: ExecutePaymentReq) => async (dispatch: any) => {
   await ApiService.post(
     dispatch,
     'SENT_EXECUTE_PAYMENT_REQUEST_SUCCESS',
     'SENT_EXECUTE_PAYMENT_REQUEST_FAILED',
-    () => {
-      dispatch(FormGoNextStep(nextStep));
-      history.push(`/${UserService.getSlugByRole(role)}/order/step/${nextStep}`);
-    },
     null,
-    'rent/new',
+    null,
+    'rent/execute-payment/true',
     'LOADING',
     data,
   );

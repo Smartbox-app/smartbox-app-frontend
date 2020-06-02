@@ -23,18 +23,20 @@ interface Props {
   paymentId: string;
   user: IUser;
   FormGoNextStep: (data: number) => void;
+  sentExecutePaymentRequest: (data: ExecutePaymentReq) => void;
 }
 
-const StepPayment = ({ formData, FormGoNextStep, user }: Props) => {
+const StepPayment = ({ formData, FormGoNextStep, user, sentExecutePaymentRequest, paymentId }: Props) => {
   // useEffect(() => {
   //   if (formData.size.length === 0) {
   //     history.push(`/${UserService.getSlugByRole(user.role)}/order/step/1`);
+  //     FormGoNextStep(1);
   //   }
   // });
   const defaultValues = {
-    'card-number': '5214 9688 1896 5732',
-    'first-name': 'Krzysiek',
-    'last-name': 'Nowak',
+    cardNumber: '5214 9688 1896 5732',
+    firstName: 'Krzysiek',
+    lastName: 'Nowak',
     month: '05',
     year: 2021,
     cvv: 123,
@@ -43,7 +45,14 @@ const StepPayment = ({ formData, FormGoNextStep, user }: Props) => {
   const { handleSubmit, register, errors } = useForm({ defaultValues });
 
   const onSubmit = (data: any) => {
-    console.log('StepPayment', data);
+    const readyData = {
+      paymentId, // TODO zebrać z poprzedniego etapu
+      name: data.firstName + data.lastName,
+      cardNumber: data.cardNumber,
+      expiryDate: data.month + data.year.slice(2),
+      cvv: data.cvv,
+    };
+    sentExecutePaymentRequest(readyData);
   };
 
   const onBack = () => {

@@ -34,6 +34,7 @@ const StepSummary = ({ formData, FormGoNextStep, user, isAgreementAccepted }: Pr
   useEffect(() => {
     if (formData.size.length === 0) {
       history.push(`/${UserService.getSlugByRole(user.role)}/order/step/1`);
+      FormGoNextStep(1);
     }
   });
 
