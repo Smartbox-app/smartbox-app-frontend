@@ -55,7 +55,6 @@ export default (state: UserState = initialState, action: Action): any => {
     }
     case 'GET_MY_DETAILS_SUCCESS': {
       const user = {
-        ...state.details,
         ...action.payload,
       };
       SessionService.setUser(user);
@@ -64,13 +63,16 @@ export default (state: UserState = initialState, action: Action): any => {
         details: user,
       };
     }
+
     case 'LOGOUT':
       SessionService.clearUserSession();
       return { ...state, details: null };
+
     case 'CLEAR_USER_SESSION':
       SessionService.clearSessionStorage();
       SessionService.clearUserSession();
       return { ...state, details: null };
+
     case 'FETCH_SINGLE_USER_SUCCESS':
       return {
         ...state,
