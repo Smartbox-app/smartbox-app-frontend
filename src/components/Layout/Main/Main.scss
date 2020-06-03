@@ -24,7 +24,7 @@ main {
 @include gt-sm {
   main {
     margin: 0 auto;
-    max-width: map-get($breakpoints, sm);
+    max-width: 100%;
   }
 }
 
