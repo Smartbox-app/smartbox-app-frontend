@@ -1,13 +1,16 @@
 @import '../../../config/variables.scss';
 @import '../../../config/mixins.scss';
 
+$login-button-size: 300px;
+$login-button-hight: 60px;
+
 .login-buttons-section {
   margin-bottom: $main-spacing * 2;
 
   .button {
-    width: 300px;
-    min-height: 60px;
-    border-radius: 30px;
+    width: $login-button-size;
+    min-height: $login-button-hight;
+    border-radius: $login-button-hight /2 ;
     font-size: 1.2rem;
     margin-bottom: $main-spacing * 2;
   }

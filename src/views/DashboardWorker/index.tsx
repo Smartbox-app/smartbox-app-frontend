@@ -2,7 +2,6 @@ import React from 'react';
 import { Route, Redirect, Switch } from 'react-router-dom';
 import { Main } from '../../components/Layout';
 import DashboardContainer from '../../components/Layout/DashboardContainer';
-import Home from '../Home';
 import { MenuItemType } from '../../types/menu-item';
 import Navigation from '../../components/Layout/Navigation';
 
@@ -26,8 +25,8 @@ const DashboardWorker = () => {
       <Main>
         <Switch>
           <Route exact path="/worker" render={() => <Redirect to="/worker/payment" />} />
-          <Route path="/worker/profile" component={Home} />
-          <Route path="/worker/payment" component={Home} />
+          {/* <Route path="/worker/profile" component={Home} />
+          <Route path="/worker/payment" component={Home} /> */}
         </Switch>
       </Main>
     </DashboardContainer>
