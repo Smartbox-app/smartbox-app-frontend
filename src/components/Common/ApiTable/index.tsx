@@ -8,8 +8,10 @@ import Table from '../Table';
 import debounce from '../../../utils/debounce';
 import { apiTable } from '../../../actions';
 
-import './ApiTable.scss';
 import { formatPrice } from '../../../utils/format-price';
+import { ApplicationState } from '../../../reducers';
+
+import './ApiTable.scss';
 
 interface SelectOption {
   value: string;
@@ -265,7 +267,7 @@ class ApiTable<T> extends Component<Props> {
   }
 }
 
-const mapStateToProps = (state: any) => ({
+const mapStateToProps = (state: ApplicationState) => ({
   data: state.apiTable,
   loading: state.spinner.loading,
 });
