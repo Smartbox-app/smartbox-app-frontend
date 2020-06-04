@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import apiTableReducer, { ApiTableState } from './api-table-reducer';
-import appStatusReducer from './app-status-reducer';
+import appStatusReducer, { AppStatus } from './app-status-reducer';
 import modalReducer from './modal-reducer';
 import notificationsReducer from './notifications-reducer';
 import langReducer from './lang-reducer';
@@ -17,6 +17,7 @@ export interface ApplicationState {
   user: UserState;
   spinner: SpinnerState;
   modal: Modal;
+  appStatus: AppStatus;
 }
 
 const appReducer = combineReducers({

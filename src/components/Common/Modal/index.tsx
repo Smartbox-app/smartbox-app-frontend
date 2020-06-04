@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { modal } from '../../../actions';
 import { Modal } from '../../../types/modal';
+import { ApplicationState } from '../../../reducers';
 
 import './Modal.scss';
 
@@ -43,7 +44,7 @@ class ModalWrapper extends React.Component<Props> {
   }
 }
 
-const mapStateToProps = (state: any) => ({
+const mapStateToProps = (state: ApplicationState) => ({
   modal: state.modal,
 });
 
