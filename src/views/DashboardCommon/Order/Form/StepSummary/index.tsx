@@ -4,23 +4,25 @@ import { withRouter } from 'react-router-dom';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { IUser } from 'smartbox-types';
+import { UserRes } from 'smartbox-types';
 import { Button } from '../../../../../components/Common';
 import { order } from '../../../../../actions';
 import { ButtonsContainer } from '../../../../../components/Layout';
 import { history } from '../../../../../App';
 import { Form } from '../../../../../reducers/order-reducer';
 
-import './StepSummary.scss';
 import FormHeader from '../../../../../components/Layout/FormHeader';
 import { formatPrice } from '../../../../../utils/format-price';
 import UserService from '../../../../../services/user-service';
+import { ApplicationState } from '../../../../../reducers';
+
+import './StepSummary.scss';
 
 interface Props {
   history: any;
   formData: Form;
   countedPrice: number;
-  user: IUser;
+  user: UserRes;
   UpdateFormData: (data: any) => void;
   FormGoNextStep: (data: number) => void;
 }
@@ -84,7 +86,7 @@ const StepSummary = ({ formData, countedPrice, UpdateFormData, FormGoNextStep, u
   );
 };
 
-const mapStateToProps = (state: any) => ({
+const mapStateToProps = (state: ApplicationState) => ({
   formData: state.order.formData,
   countedPrice: state.order.countedPrice,
   user: state.user.details,

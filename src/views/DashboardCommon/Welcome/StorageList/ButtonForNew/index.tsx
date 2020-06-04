@@ -1,14 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { IUser } from 'smartbox-types';
+import { UserRes } from 'smartbox-types';
 import { Button } from '../../../../../components/Common';
 import UserService from '../../../../../services/user-service';
+import { ApplicationState } from '../../../../../reducers';
 
 import './ButtonForNew.scss';
 
 interface Props {
-  user: IUser;
+  user: UserRes;
 }
 
 const ButtonForNew = ({ user }: Props) => (
@@ -17,7 +18,7 @@ const ButtonForNew = ({ user }: Props) => (
   </div>
 );
 
-const mapStateToProps = (state: any) => ({
+const mapStateToProps = (state: ApplicationState) => ({
   user: state.user.details,
 });
 

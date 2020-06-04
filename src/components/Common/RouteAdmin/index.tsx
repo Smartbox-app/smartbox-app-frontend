@@ -1,11 +1,12 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { UserRole, IUser } from 'smartbox-types';
+import { UserRole, UserRes } from 'smartbox-types';
 import { rememberRedirect } from '../../../utils/remeber-redirect';
+import { ApplicationState } from '../../../reducers';
 
 interface Props {
-  user: IUser;
+  user: UserRes;
   component: any;
   exact?: boolean;
   path?: string;
@@ -19,7 +20,7 @@ const RouteAdmin = ({ user, exact, path, component }: Props) => {
   return <Route exact={exact} path={path} component={component} />;
 };
 
-const mapStateToProps = (state: any) => ({
+const mapStateToProps = (state: ApplicationState) => ({
   user: state.user.details,
 });
 

@@ -1,6 +1,5 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { connect } from 'react-redux';
 import { ReactSVG } from 'react-svg';
 import { MenuItemType } from '../../../../types/menu-item';
 
@@ -53,8 +52,4 @@ class MenuItem extends React.Component<Props> {
   }
 }
 
-const mapStateToProps = (state: any): any => ({
-  mainMenuShow: state.navigation,
-});
-
-export default connect(mapStateToProps)(MenuItem);
+export default MenuItem;

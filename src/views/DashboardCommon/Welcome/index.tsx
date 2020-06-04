@@ -7,6 +7,7 @@ import { Carousel } from '../../../components/Common';
 import History from './History';
 import Discounts from './Discounts';
 import StorageList from './StorageList';
+import { ApplicationState } from '../../../reducers';
 
 import './Welcome.scss';
 
@@ -96,7 +97,7 @@ const Welcome = ({ userName }: Props) => (
   </div>
 );
 
-const mapStateToProps = (state: any) => ({
+const mapStateToProps = (state: ApplicationState) => ({
   userName: state.user.details.firstName,
 });
 
