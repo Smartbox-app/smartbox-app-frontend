@@ -48,6 +48,4 @@ const mapStateToProps = (state: ApplicationState) => ({
   user: state.user.details,
 });
 
-const mapDispatchToProps = {};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Management);
+export default connect(mapStateToProps)(Management);

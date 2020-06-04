@@ -2,16 +2,16 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Switch, Route } from 'react-router';
-import { IUser } from 'smartbox-types';
+import { UserRes } from 'smartbox-types';
 import { order } from '../../../../actions';
 import StepOne from './StepOne';
 import StepTwo from './StepTwo';
 import StepSummary from './StepSummary';
 import UserService from '../../../../services/user-service';
+import { ApplicationState } from '../../../../reducers';
 
 interface Props {
-  formData: {};
-  user: IUser;
+  user: UserRes;
   UpdateFormData: (data: any) => void;
 }
 
@@ -24,8 +24,7 @@ const Form = ({ user }: Props) => (
   </Switch>
 );
 
-const mapStateToProps = (state: any) => ({
-  formData: state.order.formData,
+const mapStateToProps = (state: ApplicationState) => ({
   user: state.user.details,
 });
 
