@@ -1,6 +1,6 @@
 import React from 'react';
 import { Section, SectionHeader } from '../../../../components/Layout';
-import Discounts from '../Discounts';
+import Discounts from './Discounts';
 
 const Sale = () => (
   <Section full>

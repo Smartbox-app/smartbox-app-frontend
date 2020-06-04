@@ -1,5 +1,5 @@
 import React from 'react';
-import { dateOnly } from '../../../../../utils/format-date';
+import { dateOnly } from '../../../../../../utils/format-date';
 
 export interface SingleHistory {
   startDate: Date;

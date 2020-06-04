@@ -1,6 +1,6 @@
 import React from 'react';
 import { Section, SectionHeader } from '../../../../components/Layout';
-import StorageList from '../StorageList';
+import StorageList from './StorageList';
 
 const Storage = () => (
   <Section full>

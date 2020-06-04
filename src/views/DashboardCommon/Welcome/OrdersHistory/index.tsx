@@ -1,6 +1,6 @@
 import React from 'react';
 import { Section, SectionHeader } from '../../../../components/Layout';
-import History from '../History';
+import History from './History';
 
 const OrdersHistory = () => (
   <Section half>
