@@ -54,7 +54,7 @@
   }
 }
 
-@media screen and (min-width: map-get($breakpoints, xs)) {
+@include gt-xs {
   .tabs {
     flex-direction: row;
   }

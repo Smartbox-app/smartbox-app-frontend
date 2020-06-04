@@ -6,7 +6,7 @@ body {
 }
 
 main {
-  background-color: #fff;
+  background-color: $color-background;
   min-height: calc(100vh - 120px);
   display: flex;
   flex: 0 0 100%;
