@@ -1,55 +1,50 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
-import { IUser } from 'smartbox-types';
 import { Switch, Route, Redirect } from 'react-router';
-import UserService from '../../../services/user-service';
+import { UserRes } from 'smartbox-types';
 import { Tabs } from '../../../components/Common';
-import WorkersManagement from '../WorkersManagement';
 import { Section } from '../../../components/Layout';
+import { ApplicationState } from '../../../reducers';
+import UserService from '../../../services/user-service';
+
+import WorkersManagement from '../WorkersManagement';
 import BoxMapManagment from '../BoxMapManagment';
 
 interface Props {
-  user: IUser;
+  user: UserRes;
 }
 
-class Managment extends Component<Props> {
-  private test = () => {};
+const Managment = ({ user }: Props) => (
+  <Section full>
+    <Tabs
+      tabs={[
+        {
+          className: 'tab',
+          activeClassName: 'active',
+          to: `/${UserService.getSlugByRole(user.role)}/managment/workers/list`,
+          text: 'Pracownicy',
+        },
+        {
+          className: 'tab',
+          activeClassName: 'active',
+          to: `/${UserService.getSlugByRole(user.role)}/managment/map`,
+          text: 'Skrzynki',
+        },
+      ]}
+    />
+    <Switch>
+      <Route
+        exact
+        path={`/${UserService.getSlugByRole(user.role)}/managment`}
+        render={() => <Redirect to={`/${UserService.getSlugByRole(user.role)}/managment/workers`} />}
+      />
+      <Route path={`/${UserService.getSlugByRole(user.role)}/managment/workers`} component={WorkersManagement} />
+      <Route path={`/${UserService.getSlugByRole(user.role)}/managment/map`} component={BoxMapManagment} />
+    </Switch>
+  </Section>
+);
 
-  render() {
-    const { user } = this.props;
-    return (
-      <Section full>
-        <Tabs
-          tabs={[
-            {
-              className: 'tab',
-              activeClassName: 'active',
-              to: `/${UserService.getSlugByRole(user.role)}/managment/workers/list`,
-              text: 'Pracownicy',
-            },
-            {
-              className: 'tab',
-              activeClassName: 'active',
-              to: `/${UserService.getSlugByRole(user.role)}/managment/map`,
-              text: 'Skrzynki',
-            },
-          ]}
-        />
-        <Switch>
-          <Route
-            exact
-            path={`/${UserService.getSlugByRole(user.role)}/managment`}
-            render={() => <Redirect to={`/${UserService.getSlugByRole(user.role)}/managment/workers`} />}
-          />
-          <Route path={`/${UserService.getSlugByRole(user.role)}/managment/workers`} component={WorkersManagement} />
-          <Route path={`/${UserService.getSlugByRole(user.role)}/managment/map`} component={BoxMapManagment} />
-        </Switch>
-      </Section>
-    );
-  }
-}
-
-const mapStateToProps = (state: any) => ({
+const mapStateToProps = (state: ApplicationState) => ({
   user: state.user.details,
 });
 
