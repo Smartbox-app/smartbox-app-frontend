@@ -9,6 +9,8 @@ import { formOnTranslateString } from '../../utils/trans-form';
 import { notifications } from '../../actions';
 import { history } from '../../App';
 
+import ButtonSection from './ButtonSection';
+
 import './Register.scss';
 
 interface Props {
@@ -16,35 +18,27 @@ interface Props {
   match: any;
 }
 
-const Register = ({ successNotification }: Props) => {
-  const subButton = (
-    <ButtonsContainer max>
-      <Button text="Wyślij" type="submit" big primary rounded />
-      <Button text="Wróć" to="/" big outline rounded />
-    </ButtonsContainer>
-  );
-  return (
-    <PageContent>
-      <LogoContainer />
-      <FormContainer className="register-form">
-        <ItfApiForm
-          formId="UuerActivationForm"
-          schemaMayBeDynamic={false}
-          schemaCacheEnabled={false}
-          loadingInfo={<Spinner transparent />}
-          schemaFetcher={() => ApiService.loadForm('user/form/add-user')}
-          sendFetcher={(formId: string, values: any) => ApiService.sendForm('user/new', values, 'POST')}
-          submitButton={subButton}
-          onSavedSuccessfully={() => {
-            successNotification('Konto zostało zarejestrowane.');
-            history.push('/');
-          }}
-          onTranslateString={formOnTranslateString}
-        />
-      </FormContainer>
-    </PageContent>
-  );
-};
+const Register = ({ successNotification }: Props) => (
+  <PageContent>
+    <LogoContainer />
+    <FormContainer className="register-form">
+      <ItfApiForm
+        formId="UuerActivationForm"
+        schemaMayBeDynamic={false}
+        schemaCacheEnabled={false}
+        loadingInfo={<Spinner transparent />}
+        schemaFetcher={() => ApiService.loadForm('user/form/add-user')}
+        sendFetcher={(formId: string, values: any) => ApiService.sendForm('user/new', values, 'POST')}
+        submitButton={<ButtonSection />}
+        onSavedSuccessfully={() => {
+          successNotification('Konto zostało zarejestrowane.');
+          history.push('/');
+        }}
+        onTranslateString={formOnTranslateString}
+      />
+    </FormContainer>
+  </PageContent>
+);
 
 const mapDispatchToProps = (dispatch: any): any =>
   bindActionCreators({ successNotification: notifications.successNotification }, dispatch);
