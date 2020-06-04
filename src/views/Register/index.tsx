@@ -20,7 +20,7 @@ const Register = ({ successNotification }: Props) => {
   const subButton = (
     <ButtonsContainer max>
       <Button text="Wyślij" type="submit" big primary rounded />
-      <Button text="Wróć" to="/" big rounded />
+      <Button text="Wróć" to="/" big outline rounded />
     </ButtonsContainer>
   );
   return (

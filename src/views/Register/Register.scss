@@ -2,11 +2,11 @@
 @import '../../config/mixins.scss';
 
 .register-form {
-  max-width: 300px;
+  max-width: $login-form-width * 0.8;
 }
 
 @include gt-sm {
   .register-form {
-    max-width: 500px;
+    max-width: $login-form-width;
   }
 }
