@@ -8,26 +8,26 @@ import { ApplicationState } from '../../../reducers';
 import UserService from '../../../services/user-service';
 
 import WorkersManagement from '../WorkersManagement';
-import BoxMapManagment from '../BoxMapManagment';
+import BoxMapManagement from '../BoxMapManagement';
 
 interface Props {
   user: UserRes;
 }
 
-const Managment = ({ user }: Props) => (
+const Management = ({ user }: Props) => (
   <Section full>
     <Tabs
       tabs={[
         {
           className: 'tab',
           activeClassName: 'active',
-          to: `/${UserService.getSlugByRole(user.role)}/managment/workers/list`,
+          to: `/${UserService.getSlugByRole(user.role)}/management/workers/list`,
           text: 'Pracownicy',
         },
         {
           className: 'tab',
           activeClassName: 'active',
-          to: `/${UserService.getSlugByRole(user.role)}/managment/map`,
+          to: `/${UserService.getSlugByRole(user.role)}/management/map`,
           text: 'Skrzynki',
         },
       ]}
@@ -35,11 +35,11 @@ const Managment = ({ user }: Props) => (
     <Switch>
       <Route
         exact
-        path={`/${UserService.getSlugByRole(user.role)}/managment`}
-        render={() => <Redirect to={`/${UserService.getSlugByRole(user.role)}/managment/workers`} />}
+        path={`/${UserService.getSlugByRole(user.role)}/management`}
+        render={() => <Redirect to={`/${UserService.getSlugByRole(user.role)}/management/workers`} />}
       />
-      <Route path={`/${UserService.getSlugByRole(user.role)}/managment/workers`} component={WorkersManagement} />
-      <Route path={`/${UserService.getSlugByRole(user.role)}/managment/map`} component={BoxMapManagment} />
+      <Route path={`/${UserService.getSlugByRole(user.role)}/management/workers`} component={WorkersManagement} />
+      <Route path={`/${UserService.getSlugByRole(user.role)}/management/map`} component={BoxMapManagement} />
     </Switch>
   </Section>
 );
@@ -50,4 +50,4 @@ const mapStateToProps = (state: ApplicationState) => ({
 
 const mapDispatchToProps = {};
 
-export default connect(mapStateToProps, mapDispatchToProps)(Managment);
+export default connect(mapStateToProps, mapDispatchToProps)(Management);

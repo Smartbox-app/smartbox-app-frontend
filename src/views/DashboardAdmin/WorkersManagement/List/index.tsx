@@ -35,7 +35,7 @@ class List extends React.Component<Props> {
       <Section full>
         <PageHeader title="Lista pracowników" />
         <ButtonsContainer>
-          <Button text="Zaproś pracowników" primary to="/admin/managment/workers/add" />
+          <Button text="Zaproś pracowników" primary to="/admin/management/workers/add" />
         </ButtonsContainer>
         <ApiTable scheme={this.scheme} apiEndpointSubUrl="user/list" />
       </Section>

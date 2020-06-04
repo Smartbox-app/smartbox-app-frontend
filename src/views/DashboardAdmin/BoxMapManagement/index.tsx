@@ -15,7 +15,7 @@ import { modal, boxes } from '../../../actions';
 import BoxDetail from './BoxDetail';
 import MapLegend from './MapLegend';
 
-import './BoxMapManagment.scss';
+import './BoxMapManagement.scss';
 
 interface Props {
   boxesGroup: BoxListItem[];
@@ -24,7 +24,7 @@ interface Props {
   fetchSingleBoxDetails: (rentId: string) => void;
 }
 
-class BoxMapManagment extends React.Component<Props> {
+class BoxMapmanagement extends React.Component<Props> {
   private element: any;
 
   constructor(props: any) {
@@ -147,4 +147,4 @@ const mapDispatchToProps = (dispatch: any) =>
     dispatch,
   );
 
-export default connect(mapStateToProps, mapDispatchToProps)(BoxMapManagment);
+export default connect(mapStateToProps, mapDispatchToProps)(BoxMapmanagement);
