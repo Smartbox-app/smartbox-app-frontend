@@ -63,16 +63,3 @@
 
   }
 }
-
-// export enum RentStatus {
-//   reserved = 'zarezerwowany',  // czerwony
-//   rented = 'wynajęty',  // czerwony
-//   noPaidExtension = 'nie opłacone przedłuzenie', // zółty
-//   noPaidExtensionWithWarning = 'nie opłacone przedłuzenie z wykrzyknikiem', // zółty
-//   toCheck = 'do sprawdzenia', // niebieski
-//   toExplain = 'do wyjaśnienia', // czarny
-//   outOfService = 'wyłączony z użytku', // czarny
-//   finished = 'zakończone', // ---
-//   failure = 'zakończone bez wynajęcia', // ---
-//   free = 'wolny', // zielony
-// }

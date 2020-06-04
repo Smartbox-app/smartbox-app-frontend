@@ -2,7 +2,6 @@
 @import '../../../config/mixins.scss';
 
 body {
-  // background-color: palegreen;
   margin: 0;
 }
 
@@ -31,7 +30,6 @@ main {
 @include gt-lg {
   main {
     display: flex;
-    // margin: 0 auto;
     max-width: 100vw;
     flex-direction: row;
   }

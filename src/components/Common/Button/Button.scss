@@ -1,8 +1,6 @@
 @import "../../../config/variables";
 @import "../../../config/mixins.scss";
 
-$button-img-size: 20px;
-
 .button {
   padding: $main-spacing $main-spacing * 2;
   margin: $main-spacing / 2 0;
@@ -122,13 +120,13 @@ $button-img-size: 20px;
     align-items: center;
     
     .button-img {
-      width: 20px;
-      height: 20px;
+      width: $button-img-size;
+      height: $button-img-size;
     }
   }
 
   &.only-icon {
-      padding: 10px;
+      padding: $main-spacing;
 
     .button-img {
       width: $button-img-size;
