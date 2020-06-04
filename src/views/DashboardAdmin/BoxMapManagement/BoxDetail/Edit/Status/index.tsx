@@ -12,7 +12,7 @@ import { successNotification } from '../../../../../../actions/notifications';
 import './Status.scss';
 
 interface Props {
-  selectedBoxId: number | string;
+  selectedBoxId: string;
 }
 
 const Status = ({ selectedBoxId }: Props) => {

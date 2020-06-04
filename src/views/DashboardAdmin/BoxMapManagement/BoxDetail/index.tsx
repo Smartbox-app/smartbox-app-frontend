@@ -11,7 +11,7 @@ import './BoxDetail.scss';
 
 interface Props {
   singleBoxDetail: RentDetailsRes;
-  selectedBoxId: number | string;
+  selectedBoxId: string;
   rentId: string;
 }
 

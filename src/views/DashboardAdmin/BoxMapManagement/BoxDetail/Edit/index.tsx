@@ -3,7 +3,7 @@ import Status from './Status';
 import Position from './Position';
 
 interface Props {
-  selectedBoxId: number | string;
+  selectedBoxId: string;
 }
 
 const Edit = (props: Props) => {

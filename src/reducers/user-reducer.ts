@@ -24,12 +24,12 @@ interface ClearUserSession {
   type: 'CLEAR_USER_SESSION';
 }
 
-interface GeetMyDetails {
+interface GetMyDetails {
   type: 'GET_MY_DETAILS_SUCCESS';
   payload: UserRes;
 }
 
-type Action = Login | Logout | FetchSingleUser | ClearUserSession | GeetMyDetails;
+type Action = Login | Logout | FetchSingleUser | ClearUserSession | GetMyDetails;
 
 const initialState: UserState = {
   details: SessionService.getUser(),

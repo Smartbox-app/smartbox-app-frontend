@@ -12,7 +12,7 @@ import { successNotification } from '../../../../../../actions/notifications';
 import './Position.scss';
 
 interface Props {
-  selectedBoxId: number | string;
+  selectedBoxId: string;
   rentId?: string;
 }
 
