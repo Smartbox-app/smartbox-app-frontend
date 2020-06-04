@@ -9,7 +9,7 @@ interface Props {
 }
 
 const Section = ({ children, full, half }: Props) => (
-  <section className={`section-wrapper ${full && 'section-full-width'} ${half && 'section-half-width'}`}>
+  <section className={`section-wrapper ${full ? 'section-full-width' : ''} ${half ? 'section-half-width' : ''}`}>
     {children}
   </section>
 );
