@@ -2,7 +2,13 @@
 @import "./mixins.scss";
 
 html {
-  font-size: 16px;
+  font-size: 14px;
+}
+
+@include gt-sm {
+  html {
+    font-size: 16px;
+  }
 }
 
 body {

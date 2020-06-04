@@ -17,7 +17,7 @@ interface Logout {
 
 interface FetchSingleUser {
   type: 'FETCH_SINGLE_USER_SUCCESS';
-  payload: any;
+  payload: UserRes;
 }
 
 interface ClearUserSession {
