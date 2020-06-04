@@ -1,8 +1,11 @@
 @import '../../../config/variables.scss';
 
-.register-control-button {
-  width: $login-button-size;
-  min-height: $login-button-hight;
-  font-size: 1.2rem;
-  margin-bottom: $main-spacing * 2;
+.buttons-container {
+
+  .register-control-button {
+    width: $login-button-size;
+    min-height: $login-button-hight;
+    font-size: 1.2rem;
+    margin-bottom: $main-spacing * 2;
+  }
 }
