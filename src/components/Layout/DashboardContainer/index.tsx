@@ -1,17 +1,18 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { IUser } from 'smartbox-types';
+import { UserRes } from 'smartbox-types';
+import { ApplicationState } from '../../../reducers';
 
 import './DashboardContainer.scss';
 
 interface Props {
   children: React.ReactNode;
-  user?: IUser;
+  user: UserRes;
 }
 
 const DashboardContainer = ({ user, children }: Props) => <div className="dashboard-container">{children}</div>;
-const mapStateToProps = (state: any) => ({
+const mapStateToProps = (state: ApplicationState) => ({
   user: state.user.details,
 });
 

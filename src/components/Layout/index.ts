@@ -8,6 +8,7 @@ import FormContainer from './FormContainer';
 import LogoContainer from './LogoContainer';
 import Section from './Section';
 import SectionHeader from './SectionHeader';
+import Navigation from './Navigation';
 
 export {
   Main,
@@ -20,4 +21,5 @@ export {
   LogoContainer,
   Section,
   SectionHeader,
+  Navigation,
 };

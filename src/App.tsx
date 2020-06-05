@@ -7,7 +7,7 @@ import { Route, Router, Switch, Redirect } from 'react-router-dom';
 import { WorkBoxProvider } from 'react-workbox';
 import { createBrowserHistory } from 'history';
 import reducers from './reducers';
-import { Home, Login, DashboardAdmin, DashboardWorker, DashboardUser, Register } from './views';
+import { Login, DashboardAdmin, DashboardWorker, DashboardUser, Register } from './views';
 import {
   OnlineContent,
   OfflineContent,
@@ -58,7 +58,6 @@ const App = () => {
               <Route exact path="/" render={() => <Redirect to="/login" />} />
               <Route path="/login" component={Login} />
               <Route path="/register" component={Register} />
-              <Route path="/home" component={Home} />
               <RouteAdmin path="/admin" component={DashboardAdmin} />
               <RouteWorker path="/worker" component={DashboardWorker} />
               <RouteUser path="/user" component={DashboardUser} />

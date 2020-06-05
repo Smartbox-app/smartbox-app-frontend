@@ -11,11 +11,12 @@ interface Props {
 }
 
 class Carousel extends Component<Props> {
-  private dataToDisplay = this.props.imagesList.map((data: string, key: number) => (
-    <div key={`carousel-${key}`}>
-      <img src={data} alt="offer-screen" />
-    </div>
-  ));
+  private dataToDisplay = (listToPrint: any) =>
+    listToPrint.map((data: string, key: number) => (
+      <div key={`carousel-${key}`}>
+        <img src={data} alt="offer-screen" />
+      </div>
+    ));
 
   render() {
     const settings = {
@@ -30,7 +31,7 @@ class Carousel extends Component<Props> {
 
     return (
       <div className="slider-wrapper">
-        <Slider {...settings}>{this.dataToDisplay}</Slider>
+        <Slider {...settings}>{this.dataToDisplay(this.props.imagesList)}</Slider>
       </div>
     );
   }

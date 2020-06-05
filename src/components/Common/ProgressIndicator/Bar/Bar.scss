@@ -30,10 +30,6 @@
   .bar-done {
     background: $color-success;
   }
-
-  .bar-current {
-    // background: $color-primary;
-  }
 }
 
 @include gt-sm {

@@ -1,20 +1,19 @@
 import React from 'react';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Switch, Route } from 'react-router';
-import { IUser } from 'smartbox-types';
-import { order } from '../../../../actions';
+
+import { UserRes } from 'smartbox-types';
+import UserService from '../../../../services/user-service';
+import { ApplicationState } from '../../../../reducers';
+
 import StepSize from './StepSize';
 import StepDuration from './StepDuration';
-import StepSummary from './StepSummary';
 import StepPayment from './StepPayment';
 import StepAgreement from './StepAgreement';
-import UserService from '../../../../services/user-service';
+import StepSummary from './StepSummary';
 
 interface Props {
-  formData: {};
-  user: IUser;
-  UpdateFormData: (data: any) => void;
+  user: UserRes;
 }
 
 const Form = ({ user }: Props) => (
@@ -27,17 +26,8 @@ const Form = ({ user }: Props) => (
   </Switch>
 );
 
-const mapStateToProps = (state: any) => ({
-  formData: state.order.formData,
+const mapStateToProps = (state: ApplicationState) => ({
   user: state.user.details,
 });
 
-const mapDispatchToProps = (dispatch: any) =>
-  bindActionCreators(
-    {
-      ...order,
-    },
-    dispatch,
-  );
-
-export default connect(mapStateToProps, mapDispatchToProps)(Form);
+export default connect(mapStateToProps)(Form);

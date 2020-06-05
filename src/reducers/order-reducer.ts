@@ -26,7 +26,7 @@ interface FormStepSuccess {
 
 interface FormGoNextStep {
   type: 'FORM_GO_NEXT_STEP_SUCCESS';
-  payload: any;
+  payload: number;
 }
 
 interface SentRentBoxRequestSuccess {

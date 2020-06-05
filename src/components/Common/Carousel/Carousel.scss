@@ -1,9 +1,6 @@
 @import '../../../config/variables.scss';
 @import '../../../config/mixins.scss';
 
-$carousel-small: 300px;
-$carousel-big: 500px;
-
 .slider-wrapper {
   position: relative;
   padding: $main-spacing * 2;

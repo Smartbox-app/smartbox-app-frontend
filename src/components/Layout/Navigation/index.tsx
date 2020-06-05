@@ -37,11 +37,9 @@ const Navigation = ({ logout, menuItems }: Props) => {
     />
   ));
 
-  const desktop = window.matchMedia('(min-width: 920px)').matches;
-
   return (
     <div className="page-header-wrapper">
-      {desktop && <LogoContainer />}
+      <LogoContainer />
       <div className="navigation-wrapper">{menu}</div>
     </div>
   );

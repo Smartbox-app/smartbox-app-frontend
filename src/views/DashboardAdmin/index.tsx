@@ -1,13 +1,13 @@
 import React from 'react';
 import { Route, Redirect, Switch } from 'react-router-dom';
-import { Main, Footer } from '../../components/Layout';
-import DashboardContainer from '../../components/Layout/DashboardContainer';
+
+import { Main, Footer, DashboardContainer, Navigation } from '../../components/Layout';
 import { Welcome, Order } from '../DashboardCommon';
-import Home from '../Home';
-import Navigation from '../../components/Layout/Navigation';
+
 import { MenuItemType } from '../../types/menu-item';
-import Managment from './Managment';
 import { __ } from '../../helpers/i18n';
+
+import Management from './Management';
 
 const DashboardAdmin = () => {
   const menuItems: MenuItemType[] = [
@@ -36,8 +36,7 @@ const DashboardAdmin = () => {
           <Route exact path="/admin" render={() => <Redirect to="/admin/main" />} />
           <Route path="/admin/main" component={Welcome} />
           <Route path="/admin/order/:step" component={Order} />
-          <Route path="/admin/account" component={Home} />
-          <Route path="/admin/managment" component={Managment} />
+          <Route path="/admin/management" component={Management} />
         </Switch>
       </Main>
       <Footer />

@@ -17,19 +17,19 @@ interface Logout {
 
 interface FetchSingleUser {
   type: 'FETCH_SINGLE_USER_SUCCESS';
-  payload: any;
+  payload: UserRes;
 }
 
 interface ClearUserSession {
   type: 'CLEAR_USER_SESSION';
 }
 
-interface GeetMyDetails {
+interface GetMyDetails {
   type: 'GET_MY_DETAILS_SUCCESS';
   payload: UserRes;
 }
 
-type Action = Login | Logout | FetchSingleUser | ClearUserSession | GeetMyDetails;
+type Action = Login | Logout | FetchSingleUser | ClearUserSession | GetMyDetails;
 
 const initialState: UserState = {
   details: SessionService.getUser(),
@@ -55,7 +55,6 @@ export default (state: UserState = initialState, action: Action): any => {
     }
     case 'GET_MY_DETAILS_SUCCESS': {
       const user = {
-        ...state.details,
         ...action.payload,
       };
       SessionService.setUser(user);
@@ -64,13 +63,16 @@ export default (state: UserState = initialState, action: Action): any => {
         details: user,
       };
     }
+
     case 'LOGOUT':
       SessionService.clearUserSession();
       return { ...state, details: null };
+
     case 'CLEAR_USER_SESSION':
       SessionService.clearSessionStorage();
       SessionService.clearUserSession();
       return { ...state, details: null };
+
     case 'FETCH_SINGLE_USER_SUCCESS':
       return {
         ...state,

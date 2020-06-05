@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { IUser, RentBoxReq, UserRole } from 'smartbox-types';
+import { RentBoxReq, UserRole, UserRes } from 'smartbox-types';
 import { Button } from '../../../../../components/Common';
 import { order } from '../../../../../actions';
 import { ButtonsContainer } from '../../../../../components/Layout';
@@ -15,6 +15,7 @@ import FormHeader from '../../../../../components/Layout/FormHeader';
 import UserService from '../../../../../services/user-service';
 import Discount from './DiscountsList';
 import SummaryTable from './SummaryTable';
+import { ApplicationState } from '../../../../../reducers';
 
 import './StepSummary.scss';
 
@@ -22,7 +23,7 @@ interface Props {
   history: any;
   formData: Form;
   countedPrice: number;
-  user: IUser;
+  user: UserRes;
   UpdateFormData: (data: any) => void;
   FormGoNextStep: (data: number) => void;
   sentRentBoxRequest: (data: RentBoxReq | any, nextStep: number, role: UserRole) => void;
@@ -71,7 +72,7 @@ const StepSummary = ({ formData, countedPrice, UpdateFormData, FormGoNextStep, u
   );
 };
 
-const mapStateToProps = (state: any) => ({
+const mapStateToProps = (state: ApplicationState) => ({
   formData: state.order.formData,
   countedPrice: state.order.countedPrice,
   user: state.user.details,

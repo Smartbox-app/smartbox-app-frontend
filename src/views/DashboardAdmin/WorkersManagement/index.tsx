@@ -7,10 +7,10 @@ import List from './List';
 const Workers = () => (
   <section className="users">
     <Switch>
-      <Route exact path="/admin/managment/workers" render={() => <Redirect to="/admin/managment/workers/list" />} />
-      <Route path="/admin/managment/workers/add" component={Add} />
-      <Route path="/admin/managment/workers/list" component={List} />
-      <Route path="/admin/managment/workers/edit/:userId" component={Edit} />
+      <Route exact path="/admin/management/workers" render={() => <Redirect to="/admin/management/workers/list" />} />
+      <Route path="/admin/management/workers/add" component={Add} />
+      <Route path="/admin/management/workers/list" component={List} />
+      <Route path="/admin/management/workers/edit/:userId" component={Edit} />
     </Switch>
   </section>
 );

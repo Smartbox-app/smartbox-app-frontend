@@ -10,7 +10,15 @@
   justify-content: center;
   align-items: center;
   padding: $main-spacing;
-  color: $color-inactive !important;
+  color: $color-inactive;
+  border: none;
+
+  &:link {
+    color: $color-inactive;
+  }
+  &:visited {
+    color: $color-inactive
+  }
 
   &:hover {
     background-color: lighten($color-background, 30%);
@@ -19,13 +27,14 @@
     cursor: pointer;
 
     .main-menu-item_text {
-      color: $color-primary;
+      color: $color-primary-light;
     }
   }
 
   &.active {
     border-top: 2px solid $color-primary;
     font-weight: 500;
+    color: $color-inactive;
 
     .main-menu-item_text {
       color: $color-primary;

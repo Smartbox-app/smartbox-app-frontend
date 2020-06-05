@@ -21,7 +21,6 @@
       background-image: url("/assets/icons/alert.svg");
       background-repeat: no-repeat;
       background-size: 30px;
-      // top: 0;
       right: 10px;
       width: 30px;
       height: 30px;
@@ -39,7 +38,7 @@
     text-align: center;
     padding: $main-spacing $main-spacing/2;
     font-family: $font-primary;
-    color: #000;
+    color: $color-text;
     border-bottom: 2px solid $color-primary;
     font-weight: 500;
     
@@ -55,7 +54,7 @@
   }
 }
 
-@media screen and (min-width: map-get($breakpoints, xs)) {
+@include gt-xs {
   .tabs {
     flex-direction: row;
   }

@@ -15,7 +15,7 @@ interface TabsProps {
 }
 
 const Tabs = ({ tabs }: TabsProps) => {
-  const displayTabs = tabs.map((tab: Tab, index: any) => (
+  const displayTabs = tabs.map((tab: Tab, index: number) => (
     <NavLink
       key={index}
       exact
