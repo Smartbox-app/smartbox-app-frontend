@@ -40,7 +40,6 @@ const initialState: UserState = {
     phone: '',
     firstName: '',
     lastName: '',
-    phone: '',
     role: UserRole.admin,
   },
 };

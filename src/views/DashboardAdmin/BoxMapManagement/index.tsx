@@ -37,7 +37,6 @@ class BoxMapmanagement extends React.Component<Props> {
     await fetchBoxStatuses();
     const catchElement = this.element.current.querySelectorAll('#kontenery .storage, #kontenery .st9');
 
-    console.log('catchElement', catchElement);
     await catchElement.forEach((singleElement: any) => {
       this.setBoxStatus(singleElement.parentElement.parentElement.id.slice(1), singleElement);
       singleElement.addEventListener('click', this.handleEventModal, false);

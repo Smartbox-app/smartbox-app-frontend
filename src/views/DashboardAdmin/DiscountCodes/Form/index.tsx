@@ -2,7 +2,7 @@ import React from 'react';
 import { ItfApiForm } from 'itf_formbuilder_react';
 import ReactSelect from 'react-select';
 import ReactCreatableSelect from 'react-select/creatable';
-import { AddGiftReq, GetGiftRes } from 'smartbox-types';
+import { AddGiftReq, GiftRes } from 'smartbox-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { FormContainer, ButtonsContainer } from '../../../../components/Layout';
@@ -48,7 +48,7 @@ const Form = ({ showModal }: Props) => {
         schemaFetcher={() => ApiService.loadForm(fetchUrl)}
         sendFetcher={customSendFetcher}
         submitButton={submitButton}
-        onSavedSuccessfully={(data: GetGiftRes) => {
+        onSavedSuccessfully={(data: GiftRes) => {
           successNotification('Poprawnie utworzono kod rabatowy');
           showModal(<NewCode newCodeProps={data} />);
         }}

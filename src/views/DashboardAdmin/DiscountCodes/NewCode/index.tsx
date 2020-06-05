@@ -1,11 +1,11 @@
 import React from 'react';
-import { GetGiftRes } from 'smartbox-types';
+import { GiftRes } from 'smartbox-types';
 import { SectionHeader } from '../../../../components/Layout';
 
 import './NewCode.scss';
 
 interface Props {
-  newCodeProps: GetGiftRes;
+  newCodeProps: GiftRes;
 }
 
 const NewCode = ({ newCodeProps }: Props) => (

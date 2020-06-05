@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { ItfApiForm } from 'itf_formbuilder_react';
-import { GetGiftReq, GetGiftRes } from 'smartbox-types';
+import { GetGiftReq, GiftRes } from 'smartbox-types';
 import { Button } from '../../../../../../../components/Common';
 import { FormContainer, ButtonsContainer } from '../../../../../../../components/Layout';
 import { modal, order } from '../../../../../../../actions';
@@ -45,10 +45,8 @@ const DiscoutCode = ({ hideModal, updateFormData }: Props) => {
         schemaFetcher={() => ApiService.loadForm(fetchUrl)}
         sendFetcher={customSendFetcher}
         submitButton={submitButton}
-        onSavedSuccessfully={(data: GetGiftRes) => {
+        onSavedSuccessfully={(data: GiftRes) => {
           successNotification('Poprawnie odczytano kod rabatowy');
-          console.log('onSavedSuccessfully', data);
-          // zapisac do reducera
           updateFormData({
             discount: data.discount,
             discountCode: data.code,
