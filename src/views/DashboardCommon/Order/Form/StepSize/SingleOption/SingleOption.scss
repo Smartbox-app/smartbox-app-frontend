@@ -14,22 +14,8 @@ $single-option-height-big: 250px;
   align-items: center;
   margin-bottom: $main-spacing/2;
 
-  input[type=radio] {
-    display: none;
-  }
-  
-  input[type=radio]:checked + label:before {
-    content: '';
-    display: block;
-    width: $single-option-width;
-    height: $single-option-height;
-    background-color: lighten($color-primary, 30%);
-    position: absolute;
-    border-radius: $main-spacing/4;
-    box-shadow: 0px 0px 3px 3px lighten($color-primary, 30%);
-  }
-
   .radio-img {
+    display: flex;
     margin: 0 $main-spacing;
     position: relative;
     display: block;
@@ -40,16 +26,99 @@ $single-option-height-big: 250px;
     border-radius: $main-spacing/4;
   }
 
+  input[type=radio] {
+    display: none;
+  }
+  
+  .svg-wrapper {
+    height: 100%;
+
+    .cls-1 {
+      fill:#dadada;
+    }
+    .cls-2 {
+      fill:#bfbfbf;
+    }
+    .cls-3 {
+      fill:#e6e6e6;
+    }
+    .cls-4 {
+      fill:#999;
+    }
+    .cls-5 {
+      fill: #000;
+      stroke:#000;
+      stroke-miterlimit:10;
+      font-size: 10px;
+    }
+    .cls-6 {
+      font-size:10px;
+      font-family:Montserrat-Regular, Montserrat;
+    }
+    .cls-7 {
+      font-size:52.55px;
+      font-family:Montserrat-Bold, Montserrat;
+      font-weight:700;
+    }
+  }
+
+  input[type=radio]:checked + .single-option {
+    .svg-wrapper{
+      .cls-1{
+        fill:#066eb3;
+      }
+      .cls-2{
+        fill:#0674bd;
+      }
+      .cls-3{
+        fill:#055991;
+      }
+      .cls-4{
+        font-size:10.24px;
+      }
+      .cls-4, .cls-6{
+        fill:red;
+        font-family:Montserrat-SemiBold, Montserrat;
+        font-weight:600;
+      }
+      .cls-5{
+        fill: red;
+        stroke:#000;
+        stroke-miterlimit:10;
+      }
+      .cls-6{
+        font-size:10.24px;
+      }
+      .cls-7{
+        font-size:52.55px;
+        fill:#fbb03b;
+        font-family:Montserrat-Bold, Montserrat;
+        font-weight:700;
+      }
+    }
+  }
+
+  .svg-wrapper {
+    padding: $main-spacing;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
   .single-option {
     cursor: pointer;
     position: relative;
     width: 100%;
-
     display: flex;
     justify-content: center;
   }
 
   .img-description {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);;
     text-align: center;
   }
 }
@@ -58,10 +127,9 @@ $single-option-height-big: 250px;
 .img-value {
   position: absolute;
   top: 50%;
-  transform: translateY(-50%);
   left: 50%;
-  transform: translateX(-50%);
-  font-size: 1.5rem;
+  transform: translateX(-50%) translateY(10%) rotate(10deg);
+  font-size: 2rem;
   color: darken($color-primary, 15%);
   font-weight: 600;
   padding: 0 10px;
@@ -96,17 +164,13 @@ $single-option-height-big: 250px;
     margin-top: $main-spacing * 1;
     margin-bottom: $main-spacing * 1;
 
-    input[type=radio]:checked + label:before {
-      width: $single-option-width-big;
-      height: $single-option-height-big;
-    }
     .radio-img {
       width: $single-option-width-big;
-      height: $single-option-height-big;
+      min-height: $single-option-height-big;
     }
   }
   .img-value {
-    font-size: 2rem;
+    font-size: 3rem;
   }
   .single-option-disable {
     &::before {
