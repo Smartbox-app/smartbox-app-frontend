@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import { addDays, differenceInCalendarDays } from 'date-fns';
-import { IUser } from 'smartbox-types';
+import { IUser, IPricingResult } from 'smartbox-types';
 import { DateInput, Button } from '../../../../../components/Common';
 import { order } from '../../../../../actions';
 import { ButtonsContainer } from '../../../../../components/Layout';
@@ -20,7 +20,7 @@ import UserService from '../../../../../services/user-service';
 interface Props {
   history: any;
   formData: Form;
-  countedPrice: number;
+  countedPrice: IPricingResult;
   user: IUser;
   updateFormData: (data: any) => void;
   formGoNextStep: (data: number) => void;
@@ -86,7 +86,7 @@ const StepDuration = ({ formData, countedPrice, updateFormData, formGoNextStep, 
             }}
           />
         </div>
-        <Price countedPrice={countedPrice} />
+        <Price countedPrice={countedPrice.value} />
         <ButtonsContainer max>
           <Button outline text="Wróć" click={() => onBack()} />
           <Button type="submit" primary text="Dalej" />

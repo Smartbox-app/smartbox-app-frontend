@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { RentBoxReq, UserRole, UserRes } from 'smartbox-types';
+import { RentBoxReq, UserRole, UserRes, IPricingResult } from 'smartbox-types';
 import { Button } from '../../../../../components/Common';
 import { order } from '../../../../../actions';
 import { ButtonsContainer } from '../../../../../components/Layout';
@@ -22,7 +22,7 @@ import './StepSummary.scss';
 interface Props {
   history: any;
   formData: Form;
-  countedPrice: number;
+  countedPrice: IPricingResult;
   user: UserRes;
   updateFormData: (data: any) => void;
   formGoNextStep: (data: number) => void;
@@ -63,7 +63,7 @@ const StepSummary = ({ formData, countedPrice, updateFormData, formGoNextStep, u
     <form onSubmit={handleSubmit(onSubmit)} className="form-step-two">
       <Discount register={register} />
       <FormHeader title="Podsumowanie zamówienia:" />
-      <SummaryTable dateStart={formData.dateStart} dateEnd={formData.dateEnd} countedPrice={countedPrice} />
+      <SummaryTable dateStart={formData.dateStart} dateEnd={formData.dateEnd} countedPrice={countedPrice.value} />
       <ButtonsContainer max>
         <Button outline text="Wróć" click={() => onBack()} />
         <Button type="submit" primary text="Przejdź do umowy" />

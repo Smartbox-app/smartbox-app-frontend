@@ -1,5 +1,5 @@
 import { addDays } from 'date-fns';
-import { BoxGroupAvailability, usePricing, ICalculateProps } from 'smartbox-types';
+import { BoxGroupAvailability, usePricing, ICalculateProps, IPricingResult } from 'smartbox-types';
 
 export interface Form {
   durationInDays: number;
@@ -13,7 +13,7 @@ export type OrderState = {
   formData: Form;
   formStep: number;
   paymentId: string;
-  countedPrice: number;
+  countedPrice: IPricingResult;
   boxAvailability: BoxGroupAvailability[];
   discountList: any[];
   isAgreementAccepted: boolean;
@@ -56,7 +56,10 @@ const initialState: OrderState = {
   },
   formStep: 1,
   paymentId: '',
-  countedPrice: 0,
+  countedPrice: {
+    name: '',
+    value: 0,
+  },
   boxAvailability: [],
   discountList: [
     { text: 'Jednorazowy rabat 5%', value: 5 },
@@ -78,6 +81,8 @@ export default (state: OrderState = initialState, action: Action): any => {
         size: Number(newFormData.size),
         isFirstRent: false,
       };
+      console.log('newFormData', newFormData);
+      console.log('countedPrice', calculate(data));
 
       if (newFormData.durationInDays !== 0) {
         const price = calculate(data);
@@ -87,7 +92,6 @@ export default (state: OrderState = initialState, action: Action): any => {
           countedPrice: price,
         };
       }
-
       return {
         ...state,
         formData: newFormData,
