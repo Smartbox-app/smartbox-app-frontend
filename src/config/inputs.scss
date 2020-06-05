@@ -179,13 +179,13 @@ textarea {
 [type="checkbox"]:checked + label:after,
 [type="checkbox"]:not(:checked) + label:after {
   content: "";
-  width: ($main-spacing * 2);
-  height: ($main-spacing * 2);
+  width: ($main-spacing * 1.4);
+  height: ($main-spacing * 1.4);
   background: $color-primary;
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  left: 2px;
+  left: 5px;
   transition: background-color 0.2s ease, opacity 0.2s ease;
 }
 [type="checkbox"]:not(:checked) + label:after {
