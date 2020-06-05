@@ -37,6 +37,7 @@ const initialState: UserState = {
     rentCount: 0,
     id: '',
     email: '',
+    phone: '',
     firstName: '',
     lastName: '',
     role: UserRole.admin,
