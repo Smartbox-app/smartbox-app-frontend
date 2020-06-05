@@ -1,4 +1,5 @@
 import React from 'react';
+import { ReactSVG } from 'react-svg';
 
 import './SingleOption.scss';
 
@@ -30,10 +31,13 @@ const SingleOption = ({ register, singleOptionData, disable }: Props) => (
     />
     <label htmlFor={singleOptionData.id} className={`single-option ${disable ? 'single-option-disable' : ''}`}>
       <div className="radio-img">
-        <span className={`img-value ${disable ? 'img-value-disabled' : ''}`}>
+        {/* <span className={`img-value ${disable ? 'img-value-disabled' : ''}`}>
           {disable ? 'BRAK' : `${singleOptionData.value}m2`}
-        </span>
-        {singleOptionData.imgAddress && <img src={singleOptionData.imgAddress} alt="container" />}
+        </span> */}
+        {singleOptionData.imgAddress && (
+          // <img src={`/assets/images/${singleOptionData.imgAddress}.png`} alt="container" />
+          <ReactSVG src={`/assets/icons/${singleOptionData.imgAddress}.svg`} />
+        )}
         <p className="img-description">
           {singleOptionData.sizeX}m x {singleOptionData.sizeY}m x {singleOptionData.sizeZ}m
         </p>

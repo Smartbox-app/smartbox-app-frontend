@@ -66,7 +66,7 @@ const StepSize = ({
       sizeX: 1.5,
       sizeY: 2,
       sizeZ: 2,
-      imgAddress: '/assets/images/dummy_box2.png',
+      imgAddress: '3g',
     },
     {
       name: 'size',
@@ -75,7 +75,7 @@ const StepSize = ({
       sizeX: 2,
       sizeY: 2,
       sizeZ: 3,
-      imgAddress: '/assets/images/dummy_box2.png',
+      imgAddress: '6g',
     },
     {
       name: 'size',
@@ -84,7 +84,7 @@ const StepSize = ({
       sizeX: 2,
       sizeY: 2,
       sizeZ: 4.5,
-      imgAddress: '/assets/images/dummy_box2.png',
+      imgAddress: '9g',
     },
     {
       name: 'size',
@@ -93,7 +93,7 @@ const StepSize = ({
       sizeX: 2,
       sizeY: 2,
       sizeZ: 6,
-      imgAddress: '/assets/images/dummy_box2.png',
+      imgAddress: '12g',
     },
   ];
 
