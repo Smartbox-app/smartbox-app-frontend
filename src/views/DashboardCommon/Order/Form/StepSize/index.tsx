@@ -53,7 +53,6 @@ const StepSize = ({
   const { register, handleSubmit, watch } = useForm({ defaultValues });
 
   const onSubmit = (data: any) => {
-    console.log('onSubmit', data);
     updateFormData(data);
     formGoNextStep(2);
     history.push(`/${UserService.getSlugByRole(user.role)}/order/step/2`);

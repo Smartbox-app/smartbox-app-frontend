@@ -8,6 +8,7 @@ export interface Form {
   isFirstRent: boolean;
   dateStart: Date;
   dateEnd: Date;
+  discountCode: string;
 }
 export type OrderState = {
   formData: Form;
@@ -64,6 +65,7 @@ const initialState: OrderState = {
     isFirstRent: true,
     dateStart: new Date(),
     dateEnd: addDays(new Date(), 7),
+    discountCode: '',
   },
   formStep: 1,
   paymentId: '',
@@ -72,10 +74,7 @@ const initialState: OrderState = {
     value: 0,
   },
   boxAvailability: [],
-  discountList: [
-    { text: 'Jednorazowy rabat 5%', value: 5 },
-    { text: 'Jednorazowy rabat 10%', value: 10 },
-  ],
+  discountList: [{ text: 'Jednorazowy rabat 5%', value: 5 }],
   isAgreementAccepted: false,
   isResignationMarked: false,
 };
@@ -89,7 +88,7 @@ export default (state: OrderState = initialState, action: Action): any => {
 
       const data: ICalculateProps = {
         durationInDays: newFormData.durationInDays,
-        discount: 0,
+        discount: newFormData.discount,
         size: Number(newFormData.size),
         isFirstRent: false,
       };
@@ -108,6 +107,7 @@ export default (state: OrderState = initialState, action: Action): any => {
           ],
         };
       }
+
       return {
         ...state,
         formData: newFormData,

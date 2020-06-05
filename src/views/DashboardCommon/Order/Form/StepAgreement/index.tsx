@@ -58,7 +58,7 @@ const StepSummary = ({
         startAt: formData.dateStart,
         finishAt: formData.dateEnd,
         cost: countedPrice.value,
-        discountCode: '',
+        discountCode: formData.discountCode,
       },
       5,
       user.role,

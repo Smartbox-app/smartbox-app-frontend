@@ -69,7 +69,7 @@ const StepDuration = ({ formData, countedPrice, updateFormData, formGoNextStep, 
             maxDate={addDays(new Date(), 7)}
             onChange={([selected]) => {
               setDateStart(selected[0]);
-              updateFormData({ durationInDays: differenceInCalendarDays(dateEndMin, selected[0]) });
+              updateFormData({ durationInDays: differenceInCalendarDays(dateEndMin, selected[0]), discount: 0 });
               return selected;
             }}
           />
@@ -82,7 +82,7 @@ const StepDuration = ({ formData, countedPrice, updateFormData, formGoNextStep, 
             minDate={addDays(dateStartMin, 7)}
             onChange={([selected]) => {
               setDateEnd(selected[0]);
-              updateFormData({ durationInDays: differenceInCalendarDays(selected[0], dateStartMin) });
+              updateFormData({ durationInDays: differenceInCalendarDays(selected[0], dateStartMin), discount: 0 });
               return selected;
             }}
           />
