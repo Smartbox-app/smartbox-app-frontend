@@ -17,15 +17,15 @@
       <polyline class="cls-3" points="142.33 156.69 22.35 127.24 22.35 129.67 142.33 159.94"/>
       <polyline class="cls-3" points="142.33 172.91 22.35 136.7 22.35 139.13 142.33 176.42"/>
       <polyline class="cls-3" points="142.33 190.47 22.35 145.61 22.35 148.04 142.33 193.98"/>
-      <text class="cls-5" transform="translate(9.04 106.31) rotate(-90)">2 m</text>
+      <text class="cls-5 red" transform="translate(9.04 106.31) rotate(-90)">2 m</text>
       <line class="cls-5" x1="13.42" y1="40.01" x2="16.93" y2="40.01"/>
       <line class="cls-5" x1="16.93" y1="152.5" x2="13.42" y2="152.5"/>
       <line class="cls-5" x1="15.18" y1="39.91" x2="15.18" y2="152.59"/>
-      <text class="cls-5" transform="translate(205.76 9.03) rotate(3)">2 m</text>
+      <text class="cls-5 red" transform="translate(205.76 9.03) rotate(3)">2 m</text>
       <line class="cls-5" x1="283.78" y1="14.56" x2="283.78" y2="18.08"/>
       <line class="cls-5" x1="145.56" y1="8.89" x2="283.65" y2="16.19"/>
       <line class="cls-5" x1="145.43" y1="7.14" x2="145.43" y2="10.65"/>
-      <text class="cls-5" transform="translate(61.21 23.26) rotate(-12)">4<tspan class="cls-5" x="7.24" y="0">,5 m</tspan></text>
+      <text class="cls-5 red" transform="translate(61.21 23.26) rotate(-12)">4<tspan class="cls-5 red" x="7.24" y="0">,5 m</tspan></text>
       <line class="cls-5" x1="145.57" y1="8.89" x2="19.92" y2="34.45"/>
       <line class="cls-5" x1="19.92" y1="31.97" x2="19.92" y2="36.58"/>
       <text class="cls-8 cls-7" transform="translate(88.49 117.02)">9 m²</text>
