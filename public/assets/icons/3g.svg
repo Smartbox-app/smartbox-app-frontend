@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="-60 -10 303.47 208.83">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-60 0 303.47 208.83">
   <g id="Warstwa_2" data-name="Warstwa 2">
     <g id="Warstwa_1-2" data-name="Warstwa 1">
       <polygon class="cls-1" points="15.19 25.56 15.19 172.38 70.85 198.16 70.85 14.33 15.19 25.56"/>
@@ -13,8 +13,8 @@
       <polyline class="cls-2" points="68.04 146.33 17.23 134.33 17.23 137.4 68.04 149.4"/>
       <polyline class="cls-2" points="68.04 160.63 17.23 147.1 17.23 150.16 68.04 163.7"/>
       <polyline class="cls-2" points="68.04 176.46 17.23 158.33 17.23 161.4 68.04 179.78"/>
-      <polygon class="cls-3" points="70.72 14.33 168.77 21.48 168.77 178.25 70.72 198.16 70.72 14.33"/>
-      <polygon class="cls-2" points="164.41 28.08 75.14 21.16 75.14 191.33 164.41 172.88 164.41 28.08"/>
+      <polygon class="cls-2" points="70.72 14.33 168.77 21.48 168.77 178.25 70.72 198.16 70.72 14.33"/>
+      <polygon class="cls-3" points="164.41 28.08 75.14 21.16 75.14 191.33 164.41 172.88 164.41 28.08"/>
       <rect class="cls-4" x="80.21" y="97.31" width="2.11" height="13.79"/>
       <line class="cls-5" x1="14.93" y1="19.95" x2="70.59" y2="8.71"/>
       <line class="cls-5" x1="14.81" y1="18.29" x2="14.81" y2="21.61"/>

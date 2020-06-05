@@ -43,6 +43,7 @@ const StepSize = ({
 }: Props) => {
   useEffect(() => {
     fetchBoxAvailability();
+    formGoNextStep(1);
   }, []);
 
   const defaultValues = {

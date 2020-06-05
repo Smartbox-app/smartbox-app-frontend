@@ -28,12 +28,12 @@ interface Props {
 }
 
 const StepPayment = ({ formData, formGoNextStep, user, sentExecutePaymentRequest, paymentId }: Props) => {
-  // useEffect(() => {
-  //   if (formData.size.length === 0) {
-  //     history.push(`/${UserService.getSlugByRole(user.role)}/order/step/1`);
-  //     formGoNextStep(1);
-  //   }
-  // });
+  useEffect(() => {
+    if (formData.size.length === 0) {
+      history.push(`/${UserService.getSlugByRole(user.role)}/order/step/1`);
+      formGoNextStep(1);
+    }
+  });
   const defaultValues = {
     cardNumber: '5214 9688 1896 5732',
     firstName: 'Krzysiek',
