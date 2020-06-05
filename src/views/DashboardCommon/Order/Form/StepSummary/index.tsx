@@ -40,18 +40,8 @@ const StepSummary = ({ formData, countedPrice, updateFormData, formGoNextStep, u
 
   const onSubmit = (data: any) => {
     updateFormData(data);
-    sentRentBoxRequest(
-      {
-        stockId: undefined,
-        size: Number(formData.size),
-        startAt: formData.dateStart,
-        finishAt: formData.dateEnd,
-        cost: 1,
-        discountCode: '',
-      },
-      4,
-      user.role,
-    );
+    formGoNextStep(4);
+    history.push(`/${UserService.getSlugByRole(user.role)}/order/step/4`);
   };
 
   const onBack = () => {

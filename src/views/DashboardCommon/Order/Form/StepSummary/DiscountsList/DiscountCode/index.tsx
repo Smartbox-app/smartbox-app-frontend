@@ -36,7 +36,7 @@ const DiscoutCode = ({ hideModal }: Props) => {
 
   return (
     <FormContainer className="gift-form">
-      <FormHeader title="Podaj Twój kod rabatopwy" />
+      <FormHeader title="Podaj Twój kod rabatowy" />
       <ItfApiForm
         formId="getGiftForm"
         schemaMayBeDynamic={false}
@@ -46,6 +46,7 @@ const DiscoutCode = ({ hideModal }: Props) => {
         submitButton={submitButton}
         onSavedSuccessfully={(data: GetGiftRes) => {
           successNotification('Poprawnie odczytano kod rabatowy');
+          console.log('onSavedSuccessfully', data);
           // zapisac do reducera
           hideModal();
         }}

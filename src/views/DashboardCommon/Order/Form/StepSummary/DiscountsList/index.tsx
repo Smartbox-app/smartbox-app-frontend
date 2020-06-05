@@ -26,7 +26,7 @@ const DiscountsList = ({ register, showModal, discoutsList }: Props) => {
 
   return (
     <div>
-      <FormHeader title="Stałe rabaty:" />
+      <FormHeader title="Zastosowane rabaty:" />
       <div className="discounts-list-wrapper">{dataToDisplay}</div>
       <ButtonsContainer>
         <Button text="Dodaj kod rabatowy" primary click={() => showModal(<DiscoutCode />)} />

@@ -9,6 +9,8 @@ export const formGoNextStep = (data: number) => ({ type: 'FORM_GO_NEXT_STEP_SUCC
 
 export const formAgreementReaded = () => ({ type: 'FORM_AGREEMENT_READED_SUCCESS' });
 
+export const formResignationMarked = () => ({ type: 'FORM_RESIGNATION_MARKED_SUCCESS' });
+
 export const fetchBoxAvailability = () => async (dispatch: any) => {
   await ApiService.get(
     dispatch,

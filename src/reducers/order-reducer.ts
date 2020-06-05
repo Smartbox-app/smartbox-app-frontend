@@ -17,6 +17,7 @@ export type OrderState = {
   boxAvailability: BoxGroupAvailability[];
   discountList: any[];
   isAgreementAccepted: boolean;
+  isResignationMarked: boolean;
 };
 
 interface FormStepSuccess {
@@ -43,7 +44,17 @@ interface FormReaded {
   type: 'FORM_AGREEMENT_READED_SUCCESS';
 }
 
-type Action = FormStepSuccess | FormGoNextStep | FetchBoxAvailability | SentRentBoxRequestSuccess | FormReaded;
+interface FormResignation {
+  type: 'FORM_RESIGNATION_MARKED_SUCCESS';
+}
+
+type Action =
+  | FormStepSuccess
+  | FormGoNextStep
+  | FetchBoxAvailability
+  | SentRentBoxRequestSuccess
+  | FormReaded
+  | FormResignation;
 
 const initialState: OrderState = {
   formData: {
@@ -66,6 +77,7 @@ const initialState: OrderState = {
     { text: 'Jednorazowy rabat 10%', value: 10 },
   ],
   isAgreementAccepted: false,
+  isResignationMarked: false,
 };
 
 export default (state: OrderState = initialState, action: Action): any => {
@@ -81,8 +93,6 @@ export default (state: OrderState = initialState, action: Action): any => {
         size: Number(newFormData.size),
         isFirstRent: false,
       };
-      console.log('newFormData', newFormData);
-      console.log('countedPrice', calculate(data));
 
       if (newFormData.durationInDays !== 0) {
         const price = calculate(data);
@@ -90,6 +100,12 @@ export default (state: OrderState = initialState, action: Action): any => {
           ...state,
           formData: newFormData,
           countedPrice: price,
+          discountList: [
+            {
+              text: price.name,
+              value: 0,
+            },
+          ],
         };
       }
       return {
@@ -124,6 +140,13 @@ export default (state: OrderState = initialState, action: Action): any => {
         isAgreementAccepted: true,
       };
     }
+    case 'FORM_RESIGNATION_MARKED_SUCCESS': {
+      return {
+        ...state,
+        isResignationMarked: true,
+      };
+    }
+
     default:
       return state;
   }

@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { IUser, RentBoxReq, UserRole, ExecutePaymentReq } from 'smartbox-types';
+import { IUser, RentBoxReq, UserRole, ExecutePaymentReq, IPricingResult } from 'smartbox-types';
 import { Button } from '../../../../../components/Common';
 import { order } from '../../../../../actions';
 import { ButtonsContainer } from '../../../../../components/Layout';
@@ -22,15 +22,24 @@ import './StepAgreement.scss';
 interface Props {
   history: any;
   formData: Form;
-  countedPrice: number;
+  countedPrice: IPricingResult;
   user: IUser;
   isAgreementAccepted: boolean;
+  isResignationMarked: boolean;
   updateFormData: (data: any) => void;
   formGoNextStep: (data: number) => void;
   sentRentBoxRequest: (data: RentBoxReq | any, nextStep: number, role: UserRole) => void;
 }
 
-const StepSummary = ({ formData, formGoNextStep, user, isAgreementAccepted }: Props) => {
+const StepSummary = ({
+  formData,
+  formGoNextStep,
+  user,
+  isAgreementAccepted,
+  isResignationMarked,
+  sentRentBoxRequest,
+  countedPrice,
+}: Props) => {
   useEffect(() => {
     if (formData.size.length === 0) {
       history.push(`/${UserService.getSlugByRole(user.role)}/order/step/1`);
@@ -41,8 +50,18 @@ const StepSummary = ({ formData, formGoNextStep, user, isAgreementAccepted }: Pr
   const { handleSubmit } = useForm();
 
   const onSubmit = (data: any) => {
-    formGoNextStep(5);
-    history.push(`/${UserService.getSlugByRole(user.role)}/order/step/5`);
+    sentRentBoxRequest(
+      {
+        stockId: undefined,
+        size: Number(formData.size),
+        startAt: formData.dateStart,
+        finishAt: formData.dateEnd,
+        cost: countedPrice.value,
+        discountCode: '',
+      },
+      5,
+      user.role,
+    );
   };
 
   const onBack = () => {
@@ -57,7 +76,12 @@ const StepSummary = ({ formData, formGoNextStep, user, isAgreementAccepted }: Pr
       <ScrollPosition />
       <ButtonsContainer max>
         <Button outline text="Wróć" click={() => onBack()} />
-        <Button type="submit" primary text="Przejdź do płatności" disabled={!isAgreementAccepted} />
+        <Button
+          type="submit"
+          primary
+          text="Przejdź do płatności"
+          disabled={!isAgreementAccepted || !isResignationMarked}
+        />
       </ButtonsContainer>
     </form>
   );
@@ -68,6 +92,7 @@ const mapStateToProps = (state: any) => ({
   countedPrice: state.order.countedPrice,
   user: state.user.details,
   isAgreementAccepted: state.order.isAgreementAccepted,
+  isResignationMarked: state.order.isResignationMarked,
 });
 
 const mapDispatchToProps = (dispatch: any) =>
