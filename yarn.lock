@@ -10401,7 +10401,7 @@ slick-carousel@^1.8.1:
 
 "smartbox-types@git+https://gitlab.com/itdotfocus/smartbox/smartbox-types.git":
   version "1.0.0"
-  resolved "git+https://gitlab.com/itdotfocus/smartbox/smartbox-types.git#e74233e5304d34400bd6baf092ac5ec7dfafe100"
+  resolved "git+https://gitlab.com/itdotfocus/smartbox/smartbox-types.git#f372777c9b22713a6d7f0cc18d3e14492ff9d558"
 
 snapdragon-node@^2.0.1:
   version "2.1.1"
