@@ -35,6 +35,7 @@
     margin: auto;
     width: map-get($breakpoints, lg);
     margin-bottom: $main-spacing;
+    margin-top: 0;
 
     .logo-container {
       width:  map-get($breakpoints, lg) /2;
