@@ -39,6 +39,7 @@ const initialState: UserState = {
     email: '',
     firstName: '',
     lastName: '',
+    phone: '',
     role: UserRole.admin,
   },
 };
