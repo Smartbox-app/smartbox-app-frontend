@@ -3,9 +3,9 @@ import ApiService from '../services/api-service';
 import { history } from '../App';
 import UserService from '../services/user-service';
 
-export const UpdateFormData = (data: any) => ({ type: 'FORM_STEP_SUCCESS', payload: data });
+export const updateFormData = (data: any) => ({ type: 'FORM_STEP_SUCCESS', payload: data });
 
-export const FormGoNextStep = (data: number) => ({ type: 'FORM_GO_NEXT_STEP_SUCCESS', payload: data });
+export const formGoNextStep = (data: number) => ({ type: 'FORM_GO_NEXT_STEP_SUCCESS', payload: data });
 
 export const formAgreementReaded = () => ({ type: 'FORM_AGREEMENT_READED_SUCCESS' });
 
@@ -26,7 +26,7 @@ export const sentRentBoxRequest = (data: RentBoxReq, nextStep: number, role: Use
     'SENT_RENT_BOX_REQUEST_SUCCESS',
     'SENT_RENT_BOX_REQUEST_FAILED',
     (d: any) => {
-      dispatch(FormGoNextStep(nextStep));
+      dispatch(formGoNextStep(nextStep));
       history.push(`/${UserService.getSlugByRole(role)}/order/step/${nextStep}`);
     },
     null,

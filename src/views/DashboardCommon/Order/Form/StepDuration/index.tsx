@@ -22,11 +22,11 @@ interface Props {
   formData: Form;
   countedPrice: number;
   user: IUser;
-  UpdateFormData: (data: any) => void;
-  FormGoNextStep: (data: number) => void;
+  updateFormData: (data: any) => void;
+  formGoNextStep: (data: number) => void;
 }
 
-const StepDuration = ({ formData, countedPrice, UpdateFormData, FormGoNextStep, user }: Props) => {
+const StepDuration = ({ formData, countedPrice, updateFormData, formGoNextStep, user }: Props) => {
   useEffect(() => {
     if (formData.size.length === 0) {
       history.push(`/${UserService.getSlugByRole(user.role)}/order/step/1`);
@@ -45,12 +45,12 @@ const StepDuration = ({ formData, countedPrice, UpdateFormData, FormGoNextStep, 
   const methods = useForm();
 
   const onSubmit = (data: any) => {
-    FormGoNextStep(3);
+    formGoNextStep(3);
     history.push(`/${UserService.getSlugByRole(user.role)}/order/step/3`);
   };
 
   const onBack = () => {
-    FormGoNextStep(1);
+    formGoNextStep(1);
     history.push(`/${UserService.getSlugByRole(user.role)}/order/step/1`);
   };
 
@@ -68,7 +68,7 @@ const StepDuration = ({ formData, countedPrice, UpdateFormData, FormGoNextStep, 
             maxDate={addDays(new Date(), 7)}
             onChange={([selected]) => {
               setDateStart(selected[0]);
-              UpdateFormData({ durationInDays: differenceInCalendarDays(dateEndMin, selected[0]) });
+              updateFormData({ durationInDays: differenceInCalendarDays(dateEndMin, selected[0]) });
               return selected;
             }}
           />
@@ -81,7 +81,7 @@ const StepDuration = ({ formData, countedPrice, UpdateFormData, FormGoNextStep, 
             minDate={addDays(dateStartMin, 7)}
             onChange={([selected]) => {
               setDateEnd(selected[0]);
-              UpdateFormData({ durationInDays: differenceInCalendarDays(selected[0], dateStartMin) });
+              updateFormData({ durationInDays: differenceInCalendarDays(selected[0], dateStartMin) });
               return selected;
             }}
           />

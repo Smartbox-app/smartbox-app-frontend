@@ -22,15 +22,15 @@ interface Props {
   countedPrice: number;
   paymentId: string;
   user: IUser;
-  FormGoNextStep: (data: number) => void;
+  formGoNextStep: (data: number) => void;
   sentExecutePaymentRequest: (data: ExecutePaymentReq) => void;
 }
 
-const StepPayment = ({ formData, FormGoNextStep, user, sentExecutePaymentRequest, paymentId }: Props) => {
+const StepPayment = ({ formData, formGoNextStep, user, sentExecutePaymentRequest, paymentId }: Props) => {
   // useEffect(() => {
   //   if (formData.size.length === 0) {
   //     history.push(`/${UserService.getSlugByRole(user.role)}/order/step/1`);
-  //     FormGoNextStep(1);
+  //     formGoNextStep(1);
   //   }
   // });
   const defaultValues = {
@@ -56,7 +56,7 @@ const StepPayment = ({ formData, FormGoNextStep, user, sentExecutePaymentRequest
   };
 
   const onBack = () => {
-    FormGoNextStep(4);
+    formGoNextStep(4);
     history.push(`/${UserService.getSlugByRole(user.role)}/order/step/4`);
   };
 

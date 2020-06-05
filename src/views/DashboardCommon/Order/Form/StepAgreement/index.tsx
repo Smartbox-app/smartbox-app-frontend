@@ -25,28 +25,28 @@ interface Props {
   countedPrice: number;
   user: IUser;
   isAgreementAccepted: boolean;
-  UpdateFormData: (data: any) => void;
-  FormGoNextStep: (data: number) => void;
+  updateFormData: (data: any) => void;
+  formGoNextStep: (data: number) => void;
   sentRentBoxRequest: (data: RentBoxReq | any, nextStep: number, role: UserRole) => void;
 }
 
-const StepSummary = ({ formData, FormGoNextStep, user, isAgreementAccepted }: Props) => {
+const StepSummary = ({ formData, formGoNextStep, user, isAgreementAccepted }: Props) => {
   useEffect(() => {
     if (formData.size.length === 0) {
       history.push(`/${UserService.getSlugByRole(user.role)}/order/step/1`);
-      FormGoNextStep(1);
+      formGoNextStep(1);
     }
   });
 
   const { handleSubmit } = useForm();
 
   const onSubmit = (data: any) => {
-    FormGoNextStep(5);
+    formGoNextStep(5);
     history.push(`/${UserService.getSlugByRole(user.role)}/order/step/5`);
   };
 
   const onBack = () => {
-    FormGoNextStep(3);
+    formGoNextStep(3);
     history.push(`/${UserService.getSlugByRole(user.role)}/order/step/3`);
   };
 
