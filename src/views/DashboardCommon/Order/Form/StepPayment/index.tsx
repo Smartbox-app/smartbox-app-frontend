@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { IUser, ExecutePaymentReq } from 'smartbox-types';
+import { ExecutePaymentReq, UserRes, IPricingResult } from 'smartbox-types';
 import { Button } from '../../../../../components/Common';
 import { order } from '../../../../../actions';
 import { ButtonsContainer } from '../../../../../components/Layout';
@@ -13,26 +13,27 @@ import { Form } from '../../../../../reducers/order-reducer';
 import FormHeader from '../../../../../components/Layout/FormHeader';
 import UserService from '../../../../../services/user-service';
 import CreditCardInput from '../../../../../components/Common/CreditCardInput';
+import { ApplicationState } from '../../../../../reducers';
 
 import './StepPayment.scss';
 
 interface Props {
   history: any;
   formData: Form;
-  countedPrice: number;
+  countedPrice: IPricingResult;
   paymentId: string;
-  user: IUser;
-  FormGoNextStep: (data: number) => void;
+  user: UserRes;
+  formGoNextStep: (data: number) => void;
   sentExecutePaymentRequest: (data: ExecutePaymentReq) => void;
 }
 
-const StepPayment = ({ formData, FormGoNextStep, user, sentExecutePaymentRequest, paymentId }: Props) => {
-  // useEffect(() => {
-  //   if (formData.size.length === 0) {
-  //     history.push(`/${UserService.getSlugByRole(user.role)}/order/step/1`);
-  //     FormGoNextStep(1);
-  //   }
-  // });
+const StepPayment = ({ formData, formGoNextStep, user, sentExecutePaymentRequest, paymentId }: Props) => {
+  useEffect(() => {
+    if (formData.size.length === 0) {
+      history.push(`/${UserService.getSlugByRole(user.role)}/order/step/1`);
+      formGoNextStep(1);
+    }
+  });
   const defaultValues = {
     cardNumber: '5214 9688 1896 5732',
     firstName: 'Krzysiek',
@@ -56,7 +57,7 @@ const StepPayment = ({ formData, FormGoNextStep, user, sentExecutePaymentRequest
   };
 
   const onBack = () => {
-    FormGoNextStep(4);
+    formGoNextStep(4);
     history.push(`/${UserService.getSlugByRole(user.role)}/order/step/4`);
   };
 
@@ -72,7 +73,7 @@ const StepPayment = ({ formData, FormGoNextStep, user, sentExecutePaymentRequest
   );
 };
 
-const mapStateToProps = (state: any) => ({
+const mapStateToProps = (state: ApplicationState) => ({
   formData: state.order.formData,
   countedPrice: state.order.countedPrice,
   paymentId: state.order.paymentId,

@@ -1,32 +1,33 @@
 import React, { useState, useEffect } from 'react';
-import { useForm, Controller, FormContext, useFormContext } from 'react-hook-form';
+import { useForm, Controller, FormContext } from 'react-hook-form';
 import { withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import { addDays, differenceInCalendarDays } from 'date-fns';
-import { IUser } from 'smartbox-types';
+import { IPricingResult, UserRes } from 'smartbox-types';
 import { DateInput, Button } from '../../../../../components/Common';
 import { order } from '../../../../../actions';
 import { ButtonsContainer } from '../../../../../components/Layout';
 import { history } from '../../../../../App';
 import { Form } from '../../../../../reducers/order-reducer';
+import { ApplicationState } from '../../../../../reducers';
+import UserService from '../../../../../services/user-service';
 
 import Price from './Price';
 
 import './StepDuration.scss';
-import UserService from '../../../../../services/user-service';
 
 interface Props {
   history: any;
   formData: Form;
-  countedPrice: number;
-  user: IUser;
-  UpdateFormData: (data: any) => void;
-  FormGoNextStep: (data: number) => void;
+  countedPrice: IPricingResult;
+  user: UserRes;
+  updateFormData: (data: any) => void;
+  formGoNextStep: (data: number) => void;
 }
 
-const StepDuration = ({ formData, countedPrice, UpdateFormData, FormGoNextStep, user }: Props) => {
+const StepDuration = ({ formData, countedPrice, updateFormData, formGoNextStep, user }: Props) => {
   useEffect(() => {
     if (formData.size.length === 0) {
       history.push(`/${UserService.getSlugByRole(user.role)}/order/step/1`);
@@ -45,12 +46,12 @@ const StepDuration = ({ formData, countedPrice, UpdateFormData, FormGoNextStep, 
   const methods = useForm();
 
   const onSubmit = (data: any) => {
-    FormGoNextStep(3);
+    formGoNextStep(3);
     history.push(`/${UserService.getSlugByRole(user.role)}/order/step/3`);
   };
 
   const onBack = () => {
-    FormGoNextStep(1);
+    formGoNextStep(1);
     history.push(`/${UserService.getSlugByRole(user.role)}/order/step/1`);
   };
 
@@ -68,7 +69,7 @@ const StepDuration = ({ formData, countedPrice, UpdateFormData, FormGoNextStep, 
             maxDate={addDays(new Date(), 7)}
             onChange={([selected]) => {
               setDateStart(selected[0]);
-              UpdateFormData({ durationInDays: differenceInCalendarDays(dateEndMin, selected[0]) });
+              updateFormData({ durationInDays: differenceInCalendarDays(dateEndMin, selected[0]), discount: 0 });
               return selected;
             }}
           />
@@ -81,12 +82,12 @@ const StepDuration = ({ formData, countedPrice, UpdateFormData, FormGoNextStep, 
             minDate={addDays(dateStartMin, 7)}
             onChange={([selected]) => {
               setDateEnd(selected[0]);
-              UpdateFormData({ durationInDays: differenceInCalendarDays(selected[0], dateStartMin) });
+              updateFormData({ durationInDays: differenceInCalendarDays(selected[0], dateStartMin), discount: 0 });
               return selected;
             }}
           />
         </div>
-        <Price countedPrice={countedPrice} />
+        <Price countedPrice={countedPrice.value} />
         <ButtonsContainer max>
           <Button outline text="Wróć" click={() => onBack()} />
           <Button type="submit" primary text="Dalej" />
@@ -96,7 +97,7 @@ const StepDuration = ({ formData, countedPrice, UpdateFormData, FormGoNextStep, 
   );
 };
 
-const mapStateToProps = (state: any) => ({
+const mapStateToProps = (state: ApplicationState) => ({
   formData: state.order.formData,
   countedPrice: state.order.countedPrice,
   user: state.user.details,

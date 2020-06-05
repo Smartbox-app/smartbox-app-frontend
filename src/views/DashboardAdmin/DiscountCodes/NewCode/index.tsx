@@ -1,23 +1,24 @@
 import React from 'react';
+import { GetGiftRes } from 'smartbox-types';
 import { SectionHeader } from '../../../../components/Layout';
 
 import './NewCode.scss';
 
 interface Props {
-  newCode: string;
+  newCodeProps: GetGiftRes;
 }
 
-const NewCode = ({ newCode }: Props) => (
+const NewCode = ({ newCodeProps }: Props) => (
   <div className="new-code-wrapper">
     <SectionHeader title="Wygenerowano kod" />
     <p>
-      Kod: <strong>{newCode}</strong>
+      Kod: <strong>{newCodeProps.code}</strong>
     </p>
     <p>
-      Zniżka: <strong>{10}%</strong>
+      Zniżka: <strong>{newCodeProps.discount}%</strong>
     </p>
     <p>
-      Na czas: <strong>{10} tygodni</strong>
+      Na czas: <strong>{newCodeProps.duration} tygodni</strong>
     </p>
   </div>
 );

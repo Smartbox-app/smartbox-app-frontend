@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { withRouter } from 'react-router-dom';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { RentBoxReq, UserRole, UserRes } from 'smartbox-types';
+import { RentBoxReq, UserRole, UserRes, IPricingResult } from 'smartbox-types';
 import { Button } from '../../../../../components/Common';
 import { order } from '../../../../../actions';
 import { ButtonsContainer } from '../../../../../components/Layout';
@@ -22,40 +22,30 @@ import './StepSummary.scss';
 interface Props {
   history: any;
   formData: Form;
-  countedPrice: number;
+  countedPrice: IPricingResult;
   user: UserRes;
-  UpdateFormData: (data: any) => void;
-  FormGoNextStep: (data: number) => void;
+  updateFormData: (data: any) => void;
+  formGoNextStep: (data: number) => void;
   sentRentBoxRequest: (data: RentBoxReq | any, nextStep: number, role: UserRole) => void;
 }
 
-const StepSummary = ({ formData, countedPrice, UpdateFormData, FormGoNextStep, user, sentRentBoxRequest }: Props) => {
+const StepSummary = ({ formData, countedPrice, updateFormData, formGoNextStep, user, sentRentBoxRequest }: Props) => {
   useEffect(() => {
     if (formData.size.length === 0) {
       history.push(`/${UserService.getSlugByRole(user.role)}/order/step/1`);
     }
   });
 
-  const { handleSubmit, register, watch } = useForm();
+  const { handleSubmit, register } = useForm();
 
   const onSubmit = (data: any) => {
-    UpdateFormData(data);
-    sentRentBoxRequest(
-      {
-        stockId: undefined,
-        size: Number(formData.size),
-        startAt: formData.dateStart,
-        finishAt: formData.dateEnd,
-        cost: 1,
-        discountCode: '',
-      },
-      4,
-      user.role,
-    );
+    updateFormData(data);
+    formGoNextStep(4);
+    history.push(`/${UserService.getSlugByRole(user.role)}/order/step/4`);
   };
 
   const onBack = () => {
-    FormGoNextStep(2);
+    formGoNextStep(2);
     history.push(`/${UserService.getSlugByRole(user.role)}/order/step/2`);
   };
 
@@ -63,7 +53,7 @@ const StepSummary = ({ formData, countedPrice, UpdateFormData, FormGoNextStep, u
     <form onSubmit={handleSubmit(onSubmit)} className="form-step-two">
       <Discount register={register} />
       <FormHeader title="Podsumowanie zamówienia:" />
-      <SummaryTable dateStart={formData.dateStart} dateEnd={formData.dateEnd} countedPrice={countedPrice} />
+      <SummaryTable dateStart={formData.dateStart} dateEnd={formData.dateEnd} countedPrice={countedPrice.value} />
       <ButtonsContainer max>
         <Button outline text="Wróć" click={() => onBack()} />
         <Button type="submit" primary text="Przejdź do umowy" />

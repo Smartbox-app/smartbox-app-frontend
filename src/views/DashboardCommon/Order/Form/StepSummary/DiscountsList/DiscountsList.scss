@@ -4,11 +4,19 @@
 .discounts-list-wrapper {
   display: flex;
   flex: 0 0 100%;
-  flex-direction: row;
+  flex-direction: column;
   margin-left: -$main-spacing *2;
   margin-right: -$main-spacing *2;
 
   input[type=radio] {
     display: none;
+  }
+}
+
+@include gt-sm {
+  .discounts-list-wrapper {
+    display: flex;
+    flex: 0 0 100%;
+    flex-direction: row;
   }
 }

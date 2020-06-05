@@ -8,8 +8,7 @@ import { BoxListItem, RentStatus } from 'smartbox-types';
 import { ApplicationState } from '../../../reducers';
 
 import { ReactComponent as ReactLogo } from './nowa_mapa.svg';
-import { Button } from '../../../components/Common';
-import { ButtonsContainer, PageHeader, Section } from '../../../components/Layout';
+import { PageHeader } from '../../../components/Layout';
 import { modal, boxes } from '../../../actions';
 
 import BoxDetail from './BoxDetail';
@@ -33,7 +32,7 @@ class BoxMapmanagement extends React.Component<Props> {
   }
 
   async componentDidMount() {
-    const { fetchBoxStatuses, boxesGroup } = this.props;
+    const { fetchBoxStatuses } = this.props;
 
     await fetchBoxStatuses();
     const catchElement = this.element.current.querySelectorAll('#kontenery .storage, #kontenery .st9');

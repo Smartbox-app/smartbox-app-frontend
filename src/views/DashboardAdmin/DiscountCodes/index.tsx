@@ -1,11 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { BoxListItem, RentStatus } from 'smartbox-types';
+import { BoxListItem } from 'smartbox-types';
 import { ApplicationState } from '../../../reducers';
 
-import { Button } from '../../../components/Common';
-import { ButtonsContainer, PageHeader, Section } from '../../../components/Layout';
+import { PageHeader } from '../../../components/Layout';
 import { modal, boxes } from '../../../actions';
 import Form from './Form';
 

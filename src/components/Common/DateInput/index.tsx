@@ -1,6 +1,6 @@
 import React from 'react';
 import Flatpickr from 'react-flatpickr';
-import { useForm, useFormContext } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import flatpickr from 'flatpickr'; // Check out other cool Themes: https://flatpickr.js.org/themes/
 import 'flatpickr/dist/themes/airbnb.css';
 

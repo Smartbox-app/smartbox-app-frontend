@@ -16,14 +16,29 @@
 
     .cell {
       display: flex;
+      width: 100%;
       justify-content: center;
       color: $color-primary;
       padding: $main-spacing 0;
+      text-align: center;
     }
 
     .fat {
+      display: flex;
       font-weight: 600;
-      font-size: 1.8rem;
+      font-size: 1.3rem;
+    }
+  }
+}
+
+@include gt-sm {
+  .order-summary-wrapper {
+    .row {
+
+      .fat {
+        font-weight: 600;
+        font-size: 1.8rem;
+      }
     }
   }
 }

@@ -26,15 +26,15 @@ interface Props extends RouteComponentProps<RouteProps> {
   formData: Form;
   user: UserRes;
   boxAvailability: BoxGroupAvailability[];
-  UpdateFormData: (data: any) => void;
-  FormGoNextStep: (data: number) => void;
+  updateFormData: (data: any) => void;
+  formGoNextStep: (data: number) => void;
   fetchBoxAvailability: () => void;
 }
 
 const StepSize = ({
   history,
-  UpdateFormData,
-  FormGoNextStep,
+  updateFormData,
+  formGoNextStep,
   match,
   fetchBoxAvailability,
   formData,
@@ -43,6 +43,7 @@ const StepSize = ({
 }: Props) => {
   useEffect(() => {
     fetchBoxAvailability();
+    formGoNextStep(1);
   }, []);
 
   const defaultValues = {
@@ -52,8 +53,8 @@ const StepSize = ({
   const { register, handleSubmit, watch } = useForm({ defaultValues });
 
   const onSubmit = (data: any) => {
-    UpdateFormData(data);
-    FormGoNextStep(2);
+    updateFormData(data);
+    formGoNextStep(2);
     history.push(`/${UserService.getSlugByRole(user.role)}/order/step/2`);
   };
 
@@ -62,37 +63,37 @@ const StepSize = ({
       name: 'size',
       value: 3,
       id: 'option3',
-      sizeX: 3,
-      sizeY: 2.3,
-      sizeZ: 2.6,
-      imgAddress: '/assets/images/dummy_box2.png',
+      sizeX: 1.5,
+      sizeY: 2,
+      sizeZ: 2,
+      imgAddress: '3g',
     },
     {
       name: 'size',
       value: 6,
       id: 'option6',
-      sizeX: 6,
-      sizeY: 2.3,
-      sizeZ: 2.6,
-      imgAddress: '/assets/images/dummy_box2.png',
+      sizeX: 2,
+      sizeY: 2,
+      sizeZ: 3,
+      imgAddress: '6g',
     },
     {
       name: 'size',
       value: 9,
       id: 'option9',
-      sizeX: 9,
-      sizeY: 2.3,
-      sizeZ: 2.6,
-      imgAddress: '/assets/images/dummy_box2.png',
+      sizeX: 2,
+      sizeY: 2,
+      sizeZ: 4.5,
+      imgAddress: '9g',
     },
     {
       name: 'size',
       value: 12,
       id: 'option12',
-      sizeX: 12,
-      sizeY: 2.3,
-      sizeZ: 2.6,
-      imgAddress: '/assets/images/dummy_box2.png',
+      sizeX: 2,
+      sizeY: 2,
+      sizeZ: 6,
+      imgAddress: '12g',
     },
   ];
 

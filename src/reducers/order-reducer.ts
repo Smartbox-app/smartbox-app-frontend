@@ -1,5 +1,5 @@
 import { addDays } from 'date-fns';
-import { BoxGroupAvailability, usePricing, ICalculateProps } from 'smartbox-types';
+import { BoxGroupAvailability, usePricing, ICalculateProps, IPricingResult } from 'smartbox-types';
 
 export interface Form {
   durationInDays: number;
@@ -8,15 +8,17 @@ export interface Form {
   isFirstRent: boolean;
   dateStart: Date;
   dateEnd: Date;
+  discountCode: string;
 }
 export type OrderState = {
   formData: Form;
   formStep: number;
   paymentId: string;
-  countedPrice: number;
+  countedPrice: IPricingResult;
   boxAvailability: BoxGroupAvailability[];
   discountList: any[];
   isAgreementAccepted: boolean;
+  isResignationMarked: boolean;
 };
 
 interface FormStepSuccess {
@@ -43,7 +45,17 @@ interface FormReaded {
   type: 'FORM_AGREEMENT_READED_SUCCESS';
 }
 
-type Action = FormStepSuccess | FormGoNextStep | FetchBoxAvailability | SentRentBoxRequestSuccess | FormReaded;
+interface FormResignation {
+  type: 'FORM_RESIGNATION_MARKED_SUCCESS';
+}
+
+type Action =
+  | FormStepSuccess
+  | FormGoNextStep
+  | FetchBoxAvailability
+  | SentRentBoxRequestSuccess
+  | FormReaded
+  | FormResignation;
 
 const initialState: OrderState = {
   formData: {
@@ -53,16 +65,18 @@ const initialState: OrderState = {
     isFirstRent: true,
     dateStart: new Date(),
     dateEnd: addDays(new Date(), 7),
+    discountCode: '',
   },
   formStep: 1,
   paymentId: '',
-  countedPrice: 0,
+  countedPrice: {
+    name: '',
+    value: 0,
+  },
   boxAvailability: [],
-  discountList: [
-    { text: 'Jednorazowy rabat 5%', value: 5 },
-    { text: 'Jednorazowy rabat 10%', value: 10 },
-  ],
+  discountList: [{ text: 'Jednorazowy rabat 5%', value: 5 }],
   isAgreementAccepted: false,
+  isResignationMarked: false,
 };
 
 export default (state: OrderState = initialState, action: Action): any => {
@@ -74,7 +88,7 @@ export default (state: OrderState = initialState, action: Action): any => {
 
       const data: ICalculateProps = {
         durationInDays: newFormData.durationInDays,
-        discount: 0,
+        discount: newFormData.discount,
         size: Number(newFormData.size),
         isFirstRent: false,
       };
@@ -85,6 +99,12 @@ export default (state: OrderState = initialState, action: Action): any => {
           ...state,
           formData: newFormData,
           countedPrice: price,
+          discountList: [
+            {
+              text: price.name,
+              value: 0,
+            },
+          ],
         };
       }
 
@@ -120,6 +140,13 @@ export default (state: OrderState = initialState, action: Action): any => {
         isAgreementAccepted: true,
       };
     }
+    case 'FORM_RESIGNATION_MARKED_SUCCESS': {
+      return {
+        ...state,
+        isResignationMarked: true,
+      };
+    }
+
     default:
       return state;
   }

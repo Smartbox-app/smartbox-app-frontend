@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { ItfApiForm } from 'itf_formbuilder_react';
 import { GetGiftReq, GetGiftRes } from 'smartbox-types';
-import { Input, Button } from '../../../../../../../components/Common';
+import { Button } from '../../../../../../../components/Common';
 import { FormContainer, ButtonsContainer } from '../../../../../../../components/Layout';
-import { modal } from '../../../../../../../actions';
+import { modal, order } from '../../../../../../../actions';
 import FormHeader from '../../../../../../../components/Layout/FormHeader';
 import ApiService from '../../../../../../../services/api-service';
 import { successNotification } from '../../../../../../../actions/notifications';
@@ -13,9 +13,10 @@ import { formOnTranslateString } from '../../../../../../../utils/trans-form';
 
 interface Props {
   hideModal: () => void;
+  updateFormData: (data: any) => void;
 }
 
-const DiscoutCode = ({ hideModal }: Props) => {
+const DiscoutCode = ({ hideModal, updateFormData }: Props) => {
   const submitButton = (
     <ButtonsContainer>
       <Button text="Dodaj" type="submit" primary />
@@ -36,7 +37,7 @@ const DiscoutCode = ({ hideModal }: Props) => {
 
   return (
     <FormContainer className="gift-form">
-      <FormHeader title="Podaj Twój kod rabatopwy" />
+      <FormHeader title="Podaj Twój kod rabatowy" />
       <ItfApiForm
         formId="getGiftForm"
         schemaMayBeDynamic={false}
@@ -46,7 +47,12 @@ const DiscoutCode = ({ hideModal }: Props) => {
         submitButton={submitButton}
         onSavedSuccessfully={(data: GetGiftRes) => {
           successNotification('Poprawnie odczytano kod rabatowy');
+          console.log('onSavedSuccessfully', data);
           // zapisac do reducera
+          updateFormData({
+            discount: data.discount,
+            discountCode: data.code,
+          });
           hideModal();
         }}
         onTranslateString={formOnTranslateString}
@@ -59,6 +65,7 @@ const mapDispatchToProps = (dispatch: any) =>
   bindActionCreators(
     {
       ...modal,
+      ...order,
     },
     dispatch,
   );
