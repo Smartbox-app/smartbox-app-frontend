@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { ItfApiForm } from 'itf_formbuilder_react';
 import ReactSelect from 'react-select';
 import ReactCreatableSelect from 'react-select/creatable';
 import { ChangeStatusReq } from 'smartbox-types';
 import { FormContainer, ButtonsContainer } from '../../../../../../components/Layout';
-import { Spinner, Button } from '../../../../../../components/Common';
+import { Button } from '../../../../../../components/Common';
 import ApiService from '../../../../../../services/api-service';
 import { formOnTranslateString } from '../../../../../../utils/trans-form';
 import { successNotification } from '../../../../../../actions/notifications';

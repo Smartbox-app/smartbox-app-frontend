@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Redirect } from 'react-router-dom';
 import { ItfApiForm } from 'itf_formbuilder_react';
-import { UserRole, AuthLoginRequest, IUser, AuthLoginResult, UserRes } from 'smartbox-types';
+import { UserRole, AuthLoginRequest, AuthLoginResult, UserRes } from 'smartbox-types';
 import { Spinner, Input } from '../../components/Common';
 import { auth, notifications } from '../../actions';
 import ApiService from '../../services/api-service';

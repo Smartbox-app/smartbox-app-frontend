@@ -2,7 +2,7 @@ import React from 'react';
 import { ItfApiForm } from 'itf_formbuilder_react';
 import ReactSelect from 'react-select';
 import ReactCreatableSelect from 'react-select/creatable';
-import { AddGiftReq, AddGiftRes, GetGiftRes } from 'smartbox-types';
+import { AddGiftReq, GetGiftRes } from 'smartbox-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { FormContainer, ButtonsContainer } from '../../../../components/Layout';
