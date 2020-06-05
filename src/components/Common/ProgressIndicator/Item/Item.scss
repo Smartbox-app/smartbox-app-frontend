@@ -1,7 +1,9 @@
 @import '../../../../config/variables.scss';
 @import '../../../../config/mixins.scss';
 
-.ittem-wrapper {
+$icon-size: $main-spacing * 4;
+
+.item-wrapper {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -12,9 +14,9 @@
   font-size: 1.1rem;
 
   .item-icon {
-    width: 40px;
-    height: 40px;
-    border-radius: 20px;
+    width: $icon-size;
+    height: $icon-size;
+    border-radius: $icon-size /2;
     background: #fff;
     color: $color-disabled;
     border: 2px solid $color-disabled;
@@ -25,7 +27,7 @@
 
   .item-current {
     background: $color-primary;
-    color: #fff;
+    color: $color-text-button;
     border: 2px solid $color-primary;
 
     &::after {
@@ -52,7 +54,23 @@
   }
 
   .item-description {
-    font-size: 1rem;
+    font-size: 0.7rem;
     font-weight: 400;
+  }
+}
+
+@include gt-sm {
+  .ittem-wrapper {
+
+    .item-description {
+      font-size: 1rem;
+      font-weight: 400;
+    }
+
+    .item-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 20px;
+    }
   }
 }

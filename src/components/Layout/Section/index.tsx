@@ -8,13 +8,10 @@ interface Props {
   half?: boolean;
 }
 
-const Section = (props: Props) => {
-  const { children, full, half } = props;
-  return (
-    <section className={`section-wrapper ${full && 'section-full-width'} ${half && 'section-half-width'}`}>
-      {children}
-    </section>
-  );
-};
+const Section = ({ children, full, half }: Props) => (
+  <section className={`section-wrapper ${full ? 'section-full-width' : ''} ${half ? 'section-half-width' : ''}`}>
+    {children}
+  </section>
+);
 
 export default Section;

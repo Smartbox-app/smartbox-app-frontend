@@ -1,40 +1,33 @@
 import React from 'react';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Switch, Route } from 'react-router';
-import { IUser } from 'smartbox-types';
-import { order } from '../../../../actions';
-import StepOne from './StepOne';
-import StepTwo from './StepTwo';
-import StepSummary from './StepSummary';
+
+import { UserRes } from 'smartbox-types';
 import UserService from '../../../../services/user-service';
+import { ApplicationState } from '../../../../reducers';
+
+import StepSize from './StepSize';
+import StepDuration from './StepDuration';
+import StepPayment from './StepPayment';
+import StepAgreement from './StepAgreement';
+import StepSummary from './StepSummary';
 
 interface Props {
-  formData: {};
-  user: IUser;
-  UpdateFormData: (data: any) => void;
+  user: UserRes;
 }
 
 const Form = ({ user }: Props) => (
   <Switch>
-    <Route path={`/${UserService.getSlugByRole(user.role)}/order/step/1`} component={StepOne} />
-    <Route path={`/${UserService.getSlugByRole(user.role)}/order/step/2`} component={StepTwo} />
+    <Route path={`/${UserService.getSlugByRole(user.role)}/order/step/1`} component={StepSize} />
+    <Route path={`/${UserService.getSlugByRole(user.role)}/order/step/2`} component={StepDuration} />
     <Route path={`/${UserService.getSlugByRole(user.role)}/order/step/3`} component={StepSummary} />
-    <Route path={`/${UserService.getSlugByRole(user.role)}/order/step/4`} component={StepSummary} />
+    <Route path={`/${UserService.getSlugByRole(user.role)}/order/step/4`} component={StepAgreement} />
+    <Route path={`/${UserService.getSlugByRole(user.role)}/order/step/5`} component={StepPayment} />
   </Switch>
 );
 
-const mapStateToProps = (state: any) => ({
-  formData: state.order.formData,
+const mapStateToProps = (state: ApplicationState) => ({
   user: state.user.details,
 });
 
-const mapDispatchToProps = (dispatch: any) =>
-  bindActionCreators(
-    {
-      ...order,
-    },
-    dispatch,
-  );
-
-export default connect(mapStateToProps, mapDispatchToProps)(Form);
+export default connect(mapStateToProps)(Form);

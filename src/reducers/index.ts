@@ -1,20 +1,36 @@
 import { combineReducers } from 'redux';
-import appStatusReducer from './app-status-reducer';
+import apiTableReducer, { ApiTableState } from './api-table-reducer';
+import appStatusReducer, { AppStatus } from './app-status-reducer';
 import modalReducer from './modal-reducer';
-import notificationsReducer from './notifications-reducer';
+import notificationsReducer, { NotificationState } from './notifications-reducer';
 import langReducer from './lang-reducer';
-import userReducer from './user-reducer';
-import spinnerReducer from './spinner-reducer';
-import orderReducer from './order-reducer';
+import userReducer, { UserState } from './user-reducer';
+import spinnerReducer, { SpinnerState } from './spinner-reducer';
+import orderReducer, { OrderState } from './order-reducer';
+import boxesReducer, { Boxes } from './boxes-reducer';
+import { Modal } from '../types/modal';
+
+export interface ApplicationState {
+  apiTable: ApiTableState;
+  boxes: Boxes;
+  order: OrderState;
+  user: UserState;
+  spinner: SpinnerState;
+  modal: Modal;
+  appStatus: AppStatus;
+  notifications: NotificationState;
+}
 
 const appReducer = combineReducers({
   appStatus: appStatusReducer,
+  apiTable: apiTableReducer,
   lang: langReducer,
   modal: modalReducer,
   notifications: notificationsReducer,
   user: userReducer,
   spinner: spinnerReducer,
   order: orderReducer,
+  boxes: boxesReducer,
 });
 
 const rootReducer = (state: any, action: any) => appReducer(state, action);

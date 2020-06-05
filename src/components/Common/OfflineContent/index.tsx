@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { ApplicationState } from '../../../reducers';
 
 interface Props {
   isOnline: boolean;
@@ -11,7 +12,7 @@ const OfflineContent = ({ isOnline, children }: Props) => {
   return <>{children}</>;
 };
 
-const mapStateToProps = (state: any) => ({
+const mapStateToProps = (state: ApplicationState) => ({
   isOnline: state.appStatus,
 });
 

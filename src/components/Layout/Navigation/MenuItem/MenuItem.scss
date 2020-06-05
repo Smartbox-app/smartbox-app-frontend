@@ -10,7 +10,15 @@
   justify-content: center;
   align-items: center;
   padding: $main-spacing;
-  color: $color-inactive !important;
+  color: $color-inactive;
+  border: none;
+
+  &:link {
+    color: $color-inactive;
+  }
+  &:visited {
+    color: $color-inactive
+  }
 
   &:hover {
     background-color: lighten($color-background, 30%);
@@ -19,13 +27,14 @@
     cursor: pointer;
 
     .main-menu-item_text {
-      color: $color-primary;
+      color: $color-primary-light;
     }
   }
 
   &.active {
     border-top: 2px solid $color-primary;
     font-weight: 500;
+    color: $color-inactive;
 
     .main-menu-item_text {
       color: $color-primary;
@@ -41,8 +50,8 @@
   }
 
   .main-menu-item_logo {
-    width: 15px;
-    height: 15px;
+    width: $menu-icon-small;
+    height: $menu-icon-small;
     margin-bottom: $main-spacing/2;
     fill: $color-inactive;
   }
@@ -51,8 +60,8 @@
 
 @include gt-sm {
   .main-menu-item_logo {
-    width: 20px;
-    height: 20px;
+    width: $menu-icon-medium;
+    height: $menu-icon-medium;
     margin-bottom: $main-spacing;
     fill: $color-inactive;
   }
@@ -74,8 +83,8 @@
 
 @include gt-md {
   .main-menu-item_logo {
-    width: 30px;
-    height: 30px;
+    width: $menu-icon-big;
+    height: $menu-icon-big;
   }
 
 }
@@ -90,9 +99,10 @@
     align-items: center;
     
     .main-menu-item_logo {
-      width: 25px;
-      height: 25px;
+      width: $menu-icon-big;
+      height: $menu-icon-big;
       margin-right: 10px;
+      margin-bottom: 0;
     }
 
     &.active {
@@ -106,6 +116,7 @@
     }
 
     .main-menu-item_text {
+      line-height: $menu-icon-big;
       font-size: 1.3rem;
       font-weight: 400;
     }

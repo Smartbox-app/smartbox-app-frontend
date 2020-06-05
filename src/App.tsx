@@ -7,7 +7,7 @@ import { Route, Router, Switch, Redirect } from 'react-router-dom';
 import { WorkBoxProvider } from 'react-workbox';
 import { createBrowserHistory } from 'history';
 import reducers from './reducers';
-import { Home, Login, DashboardAdmin, DashboardWorker, DashboardUser } from './views';
+import { Login, DashboardAdmin, DashboardWorker, DashboardUser, Register } from './views';
 import {
   OnlineContent,
   OfflineContent,
@@ -16,6 +16,7 @@ import {
   RouteAdmin,
   RouteUser,
   RouteWorker,
+  Modal,
 } from './components/Common';
 import { NotificationContainer } from './components/Notifications';
 import AppOffline from './components/AppOffline';
@@ -56,13 +57,14 @@ const App = () => {
             <Switch>
               <Route exact path="/" render={() => <Redirect to="/login" />} />
               <Route path="/login" component={Login} />
-              <Route path="/home" component={Home} />
+              <Route path="/register" component={Register} />
               <RouteAdmin path="/admin" component={DashboardAdmin} />
               <RouteWorker path="/worker" component={DashboardWorker} />
               <RouteUser path="/user" component={DashboardUser} />
               <Route render={() => <Redirect to="/404" />} />
             </Switch>
           </Router>
+          <Modal />
         </OnlineContent>
         <OfflineContent>
           <AppOffline />

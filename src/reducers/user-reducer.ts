@@ -1,66 +1,54 @@
-import { IUser, UserRole, AuthLoginResult } from 'smartbox-types';
-import { TableResponse } from 'smartbox-tables';
+import { UserRole, UserRes } from 'smartbox-types';
 import SessionService from '../services/session-service';
 
-interface State {
-  details: IUser;
-  list: TableResponse<any>;
-  singleUser: any;
-}
+export type UserState = {
+  details: UserRes;
+  singleUser: UserRes;
+};
 
 interface Login {
   type: 'LOGIN_SUCCESS';
-  payload: any;
+  payload: { user: UserRes };
 }
 
 interface Logout {
   type: 'LOGOUT';
-  payload: any;
-}
-
-interface GetSingleTypeUsers {
-  type: 'GET_SINGEL_TYPE_USERS_SUCCESS';
-  payload: TableResponse<any>;
 }
 
 interface FetchSingleUser {
   type: 'FETCH_SINGLE_USER_SUCCESS';
-  payload: any;
+  payload: UserRes;
 }
 
 interface ClearUserSession {
   type: 'CLEAR_USER_SESSION';
 }
 
-interface GeetMyDetails {
+interface GetMyDetails {
   type: 'GET_MY_DETAILS_SUCCESS';
-  payload: AuthLoginResult;
+  payload: UserRes;
 }
 
-type Action = Login | Logout | GetSingleTypeUsers | FetchSingleUser | ClearUserSession | GeetMyDetails;
+type Action = Login | Logout | FetchSingleUser | ClearUserSession | GetMyDetails;
 
-const initialState = {
+const initialState: UserState = {
   details: SessionService.getUser(),
-  list: {
-    countTotal: 0,
-    items: [],
-  },
   singleUser: {
+    rentCount: 0,
     id: '',
     email: '',
+    phone: '',
     firstName: '',
     lastName: '',
     role: UserRole.admin,
-    blocked: true,
   },
 };
 
-export default (state: State = initialState, action: Action): any => {
+export default (state: UserState = initialState, action: Action): any => {
   switch (action.type) {
     case 'LOGIN_SUCCESS': {
       const { user } = action.payload;
       SessionService.setUser(user);
-      console.log('Login success', action.payload);
       return {
         ...state,
         details: user,
@@ -68,7 +56,6 @@ export default (state: State = initialState, action: Action): any => {
     }
     case 'GET_MY_DETAILS_SUCCESS': {
       const user = {
-        ...state.details,
         ...action.payload,
       };
       SessionService.setUser(user);
@@ -77,18 +64,16 @@ export default (state: State = initialState, action: Action): any => {
         details: user,
       };
     }
+
     case 'LOGOUT':
       SessionService.clearUserSession();
       return { ...state, details: null };
+
     case 'CLEAR_USER_SESSION':
       SessionService.clearSessionStorage();
       SessionService.clearUserSession();
       return { ...state, details: null };
-    case 'GET_SINGEL_TYPE_USERS_SUCCESS':
-      return {
-        ...state,
-        list: action.payload,
-      };
+
     case 'FETCH_SINGLE_USER_SUCCESS':
       return {
         ...state,

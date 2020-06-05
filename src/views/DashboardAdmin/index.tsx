@@ -1,57 +1,47 @@
 import React from 'react';
 import { Route, Redirect, Switch } from 'react-router-dom';
-import { Main, Footer } from '../../components/Layout';
-import DashboardContainer from '../../components/Layout/DashboardContainer';
+
+import { Main, Footer, DashboardContainer, Navigation } from '../../components/Layout';
 import { Welcome, Order } from '../DashboardCommon';
-// import Users from './Users';
-import Home from '../Home';
-import Navigation from '../../components/Layout/Navigation';
 
-class DashboardAdmin extends React.Component {
-  private menuItems: any[];
+import { MenuItemType } from '../../types/menu-item';
+import { __ } from '../../helpers/i18n';
 
-  constructor(props: any) {
-    super(props);
-    this.menuItems = [];
-  }
+import Management from './Management';
 
-  private setMenuItems = () => {
-    this.menuItems = [
-      {
-        icon: '/assets/icons/dashboard.svg',
-        text: 'Home',
-        address: '/admin/main',
-      },
-      {
-        icon: '/assets/icons/dashboard.svg',
-        text: 'Pracownicy',
-        address: '/admin/workers',
-      },
-      {
-        icon: '/assets/icons/account.svg',
-        text: 'Konto',
-        address: '/admin/account',
-      },
-    ];
-  };
+const DashboardAdmin = () => {
+  const menuItems: MenuItemType[] = [
+    {
+      icon: 'dashboard.svg',
+      text: __('application.home'),
+      address: '/admin/main',
+    },
+    {
+      icon: 'dashboard.svg',
+      text: __('application.managment'),
+      address: '/admin/management',
+    },
+    {
+      icon: 'account.svg',
+      text: __('application.account'),
+      address: '/admin/account',
+    },
+  ];
 
-  render() {
-    this.setMenuItems();
-    return (
-      <DashboardContainer>
-        <Navigation menuItems={this.menuItems} />
-        <Main>
-          <Switch>
-            <Route exact path="/admin" render={() => <Redirect to="/admin/main" />} />
-            <Route path="/admin/main" component={Welcome} />
-            <Route path="/admin/order/:step" component={Order} />
-            <Route path="/admin/account" component={Home} />
-          </Switch>
-        </Main>
-        <Footer />
-      </DashboardContainer>
-    );
-  }
-}
+  return (
+    <DashboardContainer>
+      <Navigation menuItems={menuItems} />
+      <Main>
+        <Switch>
+          <Route exact path="/admin" render={() => <Redirect to="/admin/main" />} />
+          <Route path="/admin/main" component={Welcome} />
+          <Route path="/admin/order/:step" component={Order} />
+          <Route path="/admin/management" component={Management} />
+        </Switch>
+      </Main>
+      <Footer />
+    </DashboardContainer>
+  );
+};
 
 export default DashboardAdmin;

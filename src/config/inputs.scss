@@ -100,7 +100,6 @@ select,
 .input-autocomplete-option {
   padding: $main-spacing / 2 $main-spacing;
   cursor: pointer;
-  // font-size: 0.85rem;
   background-color: lighten($color-background, 20%);
 
   &:hover {
@@ -156,7 +155,6 @@ textarea {
   cursor: pointer;
   line-height: 20px;
   display: inline-block;
-  // font-size: 0.9rem;
   font-weight: 600;
   padding-left: 2rem;
 }
@@ -176,19 +174,18 @@ textarea {
   height: $main-spacing * 2;
   background: #fff;
   border: 2px solid $color-primary;
-  // padding: 1px;
 }
 
 [type="checkbox"]:checked + label:after,
 [type="checkbox"]:not(:checked) + label:after {
   content: "";
-  width: ($main-spacing * 2);
-  height: ($main-spacing * 2);
+  width: ($main-spacing * 1.4);
+  height: ($main-spacing * 1.4);
   background: $color-primary;
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  left: 2px;
+  left: 5px;
   transition: background-color 0.2s ease, opacity 0.2s ease;
 }
 [type="checkbox"]:not(:checked) + label:after {
@@ -208,7 +205,6 @@ textarea {
 
 [type="checkbox"]:hover + label:after {
   opacity: 1;
-  // transform: translateY(-50%) scale(1);
   background: lighten($color-primary, 10%);
 }
 
@@ -241,9 +237,6 @@ textarea {
     font-family: $font-primary;
     font-size: 13.333px;
 
-    // &:hover {
-    //   background-color: $color-primary;
-    // }
   }
 }
 

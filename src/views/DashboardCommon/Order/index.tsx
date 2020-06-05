@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 
 import { Section, SectionHeader } from '../../../components/Layout';
 import { ProgressIndicator } from '../../../components/Common';
+import { ApplicationState } from '../../../reducers';
+
 import Form from './Form/Index';
 
 interface Props {
@@ -31,6 +33,10 @@ const Order = ({ userName, formStep }: Props) => (
           },
           {
             value: 4,
+            desc: 'Umowa',
+          },
+          {
+            value: 5,
             desc: 'Płatność',
           },
         ]}
@@ -40,7 +46,7 @@ const Order = ({ userName, formStep }: Props) => (
   </>
 );
 
-const mapStateToProps = (state: any) => ({
+const mapStateToProps = (state: ApplicationState) => ({
   userName: state.user.details.firstName,
   formStep: state.order.formStep,
 });

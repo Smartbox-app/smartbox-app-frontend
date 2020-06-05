@@ -29,10 +29,6 @@
     color: $color-text;
   }
 
-  &:hover {
-    // background: darken($color-background, 20%);
-  }
-
   &.auto {
     align-self: flex-start;
   }
@@ -124,23 +120,20 @@
     align-items: center;
     
     .button-img {
-      width: 20px;
-      height: 20px;
-      // margin-right: 10px;
-      // margin-left: -5px;
+      width: $button-img-size;
+      height: $button-img-size;
     }
   }
 
   &.only-icon {
-      padding: 10px;
+      padding: $main-spacing;
 
     .button-img {
-      width: 20px;
-      height: 20px;
+      width: $button-img-size;
+      height: $button-img-size;
       margin: 0;
     }
   }
-
 
 }
 

@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { SingleNotification } from '../../../types/notifications';
+import { ApplicationState } from '../../../reducers';
 
 import Notification from '../Notification';
 
@@ -19,7 +20,7 @@ const Notifications = ({ notifications }: Props) => {
   return <div className="notification-container">{mapped}</div>;
 };
 
-const mapStateToProps = (state: any) => ({
+const mapStateToProps = (state: ApplicationState) => ({
   notifications: state.notifications,
 });
 

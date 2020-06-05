@@ -30,6 +30,23 @@ $main-spacing: 10px;
 $page-header-width: 500px;
 $main-logo-size: 200px;
 
+// sizing
+$max-form-width: 500px;
+
+$main-min-height-mobile: calc(100vh - 80px);
+$main-min-height: calc(100vh - 190px);
+
+$login-form-width: 400px;
+$login-button-size: 300px;
+$login-button-hight: 60px;
+
+$menu-icon-small: 15px;
+$menu-icon-medium: 20px;
+$menu-icon-big: 30px;
+$button-img-size: 20px;
+
+$carousel-small: 300px;
+$carousel-big: 500px;
 
 $transition-time: 0.3s;
 

@@ -1,90 +1,68 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { withRouter } from 'react-router-dom';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { IUser } from 'smartbox-types';
+import { RentBoxReq, UserRole, UserRes, IPricingResult } from 'smartbox-types';
 import { Button } from '../../../../../components/Common';
 import { order } from '../../../../../actions';
 import { ButtonsContainer } from '../../../../../components/Layout';
 import { history } from '../../../../../App';
 import { Form } from '../../../../../reducers/order-reducer';
 
-import './StepSummary.scss';
 import FormHeader from '../../../../../components/Layout/FormHeader';
-import { formatPrice } from '../../../../../utils/format-price';
 import UserService from '../../../../../services/user-service';
+import Discount from './DiscountsList';
+import SummaryTable from './SummaryTable';
+import { ApplicationState } from '../../../../../reducers';
+
+import './StepSummary.scss';
 
 interface Props {
   history: any;
   formData: Form;
-  countedPrice: number;
-  user: IUser;
-  UpdateFormData: (data: any) => void;
-  FormGoNextStep: (data: number) => void;
+  countedPrice: IPricingResult;
+  user: UserRes;
+  updateFormData: (data: any) => void;
+  formGoNextStep: (data: number) => void;
+  sentRentBoxRequest: (data: RentBoxReq | any, nextStep: number, role: UserRole) => void;
 }
 
-const StepSummary = ({ formData, countedPrice, UpdateFormData, FormGoNextStep, user }: Props) => {
+const StepSummary = ({ formData, countedPrice, updateFormData, formGoNextStep, user, sentRentBoxRequest }: Props) => {
   useEffect(() => {
     if (formData.size.length === 0) {
       history.push(`/${UserService.getSlugByRole(user.role)}/order/step/1`);
     }
   });
 
-  const [date, setDate] = useState(new Date());
-
-  const defaultValues = {
-    dateStart: date,
-    dateEnd: date,
-  };
-
-  const { register, handleSubmit, watch, errors, control } = useForm({ defaultValues });
+  const { handleSubmit, register } = useForm();
 
   const onSubmit = (data: any) => {
-    UpdateFormData(data);
-    FormGoNextStep(4);
+    updateFormData(data);
+    formGoNextStep(4);
     history.push(`/${UserService.getSlugByRole(user.role)}/order/step/4`);
   };
 
   const onBack = () => {
-    FormGoNextStep(2);
+    formGoNextStep(2);
     history.push(`/${UserService.getSlugByRole(user.role)}/order/step/2`);
   };
 
-  const desktop = window.matchMedia('(min-width: 920px)').matches;
-
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="form-step-two">
+      <Discount register={register} />
       <FormHeader title="Podsumowanie zamówienia:" />
-      <div className="order-summary-wrapper">
-        <div className="row">
-          Termin rozpoczęcia wynajmu: <span>{formData.dateStart.toLocaleDateString()}</span>
-        </div>
-        <div className="row">
-          Termin rozpoczęcia wynajmu: <span>{formData.dateEnd.toLocaleDateString()}</span>
-        </div>
-        <div className="row">
-          Opłata za wynajem: <span>{formatPrice(countedPrice)}</span>
-        </div>
-
-        {desktop && (
-          <object className="rules-embed" data="/assets/dummy_pdf.pdf" type="application/pdf">
-            Regulamin serwisu
-          </object>
-        )}
-        {!desktop && <h2>Przeczytaj i zaakceptuj regulamin</h2>}
-      </div>
-
+      <SummaryTable dateStart={formData.dateStart} dateEnd={formData.dateEnd} countedPrice={countedPrice.value} />
       <ButtonsContainer max>
         <Button outline text="Wróć" click={() => onBack()} />
-        <Button type="submit" primary text="Przejdz do płatności" />
+        <Button type="submit" primary text="Przejdź do umowy" />
       </ButtonsContainer>
     </form>
   );
 };
 
-const mapStateToProps = (state: any) => ({
+const mapStateToProps = (state: ApplicationState) => ({
   formData: state.order.formData,
   countedPrice: state.order.countedPrice,
   user: state.user.details,

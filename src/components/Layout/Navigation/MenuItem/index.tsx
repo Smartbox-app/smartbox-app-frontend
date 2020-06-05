@@ -1,9 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import { ReactSVG } from 'react-svg';
-import { MenuItemType } from '../../../../types/menuItem';
+import { MenuItemType } from '../../../../types/menu-item';
 
 import './MenuItem.scss';
 
@@ -11,8 +9,8 @@ type Props = MenuItemType;
 
 class MenuItem extends React.Component<Props> {
   private handleItemClick = (): void => {
-    // eslint-disable-next-line react/destructuring-assignment
-    if (this.props.onClick) this.props.onClick();
+    const { onClick } = this.props;
+    if (typeof onClick === 'function') onClick();
     else {
       setTimeout(() => {
         const offset = (document.querySelector('#root') as any).offsetTop;
@@ -26,6 +24,7 @@ class MenuItem extends React.Component<Props> {
 
   render(): any {
     const { address, icon, text, badge, customClass } = this.props;
+    const fullIconLink = `/assets/icons/${icon}`;
     const itemClass = `main-menu-item ${!icon ? 'sub-menu-item' : ''} ${customClass || ''}`;
     if (address) {
       return (
@@ -37,7 +36,7 @@ class MenuItem extends React.Component<Props> {
           onClick={this.handleItemClick}
         >
           {badge && <span className="menu-item-badge fa fa-exclamation-circle" />}
-          {icon !== null && <ReactSVG src={icon} className="main-menu-item_logo menu-icon" />}
+          {icon !== null && <ReactSVG src={fullIconLink} className="main-menu-item_logo menu-icon" />}
           <span className="main-menu-item_text">{text}</span>
         </NavLink>
       );
@@ -45,7 +44,7 @@ class MenuItem extends React.Component<Props> {
       return (
         <a role="button" tabIndex={0} title={text} className={itemClass} onClick={this.handleItemClick}>
           {badge && <span className="menu-item-badge fa fa-exclamation-circle" />}
-          {icon !== null && <ReactSVG src={icon} className="main-menu-item_logo menu-icon" />}
+          {icon !== null && <ReactSVG src={fullIconLink} className="main-menu-item_logo menu-icon" />}
           <span className="main-menu-item_text">{text}</span>
         </a>
       );
@@ -53,10 +52,4 @@ class MenuItem extends React.Component<Props> {
   }
 }
 
-const mapStateToProps = (state: any): any => ({
-  mainMenuShow: state.navigation,
-});
-
-const mapDispatchToProps = (dispatch: any): any => bindActionCreators({}, dispatch);
-
-export default connect(mapStateToProps, mapDispatchToProps)(MenuItem);
+export default MenuItem;

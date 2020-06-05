@@ -9,7 +9,7 @@ const ButtonsSection = () => (
   <div className="login-buttons-section">
     <ButtonsContainer max column>
       <Button text="Zaloguj się" big type="submit" primary rounded />
-      <Button text="Zarejestruj się" big type="submit" outline rounded />
+      <Button text="Zarejestruj się" big to="/register" outline rounded />
     </ButtonsContainer>
     <p className="lost-pass">
       Zapomniałeś hasła?{' '}
