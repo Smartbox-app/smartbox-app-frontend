@@ -2,21 +2,22 @@
 @import '../../../config/mixins.scss';
 
 .map-wrapper {
-  display:flex;
-  justify-content: flex-start;
-  align-items: flex-start;
-  width: 100%;
+  // display:flex;
+  // justify-content: flex-start;
+  // align-items: flex-start;
+  // width: 100%;
   overflow-x: scroll;
   box-shadow: $standard-shadow;
 
   svg {
-    width: 3000px;
+    width: 3500px;
     .st9{
       z-index: 100;
       &:hover{
         cursor: pointer;
       }
     }
+
     .storage {
       background: transparent;
       &:hover {
