@@ -3,7 +3,6 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Switch, Route } from 'react-router';
 import { UserRes } from 'smartbox-types';
-import { order } from '../../../../actions';
 import StepOne from './StepOne';
 import StepTwo from './StepTwo';
 import StepSummary from './StepSummary';
@@ -12,7 +11,6 @@ import { ApplicationState } from '../../../../reducers';
 
 interface Props {
   user: UserRes;
-  UpdateFormData: (data: any) => void;
 }
 
 const Form = ({ user }: Props) => (
@@ -28,12 +26,4 @@ const mapStateToProps = (state: ApplicationState) => ({
   user: state.user.details,
 });
 
-const mapDispatchToProps = (dispatch: any) =>
-  bindActionCreators(
-    {
-      ...order,
-    },
-    dispatch,
-  );
-
-export default connect(mapStateToProps, mapDispatchToProps)(Form);
+export default connect(mapStateToProps)(Form);
