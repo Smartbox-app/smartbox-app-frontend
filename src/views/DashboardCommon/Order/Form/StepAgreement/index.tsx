@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { IUser, RentBoxReq, UserRole, ExecutePaymentReq, IPricingResult } from 'smartbox-types';
+import { RentBoxReq, UserRole, IPricingResult, UserRes } from 'smartbox-types';
 import { Button } from '../../../../../components/Common';
 import { order } from '../../../../../actions';
 import { ButtonsContainer } from '../../../../../components/Layout';
@@ -16,6 +16,7 @@ import UserService from '../../../../../services/user-service';
 
 import AgreementWrapper from './AgreementWrapper';
 import ScrollPosition from './ScrollPosition';
+import { ApplicationState } from '../../../../../reducers';
 
 import './StepAgreement.scss';
 
@@ -23,7 +24,7 @@ interface Props {
   history: any;
   formData: Form;
   countedPrice: IPricingResult;
-  user: IUser;
+  user: UserRes;
   isAgreementAccepted: boolean;
   isResignationMarked: boolean;
   updateFormData: (data: any) => void;
@@ -87,7 +88,7 @@ const StepSummary = ({
   );
 };
 
-const mapStateToProps = (state: any) => ({
+const mapStateToProps = (state: ApplicationState) => ({
   formData: state.order.formData,
   countedPrice: state.order.countedPrice,
   user: state.user.details,

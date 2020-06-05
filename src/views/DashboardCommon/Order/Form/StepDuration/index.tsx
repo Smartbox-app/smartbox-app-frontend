@@ -5,23 +5,24 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import { addDays, differenceInCalendarDays } from 'date-fns';
-import { IUser, IPricingResult } from 'smartbox-types';
+import { IPricingResult, UserRes } from 'smartbox-types';
 import { DateInput, Button } from '../../../../../components/Common';
 import { order } from '../../../../../actions';
 import { ButtonsContainer } from '../../../../../components/Layout';
 import { history } from '../../../../../App';
 import { Form } from '../../../../../reducers/order-reducer';
+import { ApplicationState } from '../../../../../reducers';
+import UserService from '../../../../../services/user-service';
 
 import Price from './Price';
 
 import './StepDuration.scss';
-import UserService from '../../../../../services/user-service';
 
 interface Props {
   history: any;
   formData: Form;
   countedPrice: IPricingResult;
-  user: IUser;
+  user: UserRes;
   updateFormData: (data: any) => void;
   formGoNextStep: (data: number) => void;
 }
@@ -96,7 +97,7 @@ const StepDuration = ({ formData, countedPrice, updateFormData, formGoNextStep, 
   );
 };
 
-const mapStateToProps = (state: any) => ({
+const mapStateToProps = (state: ApplicationState) => ({
   formData: state.order.formData,
   countedPrice: state.order.countedPrice,
   user: state.user.details,

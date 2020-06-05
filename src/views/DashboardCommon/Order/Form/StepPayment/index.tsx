@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { IUser, ExecutePaymentReq } from 'smartbox-types';
+import { ExecutePaymentReq, UserRes, IPricingResult } from 'smartbox-types';
 import { Button } from '../../../../../components/Common';
 import { order } from '../../../../../actions';
 import { ButtonsContainer } from '../../../../../components/Layout';
@@ -13,15 +13,16 @@ import { Form } from '../../../../../reducers/order-reducer';
 import FormHeader from '../../../../../components/Layout/FormHeader';
 import UserService from '../../../../../services/user-service';
 import CreditCardInput from '../../../../../components/Common/CreditCardInput';
+import { ApplicationState } from '../../../../../reducers';
 
 import './StepPayment.scss';
 
 interface Props {
   history: any;
   formData: Form;
-  countedPrice: number;
+  countedPrice: IPricingResult;
   paymentId: string;
-  user: IUser;
+  user: UserRes;
   formGoNextStep: (data: number) => void;
   sentExecutePaymentRequest: (data: ExecutePaymentReq) => void;
 }
@@ -72,7 +73,7 @@ const StepPayment = ({ formData, formGoNextStep, user, sentExecutePaymentRequest
   );
 };
 
-const mapStateToProps = (state: any) => ({
+const mapStateToProps = (state: ApplicationState) => ({
   formData: state.order.formData,
   countedPrice: state.order.countedPrice,
   paymentId: state.order.paymentId,
