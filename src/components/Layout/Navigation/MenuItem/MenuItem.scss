@@ -99,9 +99,10 @@
     align-items: center;
     
     .main-menu-item_logo {
-      width: 25px;
-      height: 25px;
+      width: $menu-icon-big;
+      height: $menu-icon-big;
       margin-right: 10px;
+      margin-bottom: 0;
     }
 
     &.active {
@@ -115,6 +116,7 @@
     }
 
     .main-menu-item_text {
+      line-height: $menu-icon-big;
       font-size: 1.3rem;
       font-weight: 400;
     }
