@@ -17,6 +17,10 @@
     margin-left: $main-spacing * 3;
   }
 
+  &:first-of-type {
+    margin-top: 10%;
+  }
+
   .input {
     border: none;
     border: 2px solid $color-primary;
@@ -34,10 +38,19 @@
   }
 }
 
+@include gt-xs {
+  .login-input {
+    &:first-of-type {
+      margin-top: 25%;
+    }
+  }
+}
+
 @include gt-sm {
   .login-form {
     max-width: $login-form-width;
     margin: 0 auto;
+    height: auto;
   }
 
   .login-input {
@@ -46,6 +59,10 @@
     }
     .input {
       width: $login-button-size * 1.2;
+    }
+
+    &:first-of-type {
+      margin-top: 30%;
     }
   }
 
