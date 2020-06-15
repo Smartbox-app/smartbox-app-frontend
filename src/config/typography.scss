@@ -11,6 +11,10 @@ html {
   }
 }
 
+* {
+  font-family: $font-primary;
+}
+
 body {
   font-weight: 300;
   color: $color-text;

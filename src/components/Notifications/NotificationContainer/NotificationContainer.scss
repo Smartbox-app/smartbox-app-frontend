@@ -2,12 +2,14 @@
 @import "../../../config/mixins.scss";
 
 .notification-container {
+  font-family: $font-primary;
   position: fixed;
   top: 0;
   right: 0;
   z-index: 999;
   width: 100%;
 }
+
 @include gt-sm {
   .notification-container {
     width: 350px;
