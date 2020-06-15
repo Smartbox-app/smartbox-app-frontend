@@ -4,7 +4,34 @@
 .login-form {
   max-width: $login-form-width * 0.8;
   margin: 0 auto;
-  max-height: 600px;
+  max-height: auto;
+}
+
+.login-logo-wrapper {
+  margin: $main-spacing auto $main-spacing *4;
+  max-width: $login-button-size * 0.8;
+}
+
+.login-input {
+  label {
+    margin-left: $main-spacing * 3;
+  }
+
+  .input {
+    border: none;
+    border: 2px solid $color-primary;
+    height: $login-button-hight;
+    width: $login-button-size;
+    border-radius: $login-button-hight/2;
+    margin: 0 auto;
+    padding-left: $main-spacing *3;
+    padding-right: $main-spacing *3;
+
+    &:active, &:focus {
+      border-color: $color-active;
+      background-color: $color-background;
+    }
+  }
 }
 
 @include gt-sm {
@@ -12,5 +39,10 @@
     
     max-width: $login-form-width;
     margin: 0 auto;
+  }
+
+  .login-logo-wrapper {
+    max-width: $login-button-size;
+    margin: $main-spacing*5 auto;
   }
 }
