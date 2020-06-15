@@ -36,13 +36,21 @@
 
 @include gt-sm {
   .login-form {
-    
     max-width: $login-form-width;
     margin: 0 auto;
   }
 
+  .login-input {
+    label {
+      margin-left: $main-spacing * 5;
+    }
+    .input {
+      width: $login-button-size * 1.2;
+    }
+  }
+
   .login-logo-wrapper {
-    max-width: $login-button-size;
+    max-width: $login-button-size * 1.2;
     margin: $main-spacing*5 auto;
   }
 }
