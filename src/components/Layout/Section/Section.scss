@@ -10,21 +10,22 @@
   .section-wrapper {
     width: map-get($breakpoints, sm);
     margin: 0 auto;
-    padding: $main-spacing 0;
+    padding: $main-spacing;
   }
 }
 
 @include gt-lg {
   .section-wrapper {
-    width: map-get($breakpoints, sm);
     margin: 0 auto;
   }
 
   .section-full-width {
-    width: map-get($breakpoints, lg);
+    width: 100%;
+    max-width: map-get($breakpoints, lg);
   }
 
   .section-half-width {
-    width:  map-get($breakpoints, lg) /2;
+    width: 50%;
+    max-width: map-get($breakpoints, lg) /2;
   }
 }
