@@ -50,7 +50,7 @@
   .login-form {
     max-width: $login-form-width;
     margin: 0 auto;
-    height: auto;
+    max-height: none;
   }
 
   .login-input {
