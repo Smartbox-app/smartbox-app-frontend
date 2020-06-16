@@ -5,7 +5,8 @@ import { ButtonsContainer, SectionHeader } from '../../../../components/Layout';
 import { Button } from '../../../../components/Common';
 import { modal } from '../../../../actions';
 
-import Form from './Form';
+import UpdateMe from './UpdateMe';
+import UpdatePass from './UpdatePass';
 import Content from './Content';
 
 interface Props {
@@ -16,8 +17,8 @@ const Detail = ({ showModal }: Props) => (
   <>
     <SectionHeader title="Szczegóły Profilu" />
     <ButtonsContainer>
-      <Button text="Edytuj" primary click={() => showModal(<Form />)} />
-      <Button text="Zmień hasło" primary click={() => showModal(<Form />)} />
+      <Button text="Edytuj" primary click={() => showModal(<UpdateMe />)} />
+      <Button text="Zmień hasło" primary click={() => showModal(<UpdatePass />)} />
     </ButtonsContainer>
     <Content />
   </>

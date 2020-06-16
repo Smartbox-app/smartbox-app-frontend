@@ -9,7 +9,7 @@ import ApiService from '../../../../../services/api-service';
 import { formOnTranslateString } from '../../../../../utils/trans-form';
 import { successNotification } from '../../../../../actions/notifications';
 
-import './Form.scss';
+import './UpdateMe.scss';
 
 const UpdateMe = () => {
   const submitButton = (
@@ -40,8 +40,8 @@ const UpdateMe = () => {
         schemaFetcher={() => ApiService.loadForm(fetchUrl)}
         sendFetcher={customSendFetcher}
         submitButton={submitButton}
-        onSavedSuccessfully={(data: GiftRes) => {
-          successNotification('Poprawnie utworzono kod rabatowy');
+        onSavedSuccessfully={() => {
+          successNotification('Poprawnie zmieniono dane.');
         }}
         onTranslateString={formOnTranslateString}
         thirdPartyComponents={{ ReactSelect, ReactCreatableSelect }}
