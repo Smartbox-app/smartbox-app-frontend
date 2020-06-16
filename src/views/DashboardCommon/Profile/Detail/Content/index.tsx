@@ -3,27 +3,19 @@ import { connect } from 'react-redux';
 import { UserRes } from 'smartbox-types';
 import { ApplicationState } from '../../../../../reducers';
 
+import Row from './Row';
+
 interface Props {
   user: UserRes;
 }
 
 const Content = ({ user }: Props) => (
   <div className="content-wrapper">
-    <p>
-      Imię: <strong>{user.firstName}</strong>
-    </p>
-    <p>
-      Nazwisko: <strong>{user.lastName}</strong>
-    </p>
-    <p>
-      E-mail: <strong>{user.email}</strong>
-    </p>
-    <p>
-      Telefon: <strong>{user.phone}</strong>
-    </p>
-    <p>
-      Rola: <strong>{user.role}</strong>
-    </p>
+    <Row label="Imię" content={user.firstName} />
+    <Row label="Nazwisko" content={user.lastName} />
+    <Row label="E-mail" content={user.email} />
+    <Row label="Telefon" content={user.phone} />
+    <Row label="Rola" content={user.role} />
   </div>
 );
 
