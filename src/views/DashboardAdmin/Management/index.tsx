@@ -7,8 +7,8 @@ import { Section } from '../../../components/Layout';
 import { ApplicationState } from '../../../reducers';
 import UserService from '../../../services/user-service';
 
-import WorkersManagement from '../WorkersManagement';
-import BoxMapManagement from '../BoxMapManagement';
+import WorkersManagement from './WorkersManagement';
+import BoxMapManagement from './BoxMapManagement';
 import DiscountCodes from '../DiscountCodes';
 
 interface Props {

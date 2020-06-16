@@ -4,12 +4,12 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import ReactSelect from 'react-select';
 import ReactCreatableSelect from 'react-select/creatable';
-import { PageHeader, ButtonsContainer, FormContainer } from '../../../../components/Layout';
-import { Button, Spinner } from '../../../../components/Common';
-import ApiService from '../../../../services/api-service';
-import { formOnTranslateString } from '../../../../utils/trans-form';
-import { notifications } from '../../../../actions';
-import { history } from '../../../../App';
+import { PageHeader, ButtonsContainer, FormContainer } from '../../../../../components/Layout';
+import { Button, Spinner } from '../../../../../components/Common';
+import ApiService from '../../../../../services/api-service';
+import { formOnTranslateString } from '../../../../../utils/trans-form';
+import { notifications } from '../../../../../actions';
+import { history } from '../../../../../App';
 
 interface Props {
   successNotification: (text: string) => void;

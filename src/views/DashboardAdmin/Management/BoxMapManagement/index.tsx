@@ -5,11 +5,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { BoxListItem, RentStatus } from 'smartbox-types';
-import { ApplicationState } from '../../../reducers';
+import { ApplicationState } from '../../../../reducers';
 
 import { ReactComponent as ReactLogo } from './nowa_mapa.svg';
-import { PageHeader } from '../../../components/Layout';
-import { modal, boxes } from '../../../actions';
+import { PageHeader } from '../../../../components/Layout';
+import { modal, boxes } from '../../../../actions';
 
 import BoxDetail from './BoxDetail';
 import MapLegend from './MapLegend';

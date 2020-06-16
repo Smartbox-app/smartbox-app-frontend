@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { RentDetailsRes } from 'smartbox-types';
 import { connect } from 'react-redux';
-import { ButtonsContainer, SectionHeader } from '../../../../components/Layout';
-import { Button } from '../../../../components/Common';
-import { dateOnly } from '../../../../utils/format-date';
+import { ButtonsContainer, SectionHeader } from '../../../../../components/Layout';
+import { Button } from '../../../../../components/Common';
+import { dateOnly } from '../../../../../utils/format-date';
 
 import Edit from './Edit';
 

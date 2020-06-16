@@ -1,9 +1,9 @@
 import React from 'react';
 import { TableSchema, usersList } from 'smartbox-tables';
-import { PageHeader, Section, ButtonsContainer } from '../../../../components/Layout';
-import { ApiTable, Button } from '../../../../components/Common';
-import { InteractiveTableSchema } from '../../../../utils/table-schema-utils';
-import { __ } from '../../../../helpers/i18n';
+import { PageHeader, Section, ButtonsContainer } from '../../../../../components/Layout';
+import { ApiTable, Button } from '../../../../../components/Common';
+import { InteractiveTableSchema } from '../../../../../utils/table-schema-utils';
+import { __ } from '../../../../../helpers/i18n';
 
 interface Props {}
 
