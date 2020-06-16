@@ -23,7 +23,7 @@ interface Props {
   fetchSingleBoxDetails: (rentId: string) => void;
 }
 
-class BoxMapmanagement extends React.Component<Props> {
+class BoxMapManagement extends React.Component<Props> {
   private element: any;
 
   constructor(props: any) {
@@ -145,4 +145,4 @@ const mapDispatchToProps = (dispatch: any) =>
     dispatch,
   );
 
-export default connect(mapStateToProps, mapDispatchToProps)(BoxMapmanagement);
+export default connect(mapStateToProps, mapDispatchToProps)(BoxMapManagement);

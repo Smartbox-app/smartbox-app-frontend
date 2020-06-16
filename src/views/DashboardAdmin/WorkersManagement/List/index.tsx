@@ -36,7 +36,7 @@ class List extends React.Component<Props> {
       <Section full>
         <PageHeader title={__('application.workersList')} />
         <ButtonsContainer>
-          <Button text={__('application.inviteWorker')} primary to="/admin/managment/workers/add" />
+          <Button text={__('application.inviteWorker')} primary to="/admin/Management/workers/add" />
         </ButtonsContainer>
         <ApiTable scheme={this.scheme} apiEndpointSubUrl="user/list" />
       </Section>

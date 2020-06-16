@@ -8,7 +8,7 @@ import { PageHeader } from '../../../components/Layout';
 import { modal, boxes } from '../../../actions';
 import Form from './Form';
 
-// import './BoxMapManagment.scss';
+// import './BoxMapManagement.scss';
 
 interface Props {
   boxesGroup: BoxListItem[];

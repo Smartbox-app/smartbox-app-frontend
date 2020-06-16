@@ -29,7 +29,7 @@ const Add = ({ successNotification }: Props) => {
     <>
       <PageHeader title="Wyślij zaproszenie dla pracownika" />
       <ButtonsContainer>
-        <Button to="/admin/management/workers/list" text="Powrót" primary />
+        <Button to="/admin/Management/workers/list" text="Powrót" primary />
       </ButtonsContainer>
 
       <FormContainer>

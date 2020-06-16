@@ -22,19 +22,19 @@ const Management = ({ user }: Props) => (
         {
           className: 'tab',
           activeClassName: 'active',
-          to: `/${UserService.getSlugByRole(user.role)}/management/workers/list`,
+          to: `/${UserService.getSlugByRole(user.role)}/Management/workers/list`,
           text: 'Pracownicy',
         },
         {
           className: 'tab',
           activeClassName: 'active',
-          to: `/${UserService.getSlugByRole(user.role)}/management/map`,
+          to: `/${UserService.getSlugByRole(user.role)}/Management/map`,
           text: 'Skrzynki',
         },
         {
           className: 'tab',
           activeClassName: 'active',
-          to: `/${UserService.getSlugByRole(user.role)}/management/discount`,
+          to: `/${UserService.getSlugByRole(user.role)}/Management/discount`,
           text: 'Kody rabatowe',
         },
       ]}
@@ -42,12 +42,12 @@ const Management = ({ user }: Props) => (
     <Switch>
       <Route
         exact
-        path={`/${UserService.getSlugByRole(user.role)}/management`}
-        render={() => <Redirect to={`/${UserService.getSlugByRole(user.role)}/management/workers`} />}
+        path={`/${UserService.getSlugByRole(user.role)}/Management`}
+        render={() => <Redirect to={`/${UserService.getSlugByRole(user.role)}/Management/workers`} />}
       />
-      <Route path={`/${UserService.getSlugByRole(user.role)}/management/workers`} component={WorkersManagement} />
-      <Route path={`/${UserService.getSlugByRole(user.role)}/management/map`} component={BoxMapManagement} />
-      <Route path={`/${UserService.getSlugByRole(user.role)}/management/discount`} component={DiscountCodes} />
+      <Route path={`/${UserService.getSlugByRole(user.role)}/Management/workers`} component={WorkersManagement} />
+      <Route path={`/${UserService.getSlugByRole(user.role)}/Management/map`} component={BoxMapManagement} />
+      <Route path={`/${UserService.getSlugByRole(user.role)}/Management/discount`} component={DiscountCodes} />
     </Switch>
   </Section>
 );
