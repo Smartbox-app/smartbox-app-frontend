@@ -3,22 +3,15 @@ import { ItfApiForm } from 'itf_formbuilder_react';
 import ReactSelect from 'react-select';
 import ReactCreatableSelect from 'react-select/creatable';
 import { AddGiftReq, GiftRes } from 'smartbox-types';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import { FormContainer, ButtonsContainer } from '../../../../../components/Layout';
 import { Button, Spinner } from '../../../../../components/Common';
 import ApiService from '../../../../../services/api-service';
 import { formOnTranslateString } from '../../../../../utils/trans-form';
 import { successNotification } from '../../../../../actions/notifications';
-import { modal } from '../../../../../actions';
 
 import './Form.scss';
 
-interface Props {
-  showModal: (content: React.ReactNode) => void;
-}
-
-const Form = ({ showModal }: Props) => {
+const UpdateMe = () => {
   const submitButton = (
     <ButtonsContainer>
       <Button text="Zmień" type="submit" primary />
@@ -57,12 +50,4 @@ const Form = ({ showModal }: Props) => {
   );
 };
 
-const mapDispatchToProps = (dispatch: any) =>
-  bindActionCreators(
-    {
-      ...modal,
-    },
-    dispatch,
-  );
-
-export default connect(null, mapDispatchToProps)(Form);
+export default UpdateMe;

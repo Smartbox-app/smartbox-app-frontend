@@ -1,19 +1,34 @@
 import React from 'react';
-import Form from './Form';
-import { ButtonsContainer } from '../../../../components/Layout';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { ButtonsContainer, SectionHeader } from '../../../../components/Layout';
 import { Button } from '../../../../components/Common';
+import { modal } from '../../../../actions';
 
-const Detail = () => {
-  console.log('Detail');
-  return (
-    <div>
-      <h3>Szczegóły Profilu</h3>
-      <ButtonsContainer>
-        <Button text="Zmień hasło" primary />
-      </ButtonsContainer>
-      <Form />
-    </div>
+import Form from './Form';
+import Content from './Content';
+
+interface Props {
+  showModal: (content: React.ReactNode) => void;
+}
+
+const Detail = ({ showModal }: Props) => (
+  <>
+    <SectionHeader title="Szczegóły Profilu" />
+    <ButtonsContainer>
+      <Button text="Edytuj" primary click={() => showModal(<Form />)} />
+      <Button text="Zmień hasło" primary click={() => showModal(<Form />)} />
+    </ButtonsContainer>
+    <Content />
+  </>
+);
+
+const mapDispatchToProps = (dispatch: any) =>
+  bindActionCreators(
+    {
+      ...modal,
+    },
+    dispatch,
   );
-};
 
-export default Detail;
+export default connect(null, mapDispatchToProps)(Detail);
