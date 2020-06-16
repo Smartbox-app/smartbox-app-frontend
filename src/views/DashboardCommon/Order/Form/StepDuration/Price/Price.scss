@@ -1,0 +1,13 @@
+@import '../../../../../../config/variables.scss';
+
+.price-wrapper {
+  margin: $main-spacing*3 auto;
+  p {
+    text-align: center;
+
+    strong {
+      color: $color-primary;
+      font-size: 1.5rem;
+    }
+  }
+}

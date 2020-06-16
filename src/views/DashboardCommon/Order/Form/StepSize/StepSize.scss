@@ -1,0 +1,26 @@
+@import "../../../../../config/variables.scss";
+@import "../../../../../config/mixins.scss";
+
+.step-size-wrapper {
+
+  form {
+    width: 100%;
+  }
+
+  .options-wrapper {
+    margin-left: -10px;
+    margin-right: -10px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+@include gt-sm {
+  .options-wrapper {
+    flex-direction: row;
+    margin-bottom: $main-spacing * 2;
+  }
+}

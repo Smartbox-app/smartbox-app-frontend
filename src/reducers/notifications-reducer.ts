@@ -19,7 +19,9 @@ interface ErrorNotification {
 
 type Action = HideNotification | SuccessNotification | ErrorNotification;
 
-const initialState: SingleNotification[] = [];
+export type NotificationState = SingleNotification[];
+
+const initialState: NotificationState = [];
 
 const getError = (error: ApiErrorCode) => {
   switch (error) {

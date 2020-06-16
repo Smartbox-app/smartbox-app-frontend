@@ -4,12 +4,12 @@ interface AppStatusChange {
     type: string;
   };
 }
-
+export type AppStatus = boolean;
 type Action = AppStatusChange;
 
-const initialState = true;
+const initialState: AppStatus = true;
 
-export default (state = initialState, action: Action) => {
+export default (state: AppStatus = initialState, action: Action) => {
   switch (action.type) {
     case 'APP_STATUS_CHANGE':
       switch (action.payload.type) {

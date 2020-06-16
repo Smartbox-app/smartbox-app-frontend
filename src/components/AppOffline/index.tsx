@@ -8,7 +8,7 @@ const AppOffline = () => (
     <strong>Korzystasz z aplikacji w wersji offline.</strong>
     <svg
       className="nowifi-icon"
-      enable-background="new 0 0 512 512"
+      enableBackground="new 0 0 512 512"
       version="1.1"
       viewBox="0 0 512 512"
       xmlns="http://www.w3.org/2000/svg"

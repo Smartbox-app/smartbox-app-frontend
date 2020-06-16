@@ -1,3 +1,5 @@
+import { UserRes } from 'smartbox-types';
+
 export default class SessionService {
   static setCurrentLanguage(lang: string) {
     localStorage.setItem('language', JSON.stringify(lang));
@@ -25,7 +27,7 @@ export default class SessionService {
     return JSON.parse(localStorage.getItem('user') || 'false');
   }
 
-  static getUser() {
+  static getUser(): UserRes {
     return JSON.parse(localStorage.getItem('user') || 'null');
   }
 }

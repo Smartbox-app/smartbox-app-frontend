@@ -1,0 +1,30 @@
+@import "../../../config/variables.scss";
+@import "../../../config/mixins.scss";
+
+.form-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  width: $max-form-width;
+  width: 100%;
+
+  form {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .form-buttons {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+}
+
+@include gt-sm {
+  .form-container {
+    margin: 0 auto;
+    max-width: $max-form-width * 1.4;
+  }
+}

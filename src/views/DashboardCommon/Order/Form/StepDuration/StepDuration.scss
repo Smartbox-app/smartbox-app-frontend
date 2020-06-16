@@ -1,0 +1,22 @@
+@import '../../../../../config/variables.scss';
+@import '../../../../../config/mixins.scss';
+
+.calendars-picker-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .data-picker-wrapper {
+    margin-bottom: $main-spacing * 2;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+@include gt-sm {
+  .calendars-picker-wrapper {
+    flex-direction: row;
+    justify-content: space-around;
+  }
+}

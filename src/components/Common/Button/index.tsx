@@ -18,6 +18,9 @@ interface ButtonProps {
   small?: boolean;
   className?: string;
   blank?: boolean;
+  rounded?: boolean;
+  icon?: string;
+  onlyIcon?: boolean;
 }
 
 enum ButtonType {
@@ -42,6 +45,9 @@ const Button = (props: ButtonProps): any => {
     blank,
     click,
     text,
+    rounded,
+    icon,
+    onlyIcon,
   } = props;
 
   const setButtonType = (userinput = 'button'): any => {
@@ -55,34 +61,46 @@ const Button = (props: ButtonProps): any => {
     }
   };
 
+  const imgLink = `/assets/icons/${icon}`;
+  const imgComponent = <img className="button-img" src={imgLink} alt="img" />;
+
   const buttonClass = `button
     ${className || ''} ${primary ? 'button-primary' : ''}
     ${danger ? 'button-danger' : ''} ${success ? 'button-success' : ''}
     ${outline ? 'button-outline' : ''} ${big ? 'button-big' : ''}
     ${small ? 'button-small' : ''} ${auto ? 'auto' : ''}
-    ${disabled ? 'disabled' : ''}`;
+    ${icon ? 'with-icon' : ''} ${onlyIcon ? 'only-icon' : ''}
+    ${disabled ? 'disabled' : ''} ${rounded ? 'rounded' : ''}`;
 
   if (to) {
     if (disabled) {
-      return <a className={buttonClass}>{text}</a>;
+      return (
+        <a className={buttonClass}>
+          {icon && imgComponent}
+          {!onlyIcon && text}
+        </a>
+      );
     }
     if (blank) {
       return (
         <a target="_blank" rel="noopener noreferrer" className={buttonClass} href={to}>
-          {text}
+          {icon && imgComponent}
+          {!onlyIcon && text}
         </a>
       );
     }
     return (
       <Link className={buttonClass} to={to}>
-        {text}
+        {icon && imgComponent}
+        {!onlyIcon && text}
       </Link>
     );
   }
 
   return (
     <button type={setButtonType(type) || 'button'} disabled={disabled} onClick={click} className={buttonClass}>
-      {text}
+      {icon && imgComponent}
+      {!onlyIcon && text}
     </button>
   );
 };

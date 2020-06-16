@@ -1,14 +1,17 @@
 @import '../../../config/variables';
+@import '../../../config/mixins.scss';
 
 footer {
     position: relative;
     padding: $main-spacing;
     width: 100%;
+    height: 60px;
     text-align: end;
+    background-color: $color-background;
 
     p {
         font-size: .75rem;
-        color: $color-text-alter;
+        color: $color-text;
     }
 
     a {
@@ -31,6 +34,10 @@ footer {
     small {
         font-size: 75%;
     }
-
-
 }
+
+@include gt-sm {
+    footer {
+      margin: 0 auto;
+    }
+  }
