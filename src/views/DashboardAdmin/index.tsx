@@ -8,6 +8,7 @@ import { MenuItemType } from '../../types/menu-item';
 import { __ } from '../../helpers/i18n';
 
 import Management from './Management';
+import Profile from '../DashboardCommon/Profile';
 
 const DashboardAdmin = () => {
   const menuItems: MenuItemType[] = [
@@ -24,7 +25,7 @@ const DashboardAdmin = () => {
     {
       icon: 'account.svg',
       text: __('application.account'),
-      address: '/admin/account',
+      address: '/admin/profile',
     },
   ];
 
@@ -37,6 +38,7 @@ const DashboardAdmin = () => {
           <Route path="/admin/main" component={Welcome} />
           <Route path="/admin/order/:step" component={Order} />
           <Route path="/admin/management/" component={Management} />
+          <Route path="/admin/profile" component={Profile} />
         </Switch>
       </Main>
       <Footer />

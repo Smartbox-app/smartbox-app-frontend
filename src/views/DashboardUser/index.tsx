@@ -7,6 +7,7 @@ import { MenuItemType } from '../../types/menu-item';
 
 import DashboardContainer from '../../components/Layout/DashboardContainer';
 import Navigation from '../../components/Layout/Navigation';
+import Profile from '../DashboardCommon/Profile';
 
 const DashboardUser = () => {
   const menuItems: MenuItemType[] = [
@@ -18,7 +19,7 @@ const DashboardUser = () => {
     {
       icon: 'account.svg',
       text: 'Konto',
-      address: '/user/account',
+      address: '/user/profile',
     },
     {
       icon: 'email.svg',
@@ -34,6 +35,7 @@ const DashboardUser = () => {
         <Switch>
           <Route exact path="/user" render={() => <Redirect to="/user/main" />} />
           <Route path="/user/main" component={Welcome} />
+          <Route path="/user/profile" component={Profile} />
           <Route path="/user/order/:step" component={Order} />
         </Switch>
       </Main>
