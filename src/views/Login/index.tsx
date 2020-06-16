@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { Redirect } from 'react-router-dom';
 import { ItfApiForm } from 'itf_formbuilder_react';
 import { UserRole, AuthLoginRequest, AuthLoginResult, UserRes } from 'smartbox-types';
-import { Spinner, Input } from '../../components/Common';
+import { Spinner, Input, Logo } from '../../components/Common';
 import { auth, notifications } from '../../actions';
 import ApiService from '../../services/api-service';
 import { getRememberedRedirect, clearRememberedRedirect } from '../../utils/remeber-redirect';
@@ -16,6 +16,7 @@ import { ApplicationState } from '../../reducers';
 import ButtonsSection from './ButtonSection';
 
 import './Login.scss';
+import { __ } from '../../helpers/i18n';
 
 interface Props {
   user: UserRes;
@@ -59,7 +60,9 @@ class Login extends React.Component<Props> {
     if (user) return this.getRedirect();
     return (
       <PageContent>
-        <LogoContainer />
+        <div className="login-logo-wrapper">
+          <Logo />
+        </div>
         <FormContainer className="login-form">
           <ItfApiForm
             formId="loginForm"
@@ -74,6 +77,7 @@ class Login extends React.Component<Props> {
                 case 'text':
                   return (
                     <Input
+                      className="login-input"
                       type={field.options.type}
                       input={{
                         label: field.title,

@@ -18,7 +18,12 @@ const DashboardUser = () => {
     {
       icon: 'account.svg',
       text: 'Konto',
-      address: '/user/main',
+      address: '/user/account',
+    },
+    {
+      icon: 'email.svg',
+      text: 'Kontakt',
+      address: '/user/contact',
     },
   ];
 

@@ -20,14 +20,15 @@ interface Props {
   help?: string;
   onChange?: (value: string) => void;
   dark?: boolean;
+  className?: string;
 }
 
 const errorClass = (errors: any[] | undefined) => (errors && errors.length ? 'is-invalid' : '');
 
 const Input = (props: Props) => {
-  const containerClass = `input-container ${props.max ? 'input-max' : ''} ${props.nomargin ? 'nomargin' : ''} ${
-    props.type === 'hidden' ? 'hidden' : ''
-  }`;
+  const containerClass = `input-container ${props.className || ''} ${props.max ? 'input-max' : ''} ${
+    props.nomargin ? 'nomargin' : ''
+  } ${props.type === 'hidden' ? 'hidden' : ''}`;
   const label = props.input.label && <label htmlFor={props.input.name}>{props.input.label} </label>;
   if (props.type === 'select') {
     const options = props.options
