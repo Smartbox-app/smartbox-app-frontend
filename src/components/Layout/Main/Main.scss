@@ -1,10 +1,6 @@
 @import '../../../config/variables.scss';
 @import '../../../config/mixins.scss';
 
-body {
-  margin: 0;
-}
-
 main {
   background-color: $color-background-darken;
   min-height: $main-min-height-mobile;
