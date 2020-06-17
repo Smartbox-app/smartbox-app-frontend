@@ -1,0 +1,16 @@
+@import '../../config/variables.scss';
+@import '../../config/mixins.scss';
+
+.restor-pass-form {
+  max-width: $login-form-width * 0.8;
+  margin: 0 auto;
+  max-height: 600px;
+}
+
+@include gt-sm {
+  .restor-pass-form {
+    
+    max-width: $login-form-width;
+    margin: 0 auto;
+  }
+}

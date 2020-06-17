@@ -4,5 +4,6 @@ import Register from './Register';
 import DashboardAdmin from './DashboardAdmin';
 import DashboardUser from './DashboardUser';
 import DashboardWorker from './DashboardWorker';
+import RestorPass from './RestorPass';
 
-export { Page404, Login, Register, DashboardAdmin, DashboardUser, DashboardWorker };
+export { Page404, Login, Register, DashboardAdmin, DashboardUser, DashboardWorker, RestorPass };
