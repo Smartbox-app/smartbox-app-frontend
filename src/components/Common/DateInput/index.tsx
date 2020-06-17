@@ -23,7 +23,7 @@ interface Props {
 
 const DateInput = ({ name, value, onChange, label, minDate, maxDate, register }: Props) => {
   const { errors } = useForm();
-  // const { register } = useFormContext();
+
   const setDefaultVaule = (data: any) => {
     if (data[0]) {
       return format(data[0], 'yyyy-MM-dd');

@@ -6,6 +6,8 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import { Route, Router, Switch, Redirect } from 'react-router-dom';
 import { WorkBoxProvider } from 'react-workbox';
 import { createBrowserHistory } from 'history';
+import flatpickr from 'flatpickr';
+import { Polish } from 'flatpickr/dist/l10n/pl';
 import reducers from './reducers';
 import { Login, DashboardAdmin, DashboardWorker, DashboardUser, Register, RestorPass } from './views';
 import {
@@ -22,6 +24,12 @@ import { NotificationContainer } from './components/Notifications';
 import AppOffline from './components/AppOffline';
 import { i18n } from './helpers/i18n';
 import { appStatus } from './actions/app-status';
+
+import 'flatpickr/dist/flatpickr.min.css';
+import 'flatpickr/dist/themes/airbnb.css';
+
+flatpickr.localize(Polish);
+flatpickr.defaultConfig.time_24hr = true;
 
 const createStoreWithMiddleware = composeWithDevTools(applyMiddleware(reduxThunk))(createStore);
 
