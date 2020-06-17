@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { ItfApiForm } from 'itf_formbuilder_react';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
-import { AuthLoginResult } from 'smartbox-types';
+import { AuthLoginResult, RestorPwdReq } from 'smartbox-types';
 import { Spinner, Input, LoginLogo } from '../../components/Common';
 import { notifications } from '../../actions';
 import ApiService from '../../services/api-service';
@@ -23,8 +23,20 @@ interface Props extends RouteComponentProps<RouteProps> {
   successNotification: (text: string) => void;
 }
 const RestorPass = ({ successNotification, match }: Props) => {
-  const loadUrl = match.params.updateToken ? 'user/form/email' : 'user/form/email';
-  const sendUrl = match.params.updateToken ? 'user/restor-pwd-petition' : 'user/restor-pwd-petition';
+  const loadUrl = match.params.updateToken ? 'user/form/restore-pwd' : 'user/form/email';
+  const sendUrl = match.params.updateToken ? 'user/restore-pwd' : 'user/restore-pwd-petition';
+  const METHOD = match.params.updateToken ? 'PATCH' : 'POST';
+
+  const notificationText = match.params.updateToken ? 'Ustawiono nowe hasło' : 'Wysłano wiadomość';
+
+  const setValues = (values: any) =>
+    match.params.updateToken
+      ? {
+        ...values,
+        token: match.params.updateToken,
+        userId: match.params.userId,
+      }
+      : values;
 
   return (
     <PageContent>
@@ -36,8 +48,12 @@ const RestorPass = ({ successNotification, match }: Props) => {
           schemaCacheEnabled={false}
           loadingInfo={<Spinner transparent />}
           schemaFetcher={() => ApiService.loadForm(loadUrl)}
-          sendFetcher={(formId: string, values: AuthLoginResult) => ApiService.sendForm(sendUrl, values, 'POST')}
-          submitButton={<ButtonsSection />}
+          sendFetcher={(formId: string, values: AuthLoginResult | RestorPwdReq) =>
+            ApiService.sendForm(sendUrl, setValues(values), METHOD)
+          }
+          submitButton={
+            <ButtonsSection mainButtonText={match.params.updateToken ? 'Ustaw nowe hasło' : 'Przywróć hasło'} />
+          }
           onRenderFullField={(field, errors, fieldHtmlId, currentValue, onChange, onFocus, onBlur) => {
             switch (field.type) {
               case 'text':
@@ -58,12 +74,14 @@ const RestorPass = ({ successNotification, match }: Props) => {
                     }}
                   />
                 );
+              case 'variablePlaceholder':
+                return null;
               default:
                 throw new Error('Unknown field type!');
             }
           }}
           onSavedSuccessfully={() => {
-            successNotification('Wysłano wiadomość');
+            successNotification(notificationText);
           }}
           onTranslateString={formOnTranslateString}
         />
