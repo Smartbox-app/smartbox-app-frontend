@@ -27,7 +27,7 @@ export const sentRentBoxRequest = (data: RentBoxReq, nextStep: number, role: Use
     dispatch,
     'SENT_RENT_BOX_REQUEST_SUCCESS',
     'SENT_RENT_BOX_REQUEST_FAILED',
-    (d: any) => {
+    () => {
       dispatch(formGoNextStep(nextStep));
       history.push(`/${UserService.getSlugByRole(role)}/order/step/${nextStep}`);
     },
