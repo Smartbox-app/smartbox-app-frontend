@@ -13,37 +13,35 @@ interface Props {
 }
 
 const Order = ({ userName, formStep }: Props) => (
-  <>
-    <Section>
-      <SectionHeader title="Nowe zamówienie:" />
-      <ProgressIndicator
-        current={formStep}
-        stepList={[
-          {
-            value: 1,
-            desc: 'Rozmiar',
-          },
-          {
-            value: 2,
-            desc: 'Termin',
-          },
-          {
-            value: 3,
-            desc: 'Podsumowanie',
-          },
-          {
-            value: 4,
-            desc: 'Umowa',
-          },
-          {
-            value: 5,
-            desc: 'Płatność',
-          },
-        ]}
-      />
-      <Form />
-    </Section>
-  </>
+  <Section>
+    <SectionHeader title="Nowe zamówienie:" />
+    <ProgressIndicator
+      current={formStep}
+      stepList={[
+        {
+          value: 1,
+          desc: 'Rozmiar',
+        },
+        {
+          value: 2,
+          desc: 'Termin',
+        },
+        {
+          value: 3,
+          desc: 'Podsumowanie',
+        },
+        {
+          value: 4,
+          desc: 'Umowa',
+        },
+        {
+          value: 5,
+          desc: 'Płatność',
+        },
+      ]}
+    />
+    <Form />
+  </Section>
 );
 
 const mapStateToProps = (state: ApplicationState) => ({

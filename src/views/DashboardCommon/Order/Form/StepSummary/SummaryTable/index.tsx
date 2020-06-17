@@ -1,6 +1,8 @@
 import React from 'react';
-import './SummaryTable.scss';
 import { formatPrice } from '../../../../../../utils/format-price';
+import { dateOnly } from '../../../../../../utils/format-date';
+
+import './SummaryTable.scss';
 
 interface Props {
   dateStart: Date;
@@ -13,13 +15,13 @@ const SummaryTable = ({ dateStart, dateEnd, countedPrice }: Props) => (
     <div className="row">
       <div className="cell">Termin rozpoczęcia:</div>
       <div className="cell fat">
-        <span>{dateStart.toLocaleDateString()}</span>
+        <span>{dateOnly(dateStart)}</span>
       </div>
     </div>
     <div className="row">
       <div className="cell">Termin zakończenia:</div>
       <div className="cell fat">
-        <span>{dateEnd.toLocaleDateString()}</span>
+        <span>{dateOnly(dateEnd)}</span>
       </div>
     </div>
     <div className="row">

@@ -1,11 +1,6 @@
 @import '../../../../../../config/variables.scss';
 @import "../../../../../../config/mixins.scss";
 
-$single-option-width: 150px;
-$single-option-height: 165px;
-$single-option-width-big: 330px; 
-$single-option-height-big: 270px;
-
 .single-option-wrapper {
   display: flex;
   flex-wrap: wrap;
