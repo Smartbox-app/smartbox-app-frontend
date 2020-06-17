@@ -32,7 +32,7 @@ interface Props {
 const StepSummary = ({ formData, countedPrice, updateFormData, formGoNextStep, user, sentRentBoxRequest }: Props) => {
   useEffect(() => {
     if (formData.size.length === 0) {
-      history.push(`/${UserService.getSlugByRole(user.role)}/order/step/1`);
+      history.push(`/${UserService.getSlugByRole(user.role)}/order/step/size`);
     }
   });
 
@@ -41,12 +41,12 @@ const StepSummary = ({ formData, countedPrice, updateFormData, formGoNextStep, u
   const onSubmit = (data: any) => {
     updateFormData(data);
     formGoNextStep(4);
-    history.push(`/${UserService.getSlugByRole(user.role)}/order/step/4`);
+    history.push(`/${UserService.getSlugByRole(user.role)}/order/step/agreement`);
   };
 
   const onBack = () => {
     formGoNextStep(2);
-    history.push(`/${UserService.getSlugByRole(user.role)}/order/step/2`);
+    history.push(`/${UserService.getSlugByRole(user.role)}/order/step/duration`);
   };
 
   return (

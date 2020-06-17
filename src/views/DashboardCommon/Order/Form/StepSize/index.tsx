@@ -55,7 +55,7 @@ const StepSize = ({
   const onSubmit = (data: any) => {
     updateFormData(data);
     formGoNextStep(2);
-    history.push(`/${UserService.getSlugByRole(user.role)}/order/step/2`);
+    history.push(`/${UserService.getSlugByRole(user.role)}/order/step/duration`);
   };
 
   const boxList: SingleOptionType[] = [

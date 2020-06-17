@@ -30,7 +30,7 @@ interface Props {
 const StepPayment = ({ formData, formGoNextStep, user, sentExecutePaymentRequest, paymentId }: Props) => {
   useEffect(() => {
     if (formData.size.length === 0) {
-      history.push(`/${UserService.getSlugByRole(user.role)}/order/step/1`);
+      history.push(`/${UserService.getSlugByRole(user.role)}/order/step/size`);
       formGoNextStep(1);
     }
   });
@@ -58,7 +58,7 @@ const StepPayment = ({ formData, formGoNextStep, user, sentExecutePaymentRequest
 
   const onBack = () => {
     formGoNextStep(4);
-    history.push(`/${UserService.getSlugByRole(user.role)}/order/step/4`);
+    history.push(`/${UserService.getSlugByRole(user.role)}/order/step/agreement`);
   };
 
   return (

@@ -30,7 +30,7 @@ interface Props {
 const StepDuration = ({ formData, countedPrice, updateFormData, formGoNextStep, user }: Props) => {
   useEffect(() => {
     if (formData.size.length === 0) {
-      history.push(`/${UserService.getSlugByRole(user.role)}/order/step/1`);
+      history.push(`/${UserService.getSlugByRole(user.role)}/order/step/size`);
     }
   });
 
@@ -47,12 +47,12 @@ const StepDuration = ({ formData, countedPrice, updateFormData, formGoNextStep, 
 
   const onSubmit = (data: any) => {
     formGoNextStep(3);
-    history.push(`/${UserService.getSlugByRole(user.role)}/order/step/3`);
+    history.push(`/${UserService.getSlugByRole(user.role)}/order/step/summary`);
   };
 
   const onBack = () => {
     formGoNextStep(1);
-    history.push(`/${UserService.getSlugByRole(user.role)}/order/step/1`);
+    history.push(`/${UserService.getSlugByRole(user.role)}/order/step/size`);
   };
 
   return (

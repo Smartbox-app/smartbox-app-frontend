@@ -43,7 +43,7 @@ const StepSummary = ({
 }: Props) => {
   useEffect(() => {
     if (formData.size.length === 0) {
-      history.push(`/${UserService.getSlugByRole(user.role)}/order/step/1`);
+      history.push(`/${UserService.getSlugByRole(user.role)}/order/step/size`);
       formGoNextStep(1);
     }
   });
@@ -67,7 +67,7 @@ const StepSummary = ({
 
   const onBack = () => {
     formGoNextStep(3);
-    history.push(`/${UserService.getSlugByRole(user.role)}/order/step/3`);
+    history.push(`/${UserService.getSlugByRole(user.role)}/order/step/summary`);
   };
 
   return (
