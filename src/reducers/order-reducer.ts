@@ -1,15 +1,7 @@
 import { addDays } from 'date-fns';
 import { BoxGroupAvailability, usePricing, ICalculateProps, IPricingResult } from 'smartbox-types';
+import { Form } from '../types/order-form';
 
-export interface Form {
-  durationInDays: number;
-  discount: number;
-  size: string;
-  isFirstRent: boolean;
-  dateStart: Date;
-  dateEnd: Date;
-  discountCode: string;
-}
 export type OrderState = {
   formData: Form;
   formStep: number;
