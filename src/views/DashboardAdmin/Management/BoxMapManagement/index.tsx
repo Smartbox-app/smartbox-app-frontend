@@ -26,7 +26,7 @@ interface Props {
 class BoxMapManagement extends React.Component<Props> {
   private element: any;
 
-  constructor(props: any) {
+  constructor(props: Props) {
     super(props);
     this.element = React.createRef();
   }
