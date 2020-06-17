@@ -8,7 +8,7 @@
   border: 1px solid $color-disabled;
   border-radius: $main-spacing;
   padding: $main-spacing;
-  width: 330px;
+  width: $credit-card-width;
 
   span {
     color: #fff;
@@ -69,7 +69,7 @@
 
 @include gt-sm {
   .credit-card-input-wrapper {
-    width: 450px;
+    width: $credit-card-width * 1.4;
     margin: 0 auto;
 
     .row {

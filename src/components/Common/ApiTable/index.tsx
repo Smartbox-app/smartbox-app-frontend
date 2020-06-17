@@ -86,7 +86,7 @@ const searchComponent = (
 
   return (
     <div className="search-box">
-      <h4>Wyszukiwanie</h4>
+      <h3>Wyszukiwanie</h3>
       <div className="search-fields">
         <div className="search-field">
           <select className="input" value={search.searchBy} onChange={(e) => handleSearchByChange(e.target.value)}>
