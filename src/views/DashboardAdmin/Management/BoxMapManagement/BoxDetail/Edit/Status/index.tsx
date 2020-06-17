@@ -45,7 +45,7 @@ const Status = ({ selectedBoxId }: Props) => {
         sendFetcher={customSendFetcher}
         submitButton={submitButton}
         onSavedSuccessfully={() => {
-          successNotification('Zalogowano poprawnie');
+          successNotification('Poprawnie zmieniono status');
         }}
         onTranslateString={formOnTranslateString}
         thirdPartyComponents={{ ReactSelect, ReactCreatableSelect }}
