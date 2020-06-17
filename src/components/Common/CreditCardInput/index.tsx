@@ -55,7 +55,7 @@ const CreditCardInput = ({ register, errors }: Props) => {
         <label htmlFor="year">
           <span />
           <select name="year" ref={register({ required: true })}>
-            {yearOption.map((singleYear: any) => (
+            {yearOption.map((singleYear: number | string) => (
               <option value={singleYear}>{singleYear}</option>
             ))}
           </select>

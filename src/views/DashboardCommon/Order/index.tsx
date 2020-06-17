@@ -18,7 +18,7 @@ const Order = ({ userName, formStep }: Props) => (
       <SectionHeader title="Nowe zamówienie:" />
       <ProgressIndicator
         current={formStep}
-        data={[
+        stepList={[
           {
             value: 1,
             desc: 'Rozmiar',
