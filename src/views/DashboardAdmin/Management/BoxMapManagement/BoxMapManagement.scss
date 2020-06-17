@@ -38,10 +38,10 @@
     }
 
     .to-explain, .out-of-service {
-      fill: #000;
+      fill: $color-text;
       
       &:hover {
-        fill: lighten(#000, 5%)
+        fill: lighten($color-text, 5%)
       }
     }
 

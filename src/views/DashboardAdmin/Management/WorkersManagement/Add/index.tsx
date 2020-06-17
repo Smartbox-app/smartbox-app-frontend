@@ -29,7 +29,7 @@ const Add = ({ successNotification }: Props) => {
     <>
       <PageHeader title="Wyślij zaproszenie dla pracownika" />
       <ButtonsContainer>
-        <Button to="/admin/Management/workers/list" text="Powrót" primary />
+        <Button to="/admin/management/workers/list" text="Powrót" primary />
       </ButtonsContainer>
 
       <FormContainer>
@@ -43,7 +43,7 @@ const Add = ({ successNotification }: Props) => {
           submitButton={submitButton}
           onSavedSuccessfully={() => {
             successNotification('Poprawnie wysłano zaproszenie.');
-            history.push('/amin/orders/list');
+            history.push('/admin/orders/list');
           }}
           onTranslateString={formOnTranslateString}
           thirdPartyComponents={{ ReactSelect, ReactCreatableSelect }}
