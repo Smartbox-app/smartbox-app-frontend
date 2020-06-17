@@ -5,7 +5,7 @@ footer {
     position: relative;
     padding: $main-spacing;
     width: 100%;
-    height: 60px;
+    height: $footer-height;
     text-align: end;
     background-color: $color-background;
 
@@ -18,7 +18,7 @@ footer {
         .menu-footer_logo {
             vertical-align: middle;
             display: inline-block;
-            height: 25px;
+            height: $footer-height /2.5;
             margin: 0 10px;
         }
 
