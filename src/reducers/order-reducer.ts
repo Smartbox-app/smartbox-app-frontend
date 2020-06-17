@@ -1,9 +1,9 @@
 import { addDays } from 'date-fns';
 import { BoxGroupAvailability, usePricing, ICalculateProps, IPricingResult } from 'smartbox-types';
-import { Form } from '../types/order-form';
+import { FormType } from '../types/order-form';
 
 export type OrderState = {
-  formData: Form;
+  formData: FormType;
   formStep: number;
   paymentId: string;
   countedPrice: IPricingResult;
@@ -74,7 +74,7 @@ const initialState: OrderState = {
 export default (state: OrderState = initialState, action: Action): any => {
   switch (action.type) {
     case 'FORM_STEP_SUCCESS': {
-      const newFormData: Form = { ...state.formData, ...action.payload };
+      const newFormData: FormType = { ...state.formData, ...action.payload };
 
       const { calculate } = usePricing();
 

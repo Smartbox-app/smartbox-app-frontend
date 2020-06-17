@@ -1,4 +1,4 @@
-export interface Form {
+export interface FormType {
   durationInDays: number;
   discount: number;
   size: string;

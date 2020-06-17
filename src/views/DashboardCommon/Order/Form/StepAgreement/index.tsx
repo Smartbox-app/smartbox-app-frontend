@@ -9,7 +9,7 @@ import { Button } from '../../../../../components/Common';
 import { order } from '../../../../../actions';
 import { ButtonsContainer } from '../../../../../components/Layout';
 import { history } from '../../../../../App';
-import { Form } from '../../../../../reducers/order-reducer';
+import { FormType } from '../../../../../types/order-form';
 
 import FormHeader from '../../../../../components/Layout/FormHeader';
 import UserService from '../../../../../services/user-service';
@@ -22,7 +22,7 @@ import './StepAgreement.scss';
 
 interface Props {
   history: any;
-  formData: Form;
+  formData: FormType;
   countedPrice: IPricingResult;
   user: UserRes;
   isAgreementAccepted: boolean;

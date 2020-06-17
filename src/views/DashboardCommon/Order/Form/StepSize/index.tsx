@@ -8,7 +8,7 @@ import { order } from '../../../../../actions';
 import { FormContainer, ButtonsContainer } from '../../../../../components/Layout';
 import { Button } from '../../../../../components/Common';
 import SingleOption, { SingleOptionType } from './SingleOption';
-import { Form } from '../../../../../reducers/order-reducer';
+import { FormType } from '../../../../../types/order-form';
 import { ApplicationState } from '../../../../../reducers';
 
 import FormHeader from '../../../../../components/Layout/FormHeader';
@@ -23,7 +23,7 @@ interface RouteProps {
 
 interface Props extends RouteComponentProps<RouteProps> {
   history: any;
-  formData: Form;
+  formData: FormType;
   user: UserRes;
   boxAvailability: BoxGroupAvailability[];
   updateFormData: (data: any) => void;
