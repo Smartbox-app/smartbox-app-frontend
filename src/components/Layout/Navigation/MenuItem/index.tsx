@@ -4,6 +4,7 @@ import { ReactSVG } from 'react-svg';
 import { MenuItemType } from '../../../../types/menu-item';
 
 import './MenuItem.scss';
+import CustomNavLink from './CustomNavLink';
 
 type Props = MenuItemType;
 
@@ -26,29 +27,18 @@ class MenuItem extends React.Component<Props> {
     const { address, icon, text, badge, customClass } = this.props;
     const fullIconLink = `/assets/icons/${icon}`;
     const itemClass = `main-menu-item ${!icon ? 'sub-menu-item' : ''} ${customClass || ''}`;
-    if (address) {
-      return (
-        <NavLink
-          to={address}
-          title={text}
-          className={itemClass}
-          activeClassName="active"
-          onClick={this.handleItemClick}
-        >
-          {badge && <span className="menu-item-badge fa fa-exclamation-circle" />}
-          {icon !== null && <ReactSVG src={fullIconLink} className="main-menu-item_logo menu-icon" />}
-          <span className="main-menu-item_text">{text}</span>
-        </NavLink>
-      );
-    } else {
-      return (
-        <a role="button" tabIndex={0} title={text} className={itemClass} onClick={this.handleItemClick}>
-          {badge && <span className="menu-item-badge fa fa-exclamation-circle" />}
-          {icon !== null && <ReactSVG src={fullIconLink} className="main-menu-item_logo menu-icon" />}
-          <span className="main-menu-item_text">{text}</span>
-        </a>
-      );
-    }
+
+    return (
+      <CustomNavLink
+        text={text}
+        itemClass={itemClass}
+        address={address}
+        fullIconLink={fullIconLink}
+        handleItemClick={this.handleItemClick}
+        badge={badge}
+        icon={icon}
+      />
+    );
   }
 }
 
