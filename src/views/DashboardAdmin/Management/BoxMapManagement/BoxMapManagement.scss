@@ -37,7 +37,7 @@
       }
     }
 
-    .toExplain, .outOfService {
+    .to-explain, .out-of-service {
       fill: #000;
       
       &:hover {
@@ -45,14 +45,14 @@
       }
     }
 
-    .toCheck {
+    .to-check {
       fill: $color-primary;
       &:hover {
         fill: lighten($color-primary, 5%)
       }
     }
 
-    .noPaidExtension, .noPaidExtensionWithWarning{
+    .no-paid-extension, .no-paid-extension-with-warning{
       fill: $color-tertiary;
       &:hover {
         fill: lighten($color-tertiary, 5%)

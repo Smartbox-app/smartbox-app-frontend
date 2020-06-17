@@ -69,13 +69,13 @@ class BoxMapManagement extends React.Component<Props> {
             singleElement.classList.add('reserved');
             break;
           case RentStatus.toExplain:
-            singleElement.classList.add('toExplain');
+            singleElement.classList.add('to-explain');
             break;
           case RentStatus.noPaidExtension:
-            singleElement.classList.add('noPaidExtension');
+            singleElement.classList.add('no-paid-extension');
             break;
           case RentStatus.noPaidExtensionWithWarning:
-            singleElement.classList.add('noPaidExtensionWithWarning');
+            singleElement.classList.add('no-paid-extension-with-warning');
             break;
           default:
             break;

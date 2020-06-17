@@ -55,7 +55,7 @@
   }
 }
 
-.single-toExplain {
+.single-to-explain {
   span{
     &::before {
       background-color: #000;
@@ -63,7 +63,7 @@
   }
 }
 
-.single-toCheck {
+.single-to-check {
   span{
     &::before {
       background-color: $color-primary;
@@ -71,7 +71,7 @@
   }
 }
 
-.single-noPaidExtension {
+.single-no-paid-extension {
   span{
     &::before {
       background-color: $color-tertiary;

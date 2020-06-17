@@ -11,13 +11,13 @@ const MapLegend = () => (
       <li className="single single-reserved">
         <span>Zajęty</span>
       </li>
-      <li className="single single-toExplain">
+      <li className="single single-to-explain">
         <span>Do wyjaśnienia</span>
       </li>
-      <li className="single single-toCheck">
+      <li className="single single-to-check">
         <span>Do sprawdzenia</span>
       </li>
-      <li className="single single-noPaidExtension">
+      <li className="single single-no-paid-extension">
         <span>Zaległości</span>
       </li>
     </ul>
