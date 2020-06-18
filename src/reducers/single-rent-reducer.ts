@@ -1,4 +1,6 @@
-export type SingleRentStatus = {};
+export type SingleRentStatus = {
+  singleRent: any;
+};
 
 interface BoxGroup {
   type: 'FETCH_MY_RENT_STORY_SUCCESS';
@@ -7,14 +9,16 @@ interface BoxGroup {
 
 type Action = BoxGroup;
 
-const initialState = {};
+const initialState: SingleRentStatus = {
+  singleRent: {},
+};
 
 export default (state: SingleRentStatus = initialState, action: Action): any => {
   switch (action.type) {
     case 'FETCH_MY_RENT_STORY_SUCCESS': {
       return {
         ...state,
-        boxesGroup: action.payload,
+        singleRent: action.payload,
       };
     }
 
