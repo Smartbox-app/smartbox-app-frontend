@@ -5,13 +5,15 @@ import { ButtonsContainer } from '../../../../components/Layout';
 import { Button } from '../../../../components/Common';
 import { modal } from '../../../../actions';
 
+import Invoice from './Invoice';
+
 interface Props {
   showModal: (content: React.ReactNode) => void;
 }
 
 const Action = ({ showModal }: Props) => (
-  <ButtonsContainer>
-    <Button text="Wygeneruj fakturę" primary />
+  <ButtonsContainer max>
+    <Button text="Wygeneruj fakturę" primary click={() => showModal(<Invoice orderId="asdasd" />)} />
     <Button text="Przedłuż" success />
     <Button text="Zakończ" danger />
   </ButtonsContainer>
