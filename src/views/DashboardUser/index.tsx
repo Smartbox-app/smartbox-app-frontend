@@ -36,7 +36,7 @@ const DashboardUser = () => {
           <Route exact path="/user" render={() => <Redirect to="/user/main" />} />
           <Route path="/user/main" component={Welcome} />
           <Route path="/user/profile" component={Profile} />
-          <Route path="/user/order/:step" component={Order} />
+          <Route path="/user/order/step/:step" component={Order} />
         </Switch>
       </Main>
     </DashboardContainer>
