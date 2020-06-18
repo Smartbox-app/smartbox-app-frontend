@@ -40,7 +40,7 @@ const DashboardAdmin = () => {
           <Route path="/admin/order/:step" component={Order} />
           <Route path="/admin/management/" component={Management} />
           <Route path="/admin/profile" component={Profile} />
-          <Route path="/admin/single-rent/:orderId" component={SingleRentDetail} />
+          <Route exact path="/admin/single-rent/:orderId" component={SingleRentDetail} />
         </Switch>
       </Main>
       <Footer />
