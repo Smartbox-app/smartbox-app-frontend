@@ -24,10 +24,9 @@ interface Props {
   countedPrice: IPricingResult;
   user: UserRes;
   updateFormData: (data: any) => void;
-  formGoNextStep: (data: number) => void;
 }
 
-const StepDuration = ({ formData, countedPrice, updateFormData, formGoNextStep, user }: Props) => {
+const StepDuration = ({ formData, countedPrice, updateFormData, user }: Props) => {
   useEffect(() => {
     if (formData.size.length === 0) {
       history.push(`/${UserService.getSlugByRole(user.role)}/order/step/size`);
@@ -46,12 +45,10 @@ const StepDuration = ({ formData, countedPrice, updateFormData, formGoNextStep, 
   const methods = useForm();
 
   const onSubmit = (data: any) => {
-    formGoNextStep(3);
     history.push(`/${UserService.getSlugByRole(user.role)}/order/step/summary`);
   };
 
   const onBack = () => {
-    formGoNextStep(1);
     history.push(`/${UserService.getSlugByRole(user.role)}/order/step/size`);
   };
 

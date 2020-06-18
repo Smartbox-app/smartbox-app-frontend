@@ -1,11 +1,8 @@
 import React from 'react';
-import { connect } from 'react-redux';
 
 import { withRouter, RouteComponentProps } from 'react-router';
-import { defaultTheme } from 'react-select/src/theme';
 import { Section, SectionHeader } from '../../../components/Layout';
 import { ProgressIndicator } from '../../../components/Common';
-import { ApplicationState } from '../../../reducers';
 
 import Form from './Form/Index';
 
@@ -13,11 +10,9 @@ interface RouteProps {
   step: string;
 }
 
-interface Props extends RouteComponentProps<RouteProps> {
-  formStep: number;
-}
+type Props = RouteComponentProps<RouteProps>;
 
-const Order = ({ formStep, match }: Props) => {
+const Order = ({ match }: Props) => {
   const getStepByName = (stepName: string) => {
     switch (stepName) {
       case 'size':
@@ -68,8 +63,4 @@ const Order = ({ formStep, match }: Props) => {
   );
 };
 
-const mapStateToProps = (state: ApplicationState) => ({
-  formStep: state.order.formStep,
-});
-
-export default withRouter(connect(mapStateToProps)(Order));
+export default withRouter(Order);

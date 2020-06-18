@@ -23,15 +23,13 @@ interface Props {
   countedPrice: IPricingResult;
   paymentId: string;
   user: UserRes;
-  formGoNextStep: (data: number) => void;
   sentExecutePaymentRequest: (data: ExecutePaymentReq) => void;
 }
 
-const StepPayment = ({ formData, formGoNextStep, user, sentExecutePaymentRequest, paymentId }: Props) => {
+const StepPayment = ({ formData, user, sentExecutePaymentRequest, paymentId }: Props) => {
   useEffect(() => {
     if (formData.size.length === 0) {
       history.push(`/${UserService.getSlugByRole(user.role)}/order/step/size`);
-      formGoNextStep(1);
     }
   });
   const defaultValues = {
@@ -57,7 +55,6 @@ const StepPayment = ({ formData, formGoNextStep, user, sentExecutePaymentRequest
   };
 
   const onBack = () => {
-    formGoNextStep(4);
     history.push(`/${UserService.getSlugByRole(user.role)}/order/step/agreement`);
   };
 

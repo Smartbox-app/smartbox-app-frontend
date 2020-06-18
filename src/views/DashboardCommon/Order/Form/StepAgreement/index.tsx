@@ -28,13 +28,11 @@ interface Props {
   isAgreementAccepted: boolean;
   isResignationMarked: boolean;
   updateFormData: (data: any) => void;
-  formGoNextStep: (data: number) => void;
-  sentRentBoxRequest: (data: RentBoxReq | any, nextStep: number, role: UserRole) => void;
+  sentRentBoxRequest: (data: RentBoxReq | any, nextStep: string, role: UserRole) => void;
 }
 
 const StepSummary = ({
   formData,
-  formGoNextStep,
   user,
   isAgreementAccepted,
   isResignationMarked,
@@ -44,7 +42,6 @@ const StepSummary = ({
   useEffect(() => {
     if (formData.size.length === 0) {
       history.push(`/${UserService.getSlugByRole(user.role)}/order/step/size`);
-      formGoNextStep(1);
     }
   });
 
@@ -60,13 +57,12 @@ const StepSummary = ({
         cost: countedPrice.value,
         discountCode: formData.discountCode,
       },
-      5,
+      'payment',
       user.role,
     );
   };
 
   const onBack = () => {
-    formGoNextStep(3);
     history.push(`/${UserService.getSlugByRole(user.role)}/order/step/summary`);
   };
 

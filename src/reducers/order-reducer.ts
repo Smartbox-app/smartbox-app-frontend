@@ -4,7 +4,6 @@ import { FormType } from '../types/order-form';
 
 export type OrderState = {
   formData: FormType;
-  formStep: number;
   paymentId: string;
   countedPrice: IPricingResult;
   boxAvailability: BoxGroupAvailability[];
@@ -16,11 +15,6 @@ export type OrderState = {
 interface FormStepSuccess {
   type: 'FORM_STEP_SUCCESS';
   payload: any;
-}
-
-interface FormGoNextStep {
-  type: 'FORM_GO_NEXT_STEP_SUCCESS';
-  payload: number;
 }
 
 interface SentRentBoxRequestSuccess {
@@ -41,13 +35,7 @@ interface FormResignation {
   type: 'FORM_RESIGNATION_MARKED_SUCCESS';
 }
 
-type Action =
-  | FormStepSuccess
-  | FormGoNextStep
-  | FetchBoxAvailability
-  | SentRentBoxRequestSuccess
-  | FormReaded
-  | FormResignation;
+type Action = FormStepSuccess | FetchBoxAvailability | SentRentBoxRequestSuccess | FormReaded | FormResignation;
 
 const initialState: OrderState = {
   formData: {
@@ -59,7 +47,6 @@ const initialState: OrderState = {
     dateEnd: addDays(new Date(), 7),
     discountCode: '',
   },
-  formStep: 1,
   paymentId: '',
   countedPrice: {
     name: '',
@@ -103,13 +90,6 @@ export default (state: OrderState = initialState, action: Action): any => {
       return {
         ...state,
         formData: newFormData,
-      };
-    }
-
-    case 'FORM_GO_NEXT_STEP_SUCCESS': {
-      return {
-        ...state,
-        formStep: action.payload,
       };
     }
 
