@@ -41,12 +41,12 @@ const StepSummary = ({
   sentRentBoxRequest,
   countedPrice,
 }: Props) => {
-  // useEffect(() => {
-  //   if (formData.size.length === 0) {
-  //     history.push(`/${UserService.getSlugByRole(user.role)}/order/step/size`);
-  //     formGoNextStep(1);
-  //   }
-  // });
+  useEffect(() => {
+    if (formData.size.length === 0) {
+      history.push(`/${UserService.getSlugByRole(user.role)}/order/step/size`);
+      formGoNextStep(1);
+    }
+  });
 
   const { handleSubmit } = useForm();
 
