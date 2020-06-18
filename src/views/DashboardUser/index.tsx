@@ -8,6 +8,7 @@ import { MenuItemType } from '../../types/menu-item';
 import DashboardContainer from '../../components/Layout/DashboardContainer';
 import Navigation from '../../components/Layout/Navigation';
 import Profile from '../DashboardCommon/Profile';
+import SingleRentDetail from '../DashboardCommon/SingleRentDetail';
 
 const DashboardUser = () => {
   const menuItems: MenuItemType[] = [
@@ -37,6 +38,7 @@ const DashboardUser = () => {
           <Route path="/user/main" component={Welcome} />
           <Route path="/user/profile" component={Profile} />
           <Route path="/user/order/:step" component={Order} />
+          <Route path="/user/single-rent/:orderId" component={SingleRentDetail} />
         </Switch>
       </Main>
     </DashboardContainer>
