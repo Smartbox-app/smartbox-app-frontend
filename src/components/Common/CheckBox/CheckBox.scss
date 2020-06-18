@@ -1,0 +1,11 @@
+@import '../../../config/variables.scss';
+@import '../../../config/mixins.scss';
+
+.checkbox-disabled {
+
+  label {
+    &:hover {
+      cursor: not-allowed;
+    }
+  }
+}

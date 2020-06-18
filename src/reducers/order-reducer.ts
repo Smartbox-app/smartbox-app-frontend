@@ -135,7 +135,7 @@ export default (state: OrderState = initialState, action: Action): any => {
     case 'FORM_RESIGNATION_MARKED_SUCCESS': {
       return {
         ...state,
-        isResignationMarked: true,
+        isResignationMarked: !state.isResignationMarked,
       };
     }
 
