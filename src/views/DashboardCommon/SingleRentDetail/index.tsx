@@ -1,6 +1,9 @@
 import React from 'react';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
-import { Section } from '../../../components/Layout';
+import { Section, SectionHeader } from '../../../components/Layout';
+
+import Action from './Action';
+import Details from './Details';
 
 interface RouteProps {
   orderId: string;
@@ -11,8 +14,9 @@ const SingleRentDetail = ({ match }: Props) => {
   console.log('SingleRentDetail', match.params.orderId);
   return (
     <Section full>
-      <h1>SingleRentDetail</h1>
-      <h2>{match.params.orderId}</h2>
+      <SectionHeader title="Szczegóły wynajmu" />
+      <Action />
+      <Details />
     </Section>
   );
 };
