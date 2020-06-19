@@ -7,8 +7,16 @@ interface Props {
   rentHistory: MyRentList[];
 }
 
+const isItHistory = (status: RentStatus) => {
+  if (status === RentStatus.failure || status === RentStatus.finished) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
 const OrdersHistory = ({ rentHistory }: Props) => {
-  const filterdHistory = rentHistory.filter((rent: MyRentList) => rent.status === RentStatus.finished);
+  const filterdHistory = rentHistory.filter((rent: MyRentList) => isItHistory(rent.status));
   return (
     <Section half>
       <SectionHeader title="Historia" />

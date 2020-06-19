@@ -15,7 +15,7 @@ interface Props {
 }
 
 const Single = ({ single }: Props) => (
-  <li className={`history-line ${single.id ? 'active' : ''}`}>
+  <li className={`history-line ${!single.id ? 'active' : ''}`}>
     <span className="line-cell">
       {dateOnly(single.startAt, 5)}-{dateOnly(single.finishAt)}
     </span>
