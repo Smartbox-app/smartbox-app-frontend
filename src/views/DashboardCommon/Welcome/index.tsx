@@ -32,7 +32,7 @@ const Welcome = ({ userName, fetchMyRentStory, rentsList }: Props) => {
       </Section>
       <Sale />
       <Storage myRentList={rentsList} />
-      <OrdersHistory />
+      <OrdersHistory rentHistory={rentsList} />
       <Offers />
     </div>
   );
