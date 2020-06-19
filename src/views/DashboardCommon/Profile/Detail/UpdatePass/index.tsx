@@ -10,6 +10,7 @@ import { formOnTranslateString } from '../../../../../utils/trans-form';
 import { successNotification } from '../../../../../actions/notifications';
 
 import './UpdatePass.scss';
+import { __ } from '../../../../../helpers/i18n';
 
 const UpdatePass = () => {
   const submitButton = (
@@ -41,7 +42,7 @@ const UpdatePass = () => {
         sendFetcher={customSendFetcher}
         submitButton={submitButton}
         onSavedSuccessfully={() => {
-          successNotification('Poprawnie zmieniono hasło');
+          successNotification(__('notification.passChangedSuccess'));
         }}
         onTranslateString={formOnTranslateString}
         thirdPartyComponents={{ ReactSelect, ReactCreatableSelect }}

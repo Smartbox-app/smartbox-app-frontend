@@ -1,6 +1,7 @@
 import { UserRole } from 'smartbox-types';
 import ApiService from '../services/api-service';
 import { notifications } from '../actions';
+import { __ } from '../helpers/i18n';
 
 export const blockUser = (userId: string, userRole: UserRole = UserRole.admin) => async (dispatch: any) => {
   await ApiService.patch(
@@ -8,7 +9,7 @@ export const blockUser = (userId: string, userRole: UserRole = UserRole.admin) =
     'BLOCK_USER_SUCCESS',
     'BLOCK_USER_FAILED',
     () => {
-      dispatch(notifications.successNotification('Zablokowano użytkownika!'));
+      dispatch(notifications.successNotification(__('notification.userBlocked')));
     },
     null,
     `user/block/${userId}`,

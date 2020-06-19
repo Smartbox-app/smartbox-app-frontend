@@ -10,6 +10,7 @@ import ApiService from '../../../../../services/api-service';
 import { formOnTranslateString } from '../../../../../utils/trans-form';
 import { notifications } from '../../../../../actions';
 import { history } from '../../../../../App';
+import { __ } from '../../../../../helpers/i18n';
 
 interface Props {
   successNotification: (text: string) => void;
@@ -42,7 +43,7 @@ const Add = ({ successNotification }: Props) => {
           sendFetcher={(formId: string, values: any) => ApiService.sendForm(sendUrl, values)}
           submitButton={submitButton}
           onSavedSuccessfully={() => {
-            successNotification('Poprawnie wysłano zaproszenie.');
+            successNotification(__('notification.invitationSendProperly'));
             history.push('/admin/orders/list');
           }}
           onTranslateString={formOnTranslateString}

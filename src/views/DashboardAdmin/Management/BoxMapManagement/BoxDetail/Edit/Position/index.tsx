@@ -8,6 +8,7 @@ import { Button } from '../../../../../../../components/Common';
 import ApiService from '../../../../../../../services/api-service';
 import { formOnTranslateString } from '../../../../../../../utils/trans-form';
 import { successNotification } from '../../../../../../../actions/notifications';
+import { __ } from '../../../../../../../helpers/i18n';
 
 import './Position.scss';
 
@@ -45,7 +46,7 @@ const Position = ({ rentId, selectedBoxId }: Props) => {
         sendFetcher={customSendFetcher}
         submitButton={submitButton}
         onSavedSuccessfully={() => {
-          successNotification('Poprawnie przeniesiono użytkownika');
+          successNotification(__('notification.userMovedSuccess'));
         }}
         onTranslateString={formOnTranslateString}
         thirdPartyComponents={{ ReactSelect, ReactCreatableSelect }}

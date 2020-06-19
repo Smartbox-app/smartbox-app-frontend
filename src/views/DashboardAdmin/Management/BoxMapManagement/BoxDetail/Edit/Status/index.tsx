@@ -10,6 +10,7 @@ import { formOnTranslateString } from '../../../../../../../utils/trans-form';
 import { successNotification } from '../../../../../../../actions/notifications';
 
 import './Status.scss';
+import { __ } from '../../../../../../../helpers/i18n';
 
 interface Props {
   selectedBoxId: string;
@@ -45,7 +46,7 @@ const Status = ({ selectedBoxId }: Props) => {
         sendFetcher={customSendFetcher}
         submitButton={submitButton}
         onSavedSuccessfully={() => {
-          successNotification('Poprawnie zmieniono status');
+          successNotification(__('notification.userStatusChanged'));
         }}
         onTranslateString={formOnTranslateString}
         thirdPartyComponents={{ ReactSelect, ReactCreatableSelect }}

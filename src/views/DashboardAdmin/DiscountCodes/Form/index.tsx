@@ -11,6 +11,8 @@ import ApiService from '../../../../services/api-service';
 import { formOnTranslateString } from '../../../../utils/trans-form';
 import { successNotification } from '../../../../actions/notifications';
 import { modal } from '../../../../actions';
+import { __ } from '../../../../helpers/i18n';
+
 import NewCode from '../NewCode';
 
 import './Form.scss';
@@ -49,7 +51,7 @@ const Form = ({ showModal }: Props) => {
         sendFetcher={customSendFetcher}
         submitButton={submitButton}
         onSavedSuccessfully={(data: GiftRes) => {
-          successNotification('Poprawnie utworzono kod rabatowy');
+          successNotification(__('notification.discCodeCreated'));
           showModal(<NewCode newCodeProps={data} />);
         }}
         onTranslateString={formOnTranslateString}

@@ -14,9 +14,9 @@ import { FormContainer, PageContent, LogoContainer } from '../../components/Layo
 import { ApplicationState } from '../../reducers';
 
 import ButtonsSection from './ButtonSection';
+import { __ } from '../../helpers/i18n';
 
 import './Login.scss';
-import { __ } from '../../helpers/i18n';
 
 interface Props {
   user: UserRes;
@@ -97,7 +97,7 @@ class Login extends React.Component<Props> {
               }
             }}
             onSavedSuccessfully={(data: AuthLoginResult) => {
-              successNotification('Zalogowano poprawnie');
+              successNotification(__('notification.userMovedSuccess'));
               store.dispatch(saveUser(data));
             }}
             onTranslateString={formOnTranslateString}

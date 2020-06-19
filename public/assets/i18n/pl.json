@@ -21,6 +21,19 @@
       "inviteWorker": "Zaproś pracowników",
       "orderFormPickSize": "Proszę wybrać rozmiar magazynu:",
       "welcome": "Hello world"
+    },
+    "notification": {
+      "accountRegistered": "Konto zostało zarejestrowane.",
+      "logOutSuccess": "Wylogowano poprawnie.",
+      "discCodeCreated": "Poprawnie utworzono kod rabatowy.",
+      "userBlocked": "Zablokowano użytkownika.",
+      "userMovedSuccess": "Poprawnie przeniesiono użytkownika.",
+      "userStatusChanged": "Poprawnie zmieniono status.",
+      "invitationSendProperly": "Poprawnie wysłano zaproszenie.",
+      "discountCodeRead": "Poprawnie odczytano kod rabatowy.",
+      "passChangedSuccess": "Poprawnie zmieniono hasło.",
+      "dataChangedSuccess": "Poprawnie zmieniono dane.",
+      "logInSuccess": "Zalogowano poprawnie."
     }
   }
 }

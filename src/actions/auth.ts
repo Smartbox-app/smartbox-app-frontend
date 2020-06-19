@@ -4,6 +4,7 @@ import { notifications } from '../actions';
 import { history } from '../App';
 import { hideModal } from './modal';
 import { getRememberedRedirect, clearRememberedRedirect } from '../utils/remeber-redirect';
+import { __ } from '../helpers/i18n';
 
 export const saveUser = (userData: AuthLoginResult) => ({ type: 'LOGIN_SUCCESS', payload: userData });
 
@@ -13,7 +14,7 @@ export const login = (userData: AuthLoginRequest) => async (dispatch: any) => {
     'LOGIN_SUCCESS',
     'LOGIN_FAILED',
     (response: AuthLoginResult) => {
-      dispatch(notifications.successNotification('Zalogowano poprawnie!'));
+      dispatch(notifications.successNotification(__('notification.logInSuccess')));
       dispatch({ type: 'REFRESH_API_TABLE' });
       dispatch({ type: 'REFRESH_API_GRID' });
       dispatch(hideModal());
@@ -38,7 +39,7 @@ export const logout = () => async (dispatch: any) => {
     'LOGOUT',
     'LOGOUT',
     () => {
-      dispatch(notifications.successNotification('Wylogowano poprawnie!'));
+      dispatch(notifications.successNotification(__('notification.logOutSuccess')));
       dispatch({ type: 'REFRESH_API_TABLE' });
       dispatch({ type: 'REFRESH_API_GRID' });
     },

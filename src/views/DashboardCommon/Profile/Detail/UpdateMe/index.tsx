@@ -8,6 +8,7 @@ import { Button, Spinner } from '../../../../../components/Common';
 import ApiService from '../../../../../services/api-service';
 import { formOnTranslateString } from '../../../../../utils/trans-form';
 import { successNotification } from '../../../../../actions/notifications';
+import { __ } from '../../../../../helpers/i18n';
 
 import './UpdateMe.scss';
 
@@ -41,7 +42,7 @@ const UpdateMe = () => {
         sendFetcher={customSendFetcher}
         submitButton={submitButton}
         onSavedSuccessfully={() => {
-          successNotification('Poprawnie zmieniono dane.');
+          successNotification(__('notification.dataChangedSuccess'));
         }}
         onTranslateString={formOnTranslateString}
         thirdPartyComponents={{ ReactSelect, ReactCreatableSelect }}
