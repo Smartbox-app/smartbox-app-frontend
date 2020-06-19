@@ -66,7 +66,11 @@ const StepDuration = ({ formData, countedPrice, updateFormData, user }: Props) =
             maxDate={addDays(new Date(), 7)}
             onChange={([selected]) => {
               setDateStart(selected[0]);
-              updateFormData({ durationInDays: differenceInCalendarDays(dateEndMin, selected[0]), discount: 0 });
+              updateFormData({
+                durationInDays: differenceInCalendarDays(dateEndMin, selected[0]),
+                discount: 0,
+                dateStart: selected[0],
+              });
               return selected;
             }}
           />
@@ -79,7 +83,11 @@ const StepDuration = ({ formData, countedPrice, updateFormData, user }: Props) =
             minDate={addDays(dateStartMin, 7)}
             onChange={([selected]) => {
               setDateEnd(selected[0]);
-              updateFormData({ durationInDays: differenceInCalendarDays(selected[0], dateStartMin), discount: 0 });
+              updateFormData({
+                durationInDays: differenceInCalendarDays(selected[0], dateStartMin),
+                discount: 0,
+                dateEnd: selected[0],
+              });
               return selected;
             }}
           />
