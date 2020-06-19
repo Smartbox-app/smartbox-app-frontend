@@ -4,7 +4,7 @@ import './Row.scss';
 
 interface Props {
   label: string;
-  content: string;
+  content: string | number;
 }
 
 const index = ({ label, content }: Props) => (

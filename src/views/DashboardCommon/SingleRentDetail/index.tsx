@@ -22,12 +22,12 @@ const SingleRentDetail = ({ match, getSingleRent, singleRent }: Props) => {
   useEffect(() => {
     getSingleRent(match.params.orderId);
   });
-  console.log('singleRent', singleRent);
+
   return (
     <Section full>
       <SectionHeader title="Szczegóły wynajmu" />
       <Action />
-      <Details />
+      <Details singleRent={singleRent} />
     </Section>
   );
 };

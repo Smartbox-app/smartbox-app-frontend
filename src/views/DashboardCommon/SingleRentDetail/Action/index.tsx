@@ -16,6 +16,7 @@ const Action = ({ showModal }: Props) => (
     <Button text="Wygeneruj fakturę" primary click={() => showModal(<Invoice orderId="asdasd" />)} />
     <Button text="Przedłuż" success click={() => showModal(<h1>Przedłuż</h1>)} />
     <Button text="Zakończ" danger click={() => showModal(<h1>Zakończ</h1>)} />
+    <Button text="Wróć" primary to="/user" />
   </ButtonsContainer>
 );
 

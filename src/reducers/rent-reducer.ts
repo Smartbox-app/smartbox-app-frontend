@@ -43,10 +43,16 @@ export default (state: RentsStatus = initialState, action: Action): any => {
     case 'GET_SINGLE_RENT': {
       console.log('action.payload', action.payload);
       const foundRent = state.rentsList.find((rent: MyRentList) => rent.id === action.payload);
-      return {
-        ...state,
-        singleRent: foundRent,
-      };
+      if (foundRent) {
+        return {
+          ...state,
+          singleRent: foundRent,
+        };
+      } else {
+        return {
+          ...state,
+        };
+      }
     }
 
     default:
