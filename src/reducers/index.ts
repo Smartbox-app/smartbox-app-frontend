@@ -8,7 +8,7 @@ import userReducer, { UserState } from './user-reducer';
 import spinnerReducer, { SpinnerState } from './spinner-reducer';
 import orderReducer, { OrderState } from './order-reducer';
 import boxesReducer, { Boxes } from './boxes-reducer';
-import singleRentReducer, { SingleRentStatus } from './single-rent-reducer';
+import rentReducer, { RentsStatus } from './rent-reducer';
 import { Modal } from '../types/modal';
 
 export interface ApplicationState {
@@ -20,7 +20,7 @@ export interface ApplicationState {
   modal: Modal;
   appStatus: AppStatus;
   notifications: NotificationState;
-  singleRent: SingleRentStatus;
+  rent: RentsStatus;
 }
 
 const appReducer = combineReducers({
@@ -33,7 +33,7 @@ const appReducer = combineReducers({
   spinner: spinnerReducer,
   order: orderReducer,
   boxes: boxesReducer,
-  singleRent: singleRentReducer,
+  rent: rentReducer,
 });
 
 const rootReducer = (state: any, action: any) => appReducer(state, action);

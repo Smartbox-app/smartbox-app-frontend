@@ -40,7 +40,7 @@ const Welcome = ({ userName, fetchMyRentStory, rentsList }: Props) => {
 
 const mapStateToProps = (state: ApplicationState) => ({
   userName: state.user.details.firstName,
-  rentsList: state.singleRent.rentsList,
+  rentsList: state.rent.rentsList,
 });
 
 const mapDispatchToProps = (dispatch: any) =>
