@@ -1,21 +1,17 @@
 import React from 'react';
+import { MyRentList } from 'smartbox-types';
 
 import SingleStorage from './SingleStorage';
 import ButtonForNew from './ButtonForNew';
 
 import './StorageList.scss';
 
-export interface SingleStorageType {
-  size: number;
-  location: string;
-}
-
 interface Props {
-  list: SingleStorageType[];
+  list: MyRentList[];
 }
 
 const StorageInfo = ({ list }: Props) => {
-  const dataToDisplay = list.map((single: SingleStorageType, key: number) => (
+  const dataToDisplay = list.map((single: MyRentList, key: number) => (
     <SingleStorage key={`storage-info-${key}`} single={single} />
   ));
 
