@@ -16,11 +16,7 @@ interface Props extends RouteComponentProps<RouteProps> {
 }
 
 const SingleRentDetail = ({ match, fetchMyRentStory }: Props) => {
-  useEffect(() => {
-    console.log('SingleRentDetail', match.params.orderId);
-    fetchMyRentStory();
-  }, []);
-
+  console.log();
   return (
     <Section full>
       <SectionHeader title="Szczegóły wynajmu" />

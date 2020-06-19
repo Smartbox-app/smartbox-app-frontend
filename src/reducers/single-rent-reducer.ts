@@ -1,16 +1,29 @@
+import { MyRentList, RentStatus } from 'smartbox-types';
+
 export type SingleRentStatus = {
-  singleRent: any;
+  singleRent: MyRentList;
+  rentsList: MyRentList[];
 };
 
 interface BoxGroup {
   type: 'FETCH_MY_RENT_STORY_SUCCESS';
-  payload: any;
+  payload: RentStatus;
 }
 
 type Action = BoxGroup;
 
 const initialState: SingleRentStatus = {
-  singleRent: {},
+  singleRent: {
+    id: '',
+    startAt: new Date(),
+    finishAt: new Date(),
+    status: RentStatus.free,
+    size: 0,
+    stockName: '',
+    number: '',
+    getProps: () => [],
+  },
+  rentsList: [],
 };
 
 export default (state: SingleRentStatus = initialState, action: Action): any => {
@@ -18,7 +31,7 @@ export default (state: SingleRentStatus = initialState, action: Action): any => 
     case 'FETCH_MY_RENT_STORY_SUCCESS': {
       return {
         ...state,
-        singleRent: action.payload,
+        rentsList: action.payload,
       };
     }
 

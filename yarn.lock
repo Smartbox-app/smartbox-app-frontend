@@ -10397,11 +10397,11 @@ slick-carousel@^1.8.1:
 
 "smartbox-tables@git+https://gitlab.com/itdotfocus/smartbox/smartbox-tables.git":
   version "1.0.0"
-  resolved "git+https://gitlab.com/itdotfocus/smartbox/smartbox-tables.git#633265dc477d1c7066e12113684242faf2ba4dd7"
+  resolved "git+https://gitlab.com/itdotfocus/smartbox/smartbox-tables.git#1c79d99b0f77e072a241e81374201e9402a014ed"
 
 "smartbox-types@git+https://gitlab.com/itdotfocus/smartbox/smartbox-types.git":
   version "1.0.0"
-  resolved "git+https://gitlab.com/itdotfocus/smartbox/smartbox-types.git#5aaa309e46f8c0bd1b80816433a9419e843376e9"
+  resolved "git+https://gitlab.com/itdotfocus/smartbox/smartbox-types.git#43f3d36914bc511a866bef5983ec19bfdd56aa94"
 
 snapdragon-node@^2.0.1:
   version "2.1.1"
