@@ -18,7 +18,7 @@ export const loginWithFacebook = (data: any) => async (dispatch: any) => {
     null,
     `auth/login-facebook?access_token=${data.accessToken}`,
     'LOADING',
-    data,
+    {},
   );
 };
 
