@@ -2,12 +2,14 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ButtonsContainer } from '../../../components/Layout';
 import { Button } from '../../../components/Common';
+import FbButton from './FbButton';
 
 import './ButtonSection.scss';
 
 const ButtonsSection = () => (
   <div className="login-buttons-section">
     <ButtonsContainer max column>
+      <FbButton />
       <Button text="Zaloguj się" big type="submit" primary rounded />
       <Button text="Zarejestruj się" big to="/register" outline rounded />
     </ButtonsContainer>

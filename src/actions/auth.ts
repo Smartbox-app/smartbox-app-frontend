@@ -7,6 +7,21 @@ import { getRememberedRedirect, clearRememberedRedirect } from '../utils/remeber
 
 export const saveUser = (userData: AuthLoginResult) => ({ type: 'LOGIN_SUCCESS', payload: userData });
 
+export const loginWithFacebook = (data: any) => async (dispatch: any) => {
+  await ApiService.post(
+    dispatch,
+    'LOGIN_WITH_FB_SUCCESS',
+    'LOGIN_WITH_FB_FAILED',
+    (d: any) => {
+      console.log('LOGIN_WITH_FB_SUCCESS', d);
+    },
+    null,
+    'auth/login-facebook',
+    'LOADING',
+    data,
+  );
+};
+
 export const login = (userData: AuthLoginRequest) => async (dispatch: any) => {
   await ApiService.post(
     dispatch,
