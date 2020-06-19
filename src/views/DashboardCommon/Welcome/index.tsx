@@ -22,7 +22,6 @@ interface Props {
 
 const Welcome = ({ userName, fetchMyRentStory, rentsList }: Props) => {
   useEffect(() => {
-    // console.log('SingleRentDetail', match.params.orderId);
     fetchMyRentStory();
   }, []);
 

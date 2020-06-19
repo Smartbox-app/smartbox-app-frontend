@@ -1,16 +1,15 @@
 import React from 'react';
-import { UserRes } from 'smartbox-types';
-import { SingleStorageType } from '../index';
+import { UserRes, MyRentList } from 'smartbox-types';
+import { connect } from 'react-redux';
 
 import { history } from '../../../../../../App';
 import { ApplicationState } from '../../../../../../reducers';
 import UserService from '../../../../../../services/user-service';
 
 import './SingleStorage.scss';
-import { connect } from 'react-redux';
 
 interface Props {
-  single: SingleStorageType;
+  single: MyRentList;
   user: UserRes;
 }
 
@@ -21,7 +20,7 @@ const SingleStorage = ({ single, user }: Props) => (
   >
     <div className="storage">
       <p className="main-info">{single.size}m2</p>
-      <p className="sec-info">{single.location}</p>
+      <p className="sec-info">{single.stockName}</p>
     </div>
   </div>
 );
