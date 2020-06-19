@@ -16,7 +16,7 @@ interface Props {
 const SingleStorage = ({ single, user }: Props) => (
   <div
     className="single-wrapper"
-    onClick={() => history.push(`/${UserService.getSlugByRole(user.role)}/single-rent/asdasdasda`)}
+    onClick={() => history.push(`/${UserService.getSlugByRole(user.role)}/single-rent/${single.id}`)}
   >
     <div className="storage">
       <p className="main-info">{single.size}m2</p>
