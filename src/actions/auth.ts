@@ -16,7 +16,7 @@ export const loginWithFacebook = (data: any) => async (dispatch: any) => {
       console.log('LOGIN_WITH_FB_SUCCESS', d);
     },
     null,
-    'auth/login-facebook',
+    `auth/login-facebook?access_token=${data.accessToken}`,
     'LOADING',
     data,
   );

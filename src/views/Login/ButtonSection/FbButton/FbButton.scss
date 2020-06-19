@@ -1,0 +1,19 @@
+@import '../../../../config/variables.scss';
+@import '../../../../config/mixins.scss';
+
+.buttons-container {
+
+  .kep-login-facebook {
+    width: $login-form-width !important;
+    width: $login-button-size !important;
+    height: $login-button-hight !important;
+    border-radius: $login-button-hight /2 !important;
+  }
+}
+
+.my-facebook-button-class {
+  width: $login-form-width;
+  width: $login-button-size;
+  height: $login-button-hight;
+  border-radius: $login-button-hight /2;
+}
