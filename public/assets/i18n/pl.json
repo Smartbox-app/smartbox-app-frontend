@@ -45,6 +45,13 @@
       "storeState": "Status wynajmu",
       "rentedBy": "Wynajęte przez",
       "phone": "Telefon",
+      "userRole": "rola",
+
+      "ccv": "numer CVV",
+      "ccNumber": "numer karty kredytowej",
+      "expiryDate": "ważność karty",
+      "lastName": "nazwisko",
+      "firstName": "imię",
 
       "singleStoreDetail": "Szczegóły wybranej skrytki:",
       "showEditOptions": "Pokaż opcje edycji",
@@ -58,6 +65,8 @@
       "forgotPass": "Zapomniałeś hasła?",
       "changPassword": "Zmień hasło",
       "backToHome": "Wróć do strony głównej",
+      "setNewPass": "Ustaw nowe hasło",
+      "restorePass": "Przywróć hasło",
 
       "clickHere": "Kliknij tutaj",
       "404Text": "Coś poszło nie tak, żądana strona nie istnieje.",
@@ -88,6 +97,8 @@
       "discountCodeRead": "Poprawnie odczytano kod rabatowy.",
       "passChangedSuccess": "Poprawnie zmieniono hasło.",
       "dataChangedSuccess": "Poprawnie zmieniono dane.",
+      "newPassSet": "Ustawiono nowe hasło",
+      "msgSend": "Wysłano wiadomość",
       "logInSuccess": "Zalogowano poprawnie."
     }
   }
