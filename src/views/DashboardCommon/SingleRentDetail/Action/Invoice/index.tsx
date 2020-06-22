@@ -5,6 +5,7 @@ import { Spinner, Button } from '../../../../../components/Common';
 import ApiService from '../../../../../services/api-service';
 import { successNotification } from '../../../../../actions/notifications';
 import { formOnTranslateString } from '../../../../../utils/trans-form';
+import { __ } from '../../../../../helpers/i18n';
 
 interface Props {
   orderId: string;
@@ -17,7 +18,7 @@ const Invoice = ({ orderId }: Props) => {
 
   const submitButton = (
     <ButtonsContainer>
-      <Button text="Wyślij zaproszenie" type="submit" primary />
+      <Button text={__('application.sendInvitation')} type="submit" primary />
     </ButtonsContainer>
   );
 

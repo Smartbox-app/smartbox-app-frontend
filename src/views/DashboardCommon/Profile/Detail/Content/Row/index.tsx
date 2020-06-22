@@ -1,4 +1,5 @@
 import React from 'react';
+import { __ } from '../../../../../../helpers/i18n';
 
 import './Row.scss';
 
@@ -10,7 +11,7 @@ interface Props {
 const index = ({ label, content }: Props) => (
   <div className="row">
     <p className="row-label">{label}:</p>
-    <strong className="row-content">{content || 'Brak'}</strong>
+    <strong className="row-content">{content || `${__('application.application')}`}</strong>
   </div>
 );
 
