@@ -10,6 +10,8 @@
       "edit": "Edytuj",
       "back": "Wróć",
       "next": "Dalej",
+      "send": "Wyślij",
+      "end": "Zakończ",
       "delete": "Usuń",
       "login": "Zaloguj się",
       "register": "Zarejestruj się",
@@ -20,6 +22,10 @@
       "workersList": "Lista pracowników",
       "inviteWorker": "Zaproś pracowników",
       "orderFormPickSize": "Proszę wybrać rozmiar magazynu:",
+      "sendInvitation": "Wyślij zaproszenie",
+      "goToAgreement": "Przejdź do umowy",
+      "generateInvoice": "Wygeneruj fakturę",
+      "preInvitationForWorker": "Wyślij zaproszenie dla pracownika",
       "welcome": "Hello world"
     },
     "notification": {

@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { ButtonsContainer } from '../../../../components/Layout';
 import { Button } from '../../../../components/Common';
 import { modal } from '../../../../actions';
+import { __ } from '../../../../helpers/i18n';
 
 import Invoice from './Invoice';
 
@@ -13,10 +14,10 @@ interface Props {
 
 const Action = ({ showModal }: Props) => (
   <ButtonsContainer max>
-    <Button text="Wygeneruj fakturę" primary click={() => showModal(<Invoice orderId="asdasd" />)} />
-    <Button text="Przedłuż" success click={() => showModal(<h1>Przedłuż</h1>)} />
-    <Button text="Zakończ" danger click={() => showModal(<h1>Zakończ</h1>)} />
-    <Button text="Wróć" primary to="/user" />
+    <Button text={__('application.generateInvoice')} primary click={() => showModal(<Invoice orderId="asdasd" />)} />
+    <Button text={__('application.goToAgreement')} success click={() => showModal(<h1>Przedłuż</h1>)} />
+    <Button text={__('application.end')} danger click={() => showModal(<h1>Zakończ</h1>)} />
+    <Button text={__('application.back')} primary to="/user" />
   </ButtonsContainer>
 );
 

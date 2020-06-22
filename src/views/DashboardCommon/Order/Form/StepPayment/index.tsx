@@ -14,6 +14,7 @@ import FormHeader from '../../../../../components/Layout/FormHeader';
 import UserService from '../../../../../services/user-service';
 import CreditCardInput from '../../../../../components/Common/CreditCardInput';
 import { ApplicationState } from '../../../../../reducers';
+import { __ } from '../../../../../helpers/i18n';
 
 import './StepPayment.scss';
 
@@ -63,7 +64,7 @@ const StepPayment = ({ formData, user, sentExecutePaymentRequest, paymentId }: P
       <FormHeader title="Podaj dane:" />
       <CreditCardInput register={register} errors={errors} />
       <ButtonsContainer max>
-        <Button outline text="Wróć" click={() => onBack()} />
+        <Button outline text={__('application.back')} click={() => onBack()} />
         <Button type="submit" primary text="Zapłać" />
       </ButtonsContainer>
     </form>

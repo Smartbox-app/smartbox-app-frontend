@@ -17,6 +17,7 @@ import UserService from '../../../../../services/user-service';
 import Price from './Price';
 
 import './StepDuration.scss';
+import { __ } from '../../../../../helpers/i18n';
 
 interface Props {
   history: any;
@@ -94,8 +95,8 @@ const StepDuration = ({ formData, countedPrice, updateFormData, user }: Props) =
         </div>
         <Price countedPrice={countedPrice.value} />
         <ButtonsContainer max>
-          <Button outline text="Wróć" click={() => onBack()} />
-          <Button type="submit" primary text="Dalej" />
+          <Button outline text={__('application.back')} click={() => onBack()} />
+          <Button type="submit" primary text={__('application.next')} />
         </ButtonsContainer>
       </form>
     </FormContext>
