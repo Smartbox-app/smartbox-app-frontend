@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import { MyRentList } from 'smartbox-types';
 import { Section, SectionHeader } from '../../../components/Layout';
 import { ApplicationState } from '../../../reducers';
+import { __ } from '../../../helpers/i18n';
 
 import { singleRent } from '../../../actions';
 import Storage from './Storage';
@@ -28,7 +29,7 @@ const Welcome = ({ userName, fetchMyRentStory, rentsList }: Props) => {
   return (
     <div className="welcome-wrapper">
       <Section full>
-        <SectionHeader title={`Cześć ${userName}`} noMargin />
+        <SectionHeader title={`${__('application.hi')} ${userName}`} noMargin />
       </Section>
       <Sale />
       <Storage myRentList={rentsList} />

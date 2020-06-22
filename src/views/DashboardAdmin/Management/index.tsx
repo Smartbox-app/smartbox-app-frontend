@@ -6,6 +6,7 @@ import { Tabs } from '../../../components/Common';
 import { Section } from '../../../components/Layout';
 import { ApplicationState } from '../../../reducers';
 import UserService from '../../../services/user-service';
+import { __ } from '../../../helpers/i18n';
 
 import WorkersManagement from './WorkersManagement';
 import BoxMapManagement from './BoxMapManagement';
@@ -23,19 +24,19 @@ const Management = ({ user }: Props) => (
           className: 'tab',
           activeClassName: 'active',
           to: `/${UserService.getSlugByRole(user.role)}/management/workers/list`,
-          text: 'Pracownicy',
+          text: `${__('application.workers')}`,
         },
         {
           className: 'tab',
           activeClassName: 'active',
           to: `/${UserService.getSlugByRole(user.role)}/management/map`,
-          text: 'Skrzynki',
+          text: `${__('application.boxes')}`,
         },
         {
           className: 'tab',
           activeClassName: 'active',
           to: `/${UserService.getSlugByRole(user.role)}/management/discount`,
-          text: 'Kody rabatowe',
+          text: `${__('application.discountsCodes')}`,
         },
       ]}
     />

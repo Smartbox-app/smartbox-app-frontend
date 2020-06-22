@@ -3,6 +3,8 @@
   "langNames": "pl",
   "phrases": {
     "application": {
+      "hi": "Cześć",
+
       "management": "Zarządzanie",
       "account": "Konto",
       "logout": "Wyloguj",
@@ -16,10 +18,16 @@
       "end": "Zakończ",
       "delete": "Usuń",
 
+      "workers": "Pracownicy",
+      "boxes": "Skrzynki",
+      "discountsCodes": "Kody rabatowe",
+
       "history": "Historia wynajęć:",
       "lackOfHistory": "Brak historii wynajmu",
 
-      "storeManagement": "Zarządaj magazynami",
+      "storeManagement": "Zarządaj magazynami:",
+      "offers": "Oferta:",
+
       "startDate": "Data rozpoczęcia",
       "endDate": "Data zakończenia",
       "storePlaceName": "Nazwa placu",
@@ -36,15 +44,19 @@
       "clickHere": "Kliknij tutaj",
       "404Text": "Coś poszło nie tak, żądana strona nie istnieje.",
 
+      "orderFormPickSize": "Proszę wybrać rozmiar magazynu:",
+      "newStock": "Nowy magazyn",
+
+      "discounts": "Promocje:",
+
       "workersList": "Lista pracowników",
       "inviteWorker": "Zaproś pracowników",
-      "orderFormPickSize": "Proszę wybrać rozmiar magazynu:",
       "sendInvitation": "Wyślij zaproszenie",
       "goToAgreement": "Przejdź do umowy",
       "generateInvoice": "Wygeneruj fakturę",
       "profileDetail": "Szczegóły Profilu",
       "preInvitationForWorker": "Wyślij zaproszenie dla pracownika",
-      
+
       "welcome": "Hello world"
     },
     "notification": {

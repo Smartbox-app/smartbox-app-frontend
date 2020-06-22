@@ -9,7 +9,7 @@ interface Props {
 
 const Storage = ({ myRentList }: Props) => (
   <Section full>
-    <SectionHeader title={__('application."Zarządaj magazynami"')} />
+    <SectionHeader title={__('application.storeManagement')} />
     <StorageList list={myRentList} />
   </Section>
 );
