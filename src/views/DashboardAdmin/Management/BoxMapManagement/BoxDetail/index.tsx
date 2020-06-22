@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { ButtonsContainer, SectionHeader } from '../../../../../components/Layout';
 import { Button } from '../../../../../components/Common';
 import { dateOnly } from '../../../../../utils/format-date';
+import { __ } from '../../../../../helpers/i18n';
 
 import Edit from './Edit';
 
@@ -23,30 +24,35 @@ const BoxDetail = ({ selectedBoxId, singleBoxDetail, rentId }: Props) => {
 
   return (
     <div className="detail-wrapper">
-      <SectionHeader title="Szczegóły wybranej skrytki:" />
+      <SectionHeader title={__('application.singleStoreDetail')} />
       <p className="single">
         <span className="fa fa-lock" />
-        Numer skrytki: <strong>{selectedBoxId}</strong>
+        <span>{__('application.storeNumber')}: </span>
+        <strong>{selectedBoxId}</strong>
       </p>
       <p className="single">
         <span className="fa fa-user" />
-        Wynajęte przez: <strong>{`${singleBoxDetail.owner.firstName} ${singleBoxDetail.owner.lastName}`}</strong>
+        <span>{__('application.rentedBy')}: </span>
+        <strong>{`${singleBoxDetail.owner.firstName} ${singleBoxDetail.owner.lastName}`}</strong>
       </p>
       <p className="single">
         <span className="fa fa-calendar " />
-        Termin wynajęcia: <strong>{`${isThisBoxFree(rentId) ? '---' : dateOnly(singleBoxDetail.startAt)}`}</strong>
+        <span>{__('application.startDate')}: </span>
+        <strong>{`${isThisBoxFree(rentId) ? '---' : dateOnly(singleBoxDetail.startAt)}`}</strong>
       </p>
       <p className="single">
         <span className="fa fa-calendar " />
-        Termin zwrotu: <strong>{`${isThisBoxFree(rentId) ? '---' : dateOnly(singleBoxDetail.finishAt)}`}</strong>
+        <span>{__('application.endDate')}: </span>
+        <strong>{`${isThisBoxFree(rentId) ? '---' : dateOnly(singleBoxDetail.finishAt)}`}</strong>
       </p>
       <p className="single">
         <span className="fa fa-arrow-right" />
-        Status: <strong>{`${singleBoxDetail.status}`}</strong>
+        <span>{__('application.storeState')}: </span>
+        <strong>{`${singleBoxDetail.status}`}</strong>
       </p>
       <p className="single">
         <span className="fa fa-phone" />
-        Telefon:{' '}
+        <span>{__('application.phone')}:</span>
         <strong>
           {isThisBoxFree(rentId) ? (
             '---'
@@ -59,7 +65,7 @@ const BoxDetail = ({ selectedBoxId, singleBoxDetail, rentId }: Props) => {
       </p>
       <p className="single">
         <span className="fa fa-envelope" />
-        Mail:{' '}
+        <span>{__('application.mail')}:</span>
         <strong>
           {isThisBoxFree(rentId) ? (
             '---'
@@ -74,7 +80,7 @@ const BoxDetail = ({ selectedBoxId, singleBoxDetail, rentId }: Props) => {
         <Button
           className={`custome-icon-button ${!optionDisplayState ? '' : 'rotate'}`}
           primary
-          text={!optionDisplayState ? 'Pokaż opcje edycji' : 'Ukryj opcje edycji'}
+          text={!optionDisplayState ? __('application.showEditOptions') : __('application.hideEditOptions')}
           click={() => optionDisplayToogle(!optionDisplayState)}
           icon="arrow-down-white.svg"
         />

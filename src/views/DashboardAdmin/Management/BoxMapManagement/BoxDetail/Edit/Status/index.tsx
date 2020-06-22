@@ -8,9 +8,9 @@ import { Button } from '../../../../../../../components/Common';
 import ApiService from '../../../../../../../services/api-service';
 import { formOnTranslateString } from '../../../../../../../utils/trans-form';
 import { successNotification } from '../../../../../../../actions/notifications';
+import { __ } from '../../../../../../../helpers/i18n';
 
 import './Status.scss';
-import { __ } from '../../../../../../../helpers/i18n';
 
 interface Props {
   selectedBoxId: string;
@@ -19,7 +19,7 @@ interface Props {
 const Status = ({ selectedBoxId }: Props) => {
   const submitButton = (
     <ButtonsContainer>
-      <Button text="Zmień status" type="submit" danger />
+      <Button text={__('application.changeStatus')} type="submit" danger />
     </ButtonsContainer>
   );
 

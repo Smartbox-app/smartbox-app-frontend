@@ -17,6 +17,8 @@
       "lack": "Brak",
       "end": "Zakończ",
       "delete": "Usuń",
+      "move": "Przenieś",
+      "changeStatus": "Zmień status",
 
       "workers": "Pracownicy",
       "boxes": "Skrzynki",
@@ -39,8 +41,17 @@
       "endDate": "Data zakończenia",
       "storePlaceName": "Nazwa placu",
       "storeSize": "Rozmiar skrytki",
-      "storeNumber": "Number skrytki",
+      "storeNumber": "Numer skrytki",
       "storeState": "Status wynajmu",
+      "rentedBy": "Wynajęte przez",
+      "phone": "Telefon",
+
+      "singleStoreDetail": "Szczegóły wybranej skrytki:",
+      "showEditOptions": "Pokaż opcje edycji",
+      "hideEditOptions": "Ukryj opcje edycji",
+      "changesIrreversible": "Poniższe zmiany są nieodwracalne!",
+
+      "mail": "e-mail",
 
       "login": "Zaloguj się",
       "register": "Zarejestruj się",

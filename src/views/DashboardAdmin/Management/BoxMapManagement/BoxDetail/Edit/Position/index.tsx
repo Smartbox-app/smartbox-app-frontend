@@ -20,7 +20,7 @@ interface Props {
 const Position = ({ rentId, selectedBoxId }: Props) => {
   const submitButton = (
     <ButtonsContainer>
-      <Button text="Przenieś" type="submit" danger />
+      <Button text={__('application.move')} type="submit" danger />
     </ButtonsContainer>
   );
 
