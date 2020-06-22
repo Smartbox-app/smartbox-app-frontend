@@ -15,13 +15,27 @@
       "lack": "Brak",
       "end": "Zakończ",
       "delete": "Usuń",
+
+      "history": "Historia wynajęć:",
+      "lackOfHistory": "Brak historii wynajmu",
+
+      "storeManagement": "Zarządaj magazynami",
+      "startDate": "Data rozpoczęcia",
+      "endDate": "Data zakończenia",
+      "storePlaceName": "Nazwa placu",
+      "storeSize": "Rozmiar skrytki",
+      "storeNumber": "Number skrytki",
+      "storeState": "Status wynajmu",
+
       "login": "Zaloguj się",
       "register": "Zarejestruj się",
       "forgotPass": "Zapomniałeś hasła?",
       "changPassword": "Zmień hasło",
-      "clickHere": "Kliknij tutaj",
       "backToHome": "Wróć do strony głównej",
+
+      "clickHere": "Kliknij tutaj",
       "404Text": "Coś poszło nie tak, żądana strona nie istnieje.",
+
       "workersList": "Lista pracowników",
       "inviteWorker": "Zaproś pracowników",
       "orderFormPickSize": "Proszę wybrać rozmiar magazynu:",
@@ -30,6 +44,7 @@
       "generateInvoice": "Wygeneruj fakturę",
       "profileDetail": "Szczegóły Profilu",
       "preInvitationForWorker": "Wyślij zaproszenie dla pracownika",
+      
       "welcome": "Hello world"
     },
     "notification": {
