@@ -13,13 +13,12 @@ interface Props {
 
 const FbButton = ({ loginWithFacebook }: Props) => {
   const responseFacebook = (data: any) => {
-    console.log('responseFacebook', data);
     loginWithFacebook(data);
   };
 
   return (
     <FacebookLogin
-      appId="3131638240283290"
+      appId="3560212837341431"
       fields="name,email"
       language="pl"
       callback={responseFacebook}
