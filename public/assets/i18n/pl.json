@@ -25,8 +25,15 @@
       "history": "Historia wynajęć:",
       "lackOfHistory": "Brak historii wynajmu",
 
+      "free": "Wolne",
+      "rented": "Zajęty",
+      "toExplain": "Do wyjaśnienia",
+      "toCheck": "Do sprawdzenia",
+      "debt": "Zaległości",
+
       "storeManagement": "Zarządaj magazynami:",
       "offers": "Oferta:",
+      "storagesPlan": "Plan placu:",
 
       "startDate": "Data rozpoczęcia",
       "endDate": "Data zakończenia",

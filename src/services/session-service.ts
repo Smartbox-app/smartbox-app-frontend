@@ -6,7 +6,7 @@ export default class SessionService {
   }
 
   static getCurrentLanguage() {
-    return JSON.parse(localStorage.getItem('language') || 'null') || 'pl';
+    return JSON.parse(localStorage.getItem('language') || 'null') || 'en';
   }
 
   // @TODO: fix user type

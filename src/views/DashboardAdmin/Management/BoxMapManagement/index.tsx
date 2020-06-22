@@ -15,6 +15,7 @@ import BoxDetail from './BoxDetail';
 import MapLegend from './MapLegend';
 
 import './BoxMapManagement.scss';
+import { __ } from '../../../../helpers/i18n';
 
 interface Props {
   boxesGroup: BoxListItem[];
@@ -123,7 +124,7 @@ class BoxMapManagement extends React.Component<Props> {
   render() {
     return (
       <>
-        <PageHeader title="Plan placu" />
+        <PageHeader title={`${__('application.storagesPlan')}`} />
         <MapLegend />
         <div className="map-wrapper" ref={this.element}>
           <ReactLogo id="svg-map" />
