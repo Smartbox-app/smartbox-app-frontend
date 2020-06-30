@@ -9,14 +9,14 @@ export const formAgreementReaded = () => ({ type: 'FORM_AGREEMENT_READED_SUCCESS
 
 export const formResignationMarked = () => ({ type: 'FORM_RESIGNATION_MARKED_SUCCESS' });
 
-export const fetchBoxAvailability = () => async (dispatch: any) => {
+export const fetchBoxAvailability = (stockId: string) => async (dispatch: any) => {
   await ApiService.get(
     dispatch,
     'FETCH_BOX_AVAILABILITY_SUCCESS',
     'FETCH_BOX_AVAILABILITY_FAILED',
     null,
     null,
-    'rent/box-group/availability',
+    `rent/box-group/availability/${stockId}`,
   );
 };
 
