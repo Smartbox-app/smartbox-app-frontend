@@ -13,7 +13,7 @@ import Form from './Form';
 interface Props {
   boxesGroup: BoxListItem[];
   showModal: (content: React.ReactNode) => void;
-  fetchBoxStatuses: () => void;
+  fetchBoxStatuses: (stockId: string) => void;
   fetchSingleBoxDetails: (rentId: string) => void;
 }
 

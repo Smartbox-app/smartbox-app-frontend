@@ -20,7 +20,7 @@ import { __ } from '../../../../helpers/i18n';
 interface Props {
   boxesGroup: BoxListItem[];
   showModal: (content: React.ReactNode) => void;
-  fetchBoxStatuses: () => void;
+  fetchBoxStatuses: (stockId: string) => void;
   fetchSingleBoxDetails: (rentId: string) => void;
 }
 
@@ -35,7 +35,7 @@ class BoxMapManagement extends React.Component<Props> {
   async componentDidMount() {
     const { fetchBoxStatuses } = this.props;
 
-    await fetchBoxStatuses();
+    await fetchBoxStatuses('07b76069-5bbc-4486-95b4-63ea8a7eba52');
     const catchElement = this.element.current.querySelectorAll('#kontenery .storage, #kontenery .st9');
 
     await catchElement.forEach((singleElement: any) => {
