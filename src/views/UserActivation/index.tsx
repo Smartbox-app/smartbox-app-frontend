@@ -27,7 +27,7 @@ const UserActivation = ({ successNotification, match, logout }: Props) => {
       {
         ...values,
         invitationId: match.params.invitationId,
-        updateToken: match.params.updateToken,
+        token: match.params.updateToken,
       },
       'POST',
     );
@@ -51,7 +51,7 @@ const UserActivation = ({ successNotification, match, logout }: Props) => {
       </div>
       <FormContainer className="login-form">
         <ItfApiForm
-          formId="UuerActivationForm"
+          formId="UserActivationForm"
           schemaMayBeDynamic={false}
           schemaCacheEnabled={false}
           loadingInfo={<Spinner transparent />}
