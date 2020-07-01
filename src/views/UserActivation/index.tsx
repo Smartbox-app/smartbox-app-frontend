@@ -3,10 +3,11 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import { ItfApiForm } from 'itf_formbuilder_react';
+import { AddInvitedUserReq } from 'smartbox-types';
 import { notifications, auth } from '../../actions';
 import ApiService from '../../services/api-service';
 
-import { Spinner, Button, Logo, Input } from '../../components/Common';
+import { Spinner, Button, Logo } from '../../components/Common';
 import { formOnTranslateString } from '../../utils/trans-form';
 import { FormContainer, ButtonsContainer, PageContent } from '../../components/Layout';
 import { history } from '../../App';
@@ -21,7 +22,7 @@ const UserActivation = ({ successNotification, match, logout }: Props) => {
   const loadUrl = 'user/form/add-invited-user';
   const sendUrl = 'user/add-invited';
 
-  const customSendFetcher = (formId: string, values: any) =>
+  const customSendFetcher = (formId: string, values: AddInvitedUserReq) =>
     ApiService.sendForm(
       sendUrl,
       {
