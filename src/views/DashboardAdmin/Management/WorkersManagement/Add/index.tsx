@@ -44,7 +44,7 @@ const Add = ({ successNotification }: Props) => {
           submitButton={submitButton}
           onSavedSuccessfully={() => {
             successNotification(__('notification.invitationSendProperly'));
-            history.push('/admin/orders/list');
+            history.push('/admin/management/workers/list');
           }}
           onTranslateString={formOnTranslateString}
           thirdPartyComponents={{ ReactSelect, ReactCreatableSelect }}

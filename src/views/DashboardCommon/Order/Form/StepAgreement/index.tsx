@@ -39,7 +39,7 @@ const StepSummary = ({
   isResignationMarked,
   sentRentBoxRequest,
   countedPrice,
-}: Props) => {
+}: Props): any => {
   useEffect(() => {
     if (formData.size.length === 0) {
       history.push(`/${UserService.getSlugByRole(user.role)}/order/step/size`);

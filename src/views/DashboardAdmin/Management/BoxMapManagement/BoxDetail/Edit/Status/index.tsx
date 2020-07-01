@@ -24,7 +24,7 @@ const Status = ({ selectedBoxId }: Props) => {
   );
 
   const fetchUrl = 'rent/form/change-status';
-  const sendUrl = 'rent/status';
+  const sendUrl = 'rent/status/07b76069-5bbc-4486-95b4-63ea8a7eba52';
 
   const customSendFetcher = (formId: string, values: ChangeStatusReq) =>
     ApiService.sendForm(
