@@ -4,18 +4,26 @@ import { Main } from '../../components/Layout';
 import DashboardContainer from '../../components/Layout/DashboardContainer';
 import { MenuItemType } from '../../types/menu-item';
 import Navigation from '../../components/Layout/Navigation';
+import Management from '../DashboardAdmin/Management';
+import Profile from '../DashboardCommon/Profile';
+import { __ } from '../../helpers/i18n';
 
 const DashboardWorker = () => {
   const menuItems: MenuItemType[] = [
     {
-      icon: 'iconmonstr-user-23.svg',
-      text: 'Klienci',
-      address: '/worker/customers',
+      icon: 'dashboard.svg',
+      text: __('application.home'),
+      address: '/worker/main',
     },
     {
-      icon: 'iconmonstr-note-20.svg',
-      text: 'Umowy',
-      address: '/worker/orders',
+      icon: 'dashboard.svg',
+      text: __('application.management'),
+      address: '/worker/management',
+    },
+    {
+      icon: 'account.svg',
+      text: __('application.account'),
+      address: '/worker/profile',
     },
   ];
 
@@ -24,9 +32,11 @@ const DashboardWorker = () => {
       <Navigation menuItems={menuItems} />
       <Main>
         <Switch>
-          <Route exact path="/worker" render={() => <Redirect to="/worker/payment" />} />
+          <Route exact path="/worker" render={() => <Redirect to="/worker/management" />} />
           {/* <Route path="/worker/profile" component={Home} />
           <Route path="/worker/payment" component={Home} /> */}
+          <Route path="/worker/management/" component={Management} />
+          <Route path="/worker/profile" component={Profile} />
         </Switch>
       </Main>
     </DashboardContainer>

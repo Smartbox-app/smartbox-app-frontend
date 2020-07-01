@@ -14,7 +14,7 @@ interface Props {
 }
 
 const Profile = ({ user }: Props) => {
-  console.log('Profile');
+  console.log('Profile', UserService.getSlugByRole(user.role));
   return (
     <Section full>
       <Switch>
