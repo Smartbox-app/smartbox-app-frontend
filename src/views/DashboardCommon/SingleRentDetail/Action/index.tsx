@@ -9,11 +9,12 @@ import { __ } from '../../../../helpers/i18n';
 import Invoice from './Invoice';
 
 interface Props {
+  rentId: string;
   showModal: (content: React.ReactNode) => void;
   endMyRent: (rentId: string) => void;
 }
 
-const Action = ({ showModal, endMyRent }: Props) => (
+const Action = ({ showModal, endMyRent, rentId }: Props) => (
   <ButtonsContainer max>
     {/* <Button text={__('application.generateInvoice')} primary click={() => showModal(<Invoice orderId="asdasd" />)} /> */}
     <Button text={__('application.goToAgreement')} success click={() => showModal(<h1>Przedłuż</h1>)} />
@@ -25,7 +26,7 @@ const Action = ({ showModal, endMyRent }: Props) => (
           <ConfirmModal
             mainText="Czy jesteś pewien, że chcesz zakończyć tę umowę?"
             aproveButtonText="Zakończ"
-            approveAction={() => endMyRent('')}
+            approveAction={() => endMyRent(rentId)}
             cancelButtonText={__('application.back')}
           />,
         )}

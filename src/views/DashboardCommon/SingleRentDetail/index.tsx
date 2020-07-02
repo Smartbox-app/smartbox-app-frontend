@@ -26,7 +26,7 @@ const SingleRentDetail = ({ match, getSingleRent, singleRent }: Props) => {
   return (
     <Section full>
       <SectionHeader title="Szczegóły wynajmu" />
-      <Action />
+      <Action rentId={singleRent.id} />
       <Details singleRent={singleRent} />
     </Section>
   );
