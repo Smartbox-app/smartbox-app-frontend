@@ -1,7 +1,7 @@
 import React from 'react';
 import Status from './Status';
 import Position from './Position';
-import { __ } from '../../../../../../helpers/i18n';
+import { __ } from '../../../../../helpers/i18n';
 
 interface Props {
   selectedBoxId: string;

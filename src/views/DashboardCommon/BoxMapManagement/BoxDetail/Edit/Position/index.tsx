@@ -3,12 +3,12 @@ import { ItfApiForm } from 'itf_formbuilder_react';
 import ReactSelect from 'react-select';
 import ReactCreatableSelect from 'react-select/creatable';
 import { ChangeStatusReq } from 'smartbox-types';
-import { FormContainer, ButtonsContainer } from '../../../../../../../components/Layout';
-import { Button } from '../../../../../../../components/Common';
-import ApiService from '../../../../../../../services/api-service';
-import { formOnTranslateString } from '../../../../../../../utils/trans-form';
-import { successNotification } from '../../../../../../../actions/notifications';
-import { __ } from '../../../../../../../helpers/i18n';
+import { FormContainer, ButtonsContainer } from '../../../../../../components/Layout';
+import { Button } from '../../../../../../components/Common';
+import ApiService from '../../../../../../services/api-service';
+import { formOnTranslateString } from '../../../../../../utils/trans-form';
+import { successNotification } from '../../../../../../actions/notifications';
+import { __ } from '../../../../../../helpers/i18n';
 
 import './Position.scss';
 

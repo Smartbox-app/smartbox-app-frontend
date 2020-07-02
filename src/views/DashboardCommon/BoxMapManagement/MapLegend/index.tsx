@@ -1,7 +1,7 @@
 import React from 'react';
+import { __ } from '../../../../helpers/i18n';
 
 import './MapLegend.scss';
-import { __ } from '../../../../../helpers/i18n';
 
 const MapLegend = () => (
   <div className="map-legend-wrapper">

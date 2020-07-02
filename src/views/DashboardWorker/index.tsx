@@ -4,7 +4,7 @@ import { Main } from '../../components/Layout';
 import DashboardContainer from '../../components/Layout/DashboardContainer';
 import { MenuItemType } from '../../types/menu-item';
 import Navigation from '../../components/Layout/Navigation';
-import Management from '../DashboardAdmin/Management';
+import { BoxMapManagement } from '../DashboardCommon';
 import Profile from '../DashboardCommon/Profile';
 import { __ } from '../../helpers/i18n';
 
@@ -33,9 +33,7 @@ const DashboardWorker = () => {
       <Main>
         <Switch>
           <Route exact path="/worker" render={() => <Redirect to="/worker/management" />} />
-          {/* <Route path="/worker/profile" component={Home} />
-          <Route path="/worker/payment" component={Home} /> */}
-          <Route path="/worker/management/" component={Management} />
+          <Route path="/worker/management/" component={BoxMapManagement} />
           <Route path="/worker/profile" component={Profile} />
         </Switch>
       </Main>
