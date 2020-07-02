@@ -9,7 +9,7 @@ import UserService from '../../../services/user-service';
 import { __ } from '../../../helpers/i18n';
 
 import WorkersManagement from './WorkersManagement';
-import BoxMapManagement from './BoxMapManagement';
+import { BoxMapManagement } from '../../DashboardCommon';
 import DiscountCodes from '../DiscountCodes';
 
 interface Props {

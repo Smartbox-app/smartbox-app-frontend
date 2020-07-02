@@ -135,6 +135,7 @@ class BoxMapManagement extends React.Component<Props> {
 }
 const mapStateToProps = (state: ApplicationState) => ({
   boxesGroup: state.boxes.boxesGroup,
+  user: state.user.details,
 });
 
 const mapDispatchToProps = (dispatch: any) =>
