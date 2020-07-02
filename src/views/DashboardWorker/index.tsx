@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Redirect, Switch } from 'react-router-dom';
-import { Main } from '../../components/Layout';
+import { Main, Section, Footer } from '../../components/Layout';
 import DashboardContainer from '../../components/Layout/DashboardContainer';
 import { MenuItemType } from '../../types/menu-item';
 import Navigation from '../../components/Layout/Navigation';
@@ -10,11 +10,6 @@ import { __ } from '../../helpers/i18n';
 
 const DashboardWorker = () => {
   const menuItems: MenuItemType[] = [
-    {
-      icon: 'dashboard.svg',
-      text: __('application.home'),
-      address: '/worker/main',
-    },
     {
       icon: 'dashboard.svg',
       text: __('application.management'),
@@ -32,11 +27,14 @@ const DashboardWorker = () => {
       <Navigation menuItems={menuItems} />
       <Main>
         <Switch>
-          <Route exact path="/worker" render={() => <Redirect to="/worker/management" />} />
-          <Route path="/worker/management/" component={BoxMapManagement} />
-          <Route path="/worker/profile" component={Profile} />
+          <Section full>
+            <Route exact path="/worker" render={() => <Redirect to="/worker/management" />} />
+            <Route path="/worker/management/" component={BoxMapManagement} />
+            <Route path="/worker/profile" component={Profile} />
+          </Section>
         </Switch>
       </Main>
+      <Footer />
     </DashboardContainer>
   );
 };
