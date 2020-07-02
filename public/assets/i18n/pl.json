@@ -23,6 +23,9 @@
       "workers": "Pracownicy",
       "boxes": "Skrzynki",
       "discountsCodes": "Kody rabatowe",
+      "stockSale": "Promocje",
+      "salesList": "Lista promocji",
+      "createSale": "Utwórz zniżkę",
 
       "history": "Historia wynajęć:",
       "lackOfHistory": "Brak historii wynajmu",
