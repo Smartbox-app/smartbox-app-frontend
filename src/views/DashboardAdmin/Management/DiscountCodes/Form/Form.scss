@@ -1,0 +1,14 @@
+@import '../../../../../config/variables.scss';
+@import '../../../../../config/mixins.scss';
+
+.gift-form {
+  
+  form {
+    flex-direction: row;
+
+    .form-field {
+      margin-left:$main-spacing;
+      margin-right:$main-spacing;
+    }
+  }
+}
