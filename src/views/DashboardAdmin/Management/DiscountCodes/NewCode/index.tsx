@@ -1,6 +1,6 @@
 import React from 'react';
 import { GiftRes } from 'smartbox-types';
-import { SectionHeader } from '../../../../components/Layout';
+import { SectionHeader } from '../../../../../components/Layout';
 
 import './NewCode.scss';
 

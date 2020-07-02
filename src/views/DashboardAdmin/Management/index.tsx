@@ -10,7 +10,8 @@ import { __ } from '../../../helpers/i18n';
 
 import WorkersManagement from './WorkersManagement';
 import { BoxMapManagement } from '../../DashboardCommon';
-import DiscountCodes from '../DiscountCodes';
+import DiscountCodes from './DiscountCodes';
+import StockDiscount from './StockDiscount';
 
 interface Props {
   user: UserRes;
@@ -38,6 +39,12 @@ const Management = ({ user }: Props) => (
           to: `/${UserService.getSlugByRole(user.role)}/management/discount`,
           text: `${__('application.discountsCodes')}`,
         },
+        {
+          className: 'tab',
+          activeClassName: 'active',
+          to: `/${UserService.getSlugByRole(user.role)}/management/stock-discount`,
+          text: `${__('application.discountsCodes')}`,
+        },
       ]}
     />
     <Switch>
@@ -49,6 +56,7 @@ const Management = ({ user }: Props) => (
       <Route path={`/${UserService.getSlugByRole(user.role)}/management/workers`} component={WorkersManagement} />
       <Route path={`/${UserService.getSlugByRole(user.role)}/management/map`} component={BoxMapManagement} />
       <Route path={`/${UserService.getSlugByRole(user.role)}/management/discount`} component={DiscountCodes} />
+      <Route path={`/${UserService.getSlugByRole(user.role)}/management/stock-discount`} component={StockDiscount} />
     </Switch>
   </Section>
 );

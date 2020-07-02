@@ -5,31 +5,31 @@ import ReactCreatableSelect from 'react-select/creatable';
 import { AddGiftReq, GiftRes } from 'smartbox-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { FormContainer, ButtonsContainer } from '../../../../components/Layout';
-import { Button, Spinner } from '../../../../components/Common';
-import ApiService from '../../../../services/api-service';
-import { formOnTranslateString } from '../../../../utils/trans-form';
-import { successNotification } from '../../../../actions/notifications';
-import { modal } from '../../../../actions';
-import { __ } from '../../../../helpers/i18n';
+import { FormContainer, ButtonsContainer } from '../../../../../components/Layout';
+import { Button, Spinner } from '../../../../../components/Common';
+import ApiService from '../../../../../services/api-service';
+import { formOnTranslateString } from '../../../../../utils/trans-form';
+import { successNotification } from '../../../../../actions/notifications';
+import { modal } from '../../../../../actions';
+import { __ } from '../../../../../helpers/i18n';
 
-import NewCode from '../NewCode';
+import NewCode from '../../DiscountCodes/NewCode';
 
-import './Form.scss';
+import './Edit.scss';
 
 interface Props {
   showModal: (content: React.ReactNode) => void;
 }
 
-const Form = ({ showModal }: Props) => {
+const Edit = ({ showModal }: Props) => {
   const submitButton = (
     <ButtonsContainer>
       <Button text="Utwórz" type="submit" primary />
     </ButtonsContainer>
   );
 
-  const fetchUrl = 'gift/form/add-gift';
-  const sendUrl = 'gift/new';
+  const fetchUrl = 'stock/form/add-stock-discount';
+  const sendUrl = 'stock/discount';
 
   const customSendFetcher = (formId: string, values: AddGiftReq) =>
     ApiService.sendForm(
@@ -69,4 +69,4 @@ const mapDispatchToProps = (dispatch: any) =>
     dispatch,
   );
 
-export default connect(null, mapDispatchToProps)(Form);
+export default connect(null, mapDispatchToProps)(Edit);
