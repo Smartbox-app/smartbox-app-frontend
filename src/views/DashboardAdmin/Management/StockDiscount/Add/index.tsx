@@ -5,6 +5,8 @@ import ReactCreatableSelect from 'react-select/creatable';
 import { AddGiftReq, GiftRes } from 'smartbox-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import flatpickr from 'flatpickr';
+import { Polish } from 'flatpickr/dist/l10n/pl';
 import { FormContainer, ButtonsContainer } from '../../../../../components/Layout';
 import { Button, Spinner } from '../../../../../components/Common';
 import ApiService from '../../../../../services/api-service';
@@ -13,9 +15,8 @@ import { successNotification } from '../../../../../actions/notifications';
 import { modal } from '../../../../../actions';
 import { __ } from '../../../../../helpers/i18n';
 
-import NewCode from '../../DiscountCodes/NewCode';
-
 import './Add.scss';
+import { history } from '../../../../../App';
 
 interface Props {
   showModal: (content: React.ReactNode) => void;
@@ -41,23 +42,28 @@ const FormStockDiscount = ({ showModal }: Props) => {
     );
 
   return (
-    <FormContainer className="gift-form">
-      <ItfApiForm
-        formId="addGiftForm"
-        schemaMayBeDynamic={false}
-        schemaCacheEnabled={false}
-        loadingInfo={<Spinner transparent />}
-        schemaFetcher={() => ApiService.loadForm(fetchUrl)}
-        sendFetcher={customSendFetcher}
-        submitButton={submitButton}
-        onSavedSuccessfully={(data: GiftRes) => {
-          successNotification(__('notification.discCodeCreated'));
-          showModal(<NewCode newCodeProps={data} />);
-        }}
-        onTranslateString={formOnTranslateString}
-        thirdPartyComponents={{ ReactSelect, ReactCreatableSelect }}
-      />
-    </FormContainer>
+    <>
+      <ButtonsContainer>
+        <Button to="/admin/management/stock-discount/list" text={__('application.back')} primary />
+      </ButtonsContainer>
+      <FormContainer className="gift-form">
+        <ItfApiForm
+          formId="addGiftForm"
+          schemaMayBeDynamic={false}
+          schemaCacheEnabled={false}
+          loadingInfo={<Spinner transparent />}
+          schemaFetcher={() => ApiService.loadForm(fetchUrl)}
+          sendFetcher={customSendFetcher}
+          submitButton={submitButton}
+          onSavedSuccessfully={() => {
+            successNotification(__('notification.discCodeCreated'));
+            history.push('/admin/management/stock-discount/list');
+          }}
+          onTranslateString={formOnTranslateString}
+          thirdPartyComponents={{ ReactSelect, ReactCreatableSelect, flatpickr }}
+        />
+      </FormContainer>
+    </>
   );
 };
 

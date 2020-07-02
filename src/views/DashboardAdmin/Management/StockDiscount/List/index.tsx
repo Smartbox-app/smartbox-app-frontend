@@ -36,7 +36,7 @@ class List extends React.Component<Props> {
       <Section full>
         <PageHeader title={__('application.salesList')} />
         <ButtonsContainer>
-          <Button text={__('application.createSale')} primary to="/admin/management/stock-discount/add " />
+          <Button text={__('application.createSale')} primary to="/admin/management/stock-discount/add" />
         </ButtonsContainer>
         <ApiTable scheme={this.scheme} apiEndpointSubUrl="stock/discount/list" />
       </Section>
