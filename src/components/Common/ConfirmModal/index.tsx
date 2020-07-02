@@ -19,7 +19,7 @@ const ConfirmModal = ({ mainText, cancelButtonText = 'Anuluj', aproveButtonText,
   <div className="confirm-modal-wrapper">
     <p>{mainText}</p>
     <ButtonsContainer>
-      <Button click={() => hideModal()} text={cancelButtonText} />
+      <Button click={() => hideModal()} text={cancelButtonText} success />
       <Button
         danger
         click={() => {

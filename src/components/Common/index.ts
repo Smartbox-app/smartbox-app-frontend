@@ -20,6 +20,7 @@ import Pagination from './Pagination';
 import Tabs from './Tabs';
 import Modal from './Modal';
 import LoginLogo from './LoginLogo';
+import ConfirmModal from './ConfirmModal';
 
 export {
   Alert,
@@ -36,6 +37,7 @@ export {
   RouteAdmin,
   Button,
   CheckBox,
+  ConfirmModal,
   Icon,
   Input,
   Logo,
