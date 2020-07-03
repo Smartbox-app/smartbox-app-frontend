@@ -1,9 +1,9 @@
 import React from 'react';
 import FacebookLogin from 'react-facebook-login';
-import { AuthLoginResult } from 'smartbox-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { auth } from '../../../../actions';
+import { __ } from '../../../../helpers/i18n';
 
 import './FbButton.scss';
 
@@ -23,7 +23,7 @@ const FbButton = ({ loginWithFacebook }: Props) => {
       language="pl"
       callback={responseFacebook}
       icon="fa-facebook"
-      textButton="Zaloguj z FACEBOOK"
+      textButton={`${__('application.continueWith')} Facebook`}
     />
   );
 };

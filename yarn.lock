@@ -9414,6 +9414,14 @@ react-flatpickr@^3.10.0:
     flatpickr "^4.5.7"
     prop-types "^15.5.10"
 
+react-google-login@^5.1.20:
+  version "5.1.20"
+  resolved "https://registry.yarnpkg.com/react-google-login/-/react-google-login-5.1.20.tgz#06afbf5fd9013455ae3bfba93054630df203542d"
+  integrity sha512-/5vDx8Hy7Wo1fO1VC/0e5D6/ZGWgIgvcscI8mYZUQ653QOFf0c4GhTnKkebX5uE7m5rAB/2bzzZIUlIesGqWig==
+  dependencies:
+    "@types/react" "*"
+    prop-types "^15.6.0"
+
 react-hook-form@^5.6.1:
   version "5.6.1"
   resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-5.6.1.tgz#8b6017ec01731bde4f6a6bcd94955ff5e69e28cc"

@@ -1,0 +1,19 @@
+@import '../../../../config/variables.scss';
+@import '../../../../config/mixins.scss';
+
+.google-button-custom {
+  width: $login-form-width;
+  width: $login-button-size;
+  height: $login-button-hight;
+  border-radius: $login-button-hight /2 !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid #DB4437 !important;
+  margin: 5px;
+
+  span {
+    font-size: 1.1rem;
+    font-family: $font-primary;
+  }
+}
