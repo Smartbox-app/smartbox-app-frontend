@@ -8,6 +8,7 @@ import { modal } from '../../../../actions';
 import UpdateMe from './UpdateMe';
 import UpdatePass from './UpdatePass';
 import Content from './Content';
+import { __ } from '../../../../helpers/i18n';
 
 interface Props {
   showModal: (content: React.ReactNode) => void;
@@ -15,10 +16,10 @@ interface Props {
 
 const Detail = ({ showModal }: Props) => (
   <>
-    <SectionHeader title="Szczegóły Profilu" />
+    <SectionHeader title={__('application.profileDetail')} />
     <ButtonsContainer>
-      <Button text="Edytuj" primary click={() => showModal(<UpdateMe />)} />
-      <Button text="Zmień hasło" primary click={() => showModal(<UpdatePass />)} />
+      <Button text={__('application.edit')} primary click={() => showModal(<UpdateMe />)} />
+      <Button text={__('application.changPassword')} primary click={() => showModal(<UpdatePass />)} />
     </ButtonsContainer>
     <Content />
   </>

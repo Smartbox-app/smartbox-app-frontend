@@ -10,6 +10,53 @@
   margin: auto;
 }
 
+.offer-svg-wrapper {
+  padding: $main-spacing*4;
+  height: 100%;
+  position: relative;
+  height: 100%;
+
+  .offer-description {
+    position: absolute;
+    color: $color-primary;
+    bottom: -$main-spacing/2;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+    
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+  .cls-1 {
+    fill:#dadada;
+  }
+  .cls-2 {
+    fill:#bfbfbf;
+  }
+  .cls-3 {
+    fill:#e6e6e6;
+  }
+  .cls-4 {
+    fill:#999;
+  }
+  .cls-5 {
+    fill: #000;
+    stroke:#000;
+    stroke-miterlimit:10;
+    font-size: 10px;
+  }
+  .cls-6 {
+    font-size:10px;
+    font-family:Montserrat-Regular, Montserrat;
+  }
+  .cls-7 {
+    font-size:52.55px;
+    font-family:Montserrat-Bold, Montserrat;
+    font-weight:700;
+  }
+}
+
 .slick-list {
   position: relative;
 }

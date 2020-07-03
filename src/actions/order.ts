@@ -5,30 +5,27 @@ import UserService from '../services/user-service';
 
 export const updateFormData = (data: any) => ({ type: 'FORM_STEP_SUCCESS', payload: data });
 
-export const formGoNextStep = (data: number) => ({ type: 'FORM_GO_NEXT_STEP_SUCCESS', payload: data });
-
 export const formAgreementReaded = () => ({ type: 'FORM_AGREEMENT_READED_SUCCESS' });
 
 export const formResignationMarked = () => ({ type: 'FORM_RESIGNATION_MARKED_SUCCESS' });
 
-export const fetchBoxAvailability = () => async (dispatch: any) => {
+export const fetchBoxAvailability = (stockId: string) => async (dispatch: any) => {
   await ApiService.get(
     dispatch,
     'FETCH_BOX_AVAILABILITY_SUCCESS',
     'FETCH_BOX_AVAILABILITY_FAILED',
     null,
     null,
-    'rent/box-group/availability',
+    `rent/box-group/availability/${stockId}`,
   );
 };
 
-export const sentRentBoxRequest = (data: RentBoxReq, nextStep: number, role: UserRole) => async (dispatch: any) => {
+export const sentRentBoxRequest = (data: RentBoxReq, nextStep: string, role: UserRole) => async (dispatch: any) => {
   await ApiService.post(
     dispatch,
     'SENT_RENT_BOX_REQUEST_SUCCESS',
     'SENT_RENT_BOX_REQUEST_FAILED',
     () => {
-      dispatch(formGoNextStep(nextStep));
       history.push(`/${UserService.getSlugByRole(role)}/order/step/${nextStep}`);
     },
     null,

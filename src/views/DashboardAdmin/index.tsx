@@ -9,6 +9,7 @@ import { __ } from '../../helpers/i18n';
 
 import Management from './Management';
 import Profile from '../DashboardCommon/Profile';
+import SingleRentDetail from '../DashboardCommon/SingleRentDetail';
 
 const DashboardAdmin = () => {
   const menuItems: MenuItemType[] = [
@@ -36,9 +37,10 @@ const DashboardAdmin = () => {
         <Switch>
           <Route exact path="/admin" render={() => <Redirect to="/admin/main" />} />
           <Route path="/admin/main" component={Welcome} />
-          <Route path="/admin/order/:step" component={Order} />
+          <Route path="/admin/order/step/:step" component={Order} />
           <Route path="/admin/management/" component={Management} />
           <Route path="/admin/profile" component={Profile} />
+          <Route exact path="/admin/single-rent/:orderId" component={SingleRentDetail} />
         </Switch>
       </Main>
       <Footer />

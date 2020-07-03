@@ -1,16 +1,24 @@
 import React from 'react';
-import Single, { SingleHistory } from './Single';
+import { MyRentList } from 'smartbox-types';
+import Single from './Single';
+import { Alert } from '../../../../../components/Common';
 
-import './History.scss';
 import Legend from './Legend';
 
+import './History.scss';
+import { __ } from '../../../../../helpers/i18n';
+
 interface Props {
-  data: SingleHistory[];
+  data: MyRentList[];
 }
 
 const History = ({ data }: Props) => {
   const dataToDisplay =
-    data && data.map((single: SingleHistory, key: number) => <Single single={single} key={`history-${key}`} />);
+    data.length > 0 ? (
+      data.map((single: MyRentList, key: number) => <Single single={single} key={`history-${key}`} />)
+    ) : (
+      <Alert type="notice" text={__('application.lackOfHistory')} />
+    );
 
   return (
     <div className="history-wrapper">

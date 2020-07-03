@@ -17,6 +17,7 @@ import UserService from '../../../../../services/user-service';
 import Price from './Price';
 
 import './StepDuration.scss';
+import { __ } from '../../../../../helpers/i18n';
 
 interface Props {
   history: any;
@@ -24,10 +25,9 @@ interface Props {
   countedPrice: IPricingResult;
   user: UserRes;
   updateFormData: (data: any) => void;
-  formGoNextStep: (data: number) => void;
 }
 
-const StepDuration = ({ formData, countedPrice, updateFormData, formGoNextStep, user }: Props) => {
+const StepDuration = ({ formData, countedPrice, updateFormData, user }: Props) => {
   useEffect(() => {
     if (formData.size.length === 0) {
       history.push(`/${UserService.getSlugByRole(user.role)}/order/step/size`);
@@ -46,12 +46,10 @@ const StepDuration = ({ formData, countedPrice, updateFormData, formGoNextStep, 
   const methods = useForm();
 
   const onSubmit = (data: any) => {
-    formGoNextStep(3);
     history.push(`/${UserService.getSlugByRole(user.role)}/order/step/summary`);
   };
 
   const onBack = () => {
-    formGoNextStep(1);
     history.push(`/${UserService.getSlugByRole(user.role)}/order/step/size`);
   };
 
@@ -69,7 +67,11 @@ const StepDuration = ({ formData, countedPrice, updateFormData, formGoNextStep, 
             maxDate={addDays(new Date(), 7)}
             onChange={([selected]) => {
               setDateStart(selected[0]);
-              updateFormData({ durationInDays: differenceInCalendarDays(dateEndMin, selected[0]), discount: 0 });
+              updateFormData({
+                durationInDays: differenceInCalendarDays(dateEndMin, selected[0]),
+                discount: 0,
+                dateStart: selected[0],
+              });
               return selected;
             }}
           />
@@ -82,15 +84,19 @@ const StepDuration = ({ formData, countedPrice, updateFormData, formGoNextStep, 
             minDate={addDays(dateStartMin, 7)}
             onChange={([selected]) => {
               setDateEnd(selected[0]);
-              updateFormData({ durationInDays: differenceInCalendarDays(selected[0], dateStartMin), discount: 0 });
+              updateFormData({
+                durationInDays: differenceInCalendarDays(selected[0], dateStartMin),
+                discount: 0,
+                dateEnd: selected[0],
+              });
               return selected;
             }}
           />
         </div>
         <Price countedPrice={countedPrice.value} />
         <ButtonsContainer max>
-          <Button outline text="Wróć" click={() => onBack()} />
-          <Button type="submit" primary text="Dalej" />
+          <Button outline text={__('application.back')} click={() => onBack()} />
+          <Button type="submit" primary text={__('application.next')} />
         </ButtonsContainer>
       </form>
     </FormContext>

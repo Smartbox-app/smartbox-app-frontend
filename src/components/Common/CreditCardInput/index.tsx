@@ -1,5 +1,6 @@
 import React from 'react';
 import { addYears } from 'date-fns';
+import { __ } from '../../../helpers/i18n';
 
 import './CreditCardInput.scss';
 
@@ -23,29 +24,28 @@ const CreditCardInput = ({ register, errors }: Props) => {
     addYears(new Date(), 8).getFullYear(),
     addYears(new Date(), 9).getFullYear(),
   ];
-  console.log('errors', errors);
 
   return (
     <div className="credit-card-input-wrapper">
       <div className="row card-number-wrapper">
         <label htmlFor="card-number">
-          <span>Numer karty:</span>
+          <span>{__('application.ccNumber')}:</span>
           <input type="text" placeholder="0000 0000 0000 0000" name="cardNumber" ref={register({ required: true })} />
         </label>
       </div>
       <div className="row user-wrapper">
         <label htmlFor="first-name">
-          <span>Imię:</span>
+          <span>{__('application.firstName')}:</span>
           <input type="text" placeholder="First name" name="firstName" ref={register({ required: true })} />
         </label>
         <label htmlFor="last-name">
-          <span>Nazwisko:</span>
+          <span>{__('application.lastName')}:</span>
           <input type="text" placeholder="Last name" name="lastName" ref={register({ required: true })} />
         </label>
       </div>
       <div className="row expiration-date-wrapper">
         <label htmlFor="month">
-          <span>Ważność karty:</span>
+          <span>{__('application.expiryDate')}:</span>
           <select name="month" ref={register({ required: true })}>
             {monthOption.map((singleMonth: string) => (
               <option value={singleMonth}>{singleMonth}</option>
@@ -63,7 +63,7 @@ const CreditCardInput = ({ register, errors }: Props) => {
       </div>
       <div className="row cvv-wrapper">
         <label htmlFor="cvv">
-          <span>Numer CVV</span>
+          <span>{__('application.ccv')}</span>
           <input type="text" placeholder="CVV" name="cvv" ref={register({ required: true })} />
         </label>
       </div>

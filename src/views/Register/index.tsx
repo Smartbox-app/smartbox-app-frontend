@@ -12,6 +12,7 @@ import { history } from '../../App';
 import ButtonSection from './ButtonSection';
 
 import './Register.scss';
+import { __ } from '../../helpers/i18n';
 
 interface Props {
   successNotification: (text: string) => void;
@@ -31,7 +32,7 @@ const Register = ({ successNotification }: Props) => (
         sendFetcher={(formId: string, values: any) => ApiService.sendForm('user/new', values, 'POST')}
         submitButton={<ButtonSection />}
         onSavedSuccessfully={() => {
-          successNotification('Konto zostało zarejestrowane.');
+          successNotification(__('notification.accountRegistered'));
           history.push('/');
         }}
         onTranslateString={formOnTranslateString}

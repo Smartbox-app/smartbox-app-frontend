@@ -3,6 +3,8 @@
   "langNames": "pl",
   "phrases": {
     "application": {
+      "hi": "Cześć",
+
       "management": "Zarządzanie",
       "account": "Konto",
       "logout": "Wyloguj",
@@ -10,11 +12,95 @@
       "edit": "Edytuj",
       "back": "Wróć",
       "next": "Dalej",
+      "change": "Zmień",
+      "send": "Wyślij",
+      "lack": "Brak",
+      "end": "Zakończ",
       "delete": "Usuń",
+      "move": "Przenieś",
+      "changeStatus": "Zmień status",
+
+      "workers": "Pracownicy",
+      "boxes": "Skrzynki",
+      "discountsCodes": "Kody rabatowe",
+
+      "history": "Historia wynajęć:",
+      "lackOfHistory": "Brak historii wynajmu",
+
+      "free": "Wolne",
+      "rented": "Zajęty",
+      "toExplain": "Do wyjaśnienia",
+      "toCheck": "Do sprawdzenia",
+      "debt": "Zaległości",
+
+      "storeManagement": "Zarządaj magazynami:",
+      "offers": "Oferta:",
+      "storagesPlan": "Plan placu:",
+
+      "startDate": "Data rozpoczęcia",
+      "endDate": "Data zakończenia",
+      "storePlaceName": "Nazwa placu",
+      "storeSize": "Rozmiar skrytki",
+      "storeNumber": "Numer skrytki",
+      "storeState": "Status wynajmu",
+      "rentedBy": "Wynajęte przez",
+      "phone": "Telefon",
+      "userRole": "rola",
+
+      "ccv": "numer CVV",
+      "ccNumber": "numer karty kredytowej",
+      "expiryDate": "ważność karty",
+      "lastName": "nazwisko",
+      "firstName": "imię",
+
+      "singleStoreDetail": "Szczegóły wybranej skrytki:",
+      "showEditOptions": "Pokaż opcje edycji",
+      "hideEditOptions": "Ukryj opcje edycji",
+      "changesIrreversible": "Poniższe zmiany są nieodwracalne!",
+
+      "mail": "e-mail",
+
+      "login": "Zaloguj się",
+      "register": "Zarejestruj się",
+      "forgotPass": "Zapomniałeś hasła?",
+      "changPassword": "Zmień hasło",
+      "backToHome": "Wróć do strony głównej",
+      "setNewPass": "Ustaw nowe hasło",
+      "restorePass": "Przywróć hasło",
+
+      "clickHere": "Kliknij tutaj",
+      "404Text": "Coś poszło nie tak, żądana strona nie istnieje.",
+
+      "orderFormPickSize": "Proszę wybrać rozmiar magazynu:",
+      "newStock": "Nowy magazyn",
+
+      "discounts": "Promocje:",
+
       "workersList": "Lista pracowników",
       "inviteWorker": "Zaproś pracowników",
-      "orderFormPickSize": "Proszę wybrać rozmiar magazynu:",
+      "historyWorker": "Historia pracowników",
+      "sendInvitation": "Wyślij zaproszenie",
+      "goToAgreement": "Przejdź do umowy",
+      "generateInvoice": "Wygeneruj fakturę",
+      "profileDetail": "Szczegóły Profilu",
+      "preInvitationForWorker": "Wyślij zaproszenie dla pracownika",
+
       "welcome": "Hello world"
+    },
+    "notification": {
+      "accountRegistered": "Konto zostało zarejestrowane.",
+      "logOutSuccess": "Wylogowano poprawnie.",
+      "discCodeCreated": "Poprawnie utworzono kod rabatowy.",
+      "userBlocked": "Zablokowano użytkownika.",
+      "userMovedSuccess": "Poprawnie przeniesiono użytkownika.",
+      "userStatusChanged": "Poprawnie zmieniono status.",
+      "invitationSendProperly": "Poprawnie wysłano zaproszenie.",
+      "discountCodeRead": "Poprawnie odczytano kod rabatowy.",
+      "passChangedSuccess": "Poprawnie zmieniono hasło.",
+      "dataChangedSuccess": "Poprawnie zmieniono dane.",
+      "newPassSet": "Ustawiono nowe hasło",
+      "msgSend": "Wysłano wiadomość",
+      "logInSuccess": "Zalogowano poprawnie."
     }
   }
 }

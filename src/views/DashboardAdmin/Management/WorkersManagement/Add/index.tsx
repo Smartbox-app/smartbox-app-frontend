@@ -10,6 +10,7 @@ import ApiService from '../../../../../services/api-service';
 import { formOnTranslateString } from '../../../../../utils/trans-form';
 import { notifications } from '../../../../../actions';
 import { history } from '../../../../../App';
+import { __ } from '../../../../../helpers/i18n';
 
 interface Props {
   successNotification: (text: string) => void;
@@ -18,7 +19,7 @@ interface Props {
 const Add = ({ successNotification }: Props) => {
   const submitButton = (
     <ButtonsContainer>
-      <Button text="Wyślij zaproszenie" type="submit" primary />
+      <Button text={__('application.sendInvitation')} type="submit" primary />
     </ButtonsContainer>
   );
 
@@ -27,9 +28,9 @@ const Add = ({ successNotification }: Props) => {
 
   return (
     <>
-      <PageHeader title="Wyślij zaproszenie dla pracownika" />
+      <PageHeader title={__('application.preInvitationForWorker')} />
       <ButtonsContainer>
-        <Button to="/admin/management/workers/list" text="Powrót" primary />
+        <Button to="/admin/management/workers/list" text={__('application.back')} primary />
       </ButtonsContainer>
 
       <FormContainer>
@@ -42,8 +43,8 @@ const Add = ({ successNotification }: Props) => {
           sendFetcher={(formId: string, values: any) => ApiService.sendForm(sendUrl, values)}
           submitButton={submitButton}
           onSavedSuccessfully={() => {
-            successNotification('Poprawnie wysłano zaproszenie.');
-            history.push('/admin/orders/list');
+            successNotification(__('notification.invitationSendProperly'));
+            history.push('/admin/management/workers/list');
           }}
           onTranslateString={formOnTranslateString}
           thirdPartyComponents={{ ReactSelect, ReactCreatableSelect }}

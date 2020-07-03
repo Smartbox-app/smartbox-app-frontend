@@ -17,6 +17,7 @@ import UserService from '../../../../../services/user-service';
 import AgreementWrapper from './AgreementWrapper';
 import ScrollPosition from './ScrollPosition';
 import { ApplicationState } from '../../../../../reducers';
+import { __ } from '../../../../../helpers/i18n';
 
 import './StepAgreement.scss';
 
@@ -28,23 +29,20 @@ interface Props {
   isAgreementAccepted: boolean;
   isResignationMarked: boolean;
   updateFormData: (data: any) => void;
-  formGoNextStep: (data: number) => void;
-  sentRentBoxRequest: (data: RentBoxReq | any, nextStep: number, role: UserRole) => void;
+  sentRentBoxRequest: (data: RentBoxReq | any, nextStep: string, role: UserRole) => void;
 }
 
 const StepSummary = ({
   formData,
-  formGoNextStep,
   user,
   isAgreementAccepted,
   isResignationMarked,
   sentRentBoxRequest,
   countedPrice,
-}: Props) => {
+}: Props): any => {
   useEffect(() => {
     if (formData.size.length === 0) {
       history.push(`/${UserService.getSlugByRole(user.role)}/order/step/size`);
-      formGoNextStep(1);
     }
   });
 
@@ -53,20 +51,19 @@ const StepSummary = ({
   const onSubmit = (data: any) => {
     sentRentBoxRequest(
       {
-        stockId: undefined,
+        stockId: '07b76069-5bbc-4486-95b4-63ea8a7eba52',
         size: Number(formData.size),
         startAt: formData.dateStart,
         finishAt: formData.dateEnd,
         cost: countedPrice.value,
         discountCode: formData.discountCode,
       },
-      5,
+      'payment',
       user.role,
     );
   };
 
   const onBack = () => {
-    formGoNextStep(3);
     history.push(`/${UserService.getSlugByRole(user.role)}/order/step/summary`);
   };
 
@@ -76,7 +73,7 @@ const StepSummary = ({
       <AgreementWrapper />
       <ScrollPosition />
       <ButtonsContainer max>
-        <Button outline text="Wróć" click={() => onBack()} />
+        <Button outline text={__('application.back')} click={() => onBack()} />
         <Button
           type="submit"
           primary

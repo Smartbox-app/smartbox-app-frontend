@@ -6,10 +6,12 @@ import { Tabs } from '../../../components/Common';
 import { Section } from '../../../components/Layout';
 import { ApplicationState } from '../../../reducers';
 import UserService from '../../../services/user-service';
+import { __ } from '../../../helpers/i18n';
 
 import WorkersManagement from './WorkersManagement';
-import BoxMapManagement from './BoxMapManagement';
-import DiscountCodes from '../DiscountCodes';
+import { BoxMapManagement } from '../../DashboardCommon';
+import DiscountCodes from './DiscountCodes';
+import StockDiscount from './StockDiscount';
 
 interface Props {
   user: UserRes;
@@ -23,19 +25,25 @@ const Management = ({ user }: Props) => (
           className: 'tab',
           activeClassName: 'active',
           to: `/${UserService.getSlugByRole(user.role)}/management/workers/list`,
-          text: 'Pracownicy',
+          text: `${__('application.workers')}`,
         },
         {
           className: 'tab',
           activeClassName: 'active',
           to: `/${UserService.getSlugByRole(user.role)}/management/map`,
-          text: 'Skrzynki',
+          text: `${__('application.boxes')}`,
         },
         {
           className: 'tab',
           activeClassName: 'active',
           to: `/${UserService.getSlugByRole(user.role)}/management/discount`,
-          text: 'Kody rabatowe',
+          text: `${__('application.discountsCodes')}`,
+        },
+        {
+          className: 'tab',
+          activeClassName: 'active',
+          to: `/${UserService.getSlugByRole(user.role)}/management/stock-discount`,
+          text: `${__('application.discountsCodes')}`,
         },
       ]}
     />
@@ -48,6 +56,7 @@ const Management = ({ user }: Props) => (
       <Route path={`/${UserService.getSlugByRole(user.role)}/management/workers`} component={WorkersManagement} />
       <Route path={`/${UserService.getSlugByRole(user.role)}/management/map`} component={BoxMapManagement} />
       <Route path={`/${UserService.getSlugByRole(user.role)}/management/discount`} component={DiscountCodes} />
+      <Route path={`/${UserService.getSlugByRole(user.role)}/management/stock-discount`} component={StockDiscount} />
     </Switch>
   </Section>
 );

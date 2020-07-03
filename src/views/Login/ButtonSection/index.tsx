@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { ButtonsContainer } from '../../../components/Layout';
 import { Button } from '../../../components/Common';
 import FbButton from './FbButton';
+import { __ } from '../../../helpers/i18n';
 
 import './ButtonSection.scss';
 
@@ -10,13 +11,13 @@ const ButtonsSection = () => (
   <div className="login-buttons-section">
     <ButtonsContainer max column>
       <FbButton />
-      <Button text="Zaloguj się" big type="submit" primary rounded />
-      <Button text="Zarejestruj się" big to="/register" outline rounded />
+      <Button text={__('application.login')} big type="submit" primary rounded />
+      <Button text={__('application.register')} big to="/register" outline rounded />
     </ButtonsContainer>
     <p className="lost-pass">
-      Zapomniałeś hasła?{' '}
+      {__('application.forgotPass')}{' '}
       <Link className="light" to="/restore-pass">
-        Kliknij tutaj
+        {__('application.clickHere')}
       </Link>
     </p>
   </div>

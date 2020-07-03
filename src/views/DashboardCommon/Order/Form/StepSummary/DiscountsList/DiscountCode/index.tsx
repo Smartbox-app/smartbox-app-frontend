@@ -10,6 +10,7 @@ import FormHeader from '../../../../../../../components/Layout/FormHeader';
 import ApiService from '../../../../../../../services/api-service';
 import { successNotification } from '../../../../../../../actions/notifications';
 import { formOnTranslateString } from '../../../../../../../utils/trans-form';
+import { __ } from '../../../../../../../helpers/i18n';
 
 interface Props {
   hideModal: () => void;
@@ -46,7 +47,7 @@ const DiscoutCode = ({ hideModal, updateFormData }: Props) => {
         sendFetcher={customSendFetcher}
         submitButton={submitButton}
         onSavedSuccessfully={(data: GiftRes) => {
-          successNotification('Poprawnie odczytano kod rabatowy');
+          successNotification(__('notification.discountCodeRead'));
           updateFormData({
             discount: data.discount,
             discountCode: data.code,

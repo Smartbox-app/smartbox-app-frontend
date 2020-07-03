@@ -27,23 +27,12 @@ interface Props extends RouteComponentProps<RouteProps> {
   user: UserRes;
   boxAvailability: BoxGroupAvailability[];
   updateFormData: (data: any) => void;
-  formGoNextStep: (data: number) => void;
-  fetchBoxAvailability: () => void;
+  fetchBoxAvailability: (stockId: string) => void;
 }
 
-const StepSize = ({
-  history,
-  updateFormData,
-  formGoNextStep,
-  match,
-  fetchBoxAvailability,
-  formData,
-  user,
-  boxAvailability,
-}: Props) => {
+const StepSize = ({ history, updateFormData, match, fetchBoxAvailability, formData, user, boxAvailability }: Props) => {
   useEffect(() => {
-    fetchBoxAvailability();
-    formGoNextStep(1);
+    fetchBoxAvailability('07b76069-5bbc-4486-95b4-63ea8a7eba52');
   }, []);
 
   const defaultValues = {
@@ -54,7 +43,6 @@ const StepSize = ({
 
   const onSubmit = (data: any) => {
     updateFormData(data);
-    formGoNextStep(2);
     history.push(`/${UserService.getSlugByRole(user.role)}/order/step/duration`);
   };
 

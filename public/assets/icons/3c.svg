@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-40 -10 253.47 208.83">
+  <g id="Warstwa_2" data-name="Warstwa 2">
+    <g id="Warstwa_1-2" data-name="Warstwa 1">
+      <polygon class="cls-1" points="15.19 25.59 15.19 172.4 70.85 198.19 70.85 14.36 15.19 25.59"/>
+      <polyline class="cls-3" points="68.04 28.65 17.23 35.04 17.23 38.1 68.04 31.72"/>
+      <polyline class="cls-3" points="68.04 43.97 17.23 46.78 17.23 49.85 68.04 47.04"/>
+      <polyline class="cls-3" points="68.04 59.04 17.25 58.94 17.25 62 68.04 62.1"/>
+      <polyline class="cls-3" points="68.04 73.34 17.23 71.8 17.23 74.87 68.04 76.4"/>
+      <polyline class="cls-3" points="68.04 87.38 17.23 84.57 17.23 87.64 68.04 90.44"/>
+      <polyline class="cls-3" points="68.04 101.93 17.23 97.34 17.23 100.4 68.04 105"/>
+      <polyline class="cls-3" points="68.04 117 17.23 109.34 17.23 112.4 68.04 120.06"/>
+      <polyline class="cls-3" points="68.04 131.81 17.23 121.59 17.23 124.66 68.04 135.13"/>
+      <polyline class="cls-3" points="68.04 146.36 17.23 134.36 17.23 137.42 68.04 149.42"/>
+      <polyline class="cls-3" points="68.04 160.66 17.23 147.13 17.23 150.19 68.04 163.72"/>
+      <polyline class="cls-3" points="68.04 176.49 17.23 158.36 17.23 161.42 68.04 179.81"/>
+      <polygon class="cls-2" points="70.72 14.36 168.77 21.5 168.77 178.28 70.72 198.19 70.72 14.36"/>
+      <polygon class="cls-3" points="164.41 28.1 75.14 21.19 75.14 191.36 164.41 172.9 164.41 28.1"/>
+      <rect class="cls-3" x="80.21" y="97.34" width="2.11" height="13.79"/>
+      <line class="cls-5" x1="14.93" y1="19.97" x2="70.59" y2="8.74"/>
+      <line class="cls-5" x1="14.81" y1="18.31" x2="14.81" y2="21.63"/>
+      <line class="cls-5" x1="70.72" y1="7.21" x2="70.72" y2="10.53"/>
+      <text class="cls-5" transform="translate(30.78 14.13) rotate(-12)">2 m</text>
+      <text class="cls-5" transform="translate(8.5 108.35) rotate(-90)">2 m</text>
+      <text class="cls-5" transform="translate(108.69 8.48) rotate(4)">1,5 m</text>
+      <line class="cls-5" x1="168.83" y1="14.1" x2="168.83" y2="17.42"/>
+      <line class="cls-5" x1="70.59" y1="8.74" x2="168.74" y2="15.63"/>
+      <line class="cls-5" x1="9.83" y1="25.52" x2="13.15" y2="25.52"/>
+      <line class="cls-5" x1="13.15" y1="172.08" x2="9.83" y2="172.08"/>
+      <line class="cls-5" x1="11.49" y1="25.39" x2="11.49" y2="172.2"/>
+      <text class="cls-7" transform="translate(38.06 119.67)">3 m²</text>
+    </g>
+  </g>
+</svg>

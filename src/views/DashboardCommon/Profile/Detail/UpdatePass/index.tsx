@@ -2,19 +2,20 @@ import React from 'react';
 import { ItfApiForm } from 'itf_formbuilder_react';
 import ReactSelect from 'react-select';
 import ReactCreatableSelect from 'react-select/creatable';
-import { AddGiftReq, GiftRes } from 'smartbox-types';
+import { AddGiftReq } from 'smartbox-types';
 import { FormContainer, ButtonsContainer } from '../../../../../components/Layout';
 import { Button, Spinner } from '../../../../../components/Common';
 import ApiService from '../../../../../services/api-service';
 import { formOnTranslateString } from '../../../../../utils/trans-form';
 import { successNotification } from '../../../../../actions/notifications';
+import { __ } from '../../../../../helpers/i18n';
 
 import './UpdatePass.scss';
 
 const UpdatePass = () => {
   const submitButton = (
     <ButtonsContainer>
-      <Button text="Zmień" type="submit" primary />
+      <Button text={__('application.change')} type="submit" primary />
     </ButtonsContainer>
   );
 
@@ -41,7 +42,7 @@ const UpdatePass = () => {
         sendFetcher={customSendFetcher}
         submitButton={submitButton}
         onSavedSuccessfully={() => {
-          successNotification('Poprawnie zmieniono hasło');
+          successNotification(__('notification.passChangedSuccess'));
         }}
         onTranslateString={formOnTranslateString}
         thirdPartyComponents={{ ReactSelect, ReactCreatableSelect }}

@@ -14,6 +14,7 @@ import FormHeader from '../../../../../components/Layout/FormHeader';
 import UserService from '../../../../../services/user-service';
 import CreditCardInput from '../../../../../components/Common/CreditCardInput';
 import { ApplicationState } from '../../../../../reducers';
+import { __ } from '../../../../../helpers/i18n';
 
 import './StepPayment.scss';
 
@@ -23,15 +24,13 @@ interface Props {
   countedPrice: IPricingResult;
   paymentId: string;
   user: UserRes;
-  formGoNextStep: (data: number) => void;
   sentExecutePaymentRequest: (data: ExecutePaymentReq) => void;
 }
 
-const StepPayment = ({ formData, formGoNextStep, user, sentExecutePaymentRequest, paymentId }: Props) => {
+const StepPayment = ({ formData, user, sentExecutePaymentRequest, paymentId }: Props) => {
   useEffect(() => {
     if (formData.size.length === 0) {
       history.push(`/${UserService.getSlugByRole(user.role)}/order/step/size`);
-      formGoNextStep(1);
     }
   });
   const defaultValues = {
@@ -57,7 +56,6 @@ const StepPayment = ({ formData, formGoNextStep, user, sentExecutePaymentRequest
   };
 
   const onBack = () => {
-    formGoNextStep(4);
     history.push(`/${UserService.getSlugByRole(user.role)}/order/step/agreement`);
   };
 
@@ -66,7 +64,7 @@ const StepPayment = ({ formData, formGoNextStep, user, sentExecutePaymentRequest
       <FormHeader title="Podaj dane:" />
       <CreditCardInput register={register} errors={errors} />
       <ButtonsContainer max>
-        <Button outline text="Wróć" click={() => onBack()} />
+        <Button outline text={__('application.back')} click={() => onBack()} />
         <Button type="submit" primary text="Zapłać" />
       </ButtonsContainer>
     </form>

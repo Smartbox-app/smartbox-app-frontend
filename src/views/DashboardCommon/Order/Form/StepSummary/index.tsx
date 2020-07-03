@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { RentBoxReq, UserRole, UserRes, IPricingResult } from 'smartbox-types';
+import { UserRes, IPricingResult } from 'smartbox-types';
 import { Button } from '../../../../../components/Common';
 import { order } from '../../../../../actions';
 import { ButtonsContainer } from '../../../../../components/Layout';
@@ -16,6 +16,7 @@ import UserService from '../../../../../services/user-service';
 import Discount from './DiscountsList';
 import SummaryTable from './SummaryTable';
 import { ApplicationState } from '../../../../../reducers';
+import { __ } from '../../../../../helpers/i18n';
 
 import './StepSummary.scss';
 
@@ -25,11 +26,9 @@ interface Props {
   countedPrice: IPricingResult;
   user: UserRes;
   updateFormData: (data: any) => void;
-  formGoNextStep: (data: number) => void;
-  sentRentBoxRequest: (data: RentBoxReq | any, nextStep: number, role: UserRole) => void;
 }
 
-const StepSummary = ({ formData, countedPrice, updateFormData, formGoNextStep, user, sentRentBoxRequest }: Props) => {
+const StepSummary = ({ formData, countedPrice, updateFormData, user }: Props) => {
   useEffect(() => {
     if (formData.size.length === 0) {
       history.push(`/${UserService.getSlugByRole(user.role)}/order/step/size`);
@@ -40,12 +39,10 @@ const StepSummary = ({ formData, countedPrice, updateFormData, formGoNextStep, u
 
   const onSubmit = (data: any) => {
     updateFormData(data);
-    formGoNextStep(4);
     history.push(`/${UserService.getSlugByRole(user.role)}/order/step/agreement`);
   };
 
   const onBack = () => {
-    formGoNextStep(2);
     history.push(`/${UserService.getSlugByRole(user.role)}/order/step/duration`);
   };
 
@@ -55,7 +52,7 @@ const StepSummary = ({ formData, countedPrice, updateFormData, formGoNextStep, u
       <FormHeader title="Podsumowanie zamówienia:" />
       <SummaryTable dateStart={formData.dateStart} dateEnd={formData.dateEnd} countedPrice={countedPrice.value} />
       <ButtonsContainer max>
-        <Button outline text="Wróć" click={() => onBack()} />
+        <Button outline text={__('application.back')} click={() => onBack()} />
         <Button type="submit" primary text="Przejdź do umowy" />
       </ButtonsContainer>
     </form>

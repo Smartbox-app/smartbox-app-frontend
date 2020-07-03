@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Slider from 'react-slick';
+import { ReactSVG } from 'react-svg';
 import CustomeArrow from './CustomArrow';
 
 import 'slick-carousel/slick/slick.css';
@@ -13,8 +14,14 @@ interface Props {
 class Carousel extends Component<Props> {
   private dataToDisplay = (listToPrint: any) =>
     listToPrint.map((data: string, key: number) => (
-      <div key={`carousel-${key}`}>
-        <img src={data} alt="offer-screen" />
+      <div key={`carousel-${key}`} className="offer-svg-wrapper">
+        <ReactSVG src={`/assets/icons/${data}.svg`} />
+        <div className="offer-description">
+          <p>
+            Tydzień: <strong>100zł</strong> Miesiąc: <strong>200zł</strong>
+          </p>
+          <p />
+        </div>
       </div>
     ));
 
