@@ -16,6 +16,7 @@ const GoogleButton = () => {
       onSuccess={responseGoogle}
       onFailure={responseGoogle}
       cookiePolicy="single_host_origin"
+      redirectUri="/test"
       className="google-button-custom"
     />
   );
