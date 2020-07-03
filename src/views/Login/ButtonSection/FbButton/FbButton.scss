@@ -16,17 +16,22 @@
     font-family: $font-primary;
     text-transform: none;
     font-weight: 500;
+    display: flex;
+    justify-content: flex-start;
+
+    &:hover {
+      border: 2px solid lighten(#4c69ba, 15%) !important;
+      box-shadow: #4c69ba 0px 2px 2px 0px, rgba(0, 0, 0, 0.24) 0px 0px 1px 0px;
+    }
   }
 }
 
-.my-facebook-button-class {
-  width: $login-form-width;
-  width: $login-button-size;
-  height: $login-button-hight;
-  border-radius: $login-button-hight /2;
-}
-
-.fa-facebook {
-  width: 18px;
-  height: 18px;
+.fa.fa-facebook {
+  // margin-top: 5px;
+  margin-left: 2px;
+  display: block;
+  width: $main-spacing*3;
+  height: $main-spacing*2;
+  line-height: $main-spacing*2.5;
+  text-align: start;
 }

@@ -25,6 +25,7 @@
     margin: 0 auto;
     padding-left: $main-spacing *3;
     padding-right: $main-spacing *3;
+    background-color: $color-background;
 
     &:active, &:focus {
       border-color: $color-active;
