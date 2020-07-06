@@ -8,5 +8,6 @@ import * as order from './order';
 import * as apiTable from './api-table';
 import * as boxes from './boxes';
 import * as singleRent from './single-rent';
+import * as sales from './sales';
 
-export { appStatus, apiTable, auth, boxes, modal, notifications, lang, user, order, singleRent };
+export { appStatus, apiTable, auth, boxes, modal, notifications, lang, user, order, singleRent, sales };

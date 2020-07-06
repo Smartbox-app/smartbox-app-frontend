@@ -26,6 +26,7 @@
       "stockSale": "Promocje",
       "salesList": "Lista promocji",
       "createSale": "Utwórz zniżkę",
+      "deleteSingleSale": "Czy jesteś pewien, że chcesz usunąć zniżkę?",
 
       "history": "Historia wynajęć:",
       "lackOfHistory": "Brak historii wynajmu",
