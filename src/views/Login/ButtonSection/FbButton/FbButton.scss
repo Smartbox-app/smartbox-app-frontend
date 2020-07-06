@@ -4,6 +4,10 @@
 .buttons-container {
 
   .kep-login-facebook {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
     width: $login-form-width !important;
     width: $login-button-size !important;
     height: $login-button-hight !important;
@@ -16,8 +20,7 @@
     font-family: $font-primary;
     text-transform: none;
     font-weight: 500;
-    display: flex;
-    justify-content: flex-start;
+    margin: $main-spacing;
 
     &:hover {
       border: 2px solid lighten(#4c69ba, 15%) !important;
@@ -27,11 +30,10 @@
 }
 
 .fa.fa-facebook {
-  // margin-top: 5px;
   margin-left: 2px;
   display: block;
   width: $main-spacing*3;
   height: $main-spacing*2;
   line-height: $main-spacing*2.5;
-  text-align: start;
+  text-align: center;
 }

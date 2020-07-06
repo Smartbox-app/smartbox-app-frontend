@@ -30,7 +30,7 @@ const GoogleButton = ({ loginWithGoogle }: Props) => {
         redirectUri="/test"
         className="google-button-custom"
       />
-      <Button text="test" primary click={() => loginWithGoogle()} />
+      {/* <Button text="test" primary click={() => loginWithGoogle()} /> */}
     </>
   );
 };

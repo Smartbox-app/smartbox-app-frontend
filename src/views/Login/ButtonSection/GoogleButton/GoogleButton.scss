@@ -2,23 +2,20 @@
 @import '../../../../config/mixins.scss';
 
 .google-button-custom {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   width: $login-form-width;
   width: $login-button-size;
   height: $login-button-hight;
   border-radius: $login-button-hight /2 !important;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
   border: 2px solid #DB4437 !important;
-  margin: 5px;
+  margin: $main-spacing;
 
   &:hover {
     box-shadow: #DB4437 0px 2px 2px 0px, #DB4437 0px 0px 1px 0px;
     border: 2px solid lighten(#DB4437, 15%) !important;
-  }
-
-  div {
-    margin-left: $main-spacing;
   }
 
   span {
