@@ -1,0 +1,33 @@
+@import '../../../config/variables.scss';
+@import '../../../config/mixins.scss';
+
+.row {
+  padding: $main-spacing;
+  border-bottom: 1px solid darken($color-primary, 8%);
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  
+  &:nth-of-type(2n+1){
+    background-color: darken($color-background, 8%);
+  }
+  &:nth-of-type(2n){
+    background-color: lighten($color-background, 8%);
+  }
+
+  .row-label {
+    color: lighten($color-primary, 5%);
+    font-weight: 600;
+    // margin-right: $main-spacing*2;
+    width: 35%;
+
+    @include gt-sm {
+      width: 25%;
+    }
+  }
+
+  .row-content {
+    font-size: 1.1rem;
+    font-weight: 500;
+  }
+}
