@@ -21,6 +21,19 @@ export const loginWithFacebook = (data: any) => async (dispatch: any) => {
   );
 };
 
+export const loginWithGoogle = () => async (dispatch: any) => {
+  await ApiService.post(
+    dispatch,
+    'LOGIN_SUCCESS',
+    'LOGIN_WITH_GOOGLE_FAILED',
+    null,
+    null,
+    'auth/login-google',
+    'LOADING',
+    {},
+  );
+};
+
 export const login = (userData: AuthLoginRequest) => async (dispatch: any) => {
   await ApiService.post(
     dispatch,
