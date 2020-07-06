@@ -3,8 +3,7 @@ import { connect } from 'react-redux';
 import { UserRes } from 'smartbox-types';
 import { ApplicationState } from '../../../../../reducers';
 import { __ } from '../../../../../helpers/i18n';
-
-import Row from './Row';
+import { Row } from '../../../../../components/Common';
 
 interface Props {
   user: UserRes;

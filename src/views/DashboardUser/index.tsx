@@ -2,12 +2,11 @@ import React from 'react';
 
 import { Route, Redirect, Switch } from 'react-router-dom';
 import { Main } from '../../components/Layout';
-import { Welcome, Order } from '../DashboardCommon';
+import { Welcome, Order, Profile, Contact } from '../DashboardCommon';
 import { MenuItemType } from '../../types/menu-item';
 
 import DashboardContainer from '../../components/Layout/DashboardContainer';
 import Navigation from '../../components/Layout/Navigation';
-import Profile from '../DashboardCommon/Profile';
 import SingleRentDetail from '../DashboardCommon/SingleRentDetail';
 
 const DashboardUser = () => {
@@ -37,6 +36,7 @@ const DashboardUser = () => {
           <Route exact path="/user" render={() => <Redirect to="/user/main" />} />
           <Route path="/user/main" component={Welcome} />
           <Route path="/user/profile" component={Profile} />
+          <Route path="/user/contact" component={Contact} />
           <Route path="/user/order/step/:step" component={Order} />
           <Route exact path="/user/single-rent/:orderId" component={SingleRentDetail} />
         </Switch>

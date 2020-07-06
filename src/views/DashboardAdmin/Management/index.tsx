@@ -12,6 +12,7 @@ import WorkersManagement from './WorkersManagement';
 import { BoxMapManagement } from '../../DashboardCommon';
 import DiscountCodes from './DiscountCodes';
 import StockDiscount from './StockDiscount';
+import StockSelect from './StockSelect';
 
 interface Props {
   user: UserRes;
@@ -19,6 +20,7 @@ interface Props {
 
 const Management = ({ user }: Props) => (
   <Section full>
+    <StockSelect />
     <Tabs
       tabs={[
         {
@@ -47,6 +49,7 @@ const Management = ({ user }: Props) => (
         },
       ]}
     />
+
     <Switch>
       <Route
         exact

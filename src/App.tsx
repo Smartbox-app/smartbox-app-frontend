@@ -9,7 +9,16 @@ import { createBrowserHistory } from 'history';
 import flatpickr from 'flatpickr';
 import { Polish } from 'flatpickr/dist/l10n/pl';
 import reducers from './reducers';
-import { Login, DashboardAdmin, DashboardWorker, DashboardUser, Register, RestorPass, Page404 } from './views';
+import {
+  Login,
+  DashboardAdmin,
+  DashboardWorker,
+  DashboardUser,
+  Register,
+  RestorPass,
+  Page404,
+  UserActivation,
+} from './views';
 import {
   OnlineContent,
   OfflineContent,
@@ -68,6 +77,8 @@ const App = () => {
               <Route path="/register" component={Register} />
               <Route exact path="/restore-pass/" component={RestorPass} />
               <Route path="/restore-pass/:userId/:updateToken" component={RestorPass} />
+              <Route exact path="/user-activation/:invitationId/:updateToken" component={UserActivation} />
+              {/* http://localhost:3000/user-activation/rudytester+worker@gmail.com/df6ed2d0-2855-4bf0-a67d-57665bc59664 */}
               <RouteAdmin path="/admin" component={DashboardAdmin} />
               <RouteWorker path="/worker" component={DashboardWorker} />
               <RouteUser path="/user" component={DashboardUser} />
