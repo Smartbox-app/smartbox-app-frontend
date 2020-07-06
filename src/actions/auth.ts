@@ -75,3 +75,16 @@ export const logout = () => async (dispatch: any) => {
 };
 
 export const clearUserSession = () => ({ type: 'CLEAR_USER_SESSION' });
+
+export const logoutGoogle = () => async (dispatch: any) => {
+  await ApiService.get(
+    dispatch,
+    'LOGOUT',
+    'LOGOUT',
+    (data: any) => {
+      console.log('logoutGoogle', data);
+    },
+    null,
+    '/auth/login-google/redirect',
+  );
+};

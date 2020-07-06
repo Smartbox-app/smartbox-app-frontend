@@ -4,19 +4,35 @@ import GoogleLogin from 'react-google-login';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { __ } from '../../../../helpers/i18n';
-import { auth } from '../../../../actions';
+import { auth, modal } from '../../../../actions';
 
 import './GoogleButton.scss';
 import { Button } from '../../../../components/Common';
+import ApiService from '../../../../services/api-service';
 
 interface Props {
   loginWithGoogle: () => void;
+  logoutGoogle: () => void;
+  showModal: (data: any) => void;
 }
 
-const GoogleButton = ({ loginWithGoogle }: Props) => {
+const GoogleButton = ({ loginWithGoogle, logoutGoogle, showModal }: Props) => {
   const responseGoogle = (response: any) => {
     console.log(response);
     // loginWithGoogle();
+  };
+
+  const logInHandle = async () => {
+    const openedWindow = window.open(
+      `${ApiService.url}auth/login-google`,
+      'Logowanie - Konta Google',
+      'height=700,width=600',
+    );
+    // console.log('openedWindow', openedWindow);
+
+    // // setTimeout(() => {
+    // //   openedWindow?.close();
+    // // }, 3000);
   };
 
   return (
@@ -30,7 +46,7 @@ const GoogleButton = ({ loginWithGoogle }: Props) => {
         redirectUri="/test"
         className="google-button-custom"
       />
-      {/* <Button text="test" primary click={() => loginWithGoogle()} /> */}
+      <Button text="test" primary click={() => logInHandle()} />
     </>
   );
 };
@@ -39,6 +55,7 @@ const mapDispatchToProps = (dispatch: any) =>
   bindActionCreators(
     {
       ...auth,
+      ...modal,
     },
     dispatch,
   );
