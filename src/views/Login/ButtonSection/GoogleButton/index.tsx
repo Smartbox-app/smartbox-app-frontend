@@ -39,16 +39,15 @@ const GoogleButton = ({ loginWithGoogle, showModal, getUserLoginGoogleData }: Pr
 
   return (
     <>
+      <Button text="test" primary click={(event: any) => logInHandle(event)} />
       <GoogleLogin
         clientId="615946111684-fif6ftu4rca6tjpbvhdh1r6eb8cqnt58.apps.googleusercontent.com"
         buttonText={`${__('application.continueWith')} Google`}
         onSuccess={responseSuccessGoogle}
         onFailure={responseFailedGoogle}
         cookiePolicy="single_host_origin"
-        redirectUri="/test"
         className="google-button-custom"
       />
-      <Button text="test" primary click={(event: any) => logInHandle(event)} />
     </>
   );
 };
