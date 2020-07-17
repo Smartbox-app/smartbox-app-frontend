@@ -27,7 +27,6 @@ import { appStatus } from './actions/app-status';
 
 import 'flatpickr/dist/flatpickr.min.css';
 import 'flatpickr/dist/themes/airbnb.css';
-import Testowy from './views/Testowy';
 
 flatpickr.localize(Polish);
 flatpickr.defaultConfig.time_24hr = true;
@@ -68,7 +67,6 @@ const App = () => {
               <Route path="/login" component={Login} />
               <Route path="/register" component={Register} />
               <Route exact path="/restore-pass/" component={RestorPass} />
-              <Route path="/auth/login-google/redirect/" component={Testowy} />
               <Route path="/restore-pass/:userId/:updateToken" component={RestorPass} />
               <RouteAdmin path="/admin" component={DashboardAdmin} />
               <RouteWorker path="/worker" component={DashboardWorker} />

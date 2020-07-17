@@ -76,15 +76,15 @@ export const logout = () => async (dispatch: any) => {
 
 export const clearUserSession = () => ({ type: 'CLEAR_USER_SESSION' });
 
-export const logoutGoogle = () => async (dispatch: any) => {
+export const getUserLoginGoogleData = () => async (dispatch: any) => {
   await ApiService.get(
     dispatch,
-    'LOGOUT',
-    'LOGOUT',
+    'LOGIN_SUCCESS',
+    'LOGIN_WITH_Google_FAILED',
     (data: any) => {
-      console.log('logoutGoogle', data);
+      console.log('getUserLoginGoogleData', data);
     },
     null,
-    '/auth/login-google/redirect',
+    'auth/login-google/redirect',
   );
 };
