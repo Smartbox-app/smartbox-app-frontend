@@ -48,7 +48,7 @@ const GoogleButton = ({ loginWithGoogle, showModal, getUserLoginGoogleData }: Pr
         redirectUri="/test"
         className="google-button-custom"
       />
-      <Button text="test" primary click={(event: any) => showModal(<Mod />)} />
+      <Button text="test" primary click={(event: any) => logInHandle(event)} />
     </>
   );
 };
