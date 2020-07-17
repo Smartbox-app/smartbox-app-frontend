@@ -4,9 +4,9 @@ import { ButtonsContainer } from '../../../components/Layout';
 import { Button } from '../../../components/Common';
 import FbButton from './FbButton';
 import { __ } from '../../../helpers/i18n';
+import GoogleButton from './GoogleButton';
 
 import './ButtonSection.scss';
-import GoogleButton from './GoogleButton';
 
 const ButtonsSection = () => (
   <div className="login-buttons-section">
