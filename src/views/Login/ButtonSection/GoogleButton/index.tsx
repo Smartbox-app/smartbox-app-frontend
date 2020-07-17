@@ -22,12 +22,13 @@ const GoogleButton = ({ loginWithGoogle, logoutGoogle, showModal }: Props) => {
     // loginWithGoogle();
   };
 
-  const logInHandle = async () => {
+  const logInHandle = async (e: any) => {
     const openedWindow = window.open(
       `${ApiService.url}auth/login-google`,
       'Logowanie - Konta Google',
       'height=700,width=600',
     );
+    console.log('event', e);
     // console.log('openedWindow', openedWindow);
 
     // // setTimeout(() => {
@@ -37,7 +38,7 @@ const GoogleButton = ({ loginWithGoogle, logoutGoogle, showModal }: Props) => {
 
   return (
     <>
-      <GoogleLogin
+      {/* <GoogleLogin
         clientId="615946111684-fif6ftu4rca6tjpbvhdh1r6eb8cqnt58.apps.googleusercontent.com"
         buttonText={`${__('application.continueWith')} Google`}
         onSuccess={responseGoogle}
@@ -45,8 +46,8 @@ const GoogleButton = ({ loginWithGoogle, logoutGoogle, showModal }: Props) => {
         cookiePolicy="single_host_origin"
         redirectUri="/test"
         className="google-button-custom"
-      />
-      <Button text="test" primary click={() => logInHandle()} />
+      /> */}
+      <Button text="test" primary click={(event: any) => logInHandle(event)} />
     </>
   );
 };
