@@ -4,6 +4,7 @@ import ReactSelect from 'react-select';
 import ReactCreatableSelect from 'react-select/creatable';
 import { AddGiftReq, GiftRes } from 'smartbox-types';
 import { connect } from 'react-redux';
+import flatpickr from 'flatpickr';
 import { bindActionCreators } from 'redux';
 import { FormContainer, ButtonsContainer } from '../../../../../components/Layout';
 import { Button, Spinner } from '../../../../../components/Common';
@@ -24,7 +25,7 @@ interface Props {
 const Edit = ({ showModal }: Props) => {
   const submitButton = (
     <ButtonsContainer>
-      <Button text="Utwórz" type="submit" primary />
+      <Button text={__('notification.create')} type="submit" primary />
     </ButtonsContainer>
   );
 
@@ -55,7 +56,7 @@ const Edit = ({ showModal }: Props) => {
           showModal(<NewCode newCodeProps={data} />);
         }}
         onTranslateString={formOnTranslateString}
-        thirdPartyComponents={{ ReactSelect, ReactCreatableSelect }}
+        thirdPartyComponents={{ ReactSelect, ReactCreatableSelect, flatpickr }}
       />
     </FormContainer>
   );

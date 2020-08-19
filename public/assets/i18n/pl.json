@@ -13,6 +13,7 @@
       "back": "Wróć",
       "next": "Dalej",
       "change": "Zmień",
+      "create": "Utwórz",
       "send": "Wyślij",
       "lack": "Brak",
       "end": "Zakończ",
@@ -23,6 +24,7 @@
       "workers": "Pracownicy",
       "boxes": "Skrzynki",
       "discountsCodes": "Kody rabatowe",
+      "generalDiscounts": "Rabaty generalne",
 
       "history": "Historia wynajęć:",
       "lackOfHistory": "Brak historii wynajmu",
@@ -85,6 +87,8 @@
       "generateInvoice": "Wygeneruj fakturę",
       "profileDetail": "Szczegóły Profilu",
       "preInvitationForWorker": "Wyślij zaproszenie dla pracownika",
+
+      "createStockDisc" : "Utwórz zniżkę",
 
       "welcome": "Hello world"
     },

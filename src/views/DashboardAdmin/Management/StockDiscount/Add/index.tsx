@@ -1,19 +1,20 @@
 import React from 'react';
+import { bindActionCreators } from 'redux';
 import { ItfApiForm } from 'itf_formbuilder_react';
 import ReactSelect from 'react-select';
 import ReactCreatableSelect from 'react-select/creatable';
 import { AddGiftReq, GiftRes } from 'smartbox-types';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { FormContainer, ButtonsContainer } from '../../../../../components/Layout';
+import flatpickr from 'flatpickr';
+import { history } from '../../../../../App';
+import { FormContainer, ButtonsContainer, FieldsColumn } from '../../../../../components/Layout';
 import { Button, Spinner } from '../../../../../components/Common';
+import FormHeader from '../../../../../components/Layout/FormHeader';
 import ApiService from '../../../../../services/api-service';
 import { formOnTranslateString } from '../../../../../utils/trans-form';
 import { successNotification } from '../../../../../actions/notifications';
 import { modal } from '../../../../../actions';
 import { __ } from '../../../../../helpers/i18n';
-
-import NewCode from '../../DiscountCodes/NewCode';
 
 import './Add.scss';
 
@@ -42,21 +43,23 @@ const FormStockDiscount = ({ showModal }: Props) => {
 
   return (
     <FormContainer className="gift-form">
-      <ItfApiForm
-        formId="addGiftForm"
-        schemaMayBeDynamic={false}
-        schemaCacheEnabled={false}
-        loadingInfo={<Spinner transparent />}
-        schemaFetcher={() => ApiService.loadForm(fetchUrl)}
-        sendFetcher={customSendFetcher}
-        submitButton={submitButton}
-        onSavedSuccessfully={(data: GiftRes) => {
-          successNotification(__('notification.discCodeCreated'));
-          showModal(<NewCode newCodeProps={data} />);
-        }}
-        onTranslateString={formOnTranslateString}
-        thirdPartyComponents={{ ReactSelect, ReactCreatableSelect }}
-      />
+      <FormHeader title="Tworzysz zniżkę" />
+      <FieldsColumn>
+        <ItfApiForm
+          formId="addGiftForm"
+          schemaMayBeDynamic={false}
+          schemaCacheEnabled={false}
+          loadingInfo={<Spinner transparent />}
+          schemaFetcher={() => ApiService.loadForm(fetchUrl)}
+          sendFetcher={customSendFetcher}
+          submitButton={submitButton}
+          onSavedSuccessfully={(data: GiftRes) => {
+            successNotification(__('notification.discCodeCreated'));
+          }}
+          onTranslateString={formOnTranslateString}
+          thirdPartyComponents={{ ReactSelect, ReactCreatableSelect, flatpickr }}
+        />
+      </FieldsColumn>
     </FormContainer>
   );
 };
