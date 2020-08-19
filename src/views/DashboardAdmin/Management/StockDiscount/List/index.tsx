@@ -45,12 +45,12 @@ class List extends Component<Props> {
   render() {
     const { showModal } = this.props;
     return (
-      <div className="">
+      <>
         <ButtonsContainer>
           <Button text={__('application.createStockDisc')} primary click={() => showModal(<Add />)} />
         </ButtonsContainer>
         <ApiTable scheme={this.scheme} apiEndpointSubUrl="stock/discount/list" />
-      </div>
+      </>
     );
   }
 }
