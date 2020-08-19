@@ -9,6 +9,8 @@ import LogoContainer from './LogoContainer';
 import Section from './Section';
 import SectionHeader from './SectionHeader';
 import Navigation from './Navigation';
+import FieldsColumn from './FieldsColumn';
+import FieldsGrid from './FieldsGrid';
 
 export {
   Main,
@@ -22,4 +24,6 @@ export {
   Section,
   SectionHeader,
   Navigation,
+  FieldsColumn,
+  FieldsGrid,
 };

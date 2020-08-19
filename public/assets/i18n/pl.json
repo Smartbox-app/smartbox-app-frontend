@@ -13,6 +13,7 @@
       "back": "Wróć",
       "next": "Dalej",
       "change": "Zmień",
+      "create": "Utwórz",
       "send": "Wyślij",
       "lack": "Brak",
       "end": "Zakończ",
@@ -27,6 +28,7 @@
       "salesList": "Lista promocji",
       "createSale": "Utwórz zniżkę",
       "deleteSingleSale": "Czy jesteś pewien, że chcesz usunąć zniżkę?",
+      "generalDiscounts": "Rabaty generalne",
 
       "history": "Historia wynajęć:",
       "lackOfHistory": "Brak historii wynajmu",
@@ -77,6 +79,7 @@
 
       "orderFormPickSize": "Proszę wybrać rozmiar magazynu:",
       "newStock": "Nowy magazyn",
+      "14daysResign": "Rezygnuję z możliwości 14 dniowego wypowiedzenia i zgadzam się na uruchomienie usługi.",
 
       "discounts": "Promocje:",
 
@@ -88,6 +91,8 @@
       "generateInvoice": "Wygeneruj fakturę",
       "profileDetail": "Szczegóły Profilu",
       "preInvitationForWorker": "Wyślij zaproszenie dla pracownika",
+
+      "createStockDisc" : "Utwórz zniżkę",
 
       "welcome": "Hello world"
     },
