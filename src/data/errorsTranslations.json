@@ -19,6 +19,7 @@
     "Invalid email.": "Nieprawidłowy e-mail adres.",
     "Invalid bank account number": "Błędny numer konta bankowego",
     "Invalid phone number": "Błędny numer telefonu",
-    "Data początku nie może być wcześniejsza od końcowej": "Data początku nie może być wcześniejsza od końcowej"
+    "Data początku nie może być wcześniejsza od końcowej": "Data początku nie może być wcześniejsza od końcowej",
+    "Phone": "Telefon"
   }
 }

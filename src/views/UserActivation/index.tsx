@@ -3,8 +3,9 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import { ItfApiForm } from 'itf_formbuilder_react';
-import { AddInvitedUserReq } from 'smartbox-types';
+import { AddInvitedUserReq, UserRole } from 'smartbox-types';
 import { notifications, auth } from '../../actions';
+import { ApplicationState } from '../../reducers';
 import ApiService from '../../services/api-service';
 
 import { Spinner, Button, Logo } from '../../components/Common';
@@ -14,11 +15,12 @@ import { history } from '../../App';
 
 interface Props {
   match: any;
+  userRole: UserRole;
   logout: () => void;
   successNotification: (text: string) => void;
 }
 
-const UserActivation = ({ successNotification, match, logout }: Props) => {
+const UserActivation = ({ successNotification, match, logout, userRole }: Props) => {
   const loadUrl = 'user/form/add-invited-user';
   const sendUrl = 'user/add-invited';
 
@@ -35,7 +37,7 @@ const UserActivation = ({ successNotification, match, logout }: Props) => {
 
   const success = () => {
     successNotification('Konto zostało aktywowane.');
-    logout();
+    userRole && logout();
     history.push('/');
   };
 
@@ -67,6 +69,10 @@ const UserActivation = ({ successNotification, match, logout }: Props) => {
   );
 };
 
+const mapStateToProps = (state: ApplicationState) => ({
+  userRole: state.user.details.role,
+});
+
 const mapDispatchToProps = (dispatch: any): any =>
   bindActionCreators(
     {
@@ -76,4 +82,4 @@ const mapDispatchToProps = (dispatch: any): any =>
     dispatch,
   );
 
-export default connect(null, mapDispatchToProps)(UserActivation);
+export default connect(mapStateToProps, mapDispatchToProps)(UserActivation);

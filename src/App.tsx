@@ -78,7 +78,6 @@ const App = () => {
               <Route exact path="/restore-pass/" component={RestorPass} />
               <Route path="/restore-pass/:userId/:updateToken" component={RestorPass} />
               <Route exact path="/user-activation/:invitationId/:updateToken" component={UserActivation} />
-              {/* http://localhost:3000/user-activation/rudytester+worker@gmail.com/df6ed2d0-2855-4bf0-a67d-57665bc59664 */}
               <RouteAdmin path="/admin" component={DashboardAdmin} />
               <RouteWorker path="/worker" component={DashboardWorker} />
               <RouteUser path="/user" component={DashboardUser} />
