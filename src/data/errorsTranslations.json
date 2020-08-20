@@ -17,7 +17,8 @@
     "Field required.": "To pole jest wymagane.",
     "Invalid Zip code.": "Błędny kod pocztowy.",
     "Invalid email.": "Nieprawidłowy e-mail adres.",
-    "Invalid bank account number": "Invalid bank account number",
-    "Invalid phone number": "Invalid phone number"
+    "Invalid bank account number": "Błędny numer konta bankowego",
+    "Invalid phone number": "Błędny numer telefonu",
+    "Data początku nie może być wcześniejsza od końcowej": "Data początku nie może być wcześniejsza od końcowej"
   }
 }

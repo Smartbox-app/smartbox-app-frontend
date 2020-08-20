@@ -1,0 +1,36 @@
+@import '../../../config/variables.scss';
+@import '../../../config/mixins.scss';
+
+body {
+  margin: 0;
+}
+
+main {
+  background-color: $color-background;
+  min-height: $main-min-height;
+  display: flex;
+  flex: 0 0 100%;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+
+  footer {
+    justify-self: flex-end;
+    align-self: flex-end;
+  }
+}
+
+@include gt-sm {
+  main {
+    margin: 0 auto;
+    max-width: 100%;
+  }
+}
+
+@include gt-lg {
+  main {
+    display: flex;
+    max-width: 100vw;
+    flex-direction: row;
+  }
+}

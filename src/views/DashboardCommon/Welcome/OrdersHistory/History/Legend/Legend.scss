@@ -1,0 +1,22 @@
+@import '../../../../../../config/variables.scss';
+@import '../../../../../../config/mixins.scss';
+
+.history-legend {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: $main-spacing /4;
+
+  .legend-color {
+    display:block;
+    width: 15px;
+    height: 15px;
+    background-color: $color-active;
+    border-radius: 3px;
+    margin-right: $main-spacing /2;
+  }
+  .legend-desc {
+    margin: 0;
+    font-size: .7rem;
+  }
+}

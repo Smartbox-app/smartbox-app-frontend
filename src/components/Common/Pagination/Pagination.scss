@@ -1,0 +1,74 @@
+@import "../../../config/variables";
+
+.pagination {
+  margin: $main-spacing 0;
+  display: flex;
+  justify-content: flex-start;
+
+  &.pagination-mobile {
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+    .previous,
+    .next {
+      flex: 0 1 100%;
+      margin: 0;
+      text-align: center;
+    }
+
+    li {
+      margin: $main-spacing / 2 0;
+    }
+  }
+
+  li {
+    margin: $main-spacing / 2;
+  }
+
+  a {
+    display: block;
+    padding: $main-spacing / 2;
+    cursor: pointer;
+
+    &:hover {
+      color: $color-primary;
+      border-bottom: 1px solid $color-primary;
+    }
+  }
+
+  .next,
+  .previous {
+    background-color: $color-primary;
+    transition: 0.3s background-color;
+
+    &:hover {
+      background-color: lighten($color-primary, 10%);
+
+      a {
+        border-bottom: none;
+      }
+    }
+  }
+
+  .selected {
+    border: 1px solid $color-primary;
+  }
+
+  .next {
+    margin-right: 0;
+  }
+
+  .previous {
+    margin-left: 0;
+  }
+
+  .disabled {
+    background: #ccc;
+    cursor: not-allowed;
+
+    &:hover {
+      background-color: #ccc;
+      border: none;
+    }
+  }
+}

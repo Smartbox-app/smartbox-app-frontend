@@ -1,0 +1,29 @@
+@import "../../../config/variables";
+@import "../../../config/mixins";
+
+.section-header-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  .section-header {
+    color: $color-text;
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+
+  .no-margin {
+    margin-bottom: $main-spacing;
+  }
+}
+
+@include gt-sm {
+  .section-header-container {
+    margin-bottom: $main-spacing * 1.5;
+    
+    .section-header {
+      max-width: $page-header-width;
+    }
+  }
+}

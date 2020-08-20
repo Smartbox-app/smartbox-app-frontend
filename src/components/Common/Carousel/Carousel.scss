@@ -1,0 +1,52 @@
+@import '../../../config/variables.scss';
+@import '../../../config/mixins.scss';
+
+.slider-wrapper {
+  position: relative;
+  padding: $main-spacing * 2;
+}
+
+.slick-slide img {
+  margin: auto;
+}
+
+.slick-list {
+  position: relative;
+}
+
+.slick-slider {
+  width: 100%;
+  min-height: $carousel-small;
+}
+
+.slick-dots  {
+  li {
+    &:hover {
+      button {
+        &::before {
+          color: lighten($color-primary, 10%);
+        }
+      }
+    }
+  }
+
+
+  li.slick-active {
+    button {
+      &::before {
+        color: $color-primary;
+      }
+    }
+  }
+
+}
+
+@include gt-sm {
+  .slick-slider {
+    width: 100%;
+    min-height: $carousel-big;
+  }
+  .slick-slide img {
+    min-height: $carousel-big;
+  }
+}

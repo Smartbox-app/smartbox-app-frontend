@@ -1,0 +1,60 @@
+@import '../../../../config/variables.scss';
+@import '../../../../config/mixins.scss';
+
+$icon-size: $main-spacing * 4;
+
+.item-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  z-index: 10;
+  font-weight: 600;
+  font-size: 1.1rem;
+
+  .item-icon {
+    width: $icon-size;
+    height: $icon-size;
+    border-radius: $icon-size /2;
+    background: #fff;
+    color: $color-disabled;
+    border: 2px solid $color-disabled;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .item-current {
+    background: $color-primary;
+    color: $color-text-button;
+    border: 2px solid $color-primary;
+
+    &::after {
+      display: block;
+      content: '';
+      background-image: url('/assets/icons/bar-marker.svg');
+      background-size: contain;
+      background-repeat: no-repeat;
+      fill: #aaa;
+      width: 16px;
+      height: 16px;
+      color: $color-disabled;
+      top: -16px;
+      left: 50%;
+      transform: translateX(-50%);
+      position: absolute;
+    }
+  }
+
+  .item-done {
+    background: $color-success;
+    border: 2px solid $color-success;
+    color: #fff;
+  }
+
+  .item-description {
+    font-size: 1rem;
+    font-weight: 400;
+  }
+}

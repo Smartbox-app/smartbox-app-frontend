@@ -7,8 +7,17 @@ import { Route, Router, Switch, Redirect } from 'react-router-dom';
 import { WorkBoxProvider } from 'react-workbox';
 import { createBrowserHistory } from 'history';
 import reducers from './reducers';
-import { Home, Page404 } from './views';
-import { OnlineContent, OfflineContent, UpdateInfoBar, Spinner } from './components/Common';
+import { Login, DashboardAdmin, DashboardWorker, DashboardUser, Register } from './views';
+import {
+  OnlineContent,
+  OfflineContent,
+  UpdateInfoBar,
+  Spinner,
+  RouteAdmin,
+  RouteUser,
+  RouteWorker,
+  Modal,
+} from './components/Common';
 import { NotificationContainer } from './components/Notifications';
 import AppOffline from './components/AppOffline';
 import { i18n } from './helpers/i18n';
@@ -46,12 +55,16 @@ const App = () => {
           <NotificationContainer />
           <Router history={history}>
             <Switch>
-              <Route exact path="/" render={() => <Redirect to="/home" />} />
-              <Route path="/home" component={Home} />
-              <Route path="/404" component={Page404} />
+              <Route exact path="/" render={() => <Redirect to="/login" />} />
+              <Route path="/login" component={Login} />
+              <Route path="/register" component={Register} />
+              <RouteAdmin path="/admin" component={DashboardAdmin} />
+              <RouteWorker path="/worker" component={DashboardWorker} />
+              <RouteUser path="/user" component={DashboardUser} />
               <Route render={() => <Redirect to="/404" />} />
             </Switch>
           </Router>
+          <Modal />
         </OnlineContent>
         <OfflineContent>
           <AppOffline />

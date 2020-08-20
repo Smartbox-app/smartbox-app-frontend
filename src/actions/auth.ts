@@ -5,6 +5,8 @@ import { history } from '../App';
 import { hideModal } from './modal';
 import { getRememberedRedirect, clearRememberedRedirect } from '../utils/remeber-redirect';
 
+export const saveUser = (userData: AuthLoginResult) => ({ type: 'LOGIN_SUCCESS', payload: userData });
+
 export const login = (userData: AuthLoginRequest) => async (dispatch: any) => {
   await ApiService.post(
     dispatch,
