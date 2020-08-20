@@ -23,17 +23,46 @@ interface Props {
   fetchBoxStatuses: (stockId: string) => void;
   fetchSingleBoxDetails: (rentId: string) => void;
 }
+interface State {
+  isMouseDown: boolean;
+  grabStartX: number;
+  scrollLeft: number;
+}
 
-class BoxMapManagement extends React.Component<Props> {
+class BoxMapManagement extends React.Component<Props, State> {
   private element: any;
 
   constructor(props: Props) {
     super(props);
     this.element = React.createRef();
+    this.state = {
+      isMouseDown: false,
+      grabStartX: 0,
+      scrollLeft: 0,
+    };
   }
 
   async componentDidMount() {
     const { fetchBoxStatuses } = this.props;
+
+    const mapWapperElement = this.element.current;
+
+    mapWapperElement.addEventListener(
+      'mousedown',
+      (e: MouseEvent) => this.handleMouseDown(e, this.element.current),
+      false,
+    );
+    mapWapperElement.addEventListener('mouseup', (e: MouseEvent) => this.handleMouseUp(e, this.element.current), false);
+    mapWapperElement.addEventListener(
+      'mouseleave',
+      (e: MouseEvent) => this.handleMouseLeave(e, this.element.current),
+      false,
+    );
+    mapWapperElement.addEventListener(
+      'mousemove',
+      (e: MouseEvent) => this.handleMouseMove(e, this.element.current),
+      false,
+    );
 
     await fetchBoxStatuses('07b76069-5bbc-4486-95b4-63ea8a7eba52');
     const catchElement = this.element.current.querySelectorAll('#kontenery .storage, #kontenery .st9');
@@ -47,11 +76,11 @@ class BoxMapManagement extends React.Component<Props> {
   }
 
   componentWillUnmount() {
-    const catchElement = this.element.current.querySelectorAll('.storage');
+    const catchElement = this.element.current.querySelectorAll('#kontenery .storage, #kontenery .st9');
     catchElement.forEach((singleElement: any) => {
-      singleElement.addEventListener('click', this.handleEventModal, false);
-      singleElement.addEventListener('mouseover', this.handleEventMouseOver, false);
-      singleElement.addEventListener('mouseout', this.handleEventMouseOut, false);
+      singleElement.removeEventListener('click', this.handleEventModal, false);
+      singleElement.removeEventListener('mouseover', this.handleEventMouseOver, false);
+      singleElement.removeEventListener('mouseout', this.handleEventMouseOut, false);
     });
   }
 
@@ -83,6 +112,39 @@ class BoxMapManagement extends React.Component<Props> {
         }
       }
     });
+  };
+
+  private handleMouseDown = (e: MouseEvent, el: HTMLElement): any => {
+    this.setState({
+      isMouseDown: true,
+      grabStartX: e.pageX - el.offsetLeft,
+      scrollLeft: el.scrollLeft,
+    });
+    el.classList.add('grab');
+  };
+
+  private handleMouseUp = (e: MouseEvent, el: HTMLElement): any => {
+    this.setState({
+      isMouseDown: false,
+    });
+    el.classList.remove('grab');
+  };
+
+  private handleMouseLeave = (e: MouseEvent, el: HTMLElement): any => {
+    this.setState({
+      isMouseDown: false,
+    });
+    el.classList.remove('grab');
+  };
+
+  private handleMouseMove = (e: MouseEvent, el: HTMLElement): any => {
+    const { isMouseDown, grabStartX, scrollLeft } = this.state;
+    if (!isMouseDown) return;
+    e.preventDefault();
+    const mousePositionX = e.pageX - el.offsetLeft;
+    const mapMoveDistance = mousePositionX - grabStartX;
+
+    el.scrollLeft = scrollLeft - mapMoveDistance;
   };
 
   handleEventModal = (e: any): any => {

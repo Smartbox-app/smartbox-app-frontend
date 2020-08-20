@@ -1,6 +1,10 @@
 @import '../../../config/variables.scss';
 @import '../../../config/mixins.scss';
 
+.grab {
+  cursor: grabbing;
+}
+
 .map-wrapper {
   overflow-x: scroll;
   box-shadow: $standard-shadow;
@@ -21,10 +25,10 @@
         cursor: pointer;
       }
     }
-    
+
     .free {
       fill: $color-success;
-      
+
       &:hover {
         fill: lighten($color-success, 5%)
       }
@@ -39,7 +43,7 @@
 
     .to-explain, .out-of-service {
       fill: $color-text;
-      
+
       &:hover {
         fill: lighten($color-text, 5%)
       }
