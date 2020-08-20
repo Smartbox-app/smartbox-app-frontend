@@ -1,24 +1,41 @@
 import React from 'react';
-import { connect } from 'react-redux';
 
+import { withRouter, RouteComponentProps } from 'react-router';
 import { Section, SectionHeader } from '../../../components/Layout';
 import { ProgressIndicator } from '../../../components/Common';
-import { ApplicationState } from '../../../reducers';
 
 import Form from './Form/Index';
 
-interface Props {
-  userName: string;
-  formStep: number;
+interface RouteProps {
+  step: string;
 }
 
-const Order = ({ userName, formStep }: Props) => (
-  <>
+type Props = RouteComponentProps<RouteProps>;
+
+const Order = ({ match }: Props) => {
+  const getStepByName = (stepName: string) => {
+    switch (stepName) {
+      case 'size':
+        return 1;
+      case 'duration':
+        return 2;
+      case 'summary':
+        return 3;
+      case 'agreement':
+        return 4;
+      case 'payment':
+        return 5;
+      default:
+        return 1;
+    }
+  };
+
+  return (
     <Section>
       <SectionHeader title="Nowe zamówienie:" />
       <ProgressIndicator
-        current={formStep}
-        data={[
+        current={getStepByName(match.params.step)}
+        stepList={[
           {
             value: 1,
             desc: 'Rozmiar',
@@ -33,18 +50,17 @@ const Order = ({ userName, formStep }: Props) => (
           },
           {
             value: 4,
+            desc: 'Umowa',
+          },
+          {
+            value: 5,
             desc: 'Płatność',
           },
         ]}
       />
       <Form />
     </Section>
-  </>
-);
+  );
+};
 
-const mapStateToProps = (state: ApplicationState) => ({
-  userName: state.user.details.firstName,
-  formStep: state.order.formStep,
-});
-
-export default connect(mapStateToProps)(Order);
+export default withRouter(Order);

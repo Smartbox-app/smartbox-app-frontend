@@ -1,13 +1,9 @@
 @import '../../../config/variables.scss';
 @import '../../../config/mixins.scss';
 
-body {
-  margin: 0;
-}
-
 main {
-  background-color: $color-background;
-  min-height: $main-min-height;
+  background-color: $color-background-darken;
+  min-height: $main-min-height-mobile;
   display: flex;
   flex: 0 0 100%;
   flex-direction: column;
@@ -22,6 +18,7 @@ main {
 
 @include gt-sm {
   main {
+    min-height: $main-min-height;
     margin: 0 auto;
     max-width: 100%;
   }

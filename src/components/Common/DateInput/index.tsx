@@ -1,6 +1,6 @@
 import React from 'react';
 import Flatpickr from 'react-flatpickr';
-import { useForm, useFormContext } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import flatpickr from 'flatpickr'; // Check out other cool Themes: https://flatpickr.js.org/themes/
 import 'flatpickr/dist/themes/airbnb.css';
 
@@ -23,7 +23,7 @@ interface Props {
 
 const DateInput = ({ name, value, onChange, label, minDate, maxDate, register }: Props) => {
   const { errors } = useForm();
-  // const { register } = useFormContext();
+
   const setDefaultVaule = (data: any) => {
     if (data[0]) {
       return format(data[0], 'yyyy-MM-dd');

@@ -32,3 +32,10 @@
   }
 }
 
+@include gt-sm {
+  .bar-wrapper {
+    .bar {
+      margin-top: 20px;
+    }
+  }
+}

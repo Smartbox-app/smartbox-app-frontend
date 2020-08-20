@@ -10,15 +10,20 @@ interface SingleStep {
 }
 
 interface Props {
-  data: SingleStep[];
+  stepList: SingleStep[];
   current: number;
 }
 
-const ProgressIndicator = ({ data, current }: Props) => {
-  const dataToDisplay = data.map((data: SingleStep, key: number) => (
+const ProgressIndicator = ({ stepList, current }: Props) => {
+  const dataToDisplay = stepList.map((singleStep: SingleStep, key: number) => (
     <div className="single-stamp" key={key}>
-      <Item value={data.desc} order={data.value} current={data.value === current} done={data.value < current} />
-      {key !== 3 && <Bar done={data.value} current={current} />}
+      <Item
+        value={singleStep.desc}
+        order={singleStep.value}
+        current={singleStep.value === current}
+        done={singleStep.value < current}
+      />
+      {key !== stepList.length - 1 && <Bar done={singleStep.value} current={current} />}
     </div>
   ));
   return <div className="progress-indicator-wrapper">{dataToDisplay}</div>;

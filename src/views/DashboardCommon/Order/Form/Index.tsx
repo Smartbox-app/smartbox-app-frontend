@@ -1,13 +1,16 @@
 import React from 'react';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Switch, Route } from 'react-router';
+
 import { UserRes } from 'smartbox-types';
-import StepOne from './StepOne';
-import StepTwo from './StepTwo';
-import StepSummary from './StepSummary';
 import UserService from '../../../../services/user-service';
 import { ApplicationState } from '../../../../reducers';
+
+import StepSize from './StepSize';
+import StepDuration from './StepDuration';
+import StepPayment from './StepPayment';
+import StepAgreement from './StepAgreement';
+import StepSummary from './StepSummary';
 
 interface Props {
   user: UserRes;
@@ -15,10 +18,11 @@ interface Props {
 
 const Form = ({ user }: Props) => (
   <Switch>
-    <Route path={`/${UserService.getSlugByRole(user.role)}/order/step/1`} component={StepOne} />
-    <Route path={`/${UserService.getSlugByRole(user.role)}/order/step/2`} component={StepTwo} />
-    <Route path={`/${UserService.getSlugByRole(user.role)}/order/step/3`} component={StepSummary} />
-    <Route path={`/${UserService.getSlugByRole(user.role)}/order/step/4`} component={StepSummary} />
+    <Route path={`/${UserService.getSlugByRole(user.role)}/order/step/size`} component={StepSize} />
+    <Route path={`/${UserService.getSlugByRole(user.role)}/order/step/duration`} component={StepDuration} />
+    <Route path={`/${UserService.getSlugByRole(user.role)}/order/step/summary`} component={StepSummary} />
+    <Route path={`/${UserService.getSlugByRole(user.role)}/order/step/agreement`} component={StepAgreement} />
+    <Route path={`/${UserService.getSlugByRole(user.role)}/order/step/payment`} component={StepPayment} />
   </Switch>
 );
 

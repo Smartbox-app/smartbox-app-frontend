@@ -12,6 +12,7 @@ $color-text: #000;
 $color-text-button: #fff;
 
 $color-background: #ffffff;
+$color-background-darken: darken($color-background, 4%);;
 
 $color-danger: #a51727;
 $color-notice: #bb9c71;
@@ -32,7 +33,16 @@ $main-logo-size: 200px;
 
 // sizing
 $max-form-width: 500px;
+$credit-card-width: 330px;
+$footer-height: 60px;
+$box-map-width: 3500px;
 
+$single-option-width: 150px;
+$single-option-height: 165px;
+$single-option-width-big: 330px; 
+$single-option-height-big: 270px;
+
+$main-min-height-mobile: calc(100vh - 80px);
 $main-min-height: calc(100vh - 190px);
 
 $login-form-width: 400px;

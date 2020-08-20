@@ -7,8 +7,9 @@ import { Section } from '../../../components/Layout';
 import { ApplicationState } from '../../../reducers';
 import UserService from '../../../services/user-service';
 
-import WorkersManagement from '../WorkersManagement';
-import BoxMapManagement from '../BoxMapManagement';
+import WorkersManagement from './WorkersManagement';
+import BoxMapManagement from './BoxMapManagement';
+import DiscountCodes from '../DiscountCodes';
 
 interface Props {
   user: UserRes;
@@ -30,6 +31,12 @@ const Management = ({ user }: Props) => (
           to: `/${UserService.getSlugByRole(user.role)}/management/map`,
           text: 'Skrzynki',
         },
+        {
+          className: 'tab',
+          activeClassName: 'active',
+          to: `/${UserService.getSlugByRole(user.role)}/management/discount`,
+          text: 'Kody rabatowe',
+        },
       ]}
     />
     <Switch>
@@ -40,6 +47,7 @@ const Management = ({ user }: Props) => (
       />
       <Route path={`/${UserService.getSlugByRole(user.role)}/management/workers`} component={WorkersManagement} />
       <Route path={`/${UserService.getSlugByRole(user.role)}/management/map`} component={BoxMapManagement} />
+      <Route path={`/${UserService.getSlugByRole(user.role)}/management/discount`} component={DiscountCodes} />
     </Switch>
   </Section>
 );

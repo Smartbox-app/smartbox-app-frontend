@@ -3,8 +3,8 @@ import { ItfApiForm } from 'itf_formbuilder_react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import ApiService from '../../services/api-service';
-import { FormContainer, ButtonsContainer, LogoContainer, PageContent } from '../../components/Layout';
-import { Spinner, Button } from '../../components/Common';
+import { FormContainer, LogoContainer, PageContent } from '../../components/Layout';
+import { Spinner, LoginLogo, Input } from '../../components/Common';
 import { formOnTranslateString } from '../../utils/trans-form';
 import { notifications } from '../../actions';
 import { history } from '../../App';
@@ -20,10 +20,10 @@ interface Props {
 
 const Register = ({ successNotification }: Props) => (
   <PageContent>
-    <LogoContainer />
+    <LoginLogo />
     <FormContainer className="register-form">
       <ItfApiForm
-        formId="UuerActivationForm"
+        formId="UserActivationForm"
         schemaMayBeDynamic={false}
         schemaCacheEnabled={false}
         loadingInfo={<Spinner transparent />}

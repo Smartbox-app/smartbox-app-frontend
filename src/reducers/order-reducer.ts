@@ -1,18 +1,15 @@
 import { addDays } from 'date-fns';
-import { BoxGroupAvailability, usePricing, ICalculateProps } from 'smartbox-types';
+import { BoxGroupAvailability, usePricing, ICalculateProps, IPricingResult } from 'smartbox-types';
+import { FormType } from '../types/order-form';
 
-export interface Form {
-  durationInDays: number;
-  discount: number;
-  size: string;
-  isFirstRent: boolean;
-  dateStart: Date;
-  dateEnd: Date;
-}
 export type OrderState = {
-  formData: Form;
-  formStep: number;
-  countedPrice: number;
+  formData: FormType;
+  paymentId: string;
+  countedPrice: IPricingResult;
+  boxAvailability: BoxGroupAvailability[];
+  discountList: any[];
+  isAgreementAccepted: boolean;
+  isResignationMarked: boolean;
 };
 
 interface FormStepSuccess {
@@ -20,17 +17,25 @@ interface FormStepSuccess {
   payload: any;
 }
 
-interface FormGoNextStep {
-  type: 'FORM_GO_NEXT_STEP_SUCCESS';
-  payload: number;
+interface SentRentBoxRequestSuccess {
+  type: 'SENT_RENT_BOX_REQUEST_SUCCESS';
+  payload: string;
 }
 
-interface BoxGroup {
+interface FetchBoxAvailability {
   type: 'FETCH_BOX_AVAILABILITY_SUCCESS';
   payload: BoxGroupAvailability[];
 }
 
-type Action = FormStepSuccess | FormGoNextStep | BoxGroup;
+interface FormReaded {
+  type: 'FORM_AGREEMENT_READED_SUCCESS';
+}
+
+interface FormResignation {
+  type: 'FORM_RESIGNATION_MARKED_SUCCESS';
+}
+
+type Action = FormStepSuccess | FetchBoxAvailability | SentRentBoxRequestSuccess | FormReaded | FormResignation;
 
 const initialState: OrderState = {
   formData: {
@@ -40,21 +45,29 @@ const initialState: OrderState = {
     isFirstRent: true,
     dateStart: new Date(),
     dateEnd: addDays(new Date(), 7),
+    discountCode: '',
   },
-  formStep: 1,
-  countedPrice: 0,
+  paymentId: '',
+  countedPrice: {
+    name: '',
+    value: 0,
+  },
+  boxAvailability: [],
+  discountList: [{ text: 'Jednorazowy rabat 5%', value: 5 }],
+  isAgreementAccepted: false,
+  isResignationMarked: false,
 };
 
 export default (state: OrderState = initialState, action: Action): any => {
   switch (action.type) {
     case 'FORM_STEP_SUCCESS': {
-      const newFormData: Form = { ...state.formData, ...action.payload };
+      const newFormData: FormType = { ...state.formData, ...action.payload };
 
       const { calculate } = usePricing();
 
       const data: ICalculateProps = {
         durationInDays: newFormData.durationInDays,
-        discount: 0,
+        discount: newFormData.discount,
         size: Number(newFormData.size),
         isFirstRent: false,
       };
@@ -65,6 +78,12 @@ export default (state: OrderState = initialState, action: Action): any => {
           ...state,
           formData: newFormData,
           countedPrice: price,
+          discountList: [
+            {
+              text: price.name,
+              value: 0,
+            },
+          ],
         };
       }
 
@@ -74,10 +93,29 @@ export default (state: OrderState = initialState, action: Action): any => {
       };
     }
 
-    case 'FORM_GO_NEXT_STEP_SUCCESS': {
+    case 'SENT_RENT_BOX_REQUEST_SUCCESS': {
       return {
         ...state,
-        formStep: action.payload,
+        paymentId: action.payload,
+      };
+    }
+
+    case 'FETCH_BOX_AVAILABILITY_SUCCESS': {
+      return {
+        ...state,
+        boxAvailability: action.payload,
+      };
+    }
+    case 'FORM_AGREEMENT_READED_SUCCESS': {
+      return {
+        ...state,
+        isAgreementAccepted: true,
+      };
+    }
+    case 'FORM_RESIGNATION_MARKED_SUCCESS': {
+      return {
+        ...state,
+        isResignationMarked: !state.isResignationMarked,
       };
     }
 

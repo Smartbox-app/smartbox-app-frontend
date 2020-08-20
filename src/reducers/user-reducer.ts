@@ -3,7 +3,7 @@ import SessionService from '../services/session-service';
 
 export type UserState = {
   details: UserRes;
-  singleUser: UserRes;
+  singleUser: UserRes | any;
 };
 
 interface Login {
@@ -37,6 +37,7 @@ const initialState: UserState = {
     rentCount: 0,
     id: '',
     email: '',
+    phone: '',
     firstName: '',
     lastName: '',
     role: UserRole.admin,

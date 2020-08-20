@@ -6,8 +6,10 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import { Route, Router, Switch, Redirect } from 'react-router-dom';
 import { WorkBoxProvider } from 'react-workbox';
 import { createBrowserHistory } from 'history';
+import flatpickr from 'flatpickr';
+import { Polish } from 'flatpickr/dist/l10n/pl';
 import reducers from './reducers';
-import { Login, DashboardAdmin, DashboardWorker, DashboardUser, Register } from './views';
+import { Login, DashboardAdmin, DashboardWorker, DashboardUser, Register, RestorPass } from './views';
 import {
   OnlineContent,
   OfflineContent,
@@ -22,6 +24,12 @@ import { NotificationContainer } from './components/Notifications';
 import AppOffline from './components/AppOffline';
 import { i18n } from './helpers/i18n';
 import { appStatus } from './actions/app-status';
+
+import 'flatpickr/dist/flatpickr.min.css';
+import 'flatpickr/dist/themes/airbnb.css';
+
+flatpickr.localize(Polish);
+flatpickr.defaultConfig.time_24hr = true;
 
 const createStoreWithMiddleware = composeWithDevTools(applyMiddleware(reduxThunk))(createStore);
 
@@ -58,6 +66,8 @@ const App = () => {
               <Route exact path="/" render={() => <Redirect to="/login" />} />
               <Route path="/login" component={Login} />
               <Route path="/register" component={Register} />
+              <Route exact path="/restore-pass/" component={RestorPass} />
+              <Route path="/restore-pass/:userId/:updateToken" component={RestorPass} />
               <RouteAdmin path="/admin" component={DashboardAdmin} />
               <RouteWorker path="/worker" component={DashboardWorker} />
               <RouteUser path="/user" component={DashboardUser} />

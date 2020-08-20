@@ -1,0 +1,18 @@
+@import '../../../../../../config/variables.scss';
+@import '../../../../../../config/mixins.scss';
+
+.row {
+  padding: $main-spacing;
+  border-bottom: 1px solid darken($color-background, 8%);
+
+  .row-label {
+    color: lighten($color-primary, 5%);
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+
+  .row-content {
+    font-size: 1.1rem;
+    font-weight: 500;
+  }
+}

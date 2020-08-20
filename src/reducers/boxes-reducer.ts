@@ -1,4 +1,4 @@
-import { BoxListItem, RentDetailsRes, RentStatus } from 'smartbox-types';
+import { BoxListItem, RentDetailsRes, RentStatus, BoxGroupAvailability } from 'smartbox-types';
 
 export type Boxes = {
   boxesGroup: BoxListItem[];
@@ -31,7 +31,12 @@ interface FetchSingleBoxDetails {
   payload: RentDetailsRes;
 }
 
-type Action = FetchBoxStatuses | FetchSingleBoxDetails;
+interface BoxGroup {
+  type: 'FETCH_BOX_AVAILABILITY_SUCCESS';
+  payload: BoxGroupAvailability[];
+}
+
+type Action = FetchBoxStatuses | FetchSingleBoxDetails | BoxGroup;
 
 export default (state: Boxes = initialState, action: Action): any => {
   switch (action.type) {

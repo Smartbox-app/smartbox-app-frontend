@@ -19,7 +19,7 @@ $icon-size: $main-spacing * 4;
     border-radius: $icon-size /2;
     background: #fff;
     color: $color-disabled;
-    border: 2px solid $color-disabled;
+    border: 1px solid $color-disabled;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -54,7 +54,24 @@ $icon-size: $main-spacing * 4;
   }
 
   .item-description {
-    font-size: 1rem;
+    margin-top: $main-spacing;
+    font-size: 0.7rem;
     font-weight: 400;
+  }
+}
+
+@include gt-sm {
+  .ittem-wrapper {
+
+    .item-description {
+      font-size: 1rem;
+      font-weight: 400;
+    }
+
+    .item-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 20px;
+    }
   }
 }

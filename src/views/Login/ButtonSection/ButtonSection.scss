@@ -15,3 +15,12 @@
 .lost-pass {
   text-align: center;
 }
+
+@include gt-sm {
+  .login-buttons-section {
+    margin-top: $main-spacing*3;
+    .button {
+      width: $login-button-size * 1.2;
+    }
+  }
+}

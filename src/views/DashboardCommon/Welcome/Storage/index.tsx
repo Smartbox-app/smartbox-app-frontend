@@ -7,26 +7,26 @@ const Storage = () => (
     <SectionHeader title="Zarządaj magazynami" />
     <StorageList
       list={[
-        {
-          size: 12,
-          location: 'Warszawa, Mokotów',
-        },
-        {
-          size: 6,
-          location: 'Wrocław, Fabryczna',
-        },
-        {
-          size: 6,
-          location: 'Wrocław, Fabryczna',
-        },
-        {
-          size: 6,
-          location: 'Wrocław, Fabryczna',
-        },
-        {
-          size: 6,
-          location: 'Wrocław, Fabryczna',
-        },
+        // {
+        //   size: 12,
+        //   location: 'Warszawa, Mokotów',
+        // },
+        // {
+        //   size: 6,
+        //   location: 'Wrocław, Fabryczna',
+        // },
+        // {
+        //   size: 6,
+        //   location: 'Wrocław, Fabryczna',
+        // },
+        // {
+        //   size: 6,
+        //   location: 'Wrocław, Fabryczna',
+        // },
+        // {
+        //   size: 6,
+        //   location: 'Wrocław, Fabryczna',
+        // },
         {
           size: 6,
           location: 'Wrocław, Fabryczna',

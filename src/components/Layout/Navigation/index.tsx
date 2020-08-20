@@ -18,7 +18,7 @@ interface Props {
 const Navigation = ({ logout, menuItems }: Props) => {
   const basicItems: MenuItemType[] = [
     {
-      icon: '/assets/icons/logout.svg',
+      icon: 'logout.svg',
       text: 'Wyloguj',
       onClick: logout,
       customClass: 'logout-button',

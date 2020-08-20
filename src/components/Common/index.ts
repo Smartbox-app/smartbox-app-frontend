@@ -19,6 +19,7 @@ import Table from './Table';
 import Pagination from './Pagination';
 import Tabs from './Tabs';
 import Modal from './Modal';
+import LoginLogo from './LoginLogo';
 
 export {
   Alert,
@@ -38,6 +39,7 @@ export {
   Icon,
   Input,
   Logo,
+  LoginLogo,
   DateInput,
   ProgressIndicator,
   Carousel,
