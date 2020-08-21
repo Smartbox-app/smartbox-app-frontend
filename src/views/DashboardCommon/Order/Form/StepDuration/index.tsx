@@ -36,7 +36,7 @@ interface Props extends RouteComponentProps<RouteProps> {
 const StepDuration = ({ formData, countedPrice, updateFormData, user, match, rent }: Props) => {
   useEffect(() => {
     if (formData.size.length === 0) {
-      // history.push(`/${UserService.getSlugByRole(user.role)}/order/step/size`);
+      history.push(`/${UserService.getSlugByRole(user.role)}/order/step/size`);
     }
   });
 

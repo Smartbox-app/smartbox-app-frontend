@@ -28,6 +28,7 @@ interface Props {
   user: UserRes;
   isAgreementAccepted: boolean;
   isResignationMarked: boolean;
+  stockId: string;
   updateFormData: (data: any) => void;
   sentRentBoxRequest: (data: RentBoxReq | any, nextStep: string, role: UserRole) => void;
 }
@@ -39,6 +40,7 @@ const StepSummary = ({
   isResignationMarked,
   sentRentBoxRequest,
   countedPrice,
+  stockId,
 }: Props): any => {
   useEffect(() => {
     if (formData.size.length === 0) {
@@ -51,7 +53,7 @@ const StepSummary = ({
   const onSubmit = (data: any) => {
     sentRentBoxRequest(
       {
-        stockId: '07b76069-5bbc-4486-95b4-63ea8a7eba52',
+        stockId,
         size: Number(formData.size),
         startAt: formData.dateStart,
         finishAt: formData.dateEnd,
@@ -91,6 +93,7 @@ const mapStateToProps = (state: ApplicationState) => ({
   user: state.user.details,
   isAgreementAccepted: state.order.isAgreementAccepted,
   isResignationMarked: state.order.isResignationMarked,
+  stockId: state.rent.stockId,
 });
 
 const mapDispatchToProps = (dispatch: any) =>
