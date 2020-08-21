@@ -8,6 +8,7 @@ import Form from './Form/Index';
 
 interface RouteProps {
   step: string;
+  rentId: string;
 }
 
 type Props = RouteComponentProps<RouteProps>;

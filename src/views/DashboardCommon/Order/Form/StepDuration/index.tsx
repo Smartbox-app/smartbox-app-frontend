@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useForm, Controller, FormContext } from 'react-hook-form';
-import { withRouter } from 'react-router-dom';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import { addDays, differenceInCalendarDays } from 'date-fns';
-import { IPricingResult, UserRes } from 'smartbox-types';
+import { IPricingResult, MyRentList, UserRes } from 'smartbox-types';
 import { DateInput, Button } from '../../../../../components/Common';
 import { order } from '../../../../../actions';
 import { ButtonsContainer } from '../../../../../components/Layout';
@@ -13,39 +13,48 @@ import { history } from '../../../../../App';
 import { FormType } from '../../../../../types/order-form';
 import { ApplicationState } from '../../../../../reducers';
 import UserService from '../../../../../services/user-service';
+import { __ } from '../../../../../helpers/i18n';
 
 import Price from './Price';
 
 import './StepDuration.scss';
-import { __ } from '../../../../../helpers/i18n';
 
-interface Props {
+interface RouteProps {
+  step: string;
+  rentId: string;
+}
+
+interface Props extends RouteComponentProps<RouteProps> {
   history: any;
   formData: FormType;
   countedPrice: IPricingResult;
   user: UserRes;
+  rent: MyRentList;
   updateFormData: (data: any) => void;
 }
 
-const StepDuration = ({ formData, countedPrice, updateFormData, user }: Props) => {
+const StepDuration = ({ formData, countedPrice, updateFormData, user, match, rent }: Props) => {
   useEffect(() => {
     if (formData.size.length === 0) {
-      history.push(`/${UserService.getSlugByRole(user.role)}/order/step/size`);
+      // history.push(`/${UserService.getSlugByRole(user.role)}/order/step/size`);
     }
   });
 
-  const [dateStartMin, setDateStart] = useState(new Date());
-  const [dateEndMin, setDateEnd] = useState(addDays(new Date(), 7));
+  const setMinDate = () => (match.params.rentId ? new Date(rent.finishAt) : new Date());
+  const setMaxDateToExtend = () => (match.params.rentId ? addDays(new Date(rent.finishAt), 0) : addDays(new Date(), 7));
+
+  const [dateStartMin, setDateStart] = useState(setMinDate());
+  const [dateEndMin, setDateEnd] = useState(addDays(dateStartMin, 7));
 
   const defaultValues = {
-    dateStart: formData.dateStart,
+    dateStart: setMinDate(),
     dateEnd: formData.dateEnd,
   };
 
   const { register, handleSubmit, control } = useForm({ defaultValues });
   const methods = useForm();
 
-  const onSubmit = (data: any) => {
+  const onSubmit = () => {
     history.push(`/${UserService.getSlugByRole(user.role)}/order/step/summary`);
   };
 
@@ -63,8 +72,8 @@ const StepDuration = ({ formData, countedPrice, updateFormData, user }: Props) =
             as={DateInput}
             register={register({ required: true })}
             label="Wybierz datę rozpoczęcia wynajmu:"
-            minDate={addDays(new Date(), 0)}
-            maxDate={addDays(new Date(), 7)}
+            minDate={setMinDate()}
+            maxDate={setMaxDateToExtend()}
             onChange={([selected]) => {
               setDateStart(selected[0]);
               updateFormData({
@@ -81,7 +90,7 @@ const StepDuration = ({ formData, countedPrice, updateFormData, user }: Props) =
             as={DateInput}
             register={register({ required: true })}
             label="Wybierz datę zakończenia wynajmu:"
-            minDate={addDays(dateStartMin, 7)}
+            minDate={addDays(setMinDate(), 7)}
             onChange={([selected]) => {
               setDateEnd(selected[0]);
               updateFormData({
@@ -95,7 +104,7 @@ const StepDuration = ({ formData, countedPrice, updateFormData, user }: Props) =
         </div>
         <Price countedPrice={countedPrice.value} />
         <ButtonsContainer max>
-          <Button outline text={__('application.back')} click={() => onBack()} />
+          <Button outline text={__('application.back')} click={() => onBack()} disabled={!!match.params.rentId} />
           <Button type="submit" primary text={__('application.next')} />
         </ButtonsContainer>
       </form>
@@ -107,6 +116,7 @@ const mapStateToProps = (state: ApplicationState) => ({
   formData: state.order.formData,
   countedPrice: state.order.countedPrice,
   user: state.user.details,
+  rent: state.rent.singleRent,
 });
 
 const mapDispatchToProps = (dispatch: any) =>
@@ -117,4 +127,5 @@ const mapDispatchToProps = (dispatch: any) =>
     dispatch,
   );
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(StepDuration));
+const StepDurationWithRouter = withRouter(StepDuration);
+export default connect(mapStateToProps, mapDispatchToProps)(StepDurationWithRouter);

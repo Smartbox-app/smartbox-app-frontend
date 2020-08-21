@@ -38,6 +38,7 @@ const DashboardUser = () => {
           <Route path="/user/profile" component={Profile} />
           <Route path="/user/contact" component={Contact} />
           <Route path="/user/order/step/:step" component={Order} />
+          <Route path="/user/order/step/:step/:orderId" component={Order} />
           <Route exact path="/user/single-rent/:orderId" component={SingleRentDetail} />
         </Switch>
       </Main>
