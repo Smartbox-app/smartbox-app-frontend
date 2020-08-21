@@ -53,6 +53,8 @@ const StepDuration = ({ formData, countedPrice, updateFormData, user }: Props) =
     history.push(`/${UserService.getSlugByRole(user.role)}/order/step/size`);
   };
 
+  const isItFirstRent = (u: UserRes): boolean => u.rentCount === 0;
+
   return (
     <FormContext {...methods}>
       <form onSubmit={handleSubmit(onSubmit)} className="form-step-two">
@@ -71,6 +73,7 @@ const StepDuration = ({ formData, countedPrice, updateFormData, user }: Props) =
                 durationInDays: differenceInCalendarDays(dateEndMin, selected[0]),
                 discount: 0,
                 dateStart: selected[0],
+                isFirstRent: isItFirstRent(user),
               });
               return selected;
             }}
@@ -88,6 +91,7 @@ const StepDuration = ({ formData, countedPrice, updateFormData, user }: Props) =
                 durationInDays: differenceInCalendarDays(selected[0], dateStartMin),
                 discount: 0,
                 dateEnd: selected[0],
+                isFirstRent: isItFirstRent(user),
               });
               return selected;
             }}

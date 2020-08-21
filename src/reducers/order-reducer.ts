@@ -69,11 +69,12 @@ export default (state: OrderState = initialState, action: Action): any => {
         durationInDays: newFormData.durationInDays,
         discount: newFormData.discount,
         size: Number(newFormData.size),
-        isFirstRent: false,
+        isFirstRent: newFormData.isFirstRent,
       };
 
       if (newFormData.durationInDays !== 0) {
         const price = calculate(data);
+
         return {
           ...state,
           formData: newFormData,

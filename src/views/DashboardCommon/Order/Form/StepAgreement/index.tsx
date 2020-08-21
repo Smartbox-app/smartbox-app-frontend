@@ -51,7 +51,7 @@ const StepSummary = ({
   const onSubmit = (data: any) => {
     sentRentBoxRequest(
       {
-        stockId: '07b76069-5bbc-4486-95b4-63ea8a7eba52',
+        stockId: '1231qweqwe123',
         size: Number(formData.size),
         startAt: formData.dateStart,
         finishAt: formData.dateEnd,

@@ -32,7 +32,7 @@ interface Props extends RouteComponentProps<RouteProps> {
 
 const StepSize = ({ history, updateFormData, match, fetchBoxAvailability, formData, user, boxAvailability }: Props) => {
   useEffect(() => {
-    fetchBoxAvailability('07b76069-5bbc-4486-95b4-63ea8a7eba52');
+    fetchBoxAvailability('1231qweqwe123');
   }, []);
 
   const defaultValues = {
