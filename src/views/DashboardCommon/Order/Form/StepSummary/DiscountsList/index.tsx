@@ -21,7 +21,7 @@ interface Props {
 
 const DiscountsList = ({ register, showModal, discoutsList }: Props) => {
   const dataToDisplay = discoutsList.map((data: any) => (
-    <RadioDiscout text={data.text} value={data.value} register={register} />
+    <RadioDiscout key={data.text} text={data.text} value={data.value} register={register} />
   ));
 
   return (
