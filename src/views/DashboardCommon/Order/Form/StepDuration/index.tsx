@@ -34,21 +34,31 @@ interface Props extends RouteComponentProps<RouteProps> {
 }
 
 const StepDuration = ({ formData, countedPrice, updateFormData, user, match, rent }: Props) => {
+  const setMinDate = (addAmount = 0, end?: boolean) =>
+    match.params.rentId
+      ? addDays(new Date(rent.finishAt), addAmount)
+      : addDays(end ? formData.dateStart : new Date(), addAmount);
+
   useEffect(() => {
     if (formData.size.length === 0) {
       history.push(`/${UserService.getSlugByRole(user.role)}/order/step/size`);
     }
-  });
+    if (match.params.rentId) {
+      console.log('match.params.rentId', match.params.rentId);
+      updateFormData({
+        durationInDays: 7,
+        dateStart: setMinDate(),
+        dateEnd: setMinDate(7),
+        size: rent.size,
+      });
+    }
+  }, []);
 
-  const setMinDate = () => (match.params.rentId ? new Date(rent.finishAt) : new Date());
   const setMaxDateToExtend = () => (match.params.rentId ? addDays(new Date(rent.finishAt), 0) : addDays(new Date(), 7));
-
-  const [dateStartMin, setDateStart] = useState(setMinDate());
-  const [dateEndMin, setDateEnd] = useState(addDays(dateStartMin, 7));
 
   const defaultValues = {
     dateStart: setMinDate(),
-    dateEnd: formData.dateEnd,
+    dateEnd: setMinDate(7),
   };
 
   const { register, handleSubmit, control } = useForm({ defaultValues });
@@ -75,11 +85,11 @@ const StepDuration = ({ formData, countedPrice, updateFormData, user, match, ren
             minDate={setMinDate()}
             maxDate={setMaxDateToExtend()}
             onChange={([selected]) => {
-              setDateStart(selected[0]);
               updateFormData({
-                durationInDays: differenceInCalendarDays(dateEndMin, selected[0]),
+                durationInDays: differenceInCalendarDays(formData.dateEnd, selected[0]),
                 discount: 0,
                 dateStart: selected[0],
+                dateEnd: addDays(selected[0], 7),
               });
               return selected;
             }}
@@ -90,11 +100,10 @@ const StepDuration = ({ formData, countedPrice, updateFormData, user, match, ren
             as={DateInput}
             register={register({ required: true })}
             label="Wybierz datę zakończenia wynajmu:"
-            minDate={addDays(setMinDate(), 7)}
+            minDate={setMinDate(7, true)}
             onChange={([selected]) => {
-              setDateEnd(selected[0]);
               updateFormData({
-                durationInDays: differenceInCalendarDays(selected[0], dateStartMin),
+                durationInDays: differenceInCalendarDays(selected[0], formData.dateStart),
                 discount: 0,
                 dateEnd: selected[0],
               });

@@ -31,7 +31,8 @@ const DateInput = ({ name, value, onChange, label, minDate, maxDate, register }:
       return format(data, 'yyyy-MM-dd');
     }
   };
-
+  console.log('value', name, value);
+  console.log('setDefaultVaule', name, setDefaultVaule(value));
   return (
     <div className="data-picker-wrapper">
       {label && (
@@ -45,7 +46,8 @@ const DateInput = ({ name, value, onChange, label, minDate, maxDate, register }:
         onChange={(data: any) => {
           onChange(data);
         }}
-        defaultValue={setDefaultVaule(value)}
+        // defaultValue={value}
+        value={value}
         options={{
           allowInput: false,
           inline: true,
