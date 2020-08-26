@@ -13,9 +13,11 @@ import { FormType } from '../../../../../types/order-form';
 
 import FormHeader from '../../../../../components/Layout/FormHeader';
 import UserService from '../../../../../services/user-service';
+
 import Discount from './DiscountsList';
-import PaymentMethods from "./PaymentMethods";
+import PaymentMethods from './PaymentMethods';
 import SummaryTable from './SummaryTable';
+
 import { ApplicationState } from '../../../../../reducers';
 import { __ } from '../../../../../helpers/i18n';
 

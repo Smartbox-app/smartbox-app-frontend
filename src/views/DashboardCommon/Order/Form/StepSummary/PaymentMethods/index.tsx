@@ -4,9 +4,11 @@ import { connect } from 'react-redux';
 import { ReactSVG } from 'react-svg';
 import { modal, order } from '../../../../../../actions';
 import FormHeader from '../../../../../../components/Layout/FormHeader';
+import { ApplicationState } from '../../../../../../reducers';
+
+import BankListModal from './BankListModal';
 
 import './PaymentMethods.scss';
-import { ApplicationState } from '../../../../../../reducers';
 
 interface Props {
   bankList: [];
@@ -16,8 +18,7 @@ interface Props {
 
 const PaymentMethods = ({ showModal, getBankList, bankList }: Props) => {
   useEffect(() => {
-    getBankList();
-    console.log('bankList', bankList);
+    // getBankList(); //TODO need to handle cors
   }, []);
 
   return (
@@ -37,7 +38,7 @@ const PaymentMethods = ({ showModal, getBankList, bankList }: Props) => {
         </label>
 
         <input type="radio" id="contactChoice3" name="paymentType" value="mail" />
-        <label className="payment-label" htmlFor="contactChoice3" onClick={() => showModal(<h1>testowy modal</h1>)}>
+        <label className="payment-label" htmlFor="contactChoice3" onClick={() => showModal(<BankListModal />)}>
           <ReactSVG src={`/assets/icons/wallet.svg`} />
           <span>Przelew</span>
         </label>
