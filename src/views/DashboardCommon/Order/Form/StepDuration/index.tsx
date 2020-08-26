@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useForm, Controller, FormContext } from 'react-hook-form';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { addDays, differenceInCalendarDays } from 'date-fns';
+import { addDays, differenceInCalendarDays, endOfDay, startOfDay, startOfToday } from 'date-fns';
 import { IPricingResult, MyRentList, UserRes } from 'smartbox-types';
 import { DateInput, Button } from '../../../../../components/Common';
 import { order } from '../../../../../actions';
@@ -36,30 +36,35 @@ interface Props extends RouteComponentProps<RouteProps> {
 const StepDuration = ({ formData, countedPrice, updateFormData, user, match, rent }: Props) => {
   const setMinDate = (addAmount = 0, end?: boolean) =>
     match.params.rentId
-      ? addDays(new Date(rent.finishAt), addAmount)
-      : addDays(end ? formData.dateStart : new Date(), addAmount);
+      ? addDays(startOfDay(new Date(rent.finishAt)), addAmount)
+      : addDays(end ? formData.dateStart : startOfToday(), addAmount);
+
+  const setMaxDateToExtend = () =>
+    match.params.rentId ? addDays(endOfDay(new Date(rent.finishAt)), 0) : addDays(new Date(), 7);
+
+  const defaultValues = {
+    dateStart: match.params.rentId ? addDays(new Date(rent.finishAt), 0) : addDays(formData.dateStart, 0),
+    dateEnd: match.params.rentId ? addDays(new Date(rent.finishAt), 7) : addDays(formData.dateEnd, 0),
+  };
 
   useEffect(() => {
-    if (formData.size.length === 0) {
+    if (formData.size === '') {
       history.push(`/${UserService.getSlugByRole(user.role)}/order/step/size`);
-    }
-    if (match.params.rentId) {
-      console.log('match.params.rentId', match.params.rentId);
+    } else if (match.params.rentId) {
       updateFormData({
         durationInDays: 7,
         dateStart: setMinDate(),
         dateEnd: setMinDate(7),
         size: rent.size,
       });
+    } else {
+      updateFormData({
+        durationInDays: 7,
+        dateStart: setMinDate(),
+        dateEnd: setMinDate(7),
+      });
     }
   }, []);
-
-  const setMaxDateToExtend = () => (match.params.rentId ? addDays(new Date(rent.finishAt), 0) : addDays(new Date(), 7));
-
-  const defaultValues = {
-    dateStart: setMinDate(),
-    dateEnd: setMinDate(7),
-  };
 
   const { register, handleSubmit, control } = useForm({ defaultValues });
   const methods = useForm();
@@ -89,7 +94,6 @@ const StepDuration = ({ formData, countedPrice, updateFormData, user, match, ren
                 durationInDays: differenceInCalendarDays(formData.dateEnd, selected[0]),
                 discount: 0,
                 dateStart: selected[0],
-                dateEnd: addDays(selected[0], 7),
               });
               return selected;
             }}
