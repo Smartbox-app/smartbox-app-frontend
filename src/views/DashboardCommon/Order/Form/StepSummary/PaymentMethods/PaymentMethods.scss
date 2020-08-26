@@ -1,0 +1,39 @@
+@import '../../../../../../config/variables';
+@import '../../../../../../config/mixins';
+
+.payment-methods-wrapper {
+  display: flex;
+  flex-direction: column;
+
+  input {
+    display: none;
+  }
+
+  .payment-label {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    border: 1px solid #000;
+    padding: $main-spacing;
+    margin: $main-spacing 0;
+
+    svg {
+      height: $main-spacing * 2;
+      margin-right: $main-spacing;
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+  input[type='radio']:checked + .payment-label {
+    //border-bottom: 2px solid $color-success;
+    //box-shadow: inset 2px -2px 2px $color-success;
+    box-shadow: inset 0px 0px 2px 1px $color-primary;
+    border: 1px solid $color-primary;
+  }
+  input[type='radio']:checked + svg {
+    color: $color-success;
+  }
+}

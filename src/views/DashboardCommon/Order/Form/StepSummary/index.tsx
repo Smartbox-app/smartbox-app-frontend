@@ -14,6 +14,7 @@ import { FormType } from '../../../../../types/order-form';
 import FormHeader from '../../../../../components/Layout/FormHeader';
 import UserService from '../../../../../services/user-service';
 import Discount from './DiscountsList';
+import PaymentMethods from "./PaymentMethods";
 import SummaryTable from './SummaryTable';
 import { ApplicationState } from '../../../../../reducers';
 import { __ } from '../../../../../helpers/i18n';
@@ -31,7 +32,7 @@ interface Props {
 const StepSummary = ({ formData, countedPrice, updateFormData, user }: Props) => {
   useEffect(() => {
     if (formData.size.length === 0) {
-      history.push(`/${UserService.getSlugByRole(user.role)}/order/step/size`);
+      // history.push(`/${UserService.getSlugByRole(user.role)}/order/step/size`);
     }
   });
 
@@ -51,6 +52,7 @@ const StepSummary = ({ formData, countedPrice, updateFormData, user }: Props) =>
       <Discount register={register} />
       <FormHeader title="Podsumowanie zamówienia:" />
       <SummaryTable dateStart={formData.dateStart} dateEnd={formData.dateEnd} countedPrice={countedPrice.value} />
+      <PaymentMethods />
       <ButtonsContainer max>
         <Button outline text={__('application.back')} click={() => onBack()} />
         <Button type="submit" primary text="Przejdź do umowy" />

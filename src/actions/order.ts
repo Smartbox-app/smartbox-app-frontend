@@ -9,6 +9,8 @@ export const formAgreementReaded = () => ({ type: 'FORM_AGREEMENT_READED_SUCCESS
 
 export const formResignationMarked = () => ({ type: 'FORM_RESIGNATION_MARKED_SUCCESS' });
 
+const saveBanks = (data: any) => ({ type: 'SAVE_BANKS_LIST', payload: data });
+
 export const fetchBoxAvailability = (stockId: string) => async (dispatch: any) => {
   await ApiService.get(
     dispatch,
@@ -46,4 +48,14 @@ export const sentExecutePaymentRequest = (data: ExecutePaymentReq) => async (dis
     'LOADING',
     data,
   );
+};
+
+export const getBankList = () => async () => {
+  await fetch(`https://cors-anywhere.herokuapp.com/https://secure.tpay.com/groups-10100.js?json`, {
+    method: 'GET',
+    mode: 'cors',
+    headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
+  })
+    .then((res: any) => res.json())
+    .then((data) => saveBanks(data));
 };

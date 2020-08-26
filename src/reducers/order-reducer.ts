@@ -10,6 +10,7 @@ export type OrderState = {
   discountList: any[];
   isAgreementAccepted: boolean;
   isResignationMarked: boolean;
+  bankList: [];
 };
 
 interface FormStepSuccess {
@@ -35,7 +36,18 @@ interface FormResignation {
   type: 'FORM_RESIGNATION_MARKED_SUCCESS';
 }
 
-type Action = FormStepSuccess | FetchBoxAvailability | SentRentBoxRequestSuccess | FormReaded | FormResignation;
+interface SaveBankList {
+  type: 'SAVE_BANKS_LIST';
+  payload: any;
+}
+
+type Action =
+  | FormStepSuccess
+  | FetchBoxAvailability
+  | SentRentBoxRequestSuccess
+  | FormReaded
+  | FormResignation
+  | SaveBankList;
 
 const initialState: OrderState = {
   formData: {
@@ -56,6 +68,7 @@ const initialState: OrderState = {
   discountList: [{ text: 'Jednorazowy rabat 5%', value: 5 }],
   isAgreementAccepted: false,
   isResignationMarked: false,
+  bankList: [],
 };
 
 export default (state: OrderState = initialState, action: Action): any => {
