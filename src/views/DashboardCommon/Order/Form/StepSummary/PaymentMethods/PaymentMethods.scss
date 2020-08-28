@@ -23,7 +23,7 @@
       height: $main-spacing * 2.5;
       margin-right: $main-spacing;
       display: flex;
-      margin-left: 20px;
+      margin-left: $main-spacing * 2;
     }
 
     &:hover {
