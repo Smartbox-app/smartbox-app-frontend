@@ -13,13 +13,36 @@ import './PaymentMethods.scss';
 interface Props {
   bankList: [];
   getBankList: () => void;
+  selectedPaymentMethod: {
+    id: string;
+    name: string;
+    img: string;
+  };
   showModal: (content: React.ReactNode) => void;
 }
 
-const PaymentMethods = ({ showModal, getBankList, bankList }: Props) => {
+const PaymentMethods = ({ showModal, getBankList, bankList, selectedPaymentMethod }: Props) => {
   useEffect(() => {
-    // getBankList(); //TODO need to handle cors
+    getBankList(); //TODO need to handle cors
   }, []);
+
+  const slectedPayment = () => {
+    if (selectedPaymentMethod.id === '') {
+      return (
+        <>
+          <ReactSVG src="/assets/icons/wallet.svg" />
+          <span>Inne</span>
+        </>
+      );
+    } else {
+      return (
+        <>
+          <img className="payment-img" src={selectedPaymentMethod.img} alt="LogoBanku" />
+          <span>{selectedPaymentMethod.name}</span>
+        </>
+      );
+    }
+  };
 
   return (
     <div>
@@ -33,14 +56,13 @@ const PaymentMethods = ({ showModal, getBankList, bankList }: Props) => {
 
         <input type="radio" id="contactChoice2" name="paymentType" value="phone" />
         <label className="payment-label" htmlFor="contactChoice2">
-          <ReactSVG src={`/assets/icons/credit-card.svg`} />
+          <img className="payment-img" src="/assets/images/150.png" alt="LogoBanku" />
           <span>Blik</span>
         </label>
 
         <input type="radio" id="contactChoice3" name="paymentType" value="mail" />
         <label className="payment-label" htmlFor="contactChoice3" onClick={() => showModal(<BankListModal />)}>
-          <ReactSVG src={`/assets/icons/wallet.svg`} />
-          <span>Przelew</span>
+          {slectedPayment()}
         </label>
       </div>
     </div>
@@ -49,6 +71,7 @@ const PaymentMethods = ({ showModal, getBankList, bankList }: Props) => {
 
 const mapStateToProps = (state: ApplicationState) => ({
   bankList: state.order.bankList,
+  selectedPaymentMethod: state.order.selectedPaymentMethod,
 });
 
 const mapDispatchToProps = (dispatch: any) =>
