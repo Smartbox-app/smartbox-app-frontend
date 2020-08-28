@@ -5,6 +5,7 @@ import { ReactSVG } from 'react-svg';
 import { modal, order } from '../../../../../../actions';
 import FormHeader from '../../../../../../components/Layout/FormHeader';
 import { ApplicationState } from '../../../../../../reducers';
+import { MainPaymentWay } from '../../../../../../reducers/order-reducer';
 
 import BankListModal from './BankListModal';
 
@@ -19,9 +20,10 @@ interface Props {
     img: string;
   };
   showModal: (content: React.ReactNode) => void;
+  register?: any;
 }
 
-const PaymentMethods = ({ showModal, getBankList, bankList, selectedPaymentMethod }: Props) => {
+const PaymentMethods = ({ showModal, getBankList, bankList, selectedPaymentMethod, register }: Props) => {
   useEffect(() => {
     getBankList(); //TODO need to handle cors
   }, []);
@@ -48,19 +50,37 @@ const PaymentMethods = ({ showModal, getBankList, bankList, selectedPaymentMetho
     <div>
       <FormHeader title="Metody płatności:" />
       <div className="payment-methods-wrapper">
-        <input type="radio" id="contactChoice1" name="paymentType" value="email" />
+        <input
+          type="radio"
+          id="contactChoice1"
+          name="paymentType"
+          value={MainPaymentWay.card}
+          ref={register({ required: true })}
+        />
         <label className="payment-label" htmlFor="contactChoice1">
           <ReactSVG src={`/assets/icons/credit-card.svg`} />
           <span>Karta płatnicza</span>
         </label>
 
-        <input type="radio" id="contactChoice2" name="paymentType" value="phone" />
+        <input
+          type="radio"
+          id="contactChoice2"
+          name="paymentType"
+          value={MainPaymentWay.blik}
+          ref={register({ required: true })}
+        />
         <label className="payment-label" htmlFor="contactChoice2">
           <img className="payment-img" src="/assets/images/150.png" alt="LogoBanku" />
           <span>Blik</span>
         </label>
 
-        <input type="radio" id="contactChoice3" name="paymentType" value="mail" />
+        <input
+          type="radio"
+          id="contactChoice3"
+          name="paymentType"
+          value={MainPaymentWay.other}
+          ref={register({ required: true })}
+        />
         <label className="payment-label" htmlFor="contactChoice3" onClick={() => showModal(<BankListModal />)}>
           {slectedPayment()}
         </label>
@@ -71,7 +91,7 @@ const PaymentMethods = ({ showModal, getBankList, bankList, selectedPaymentMetho
 
 const mapStateToProps = (state: ApplicationState) => ({
   bankList: state.order.bankList,
-  selectedPaymentMethod: state.order.selectedPaymentMethod,
+  selectedPaymentMethod: state.order.selectedPaymentMethodDetail,
 });
 
 const mapDispatchToProps = (dispatch: any) =>

@@ -13,13 +13,13 @@ import { FormType } from '../../../../../types/order-form';
 
 import FormHeader from '../../../../../components/Layout/FormHeader';
 import UserService from '../../../../../services/user-service';
+import { ApplicationState } from '../../../../../reducers';
+import { MainPaymentWay } from '../../../../../reducers/order-reducer';
+import { __ } from '../../../../../helpers/i18n';
 
 import Discount from './DiscountsList';
 import PaymentMethods from './PaymentMethods';
 import SummaryTable from './SummaryTable';
-
-import { ApplicationState } from '../../../../../reducers';
-import { __ } from '../../../../../helpers/i18n';
 
 import './StepSummary.scss';
 
@@ -28,17 +28,22 @@ interface Props {
   formData: FormType;
   countedPrice: IPricingResult;
   user: UserRes;
+  selectedPaymentMethod: any;
   updateFormData: (data: any) => void;
 }
 
-const StepSummary = ({ formData, countedPrice, updateFormData, user }: Props) => {
+const StepSummary = ({ formData, countedPrice, updateFormData, user, selectedPaymentMethod }: Props) => {
   useEffect(() => {
     if (formData.size.length === 0) {
       // history.push(`/${UserService.getSlugByRole(user.role)}/order/step/size`);
     }
   });
 
-  const { handleSubmit, register } = useForm();
+  const defaultValues = {
+    paymentType: MainPaymentWay.card,
+  };
+
+  const { handleSubmit, register, watch } = useForm({ defaultValues });
 
   const onSubmit = (data: any) => {
     updateFormData(data);
@@ -49,15 +54,25 @@ const StepSummary = ({ formData, countedPrice, updateFormData, user }: Props) =>
     history.push(`/${UserService.getSlugByRole(user.role)}/order/step/duration`);
   };
 
+  const dataVerification = (): boolean => {
+    if (typeof watch().paymentType !== 'string') {
+      return true;
+    } else if (Number(watch().paymentType) === MainPaymentWay.other) {
+      return selectedPaymentMethod.id.length === 0;
+    } else {
+      return false;
+    }
+  };
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="form-step-two">
       <Discount register={register} />
       <FormHeader title="Podsumowanie zamówienia:" />
       <SummaryTable dateStart={formData.dateStart} dateEnd={formData.dateEnd} countedPrice={countedPrice.value} />
-      <PaymentMethods />
+      <PaymentMethods register={register} />
       <ButtonsContainer max>
         <Button outline text={__('application.back')} click={() => onBack()} />
-        <Button type="submit" primary text="Przejdź do umowy" />
+        <Button type="submit" primary text="Przejdź do umowy" disabled={dataVerification()} />
       </ButtonsContainer>
     </form>
   );
@@ -67,6 +82,7 @@ const mapStateToProps = (state: ApplicationState) => ({
   formData: state.order.formData,
   countedPrice: state.order.countedPrice,
   user: state.user.details,
+  selectedPaymentMethod: state.order.selectedPaymentMethodDetail,
 });
 
 const mapDispatchToProps = (dispatch: any) =>

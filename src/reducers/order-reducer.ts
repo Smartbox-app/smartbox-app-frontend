@@ -2,7 +2,13 @@ import { addDays } from 'date-fns';
 import { BoxGroupAvailability, usePricing, ICalculateProps, IPricingResult } from 'smartbox-types';
 import { FormType } from '../types/order-form';
 
-export type paymentMethod = {
+export enum MainPaymentWay {
+  'card',
+  'blik',
+  'other',
+}
+
+export type PaymentMethodDetail = {
   id: string;
   name: string;
   img: string;
@@ -17,7 +23,8 @@ export type OrderState = {
   isAgreementAccepted: boolean;
   isResignationMarked: boolean;
   bankList: any;
-  selectedPaymentMethod: paymentMethod;
+  selectedPayment: MainPaymentWay;
+  selectedPaymentMethodDetail: PaymentMethodDetail;
 };
 
 interface FormStepSuccess {
@@ -50,7 +57,7 @@ interface SaveBankList {
 
 interface SetPaymentMethod {
   type: 'SET_PAYMENT_METHOD_SUCCESS';
-  payload: paymentMethod;
+  payload: PaymentMethodDetail | MainPaymentWay;
 }
 
 type Action =
@@ -281,7 +288,8 @@ const initialState: OrderState = {
   isAgreementAccepted: false,
   isResignationMarked: false,
   bankList: bankListDummy,
-  selectedPaymentMethod: {
+  selectedPayment: MainPaymentWay.card,
+  selectedPaymentMethodDetail: {
     id: '',
     name: '',
     img: '',
@@ -356,8 +364,9 @@ export default (state: OrderState = initialState, action: Action): any => {
     case 'SET_PAYMENT_METHOD_SUCCESS':
       return {
         ...state,
-        selectedPaymentMethod: state.bankList[`${action.payload}`],
+        selectedPaymentMethodDetail: state.bankList[`${action.payload}`],
       };
+
     default:
       return state;
   }
