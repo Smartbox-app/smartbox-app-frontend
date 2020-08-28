@@ -2,6 +2,12 @@ import { addDays } from 'date-fns';
 import { BoxGroupAvailability, usePricing, ICalculateProps, IPricingResult } from 'smartbox-types';
 import { FormType } from '../types/order-form';
 
+export type paymentMethod = {
+  id: string;
+  name: string;
+  img: string;
+};
+
 export type OrderState = {
   formData: FormType;
   paymentId: string;
@@ -11,6 +17,7 @@ export type OrderState = {
   isAgreementAccepted: boolean;
   isResignationMarked: boolean;
   bankList: any;
+  selectedPaymentMethod: paymentMethod;
 };
 
 interface FormStepSuccess {
@@ -41,12 +48,18 @@ interface SaveBankList {
   payload: any;
 }
 
+interface SetPaymentMethod {
+  type: 'SET_PAYMENT_METHOD_SUCCESS';
+  payload: paymentMethod;
+}
+
 type Action =
   | FormStepSuccess
   | FetchBoxAvailability
   | SentRentBoxRequestSuccess
   | FormReaded
   | FormResignation
+  | SetPaymentMethod
   | SaveBankList;
 
 const bankListDummy = {
@@ -268,6 +281,11 @@ const initialState: OrderState = {
   isAgreementAccepted: false,
   isResignationMarked: false,
   bankList: bankListDummy,
+  selectedPaymentMethod: {
+    id: '',
+    name: '',
+    img: '',
+  },
 };
 
 export default (state: OrderState = initialState, action: Action): any => {
@@ -335,9 +353,12 @@ export default (state: OrderState = initialState, action: Action): any => {
         ...state,
         // bankList: action.payload,
       };
+    case 'SET_PAYMENT_METHOD_SUCCESS':
+      return {
+        ...state,
+        selectedPaymentMethod: state.bankList[`${action.payload}`],
+      };
     default:
       return state;
   }
 };
-
-
