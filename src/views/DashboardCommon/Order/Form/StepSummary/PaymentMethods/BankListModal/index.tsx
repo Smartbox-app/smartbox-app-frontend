@@ -34,14 +34,14 @@ const BankListModal = ({ bankList, setPaymentMethod, hideModal }: Props) => {
     <>
       <div className="bank-list-wrapper">
         {dataToRender.map((bank: any) => (
-          <>
+          <div key={bank.id}>
             <input type="radio" id={`payment-${bank.id}`} name="paymentType" value={bank.id} onChange={handleChange} />
             <label className="single-bank" key={bank.id} htmlFor={`payment-${bank.id}`}>
               <div className="img-wrapper">
                 <img src={bank.img} alt="bank-img" />
               </div>
             </label>
-          </>
+          </div>
         ))}
       </div>
       <ButtonsContainer max>
