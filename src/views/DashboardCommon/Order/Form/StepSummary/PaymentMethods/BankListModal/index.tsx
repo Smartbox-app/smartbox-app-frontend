@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { modal, order } from '../../../../../../../actions';
 import { Button } from '../../../../../../../components/Common';
-import { ButtonsContainer } from '../../../../../../../components/Layout';
+import { ButtonsContainer, SectionHeader } from '../../../../../../../components/Layout';
 import { ApplicationState } from '../../../../../../../reducers';
 
 import './BankListModal.scss';
@@ -19,11 +19,6 @@ const BankListModal = ({ bankList, setPaymentMethod, hideModal }: Props) => {
     id: '',
   });
 
-  const dataToRender: any[] = [];
-  for (const bank in bankList) {
-    dataToRender.push(bankList[bank]);
-  }
-
   const handleChange = (event: any) => {
     setPayment({
       id: event.target.value,
@@ -32,11 +27,18 @@ const BankListModal = ({ bankList, setPaymentMethod, hideModal }: Props) => {
 
   return (
     <>
+      <SectionHeader title="Proszę wybrać pośrednika:" />
       <div className="bank-list-wrapper">
-        {dataToRender.map((bank: any) => (
-          <div key={bank.id}>
-            <input type="radio" id={`payment-${bank.id}`} name="paymentType" value={bank.id} onChange={handleChange} />
-            <label className="single-bank" key={bank.id} htmlFor={`payment-${bank.id}`}>
+        {bankList.map((bank: any) => (
+          <div key={bank.id} className="single-bank">
+            <input
+              type="radio"
+              id={`payment-${bank.id}`}
+              name={`payment-${bank.id}`}
+              value={bank.id}
+              onChange={handleChange}
+            />
+            <label className="single-bank-label" htmlFor={`payment-${bank.id}`}>
               <div className="img-wrapper">
                 <img src={bank.img} alt="bank-img" />
               </div>
