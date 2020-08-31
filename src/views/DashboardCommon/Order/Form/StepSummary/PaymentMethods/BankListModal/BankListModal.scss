@@ -10,7 +10,7 @@
   margin-right: -$main-spacing;
   max-width: 100%;
 
-  @include gt-xs{
+  @include gt-xs {
     max-width: 80vw;
   }
 
@@ -41,20 +41,20 @@
     flex: 0 0 100%;
     padding: $main-spacing;
 
-    @include gt-xs{
+    @include gt-xs {
       flex: 0 0 50%;
     }
 
     @include gt-sm {
-      flex: 0 0 50%
+      flex: 0 0 50%;
     }
 
     @include gt-md {
-      flex: 0 0 33.333%
+      flex: 0 0 33.333%;
     }
 
     @include gt-lg {
-      flex: 0 0 25%
+      flex: 0 0 25%;
     }
 
     &:hover {
@@ -62,9 +62,7 @@
     }
   }
 
-  .single-bank input[type='radio']:checked  {
-    .img-wrapper {
-      border: 2px solid $color-primary;
-    }
+  input[type='radio']:checked + .img-wrapper {
+    border: 2px solid $color-primary;
   }
 }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { modal, order } from '../../../../../../../actions';
@@ -9,51 +9,37 @@ import { ApplicationState } from '../../../../../../../reducers';
 import './BankListModal.scss';
 
 interface Props {
-  bankList: any;
+  bankList: any[];
+  selectedPaymentMethodDetail: any;
   setPaymentMethod: (paymentId: string) => void;
   hideModal: () => void;
 }
 
-const BankListModal = ({ bankList, setPaymentMethod, hideModal }: Props) => {
-  const [selectedPayment, setPayment] = useState({
-    id: '',
-  });
-
+const BankListModal = ({ bankList, setPaymentMethod, selectedPaymentMethodDetail, hideModal }: Props) => {
   const handleChange = (event: any) => {
-    setPayment({
-      id: event.target.value,
-    });
+    setPaymentMethod(event.target.value);
   };
 
   return (
     <>
-      <SectionHeader title="Proszę wybrać pośrednika:" />
+      <SectionHeader title="Proszę wybrać:" />
       <div className="bank-list-wrapper">
         {bankList.map((bank: any) => (
-          <div key={bank.id} className="single-bank">
-            <input
-              type="radio"
-              id={`payment-${bank.id}`}
-              name={`payment-${bank.id}`}
-              value={bank.id}
-              onChange={handleChange}
-            />
-            <label className="single-bank-label" htmlFor={`payment-${bank.id}`}>
-              <div className="img-wrapper">
-                <img src={bank.img} alt="bank-img" />
-              </div>
-            </label>
-          </div>
+          <label key={bank.id} className="single-bank" htmlFor={`payment-${bank.id}`}>
+            <input type="radio" id={`payment-${bank.id}`} name="bank-picked" value={bank.id} onChange={handleChange} />
+            <div className="img-wrapper">
+              <img src={bank.img} alt="bank-img" />
+            </div>
+          </label>
         ))}
       </div>
       <ButtonsContainer max>
         <Button
           text="Wybierz"
           type="submit"
-          disabled={selectedPayment.id === ''}
+          disabled={selectedPaymentMethodDetail.id === ''}
           primary
-          click={() => {
-            setPaymentMethod(selectedPayment.id);
+          click={(): void => {
             hideModal();
           }}
         />
@@ -64,6 +50,7 @@ const BankListModal = ({ bankList, setPaymentMethod, hideModal }: Props) => {
 
 const mapStateToProps = (state: ApplicationState) => ({
   bankList: state.order.bankList,
+  selectedPaymentMethodDetail: state.order.selectedPaymentMethodDetail,
 });
 
 const mapDispatchToProps = (dispatch: any) =>
