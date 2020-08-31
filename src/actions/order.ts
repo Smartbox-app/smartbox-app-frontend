@@ -66,3 +66,4 @@ export const sentExecutePaymentWithBlikRequest = (data: ExecutePaymentReq) => as
 };
 
 export const setPaymentMethod = (paymentId: string) => ({ type: 'SET_PAYMENT_METHOD_SUCCESS', payload: paymentId });
+export const pickPaymentType = (paymentId: string) => ({ type: 'PICK_PAYMENT_TYPE_SUCCESS', payload: paymentId });

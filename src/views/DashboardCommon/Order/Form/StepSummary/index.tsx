@@ -40,7 +40,7 @@ const StepSummary = ({ formData, countedPrice, updateFormData, user, selectedPay
   });
 
   const defaultValues = {
-    paymentType: MainPaymentWay.card,
+    paymentType: `${MainPaymentWay.card}`,
   };
 
   const { handleSubmit, register, watch } = useForm({ defaultValues });
@@ -58,7 +58,7 @@ const StepSummary = ({ formData, countedPrice, updateFormData, user, selectedPay
     if (typeof watch().paymentType !== 'string') {
       return true;
     } else if (Number(watch().paymentType) === MainPaymentWay.other) {
-      return selectedPaymentMethod.id.length === 0;
+      return selectedPaymentMethod.id === 0;
     } else {
       return false;
     }

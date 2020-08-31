@@ -60,6 +60,11 @@ interface SetPaymentMethod {
   payload: PaymentMethodDetail | MainPaymentWay;
 }
 
+interface PickPaymentMethod {
+  type: 'PICK_PAYMENT_TYPE_SUCCESS';
+  payload: PaymentMethodDetail;
+}
+
 type Action =
   | FormStepSuccess
   | FetchBoxAvailability
@@ -67,6 +72,7 @@ type Action =
   | FormReaded
   | FormResignation
   | SetPaymentMethod
+  | PickPaymentMethod
   | SaveBankList;
 
 const initialState: OrderState = {
@@ -166,6 +172,14 @@ export default (state: OrderState = initialState, action: Action): any => {
         ...state,
         bankList: dataToRender,
       };
+
+    case 'PICK_PAYMENT_TYPE_SUCCESS':
+      console.log('PaymentMethodDetail', action.payload);
+      return {
+        ...state,
+        selectedPayment: action.payload,
+      };
+
     case 'SET_PAYMENT_METHOD_SUCCESS':
       return {
         ...state,

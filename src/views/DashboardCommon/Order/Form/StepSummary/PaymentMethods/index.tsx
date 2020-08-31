@@ -12,23 +12,23 @@ import BankListModal from './BankListModal';
 import './PaymentMethods.scss';
 
 interface Props {
-  bankList: [];
-  saveBanks: () => void;
   selectedPaymentMethod: {
     id: string;
     name: string;
     img: string;
   };
+  saveBanks: () => void;
   showModal: (content: React.ReactNode) => void;
+  pickPaymentType: (payment: any) => void;
   register?: any;
 }
 
-const PaymentMethods = ({ showModal, saveBanks, bankList, selectedPaymentMethod, register }: Props) => {
+const PaymentMethods = ({ showModal, saveBanks, selectedPaymentMethod, register, pickPaymentType }: Props) => {
   useEffect(() => {
     saveBanks();
   }, []);
 
-  const slectedPayment = () => {
+  const selectedPayment = () => {
     if (selectedPaymentMethod.id === '') {
       return (
         <>
@@ -50,39 +50,46 @@ const PaymentMethods = ({ showModal, saveBanks, bankList, selectedPaymentMethod,
     <div>
       <FormHeader title="Metody płatności:" />
       <div className="payment-methods-wrapper">
-        <input
-          type="radio"
-          id="contactChoice1"
-          name="paymentType"
-          value={MainPaymentWay.card}
-          ref={register({ required: true })}
-        />
-        <label className="payment-label" htmlFor="contactChoice1">
-          <ReactSVG src={`/assets/icons/credit-card.svg`} />
-          <span>Karta płatnicza</span>
+        <label htmlFor="paymentTypeCard">
+          <input
+            type="radio"
+            id="paymentTypeCard"
+            name="paymentType"
+            value={MainPaymentWay.card}
+            ref={register({ required: true })}
+            onChange={(event: any) => pickPaymentType(Number(event.target.value))}
+          />
+          <div className="payment-label">
+            <ReactSVG src="/assets/icons/credit-card.svg" />
+            <span>Karta płatnicza</span>
+          </div>
         </label>
 
-        <input
-          type="radio"
-          id="contactChoice2"
-          name="paymentType"
-          value={MainPaymentWay.blik}
-          ref={register({ required: true })}
-        />
-        <label className="payment-label" htmlFor="contactChoice2">
-          <img className="payment-img" src="/assets/images/150.png" alt="LogoBanku" />
-          <span>Blik</span>
+        <label htmlFor="paymentTypeBlik">
+          <input
+            type="radio"
+            id="paymentTypeBlik"
+            name="paymentType"
+            value={MainPaymentWay.blik}
+            ref={register({ required: true })}
+            onChange={(event: any) => pickPaymentType(Number(event.target.value))}
+          />
+          <div className="payment-label">
+            <img className="payment-img" src="/assets/images/150.png" alt="LogoBanku" />
+            <span>Blik</span>
+          </div>
         </label>
 
-        <input
-          type="radio"
-          id="contactChoice3"
-          name="paymentType"
-          value={MainPaymentWay.other}
-          ref={register({ required: true })}
-        />
-        <label className="payment-label" htmlFor="contactChoice3" onClick={() => showModal(<BankListModal />)}>
-          {slectedPayment()}
+        <label htmlFor="paymentTypeBank" onClick={() => showModal(<BankListModal />)}>
+          <input
+            type="radio"
+            id="paymentTypeBank"
+            name="paymentType"
+            value={MainPaymentWay.other}
+            ref={register({ required: true })}
+            onChange={(event: any) => pickPaymentType(Number(event.target.value))}
+          />
+          <div className="payment-label">{selectedPayment()}</div>
         </label>
       </div>
     </div>
