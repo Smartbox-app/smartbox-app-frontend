@@ -51,7 +51,7 @@ interface FormResignation {
 }
 
 interface SaveBankList {
-  type: 'SAVE_BANKS_LIST';
+  type: 'SAVE_BANKS_LIST_SUCCESS';
   payload: any;
 }
 
@@ -356,10 +356,10 @@ export default (state: OrderState = initialState, action: Action): any => {
         isResignationMarked: !state.isResignationMarked,
       };
     }
-    case 'SAVE_BANKS_LIST':
+    case 'SAVE_BANKS_LIST_SUCCESS':
       return {
         ...state,
-        // bankList: action.payload,
+        bankList: action.payload,
       };
     case 'SET_PAYMENT_METHOD_SUCCESS':
       return {

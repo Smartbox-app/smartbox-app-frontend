@@ -13,7 +13,7 @@ import './PaymentMethods.scss';
 
 interface Props {
   bankList: [];
-  getBankList: () => void;
+  saveBanks: () => void;
   selectedPaymentMethod: {
     id: string;
     name: string;
@@ -23,9 +23,9 @@ interface Props {
   register?: any;
 }
 
-const PaymentMethods = ({ showModal, getBankList, bankList, selectedPaymentMethod, register }: Props) => {
+const PaymentMethods = ({ showModal, saveBanks, bankList, selectedPaymentMethod, register }: Props) => {
   useEffect(() => {
-    getBankList(); //TODO need to handle cors
+    saveBanks();
   }, []);
 
   const slectedPayment = () => {
