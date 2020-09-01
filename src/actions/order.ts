@@ -52,7 +52,7 @@ export const sentExecutePaymentRequest = (data: ExecutePaymentReq) => async (dis
   );
 };
 
-export const sentExecutePaymentWithBlikRequest = (data: ExecutePaymentReq) => async (dispatch: any) => {
+export const sentExecutePaymentWithBlikRequest = (code: string) => async (dispatch: any) => {
   await ApiService.post(
     dispatch,
     'SENT_EXECUTE_PAYMENT_WITH_BLIK_REQUEST_SUCCESS',
@@ -61,7 +61,7 @@ export const sentExecutePaymentWithBlikRequest = (data: ExecutePaymentReq) => as
     null,
     'rent/execute-payment-with-blik',
     'LOADING',
-    data,
+    { code },
   );
 };
 
