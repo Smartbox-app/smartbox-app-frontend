@@ -10,3 +10,7 @@ export const deleteDiscount = (discountId: string) => async (dispatch: any) => {
     `stock/discount/${discountId}`,
   );
 };
+
+export const getStockList = () => async (dispatch: any) => {
+  await ApiService.get(dispatch, 'GET_STOCK_LIST_SUCCESS', 'GET_STOCK_LIST_FAILED', null, null, `stock/list`);
+};
