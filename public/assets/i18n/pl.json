@@ -91,6 +91,7 @@
       "createStockDisc" : "Utwórz zniżkę",
 
       "pay": "Zapłać",
+      "fillData": "Podaj dane:",
       "code": "Kod:",
       "enter6DigitCode": "Przepisz 6 cyfrowy kod BLIK:",
 

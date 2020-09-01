@@ -36,7 +36,7 @@ const CreditCardForm = ({ formData, user, sentExecutePaymentRequest, paymentId }
 
   const onSubmit = (data: any) => {
     const readyData = {
-      paymentId, // TODO zebrać z poprzedniego etapu
+      paymentId,
       name: data.firstName + data.lastName,
       cardNumber: data.cardNumber,
       expiryDate: data.month + data.year.slice(2),
@@ -51,11 +51,11 @@ const CreditCardForm = ({ formData, user, sentExecutePaymentRequest, paymentId }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="form-step-payment">
-      <FormHeader title="Podaj dane:" />
+      <FormHeader title={__('application.fillData')} />
       <CreditCardInput register={register} errors={errors} />
       <ButtonsContainer max>
         <Button outline text={__('application.back')} click={() => onBack()} />
-        <Button type="submit" primary text="Zapłać" />
+        <Button type="submit" primary text={__('application.pay')} />
       </ButtonsContainer>
     </form>
   );
