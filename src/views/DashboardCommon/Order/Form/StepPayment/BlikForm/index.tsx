@@ -2,11 +2,10 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { UserRes } from 'smartbox-types';
+import { ExecuteBlikPaymentReq, UserRes } from 'smartbox-types';
 import { history } from '../../../../../../App';
 import { Button } from '../../../../../../components/Common';
 import { ButtonsContainer, FormHeader } from '../../../../../../components/Layout';
-// import FormHeader from '../../../../../../components/Layout/FormHeader';
 import { __ } from '../../../../../../helpers/i18n';
 import { ApplicationState } from '../../../../../../reducers';
 import UserService from '../../../../../../services/user-service';
@@ -27,7 +26,8 @@ const CreditCardForm = ({ user, paymentId, sentExecutePaymentWithBlikRequest }: 
   const { handleSubmit, register, errors, watch } = useForm({ defaultValues });
 
   const onSubmit = (data: any) => {
-    sentExecutePaymentWithBlikRequest({ ...data, paymentId });
+    const req: ExecuteBlikPaymentReq = { ...data, paymentId };
+    sentExecutePaymentWithBlikRequest(req);
   };
 
   const onBack = () => {
