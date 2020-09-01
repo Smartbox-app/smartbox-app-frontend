@@ -90,6 +90,10 @@
 
       "createStockDisc" : "Utwórz zniżkę",
 
+      "pay": "Zapłać",
+      "code": "Kod:",
+      "enter6DigitCode": "Przepisz 6 cyfrowy kod BLIK:",
+
       "welcome": "Hello world"
     },
     "notification": {

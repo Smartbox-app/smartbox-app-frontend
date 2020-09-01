@@ -1,4 +1,5 @@
 import React from 'react';
+import { __ } from '../../../../../../../helpers/i18n';
 
 import './BlikInput.scss';
 
@@ -10,15 +11,9 @@ const BlikInput = ({ register }: Props) => {
   return (
     <div className="blik-input-wrapper">
       <label htmlFor="blik-input" className="blik-input-label">
-        Kod:
+        {__('application.code')}
       </label>
-      <input
-        id="blik-input"
-        name="blikInput"
-        type="number"
-        className="blik-input"
-        ref={register({ required: true })}
-      />
+      <input id="blik-input" name="blikInput" type="number" className="blik-input" ref={register({ required: true })} />
     </div>
   );
 };

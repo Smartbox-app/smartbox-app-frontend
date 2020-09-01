@@ -36,14 +36,14 @@ const CreditCardForm = ({ user, paymentId, sentExecutePaymentWithBlikRequest }: 
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="form-step-payment-blik">
-      <FormHeader title="Przepisz 6 cyfrowy kod BLIK:" />
+      <FormHeader title={__('application.enter6DigitCode')} />
       <BlikInput register={register} />
       <ButtonsContainer max>
         <Button outline text={__('application.back')} click={() => onBack()} />
         <Button
           type="submit"
           primary
-          text="Zapłać"
+          text={__('application.pay')}
           disabled={watch().blikInput === '' || watch().blikInput.length !== 6}
         />
       </ButtonsContainer>
