@@ -25,14 +25,14 @@ interface Props {
 const StepPayment = ({ formData, selectedPayment, user }: Props) => {
   useEffect(() => {
     if (formData.size.length === 0) {
-      history.push(`/${UserService.getSlugByRole(user.role)}/order/step/size`);
+      // history.push(`/${UserService.getSlugByRole(user.role)}/order/step/size`);
     }
   });
 
   const formToRender = () => {
     switch (selectedPayment) {
       case MainPaymentWay.card:
-        return <CreditCardForm />;
+        return <BlikForm />;
       case MainPaymentWay.blik:
         return <BlikForm />;
       case MainPaymentWay.other:

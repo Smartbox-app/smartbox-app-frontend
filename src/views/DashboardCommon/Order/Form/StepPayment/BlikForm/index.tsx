@@ -9,17 +9,19 @@ import { ButtonsContainer, FormHeader } from '../../../../../../components/Layou
 import { __ } from '../../../../../../helpers/i18n';
 import { ApplicationState } from '../../../../../../reducers';
 import UserService from '../../../../../../services/user-service';
-import { order } from '../../../../../../actions';
+import { modal, order } from '../../../../../../actions';
 
 import BlikInput from './BlikInput';
+import BlikWaitingModal from './BlikWaitingModal';
 
 interface Props {
   user: UserRes;
   paymentId: string;
   sentExecutePaymentWithBlikRequest: (data: any) => void;
+  showModal: (content: React.ReactNode, isClosable: boolean) => void;
 }
 
-const CreditCardForm = ({ user, paymentId, sentExecutePaymentWithBlikRequest }: Props) => {
+const CreditCardForm = ({ user, paymentId, sentExecutePaymentWithBlikRequest, showModal }: Props) => {
   const defaultValues = {
     blikInput: '123456',
   };
@@ -30,8 +32,8 @@ const CreditCardForm = ({ user, paymentId, sentExecutePaymentWithBlikRequest }: 
       paymentId,
       code: data.blikInput,
     };
-
-    sentExecutePaymentWithBlikRequest(req);
+    showModal(<BlikWaitingModal />, false);
+    // sentExecutePaymentWithBlikRequest(req);
   };
 
   const onBack = () => {
@@ -64,6 +66,7 @@ const mapDispatchToProps = (dispatch: any) =>
   bindActionCreators(
     {
       ...order,
+      ...modal,
     },
     dispatch,
   );
