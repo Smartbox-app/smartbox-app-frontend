@@ -47,6 +47,8 @@ const StepDuration = ({ formData, countedPrice, updateFormData, user, match, ren
     dateEnd: match.params.rentId ? addDays(new Date(rent.finishAt), 7) : addDays(formData.dateEnd, 0),
   };
 
+  const firstRentChecker = (u: UserRes): boolean => u.rentCount === 0;
+
   useEffect(() => {
     if (formData.size === '') {
       history.push(`/${UserService.getSlugByRole(user.role)}/order/step/size`);
@@ -56,12 +58,14 @@ const StepDuration = ({ formData, countedPrice, updateFormData, user, match, ren
         dateStart: setMinDate(),
         dateEnd: setMinDate(7),
         size: rent.size,
+        isFirstRent: firstRentChecker(user),
       });
     } else {
       updateFormData({
         durationInDays: 7,
         dateStart: setMinDate(),
         dateEnd: setMinDate(7),
+        isFirstRent: firstRentChecker(user),
       });
     }
   }, []);
