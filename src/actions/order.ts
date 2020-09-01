@@ -1,4 +1,4 @@
-import { RentBoxReq, UserRole, ExecutePaymentReq } from 'smartbox-types';
+import { RentBoxReq, UserRole, ExecutePaymentReq, ExecuteBlikPaymentReq } from 'smartbox-types';
 import ApiService from '../services/api-service';
 import { history } from '../App';
 import UserService from '../services/user-service';
@@ -52,7 +52,7 @@ export const sentExecutePaymentRequest = (data: ExecutePaymentReq) => async (dis
   );
 };
 
-export const sentExecutePaymentWithBlikRequest = (code: string) => async (dispatch: any) => {
+export const sentExecutePaymentWithBlikRequest = (data: ExecuteBlikPaymentReq) => async (dispatch: any) => {
   await ApiService.post(
     dispatch,
     'SENT_EXECUTE_PAYMENT_WITH_BLIK_REQUEST_SUCCESS',
@@ -61,7 +61,7 @@ export const sentExecutePaymentWithBlikRequest = (code: string) => async (dispat
     null,
     'rent/execute-payment-with-blik',
     'LOADING',
-    { code },
+    data,
   );
 };
 

@@ -26,7 +26,11 @@ const CreditCardForm = ({ user, paymentId, sentExecutePaymentWithBlikRequest }: 
   const { handleSubmit, register, errors, watch } = useForm({ defaultValues });
 
   const onSubmit = (data: any) => {
-    const req: ExecuteBlikPaymentReq = { ...data, paymentId };
+    const req: ExecuteBlikPaymentReq = {
+      paymentId,
+      code: data.blikInput,
+    };
+
     sentExecutePaymentWithBlikRequest(req);
   };
 
