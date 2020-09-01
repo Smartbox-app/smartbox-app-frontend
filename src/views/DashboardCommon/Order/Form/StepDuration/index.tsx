@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import { addDays, differenceInCalendarDays, endOfDay, startOfDay, startOfToday } from 'date-fns';
-import { IPricingResult, MyRentList, UserRes } from 'smartbox-types';
+import { IPricingResult, MyRentList, StockList, UserRes } from 'smartbox-types';
 import { DateInput, Button } from '../../../../../components/Common';
 import { order } from '../../../../../actions';
 import { ButtonsContainer } from '../../../../../components/Layout';
@@ -27,13 +27,14 @@ interface RouteProps {
 interface Props extends RouteComponentProps<RouteProps> {
   history: any;
   formData: FormType;
+  stockDiscount: StockList;
   countedPrice: IPricingResult;
   user: UserRes;
   rent: MyRentList;
   updateFormData: (data: any) => void;
 }
 
-const StepDuration = ({ formData, countedPrice, updateFormData, user, match, rent }: Props) => {
+const StepDuration = ({ formData, countedPrice, updateFormData, user, match, rent, stockDiscount }: Props) => {
   const setMinDate = (addAmount = 0, end?: boolean) =>
     match.params.rentId
       ? addDays(startOfDay(new Date(rent.finishAt)), addAmount)
@@ -59,6 +60,7 @@ const StepDuration = ({ formData, countedPrice, updateFormData, user, match, ren
         dateEnd: setMinDate(7),
         size: rent.size,
         isFirstRent: firstRentChecker(user),
+        discount: stockDiscount.discount,
       });
     } else {
       updateFormData({
@@ -66,6 +68,7 @@ const StepDuration = ({ formData, countedPrice, updateFormData, user, match, ren
         dateStart: setMinDate(),
         dateEnd: setMinDate(7),
         isFirstRent: firstRentChecker(user),
+        discount: stockDiscount.discount,
       });
     }
   }, []);
@@ -96,7 +99,6 @@ const StepDuration = ({ formData, countedPrice, updateFormData, user, match, ren
             onChange={([selected]) => {
               updateFormData({
                 durationInDays: differenceInCalendarDays(formData.dateEnd, selected[0]),
-                discount: 0,
                 dateStart: selected[0],
               });
               return selected;
@@ -112,7 +114,6 @@ const StepDuration = ({ formData, countedPrice, updateFormData, user, match, ren
             onChange={([selected]) => {
               updateFormData({
                 durationInDays: differenceInCalendarDays(selected[0], formData.dateStart),
-                discount: 0,
                 dateEnd: selected[0],
               });
               return selected;
@@ -134,6 +135,7 @@ const mapStateToProps = (state: ApplicationState) => ({
   countedPrice: state.order.countedPrice,
   user: state.user.details,
   rent: state.rent.singleRent,
+  stockDiscount: state.stock.list[0],
 });
 
 const mapDispatchToProps = (dispatch: any) =>
