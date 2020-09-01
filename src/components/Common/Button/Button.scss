@@ -80,8 +80,7 @@
     text-transform: none;
     border: 2px solid $color-primary;
     color: $color-primary;
-    background: transparent;
-    padding: 9px 20px;
+    padding: 8px 20px;
     font-weight: 500;
 
     &:hover {
@@ -118,7 +117,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    
+
     .button-img {
       width: $button-img-size;
       height: $button-img-size;

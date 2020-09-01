@@ -1,5 +1,5 @@
-@import "../../../config/variables";
-@import "../../../config/mixins.scss";
+@import '../../../config/variables';
+@import '../../../config/mixins.scss';
 
 .buttons-container {
   display: flex;
@@ -22,10 +22,7 @@
   .buttons-container {
     .button {
       margin-bottom: $main-spacing / 4;
-
-      &:not(:first-child) {
-        margin-top: 0;
-      }
+      margin-top: 0;
     }
   }
 }
