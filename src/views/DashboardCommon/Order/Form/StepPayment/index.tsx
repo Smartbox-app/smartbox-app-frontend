@@ -32,7 +32,7 @@ const StepPayment = ({ formData, selectedPayment, user }: Props) => {
   const formToRender = () => {
     switch (selectedPayment) {
       case MainPaymentWay.card:
-        return <BlikForm />;
+        return <CreditCardForm />;
       case MainPaymentWay.blik:
         return <BlikForm />;
       case MainPaymentWay.other:
