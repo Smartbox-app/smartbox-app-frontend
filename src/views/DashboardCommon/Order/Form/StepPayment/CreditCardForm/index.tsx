@@ -32,7 +32,8 @@ const CreditCardForm = ({ formData, user, sentExecutePaymentRequest, paymentId }
     cvv: 123,
   };
 
-  const { handleSubmit, register, errors } = useForm({ defaultValues });
+  // const { handleSubmit, register, errors } = useForm();
+  const { handleSubmit, register, errors } = useForm();
 
   const onSubmit = (data: any) => {
     const readyData = {
