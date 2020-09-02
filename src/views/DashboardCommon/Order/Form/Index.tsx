@@ -23,6 +23,7 @@ const Form = ({ user }: Props) => (
     <Route path={`/${UserService.getSlugByRole(user.role)}/order/step/summary/:rentId?`} component={StepSummary} />
     <Route path={`/${UserService.getSlugByRole(user.role)}/order/step/agreement/:rentId?`} component={StepAgreement} />
     <Route path={`/${UserService.getSlugByRole(user.role)}/order/step/payment/:rentId?`} component={StepPayment} />
+    <Route path={`/${UserService.getSlugByRole(user.role)}/order/invoice/:rentId?`} component={StepPayment} />
   </Switch>
 );
 
