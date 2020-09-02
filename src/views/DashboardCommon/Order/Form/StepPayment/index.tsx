@@ -11,6 +11,7 @@ import { FormType } from '../../../../../types/order-form';
 import { ApplicationState } from '../../../../../reducers';
 import { __ } from '../../../../../helpers/i18n';
 import { history } from '../../../../../App';
+import BankForm from './BankForm';
 import CreditCardForm from './CreditCardForm';
 import BlikForm from './BlikForm';
 
@@ -25,7 +26,7 @@ interface Props {
 const StepPayment = ({ formData, selectedPayment, user }: Props) => {
   useEffect(() => {
     if (formData.size.length === 0) {
-      // history.push(`/${UserService.getSlugByRole(user.role)}/order/step/size`);
+      history.push(`/${UserService.getSlugByRole(user.role)}/order/step/size`);
     }
   });
 
@@ -36,9 +37,9 @@ const StepPayment = ({ formData, selectedPayment, user }: Props) => {
       case MainPaymentWay.blik:
         return <BlikForm />;
       case MainPaymentWay.other:
-        return <CreditCardForm />;
+        return <BankForm />;
       default:
-        return <BlikForm />;
+        return <CreditCardForm />;
     }
   };
 

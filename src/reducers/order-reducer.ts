@@ -12,6 +12,8 @@ export type PaymentMethodDetail = {
   id: string;
   name: string;
   img: string;
+  banks: string;
+  main_bank_id: string;
 };
 
 export type OrderState = {
@@ -108,6 +110,8 @@ const initialState: OrderState = {
     id: '',
     name: '',
     img: '',
+    banks: '',
+    main_bank_id: '',
   },
 };
 

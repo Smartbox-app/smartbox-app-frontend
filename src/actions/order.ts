@@ -1,4 +1,4 @@
-import { RentBoxReq, UserRole, ExecutePaymentReq, ExecuteBlikPaymentReq } from 'smartbox-types';
+import { RentBoxReq, UserRole, ExecutePaymentReq, ExecuteBlikPaymentReq, UrlRes } from 'smartbox-types';
 import ApiService from '../services/api-service';
 import { history } from '../App';
 import UserService from '../services/user-service';
@@ -81,4 +81,18 @@ export const checkPaymentStatus = (paymentId: string) => async (dispatch: any) =
     null,
     `payment/is-paid/${paymentId}`,
   );
-}
+};
+
+export const sentExecutePaymentWithTpayRequest = (paymentId: string, group: string) => async (dispatch: any) => {
+  await ApiService.get(
+    dispatch,
+    'SENT_EXECUTE_PAYMENT_WITH_TPAY_REQUEST_SUCCESS',
+    'SENT_EXECUTE_PAYMENT_WITH_TPAY_REQUEST_FAILED',
+    (res: UrlRes) => {
+      console.log('res: UrlRes', res);
+      // przesłać usera na wskazany url
+    },
+    null,
+    `rent/execut-payment-with-tpay/${paymentId}/${group}`,
+  );
+};
