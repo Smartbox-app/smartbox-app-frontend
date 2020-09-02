@@ -20,6 +20,7 @@ export type OrderState = {
   countedPrice: IPricingResult;
   boxAvailability: BoxGroupAvailability[];
   discountList: any[];
+  paymentSuccess: boolean;
   isAgreementAccepted: boolean;
   isResignationMarked: boolean;
   bankList: any;
@@ -65,6 +66,11 @@ interface PickPaymentMethod {
   payload: PaymentMethodDetail;
 }
 
+interface CheckPaymentStatus {
+  type: 'CHECK_PAYMENT_STATUS_SUCCESS';
+  payload: boolean;
+}
+
 type Action =
   | FormStepSuccess
   | FetchBoxAvailability
@@ -73,6 +79,7 @@ type Action =
   | FormResignation
   | SetPaymentMethod
   | PickPaymentMethod
+  | CheckPaymentStatus
   | SaveBankList;
 
 const initialState: OrderState = {
@@ -86,6 +93,7 @@ const initialState: OrderState = {
     discountCode: '',
   },
   paymentId: '',
+  paymentSuccess: false,
   countedPrice: {
     name: '',
     value: 0,

@@ -71,3 +71,14 @@ export const sentExecutePaymentWithBlikRequest = (data: ExecuteBlikPaymentReq) =
 
 export const setPaymentMethod = (paymentId: string) => ({ type: 'SET_PAYMENT_METHOD_SUCCESS', payload: paymentId });
 export const pickPaymentType = (paymentId: string) => ({ type: 'PICK_PAYMENT_TYPE_SUCCESS', payload: paymentId });
+
+export const checkPaymentStatus = (paymentId: string) => async (dispatch: any) => {
+  await ApiService.get(
+    dispatch,
+    'CHECK_PAYMENT_STATUS_SUCCESS',
+    'CHECK_PAYMENT_STATUS_FAILED',
+    null,
+    null,
+    `payment/is-paid/${paymentId}`,
+  );
+}
