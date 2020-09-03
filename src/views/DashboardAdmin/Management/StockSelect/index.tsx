@@ -4,7 +4,6 @@ import { Input } from '../../../../components/Common';
 import './StockSelect.scss';
 
 const StockSelect = () => {
-  console.log('StockSelect');
   return (
     <div className="stock-select-wrapper">
       <Input

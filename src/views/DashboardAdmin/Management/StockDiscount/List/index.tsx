@@ -6,7 +6,7 @@ import { Section, ButtonsContainer } from '../../../../../components/Layout';
 import { ApiTable, Button, ConfirmModal } from '../../../../../components/Common';
 import { InteractiveTableSchema } from '../../../../../utils/table-schema-utils';
 import { __ } from '../../../../../helpers/i18n';
-import { modal, discounts } from '../../../../../actions';
+import { modal, stock } from '../../../../../actions';
 
 import Edit from '../Edit';
 import Add from '../Add';
@@ -66,7 +66,7 @@ const mapDispatchToProps = (dispatch: any) =>
   bindActionCreators(
     {
       ...modal,
-      ...discounts,
+      ...stock,
     },
     dispatch,
   );
