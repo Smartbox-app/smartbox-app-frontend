@@ -131,6 +131,7 @@ select:-webkit-autofill:focus {
   -webkit-box-shadow: 0 0 0px 1000px $color-text inset;
   box-shadow: 0 0 0px 1000px $color-text inset;
   transition: background-color 5000s ease-in-out 0s;
+  background-color: white !important;
 }
 
 textarea {

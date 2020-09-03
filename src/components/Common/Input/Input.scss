@@ -40,15 +40,6 @@
       background: rgba($color-text, 0.1);
       box-shadow: $box-shadow-small rgba($color-text, 0.25);
     }
-
-    &:-webkit-autofill,
-    &:-webkit-autofill:hover,
-    &:-webkit-autofill:focus {
-      -webkit-text-fill-color: $color-text !important;
-      -webkit-box-shadow: 0 0 0px 1000px $color-primary inset !important;
-      box-shadow: 0 0 0px 1000px $color-primary inset !important;
-      transition: background-color 5000s ease-in-out 0s !important;
-    }
   }
 }
 
