@@ -31,6 +31,40 @@ const getError = (error: ApiErrorCode) => {
       return 'Nieprawidłowa cena';
     case ApiErrorCode.UAreTooFarAway:
       return 'Jesteś za daleko';
+    case ApiErrorCode.NoFreeBoxInThisSize:
+      return 'Brak wolnej skrytki o tym rozmiarze';
+    case ApiErrorCode.PaymentError:
+      return 'Błąd przy płatności';
+    case ApiErrorCode.PayFirst:
+      return 'Płatność wymagana';
+    case ApiErrorCode.CantChangeThisBoxOnThisStatus:
+      return 'Nie można wynonać zmiany przy obecnym statusie';
+    case ApiErrorCode.TooLateForCahnge:
+      return 'Jest za późno na dokonanie tej zmiany';
+    case ApiErrorCode.NotFreeBox:
+      return 'Brak wolnych skrytek';
+    case ApiErrorCode.InvalidDiscountCode:
+      return 'Błędny kod';
+    case ApiErrorCode.CardHasBeenUsedWithDiscount:
+      return 'Karta uzyskała już jednorazową zniżkę';
+    case ApiErrorCode.InvalidBoxNumber:
+      return 'Błędny numer skrytki';
+    case ApiErrorCode.CreatingInvoiceFailure:
+      return 'Błąd podczas tworzenia faktury';
+    case ApiErrorCode.SendingEmailWithInvoiceFailure:
+      return 'Błąd podczas wysyłania faktury';
+    case ApiErrorCode.InvalidLang:
+      return 'Wybrano błędny język';
+    case ApiErrorCode.ActionForebiden:
+      return 'Akcja niedozwolona';
+    case ApiErrorCode.InvalidCoordinate:
+      return 'Błędne współrzędne geograficzne';
+    case ApiErrorCode.StockHasActiveDiscont:
+      return 'Plac posiada już zniżkę';
+    case ApiErrorCode.InvalidBlik:
+      return 'Błędny numer BLIK';
+    case ApiErrorCode.InvalidGroup:
+      return 'Błędny numer grupy bankowej';
     default:
       return 'Wystąpił błąd';
   }
