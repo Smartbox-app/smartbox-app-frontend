@@ -2,14 +2,32 @@ import { addDays } from 'date-fns';
 import { BoxGroupAvailability, usePricing, ICalculateProps, IPricingResult } from 'smartbox-types';
 import { FormType } from '../types/order-form';
 
+export enum MainPaymentWay {
+  'card',
+  'blik',
+  'other',
+}
+
+export type PaymentMethodDetail = {
+  id: string;
+  name: string;
+  img: string;
+  banks: string;
+  main_bank_id: string;
+};
+
 export type OrderState = {
   formData: FormType;
   paymentId: string;
   countedPrice: IPricingResult;
   boxAvailability: BoxGroupAvailability[];
   discountList: any[];
+  paymentSuccess: boolean;
   isAgreementAccepted: boolean;
   isResignationMarked: boolean;
+  bankList: any;
+  selectedPayment: MainPaymentWay;
+  selectedPaymentMethodDetail: PaymentMethodDetail;
 };
 
 interface FormStepSuccess {
@@ -35,7 +53,36 @@ interface FormResignation {
   type: 'FORM_RESIGNATION_MARKED_SUCCESS';
 }
 
-type Action = FormStepSuccess | FetchBoxAvailability | SentRentBoxRequestSuccess | FormReaded | FormResignation;
+interface SaveBankList {
+  type: 'SAVE_BANKS_LIST_SUCCESS';
+  payload: any;
+}
+
+interface SetPaymentMethod {
+  type: 'SET_PAYMENT_METHOD_SUCCESS';
+  payload: PaymentMethodDetail | MainPaymentWay;
+}
+
+interface PickPaymentMethod {
+  type: 'PICK_PAYMENT_TYPE_SUCCESS';
+  payload: PaymentMethodDetail;
+}
+
+interface CheckPaymentStatus {
+  type: 'CHECK_PAYMENT_STATUS_SUCCESS';
+  payload: boolean;
+}
+
+type Action =
+  | FormStepSuccess
+  | FetchBoxAvailability
+  | SentRentBoxRequestSuccess
+  | FormReaded
+  | FormResignation
+  | SetPaymentMethod
+  | PickPaymentMethod
+  | CheckPaymentStatus
+  | SaveBankList;
 
 const initialState: OrderState = {
   formData: {
@@ -48,6 +95,7 @@ const initialState: OrderState = {
     discountCode: '',
   },
   paymentId: '',
+  paymentSuccess: false,
   countedPrice: {
     name: '',
     value: 0,
@@ -56,6 +104,15 @@ const initialState: OrderState = {
   discountList: [{ text: 'Jednorazowy rabat 5%', value: 5 }],
   isAgreementAccepted: false,
   isResignationMarked: false,
+  bankList: [],
+  selectedPayment: MainPaymentWay.card,
+  selectedPaymentMethodDetail: {
+    id: '',
+    name: '',
+    img: '',
+    banks: '',
+    main_bank_id: '',
+  },
 };
 
 export default (state: OrderState = initialState, action: Action): any => {
@@ -119,6 +176,27 @@ export default (state: OrderState = initialState, action: Action): any => {
         isResignationMarked: !state.isResignationMarked,
       };
     }
+    case 'SAVE_BANKS_LIST_SUCCESS':
+      const dataToRender: any[] = [];
+      for (const bank in action.payload) {
+        dataToRender.push(action.payload[bank]);
+      }
+      return {
+        ...state,
+        bankList: dataToRender,
+      };
+
+    case 'PICK_PAYMENT_TYPE_SUCCESS':
+      return {
+        ...state,
+        selectedPayment: action.payload,
+      };
+
+    case 'SET_PAYMENT_METHOD_SUCCESS':
+      return {
+        ...state,
+        selectedPaymentMethodDetail: state.bankList.find((singleBank: any) => singleBank.id === action.payload),
+      };
 
     default:
       return state;

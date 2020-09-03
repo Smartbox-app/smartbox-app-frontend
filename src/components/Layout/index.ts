@@ -11,6 +11,7 @@ import SectionHeader from './SectionHeader';
 import Navigation from './Navigation';
 import FieldsColumn from './FieldsColumn';
 import FieldsGrid from './FieldsGrid';
+import FormHeader from './FormHeader';
 
 export {
   Main,
@@ -26,4 +27,5 @@ export {
   Navigation,
   FieldsColumn,
   FieldsGrid,
+  FormHeader,
 };

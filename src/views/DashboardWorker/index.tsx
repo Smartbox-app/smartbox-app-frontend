@@ -11,7 +11,7 @@ import { __ } from '../../helpers/i18n';
 const DashboardWorker = () => {
   const menuItems: MenuItemType[] = [
     {
-      icon: 'dashboard.svg',
+      icon: 'settings.svg',
       text: __('application.management'),
       address: '/worker/management',
     },

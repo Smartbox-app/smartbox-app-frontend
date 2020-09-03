@@ -131,4 +131,5 @@ const mapDispatchToProps = (dispatch: any) =>
     dispatch,
   );
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(StepSize));
+const StepSizeWithRouter = withRouter(StepSize);
+export default connect(mapStateToProps, mapDispatchToProps)(StepSizeWithRouter);

@@ -27,6 +27,8 @@ const getError = (error: ApiErrorCode) => {
   switch (error) {
     case ApiErrorCode.InvalidLoginData:
       return 'Niepoprawne dane logowania.';
+    case ApiErrorCode.InvalidPrice:
+      return 'Nieprawidłowa cena';
     default:
       return 'Wystąpił błąd';
   }

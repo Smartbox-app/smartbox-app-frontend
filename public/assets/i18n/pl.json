@@ -53,6 +53,7 @@
       "ccNumber": "numer karty kredytowej",
       "expiryDate": "ważność karty",
       "lastName": "nazwisko",
+      "owner": "właściciel",
       "firstName": "imię",
 
       "singleStoreDetail": "Szczegóły wybranej skrytki:",
@@ -89,6 +90,11 @@
       "preInvitationForWorker": "Wyślij zaproszenie dla pracownika",
 
       "createStockDisc" : "Utwórz zniżkę",
+
+      "pay": "Zapłać",
+      "fillData": "Podaj dane:",
+      "code": "Kod:",
+      "enter6DigitCode": "Przepisz 6 cyfrowy kod BLIK:",
 
       "welcome": "Hello world"
     },

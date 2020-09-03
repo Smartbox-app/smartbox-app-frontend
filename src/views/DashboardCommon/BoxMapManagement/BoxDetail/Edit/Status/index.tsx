@@ -1,10 +1,12 @@
 import React from 'react';
 import { ItfApiForm } from 'itf_formbuilder_react';
 import ReactSelect from 'react-select';
+import { connect } from 'react-redux';
 import ReactCreatableSelect from 'react-select/creatable';
 import { ChangeStatusReq } from 'smartbox-types';
 import { FormContainer, ButtonsContainer } from '../../../../../../components/Layout';
 import { Button } from '../../../../../../components/Common';
+import { ApplicationState } from '../../../../../../reducers';
 import ApiService from '../../../../../../services/api-service';
 import { formOnTranslateString } from '../../../../../../utils/trans-form';
 import { successNotification } from '../../../../../../actions/notifications';
@@ -14,9 +16,10 @@ import './Status.scss';
 
 interface Props {
   selectedBoxId: string;
+  stockId: string;
 }
 
-const Status = ({ selectedBoxId }: Props) => {
+const Status = ({ selectedBoxId, stockId }: Props) => {
   const submitButton = (
     <ButtonsContainer>
       <Button text={__('application.changeStatus')} type="submit" danger />
@@ -24,7 +27,7 @@ const Status = ({ selectedBoxId }: Props) => {
   );
 
   const fetchUrl = 'rent/form/change-status';
-  const sendUrl = 'rent/status/07b76069-5bbc-4486-95b4-63ea8a7eba52';
+  const sendUrl = `rent/status/${stockId}`;
 
   const customSendFetcher = (formId: string, values: ChangeStatusReq) =>
     ApiService.sendForm(
@@ -55,4 +58,8 @@ const Status = ({ selectedBoxId }: Props) => {
   );
 };
 
-export default Status;
+const mapStateToProps = (state: ApplicationState) => ({
+  stockId: state.rent.stockId,
+});
+
+export default connect(mapStateToProps)(Status);

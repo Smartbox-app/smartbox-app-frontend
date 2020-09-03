@@ -1,5 +1,5 @@
 @import "../../../config/variables";
-@import "../../../config/mixins.scss";
+@import "../../../config/mixins";
 
 .modal {
   position: fixed;
@@ -35,14 +35,12 @@
     flex-direction: column;
     padding: $main-spacing;
     z-index: 1000;
-    overflow: auto;
     max-height: 100vh;
     max-width: 90%;
-    position: relative;
     box-shadow: $box-shadow-small rgba(0, 0, 0, 0.5);
     transform: scale(0.8);
     transition: $transition-time transform;
-    border-radius: $main-spacing /4;
+    border-radius: $main-spacing /2;
 
     p {
       max-width: 800px;
@@ -57,6 +55,13 @@
       border-radius: 0;
     }
   }
+}
+
+.modal-content {
+  max-height: 90vh;
+  position: relative;
+  overflow: hidden;
+  overflow-y: scroll;
 }
 
 .modal-exit {
@@ -77,20 +82,20 @@
   }
 }
 
-@include gt-sm {
+@media screen and (min-width: map-get($breakpoints, xs)) {
+  .modal-body {
+    max-width: 100%;
+  }
+  .modal-content {
+    min-width: 250px;
+  }
+}
+
+@media screen and (min-width: map-get($breakpoints, sm)) {
   .modal-body {
     max-width: 100%;
   }
   .modal-content {
     min-width: 400px;
-  }
-}
-
-@include gt-lg {
-  .modal-body {
-    max-width: 100%;
-  }
-  .modal-content {
-    min-width: 450px;
   }
 }

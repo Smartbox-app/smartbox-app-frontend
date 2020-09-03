@@ -19,7 +19,7 @@ const DashboardAdmin = () => {
       address: '/admin/main',
     },
     {
-      icon: 'dashboard.svg',
+      icon: 'settings.svg',
       text: __('application.management'),
       address: '/admin/management',
     },

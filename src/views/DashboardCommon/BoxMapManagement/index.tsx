@@ -19,6 +19,7 @@ import './BoxMapManagement.scss';
 
 interface Props {
   boxesGroup: BoxListItem[];
+  stockId: string;
   showModal: (content: React.ReactNode) => void;
   fetchBoxStatuses: (stockId: string) => void;
   fetchSingleBoxDetails: (rentId: string) => void;
@@ -43,7 +44,7 @@ class BoxMapManagement extends React.Component<Props, State> {
   }
 
   async componentDidMount() {
-    const { fetchBoxStatuses } = this.props;
+    const { fetchBoxStatuses, stockId } = this.props;
 
     const mapWapperElement = this.element.current;
 
@@ -64,7 +65,8 @@ class BoxMapManagement extends React.Component<Props, State> {
       false,
     );
 
-    await fetchBoxStatuses('07b76069-5bbc-4486-95b4-63ea8a7eba52');
+    await fetchBoxStatuses(stockId);
+
     const catchElement = this.element.current.querySelectorAll('#kontenery .storage, #kontenery .st9');
 
     await catchElement.forEach((singleElement: any) => {
@@ -198,6 +200,7 @@ class BoxMapManagement extends React.Component<Props, State> {
 const mapStateToProps = (state: ApplicationState) => ({
   boxesGroup: state.boxes.boxesGroup,
   user: state.user.details,
+  stockId: state.rent.stockId,
 });
 
 const mapDispatchToProps = (dispatch: any) =>

@@ -3,6 +3,7 @@ import { MyRentList, RentStatus } from 'smartbox-types';
 export type RentsStatus = {
   singleRent: MyRentList;
   rentsList: MyRentList[];
+  stockId: string;
 };
 
 interface BoxGroup {
@@ -29,6 +30,7 @@ const initialState: RentsStatus = {
     getProps: () => [],
   },
   rentsList: [],
+  stockId: '1231qweqwe123',
 };
 
 export default (state: RentsStatus = initialState, action: Action): any => {
