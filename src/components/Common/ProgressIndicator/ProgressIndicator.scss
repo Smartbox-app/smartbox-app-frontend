@@ -1,0 +1,26 @@
+@import '../../../config/variables.scss';
+@import '../../../config/mixins.scss';
+
+.progress-indicator-wrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  margin-bottom: $main-spacing * 1;
+  width: 100%;
+
+  .single-stamp {
+    display: flex;
+    flex: 0 0 20%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    position: relative;
+    justify-content: center;
+  }
+}
+
+@include gt-xs {
+  .progress-indicator-wrapper {
+    margin-top: $main-spacing * 2;
+    margin-bottom: $main-spacing * 2;
+  }
+}

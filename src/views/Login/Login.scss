@@ -1,0 +1,63 @@
+@import '../../config/variables.scss';
+@import '../../config/mixins.scss';
+
+.login-form {
+  max-width: $login-form-width * 0.8;
+  margin: 0 auto;
+  max-height: auto;
+}
+
+.login-input {
+  label {
+    margin-left: $main-spacing * 3;
+  }
+
+  &:first-of-type {
+    margin-top: 10%;
+  }
+
+  .input {
+    border: none;
+    border: 2px solid $color-primary;
+    height: $login-button-height;
+    width: $login-button-size;
+    border-radius: $login-button-height/2;
+    margin: 0 auto;
+    padding-left: $main-spacing *3;
+    padding-right: $main-spacing *3;
+
+    &:active, &:focus {
+      border-color: $color-active;
+      background-color: $color-background;
+    }
+  }
+}
+
+@include gt-xs {
+  .login-input {
+    &:first-of-type {
+      margin-top: 25%;
+    }
+  }
+}
+
+@include gt-sm {
+  .login-form {
+    max-width: $login-form-width;
+    margin: 0 auto;
+    max-height: none;
+  }
+
+  .login-input {
+    label {
+      margin-left: $main-spacing * 5;
+    }
+    .input {
+      width: $login-button-size * 1.2;
+    }
+
+    &:first-of-type {
+      margin-top: 30%;
+    }
+  }
+}

@@ -1,21 +1,24 @@
 @import '../../../config/variables';
+@import '../../../config/mixins.scss';
 
 footer {
     position: relative;
     padding: $main-spacing;
     width: 100%;
-    text-align: end;
+    height: $footer-height;
+    text-align: right;
+    background-color: $color-background;
 
     p {
         font-size: .75rem;
-        color: $color-text-alter;
+        color: $color-text;
     }
 
     a {
         .menu-footer_logo {
             vertical-align: middle;
             display: inline-block;
-            height: 25px;
+            height: $footer-height /2.5;
             margin: 0 10px;
         }
 
@@ -31,6 +34,10 @@ footer {
     small {
         font-size: 75%;
     }
-
-
 }
+
+@include gt-sm {
+    footer {
+      margin: 0 auto;
+    }
+  }

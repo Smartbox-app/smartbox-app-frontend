@@ -1,0 +1,122 @@
+@import '../../../../config/variables.scss';
+@import '../../../../config/mixins.scss';
+
+.map-legend-wrapper {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: $main-spacing;
+
+  .legend-list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    flex: 0 0 100%;
+
+    .single {
+      flex: 0 0 50%;
+      text-align: center;
+      padding: $main-spacing /2;
+      font-weight: 500;
+      font-size: 0.9rem;
+      height: $main-spacing * 4;
+      line-height: 20px;
+      position: relative;
+
+      span{
+        &::before {
+          position: absolute;
+          display: block;
+          width: 20px;
+          height: 20px;
+          content: '';
+        }
+      }
+    }
+  }
+}
+
+.st9 {
+  fill: #fff;
+}
+
+.single-free {
+  span{
+    &::before {
+      background-color: $color-success;
+    }
+  }
+}
+
+.single-reserved {
+  span{
+    &::before {
+      background-color: $color-danger;
+    }
+  }
+}
+
+.single-to-explain {
+  span{
+    &::before {
+      background-color: #000;
+    }
+  }
+}
+
+.single-to-check {
+  span{
+    &::before {
+      background-color: $color-primary;
+    }
+  }
+}
+
+.single-no-paid-extension {
+  span{
+    &::before {
+      background-color: $color-tertiary;
+    }
+  }
+}
+
+@include gt-sm {
+  .map-legend-wrapper {
+
+    .legend-list {
+
+      .single {
+        flex: 0 0 30%;
+        font-size: 1rem;
+        line-height: 30px;
+
+        span{
+          &::before {
+            width: 30px;
+            height: 30px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@include gt-lg {
+  .map-legend-wrapper {
+
+    .legend-list {
+
+      .single {
+        flex: 0 0 20%;
+        font-size: 1rem;
+        line-height: 30px;
+
+        span{
+          &::before {
+            width: 30px;
+            height: 30px;
+          }
+        }
+      }
+    }
+  }
+}

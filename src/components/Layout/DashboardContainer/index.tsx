@@ -1,21 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { UserRes } from 'smartbox-types';
+import { ApplicationState } from '../../../reducers';
 
 import './DashboardContainer.scss';
-// import { Spinner } from '../../Common';
 
 interface Props {
   children: React.ReactNode;
-  user?: UserRes;
 }
 
-const DashboardContainer = ({ user, children }: Props) => (
-  // if (!user) return <Spinner />;
-  <div className="dashboard-container">{children}</div>
-);
-const mapStateToProps = (state: any) => ({
+const DashboardContainer = ({ children }: Props) => <div className="dashboard-container">{children}</div>;
+const mapStateToProps = (state: ApplicationState) => ({
   user: state.user.details,
 });
 

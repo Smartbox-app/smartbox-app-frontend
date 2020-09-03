@@ -1,0 +1,184 @@
+@import '../../../../../../config/variables.scss';
+@import "../../../../../../config/mixins.scss";
+
+.single-option-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  flex: 0 0 50%;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: $main-spacing/2;
+
+  .radio-img {
+    margin: 0 $main-spacing;
+    position: relative;
+    display: block;
+    height: $single-option-height;
+    width: $single-option-width;
+    box-shadow: 0 0 2px 2px rgba(0,0,0,0.1);
+  }
+
+  input[type=radio] {
+    display: none;
+  }
+
+  .svg-wrapper {
+    height: 100%;
+
+    svg {
+      width: 100%;
+      height: 100%;
+    }
+    .cls-1 {
+      fill:#dadada;
+    }
+    .cls-2 {
+      fill:#bfbfbf;
+    }
+    .cls-3 {
+      fill:#e6e6e6;
+    }
+    .cls-4 {
+      fill:#999;
+    }
+    .cls-5 {
+      fill: #000;
+      stroke:#000;
+      stroke-miterlimit:10;
+      font-size: 10px;
+    }
+    .cls-6 {
+      font-size:10px;
+      font-family:Montserrat-Regular, Montserrat, sans-serif;
+    }
+    .cls-7 {
+      font-size:52.55px;
+      font-family:Montserrat-Bold, Montserrat, sans-serif;
+      font-weight:700;
+    }
+  }
+
+  input[type=radio]:checked + .single-option {
+    .radio-img {
+      box-shadow: 0px 0px 1px 2px rgba(6,110,179,0.75);
+    }
+
+    .svg-wrapper{
+      .cls-1{
+        fill:#066eb3;
+      }
+      .cls-2{
+        fill:#0674bd;
+      }
+      .cls-3{
+        fill:#055991;
+      }
+      .cls-4{
+        font-size:10.24px;
+      }
+      .cls-4, .cls-6{
+        fill:red;
+        font-family:Montserrat-SemiBold, Montserrat, sans-serif;
+        font-weight:600;
+      }
+      .cls-5{
+        stroke-miterlimit:10;
+      }
+      .red {
+        stroke: red;
+      }
+      .cls-6{
+        font-size:10.24px;
+      }
+      .cls-7{
+        font-size:52.55px;
+        fill:#fbb03b;
+        font-family: Montserrat-Bold, Montserrat, sans-serif;
+        font-weight:700;
+      }
+    }
+  }
+
+  .svg-wrapper {
+    padding: $main-spacing;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .single-option {
+    cursor: pointer;
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .img-description {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);;
+    text-align: center;
+  }
+}
+
+
+.img-value {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(10%) rotate(10deg);
+  font-size: 2rem;
+  color: darken($color-primary, 15%);
+  font-weight: 600;
+  padding: 0 10px;
+}
+
+.img-value-disabled {
+  color: $color-danger;
+}
+
+.single-option-disable {
+  cursor: not-allowed !important;
+  &::before {
+    content: '';
+    display: block;
+    width: $single-option-width;
+    height: $single-option-height;
+    background-color: lighten($color-disabled, 1%);
+    position: absolute;
+    box-shadow: 0 0 3px 3px lighten($color-disabled, 10%);
+  }
+}
+
+@include gt-xs {
+  .single-option-wrapper {
+    flex: 0 0 50%;
+  }
+}
+
+@include gt-sm {
+  .single-option-wrapper {
+    margin-top: $main-spacing * 1;
+    margin-bottom: $main-spacing * 1;
+
+    .radio-img {
+      padding: 0 $main-spacing * 3;
+      width: $single-option-width-big;
+      height: $single-option-height-big;
+    }
+  }
+
+  .img-value {
+    font-size: 3rem;
+  }
+
+  .single-option-disable {
+    &::before {
+      width: $single-option-width-big;
+      height: $single-option-height-big;
+    }
+  }
+}

@@ -1,6 +1,8 @@
 @import "../../../config/variables";
+@import "../../../config/mixins.scss";
 
 .notification-container {
+  font-family: $font-primary;
   position: fixed;
   top: 0;
   right: 0;
@@ -8,7 +10,7 @@
   width: 100%;
 }
 
-@media screen and (min-width: map-get($breakpoints, sm)) {
+@include gt-sm {
   .notification-container {
     width: 350px;
   }

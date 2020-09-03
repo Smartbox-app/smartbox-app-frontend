@@ -1,0 +1,124 @@
+@import '../../../../config/variables.scss';
+@import '../../../../config/mixins.scss';
+
+.main-menu-item {
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 25%;
+  border-top: 2px solid $color-inactive;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  padding: $main-spacing;
+  color: $color-inactive;
+  border: none;
+
+  &:link {
+    color: $color-inactive;
+  }
+  &:visited {
+    color: $color-inactive
+  }
+
+  &:hover {
+    background-color: lighten($color-background, 30%);
+    border-top: 2px solid $color-primary-light;
+    color: $color-primary-light;
+    cursor: pointer;
+
+    .main-menu-item_text {
+      color: $color-primary-light;
+    }
+  }
+
+  &.active {
+    border-top: 2px solid $color-primary;
+    font-weight: 500;
+    color: $color-inactive;
+
+    .main-menu-item_text {
+      color: $color-primary;
+    }
+  }
+  
+  &.active .main-menu-item_logo {
+    fill: $color-primary;
+  }
+
+  &:hover .main-menu-item_logo {
+    fill: $color-primary-light;
+  }
+
+  .main-menu-item_logo {
+    width: $menu-icon-small;
+    height: $menu-icon-small;
+    margin-bottom: $main-spacing/2;
+    fill: $color-inactive;
+  }
+
+}
+
+@include gt-sm {
+  .main-menu-item_logo {
+    width: $menu-icon-medium;
+    height: $menu-icon-medium;
+    margin-bottom: $main-spacing;
+    fill: $color-inactive;
+  }
+  .main-menu-item {
+    border-top: none;
+    border-bottom: 2px solid $color-inactive;
+  
+    &:hover {
+      border-top: none;
+      border-bottom: 2px solid $color-primary-light;
+    }
+  
+    &.active {
+      border-top: none;
+      border-bottom: 2px solid $color-primary;
+    }
+  }
+}
+
+@include gt-md {
+  .main-menu-item_logo {
+    width: $menu-icon-big;
+    height: $menu-icon-big;
+  }
+
+}
+
+@include gt-lg {
+  .main-menu-item {
+    display: flex;
+    border-top: none;
+    border-bottom: none;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    
+    .main-menu-item_logo {
+      width: $menu-icon-big;
+      height: $menu-icon-big;
+      margin-right: 10px;
+      margin-bottom: 0;
+    }
+
+    &.active {
+      border-top: none;
+      border-bottom: none;
+    }
+
+    &:hover {
+      border-top: none;
+      border-bottom: none;
+    }
+
+    .main-menu-item_text {
+      line-height: $menu-icon-big;
+      font-size: 1.3rem;
+      font-weight: 400;
+    }
+  }
+}

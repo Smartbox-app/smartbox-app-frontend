@@ -1,0 +1,68 @@
+@import '../../../../../../../config/variables';
+@import '../../../../../../../config/mixins';
+
+.bank-list-wrapper {
+  display: flex;
+  flex-direction: row;
+  background: #ffffff;
+  flex-wrap: wrap;
+  margin-left: -$main-spacing;
+  margin-right: -$main-spacing;
+  max-width: 100%;
+
+  @include gt-xs {
+    max-width: 80vw;
+  }
+
+  @include gt-sm {
+    flex-direction: row;
+  }
+
+  input {
+    display: none;
+  }
+
+  .img-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: $main-spacing;
+    background: #eee;
+    border-radius: $main-spacing;
+    height: 90px;
+    border: 2px solid $color-disabled;
+    max-width: 200px;
+  }
+
+  .single-bank {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 0 0 100%;
+    padding: $main-spacing;
+
+    @include gt-xs {
+      flex: 0 0 50%;
+    }
+
+    @include gt-sm {
+      flex: 0 0 50%;
+    }
+
+    @include gt-md {
+      flex: 0 0 33.333%;
+    }
+
+    @include gt-lg {
+      flex: 0 0 25%;
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  input[type='radio']:checked + .img-wrapper {
+    border: 2px solid $color-primary;
+  }
+}

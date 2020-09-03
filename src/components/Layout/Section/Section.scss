@@ -1,0 +1,32 @@
+@import '../../../config/variables.scss';
+@import '../../../config/mixins.scss';
+
+.section-wrapper {
+  width: 100%;
+  padding: $main-spacing $main-spacing*2;
+}
+
+@include gt-sm {
+  .section-wrapper {
+    width: map-get($breakpoints, sm);
+    margin: 0 auto;
+    padding: $main-spacing;
+  }
+}
+
+@include gt-lg {
+  .section-wrapper {
+    margin: 0 auto;
+  }
+
+  .section-full-width {
+    width: 100%;
+    max-width: map-get($breakpoints, lg);
+    min-width: map-get($breakpoints, sm);
+  }
+
+  .section-half-width {
+    width: 50%;
+    max-width: map-get($breakpoints, lg) /2;
+  }
+}

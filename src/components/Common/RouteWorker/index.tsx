@@ -1,17 +1,25 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { UserRole, UserRes } from 'smartbox-types';
+import { stock } from '../../../actions';
 import { rememberRedirect } from '../../../utils/remeber-redirect';
+import { ApplicationState } from '../../../reducers';
 
 interface Props {
   user: UserRes;
+  getStockList: () => void;
   component: any;
   exact?: boolean;
   path?: string;
 }
 
-const RouteWorker = ({ user, exact, path, component }: Props) => {
+const RouteWorker = ({ user, exact, path, component, getStockList }: Props) => {
+  useEffect(() => {
+    getStockList();
+  }, []);
+
   if (!user || user.role !== UserRole.worker) {
     return <Route render={() => <Redirect to="/" />} />;
   }
@@ -19,8 +27,10 @@ const RouteWorker = ({ user, exact, path, component }: Props) => {
   return <Route exact={exact} path={path} component={component} />;
 };
 
-const mapStateToProps = (state: any) => ({
+const mapStateToProps = (state: ApplicationState) => ({
   user: state.user.details,
 });
 
-export default connect(mapStateToProps)(RouteWorker);
+const mapDispatchToProps = (dispatch: any) => bindActionCreators({ ...stock }, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(RouteWorker);

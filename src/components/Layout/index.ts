@@ -1,8 +1,31 @@
 import Main from './Main';
-import ButtonContainer from './ButtonsContainer';
+import ButtonsContainer from './ButtonsContainer';
 import DashboardContainer from './DashboardContainer';
 import Footer from './Footer';
 import PageContent from './PageContent';
 import PageHeader from './PageHeader';
+import FormContainer from './FormContainer';
+import LogoContainer from './LogoContainer';
+import Section from './Section';
+import SectionHeader from './SectionHeader';
+import Navigation from './Navigation';
+import FieldsColumn from './FieldsColumn';
+import FieldsGrid from './FieldsGrid';
+import FormHeader from './FormHeader';
 
-export { Main, ButtonContainer, DashboardContainer, Footer, PageContent, PageHeader };
+export {
+  Main,
+  ButtonsContainer,
+  DashboardContainer,
+  Footer,
+  PageContent,
+  PageHeader,
+  FormContainer,
+  LogoContainer,
+  Section,
+  SectionHeader,
+  Navigation,
+  FieldsColumn,
+  FieldsGrid,
+  FormHeader,
+};
