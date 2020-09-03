@@ -46,7 +46,7 @@ const FormStockDiscount = ({ showModal }: Props) => {
       <FormHeader title="Tworzysz zniżkę" />
       <FieldsColumn>
         <ItfApiForm
-          formId="addGiftForm"
+          formId="addStockDiscountForm"
           schemaMayBeDynamic={false}
           schemaCacheEnabled={false}
           loadingInfo={<Spinner transparent />}

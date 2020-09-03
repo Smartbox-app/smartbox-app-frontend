@@ -24,6 +24,10 @@
       "workers": "Pracownicy",
       "boxes": "Skrzynki",
       "discountsCodes": "Kody rabatowe",
+      "stockSale": "Promocje",
+      "salesList": "Lista promocji",
+      "createSale": "Utwórz zniżkę",
+      "deleteSingleSale": "Czy jesteś pewien, że chcesz usunąć zniżkę?",
       "generalDiscounts": "Rabaty generalne",
 
       "history": "Historia wynajęć:",

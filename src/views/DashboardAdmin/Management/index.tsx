@@ -45,7 +45,7 @@ const Management = ({ user }: Props) => (
           className: 'tab',
           activeClassName: 'active',
           to: `/${UserService.getSlugByRole(user.role)}/management/stock-discount/list`,
-          text: `${__('application.generalDiscounts')}`,
+          text: `${__('application.stockSale')}`,
         },
       ]}
     />

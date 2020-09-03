@@ -1,6 +1,6 @@
 import ApiService from '../services/api-service';
 
-export const deleteDiscount = (discountId: string) => async (dispatch: any) => {
+export const deleteStockDiscount = (discountId: string) => async (dispatch: any) => {
   await ApiService.delete(
     dispatch,
     'DELETE_DISCOUNT_SUCCESS',
