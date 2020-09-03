@@ -29,6 +29,8 @@ const getError = (error: ApiErrorCode) => {
       return 'Niepoprawne dane logowania.';
     case ApiErrorCode.InvalidPrice:
       return 'Nieprawidłowa cena';
+    case ApiErrorCode.UAreTooFarAway:
+      return 'Jesteś za daleko';
     default:
       return 'Wystąpił błąd';
   }

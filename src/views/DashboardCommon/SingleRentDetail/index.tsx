@@ -5,10 +5,12 @@ import { bindActionCreators } from 'redux';
 import { MyRentList } from 'smartbox-types';
 import { Section, SectionHeader } from '../../../components/Layout';
 
-import Action from './Action';
-import Details from './Details';
 import { singleRent } from '../../../actions';
 import { ApplicationState } from '../../../reducers';
+
+import Action from './Action';
+import Details from './Details';
+import Gate from './Gate';
 
 interface RouteProps {
   orderId: string;
@@ -28,6 +30,7 @@ const SingleRentDetail = ({ match, getSingleRent, singleRent }: Props) => {
       <SectionHeader title="Szczegóły wynajmu" />
       <Action rentId={singleRent.id} />
       <Details singleRent={singleRent} />
+      <Gate />
     </Section>
   );
 };
