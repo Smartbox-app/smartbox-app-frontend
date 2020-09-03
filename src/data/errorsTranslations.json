@@ -18,6 +18,7 @@
     "Invalid Zip code.": "Błędny kod pocztowy.",
     "Invalid email.": "Nieprawidłowy e-mail adres.",
     "Invalid bank account number": "Invalid bank account number",
-    "Invalid phone number": "Invalid phone number"
+    "Invalid phone number": "Invalid phone number",
+    "Data początku nie może być wcześniejsza od końcowej": "Data początku nie może być wcześniejsza od końcowej"
   }
 }
