@@ -56,7 +56,7 @@ const Gate = ({ startAnimation, askGateToOpen }: Props) => {
       <ReactSVG src={`${startAnimation ? '/assets/images/Group46.svg' : '/assets/images/Group39.svg'}`} />
       <span>{startAnimation ? 'Brama otwarta' : 'Przesuń suwak aby otworzyć bramę'}</span>
       <div className="slide-to-open">
-        <Button text="Zrobić suwak" primary click={() => askGateToOpen(geoCoord)} />
+        <Button text="Otwórz bramę" big primary click={() => askGateToOpen(geoCoord)} disabled={startAnimation} />
       </div>
     </div>
   );
