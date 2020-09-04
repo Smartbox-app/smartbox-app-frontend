@@ -10,7 +10,10 @@ import orderReducer, { OrderState } from './order-reducer';
 import boxesReducer, { Boxes } from './boxes-reducer';
 import rentReducer, { RentsStatus } from './rent-reducer';
 import stockReducer, { StockStatus } from './stock-reducer';
+import gateReducer, { GateState } from './gate-reducer';
+
 import { Modal } from '../types/modal';
+
 
 export interface ApplicationState {
   apiTable: ApiTableState;
@@ -23,6 +26,7 @@ export interface ApplicationState {
   notifications: NotificationState;
   rent: RentsStatus;
   stock: StockStatus;
+  gate: GateState;
 }
 
 const appReducer = combineReducers({
@@ -37,6 +41,7 @@ const appReducer = combineReducers({
   boxes: boxesReducer,
   rent: rentReducer,
   stock: stockReducer,
+  gate: gateReducer,
 });
 
 const rootReducer = (state: any, action: any) => appReducer(state, action);
