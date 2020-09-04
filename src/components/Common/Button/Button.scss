@@ -61,6 +61,15 @@
     }
   }
 
+  &.button-tertiary {
+    background: $color-tertiary;
+    text-transform: uppercase;
+    color: $color-text-button;
+    &:hover {
+      background: lighten($color-tertiary, 10%);
+    }
+  }
+
   &.button-small {
     padding: $main-spacing $main-spacing;
     font-size: 0.9rem;

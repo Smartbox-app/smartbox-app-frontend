@@ -11,6 +11,7 @@ interface ButtonProps {
   success?: boolean;
   outline?: boolean;
   disabled?: boolean;
+  tertiary?: boolean;
   auto?: boolean;
   type?: string;
   text: string;
@@ -35,6 +36,7 @@ const Button = (props: ButtonProps): any => {
     danger,
     primary,
     success,
+    tertiary,
     small,
     disabled,
     outline,
@@ -70,7 +72,7 @@ const Button = (props: ButtonProps): any => {
     ${outline ? 'button-outline' : ''} ${big ? 'button-big' : ''}
     ${small ? 'button-small' : ''} ${auto ? 'auto' : ''}
     ${icon ? 'with-icon' : ''} ${onlyIcon ? 'only-icon' : ''}
-    ${disabled ? 'disabled' : ''} ${rounded ? 'rounded' : ''}`;
+    ${disabled ? 'disabled' : ''} ${rounded ? 'rounded' : ''} ${tertiary ? 'button-tertiary' : ''}`;
 
   if (to) {
     if (disabled) {
