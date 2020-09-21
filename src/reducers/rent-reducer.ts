@@ -30,7 +30,7 @@ const initialState: RentsStatus = {
     getProps: () => [],
   },
   rentsList: [],
-  stockId: '1231qweqwe123',
+  stockId: '',
 };
 
 export default (state: RentsStatus = initialState, action: Action): any => {

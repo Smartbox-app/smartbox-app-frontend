@@ -26,13 +26,23 @@ interface Props extends RouteComponentProps<RouteProps> {
   formData: FormType;
   user: UserRes;
   boxAvailability: BoxGroupAvailability[];
+  stockId: string;
   updateFormData: (data: any) => void;
   fetchBoxAvailability: (stockId: string) => void;
 }
 
-const StepSize = ({ history, updateFormData, match, fetchBoxAvailability, formData, user, boxAvailability }: Props) => {
+const StepSize = ({
+  history,
+  updateFormData,
+  match,
+  stockId,
+  fetchBoxAvailability,
+  formData,
+  user,
+  boxAvailability,
+}: Props) => {
   useEffect(() => {
-    fetchBoxAvailability('1231qweqwe123');
+    fetchBoxAvailability(stockId);
   }, []);
 
   const defaultValues = {
@@ -121,6 +131,7 @@ const mapStateToProps = (state: ApplicationState) => ({
   countedPrice: state.order.countedPrice,
   user: state.user.details,
   boxAvailability: state.order.boxAvailability,
+  stockId: state.stock.list[0].id,
 });
 
 const mapDispatchToProps = (dispatch: any) =>
