@@ -4,7 +4,7 @@ import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { UserRes, BoxGroupAvailability } from 'smartbox-types';
-import { order } from '../../../../../actions';
+import { order, stock } from '../../../../../actions';
 import { FormContainer, ButtonsContainer } from '../../../../../components/Layout';
 import { Button } from '../../../../../components/Common';
 import SingleOption, { SingleOptionType } from './SingleOption';
@@ -34,7 +34,6 @@ interface Props extends RouteComponentProps<RouteProps> {
 const StepSize = ({
   history,
   updateFormData,
-  match,
   stockId,
   fetchBoxAvailability,
   formData,
@@ -42,7 +41,11 @@ const StepSize = ({
   boxAvailability,
 }: Props) => {
   useEffect(() => {
-    fetchBoxAvailability(stockId);
+    if (stockId !== '') {
+      fetchBoxAvailability(stockId);
+    } else {
+      history.push(`/${UserService.getSlugByRole(user.role)}/main`);
+    }
   }, []);
 
   const defaultValues = {
@@ -138,6 +141,7 @@ const mapDispatchToProps = (dispatch: any) =>
   bindActionCreators(
     {
       ...order,
+      ...stock,
     },
     dispatch,
   );
