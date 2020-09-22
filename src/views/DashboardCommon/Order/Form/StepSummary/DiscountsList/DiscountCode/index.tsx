@@ -17,7 +17,7 @@ interface Props {
   updateFormData: (data: any) => void;
 }
 
-const DiscoutCode = ({ hideModal, updateFormData }: Props) => {
+const DiscountCode = ({ hideModal, updateFormData }: Props) => {
   const submitButton = (
     <ButtonsContainer>
       <Button text="Dodaj" type="submit" primary />
@@ -69,4 +69,4 @@ const mapDispatchToProps = (dispatch: any) =>
     dispatch,
   );
 
-export default connect(null, mapDispatchToProps)(DiscoutCode);
+export default connect(null, mapDispatchToProps)(DiscountCode);

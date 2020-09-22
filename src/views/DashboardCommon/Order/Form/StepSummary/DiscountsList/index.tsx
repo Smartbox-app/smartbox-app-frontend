@@ -8,20 +8,20 @@ import { Button } from '../../../../../../components/Common';
 import { modal } from '../../../../../../actions';
 import { ApplicationState } from '../../../../../../reducers';
 
-import RadioDiscout from './RadioDiscout';
-import DiscoutCode from './DiscountCode';
+import RadioDiscount from './RadioDiscount';
+import DiscountCode from './DiscountCode';
 
 import './DiscountsList.scss';
 
 interface Props {
   register: any;
-  discoutsList: any[];
+  discountsList: any[];
   showModal: (content: React.ReactNode) => void;
 }
 
-const DiscountsList = ({ register, showModal, discoutsList }: Props) => {
-  const dataToDisplay = discoutsList.map((data: any) => (
-    <RadioDiscout key={data.text} text={data.text} value={data.value} register={register} />
+const DiscountsList = ({ register, showModal, discountsList }: Props) => {
+  const dataToDisplay = discountsList.map((data: any) => (
+    <RadioDiscount key={data.text} text={data.text} value={data.value} register={register} />
   ));
 
   return (
@@ -29,14 +29,14 @@ const DiscountsList = ({ register, showModal, discoutsList }: Props) => {
       <FormHeader title="Zastosowane rabaty:" />
       <div className="discounts-list-wrapper">{dataToDisplay}</div>
       <ButtonsContainer>
-        <Button text="Dodaj kod rabatowy" primary click={() => showModal(<DiscoutCode />)} />
+        <Button text="Dodaj kod rabatowy" primary click={() => showModal(<DiscountCode />)} />
       </ButtonsContainer>
     </div>
   );
 };
 
 const mapStateToProps = (state: ApplicationState) => ({
-  discoutsList: state.order.discountList,
+  discountsList: state.order.discountList,
 });
 
 const mapDispatchToProps = (dispatch: any) =>
