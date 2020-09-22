@@ -131,7 +131,8 @@ export default (state: OrderState = initialState, action: Action): any => {
 
       if (newFormData.durationInDays !== 0) {
         const price = calculate(data);
-
+        console.log('(data)', data);
+        console.log('calculate(data)', calculate(data));
         return {
           ...state,
           formData: newFormData,

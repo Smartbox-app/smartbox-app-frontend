@@ -48,6 +48,7 @@ const DiscountCode = ({ hideModal, updateFormData }: Props) => {
         submitButton={submitButton}
         onSavedSuccessfully={(data: GiftRes) => {
           successNotification(__('notification.discountCodeRead'));
+          console.log('data: GiftRes', data);
           updateFormData({
             discount: data.discount,
             discountCode: data.code,

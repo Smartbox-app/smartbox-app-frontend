@@ -9,7 +9,7 @@ $discount-height: 50px;
   margin: $main-spacing/2 $main-spacing;
   padding: $main-spacing /4;
   box-shadow: 0 0 3px 3px lighten($color-disabled, 30%);
-  cursor: pointer;
+  cursor: default;
   position: relative;
 
   input[type=radio]:checked + label:before {
@@ -27,7 +27,6 @@ $discount-height: 50px;
   .discount-option {
     padding: $main-spacing;
     margin: 0;
-    cursor: pointer;
   }
 }
 

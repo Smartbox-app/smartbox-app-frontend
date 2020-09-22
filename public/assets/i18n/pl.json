@@ -101,6 +101,9 @@
       "code": "Kod:",
       "enter6DigitCode": "Przepisz 6 cyfrowy kod BLIK:",
 
+      "usedDiscount": "Zastosowana cena:",
+      "useDiscountCode": "Użyj kodu rabatowego",
+
       "welcome": "Hello world"
     },
     "notification": {
