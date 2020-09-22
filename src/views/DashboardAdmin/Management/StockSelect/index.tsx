@@ -14,7 +14,7 @@ const StockSelect = () => {
           name: 'stockId',
           id: 'stockId',
           placeholder: 'Wybór placu:',
-          // onChange: (e: any) => onChange(e.target.value),
+          onChange: (e: any) => e.target.value,
         }}
         options={[
           {

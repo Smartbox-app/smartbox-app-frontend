@@ -84,7 +84,6 @@ class BoxMapManagement extends React.Component<Props, State> {
     } else {
       history.push('/admin/management/workers/list');
     }
-
   }
 
   componentWillUnmount() {
