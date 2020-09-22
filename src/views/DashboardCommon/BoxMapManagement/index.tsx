@@ -5,11 +5,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { BoxListItem, RentStatus, StockList } from 'smartbox-types';
+import { history } from '../../../App';
 import { ApplicationState } from '../../../reducers';
 
 import { ReactComponent as ReactLogo } from './nowa_mapa.svg';
 import { PageHeader } from '../../../components/Layout';
-import { modal, boxes } from '../../../actions';
+import { modal, boxes, stock } from '../../../actions';
 import { __ } from '../../../helpers/i18n';
 
 import BoxDetail from './BoxDetail';
@@ -23,6 +24,7 @@ interface Props {
   showModal: (content: React.ReactNode) => void;
   fetchBoxStatuses: (stockId: string) => void;
   fetchSingleBoxDetails: (rentId: string) => void;
+  getStockList: () => void;
 }
 interface State {
   isMouseDown: boolean;
@@ -44,39 +46,45 @@ class BoxMapManagement extends React.Component<Props, State> {
   }
 
   async componentDidMount() {
-    const { fetchBoxStatuses, stockId } = this.props;
-    const mapWrapperElement = this.element.current;
+    const { fetchBoxStatuses, stockId, getStockList } = this.props;
+    await getStockList();
+    if (stockId) {
+      await fetchBoxStatuses(stockId.id);
+      const mapWrapperElement = this.element.current;
 
-    mapWrapperElement.addEventListener(
-      'mousedown',
-      (e: MouseEvent) => this.handleMouseDown(e, this.element.current),
-      false,
-    );
-    mapWrapperElement.addEventListener(
-      'mouseup',
-      (e: MouseEvent) => this.handleMouseUp(e, this.element.current),
-      false,
-    );
-    mapWrapperElement.addEventListener(
-      'mouseleave',
-      (e: MouseEvent) => this.handleMouseLeave(e, this.element.current),
-      false,
-    );
-    mapWrapperElement.addEventListener(
-      'mousemove',
-      (e: MouseEvent) => this.handleMouseMove(e, this.element.current),
-      false,
-    );
+      mapWrapperElement.addEventListener(
+        'mousedown',
+        (e: MouseEvent) => this.handleMouseDown(e, this.element.current),
+        false,
+      );
+      mapWrapperElement.addEventListener(
+        'mouseup',
+        (e: MouseEvent) => this.handleMouseUp(e, this.element.current),
+        false,
+      );
+      mapWrapperElement.addEventListener(
+        'mouseleave',
+        (e: MouseEvent) => this.handleMouseLeave(e, this.element.current),
+        false,
+      );
+      mapWrapperElement.addEventListener(
+        'mousemove',
+        (e: MouseEvent) => this.handleMouseMove(e, this.element.current),
+        false,
+      );
 
-    stockId && (await fetchBoxStatuses(stockId.id));
-    const catchElement = this.element.current.querySelectorAll('#kontenery .storage, #kontenery .st9');
+      const catchElement = this.element.current.querySelectorAll('#kontenery .storage, #kontenery .st9');
 
-    await catchElement.forEach((singleElement: any) => {
-      this.setBoxStatus(singleElement.parentElement.parentElement.id.slice(1), singleElement);
-      singleElement.addEventListener('click', this.handleEventModal, false);
-      singleElement.addEventListener('mouseover', this.handleEventMouseOver, false);
-      singleElement.addEventListener('mouseout', this.handleEventMouseOut, false);
-    });
+      await catchElement.forEach((singleElement: any) => {
+        this.setBoxStatus(singleElement.parentElement.parentElement.id.slice(1), singleElement);
+        singleElement.addEventListener('click', this.handleEventModal, false);
+        singleElement.addEventListener('mouseover', this.handleEventMouseOver, false);
+        singleElement.addEventListener('mouseout', this.handleEventMouseOut, false);
+      });
+    } else {
+      history.push('/admin/management/workers/list');
+    }
+
   }
 
   componentWillUnmount() {
@@ -210,6 +218,7 @@ const mapDispatchToProps = (dispatch: any) =>
     {
       ...modal,
       ...boxes,
+      ...stock,
     },
     dispatch,
   );
