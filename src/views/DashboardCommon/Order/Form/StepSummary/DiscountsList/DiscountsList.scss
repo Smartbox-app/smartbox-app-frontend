@@ -13,6 +13,17 @@
   }
 }
 
+.discount-wrapper {
+  background: #fff;
+  margin: $main-spacing/2 $main-spacing;
+  padding: $main-spacing;
+  box-shadow: 0 0 3px 3px lighten($color-disabled, 30%);
+  cursor: default;
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
 @include gt-sm {
   .discounts-list-wrapper {
     display: flex;

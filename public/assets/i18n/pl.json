@@ -104,6 +104,11 @@
       "usedDiscount": "Zastosowana cena:",
       "useDiscountCode": "Użyj kodu rabatowego",
 
+      "firstRentFreePracing": "Rabat pierwszego wynajmu",
+      "withDicoutnPricing": "Standardowa cena",
+      "cardPricing": "Zniżka za wykorzystanie karty kredytowej",
+      "standardPrice": "Standardowa cena",
+
       "welcome": "Hello world"
     },
     "notification": {

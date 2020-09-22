@@ -15,8 +15,6 @@ import DiscountCode from './DiscountCode';
 import './DiscountsList.scss';
 
 interface Props {
-  register: any;
-  discountsList: any[];
   countedPrice: {
     name: string;
     value: number;
@@ -24,28 +22,25 @@ interface Props {
   showModal: (content: React.ReactNode) => void;
 }
 
-const DiscountsList = ({ register, showModal, discountsList, countedPrice }: Props) => {
-  const dataToDisplay = discountsList.map((data: any) => (
-    <RadioDiscount key={data.text} text={data.text} value={data.value} register={register} />
-  ));
+const DiscountsList = ({ showModal, countedPrice }: Props) => {
 
   const getText = () => {
     switch (countedPrice.name) {
       case 'firstRentFreePracing':
-        return 'Rabat pierwszego wynajmu';
+        return __('application.firstRentFreePracing');
       case 'withDicoutnPricing':
-        return 'Standardowa cena';
+        return __('application.withDicoutnPricing');
       case 'cardPricing':
-        return 'cardPricing';
+        return __('application.cardPricing');
       default:
-        return 'Standardowa cena';
+        return __('application.standardPrice');
     }
   };
 
   return (
     <div>
       <FormHeader title={__('application.usedDiscount')} />
-      <div className="radio-discount-wrapper">{getText()}</div>
+      <div className="discount-wrapper">{getText()}</div>
       <ButtonsContainer>
         <Button text={__('application.useDiscountCode')} primary click={() => showModal(<DiscountCode />)} />
       </ButtonsContainer>
@@ -54,7 +49,6 @@ const DiscountsList = ({ register, showModal, discountsList, countedPrice }: Pro
 };
 
 const mapStateToProps = (state: ApplicationState) => ({
-  discountsList: state.order.discountList,
   countedPrice: state.order.countedPrice,
 });
 
