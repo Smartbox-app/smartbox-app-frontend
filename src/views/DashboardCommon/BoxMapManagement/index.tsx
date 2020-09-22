@@ -4,7 +4,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { BoxListItem, RentStatus } from 'smartbox-types';
+import { BoxListItem, RentStatus, StockList } from 'smartbox-types';
 import { ApplicationState } from '../../../reducers';
 
 import { ReactComponent as ReactLogo } from './nowa_mapa.svg';
@@ -19,7 +19,7 @@ import './BoxMapManagement.scss';
 
 interface Props {
   boxesGroup: BoxListItem[];
-  stockId: string;
+  stockId: StockList;
   showModal: (content: React.ReactNode) => void;
   fetchBoxStatuses: (stockId: string) => void;
   fetchSingleBoxDetails: (rentId: string) => void;
@@ -45,28 +45,30 @@ class BoxMapManagement extends React.Component<Props, State> {
 
   async componentDidMount() {
     const { fetchBoxStatuses, stockId } = this.props;
+    const mapWrapperElement = this.element.current;
 
-    const mapWapperElement = this.element.current;
-
-    mapWapperElement.addEventListener(
+    mapWrapperElement.addEventListener(
       'mousedown',
       (e: MouseEvent) => this.handleMouseDown(e, this.element.current),
       false,
     );
-    mapWapperElement.addEventListener('mouseup', (e: MouseEvent) => this.handleMouseUp(e, this.element.current), false);
-    mapWapperElement.addEventListener(
+    mapWrapperElement.addEventListener(
+      'mouseup',
+      (e: MouseEvent) => this.handleMouseUp(e, this.element.current),
+      false,
+    );
+    mapWrapperElement.addEventListener(
       'mouseleave',
       (e: MouseEvent) => this.handleMouseLeave(e, this.element.current),
       false,
     );
-    mapWapperElement.addEventListener(
+    mapWrapperElement.addEventListener(
       'mousemove',
       (e: MouseEvent) => this.handleMouseMove(e, this.element.current),
       false,
     );
 
-    await fetchBoxStatuses(stockId);
-
+    stockId && (await fetchBoxStatuses(stockId.id));
     const catchElement = this.element.current.querySelectorAll('#kontenery .storage, #kontenery .st9');
 
     await catchElement.forEach((singleElement: any) => {
@@ -200,7 +202,7 @@ class BoxMapManagement extends React.Component<Props, State> {
 const mapStateToProps = (state: ApplicationState) => ({
   boxesGroup: state.boxes.boxesGroup,
   user: state.user.details,
-  stockId: state.rent.stockId,
+  stockId: state.stock.list[0],
 });
 
 const mapDispatchToProps = (dispatch: any) =>
