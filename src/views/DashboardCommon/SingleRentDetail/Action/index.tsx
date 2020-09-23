@@ -24,7 +24,7 @@ interface Props {
 const Action = ({ showModal, endMyRent, rentId, updateFormData, rent, user }: Props) => {
   const handleExtendingOrderData = (rentId: string) => {
     updateFormData({ size: rent.size });
-    history.push(`/user/order/step/duration/${rentId}`);
+    history.push(`/${UserService.getSlugByRole(user.role)}/order/step/duration/${rentId}`);
   };
 
   return (
