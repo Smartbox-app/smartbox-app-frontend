@@ -27,8 +27,31 @@ const getError = (error: ApiErrorCode) => {
   switch (error) {
     case ApiErrorCode.InvalidLoginData:
       return 'Niepoprawne dane logowania.';
+
     case ApiErrorCode.InvalidPrice:
       return 'Nieprawidłowa cena';
+
+    case ApiErrorCode.NoFoundBoxNumberOnStock:
+      return 'Nie odnaleziono skrytki';
+
+    case ApiErrorCode.ActionForebiden:
+      return 'Akcja zaproniona';
+
+    case ApiErrorCode.InvalidCoordinate:
+      return 'Błędne współrzędne';
+
+    case ApiErrorCode.UAreTooFarAway:
+      return 'Jesteś za daleko';
+
+    case ApiErrorCode.StockHasActiveDiscont:
+      return 'Plac posiada już zniżkę';
+
+    case ApiErrorCode.InvalidBlik:
+      return 'Nieprawidłowy BLIK';
+
+    case ApiErrorCode.InvalidGroup:
+      return 'Nieprawidłowa grupa';
+
     default:
       return 'Wystąpił błąd';
   }
