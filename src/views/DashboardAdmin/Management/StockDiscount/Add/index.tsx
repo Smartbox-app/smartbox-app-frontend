@@ -6,23 +6,23 @@ import ReactCreatableSelect from 'react-select/creatable';
 import { AddGiftReq, GiftRes } from 'smartbox-types';
 import { connect } from 'react-redux';
 import flatpickr from 'flatpickr';
-import { history } from '../../../../../App';
 import { FormContainer, ButtonsContainer, FieldsColumn } from '../../../../../components/Layout';
 import { Button, Spinner } from '../../../../../components/Common';
 import FormHeader from '../../../../../components/Layout/FormHeader';
 import ApiService from '../../../../../services/api-service';
 import { formOnTranslateString } from '../../../../../utils/trans-form';
 import { successNotification } from '../../../../../actions/notifications';
-import { modal } from '../../../../../actions';
+import { apiTable, modal } from '../../../../../actions';
 import { __ } from '../../../../../helpers/i18n';
 
 import './Add.scss';
 
 interface Props {
-  showModal: (content: React.ReactNode) => void;
+  fetchApiTableData: (url: string) => void;
+  hideModal: () => void;
 }
 
-const FormStockDiscount = ({ showModal }: Props) => {
+const FormStockDiscount = ({ fetchApiTableData, hideModal }: Props) => {
   const submitButton = (
     <ButtonsContainer>
       <Button text="Utwórz" type="submit" primary />
@@ -54,6 +54,8 @@ const FormStockDiscount = ({ showModal }: Props) => {
           sendFetcher={customSendFetcher}
           submitButton={submitButton}
           onSavedSuccessfully={(data: GiftRes) => {
+            hideModal();
+            fetchApiTableData('stock/discount/list')
             successNotification(__('notification.discCodeCreated'));
           }}
           onTranslateString={formOnTranslateString}
@@ -68,6 +70,7 @@ const mapDispatchToProps = (dispatch: any) =>
   bindActionCreators(
     {
       ...modal,
+      ...apiTable,
     },
     dispatch,
   );

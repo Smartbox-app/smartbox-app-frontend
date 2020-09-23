@@ -41,7 +41,6 @@ class List extends React.Component<Props> {
                 aproveButtonText={__('application.delete')}
                 mainText={__('application.deleteSingleSale')}
                 approveAction={() => deleteStockDiscount(data.discountId)}
-                // approveAction={() => console.log(data)}
               />,
             ),
         },

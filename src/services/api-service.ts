@@ -34,6 +34,8 @@ export default class ApiService {
 
       const data = await response.json();
 
+      console.log('data', data);
+
       switch (data.result) {
         case ApiResult.ok:
           dispatch({ type: successAction, payload: data.payload });
@@ -41,9 +43,10 @@ export default class ApiService {
           dispatch({ type: loadingAction, payload: false });
           break;
         case ApiResult.error:
+          console.log(' ApiResult.error', data);
           // @TODO: optional 404 handling
           if (data.error_code === ApiErrorCode.NoSuchObjectWithThisId) {
-            // history.push('/error');
+            history.push('/');
           } else {
             dispatch({ type: failedAction, payload: data.result });
             if (failedCb) failedCb();
@@ -53,12 +56,12 @@ export default class ApiService {
           break;
         default:
           if (ApiService.is404(data)) {
-            history.push('/error');
+            history.push('/');
           } else if (ApiService.is401(data)) {
             if (SessionService.isUserSet()) dispatch(auth.clearUserSession());
             dispatch({ type: loadingAction, payload: false });
           } else if (ApiService.is502(data)) {
-            history.push('/error');
+            history.push('/');
           } else {
             dispatch({ type: failedAction, payload: ApiErrorCode.OtherError });
             dispatch(notifications.errorNotification(ApiErrorCode.OtherError));
@@ -66,10 +69,11 @@ export default class ApiService {
           }
       }
     } catch (error) {
+      console.log('catch (error)', error)
       dispatch({ type: failedAction, payload: ApiErrorCode.OtherError });
-      history.push('/error');
-      if (SessionService.isUserSet()) dispatch(auth.clearUserSession());
-      dispatch({ type: loadingAction, payload: false });
+      // if (SessionService.isUserSet()) dispatch(auth.clearUserSession());
+      // dispatch({ type: loadingAction, payload: false });
+      // history.push('/404');
     }
   };
 
@@ -198,8 +202,19 @@ export default class ApiService {
     failedCb: any,
     url: string,
     loadingAction = 'LOADING',
+    requestData?: any,
   ) => {
-    await ApiService.call(dispatch, 'GET', successAction, failedAction, successCb, failedCb, url, loadingAction);
+    await ApiService.call(
+      dispatch,
+      'GET',
+      successAction,
+      failedAction,
+      successCb,
+      failedCb,
+      url,
+      loadingAction,
+      requestData,
+    );
   };
 
   static delete = async (
