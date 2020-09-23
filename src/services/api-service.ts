@@ -42,15 +42,14 @@ export default class ApiService {
           break;
         case ApiResult.error:
           // @TODO: optional 404 handling
-          // if (data.error_code === ApiErrorCode.NoSuchObjectWithThisId) {
-          //     history.push('/error');
-          // }
-          // else {
-          dispatch({ type: failedAction, payload: data.result });
-          if (failedCb) failedCb();
-          dispatch(notifications.errorNotification(data.error_code));
-          dispatch({ type: loadingAction, payload: false });
-          // }
+          if (data.error_code === ApiErrorCode.NoSuchObjectWithThisId) {
+            // history.push('/error');
+          } else {
+            dispatch({ type: failedAction, payload: data.result });
+            if (failedCb) failedCb();
+            dispatch(notifications.errorNotification(data.error_code));
+            dispatch({ type: loadingAction, payload: false });
+          }
           break;
         default:
           if (ApiService.is404(data)) {
