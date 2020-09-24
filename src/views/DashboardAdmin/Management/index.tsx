@@ -27,7 +27,7 @@ const Management = ({ user }: Props) => (
           className: 'tab',
           activeClassName: 'active',
           to: `/${UserService.getSlugByRole(user.role)}/management/workers/list`,
-          text: `${__('application.workers')}`,
+          text: `${__('application.users')}`,
         },
         {
           className: 'tab',
