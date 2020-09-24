@@ -34,9 +34,9 @@ class List extends React.Component<Props> {
   render() {
     return (
       <Section full>
-        <PageHeader title={__('application.workersList')} />
+        <PageHeader title={__('application.usersList')} />
         <ButtonsContainer>
-          <Button text={__('application.inviteWorker')} primary to="/admin/management/workers/add" />
+          <Button text={__('application.inviteUser')} primary to="/admin/management/workers/add" />
           <Button text={__('application.historyWorker')} primary to="/admin/management/workers/history" />
         </ButtonsContainer>
         <ApiTable scheme={this.scheme} apiEndpointSubUrl="user/list" />

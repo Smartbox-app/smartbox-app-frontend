@@ -33,7 +33,9 @@ const BoxDetail = ({ selectedBoxId, singleBoxDetail, rentId }: Props) => {
       <p className="single">
         <span className="fa fa-user" />
         <span>{__('application.rentedBy')}: </span>
-        <strong>{`${singleBoxDetail.owner.firstName} ${singleBoxDetail.owner.lastName}`}</strong>
+        <strong>
+          {singleBoxDetail.owner ? `${singleBoxDetail.owner.firstName} ${singleBoxDetail.owner.lastName}` : '---'}
+        </strong>
       </p>
       <p className="single">
         <span className="fa fa-calendar " />

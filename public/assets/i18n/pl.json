@@ -86,13 +86,16 @@
       "discounts": "Promocje:",
 
       "workersList": "Lista pracowników",
+      "usersList": "Lista użytkowników",
       "inviteWorker": "Zaproś pracowników",
+      "inviteUser": "Zaproś użytkownika",
       "historyWorker": "Historia pracowników",
       "sendInvitation": "Wyślij zaproszenie",
       "goToAgreement": "Przedłuż",
       "generateInvoice": "Wygeneruj fakturę",
       "profileDetail": "Szczegóły Profilu",
       "preInvitationForWorker": "Wyślij zaproszenie dla pracownika",
+      "preInvitation": "Wyślij zaproszenie",
 
       "createStockDisc" : "Utwórz zniżkę",
 

@@ -101,7 +101,7 @@ class BoxMapManagement extends React.Component<Props, State> {
       if (singleBox.number === boxId && singleBox.status !== RentStatus.free) {
         switch (singleBox.status) {
           case RentStatus.toCheck:
-            singleElement.classList.add('toCheck');
+            singleElement.classList.add('to-check');
             break;
           case RentStatus.rented:
             singleElement.classList.add('rented');
