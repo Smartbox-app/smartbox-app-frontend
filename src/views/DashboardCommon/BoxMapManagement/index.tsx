@@ -118,6 +118,9 @@ class BoxMapManagement extends React.Component<Props, State> {
           case RentStatus.noPaidExtensionWithWarning:
             singleElement.classList.add('no-paid-extension-with-warning');
             break;
+          case RentStatus.outOfService:
+            singleElement.classList.add('out-of-service');
+            break;
           default:
             break;
         }

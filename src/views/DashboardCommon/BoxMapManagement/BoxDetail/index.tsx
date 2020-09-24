@@ -17,7 +17,7 @@ interface Props {
 }
 
 const BoxDetail = ({ selectedBoxId, singleBoxDetail, rentId }: Props) => {
-  const [optionDisplayState, optionDisplayToogle] = useState(false);
+  const [optionDisplayState, optionDisplayToggle] = useState(false);
   const dummyMail = 'kontakt@itdotfocus.com';
   const dummyPhone = 333222111;
   const isThisBoxFree = (data: string): boolean => data === '';
@@ -81,7 +81,7 @@ const BoxDetail = ({ selectedBoxId, singleBoxDetail, rentId }: Props) => {
           className={`custome-icon-button ${!optionDisplayState ? '' : 'rotate'}`}
           primary
           text={!optionDisplayState ? __('application.showEditOptions') : __('application.hideEditOptions')}
-          click={() => optionDisplayToogle(!optionDisplayState)}
+          click={() => optionDisplayToggle(!optionDisplayState)}
           icon="arrow-down-white.svg"
         />
       </ButtonsContainer>

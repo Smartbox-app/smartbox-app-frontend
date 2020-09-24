@@ -3,7 +3,9 @@ import { ItfApiForm } from 'itf_formbuilder_react';
 import ReactSelect from 'react-select';
 import { connect } from 'react-redux';
 import ReactCreatableSelect from 'react-select/creatable';
-import { ChangeStatusReq } from 'smartbox-types';
+import { bindActionCreators } from 'redux';
+import { ChangeStatusReq, StockList } from 'smartbox-types';
+import { modal } from '../../../../../../actions';
 import { FormContainer, ButtonsContainer } from '../../../../../../components/Layout';
 import { Button } from '../../../../../../components/Common';
 import { ApplicationState } from '../../../../../../reducers';
@@ -16,10 +18,11 @@ import './Status.scss';
 
 interface Props {
   selectedBoxId: string;
-  stockId: string;
+  hideModal: () => void;
+  stock: StockList;
 }
 
-const Status = ({ selectedBoxId, stockId }: Props) => {
+const Status = ({ selectedBoxId, hideModal, stock }: Props) => {
   const submitButton = (
     <ButtonsContainer>
       <Button text={__('application.changeStatus')} type="submit" danger />
@@ -27,7 +30,7 @@ const Status = ({ selectedBoxId, stockId }: Props) => {
   );
 
   const fetchUrl = 'rent/form/change-status';
-  const sendUrl = `rent/status/${stockId}`;
+  const sendUrl = `rent/status/${stock.id}`;
 
   const customSendFetcher = (formId: string, values: ChangeStatusReq) =>
     ApiService.sendForm(
@@ -49,6 +52,7 @@ const Status = ({ selectedBoxId, stockId }: Props) => {
         sendFetcher={customSendFetcher}
         submitButton={submitButton}
         onSavedSuccessfully={() => {
+          hideModal();
           successNotification(__('notification.userStatusChanged'));
         }}
         onTranslateString={formOnTranslateString}
@@ -60,6 +64,9 @@ const Status = ({ selectedBoxId, stockId }: Props) => {
 
 const mapStateToProps = (state: ApplicationState) => ({
   stockId: state.rent.stockId,
+  stock: state.stock.list[0],
 });
 
-export default connect(mapStateToProps)(Status);
+const mapDispatchToProps = (dispatch: any) => bindActionCreators({ ...modal }, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Status);
