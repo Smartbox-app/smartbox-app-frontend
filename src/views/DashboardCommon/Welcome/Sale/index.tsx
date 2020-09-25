@@ -20,7 +20,7 @@ const Sale = ({ discountsList, getStockDiscountsList }: Props) => {
 
   const createText = (list: DiscountList[]) => {
     const result = ['Pierwszy tydzień za 1zł'];
-    list.forEach((el: DiscountList) => {
+    list.forEach((el: any) => {
       result.push(`Zniżka ${el.discount}% na placu: ${el.name}`);
     });
     return result;

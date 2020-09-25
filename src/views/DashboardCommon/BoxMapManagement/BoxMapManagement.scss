@@ -6,7 +6,7 @@
 }
 
 .map-wrapper {
-  overflow-x: scroll;
+  overflow-x: hidden;
   box-shadow: $standard-shadow;
 
   svg {
