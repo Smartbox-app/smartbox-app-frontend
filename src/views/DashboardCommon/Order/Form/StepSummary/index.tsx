@@ -35,7 +35,7 @@ interface Props {
 const StepSummary = ({ formData, countedPrice, updateFormData, user, selectedPaymentMethod }: Props) => {
   useEffect(() => {
     if (formData.size.length === 0) {
-      history.push(`/${UserService.getSlugByRole(user.role)}/order/step/size`);
+      // history.push(`/${UserService.getSlugByRole(user.role)}/order/step/size`);
     }
   });
 

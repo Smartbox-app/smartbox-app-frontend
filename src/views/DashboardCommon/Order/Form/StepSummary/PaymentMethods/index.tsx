@@ -32,14 +32,18 @@ const PaymentMethods = ({ showModal, saveBanks, selectedPaymentMethod, register,
     if (selectedPaymentMethod.id === '') {
       return (
         <>
-          <ReactSVG src="/assets/icons/wallet.svg" />
+          <div className="label-img">
+            <ReactSVG src="/assets/icons/wallet.svg" />
+          </div>
           <span>Inne</span>
         </>
       );
     } else {
       return (
         <>
-          <img className="payment-img" src={selectedPaymentMethod.img} alt="LogoBanku" />
+          <div className="label-img">
+            <img className="payment-img" src={selectedPaymentMethod.img} alt="LogoBanku" />
+          </div>
           <span>{selectedPaymentMethod.name}</span>
         </>
       );
@@ -60,7 +64,9 @@ const PaymentMethods = ({ showModal, saveBanks, selectedPaymentMethod, register,
             onChange={(event: any) => pickPaymentType(Number(event.target.value))}
           />
           <div className="payment-label">
-            <ReactSVG src="/assets/icons/credit-card.svg" />
+            <div className="label-img">
+              <ReactSVG src="/assets/icons/credit-card.svg" />
+            </div>
             <span>Karta płatnicza</span>
           </div>
         </label>
@@ -75,7 +81,9 @@ const PaymentMethods = ({ showModal, saveBanks, selectedPaymentMethod, register,
             onChange={(event: any) => pickPaymentType(Number(event.target.value))}
           />
           <div className="payment-label">
-            <img className="payment-img" src="/assets/images/150.png" alt="LogoBanku" />
+            <div className="label-img">
+              <img className="payment-img" src="/assets/images/150.png" alt="LogoBanku" />
+            </div>
             <span>Blik</span>
           </div>
         </label>
@@ -89,6 +97,7 @@ const PaymentMethods = ({ showModal, saveBanks, selectedPaymentMethod, register,
             ref={register({ required: true })}
             onChange={(event: any) => pickPaymentType(Number(event.target.value))}
           />
+
           <div className="payment-label">{selectedPayment()}</div>
         </label>
       </div>
