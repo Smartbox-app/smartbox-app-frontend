@@ -2,7 +2,6 @@
 @import '../../../config/mixins.scss';
 
 main {
-  background-color: $color-background-darken;
   min-height: $main-min-height-mobile;
   display: flex;
   flex: 0 0 100%;
