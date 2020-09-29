@@ -5,7 +5,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { BoxListItem, RentStatus, StockList } from 'smartbox-types';
-import { history } from '../../../App';
+import { Spinner } from '../../../components/Common';
 import { ApplicationState } from '../../../reducers';
 
 import { ReactComponent as ReactLogo } from './nowa_mapa.svg';
@@ -20,7 +20,7 @@ import './BoxMapManagement.scss';
 
 interface Props {
   boxesGroup: BoxListItem[];
-  stockId: StockList;
+  stock: StockList;
   showModal: (content: React.ReactNode) => void;
   fetchBoxStatuses: (stockId: string) => void;
   fetchSingleBoxDetails: (rentId: string) => void;
@@ -46,10 +46,10 @@ class BoxMapManagement extends React.Component<Props, State> {
   }
 
   async componentDidMount() {
-    const { fetchBoxStatuses, stockId, getStockList } = this.props;
+    const { fetchBoxStatuses, stock, getStockList } = this.props;
     await getStockList();
-    if (stockId) {
-      await fetchBoxStatuses(stockId.id);
+    if (stock) {
+      await fetchBoxStatuses(stock.id);
       const mapWrapperElement = this.element.current;
 
       console.log('this.element.current', this.element.current);
@@ -77,7 +77,7 @@ class BoxMapManagement extends React.Component<Props, State> {
 
       const catchElement = this.element.current.querySelectorAll('#kontenery .storage, #kontenery .st9');
 
-      console.log('catchElement', catchElement)
+      console.log('catchElement', catchElement);
 
       await catchElement.forEach((singleElement: any) => {
         this.setBoxStatus(singleElement.parentElement.parentElement.id.slice(1), singleElement);
@@ -85,9 +85,12 @@ class BoxMapManagement extends React.Component<Props, State> {
         singleElement.addEventListener('mouseover', this.handleEventMouseOver, false);
         singleElement.addEventListener('mouseout', this.handleEventMouseOut, false);
       });
-    } else {
-      history.push('/admin/management/workers/list');
     }
+  }
+
+  public componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>): void {
+    const { fetchBoxStatuses, stock, boxesGroup } = this.props;
+    boxesGroup.length === 0 && fetchBoxStatuses(stock.id);
   }
 
   componentWillUnmount() {
@@ -167,7 +170,7 @@ class BoxMapManagement extends React.Component<Props, State> {
 
   handleEventModal = (e: any): any => {
     const { showModal, boxesGroup, fetchSingleBoxDetails } = this.props;
-    console.log('handleEventModal', e.target.parentElement)
+    console.log('handleEventModal', e.target.parentElement);
     let selectedBoxId = e.target.parentElement.parentElement.id.slice(1);
     let selectedRentId = '';
     if (e.target.parentElement.attributes.class && e.target.parentElement.attributes.class.value === 'storage') {
@@ -203,13 +206,19 @@ class BoxMapManagement extends React.Component<Props, State> {
   };
 
   render() {
+    const { stock } = this.props;
     return (
       <>
         <PageHeader title={`${__('application.storagesPlan')}`} />
         <MapLegend />
-        <div className="map-wrapper" ref={this.element}>
-          <ReactLogo id="svg-map" />
-        </div>
+        {console.log('stock?.id ', stock?.id)}
+        {stock?.id ? (
+          <div className="map-wrapper" ref={this.element}>
+            <ReactLogo id="svg-map" />
+          </div>
+        ) : (
+          <Spinner />
+        )}
       </>
     );
   }
@@ -217,7 +226,7 @@ class BoxMapManagement extends React.Component<Props, State> {
 const mapStateToProps = (state: ApplicationState) => ({
   boxesGroup: state.boxes.boxesGroup,
   user: state.user.details,
-  stockId: state.stock.list[0],
+  stock: state.stock.list[0],
 });
 
 const mapDispatchToProps = (dispatch: any) =>
