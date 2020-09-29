@@ -8,6 +8,7 @@
 .map-wrapper {
   overflow-x: hidden;
   box-shadow: $standard-shadow;
+  max-width: map-get($breakpoints, lg);
 
   svg {
     width: $box-map-width;

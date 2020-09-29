@@ -15,6 +15,7 @@
       "change": "Zmień",
       "create": "Utwórz",
       "send": "Wyślij",
+      "save": "Zapisz",
       "lack": "Brak",
       "end": "Zakończ",
       "delete": "Usuń",
@@ -98,6 +99,8 @@
       "profileDetail": "Szczegóły Profilu",
       "preInvitationForWorker": "Wyślij zaproszenie dla pracownika",
       "preInvitation": "Wyślij zaproszenie",
+
+      "workerAssignChange": "Zmień przypisanie pracownika.",
 
       "createStockDisc" : "Utwórz zniżkę",
 
