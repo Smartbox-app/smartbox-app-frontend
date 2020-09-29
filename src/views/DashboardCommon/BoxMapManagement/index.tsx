@@ -52,6 +52,8 @@ class BoxMapManagement extends React.Component<Props, State> {
       await fetchBoxStatuses(stockId.id);
       const mapWrapperElement = this.element.current;
 
+      console.log('this.element.current', this.element.current);
+
       mapWrapperElement.addEventListener(
         'mousedown',
         (e: MouseEvent) => this.handleMouseDown(e, this.element.current),
@@ -74,6 +76,8 @@ class BoxMapManagement extends React.Component<Props, State> {
       );
 
       const catchElement = this.element.current.querySelectorAll('#kontenery .storage, #kontenery .st9');
+
+      console.log('catchElement', catchElement)
 
       await catchElement.forEach((singleElement: any) => {
         this.setBoxStatus(singleElement.parentElement.parentElement.id.slice(1), singleElement);
@@ -163,6 +167,7 @@ class BoxMapManagement extends React.Component<Props, State> {
 
   handleEventModal = (e: any): any => {
     const { showModal, boxesGroup, fetchSingleBoxDetails } = this.props;
+    console.log('handleEventModal', e.target.parentElement)
     let selectedBoxId = e.target.parentElement.parentElement.id.slice(1);
     let selectedRentId = '';
     if (e.target.parentElement.attributes.class && e.target.parentElement.attributes.class.value === 'storage') {
