@@ -45,52 +45,58 @@ class BoxMapManagement extends React.Component<Props, State> {
     };
   }
 
+  private eventListenerAdding = () => {
+    const mapWrapperElement = this.element.current;
+
+    console.log('this.element.current', this.element.current);
+
+    mapWrapperElement.addEventListener(
+      'mousedown',
+      (e: MouseEvent) => this.handleMouseDown(e, this.element.current),
+      false,
+    );
+    mapWrapperElement.addEventListener(
+      'mouseup',
+      (e: MouseEvent) => this.handleMouseUp(e, this.element.current),
+      false,
+    );
+    mapWrapperElement.addEventListener(
+      'mouseleave',
+      (e: MouseEvent) => this.handleMouseLeave(e, this.element.current),
+      false,
+    );
+    mapWrapperElement.addEventListener(
+      'mousemove',
+      (e: MouseEvent) => this.handleMouseMove(e, this.element.current),
+      false,
+    );
+
+    const catchElement = this.element.current.querySelectorAll('#kontenery .storage, #kontenery .st9');
+
+    catchElement.forEach((singleElement: any) => {
+      this.setBoxStatus(singleElement.parentElement.parentElement.id.slice(1), singleElement);
+      singleElement.addEventListener('click', this.handleEventModal, false);
+      singleElement.addEventListener('mouseover', this.handleEventMouseOver, false);
+      singleElement.addEventListener('mouseout', this.handleEventMouseOut, false);
+    });
+  };
+
   async componentDidMount() {
     const { fetchBoxStatuses, stock, getStockList } = this.props;
     await getStockList();
     if (stock) {
       await fetchBoxStatuses(stock.id);
-      const mapWrapperElement = this.element.current;
-
-      console.log('this.element.current', this.element.current);
-
-      mapWrapperElement.addEventListener(
-        'mousedown',
-        (e: MouseEvent) => this.handleMouseDown(e, this.element.current),
-        false,
-      );
-      mapWrapperElement.addEventListener(
-        'mouseup',
-        (e: MouseEvent) => this.handleMouseUp(e, this.element.current),
-        false,
-      );
-      mapWrapperElement.addEventListener(
-        'mouseleave',
-        (e: MouseEvent) => this.handleMouseLeave(e, this.element.current),
-        false,
-      );
-      mapWrapperElement.addEventListener(
-        'mousemove',
-        (e: MouseEvent) => this.handleMouseMove(e, this.element.current),
-        false,
-      );
-
-      const catchElement = this.element.current.querySelectorAll('#kontenery .storage, #kontenery .st9');
-
-      console.log('catchElement', catchElement);
-
-      await catchElement.forEach((singleElement: any) => {
-        this.setBoxStatus(singleElement.parentElement.parentElement.id.slice(1), singleElement);
-        singleElement.addEventListener('click', this.handleEventModal, false);
-        singleElement.addEventListener('mouseover', this.handleEventMouseOver, false);
-        singleElement.addEventListener('mouseout', this.handleEventMouseOut, false);
-      });
+      await this.eventListenerAdding();
     }
   }
 
   public componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>): void {
     const { fetchBoxStatuses, stock, boxesGroup } = this.props;
     boxesGroup.length === 0 && fetchBoxStatuses(stock.id);
+
+    if (stock) {
+      this.eventListenerAdding();
+    }
   }
 
   componentWillUnmount() {
