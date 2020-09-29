@@ -64,7 +64,7 @@ const RestorPass = ({ successNotification, match }: Props) => {
                     className="login-input"
                     type={field.options.type}
                     input={{
-                      label: field.title,
+                      label: formOnTranslateString(field.title),
                       name: fieldHtmlId,
                       id: fieldHtmlId,
                       placeholder: field.placeholder,

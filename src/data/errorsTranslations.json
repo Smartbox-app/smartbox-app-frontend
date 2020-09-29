@@ -24,6 +24,9 @@
     "Stock": "Plac",
     "Value": "Wartość",
     "Expiration Date": "Data wygaśnięcia",
+    "Password": "Hasło",
+    "New password": "Nowe hasło",
+    "Repeat new password": "Powtórz nowe hasło",
     "Phone": "Telefon"
   }
 }

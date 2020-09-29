@@ -76,12 +76,13 @@ class Login extends React.Component<Props> {
             onRenderFullField={(field, errors, fieldHtmlId, currentValue, onChange, onFocus, onBlur) => {
               switch (field.type) {
                 case 'text':
+                  console.log('title', field)
                   return (
                     <Input
                       className="login-input"
                       type={field.options.type}
                       input={{
-                        label: field.title,
+                        label: formOnTranslateString(field.title),
                         name: fieldHtmlId,
                         id: fieldHtmlId,
                         placeholder: field.placeholder,
