@@ -7,6 +7,7 @@ import { AuthLoginResult, RestorPwdReq } from 'smartbox-types';
 import { Spinner, Input, LoginLogo } from '../../components/Common';
 import { notifications } from '../../actions';
 import ApiService from '../../services/api-service';
+import { translateErrors } from "../../utils/errors-trans";
 import { formOnTranslateString } from '../../utils/trans-form';
 import { FormContainer, PageContent } from '../../components/Layout';
 import { ApplicationState } from '../../reducers';
@@ -67,7 +68,7 @@ const RestorPass = ({ successNotification, match }: Props) => {
                       name: fieldHtmlId,
                       id: fieldHtmlId,
                       placeholder: field.placeholder,
-                      errors,
+                      errors: translateErrors(errors),
                       value: currentValue,
                       onChange: (e: any) => onChange(e.target.value),
                       onFocus,

@@ -4,7 +4,7 @@ import ReactSelect from 'react-select';
 import ReactCreatableSelect from 'react-select/creatable';
 import { ChangeStatusReq } from 'smartbox-types';
 import { FormContainer, ButtonsContainer } from '../../../../../../components/Layout';
-import { Button } from '../../../../../../components/Common';
+import { Button, Spinner } from '../../../../../../components/Common';
 import ApiService from '../../../../../../services/api-service';
 import { formOnTranslateString } from '../../../../../../utils/trans-form';
 import { successNotification } from '../../../../../../actions/notifications';
@@ -45,6 +45,7 @@ const Position = ({ rentId, selectedBoxId }: Props) => {
         schemaFetcher={() => ApiService.loadForm(fetchUrl)}
         sendFetcher={customSendFetcher}
         submitButton={submitButton}
+        loadingInfo={<Spinner transparent />}
         onSavedSuccessfully={() => {
           successNotification(__('notification.userMovedSuccess'));
         }}

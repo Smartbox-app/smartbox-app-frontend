@@ -7,7 +7,7 @@ import { bindActionCreators } from 'redux';
 import { ChangeStatusReq, StockList } from 'smartbox-types';
 import { modal } from '../../../../../../actions';
 import { FormContainer, ButtonsContainer } from '../../../../../../components/Layout';
-import { Button } from '../../../../../../components/Common';
+import { Button, Spinner } from '../../../../../../components/Common';
 import { ApplicationState } from '../../../../../../reducers';
 import ApiService from '../../../../../../services/api-service';
 import { formOnTranslateString } from '../../../../../../utils/trans-form';
@@ -51,6 +51,7 @@ const Status = ({ selectedBoxId, hideModal, stock }: Props) => {
         schemaFetcher={() => ApiService.loadForm(fetchUrl)}
         sendFetcher={customSendFetcher}
         submitButton={submitButton}
+        loadingInfo={<Spinner transparent />}
         onSavedSuccessfully={() => {
           hideModal();
           successNotification(__('notification.userStatusChanged'));

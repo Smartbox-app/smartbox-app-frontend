@@ -22,18 +22,18 @@ class List extends React.Component<Props> {
     this.scheme = new InteractiveTableSchema(usersList)
       .removeFields('status')
       .addFieldAfter('role', {
-        name: 'Status',
-        field: 'status',
-        mobile: true,
-        type: FieldType.Custom,
-        customRender: (value, field, userData) => this.getLockButton(value, field, userData),
-      })
-      .addFieldAfter('status', {
         name: 'Przypisanie',
         field: 'storageAssign',
         mobile: true,
         type: FieldType.Custom,
         customRender: (value, field, userData) => this.getAssignButton(value, field, userData),
+      })
+      .addFieldAfter('storageAssign', {
+        name: 'Status',
+        field: 'status',
+        mobile: true,
+        type: FieldType.Custom,
+        customRender: (value, field, userData) => this.getLockButton(value, field, userData),
       })
       .addFieldAtTheEnd({
         name: 'Akcje',
@@ -46,9 +46,9 @@ class List extends React.Component<Props> {
             click: (data: any) =>
               this.props.showModal(
                 <ConfirmModal
-                  aproveButtonText="Usuń"
+                  aproveButtonText={__('application.delete')}
                   mainText="Czy jesteś pewien, że chcesz usunąć użytkownika"
-                  cancelButtonText="Anuluj"
+                  cancelButtonText={__('application.cancel')}
                   approveAction={() => console.log()}
                 />,
               ),
@@ -58,7 +58,6 @@ class List extends React.Component<Props> {
   }
 
   private getAssignButton = (value: any, field: TableSchemaField, userData: IUser) => {
-    console.log('userData', userData);
     if (userData.role === UserRole.worker) {
       return (
         <Button
@@ -74,9 +73,9 @@ class List extends React.Component<Props> {
 
   private getLockButton = (value: boolean, field: TableSchemaField, userData: IUser) => {
     if (userData.status === UserStatus.blocked) {
-      return <Button text="Odblokuj" success small click={() => console.log(userData)} />;
+      return <Button text={__('application.active')} success small click={() => console.log(userData)} />;
     } else {
-      return <Button text="Zablokuj" danger small click={() => console.log(userData)} />;
+      return <Button text={__('application.block')} danger small click={() => console.log(userData)} />;
     }
   };
 

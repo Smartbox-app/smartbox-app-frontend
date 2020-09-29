@@ -7,6 +7,7 @@ import { UserRole, AuthLoginRequest, AuthLoginResult, UserRes } from 'smartbox-t
 import { Spinner, Input, Logo } from '../../components/Common';
 import { auth, notifications } from '../../actions';
 import ApiService from '../../services/api-service';
+import { translateErrors } from "../../utils/errors-trans";
 import { getRememberedRedirect, clearRememberedRedirect } from '../../utils/remeber-redirect';
 import { store } from '../../App';
 import { formOnTranslateString } from '../../utils/trans-form';
@@ -84,7 +85,7 @@ class Login extends React.Component<Props> {
                         name: fieldHtmlId,
                         id: fieldHtmlId,
                         placeholder: field.placeholder,
-                        errors,
+                        errors: translateErrors(errors),
                         value: currentValue,
                         onChange: (e: any) => onChange(e.target.value),
                         onFocus,
