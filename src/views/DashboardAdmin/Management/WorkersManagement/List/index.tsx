@@ -7,11 +7,13 @@ import { ApiTable, Button, ConfirmModal } from '../../../../../components/Common
 import { ButtonsContainer, PageHeader, Section } from '../../../../../components/Layout';
 import { __ } from '../../../../../helpers/i18n';
 import { InteractiveTableSchema } from '../../../../../utils/table-schema-utils';
-import { modal } from '../../../../../actions';
+import { modal, user } from '../../../../../actions';
 import EditAssign from './EditAssign';
 
 interface Props {
   showModal: (content: React.ReactNode) => void;
+  enableUser: (userId: string) => void;
+  blockUser: (userId: string) => void;
 }
 
 class List extends React.Component<Props> {
@@ -73,9 +75,9 @@ class List extends React.Component<Props> {
 
   private getLockButton = (value: boolean, field: TableSchemaField, userData: IUser) => {
     if (userData.status === UserStatus.blocked) {
-      return <Button text={__('application.active')} success small click={() => console.log(userData)} />;
+      return <Button text={__('application.active')} success small click={() => this.props.enableUser(userData.id)} />;
     } else {
-      return <Button text={__('application.block')} danger small click={() => console.log(userData)} />;
+      return <Button text={__('application.block')} danger small click={() => this.props.blockUser(userData.id)} />;
     }
   };
 
@@ -93,6 +95,6 @@ class List extends React.Component<Props> {
   }
 }
 
-const mapDispatchToProps = (dispatch: any) => bindActionCreators({ ...modal }, dispatch);
+const mapDispatchToProps = (dispatch: any) => bindActionCreators({ ...modal, ...user }, dispatch);
 
 export default connect(null, mapDispatchToProps)(List);

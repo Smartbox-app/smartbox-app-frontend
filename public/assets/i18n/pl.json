@@ -132,6 +132,7 @@
       "logOutSuccess": "Wylogowano poprawnie.",
       "discCodeCreated": "Poprawnie utworzono kod rabatowy.",
       "userBlocked": "Zablokowano użytkownika.",
+      "userUnblocked": "Odblokowano użytkownika.",
       "userMovedSuccess": "Poprawnie przeniesiono użytkownika.",
       "userStatusChanged": "Poprawnie zmieniono status.",
       "invitationSendProperly": "Poprawnie wysłano zaproszenie.",
