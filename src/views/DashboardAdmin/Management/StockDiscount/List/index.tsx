@@ -7,7 +7,7 @@ import { ApiTable, Button, ConfirmModal } from '../../../../../components/Common
 import { InteractiveTableSchema } from '../../../../../utils/table-schema-utils';
 import { __ } from '../../../../../helpers/i18n';
 import { modal, stock } from '../../../../../actions';
-import DiscountCodes from "../../DiscountCodes";
+import DiscountCodes from '../../DiscountCodes';
 
 import Edit from '../Edit';
 import Add from '../Add';
@@ -31,7 +31,7 @@ class List extends React.Component<Props> {
         {
           name: __('application.edit'),
           type: 'primary',
-          click: (data: any) => showModal(<Edit discoutnId={data.stockId} />),
+          click: (data: any) => showModal(<Edit discoutnId={data.discountId} />),
         },
         {
           name: __('application.delete'),
