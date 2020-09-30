@@ -13,6 +13,7 @@ import { BoxMapManagement } from '../../DashboardCommon';
 import DiscountCodes from './DiscountCodes';
 import StockDiscount from './StockDiscount';
 import StockSelect from './StockSelect';
+import InvitesSent from './InvitesSent';
 
 interface Props {
   user: UserRes;
@@ -32,14 +33,14 @@ const Management = ({ user }: Props) => (
         {
           className: 'tab',
           activeClassName: 'active',
-          to: `/${UserService.getSlugByRole(user.role)}/management/map`,
-          text: `${__('application.boxes')}`,
+          to: `/${UserService.getSlugByRole(user.role)}/management/invitations`,
+          text: `${__('application.invitations')}`,
         },
         {
           className: 'tab',
           activeClassName: 'active',
-          to: `/${UserService.getSlugByRole(user.role)}/management/discount`,
-          text: `${__('application.discountsCodes')}`,
+          to: `/${UserService.getSlugByRole(user.role)}/management/map`,
+          text: `${__('application.boxes')}`,
         },
         {
           className: 'tab',
@@ -58,7 +59,7 @@ const Management = ({ user }: Props) => (
       />
       <Route path={`/${UserService.getSlugByRole(user.role)}/management/workers`} component={WorkersManagement} />
       <Route path={`/${UserService.getSlugByRole(user.role)}/management/map`} component={BoxMapManagement} />
-      <Route path={`/${UserService.getSlugByRole(user.role)}/management/discount`} component={DiscountCodes} />
+      <Route path={`/${UserService.getSlugByRole(user.role)}/management/invitations`} component={InvitesSent} />
       <Route path={`/${UserService.getSlugByRole(user.role)}/management/stock-discount`} component={StockDiscount} />
     </Switch>
   </Section>

@@ -1,12 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { invitationList, TableSchema, usersList } from 'smartbox-tables';
-import { PageHeader, Section, ButtonsContainer } from '../../../../../components/Layout';
-import { ApiTable, Button, ConfirmModal } from '../../../../../components/Common';
-import { InteractiveTableSchema } from '../../../../../utils/table-schema-utils';
-import { __ } from '../../../../../helpers/i18n';
-import { invitations, modal } from '../../../../../actions';
+import { invitationList, TableSchema } from 'smartbox-tables';
+import { PageHeader, Section, ButtonsContainer } from '../../../../components/Layout';
+import { ApiTable, Button, ConfirmModal } from '../../../../components/Common';
+import { InteractiveTableSchema } from '../../../../utils/table-schema-utils';
+import { __ } from '../../../../helpers/i18n';
+import { invitations, modal } from '../../../../actions';
 
 interface Props {
   deleteSentInvitations: (invitationId: string) => void;
@@ -51,7 +51,7 @@ class InvitesSent extends React.Component<Props> {
       <Section full>
         <PageHeader title={__('application.inviteList')} />
         <ButtonsContainer>
-          <Button text={__('application.back')} primary to="/admin/management/workers/list" />
+          <Button text={__('application.inviteUser')} primary to="/admin/management/workers/add" />
         </ButtonsContainer>
         <ApiTable scheme={this.scheme} apiEndpointSubUrl="user/invitation-list" />
       </Section>

@@ -7,6 +7,7 @@ import { ApiTable, Button, ConfirmModal } from '../../../../../components/Common
 import { InteractiveTableSchema } from '../../../../../utils/table-schema-utils';
 import { __ } from '../../../../../helpers/i18n';
 import { modal, stock } from '../../../../../actions';
+import DiscountCodes from "../../DiscountCodes";
 
 import Edit from '../Edit';
 import Add from '../Add';
@@ -53,6 +54,7 @@ class List extends React.Component<Props> {
     return (
       <Section full>
         <ButtonsContainer>
+          <Button text={__('application.createDiscountCode')} primary click={() => showModal(<DiscountCodes />)} />
           <Button text={__('application.createStockDisc')} primary click={() => showModal(<Add />)} />
         </ButtonsContainer>
         <ApiTable scheme={this.scheme} apiEndpointSubUrl="stock/discount/list" />

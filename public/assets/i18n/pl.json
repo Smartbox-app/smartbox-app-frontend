@@ -95,6 +95,7 @@
       "workersList": "Lista pracowników",
       "usersList": "Lista użytkowników",
       "inviteList": "Lista wysłanych zaproszeń",
+      "invitations": "Zaproszenia",
       "inviteWorker": "Zaproś pracowników",
       "inviteUser": "Zaproś użytkownika",
       "sentInvitation": "Zaproszenia wysłane",
@@ -109,6 +110,7 @@
       "workerAssignChange": "Zmień przypisanie pracownika.",
 
       "createStockDisc" : "Utwórz zniżkę",
+      "createDiscountCode" : "Utwórz kod zniżkowy",
 
       "pay": "Zapłać",
       "fillData": "Podaj dane:",

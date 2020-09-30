@@ -5,7 +5,7 @@ import ReactCreatableSelect from 'react-select/creatable';
 import { AddGiftReq, GiftRes } from 'smartbox-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { FormContainer, ButtonsContainer } from '../../../../../components/Layout';
+import { FormContainer, ButtonsContainer, FieldsColumn } from '../../../../../components/Layout';
 import { Button, Spinner } from '../../../../../components/Common';
 import ApiService from '../../../../../services/api-service';
 import { formOnTranslateString } from '../../../../../utils/trans-form';
@@ -41,23 +41,25 @@ const Form = ({ showModal }: Props) => {
     );
 
   return (
-    <FormContainer className="gift-form">
-      <ItfApiForm
-        formId="addGiftForm"
-        schemaMayBeDynamic={false}
-        schemaCacheEnabled={false}
-        loadingInfo={<Spinner transparent />}
-        schemaFetcher={() => ApiService.loadForm(fetchUrl)}
-        sendFetcher={customSendFetcher}
-        submitButton={submitButton}
-        onSavedSuccessfully={(data: GiftRes) => {
-          successNotification(__('notification.discCodeCreated'));
-          showModal(<NewCode newCodeProps={data} />);
-        }}
-        onTranslateString={formOnTranslateString}
-        thirdPartyComponents={{ ReactSelect, ReactCreatableSelect }}
-      />
-    </FormContainer>
+    <FieldsColumn>
+      <FormContainer className="gift-form">
+        <ItfApiForm
+          formId="addGiftForm"
+          schemaMayBeDynamic={false}
+          schemaCacheEnabled={false}
+          loadingInfo={<Spinner transparent />}
+          schemaFetcher={() => ApiService.loadForm(fetchUrl)}
+          sendFetcher={customSendFetcher}
+          submitButton={submitButton}
+          onSavedSuccessfully={(data: GiftRes) => {
+            successNotification(__('notification.discCodeCreated'));
+            showModal(<NewCode newCodeProps={data} />);
+          }}
+          onTranslateString={formOnTranslateString}
+          thirdPartyComponents={{ ReactSelect, ReactCreatableSelect }}
+        />
+      </FormContainer>
+    </FieldsColumn>
   );
 };
 
