@@ -10,12 +10,27 @@
   box-shadow: $standard-shadow;
   max-width: map-get($breakpoints, lg);
 
+  .map-scale {
+    position: absolute;
+
+    span {
+      display: block;
+      margin: $main-spacing;
+      font-size: 2rem;
+      text-align: center;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+
   svg {
     width: $box-map-width;
 
-    .st9{
+    .st9 {
       z-index: 100;
-      &:hover{
+      &:hover {
         cursor: pointer;
       }
     }
@@ -31,38 +46,45 @@
       fill: $color-success;
 
       &:hover {
-        fill: lighten($color-success, 5%)
+        fill: lighten($color-success, 5%);
       }
     }
 
-    .reserved, .rented {
+    .reserved,
+    .rented {
       fill: $color-danger;
       &:hover {
-        fill: lighten($color-danger, 5%)
+        fill: lighten($color-danger, 5%);
       }
     }
 
-    .to-explain, .out-of-service {
+    .out-of-service-text,
+    .to-explain-text {
+      fill: #fff;
+    }
+
+    .to-explain,
+    .out-of-service {
       fill: $color-text;
 
       &:hover {
-        fill: lighten($color-text, 5%)
+        fill: lighten($color-text, 15%);
       }
     }
 
     .to-check {
       fill: $color-primary;
       &:hover {
-        fill: lighten($color-primary, 5%)
+        fill: lighten($color-primary, 5%);
       }
     }
 
-    .no-paid-extension, .no-paid-extension-with-warning{
+    .no-paid-extension,
+    .no-paid-extension-with-warning {
       fill: $color-tertiary;
       &:hover {
-        fill: lighten($color-tertiary, 5%)
+        fill: lighten($color-tertiary, 5%);
       }
     }
-
   }
 }

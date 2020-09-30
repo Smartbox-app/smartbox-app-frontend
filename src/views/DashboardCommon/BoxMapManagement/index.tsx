@@ -5,7 +5,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { BoxListItem, RentStatus, StockList } from 'smartbox-types';
-import { Spinner } from '../../../components/Common';
+import { Button, Spinner } from '../../../components/Common';
 import { ApplicationState } from '../../../reducers';
 
 import { ReactComponent as ReactLogo } from './map_1.2.svg';
@@ -45,9 +45,15 @@ class BoxMapManagement extends React.Component<Props, State> {
     };
   }
 
+  private statusColorMarker = () => {
+    const catchElement = this.element.current.querySelectorAll('#kontenery .storage');
+    catchElement.forEach((singleElement: any) => {
+      this.setBoxStatus(singleElement.id, singleElement);
+    });
+  };
+
   private eventListenerAdding = () => {
     const mapWrapperElement = this.element.current;
-
     mapWrapperElement.addEventListener(
       'mousedown',
       (e: MouseEvent) => this.handleMouseDown(e, this.element.current),
@@ -71,7 +77,6 @@ class BoxMapManagement extends React.Component<Props, State> {
 
     const catchElement = this.element.current.querySelectorAll('#kontenery .storage');
     catchElement.forEach((singleElement: any) => {
-      this.setBoxStatus(singleElement.id, singleElement);
       singleElement.addEventListener('click', this.handleEventModal, false);
       singleElement.addEventListener('mouseover', this.handleEventMouseOver, false);
       singleElement.addEventListener('mouseout', this.handleEventMouseOut, false);
@@ -81,9 +86,10 @@ class BoxMapManagement extends React.Component<Props, State> {
   async componentDidMount() {
     const { fetchBoxStatuses, stock, getStockList } = this.props;
     await getStockList();
+    await this.eventListenerAdding();
+
     if (stock) {
       await fetchBoxStatuses(stock.id);
-      await this.eventListenerAdding();
     }
   }
 
@@ -92,7 +98,7 @@ class BoxMapManagement extends React.Component<Props, State> {
     boxesGroup.length === 0 && fetchBoxStatuses(stock.id);
 
     if (stock) {
-      this.eventListenerAdding();
+      this.statusColorMarker();
     }
   }
 
@@ -122,6 +128,7 @@ class BoxMapManagement extends React.Component<Props, State> {
             break;
           case RentStatus.toExplain:
             singleElement.firstElementChild.classList.add('to-explain');
+            singleElement.lastElementChild.classList.add('to-explain-text');
             break;
           case RentStatus.noPaidExtension:
             singleElement.firstElementChild.classList.add('no-paid-extension');
@@ -131,11 +138,13 @@ class BoxMapManagement extends React.Component<Props, State> {
             break;
           case RentStatus.outOfService:
             singleElement.firstElementChild.classList.add('out-of-service');
+            singleElement.lastElementChild.classList.add('out-of-service-text');
             break;
           default:
-            singleElement.firstElementChild.classList.add('free');
             break;
         }
+      } else {
+        singleElement.firstElementChild.classList.add('free');
       }
     });
   };
@@ -175,17 +184,8 @@ class BoxMapManagement extends React.Component<Props, State> {
 
   handleEventModal = (e: any): any => {
     const { showModal, boxesGroup, fetchSingleBoxDetails } = this.props;
-    console.log('handleEventModal', e.target.parentElement.parentElement.id);
-    console.log('e.target.parentElement.parentElement.class', e.target.parentElement.parentElement.classList[0]);
-    const selectedBoxId = e.target.parentElement.parentElement.id;
+    const selectedBoxId = e.target.parentElement.id;
     let selectedRentId = '';
-    // if (e.target.parentElement.parentElement.classList[0] === 'storage') {
-    //   selectedBoxId = e.target.parentElement.id;
-    // }
-    //
-    // if (e.target.attributes.class.value === 'st9 st10') {
-    //   selectedBoxId = e.target.parentElement.id;
-    // }
 
     boxesGroup.find((singleBox: BoxListItem): void => {
       if (singleBox.number === selectedBoxId && singleBox.status !== RentStatus.free) {
@@ -219,6 +219,10 @@ class BoxMapManagement extends React.Component<Props, State> {
         <MapLegend />
         {stock?.id ? (
           <div className="map-wrapper" ref={this.element}>
+            <div className="map-scale">
+              <span className="fa fa-plus-circle" />
+              <span className="fa fa-minus-circle" />
+            </div>
             <ReactLogo id="svg-map" />
           </div>
         ) : (

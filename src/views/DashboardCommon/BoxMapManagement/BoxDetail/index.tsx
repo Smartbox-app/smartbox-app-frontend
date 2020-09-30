@@ -18,8 +18,7 @@ interface Props {
 
 const BoxDetail = ({ selectedBoxId, singleBoxDetail, rentId }: Props) => {
   const [optionDisplayState, optionDisplayToggle] = useState(false);
-  const dummyMail = 'kontakt@itdotfocus.com';
-  const dummyPhone = 333222111;
+
   const isThisBoxFree = (data: string): boolean => data === '';
 
   return (
@@ -53,27 +52,14 @@ const BoxDetail = ({ selectedBoxId, singleBoxDetail, rentId }: Props) => {
         <strong>{`${singleBoxDetail.status}`}</strong>
       </p>
       <p className="single">
-        <span className="fa fa-phone" />
-        <span>{__('application.phone')}:</span>
-        <strong>
-          {isThisBoxFree(rentId) ? (
-            '---'
-          ) : (
-            <a href={`tel:${dummyPhone}`} rel="noopener noreferrer" target="_blank">
-              {dummyPhone}
-            </a>
-          )}
-        </strong>
-      </p>
-      <p className="single">
         <span className="fa fa-envelope" />
         <span>{__('application.mail')}:</span>
         <strong>
           {isThisBoxFree(rentId) ? (
             '---'
           ) : (
-            <a href={`mailto:${dummyMail}`} rel="noopener noreferrer" target="_blank">
-              {dummyMail}
+            <a href={`mailto:${singleBoxDetail.owner.email}`} rel="noopener noreferrer" target="_blank">
+              {singleBoxDetail.owner.email}
             </a>
           )}
         </strong>
