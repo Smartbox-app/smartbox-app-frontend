@@ -35,9 +35,8 @@ const Add = ({ successNotification }: Props) => {
 
       <FormContainer>
         <ItfApiForm
-          formId="addOrderForm"
+          formId="sendInvitationToUser"
           schemaMayBeDynamic={false}
-          schemaCacheEnabled={false}
           loadingInfo={<Spinner transparent />}
           schemaFetcher={() => ApiService.loadForm(fetchUrl)}
           sendFetcher={(formId: string, values: any) => ApiService.sendForm(sendUrl, values)}

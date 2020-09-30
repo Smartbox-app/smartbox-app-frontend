@@ -9,5 +9,6 @@ import * as apiTable from './api-table';
 import * as boxes from './boxes';
 import * as singleRent from './single-rent';
 import * as stock from './stock';
+import * as invitations from './invitations';
 
-export { appStatus, apiTable, auth, boxes, modal, notifications, lang, user, order, singleRent, stock };
+export { appStatus, apiTable, auth, boxes, modal, notifications, lang, user, order, singleRent, stock, invitations };

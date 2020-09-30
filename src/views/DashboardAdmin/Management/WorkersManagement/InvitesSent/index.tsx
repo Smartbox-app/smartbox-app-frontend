@@ -1,11 +1,18 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { invitationList, TableSchema, usersList } from 'smartbox-tables';
 import { PageHeader, Section, ButtonsContainer } from '../../../../../components/Layout';
-import { ApiTable, Button } from '../../../../../components/Common';
+import { ApiTable, Button, ConfirmModal } from '../../../../../components/Common';
 import { InteractiveTableSchema } from '../../../../../utils/table-schema-utils';
 import { __ } from '../../../../../helpers/i18n';
+import { invitations, modal } from '../../../../../actions';
 
-interface Props {}
+interface Props {
+  deleteSentInvitations: (invitationId: string) => void;
+  resendInvitations: (invitationId: string) => void;
+  showModal: (content: React.ReactNode) => void;
+}
 
 class InvitesSent extends React.Component<Props> {
   private scheme: TableSchema;
@@ -18,14 +25,22 @@ class InvitesSent extends React.Component<Props> {
       mobile: true,
       buttons: [
         {
-          name: __('application.edit'),
+          name: __('application.resend'),
           type: 'primary',
-          click: (data: any) => console.log(data.id),
+          click: (data: any) => this.props.resendInvitations(data.id),
         },
         {
           name: __('application.delete'),
           type: 'danger',
-          click: (data: any) => console.log(data.id),
+          click: (data: any) =>
+            this.props.showModal(
+              <ConfirmModal
+                aproveButtonText={__('application.delete')}
+                mainText="Czy jesteś pewien, że chcesz usunąć zaproszenie"
+                cancelButtonText={__('application.cancel')}
+                approveAction={() => this.props.deleteSentInvitations(data.id)}
+              />,
+            ),
         },
       ],
     });
@@ -34,15 +49,16 @@ class InvitesSent extends React.Component<Props> {
   render() {
     return (
       <Section full>
-        <PageHeader title={__('application.usersList')} />
+        <PageHeader title={__('application.inviteList')} />
         <ButtonsContainer>
           <Button text={__('application.back')} primary to="/admin/management/workers/list" />
         </ButtonsContainer>
-        <h2>Lista wysłanych zaproszeń</h2>
         <ApiTable scheme={this.scheme} apiEndpointSubUrl="user/invitation-list" />
       </Section>
     );
   }
 }
 
-export default InvitesSent;
+const mapDispatchToProps = (dispatch: any) => bindActionCreators({ ...invitations, ...modal }, dispatch);
+
+export default connect(null, mapDispatchToProps)(InvitesSent);

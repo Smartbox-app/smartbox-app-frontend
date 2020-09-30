@@ -16,6 +16,7 @@
       "create": "Utwórz",
       "cancel": "Anuluj",
       "send": "Wyślij",
+      "resend": "Wyślij ponownie",
       "save": "Zapisz",
       "lack": "Brak",
       "end": "Zakończ",
@@ -93,6 +94,7 @@
 
       "workersList": "Lista pracowników",
       "usersList": "Lista użytkowników",
+      "inviteList": "Lista wysłanych zaproszeń",
       "inviteWorker": "Zaproś pracowników",
       "inviteUser": "Zaproś użytkownika",
       "sentInvitation": "Zaproszenia wysłane",
@@ -136,6 +138,8 @@
       "dataChangedSuccess": "Poprawnie zmieniono dane.",
       "newPassSet": "Ustawiono nowe hasło",
       "msgSend": "Wysłano wiadomość",
+      "invitationDeleted": "Usunięto zaproszenie!",
+      "invitationResent": "Wysłano ponownie zaproszenie!",
       "logInSuccess": "Zalogowano poprawnie."
     }
   }
