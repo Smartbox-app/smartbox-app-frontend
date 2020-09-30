@@ -8,7 +8,7 @@ import { BoxListItem, RentStatus, StockList } from 'smartbox-types';
 import { Spinner } from '../../../components/Common';
 import { ApplicationState } from '../../../reducers';
 
-import { ReactComponent as ReactLogo } from './nowa_mapa.svg';
+import { ReactComponent as ReactLogo } from './map_1.2.svg';
 import { PageHeader } from '../../../components/Layout';
 import { modal, boxes, stock } from '../../../actions';
 import { __ } from '../../../helpers/i18n';
@@ -48,8 +48,6 @@ class BoxMapManagement extends React.Component<Props, State> {
   private eventListenerAdding = () => {
     const mapWrapperElement = this.element.current;
 
-    console.log('this.element.current', this.element.current);
-
     mapWrapperElement.addEventListener(
       'mousedown',
       (e: MouseEvent) => this.handleMouseDown(e, this.element.current),
@@ -71,10 +69,9 @@ class BoxMapManagement extends React.Component<Props, State> {
       false,
     );
 
-    const catchElement = this.element.current.querySelectorAll('#kontenery .storage, #kontenery .st9');
-
+    const catchElement = this.element.current.querySelectorAll('#kontenery .storage');
     catchElement.forEach((singleElement: any) => {
-      this.setBoxStatus(singleElement.parentElement.parentElement.id.slice(1), singleElement);
+      this.setBoxStatus(singleElement.id, singleElement);
       singleElement.addEventListener('click', this.handleEventModal, false);
       singleElement.addEventListener('mouseover', this.handleEventMouseOver, false);
       singleElement.addEventListener('mouseout', this.handleEventMouseOut, false);
@@ -100,7 +97,7 @@ class BoxMapManagement extends React.Component<Props, State> {
   }
 
   componentWillUnmount() {
-    const catchElement = this.element.current.querySelectorAll('#kontenery .storage, #kontenery .st9');
+    const catchElement = this.element.current.querySelectorAll('#kontenery .storage');
     catchElement.forEach((singleElement: any) => {
       singleElement.removeEventListener('click', this.handleEventModal, false);
       singleElement.removeEventListener('mouseover', this.handleEventMouseOver, false);
@@ -110,31 +107,33 @@ class BoxMapManagement extends React.Component<Props, State> {
 
   private setBoxStatus = (boxId: string, singleElement: any): void => {
     const { boxesGroup } = this.props;
-    boxesGroup.find((singleBox: BoxListItem): void => {
+
+    boxesGroup.forEach((singleBox: BoxListItem): void => {
       if (singleBox.number === boxId && singleBox.status !== RentStatus.free) {
         switch (singleBox.status) {
           case RentStatus.toCheck:
-            singleElement.classList.add('to-check');
+            singleElement.firstElementChild.classList.add('to-check');
             break;
           case RentStatus.rented:
-            singleElement.classList.add('rented');
+            singleElement.firstElementChild.classList.add('rented');
             break;
           case RentStatus.reserved:
-            singleElement.classList.add('reserved');
+            singleElement.firstElementChild.classList.add('reserved');
             break;
           case RentStatus.toExplain:
-            singleElement.classList.add('to-explain');
+            singleElement.firstElementChild.classList.add('to-explain');
             break;
           case RentStatus.noPaidExtension:
-            singleElement.classList.add('no-paid-extension');
+            singleElement.firstElementChild.classList.add('no-paid-extension');
             break;
           case RentStatus.noPaidExtensionWithWarning:
-            singleElement.classList.add('no-paid-extension-with-warning');
+            singleElement.firstElementChild.classList.add('no-paid-extension-with-warning');
             break;
           case RentStatus.outOfService:
-            singleElement.classList.add('out-of-service');
+            singleElement.firstElementChild.classList.add('out-of-service');
             break;
           default:
+            singleElement.firstElementChild.classList.add('free');
             break;
         }
       }
@@ -176,16 +175,17 @@ class BoxMapManagement extends React.Component<Props, State> {
 
   handleEventModal = (e: any): any => {
     const { showModal, boxesGroup, fetchSingleBoxDetails } = this.props;
-    console.log('handleEventModal', e.target.parentElement);
-    let selectedBoxId = e.target.parentElement.parentElement.id.slice(1);
+    console.log('handleEventModal', e.target.parentElement.parentElement.id);
+    console.log('e.target.parentElement.parentElement.class', e.target.parentElement.parentElement.classList[0]);
+    const selectedBoxId = e.target.parentElement.parentElement.id;
     let selectedRentId = '';
-    if (e.target.parentElement.attributes.class && e.target.parentElement.attributes.class.value === 'storage') {
-      selectedBoxId = e.target.parentElement.id.slice(1);
-    }
-
-    if (e.target.attributes.class.value === 'st9 st10') {
-      selectedBoxId = e.target.parentElement.id.slice(1);
-    }
+    // if (e.target.parentElement.parentElement.classList[0] === 'storage') {
+    //   selectedBoxId = e.target.parentElement.id;
+    // }
+    //
+    // if (e.target.attributes.class.value === 'st9 st10') {
+    //   selectedBoxId = e.target.parentElement.id;
+    // }
 
     boxesGroup.find((singleBox: BoxListItem): void => {
       if (singleBox.number === selectedBoxId && singleBox.status !== RentStatus.free) {
