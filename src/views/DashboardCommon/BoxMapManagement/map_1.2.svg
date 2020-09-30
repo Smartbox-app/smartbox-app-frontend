@@ -118,7 +118,7 @@
 				<rect x="470.7" y="280.7" class="st4" width="15" height="20.6"/>
 				<text transform="matrix(1 0 0 1 473.5649 292.73)" class="st2 st5">121</text>
 			</g>
-			<g id="122_ class=storage1_">
+			<g id="122" class="storage">
 				<rect x="490.8" y="280.7" class="st4" width="15" height="20.6"/>
 				<text transform="matrix(1 0 0 1 493.7012 292.73)" class="st2 st5">122</text>
 			</g>
@@ -694,7 +694,7 @@
 				<text transform="matrix(1 0 0 1 807.2467 181.73)" class="st2 st5">324</text>
 			</g>
 		</g>
-		<g>
+		<g id="0400">
 			<g>
 				<rect x="70" y="139.7" class="st6" width="15" height="20.6"/>
 			</g>
@@ -755,52 +755,62 @@
 				<text transform="matrix(1 0 0 1 423.5649 151.73)" class="st2 st5">413</text>
 			</g>
 			<g id="414" class="storage">
-
-					<rect x="437.3" y="139.7" class="st4" width="15" height="20.6"/>
+				<rect x="437.3" y="139.7" class="st4" width="15" height="20.6"/>
 				<text transform="matrix(1 0 0 1 440.2315 151.73)" class="st2 st5">414</text>
 			</g>
 			<g id="415" class="storage">
-
-					<rect x="454" y="139.7" class="st4" width="15" height="20.6"/>
+				<rect x="454" y="139.7" class="st4" width="15" height="20.6"/>
 				<text transform="matrix(1 0 0 1 456.8982 151.73)" class="st2 st5">415</text>
 			</g>
 			<g id="416" class="storage">
-
-					<rect x="470.7" y="139.7" class="st4" width="15" height="20.6"/>
+				<rect x="470.7" y="139.7" class="st4" width="15" height="20.6"/>
 				<text transform="matrix(1 0 0 1 473.5649 151.73)" class="st2 st5">416</text>
 			</g>
 			<g id="417" class="storage">
-
-					<rect x="490.8" y="139.7" class="st4" width="15" height="20.6"/>
+				<rect x="490.8" y="139.7" class="st4" width="15" height="20.6"/>
 				<text transform="matrix(1 0 0 1 493.7012 151.73)" class="st2 st5">417</text>
 			</g>
 			<g id="418" class="storage">
-
-					<rect x="507.5" y="139.7" class="st4" width="15" height="20.6"/>
+				<rect x="507.5" y="139.7" class="st4" width="15" height="20.6"/>
 				<text transform="matrix(1 0 0 1 510.3679 151.73)" class="st2 st5">418</text>
 			</g>
 			<g id="419" class="storage">
-
-					<rect x="524.2" y="139.7" class="st4" width="15" height="20.6"/>
+				<rect x="524.2" y="139.7" class="st4" width="15" height="20.6"/>
 				<text transform="matrix(1 0 0 1 527.0345 151.73)" class="st2 st5">419</text>
 			</g>
 			<g id="420" class="storage">
-
-					<rect x="540.8" y="139.7" class="st4" width="15" height="20.6"/>
+				<rect x="540.8" y="139.7" class="st4" width="15" height="20.6"/>
 				<text transform="matrix(1 0 0 1 543.7012 151.73)" class="st2 st5">420</text>
 			</g>
 			<g id="421" class="storage">
-
-					<rect x="561" y="139.7" class="st4" width="15" height="20.6"/>
+				<rect x="561" y="139.7" class="st4" width="15" height="20.6"/>
 				<text transform="matrix(1 0 0 1 563.8376 151.73)" class="st2 st5">421</text>
 			</g>
 			<g id="422" class="storage">
-				<g>
-					<g>
-						<rect x="577.4" y="139.7" class="st4" width="48.6" height="20.6"/>
-					</g>
-				</g>
+				<rect x="577.4" y="139.7" class="st4" width="48.6" height="20.6"/>
 				<text transform="matrix(1 0 0 1 596.8376 151.73)" class="st2 st5">422</text>
+			</g>
+		</g>
+		<g id="0500">
+			<g id="500" class="storage">
+				<rect x="80.7" y="33.6" transform="matrix(9.761983e-02 -0.9952 0.9952 9.761983e-02 58.4727 152.2162)" class="st7" width="65" height="20.6"/>
+				<text transform="matrix(9.761983e-02 -0.9952 0.9952 9.761983e-02 114.4444 48.9625)" class="st2 st5">500</text>
+			</g>
+			<g id="501" class="storage">
+				<rect x="105.6" y="36" transform="matrix(9.761983e-02 -0.9952 0.9952 9.761983e-02 78.4956 179.1802)" class="st7" width="65" height="20.6"/>
+				<text transform="matrix(9.761983e-02 -0.9952 0.9952 9.761983e-02 139.3249 51.403)" class="st2 st5">501</text>
+			</g>
+			<g id="502" class="storage">
+				<rect x="130.4" y="38.5" transform="matrix(9.761983e-02 -0.9952 0.9952 9.761983e-02 98.5185 206.1442)" class="st7" width="65" height="20.6"/>
+				<text transform="matrix(9.761983e-02 -0.9952 0.9952 9.761983e-02 164.2055 53.8434)" class="st2 st5">502</text>
+			</g>
+			<g id="503" class="storage">
+				<rect x="155.3" y="40.9" transform="matrix(9.761983e-02 -0.9952 0.9952 9.761983e-02 118.5414 233.1082)" class="st7" width="65" height="20.6"/>
+				<text transform="matrix(9.761983e-02 -0.9952 0.9952 9.761983e-02 189.0861 56.2838)" class="st2 st5">503</text>
+			</g>
+			<g id="504" class="storage">
+				<rect x="180.2" y="43.3" transform="matrix(9.761983e-02 -0.9952 0.9952 9.761983e-02 138.5643 260.0722)" class="st7" width="65" height="20.6"/>
+				<text transform="matrix(9.761983e-02 -0.9952 0.9952 9.761983e-02 213.9667 58.7242)" class="st2 st5">504</text>
 			</g>
 		</g>
 		<g>
@@ -810,10 +820,7 @@
 					l0.1-1l6.3-64.7l0.1-1l-1-0.1l-20.5-2L105.2,9.4L105.2,9.4z"/>
 			</g>
 		</g>
-			<g id="500">
-			<rect x="80.7" y="33.6" transform="matrix(9.761983e-02 -0.9952 0.9952 9.761983e-02 58.4727 152.2162)" class="st7" width="65" height="20.6"/>
-					<text transform="matrix(9.761983e-02 -0.9952 0.9952 9.761983e-02 114.4444 48.9625)" class="st2 st5">500</text>
-		</g>
+
 	</g>
 			<g>
 		<g>
@@ -822,11 +829,7 @@
 					l6.3-64.7l0.1-1l-1-0.1l-20.5-2L130.1,11.9L130.1,11.9z"/>
 			</g>
 		</g>
-				<g id="501">
 
-				<rect x="105.6" y="36" transform="matrix(9.761983e-02 -0.9952 0.9952 9.761983e-02 78.4956 179.1802)" class="st7" width="65" height="20.6"/>
-					<text transform="matrix(9.761983e-02 -0.9952 0.9952 9.761983e-02 139.3249 51.403)" class="st2 st5">501</text>
-		</g>
 	</g>
 			<g>
 		<g>
@@ -835,10 +838,7 @@
 					l6.3-64.7l0.1-1l-1-0.1l-20.5-2L155,14.3L155,14.3z"/>
 			</g>
 		</g>
-				<g id="502">
-			<rect x="130.4" y="38.5" transform="matrix(9.761983e-02 -0.9952 0.9952 9.761983e-02 98.5185 206.1442)" class="st7" width="65" height="20.6"/>
-					<text transform="matrix(9.761983e-02 -0.9952 0.9952 9.761983e-02 164.2055 53.8434)" class="st2 st5">502</text>
-		</g>
+
 	</g>
 			<g>
 		<g>
@@ -847,10 +847,7 @@
 					l0.1-1l6.3-64.7l0.1-1l-1-0.1l-20.5-2L179.8,16.7L179.8,16.7z"/>
 			</g>
 		</g>
-				<g id="503">
-			<rect x="155.3" y="40.9" transform="matrix(9.761983e-02 -0.9952 0.9952 9.761983e-02 118.5414 233.1082)" class="st7" width="65" height="20.6"/>
-					<text transform="matrix(9.761983e-02 -0.9952 0.9952 9.761983e-02 189.0861 56.2838)" class="st2 st5">503</text>
-		</g>
+
 	</g>
 			<g>
 		<g>
@@ -859,38 +856,35 @@
 					l0.1-1l6.3-64.7l0.1-1l-1-0.1l-20.5-2L204.7,19.2L204.7,19.2z"/>
 			</g>
 		</g>
-				<g id="504">
-			<rect x="180.2" y="43.3" transform="matrix(9.761983e-02 -0.9952 0.9952 9.761983e-02 138.5643 260.0722)" class="st7" width="65" height="20.6"/>
-					<text transform="matrix(9.761983e-02 -0.9952 0.9952 9.761983e-02 213.9667 58.7242)" class="st2 st5">504</text>
-		</g>
+
 	</g>
 	</g>
 <g id="Strzałki">
 	<g>
 		<g>
-			<polygon class="st1" points="70,207.9 65,203 65,206 46,206 46,210 65,210 65,213 			"/>
+			<polygon class="st1 st0" points="70,207.9 65,203 65,206 46,206 46,210 65,210 65,213 			"/>
 		</g>
 		<g>
-			<polygon class="st1" points="47.9,186 43,191 46,191 46,210 50,210 50,191 53,191 			"/>
+			<polygon class="st1 st0" points="47.9,186 43,191 46,191 46,210 50,210 50,191 53,191 			"/>
 		</g>
 		<g>
-			<polygon class="st1" points="47.9,230 43,225 46,225 46,206 50,206 50,225 53,225 			"/>
-		</g>
-	</g>
-	<g>
-		<g>
-			<polygon class="st1" points="70,116.9 65,112 65,115 46,115 46,119 65,119 65,122 			"/>
-		</g>
-		<g>
-			<polygon class="st1" points="47.9,139 43,134 46,134 46,115 50,115 50,134 53,134 			"/>
+			<polygon class="st1 st0" points="47.9,230 43,225 46,225 46,206 50,206 50,225 53,225 			"/>
 		</g>
 	</g>
 	<g>
 		<g>
-			<polygon class="st1" points="70,320.9 65,316 65,319 46,319 46,323 65,323 65,326 			"/>
+			<polygon class="st1 st0" points="70,116.9 65,112 65,115 46,115 46,119 65,119 65,122 			"/>
 		</g>
 		<g>
-			<polygon class="st1" points="47.9,299 43,304 46,304 46,323 50,323 50,304 53,304 			"/>
+			<polygon class="st1 st0" points="47.9,139 43,134 46,134 46,115 50,115 50,134 53,134 			"/>
+		</g>
+	</g>
+	<g>
+		<g>
+			<polygon class="st1 st0" points="70,320.9 65,316 65,319 46,319 46,323 65,323 65,326 			"/>
+		</g>
+		<g>
+			<polygon class="st1 st0" points="47.9,299 43,304 46,304 46,323 50,323 50,304 53,304 			"/>
 		</g>
 	</g>
 </g>
