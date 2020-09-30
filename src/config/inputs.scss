@@ -91,12 +91,17 @@ select,
   -webkit-border-radius: 0px;
   border-radius: 0px;
   background-image: url("/assets/icons/arrow-down.svg");
-  background-position: 99% 50%;
+  background-position: 95% 50%;
   background-repeat: no-repeat;
   background-size: 10px;
+
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 .input-autocomplete-option {
+  margin-left: 5px;
   padding: $main-spacing / 2 $main-spacing;
   cursor: pointer;
   background-color: lighten($color-background, 20%);
