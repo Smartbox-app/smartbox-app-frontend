@@ -7,7 +7,7 @@
 
 .map-wrapper {
   overflow-x: hidden;
-  box-shadow: $standard-shadow;
+  border: 1px solid darken($color-background, 5%);
   max-width: map-get($breakpoints, lg);
 
   .map-scale {
