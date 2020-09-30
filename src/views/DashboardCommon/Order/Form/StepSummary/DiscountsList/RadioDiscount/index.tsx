@@ -24,7 +24,6 @@ const RadioDiscount = ({ value, text, register, countedPrice }: Props) => {
         return 'Standardowa cena';
     }
   };
-  console.log('getName(text)', getName(text));
   return (
     <div className="radio-discount-wrapper">
       <input name="discount" type="radio" value={value} id={text} />

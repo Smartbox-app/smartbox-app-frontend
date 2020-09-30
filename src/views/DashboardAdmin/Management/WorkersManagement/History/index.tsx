@@ -21,17 +21,6 @@ class History extends React.Component<Props> {
     this.scheme = new InteractiveTableSchema(WorkerStatusTable);
   }
 
-  public componentDidMount(): void {
-    const { stockId, user } = this.props;
-    if (stockId && stockId.id !== '') {
-      console.log('stockId.id', stockId.id);
-      // fetchBoxAvailability(stockId.id);
-    } else {
-      console.log('stockId.id - else');
-      // history.push(`/${UserService.getSlugByRole(user.role)}/main`);
-    }
-  }
-
   render() {
     const { stockId } = this.props;
     return (

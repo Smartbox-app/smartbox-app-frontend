@@ -34,7 +34,6 @@ const GoogleButton = ({ loginWithGoogle, showModal, getUserLoginGoogleData }: Pr
       'height=700,width=600',
     );
 
-    console.log('openedWindow', openedWindow);
   };
 
   return (

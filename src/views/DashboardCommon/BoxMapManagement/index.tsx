@@ -217,7 +217,6 @@ class BoxMapManagement extends React.Component<Props, State> {
       <>
         <PageHeader title={`${__('application.storagesPlan')}`} />
         <MapLegend />
-        {console.log('stock?.id ', stock?.id)}
         {stock?.id ? (
           <div className="map-wrapper" ref={this.element}>
             <ReactLogo id="svg-map" />
