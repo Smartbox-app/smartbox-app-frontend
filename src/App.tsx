@@ -15,7 +15,7 @@ import {
   DashboardWorker,
   DashboardUser,
   Register,
-  RestorPass,
+  RestorePass,
   Page404,
   UserActivation,
 } from './views';
@@ -75,8 +75,8 @@ const App = () => {
               <Route exact path="/" render={() => <Redirect to="/login" />} />
               <Route path="/login" component={Login} />
               <Route path="/register" component={Register} />
-              <Route exact path="/restore-pass/" component={RestorPass} />
-              <Route path="/restore-pass/:userId/:updateToken" component={RestorPass} />
+              <Route exact path="/restore-pass/" component={RestorePass} />
+              <Route path="/restore-pass/:userId/:updateToken" component={RestorePass} />
               <Route exact path="/user-activation/:invitationId/:updateToken" component={UserActivation} />
               <RouteAdmin path="/admin" component={DashboardAdmin} />
               <RouteWorker path="/worker" component={DashboardWorker} />

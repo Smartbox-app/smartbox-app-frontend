@@ -12,6 +12,7 @@ import { formOnTranslateString } from '../../utils/trans-form';
 import { FormContainer, PageContent } from '../../components/Layout';
 import { ApplicationState } from '../../reducers';
 import { __ } from '../../helpers/i18n';
+import { history } from '../../App';
 
 import ButtonsSection from './ButtonSection';
 
@@ -85,6 +86,7 @@ const RestorePass = ({ successNotification, match }: Props) => {
           }}
           onSavedSuccessfully={() => {
             successNotification(notificationText);
+            history.push('/');
           }}
           onTranslateString={formOnTranslateString}
         />

@@ -4,7 +4,7 @@ import Register from './Register';
 import DashboardAdmin from './DashboardAdmin';
 import DashboardUser from './DashboardUser';
 import DashboardWorker from './DashboardWorker';
-import RestorPass from './RestorPass';
+import RestorePass from './RestorPass';
 import UserActivation from './UserActivation';
 
-export { Page404, Login, Register, DashboardAdmin, DashboardUser, DashboardWorker, RestorPass, UserActivation };
+export { Page404, Login, Register, DashboardAdmin, DashboardUser, DashboardWorker, RestorePass, UserActivation };
