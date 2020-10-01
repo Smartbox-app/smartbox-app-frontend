@@ -7,7 +7,7 @@ import { AuthLoginResult, RestorPwdReq } from 'smartbox-types';
 import { Spinner, Input, LoginLogo } from '../../components/Common';
 import { notifications } from '../../actions';
 import ApiService from '../../services/api-service';
-import { translateErrors } from "../../utils/errors-trans";
+import { translateErrors } from '../../utils/errors-trans';
 import { formOnTranslateString } from '../../utils/trans-form';
 import { FormContainer, PageContent } from '../../components/Layout';
 import { ApplicationState } from '../../reducers';
@@ -24,7 +24,7 @@ interface RouteProps {
 interface Props extends RouteComponentProps<RouteProps> {
   successNotification: (text: string) => void;
 }
-const RestorPass = ({ successNotification, match }: Props) => {
+const RestorePass = ({ successNotification, match }: Props) => {
   const loadUrl = match.params.updateToken ? 'user/form/restore-pwd' : 'user/form/email';
   const sendUrl = match.params.updateToken ? 'user/restore-pwd' : 'user/restore-pwd-petition';
   const METHOD = match.params.updateToken ? 'PATCH' : 'POST';
@@ -38,7 +38,7 @@ const RestorPass = ({ successNotification, match }: Props) => {
     match.params.updateToken
       ? {
           ...values,
-        token: match.params.updateToken,
+          token: match.params.updateToken,
           userId: match.params.userId,
         }
       : values;
@@ -54,7 +54,8 @@ const RestorPass = ({ successNotification, match }: Props) => {
           loadingInfo={<Spinner transparent />}
           schemaFetcher={() => ApiService.loadForm(loadUrl)}
           sendFetcher={(formId: string, values: AuthLoginResult | RestorPwdReq) =>
-            ApiService.sendForm(sendUrl, setValues(values), METHOD)}
+            ApiService.sendForm(sendUrl, setValues(values), METHOD)
+          }
           submitButton={<ButtonsSection mainButtonText={buttonText} />}
           onRenderFullField={(field, errors, fieldHtmlId, currentValue, onChange, onFocus, onBlur) => {
             switch (field.type) {
@@ -103,5 +104,5 @@ const mapDispatchToProps = (dispatch: any): any =>
     },
     dispatch,
   );
-const RestorPassWithRouter = withRouter(RestorPass);
-export default connect(mapStateToProps, mapDispatchToProps)(RestorPassWithRouter);
+const RestorePassWithRouter = withRouter(RestorePass);
+export default connect(mapStateToProps, mapDispatchToProps)(RestorePassWithRouter);
