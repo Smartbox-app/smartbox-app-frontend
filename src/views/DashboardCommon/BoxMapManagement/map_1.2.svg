@@ -7,13 +7,13 @@
 <!--	.st1{fill:#0674BD;}-->
 	.st2{font-family:'MyriadPro-Regular';}
 	.st3{font-size:8px;}
-<!--	.st4{fill:#FAAF3B;}-->
+	.st4{fill:#00a45a;}
 	.st5{font-size:6px;}
 	.st6{fill:#333333;}
-<!--	.st7{fill:#A8DF65;}-->
+	.st7{fill:#00a45a;}
 <!--	.st8{fill:#FF4B5C;}-->
 <!--	.st9{fill:#FDDB3A;}-->
-<!--	.st10{fill:#7D0633;}-->
+	.st10{fill:#00a45a;}
 </style>
 <polygon id="tło" class="st0" points="30,0 0,356 2064.2,336.8 2073,166.7 "/>
 <g id="Brama_1">
@@ -598,15 +598,15 @@
 				<text transform="matrix(1 0 0 1 97.5497 181.73)" class="st2 st5">300</text>
 			</g>
 			<g id="301" class="storage">
-				<rect x="140.1" y="169.7" class="st8" width="15" height="20.6"/>
+				<rect x="140.1" y="169.7" class="st7" width="15" height="20.6"/>
 				<text transform="matrix(1 0 0 1 143.0194 181.73)" class="st2 st5">301</text>
 			</g>
 			<g id="302" class="storage">
-				<rect x="156.8" y="169.7" class="st8" width="15" height="20.6"/>
+				<rect x="156.8" y="169.7" class="st7" width="15" height="20.6"/>
 				<text transform="matrix(1 0 0 1 159.6861 181.73)" class="st2 st5">302</text>
 			</g>
 			<g id="303" class="storage">
-				<rect x="173.5" y="169.7" class="st9" width="15" height="20.6"/>
+				<rect x="173.5" y="169.7" class="st7" width="15" height="20.6"/>
 				<text transform="matrix(1 0 0 1 176.3527 181.73)" class="st2 st5">303</text>
 			</g>
 			<g id="304" class="storage">
@@ -618,7 +618,7 @@
 				<text transform="matrix(1 0 0 1 213.1558 181.73)" class="st2 st5">305</text>
 			</g>
 			<g id="306" class="storage">
-				<rect x="226.9" y="169.7" class="st1" width="15" height="20.6"/>
+				<rect x="226.9" y="169.7" class="st7" width="15" height="20.6"/>
 				<text transform="matrix(1 0 0 1 229.8224 181.73)" class="st2 st5">306</text>
 			</g>
 			<g id="307" class="storage">
@@ -699,15 +699,15 @@
 				<rect x="70" y="139.7" class="st6" width="15" height="20.6"/>
 			</g>
 			<g id="400" class="storage">
-				<rect x="86.7" y="139.7" class="st8" width="15" height="20.6"/>
+				<rect x="86.7" y="139.7" class="st7" width="15" height="20.6"/>
 				<text transform="matrix(1 0 0 1 89.5497 151.73)" class="st2 st5">400</text>
 			</g>
 			<g id="401" class="storage">
-				<rect x="103.3" y="139.7" class="st8" width="15" height="20.6"/>
+				<rect x="103.3" y="139.7" class="st7" width="15" height="20.6"/>
 				<text transform="matrix(1 0 0 1 106.2164 151.73)" class="st2 st5">401</text>
 			</g>
 			<g id="402" class="storage">
-				<rect x="120" y="139.7" class="st9" width="15" height="20.6"/>
+				<rect x="120" y="139.7" class="st7" width="15" height="20.6"/>
 				<text transform="matrix(1 0 0 1 122.8831 151.73)" class="st2 st5">402</text>
 			</g>
 			<g id="403" class="storage">
@@ -719,15 +719,15 @@
 				<text transform="matrix(1 0 0 1 159.6861 151.73)" class="st2 st5">404</text>
 			</g>
 			<g id="405" class="storage">
-				<rect x="173.5" y="139.7" class="st8" width="15" height="20.6"/>
+				<rect x="173.5" y="139.7" class="st7" width="15" height="20.6"/>
 				<text transform="matrix(1 0 0 1 176.3527 151.73)" class="st2 st5">405</text>
 			</g>
 			<g id="406" class="storage">
-				<rect x="190.1" y="139.7" class="st8" width="15" height="20.6"/>
+				<rect x="190.1" y="139.7" class="st7" width="15" height="20.6"/>
 				<text transform="matrix(1 0 0 1 193.0194 151.73)" class="st2 st5">406</text>
 			</g>
 			<g id="407" class="storage">
-				<rect x="210.3" y="139.7" class="st10" width="31.5" height="20.6"/>
+				<rect x="210.3" y="139.7" class="st7" width="31.5" height="20.6"/>
 				<text transform="matrix(0.9816 0 0 1 221.491 151.7404)" class="st2 st5">407</text>
 			</g>
 			<g id="408" class="storage">

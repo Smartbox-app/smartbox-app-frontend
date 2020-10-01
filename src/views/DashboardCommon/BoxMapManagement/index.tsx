@@ -19,7 +19,7 @@ import MapLegend from './MapLegend';
 import './BoxMapManagement.scss';
 
 interface Props {
-  boxesGroup: BoxListItem[];
+  boxesGroup: BoxListItem[] | null;
   stock: StockList;
   showModal: (content: React.ReactNode) => void;
   fetchBoxStatuses: (stockId: string) => void;
@@ -95,7 +95,8 @@ class BoxMapManagement extends React.Component<Props, State> {
 
   public componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>): void {
     const { fetchBoxStatuses, stock, boxesGroup } = this.props;
-    boxesGroup.length === 0 && fetchBoxStatuses(stock.id);
+    console.log('boxesGroup', boxesGroup);
+    boxesGroup === null && fetchBoxStatuses(stock.id);
 
     if (stock) {
       this.statusColorMarker();
@@ -114,7 +115,7 @@ class BoxMapManagement extends React.Component<Props, State> {
   private setBoxStatus = (boxId: string, singleElement: any): void => {
     const { boxesGroup } = this.props;
 
-    boxesGroup.forEach((singleBox: BoxListItem): void => {
+    boxesGroup?.forEach((singleBox: BoxListItem): void => {
       if (singleBox.number === boxId && singleBox.status !== RentStatus.free) {
         switch (singleBox.status) {
           case RentStatus.toCheck:
@@ -187,7 +188,7 @@ class BoxMapManagement extends React.Component<Props, State> {
     const selectedBoxId = e.target.parentElement.id;
     let selectedRentId = '';
 
-    boxesGroup.find((singleBox: BoxListItem): void => {
+    boxesGroup?.find((singleBox: BoxListItem): void => {
       if (singleBox.number === selectedBoxId && singleBox.status !== RentStatus.free) {
         selectedRentId = singleBox.rentId;
       }
