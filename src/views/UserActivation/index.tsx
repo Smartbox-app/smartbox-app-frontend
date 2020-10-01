@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import { ItfApiForm } from 'itf_formbuilder_react';
-import { AddInvitedUserReq, UserRole } from 'smartbox-types';
+import { AddInvitedUserReq, UserRes, UserRole } from 'smartbox-types';
 import { notifications, auth } from '../../actions';
 import { ApplicationState } from '../../reducers';
 import ApiService from '../../services/api-service';
@@ -15,7 +15,7 @@ import { history } from '../../App';
 
 interface Props {
   match: any;
-  userRole: UserRole;
+  userRole: UserRes;
   logout: () => void;
   successNotification: (text: string) => void;
 }
@@ -37,7 +37,6 @@ const UserActivation = ({ successNotification, match, logout, userRole }: Props)
 
   const success = () => {
     successNotification('Konto zostało aktywowane.');
-    userRole && logout();
     history.push('/');
   };
 
@@ -70,7 +69,7 @@ const UserActivation = ({ successNotification, match, logout, userRole }: Props)
 };
 
 const mapStateToProps = (state: ApplicationState) => ({
-  userRole: state.user.details.role,
+  user: state.user.details,
 });
 
 const mapDispatchToProps = (dispatch: any): any =>
