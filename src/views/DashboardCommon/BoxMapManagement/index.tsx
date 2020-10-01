@@ -4,23 +4,24 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { BoxListItem, RentStatus, StockList } from 'smartbox-types';
-import { Button, Spinner } from '../../../components/Common';
+import { BoxListItem, RentStatus, StockList, UserRes, UserRole } from 'smartbox-types';
+import { boxes, modal, stock } from '../../../actions';
+import { Spinner } from '../../../components/Common';
+import { PageHeader } from '../../../components/Layout';
+import { __ } from '../../../helpers/i18n';
 import { ApplicationState } from '../../../reducers';
 
-import { ReactComponent as ReactLogo } from './map_1.2.svg';
-import { PageHeader } from '../../../components/Layout';
-import { modal, boxes, stock } from '../../../actions';
-import { __ } from '../../../helpers/i18n';
-
 import BoxDetail from './BoxDetail';
-import MapLegend from './MapLegend';
 
 import './BoxMapManagement.scss';
+
+import { ReactComponent as ReactLogo } from './map_1.2.svg';
+import MapLegend from './MapLegend';
 
 interface Props {
   boxesGroup: BoxListItem[] | null;
   stock: StockList;
+  user: UserRes;
   showModal: (content: React.ReactNode) => void;
   fetchBoxStatuses: (stockId: string) => void;
   fetchSingleBoxDetails: (rentId: string) => void;
@@ -95,7 +96,6 @@ class BoxMapManagement extends React.Component<Props, State> {
 
   public componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>): void {
     const { fetchBoxStatuses, stock, boxesGroup } = this.props;
-    console.log('boxesGroup', boxesGroup);
     boxesGroup === null && fetchBoxStatuses(stock.id);
 
     if (stock) {
@@ -184,7 +184,7 @@ class BoxMapManagement extends React.Component<Props, State> {
   };
 
   handleEventModal = (e: any): any => {
-    const { showModal, boxesGroup, fetchSingleBoxDetails } = this.props;
+    const { showModal, boxesGroup, fetchSingleBoxDetails, user } = this.props;
     const selectedBoxId = e.target.parentElement.id;
     let selectedRentId = '';
 
@@ -194,7 +194,7 @@ class BoxMapManagement extends React.Component<Props, State> {
       }
     });
 
-    if (selectedRentId !== '') {
+    if (selectedRentId !== '' && user.role === UserRole.admin) {
       fetchSingleBoxDetails(selectedRentId);
     }
     showModal(<BoxDetail selectedBoxId={selectedBoxId} rentId={selectedRentId} />);
