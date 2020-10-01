@@ -54,6 +54,9 @@ const DiscountCode = ({ hideModal, updateFormData }: Props) => {
           });
           hideModal();
         }}
+        onErrorsWhileSaving={() => {
+          hideModal();
+        }}
         onTranslateString={formOnTranslateString}
       />
     </FormContainer>
