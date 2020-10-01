@@ -8,7 +8,7 @@ export type RentsStatus = {
 
 interface BoxGroup {
   type: 'FETCH_MY_RENT_STORY_SUCCESS';
-  payload: RentStatus;
+  payload: MyRentList[];
 }
 
 interface GetSingleRent {
@@ -38,7 +38,7 @@ export default (state: RentsStatus = initialState, action: Action): any => {
     case 'FETCH_MY_RENT_STORY_SUCCESS': {
       return {
         ...state,
-        rentsList: action.payload,
+        rentsList: action.payload.filter((rent: MyRentList) => rent.status !== RentStatus.failure),
       };
     }
 
