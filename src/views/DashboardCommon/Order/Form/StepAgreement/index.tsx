@@ -93,7 +93,7 @@ const mapStateToProps = (state: ApplicationState) => ({
   user: state.user.details,
   isAgreementAccepted: state.order.isAgreementAccepted,
   isResignationMarked: state.order.isResignationMarked,
-  stockId: state.rent.stockId,
+  stockId: state.stock.list[0].id,
 });
 
 const mapDispatchToProps = (dispatch: any) =>
