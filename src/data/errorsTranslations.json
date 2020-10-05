@@ -28,6 +28,10 @@
     "Password": "Hasło",
     "New password": "Nowe hasło",
     "Repeat new password": "Powtórz nowe hasło",
+    "Company name": "Nazwa firmy",
+    "Company city": "Dane kontaktowe: Miasto",
+    "Compnay street": "Dane kontaktowe: Ulica",
+    "Company post code": "Dane kontaktowe: Kod pocztowy",
     "Phone": "Telefon"
   }
 }

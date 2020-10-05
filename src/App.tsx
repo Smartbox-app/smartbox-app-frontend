@@ -27,8 +27,10 @@ import {
   RouteAdmin,
   RouteUser,
   RouteWorker,
+  ErrorBoundary,
   Modal,
 } from './components/Common';
+import { Invoice } from './views/DashboardCommon';
 import { NotificationContainer } from './components/Notifications';
 import AppOffline from './components/AppOffline';
 import { i18n } from './helpers/i18n';
@@ -65,33 +67,36 @@ const App = () => {
   if (loading) return <Spinner overlay />;
 
   return (
-    <WorkBoxProvider>
-      <Provider store={store}>
-        <OnlineContent>
-          <UpdateInfoBar />
-          <NotificationContainer />
-          <Router history={history}>
-            <Switch>
-              <Route exact path="/" render={() => <Redirect to="/login" />} />
-              <Route path="/login" component={Login} />
-              <Route path="/register" component={Register} />
-              <Route exact path="/restore-pass/" component={RestorePass} />
-              <Route path="/restore-pass/:userId/:updateToken" component={RestorePass} />
-              <Route exact path="/user-activation/:invitationId/:updateToken" component={UserActivation} />
-              <RouteAdmin path="/admin" component={DashboardAdmin} />
-              <RouteWorker path="/worker" component={DashboardWorker} />
-              <RouteUser path="/user" component={DashboardUser} />
-              <Route path="/404" component={Page404} />
-              <Route render={() => <Redirect to="/404" />} />
-            </Switch>
-          </Router>
-          <Modal />
-        </OnlineContent>
-        <OfflineContent>
-          <AppOffline />
-        </OfflineContent>
-      </Provider>
-    </WorkBoxProvider>
+    <ErrorBoundary>
+      <WorkBoxProvider>
+        <Provider store={store}>
+          <OnlineContent>
+            <UpdateInfoBar />
+            <NotificationContainer />
+            <Router history={history}>
+              <Switch>
+                <Route exact path="/" render={() => <Redirect to="/login" />} />
+                <Route path="/login" component={Login} />
+                <Route path="/register" component={Register} />
+                <Route exact path="/restore-pass/" component={RestorePass} />
+                <Route exact path="/invoice/" component={Invoice} />
+                <Route path="/restore-pass/:userId/:updateToken" component={RestorePass} />
+                <Route exact path="/user-activation/:invitationId/:updateToken" component={UserActivation} />
+                <RouteAdmin path="/admin" component={DashboardAdmin} />
+                <RouteWorker path="/worker" component={DashboardWorker} />
+                <RouteUser path="/user" component={DashboardUser} />
+                <Route path="/404" component={Page404} />
+                <Route render={() => <Redirect to="/404" />} />
+              </Switch>
+            </Router>
+            <Modal />
+          </OnlineContent>
+          <OfflineContent>
+            <AppOffline />
+          </OfflineContent>
+        </Provider>
+      </WorkBoxProvider>
+    </ErrorBoundary>
   );
 };
 

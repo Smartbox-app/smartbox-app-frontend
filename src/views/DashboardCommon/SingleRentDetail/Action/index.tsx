@@ -8,9 +8,7 @@ import { modal, order, singleRent } from '../../../../actions';
 import { __ } from '../../../../helpers/i18n';
 import { history } from '../../../../App';
 import { ApplicationState } from '../../../../reducers';
-import UserService from "../../../../services/user-service";
-
-import Invoice from './Invoice';
+import UserService from '../../../../services/user-service';
 
 interface Props {
   rentId: string;

@@ -22,11 +22,13 @@ import Modal from './Modal';
 import LoginLogo from './LoginLogo';
 import ConfirmModal from './ConfirmModal';
 import Row from './Row';
+import ErrorBoundary from './ErrorBoundary';
 
 export {
   Alert,
   ApiTable,
   Modal,
+  ErrorBoundary,
   Pagination,
   Table,
   Row,
