@@ -30,7 +30,10 @@ interface Props {
 interface State {
   isMouseDown: boolean;
   grabStartX: number;
+  grabStartY: number;
   scrollLeft: number;
+  scrollTop: number;
+  mapScale: number;
 }
 
 class BoxMapManagement extends React.Component<Props, State> {
@@ -42,7 +45,10 @@ class BoxMapManagement extends React.Component<Props, State> {
     this.state = {
       isMouseDown: false,
       grabStartX: 0,
+      grabStartY: 0,
       scrollLeft: 0,
+      scrollTop: 0,
+      mapScale: 100,
     };
   }
 
@@ -154,7 +160,9 @@ class BoxMapManagement extends React.Component<Props, State> {
     this.setState({
       isMouseDown: true,
       grabStartX: e.pageX - el.offsetLeft,
+      grabStartY: e.pageY - el.offsetTop,
       scrollLeft: el.scrollLeft,
+      scrollTop: el.scrollTop,
     });
     el.classList.add('grab');
   };
@@ -174,13 +182,16 @@ class BoxMapManagement extends React.Component<Props, State> {
   };
 
   private handleMouseMove = (e: MouseEvent, el: HTMLElement): any => {
-    const { isMouseDown, grabStartX, scrollLeft } = this.state;
+    const { isMouseDown, grabStartX, grabStartY, scrollLeft, scrollTop } = this.state;
     if (!isMouseDown) return;
     e.preventDefault();
     const mousePositionX = e.pageX - el.offsetLeft;
+    const mousePositionY = e.pageY - el.offsetTop;
     const mapMoveDistance = mousePositionX - grabStartX;
+    const mapMoveHieght = mousePositionY - grabStartY;
 
     el.scrollLeft = scrollLeft - mapMoveDistance;
+    el.scrollTop = scrollTop - mapMoveHieght;
   };
 
   handleEventModal = (e: any): any => {
@@ -212,6 +223,37 @@ class BoxMapManagement extends React.Component<Props, State> {
     }
   };
 
+  private mapScaleUpHandle = () => {
+    const mapWrapperElement = this.element.current;
+    const { mapScale } = this.state;
+    if (mapScale < 150) {
+      const name = `scale${mapScale}`;
+      mapWrapperElement.classList.remove(name);
+      this.setState({
+        mapScale: mapScale + 10,
+      });
+
+      const newName = `scale${mapScale + 10}`;
+      mapWrapperElement.classList.add(newName);
+    }
+  };
+
+  private mapScaleDownHandle = () => {
+    const mapWrapperElement = this.element.current;
+    const { mapScale } = this.state;
+    if (mapScale > 90) {
+      const name = `scale${mapScale}`;
+      mapWrapperElement.classList.remove(name);
+
+      this.setState({
+        mapScale: mapScale - 10,
+      });
+
+      const newName = `scale${mapScale - 10}`;
+      mapWrapperElement.classList.add(newName);
+    }
+  };
+
   render() {
     const { stock } = this.props;
     return (
@@ -219,10 +261,10 @@ class BoxMapManagement extends React.Component<Props, State> {
         <PageHeader title={`${__('application.storagesPlan')}`} />
         <MapLegend />
         {stock?.id ? (
-          <div className="map-wrapper" ref={this.element}>
+          <div className="map-wrapper scale100" ref={this.element}>
             <div className="map-scale">
-              <span className="fa fa-plus-circle" />
-              <span className="fa fa-minus-circle" />
+              <span className="fa fa-plus-circle" onClick={() => this.mapScaleUpHandle()} />
+              <span className="fa fa-minus-circle" onClick={() => this.mapScaleDownHandle()} />
             </div>
             <ReactLogo id="svg-map" />
           </div>
