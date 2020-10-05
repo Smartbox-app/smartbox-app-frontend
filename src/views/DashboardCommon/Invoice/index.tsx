@@ -15,7 +15,7 @@ interface Props {
   showModal: (content: React.ReactNode) => void;
 }
 
-const Invoice = ({ showModal }: Props) => {
+const Invoice = ({ showModal, paymentId }: Props) => {
   return (
     <PageContent>
       <ErrorBoundary>
@@ -25,7 +25,7 @@ const Invoice = ({ showModal }: Props) => {
           <p className="content-text">Dziękujemy za korzystanie z naszych usług.</p>
           <ButtonsContainer max>
             <Button success text="Wróć do aplikacji" to="/" />
-            <Button primary text="Wygeneruj fakturę" click={() => showModal(<Form paymentId="paymentId" />)} />
+            <Button primary text="Wygeneruj fakturę" click={() => showModal(<Form paymentId={paymentId} />)} />
           </ButtonsContainer>
         </Section>
       </ErrorBoundary>
