@@ -8,12 +8,12 @@ import { formOnTranslateString } from '../../../../utils/trans-form';
 import { __ } from '../../../../helpers/i18n';
 
 interface Props {
-  orderId: string;
+  paymentId: string;
 }
 
-const Invoice = ({ orderId }: Props) => {
+const Invoice = ({ paymentId }: Props) => {
   const loadUrl = 'payment/form/invoice';
-  const sendUrl = `payment/create-invoice/${orderId}`;
+  const sendUrl = `payment/create-invoice/${paymentId}`;
   const METHOD = 'POST';
 
   const submitButton = (
