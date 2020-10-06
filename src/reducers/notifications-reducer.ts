@@ -52,6 +52,9 @@ const getError = (error: ApiErrorCode) => {
     case ApiErrorCode.InvalidGroup:
       return 'Nieprawidłowa grupa';
 
+    case ApiErrorCode.StckIdIsRequiredForWorkerRole:
+      return 'Wybranie placu jest wymagane';
+
     default:
       return 'Wystąpił błąd';
   }
