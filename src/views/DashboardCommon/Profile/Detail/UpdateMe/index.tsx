@@ -36,7 +36,7 @@ const UpdateMe = () => {
       <FormHeader title="Edytujesz swoje dane" />
       <FieldsColumn>
         <ItfApiForm
-          formId="addGiftForm"
+          formId="EditUserProfileData"
           schemaMayBeDynamic={false}
           schemaCacheEnabled={false}
           loadingInfo={<Spinner transparent />}
