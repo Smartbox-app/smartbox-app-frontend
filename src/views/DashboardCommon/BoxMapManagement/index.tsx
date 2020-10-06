@@ -7,7 +7,7 @@ import { bindActionCreators } from 'redux';
 import { BoxListItem, RentStatus, StockList, UserRes, UserRole } from 'smartbox-types';
 import { boxes, modal, stock } from '../../../actions';
 import { Spinner } from '../../../components/Common';
-import { PageHeader } from '../../../components/Layout';
+import { PageHeader, Section } from '../../../components/Layout';
 import { __ } from '../../../helpers/i18n';
 import { ApplicationState } from '../../../reducers';
 
@@ -257,7 +257,7 @@ class BoxMapManagement extends React.Component<Props, State> {
   render() {
     const { stock } = this.props;
     return (
-      <>
+      <Section full>
         <PageHeader title={`${__('application.storagesPlan')}`} />
         <MapLegend />
         {stock?.id ? (
@@ -271,7 +271,7 @@ class BoxMapManagement extends React.Component<Props, State> {
         ) : (
           <Spinner />
         )}
-      </>
+      </Section>
     );
   }
 }

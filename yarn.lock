@@ -6507,11 +6507,11 @@ istanbul-reports@^2.2.6:
 
 "itf_formbuilder@git+https://gitlab.com/IT.focus/itf_formbuilder.git":
   version "1.0.0"
-  resolved "git+https://gitlab.com/IT.focus/itf_formbuilder.git#fef50661a23255d78553beb288e0d45921e25dde"
+  resolved "git+https://gitlab.com/IT.focus/itf_formbuilder.git#a457cc49c2a01a318a12510db854e8a21368ce0a"
 
 "itf_formbuilder_react@git+https://gitlab.com/IT.focus/itf_formbuilder_react.git":
   version "1.0.0"
-  resolved "git+https://gitlab.com/IT.focus/itf_formbuilder_react.git#ca81448f3ae45c963cd4e831252f670acffa0d5d"
+  resolved "git+https://gitlab.com/IT.focus/itf_formbuilder_react.git#231f80d342c4c1542457e442364343fdb67981af"
   dependencies:
     itf_formbuilder "git+https://gitlab.com/IT.focus/itf_formbuilder.git"
     react "^16.8.3"

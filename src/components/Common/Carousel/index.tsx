@@ -1,29 +1,34 @@
 import React, { Component } from 'react';
 import Slider from 'react-slick';
 import { ReactSVG } from 'react-svg';
-import CustomeArrow from './CustomArrow';
+import { usePricing } from 'smartbox-types';
+import CustomArrow from './CustomArrow';
 
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import './Carousel.scss';
 
 interface Props {
-  imagesList: string[];
+  imagesList: number[];
 }
 
 class Carousel extends Component<Props> {
-  private dataToDisplay = (listToPrint: any) =>
-    listToPrint.map((data: string, key: number) => (
-      <div key={`carousel-${key}`} className="offer-svg-wrapper">
-        <ReactSVG src={`/assets/icons/${data}.svg`} />
-        <div className="offer-description">
-          <p>
-            Tydzień: <strong>100zł</strong> Miesiąc: <strong>200zł</strong>
-          </p>
-          <p />
+  private dataToDisplay = (listToPrint: any) => {
+    const { pricing } = usePricing();
+    return listToPrint.map((data: '3' | '6' | '9' | '12', key: number) => {
+      const { weekly, monthly } = pricing[data];
+      return (
+        <div key={`carousel-${key}`} className="offer-svg-wrapper">
+          <div className="offer-description">
+            <p>
+              Tydzień: <strong>{weekly}zł</strong> Miesiąc: <strong>{monthly}zł</strong>
+            </p>
+          </div>
+          <ReactSVG src={`/assets/icons/${data}c.svg`} />
         </div>
-      </div>
-    ));
+      );
+    });
+  };
 
   render() {
     const settings = {
@@ -32,8 +37,8 @@ class Carousel extends Component<Props> {
       speed: 300,
       slidesToShow: 1,
       slidesToScroll: 1,
-      nextArrow: <CustomeArrow right />,
-      prevArrow: <CustomeArrow left />,
+      nextArrow: <CustomArrow right />,
+      prevArrow: <CustomArrow left />,
     };
 
     return (
