@@ -3,15 +3,16 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import { ItfApiForm } from 'itf_formbuilder_react';
-import { AddInvitedUserReq, UserRes, UserRole } from 'smartbox-types';
+import { AddInvitedUserReq, UserRes } from 'smartbox-types';
 import { notifications, auth } from '../../actions';
 import { ApplicationState } from '../../reducers';
 import ApiService from '../../services/api-service';
 
 import { Spinner, Button, Logo } from '../../components/Common';
 import { formOnTranslateString } from '../../utils/trans-form';
-import { FormContainer, ButtonsContainer, PageContent } from '../../components/Layout';
+import { FormContainer, ButtonsContainer, PageContent, PageHeader } from '../../components/Layout';
 import { history } from '../../App';
+import { __ } from '../../helpers/i18n';
 
 interface Props {
   match: any;
@@ -36,13 +37,13 @@ const UserActivation = ({ successNotification, match, logout, userRole }: Props)
     );
 
   const success = () => {
-    successNotification('Konto zostało aktywowane.');
+    successNotification(__('application.accountHasBeenActivated'));
     history.push('/');
   };
 
   const subButton = (
     <ButtonsContainer max>
-      <Button text="Wyślij" type="submit" big primary rounded />
+      <Button text={__('application.send')} type="submit" big primary rounded />
     </ButtonsContainer>
   );
 
@@ -52,6 +53,8 @@ const UserActivation = ({ successNotification, match, logout, userRole }: Props)
         <Logo />
       </div>
       <FormContainer className="login-form">
+        <PageHeader title={__('application.welcomeOnPlatform')} />
+        <p>{__('application.fillFormToCreatAccount')}</p>
         <ItfApiForm
           formId="UserActivationForm"
           schemaMayBeDynamic={false}

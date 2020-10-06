@@ -125,6 +125,10 @@
       "cardPricing": "Zniżka za wykorzystanie karty kredytowej",
       "standardPrice": "Standardowa cena",
 
+      "accountHasBeenActivated": "Konto zostało aktywowane.",
+      "welcomeOnPlatform": "Witaj na platformie smartbox.",
+      "fillFormToCreatAccount": "Proszę wypełnić poniższy formularz, żeby utworzyć konto.",
+
       "welcome": "Hello world"
     },
     "notification": {
