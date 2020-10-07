@@ -25,6 +25,7 @@ export type OrderState = {
   paymentSuccess: boolean;
   isAgreementAccepted: boolean;
   isResignationMarked: boolean;
+  blikPaymentCompletedSuccessfully: boolean;
   bankList: any;
   selectedPayment: MainPaymentWay;
   selectedPaymentMethodDetail: PaymentMethodDetail;
@@ -73,6 +74,10 @@ interface CheckPaymentStatus {
   payload: boolean;
 }
 
+interface BlikPaymentFinishSuccess {
+  type: 'BLIK_PAYMENT_FINISH_SUCCESS';
+}
+
 type Action =
   | FormStepSuccess
   | FetchBoxAvailability
@@ -82,7 +87,8 @@ type Action =
   | SetPaymentMethod
   | PickPaymentMethod
   | CheckPaymentStatus
-  | SaveBankList;
+  | SaveBankList
+  | BlikPaymentFinishSuccess;
 
 const initialState: OrderState = {
   formData: {
@@ -113,6 +119,7 @@ const initialState: OrderState = {
     banks: '',
     main_bank_id: '',
   },
+  blikPaymentCompletedSuccessfully: false,
 };
 
 export default (state: OrderState = initialState, action: Action): any => {
@@ -195,6 +202,12 @@ export default (state: OrderState = initialState, action: Action): any => {
       return {
         ...state,
         selectedPaymentMethodDetail: state.bankList.find((singleBank: any) => singleBank.id === action.payload),
+      };
+
+    case 'BLIK_PAYMENT_FINISH_SUCCESS':
+      return {
+        ...state,
+        blikPaymentCompletedSuccessfully: true,
       };
 
     default:

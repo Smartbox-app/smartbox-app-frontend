@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Redirect, Switch } from 'react-router-dom';
 
 import { Main, Footer, DashboardContainer, Navigation } from '../../components/Layout';
-import { Welcome, Order } from '../DashboardCommon';
+import { Welcome, Order, Invoice } from '../DashboardCommon';
 
 import { MenuItemType } from '../../types/menu-item';
 import { __ } from '../../helpers/i18n';
@@ -40,6 +40,7 @@ const DashboardAdmin = () => {
           <Route path="/admin/order/step/:step" component={Order} />
           <Route path="/admin/management/" component={Management} />
           <Route path="/admin/profile" component={Profile} />
+          <Route path="/admin/invoice/" component={Invoice} />
           <Route exact path="/admin/single-rent/:orderId" component={SingleRentDetail} />
         </Switch>
       </Main>
