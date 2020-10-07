@@ -3,6 +3,7 @@ import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { MyRentList } from 'smartbox-types';
+import { Spinner } from '../../../components/Common';
 import { Section, SectionHeader } from '../../../components/Layout';
 
 import { singleRent } from '../../../actions';
@@ -16,18 +17,23 @@ interface RouteProps {
   orderId: string;
 }
 interface Props extends RouteComponentProps<RouteProps> {
+  loading: boolean;
   singleRent: MyRentList;
   getSingleRent: (rentId: string) => void;
+  fetchMyRentStory: () => void;
 }
 
-const SingleRentDetail = ({ match, getSingleRent, singleRent }: Props) => {
+const SingleRentDetail = ({ loading, match, getSingleRent, singleRent, fetchMyRentStory }: Props) => {
   useEffect(() => {
-    getSingleRent(match.params.orderId);
-  });
+    (async function() {
+      await fetchMyRentStory();
+      await getSingleRent(match.params.orderId);
+    })();
+  }, []);
 
   return (
     <Section full>
-      <SectionHeader title="Szczegóły wynajmu" />
+      <SectionHeader title="Szczegóły najmu" />
       <Action rentId={singleRent.id} />
       <Details singleRent={singleRent} />
       <Gate />
@@ -37,6 +43,7 @@ const SingleRentDetail = ({ match, getSingleRent, singleRent }: Props) => {
 
 const mapStateToProps = (state: ApplicationState) => ({
   singleRent: state.rent.singleRent,
+  loading: state.spinner.loading,
 });
 
 const mapDispatchToProps = (dispatch: any) =>
