@@ -28,7 +28,7 @@ const BlikWaitingModal = ({
   useEffect(() => {
     const askServer = setInterval(() => {
       checkPaymentStatus(paymentId);
-
+      console.log('blikPaymentCompletedSuccessfully', blikPaymentCompletedSuccessfully);
       if (blikPaymentCompletedSuccessfully) {
         clearInterval(askServer);
         hideModal();
