@@ -9,6 +9,7 @@ import { __ } from '../../../../helpers/i18n';
 import { history } from '../../../../App';
 import { ApplicationState } from '../../../../reducers';
 import UserService from '../../../../services/user-service';
+import { BoxMapManagement } from '../../index';
 
 interface Props {
   rentId: string;
@@ -27,6 +28,11 @@ const Action = ({ showModal, endMyRent, rentId, updateFormData, rent, user }: Pr
 
   return (
     <ButtonsContainer max>
+      <Button
+        text={__('application.showOnStockMap')}
+        success
+        click={() => showModal(<BoxMapManagement boxNumberToMarkWay={Number(rent.number)} />)}
+      />
       <Button text={__('application.goToAgreement')} success click={() => handleExtendingOrderData(rentId)} />
       <Button
         text={__('application.end')}
@@ -35,7 +41,7 @@ const Action = ({ showModal, endMyRent, rentId, updateFormData, rent, user }: Pr
           showModal(
             <ConfirmModal
               mainText="Czy jesteś pewien, że chcesz zakończyć tę umowę?"
-              aproveButtonText="Zakończ"
+              approveButtonText="Zakończ"
               approveAction={() => endMyRent(rentId)}
               cancelButtonText={__('application.back')}
             />,

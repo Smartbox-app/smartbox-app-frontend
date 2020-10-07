@@ -39,7 +39,7 @@ class List extends React.Component<Props> {
           click: (data: any) =>
             showModal(
               <ConfirmModal
-                aproveButtonText={__('application.delete')}
+                approveButtonText={__('application.delete')}
                 mainText={__('application.deleteSingleSale')}
                 approveAction={() => deleteStockDiscount(data.discountId)}
               />,

@@ -35,7 +35,7 @@ class InvitesSent extends React.Component<Props> {
           click: (data: any) =>
             this.props.showModal(
               <ConfirmModal
-                aproveButtonText={__('application.delete')}
+                approveButtonText={__('application.delete')}
                 mainText="Czy jesteś pewien, że chcesz usunąć zaproszenie"
                 cancelButtonText={__('application.cancel')}
                 approveAction={() => this.props.deleteSentInvitations(data.id)}

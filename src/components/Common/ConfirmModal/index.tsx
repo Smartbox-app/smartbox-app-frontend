@@ -10,12 +10,18 @@ import './ConfirmModal.scss';
 interface Props {
   mainText: string;
   cancelButtonText?: string;
-  aproveButtonText: string;
+  approveButtonText: string;
   hideModal: () => void;
   approveAction: () => void;
 }
 
-const ConfirmModal = ({ mainText, cancelButtonText = 'Anuluj', aproveButtonText, approveAction, hideModal }: Props) => (
+const ConfirmModal = ({
+  mainText,
+  cancelButtonText = 'Anuluj',
+  approveButtonText,
+  approveAction,
+  hideModal,
+}: Props) => (
   <div className="confirm-modal-wrapper">
     <p>{mainText}</p>
     <ButtonsContainer>
@@ -26,7 +32,7 @@ const ConfirmModal = ({ mainText, cancelButtonText = 'Anuluj', aproveButtonText,
           approveAction();
           hideModal();
         }}
-        text={aproveButtonText}
+        text={approveButtonText}
       />
     </ButtonsContainer>
   </div>

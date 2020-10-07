@@ -61,11 +61,11 @@ $buttonSize: 40px;
       width: $buttonSize;
       line-height: $buttonSize;
       text-align: center;
-      background: #fff;
-      border-radius: 10px;
+      color: $color-primary;
 
       &:hover {
         cursor: pointer;
+        color: darken($color-primary, 5%)
       }
     }
   }

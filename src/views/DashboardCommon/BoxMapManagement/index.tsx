@@ -10,6 +10,7 @@ import { Spinner } from '../../../components/Common';
 import { PageHeader, Section } from '../../../components/Layout';
 import { __ } from '../../../helpers/i18n';
 import { ApplicationState } from '../../../reducers';
+import { isAdmin, isUser } from '../../../utils/role-check';
 
 import BoxDetail from './BoxDetail';
 
@@ -22,10 +23,13 @@ interface Props {
   boxesGroup: BoxListItem[] | null;
   stock: StockList;
   user: UserRes;
+
   showModal: (content: React.ReactNode) => void;
   fetchBoxStatuses: (stockId: string) => void;
   fetchSingleBoxDetails: (rentId: string) => void;
   getStockList: () => void;
+
+  boxNumberToMarkWay?: number;
 }
 interface State {
   isMouseDown: boolean;
@@ -82,29 +86,42 @@ class BoxMapManagement extends React.Component<Props, State> {
       false,
     );
 
-    const catchElement = this.element.current.querySelectorAll('#kontenery .storage');
-    catchElement.forEach((singleElement: any) => {
-      singleElement.addEventListener('click', this.handleEventModal, false);
-      singleElement.addEventListener('mouseover', this.handleEventMouseOver, false);
-      singleElement.addEventListener('mouseout', this.handleEventMouseOut, false);
-    });
+    if (isAdmin(this.props.user.role)) {
+      const catchElement = this.element.current.querySelectorAll('#kontenery .storage');
+      catchElement.forEach((singleElement: any) => {
+        singleElement.addEventListener('click', this.handleEventModal, false);
+      });
+    }
+
+    if (isUser(this.props.user.role)) {
+      const row = this.props.boxNumberToMarkWay && Math.floor(this.props.boxNumberToMarkWay / 100);
+
+      const catchElement = this.element.current.querySelectorAll(`.row${row}00`);
+      catchElement.forEach((singleElement: any) => {
+        singleElement.classList.add('rented');
+      });
+    }
   };
 
   async componentDidMount() {
-    const { fetchBoxStatuses, stock, getStockList } = this.props;
-    await getStockList();
+    const { fetchBoxStatuses, stock, getStockList, user } = this.props;
+    if (user.role === UserRole.admin) {
+      await getStockList();
+    }
     await this.eventListenerAdding();
 
-    if (stock) {
+    if (stock && isAdmin(user.role)) {
       await fetchBoxStatuses(stock.id);
     }
   }
 
   public componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>): void {
-    const { fetchBoxStatuses, stock, boxesGroup } = this.props;
-    boxesGroup === null && fetchBoxStatuses(stock.id);
+    const { fetchBoxStatuses, stock, boxesGroup, user } = this.props;
+    if (isAdmin(user.role)) {
+      boxesGroup === null && fetchBoxStatuses(stock.id);
+    }
 
-    if (stock) {
+    if (stock && isAdmin(user.role)) {
       this.statusColorMarker();
     }
   }
@@ -113,8 +130,6 @@ class BoxMapManagement extends React.Component<Props, State> {
     const catchElement = this.element.current.querySelectorAll('#kontenery .storage');
     catchElement.forEach((singleElement: any) => {
       singleElement.removeEventListener('click', this.handleEventModal, false);
-      singleElement.removeEventListener('mouseover', this.handleEventMouseOver, false);
-      singleElement.removeEventListener('mouseout', this.handleEventMouseOut, false);
     });
   }
 
@@ -211,18 +226,6 @@ class BoxMapManagement extends React.Component<Props, State> {
     showModal(<BoxDetail selectedBoxId={selectedBoxId} rentId={selectedRentId} />);
   };
 
-  handleEventMouseOver = (e: any): any => {
-    if (e?.target?.attributes?.class?.value === 'cls-2') {
-      console.log('handleEventMouseOver', e.target.parentElement.parentElement.dataset.name);
-    }
-  };
-
-  handleEventMouseOut = (e: any): any => {
-    if (e?.target?.attributes?.class?.value === 'cls-2') {
-      console.log('handleEventMouseOut', e.target.parentElement.parentElement.dataset.name);
-    }
-  };
-
   private mapScaleUpHandle = () => {
     const mapWrapperElement = this.element.current;
     const { mapScale } = this.state;
@@ -255,11 +258,16 @@ class BoxMapManagement extends React.Component<Props, State> {
   };
 
   render() {
-    const { stock } = this.props;
+    const { stock, user, boxNumberToMarkWay } = this.props;
     return (
       <Section full>
         <PageHeader title={`${__('application.storagesPlan')}`} />
-        <MapLegend />
+        {isAdmin(user.role) && <MapLegend />}
+        {isUser(user.role) && (
+          <p>
+            Twoja skrytka ma numer: <strong>{boxNumberToMarkWay}</strong>
+          </p>
+        )}
         {stock?.id ? (
           <div className="map-wrapper scale100" ref={this.element}>
             <div className="map-scale">

@@ -48,7 +48,7 @@ class List extends React.Component<Props> {
             click: (data: any) =>
               this.props.showModal(
                 <ConfirmModal
-                  aproveButtonText={__('application.delete')}
+                  approveButtonText={__('application.delete')}
                   mainText="Czy jesteś pewien, że chcesz usunąć użytkownika"
                   cancelButtonText={__('application.cancel')}
                   approveAction={() => console.log()}
