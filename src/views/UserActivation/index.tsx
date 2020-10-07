@@ -3,22 +3,25 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import { ItfApiForm } from 'itf_formbuilder_react';
-import { AddInvitedUserReq } from 'smartbox-types';
+import { AddInvitedUserReq, UserRes } from 'smartbox-types';
 import { notifications, auth } from '../../actions';
+import { ApplicationState } from '../../reducers';
 import ApiService from '../../services/api-service';
 
 import { Spinner, Button, Logo } from '../../components/Common';
 import { formOnTranslateString } from '../../utils/trans-form';
-import { FormContainer, ButtonsContainer, PageContent } from '../../components/Layout';
+import { FormContainer, ButtonsContainer, PageContent, PageHeader } from '../../components/Layout';
 import { history } from '../../App';
+import { __ } from '../../helpers/i18n';
 
 interface Props {
   match: any;
+  userRole: UserRes;
   logout: () => void;
   successNotification: (text: string) => void;
 }
 
-const UserActivation = ({ successNotification, match, logout }: Props) => {
+const UserActivation = ({ successNotification, match, logout, userRole }: Props) => {
   const loadUrl = 'user/form/add-invited-user';
   const sendUrl = 'user/add-invited';
 
@@ -34,14 +37,13 @@ const UserActivation = ({ successNotification, match, logout }: Props) => {
     );
 
   const success = () => {
-    successNotification('Konto zostało aktywowane.');
-    logout();
+    successNotification(__('application.accountHasBeenActivated'));
     history.push('/');
   };
 
   const subButton = (
     <ButtonsContainer max>
-      <Button text="Wyślij" type="submit" big primary rounded />
+      <Button text={__('application.send')} type="submit" big primary rounded />
     </ButtonsContainer>
   );
 
@@ -51,6 +53,8 @@ const UserActivation = ({ successNotification, match, logout }: Props) => {
         <Logo />
       </div>
       <FormContainer className="login-form">
+        <PageHeader title={__('application.welcomeOnPlatform')} />
+        <p>{__('application.fillFormToCreatAccount')}</p>
         <ItfApiForm
           formId="UserActivationForm"
           schemaMayBeDynamic={false}
@@ -67,6 +71,10 @@ const UserActivation = ({ successNotification, match, logout }: Props) => {
   );
 };
 
+const mapStateToProps = (state: ApplicationState) => ({
+  user: state.user.details,
+});
+
 const mapDispatchToProps = (dispatch: any): any =>
   bindActionCreators(
     {
@@ -76,4 +84,4 @@ const mapDispatchToProps = (dispatch: any): any =>
     dispatch,
   );
 
-export default connect(null, mapDispatchToProps)(UserActivation);
+export default connect(mapStateToProps, mapDispatchToProps)(UserActivation);

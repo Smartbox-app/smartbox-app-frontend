@@ -66,7 +66,7 @@ const StepSummary = ({ formData, countedPrice, updateFormData, user, selectedPay
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="form-step-two">
-      <Discount register={register} />
+      <Discount />
       <FormHeader title="Podsumowanie zamówienia:" />
       <SummaryTable dateStart={formData.dateStart} dateEnd={formData.dateEnd} countedPrice={countedPrice.value} />
       <PaymentMethods register={register} />

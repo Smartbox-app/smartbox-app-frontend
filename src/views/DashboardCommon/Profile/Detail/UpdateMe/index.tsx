@@ -3,7 +3,7 @@ import { ItfApiForm } from 'itf_formbuilder_react';
 import ReactSelect from 'react-select';
 import ReactCreatableSelect from 'react-select/creatable';
 import { AddGiftReq } from 'smartbox-types';
-import { FormContainer, ButtonsContainer } from '../../../../../components/Layout';
+import { FormContainer, ButtonsContainer, FieldsColumn, FormHeader } from '../../../../../components/Layout';
 import { Button, Spinner } from '../../../../../components/Common';
 import ApiService from '../../../../../services/api-service';
 import { formOnTranslateString } from '../../../../../utils/trans-form';
@@ -33,20 +33,23 @@ const UpdateMe = () => {
 
   return (
     <FormContainer className="gift-form">
-      <ItfApiForm
-        formId="addGiftForm"
-        schemaMayBeDynamic={false}
-        schemaCacheEnabled={false}
-        loadingInfo={<Spinner transparent />}
-        schemaFetcher={() => ApiService.loadForm(fetchUrl)}
-        sendFetcher={customSendFetcher}
-        submitButton={submitButton}
-        onSavedSuccessfully={() => {
-          successNotification(__('notification.dataChangedSuccess'));
-        }}
-        onTranslateString={formOnTranslateString}
-        thirdPartyComponents={{ ReactSelect, ReactCreatableSelect }}
-      />
+      <FormHeader title="Edytujesz swoje dane" />
+      <FieldsColumn>
+        <ItfApiForm
+          formId="EditUserProfileData"
+          schemaMayBeDynamic={false}
+          schemaCacheEnabled={false}
+          loadingInfo={<Spinner transparent />}
+          schemaFetcher={() => ApiService.loadForm(fetchUrl)}
+          sendFetcher={customSendFetcher}
+          submitButton={submitButton}
+          onSavedSuccessfully={() => {
+            successNotification(__('notification.dataChangedSuccess'));
+          }}
+          onTranslateString={formOnTranslateString}
+          thirdPartyComponents={{ ReactSelect, ReactCreatableSelect }}
+        />
+      </FieldsColumn>
     </FormContainer>
   );
 };

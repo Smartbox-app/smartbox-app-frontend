@@ -8,11 +8,11 @@ interface Props {
   content: string | number;
 }
 
-const index = ({ label, content }: Props) => (
+const Row = ({ label, content }: Props) => (
   <div className="row">
     <p className="row-label">{label}:</p>
-    <strong className="row-content">{content || `${__('application.application')}`}</strong>
+    <strong className="row-content">{content || `${__('application.lack')}`}</strong>
   </div>
 );
 
-export default index;
+export default Row;

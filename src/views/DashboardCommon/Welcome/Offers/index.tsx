@@ -6,7 +6,7 @@ import { __ } from '../../../../helpers/i18n';
 const index = () => (
   <Section half>
     <SectionHeader title={__('application.offers')} />
-    <Carousel imagesList={['3c', '6c', '9c', '12c']} />
+    <Carousel imagesList={[3, 6, 9, 12]} />
   </Section>
 );
 

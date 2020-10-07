@@ -13,6 +13,7 @@ import { BoxMapManagement } from '../../DashboardCommon';
 import DiscountCodes from './DiscountCodes';
 import StockDiscount from './StockDiscount';
 import StockSelect from './StockSelect';
+import InvitesSent from './InvitesSent';
 
 interface Props {
   user: UserRes;
@@ -27,7 +28,13 @@ const Management = ({ user }: Props) => (
           className: 'tab',
           activeClassName: 'active',
           to: `/${UserService.getSlugByRole(user.role)}/management/workers/list`,
-          text: `${__('application.workers')}`,
+          text: `${__('application.users')}`,
+        },
+        {
+          className: 'tab',
+          activeClassName: 'active',
+          to: `/${UserService.getSlugByRole(user.role)}/management/invitations`,
+          text: `${__('application.invitations')}`,
         },
         {
           className: 'tab',
@@ -38,14 +45,8 @@ const Management = ({ user }: Props) => (
         {
           className: 'tab',
           activeClassName: 'active',
-          to: `/${UserService.getSlugByRole(user.role)}/management/discount`,
-          text: `${__('application.discountsCodes')}`,
-        },
-        {
-          className: 'tab',
-          activeClassName: 'active',
           to: `/${UserService.getSlugByRole(user.role)}/management/stock-discount/list`,
-          text: `${__('application.generalDiscounts')}`,
+          text: `${__('application.stockSale')}`,
         },
       ]}
     />
@@ -58,7 +59,7 @@ const Management = ({ user }: Props) => (
       />
       <Route path={`/${UserService.getSlugByRole(user.role)}/management/workers`} component={WorkersManagement} />
       <Route path={`/${UserService.getSlugByRole(user.role)}/management/map`} component={BoxMapManagement} />
-      <Route path={`/${UserService.getSlugByRole(user.role)}/management/discount`} component={DiscountCodes} />
+      <Route path={`/${UserService.getSlugByRole(user.role)}/management/invitations`} component={InvitesSent} />
       <Route path={`/${UserService.getSlugByRole(user.role)}/management/stock-discount`} component={StockDiscount} />
     </Switch>
   </Section>

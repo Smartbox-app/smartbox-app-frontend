@@ -1,21 +1,30 @@
 import React from 'react';
-import Status from './Status';
-import Position from './Position';
+import { connect } from 'react-redux';
+import { UserRes, UserRole } from 'smartbox-types';
 import { __ } from '../../../../../helpers/i18n';
+import { ApplicationState } from '../../../../../reducers';
+
+import Position from './Position';
+import Status from './Status';
+import WorkerEdit from './WorkerEdit';
 
 interface Props {
   selectedBoxId: string;
+  user: UserRes;
+  rentId: string;
 }
 
-const Edit = (props: Props) => {
-  const { selectedBoxId } = props;
-  return (
-    <div>
-      <p>{__('application.changesIrreversible')}</p>
-      <Status selectedBoxId={selectedBoxId} />
-      <Position selectedBoxId={selectedBoxId} rentId="6af51d59-9c06-4704-bb5a-374de61726a2" />
-    </div>
-  );
-};
+const Edit = ({ selectedBoxId, user, rentId }: Props) => (
+  <div>
+    <p>{__('application.changesIrreversible')}</p>
+    {user.role === UserRole.admin && <Status selectedBoxId={selectedBoxId} />}
+    {user.role === UserRole.admin && <Position selectedBoxId={selectedBoxId} rentId={rentId} />}
+    {user.role === UserRole.worker && <WorkerEdit selectedBoxId={selectedBoxId} rentId={rentId} />}
+  </div>
+);
 
-export default Edit;
+const mapStateToProps = (state: ApplicationState) => ({
+  user: state.user.details,
+});
+
+export default connect(mapStateToProps)(Edit);

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { IPricingResult } from 'smartbox-types';
 import { ApplicationState } from '../../../../../../../reducers';
 
-import './RadioDiscout.scss';
+import './RadioDiscount.scss';
 
 interface Props {
   text: string;
@@ -13,7 +13,7 @@ interface Props {
   countedPrice?: IPricingResult;
 }
 
-const RadioDiscout = ({ value, text, register, countedPrice }: Props) => {
+const RadioDiscount = ({ value, text, register, countedPrice }: Props) => {
   const getName = (data: string): string => {
     switch (data) {
       case 'withoutDiscountPricing':
@@ -38,4 +38,4 @@ const mapStateToProps = (state: ApplicationState) => ({
   countedPrice: state.order.countedPrice,
 });
 
-export default connect(mapStateToProps)(RadioDiscout);
+export default connect(mapStateToProps)(RadioDiscount);

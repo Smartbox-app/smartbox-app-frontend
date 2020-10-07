@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { RentBoxReq, UserRole, IPricingResult, UserRes } from 'smartbox-types';
+import { RentBoxReq, UserRole, IPricingResult, UserRes, StockList } from 'smartbox-types';
 import { Button } from '../../../../../components/Common';
 import { order } from '../../../../../actions';
 import { ButtonsContainer } from '../../../../../components/Layout';
@@ -28,7 +28,7 @@ interface Props {
   user: UserRes;
   isAgreementAccepted: boolean;
   isResignationMarked: boolean;
-  stockId: string;
+  stock: StockList;
   updateFormData: (data: any) => void;
   sentRentBoxRequest: (data: RentBoxReq | any, nextStep: string, role: UserRole) => void;
 }
@@ -40,7 +40,7 @@ const StepSummary = ({
   isResignationMarked,
   sentRentBoxRequest,
   countedPrice,
-  stockId,
+  stock,
 }: Props): any => {
   useEffect(() => {
     if (formData.size.length === 0) {
@@ -53,7 +53,7 @@ const StepSummary = ({
   const onSubmit = (data: any) => {
     sentRentBoxRequest(
       {
-        stockId,
+        stockId: stock.id,
         size: Number(formData.size),
         startAt: formData.dateStart,
         finishAt: formData.dateEnd,
@@ -93,7 +93,7 @@ const mapStateToProps = (state: ApplicationState) => ({
   user: state.user.details,
   isAgreementAccepted: state.order.isAgreementAccepted,
   isResignationMarked: state.order.isResignationMarked,
-  stockId: state.rent.stockId,
+  stock: state.stock.list[0],
 });
 
 const mapDispatchToProps = (dispatch: any) =>

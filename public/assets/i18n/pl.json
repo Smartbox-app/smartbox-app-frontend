@@ -14,16 +14,27 @@
       "next": "Dalej",
       "change": "Zmień",
       "create": "Utwórz",
+      "cancel": "Anuluj",
       "send": "Wyślij",
+      "resend": "Wyślij ponownie",
+      "save": "Zapisz",
       "lack": "Brak",
       "end": "Zakończ",
       "delete": "Usuń",
       "move": "Przenieś",
+      "block": "Blokuj",
+      "active": "Aktywuj",
       "changeStatus": "Zmień status",
+      "notApplicable": "Nie dotyczy",
 
       "workers": "Pracownicy",
+      "users": "Użytkownicy",
       "boxes": "Skrzynki",
       "discountsCodes": "Kody rabatowe",
+      "stockSale": "Promocje",
+      "salesList": "Lista promocji",
+      "createSale": "Utwórz zniżkę",
+      "deleteSingleSale": "Czy jesteś pewien, że chcesz usunąć zniżkę?",
       "generalDiscounts": "Rabaty generalne",
 
       "history": "Historia wynajęć:",
@@ -48,6 +59,7 @@
       "rentedBy": "Wynajęte przez",
       "phone": "Telefon",
       "userRole": "rola",
+      "continueWith": "Zaloguj się z",
 
       "ccv": "numer CVV",
       "ccNumber": "numer karty kredytowej",
@@ -81,20 +93,41 @@
       "discounts": "Promocje:",
 
       "workersList": "Lista pracowników",
+      "usersList": "Lista użytkowników",
+      "inviteList": "Lista wysłanych zaproszeń",
+      "invitations": "Zaproszenia",
       "inviteWorker": "Zaproś pracowników",
+      "inviteUser": "Zaproś użytkownika",
+      "sentInvitation": "Zaproszenia wysłane",
       "historyWorker": "Historia pracowników",
       "sendInvitation": "Wyślij zaproszenie",
       "goToAgreement": "Przedłuż",
       "generateInvoice": "Wygeneruj fakturę",
       "profileDetail": "Szczegóły Profilu",
       "preInvitationForWorker": "Wyślij zaproszenie dla pracownika",
+      "preInvitation": "Wyślij zaproszenie",
+
+      "workerAssignChange": "Zmień przypisanie pracownika.",
 
       "createStockDisc" : "Utwórz zniżkę",
+      "createDiscountCode" : "Utwórz kod zniżkowy",
 
       "pay": "Zapłać",
       "fillData": "Podaj dane:",
       "code": "Kod:",
       "enter6DigitCode": "Przepisz 6 cyfrowy kod BLIK:",
+
+      "usedDiscount": "Zastosowana cena:",
+      "useDiscountCode": "Użyj kodu rabatowego",
+
+      "firstRentFreePracing": "Rabat pierwszego wynajmu",
+      "withDicoutnPricing": "Standardowa cena",
+      "cardPricing": "Zniżka za wykorzystanie karty kredytowej",
+      "standardPrice": "Standardowa cena",
+
+      "accountHasBeenActivated": "Konto zostało aktywowane.",
+      "welcomeOnPlatform": "Witaj na platformie smartbox.",
+      "fillFormToCreatAccount": "Proszę wypełnić poniższy formularz, żeby utworzyć konto.",
 
       "welcome": "Hello world"
     },
@@ -103,6 +136,7 @@
       "logOutSuccess": "Wylogowano poprawnie.",
       "discCodeCreated": "Poprawnie utworzono kod rabatowy.",
       "userBlocked": "Zablokowano użytkownika.",
+      "userUnblocked": "Odblokowano użytkownika.",
       "userMovedSuccess": "Poprawnie przeniesiono użytkownika.",
       "userStatusChanged": "Poprawnie zmieniono status.",
       "invitationSendProperly": "Poprawnie wysłano zaproszenie.",
@@ -111,6 +145,8 @@
       "dataChangedSuccess": "Poprawnie zmieniono dane.",
       "newPassSet": "Ustawiono nowe hasło",
       "msgSend": "Wysłano wiadomość",
+      "invitationDeleted": "Usunięto zaproszenie!",
+      "invitationResent": "Wysłano ponownie zaproszenie!",
       "logInSuccess": "Zalogowano poprawnie."
     }
   }

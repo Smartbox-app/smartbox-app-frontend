@@ -2,13 +2,13 @@
 @import '../../../config/mixins.scss';
 
 main {
-  background-color: $color-background-darken;
   min-height: $main-min-height-mobile;
   display: flex;
   flex: 0 0 100%;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
+  margin-bottom: 60px;
 
   footer {
     justify-self: flex-end;

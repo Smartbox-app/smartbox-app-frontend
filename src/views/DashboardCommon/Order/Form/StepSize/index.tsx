@@ -3,8 +3,8 @@ import { useForm } from 'react-hook-form';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { UserRes, BoxGroupAvailability } from 'smartbox-types';
-import { order } from '../../../../../actions';
+import { UserRes, BoxGroupAvailability, StockList } from 'smartbox-types';
+import { order, stock } from '../../../../../actions';
 import { FormContainer, ButtonsContainer } from '../../../../../components/Layout';
 import { Button } from '../../../../../components/Common';
 import SingleOption, { SingleOptionType } from './SingleOption';
@@ -26,13 +26,26 @@ interface Props extends RouteComponentProps<RouteProps> {
   formData: FormType;
   user: UserRes;
   boxAvailability: BoxGroupAvailability[];
+  stockId: StockList;
   updateFormData: (data: any) => void;
   fetchBoxAvailability: (stockId: string) => void;
 }
 
-const StepSize = ({ history, updateFormData, match, fetchBoxAvailability, formData, user, boxAvailability }: Props) => {
+const StepSize = ({
+  history,
+  updateFormData,
+  stockId,
+  fetchBoxAvailability,
+  formData,
+  user,
+  boxAvailability,
+}: Props) => {
   useEffect(() => {
-    fetchBoxAvailability('1231qweqwe123');
+    if (stockId && stockId.id !== '') {
+      fetchBoxAvailability(stockId.id);
+    } else {
+      history.push(`/${UserService.getSlugByRole(user.role)}/main`);
+    }
   }, []);
 
   const defaultValues = {
@@ -121,12 +134,14 @@ const mapStateToProps = (state: ApplicationState) => ({
   countedPrice: state.order.countedPrice,
   user: state.user.details,
   boxAvailability: state.order.boxAvailability,
+  stockId: state.stock.list[0],
 });
 
 const mapDispatchToProps = (dispatch: any) =>
   bindActionCreators(
     {
       ...order,
+      ...stock,
     },
     dispatch,
   );

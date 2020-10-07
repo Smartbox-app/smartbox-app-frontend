@@ -6,37 +6,50 @@ import FormHeader from '../../../../../../components/Layout/FormHeader';
 import { ButtonsContainer } from '../../../../../../components/Layout';
 import { Button } from '../../../../../../components/Common';
 import { modal } from '../../../../../../actions';
+import { __ } from '../../../../../../helpers/i18n';
 import { ApplicationState } from '../../../../../../reducers';
 
-import RadioDiscout from './RadioDiscout';
-import DiscoutCode from './DiscountCode';
+import RadioDiscount from './RadioDiscount';
+import DiscountCode from './DiscountCode';
 
 import './DiscountsList.scss';
 
 interface Props {
-  register: any;
-  discoutsList: any[];
+  countedPrice: {
+    name: string;
+    value: number;
+  };
   showModal: (content: React.ReactNode) => void;
 }
 
-const DiscountsList = ({ register, showModal, discoutsList }: Props) => {
-  const dataToDisplay = discoutsList.map((data: any) => (
-    <RadioDiscout key={data.text} text={data.text} value={data.value} register={register} />
-  ));
+const DiscountsList = ({ showModal, countedPrice }: Props) => {
+
+  const getText = () => {
+    switch (countedPrice.name) {
+      case 'firstRentFreePracing':
+        return __('application.firstRentFreePracing');
+      case 'withDicoutnPricing':
+        return __('application.withDicoutnPricing');
+      case 'cardPricing':
+        return __('application.cardPricing');
+      default:
+        return __('application.standardPrice');
+    }
+  };
 
   return (
     <div>
-      <FormHeader title="Zastosowane rabaty:" />
-      <div className="discounts-list-wrapper">{dataToDisplay}</div>
+      <FormHeader title={__('application.usedDiscount')} />
+      <div className="discount-wrapper">{getText()}</div>
       <ButtonsContainer>
-        <Button text="Dodaj kod rabatowy" primary click={() => showModal(<DiscoutCode />)} />
+        <Button text={__('application.useDiscountCode')} primary click={() => showModal(<DiscountCode />)} />
       </ButtonsContainer>
     </div>
   );
 };
 
 const mapStateToProps = (state: ApplicationState) => ({
-  discoutsList: state.order.discountList,
+  countedPrice: state.order.countedPrice,
 });
 
 const mapDispatchToProps = (dispatch: any) =>

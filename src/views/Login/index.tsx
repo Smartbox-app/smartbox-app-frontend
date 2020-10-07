@@ -7,6 +7,7 @@ import { UserRole, AuthLoginRequest, AuthLoginResult, UserRes } from 'smartbox-t
 import { Spinner, Input, Logo } from '../../components/Common';
 import { auth, notifications } from '../../actions';
 import ApiService from '../../services/api-service';
+import { translateErrors } from '../../utils/errors-trans';
 import { getRememberedRedirect, clearRememberedRedirect } from '../../utils/remeber-redirect';
 import { store } from '../../App';
 import { formOnTranslateString } from '../../utils/trans-form';
@@ -42,7 +43,20 @@ class Login extends React.Component<Props> {
 
   private getRedirect = () => {
     const { user } = this.props;
-    const prohibited = ['/set-pass', '/restore-pass'];
+    const prohibited = [
+      '/set-pass',
+      '/restore-pass',
+      '/user/order/step/size',
+      '/user/order/step/duration',
+      '/user/order/step/summary',
+      '/user/order/step/agreement',
+      '/user/order/step/payment',
+      '/admin/order/step/size',
+      '/admin/order/step/duration',
+      '/admin/order/step/summary',
+      '/admin/order/step/agreement',
+      '/admin/order/step/payment',
+    ];
     const redirect = getRememberedRedirect();
     if (redirect && redirect.role === user!.role) {
       clearRememberedRedirect();
@@ -80,11 +94,11 @@ class Login extends React.Component<Props> {
                       className="login-input"
                       type={field.options.type}
                       input={{
-                        label: field.title,
+                        label: formOnTranslateString(field.title),
                         name: fieldHtmlId,
                         id: fieldHtmlId,
                         placeholder: field.placeholder,
-                        errors,
+                        errors: translateErrors(errors),
                         value: currentValue,
                         onChange: (e: any) => onChange(e.target.value),
                         onFocus,
@@ -97,7 +111,7 @@ class Login extends React.Component<Props> {
               }
             }}
             onSavedSuccessfully={(data: AuthLoginResult) => {
-              successNotification(__('notification.userMovedSuccess'));
+              successNotification(__('notification.logInSuccess'));
               store.dispatch(saveUser(data));
             }}
             onTranslateString={formOnTranslateString}

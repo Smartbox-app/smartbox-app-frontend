@@ -4,7 +4,7 @@ import { Main, Section, Footer } from '../../components/Layout';
 import DashboardContainer from '../../components/Layout/DashboardContainer';
 import { MenuItemType } from '../../types/menu-item';
 import Navigation from '../../components/Layout/Navigation';
-import { BoxMapManagement } from '../DashboardCommon';
+import { BoxMapManagement, Invoice } from '../DashboardCommon';
 import Profile from '../DashboardCommon/Profile';
 import { __ } from '../../helpers/i18n';
 
@@ -31,6 +31,7 @@ const DashboardWorker = () => {
             <Route exact path="/worker" render={() => <Redirect to="/worker/management" />} />
             <Route path="/worker/management/" component={BoxMapManagement} />
             <Route path="/worker/profile" component={Profile} />
+            <Route path="/worker/invoice/" component={Invoice} />
           </Section>
         </Switch>
       </Main>

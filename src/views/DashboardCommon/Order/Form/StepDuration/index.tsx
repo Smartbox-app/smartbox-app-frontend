@@ -55,18 +55,18 @@ const StepDuration = ({ formData, countedPrice, updateFormData, user, match, ren
       history.push(`/${UserService.getSlugByRole(user.role)}/order/step/size`);
     } else if (match.params.rentId) {
       updateFormData({
-        durationInDays: 7,
+        durationInDays: formData.durationInDays,
         dateStart: setMinDate(),
-        dateEnd: setMinDate(7),
+        dateEnd: setMinDate(formData.durationInDays),
         size: rent.size,
         isFirstRent: firstRentChecker(user),
         discount: stockDiscount.discount,
       });
     } else {
       updateFormData({
-        durationInDays: 7,
+        durationInDays: formData.durationInDays,
         dateStart: setMinDate(),
-        dateEnd: setMinDate(7),
+        dateEnd: setMinDate(formData.durationInDays),
         isFirstRent: firstRentChecker(user),
         discount: stockDiscount.discount,
       });
@@ -84,6 +84,8 @@ const StepDuration = ({ formData, countedPrice, updateFormData, user, match, ren
     history.push(`/${UserService.getSlugByRole(user.role)}/order/step/size`);
   };
 
+  const isItFirstRent = (u: UserRes): boolean => u.rentCount === 0;
+
   return (
     <FormContext {...methods}>
       <form onSubmit={handleSubmit(onSubmit)} className="form-step-two">
@@ -100,6 +102,7 @@ const StepDuration = ({ formData, countedPrice, updateFormData, user, match, ren
               updateFormData({
                 durationInDays: differenceInCalendarDays(formData.dateEnd, selected[0]),
                 dateStart: selected[0],
+                isFirstRent: isItFirstRent(user),
               });
               return selected;
             }}
@@ -115,6 +118,7 @@ const StepDuration = ({ formData, countedPrice, updateFormData, user, match, ren
               updateFormData({
                 durationInDays: differenceInCalendarDays(selected[0], formData.dateStart),
                 dateEnd: selected[0],
+                isFirstRent: isItFirstRent(user),
               });
               return selected;
             }}

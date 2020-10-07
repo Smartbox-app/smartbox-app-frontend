@@ -8,6 +8,32 @@ import { __ } from '../helpers/i18n';
 
 export const saveUser = (userData: AuthLoginResult) => ({ type: 'LOGIN_SUCCESS', payload: userData });
 
+export const loginWithFacebook = (data: any) => async (dispatch: any) => {
+  await ApiService.post(
+    dispatch,
+    'LOGIN_SUCCESS',
+    'LOGIN_WITH_FB_FAILED',
+    null,
+    null,
+    `auth/login-facebook?access_token=${data.accessToken}`,
+    'LOADING',
+    {},
+  );
+};
+
+export const loginWithGoogle = () => async (dispatch: any) => {
+  await ApiService.post(
+    dispatch,
+    'LOGIN_SUCCESS',
+    'LOGIN_WITH_GOOGLE_FAILED',
+    null,
+    null,
+    'auth/login-google',
+    'LOADING',
+    {},
+  );
+};
+
 export const login = (userData: AuthLoginRequest) => async (dispatch: any) => {
   await ApiService.post(
     dispatch,
@@ -49,3 +75,16 @@ export const logout = () => async (dispatch: any) => {
 };
 
 export const clearUserSession = () => ({ type: 'CLEAR_USER_SESSION' });
+
+export const getUserLoginGoogleData = () => async (dispatch: any) => {
+  await ApiService.get(
+    dispatch,
+    'LOGIN_SUCCESS',
+    'LOGIN_WITH_Google_FAILED',
+    (data: any) => {
+      console.log('getUserLoginGoogleData', data);
+    },
+    null,
+    'auth/login-google/redirect',
+  );
+};

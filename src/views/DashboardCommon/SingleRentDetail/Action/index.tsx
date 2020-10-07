@@ -1,33 +1,32 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { MyRentList } from 'smartbox-types';
+import { MyRentList, UserRes } from 'smartbox-types';
 import { ButtonsContainer } from '../../../../components/Layout';
 import { Button, ConfirmModal } from '../../../../components/Common';
 import { modal, order, singleRent } from '../../../../actions';
 import { __ } from '../../../../helpers/i18n';
 import { history } from '../../../../App';
 import { ApplicationState } from '../../../../reducers';
-
-import Invoice from './Invoice';
+import UserService from '../../../../services/user-service';
 
 interface Props {
   rentId: string;
+  user: UserRes;
   rent: MyRentList;
   showModal: (content: React.ReactNode) => void;
   endMyRent: (rentId: string) => void;
   updateFormData: (data: any) => void;
 }
 
-const Action = ({ showModal, endMyRent, rentId, updateFormData, rent }: Props) => {
+const Action = ({ showModal, endMyRent, rentId, updateFormData, rent, user }: Props) => {
   const handleExtendingOrderData = (rentId: string) => {
     updateFormData({ size: rent.size });
-    history.push(`/user/order/step/duration/${rentId}`);
+    history.push(`/${UserService.getSlugByRole(user.role)}/order/step/duration/${rentId}`);
   };
 
   return (
     <ButtonsContainer max>
-      {/* <Button text={__('application.generateInvoice')} primary click={() => showModal(<Invoice orderId="asdasd" />)} /> */}
       <Button text={__('application.goToAgreement')} success click={() => handleExtendingOrderData(rentId)} />
       <Button
         text={__('application.end')}
@@ -43,13 +42,14 @@ const Action = ({ showModal, endMyRent, rentId, updateFormData, rent }: Props) =
           )
         }
       />
-      <Button text={__('application.back')} primary to="/user" />
+      <Button text={__('application.back')} primary to={`/${UserService.getSlugByRole(user.role)}`} />
     </ButtonsContainer>
   );
 };
 
 const mapStateToProps = (state: ApplicationState) => ({
   rent: state.rent.singleRent,
+  user: state.user.details,
 });
 
 const mapDispatchToProps = (dispatch: any) =>

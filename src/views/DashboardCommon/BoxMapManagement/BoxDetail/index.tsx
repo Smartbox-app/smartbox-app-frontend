@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { RentDetailsRes } from 'smartbox-types';
+import { RentDetailsRes, UserRes, UserRole } from 'smartbox-types';
 import { connect } from 'react-redux';
 import { ButtonsContainer, SectionHeader } from '../../../../components/Layout';
 import { Button } from '../../../../components/Common';
+import { ApplicationState } from '../../../../reducers';
 import { dateOnly } from '../../../../utils/format-date';
 import { __ } from '../../../../helpers/i18n';
 
@@ -14,12 +15,12 @@ interface Props {
   singleBoxDetail: RentDetailsRes;
   selectedBoxId: string;
   rentId: string;
+  user: UserRes;
 }
 
-const BoxDetail = ({ selectedBoxId, singleBoxDetail, rentId }: Props) => {
-  const [optionDisplayState, optionDisplayToogle] = useState(false);
-  const dummyMail = 'kontakt@itdotfocus.com';
-  const dummyPhone = 333222111;
+const BoxDetail = ({ selectedBoxId, singleBoxDetail, rentId, user }: Props) => {
+  const [optionDisplayState, optionDisplayToggle] = useState(false);
+
   const isThisBoxFree = (data: string): boolean => data === '';
 
   return (
@@ -30,68 +31,63 @@ const BoxDetail = ({ selectedBoxId, singleBoxDetail, rentId }: Props) => {
         <span>{__('application.storeNumber')}: </span>
         <strong>{selectedBoxId}</strong>
       </p>
-      <p className="single">
-        <span className="fa fa-user" />
-        <span>{__('application.rentedBy')}: </span>
-        <strong>{`${singleBoxDetail.owner.firstName} ${singleBoxDetail.owner.lastName}`}</strong>
-      </p>
-      <p className="single">
-        <span className="fa fa-calendar " />
-        <span>{__('application.startDate')}: </span>
-        <strong>{`${isThisBoxFree(rentId) ? '---' : dateOnly(singleBoxDetail.startAt)}`}</strong>
-      </p>
-      <p className="single">
-        <span className="fa fa-calendar " />
-        <span>{__('application.endDate')}: </span>
-        <strong>{`${isThisBoxFree(rentId) ? '---' : dateOnly(singleBoxDetail.finishAt)}`}</strong>
-      </p>
-      <p className="single">
-        <span className="fa fa-arrow-right" />
-        <span>{__('application.storeState')}: </span>
-        <strong>{`${singleBoxDetail.status}`}</strong>
-      </p>
-      <p className="single">
-        <span className="fa fa-phone" />
-        <span>{__('application.phone')}:</span>
-        <strong>
-          {isThisBoxFree(rentId) ? (
-            '---'
-          ) : (
-            <a href={`tel:${dummyPhone}`} rel="noopener noreferrer" target="_blank">
-              {dummyPhone}
-            </a>
-          )}
-        </strong>
-      </p>
-      <p className="single">
-        <span className="fa fa-envelope" />
-        <span>{__('application.mail')}:</span>
-        <strong>
-          {isThisBoxFree(rentId) ? (
-            '---'
-          ) : (
-            <a href={`mailto:${dummyMail}`} rel="noopener noreferrer" target="_blank">
-              {dummyMail}
-            </a>
-          )}
-        </strong>
-      </p>
+      {user.role === UserRole.admin && (
+        <>
+          <p className="single">
+            <span className="fa fa-user" />
+            <span>{__('application.rentedBy')}: </span>
+            <strong>
+              {singleBoxDetail.owner ? `${singleBoxDetail.owner.firstName} ${singleBoxDetail.owner.lastName}` : '---'}
+            </strong>
+          </p>
+          <p className="single">
+            <span className="fa fa-calendar " />
+            <span>{__('application.startDate')}: </span>
+            <strong>{`${isThisBoxFree(rentId) ? '---' : dateOnly(singleBoxDetail.startAt)}`}</strong>
+          </p>
+          <p className="single">
+            <span className="fa fa-calendar " />
+            <span>{__('application.endDate')}: </span>
+            <strong>{`${isThisBoxFree(rentId) ? '---' : dateOnly(singleBoxDetail.finishAt)}`}</strong>
+          </p>
+          <p className="single">
+            <span className="fa fa-arrow-right" />
+            <span>{__('application.storeState')}: </span>
+            <strong>{`${singleBoxDetail.status}`}</strong>
+          </p>
+          <p className="single">
+            <span className="fa fa-envelope" />
+            <span>{__('application.mail')}:</span>
+            <strong>
+              {isThisBoxFree(rentId) ? (
+                '---'
+              ) : (
+                <a href={`mailto:${singleBoxDetail.owner.email}`} rel="noopener noreferrer" target="_blank">
+                  {singleBoxDetail.owner.email}
+                </a>
+              )}
+            </strong>
+          </p>
+        </>
+      )}
+
       <ButtonsContainer max>
         <Button
           className={`custome-icon-button ${!optionDisplayState ? '' : 'rotate'}`}
           primary
           text={!optionDisplayState ? __('application.showEditOptions') : __('application.hideEditOptions')}
-          click={() => optionDisplayToogle(!optionDisplayState)}
+          click={() => optionDisplayToggle(!optionDisplayState)}
           icon="arrow-down-white.svg"
         />
       </ButtonsContainer>
-      {optionDisplayState && <Edit selectedBoxId={selectedBoxId} />}
+      {optionDisplayState && <Edit selectedBoxId={selectedBoxId} rentId={rentId} />}
     </div>
   );
 };
 
-const mapStateToProps = (state: any) => ({
+const mapStateToProps = (state: ApplicationState) => ({
   singleBoxDetail: state.boxes.singleBoxDetail,
+  user: state.user.details,
 });
 
 export default connect(mapStateToProps)(BoxDetail);

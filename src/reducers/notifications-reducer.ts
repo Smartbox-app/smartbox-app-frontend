@@ -27,6 +27,7 @@ const getError = (error: ApiErrorCode) => {
   switch (error) {
     case ApiErrorCode.InvalidLoginData:
       return 'Niepoprawne dane logowania.';
+
     case ApiErrorCode.InvalidPrice:
       return 'Nieprawidłowa cena';
     case ApiErrorCode.UAreTooFarAway:
@@ -65,6 +66,10 @@ const getError = (error: ApiErrorCode) => {
       return 'Błędny numer BLIK';
     case ApiErrorCode.InvalidGroup:
       return 'Błędny numer grupy bankowej';
+    case ApiErrorCode.NoFoundBoxNumberOnStock:
+      return 'Nie odnaleziono skrytki';
+    case ApiErrorCode.StckIdIsRequiredForWorkerRole:
+      return 'Wybranie placu jest wymagane';
     default:
       return 'Wystąpił błąd';
   }

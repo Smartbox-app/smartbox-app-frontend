@@ -1,20 +1,20 @@
 import { BoxListItem, RentDetailsRes, RentStatus, BoxGroupAvailability } from 'smartbox-types';
 
 export type Boxes = {
-  boxesGroup: BoxListItem[];
+  boxesGroup: BoxListItem[] | null;
   singleBoxDetail: RentDetailsRes;
 };
 
 const initialState: Boxes = {
-  boxesGroup: [],
+  boxesGroup: null,
   singleBoxDetail: {
     number: '',
     startAt: new Date(),
     finishAt: new Date(),
     status: RentStatus.free,
     owner: {
-      email: '-',
-      firstName: '---',
+      email: '',
+      firstName: '',
       lastName: '',
       rentCount: 0,
     },

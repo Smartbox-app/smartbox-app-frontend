@@ -60,9 +60,7 @@ export const sentExecutePaymentWithBlikRequest = (data: ExecuteBlikPaymentReq) =
     'SENT_EXECUTE_PAYMENT_WITH_BLIK_REQUEST_SUCCESS',
     'SENT_EXECUTE_PAYMENT_WITH_BLIK_REQUEST_FAILED',
     null,
-    () => {
-      dispatch(modal.showModal(BlikWaitingModal, false));
-    },
+    null,
     'rent/execute-payment-with-blik',
     'LOADING',
     data,
@@ -71,13 +69,19 @@ export const sentExecutePaymentWithBlikRequest = (data: ExecuteBlikPaymentReq) =
 
 export const setPaymentMethod = (paymentId: string) => ({ type: 'SET_PAYMENT_METHOD_SUCCESS', payload: paymentId });
 export const pickPaymentType = (paymentId: string) => ({ type: 'PICK_PAYMENT_TYPE_SUCCESS', payload: paymentId });
+export const blikPaymentFinishSuccess = (paymentId: string) => ({ type: 'BLIK_PAYMENT_FINISH_SUCCESS' });
 
 export const checkPaymentStatus = (paymentId: string) => async (dispatch: any) => {
   await ApiService.get(
     dispatch,
     'CHECK_PAYMENT_STATUS_SUCCESS',
     'CHECK_PAYMENT_STATUS_FAILED',
-    null,
+    (data: boolean) => {
+      console.log('checkPaymentStatus', data);
+      if (data) {
+        blikPaymentFinishSuccess(paymentId);
+      }
+    },
     null,
     `payment/is-paid/${paymentId}`,
   );

@@ -15,7 +15,7 @@ import {
   DashboardWorker,
   DashboardUser,
   Register,
-  RestorPass,
+  RestorePass,
   Page404,
   UserActivation,
 } from './views';
@@ -29,6 +29,7 @@ import {
   RouteWorker,
   Modal,
 } from './components/Common';
+import { Invoice } from './views/DashboardCommon';
 import { NotificationContainer } from './components/Notifications';
 import AppOffline from './components/AppOffline';
 import { i18n } from './helpers/i18n';
@@ -75,10 +76,10 @@ const App = () => {
               <Route exact path="/" render={() => <Redirect to="/login" />} />
               <Route path="/login" component={Login} />
               <Route path="/register" component={Register} />
-              <Route exact path="/restore-pass/" component={RestorPass} />
-              <Route path="/restore-pass/:userId/:updateToken" component={RestorPass} />
+              <Route exact path="/restore-pass/" component={RestorePass} />
+              <Route exact path="/invoice/" component={Invoice} />
+              <Route path="/restore-pass/:userId/:updateToken" component={RestorePass} />
               <Route exact path="/user-activation/:invitationId/:updateToken" component={UserActivation} />
-              {/* http://localhost:3000/user-activation/rudytester+worker@gmail.com/df6ed2d0-2855-4bf0-a67d-57665bc59664 */}
               <RouteAdmin path="/admin" component={DashboardAdmin} />
               <RouteWorker path="/worker" component={DashboardWorker} />
               <RouteUser path="/user" component={DashboardUser} />

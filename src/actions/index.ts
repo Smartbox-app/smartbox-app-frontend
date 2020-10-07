@@ -10,5 +10,20 @@ import * as boxes from './boxes';
 import * as singleRent from './single-rent';
 import * as stock from './stock';
 import * as gate from './gate';
+import * as invitations from './invitations';
 
-export { appStatus, apiTable, auth, boxes, modal, notifications, lang, user, order, singleRent, stock, gate };
+export {
+  appStatus,
+  apiTable,
+  auth,
+  boxes,
+  modal,
+  notifications,
+  lang,
+  user,
+  order,
+  singleRent,
+  stock,
+  gate,
+  invitations,
+};

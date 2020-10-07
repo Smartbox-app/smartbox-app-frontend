@@ -28,16 +28,15 @@ const Add = ({ successNotification }: Props) => {
 
   return (
     <>
-      <PageHeader title={__('application.preInvitationForWorker')} />
+      <PageHeader title={__('application.preInvitation')} />
       <ButtonsContainer>
         <Button to="/admin/management/workers/list" text={__('application.back')} primary />
       </ButtonsContainer>
 
       <FormContainer>
         <ItfApiForm
-          formId="addOrderForm"
+          formId="sendInvitationToUser"
           schemaMayBeDynamic={false}
-          schemaCacheEnabled={false}
           loadingInfo={<Spinner transparent />}
           schemaFetcher={() => ApiService.loadForm(fetchUrl)}
           sendFetcher={(formId: string, values: any) => ApiService.sendForm(sendUrl, values)}

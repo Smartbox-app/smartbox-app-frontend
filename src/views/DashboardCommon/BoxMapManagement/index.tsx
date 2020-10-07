@@ -4,107 +4,208 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { BoxListItem, RentStatus } from 'smartbox-types';
+import { BoxListItem, RentStatus, StockList, UserRes, UserRole } from 'smartbox-types';
+import { boxes, modal, stock } from '../../../actions';
+import { Spinner } from '../../../components/Common';
+import { PageHeader, Section } from '../../../components/Layout';
+import { __ } from '../../../helpers/i18n';
 import { ApplicationState } from '../../../reducers';
 
-import { ReactComponent as ReactLogo } from './nowa_mapa.svg';
-import { PageHeader } from '../../../components/Layout';
-import { modal, boxes } from '../../../actions';
-import { __ } from '../../../helpers/i18n';
-
 import BoxDetail from './BoxDetail';
-import MapLegend from './MapLegend';
 
 import './BoxMapManagement.scss';
 
+import { ReactComponent as ReactLogo } from './map_1.2.svg';
+import MapLegend from './MapLegend';
+
 interface Props {
-  boxesGroup: BoxListItem[];
-  stockId: string;
+  boxesGroup: BoxListItem[] | null;
+  stock: StockList;
+  user: UserRes;
   showModal: (content: React.ReactNode) => void;
   fetchBoxStatuses: (stockId: string) => void;
   fetchSingleBoxDetails: (rentId: string) => void;
+  getStockList: () => void;
+}
+interface State {
+  isMouseDown: boolean;
+  grabStartX: number;
+  grabStartY: number;
+  scrollLeft: number;
+  scrollTop: number;
+  mapScale: number;
 }
 
-class BoxMapManagement extends React.Component<Props> {
+class BoxMapManagement extends React.Component<Props, State> {
   private element: any;
 
   constructor(props: Props) {
     super(props);
     this.element = React.createRef();
+    this.state = {
+      isMouseDown: false,
+      grabStartX: 0,
+      grabStartY: 0,
+      scrollLeft: 0,
+      scrollTop: 0,
+      mapScale: 100,
+    };
   }
 
-  async componentDidMount() {
-    const { fetchBoxStatuses, stockId } = this.props;
-
-    await fetchBoxStatuses(stockId);
-    const catchElement = this.element.current.querySelectorAll('#kontenery .storage, #kontenery .st9');
-
-    await catchElement.forEach((singleElement: any) => {
-      this.setBoxStatus(singleElement.parentElement.parentElement.id.slice(1), singleElement);
-      singleElement.addEventListener('click', this.handleEventModal, false);
-      singleElement.addEventListener('mouseover', this.handleEventMouseOver, false);
-      singleElement.addEventListener('mouseout', this.handleEventMouseOut, false);
+  private statusColorMarker = () => {
+    const catchElement = this.element.current.querySelectorAll('#kontenery .storage');
+    catchElement.forEach((singleElement: any) => {
+      this.setBoxStatus(singleElement.id, singleElement);
     });
-  }
+  };
 
-  componentWillUnmount() {
-    const catchElement = this.element.current.querySelectorAll('.storage');
+  private eventListenerAdding = () => {
+    const mapWrapperElement = this.element.current;
+    mapWrapperElement.addEventListener(
+      'mousedown',
+      (e: MouseEvent) => this.handleMouseDown(e, this.element.current),
+      false,
+    );
+    mapWrapperElement.addEventListener(
+      'mouseup',
+      (e: MouseEvent) => this.handleMouseUp(e, this.element.current),
+      false,
+    );
+    mapWrapperElement.addEventListener(
+      'mouseleave',
+      (e: MouseEvent) => this.handleMouseLeave(e, this.element.current),
+      false,
+    );
+    mapWrapperElement.addEventListener(
+      'mousemove',
+      (e: MouseEvent) => this.handleMouseMove(e, this.element.current),
+      false,
+    );
+
+    const catchElement = this.element.current.querySelectorAll('#kontenery .storage');
     catchElement.forEach((singleElement: any) => {
       singleElement.addEventListener('click', this.handleEventModal, false);
       singleElement.addEventListener('mouseover', this.handleEventMouseOver, false);
       singleElement.addEventListener('mouseout', this.handleEventMouseOut, false);
     });
+  };
+
+  async componentDidMount() {
+    const { fetchBoxStatuses, stock, getStockList } = this.props;
+    await getStockList();
+    await this.eventListenerAdding();
+
+    if (stock) {
+      await fetchBoxStatuses(stock.id);
+    }
+  }
+
+  public componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>): void {
+    const { fetchBoxStatuses, stock, boxesGroup } = this.props;
+    boxesGroup === null && fetchBoxStatuses(stock.id);
+
+    if (stock) {
+      this.statusColorMarker();
+    }
+  }
+
+  componentWillUnmount() {
+    const catchElement = this.element.current.querySelectorAll('#kontenery .storage');
+    catchElement.forEach((singleElement: any) => {
+      singleElement.removeEventListener('click', this.handleEventModal, false);
+      singleElement.removeEventListener('mouseover', this.handleEventMouseOver, false);
+      singleElement.removeEventListener('mouseout', this.handleEventMouseOut, false);
+    });
   }
 
   private setBoxStatus = (boxId: string, singleElement: any): void => {
     const { boxesGroup } = this.props;
-    boxesGroup.find((singleBox: BoxListItem): void => {
+
+    boxesGroup?.forEach((singleBox: BoxListItem): void => {
       if (singleBox.number === boxId && singleBox.status !== RentStatus.free) {
         switch (singleBox.status) {
           case RentStatus.toCheck:
-            singleElement.classList.add('toCheck');
+            singleElement.firstElementChild.classList.add('to-check');
             break;
           case RentStatus.rented:
-            singleElement.classList.add('rented');
+            singleElement.firstElementChild.classList.add('rented');
             break;
           case RentStatus.reserved:
-            singleElement.classList.add('reserved');
+            singleElement.firstElementChild.classList.add('reserved');
             break;
           case RentStatus.toExplain:
-            singleElement.classList.add('to-explain');
+            singleElement.firstElementChild.classList.add('to-explain');
+            singleElement.lastElementChild.classList.add('to-explain-text');
             break;
           case RentStatus.noPaidExtension:
-            singleElement.classList.add('no-paid-extension');
+            singleElement.firstElementChild.classList.add('no-paid-extension');
             break;
           case RentStatus.noPaidExtensionWithWarning:
-            singleElement.classList.add('no-paid-extension-with-warning');
+            singleElement.firstElementChild.classList.add('no-paid-extension-with-warning');
+            break;
+          case RentStatus.outOfService:
+            singleElement.firstElementChild.classList.add('out-of-service');
+            singleElement.lastElementChild.classList.add('out-of-service-text');
             break;
           default:
             break;
         }
+      } else {
+        singleElement.firstElementChild.classList.add('free');
       }
     });
   };
 
+  private handleMouseDown = (e: MouseEvent, el: HTMLElement): any => {
+    this.setState({
+      isMouseDown: true,
+      grabStartX: e.pageX - el.offsetLeft,
+      grabStartY: e.pageY - el.offsetTop,
+      scrollLeft: el.scrollLeft,
+      scrollTop: el.scrollTop,
+    });
+    el.classList.add('grab');
+  };
+
+  private handleMouseUp = (e: MouseEvent, el: HTMLElement): any => {
+    this.setState({
+      isMouseDown: false,
+    });
+    el.classList.remove('grab');
+  };
+
+  private handleMouseLeave = (e: MouseEvent, el: HTMLElement): any => {
+    this.setState({
+      isMouseDown: false,
+    });
+    el.classList.remove('grab');
+  };
+
+  private handleMouseMove = (e: MouseEvent, el: HTMLElement): any => {
+    const { isMouseDown, grabStartX, grabStartY, scrollLeft, scrollTop } = this.state;
+    if (!isMouseDown) return;
+    e.preventDefault();
+    const mousePositionX = e.pageX - el.offsetLeft;
+    const mousePositionY = e.pageY - el.offsetTop;
+    const mapMoveDistance = mousePositionX - grabStartX;
+    const mapMoveHieght = mousePositionY - grabStartY;
+
+    el.scrollLeft = scrollLeft - mapMoveDistance;
+    el.scrollTop = scrollTop - mapMoveHieght;
+  };
+
   handleEventModal = (e: any): any => {
-    const { showModal, boxesGroup, fetchSingleBoxDetails } = this.props;
-    let selectedBoxId = e.target.parentElement.parentElement.id.slice(1);
+    const { showModal, boxesGroup, fetchSingleBoxDetails, user } = this.props;
+    const selectedBoxId = e.target.parentElement.id;
     let selectedRentId = '';
-    if (e.target.parentElement.attributes.class && e.target.parentElement.attributes.class.value === 'storage') {
-      selectedBoxId = e.target.parentElement.id.slice(1);
-    }
 
-    if (e.target.attributes.class.value === 'st9 st10') {
-      selectedBoxId = e.target.parentElement.id.slice(1);
-    }
-
-    boxesGroup.find((singleBox: BoxListItem): void => {
+    boxesGroup?.find((singleBox: BoxListItem): void => {
       if (singleBox.number === selectedBoxId && singleBox.status !== RentStatus.free) {
         selectedRentId = singleBox.rentId;
       }
     });
 
-    if (selectedRentId !== '') {
+    if (selectedRentId !== '' && user.role === UserRole.admin) {
       fetchSingleBoxDetails(selectedRentId);
     }
     showModal(<BoxDetail selectedBoxId={selectedBoxId} rentId={selectedRentId} />);
@@ -122,22 +223,62 @@ class BoxMapManagement extends React.Component<Props> {
     }
   };
 
+  private mapScaleUpHandle = () => {
+    const mapWrapperElement = this.element.current;
+    const { mapScale } = this.state;
+    if (mapScale < 150) {
+      const name = `scale${mapScale}`;
+      mapWrapperElement.classList.remove(name);
+      this.setState({
+        mapScale: mapScale + 10,
+      });
+
+      const newName = `scale${mapScale + 10}`;
+      mapWrapperElement.classList.add(newName);
+    }
+  };
+
+  private mapScaleDownHandle = () => {
+    const mapWrapperElement = this.element.current;
+    const { mapScale } = this.state;
+    if (mapScale > 90) {
+      const name = `scale${mapScale}`;
+      mapWrapperElement.classList.remove(name);
+
+      this.setState({
+        mapScale: mapScale - 10,
+      });
+
+      const newName = `scale${mapScale - 10}`;
+      mapWrapperElement.classList.add(newName);
+    }
+  };
+
   render() {
+    const { stock } = this.props;
     return (
-      <>
+      <Section full>
         <PageHeader title={`${__('application.storagesPlan')}`} />
         <MapLegend />
-        <div className="map-wrapper" ref={this.element}>
-          <ReactLogo id="svg-map" />
-        </div>
-      </>
+        {stock?.id ? (
+          <div className="map-wrapper scale100" ref={this.element}>
+            <div className="map-scale">
+              <span className="fa fa-plus-circle" onClick={() => this.mapScaleUpHandle()} />
+              <span className="fa fa-minus-circle" onClick={() => this.mapScaleDownHandle()} />
+            </div>
+            <ReactLogo id="svg-map" />
+          </div>
+        ) : (
+          <Spinner />
+        )}
+      </Section>
     );
   }
 }
 const mapStateToProps = (state: ApplicationState) => ({
   boxesGroup: state.boxes.boxesGroup,
   user: state.user.details,
-  stockId: state.rent.stockId,
+  stock: state.stock.list[0],
 });
 
 const mapDispatchToProps = (dispatch: any) =>
@@ -145,6 +286,7 @@ const mapDispatchToProps = (dispatch: any) =>
     {
       ...modal,
       ...boxes,
+      ...stock,
     },
     dispatch,
   );

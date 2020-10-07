@@ -8,7 +8,7 @@ export type RentsStatus = {
 
 interface BoxGroup {
   type: 'FETCH_MY_RENT_STORY_SUCCESS';
-  payload: RentStatus;
+  payload: MyRentList[];
 }
 
 interface GetSingleRent {
@@ -30,7 +30,7 @@ const initialState: RentsStatus = {
     getProps: () => [],
   },
   rentsList: [],
-  stockId: '1231qweqwe123',
+  stockId: '',
 };
 
 export default (state: RentsStatus = initialState, action: Action): any => {
@@ -38,12 +38,11 @@ export default (state: RentsStatus = initialState, action: Action): any => {
     case 'FETCH_MY_RENT_STORY_SUCCESS': {
       return {
         ...state,
-        rentsList: action.payload,
+        rentsList: action.payload.filter((rent: MyRentList) => rent.status !== RentStatus.failure),
       };
     }
 
     case 'GET_SINGLE_RENT': {
-      console.log('action.payload', action.payload);
       const foundRent = state.rentsList.find((rent: MyRentList) => rent.id === action.payload);
       if (foundRent) {
         return {

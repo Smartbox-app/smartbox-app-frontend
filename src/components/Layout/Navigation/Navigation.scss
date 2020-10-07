@@ -4,9 +4,7 @@
 .page-header-wrapper {
   display: flex;
   flex-direction: row;
-
 }
-
 
 .navigation-wrapper {
   display: flex;
@@ -26,7 +24,7 @@
 
 @include gt-sm {
   .navigation-wrapper {
-      position: relative;
+    position: relative;
   }
 }
 
@@ -37,7 +35,7 @@
     margin: 0 auto $main-spacing;
 
     .logo-container {
-      width:  map-get($breakpoints, lg) /2;
+      width: map-get($breakpoints, lg) / 2;
       height: 100px;
       width: auto;
       margin: 0;
@@ -47,7 +45,7 @@
     }
 
     .navigation-wrapper {
-      width:  map-get($breakpoints, lg) /2;
+      width: map-get($breakpoints, lg) / 2;
       margin: 0;
     }
   }

@@ -4,5 +4,6 @@ import BoxMapManagement from './BoxMapManagement';
 import SingleRentDetail from './SingleRentDetail';
 import Profile from './Profile';
 import Contact from './Contact';
+import Invoice from './Invoice';
 
-export { Welcome, Order, BoxMapManagement, SingleRentDetail, Profile, Contact };
+export { Welcome, Order, BoxMapManagement, SingleRentDetail, Profile, Contact, Invoice };

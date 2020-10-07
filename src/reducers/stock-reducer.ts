@@ -1,11 +1,13 @@
-import { StockList } from 'smartbox-types';
+import { DiscountList, StockList } from 'smartbox-types';
 
 export interface StockStatus {
   list: StockList[];
-};
+  discountsList: DiscountList[];
+}
 
 const initialState: StockStatus = {
   list: [],
+  discountsList: [],
 };
 
 interface FetchWorkersList {
@@ -13,7 +15,12 @@ interface FetchWorkersList {
   payload: StockList[];
 }
 
-type Action = FetchWorkersList;
+interface FetchDiscountsList {
+  type: 'FETCH_STOCK_DISCOUNTS_LIST_SUCCESS';
+  payload: DiscountList[];
+}
+
+type Action = FetchWorkersList | FetchDiscountsList;
 
 export default (state: StockStatus = initialState, action: Action) => {
   switch (action.type) {
@@ -21,6 +28,11 @@ export default (state: StockStatus = initialState, action: Action) => {
       return {
         ...state,
         list: action.payload,
+      };
+    case 'FETCH_STOCK_DISCOUNTS_LIST_SUCCESS':
+      return {
+        ...state,
+        discountsList: action.payload,
       };
     default:
       return state;
