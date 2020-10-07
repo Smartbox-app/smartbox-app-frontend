@@ -23,7 +23,7 @@ interface Props {
 
 const CreditCardForm = ({ user, paymentId, sentExecutePaymentWithBlikRequest, showModal }: Props) => {
   const defaultValues = {
-    blikInput: '123456',
+    blikInput: '',
   };
   const { handleSubmit, register, errors, watch } = useForm({ defaultValues });
 
