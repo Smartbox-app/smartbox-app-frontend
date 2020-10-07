@@ -22,7 +22,7 @@ interface Props {
 
 const BankForm = ({ user, paymentId, sentExecutePaymentWithTpayRequest, bankGroup }: Props) => {
   useEffect(() => {
-    sentExecutePaymentWithTpayRequest(paymentId, bankGroup.name);
+    sentExecutePaymentWithTpayRequest(paymentId, bankGroup.id);
   }, []);
 
   const { handleSubmit, register, errors, watch } = useForm();
