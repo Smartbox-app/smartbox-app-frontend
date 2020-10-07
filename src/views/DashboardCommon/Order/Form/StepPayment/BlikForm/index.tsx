@@ -21,11 +21,11 @@ interface Props {
   showModal: (content: React.ReactNode, isClosable: boolean) => void;
 }
 
-const CreditCardForm = ({ user, paymentId, sentExecutePaymentWithBlikRequest, showModal }: Props) => {
+const BlikForm = ({ user, paymentId, sentExecutePaymentWithBlikRequest, showModal }: Props) => {
   const defaultValues = {
     blikInput: '',
   };
-  const { handleSubmit, register, errors, watch } = useForm({ defaultValues });
+  const { handleSubmit, register, watch } = useForm({ defaultValues });
 
   const onSubmit = (data: any) => {
     const req: ExecuteBlikPaymentReq = {
@@ -33,7 +33,7 @@ const CreditCardForm = ({ user, paymentId, sentExecutePaymentWithBlikRequest, sh
       code: data.blikInput,
     };
     showModal(<BlikWaitingModal />, false);
-    // sentExecutePaymentWithBlikRequest(req);
+    sentExecutePaymentWithBlikRequest(req);
   };
 
   const onBack = () => {
@@ -71,4 +71,4 @@ const mapDispatchToProps = (dispatch: any) =>
     dispatch,
   );
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreditCardForm);
+export default connect(mapStateToProps, mapDispatchToProps)(BlikForm);

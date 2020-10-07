@@ -60,9 +60,7 @@ export const sentExecutePaymentWithBlikRequest = (data: ExecuteBlikPaymentReq) =
     'SENT_EXECUTE_PAYMENT_WITH_BLIK_REQUEST_SUCCESS',
     'SENT_EXECUTE_PAYMENT_WITH_BLIK_REQUEST_FAILED',
     null,
-    () => {
-      dispatch(modal.showModal(BlikWaitingModal, false));
-    },
+    null,
     'rent/execute-payment-with-blik',
     'LOADING',
     data,
