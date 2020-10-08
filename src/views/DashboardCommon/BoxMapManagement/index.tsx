@@ -100,6 +100,13 @@ class BoxMapManagement extends React.Component<Props, State> {
       catchElement.forEach((singleElement: any) => {
         singleElement.classList.add('rented');
       });
+
+      const myBox = this.element.current.querySelectorAll('#kontenery .storage');
+      myBox.forEach((singleElement: any) => {
+        if (Number(singleElement.id) === this.props.boxNumberToMarkWay) {
+          singleElement.classList.add('myBox');
+        }
+      });
     }
   };
 

@@ -9,7 +9,7 @@ $buttonSize: 40px;
 
 .scale100 {
   svg {
-    transform: scale(1.0);
+    transform: scale(1);
   }
 }
 
@@ -65,7 +65,7 @@ $buttonSize: 40px;
 
       &:hover {
         cursor: pointer;
-        color: darken($color-primary, 5%)
+        color: darken($color-primary, 5%);
       }
     }
   }
@@ -85,6 +85,12 @@ $buttonSize: 40px;
       background: transparent;
       &:hover {
         cursor: pointer;
+      }
+    }
+
+    .myBox {
+      rect {
+        fill: $color-primary;
       }
     }
 

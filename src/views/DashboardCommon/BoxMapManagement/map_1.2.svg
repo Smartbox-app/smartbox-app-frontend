@@ -30,7 +30,7 @@
 	<text transform="matrix(1 0 0 1 1797.1724 326.4627)" class="st2 st3">Brama nr 2</text>
 </g>
 	<g id="kontenery">
-		<g id="0100">
+		<g id="_100">
 			<g id="100" class="storage">
 				<rect x="103.3" y="280.7" class="st4" width="15" height="20.6"/>
 				<text transform="matrix(1 0 0 1 106.2164 292.73)" class="st2 st5">100</text>
@@ -315,7 +315,7 @@
 				<rect x="70" y="280.7" class="st6" width="31.7" height="20.6"/>
 			</g>
 		</g>
-		<g id="0200">
+		<g id="_200">
 			<g id="200" class="storage">
 				<rect x="70" y="250.7" class="st4" width="65" height="20.6"/>
 				<text transform="matrix(1 0 0 1 97.5497 262.73)" class="st2 st5">200</text>
@@ -593,7 +593,7 @@
 				<text transform="matrix(1 0 0 1 1507.474 262.73)" class="st2 st5">268</text>
 			</g>
 		</g>
-		<g id="0300">
+		<g id="_300">
 			<g id="300" class="storage">
 				<rect x="70" y="169.7" class="st7" width="65" height="20.6"/>
 				<text transform="matrix(1 0 0 1 97.5497 181.73)" class="st2 st5">300</text>
@@ -695,7 +695,7 @@
 				<text transform="matrix(1 0 0 1 807.2467 181.73)" class="st2 st5">324</text>
 			</g>
 		</g>
-		<g id="0400">
+		<g id="_400">
 			<g>
 				<rect x="70" y="139.7" class="st6" width="15" height="20.6"/>
 			</g>
@@ -792,7 +792,7 @@
 				<text transform="matrix(1 0 0 1 596.8376 151.73)" class="st2 st5">422</text>
 			</g>
 		</g>
-		<g id="0500">
+		<g id="_500">
 			<g id="500" class="storage">
 				<rect x="80.7" y="33.6" transform="matrix(9.761983e-02 -0.9952 0.9952 9.761983e-02 58.4727 152.2162)" class="st7" width="65" height="20.6"/>
 				<text transform="matrix(9.761983e-02 -0.9952 0.9952 9.761983e-02 114.4444 48.9625)" class="st2 st5">500</text>
