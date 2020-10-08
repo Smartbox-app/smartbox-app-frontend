@@ -37,6 +37,7 @@ import { appStatus } from './actions/app-status';
 
 import 'flatpickr/dist/flatpickr.min.css';
 import 'flatpickr/dist/themes/airbnb.css';
+import PaymentFailed from './views/DashboardCommon/PaymentFailed';
 
 flatpickr.localize(Polish);
 flatpickr.defaultConfig.time_24hr = true;
@@ -78,7 +79,7 @@ const App = () => {
               <Route path="/register" component={Register} />
               <Route exact path="/restore-pass/" component={RestorePass} />
               <Route exact path="/payment-success/:paymentId" component={Invoice} />
-              <Route exact path="/payment-failed/" component={Invoice} />
+              <Route exact path="/payment-failed/" component={PaymentFailed} />
               <Route path="/restore-pass/:userId/:updateToken" component={RestorePass} />
               <Route exact path="/user-activation/:invitationId/:updateToken" component={UserActivation} />
               <RouteAdmin path="/admin" component={DashboardAdmin} />

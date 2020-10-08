@@ -7,5 +7,5 @@ export const fetchMyRentStory = () => async (dispatch: any) => {
 export const getSingleRent = (rentId: string) => ({ type: 'GET_SINGLE_RENT', payload: rentId });
 
 export const endMyRent = (rentId: string) => async (dispatch: any) => {
-  await ApiService.patch(dispatch, 'END_MY_RENT_SUCCESS', 'END_MY_RENT_FAILED', null, null, `rent/finish${rentId}`);
+  await ApiService.patch(dispatch, 'END_MY_RENT_SUCCESS', 'END_MY_RENT_FAILED', null, null, `rent/finish/${rentId}`);
 };

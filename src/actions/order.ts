@@ -41,14 +41,14 @@ export const sentRentBoxRequest = (data: RentBoxReq, nextStep: string, role: Use
   );
 };
 
-export const sentExecutePaymentRequest = (data: ExecutePaymentReq) => async (dispatch: any) => {
+export const sentExecutePaymentRequest = (data: ExecutePaymentReq, develop = false) => async (dispatch: any) => {
   await ApiService.post(
     dispatch,
     'SENT_EXECUTE_PAYMENT_REQUEST_SUCCESS',
     'SENT_EXECUTE_PAYMENT_REQUEST_FAILED',
     null,
     null,
-    'rent/execute-payment/true',
+    develop ? 'rent/execute-payment/true' : 'rent/execute-payment',
     'LOADING',
     data,
   );
