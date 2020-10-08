@@ -21,7 +21,7 @@
 
   .section-full-width {
     width: 100%;
-    min-width: map-get($breakpoints, lg);
+    min-width: map-get($breakpoints, sm);
   }
 
   .section-half-width {
@@ -29,10 +29,3 @@
     max-width: map-get($breakpoints, lg) /2;
   }
 }
-
-//@include gt-xl {
-//
-//  .section-full-width {
-//    min-width: map-get($breakpoints, xl);
-//  }
-//}
