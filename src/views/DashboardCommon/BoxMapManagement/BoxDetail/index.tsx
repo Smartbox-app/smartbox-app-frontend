@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { RentDetailsRes, UserRes, UserRole } from 'smartbox-types';
+import { RentDetailsRes, UserRes } from 'smartbox-types';
 import { connect } from 'react-redux';
 import { ButtonsContainer, SectionHeader } from '../../../../components/Layout';
 import { Button } from '../../../../components/Common';
 import { ApplicationState } from '../../../../reducers';
 import { dateOnly } from '../../../../utils/format-date';
 import { __ } from '../../../../helpers/i18n';
+import { isAdmin } from '../../../../utils/role-check';
 
 import Edit from './Edit';
 
@@ -31,7 +32,7 @@ const BoxDetail = ({ selectedBoxId, singleBoxDetail, rentId, user }: Props) => {
         <span>{__('application.storeNumber')}: </span>
         <strong>{selectedBoxId}</strong>
       </p>
-      {user.role === UserRole.admin && (
+      {isAdmin(user.role) && (
         <>
           <p className="single">
             <span className="fa fa-user" />

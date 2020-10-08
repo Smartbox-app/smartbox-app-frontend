@@ -2,12 +2,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { FieldType, TableSchema, TableSchemaField, usersList } from 'smartbox-tables';
-import { IUser, UserRes, UserRole, UserStatus } from 'smartbox-types';
+import { IUser, UserStatus } from 'smartbox-types';
 import { ApiTable, Button, ConfirmModal } from '../../../../../components/Common';
 import { ButtonsContainer, PageHeader, Section } from '../../../../../components/Layout';
 import { __ } from '../../../../../helpers/i18n';
 import { InteractiveTableSchema } from '../../../../../utils/table-schema-utils';
 import { modal, user } from '../../../../../actions';
+import { isWorker } from '../../../../../utils/role-check';
+
 import EditAssign from './EditAssign';
 
 interface Props {
@@ -60,7 +62,7 @@ class List extends React.Component<Props> {
   }
 
   private getAssignButton = (value: any, field: TableSchemaField, userData: IUser) => {
-    if (userData.role === UserRole.worker) {
+    if (isWorker(userData.role)) {
       return (
         <Button
           text="Zmień przypisanie"

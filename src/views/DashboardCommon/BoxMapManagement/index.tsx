@@ -230,7 +230,7 @@ class BoxMapManagement extends React.Component<Props, State> {
       }
     });
 
-    if (selectedRentId !== '' && user.role === UserRole.admin) {
+    if (selectedRentId !== '' && isAdmin(user.role)) {
       fetchSingleBoxDetails(selectedRentId);
     }
     showModal(<BoxDetail selectedBoxId={selectedBoxId} rentId={selectedRentId} />);
