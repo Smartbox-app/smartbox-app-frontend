@@ -1,5 +1,6 @@
 import React from 'react';
 import { addYears } from 'date-fns';
+import { Controller } from 'react-hook-form';
 import Select from 'react-select';
 import { __ } from '../../../helpers/i18n';
 
@@ -8,9 +9,10 @@ import './CreditCardInput.scss';
 interface Props {
   register: any;
   errors: any;
+  control: any;
 }
 
-const CreditCardInput = ({ register, errors }: Props) => {
+const CreditCardInput = ({ register, errors, control }: Props) => {
   const month = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
 
   const optionsMonth = month.map((data: string) => ({
@@ -94,8 +96,23 @@ const CreditCardInput = ({ register, errors }: Props) => {
       <div className="expiration-date-wrapper">
         <span>{__('application.expiryDate')}:</span>
         <div className="expiration-date">
-          <Select defaultValue={optionsMonth[0]} styles={customStyles} options={optionsMonth} />
-          <Select defaultValue={yearMonth[0]} styles={customStyles} options={yearMonth} />
+          <Controller
+            name="expirationDateMonth"
+            rules={{ required: true }}
+            control={control}
+            defaultValue={optionsMonth[0]}
+            options={optionsMonth}
+            as={<Select styles={customStyles} />}
+          />
+
+          <Controller
+            name="expirationDateYear"
+            rules={{ required: true }}
+            control={control}
+            defaultValue={yearMonth[0]}
+            options={yearMonth}
+            as={<Select styles={customStyles} />}
+          />
         </div>
       </div>
       <div className="cvv-wrapper">

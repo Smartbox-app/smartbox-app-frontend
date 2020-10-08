@@ -32,8 +32,8 @@ const BlikForm = ({ user, paymentId, sentExecutePaymentWithBlikRequest, showModa
       paymentId,
       code: data.blikInput,
     };
-    showModal(<BlikWaitingModal />, false);
     sentExecutePaymentWithBlikRequest(req);
+    showModal(<BlikWaitingModal />, false);
   };
 
   const onBack = () => {
