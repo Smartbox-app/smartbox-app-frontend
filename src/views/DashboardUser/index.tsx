@@ -37,7 +37,6 @@ const DashboardUser = () => {
           <Route path="/user/main" component={Welcome} />
           <Route path="/user/profile" component={Profile} />
           <Route path="/user/contact" component={Contact} />
-          <Route path="/invoice/" component={Invoice} />
           <Route path="/user/order/step/:step" component={Order} />
           <Route path="/user/order/step/:step/:orderId" component={Order} />
           <Route exact path="/user/single-rent/:orderId" component={SingleRentDetail} />

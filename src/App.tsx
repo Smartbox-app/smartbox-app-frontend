@@ -77,7 +77,8 @@ const App = () => {
               <Route path="/login" component={Login} />
               <Route path="/register" component={Register} />
               <Route exact path="/restore-pass/" component={RestorePass} />
-              <Route exact path="/invoice/" component={Invoice} />
+              <Route exact path="/payment-success/:paymentId" component={Invoice} />
+              <Route exact path="/payment-failed/" component={Invoice} />
               <Route path="/restore-pass/:userId/:updateToken" component={RestorePass} />
               <Route exact path="/user-activation/:invitationId/:updateToken" component={UserActivation} />
               <RouteAdmin path="/admin" component={DashboardAdmin} />
