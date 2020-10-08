@@ -62,8 +62,12 @@ const BoxDetail = ({ selectedBoxId, singleBoxDetail, rentId, user }: Props) => {
               {isThisBoxFree(rentId) ? (
                 '---'
               ) : (
-                <a href={`mailto:${singleBoxDetail.owner.email}`} rel="noopener noreferrer" target="_blank">
-                  {singleBoxDetail.owner.email}
+                <a
+                  href={`mailto:${singleBoxDetail.owner ? singleBoxDetail.owner.email : 'error'}`}
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  {singleBoxDetail.owner ? singleBoxDetail.owner.email : 'brak'}
                 </a>
               )}
             </strong>
