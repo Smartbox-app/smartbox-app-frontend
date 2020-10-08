@@ -5,19 +5,19 @@ import { ItfApiForm } from 'itf_formbuilder_react';
 import { GetGiftReq, GiftRes } from 'smartbox-types';
 import { Button } from '../../../../../../../components/Common';
 import { FormContainer, ButtonsContainer } from '../../../../../../../components/Layout';
-import { modal, order } from '../../../../../../../actions';
+import { modal, notifications, order } from '../../../../../../../actions';
 import FormHeader from '../../../../../../../components/Layout/FormHeader';
 import ApiService from '../../../../../../../services/api-service';
-import { successNotification } from '../../../../../../../actions/notifications';
 import { formOnTranslateString } from '../../../../../../../utils/trans-form';
 import { __ } from '../../../../../../../helpers/i18n';
 
 interface Props {
   hideModal: () => void;
   updateFormData: (data: any) => void;
+  successNotification: (text: string) => void;
 }
 
-const DiscountCode = ({ hideModal, updateFormData }: Props) => {
+const DiscountCode = ({ hideModal, updateFormData, successNotification }: Props) => {
   const submitButton = (
     <ButtonsContainer>
       <Button text="Dodaj" type="submit" primary />
@@ -68,6 +68,7 @@ const mapDispatchToProps = (dispatch: any) =>
     {
       ...modal,
       ...order,
+      ...notifications,
     },
     dispatch,
   );

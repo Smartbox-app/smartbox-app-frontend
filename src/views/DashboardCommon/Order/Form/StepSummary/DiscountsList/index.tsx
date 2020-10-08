@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -23,24 +23,29 @@ interface Props {
 }
 
 const DiscountsList = ({ showModal, countedPrice }: Props) => {
+  const [priceName, setPriceName] = useState();
 
   const getText = () => {
     switch (countedPrice.name) {
       case 'firstRentFreePracing':
-        return __('application.firstRentFreePracing');
+        return setPriceName(__('application.firstRentFreePracing'));
       case 'withDicoutnPricing':
-        return __('application.withDicoutnPricing');
+        return setPriceName(__('application.withDicoutnPricing'));
       case 'cardPricing':
-        return __('application.cardPricing');
+        return setPriceName(__('application.cardPricing'));
       default:
-        return __('application.standardPrice');
+        return setPriceName(__('application.standardPrice'));
     }
   };
+
+  useEffect(() => {
+    getText();
+  }, [countedPrice]);
 
   return (
     <div>
       <FormHeader title={__('application.usedDiscount')} />
-      <div className="discount-wrapper">{getText()}</div>
+      <div className="discount-wrapper">{priceName}</div>
       <ButtonsContainer>
         <Button text={__('application.useDiscountCode')} primary click={() => showModal(<DiscountCode />)} />
       </ButtonsContainer>
