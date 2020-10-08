@@ -4,9 +4,10 @@ import { Main, Section, Footer } from '../../components/Layout';
 import DashboardContainer from '../../components/Layout/DashboardContainer';
 import { MenuItemType } from '../../types/menu-item';
 import Navigation from '../../components/Layout/Navigation';
-import { BoxMapManagement, Invoice } from '../DashboardCommon';
+import { Invoice } from '../DashboardCommon';
 import Profile from '../DashboardCommon/Profile';
 import { __ } from '../../helpers/i18n';
+import ManagementWorker from './ManagementWorker';
 
 const DashboardWorker = () => {
   const menuItems: MenuItemType[] = [
@@ -29,7 +30,7 @@ const DashboardWorker = () => {
         <Switch>
           <Section full>
             <Route exact path="/worker" render={() => <Redirect to="/worker/management" />} />
-            <Route path="/worker/management/" component={BoxMapManagement} />
+            <Route path="/worker/management/" component={ManagementWorker} />
             <Route path="/worker/profile" component={Profile} />
             <Route path="/worker/invoice/" component={Invoice} />
           </Section>

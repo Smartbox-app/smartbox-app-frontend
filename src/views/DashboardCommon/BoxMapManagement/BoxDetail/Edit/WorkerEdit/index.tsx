@@ -4,24 +4,23 @@ import ReactSelect from 'react-select';
 import { connect } from 'react-redux';
 import ReactCreatableSelect from 'react-select/creatable';
 import { bindActionCreators } from 'redux';
-import { ChangeStatusReq, StockList } from 'smartbox-types';
-import { modal } from '../../../../../../actions';
+import { ChangeStatusReq } from 'smartbox-types';
+import { modal, notifications } from '../../../../../../actions';
 import { FormContainer, ButtonsContainer } from '../../../../../../components/Layout';
 import { Button, Spinner } from '../../../../../../components/Common';
 import { ApplicationState } from '../../../../../../reducers';
 import ApiService from '../../../../../../services/api-service';
 import { formOnTranslateString } from '../../../../../../utils/trans-form';
-import { successNotification } from '../../../../../../actions/notifications';
 import { __ } from '../../../../../../helpers/i18n';
 
 interface Props {
   selectedBoxId: string;
   rentId: string;
   hideModal: () => void;
-  stock: StockList;
+  successNotification: (text: string) => void;
 }
 
-const Status = ({ selectedBoxId, hideModal, stock, rentId }: Props) => {
+const Status = ({ selectedBoxId, hideModal, successNotification, rentId }: Props) => {
   const submitButton = (
     <ButtonsContainer>
       <Button text={__('application.changeStatus')} type="submit" danger />
@@ -55,6 +54,7 @@ const Status = ({ selectedBoxId, hideModal, stock, rentId }: Props) => {
           hideModal();
           successNotification(__('notification.userStatusChanged'));
         }}
+        onErrorsWhileSaving={() => hideModal()}
         onTranslateString={formOnTranslateString}
         thirdPartyComponents={{ ReactSelect, ReactCreatableSelect }}
       />
@@ -67,6 +67,6 @@ const mapStateToProps = (state: ApplicationState) => ({
   stock: state.stock.list[0],
 });
 
-const mapDispatchToProps = (dispatch: any) => bindActionCreators({ ...modal }, dispatch);
+const mapDispatchToProps = (dispatch: any) => bindActionCreators({ ...modal, ...notifications }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Status);

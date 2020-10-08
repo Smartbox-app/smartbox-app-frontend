@@ -10,7 +10,7 @@ import { Spinner } from '../../../components/Common';
 import { PageHeader, Section } from '../../../components/Layout';
 import { __ } from '../../../helpers/i18n';
 import { ApplicationState } from '../../../reducers';
-import { isAdmin, isUser } from '../../../utils/role-check';
+import { isAdmin, isUser, isWorker } from '../../../utils/role-check';
 
 import BoxDetail from './BoxDetail';
 
@@ -65,6 +65,9 @@ class BoxMapManagement extends React.Component<Props, State> {
 
   private eventListenerAdding = () => {
     const mapWrapperElement = this.element.current;
+
+    const { user, boxNumberToMarkWay } = this.props;
+
     mapWrapperElement.addEventListener(
       'mousedown',
       (e: MouseEvent) => this.handleMouseDown(e, this.element.current),
@@ -86,15 +89,15 @@ class BoxMapManagement extends React.Component<Props, State> {
       false,
     );
 
-    if (isAdmin(this.props.user.role)) {
+    if (isAdmin(user.role) || isWorker(user.role)) {
       const catchElement = this.element.current.querySelectorAll('#kontenery .storage');
       catchElement.forEach((singleElement: any) => {
         singleElement.addEventListener('click', this.handleEventModal, false);
       });
     }
 
-    if (isUser(this.props.user.role)) {
-      const row = this.props.boxNumberToMarkWay && Math.floor(this.props.boxNumberToMarkWay / 100);
+    if (isUser(user.role)) {
+      const row = boxNumberToMarkWay && Math.floor(boxNumberToMarkWay / 100);
 
       const catchElement = this.element.current.querySelectorAll(`.row${row}00`);
       catchElement.forEach((singleElement: any) => {
@@ -103,7 +106,7 @@ class BoxMapManagement extends React.Component<Props, State> {
 
       const myBox = this.element.current.querySelectorAll('#kontenery .storage');
       myBox.forEach((singleElement: any) => {
-        if (Number(singleElement.id) === this.props.boxNumberToMarkWay) {
+        if (Number(singleElement.id) === boxNumberToMarkWay) {
           singleElement.classList.add('myBox');
         }
       });
@@ -112,7 +115,7 @@ class BoxMapManagement extends React.Component<Props, State> {
 
   async componentDidMount() {
     const { fetchBoxStatuses, stock, getStockList, user } = this.props;
-    if (user.role === UserRole.admin) {
+    if (isAdmin(user.role) || isWorker(user.role)) {
       await getStockList();
     }
     await this.eventListenerAdding();
@@ -124,11 +127,11 @@ class BoxMapManagement extends React.Component<Props, State> {
 
   public componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>): void {
     const { fetchBoxStatuses, stock, boxesGroup, user } = this.props;
-    if (isAdmin(user.role)) {
+    if (isAdmin(user.role) || isWorker(user.role)) {
       boxesGroup === null && fetchBoxStatuses(stock.id);
     }
 
-    if (stock && isAdmin(user.role)) {
+    if (stock && (isAdmin(user.role) || isWorker(user.role))) {
       this.statusColorMarker();
     }
   }
@@ -269,7 +272,7 @@ class BoxMapManagement extends React.Component<Props, State> {
     return (
       <Section full>
         <PageHeader title={`${__('application.storagesPlan')}`} />
-        {isAdmin(user.role) && <MapLegend />}
+        {(isAdmin(user.role) || isWorker(user.role)) && <MapLegend />}
         {isUser(user.role) && (
           <p>
             Twoja skrytka ma numer: <strong>{boxNumberToMarkWay}</strong>
