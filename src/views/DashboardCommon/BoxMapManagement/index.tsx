@@ -120,14 +120,14 @@ class BoxMapManagement extends React.Component<Props, State> {
     }
     await this.eventListenerAdding();
 
-    if (stock && isAdmin(user.role)) {
+    if (stock && (isAdmin(user.role) || isWorker(user.role))) {
       await fetchBoxStatuses(stock.id);
     }
   }
 
   public componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>): void {
     const { fetchBoxStatuses, stock, boxesGroup, user } = this.props;
-    if (isAdmin(user.role) || isWorker(user.role)) {
+    if (stock && (isAdmin(user.role) || isWorker(user.role))) {
       boxesGroup === null && fetchBoxStatuses(stock.id);
     }
 
