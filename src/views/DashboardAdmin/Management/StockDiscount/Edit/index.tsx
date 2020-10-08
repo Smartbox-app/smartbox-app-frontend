@@ -11,8 +11,7 @@ import { Button, Spinner } from '../../../../../components/Common';
 import FormHeader from '../../../../../components/Layout/FormHeader';
 import ApiService from '../../../../../services/api-service';
 import { formOnTranslateString } from '../../../../../utils/trans-form';
-import { successNotification } from '../../../../../actions/notifications';
-import { apiTable, modal } from '../../../../../actions';
+import { apiTable, modal, notifications } from '../../../../../actions';
 import { __ } from '../../../../../helpers/i18n';
 
 import './Edit.scss';
@@ -21,10 +20,10 @@ interface Props {
   discoutnId: string;
   hideModal: () => void;
   refreshApiTableData: () => void;
-  showModal: (content: React.ReactNode) => void;
+  successNotification: (text: string) => void;
 }
 
-const Edit = ({ discoutnId, showModal, hideModal, refreshApiTableData }: Props) => {
+const Edit = ({ discoutnId, successNotification, hideModal, refreshApiTableData }: Props) => {
   const submitButton = (
     <ButtonsContainer>
       <Button text={__('application.edit')} type="submit" primary />
@@ -73,6 +72,7 @@ const mapDispatchToProps = (dispatch: any) =>
     {
       ...modal,
       ...apiTable,
+      ...notifications,
     },
     dispatch,
   );

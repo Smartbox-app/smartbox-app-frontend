@@ -5,24 +5,24 @@ import { connect } from 'react-redux';
 import ReactCreatableSelect from 'react-select/creatable';
 import { bindActionCreators } from 'redux';
 import { ChangeStatusReq, StockList } from 'smartbox-types';
-import { modal } from '../../../../../../actions';
+import { modal, notifications } from '../../../../../../actions';
 import { FormContainer, ButtonsContainer } from '../../../../../../components/Layout';
 import { Button, Spinner } from '../../../../../../components/Common';
 import { ApplicationState } from '../../../../../../reducers';
 import ApiService from '../../../../../../services/api-service';
 import { formOnTranslateString } from '../../../../../../utils/trans-form';
-import { successNotification } from '../../../../../../actions/notifications';
 import { __ } from '../../../../../../helpers/i18n';
 
 import './Status.scss';
 
 interface Props {
   selectedBoxId: string;
-  hideModal: () => void;
   stock: StockList;
+  hideModal: () => void;
+  successNotification: (text: string) => void;
 }
 
-const Status = ({ selectedBoxId, hideModal, stock }: Props) => {
+const Status = ({ selectedBoxId, hideModal, stock, successNotification }: Props) => {
   const submitButton = (
     <ButtonsContainer>
       <Button text={__('application.changeStatus')} type="submit" danger />
@@ -68,6 +68,6 @@ const mapStateToProps = (state: ApplicationState) => ({
   stock: state.stock.list[0],
 });
 
-const mapDispatchToProps = (dispatch: any) => bindActionCreators({ ...modal }, dispatch);
+const mapDispatchToProps = (dispatch: any) => bindActionCreators({ ...modal, ...notifications }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Status);

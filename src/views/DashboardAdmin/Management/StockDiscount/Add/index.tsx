@@ -11,8 +11,7 @@ import { Button, Spinner } from '../../../../../components/Common';
 import FormHeader from '../../../../../components/Layout/FormHeader';
 import ApiService from '../../../../../services/api-service';
 import { formOnTranslateString } from '../../../../../utils/trans-form';
-import { successNotification } from '../../../../../actions/notifications';
-import { apiTable, modal } from '../../../../../actions';
+import { apiTable, modal, notifications } from '../../../../../actions';
 import { __ } from '../../../../../helpers/i18n';
 
 import './Add.scss';
@@ -20,9 +19,10 @@ import './Add.scss';
 interface Props {
   fetchApiTableData: (url: string) => void;
   hideModal: () => void;
+  successNotification: (text: string) => void;
 }
 
-const FormStockDiscount = ({ fetchApiTableData, hideModal }: Props) => {
+const FormStockDiscount = ({ fetchApiTableData, hideModal, successNotification }: Props) => {
   const submitButton = (
     <ButtonsContainer>
       <Button text="Utwórz" type="submit" primary />
@@ -71,6 +71,7 @@ const mapDispatchToProps = (dispatch: any) =>
     {
       ...modal,
       ...apiTable,
+      ...notifications,
     },
     dispatch,
   );

@@ -9,8 +9,7 @@ import { FormContainer, ButtonsContainer, FieldsColumn } from '../../../../../co
 import { Button, Spinner } from '../../../../../components/Common';
 import ApiService from '../../../../../services/api-service';
 import { formOnTranslateString } from '../../../../../utils/trans-form';
-import { successNotification } from '../../../../../actions/notifications';
-import { modal } from '../../../../../actions';
+import { modal, notifications } from '../../../../../actions';
 import { __ } from '../../../../../helpers/i18n';
 
 import NewCode from '../NewCode';
@@ -19,9 +18,10 @@ import './Form.scss';
 
 interface Props {
   showModal: (content: React.ReactNode) => void;
+  successNotification: (text: string) => void;
 }
 
-const Form = ({ showModal }: Props) => {
+const Form = ({ showModal, successNotification }: Props) => {
   const submitButton = (
     <ButtonsContainer>
       <Button text="Utwórz" type="submit" primary />
@@ -67,6 +67,7 @@ const mapDispatchToProps = (dispatch: any) =>
   bindActionCreators(
     {
       ...modal,
+      ...notifications,
     },
     dispatch,
   );

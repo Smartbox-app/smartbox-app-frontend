@@ -1,23 +1,26 @@
 import React from 'react';
 import { ItfApiForm } from 'itf_formbuilder_react';
 import ReactSelect from 'react-select';
+import { connect } from 'react-redux';
 import ReactCreatableSelect from 'react-select/creatable';
+import { bindActionCreators } from 'redux';
 import { ChangeStatusReq } from 'smartbox-types';
+import { notifications } from '../../../../../../actions';
 import { FormContainer, ButtonsContainer } from '../../../../../../components/Layout';
 import { Button, Spinner } from '../../../../../../components/Common';
 import ApiService from '../../../../../../services/api-service';
 import { formOnTranslateString } from '../../../../../../utils/trans-form';
-import { successNotification } from '../../../../../../actions/notifications';
 import { __ } from '../../../../../../helpers/i18n';
 
 import './Position.scss';
 
 interface Props {
   selectedBoxId: string;
+  successNotification: (text: string) => void;
   rentId?: string;
 }
 
-const Position = ({ rentId, selectedBoxId }: Props) => {
+const Position = ({ rentId, selectedBoxId, successNotification }: Props) => {
   const submitButton = (
     <ButtonsContainer>
       <Button text={__('application.move')} type="submit" danger />
@@ -56,4 +59,6 @@ const Position = ({ rentId, selectedBoxId }: Props) => {
   );
 };
 
-export default Position;
+const mapDispatchToProps = (dispatch: any) => bindActionCreators({ ...notifications }, dispatch);
+
+export default connect(null, mapDispatchToProps)(Position);
