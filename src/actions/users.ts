@@ -48,3 +48,16 @@ export const fetchSingleUser = (userId: string) => async (dispatch: any) => {
     `user/details/${userId}`,
   );
 };
+
+export const fetchMyData = () => async (dispatch: any) => {
+  await ApiService.get(
+    dispatch,
+    'GET_MY_DETAILS_SUCCESS',
+    'GET_MY_DETAILS_FAILED',
+    () => {
+      dispatch(successNotification('Pobrano dane!'));
+    },
+    null,
+    'user/me',
+  );
+};
