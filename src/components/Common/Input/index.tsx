@@ -33,10 +33,10 @@ const Input = (props: Props) => {
   if (props.type === 'select') {
     const options = props.options
       ? props.options.map((option) => (
-        <option disabled={option.disabled} key={option.value} value={option.value}>
+          <option disabled={option.disabled} key={option.value} value={option.value}>
             {option.name}
           </option>
-      ))
+        ))
       : null;
     return (
       <div className={containerClass}>
@@ -88,7 +88,7 @@ const Input = (props: Props) => {
       <div className={containerClass}>
         {label}
         <div className="input-wrapper">
-          <Icon className="input-icon" noWrapper icon={props.type} />
+          {/*<Icon className="input-icon" noWrapper icon={props.type} />*/}
           <input
             className={`input ${props.dark ? 'dark' : ''} input-${props.type} ${errorClass(props.input.errors)}`}
             id={props.input.name}

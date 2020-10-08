@@ -3,7 +3,6 @@ import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { MyRentList } from 'smartbox-types';
-import { Spinner } from '../../../components/Common';
 import { Section, SectionHeader } from '../../../components/Layout';
 
 import { singleRent } from '../../../actions';

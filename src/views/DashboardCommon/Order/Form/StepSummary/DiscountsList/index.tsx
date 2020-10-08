@@ -9,7 +9,6 @@ import { modal } from '../../../../../../actions';
 import { __ } from '../../../../../../helpers/i18n';
 import { ApplicationState } from '../../../../../../reducers';
 
-import RadioDiscount from './RadioDiscount';
 import DiscountCode from './DiscountCode';
 
 import './DiscountsList.scss';

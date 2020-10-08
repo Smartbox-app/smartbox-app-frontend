@@ -4,7 +4,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { BoxListItem, RentStatus, StockList, UserRes, UserRole } from 'smartbox-types';
+import { BoxListItem, RentStatus, StockList, UserRes } from 'smartbox-types';
 import { boxes, modal, stock } from '../../../actions';
 import { Spinner } from '../../../components/Common';
 import { PageHeader, Section } from '../../../components/Layout';

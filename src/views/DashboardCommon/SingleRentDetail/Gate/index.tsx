@@ -5,7 +5,6 @@ import { bindActionCreators } from 'redux';
 import { Coordinate } from 'smartbox-types';
 import { Button } from '../../../../components/Common';
 import { ApplicationState } from '../../../../reducers';
-import { ButtonsContainer } from '../../../../components/Layout';
 import { gate } from '../../../../actions';
 
 import './Gate.scss';

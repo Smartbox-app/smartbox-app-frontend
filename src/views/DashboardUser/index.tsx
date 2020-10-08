@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Route, Redirect, Switch } from 'react-router-dom';
 import { Main } from '../../components/Layout';
-import { Welcome, Order, Profile, Contact, Invoice } from '../DashboardCommon';
+import { Welcome, Order, Profile, Contact } from '../DashboardCommon';
 import { MenuItemType } from '../../types/menu-item';
 
 import DashboardContainer from '../../components/Layout/DashboardContainer';

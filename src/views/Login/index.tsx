@@ -11,7 +11,7 @@ import { translateErrors } from '../../utils/errors-trans';
 import { getRememberedRedirect, clearRememberedRedirect } from '../../utils/remeber-redirect';
 import { store } from '../../App';
 import { formOnTranslateString } from '../../utils/trans-form';
-import { FormContainer, PageContent, LogoContainer } from '../../components/Layout';
+import { FormContainer, PageContent } from '../../components/Layout';
 import { ApplicationState } from '../../reducers';
 
 import ButtonsSection from './ButtonSection';
@@ -91,6 +91,7 @@ class Login extends React.Component<Props> {
                 case 'text':
                   return (
                     <Input
+                      key={fieldHtmlId}
                       className="login-input"
                       type={field.options.type}
                       input={{

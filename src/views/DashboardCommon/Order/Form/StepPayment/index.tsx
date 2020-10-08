@@ -9,8 +9,8 @@ import { MainPaymentWay } from '../../../../../reducers/order-reducer';
 import UserService from '../../../../../services/user-service';
 import { FormType } from '../../../../../types/order-form';
 import { ApplicationState } from '../../../../../reducers';
-import { __ } from '../../../../../helpers/i18n';
 import { history } from '../../../../../App';
+
 import BankForm from './BankForm';
 import CreditCardForm from './CreditCardForm';
 import BlikForm from './BlikForm';

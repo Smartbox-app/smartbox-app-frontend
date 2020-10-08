@@ -10,7 +10,6 @@ import { __ } from '../../../helpers/i18n';
 
 import WorkersManagement from './WorkersManagement';
 import { BoxMapManagement } from '../../DashboardCommon';
-import DiscountCodes from './DiscountCodes';
 import StockDiscount from './StockDiscount';
 import StockSelect from './StockSelect';
 import InvitesSent from './InvitesSent';

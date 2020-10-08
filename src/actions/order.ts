@@ -2,8 +2,6 @@ import { RentBoxReq, UserRole, ExecutePaymentReq, ExecuteBlikPaymentReq, UrlRes 
 import ApiService from '../services/api-service';
 import { history } from '../App';
 import UserService from '../services/user-service';
-import { modal } from './index';
-import BlikWaitingModal from '../views/DashboardCommon/Order/Form/StepPayment/BlikForm/BlikWaitingModal';
 
 export const updateFormData = (data: any) => ({ type: 'FORM_STEP_SUCCESS', payload: data });
 
