@@ -10,6 +10,17 @@ interface Props {
 }
 
 const Contact = ({ user }: Props) => {
+  const contactData = {
+    city: 'Ostrów Wielkopolski',
+    postCode: '63-400',
+    street: 'ul. Wylotowa 13',
+    adminContact: 'p.drobnikowski@smartbox.pl',
+    adminPhone: '0048777888999',
+    technicalContact: 'a.pawlowski@smartbox.pl',
+    technicalPhone: '0048777888999',
+    helpContact: 'pomoc@smartbox.pl',
+    helpPhone: '00487665519467',
+  };
   return (
     <Section full>
       <h2>Strona w przygotowaniu</h2>
