@@ -91,6 +91,7 @@ $buttonSize: 40px;
     .myBox {
       rect {
         fill: $color-primary;
+        z-index: 1000;
       }
     }
 

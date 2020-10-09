@@ -4,7 +4,7 @@
 	 viewBox="0 0 2073 360" style="enable-background:new 0 0 2073 360;" xml:space="preserve">
 <style type="text/css">
 	.st0{fill:#DAEDF6;}
-<!--	.st1{fill:#0674BD;}-->
+	.st1{fill:transparent;}
 	.st2{font-family:'MyriadPro-Regular';}
 	.st3{font-size:8px;}
 	.st4{fill:#00a45a;}
@@ -863,10 +863,10 @@
 <g id="Strzałki">
 	<g>
 		<g>
-			<polygon class="st0 row200 row300" points="70,207.9 65,203 65,206 46,206 46,210 65,210 65,213 			"/>
+			<polygon class="st1 row200 row300" points="70,207.9 65,203 65,206 46,206 46,210 65,210 65,213 			"/>
 		</g>
 		<g>
-			<polygon class=" st0 row400 row500" points="47.9,186 43,191 46,191 46,210 50,210 50,191 53,191 			"/>
+			<polygon class=" st1 row400 row500" points="47.9,186 43,191 46,191 46,210 50,210 50,191 53,191 			"/>
 		</g>
 		<g>
 <!--			<polygon class="st12 test3" points="47.9,230 43,225 46,225 46,206 50,206 50,225 53,225 			"/>-->
@@ -874,7 +874,7 @@
 	</g>
 	<g>
 		<g>
-			<polygon class=" st0 row400 row500" points="70,116.9 65,112 65,115 46,115 46,119 65,119 65,122 			"/>
+			<polygon class=" st1 row400 row500" points="70,116.9 65,112 65,115 46,115 46,119 65,119 65,122 			"/>
 		</g>
 		<g>
 <!--			<polygon class="st12 test5" points="47.9,139 43,134 46,134 46,115 50,115 50,134 53,134 			"/>-->
@@ -882,10 +882,10 @@
 	</g>
 	<g>
 		<g>
-			<polygon class=" st0 row100" points="70,320.9 65,316 65,319 46,319 46,323 65,323 65,326 			"/>
+			<polygon class=" st1 row100" points="70,320.9 65,316 65,319 46,319 46,323 65,323 65,326 			"/>
 		</g>
 		<g>
-			<polygon class=" st0 row200 row300 row400 row500" points="47.9,299 43,304 46,304 46,323 50,323 50,304 53,304 			"/>
+			<polygon class=" st1 row200 row300 row400 row500" points="47.9,299 43,304 46,304 46,323 50,323 50,304 53,304 			"/>
 		</g>
 	</g>
 </g>
