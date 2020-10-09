@@ -4,11 +4,12 @@
   margin: $main-spacing 0;
   outline: none;
   font-weight: 400;
-  padding: $main-spacing / 1.5;
+  padding: $main-spacing;
   text-align: center;
   text-decoration: none;
   width: 100%;
   color: #fff;
+  font-size: 1.1rem;
 
   &.alert-error {
     background: rgba($color-danger, 0.95);
