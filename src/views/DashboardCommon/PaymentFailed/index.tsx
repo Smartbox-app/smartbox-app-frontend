@@ -20,7 +20,7 @@ const PaymentFailed = ({ showModal, paymentId }: Props) => {
         <p className="content-text">
           Płatność zakończyła się <strong>niepowodzeniem</strong>.
         </p>
-        <p className="content-text">Proszę skontaktować się obsługą</p>
+        <p className="content-text">Spróbuj ponownie</p>
         <ButtonsContainer max>
           <Button success text="Wróć do aplikacji" to="/" />
         </ButtonsContainer>
