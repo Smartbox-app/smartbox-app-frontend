@@ -17,7 +17,7 @@ import './Position.scss';
 interface Props {
   selectedBoxId: string;
   successNotification: (text: string) => void;
-  rentId?: string;
+  rentId: string;
 }
 
 const Position = ({ rentId, selectedBoxId, successNotification }: Props) => {

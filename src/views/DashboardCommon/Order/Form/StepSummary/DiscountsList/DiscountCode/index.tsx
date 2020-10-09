@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { ItfApiForm } from 'itf_formbuilder_react';
 import { GetGiftReq, GiftRes } from 'smartbox-types';
-import { Button } from '../../../../../../../components/Common';
+import { Button, Spinner } from '../../../../../../../components/Common';
 import { FormContainer, ButtonsContainer } from '../../../../../../../components/Layout';
 import { modal, notifications, order } from '../../../../../../../actions';
 import FormHeader from '../../../../../../../components/Layout/FormHeader';
@@ -43,6 +43,7 @@ const DiscountCode = ({ hideModal, updateFormData, successNotification }: Props)
         formId="getGiftForm"
         schemaMayBeDynamic={false}
         schemaCacheEnabled={false}
+        loadingInfo={<Spinner small />}
         schemaFetcher={() => ApiService.loadForm(fetchUrl)}
         sendFetcher={customSendFetcher}
         submitButton={submitButton}

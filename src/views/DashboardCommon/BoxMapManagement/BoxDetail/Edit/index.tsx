@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { UserRes } from 'smartbox-types';
+import { RentStatus, UserRes } from 'smartbox-types';
 import { __ } from '../../../../../helpers/i18n';
 import { ApplicationState } from '../../../../../reducers';
 import { isAdmin, isWorker } from '../../../../../utils/role-check';
@@ -13,13 +13,16 @@ interface Props {
   selectedBoxId: string;
   user: UserRes;
   rentId: string;
+  singleBoxDetailStatus: RentStatus;
 }
 
-const Edit = ({ selectedBoxId, user, rentId }: Props) => (
+const Edit = ({ selectedBoxId, user, rentId, singleBoxDetailStatus }: Props) => (
   <div>
     <p>{__('application.changesIrreversible')}</p>
     {isAdmin(user.role) && <Status selectedBoxId={selectedBoxId} />}
-    {isAdmin(user.role) && <Position selectedBoxId={selectedBoxId} rentId={rentId} />}
+    {isAdmin(user.role) && rentId !== '' && singleBoxDetailStatus === RentStatus.rented && (
+      <Position selectedBoxId={selectedBoxId} rentId={rentId} />
+    )}
     {isWorker(user.role) && <WorkerEdit selectedBoxId={selectedBoxId} rentId={rentId} />}
   </div>
 );

@@ -27,7 +27,7 @@ import {
   RouteAdmin,
   RouteUser,
   RouteWorker,
-  Modal,
+  Modal, ErrorBoundary,
 } from './components/Common';
 import { Invoice } from './views/DashboardCommon';
 import { NotificationContainer } from './components/Notifications';
@@ -70,26 +70,28 @@ const App = () => {
     <WorkBoxProvider>
       <Provider store={store}>
         <OnlineContent>
-          <UpdateInfoBar />
-          <NotificationContainer />
-          <Router history={history}>
-            <Switch>
-              <Route exact path="/" render={() => <Redirect to="/login" />} />
-              <Route path="/login" component={Login} />
-              <Route path="/register" component={Register} />
-              <Route exact path="/restore-pass/" component={RestorePass} />
-              <Route exact path="/payment-success/:paymentId" component={Invoice} />
-              <Route exact path="/payment-failed/" component={PaymentFailed} />
-              <Route path="/restore-pass/:userId/:updateToken" component={RestorePass} />
-              <Route exact path="/user-activation/:invitationId/:updateToken" component={UserActivation} />
-              <RouteAdmin path="/admin" component={DashboardAdmin} />
-              <RouteWorker path="/worker" component={DashboardWorker} />
-              <RouteUser path="/user" component={DashboardUser} />
-              <Route path="/404" component={Page404} />
-              <Route render={() => <Redirect to="/404" />} />
-            </Switch>
-          </Router>
-          <Modal />
+          <ErrorBoundary>
+            <UpdateInfoBar />
+            <NotificationContainer />
+            <Router history={history}>
+              <Switch>
+                <Route exact path="/" render={() => <Redirect to="/login" />} />
+                <Route path="/login" component={Login} />
+                <Route path="/register" component={Register} />
+                <Route exact path="/restore-pass/" component={RestorePass} />
+                <Route exact path="/payment-success/:paymentId" component={Invoice} />
+                <Route exact path="/payment-failed/" component={PaymentFailed} />
+                <Route path="/restore-pass/:userId/:updateToken" component={RestorePass} />
+                <Route exact path="/user-activation/:invitationId/:updateToken" component={UserActivation} />
+                <RouteAdmin path="/admin" component={DashboardAdmin} />
+                <RouteWorker path="/worker" component={DashboardWorker} />
+                <RouteUser path="/user" component={DashboardUser} />
+                <Route path="/404" component={Page404} />
+                <Route render={() => <Redirect to="/404" />} />
+              </Switch>
+            </Router>
+            <Modal />
+          </ErrorBoundary>
         </OnlineContent>
         <OfflineContent>
           <AppOffline />
