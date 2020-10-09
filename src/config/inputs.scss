@@ -1,19 +1,22 @@
 @import './variables';
 
-%input-base {
-  border: 1px solid $color-primary;
-  outline: none;
-  padding: $main-spacing;
-  color: $color-text;
-  display: block;
-  width: 100%;
-  line-height: $basic-font-size * 1.3;
-  transition: 0.3s background-color;
-  filter: none;
+%input-base-bordering {
+  border: 1px solid $color-disabled;
+  border-bottom: 2px solid $color-disabled;
 
   &:focus {
-    border: 2px solid $color-primary;
+    border: 1px solid $color-primary;
+    border-bottom: 2px solid $color-primary;
   }
+}
+
+%input-base {
+  padding: $main-spacing;
+  width: 100%;
+  background: #fff;
+  height: $main-spacing * 4;
+
+  @extend %input-base-bordering;
 
   &:hover {
     background-color: darken($color-background, 2%);
@@ -85,7 +88,6 @@
 .input,
 .flatpickr-input {
   @extend %input-base;
-  border-bottom: 1px solid $color-primary;
 }
 
 select,
@@ -111,7 +113,7 @@ select,
   background-color: lighten($color-background, 20%);
 
   &:hover {
-    background-color: lighten($color-background, 10%);
+    background-color: lighten(#906090, 10%);
   }
 }
 
@@ -137,7 +139,7 @@ select:-webkit-autofill,
 select:-webkit-autofill:hover,
 select:-webkit-autofill:focus {
   -webkit-text-fill-color: $color-text;
-  -webkit-box-shadow: 0 0 0px 1000px red inset;
+  -webkit-box-shadow: 0 0 0px 1000px $color-text inset;
   box-shadow: 0 0 0px 1000px $color-background inset;
   transition: background-color 5000s ease-in-out 0s;
   background-color: $color-background !important;
@@ -175,14 +177,12 @@ textarea {
   left: 0;
   top: 50%;
   transform: translateY(-50%);
-  border: 1px solid $color-primary;
-  width: 1rem;
-  height: 1rem;
   background: #fff;
   width: $main-spacing * 2;
   height: $main-spacing * 2;
-  background: #fff;
-  border: 2px solid $color-primary;
+
+  @extend %input-base-bordering;
+
 }
 
 [type='checkbox']:checked + label:after,
@@ -216,19 +216,25 @@ textarea {
 }
 
 .form-container {
+
+  [class*='IndicatorsContainer'] {
+    max-height: 40px;
+  }
+  [class*='ValueContainer'] {
+    max-height: 40px;
+  }
   [class*='control'] {
     display: flex;
     flex-direction: row;
     border-radius: 0;
-    border: 1px solid $color-primary;
-    border-bottom: 1px solid $color-primary;
     outline: none;
     color: $color-text;
     width: 100%;
-    line-height: $basic-font-size * 1.3;
     transition: 0.3s background-color;
     box-sizing: border-box;
-    min-height: 35px;
+    max-height: 40px;
+
+    @extend %input-base-bordering;
 
     [class*='placeholder'] {
       color: $color-text-alter;
