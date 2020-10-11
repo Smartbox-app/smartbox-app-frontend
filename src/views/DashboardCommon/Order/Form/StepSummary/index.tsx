@@ -57,10 +57,17 @@ const StepSummary = ({ formData, countedPrice, updateFormData, user, selectedPay
   const dataVerification = (): boolean => {
     if (typeof watch().paymentType !== 'string') {
       return true;
-    } else if (Number(watch().paymentType) === MainPaymentWay.other) {
-      return selectedPaymentMethod.id === 0;
-    } else {
+    } else if (Number(watch().paymentType) === MainPaymentWay.other && selectedPaymentMethod.id === '') {
+      return true;
+    } else if (Number(watch().paymentType) === MainPaymentWay.other && selectedPaymentMethod.id !== '') {
       return false;
+    } else if (
+      Number(watch().paymentType) === MainPaymentWay.blik ||
+      Number(watch().paymentType) === MainPaymentWay.card
+    ) {
+      return false;
+    } else {
+      return true;
     }
   };
 
