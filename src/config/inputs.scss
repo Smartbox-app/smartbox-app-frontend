@@ -15,6 +15,7 @@
   width: 100%;
   background: #fff;
   height: $main-spacing * 4;
+  filter: none;
 
   @extend %input-base-bordering;
 
