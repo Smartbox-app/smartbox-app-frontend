@@ -47,7 +47,7 @@ const RestorePass = ({ successNotification, match }: Props) => {
   return (
     <PageContent>
       <LoginLogo />
-      <FormContainer className="restor-pass-form">
+      <FormContainer className="restore-pass-form">
         <ItfApiForm
           formId="loginForm"
           schemaMayBeDynamic={false}

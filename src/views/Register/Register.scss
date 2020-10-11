@@ -5,6 +5,10 @@
   max-width: $login-form-width * 0.8;
   margin: 0 auto;
 
+  .input-wrapper {
+    margin: 0 auto;
+  }
+
   .register-input {
     label {
       margin-left: $main-spacing * 3;
