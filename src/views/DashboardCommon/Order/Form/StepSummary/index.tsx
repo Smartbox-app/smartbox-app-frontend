@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { withRouter } from 'react-router-dom';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -23,7 +23,12 @@ import SummaryTable from './SummaryTable';
 
 import './StepSummary.scss';
 
-interface Props {
+interface RouteProps {
+  step: string;
+  rentId: string;
+}
+
+interface Props extends RouteComponentProps<RouteProps> {
   history: any;
   formData: FormType;
   countedPrice: IPricingResult;
@@ -32,7 +37,7 @@ interface Props {
   updateFormData: (data: any) => void;
 }
 
-const StepSummary = ({ formData, countedPrice, updateFormData, user, selectedPaymentMethod }: Props) => {
+const StepSummary = ({ formData, countedPrice, updateFormData, user, selectedPaymentMethod, match }: Props) => {
   useEffect(() => {
     if (formData.size.length === 0) {
       history.push(`/${UserService.getSlugByRole(user.role)}/order/step/size`);
@@ -47,11 +52,11 @@ const StepSummary = ({ formData, countedPrice, updateFormData, user, selectedPay
 
   const onSubmit = (data: any) => {
     updateFormData(data);
-    history.push(`/${UserService.getSlugByRole(user.role)}/order/step/agreement`);
+    history.push(`/${UserService.getSlugByRole(user.role)}/order/step/agreement/${match.params.rentId || ''}`);
   };
 
   const onBack = () => {
-    history.push(`/${UserService.getSlugByRole(user.role)}/order/step/duration`);
+    history.push(`/${UserService.getSlugByRole(user.role)}/order/step/duration/${match.params.rentId || ''}`);
   };
 
   const dataVerification = (): boolean => {

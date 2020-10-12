@@ -39,7 +39,7 @@ const BlikWaitingModal = ({
         clearInterval(askServer);
         hideModal();
       };
-    }, 2000);
+    }, 3000);
   }, []);
   return (
     <div className="blik-waiting-modal">

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { connect } from 'react-redux';
+import { RouteComponentProps, withRouter } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { ExecutePaymentReq, UserRes } from 'smartbox-types';
 import { history } from '../../../../../../App';
@@ -13,18 +14,23 @@ import { ApplicationState } from '../../../../../../reducers';
 import UserService from '../../../../../../services/user-service';
 import { order } from '../../../../../../actions';
 
-interface Props {
+interface RouteProps {
+  step: string;
+  rentId: string;
+}
+
+interface Props extends RouteComponentProps<RouteProps> {
   paymentId: string;
   user: UserRes;
   sentExecutePaymentRequest: (data: ExecutePaymentReq, develop?: boolean) => void;
 }
 
-const CreditCardForm = ({ user, sentExecutePaymentRequest, paymentId }: Props) => {
+const CreditCardForm = ({ user, sentExecutePaymentRequest, paymentId, match }: Props) => {
   const { handleSubmit, register, errors, control } = useForm();
 
   const onSubmit = (data: any) => {
     const readyData: ExecutePaymentReq = {
-      paymentId,
+      paymentId: match.params.rentId || paymentId,
       name: data.owner,
       cardNumber: data.cardNumber,
       expiryDate: data.expirationDateMonth.value + data.expirationDateYear.value.slice(2),
@@ -60,5 +66,4 @@ const mapDispatchToProps = (dispatch: any) =>
     },
     dispatch,
   );
-
-export default connect(mapStateToProps, mapDispatchToProps)(CreditCardForm);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CreditCardForm));

@@ -77,11 +77,11 @@ const StepDuration = ({ formData, countedPrice, updateFormData, user, match, ren
   const methods = useForm();
 
   const onSubmit = () => {
-    history.push(`/${UserService.getSlugByRole(user.role)}/order/step/summary`);
+    history.push(`/${UserService.getSlugByRole(user.role)}/order/step/summary/${match.params.rentId || ''}`);
   };
 
   const onBack = () => {
-    history.push(`/${UserService.getSlugByRole(user.role)}/order/step/size`);
+    history.push(`/${UserService.getSlugByRole(user.role)}/order/step/size/${match.params.rentId || ''}`);
   };
 
   const isItFirstRent = (u: UserRes): boolean => u.rentCount === 0;

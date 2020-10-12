@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { withRouter } from 'react-router-dom';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -21,8 +21,12 @@ import { __ } from '../../../../../helpers/i18n';
 
 import './StepAgreement.scss';
 
-interface Props {
-  history: any;
+interface RouteProps {
+  step: string;
+  rentId: string;
+}
+
+interface Props extends RouteComponentProps<RouteProps> {
   formData: FormType;
   countedPrice: IPricingResult;
   user: UserRes;
@@ -41,6 +45,8 @@ const StepSummary = ({
   sentRentBoxRequest,
   countedPrice,
   stock,
+  match,
+  updateFormData,
 }: Props): any => {
   useEffect(() => {
     if (formData.size.length === 0) {
@@ -51,22 +57,28 @@ const StepSummary = ({
   const { handleSubmit } = useForm();
 
   const onSubmit = (data: any) => {
-    sentRentBoxRequest(
-      {
-        stockId: stock.id,
-        size: Number(formData.size),
-        startAt: formData.dateStart,
-        finishAt: formData.dateEnd,
-        cost: countedPrice.value,
-        discountCode: formData.discountCode,
-      },
-      'payment',
-      user.role,
-    );
+    if (match.params.rentId) {
+      // rent extension
+      history.push(`/${UserService.getSlugByRole(user.role)}/order/step/payment/${match.params.rentId || ''}`);
+    } else {
+      // new Rent
+      sentRentBoxRequest(
+        {
+          stockId: stock.id,
+          size: Number(formData.size),
+          startAt: formData.dateStart,
+          finishAt: formData.dateEnd,
+          cost: countedPrice.value,
+          discountCode: formData.discountCode,
+        },
+        'payment',
+        user.role,
+      );
+    }
   };
 
   const onBack = () => {
-    history.push(`/${UserService.getSlugByRole(user.role)}/order/step/summary`);
+    history.push(`/${UserService.getSlugByRole(user.role)}/order/step/summary/${match.params.rentId || ''}`);
   };
 
   return (
@@ -94,6 +106,7 @@ const mapStateToProps = (state: ApplicationState) => ({
   isAgreementAccepted: state.order.isAgreementAccepted,
   isResignationMarked: state.order.isResignationMarked,
   stock: state.stock.list[0],
+  rentId: state.rent.singleRent.id,
 });
 
 const mapDispatchToProps = (dispatch: any) =>
