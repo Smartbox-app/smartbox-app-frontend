@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { ExecuteBlikPaymentReq, UserRes } from 'smartbox-types';
 import { history } from '../../../../../../App';
-import { Button } from '../../../../../../components/Common';
+import { Button, Spinner } from '../../../../../../components/Common';
 import { ButtonsContainer, FormHeader } from '../../../../../../components/Layout';
 import { __ } from '../../../../../../helpers/i18n';
 import { ApplicationState } from '../../../../../../reducers';
@@ -18,7 +18,7 @@ interface Props {
   user: UserRes;
   paymentId: string;
   sentExecutePaymentWithBlikRequest: (data: any) => void;
-  showModal: (content: React.ReactNode, isClosable: boolean) => void;
+  showModal: (content: React.ReactNode) => void;
 }
 
 const BlikForm = ({ user, paymentId, sentExecutePaymentWithBlikRequest, showModal }: Props) => {
@@ -33,8 +33,7 @@ const BlikForm = ({ user, paymentId, sentExecutePaymentWithBlikRequest, showModa
       code: data.blikInput,
     };
     sentExecutePaymentWithBlikRequest(req);
-
-    // showModal(<BlikWaitingModal />, false);
+    showModal(<Spinner />);
   };
 
   const onBack = () => {
