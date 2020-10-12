@@ -32,7 +32,7 @@ const CreditCardForm = ({ user, sentExecutePaymentRequest, paymentId, match }: P
       paymentId: match.params.rentId || paymentId,
       name: data.owner,
       cardNumber: data.cardNumber,
-      expiryDate: data.expirationDateMonth.value + data.expirationDateYear.value.slice(2),
+      expiryDate: `${data.expirationDateMonth.value}/${data.expirationDateYear.value.slice(2)}`,
       cvv: data.cvv,
     };
     sentExecutePaymentRequest(readyData, true);
