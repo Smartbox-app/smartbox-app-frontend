@@ -1,15 +1,11 @@
 import React, { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { ExecuteBlikPaymentReq, UserRes } from 'smartbox-types';
-import { history } from '../../../../../../App';
-import { Button } from '../../../../../../components/Common';
-import { ButtonsContainer, FormHeader } from '../../../../../../components/Layout';
-import { __ } from '../../../../../../helpers/i18n';
+import { UserRes } from 'smartbox-types';
+import { Spinner } from '../../../../../../components/Common';
+import { PageHeader } from '../../../../../../components/Layout';
 import { ApplicationState } from '../../../../../../reducers';
 import { PaymentMethodDetail } from '../../../../../../reducers/order-reducer';
-import UserService from '../../../../../../services/user-service';
 import { modal, order } from '../../../../../../actions';
 
 interface Props {
@@ -17,7 +13,6 @@ interface Props {
   user: UserRes;
   paymentId: string;
   sentExecutePaymentWithTpayRequest: (paymentId: string, group: string) => void;
-  showModal: (content: React.ReactNode, isClosable: boolean) => void;
 }
 
 const BankForm = ({ user, paymentId, sentExecutePaymentWithTpayRequest, bankGroup }: Props) => {
@@ -25,23 +20,11 @@ const BankForm = ({ user, paymentId, sentExecutePaymentWithTpayRequest, bankGrou
     sentExecutePaymentWithTpayRequest(paymentId, bankGroup.id);
   }, []);
 
-  const { handleSubmit, register, errors, watch } = useForm();
-
-  const onSubmit = (data: any) => {
-    const req: ExecuteBlikPaymentReq = {
-      paymentId,
-      code: data.blikInput,
-    };
-  };
-
-  const onBack = () => {
-    history.push(`/${UserService.getSlugByRole(user.role)}/order/step/agreement`);
-  };
-
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="form-step-payment-blik">
-      <h1>Płatność TPAYEM</h1>
-    </form>
+    <div className="form-step-payment-blik">
+      <PageHeader title="Za chwilę zostaniesz przekerowany na stronę banku" />
+      <Spinner />
+    </div>
   );
 };
 

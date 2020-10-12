@@ -2,11 +2,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { modal, order } from '../../../../../../../actions';
-import { Button } from '../../../../../../../components/Common';
-import { ButtonsContainer, SectionHeader } from '../../../../../../../components/Layout';
+import { SectionHeader } from '../../../../../../../components/Layout';
+import { __ } from '../../../../../../../helpers/i18n';
 import { ApplicationState } from '../../../../../../../reducers';
 
 import './BankListModal.scss';
+import { Button } from '../../../../../../../components/Common';
 
 interface Props {
   bankList: any[];
@@ -26,24 +27,20 @@ const BankListModal = ({ bankList, setPaymentMethod, selectedPaymentMethodDetail
       <div className="bank-list-wrapper">
         {bankList.map((bank: any) => (
           <label key={bank.id} className="single-bank" htmlFor={`payment-${bank.id}`}>
-            <input type="radio" id={`payment-${bank.id}`} name="bank-picked" value={bank.id} onChange={handleChange} />
+            <input
+              type="radio"
+              id={`payment-${bank.id}`}
+              name="bank-picked"
+              value={bank.id}
+              onChange={handleChange}
+              onClick={() => hideModal()}
+            />
             <div className="img-wrapper">
               <img src={bank.img} alt="bank-img" />
             </div>
           </label>
         ))}
       </div>
-      <ButtonsContainer max>
-        <Button
-          text="Wybierz"
-          type="submit"
-          disabled={selectedPaymentMethodDetail.id === ''}
-          primary
-          click={(): void => {
-            hideModal();
-          }}
-        />
-      </ButtonsContainer>
     </>
   );
 };

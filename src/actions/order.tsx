@@ -102,6 +102,8 @@ export const sentExecutePaymentWithTpayRequest = (paymentId: string, group: stri
     (res: UrlRes) => {
       console.log('res: UrlRes', res);
       // przesłać usera na wskazany url
+      const win = window.open(res.url, '_blank');
+      win?.focus();
     },
     null,
     `rent/execut-payment-with-tpay/${paymentId}/${group}`,

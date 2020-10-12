@@ -33,7 +33,9 @@ interface Props extends RouteComponentProps<RouteProps> {
   isAgreementAccepted: boolean;
   isResignationMarked: boolean;
   stock: StockList;
+  selectedPaymentMethodDetailId: string;
   updateFormData: (data: any) => void;
+  sentExecutePaymentWithTpayRequest: (paymentId: string, group: string) => void;
   sentRentBoxRequest: (data: RentBoxReq | any, nextStep: string, role: UserRole) => void;
 }
 
@@ -61,7 +63,7 @@ const StepSummary = ({
       // rent extension
       history.push(`/${UserService.getSlugByRole(user.role)}/order/step/payment/${match.params.rentId || ''}`);
     } else {
-      // new Rent
+      // new Rent blik/creditcart
       sentRentBoxRequest(
         {
           stockId: stock.id,
@@ -107,6 +109,7 @@ const mapStateToProps = (state: ApplicationState) => ({
   isResignationMarked: state.order.isResignationMarked,
   stock: state.stock.list[0],
   rentId: state.rent.singleRent.id,
+  selectedPaymentMethodDetailId: state.order.selectedPaymentMethodDetail.id,
 });
 
 const mapDispatchToProps = (dispatch: any) =>
