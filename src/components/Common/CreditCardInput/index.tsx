@@ -81,7 +81,6 @@ const CreditCardInput = ({ register, errors, control }: Props) => {
 
   return (
     <div className="credit-card-input-wrapper">
-      {console.log('errors', errors)}
       <div className="card-number-wrapper">
         <label htmlFor="card-number">
           <span>{__('application.ccNumber')}:</span>

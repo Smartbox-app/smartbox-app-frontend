@@ -1,10 +1,10 @@
 import React from 'react';
-import { RentBoxReq, UserRole, ExecutePaymentReq, ExecuteBlikPaymentReq, UrlRes } from 'smartbox-types';
+import { RentBoxReq, UserRole, ExecutePaymentReq, ExecuteBlikPaymentReq, UrlRes, ApiErrorCode } from 'smartbox-types';
 import ApiService from '../services/api-service';
 import { history } from '../App';
 import UserService from '../services/user-service';
 import BlikWaitingModal from '../views/DashboardCommon/Order/Form/StepPayment/BlikForm/BlikWaitingModal';
-import { modal } from './index';
+import { modal, notifications } from './index';
 
 export const updateFormData = (data: any) => ({ type: 'FORM_STEP_SUCCESS', payload: data });
 
@@ -60,12 +60,11 @@ export const sentExecutePaymentWithBlikRequest = (data: ExecuteBlikPaymentReq) =
     dispatch,
     'SENT_EXECUTE_PAYMENT_WITH_BLIK_REQUEST_SUCCESS',
     'SENT_EXECUTE_PAYMENT_WITH_BLIK_REQUEST_FAILED',
-    (succes: any) => {
-      console.log('success', succes);
+    () => {
       dispatch(modal.showModal(<BlikWaitingModal />, false));
     },
-    (failed: any) => {
-      console.log('success', failed);
+    () => {
+      dispatch(notifications.errorNotification(ApiErrorCode.InvalidBlik));
       dispatch(modal.hideModal());
     },
     'rent/execute-payment-with-blik',
@@ -76,7 +75,7 @@ export const sentExecutePaymentWithBlikRequest = (data: ExecuteBlikPaymentReq) =
 
 export const setPaymentMethod = (paymentId: string) => ({ type: 'SET_PAYMENT_METHOD_SUCCESS', payload: paymentId });
 export const pickPaymentType = (paymentId: string) => ({ type: 'PICK_PAYMENT_TYPE_SUCCESS', payload: paymentId });
-export const blikPaymentFinishSuccess = (paymentId: string) => ({ type: 'BLIK_PAYMENT_FINISH_SUCCESS' });
+export const blikPaymentFinishSuccess = () => ({ type: 'BLIK_PAYMENT_FINISH_SUCCESS' });
 
 export const checkPaymentStatus = (paymentId: string) => async (dispatch: any) => {
   await ApiService.get(
@@ -84,9 +83,8 @@ export const checkPaymentStatus = (paymentId: string) => async (dispatch: any) =
     'CHECK_PAYMENT_STATUS_SUCCESS',
     'CHECK_PAYMENT_STATUS_FAILED',
     (data: boolean) => {
-      console.log('checkPaymentStatus', data);
       if (data) {
-        blikPaymentFinishSuccess(paymentId);
+        dispatch(blikPaymentFinishSuccess());
       }
     },
     null,

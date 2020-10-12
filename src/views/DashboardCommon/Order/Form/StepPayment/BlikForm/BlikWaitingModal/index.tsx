@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { UserRes } from 'smartbox-types';
@@ -25,22 +25,24 @@ const BlikWaitingModal = ({
   blikPaymentCompletedSuccessfully,
   user,
 }: Props) => {
-  useEffect(() => {
-    const askServer = setInterval(() => {
-      checkPaymentStatus(paymentId);
-      console.log('blikPaymentCompletedSuccessfully', blikPaymentCompletedSuccessfully);
-      if (blikPaymentCompletedSuccessfully) {
-        clearInterval(askServer);
-        hideModal();
-        history.push(`/${UserService.getSlugByRole(user.role)}/invoice`);
-      }
+  const intervalCallBack = () => {
+    checkPaymentStatus(paymentId);
+    console.log('blikPaymentCompletedSuccessfully', blikPaymentCompletedSuccessfully);
 
-      return function cleanUp() {
-        clearInterval(askServer);
-        hideModal();
-      };
-    }, 3000);
-  }, []);
+    if (blikPaymentCompletedSuccessfully) {
+      hideModal();
+      history.push(`/payment-success/${paymentId}`);
+    }
+  };
+
+  useEffect(() => {
+    const askServer = setInterval(intervalCallBack, 3000);
+    return () => {
+      clearInterval(askServer);
+      hideModal();
+    };
+  }, [blikPaymentCompletedSuccessfully]);
+
   return (
     <div className="blik-waiting-modal">
       <h3>Dziękujemy za wybór naszej firmy</h3>
