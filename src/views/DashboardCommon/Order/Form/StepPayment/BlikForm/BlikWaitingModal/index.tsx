@@ -1,20 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { UserRes } from 'smartbox-types';
-import { modal, order } from '../../../../../../../actions';
+import { modal, notifications, order } from '../../../../../../../actions';
 import { Spinner } from '../../../../../../../components/Common';
+import { __ } from '../../../../../../../helpers/i18n';
 import { ApplicationState } from '../../../../../../../reducers';
 import { history } from '../../../../../../../App';
-import UserService from '../../../../../../../services/user-service';
 
 interface Props {
   hideModal: () => void;
   paymentId: string;
   paymentSuccess: boolean;
-  user: UserRes;
   blikPaymentCompletedSuccessfully: boolean;
   checkPaymentStatus: (paymentId: string) => void;
+  successNotification: (text: string) => void;
 }
 
 const BlikWaitingModal = ({
@@ -23,23 +22,24 @@ const BlikWaitingModal = ({
   checkPaymentStatus,
   paymentSuccess,
   blikPaymentCompletedSuccessfully,
-  user,
+  successNotification,
 }: Props) => {
   const intervalCallBack = () => {
-    checkPaymentStatus(paymentId);
-    console.log('blikPaymentCompletedSuccessfully', blikPaymentCompletedSuccessfully);
-
     if (blikPaymentCompletedSuccessfully) {
+      successNotification('Płatność zakończyła się sukcesem');
       hideModal();
       history.push(`/payment-success/${paymentId}`);
     }
+
+    checkPaymentStatus(paymentId);
   };
 
   useEffect(() => {
     const askServer = setInterval(intervalCallBack, 3000);
     return () => {
       clearInterval(askServer);
-      hideModal();
+      // hideModal();
+      // history.push(`/payment-success/${paymentId}`);
     };
   }, [blikPaymentCompletedSuccessfully]);
 
@@ -64,6 +64,7 @@ const mapDispatchToProps = (dispatch: any) =>
     {
       ...modal,
       ...order,
+      ...notifications,
     },
     dispatch,
   );

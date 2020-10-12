@@ -205,6 +205,7 @@ export default (state: OrderState = initialState, action: Action): any => {
       };
 
     case 'BLIK_PAYMENT_FINISH_SUCCESS':
+      console.log('BLIK_PAYMENT_FINISH_SUCCESS');
       return {
         ...state,
         blikPaymentCompletedSuccessfully: true,

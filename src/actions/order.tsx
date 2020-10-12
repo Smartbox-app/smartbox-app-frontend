@@ -84,6 +84,7 @@ export const checkPaymentStatus = (paymentId: string) => async (dispatch: any) =
     'CHECK_PAYMENT_STATUS_FAILED',
     (data: boolean) => {
       if (data) {
+        dispatch({ type: 'REFRESH_API_TABLE' });
         dispatch(blikPaymentFinishSuccess());
       }
     },
