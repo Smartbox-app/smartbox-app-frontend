@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router';
@@ -26,8 +26,7 @@ interface Props extends RouteComponentProps<RouteProps> {
 }
 
 const CreditCardForm = ({ user, sentExecutePaymentRequest, paymentId, match }: Props) => {
-  const { handleSubmit, register, errors, control } = useForm();
-
+  const { handleSubmit, register, errors, control, watch } = useForm();
   const onSubmit = (data: any) => {
     const readyData: ExecutePaymentReq = {
       paymentId: match.params.rentId || paymentId,
@@ -42,13 +41,24 @@ const CreditCardForm = ({ user, sentExecutePaymentRequest, paymentId, match }: P
   const onBack = () => {
     history.push(`/${UserService.getSlugByRole(user.role)}/order/step/agreement`);
   };
+
+  const submitValidation = (): boolean => {
+    if (watch().cardNumber === '') {
+      return true;
+    } else if (watch().cvv === '') {
+      return true;
+    } else if (watch().owner === '') {
+      return true;
+    } else return watch().cvv === '';
+  };
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="form-step-payment">
       <FormHeader title={__('application.fillData')} />
       <CreditCardInput register={register} errors={errors} control={control} />
       <ButtonsContainer max>
         <Button outline text={__('application.back')} click={() => onBack()} />
-        <Button type="submit" primary text={__('application.pay')} />
+        <Button type="submit" primary text={__('application.pay')} disabled={submitValidation()} />
       </ButtonsContainer>
     </form>
   );

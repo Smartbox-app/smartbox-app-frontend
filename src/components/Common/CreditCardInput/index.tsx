@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { addYears } from 'date-fns';
 import { Controller } from 'react-hook-form';
 import Select from 'react-select';
@@ -81,16 +81,19 @@ const CreditCardInput = ({ register, errors, control }: Props) => {
 
   return (
     <div className="credit-card-input-wrapper">
+      {console.log('errors', errors)}
       <div className="card-number-wrapper">
         <label htmlFor="card-number">
           <span>{__('application.ccNumber')}:</span>
           <input type="text" placeholder="0000 0000 0000 0000" name="cardNumber" ref={register({ required: true })} />
+          {errors.cardNumber && <p className="input-error-wrapper">Pole wymagane</p>}
         </label>
       </div>
       <div className="user-wrapper">
         <label htmlFor="owner">
           <span>{__('application.owner')}:</span>
           <input type="text" placeholder="Jan Kowalski" name="owner" ref={register({ required: true })} />
+          {errors.owner && <p className="input-error-wrapper">Pole wymagane</p>}
         </label>
       </div>
       <div className="expiration-date-wrapper">
@@ -119,6 +122,7 @@ const CreditCardInput = ({ register, errors, control }: Props) => {
         <label htmlFor="cvv">
           <span>{__('application.ccv')}:</span>
           <input type="text" placeholder="123" name="cvv" ref={register({ required: true })} />
+          {errors.owner && <p className="input-error-wrapper">Pole wymagane</p>}
         </label>
       </div>
     </div>
