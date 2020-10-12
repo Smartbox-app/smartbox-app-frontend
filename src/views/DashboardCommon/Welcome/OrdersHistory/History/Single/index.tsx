@@ -1,5 +1,5 @@
 import React from 'react';
-import { MyRentList } from 'smartbox-types';
+import { MyRentList, RentStatus } from 'smartbox-types';
 import { dateOnly } from '../../../../../../utils/format-date';
 
 export interface SingleHistory {
@@ -15,7 +15,7 @@ interface Props {
 }
 
 const Single = ({ single }: Props) => (
-  <li className={`history-line ${!single.id ? 'active' : ''}`}>
+  <li className={`history-line ${single.status === RentStatus.rented ? 'active' : ''}`}>
     <span className="line-cell">
       {dateOnly(single.startAt, 5)}-{dateOnly(single.finishAt)}
     </span>
