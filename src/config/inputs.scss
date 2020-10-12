@@ -184,7 +184,11 @@ textarea {
   height: $main-spacing * 2;
 
   @extend %input-base-bordering;
+  border-bottom-width: 1px;
+}
 
+[type='checkbox']:checked + label:before {
+  border-color: $color-primary;
 }
 
 [type='checkbox']:checked + label:after,
@@ -196,7 +200,7 @@ textarea {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  left: 5px;
+  left: 4px;
   transition: background-color 0.2s ease, opacity 0.2s ease;
 }
 [type='checkbox']:not(:checked) + label:after {
