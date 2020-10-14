@@ -107,3 +107,7 @@ export const sentExecutePaymentWithTpayRequest = (paymentId: string, group: stri
     `rent/execut-payment-with-tpay/${paymentId}/${group}`,
   );
 };
+
+export const clearPaymentDetails = () => ({
+  type: 'CLEAR_PAYMENT_METHOD_SUCCESS',
+});

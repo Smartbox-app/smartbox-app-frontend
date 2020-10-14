@@ -1,6 +1,7 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { connect } from 'react-redux';
+import { RouteComponentProps, withRouter } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { ExecuteBlikPaymentReq, UserRes } from 'smartbox-types';
 import { history } from '../../../../../../App';
@@ -14,14 +15,19 @@ import { modal, order } from '../../../../../../actions';
 import BlikInput from './BlikInput';
 import BlikWaitingModal from './BlikWaitingModal';
 
-interface Props {
+interface RouteProps {
+  step: string;
+  rentId: string;
+}
+
+interface Props extends RouteComponentProps<RouteProps> {
   user: UserRes;
   paymentId: string;
   sentExecutePaymentWithBlikRequest: (data: any) => void;
   showModal: (content: React.ReactNode) => void;
 }
 
-const BlikForm = ({ user, paymentId, sentExecutePaymentWithBlikRequest, showModal }: Props) => {
+const BlikForm = ({ user, paymentId, sentExecutePaymentWithBlikRequest, showModal, match }: Props) => {
   const defaultValues = {
     blikInput: '',
   };
@@ -37,7 +43,7 @@ const BlikForm = ({ user, paymentId, sentExecutePaymentWithBlikRequest, showModa
   };
 
   const onBack = () => {
-    history.push(`/${UserService.getSlugByRole(user.role)}/order/step/agreement`);
+    history.push(`/${UserService.getSlugByRole(user.role)}/order/step/agreement/${match.params.rentId || ''}`);
   };
 
   return (
@@ -71,4 +77,4 @@ const mapDispatchToProps = (dispatch: any) =>
     dispatch,
   );
 
-export default connect(mapStateToProps, mapDispatchToProps)(BlikForm);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(BlikForm));

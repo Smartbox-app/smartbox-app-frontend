@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
+import { RouteComponentProps, withRouter } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { UserRes } from 'smartbox-types';
 import { Spinner } from '../../../../../../components/Common';
@@ -8,7 +9,12 @@ import { ApplicationState } from '../../../../../../reducers';
 import { PaymentMethodDetail } from '../../../../../../reducers/order-reducer';
 import { modal, order } from '../../../../../../actions';
 
-interface Props {
+interface RouteProps {
+  step: string;
+  rentId: string;
+}
+
+interface Props extends RouteComponentProps<RouteProps> {
   bankGroup: PaymentMethodDetail;
   user: UserRes;
   paymentId: string;
@@ -43,4 +49,4 @@ const mapDispatchToProps = (dispatch: any) =>
     dispatch,
   );
 
-export default connect(mapStateToProps, mapDispatchToProps)(BankForm);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(BankForm));

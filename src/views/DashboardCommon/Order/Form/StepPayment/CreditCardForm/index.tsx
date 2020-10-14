@@ -39,7 +39,7 @@ const CreditCardForm = ({ user, sentExecutePaymentRequest, paymentId, match }: P
   };
 
   const onBack = () => {
-    history.push(`/${UserService.getSlugByRole(user.role)}/order/step/agreement`);
+    history.push(`/${UserService.getSlugByRole(user.role)}/order/step/agreement/${match.params.rentId || ''}`);
   };
 
   const submitValidation = (): boolean => {

@@ -78,6 +78,10 @@ interface BlikPaymentFinishSuccess {
   type: 'BLIK_PAYMENT_FINISH_SUCCESS';
 }
 
+interface ClearPaymentMethodSuccess {
+  type: 'CLEAR_PAYMENT_METHOD_SUCCESS';
+}
+
 type Action =
   | FormStepSuccess
   | FetchBoxAvailability
@@ -88,6 +92,7 @@ type Action =
   | PickPaymentMethod
   | CheckPaymentStatus
   | SaveBankList
+  | ClearPaymentMethodSuccess
   | BlikPaymentFinishSuccess;
 
 const initialState: OrderState = {
@@ -204,8 +209,20 @@ export default (state: OrderState = initialState, action: Action): any => {
         selectedPaymentMethodDetail: state.bankList.find((singleBank: any) => singleBank.id === action.payload),
       };
 
+    case 'CLEAR_PAYMENT_METHOD_SUCCESS':
+      return {
+        ...state,
+        selectedPayment: MainPaymentWay.card,
+        selectedPaymentMethodDetail: {
+          id: '',
+          name: '',
+          img: '',
+          banks: '',
+          main_bank_id: '',
+        },
+      };
+
     case 'BLIK_PAYMENT_FINISH_SUCCESS':
-      console.log('BLIK_PAYMENT_FINISH_SUCCESS');
       return {
         ...state,
         blikPaymentCompletedSuccessfully: true,

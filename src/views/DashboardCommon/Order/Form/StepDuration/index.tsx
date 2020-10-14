@@ -32,9 +32,19 @@ interface Props extends RouteComponentProps<RouteProps> {
   user: UserRes;
   rent: MyRentList;
   updateFormData: (data: any) => void;
+  clearPaymentDetails: () => void;
 }
 
-const StepDuration = ({ formData, countedPrice, updateFormData, user, match, rent, stockDiscount }: Props) => {
+const StepDuration = ({
+  clearPaymentDetails,
+  formData,
+  countedPrice,
+  updateFormData,
+  user,
+  match,
+  rent,
+  stockDiscount,
+}: Props) => {
   const setMinDate = (addAmount = 0, end?: boolean) =>
     match.params.rentId
       ? addDays(startOfDay(new Date(rent.finishAt)), addAmount)
@@ -51,6 +61,7 @@ const StepDuration = ({ formData, countedPrice, updateFormData, user, match, ren
   const firstRentChecker = (u: UserRes): boolean => u.rentCount === 0;
 
   useEffect(() => {
+    clearPaymentDetails();
     if (formData.size === '') {
       history.push(`/${UserService.getSlugByRole(user.role)}/order/step/size`);
     } else if (match.params.rentId) {
