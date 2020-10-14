@@ -1,0 +1,10 @@
+@import '../../../config/variables';
+@import '../../../config/mixins';
+
+.department-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  flex-direction: column;
+}
