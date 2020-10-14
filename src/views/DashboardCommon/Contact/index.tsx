@@ -4,6 +4,9 @@ import { connect } from 'react-redux';
 import { UserRes } from 'smartbox-types';
 import { Section } from '../../../components/Layout';
 import { ApplicationState } from '../../../reducers';
+import SingleDepartment from './SingleDepartment';
+
+import './Contact.scss';
 
 interface Props {
   user: UserRes;
@@ -23,7 +26,27 @@ const Contact = ({ user }: Props) => {
   };
   return (
     <Section full>
-      <h2>Strona w przygotowaniu</h2>
+      <h2>Zapraszamy do kontaktu:</h2>
+      <div className="department-wrapper">
+        <SingleDepartment
+          organisationRole="Administrator"
+          name="Piotr Drobnikowski"
+          phone={contactData.adminPhone}
+          mail={contactData.adminContact}
+        />
+        <SingleDepartment
+          organisationRole="Pomoc techniczna"
+          name="Adam Pawłowski"
+          phone={contactData.adminPhone}
+          mail={contactData.technicalContact}
+        />
+        <SingleDepartment
+          organisationRole="Pomoc ogólna"
+          name=""
+          phone={contactData.helpPhone}
+          mail={contactData.helpContact}
+        />
+      </div>
     </Section>
   );
 };
