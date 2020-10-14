@@ -70,6 +70,8 @@ const getError = (error: ApiErrorCode) => {
       return 'Nie odnaleziono skrytki';
     case ApiErrorCode.StckIdIsRequiredForWorkerRole:
       return 'Wybranie placu jest wymagane';
+    case ApiErrorCode.InvalidData:
+      return 'Podano błędne dane';
     default:
       return 'Wystąpił błąd';
   }
