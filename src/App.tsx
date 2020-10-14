@@ -27,9 +27,10 @@ import {
   RouteAdmin,
   RouteUser,
   RouteWorker,
-  Modal, ErrorBoundary,
+  Modal,
+  ErrorBoundary,
 } from './components/Common';
-import { Invoice } from './views/DashboardCommon';
+import { Invoice, PaymentFailed } from './views/DashboardCommon';
 import { NotificationContainer } from './components/Notifications';
 import AppOffline from './components/AppOffline';
 import { i18n } from './helpers/i18n';
@@ -37,7 +38,6 @@ import { appStatus } from './actions/app-status';
 
 import 'flatpickr/dist/flatpickr.min.css';
 import 'flatpickr/dist/themes/airbnb.css';
-import PaymentFailed from './views/DashboardCommon/PaymentFailed';
 
 flatpickr.localize(Polish);
 flatpickr.defaultConfig.time_24hr = true;

@@ -6,7 +6,6 @@ import { LogoContainer, PageContent, ButtonsContainer, Section } from '../../../
 import { ApplicationState } from '../../../reducers';
 import { modal } from '../../../actions';
 
-
 interface Props {
   paymentId: string;
   showModal: (content: React.ReactNode) => void;
