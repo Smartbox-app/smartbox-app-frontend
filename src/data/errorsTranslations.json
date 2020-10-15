@@ -1,37 +1,155 @@
 {
   "pl": {
-    "Invalid e-mail address.": "Nieprawidłowy e-mail adres.",
-    "Invalid NIP.": "Nieprawidłowy NIP.",
-    "Invalid color hash.": "Invalid color hash.",
-    "Invalid absolute URL.": "Invalid absolute URL.",
     "Both new passwords have to be identical.": "Oba hasła muszą być identyczne.",
-    "Invalid type of value: {0} expected.": "Niewłaściwy typ: {0} oczekiwany.",
-    "Date too low. Min. {0}.": "Date too low. Min. {0}.",
-    "Date too high. Max. {0}.": "Date too high. Max. {0}.",
-    "Value too low. Min. {0}.": "Wartość za mała. Min. {0}.",
-    "Value too high. Max. {0}.": "Wartość za duża. Max. {0}.",
-    "Invalid option: {0}.": "Nieprawidłowa opcja: {0}.",
-    "Value too short (min. {0})": "Wartość za krótka (min. {0})",
-    "Value too long (max. {0})": "Wartość za długa (max. {0})",
     "Cannot decode this type of data when using FormData.": "Cannot decode this type of data when using FormData.",
-    "Field required.": "To pole jest wymagane.",
-    "Invalid Zip code.": "Błędny kod pocztowy.",
-    "Invalid email.": "Nieprawidłowy e-mail adres.",
-    "Invalid bank account number": "Błędny numer konta bankowego",
-    "Invalid phone number": "Błędny numer telefonu",
+    "Company city": "Dane kontaktowe: Miasto",
+    "Company name": "Nazwa firmy",
+    "Company post code": "Dane kontaktowe: Kod pocztowy",
+    "Compnay street": "Dane kontaktowe: Ulica",
     "Data początku nie może być wcześniejsza od końcowej": "Data początku nie może być wcześniejsza od końcowej",
+    "Date too high. Max. {0}.": "Date too high. Max. {0}.",
+    "Date too low. Min. {0}.": "Date too low. Min. {0}.",
     "Discount value": "Wartość zniżki",
+    "Expiration Date": "Data wygaśnięcia",
+    "Field required.": "To pole jest wymagane.",
+    "Invalid NIP.": "Nieprawidłowy NIP.",
+    "Invalid Zip code.": "Błędny kod pocztowy.",
+    "Invalid absolute URL.": "Invalid absolute URL.",
+    "Invalid bank account number": "Błędny numer konta bankowego",
+    "Invalid color hash.": "Invalid color hash.",
+    "Invalid e-mail address.": "Nieprawidłowy e-mail adres.",
+    "Invalid email.": "Nieprawidłowy e-mail adres.",
+    "Invalid option: {0}.": "Nieprawidłowa opcja: {0}.",
+    "Invalid phone number": "Błędny numer telefonu",
+    "Invalid type of value: {0} expected.": "Niewłaściwy typ: {0} oczekiwany.",
+    "New password": "Nowe hasło",
+    "Password": "Hasło",
+    "Phone": "Telefon",
+    "Repeat new password": "Powtórz nowe hasło",
     "Stock": "Plac",
     "Stocks": "Plac",
     "Value": "Wartość",
-    "Expiration Date": "Data wygaśnięcia",
-    "Password": "Hasło",
-    "New password": "Nowe hasło",
-    "Repeat new password": "Powtórz nowe hasło",
-    "Company name": "Nazwa firmy",
-    "Company city": "Dane kontaktowe: Miasto",
-    "Compnay street": "Dane kontaktowe: Ulica",
-    "Company post code": "Dane kontaktowe: Kod pocztowy",
-    "Phone": "Telefon"
+    "Value too high. Max. {0}.": "Wartość za duża. Max. {0}.",
+    "Value too long (max. {0})": "Wartość za długa (max. {0})",
+    "Value too low. Min. {0}.": "Wartość za mała. Min. {0}.",
+    "Value too short (min. {0})": "Wartość za krótka (min. {0})",
+    "_API_ERROR_CODES_": {
+      "0": {
+        "text": "@@@@@@@@@@@@@@@TODO: Translate ApiErrorCode.OtherError!",
+        "__type_alias_do_not_touch": "ApiErrorCode.OtherError"
+      },
+      "1": {
+        "text": "@@@@@@@@@@@@@@@TODO: Translate ApiErrorCode.NoSuchObjectWithThisId!",
+        "__type_alias_do_not_touch": "ApiErrorCode.NoSuchObjectWithThisId"
+      },
+      "2": {
+        "text": "@@@@@@@@@@@@@@@TODO: Translate ApiErrorCode.ObjectNotUniuque!",
+        "__type_alias_do_not_touch": "ApiErrorCode.ObjectNotUniuque"
+      },
+      "3": {
+        "text": "@@@@@@@@@@@@@@@TODO: Translate ApiErrorCode.InvalidLoginData!",
+        "__type_alias_do_not_touch": "ApiErrorCode.InvalidLoginData"
+      },
+      "4": {
+        "text": "@@@@@@@@@@@@@@@TODO: Translate ApiErrorCode.InvalidData!",
+        "__type_alias_do_not_touch": "ApiErrorCode.InvalidData"
+      },
+      "5": {
+        "text": "@@@@@@@@@@@@@@@TODO: Translate ApiErrorCode.FormValidationError!",
+        "__type_alias_do_not_touch": "ApiErrorCode.FormValidationError"
+      },
+      "6": {
+        "text": "@@@@@@@@@@@@@@@TODO: Translate ApiErrorCode.UserExist!",
+        "__type_alias_do_not_touch": "ApiErrorCode.UserExist"
+      },
+      "7": {
+        "text": "@@@@@@@@@@@@@@@TODO: Translate ApiErrorCode.InvalidPrice!",
+        "__type_alias_do_not_touch": "ApiErrorCode.InvalidPrice"
+      },
+      "8": {
+        "text": "@@@@@@@@@@@@@@@TODO: Translate ApiErrorCode.NoFreeBoxInThisSize!",
+        "__type_alias_do_not_touch": "ApiErrorCode.NoFreeBoxInThisSize"
+      },
+      "9": {
+        "text": "@@@@@@@@@@@@@@@TODO: Translate ApiErrorCode.PaymentError!",
+        "__type_alias_do_not_touch": "ApiErrorCode.PaymentError"
+      },
+      "10": {
+        "text": "@@@@@@@@@@@@@@@TODO: Translate ApiErrorCode.PayFirst!",
+        "__type_alias_do_not_touch": "ApiErrorCode.PayFirst"
+      },
+      "11": {
+        "text": "@@@@@@@@@@@@@@@TODO: Translate ApiErrorCode.CantChangeThisBoxOnThisStatus!",
+        "__type_alias_do_not_touch": "ApiErrorCode.CantChangeThisBoxOnThisStatus"
+      },
+      "12": {
+        "text": "@@@@@@@@@@@@@@@TODO: Translate ApiErrorCode.TooLateForCahnge!",
+        "__type_alias_do_not_touch": "ApiErrorCode.TooLateForCahnge"
+      },
+      "13": {
+        "text": "@@@@@@@@@@@@@@@TODO: Translate ApiErrorCode.NotFreeBox!",
+        "__type_alias_do_not_touch": "ApiErrorCode.NotFreeBox"
+      },
+      "14": {
+        "text": "@@@@@@@@@@@@@@@TODO: Translate ApiErrorCode.InvalidDiscountCode!",
+        "__type_alias_do_not_touch": "ApiErrorCode.InvalidDiscountCode"
+      },
+      "15": {
+        "text": "@@@@@@@@@@@@@@@TODO: Translate ApiErrorCode.CardHasBeenUsedWithDiscount!",
+        "__type_alias_do_not_touch": "ApiErrorCode.CardHasBeenUsedWithDiscount"
+      },
+      "16": {
+        "text": "@@@@@@@@@@@@@@@TODO: Translate ApiErrorCode.InvalidBoxNumber!",
+        "__type_alias_do_not_touch": "ApiErrorCode.InvalidBoxNumber"
+      },
+      "17": {
+        "text": "@@@@@@@@@@@@@@@TODO: Translate ApiErrorCode.CreatingInvoiceFailure!",
+        "__type_alias_do_not_touch": "ApiErrorCode.CreatingInvoiceFailure"
+      },
+      "18": {
+        "text": "@@@@@@@@@@@@@@@TODO: Translate ApiErrorCode.SendingEmailWithInvoiceFailure!",
+        "__type_alias_do_not_touch": "ApiErrorCode.SendingEmailWithInvoiceFailure"
+      },
+      "19": {
+        "text": "@@@@@@@@@@@@@@@TODO: Translate ApiErrorCode.InvalidLang!",
+        "__type_alias_do_not_touch": "ApiErrorCode.InvalidLang"
+      },
+      "20": {
+        "text": "@@@@@@@@@@@@@@@TODO: Translate ApiErrorCode.StckIdIsRequiredForWorkerRole!",
+        "__type_alias_do_not_touch": "ApiErrorCode.StckIdIsRequiredForWorkerRole"
+      },
+      "21": {
+        "text": "@@@@@@@@@@@@@@@TODO: Translate ApiErrorCode.NoFoundBoxNumberOnStock!",
+        "__type_alias_do_not_touch": "ApiErrorCode.NoFoundBoxNumberOnStock"
+      },
+      "22": {
+        "text": "@@@@@@@@@@@@@@@TODO: Translate ApiErrorCode.ActionForebiden!",
+        "__type_alias_do_not_touch": "ApiErrorCode.ActionForebiden"
+      },
+      "23": {
+        "text": "@@@@@@@@@@@@@@@TODO: Translate ApiErrorCode.InvalidCoordinate!",
+        "__type_alias_do_not_touch": "ApiErrorCode.InvalidCoordinate"
+      },
+      "24": {
+        "text": "@@@@@@@@@@@@@@@TODO: Translate ApiErrorCode.UAreTooFarAway!",
+        "__type_alias_do_not_touch": "ApiErrorCode.UAreTooFarAway"
+      },
+      "25": {
+        "text": "@@@@@@@@@@@@@@@TODO: Translate ApiErrorCode.StockHasActiveDiscont!",
+        "__type_alias_do_not_touch": "ApiErrorCode.StockHasActiveDiscont"
+      },
+      "26": {
+        "text": "@@@@@@@@@@@@@@@TODO: Translate ApiErrorCode.InvalidBlik!",
+        "__type_alias_do_not_touch": "ApiErrorCode.InvalidBlik"
+      },
+      "27": {
+        "text": "@@@@@@@@@@@@@@@TODO: Translate ApiErrorCode.InvalidGroup!",
+        "__type_alias_do_not_touch": "ApiErrorCode.InvalidGroup"
+      },
+      "28": {
+        "text": "@@@@@@@@@@@@@@@TODO: Translate ApiErrorCode.BoxNumberIsReserved!",
+        "__type_alias_do_not_touch": "ApiErrorCode.BoxNumberIsReserved"
+      }
+    }
   }
 }

@@ -2137,6 +2137,10 @@
   resolved "https://registry.yarnpkg.com/@xtuc/long/-/long-4.2.2.tgz#d291c6a4e97989b5c61d9acf396ae4fe133a718d"
   integrity sha512-NuHqBY1PB/D8xU6s/thBgOAiAP7HOYDQ32+BFZILJ8ivkUkAHQnWfn6WhL79Owj1qmUnoN/YPhktdIoucipkAQ==
 
+"ITF_FormBuilder_translation_tool@git+https://gitlab.com/IT.focus/ITF_FormBuilder_translation_tool.git":
+  version "1.0.0"
+  resolved "git+https://gitlab.com/IT.focus/ITF_FormBuilder_translation_tool.git#cca2c43937c71a9fc19c20fe0b3499f13cf4a982"
+
 abab@^2.0.0:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/abab/-/abab-2.0.4.tgz#6dfa57b417ca06d21b2478f0e638302f99c2405c"

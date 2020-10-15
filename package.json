@@ -21,6 +21,7 @@
     "@types/redux": "^3.6.0",
     "@types/redux-thunk": "^2.1.0",
     "@types/uuid": "^3.4.6",
+    "ITF_FormBuilder_translation_tool": "git+https://gitlab.com/IT.focus/ITF_FormBuilder_translation_tool.git",
     "body-scroll-lock": "^2.6.4",
     "customize-cra": "^0.9.1",
     "date-fns": "^2.12.0",
@@ -61,7 +62,8 @@
     "eject": "react-scripts eject",
     "lint:fix": "eslint './src/**/*.{ts,tsx}'",
     "trans-form-errors": "node node_modules/itf_formbuilder_translation_tool",
-    "upr": "yarn upgrade smartbox-types smartbox-tables && yarn trans-form-errors"
+    "prepare-translations": "node ./node_modules/ITF_FormBuilder_translation_tool/dist/index.js",
+    "upr": "yarn upgrade smartbox-types smartbox-tables && yarn prepare-translations"
   },
   "eslintConfig": {
     "extends": "react-app"
