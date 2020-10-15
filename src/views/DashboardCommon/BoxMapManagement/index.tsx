@@ -271,24 +271,26 @@ class BoxMapManagement extends React.Component<Props, State> {
     const { stock, user, boxNumberToMarkWay } = this.props;
     return (
       <Section full>
-        <PageHeader title={`${__('application.storagesPlan')}`} />
-        {(isAdmin(user.role) || isWorker(user.role)) && <MapLegend />}
-        {isUser(user.role) && (
-          <p>
-            Twoja skrytka ma numer: <strong>{boxNumberToMarkWay}</strong>
-          </p>
-        )}
-        {stock?.id ? (
-          <div className="map-wrapper scale100" ref={this.element}>
-            <div className="map-scale">
-              <span className="fa fa-plus-circle" onClick={() => this.mapScaleUpHandle()} />
-              <span className="fa fa-minus-circle" onClick={() => this.mapScaleDownHandle()} />
+        <div className="user-map-wrapper">
+          <PageHeader title={`${__('application.storagesPlan')}`} />
+          {(isAdmin(user.role) || isWorker(user.role)) && <MapLegend />}
+          {isUser(user.role) && (
+            <p className="user-box">
+              Twoja skrytka ma numer: <strong>{boxNumberToMarkWay}</strong>
+            </p>
+          )}
+          {stock?.id ? (
+            <div className="map-wrapper scale100" ref={this.element}>
+              <div className="map-scale">
+                <span className="fa fa-plus-circle" onClick={() => this.mapScaleUpHandle()} />
+                <span className="fa fa-minus-circle" onClick={() => this.mapScaleDownHandle()} />
+              </div>
+              <ReactLogo id="svg-map" />
             </div>
-            <ReactLogo id="svg-map" />
-          </div>
-        ) : (
-          <Spinner />
-        )}
+          ) : (
+            <Spinner />
+          )}
+        </div>
       </Section>
     );
   }

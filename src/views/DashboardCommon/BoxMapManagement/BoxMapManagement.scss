@@ -43,6 +43,15 @@ $buttonSize: 40px;
   }
 }
 
+.user-map-wrapper {
+  padding: 0 $main-spacing;
+  margin: 0 $main-spacing;
+}
+
+.user-box {
+  padding: 0 $main-spacing;
+}
+
 .map-wrapper {
   overflow: hidden;
 
