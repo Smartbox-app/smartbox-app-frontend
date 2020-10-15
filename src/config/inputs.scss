@@ -226,9 +226,13 @@ textarea {
   [class*='IndicatorsContainer'] {
     max-height: 40px;
   }
+
   [class*='ValueContainer'] {
     max-height: 40px;
+    display: flex;
+    align-content: center;
   }
+
   [class*='control'] {
     display: flex;
     flex-direction: row;
