@@ -7,7 +7,7 @@
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  
+
   &:nth-of-type(2n+1){
     background-color: darken($color-background, 8%);
   }
@@ -18,8 +18,8 @@
   .row-label {
     color: lighten($color-primary, 5%);
     font-weight: 600;
-    // margin-right: $main-spacing*2;
     width: 35%;
+    text-transform: capitalize;
 
     @include gt-sm {
       width: 25%;
