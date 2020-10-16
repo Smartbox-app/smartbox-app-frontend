@@ -20,6 +20,12 @@ interface Props {
   match: any;
 }
 
+const helpsForInputPass = (title: any) => {
+  if (title === 'Hasło' || title === 'Powtórz hasło') {
+    return 'Minimum 8 znaków';
+  }
+};
+
 const Register = ({ successNotification }: Props) => (
   <PageContent>
     <LoginLogo />
@@ -40,6 +46,7 @@ const Register = ({ successNotification }: Props) => (
                   key={fieldHtmlId}
                   className="register-input"
                   type={field.options.type}
+                  help={helpsForInputPass(field.title)}
                   input={{
                     label: formOnTranslateString(field.title),
                     name: fieldHtmlId,

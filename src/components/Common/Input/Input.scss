@@ -20,6 +20,12 @@
     display: none;
   }
 
+  .text-help {
+    margin-left: 50px;
+    color: $color-disabled;
+    font-size: 0.75rem;
+  }
+
   label {
     color: $color-text;
     font-size: 0.85rem;
