@@ -224,10 +224,12 @@ textarea {
 
   [class*='IndicatorsContainer'] {
     max-height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   [class*='ValueContainer'] {
-    max-height: 40px;
     display: flex;
     align-content: center;
   }
@@ -235,6 +237,8 @@ textarea {
   [class*='control'] {
     @extend %input-base-bordering;
     display: flex;
+    justify-content: center;
+    align-items: center;
     flex-direction: row;
     border-radius: 0;
     outline: none;
@@ -244,8 +248,10 @@ textarea {
     box-sizing: border-box;
     max-height: 40px;
 
-    [class*='css'] {
+    div {
       max-height: 40px;
+      display: flex;
+      align-content: center;
     }
 
     [class*='placeholder'] {
@@ -256,8 +262,7 @@ textarea {
   }
 
   [class*='menu'] {
-    margin: 0;
-    margin-top: $main-spacing /2;
+    margin: $main-spacing /2 0 0;
     border-radius: 0;
     padding: 0;
     font-family: $font-primary;

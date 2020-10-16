@@ -31,7 +31,7 @@
     border-radius: $main-spacing;
     height: 90px;
     border: 2px solid $color-disabled;
-    max-width: 200px;
+    max-width: 150px;
   }
 
   .single-bank {
@@ -46,15 +46,15 @@
     }
 
     @include gt-sm {
-      flex: 0 0 50%;
-    }
-
-    @include gt-md {
       flex: 0 0 33.333%;
     }
 
-    @include gt-lg {
+    @include gt-md {
       flex: 0 0 25%;
+    }
+
+    @include gt-lg {
+      flex: 0 0 20%;
     }
 
     &:hover {

@@ -41,6 +41,7 @@
     transform: scale(0.8);
     transition: $transition-time transform;
     border-radius: $main-spacing /2;
+    overflow-y: auto;
 
     p {
       max-width: 800px;
@@ -60,6 +61,7 @@
 .modal-content {
   max-height: 100vh;
   position: relative;
+
 }
 
 .modal-exit {
