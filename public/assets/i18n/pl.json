@@ -26,6 +26,7 @@
       "active": "Aktywuj",
       "changeStatus": "Zmień status",
       "notApplicable": "Nie dotyczy",
+      "changesSavedSuccess": "Zapisano zmiany",
 
       "workers": "Pracownicy",
       "users": "Użytkownicy",
@@ -112,6 +113,8 @@
 
       "createStockDisc" : "Utwórz zniżkę",
       "createDiscountCode" : "Utwórz kod zniżkowy",
+      "editStockDiscount" : "Edytujesz zniżkę",
+      "creatStockDiscount" : "Tworzysz zniżkę",
 
       "pay": "Zapłać",
       "fillData": "Podaj dane:",
@@ -134,6 +137,7 @@
     },
     "notification": {
       "accountRegistered": "Konto zostało zarejestrowane.",
+      "stockDiscountCreated" : "Utworzono zniżkę",
       "logOutSuccess": "Wylogowano poprawnie.",
       "discCodeCreated": "Poprawnie utworzono kod rabatowy.",
       "userBlocked": "Zablokowano użytkownika.",

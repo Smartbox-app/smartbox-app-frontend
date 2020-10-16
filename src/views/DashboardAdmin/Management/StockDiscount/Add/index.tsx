@@ -25,7 +25,7 @@ interface Props {
 const FormStockDiscount = ({ fetchApiTableData, hideModal, successNotification }: Props) => {
   const submitButton = (
     <ButtonsContainer>
-      <Button text="Utwórz" type="submit" primary />
+      <Button text={__('application.create')} type="submit" primary />
     </ButtonsContainer>
   );
 
@@ -43,7 +43,7 @@ const FormStockDiscount = ({ fetchApiTableData, hideModal, successNotification }
 
   return (
     <FormContainer className="gift-form">
-      <FormHeader title="Tworzysz zniżkę" />
+      <FormHeader title={__('application.creatStockDiscount')} />
       <FieldsColumn>
         <ItfApiForm
           formId="addStockDiscountForm"
@@ -53,10 +53,10 @@ const FormStockDiscount = ({ fetchApiTableData, hideModal, successNotification }
           schemaFetcher={() => ApiService.loadForm(fetchUrl)}
           sendFetcher={customSendFetcher}
           submitButton={submitButton}
-          onSavedSuccessfully={(data: GiftRes) => {
+          onSavedSuccessfully={() => {
             hideModal();
             fetchApiTableData('stock/discount/list')
-            successNotification(__('notification.discCodeCreated'));
+            successNotification(__('notification.stockDiscountCreated'));
           }}
           onTranslateString={formOnTranslateString}
           thirdPartyComponents={{ ReactSelect, ReactCreatableSelect, flatpickr }}

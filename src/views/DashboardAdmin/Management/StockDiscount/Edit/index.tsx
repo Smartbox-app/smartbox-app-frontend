@@ -26,7 +26,7 @@ interface Props {
 const Edit = ({ discoutnId, successNotification, hideModal, refreshApiTableData }: Props) => {
   const submitButton = (
     <ButtonsContainer>
-      <Button text={__('application.edit')} type="submit" primary />
+      <Button text={__('application.save')} type="submit" primary />
     </ButtonsContainer>
   );
 
@@ -44,7 +44,7 @@ const Edit = ({ discoutnId, successNotification, hideModal, refreshApiTableData 
 
   return (
     <FormContainer className="gift-form">
-      <FormHeader title="Edytujesz zniżkę" />
+      <FormHeader title={__('application.editStockDiscount')} />
       <FieldsColumn>
         <ItfApiForm
           formId="editStockDiscountForm"
@@ -54,8 +54,8 @@ const Edit = ({ discoutnId, successNotification, hideModal, refreshApiTableData 
           schemaFetcher={() => ApiService.loadForm(fetchUrl)}
           sendFetcher={customSendFetcher}
           submitButton={submitButton}
-          onSavedSuccessfully={(data: GiftRes) => {
-            successNotification(__('notification.discCodeCreated'));
+          onSavedSuccessfully={() => {
+            successNotification(__('application.changesSavedSuccess'));
             refreshApiTableData();
             hideModal();
           }}
