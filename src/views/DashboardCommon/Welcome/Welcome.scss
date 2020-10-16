@@ -31,7 +31,6 @@
       margin-bottom: $main-spacing * 2;
       flex-direction: row;
       flex-wrap: wrap;
-      max-width: map-get($breakpoints, lg);
     }
   }
 }

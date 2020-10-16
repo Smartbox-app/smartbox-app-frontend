@@ -8,7 +8,7 @@
 
 @include gt-sm {
   .section-wrapper {
-    width: map-get($breakpoints, sm);
+    //width: map-get($breakpoints, sm);
     margin: 0 auto;
     padding: $main-spacing;
   }
@@ -21,11 +21,11 @@
 
   .section-full-width {
     width: 100%;
-    min-width: map-get($breakpoints, sm);
+    //min-width: map-get($breakpoints, sm);
   }
 
   .section-half-width {
     width: 50%;
-    max-width: map-get($breakpoints, lg) /2;
+    //max-width: map-get($breakpoints, lg) /2;
   }
 }

@@ -5,7 +5,9 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  padding: $main-spacing*2 0;
+  //padding: $main-spacing*2 0;
+  font-size: 1.2rem;
+  font-weight: 500;
 
   .page-header {
     color: $color-text;
