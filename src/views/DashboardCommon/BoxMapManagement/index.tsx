@@ -240,13 +240,13 @@ class BoxMapManagement extends React.Component<Props, State> {
     const mapWrapperElement = this.element.current;
     const { mapScale } = this.state;
     if (mapScale < 150) {
-      const name = `scale${mapScale}`;
+      const name = `scale-${mapScale}`;
       mapWrapperElement.classList.remove(name);
       this.setState({
         mapScale: mapScale + 10,
       });
 
-      const newName = `scale${mapScale + 10}`;
+      const newName = `scale-${mapScale + 10}`;
       mapWrapperElement.classList.add(newName);
     }
   };
@@ -254,15 +254,15 @@ class BoxMapManagement extends React.Component<Props, State> {
   private mapScaleDownHandle = () => {
     const mapWrapperElement = this.element.current;
     const { mapScale } = this.state;
-    if (mapScale > 90) {
-      const name = `scale${mapScale}`;
+    if (mapScale > 70) {
+      const name = `scale-${mapScale}`;
       mapWrapperElement.classList.remove(name);
 
       this.setState({
         mapScale: mapScale - 10,
       });
 
-      const newName = `scale${mapScale - 10}`;
+      const newName = `scale-${mapScale - 10}`;
       mapWrapperElement.classList.add(newName);
     }
   };
@@ -280,7 +280,7 @@ class BoxMapManagement extends React.Component<Props, State> {
             </p>
           )}
           {stock?.id ? (
-            <div className="map-wrapper scale100" ref={this.element}>
+            <div className="map-wrapper scale-100" ref={this.element}>
               <div className="map-scale">
                 <span className="fa fa-plus-circle" onClick={() => this.mapScaleUpHandle()} />
                 <span className="fa fa-minus-circle" onClick={() => this.mapScaleDownHandle()} />
