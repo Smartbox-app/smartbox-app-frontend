@@ -20,7 +20,7 @@ class ScrollPosition extends Component<Props> {
   }
 
   private onScroll = (el: any) => {
-    if (el.scrollTop > (el.children[0].scrollHeight - el.clientHeight) * 0.95) {
+    if (el.scrollTop > (el.children[0].scrollHeight - el.clientHeight)) {
       this.props.formAgreementReaded();
     }
   };
