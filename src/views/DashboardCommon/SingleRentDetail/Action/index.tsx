@@ -1,12 +1,12 @@
 import React from 'react';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { MyRentList, UserRes } from 'smartbox-types';
-import { ButtonsContainer } from '../../../../components/Layout';
-import { Button, ConfirmModal } from '../../../../components/Common';
+import { bindActionCreators } from 'redux';
+import { MyRentList, RentStatus, UserRes } from 'smartbox-types';
 import { modal, order, singleRent } from '../../../../actions';
-import { __ } from '../../../../helpers/i18n';
 import { history } from '../../../../App';
+import { Button, ConfirmModal } from '../../../../components/Common';
+import { ButtonsContainer } from '../../../../components/Layout';
+import { __ } from '../../../../helpers/i18n';
 import { ApplicationState } from '../../../../reducers';
 import UserService from '../../../../services/user-service';
 import { BoxMapManagement } from '../../index';
@@ -33,15 +33,20 @@ const Action = ({ showModal, endMyRent, rentId, updateFormData, rent, user }: Pr
         success
         click={() => showModal(<BoxMapManagement boxNumberToMarkWay={Number(rent.number)} />)}
       />
-      <Button text={__('application.goToAgreement')} success click={() => handleExtendingOrderData(rentId)} />
+      <Button
+        text={__('application.goToAgreement')}
+        success
+        click={() => handleExtendingOrderData(rentId)}
+        disabled={rent.status !== RentStatus.rented}
+      />
       <Button
         text={__('application.end')}
         danger
         click={() =>
           showModal(
             <ConfirmModal
-              mainText="Czy jesteś pewien, że chcesz zakończyć tę umowę?"
-              approveButtonText="Zakończ"
+              mainText={__('application.endRental')}
+              approveButtonText={__('application.end')}
               approveAction={() => endMyRent(rentId)}
               cancelButtonText={__('application.back')}
             />,

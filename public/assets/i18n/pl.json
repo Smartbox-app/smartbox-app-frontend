@@ -104,6 +104,14 @@
       "sendInvitation": "Wyślij zaproszenie",
       "goToAgreement": "Przedłuż",
       "showOnStockMap": "Pokaż mapę",
+
+      "rentDetail": "Szczegóły najmu",
+      "openGate": "Otwórz bramę",
+      "theGateOpens": "Brama się otwiera",
+      "slideToOpenGate": "Przesuń suwak aby otworzyć bramę",
+      "endRental": "Czy jesteś pewien, że chcesz zakończyć tę umowę?",
+      "shareYourLoc": "Udostępnij swoją lokalizację by otworzyć bramę",
+
       "generateInvoice": "Wygeneruj fakturę",
       "profileDetail": "Szczegóły Profilu",
       "preInvitationForWorker": "Wyślij zaproszenie dla pracownika",

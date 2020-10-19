@@ -6,6 +6,7 @@ import { MyRentList } from 'smartbox-types';
 import { Section, SectionHeader } from '../../../components/Layout';
 
 import { singleRent } from '../../../actions';
+import { __ } from '../../../helpers/i18n';
 import { ApplicationState } from '../../../reducers';
 
 import Action from './Action';
@@ -32,7 +33,7 @@ const SingleRentDetail = ({ loading, match, getSingleRent, singleRent, fetchMyRe
 
   return (
     <Section full>
-      <SectionHeader title="Szczegóły najmu" />
+      <SectionHeader title={__('application.rentDetail')} />
       <Action rentId={singleRent.id} />
       <Details singleRent={singleRent} />
       <Gate />

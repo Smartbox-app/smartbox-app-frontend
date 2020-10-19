@@ -4,6 +4,7 @@ import { ReactSVG } from 'react-svg';
 import { bindActionCreators } from 'redux';
 import { Coordinate } from 'smartbox-types';
 import { Button } from '../../../../components/Common';
+import { __ } from '../../../../helpers/i18n';
 import { ApplicationState } from '../../../../reducers';
 import { gate } from '../../../../actions';
 
@@ -35,9 +36,6 @@ const Gate = ({ startAnimation, askGateToOpen }: Props) => {
       console.log('Geo Location not supported by browser');
     }
   };
-  // function that retrieves the position
-
-  // request for location
 
   useEffect(() => {
     getLocation();
@@ -46,16 +44,22 @@ const Gate = ({ startAnimation, askGateToOpen }: Props) => {
   const noGpsCords = (
     <div className="no-gps-cords">
       <ReactSVG src="/assets/images/Group37.svg" />
-      <span>Udostępnij swoją lokalizację by otworzyć bramę</span>
+      <span>{__('application.shareYourLoc')}</span>
     </div>
   );
 
   const gateOpenningAnimation = (
     <div className="gate-animation">
       <ReactSVG src={`${startAnimation ? '/assets/images/Group46.svg' : '/assets/images/Group39.svg'}`} />
-      <span>{startAnimation ? 'Brama otwarta' : 'Przesuń suwak aby otworzyć bramę'}</span>
+      <span>{startAnimation ? __('application.theGateOpens') : __('application.slideToOpenGate')}</span>
       <div className="slide-to-open">
-        <Button text="Otwórz bramę" big primary click={() => askGateToOpen(geoCoord)} disabled={startAnimation} />
+        <Button
+          text={__('application.openGate')}
+          big
+          primary
+          click={() => askGateToOpen(geoCoord)}
+          disabled={startAnimation}
+        />
       </div>
     </div>
   );
