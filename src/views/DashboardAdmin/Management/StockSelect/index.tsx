@@ -21,10 +21,6 @@ const StockSelect = () => {
             value: 'Warszawa-Łomianki',
             name: 'Warszawa-Łomianki',
           },
-          {
-            value: 'Nowy plac',
-            name: 'Nowy plac',
-          },
         ]}
       />
     </div>
