@@ -8,6 +8,7 @@ import { dateOnly } from '../../../../utils/format-date';
 import { __ } from '../../../../helpers/i18n';
 import { isAdmin } from '../../../../utils/role-check';
 
+import DescriptionRow from './DescriptionRow';
 import Edit from './Edit';
 
 import './BoxDetail.scss';
@@ -27,65 +28,61 @@ const BoxDetail = ({ selectedBoxId, singleBoxDetail, rentId, user }: Props) => {
   return (
     <div className="detail-wrapper">
       <SectionHeader title={__('application.singleStoreDetail')} />
-      <p className="single">
-        <span className="fa fa-lock" />
-        <span>{__('application.storeNumber')}: </span>
-        <strong>{selectedBoxId}</strong>
-      </p>
+
+      <DescriptionRow icon="fa-lock" text={__('application.storeNumber')}>
+        {selectedBoxId}
+      </DescriptionRow>
+
       {isAdmin(user.role) && (
         <>
-          <p className="single">
-            <span className="fa fa-user" />
-            <span>{__('application.rentedBy')}: </span>
-            <strong>
-              {singleBoxDetail.owner ? `${singleBoxDetail.owner.firstName} ${singleBoxDetail.owner.lastName}` : '---'}
-            </strong>
-          </p>
-          <p className="single">
-            <span className="fa fa-calendar " />
-            <span>{__('application.startDate')}: </span>
-            <strong>{`${isThisBoxFree(rentId) ? '---' : dateOnly(singleBoxDetail.startAt)}`}</strong>
-          </p>
-          <p className="single">
-            <span className="fa fa-calendar " />
-            <span>{__('application.endDate')}: </span>
-            <strong>{`${isThisBoxFree(rentId) ? '---' : dateOnly(singleBoxDetail.finishAt)}`}</strong>
-          </p>
-          <p className="single">
-            <span className="fa fa-arrow-right" />
-            <span>{__('application.storeState')}: </span>
-            <strong>{`${singleBoxDetail.status}`}</strong>
-          </p>
-          <p className="single">
-            <span className="fa fa-envelope" />
-            <span>{__('application.mail')}:</span>
-            <strong>
-              {isThisBoxFree(rentId) ? (
-                '---'
-              ) : (
-                <a
-                  href={`mailto:${singleBoxDetail.owner ? singleBoxDetail.owner.email : 'error'}`}
-                  rel="noopener noreferrer"
-                  target="_blank"
-                >
-                  {singleBoxDetail.owner ? singleBoxDetail.owner.email : 'brak'}
-                </a>
-              )}
-            </strong>
-          </p>
+          <DescriptionRow icon="fa-user" text={__('application.rentedBy')}>
+            {singleBoxDetail.owner ? `${singleBoxDetail.owner.firstName} ${singleBoxDetail.owner.lastName}` : '---'}
+          </DescriptionRow>
+
+          <DescriptionRow icon="fa-calendar" text={__('application.startDate')}>
+            {`${isThisBoxFree(rentId) ? '---' : dateOnly(singleBoxDetail.startAt)}`}
+          </DescriptionRow>
+
+          <DescriptionRow icon="fa-calendar" text={__('application.endDate')}>
+            {`${isThisBoxFree(rentId) ? '---' : dateOnly(singleBoxDetail.finishAt)}`}
+          </DescriptionRow>
+
+          <DescriptionRow icon="fa-arrow-right" text={__('application.storeState')}>
+            {`${singleBoxDetail.status}`}
+          </DescriptionRow>
+
+          <DescriptionRow icon="fa-flag" text="Płatność">
+            {singleBoxDetail.owner ? `Opłacono ze zniżką` : '---'}
+          </DescriptionRow>
+
+          <DescriptionRow icon="fa-envelope" text={__('application.mail')}>
+            {isThisBoxFree(rentId) ? (
+              '---'
+            ) : (
+              <a
+                href={`mailto:${singleBoxDetail.owner ? singleBoxDetail.owner.email : 'error'}`}
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                {singleBoxDetail.owner ? singleBoxDetail.owner.email : 'brak'}
+              </a>
+            )}
+          </DescriptionRow>
         </>
       )}
 
       <ButtonsContainer max>
         <Button
-          className={`custome-icon-button ${!optionDisplayState ? '' : 'rotate'}`}
+          className={`custom-icon-button ${!optionDisplayState ? '' : 'rotate'}`}
           primary
           text={!optionDisplayState ? __('application.showEditOptions') : __('application.hideEditOptions')}
           click={() => optionDisplayToggle(!optionDisplayState)}
           icon="arrow-down-white.svg"
         />
       </ButtonsContainer>
-      {optionDisplayState && <Edit selectedBoxId={selectedBoxId} rentId={rentId} singleBoxDetailStatus={singleBoxDetail.status} />}
+      {optionDisplayState && (
+        <Edit selectedBoxId={selectedBoxId} rentId={rentId} singleBoxDetailStatus={singleBoxDetail.status} />
+      )}
     </div>
   );
 };
