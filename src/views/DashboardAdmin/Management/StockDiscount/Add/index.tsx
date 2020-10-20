@@ -1,9 +1,10 @@
+import { addHours, addMinutes } from "date-fns";
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { ItfApiForm } from 'itf_formbuilder_react';
 import ReactSelect from 'react-select';
 import ReactCreatableSelect from 'react-select/creatable';
-import { AddGiftReq, GiftRes } from 'smartbox-types';
+import { AddGiftReq, DiscountReq, GiftRes } from 'smartbox-types';
 import { connect } from 'react-redux';
 import flatpickr from 'flatpickr';
 import { FormContainer, ButtonsContainer, FieldsColumn } from '../../../../../components/Layout';
@@ -32,11 +33,12 @@ const FormStockDiscount = ({ fetchApiTableData, hideModal, successNotification }
   const fetchUrl = 'stock/form/add-stock-discount';
   const sendUrl = 'stock/discount';
 
-  const customSendFetcher = (formId: string, values: AddGiftReq) =>
+  const customSendFetcher = (formId: string, values: DiscountReq) =>
     ApiService.sendForm(
       sendUrl,
       {
         ...values,
+        expireAt: addMinutes(values.expireAt, 1439),
       },
       'POST',
     );

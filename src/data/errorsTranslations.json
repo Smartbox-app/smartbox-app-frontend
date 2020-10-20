@@ -8,7 +8,7 @@
     "Compnay street": "Dane kontaktowe: Ulica",
     "Data początku nie może być wcześniejsza od końcowej": "Data początku nie może być wcześniejsza od końcowej",
     "Date too high. Max. {0}.": "Date too high. Max. {0}.",
-    "Date too low. Min. {0}.": "Date too low. Min. {0}.",
+    "Date too low. Min. {0}.": "Data minęła. Min. {0}.",
     "Discount value": "Wartość zniżki",
     "Expiration Date": "Data wygaśnięcia",
     "Field required.": "To pole jest wymagane.",

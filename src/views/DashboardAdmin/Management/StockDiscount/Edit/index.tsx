@@ -2,7 +2,8 @@ import React from 'react';
 import { ItfApiForm } from 'itf_formbuilder_react';
 import ReactSelect from 'react-select';
 import ReactCreatableSelect from 'react-select/creatable';
-import { AddGiftReq, GiftRes } from 'smartbox-types';
+import { DiscountReq } from 'smartbox-types';
+import { addMinutes } from 'date-fns';
 import { connect } from 'react-redux';
 import flatpickr from 'flatpickr';
 import { bindActionCreators } from 'redux';
@@ -33,11 +34,12 @@ const Edit = ({ discoutnId, successNotification, hideModal, refreshApiTableData 
   const fetchUrl = `stock/form/update-stock-discount/${discoutnId}`;
   const sendUrl = `stock/discount/${discoutnId}`;
 
-  const customSendFetcher = (formId: string, values: AddGiftReq) =>
+  const customSendFetcher = (formId: string, values: DiscountReq) =>
     ApiService.sendForm(
       sendUrl,
       {
         ...values,
+        expireAt: addMinutes(values.expireAt, 1439),
       },
       'PATCH',
     );
