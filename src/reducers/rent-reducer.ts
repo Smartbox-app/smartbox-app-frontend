@@ -16,7 +16,13 @@ interface GetSingleRent {
   payload: string;
 }
 
-type Action = BoxGroup | GetSingleRent;
+interface GetMySingleRent {
+  type: 'GET_MY_RENT_LIST_SUCCESS';
+  payload: MyRentList[];
+}
+
+
+type Action = BoxGroup | GetSingleRent | GetMySingleRent;
 
 const initialState: RentsStatus = {
   singleRent: {
@@ -39,6 +45,12 @@ export default (state: RentsStatus = initialState, action: Action): any => {
       return {
         ...state,
         rentsList: action.payload.filter((rent: MyRentList) => rent.status !== RentStatus.failure),
+      };
+    }
+    case 'GET_MY_RENT_LIST_SUCCESS': {
+      return {
+        ...state,
+        rentsList: action.payload,
       };
     }
 

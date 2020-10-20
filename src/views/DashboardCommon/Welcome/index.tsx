@@ -18,12 +18,12 @@ import './Welcome.scss';
 interface Props {
   userName: string;
   rentsList: MyRentList[];
-  fetchMyRentStory: () => void;
+  getMyRentList: () => void;
 }
 
-const Welcome = ({ userName, fetchMyRentStory, rentsList }: Props) => {
+const Welcome = ({ userName, getMyRentList, rentsList }: Props) => {
   useEffect(() => {
-    fetchMyRentStory();
+    getMyRentList();
   }, []);
 
   return (

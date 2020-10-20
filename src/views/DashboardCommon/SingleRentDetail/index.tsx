@@ -20,13 +20,13 @@ interface Props extends RouteComponentProps<RouteProps> {
   loading: boolean;
   singleRent: MyRentList;
   getSingleRent: (rentId: string) => void;
-  fetchMyRentStory: () => void;
+  getMyRentList: () => void;
 }
 
-const SingleRentDetail = ({ loading, match, getSingleRent, singleRent, fetchMyRentStory }: Props) => {
+const SingleRentDetail = ({ loading, match, getSingleRent, singleRent, getMyRentList }: Props) => {
   useEffect(() => {
     (async function() {
-      await fetchMyRentStory();
+      await getMyRentList();
       await getSingleRent(match.params.orderId);
     })();
   }, []);
