@@ -4,8 +4,8 @@ import ReactSelect from 'react-select';
 import { connect } from 'react-redux';
 import ReactCreatableSelect from 'react-select/creatable';
 import { bindActionCreators } from 'redux';
-import { ChangeStatusReq } from 'smartbox-types';
-import { modal, notifications } from '../../../../../../actions';
+import { ChangeStatusReq, StockList } from 'smartbox-types';
+import { boxes, modal, notifications } from '../../../../../../actions';
 import { FormContainer, ButtonsContainer } from '../../../../../../components/Layout';
 import { Button, Spinner } from '../../../../../../components/Common';
 import { ApplicationState } from '../../../../../../reducers';
@@ -16,11 +16,13 @@ import { __ } from '../../../../../../helpers/i18n';
 interface Props {
   selectedBoxId: string;
   rentId: string;
+  stock: StockList;
   hideModal: () => void;
   successNotification: (text: string) => void;
+  fetchBoxStatuses: (stockId: string) => void;
 }
 
-const Status = ({ selectedBoxId, hideModal, successNotification, rentId }: Props) => {
+const Status = ({ selectedBoxId, hideModal, successNotification, rentId, stock, fetchBoxStatuses }: Props) => {
   const submitButton = (
     <ButtonsContainer>
       <Button text={__('application.changeStatus')} type="submit" danger />
@@ -53,6 +55,7 @@ const Status = ({ selectedBoxId, hideModal, successNotification, rentId }: Props
         onSavedSuccessfully={() => {
           hideModal();
           successNotification(__('notification.userStatusChanged'));
+          fetchBoxStatuses(stock.id);
         }}
         onErrorsWhileSaving={() => hideModal()}
         onTranslateString={formOnTranslateString}
@@ -67,6 +70,6 @@ const mapStateToProps = (state: ApplicationState) => ({
   stock: state.stock.list[0],
 });
 
-const mapDispatchToProps = (dispatch: any) => bindActionCreators({ ...modal, ...notifications }, dispatch);
+const mapDispatchToProps = (dispatch: any) => bindActionCreators({ ...boxes, ...modal, ...notifications }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Status);

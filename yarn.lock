@@ -10642,7 +10642,7 @@ slick-carousel@^1.8.1:
 
 "smartbox-tables@git+https://gitlab.com/itdotfocus/smartbox/smartbox-tables.git":
   version "1.0.0"
-  resolved "git+https://gitlab.com/itdotfocus/smartbox/smartbox-tables.git#998181356bde0d8dc2985f0552f54ce7cce474b1"
+  resolved "git+https://gitlab.com/itdotfocus/smartbox/smartbox-tables.git#69d5b85ce6d50061122783f0cc09f81212ef1b09"
 
 "smartbox-types@git+https://gitlab.com/itdotfocus/smartbox/smartbox-types.git":
   version "1.0.0"

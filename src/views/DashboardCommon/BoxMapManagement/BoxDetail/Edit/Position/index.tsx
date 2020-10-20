@@ -4,10 +4,11 @@ import ReactSelect from 'react-select';
 import { connect } from 'react-redux';
 import ReactCreatableSelect from 'react-select/creatable';
 import { bindActionCreators } from 'redux';
-import { ChangeStatusReq } from 'smartbox-types';
-import { notifications } from '../../../../../../actions';
+import { ChangeStatusReq, StockList } from 'smartbox-types';
+import { boxes, modal, notifications } from '../../../../../../actions';
 import { FormContainer, ButtonsContainer } from '../../../../../../components/Layout';
 import { Button, Spinner } from '../../../../../../components/Common';
+import { ApplicationState } from '../../../../../../reducers';
 import ApiService from '../../../../../../services/api-service';
 import { formOnTranslateString } from '../../../../../../utils/trans-form';
 import { __ } from '../../../../../../helpers/i18n';
@@ -15,12 +16,15 @@ import { __ } from '../../../../../../helpers/i18n';
 import './Position.scss';
 
 interface Props {
-  selectedBoxId: string;
-  successNotification: (text: string) => void;
   rentId: string;
+  stock: StockList;
+  selectedBoxId: string;
+  hideModal: () => void;
+  successNotification: (text: string) => void;
+  fetchBoxStatuses: (stockId: string) => void;
 }
 
-const Position = ({ rentId, selectedBoxId, successNotification }: Props) => {
+const Position = ({ rentId, stock, successNotification, fetchBoxStatuses, hideModal }: Props) => {
   const submitButton = (
     <ButtonsContainer>
       <Button text={__('application.move')} type="submit" danger />
@@ -50,7 +54,9 @@ const Position = ({ rentId, selectedBoxId, successNotification }: Props) => {
         submitButton={submitButton}
         loadingInfo={<Spinner transparent />}
         onSavedSuccessfully={() => {
+          hideModal();
           successNotification(__('notification.userMovedSuccess'));
+          fetchBoxStatuses(stock.id);
         }}
         onTranslateString={formOnTranslateString}
         thirdPartyComponents={{ ReactSelect, ReactCreatableSelect }}
@@ -59,6 +65,10 @@ const Position = ({ rentId, selectedBoxId, successNotification }: Props) => {
   );
 };
 
-const mapDispatchToProps = (dispatch: any) => bindActionCreators({ ...notifications }, dispatch);
+const mapStateToProps = (state: ApplicationState) => ({
+  stock: state.stock.list[0],
+});
 
-export default connect(null, mapDispatchToProps)(Position);
+const mapDispatchToProps = (dispatch: any) => bindActionCreators({ ...modal, ...boxes, ...notifications }, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Position);
