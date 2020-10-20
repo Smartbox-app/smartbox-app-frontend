@@ -3,6 +3,11 @@
 
 $buttonSize: 40px;
 
+.user-map-wrapper {
+  position: relative;
+  width: 100%;
+}
+
 .grab {
   cursor: grabbing;
 }
