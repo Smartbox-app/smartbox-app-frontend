@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { RouteComponentProps, withRouter } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { Button } from '../../../components/Common';
 import { LogoContainer, PageContent, ButtonsContainer, Section } from '../../../components/Layout';
@@ -10,12 +11,16 @@ import Form from './Form';
 
 import './Invoice.scss';
 
-interface Props {
+interface RouteProps {
+  rentId: string;
+}
+
+interface Props extends RouteComponentProps<RouteProps> {
   paymentId: string;
   showModal: (content: React.ReactNode) => void;
 }
 
-const Invoice = ({ showModal, paymentId }: Props) => {
+const Invoice = ({ showModal, paymentId, match }: Props) => {
   return (
     <PageContent>
       <Section>
@@ -24,7 +29,7 @@ const Invoice = ({ showModal, paymentId }: Props) => {
         <p className="content-text">Dziękujemy za korzystanie z naszych usług.</p>
         <ButtonsContainer max>
           <Button success text="Wróć do aplikacji" to="/" />
-          <Button primary text="Wygeneruj fakturę" click={() => showModal(<Form paymentId={paymentId} />)} />
+          <Button primary text="Wygeneruj fakturę" click={() => showModal(<Form paymentId={match.params.rentId} />)} />
         </ButtonsContainer>
       </Section>
     </PageContent>
@@ -43,4 +48,4 @@ const mapDispatchToProps = (dispatch: any) =>
     dispatch,
   );
 
-export default connect(mapStateToProps, mapDispatchToProps)(Invoice);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Invoice));
