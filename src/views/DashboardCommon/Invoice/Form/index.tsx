@@ -6,15 +6,16 @@ import { FormContainer, ButtonsContainer, FormHeader } from '../../../../compone
 import { Spinner, Button } from '../../../../components/Common';
 import ApiService from '../../../../services/api-service';
 import { formOnTranslateString } from '../../../../utils/trans-form';
-import { notifications } from '../../../../actions';
+import { notifications, modal } from '../../../../actions';
 import { __ } from '../../../../helpers/i18n';
 
 interface Props {
   paymentId: string;
   successNotification: (text: string) => void;
+  hideModal: () => void;
 }
 
-const Invoice = ({ paymentId, successNotification }: Props) => {
+const Invoice = ({ paymentId, successNotification, hideModal }: Props) => {
   const loadUrl = 'payment/form/invoice';
   const sendUrl = `payment/create-invoice/${paymentId}`;
   const METHOD = 'POST';
@@ -37,7 +38,10 @@ const Invoice = ({ paymentId, successNotification }: Props) => {
         sendFetcher={(formId: string, values: any) => ApiService.sendForm(sendUrl, values, METHOD)}
         submitButton={submitButton}
         onSavedSuccessfully={(data: any) => {
-          successNotification('Poprawnie wygenerowano fakturę');
+          if (data === null) {
+            successNotification('Wysłano fakturę na maila');
+            hideModal();
+          }
         }}
         onTranslateString={formOnTranslateString}
       />
@@ -45,6 +49,6 @@ const Invoice = ({ paymentId, successNotification }: Props) => {
   );
 };
 
-const mapDispatchToProps = (dispatch: any) => bindActionCreators({ ...notifications }, dispatch);
+const mapDispatchToProps = (dispatch: any) => bindActionCreators({ ...notifications, ...modal }, dispatch);
 
 export default connect(null, mapDispatchToProps)(Invoice);
