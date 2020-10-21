@@ -9,6 +9,7 @@ import UserService from '../../../services/user-service';
 import { __ } from '../../../helpers/i18n';
 import { BoxMapManagement } from '../../DashboardCommon';
 import StockSelect from '../../DashboardAdmin/Management/StockSelect';
+import Gate from '../../DashboardCommon/SingleRentDetail/Gate';
 
 interface Props {
   user: UserRes;
@@ -41,7 +42,7 @@ const Management = ({ user }: Props) => (
         render={() => <Redirect to={`/${UserService.getSlugByRole(user.role)}/management/map`} />}
       />
       <Route path={`/${UserService.getSlugByRole(user.role)}/management/map`} component={BoxMapManagement} />
-      <Route path={`/${UserService.getSlugByRole(user.role)}/management/gate`} component={BoxMapManagement} />
+      <Route path={`/${UserService.getSlugByRole(user.role)}/management/gate`} component={Gate} />
     </Switch>
   </Section>
 );

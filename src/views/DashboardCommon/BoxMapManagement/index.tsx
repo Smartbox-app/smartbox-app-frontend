@@ -145,9 +145,7 @@ class BoxMapManagement extends React.Component<Props, State> {
 
   private setBoxStatus = (boxId: string, singleElement: any): void => {
     const { boxesGroup } = this.props;
-
     boxesGroup?.forEach((singleBox: BoxListItem): void => {
-      console.log('setBoxStatus', singleElement.firstElementChild.classList);
       if (singleBox.number === boxId) {
         switch (singleBox.status) {
           case RentStatus.toCheck:
@@ -175,10 +173,15 @@ class BoxMapManagement extends React.Component<Props, State> {
             singleElement.lastElementChild.classList.add('out-of-service-text');
             break;
           case RentStatus.free:
-            singleElement.firstElementChild.classList.remove('out-of-service');
-            singleElement.lastElementChild.classList.remove('out-of-service-text');
+            singleElement.firstElementChild.classList.remove('to-check');
+            singleElement.firstElementChild.classList.remove('rented');
+            singleElement.firstElementChild.classList.remove('reserved');
             singleElement.firstElementChild.classList.remove('to-explain');
             singleElement.lastElementChild.classList.remove('to-explain-text');
+            singleElement.firstElementChild.classList.remove('no-paid-extension');
+            singleElement.firstElementChild.classList.remove('no-paid-extension-with-warning');
+            singleElement.firstElementChild.classList.remove('out-of-service');
+            singleElement.lastElementChild.classList.remove('out-of-service-text');
             singleElement.firstElementChild.classList.add('free');
             break;
           default:

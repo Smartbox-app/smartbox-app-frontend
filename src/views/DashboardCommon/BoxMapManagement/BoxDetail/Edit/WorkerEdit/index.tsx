@@ -37,7 +37,7 @@ const Status = ({ selectedBoxId, hideModal, successNotification, rentId, stock, 
       sendUrl,
       {
         ...values,
-        number: selectedBoxId,
+        // number: selectedBoxId,
       },
       'PATCH',
     );
