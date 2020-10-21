@@ -25,6 +25,12 @@ const Management = ({ user }: Props) => (
           to: `/${UserService.getSlugByRole(user.role)}/management/map`,
           text: `${__('application.boxes')}`,
         },
+        {
+          className: 'tab',
+          activeClassName: 'active',
+          to: `/${UserService.getSlugByRole(user.role)}/management/gate`,
+          text: `${__('application.gate')}`,
+        },
       ]}
     />
 
@@ -35,6 +41,7 @@ const Management = ({ user }: Props) => (
         render={() => <Redirect to={`/${UserService.getSlugByRole(user.role)}/management/map`} />}
       />
       <Route path={`/${UserService.getSlugByRole(user.role)}/management/map`} component={BoxMapManagement} />
+      <Route path={`/${UserService.getSlugByRole(user.role)}/management/gate`} component={BoxMapManagement} />
     </Switch>
   </Section>
 );
