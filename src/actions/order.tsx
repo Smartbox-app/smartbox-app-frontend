@@ -132,7 +132,7 @@ export const sentExtendRentRequest = (rentId: string, data: ExtendRentalReq, rol
       history.push(`/${UserService.getSlugByRole(role)}/order/step/payment/${rentId}`);
     },
     null,
-    `rent/extend-rent/${rentId}/true`,
+    `rent/extend-rent/${rentId}`,
     'LOADING',
     data,
   );
