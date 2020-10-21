@@ -35,7 +35,7 @@
     flex-direction: column;
     padding: $main-spacing *2;
     z-index: 1000;
-    max-height: 100vh;
+    max-height: 90vh;
     max-width: 90%;
     box-shadow: $box-shadow-small rgba(0, 0, 0, 0.5);
     transform: scale(0.8);
@@ -59,7 +59,7 @@
 }
 
 .modal-content {
-  max-height: 100vh;
+  max-height: 90vh;
   position: relative;
   width: 100%;
 }
