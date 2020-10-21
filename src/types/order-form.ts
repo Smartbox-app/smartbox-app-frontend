@@ -6,4 +6,8 @@ export interface FormType {
   dateStart: Date;
   dateEnd: Date;
   discountCode: string;
+  card: {
+    discount: number;
+    durationInWeeks: number;
+  };
 }

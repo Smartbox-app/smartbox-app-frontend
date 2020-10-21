@@ -50,8 +50,11 @@ const DiscountCode = ({ hideModal, updateFormData, successNotification }: Props)
         onSavedSuccessfully={(data: GiftRes) => {
           successNotification(__('notification.discountCodeRead'));
           updateFormData({
-            discount: data.discount,
             discountCode: data.code,
+            card: {
+              discount: data.discount,
+              durationInWeeks: data.duration,
+            },
           });
           hideModal();
         }}

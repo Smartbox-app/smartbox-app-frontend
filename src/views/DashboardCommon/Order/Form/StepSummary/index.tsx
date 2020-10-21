@@ -29,7 +29,6 @@ interface RouteProps {
 }
 
 interface Props extends RouteComponentProps<RouteProps> {
-  history: any;
   formData: FormType;
   countedPrice: IPricingResult;
   user: UserRes;

@@ -110,6 +110,10 @@ const initialState: OrderState = {
     dateStart: new Date(),
     dateEnd: addDays(new Date(), 7),
     discountCode: '',
+    card: {
+      discount: 0,
+      durationInWeeks: 0,
+    },
   },
   paymentId: '',
   paymentSuccess: false,
@@ -145,6 +149,10 @@ export default (state: OrderState = initialState, action: Action): any => {
         discount: newFormData.discount,
         size: Number(newFormData.size),
         isFirstRent: newFormData.isFirstRent,
+        card: {
+          discount: newFormData.card.discount,
+          durationInWeeks: newFormData.card.durationInWeeks,
+        },
       };
 
       if (newFormData.durationInDays !== 0) {
