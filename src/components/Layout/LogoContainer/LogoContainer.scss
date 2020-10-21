@@ -1,5 +1,5 @@
-@import "../../../config/variables";
-@import "../../../config/mixins.scss";
+@import '../../../config/variables';
+@import '../../../config/mixins.scss';
 
 .logo-container {
   order: 0;
@@ -9,6 +9,10 @@
   padding-left: 0;
   display: none;
 
+  &:hover {
+    cursor: pointer;
+  }
+
   img {
     display: block;
     width: auto;
@@ -17,7 +21,7 @@
 
   &.small {
     img {
-      height: $main-logo-size /3.5;
+      height: $main-logo-size / 3.5;
     }
   }
 
@@ -31,8 +35,8 @@
   .logo-container {
     margin-top: $main-spacing * 3;
     img {
-      height: $main-logo-size /2;
-      margin-bottom: $main-spacing *2;
+      height: $main-logo-size / 2;
+      margin-bottom: $main-spacing * 2;
     }
   }
 }
@@ -40,7 +44,7 @@
 @include gt-lg {
   .logo-container {
     display: flex;
-    
+
     img {
       height: $main-logo-size;
     }
