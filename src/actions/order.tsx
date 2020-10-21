@@ -1,5 +1,13 @@
 import React from 'react';
-import { RentBoxReq, UserRole, ExecutePaymentReq, ExecuteBlikPaymentReq, UrlRes, ApiErrorCode } from 'smartbox-types';
+import {
+  RentBoxReq,
+  UserRole,
+  ExecutePaymentReq,
+  ExecuteBlikPaymentReq,
+  UrlRes,
+  ApiErrorCode,
+  ExtendRentalReq,
+} from 'smartbox-types';
 import ApiService from '../services/api-service';
 import { history } from '../App';
 import UserService from '../services/user-service';
@@ -111,3 +119,21 @@ export const sentExecutePaymentWithTpayRequest = (paymentId: string, group: stri
 export const clearPaymentDetails = () => ({
   type: 'CLEAR_PAYMENT_METHOD_SUCCESS',
 });
+
+export const sentExtendRentRequest = (rentId: string, data: ExtendRentalReq, role: UserRole) => async (
+  dispatch: any,
+) => {
+  await ApiService.post(
+    dispatch,
+    'SENT_EXTEND_RENT_SUCCESS',
+    'SENT_EXTEND_RENT_FAILED',
+    (suc: any) => {
+      console.log('suc', suc);
+      history.push(`/${UserService.getSlugByRole(role)}/order/step/payment/${rentId}`);
+    },
+    null,
+    `rent/extend-rent/${rentId}/true`,
+    'LOADING',
+    data,
+  );
+};

@@ -4,7 +4,7 @@ import { RouteComponentProps, withRouter } from 'react-router-dom';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { RentBoxReq, UserRole, IPricingResult, UserRes, StockList } from 'smartbox-types';
+import { RentBoxReq, UserRole, IPricingResult, UserRes, StockList, ExtendRentalReq } from 'smartbox-types';
 import { Button } from '../../../../../components/Common';
 import { order } from '../../../../../actions';
 import { ButtonsContainer } from '../../../../../components/Layout';
@@ -33,9 +33,7 @@ interface Props extends RouteComponentProps<RouteProps> {
   isAgreementAccepted: boolean;
   isResignationMarked: boolean;
   stock: StockList;
-  selectedPaymentMethodDetailId: string;
-  updateFormData: (data: any) => void;
-  sentExecutePaymentWithTpayRequest: (paymentId: string, group: string) => void;
+  sentExtendRentRequest: (rentId: string, data: ExtendRentalReq, role: UserRole) => void;
   sentRentBoxRequest: (data: RentBoxReq | any, nextStep: string, role: UserRole) => void;
 }
 
@@ -48,7 +46,7 @@ const StepSummary = ({
   countedPrice,
   stock,
   match,
-  updateFormData,
+  sentExtendRentRequest,
 }: Props): any => {
   useEffect(() => {
     if (formData.size.length === 0) {
@@ -61,7 +59,16 @@ const StepSummary = ({
   const onSubmit = (data: any) => {
     if (match.params.rentId) {
       // rent extension
-      history.push(`/${UserService.getSlugByRole(user.role)}/order/step/payment/${match.params.rentId || ''}`);
+      sentExtendRentRequest(
+        match.params.rentId,
+        {
+          discountCode: formData.discountCode,
+          finishAt: formData.dateEnd,
+          cost: countedPrice.value,
+          isPaySavedCard: false,
+        },
+        user.role,
+      );
     } else {
       // new Rent blik/creditcart
       sentRentBoxRequest(

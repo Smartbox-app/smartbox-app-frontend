@@ -82,6 +82,11 @@ interface ClearPaymentMethodSuccess {
   type: 'CLEAR_PAYMENT_METHOD_SUCCESS';
 }
 
+interface SentExtendRentRequestSuccess {
+  type: 'SENT_EXTEND_RENT_SUCCESS';
+  payload: string;
+}
+
 type Action =
   | FormStepSuccess
   | FetchBoxAvailability
@@ -93,6 +98,7 @@ type Action =
   | CheckPaymentStatus
   | SaveBankList
   | ClearPaymentMethodSuccess
+  | SentExtendRentRequestSuccess
   | BlikPaymentFinishSuccess;
 
 const initialState: OrderState = {
@@ -168,6 +174,12 @@ export default (state: OrderState = initialState, action: Action): any => {
         paymentId: action.payload,
       };
     }
+    case 'SENT_EXTEND_RENT_SUCCESS': {
+      return {
+        ...state,
+        paymentId: action.payload,
+      };
+    }
 
     case 'FETCH_BOX_AVAILABILITY_SUCCESS': {
       return {
@@ -213,6 +225,7 @@ export default (state: OrderState = initialState, action: Action): any => {
       return {
         ...state,
         selectedPayment: MainPaymentWay.card,
+        isResignationMarked: false,
         selectedPaymentMethodDetail: {
           id: '',
           name: '',
