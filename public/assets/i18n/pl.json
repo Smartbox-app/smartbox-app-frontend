@@ -112,7 +112,6 @@
       "endRental": "Czy jesteś pewien, że chcesz zakończyć tę umowę?",
       "shareYourLoc": "Udostępnij swoją lokalizację by otworzyć bramę",
 
-      "generateInvoice": "Wygeneruj fakturę",
       "profileDetail": "Szczegóły Profilu",
       "preInvitationForWorker": "Wyślij zaproszenie dla pracownika",
       "preInvitation": "Wyślij zaproszenie",
@@ -141,6 +140,12 @@
       "welcomeOnPlatform": "Witaj na platformie smartbox.",
       "fillFormToCreatAccount": "Proszę wypełnić poniższy formularz, żeby utworzyć konto.",
 
+      "invoiceCreateData": "Generowanie faktury - dane",
+      "paymentSuccess": "Płatność zakończyła się pozytywnie.",
+      "thanks": "Dziękujemy za korzystanie z naszych usług.",
+      "backToApp": "Wróć do aplikacji",
+      "generateInvoice": "Wygeneruj fakturę",
+
       "welcome": "Hello world"
     },
     "notification": {
@@ -160,6 +165,7 @@
       "msgSend": "Wysłano wiadomość",
       "invitationDeleted": "Usunięto zaproszenie!",
       "invitationResent": "Wysłano ponownie zaproszenie!",
+      "invoiceSent": "Wysłano fakturę na maila!",
       "logInSuccess": "Zalogowano poprawnie."
     }
   }

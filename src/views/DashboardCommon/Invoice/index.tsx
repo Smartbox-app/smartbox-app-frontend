@@ -4,6 +4,7 @@ import { RouteComponentProps, withRouter } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { Button } from '../../../components/Common';
 import { LogoContainer, PageContent, ButtonsContainer, Section } from '../../../components/Layout';
+import { __ } from '../../../helpers/i18n';
 import { ApplicationState } from '../../../reducers';
 import { modal } from '../../../actions';
 
@@ -25,11 +26,15 @@ const Invoice = ({ showModal, paymentId, match }: Props) => {
     <PageContent>
       <Section>
         <LogoContainer />
-        <p className="content-text">Płatność zakończyła się pozytywnie.</p>
-        <p className="content-text">Dziękujemy za korzystanie z naszych usług.</p>
+        <p className="content-text">{__('application.paymentSuccess')}.</p>
+        <p className="content-text">{__('application.thanks')}</p>
         <ButtonsContainer max>
-          <Button success text="Wróć do aplikacji" to="/" />
-          <Button primary text="Wygeneruj fakturę" click={() => showModal(<Form paymentId={match.params.rentId} />)} />
+          <Button success text={__('application.backToApp')} to="/" />
+          <Button
+            primary
+            text={__('application.generateInvoice')}
+            click={() => showModal(<Form paymentId={match.params.rentId} />)}
+          />
         </ButtonsContainer>
       </Section>
     </PageContent>

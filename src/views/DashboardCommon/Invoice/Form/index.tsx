@@ -28,7 +28,7 @@ const Invoice = ({ paymentId, successNotification, hideModal }: Props) => {
 
   return (
     <FormContainer className="invoice-form">
-      <FormHeader title="Generowanie faktury - dane" />
+      <FormHeader title={__('application.invoiceCreateData')} />
       <ItfApiForm
         formId="nip-form"
         schemaMayBeDynamic={false}
@@ -39,7 +39,7 @@ const Invoice = ({ paymentId, successNotification, hideModal }: Props) => {
         submitButton={submitButton}
         onSavedSuccessfully={(data: any) => {
           if (data === null) {
-            successNotification('Wysłano fakturę na maila');
+            successNotification(__('notification.invoiceSent'));
             hideModal();
           }
         }}
