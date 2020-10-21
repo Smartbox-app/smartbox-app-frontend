@@ -16,13 +16,19 @@
   position: relative;
 
   .offer-description {
-    //position: absolute;
-    //left: 50%;
-    //transform: translateX(-50%);
-    //bottom: -$main-spacing/2;
     margin-bottom: $main-spacing*2;
     color: $color-primary;
     text-align: center;
+
+    p {
+      font-size: 1.5rem;
+    }
+
+    strong {
+      font-size: 2rem;
+      margin-right: $main-spacing;
+    }
+
   }
 
   svg {
@@ -64,7 +70,6 @@
 
 .slick-slider {
   width: 100%;
-  //min-height: $carousel-small;
 }
 
 .slick-dots  {
@@ -92,9 +97,5 @@
 @include gt-sm {
   .slick-slider {
     width: 100%;
-    //min-height: $carousel-big;
-  }
-  .slick-slide img {
-    //min-height: $carousel-big;
   }
 }
