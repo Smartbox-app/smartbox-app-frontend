@@ -13,15 +13,14 @@ import Form from './Form';
 import './Invoice.scss';
 
 interface RouteProps {
-  rentId: string;
+  paymentId: string;
 }
 
 interface Props extends RouteComponentProps<RouteProps> {
-  paymentId: string;
   showModal: (content: React.ReactNode) => void;
 }
 
-const Invoice = ({ showModal, paymentId, match }: Props) => {
+const Invoice = ({ showModal, match }: Props) => {
   return (
     <PageContent>
       <Section>
@@ -33,17 +32,13 @@ const Invoice = ({ showModal, paymentId, match }: Props) => {
           <Button
             primary
             text={__('application.generateInvoice')}
-            click={() => showModal(<Form paymentId={match.params.rentId} />)}
+            click={() => showModal(<Form paymentId={match.params.paymentId} />)}
           />
         </ButtonsContainer>
       </Section>
     </PageContent>
   );
 };
-
-const mapStateToProps = (state: ApplicationState) => ({
-  paymentId: state.order.paymentId,
-});
 
 const mapDispatchToProps = (dispatch: any) =>
   bindActionCreators(
@@ -53,4 +48,4 @@ const mapDispatchToProps = (dispatch: any) =>
     dispatch,
   );
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Invoice));
+export default withRouter(connect(null, mapDispatchToProps)(Invoice));
