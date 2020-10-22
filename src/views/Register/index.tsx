@@ -21,8 +21,8 @@ interface Props {
 }
 
 const helpsForInputPass = (title: any) => {
-  if (title === 'Hasło' || title === 'Powtórz hasło') {
-    return 'Minimum 8 znaków';
+  if (title === __('application.pass') || title === __('application.repPass')) {
+    return __('application.min8Char');
   }
 };
 

@@ -2,6 +2,7 @@ import React from 'react';
 
 import { Route, Redirect, Switch } from 'react-router-dom';
 import { Main } from '../../components/Layout';
+import { __ } from '../../helpers/i18n';
 import { Welcome, Order, Profile, Contact } from '../DashboardCommon';
 import { MenuItemType } from '../../types/menu-item';
 
@@ -13,17 +14,17 @@ const DashboardUser = () => {
   const menuItems: MenuItemType[] = [
     {
       icon: 'dashboard.svg',
-      text: 'Home',
+      text: __('application.home'),
       address: '/user/main',
     },
     {
       icon: 'account.svg',
-      text: 'Konto',
+      text: __('application.account'),
       address: '/user/profile',
     },
     {
       icon: 'email.svg',
-      text: 'Kontakt',
+      text: __('application.contact'),
       address: '/user/contact',
     },
   ];

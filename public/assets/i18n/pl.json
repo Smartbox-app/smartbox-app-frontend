@@ -22,6 +22,8 @@
       "end": "Zakończ",
       "delete": "Usuń",
       "move": "Przenieś",
+      "contact": "Kontakt",
+      "min8Char": "Minimum 8 znaków",
       "block": "Blokuj",
       "actions": "Akcje",
       "userAssigment": "Przypisanie",
@@ -88,6 +90,8 @@
       "backToHome": "Wróć do strony głównej",
       "setNewPass": "Ustaw nowe hasło",
       "restorePass": "Przywróć hasło",
+      "pass": "Hasło",
+      "repPass": "Powtórz hasło",
 
       "clickHere": "Kliknij tutaj",
       "404Text": "Coś poszło nie tak, żądana strona nie istnieje.",
