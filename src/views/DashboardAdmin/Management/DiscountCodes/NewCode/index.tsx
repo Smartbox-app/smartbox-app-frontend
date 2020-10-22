@@ -1,6 +1,7 @@
 import React from 'react';
 import { GiftRes } from 'smartbox-types';
 import { SectionHeader } from '../../../../../components/Layout';
+import { __ } from '../../../../../helpers/i18n';
 
 import './NewCode.scss';
 
@@ -10,15 +11,18 @@ interface Props {
 
 const NewCode = ({ newCodeProps }: Props) => (
   <div className="new-code-wrapper">
-    <SectionHeader title="Wygenerowano kod" />
+    <SectionHeader title={__('application.giftCodeGenerated')} />
     <p>
-      Kod: <strong>{newCodeProps.code}</strong>
+      {__('application.giftCod')}: <strong>{newCodeProps.code}</strong>
     </p>
     <p>
-      Zniżka: <strong>{newCodeProps.discount}%</strong>
+      {__('application.giftCodDiscount')}: <strong>{newCodeProps.discount}%</strong>
     </p>
     <p>
-      Na czas: <strong>{newCodeProps.duration} tygodni</strong>
+      {__('application.forTime')}:{' '}
+      <strong>
+        {newCodeProps.duration} {__('application.weeksAmount')}
+      </strong>
     </p>
   </div>
 );

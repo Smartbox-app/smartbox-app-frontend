@@ -24,14 +24,14 @@ class List extends React.Component<Props> {
     super(props);
     const { showModal, deleteStockDiscount } = this.props;
     this.scheme = new InteractiveTableSchema(discounTable).addFieldAtTheEnd({
-      name: 'Akcje',
+      name: __('application.actions'),
       field: 'actions',
       mobile: true,
       buttons: [
         {
           name: __('application.edit'),
           type: 'primary',
-          click: (data: any) => showModal(<Edit discoutnId={data.discountId} />),
+          click: (data: any) => showModal(<Edit discountId={data.discountId} />),
         },
         {
           name: __('application.delete'),

@@ -20,7 +20,7 @@ class InvitesSent extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
     this.scheme = new InteractiveTableSchema(invitationList).addFieldAtTheEnd({
-      name: 'Akcje',
+      name: __('application.actions'),
       field: 'actions',
       mobile: true,
       buttons: [
@@ -36,7 +36,7 @@ class InvitesSent extends React.Component<Props> {
             this.props.showModal(
               <ConfirmModal
                 approveButtonText={__('application.delete')}
-                mainText="Czy jesteś pewien, że chcesz usunąć zaproszenie"
+                mainText={__('application.doYouWantDeleteInvite')}
                 cancelButtonText={__('application.cancel')}
                 approveAction={() => this.props.deleteSentInvitations(data.id)}
               />,

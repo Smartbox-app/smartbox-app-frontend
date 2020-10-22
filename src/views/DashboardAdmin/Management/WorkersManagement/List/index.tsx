@@ -26,21 +26,21 @@ class List extends React.Component<Props> {
     this.scheme = new InteractiveTableSchema(usersList)
       .removeFields('status')
       .addFieldAfter('role', {
-        name: 'Przypisanie',
+        name: __('application.userAssigment'),
         field: 'storageAssign',
         mobile: true,
         type: FieldType.Custom,
         customRender: (value, field, userData) => this.getAssignButton(value, field, userData),
       })
       .addFieldAfter('storageAssign', {
-        name: 'Status',
+        name: __('application.state'),
         field: 'status',
         mobile: true,
         type: FieldType.Custom,
         customRender: (value, field, userData) => this.getLockButton(value, field, userData),
       })
       .addFieldAtTheEnd({
-        name: 'Akcje',
+        name: __('application.actions'),
         field: 'actions',
         mobile: true,
         buttons: [
@@ -65,13 +65,13 @@ class List extends React.Component<Props> {
     if (isWorker(userData.role)) {
       return (
         <Button
-          text="Zmień przypisanie"
+          text={__('application.changeUserAssigment')}
           primary
           click={() => this.props.showModal(<EditAssign userId={userData.id} />)}
         />
       );
     } else {
-      return 'nie dotyczy';
+      return __('application.notApplicable');
     }
   };
 

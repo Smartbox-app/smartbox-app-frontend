@@ -24,7 +24,7 @@ interface Props {
 const Form = ({ showModal, successNotification }: Props) => {
   const submitButton = (
     <ButtonsContainer>
-      <Button text="Utwórz" type="submit" primary />
+      <Button text={__('application.create')} type="submit" primary />
     </ButtonsContainer>
   );
 

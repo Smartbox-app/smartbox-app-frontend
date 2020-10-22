@@ -18,21 +18,21 @@ import { __ } from '../../../../../helpers/i18n';
 import './Edit.scss';
 
 interface Props {
-  discoutnId: string;
+  discountId: string;
   hideModal: () => void;
   refreshApiTableData: () => void;
   successNotification: (text: string) => void;
 }
 
-const Edit = ({ discoutnId, successNotification, hideModal, refreshApiTableData }: Props) => {
+const Edit = ({ discountId, successNotification, hideModal, refreshApiTableData }: Props) => {
   const submitButton = (
     <ButtonsContainer>
       <Button text={__('application.save')} type="submit" primary />
     </ButtonsContainer>
   );
 
-  const fetchUrl = `stock/form/update-stock-discount/${discoutnId}`;
-  const sendUrl = `stock/discount/${discoutnId}`;
+  const fetchUrl = `stock/form/update-stock-discount/${discountId}`;
+  const sendUrl = `stock/discount/${discountId}`;
 
   const customSendFetcher = (formId: string, values: DiscountReq) =>
     ApiService.sendForm(
