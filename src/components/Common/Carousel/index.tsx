@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Slider from 'react-slick';
 import { ReactSVG } from 'react-svg';
 import { usePricing } from 'smartbox-types';
+import { __ } from '../../../helpers/i18n';
 import CustomArrow from './CustomArrow';
 
 import 'slick-carousel/slick/slick.css';
@@ -21,7 +22,8 @@ class Carousel extends Component<Props> {
         <div key={`carousel-${key}`} className="offer-svg-wrapper">
           <div className="offer-description">
             <p>
-              Tydzień: <strong>{weekly}zł</strong> Miesiąc: <strong>{monthly}zł</strong>
+              {__('application.week')}: <strong>{weekly}zł</strong> {__('application.month')}:{' '}
+              <strong>{monthly}zł</strong>
             </p>
           </div>
           <ReactSVG src={`/assets/icons/${data}c.svg`} />
@@ -41,9 +43,11 @@ class Carousel extends Component<Props> {
       prevArrow: <CustomArrow left />,
     };
 
+    const { imagesList } = this.props;
+
     return (
       <div className="slider-wrapper">
-        <Slider {...settings}>{this.dataToDisplay(this.props.imagesList)}</Slider>
+        <Slider {...settings}>{this.dataToDisplay(imagesList)}</Slider>
       </div>
     );
   }

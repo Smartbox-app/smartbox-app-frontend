@@ -147,6 +147,9 @@
       "backToApp": "Wróć do aplikacji",
       "generateInvoice": "Wygeneruj fakturę",
 
+      "week": "Tydzień",
+      "month": "Miesiąc",
+
       "welcome": "Hello world"
     },
     "notification": {
