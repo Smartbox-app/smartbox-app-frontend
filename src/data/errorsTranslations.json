@@ -35,119 +35,119 @@
     "Value too short (min. {0})": "Wartość za krótka (min. {0})",
     "_API_ERROR_CODES_": {
       "0": {
-        "text": "@@@@@@@@@@@@@@@TODO: Translate ApiErrorCode.OtherError!",
+        "text": "Wystąpił błąd!",
         "__type_alias_do_not_touch": "ApiErrorCode.OtherError"
       },
       "1": {
-        "text": "@@@@@@@@@@@@@@@TODO: Translate ApiErrorCode.NoSuchObjectWithThisId!",
+        "text": "Brak obiektu o wskazanym numerze!",
         "__type_alias_do_not_touch": "ApiErrorCode.NoSuchObjectWithThisId"
       },
       "2": {
-        "text": "@@@@@@@@@@@@@@@TODO: Translate ApiErrorCode.ObjectNotUniuque!",
+        "text": "Obiekt nie jest unikalny!",
         "__type_alias_do_not_touch": "ApiErrorCode.ObjectNotUniuque"
       },
       "3": {
-        "text": "@@@@@@@@@@@@@@@TODO: Translate ApiErrorCode.InvalidLoginData!",
+        "text": "Niepoprawne dane logowania!",
         "__type_alias_do_not_touch": "ApiErrorCode.InvalidLoginData"
       },
       "4": {
-        "text": "@@@@@@@@@@@@@@@TODO: Translate ApiErrorCode.InvalidData!",
+        "text": "Podano błędne dane!",
         "__type_alias_do_not_touch": "ApiErrorCode.InvalidData"
       },
       "5": {
-        "text": "@@@@@@@@@@@@@@@TODO: Translate ApiErrorCode.FormValidationError!",
+        "text": "Błąd walidacji formularzu!",
         "__type_alias_do_not_touch": "ApiErrorCode.FormValidationError"
       },
       "6": {
-        "text": "@@@@@@@@@@@@@@@TODO: Translate ApiErrorCode.UserExist!",
+        "text": "Istnieje już użytkownik o takich danych!",
         "__type_alias_do_not_touch": "ApiErrorCode.UserExist"
       },
       "7": {
-        "text": "@@@@@@@@@@@@@@@TODO: Translate ApiErrorCode.InvalidPrice!",
+        "text": "Nieprawidłowa cena!",
         "__type_alias_do_not_touch": "ApiErrorCode.InvalidPrice"
       },
       "8": {
-        "text": "@@@@@@@@@@@@@@@TODO: Translate ApiErrorCode.NoFreeBoxInThisSize!",
+        "text": "Brak wolnej skrytki o tym rozmiarze!",
         "__type_alias_do_not_touch": "ApiErrorCode.NoFreeBoxInThisSize"
       },
       "9": {
-        "text": "@@@@@@@@@@@@@@@TODO: Translate ApiErrorCode.PaymentError!",
+        "text": "Błąd przy płatności!",
         "__type_alias_do_not_touch": "ApiErrorCode.PaymentError"
       },
       "10": {
-        "text": "@@@@@@@@@@@@@@@TODO: Translate ApiErrorCode.PayFirst!",
+        "text": "Nie można wykonać akcji przed dokonaniem płatności!",
         "__type_alias_do_not_touch": "ApiErrorCode.PayFirst"
       },
       "11": {
-        "text": "@@@@@@@@@@@@@@@TODO: Translate ApiErrorCode.CantChangeThisBoxOnThisStatus!",
+        "text": "Nie można wynonać zmiany przy obecnym statusie!",
         "__type_alias_do_not_touch": "ApiErrorCode.CantChangeThisBoxOnThisStatus"
       },
       "12": {
-        "text": "@@@@@@@@@@@@@@@TODO: Translate ApiErrorCode.TooLateForCahnge!",
+        "text": "Jest za późno na dokonanie tej zmiany!",
         "__type_alias_do_not_touch": "ApiErrorCode.TooLateForCahnge"
       },
       "13": {
-        "text": "@@@@@@@@@@@@@@@TODO: Translate ApiErrorCode.NotFreeBox!",
+        "text": "Brak wolnych skrytek!",
         "__type_alias_do_not_touch": "ApiErrorCode.NotFreeBox"
       },
       "14": {
-        "text": "@@@@@@@@@@@@@@@TODO: Translate ApiErrorCode.InvalidDiscountCode!",
+        "text": "Błędny kod rabatowy!",
         "__type_alias_do_not_touch": "ApiErrorCode.InvalidDiscountCode"
       },
       "15": {
-        "text": "@@@@@@@@@@@@@@@TODO: Translate ApiErrorCode.CardHasBeenUsedWithDiscount!",
+        "text": "Karta uzyskała już jednorazową zniżkę!",
         "__type_alias_do_not_touch": "ApiErrorCode.CardHasBeenUsedWithDiscount"
       },
       "16": {
-        "text": "@@@@@@@@@@@@@@@TODO: Translate ApiErrorCode.InvalidBoxNumber!",
+        "text": "Błędny numer skrytki!",
         "__type_alias_do_not_touch": "ApiErrorCode.InvalidBoxNumber"
       },
       "17": {
-        "text": "@@@@@@@@@@@@@@@TODO: Translate ApiErrorCode.CreatingInvoiceFailure!",
+        "text": "Błąd podczas tworzenia faktury!",
         "__type_alias_do_not_touch": "ApiErrorCode.CreatingInvoiceFailure"
       },
       "18": {
-        "text": "@@@@@@@@@@@@@@@TODO: Translate ApiErrorCode.SendingEmailWithInvoiceFailure!",
+        "text": "Błąd podczas wysyłania faktury!",
         "__type_alias_do_not_touch": "ApiErrorCode.SendingEmailWithInvoiceFailure"
       },
       "19": {
-        "text": "@@@@@@@@@@@@@@@TODO: Translate ApiErrorCode.InvalidLang!",
+        "text": "ybrano błędny język!",
         "__type_alias_do_not_touch": "ApiErrorCode.InvalidLang"
       },
       "20": {
-        "text": "@@@@@@@@@@@@@@@TODO: Translate ApiErrorCode.StckIdIsRequiredForWorkerRole!",
+        "text": "Wybranie placu dla pracownika jest wymagane!",
         "__type_alias_do_not_touch": "ApiErrorCode.StckIdIsRequiredForWorkerRole"
       },
       "21": {
-        "text": "@@@@@@@@@@@@@@@TODO: Translate ApiErrorCode.NoFoundBoxNumberOnStock!",
+        "text": "Nie odnaleziono skrytki o wskazanym numerze!",
         "__type_alias_do_not_touch": "ApiErrorCode.NoFoundBoxNumberOnStock"
       },
       "22": {
-        "text": "@@@@@@@@@@@@@@@TODO: Translate ApiErrorCode.ActionForebiden!",
+        "text": "Akcja niedozwolona!",
         "__type_alias_do_not_touch": "ApiErrorCode.ActionForebiden"
       },
       "23": {
-        "text": "@@@@@@@@@@@@@@@TODO: Translate ApiErrorCode.InvalidCoordinate!",
+        "text": "Błędne współrzędne geograficzne!",
         "__type_alias_do_not_touch": "ApiErrorCode.InvalidCoordinate"
       },
       "24": {
-        "text": "@@@@@@@@@@@@@@@TODO: Translate ApiErrorCode.UAreTooFarAway!",
+        "text": "Jesteś za daleko!",
         "__type_alias_do_not_touch": "ApiErrorCode.UAreTooFarAway"
       },
       "25": {
-        "text": "@@@@@@@@@@@@@@@TODO: Translate ApiErrorCode.StockHasActiveDiscont!",
+        "text": "Wybrany plac posiada już zniżkę!",
         "__type_alias_do_not_touch": "ApiErrorCode.StockHasActiveDiscont"
       },
       "26": {
-        "text": "@@@@@@@@@@@@@@@TODO: Translate ApiErrorCode.InvalidBlik!",
+        "text": "Błędny numer BLIK!",
         "__type_alias_do_not_touch": "ApiErrorCode.InvalidBlik"
       },
       "27": {
-        "text": "@@@@@@@@@@@@@@@TODO: Translate ApiErrorCode.InvalidGroup!",
+        "text": "Błędny numer grupy bankowej!",
         "__type_alias_do_not_touch": "ApiErrorCode.InvalidGroup"
       },
       "28": {
-        "text": "@@@@@@@@@@@@@@@TODO: Translate ApiErrorCode.BoxNumberIsReserved!",
+        "text": "Skrytka o wybranym numerze jest zarezerwowana!",
         "__type_alias_do_not_touch": "ApiErrorCode.BoxNumberIsReserved"
       }
     }

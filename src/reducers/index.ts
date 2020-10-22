@@ -3,7 +3,7 @@ import apiTableReducer, { ApiTableState } from './api-table-reducer';
 import appStatusReducer, { AppStatus } from './app-status-reducer';
 import modalReducer from './modal-reducer';
 import notificationsReducer, { NotificationState } from './notifications-reducer';
-import langReducer from './lang-reducer';
+import langReducer, { LangStatus } from './lang-reducer';
 import userReducer, { UserState } from './user-reducer';
 import spinnerReducer, { SpinnerState } from './spinner-reducer';
 import orderReducer, { OrderState } from './order-reducer';
@@ -13,7 +13,6 @@ import stockReducer, { StockStatus } from './stock-reducer';
 import gateReducer, { GateState } from './gate-reducer';
 
 import { Modal } from '../types/modal';
-
 
 export interface ApplicationState {
   apiTable: ApiTableState;
@@ -27,6 +26,7 @@ export interface ApplicationState {
   rent: RentsStatus;
   stock: StockStatus;
   gate: GateState;
+  lang: LangStatus;
 }
 
 const appReducer = combineReducers({

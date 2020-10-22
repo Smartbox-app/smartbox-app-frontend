@@ -6515,7 +6515,7 @@ istanbul-reports@^2.2.6:
 
 "itf_formbuilder_react@git+https://gitlab.com/IT.focus/itf_formbuilder_react.git":
   version "1.0.0"
-  resolved "git+https://gitlab.com/IT.focus/itf_formbuilder_react.git#0bda88a293c0ae0ca1731a780879d0dd2f56fc6b"
+  resolved "git+https://gitlab.com/IT.focus/itf_formbuilder_react.git#0d3d46e783ac07a14dd2ebe92d6736a44e18c477"
   dependencies:
     itf_formbuilder "git+https://gitlab.com/IT.focus/itf_formbuilder.git"
     react "^16.8.3"
