@@ -5,7 +5,7 @@ import './Row.scss';
 
 interface Props {
   label: string;
-  content: string | number;
+  content: React.ReactNode;
 }
 
 const Row = ({ label, content }: Props) => (
