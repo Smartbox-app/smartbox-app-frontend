@@ -3,6 +3,7 @@ import { MyRentList, RentStatus } from 'smartbox-types';
 export type RentsStatus = {
   singleRent: MyRentList;
   rentsList: MyRentList[];
+  rentsHistoryList: MyRentList[];
   stockId: string;
 };
 
@@ -21,8 +22,12 @@ interface GetMySingleRent {
   payload: MyRentList[];
 }
 
+interface FetchMyRentHistory {
+  type: 'FETCH_MY_RENT_HISTORY_SUCCESS';
+  payload: MyRentList[];
+}
 
-type Action = BoxGroup | GetSingleRent | GetMySingleRent;
+type Action = BoxGroup | GetSingleRent | GetMySingleRent | FetchMyRentHistory;
 
 const initialState: RentsStatus = {
   singleRent: {
@@ -36,11 +41,18 @@ const initialState: RentsStatus = {
     getProps: () => [],
   },
   rentsList: [],
+  rentsHistoryList: [],
   stockId: '',
 };
 
 export default (state: RentsStatus = initialState, action: Action): any => {
   switch (action.type) {
+    case 'FETCH_MY_RENT_HISTORY_SUCCESS': {
+      return {
+        ...state,
+        rentsHistoryList: [...action.payload, ...action.payload, ...action.payload, ...action.payload],
+      };
+    }
     case 'FETCH_MY_RENT_STORY_SUCCESS': {
       return {
         ...state,

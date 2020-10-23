@@ -18,12 +18,15 @@ import './Welcome.scss';
 interface Props {
   userName: string;
   rentsList: MyRentList[];
+  rentsHistoryList: MyRentList[];
   getMyRentList: () => void;
+  fetchMyRentHistory: () => void;
 }
 
-const Welcome = ({ userName, getMyRentList, rentsList }: Props) => {
+const Welcome = ({ userName, getMyRentList, rentsList, fetchMyRentHistory, rentsHistoryList }: Props) => {
   useEffect(() => {
     getMyRentList();
+    fetchMyRentHistory();
   }, []);
 
   return (
@@ -33,7 +36,7 @@ const Welcome = ({ userName, getMyRentList, rentsList }: Props) => {
       </Section>
       <Sale />
       <Storage myRentList={rentsList} />
-      <OrdersHistory rentHistory={rentsList} />
+      <OrdersHistory rentsHistoryList={rentsHistoryList} />
       <Offers />
     </div>
   );
@@ -42,6 +45,7 @@ const Welcome = ({ userName, getMyRentList, rentsList }: Props) => {
 const mapStateToProps = (state: ApplicationState) => ({
   userName: state.user.details.firstName,
   rentsList: state.rent.rentsList,
+  rentsHistoryList: state.rent.rentsHistoryList,
 });
 
 const mapDispatchToProps = (dispatch: any) =>
