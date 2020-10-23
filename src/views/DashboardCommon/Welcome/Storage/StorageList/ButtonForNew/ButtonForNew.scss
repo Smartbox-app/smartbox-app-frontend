@@ -9,7 +9,7 @@ $box-size: 100px;
     width: 100%;
     height: $box-size;
     &:hover {
-      box-shadow: 0 0 3px 3px $color-primary-light;
+      box-shadow: 0 0 2px 1px $color-primary-light;
     }
   }
 }

@@ -19,7 +19,7 @@ const SingleStorage = ({ single, user }: Props) => (
     onClick={() => history.push(`/${UserService.getSlugByRole(user.role)}/single-rent/${single.id}`)}
   >
     <div className="storage">
-      <p className="main-info">{single.size}m2</p>
+      <p className="main-info size">{single.number} {single.size}m</p>
       <p className="sec-info">{single.stockName}</p>
     </div>
   </div>
