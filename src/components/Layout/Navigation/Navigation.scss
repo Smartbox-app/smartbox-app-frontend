@@ -10,7 +10,6 @@
   display: flex;
   flex-direction: row;
   width: 100%;
-  max-width: map-get($breakpoints, sm);
   overflow: hidden;
   bottom: 0;
   position: fixed;
@@ -22,22 +21,14 @@
   height: $main-spacing * 6;
 }
 
-@include gt-sm {
-  .navigation-wrapper {
-    position: relative;
-  }
-}
-
 @include gt-lg {
   .page-header-wrapper {
     justify-content: space-between;
-    width: map-get($breakpoints, lg);
+    width: 80vw;
     margin: 0 auto $main-spacing;
 
     .logo-container {
-      width: map-get($breakpoints, lg) / 2;
       height: 100px;
-      width: auto;
       margin: 0;
       img {
         height: 100%;
@@ -45,8 +36,44 @@
     }
 
     .navigation-wrapper {
-      width: map-get($breakpoints, lg) / 2;
-      margin: 0;
+      justify-content: flex-end;
+      margin: 10px 0 0;
     }
+  }
+}
+
+@include gt-sm {
+  .navigation-wrapper {
+    position: relative;
+  }
+}
+
+@include gt-sm {
+  .page-header-wrapper {
+    margin: 0 auto;
+    width: 90vw;
+  }
+}
+
+@include gt-md {
+  .page-header-wrapper {
+    margin: 0 auto;
+    width: 80vw;
+  }
+}
+
+@include gt-lg {
+  .page-header-wrapper {
+    display: flex;
+    width: 80vw;
+    flex-direction: row;
+  }
+}
+
+@include gt-xl {
+  .page-header-wrapper {
+    display: flex;
+    width: 65vw;
+    flex-direction: row;
   }
 }
