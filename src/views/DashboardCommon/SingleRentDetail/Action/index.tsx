@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { MyRentList, RentStatus, UserRes } from 'smartbox-types';
-import { modal, order, singleRent } from '../../../../actions';
+import { modal, order, singleRent, notifications } from '../../../../actions';
 import { history } from '../../../../App';
 import { Button, ConfirmModal } from '../../../../components/Common';
 import { ButtonsContainer } from '../../../../components/Layout';
@@ -18,9 +18,20 @@ interface Props {
   showModal: (content: React.ReactNode) => void;
   endMyRent: (rentId: string) => void;
   updateFormData: (data: any) => void;
+  successNotification: (text: string) => void;
+  getMyRentList: () => void;
 }
 
-const Action = ({ showModal, endMyRent, rentId, updateFormData, rent, user }: Props) => {
+const Action = ({
+  showModal,
+  endMyRent,
+  rentId,
+  updateFormData,
+  rent,
+  user,
+  getMyRentList,
+  successNotification,
+}: Props) => {
   const handleExtendingOrderData = (rentId: string) => {
     updateFormData({ size: rent.size });
     history.push(`/${UserService.getSlugByRole(user.role)}/order/step/duration/${rentId}`);
@@ -47,7 +58,12 @@ const Action = ({ showModal, endMyRent, rentId, updateFormData, rent, user }: Pr
             <ConfirmModal
               mainText={__('application.endRental')}
               approveButtonText={__('application.end')}
-              approveAction={() => endMyRent(rentId)}
+              approveAction={async () => {
+                successNotification(__('notification.rentFinishManually'));
+                await endMyRent(rentId);
+                await getMyRentList();
+                history.push('/user/main');
+              }}
               cancelButtonText={__('application.back')}
             />,
           )
@@ -69,6 +85,7 @@ const mapDispatchToProps = (dispatch: any) =>
       ...modal,
       ...singleRent,
       ...order,
+      ...notifications,
     },
     dispatch,
   );
