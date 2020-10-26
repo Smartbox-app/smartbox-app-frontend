@@ -149,6 +149,14 @@
       "28": {
         "text": "Skrytka o wybranym numerze jest zarezerwowana!",
         "__type_alias_do_not_touch": "ApiErrorCode.BoxNumberIsReserved"
+      },
+      "29": {
+        "text": "Numer telefonu wymagany do zamówienia. Proszę uzupełnić profil!",
+        "__type_alias_do_not_touch": "ApiErrorCode.PhoneIsRequiredForRent"
+      },
+      "30": {
+        "text": "Błędne stanowisko!",
+        "__type_alias_do_not_touch": "ApiErrorCode.InvalidUserType"
       }
     }
   }

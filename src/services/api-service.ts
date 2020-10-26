@@ -67,7 +67,7 @@ export default class ApiService {
           }
       }
     } catch (error) {
-      console.log('catch (error)', error);
+      dispatch(notifications.errorNotification(ApiErrorCode.OtherError));
       dispatch({ type: failedAction, payload: ApiErrorCode.OtherError });
       // if (SessionService.isUserSet()) dispatch(auth.clearUserSession());
       // dispatch({ type: loadingAction, payload: false });
