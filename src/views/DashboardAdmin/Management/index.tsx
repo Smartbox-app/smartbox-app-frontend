@@ -8,8 +8,11 @@ import { ApplicationState } from '../../../reducers';
 import UserService from '../../../services/user-service';
 import { __ } from '../../../helpers/i18n';
 
-import WorkersManagement from './WorkersManagement';
 import { BoxMapManagement } from '../../DashboardCommon';
+
+import WorkersManagement from './WorkersManagement';
+import UsersManagement from './UsersManagement';
+
 import StockDiscount from './StockDiscount';
 import StockSelect from './StockSelect';
 import InvitesSent from './InvitesSent';
@@ -26,8 +29,14 @@ const Management = ({ user }: Props) => (
         {
           className: 'tab',
           activeClassName: 'active',
-          to: `/${UserService.getSlugByRole(user.role)}/management/workers/list`,
+          to: `/${UserService.getSlugByRole(user.role)}/management/users/list`,
           text: `${__('application.users')}`,
+        },
+        {
+          className: 'tab',
+          activeClassName: 'active',
+          to: `/${UserService.getSlugByRole(user.role)}/management/workers/list`,
+          text: `${__('application.workers')}`,
         },
         {
           className: 'tab',
@@ -57,6 +66,7 @@ const Management = ({ user }: Props) => (
         render={() => <Redirect to={`/${UserService.getSlugByRole(user.role)}/management/workers`} />}
       />
       <Route path={`/${UserService.getSlugByRole(user.role)}/management/workers`} component={WorkersManagement} />
+      <Route path={`/${UserService.getSlugByRole(user.role)}/management/users`} component={UsersManagement} />
       <Route path={`/${UserService.getSlugByRole(user.role)}/management/map`} component={BoxMapManagement} />
       <Route path={`/${UserService.getSlugByRole(user.role)}/management/invitations`} component={InvitesSent} />
       <Route path={`/${UserService.getSlugByRole(user.role)}/management/stock-discount`} component={StockDiscount} />

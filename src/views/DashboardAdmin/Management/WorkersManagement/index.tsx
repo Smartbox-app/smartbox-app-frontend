@@ -1,6 +1,6 @@
 import React from 'react';
 import { Switch, Route, Redirect } from 'react-router';
-import Add from './Add';
+import Add from '../Add';
 import List from './List';
 import History from './History';
 
