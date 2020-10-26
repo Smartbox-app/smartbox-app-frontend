@@ -1,12 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { Button } from '../../../components/Common';
 import { LogoContainer, PageContent, ButtonsContainer, Section } from '../../../components/Layout';
 import { __ } from '../../../helpers/i18n';
-import { ApplicationState } from '../../../reducers';
-import { modal } from '../../../actions';
+import { modal, singleRent } from '../../../actions';
 
 import Form from './Form';
 
@@ -18,9 +17,15 @@ interface RouteProps {
 
 interface Props extends RouteComponentProps<RouteProps> {
   showModal: (content: React.ReactNode) => void;
+  getMyRentList: () => void;
+  fetchMyRentHistory: () => void;
 }
 
-const Invoice = ({ showModal, match }: Props) => {
+const Invoice = ({ showModal, match, getMyRentList, fetchMyRentHistory }: Props) => {
+  useEffect(() => {
+    getMyRentList();
+    fetchMyRentHistory();
+  }, [])
   return (
     <PageContent>
       <Section>
@@ -44,6 +49,7 @@ const mapDispatchToProps = (dispatch: any) =>
   bindActionCreators(
     {
       ...modal,
+      ...singleRent,
     },
     dispatch,
   );
