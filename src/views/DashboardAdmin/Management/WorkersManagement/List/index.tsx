@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { FieldType, TableSchema, TableSchemaField, usersList } from 'smartbox-tables';
 import { IUser, UserStatus } from 'smartbox-types';
-import { ApiTable, Button, ConfirmModal } from '../../../../../components/Common';
+import { ApiTable, Button } from '../../../../../components/Common';
 import { ButtonsContainer, PageHeader, Section } from '../../../../../components/Layout';
 import { __ } from '../../../../../helpers/i18n';
 import { InteractiveTableSchema } from '../../../../../utils/table-schema-utils';
@@ -11,6 +11,7 @@ import { modal, user } from '../../../../../actions';
 import { isWorker } from '../../../../../utils/role-check';
 
 import EditAssign from './EditAssign';
+import EditRoleForm from './EditRoleForm';
 
 interface Props {
   showModal: (content: React.ReactNode) => void;
@@ -45,17 +46,9 @@ class List extends React.Component<Props> {
         mobile: true,
         buttons: [
           {
-            name: __('application.delete'),
-            type: 'danger',
-            click: (data: any) =>
-              this.props.showModal(
-                <ConfirmModal
-                  approveButtonText={__('application.delete')}
-                  mainText="Czy jesteś pewien, że chcesz usunąć użytkownika"
-                  cancelButtonText={__('application.cancel')}
-                  approveAction={() => console.log()}
-                />,
-              ),
+            name: __('application.changeUserRole'),
+            type: 'primary',
+            click: (data: any) => this.props.showModal(<EditRoleForm userId={data.id} />),
           },
         ],
       });
@@ -77,16 +70,16 @@ class List extends React.Component<Props> {
 
   private getLockButton = (value: boolean, field: TableSchemaField, userData: IUser) => {
     if (userData.status === UserStatus.blocked) {
-      return <Button text={__('application.active')} success small click={() => this.props.enableUser(userData.id)} />;
+      return <Button text={__('application.active')} success click={() => this.props.enableUser(userData.id)} />;
     } else {
-      return <Button text={__('application.block')} danger small click={() => this.props.blockUser(userData.id)} />;
+      return <Button text={__('application.block')} danger click={() => this.props.blockUser(userData.id)} />;
     }
   };
 
   render() {
     return (
       <Section full>
-        <PageHeader title={__('application.usersList')} />
+        <PageHeader title={__('application.workersList')} />
         <ButtonsContainer>
           <Button text={__('application.inviteUser')} primary to="/admin/management/workers/add" />
           <Button text={__('application.historyWorker')} primary to="/admin/management/workers/history" />

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { FieldType, TableSchema, TableSchemaField, usersList } from 'smartbox-tables';
 import { IUser, UserStatus } from 'smartbox-types';
-import { ApiTable, Button, ConfirmModal } from '../../../../../components/Common';
+import { ApiTable, Button } from '../../../../../components/Common';
 import { ButtonsContainer, PageHeader, Section } from '../../../../../components/Layout';
 import { __ } from '../../../../../helpers/i18n';
 import { InteractiveTableSchema } from '../../../../../utils/table-schema-utils';
@@ -20,42 +20,20 @@ class List extends React.Component<Props> {
 
   constructor(props: Props) {
     super(props);
-    this.scheme = new InteractiveTableSchema(usersList)
-      .removeFields('status')
-      .addFieldAfter('role', {
-        name: __('application.state'),
-        field: 'status',
-        mobile: true,
-        type: FieldType.Custom,
-        customRender: (value, field, userData) => this.getLockButton(value, field, userData),
-      })
-      .addFieldAtTheEnd({
-        name: __('application.actions'),
-        field: 'actions',
-        mobile: true,
-        buttons: [
-          {
-            name: __('application.delete'),
-            type: 'danger',
-            click: (data: any) =>
-              this.props.showModal(
-                <ConfirmModal
-                  approveButtonText={__('application.delete')}
-                  mainText="Czy jesteś pewien, że chcesz usunąć użytkownika"
-                  cancelButtonText={__('application.cancel')}
-                  approveAction={() => console.log()}
-                />,
-              ),
-          },
-        ],
-      });
+    this.scheme = new InteractiveTableSchema(usersList).removeFields('status').addFieldAfter('role', {
+      name: __('application.state'),
+      field: 'status',
+      mobile: true,
+      type: FieldType.Custom,
+      customRender: (value, field, userData) => this.getLockButton(value, field, userData),
+    });
   }
 
   private getLockButton = (value: boolean, field: TableSchemaField, userData: IUser) => {
     if (userData.status === UserStatus.blocked) {
-      return <Button text={__('application.active')} success small click={() => this.props.enableUser(userData.id)} />;
+      return <Button text={__('application.active')} success click={() => this.props.enableUser(userData.id)} />;
     } else {
-      return <Button text={__('application.block')} danger small click={() => this.props.blockUser(userData.id)} />;
+      return <Button text={__('application.block')} danger click={() => this.props.blockUser(userData.id)} />;
     }
   };
 

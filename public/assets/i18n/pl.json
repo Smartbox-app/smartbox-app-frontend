@@ -106,6 +106,7 @@
       "usersList": "Lista użytkowników",
       "inviteList": "Lista wysłanych zaproszeń",
       "doYouWantDeleteInvite": "Czy jesteś pewien, że chcesz usunąć zaproszenie",
+      "changeUserRole": "Zmień rolę",
       "invitations": "Zaproszenia",
       "inviteWorker": "Zaproś pracowników",
       "inviteUser": "Zaproś użytkownika",
@@ -127,6 +128,7 @@
       "preInvitation": "Wyślij zaproszenie",
 
       "workerAssignChange": "Zmień przypisanie pracownika.",
+      "workerRoleChange": "Zmień stanowisko pracownika.",
 
       "createStockDisc" : "Utwórz zniżkę",
       "createDiscountCode" : "Utwórz kod zniżkowy",
@@ -186,6 +188,7 @@
       "invitationResent": "Wysłano ponownie zaproszenie!",
       "invoiceSent": "Wysłano fakturę na maila!",
       "rentFinishManually": "Umowa zakończona!",
+      "workerPositionChanged": "Zmieniono stanowisko!",
       "logInSuccess": "Zalogowano poprawnie."
     }
   }

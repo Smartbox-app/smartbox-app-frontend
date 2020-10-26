@@ -146,7 +146,6 @@ class Table extends React.Component<Props> {
               {header.buttons
                 ? header.buttons.map((button: any, index: number) => (
                   <Button
-                      small
                       key={index}
                       primary={button.type === 'primary'}
                       danger={button.type === 'danger'}
@@ -186,7 +185,6 @@ class Table extends React.Component<Props> {
                     <div className="list-buttons">
                       {header.buttons.map((button: any, index: number) => (
                         <Button
-                          small
                           key={index}
                           primary={button.type === 'primary'}
                           danger={button.type === 'danger'}
