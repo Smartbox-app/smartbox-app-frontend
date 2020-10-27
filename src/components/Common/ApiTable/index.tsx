@@ -171,8 +171,10 @@ class ApiTable<T> extends Component<Props> {
   }
 
   componentDidUpdate(prevProps: Props) {
-    if (this.props.data.uuid !== prevProps.data.uuid) {
-      this.fetch();
+    if (this.props.data.uuid) {
+      if (this.props.data.uuid !== prevProps.data.uuid) {
+        this.fetch();
+      }
     }
   }
 
@@ -249,19 +251,6 @@ class ApiTable<T> extends Component<Props> {
             this.props.selectSearchByOption,
           )}
         {table}
-        {data && data.totalValue >= 0 && (
-          <div>
-            <span>
-              Podsumowanie tabeli:
-              <p>
-                Łączna wartość: <strong>{formatPrice(data.totalValue)}</strong>
-              </p>
-              <p>
-                Łączna brakująca kwota: <strong>{formatPrice(data.totalToPay)}</strong>
-              </p>
-            </span>
-          </div>
-        )}
       </>
     );
   }
