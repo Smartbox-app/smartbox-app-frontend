@@ -32,6 +32,9 @@ $box-size: 100px;
 
     .main-info {
       font-size: 1.1rem;
+      strong {
+        margin-right: $main-spacing * 2;
+      }
     }
 
     .sec-info {
