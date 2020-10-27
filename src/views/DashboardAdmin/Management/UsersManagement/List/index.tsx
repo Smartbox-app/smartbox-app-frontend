@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { FieldType, TableSchema, TableSchemaField, usersList } from 'smartbox-tables';
-import { IUser, UserStatus } from 'smartbox-types';
+import { IUser, UserStatus, UserType } from 'smartbox-types';
 import { ApiTable, Button } from '../../../../../components/Common';
 import { ButtonsContainer, PageHeader, Section } from '../../../../../components/Layout';
 import { __ } from '../../../../../helpers/i18n';
@@ -20,10 +20,11 @@ class List extends React.Component<Props> {
 
   constructor(props: Props) {
     super(props);
-    this.scheme = new InteractiveTableSchema(usersList).removeFields('status').addFieldAfter('role', {
+    this.scheme = new InteractiveTableSchema(usersList).modifyFieldStatic('status', {
       name: __('application.state'),
       field: 'status',
       mobile: true,
+      defaultSort: true,
       type: FieldType.Custom,
       customRender: (value, field, userData) => this.getLockButton(value, field, userData),
     });
@@ -45,7 +46,7 @@ class List extends React.Component<Props> {
           <Button text={__('application.inviteUser')} primary to="/admin/management/workers/add" />
           <Button text={__('application.historyWorker')} primary to="/admin/management/workers/history" />
         </ButtonsContainer>
-        <ApiTable scheme={this.scheme} apiEndpointSubUrl="user/list" />
+        <ApiTable scheme={this.scheme} apiEndpointSubUrl={`user/list/${UserType.client}`} />
       </Section>
     );
   }
