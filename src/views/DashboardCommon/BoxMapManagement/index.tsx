@@ -18,6 +18,7 @@ import './BoxMapManagement.scss';
 
 import { ReactComponent as ReactLogo } from './map_1.2.svg';
 import MapLegend from './MapLegend';
+import SimpleStockMap from '../../../components/Common/SimpleStockMap';
 
 interface Props {
   boxesGroup: BoxListItem[] | null;
@@ -31,29 +32,13 @@ interface Props {
 
   boxNumberToMarkWay?: number;
 }
-interface State {
-  isMouseDown: boolean;
-  grabStartX: number;
-  grabStartY: number;
-  scrollLeft: number;
-  scrollTop: number;
-  mapScale: number;
-}
 
-class BoxMapManagement extends React.Component<Props, State> {
+class BoxMapManagement extends React.Component<Props> {
   private element: any;
 
   constructor(props: Props) {
     super(props);
     this.element = React.createRef();
-    this.state = {
-      isMouseDown: false,
-      grabStartX: 0,
-      grabStartY: 0,
-      scrollLeft: 0,
-      scrollTop: 0,
-      mapScale: 100,
-    };
   }
 
   private statusColorMarker = () => {
@@ -68,49 +53,28 @@ class BoxMapManagement extends React.Component<Props, State> {
 
     const { user, boxNumberToMarkWay } = this.props;
 
-    mapWrapperElement.addEventListener(
-      'mousedown',
-      (e: MouseEvent) => this.handleMouseDown(e, this.element.current),
-      false,
-    );
-    mapWrapperElement.addEventListener(
-      'mouseup',
-      (e: MouseEvent) => this.handleMouseUp(e, this.element.current),
-      false,
-    );
-    mapWrapperElement.addEventListener(
-      'mouseleave',
-      (e: MouseEvent) => this.handleMouseLeave(e, this.element.current),
-      false,
-    );
-    mapWrapperElement.addEventListener(
-      'mousemove',
-      (e: MouseEvent) => this.handleMouseMove(e, this.element.current),
-      false,
-    );
-
-    if (isAdmin(user.role) || isWorker(user.role)) {
-      const catchElement = this.element.current.querySelectorAll('#kontenery .storage');
-      catchElement.forEach((singleElement: any) => {
-        singleElement.addEventListener('click', this.handleEventModal, false);
-      });
-    }
-
-    if (isUser(user.role)) {
-      const row = boxNumberToMarkWay && Math.floor(boxNumberToMarkWay / 100);
-
-      const catchElement = this.element.current.querySelectorAll(`.row${row}00`);
-      catchElement.forEach((singleElement: any) => {
-        singleElement.classList.add('rented');
-      });
-
-      const myBox = this.element.current.querySelectorAll('#kontenery .storage');
-      myBox.forEach((singleElement: any) => {
-        if (Number(singleElement.id) === boxNumberToMarkWay) {
-          singleElement.classList.add('myBox');
-        }
-      });
-    }
+    // if (isAdmin(user.role) || isWorker(user.role)) {
+    //   const catchElement = this.element.current.querySelectorAll('#kontenery .storage');
+    //   catchElement.forEach((singleElement: any) => {
+    //     singleElement.addEventListener('click', this.handleEventModal, false);
+    //   });
+    // }
+    //
+    // if (isUser(user.role)) {
+    //   const row = boxNumberToMarkWay && Math.floor(boxNumberToMarkWay / 100);
+    //
+    //   const catchElement = this.element.current.querySelectorAll(`.row${row}00`);
+    //   catchElement.forEach((singleElement: any) => {
+    //     singleElement.classList.add('rented');
+    //   });
+    //
+    //   const myBox = this.element.current.querySelectorAll('#kontenery .storage');
+    //   myBox.forEach((singleElement: any) => {
+    //     if (Number(singleElement.id) === boxNumberToMarkWay) {
+    //       singleElement.classList.add('myBox');
+    //     }
+    //   });
+    // }
   };
 
   async componentDidMount() {
@@ -125,22 +89,22 @@ class BoxMapManagement extends React.Component<Props, State> {
     }
   }
 
-  public componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>): void {
+  public componentDidUpdate(prevProps: Readonly<Props>): void {
     const { fetchBoxStatuses, stock, boxesGroup, user } = this.props;
     if (stock && (isAdmin(user.role) || isWorker(user.role))) {
       boxesGroup === null && fetchBoxStatuses(stock.id);
     }
 
     if (stock && (isAdmin(user.role) || isWorker(user.role))) {
-      this.statusColorMarker();
+      // this.statusColorMarker();
     }
   }
 
   componentWillUnmount() {
-    const catchElement = this.element.current.querySelectorAll('#kontenery .storage');
-    catchElement.forEach((singleElement: any) => {
-      singleElement.removeEventListener('click', this.handleEventModal, false);
-    });
+    // const catchElement = this.element.current.querySelectorAll('#kontenery .storage');
+    // catchElement.forEach((singleElement: any) => {
+    //   singleElement.removeEventListener('click', this.handleEventModal, false);
+    // });
   }
 
   private setBoxStatus = (boxId: string, singleElement: any): void => {
@@ -193,43 +157,6 @@ class BoxMapManagement extends React.Component<Props, State> {
     });
   };
 
-  private handleMouseDown = (e: MouseEvent, el: HTMLElement): any => {
-    this.setState({
-      isMouseDown: true,
-      grabStartX: e.pageX - el.offsetLeft,
-      grabStartY: e.pageY - el.offsetTop,
-      scrollLeft: el.scrollLeft,
-      scrollTop: el.scrollTop,
-    });
-    el.classList.add('grab');
-  };
-
-  private handleMouseUp = (e: MouseEvent, el: HTMLElement): any => {
-    this.setState({
-      isMouseDown: false,
-    });
-    el.classList.remove('grab');
-  };
-
-  private handleMouseLeave = (e: MouseEvent, el: HTMLElement): any => {
-    this.setState({
-      isMouseDown: false,
-    });
-    el.classList.remove('grab');
-  };
-
-  private handleMouseMove = (e: MouseEvent, el: HTMLElement): any => {
-    const { isMouseDown, grabStartX, grabStartY, scrollLeft, scrollTop } = this.state;
-    if (!isMouseDown) return;
-    e.preventDefault();
-    const mousePositionX = e.pageX - el.offsetLeft;
-    const mousePositionY = e.pageY - el.offsetTop;
-    const mapMoveDistance = mousePositionX - grabStartX;
-    const mapMoveHieght = mousePositionY - grabStartY;
-
-    el.scrollLeft = scrollLeft - mapMoveDistance;
-    el.scrollTop = scrollTop - mapMoveHieght;
-  };
 
   handleEventModal = (e: any): any => {
     const { showModal, boxesGroup, fetchSingleBoxDetails, user } = this.props;
@@ -248,36 +175,6 @@ class BoxMapManagement extends React.Component<Props, State> {
     showModal(<BoxDetail selectedBoxId={selectedBoxId} rentId={selectedRentId} />);
   };
 
-  private mapScaleUpHandle = () => {
-    const mapWrapperElement = this.element.current;
-    const { mapScale } = this.state;
-    if (mapScale < 150) {
-      const name = `scale-${mapScale}`;
-      mapWrapperElement.classList.remove(name);
-      this.setState({
-        mapScale: mapScale + 10,
-      });
-
-      const newName = `scale-${mapScale + 10}`;
-      mapWrapperElement.classList.add(newName);
-    }
-  };
-
-  private mapScaleDownHandle = () => {
-    const mapWrapperElement = this.element.current;
-    const { mapScale } = this.state;
-    if (mapScale > 70) {
-      const name = `scale-${mapScale}`;
-      mapWrapperElement.classList.remove(name);
-
-      this.setState({
-        mapScale: mapScale - 10,
-      });
-
-      const newName = `scale-${mapScale - 10}`;
-      mapWrapperElement.classList.add(newName);
-    }
-  };
 
   render() {
     const { stock, user, boxNumberToMarkWay } = this.props;
@@ -291,13 +188,9 @@ class BoxMapManagement extends React.Component<Props, State> {
           </p>
         )}
         {stock?.id ? (
-          <div className="map-wrapper scale-100" ref={this.element}>
-            <div className="map-scale">
-              <span className="fa fa-plus-circle" onClick={() => this.mapScaleUpHandle()} />
-              <span className="fa fa-minus-circle" onClick={() => this.mapScaleDownHandle()} />
-            </div>
-            <ReactLogo id="svg-map" />
-          </div>
+          <>
+            <SimpleStockMap />
+          </>
         ) : (
           <Spinner />
         )}

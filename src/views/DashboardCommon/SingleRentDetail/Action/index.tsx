@@ -5,6 +5,7 @@ import { MyRentList, RentStatus, UserRes } from 'smartbox-types';
 import { modal, order, singleRent, notifications } from '../../../../actions';
 import { history } from '../../../../App';
 import { Button, ConfirmModal } from '../../../../components/Common';
+import UserStockMap from "../../../../components/Common/UserStockMap";
 import { ButtonsContainer } from '../../../../components/Layout';
 import { __ } from '../../../../helpers/i18n';
 import { ApplicationState } from '../../../../reducers';
@@ -42,7 +43,7 @@ const Action = ({
       <Button
         text={__('application.showOnStockMap')}
         success
-        click={() => showModal(<BoxMapManagement boxNumberToMarkWay={Number(rent.number)} />)}
+        click={() => showModal(<UserStockMap boxNumberToMarkWay={Number(rent.number)} />)}
       />
       <Button
         text={__('application.goToAgreement')}
