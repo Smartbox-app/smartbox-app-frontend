@@ -5,12 +5,11 @@ import { MyRentList, RentStatus, UserRes } from 'smartbox-types';
 import { modal, order, singleRent, notifications } from '../../../../actions';
 import { history } from '../../../../App';
 import { Button, ConfirmModal } from '../../../../components/Common';
-import UserStockMap from "../../../../components/Common/UserStockMap";
+import UserStockMap from '../../../../components/Common/UserStockMap';
 import { ButtonsContainer } from '../../../../components/Layout';
 import { __ } from '../../../../helpers/i18n';
 import { ApplicationState } from '../../../../reducers';
 import UserService from '../../../../services/user-service';
-import { BoxMapManagement } from '../../index';
 
 interface Props {
   rentId: string;
