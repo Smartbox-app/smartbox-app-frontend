@@ -4,6 +4,8 @@ import { bindActionCreators } from 'redux';
 import { ApplicationState } from '../../../reducers';
 import SimpleStockMap from '../SimpleStockMap';
 
+import './UserStockMap.scss';
+
 interface Props {
   boxNumberToMarkWay: number;
 }
@@ -20,7 +22,9 @@ class UserStockMap extends React.Component<Props> {
     if (list) {
       list.forEach((singleElement: any) => {
         if (Number(singleElement.id) === boxToMark) {
-          singleElement.classList.add('myBox');
+          singleElement.classList.add('my-box');
+        } else {
+          singleElement.classList.add('not-my-box');
         }
       });
     }

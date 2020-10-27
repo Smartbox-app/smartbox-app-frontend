@@ -41,7 +41,7 @@ const Status = ({ selectedBoxId, hideModal, successNotification, rentId, stock, 
       },
       'PATCH',
     );
-
+  if (rentId === '') return <p>Nie możesz wykonywać akcji na tej skrytce!</p>;
   return (
     <FormContainer className="box-status-form">
       <ItfApiForm

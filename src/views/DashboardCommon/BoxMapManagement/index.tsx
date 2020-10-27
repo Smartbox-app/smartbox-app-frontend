@@ -7,16 +7,15 @@ import { bindActionCreators } from 'redux';
 import { BoxListItem, RentStatus, StockList, UserRes } from 'smartbox-types';
 import { boxes, modal, stock } from '../../../actions';
 import { Spinner } from '../../../components/Common';
-import { PageHeader, Section } from '../../../components/Layout';
+import { PageHeader } from '../../../components/Layout';
 import { __ } from '../../../helpers/i18n';
 import { ApplicationState } from '../../../reducers';
-import { isAdmin, isUser, isWorker } from '../../../utils/role-check';
+import { isAdmin, isWorker } from '../../../utils/role-check';
 
 import BoxDetail from './BoxDetail';
 
 import './BoxMapManagement.scss';
 
-import { ReactComponent as ReactLogo } from './map_1.2.svg';
 import MapLegend from './MapLegend';
 import SimpleStockMap from '../../../components/Common/SimpleStockMap';
 
@@ -42,39 +41,21 @@ class BoxMapManagement extends React.Component<Props> {
   }
 
   private statusColorMarker = () => {
-    const catchElement = this.element.current.querySelectorAll('#kontenery .storage');
+    const catchElement = this.element.current?.querySelectorAll('#kontenery .storage');
     catchElement.forEach((singleElement: any) => {
       this.setBoxStatus(singleElement.id, singleElement);
     });
   };
 
   private eventListenerAdding = () => {
-    const mapWrapperElement = this.element.current;
+    const { user } = this.props;
 
-    const { user, boxNumberToMarkWay } = this.props;
-
-    // if (isAdmin(user.role) || isWorker(user.role)) {
-    //   const catchElement = this.element.current.querySelectorAll('#kontenery .storage');
-    //   catchElement.forEach((singleElement: any) => {
-    //     singleElement.addEventListener('click', this.handleEventModal, false);
-    //   });
-    // }
-    //
-    // if (isUser(user.role)) {
-    //   const row = boxNumberToMarkWay && Math.floor(boxNumberToMarkWay / 100);
-    //
-    //   const catchElement = this.element.current.querySelectorAll(`.row${row}00`);
-    //   catchElement.forEach((singleElement: any) => {
-    //     singleElement.classList.add('rented');
-    //   });
-    //
-    //   const myBox = this.element.current.querySelectorAll('#kontenery .storage');
-    //   myBox.forEach((singleElement: any) => {
-    //     if (Number(singleElement.id) === boxNumberToMarkWay) {
-    //       singleElement.classList.add('myBox');
-    //     }
-    //   });
-    // }
+    if (isAdmin(user.role) || isWorker(user.role)) {
+      const catchElement = this.element.current.querySelectorAll('#kontenery .storage');
+      catchElement.forEach((singleElement: any) => {
+        singleElement.addEventListener('click', this.handleEventModal, false);
+      });
+    }
   };
 
   async componentDidMount() {
@@ -96,15 +77,15 @@ class BoxMapManagement extends React.Component<Props> {
     }
 
     if (stock && (isAdmin(user.role) || isWorker(user.role))) {
-      // this.statusColorMarker();
+      this.statusColorMarker();
     }
   }
 
   componentWillUnmount() {
-    // const catchElement = this.element.current.querySelectorAll('#kontenery .storage');
-    // catchElement.forEach((singleElement: any) => {
-    //   singleElement.removeEventListener('click', this.handleEventModal, false);
-    // });
+    const catchElement = this.element.current.querySelectorAll('#kontenery .storage');
+    catchElement.forEach((singleElement: any) => {
+      singleElement.removeEventListener('click', this.handleEventModal, false);
+    });
   }
 
   private setBoxStatus = (boxId: string, singleElement: any): void => {
@@ -157,7 +138,6 @@ class BoxMapManagement extends React.Component<Props> {
     });
   };
 
-
   handleEventModal = (e: any): any => {
     const { showModal, boxesGroup, fetchSingleBoxDetails, user } = this.props;
     const selectedBoxId = e.target.parentElement.id;
@@ -175,18 +155,12 @@ class BoxMapManagement extends React.Component<Props> {
     showModal(<BoxDetail selectedBoxId={selectedBoxId} rentId={selectedRentId} />);
   };
 
-
   render() {
-    const { stock, user, boxNumberToMarkWay } = this.props;
+    const { stock, user } = this.props;
     return (
-      <div className="user-map-wrapper">
+      <div className="user-map-wrapper" ref={this.element}>
         <PageHeader title={`${__('application.storagesPlan')}`} />
         {(isAdmin(user.role) || isWorker(user.role)) && <MapLegend />}
-        {isUser(user.role) && (
-          <p className="user-box">
-            Twoja skrytka ma numer: <strong>{boxNumberToMarkWay}</strong>
-          </p>
-        )}
         {stock?.id ? (
           <>
             <SimpleStockMap />
