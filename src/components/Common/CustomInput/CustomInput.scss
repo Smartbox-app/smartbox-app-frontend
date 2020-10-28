@@ -1,0 +1,8 @@
+@import '../../../config/variables';
+@import '../../../config/mixins';
+
+.custom-input {
+  .label {
+    text-transform: capitalize;
+  }
+}
