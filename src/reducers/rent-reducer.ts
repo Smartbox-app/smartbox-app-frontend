@@ -50,7 +50,7 @@ export default (state: RentsStatus = initialState, action: Action): any => {
     case 'FETCH_MY_RENT_HISTORY_SUCCESS': {
       return {
         ...state,
-        rentsHistoryList: [...action.payload, ...action.payload, ...action.payload, ...action.payload],
+        rentsHistoryList: action.payload,
       };
     }
     case 'FETCH_MY_RENT_STORY_SUCCESS': {
