@@ -29,14 +29,12 @@
   align-items: center;
   flex-wrap: nowrap;
   width: 100%;
-  //padding: $main-spacing/2  0;
+  height: 30px;
   border-bottom: 1px solid $color-inactive;
 }
 
-.line-cell {
-  //flex: 0 0 40%;
-}
-
-.line-cell.small {
-  //flex: 0 0 20%;
+.header {
+  text-transform: uppercase;
+  font-weight: 600;
+  color: $color-disabled;
 }

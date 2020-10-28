@@ -1,7 +1,6 @@
 import React from 'react';
 import { MyRentList, RentStatus } from 'smartbox-types';
 import { dateOnly } from '../../../../../../utils/format-date';
-import { Button } from '../../../../../../components/Common';
 
 export interface SingleHistory {
   startDate: Date;
@@ -22,7 +21,6 @@ const Single = ({ single }: Props) => (
     </span>
     <span className="line-cell small">{single.size}m2</span>
     <span className="line-cell">{single.stockName}</span>
-    <Button text="Generuj" primary small />
   </li>
 );
 export default Single;

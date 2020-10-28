@@ -22,6 +22,11 @@ const History = ({ data }: Props) => {
 
   return (
     <div className="history-wrapper">
+      <p className="history-line header">
+        <span className="header-cell">Okres</span>
+        <span className="header-cell">rozmiar</span>
+        <span className="header-cell">Magazyn</span>
+      </p>
       <ul className="history-list">{dataToDisplay}</ul>
       <Legend />
     </div>
