@@ -13,7 +13,6 @@ interface Props {
 }
 
 const CustomInput = ({ register, errors, control, id, type }: Props) => {
-  console.log('CustomInput', errors)
   return (
     <label htmlFor="form-field" title={id} className="custom-input">
       <p className="label">{__(`application.${id}`)}:</p>

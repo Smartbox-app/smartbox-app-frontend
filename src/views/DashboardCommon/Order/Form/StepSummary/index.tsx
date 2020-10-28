@@ -48,13 +48,13 @@ const StepSummary = ({ formData, countedPrice, updateFormData, user, selectedPay
 
   const defaultValues = {
     paymentType: `${MainPaymentWay.card}`,
-    firstName: '',
-    lastName: '',
+    firstName: user.firstName || '',
+    lastName: user.lastName || '',
     street: '',
     city: '',
     postCode: '',
-    mailToSendInvoice: '',
-    phone: '',
+    mailToSendInvoice: user.email || '',
+    phone: user.phone || '',
   };
 
   const { handleSubmit, register, watch, control, errors } = useForm({ defaultValues, mode: 'onChange', });
@@ -95,7 +95,7 @@ const StepSummary = ({ formData, countedPrice, updateFormData, user, selectedPay
       watch().mailToSendInvoice !== '' &&
       watch().phone !== ''
     ) {
-      if (!errors.mailToSendInvoice) {
+      if (!errors.mailToSendInvoice && !errors.postCode) {
         return false;
       }
     }
