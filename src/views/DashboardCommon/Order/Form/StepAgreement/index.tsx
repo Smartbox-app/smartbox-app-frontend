@@ -57,32 +57,41 @@ const StepSummary = ({
   const { handleSubmit } = useForm();
 
   const onSubmit = (data: any) => {
+    const dataCollection = {
+      stockId: stock.id,
+      size: Number(formData.size),
+      startAt: formData.dateStart,
+      finishAt: formData.dateEnd,
+      cost: countedPrice.value,
+      discountCode: formData.discountCode,
+      firstName: formData.firstName,
+      lastName: formData.lastName,
+      street: formData.street,
+      city: formData.city,
+      postCode: formData.postCode,
+      isCompany: formData.isCompany || false,
+      phone: formData.phone,
+      mailToSendInvoice: formData.mailToSendInvoice,
+      companyName: formData.companyName,
+      companyStreet: formData.companyStreet,
+      companyCity: formData.companyCity,
+      companyPostCode: formData.companyPostCode,
+      nip: formData.nip,
+    };
+
     if (match.params.rentId) {
       // rent extension
       sentExtendRentRequest(
         match.params.rentId,
         {
-          discountCode: formData.discountCode,
-          finishAt: formData.dateEnd,
-          cost: countedPrice.value,
+          ...dataCollection,
           isPaySavedCard: false,
         },
         user.role,
       );
     } else {
       // new Rent blik/creditcart
-      sentRentBoxRequest(
-        {
-          stockId: stock.id,
-          size: Number(formData.size),
-          startAt: formData.dateStart,
-          finishAt: formData.dateEnd,
-          cost: countedPrice.value,
-          discountCode: formData.discountCode,
-        },
-        'payment',
-        user.role,
-      );
+      sentRentBoxRequest(dataCollection, 'payment', user.role);
     }
   };
 

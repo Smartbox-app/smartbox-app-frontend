@@ -10,4 +10,17 @@ export interface FormType {
     discount: number;
     durationInWeeks: number;
   };
+  firstName: string;
+  lastName: string;
+  street: string;
+  city: string;
+  postCode: string;
+  phone: string;
+  mailToSendInvoice: string;
+  isCompany?: boolean;
+  companyName?: string;
+  companyStreet?: string;
+  companyCity?: string;
+  companyPostCode?: string;
+  nip?: string;
 }

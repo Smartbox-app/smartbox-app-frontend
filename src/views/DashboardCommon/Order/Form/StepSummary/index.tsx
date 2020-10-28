@@ -42,7 +42,7 @@ const StepSummary = ({ formData, countedPrice, updateFormData, user, selectedPay
   const [invoiceNeeded, setInvoiceNeeded] = useState(false);
   useEffect(() => {
     if (formData.size.length === 0) {
-      // history.push(`/${UserService.getSlugByRole(user.role)}/order/step/size`);
+      history.push(`/${UserService.getSlugByRole(user.role)}/order/step/size`);
     }
   });
 
@@ -57,9 +57,10 @@ const StepSummary = ({ formData, countedPrice, updateFormData, user, selectedPay
     phone: user.phone || '',
   };
 
-  const { handleSubmit, register, watch, control, errors } = useForm({ defaultValues, mode: 'onChange', });
+  const { handleSubmit, register, watch, control, errors } = useForm({ defaultValues, mode: 'onChange' });
 
   const onSubmit = (data: any) => {
+    console.log('onSubmit', data);
     updateFormData(data);
     history.push(`/${UserService.getSlugByRole(user.role)}/order/step/agreement/${match.params.rentId || ''}`);
   };
