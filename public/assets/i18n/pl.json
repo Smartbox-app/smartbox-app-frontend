@@ -168,6 +168,17 @@
       "week": "Tydzień",
       "month": "Miesiąc",
 
+      "nameTenant": "Imię i nazwisko",
+      "street": "Ulica i numer",
+      "postCode": "Kod pocztowy",
+      "city": "Miasto",
+      "mailToSendInvoice": "E-mail",
+      "companyCity": "Miasto",
+      "companyPostCode": "Kod pocztowy",
+      "nip": "nip",
+      "companyStreet": "Adres",
+      "companyName": "Nazwa firmy",
+
       "welcome": "Hello world"
     },
     "notification": {

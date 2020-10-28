@@ -157,6 +157,10 @@
       "30": {
         "text": "Błędne stanowisko!",
         "__type_alias_do_not_touch": "ApiErrorCode.InvalidUserType"
+      },
+      "31": {
+        "text": "@@@@@@@@@@@@@@@TODO: Translate ApiErrorCode.CompanyDataIsRequired!",
+        "__type_alias_do_not_touch": "ApiErrorCode.CompanyDataIsRequired"
       }
     }
   }

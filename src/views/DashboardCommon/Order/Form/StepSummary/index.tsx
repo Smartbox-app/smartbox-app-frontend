@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { UserRes, IPricingResult } from 'smartbox-types';
-import { Button } from '../../../../../components/Common';
+import { Button, CheckBox } from '../../../../../components/Common';
 import { order } from '../../../../../actions';
 import { ButtonsContainer } from '../../../../../components/Layout';
 import { history } from '../../../../../App';
@@ -16,12 +16,14 @@ import UserService from '../../../../../services/user-service';
 import { ApplicationState } from '../../../../../reducers';
 import { MainPaymentWay } from '../../../../../reducers/order-reducer';
 import { __ } from '../../../../../helpers/i18n';
+import CompanyDetailsForm from './CompanyDetailsForm';
 
 import Discount from './DiscountsList';
 import PaymentMethods from './PaymentMethods';
 import SummaryTable from './SummaryTable';
 
 import './StepSummary.scss';
+import TenantDetailsForm from './TenantDetailsForm';
 
 interface RouteProps {
   step: string;
@@ -37,9 +39,10 @@ interface Props extends RouteComponentProps<RouteProps> {
 }
 
 const StepSummary = ({ formData, countedPrice, updateFormData, user, selectedPaymentMethod, match }: Props) => {
+  const [invoiceNeeded, setInvoiceNeeded] = useState(false);
   useEffect(() => {
     if (formData.size.length === 0) {
-      history.push(`/${UserService.getSlugByRole(user.role)}/order/step/size`);
+      // history.push(`/${UserService.getSlugByRole(user.role)}/order/step/size`);
     }
   });
 
@@ -47,7 +50,7 @@ const StepSummary = ({ formData, countedPrice, updateFormData, user, selectedPay
     paymentType: `${MainPaymentWay.card}`,
   };
 
-  const { handleSubmit, register, watch } = useForm({ defaultValues });
+  const { handleSubmit, register, watch, control, errors } = useForm({ defaultValues });
 
   const onSubmit = (data: any) => {
     updateFormData(data);
@@ -77,10 +80,20 @@ const StepSummary = ({ formData, countedPrice, updateFormData, user, selectedPay
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="form-step-two">
+      {console.log('watch()', watch())}
       <Discount />
       <FormHeader title="Podsumowanie zamówienia:" />
       <SummaryTable dateStart={formData.dateStart} dateEnd={formData.dateEnd} countedPrice={countedPrice.value} />
       <PaymentMethods register={register} />
+      <TenantDetailsForm register={register} control={control} errors={errors} />
+      <p>Fakturę wystawimy na dane odbiorcy. Możesz też podać inne dane, na przykład Twojej firmy.</p>
+      <CheckBox
+        name="iNeedInvoice"
+        checked={invoiceNeeded}
+        handleChange={() => setInvoiceNeeded(!invoiceNeeded)}
+        label="Chcę dodać inne dane lub potrzebuję faktury na firmę"
+      />
+      {invoiceNeeded && <CompanyDetailsForm register={register} errors={errors} control={control} />}
       <ButtonsContainer max>
         <Button outline text={__('application.back')} click={() => onBack()} />
         <Button type="submit" primary text="Przejdź do umowy" disabled={dataVerification()} />

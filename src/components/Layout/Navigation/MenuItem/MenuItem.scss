@@ -40,7 +40,7 @@
       color: $color-primary;
     }
   }
-  
+
   &.active .main-menu-item_logo {
     fill: $color-primary;
   }
@@ -68,12 +68,12 @@
   .main-menu-item {
     border-top: none;
     border-bottom: 2px solid $color-inactive;
-  
+
     &:hover {
       border-top: none;
       border-bottom: 2px solid $color-primary-light;
     }
-  
+
     &.active {
       border-top: none;
       border-bottom: 2px solid $color-primary;
@@ -95,9 +95,8 @@
     border-top: none;
     border-bottom: none;
     flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    
+    justify-content: flex-end;
+
     .main-menu-item_logo {
       width: $menu-icon-big;
       height: $menu-icon-big;

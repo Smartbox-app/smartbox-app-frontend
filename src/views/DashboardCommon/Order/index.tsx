@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { withRouter, RouteComponentProps } from 'react-router';
-import { Section, SectionHeader } from '../../../components/Layout';
+import { FormContainer, Section, SectionHeader } from '../../../components/Layout';
 import { ProgressIndicator } from '../../../components/Common';
 
 import Form from './Form/Index';
@@ -59,7 +59,9 @@ const Order = ({ match }: Props) => {
           },
         ]}
       />
-      <Form />
+      <FormContainer>
+        <Form />
+      </FormContainer>
     </Section>
   );
 };
