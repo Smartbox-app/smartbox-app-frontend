@@ -48,9 +48,16 @@ const StepSummary = ({ formData, countedPrice, updateFormData, user, selectedPay
 
   const defaultValues = {
     paymentType: `${MainPaymentWay.card}`,
+    firstName: '',
+    lastName: '',
+    street: '',
+    city: '',
+    postCode: '',
+    mailToSendInvoice: '',
+    phone: '',
   };
 
-  const { handleSubmit, register, watch, control, errors } = useForm({ defaultValues });
+  const { handleSubmit, register, watch, control, errors } = useForm({ defaultValues, mode: 'onChange', });
 
   const onSubmit = (data: any) => {
     updateFormData(data);
@@ -78,9 +85,25 @@ const StepSummary = ({ formData, countedPrice, updateFormData, user, selectedPay
     }
   };
 
+  const tenantData = (): boolean => {
+    if (
+      watch().firstName !== '' &&
+      watch().lastName !== '' &&
+      watch().street !== '' &&
+      watch().city !== '' &&
+      watch().postCode !== '' &&
+      watch().mailToSendInvoice !== '' &&
+      watch().phone !== ''
+    ) {
+      if (!errors.mailToSendInvoice) {
+        return false;
+      }
+    }
+    return true;
+  };
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="form-step-two">
-      {console.log('watch()', watch())}
       <Discount />
       <FormHeader title="Podsumowanie zamówienia:" />
       <SummaryTable dateStart={formData.dateStart} dateEnd={formData.dateEnd} countedPrice={countedPrice.value} />
@@ -96,7 +119,7 @@ const StepSummary = ({ formData, countedPrice, updateFormData, user, selectedPay
       {invoiceNeeded && <CompanyDetailsForm register={register} errors={errors} control={control} />}
       <ButtonsContainer max>
         <Button outline text={__('application.back')} click={() => onBack()} />
-        <Button type="submit" primary text="Przejdź do umowy" disabled={dataVerification()} />
+        <Button type="submit" primary text="Przejdź do umowy" disabled={dataVerification() || tenantData()} />
       </ButtonsContainer>
     </form>
   );

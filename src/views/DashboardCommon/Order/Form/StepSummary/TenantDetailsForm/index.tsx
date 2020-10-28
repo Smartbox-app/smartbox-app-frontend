@@ -38,21 +38,29 @@ const TenantDetailsForm = ({ register, errors, control }: Props) => {
         id="city"
       />
       <CustomInput
-        register={register({ required: formOnTranslateString('Field required.') })}
+        register={register({
+          required: formOnTranslateString('Field required.'),
+          pattern: {
+            value: /^([0-9]{2})(-[0-9]{3})?$/i,
+            message: formOnTranslateString('Invalid Zip code.'),
+          },
+        })}
         errors={errors}
         control={control}
         id="postCode"
       />
+
       <CustomInput
         register={register({
           required: formOnTranslateString('Field required.'),
           pattern: {
             value: /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
-            message: formOnTranslateString('Invalid email address'),
+            message: formOnTranslateString('Invalid email.'),
           },
         })}
         errors={errors}
         control={control}
+        type="email"
         id="mailToSendInvoice"
       />
       <CustomInput
