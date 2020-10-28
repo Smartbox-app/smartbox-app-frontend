@@ -32,7 +32,13 @@ const CompanyDetailsForm = ({ register, errors, control }: Props) => {
         id="companyCity"
       />
       <CustomInput
-        register={register({ required: formOnTranslateString('Field required.') })}
+        register={register({
+          required: formOnTranslateString('Field required.'),
+          pattern: {
+            value: /^([0-9]{2})(-[0-9]{3})?$/i,
+            message: formOnTranslateString('Invalid Zip code.'),
+          },
+        })}
         errors={errors}
         control={control}
         id="companyPostCode"
