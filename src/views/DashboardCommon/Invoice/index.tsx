@@ -30,15 +30,11 @@ const Invoice = ({ showModal, match, getMyRentList, fetchMyRentHistory }: Props)
     <PageContent>
       <Section>
         <LogoContainer />
-        <p className="content-text">{__('application.paymentSuccess')}.</p>
+        <p className="content-text">{__('application.paymentSuccess')}</p>
         <p className="content-text">{__('application.thanks')}</p>
+        <p className="content-text">{__('application.invoiceWasSent')}</p>
         <ButtonsContainer max>
           <Button success text={__('application.backToApp')} to="/" />
-          <Button
-            primary
-            text={__('application.generateInvoice')}
-            click={() => showModal(<Form paymentId={match.params.paymentId} />)}
-          />
         </ButtonsContainer>
       </Section>
     </PageContent>
