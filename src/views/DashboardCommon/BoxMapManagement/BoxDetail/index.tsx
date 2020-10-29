@@ -52,7 +52,11 @@ const BoxDetail = ({ selectedBoxId, singleBoxDetail, rentId, user }: Props) => {
           </DescriptionRow>
 
           <DescriptionRow icon="fa-flag" text="Płatność">
-            {singleBoxDetail.owner ? `Opłacono ze zniżką` : '---'}
+            {singleBoxDetail.owner ? `Brak danych` : '---'}
+          </DescriptionRow>
+
+          <DescriptionRow icon="fa-mobile" text="Telefon">
+            {singleBoxDetail.owner ? <a href={`tel:${765456456}`}>{765456456}</a> : '---'}
           </DescriptionRow>
 
           <DescriptionRow icon="fa-envelope" text={__('application.mail')}>
