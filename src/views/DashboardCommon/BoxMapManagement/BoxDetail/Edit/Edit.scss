@@ -1,3 +1,17 @@
 @import '../../../../../config/variables.scss';
 @import '../../../../../config/mixins.scss';
 
+.edit-wrapper {
+  position: relative;
+  transition: all $transition-time/1.5 ease-in-out;
+  height: 0;
+  opacity: 0;
+  line-height: 0;
+}
+
+.show-me {
+  height: auto;
+  opacity: 1;
+  line-height: normal;
+  color: black;
+}

@@ -84,9 +84,12 @@ const BoxDetail = ({ selectedBoxId, singleBoxDetail, rentId, user }: Props) => {
           icon="arrow-down-white.svg"
         />
       </ButtonsContainer>
-      {optionDisplayState && (
-        <Edit selectedBoxId={selectedBoxId} rentId={rentId} singleBoxDetailStatus={singleBoxDetail.status} />
-      )}
+      <Edit
+        display={optionDisplayState}
+        selectedBoxId={selectedBoxId}
+        rentId={rentId}
+        singleBoxDetailStatus={singleBoxDetail.status}
+      />
     </div>
   );
 };

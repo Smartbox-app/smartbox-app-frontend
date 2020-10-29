@@ -6,6 +6,7 @@ import { Modal } from '../../../types/modal';
 import { ApplicationState } from '../../../reducers';
 
 import './Modal.scss';
+import ModalContent from './ModalContent';
 
 interface Props {
   modal: Modal;
@@ -31,12 +32,14 @@ class ModalWrapper extends React.Component<Props> {
           id="modal"
         >
           <div className="modal-body">
-            <div className="modal-content">{modal.content}</div>
-            {modal.isClosable && (
-              <span className="modal-exit" onClick={() => hideModal()}>
-                &times;
-              </span>
-            )}
+            <ModalContent>
+              <div className="modal-content">{modal.content}</div>
+              {modal.isClosable && (
+                <span className="modal-exit" onClick={() => hideModal()}>
+                  &times;
+                </span>
+              )}
+            </ModalContent>
           </div>
         </div>
       </>
