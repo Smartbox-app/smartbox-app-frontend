@@ -55,7 +55,7 @@
         "__type_alias_do_not_touch": "ApiErrorCode.InvalidData"
       },
       "5": {
-        "text": "Błąd walidacji formularzu!",
+        "text": "Błąd walidacji formularza!",
         "__type_alias_do_not_touch": "ApiErrorCode.FormValidationError"
       },
       "6": {
