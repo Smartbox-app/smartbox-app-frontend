@@ -1,10 +1,8 @@
 @import '../../../../../../config/variables.scss';
 @import '../../../../../../config/mixins.scss';
 
-$box-size: 100px;
-
 .single-wrapper {
-  padding: $main-spacing/2;
+  padding: $main-spacing / 4;
   width: 50%;
 
   .storage {
@@ -23,22 +21,30 @@ $box-size: 100px;
     background-repeat: no-repeat;
     background-size: contain;
     color: #fff;
-    font-size: 600;
     border: 2px solid darken($color-primary, 10%);
 
     &:hover {
       box-shadow: 0 0 2px 1px $color-primary-light;
     }
 
+    .details {
+      position: relative;
+      font-size: 0.8rem;
+      display: flex;
+      width: 90%;
+      justify-content: space-between;
+    }
+
     .main-info {
-      font-size: 1.1rem;
-      strong {
-        margin-right: $main-spacing * 2;
-      }
+      font-size: 1.2rem;
+      display: flex;
+      width: 90%;
+      justify-content: center;
     }
 
     .sec-info {
       font-size: 0.7rem;
+      width: 90%;
     }
 
     .size {
@@ -54,9 +60,10 @@ $box-size: 100px;
       }
     }
 
-    .sec-info, .main-info {
+    .sec-info,
+    .main-info {
       position: relative;
-      text-align: center;
+      text-align: start;
     }
   }
 }
@@ -64,27 +71,27 @@ $box-size: 100px;
 @include gt-sm {
   .single-wrapper {
     width: 25%;
+    .storage {
+      height: $big-box-size;
+      justify-content: space-between;
+      padding: $main-spacing;
+    }
   }
 }
 
 @include gt-md {
   .single-wrapper {
-
     .storage {
-      height: 150px;
-      flex-direction: column-reverse;
-      align-items: flex-start;
-      justify-content: flex-start;
-      padding-left: $main-spacing*2;
-      padding-bottom: $main-spacing;
+      height: $big-box-size;
+      align-items: center;
 
       .main-info {
         font-size: 1.5rem;
         font-weight: 500;
       }
 
-      .sec-info {
-        font-size: .9rem;
+      .sec-info, .details {
+        font-size: 0.9rem;
       }
     }
   }

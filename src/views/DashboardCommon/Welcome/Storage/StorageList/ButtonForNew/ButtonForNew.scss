@@ -1,13 +1,13 @@
 @import '../../../../../../config/variables.scss';
 @import '../../../../../../config/mixins.scss';
 
-$box-size: 100px;
-
 .new-storage {
   width: 50%;
+
   .button {
     width: 100%;
     height: $box-size;
+
     &:hover {
       box-shadow: 0 0 2px 1px $color-primary-light;
     }
@@ -17,14 +17,19 @@ $box-size: 100px;
 @include gt-sm {
   .new-storage {
     width: 25%;
+
+    .button {
+      height: $big-box-size;
+    }
   }
 }
 
 @include gt-md {
   .new-storage {
+
     .button {
-      height: 150px;
       font-size: 1.3rem;
+
       .button-img {
         margin-bottom: $main-spacing;
       }
