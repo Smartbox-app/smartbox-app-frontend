@@ -159,8 +159,12 @@
         "__type_alias_do_not_touch": "ApiErrorCode.InvalidUserType"
       },
       "31": {
-        "text": "@@@@@@@@@@@@@@@TODO: Translate ApiErrorCode.CompanyDataIsRequired!",
+        "text": "Dane firmy są wymagane!",
         "__type_alias_do_not_touch": "ApiErrorCode.CompanyDataIsRequired"
+      },
+      "32": {
+        "text": "Skrytka zostła zarezerwowana!",
+        "__type_alias_do_not_touch": "ApiErrorCode.BoxIsReserved"
       }
     }
   }
