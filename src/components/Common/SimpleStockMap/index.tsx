@@ -123,6 +123,29 @@ class SimpleStockMap extends React.Component<Props, State> {
     );
   }
 
+  public componentWillUnmount(): void {
+    this.element.current.removeEventListener(
+      'mousedown',
+      (e: MouseEvent) => this.handleMouseDown(e, this.element.current),
+      false,
+    );
+    this.element.current.removeEventListener(
+      'mouseup',
+      (e: MouseEvent) => this.handleMouseUp(e, this.element.current),
+      false,
+    );
+    this.element.current.removeEventListener(
+      'mouseleave',
+      (e: MouseEvent) => this.handleMouseLeave(e, this.element.current),
+      false,
+    );
+    this.element.current.removeEventListener(
+      'mousemove',
+      (e: MouseEvent) => this.handleMouseMove(e, this.element.current),
+      false,
+    );
+  }
+
   render() {
     return (
       <div className="map-wrapper scale-100" ref={this.element}>
