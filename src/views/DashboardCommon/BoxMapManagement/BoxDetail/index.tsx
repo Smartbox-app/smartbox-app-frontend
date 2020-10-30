@@ -56,7 +56,11 @@ const BoxDetail = ({ selectedBoxId, singleBoxDetail, rentId, user }: Props) => {
           </DescriptionRow>
 
           <DescriptionRow icon="fa-mobile" text="Telefon">
-            {singleBoxDetail.owner ? <a href={`tel:${765456456}`}>{765456456}</a> : '---'}
+            {singleBoxDetail.owner.phone ? (
+              <a href={`tel:${singleBoxDetail.owner.phone}`}>{singleBoxDetail.owner.phone}</a>
+            ) : (
+              '---'
+            )}
           </DescriptionRow>
 
           <DescriptionRow icon="fa-envelope" text={__('application.mail')}>

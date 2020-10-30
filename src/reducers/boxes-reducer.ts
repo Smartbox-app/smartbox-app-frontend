@@ -17,6 +17,7 @@ const initialState: Boxes = {
       firstName: '',
       lastName: '',
       rentCount: 0,
+      phone: '',
     },
   },
 };
