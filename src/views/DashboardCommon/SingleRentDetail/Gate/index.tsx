@@ -51,7 +51,7 @@ const Gate = ({ startAnimation, askGateToOpen }: Props) => {
   const gateOpenningAnimation = (
     <div className="gate-animation">
       <ReactSVG src={`${startAnimation ? '/assets/images/Group46.svg' : '/assets/images/Group39.svg'}`} />
-      <span>{startAnimation ? __('application.theGateOpens') : __('application.slideToOpenGate')}</span>
+      {/*<span>{startAnimation ? __('application.theGateOpens') : __('application.slideToOpenGate')}</span>*/}
       <div className="slide-to-open">
         <Button
           text={__('application.openGate')}
