@@ -2,6 +2,7 @@ import React from 'react';
 import CustomInput from '../../../../../../components/Common/CustomInput';
 import FormHeader from '../../../../../../components/Layout/FormHeader';
 import { formOnTranslateString } from '../../../../../../utils/trans-form';
+import { validateNip } from '../../../../../../utils/validate-nip';
 
 interface Props {
   register: any;
@@ -44,7 +45,14 @@ const CompanyDetailsForm = ({ register, errors, control }: Props) => {
         id="companyPostCode"
       />
       <CustomInput
-        register={register({ required: formOnTranslateString('Field required.') })}
+        register={register({
+          required: formOnTranslateString('Field required.'),
+          validate: (data: any) => (validateNip(data) ? '' : formOnTranslateString('Invalid NIP.')),
+          // pattern: {
+          //   value: validateNip,
+          //   message: formOnTranslateString('Invalid NIP.'),
+          // },
+        })}
         errors={errors}
         control={control}
         id="nip"

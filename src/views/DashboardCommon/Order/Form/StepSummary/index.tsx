@@ -57,7 +57,7 @@ const StepSummary = ({ formData, countedPrice, updateFormData, user, selectedPay
     phone: user.phone || '',
   };
 
-  const { handleSubmit, register, watch, control, errors } = useForm({ defaultValues, mode: 'onChange' });
+  const { handleSubmit, register, watch, control, errors } = useForm({ defaultValues });
 
   const onSubmit = (data: any) => {
     updateFormData(data);
