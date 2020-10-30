@@ -43,6 +43,7 @@ class BoxMapManagement extends React.Component<Props> {
   private statusColorMarker = () => {
     const catchElement = this.element.current?.querySelectorAll('#kontenery .storage');
     catchElement.forEach((singleElement: any) => {
+      this.clearBoxStatus(singleElement);
       this.setBoxStatus(singleElement.id, singleElement);
     });
   };
@@ -87,6 +88,19 @@ class BoxMapManagement extends React.Component<Props> {
       singleElement.removeEventListener('click', this.handleEventModal, false);
     });
   }
+
+  private clearBoxStatus = (singleElement: any): void => {
+    singleElement.firstElementChild.classList.remove('to-check');
+    singleElement.firstElementChild.classList.remove('rented');
+    singleElement.firstElementChild.classList.remove('reserved');
+    singleElement.firstElementChild.classList.remove('to-explain');
+    singleElement.lastElementChild.classList.remove('to-explain-text');
+    singleElement.firstElementChild.classList.remove('no-paid-extension');
+    singleElement.firstElementChild.classList.remove('no-paid-extension-with-warning');
+    singleElement.firstElementChild.classList.remove('out-of-service');
+    singleElement.lastElementChild.classList.remove('out-of-service-text');
+    singleElement.firstElementChild.classList.add('free');
+  };
 
   private setBoxStatus = (boxId: string, singleElement: any): void => {
     const { boxesGroup } = this.props;
