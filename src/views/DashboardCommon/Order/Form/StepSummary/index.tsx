@@ -50,9 +50,9 @@ const StepSummary = ({ formData, countedPrice, updateFormData, user, selectedPay
     paymentType: `${MainPaymentWay.card}`,
     firstName: user.firstName || '',
     lastName: user.lastName || '',
-    street: '',
-    city: '',
-    postCode: '',
+    street: formData.street || '',
+    city: formData.city || '',
+    postCode: formData.postCode || '',
     mailToSendInvoice: user.email || '',
     phone: user.phone || '',
   };
@@ -60,7 +60,6 @@ const StepSummary = ({ formData, countedPrice, updateFormData, user, selectedPay
   const { handleSubmit, register, watch, control, errors } = useForm({ defaultValues, mode: 'onChange' });
 
   const onSubmit = (data: any) => {
-    console.log('onSubmit', data);
     updateFormData(data);
     history.push(`/${UserService.getSlugByRole(user.role)}/order/step/agreement/${match.params.rentId || ''}`);
   };

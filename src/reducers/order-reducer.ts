@@ -148,7 +148,6 @@ export default (state: OrderState = initialState, action: Action): any => {
   switch (action.type) {
     case 'FORM_STEP_SUCCESS': {
       const newFormData: FormType = { ...state.formData, ...action.payload };
-
       const { calculate } = usePricing();
 
       const data: ICalculateProps = {
