@@ -1,6 +1,7 @@
 import React from 'react';
 import { UserListRes } from 'smartbox-types';
 import { SectionHeader } from '../../../../../../components/Layout';
+import { __ } from '../../../../../../helpers/i18n';
 
 import './UserDetail.scss';
 
@@ -12,7 +13,7 @@ interface Props {
 const UserDetail = ({ userId, userData }: Props) => {
   return (
     <div className="user-detail-wrapper">
-      <SectionHeader title={`Szczegóły użytkownika`} />
+      <SectionHeader title={__('application.customerDetails')} />
       <div className="single-address-content">
         <div className="addresses-wrapper">
           <div className="single-address">
@@ -20,7 +21,7 @@ const UserDetail = ({ userId, userData }: Props) => {
               <i className="fa fa-home" aria-hidden="true" />
             </div>
             <div className="single-address-content">
-              <p className="single-address-header">Dane osobowe:</p>
+              <p className="single-address-header">{__('application.customerData')}:</p>
               <p>
                 {userData.firstName} {userData.lastName}
               </p>
@@ -36,7 +37,7 @@ const UserDetail = ({ userId, userData }: Props) => {
             <i className="fa fa-file-o" aria-hidden="true" />
           </div>
           <div className="single-address-content">
-            <p className="single-address-header">Dane firmowe:</p>
+            <p className="single-address-header">{__('application.customerCompanyData')}:</p>
             <p>{userData.companyData.name}</p>
             <p>{userData.companyData.street}</p>
             <p>{userData.companyData.city}</p>

@@ -180,6 +180,10 @@
       "companyStreet": "Adres",
       "companyName": "Nazwa firmy",
 
+      "customerDetails": "Szczegóły klienta",
+      "customerData": "Dane osobowe",
+      "customerCompanyData": "Dane firmowe",
+
       "welcome": "Hello world"
     },
     "notification": {
