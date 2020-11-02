@@ -46,21 +46,11 @@ class Login extends React.Component<Props> {
     const prohibited = [
       '/set-pass',
       '/restore-pass',
-      '/user/order/step/size',
-      '/user/order/step/duration',
-      '/user/order/step/summary',
-      '/user/order/step/agreement',
-      '/user/order/step/payment',
-      '/admin/order/step/size',
-      '/admin/order/step/duration',
-      '/admin/order/step/summary',
-      '/admin/order/step/agreement',
-      '/admin/order/step/payment',
     ];
     const redirect = getRememberedRedirect();
     if (redirect && redirect.role === user!.role) {
       clearRememberedRedirect();
-      if (prohibited.includes(redirect.to)) {
+      if (prohibited.includes(redirect.to) || redirect.to.indexOf('/order/step') > -1) {
         return this.getDefaultUserRedirect();
       }
       return <Redirect to={redirect.to} />;
