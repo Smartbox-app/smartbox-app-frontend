@@ -184,6 +184,14 @@
       "customerData": "Dane osobowe",
       "customerCompanyData": "Dane firmowe",
 
+      "newOrder": "Nowe zamówienie",
+      "extendsOrder": "Przedłużanie zamówienia",
+      "orderStepSize": "Rozmiar",
+      "orderStepDate": "Termin",
+      "orderStepSummary": "Podsumowanie",
+      "orderStepAgreement": "Umowa",
+      "orderStepPayment": "Płatność",
+
       "welcome": "Hello world"
     },
     "notification": {
