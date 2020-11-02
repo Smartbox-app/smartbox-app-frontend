@@ -68,7 +68,13 @@ const TenantDetailsForm = ({ register, errors, control }: Props) => {
         placeholder="example@gmail.com"
       />
       <CustomInput
-        register={register({ required: formOnTranslateString('Field required.') })}
+        register={register({
+          required: formOnTranslateString('Field required.'),
+          pattern: {
+            value: /^(([0-9]|-|\(|\)|\+| ){9,14})/i,
+            message: formOnTranslateString('Invalid phone number'),
+          },
+        })}
         errors={errors}
         control={control}
         id="phone"
