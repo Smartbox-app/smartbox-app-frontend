@@ -30,12 +30,14 @@ const TenantDetailsForm = ({ register, errors, control }: Props) => {
         errors={errors}
         control={control}
         id="street"
+        placeholder="ul. Główna 12/3"
       />
       <CustomInput
         register={register({ required: formOnTranslateString('Field required.') })}
         errors={errors}
         control={control}
         id="city"
+        placeholder="Warszawa"
       />
       <CustomInput
         register={register({
@@ -48,6 +50,7 @@ const TenantDetailsForm = ({ register, errors, control }: Props) => {
         errors={errors}
         control={control}
         id="postCode"
+        placeholder="00-001"
       />
 
       <CustomInput
@@ -62,6 +65,7 @@ const TenantDetailsForm = ({ register, errors, control }: Props) => {
         control={control}
         type="email"
         id="mailToSendInvoice"
+        placeholder="example@gmail.com"
       />
       <CustomInput
         register={register({ required: formOnTranslateString('Field required.') })}
