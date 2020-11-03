@@ -42,7 +42,7 @@ const Status = ({ singleBoxDetailStatus, hideModal, successNotification, rentId,
       'PATCH',
     );
 
-  if (rentId === '' || singleBoxDetailStatus === RentStatus.rented) {
+  if (rentId === '' || singleBoxDetailStatus === RentStatus.free) {
     return <p>Nie możesz wykonywać akcji na tej skrytce!</p>;
   }
 
