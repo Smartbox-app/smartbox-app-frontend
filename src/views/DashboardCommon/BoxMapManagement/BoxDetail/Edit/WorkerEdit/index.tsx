@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import ReactSelect from 'react-select';
 import ReactCreatableSelect from 'react-select/creatable';
 import { bindActionCreators } from 'redux';
-import { ChangeStatusReq, RentStatus, StockList } from 'smartbox-types';
+import { BoxListItem, ChangeStatusReq, RentStatus, StockList } from 'smartbox-types';
 import { boxes, modal, notifications } from '../../../../../../actions';
 import { Button, Spinner } from '../../../../../../components/Common';
 import { ButtonsContainer, FormContainer } from '../../../../../../components/Layout';
@@ -15,14 +15,23 @@ import { formOnTranslateString } from '../../../../../../utils/trans-form';
 
 interface Props {
   rentId: string;
+  selectedBoxId: string;
   stock: StockList;
+  boxesGroup: BoxListItem[] | null;
   hideModal: () => void;
   successNotification: (text: string) => void;
   fetchBoxStatuses: (stockId: string) => void;
-  singleBoxDetailStatus: RentStatus;
 }
 
-const Status = ({ singleBoxDetailStatus, hideModal, successNotification, rentId, stock, fetchBoxStatuses }: Props) => {
+const WorkerEdit = ({
+  hideModal,
+  successNotification,
+  rentId,
+  stock,
+  fetchBoxStatuses,
+  boxesGroup,
+  selectedBoxId,
+}: Props) => {
   const submitButton = (
     <ButtonsContainer>
       <Button text={__('application.changeStatus')} type="submit" danger />
@@ -42,7 +51,17 @@ const Status = ({ singleBoxDetailStatus, hideModal, successNotification, rentId,
       'PATCH',
     );
 
-  if (rentId === '' || singleBoxDetailStatus === RentStatus.free) {
+  const canWorkerEdit = (): boolean => {
+    let result = true;
+    boxesGroup?.forEach((box: BoxListItem) => {
+      if (box.number === `${selectedBoxId}` && box.status === RentStatus.toCheck) {
+        result = false;
+      }
+    });
+    return result;
+  };
+
+  if (rentId === '' || canWorkerEdit()) {
     return <p>Nie możesz wykonywać akcji na tej skrytce!</p>;
   }
 
@@ -72,8 +91,9 @@ const Status = ({ singleBoxDetailStatus, hideModal, successNotification, rentId,
 const mapStateToProps = (state: ApplicationState) => ({
   stockId: state.rent.stockId,
   stock: state.stock.list[0],
+  boxesGroup: state.boxes.boxesGroup,
 });
 
 const mapDispatchToProps = (dispatch: any) => bindActionCreators({ ...boxes, ...modal, ...notifications }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(Status);
+export default connect(mapStateToProps, mapDispatchToProps)(WorkerEdit);

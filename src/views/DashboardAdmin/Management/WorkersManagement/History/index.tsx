@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { StockStatusTable, TableSchema, WorkerStatusTable } from 'smartbox-tables';
+import { StockStatusTable, TableSchema } from 'smartbox-tables';
 import { StockList, UserRes } from 'smartbox-types';
 import { ApiTable, Button, Spinner } from '../../../../../components/Common';
 import { ApplicationState } from '../../../../../reducers';
