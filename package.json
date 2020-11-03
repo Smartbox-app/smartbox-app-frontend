@@ -51,8 +51,8 @@
     "redux-devtools-extension": "^2.13.8",
     "redux-thunk": "^2.3.0",
     "slick-carousel": "^1.8.1",
-    "smartbox-tables": "git+https://gitlab.com/itdotfocus/smartbox/smartbox-tables.git",
-    "smartbox-types": "git+https://gitlab.com/itdotfocus/smartbox/smartbox-types.git",
+    "smartbox-tables": "https://gitlab.com/itdotfocus/smartbox/smartbox-tables.git",
+    "smartbox-types": "https://gitlab.com/itdotfocus/smartbox/smartbox-types.git",
     "typescript": "~3.7.2"
   },
   "scripts": {
