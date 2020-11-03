@@ -101,9 +101,10 @@ const StepSummary = ({
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <FormHeader title="Umowa zamówienia:" />
+      <FormHeader title={__('application.orderAgreement')} />
       <AgreementWrapper />
       <ScrollPosition />
+      <p>{__('application.orderAgreementAcceptation')}</p>
       <ButtonsContainer max>
         <Button outline text={__('application.back')} click={() => onBack()} />
         <Button

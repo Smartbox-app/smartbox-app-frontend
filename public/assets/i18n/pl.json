@@ -95,6 +95,7 @@
 
       "clickHere": "Kliknij tutaj",
       "404Text": "Coś poszło nie tak, żądana strona nie istnieje.",
+      "ApplicationError": "Wystąpił błąd w aplikacji.",
 
       "orderFormPickSize": "Proszę wybrać rozmiar magazynu:",
       "newStock": "Nowy magazyn",
@@ -191,6 +192,9 @@
       "orderStepSummary": "Podsumowanie",
       "orderStepAgreement": "Umowa",
       "orderStepPayment": "Płatność",
+
+      "orderAgreement": "Umowa zamówienia",
+      "orderAgreementAcceptation": "Aby kontynuować zapoznaj się z regulaminem i potwierdź jego akceptację.",
 
       "welcome": "Hello world"
     },
