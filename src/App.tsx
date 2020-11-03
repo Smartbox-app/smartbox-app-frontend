@@ -70,28 +70,31 @@ const App = () => {
     <WorkBoxProvider>
       <Provider store={store}>
         <OnlineContent>
-          <ErrorBoundary>
-            <UpdateInfoBar />
-            <NotificationContainer />
-            <Router history={history}>
-              <Switch>
+          <UpdateInfoBar />
+          <NotificationContainer />
+          <Router history={history}>
+            <Switch>
+              <ErrorBoundary>
                 <Route exact path="/" render={() => <Redirect to="/login" />} />
                 <Route path="/login" component={Login} />
                 <Route path="/register" component={Register} />
-                <Route exact path="/restore-pass/" component={RestorePass} />
-                <Route exact path="/payment-success/:paymentId" component={Invoice} />
-                <Route exact path="/payment-failed/" component={PaymentFailed} />
+                <Route path="/restore-pass/" component={RestorePass} />
                 <Route path="/restore-pass/:userId/:updateToken" component={RestorePass} />
                 <Route exact path="/user-activation/:invitationId/:updateToken" component={UserActivation} />
+
+                <Route exact path="/payment-success/:paymentId" component={Invoice} />
+                <Route exact path="/payment-failed/" component={PaymentFailed} />
+
                 <RouteAdmin path="/admin" component={DashboardAdmin} />
                 <RouteWorker path="/worker" component={DashboardWorker} />
                 <RouteUser path="/user" component={DashboardUser} />
-                <Route path="/404" component={Page404} />
-                <Route render={() => <Redirect to="/404" />} />
-              </Switch>
-            </Router>
-            <Modal />
-          </ErrorBoundary>
+
+                <Route exact path="/404" component={Page404} />
+                {/*<Route render={() => <Redirect to="/404" />} />*/}
+              </ErrorBoundary>
+            </Switch>
+          </Router>
+          <Modal />
         </OnlineContent>
         <OfflineContent>
           <AppOffline />
