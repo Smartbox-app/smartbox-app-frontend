@@ -73,26 +73,26 @@ const App = () => {
           <UpdateInfoBar />
           <NotificationContainer />
           <Router history={history}>
-            <Switch>
-              <ErrorBoundary>
+            <ErrorBoundary>
+              <Switch>
                 <Route exact path="/" render={() => <Redirect to="/login" />} />
                 <Route path="/login" component={Login} />
                 <Route path="/register" component={Register} />
                 <Route path="/restore-pass/" component={RestorePass} />
                 <Route path="/restore-pass/:userId/:updateToken" component={RestorePass} />
-                <Route exact path="/user-activation/:invitationId/:updateToken" component={UserActivation} />
+                <Route path="/user-activation/:invitationId/:updateToken" component={UserActivation} />
 
-                <Route exact path="/payment-success/:paymentId" component={Invoice} />
-                <Route exact path="/payment-failed/" component={PaymentFailed} />
+                <Route path="/payment-success/:paymentId" component={Invoice} />
+                <Route path="/payment-failed/" component={PaymentFailed} />
 
                 <RouteAdmin path="/admin" component={DashboardAdmin} />
                 <RouteWorker path="/worker" component={DashboardWorker} />
                 <RouteUser path="/user" component={DashboardUser} />
 
                 <Route exact path="/404" component={Page404} />
-                {/*<Route render={() => <Redirect to="/404" />} />*/}
-              </ErrorBoundary>
-            </Switch>
+                <Route render={() => <Redirect to="/404" />} />
+              </Switch>
+            </ErrorBoundary>
           </Router>
           <Modal />
         </OnlineContent>

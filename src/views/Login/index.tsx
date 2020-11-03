@@ -43,10 +43,7 @@ class Login extends React.Component<Props> {
 
   private getRedirect = () => {
     const { user } = this.props;
-    const prohibited = [
-      '/set-pass',
-      '/restore-pass',
-    ];
+    const prohibited = ['/set-pass', '/restore-pass', '/404'];
     const redirect = getRememberedRedirect();
     if (redirect && redirect.role === user!.role) {
       clearRememberedRedirect();
