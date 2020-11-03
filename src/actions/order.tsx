@@ -108,7 +108,7 @@ export const sentExecutePaymentWithTpayRequest = (paymentId: string, group: stri
     'SENT_EXECUTE_PAYMENT_WITH_TPAY_REQUEST_FAILED',
     (res: UrlRes) => {
       // const win = window.open(res.url, '_blank');
-      const win = window.open(res.url, '_blank');
+      const win = window.open(res.url, '_self');
       win?.focus();
       // history.push('/');
     },

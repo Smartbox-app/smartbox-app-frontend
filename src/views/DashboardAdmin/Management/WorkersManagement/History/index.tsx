@@ -1,12 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { TableSchema, WorkerStatusTable } from 'smartbox-tables';
+import { StockStatusTable, TableSchema, WorkerStatusTable } from 'smartbox-tables';
 import { StockList, UserRes } from 'smartbox-types';
 import { ApiTable, Button, Spinner } from '../../../../../components/Common';
 import { ApplicationState } from '../../../../../reducers';
 import { InteractiveTableSchema } from '../../../../../utils/table-schema-utils';
 import { __ } from '../../../../../helpers/i18n';
-import { ButtonsContainer, PageHeader, Section } from '../../../../../components/Layout';
+import { ButtonsContainer, PageHeader, Section, SectionHeader } from '../../../../../components/Layout';
 
 interface Props {
   stockId: Omit<StockList, 'getProps'>;
@@ -18,7 +18,7 @@ class History extends React.Component<Props> {
 
   constructor(props: Props) {
     super(props);
-    this.scheme = new InteractiveTableSchema(WorkerStatusTable);
+    this.scheme = new InteractiveTableSchema(StockStatusTable);
   }
 
   render() {
@@ -29,9 +29,11 @@ class History extends React.Component<Props> {
         <ButtonsContainer>
           <Button text={__('application.back')} primary to="/admin/management/workers/list" />
         </ButtonsContainer>
-
         {stockId?.id ? (
-          <ApiTable scheme={this.scheme} apiEndpointSubUrl={`rent/changes-story/worker/${stockId.id}`} />
+          <>
+            <SectionHeader title={stockId.name} />
+            <ApiTable scheme={this.scheme} apiEndpointSubUrl={`rent/changes-story/stock/${stockId.id}`} />
+          </>
         ) : (
           <Spinner />
         )}
