@@ -52,11 +52,11 @@ const BoxDetail = ({ selectedBoxId, singleBoxDetail, rentId, user }: Props) => {
           </DescriptionRow>
 
           <DescriptionRow icon="fa-flag" text="Płatność">
-            {singleBoxDetail.owner ? `Brak danych` : '---'}
+            {singleBoxDetail?.owner ? 'Brak danych' : '---'}
           </DescriptionRow>
 
-          <DescriptionRow icon="fa-mobile" text="Telefon">
-            {singleBoxDetail.owner.phone ? (
+          <DescriptionRow icon="fa-mobile" text={__('application.phone')}>
+            {singleBoxDetail?.owner?.phone ? (
               <a href={`tel:${singleBoxDetail.owner.phone}`}>{singleBoxDetail.owner.phone}</a>
             ) : (
               '---'
@@ -68,11 +68,11 @@ const BoxDetail = ({ selectedBoxId, singleBoxDetail, rentId, user }: Props) => {
               '---'
             ) : (
               <a
-                href={`mailto:${singleBoxDetail.owner ? singleBoxDetail.owner.email : 'error'}`}
+                href={`mailto:${singleBoxDetail.owner?.email ? singleBoxDetail.owner?.email : 'error'}`}
                 rel="noopener noreferrer"
                 target="_blank"
               >
-                {singleBoxDetail.owner ? singleBoxDetail.owner.email : 'brak'}
+                {singleBoxDetail.owner ? singleBoxDetail.owner.email : __('application.lack')}
               </a>
             )}
           </DescriptionRow>
