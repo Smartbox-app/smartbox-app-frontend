@@ -194,7 +194,7 @@
       "orderStepPayment": "Płatność",
 
       "orderAgreement": "Umowa zamówienia",
-      "orderAgreementAcceptation": "Aby kontynuować zapoznaj się z regulaminem i potwierdź jego akceptację.",
+      "orderAgreementAcceptation": "Aby kontynuować zapoznaj się z umową oraz zaakceptuj wymagane zgody.",
 
       "welcome": "Hello world"
     },

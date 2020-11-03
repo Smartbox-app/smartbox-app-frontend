@@ -109,7 +109,7 @@ const StepSummary = ({ formData, countedPrice, updateFormData, user, selectedPay
       <SummaryTable dateStart={formData.dateStart} dateEnd={formData.dateEnd} countedPrice={countedPrice.value} />
       <PaymentMethods register={register} />
       <TenantDetailsForm register={register} control={control} errors={errors} />
-      <p>Fakturę wystawimy na dane odbiorcy. Możesz też podać inne dane, na przykład Twojej firmy.</p>
+      <p>Fakturę wystawimy na dane najemcy. Możesz też podać inne dane, na przykład Twojej firmy.</p>
       <CheckBox
         name="iNeedInvoice"
         checked={invoiceNeeded}
