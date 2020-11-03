@@ -29,6 +29,7 @@
     "Stock": "Plac",
     "Stocks": "Plac",
     "Value": "Wartość",
+    "Value%": "Wartość [%]",
     "Value too high. Max. {0}.": "Wartość za duża. Max. {0}.",
     "Value too long (max. {0})": "Wartość za długa (max. {0})",
     "Value too low. Min. {0}.": "Wartość za mała. Min. {0}.",
