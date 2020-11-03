@@ -6,6 +6,7 @@ import { history } from '../../../../../../App';
 import { ApplicationState } from '../../../../../../reducers';
 import UserService from '../../../../../../services/user-service';
 import { dateOnly } from '../../../../../../utils/format-date';
+import { __ } from '../../../../../../helpers/i18n';
 
 import './SingleStorage.scss';
 
@@ -22,7 +23,9 @@ const SingleStorage = ({ single, user }: Props) => (
     <div className="storage">
       <p className="sec-info">{single.stockName}</p>
       <p className="main-info">
-        <strong>Box nr: {single.number}</strong>
+        <strong>
+          {__('application.miniStorage')}: {single.number}
+        </strong>
       </p>
       <p className="details">
         <span className="date">{dateOnly(single.finishAt)}</span>

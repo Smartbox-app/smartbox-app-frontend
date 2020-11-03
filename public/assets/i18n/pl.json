@@ -30,13 +30,16 @@
       "changeUserAssigment": "Zmień przypisanie",
       "state": "Status",
       "active": "Aktywuj",
+      "stock": "Plac",
+      "period": "Okres",
       "changeStatus": "Zmień status",
       "notApplicable": "Nie dotyczy",
+      "miniStorage": "Mini magazyn",
       "changesSavedSuccess": "Zapisano zmiany",
 
       "workers": "Pracownicy",
       "users": "Użytkownicy",
-      "boxes": "Skrzynki",
+      "boxes": "Mini magazyny",
       "gate": "Brama",
       "discountsCodes": "Kody rabatowe",
       "stockSale": "Promocje",
@@ -54,7 +57,7 @@
       "toCheck": "Do sprawdzenia",
       "debt": "Zaległości",
 
-      "storeManagement": "Zarządaj magazynami:",
+      "storeManagement": "Zarządaj mini magazynami:",
       "offers": "Oferta:",
       "storagesPlan": "Plan placu:",
 
@@ -76,7 +79,7 @@
       "owner": "właściciel",
       "firstName": "imię",
 
-      "singleStoreDetail": "Szczegóły wybranej skrytki:",
+      "singleStoreDetail": "Szczegóły wybranego mini magazynu:",
       "showEditOptions": "Pokaż opcje edycji",
       "hideEditOptions": "Ukryj opcje edycji",
       "changesIrreversible": "Poniższe zmiany są nieodwracalne!",
@@ -97,8 +100,8 @@
       "404Text": "Coś poszło nie tak, żądana strona nie istnieje.",
       "ApplicationError": "Wystąpił błąd w aplikacji.",
 
-      "orderFormPickSize": "Proszę wybrać rozmiar magazynu:",
-      "newStock": "Nowy magazyn",
+      "orderFormPickSize": "Proszę wybrać rozmiar mini magazynu:",
+      "newStock": "Nowy mini magazyn",
       "14daysResign": "Rezygnuję z możliwości 14 dniowego wypowiedzenia i zgadzam się na uruchomienie usługi.",
 
       "discounts": "Promocje:",
