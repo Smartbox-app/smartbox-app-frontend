@@ -5,8 +5,8 @@ import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { UserRes, IPricingResult } from 'smartbox-types';
-import { Button, CheckBox } from '../../../../../components/Common';
-import { order } from '../../../../../actions';
+import { Button, CheckBox, Alert } from '../../../../../components/Common';
+import { order, modal, notifications } from '../../../../../actions';
 import { ButtonsContainer } from '../../../../../components/Layout';
 import { history } from '../../../../../App';
 import { FormType } from '../../../../../types/order-form';
@@ -36,9 +36,20 @@ interface Props extends RouteComponentProps<RouteProps> {
   user: UserRes;
   selectedPaymentMethod: any;
   updateFormData: (data: any) => void;
+  showModal: (content: React.ReactNode) => void;
+  successNotification: (text: string) => void;
 }
 
-const StepSummary = ({ formData, countedPrice, updateFormData, user, selectedPaymentMethod, match }: Props) => {
+const StepSummary = ({
+  formData,
+  countedPrice,
+  updateFormData,
+  user,
+  selectedPaymentMethod,
+  match,
+  showModal,
+  successNotification,
+}: Props) => {
   const [invoiceNeeded, setInvoiceNeeded] = useState(false);
   useEffect(() => {
     if (formData.size.length === 0) {
@@ -126,8 +137,25 @@ const StepSummary = ({ formData, countedPrice, updateFormData, user, selectedPay
     }
   };
 
+  const handleChange = (e: any) => {
+    if (watch().paymentType !== `${MainPaymentWay.card}`) {
+      if (countedPrice?.name === 'firstRentFreePracing') {
+        successNotification(
+          'Promocja 1zł za pierwszy tydzień obowiązuje tylko przy płatności kartą. Cena została zmieniona.',
+        );
+        updateFormData({
+          isFirstRent: false,
+        });
+      }
+    } else {
+      updateFormData({
+        isFirstRent: true,
+      });
+    }
+  };
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="form-step-two">
+    <form onSubmit={handleSubmit(onSubmit)} className="form-step-two" onChange={handleChange}>
       <Discount />
       <FormHeader title="Podsumowanie zamówienia:" />
       <SummaryTable dateStart={formData.dateStart} dateEnd={formData.dateEnd} countedPrice={countedPrice.value} />
@@ -165,6 +193,8 @@ const mapDispatchToProps = (dispatch: any) =>
   bindActionCreators(
     {
       ...order,
+      ...modal,
+      ...notifications,
     },
     dispatch,
   );
