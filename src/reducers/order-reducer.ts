@@ -265,6 +265,9 @@ export default (state: OrderState = initialState, action: Action): any => {
         ...state,
         isAgreementAccepted: false,
         isResignationMarked: false,
+        paymentId: '',
+        paymentSuccess: false,
+        selectedPayment: MainPaymentWay.card,
         formData: {
           durationInDays: 7,
           discount: 0,
