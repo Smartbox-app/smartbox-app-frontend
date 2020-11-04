@@ -108,8 +108,6 @@ const StepSummary = ({ formData, countedPrice, updateFormData, user, selectedPay
     return true;
   };
 
-  console.log(watch());
-
   const companyData = (): boolean => {
     if (invoiceNeeded) {
       if (
