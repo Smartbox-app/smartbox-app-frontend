@@ -151,6 +151,7 @@ const StepSummary = ({
       updateFormData({
         isFirstRent: true,
       });
+      successNotification('Promocja 1zł za pierwszy tydzień aktywna. Cena została zmieniona.');
     }
   };
 
