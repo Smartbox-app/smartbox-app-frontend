@@ -51,7 +51,7 @@ const CompanyDetailsForm = ({ register, errors, control }: Props) => {
       <CustomInput
         register={register({
           required: formOnTranslateString('Field required.'),
-          validate: (data: any) => (validateNip(data) ? '' : formOnTranslateString('Invalid NIP.')),
+          validate: (data: any) => (validateNip(data) || formOnTranslateString('Invalid NIP.')),
         })}
         errors={errors}
         control={control}

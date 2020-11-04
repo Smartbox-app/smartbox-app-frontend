@@ -50,11 +50,17 @@ const StepSummary = ({ formData, countedPrice, updateFormData, user, selectedPay
     paymentType: `${MainPaymentWay.card}`,
     firstName: user.firstName || '',
     lastName: user.lastName || '',
-    street: formData.street || '',
-    city: formData.city || '',
-    postCode: formData.postCode || '',
+    street: user.street || '',
+    city: user.city || '',
+    postCode: user.postCode || '',
     mailToSendInvoice: user.email || '',
     phone: user.phone || '',
+
+    nip: formData.nip || '',
+    companyPostCode: formData.companyPostCode || '',
+    companyCity: formData.companyCity || '',
+    companyStreet: formData.companyStreet || '',
+    companyName: formData.companyName || '',
   };
 
   const { handleSubmit, register, watch, control, errors } = useForm({ defaultValues });
@@ -102,6 +108,26 @@ const StepSummary = ({ formData, countedPrice, updateFormData, user, selectedPay
     return true;
   };
 
+  console.log(watch());
+
+  const companyData = (): boolean => {
+    if (invoiceNeeded) {
+      if (
+        watch().companyName !== '' &&
+        watch().companyStreet !== '' &&
+        watch().companyCity !== '' &&
+        watch().companyPostCode !== '' &&
+        watch().nip !== ''
+      ) {
+        return false;
+      } else {
+        return true;
+      }
+    } else {
+      return false;
+    }
+  };
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="form-step-two">
       <Discount />
@@ -119,7 +145,12 @@ const StepSummary = ({ formData, countedPrice, updateFormData, user, selectedPay
       {invoiceNeeded && <CompanyDetailsForm register={register} errors={errors} control={control} />}
       <ButtonsContainer max>
         <Button outline text={__('application.back')} click={() => onBack()} />
-        <Button type="submit" primary text="Przejdź do umowy" disabled={dataVerification() || tenantData()} />
+        <Button
+          type="submit"
+          primary
+          text="Przejdź do umowy"
+          disabled={dataVerification() || tenantData() || companyData()}
+        />
       </ButtonsContainer>
     </form>
   );
