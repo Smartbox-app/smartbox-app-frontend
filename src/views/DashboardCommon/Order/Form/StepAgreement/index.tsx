@@ -5,7 +5,7 @@ import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { RentBoxReq, UserRole, IPricingResult, UserRes, StockList, ExtendRentalReq } from 'smartbox-types';
-import { Button } from '../../../../../components/Common';
+import { Alert, Button } from '../../../../../components/Common';
 import { order } from '../../../../../actions';
 import { ButtonsContainer } from '../../../../../components/Layout';
 import { history } from '../../../../../App';
@@ -104,7 +104,7 @@ const StepSummary = ({
       <FormHeader title={__('application.orderAgreement')} />
       <AgreementWrapper />
       <ScrollPosition />
-      <p>{__('application.orderAgreementAcceptation')}</p>
+      <Alert type="notice" text={__('application.orderAgreementAcceptation')} />
       <ButtonsContainer max>
         <Button outline text={__('application.back')} click={() => onBack()} />
         <Button
