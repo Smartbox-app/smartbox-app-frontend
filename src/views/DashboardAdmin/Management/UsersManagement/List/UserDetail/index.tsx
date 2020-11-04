@@ -25,10 +25,10 @@ const UserDetail = ({ userId, userData }: Props) => {
               <p>
                 {userData.firstName} {userData.lastName}
               </p>
-              <p>{userData.phone}</p>
-              <p>{userData.street}</p>
-              <p>{userData.city}</p>
-              <p>{userData.postCode}</p>
+              <p>{userData.phone || '......'}</p>
+              <p>{userData.street || '......'}</p>
+              <p>{userData.city || '......'}</p>
+              <p>{userData.postCode || '......'}</p>
             </div>
           </div>
         </div>
@@ -38,11 +38,11 @@ const UserDetail = ({ userId, userData }: Props) => {
           </div>
           <div className="single-address-content">
             <p className="single-address-header">{__('application.customerCompanyData')}:</p>
-            <p>{userData.companyData.name}</p>
-            <p>{userData.companyData.street}</p>
-            <p>{userData.companyData.city}</p>
-            <p>{userData.companyData.postCode}</p>
-            <p>{userData.companyData.nip}</p>
+            <p>{userData?.companyData?.name || '......'}</p>
+            <p>{userData?.companyData?.street || '......'}</p>
+            <p>{userData?.companyData?.city || '......'}</p>
+            <p>{userData?.companyData?.postCode || '......'}</p>
+            <p>{userData?.companyData?.nip || '......'}</p>
           </div>
         </div>
       </div>
