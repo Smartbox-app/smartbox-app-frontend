@@ -14,8 +14,24 @@ interface Props {
   single: MyRentList;
 }
 
+const colorStatusCalc = (s: string): string => {
+  switch (s) {
+    case RentStatus.rented: {
+      return 'active-stock';
+    }
+    case RentStatus.failure: {
+      return 'payment-issue';
+    }
+    case RentStatus.finished: {
+      return 'ended';
+    }
+    default:
+      return '';
+  }
+};
+
 const Single = ({ single }: Props) => (
-  <li className={`history-line ${single.status === RentStatus.rented ? 'active' : ''}`}>
+  <li className={`history-line ${colorStatusCalc(single.status)}`}>
     <span className="line-cell">
       {dateOnly(single.startAt, 5)}-{dateOnly(single.finishAt)}
     </span>
