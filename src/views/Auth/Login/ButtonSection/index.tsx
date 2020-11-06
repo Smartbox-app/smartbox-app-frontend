@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ButtonsContainer } from '../../../components/Layout';
-import { Button } from '../../../components/Common';
+import { ButtonsContainer } from '../../../../components/Layout';
+import { Button } from '../../../../components/Common';
 import FbButton from './FbButton';
-import { __ } from '../../../helpers/i18n';
+import { __ } from '../../../../helpers/i18n';
 
 import './ButtonSection.scss';
 

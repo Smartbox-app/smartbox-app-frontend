@@ -4,19 +4,19 @@ import { bindActionCreators } from 'redux';
 import { ItfApiForm } from 'itf_formbuilder_react';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { AuthLoginResult, RestorPwdReq } from 'smartbox-types';
-import { Spinner, Input, LoginLogo } from '../../components/Common';
-import { notifications } from '../../actions';
-import ApiService from '../../services/api-service';
-import { translateErrors } from '../../utils/errors-trans';
-import { formOnTranslateString } from '../../utils/trans-form';
-import { FormContainer, PageContent } from '../../components/Layout';
-import { ApplicationState } from '../../reducers';
-import { __ } from '../../helpers/i18n';
-import { history } from '../../App';
+import { Spinner, Input, LoginLogo } from '../../../components/Common';
+import { notifications } from '../../../actions';
+import ApiService from '../../../services/api-service';
+import { translateErrors } from '../../../utils/errors-trans';
+import { formOnTranslateString } from '../../../utils/trans-form';
+import { FormContainer, PageContent } from '../../../components/Layout';
+import { ApplicationState } from '../../../reducers';
+import { __ } from '../../../helpers/i18n';
+import { history } from '../../../App';
 
 import ButtonsSection from './ButtonSection';
 
-import './RestorPass.scss';
+import './RestorePass.scss';
 
 interface RouteProps {
   userId: string;

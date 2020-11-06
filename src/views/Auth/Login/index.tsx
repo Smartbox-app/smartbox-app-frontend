@@ -4,18 +4,18 @@ import { bindActionCreators } from 'redux';
 import { Redirect } from 'react-router-dom';
 import { ItfApiForm } from 'itf_formbuilder_react';
 import { UserRole, AuthLoginRequest, AuthLoginResult, UserRes } from 'smartbox-types';
-import { Spinner, Input, Logo } from '../../components/Common';
-import { auth, notifications } from '../../actions';
-import ApiService from '../../services/api-service';
-import { translateErrors } from '../../utils/errors-trans';
-import { getRememberedRedirect, clearRememberedRedirect } from '../../utils/remeber-redirect';
-import { store } from '../../App';
-import { formOnTranslateString } from '../../utils/trans-form';
-import { FormContainer, PageContent } from '../../components/Layout';
-import { ApplicationState } from '../../reducers';
+import { Spinner, Input, Logo } from '../../../components/Common';
+import { auth, notifications } from '../../../actions';
+import ApiService from '../../../services/api-service';
+import { translateErrors } from '../../../utils/errors-trans';
+import { getRememberedRedirect, clearRememberedRedirect } from '../../../utils/remeber-redirect';
+import { store } from '../../../App';
+import { formOnTranslateString } from '../../../utils/trans-form';
+import { FormContainer, PageContent } from '../../../components/Layout';
+import { ApplicationState } from '../../../reducers';
 
 import ButtonsSection from './ButtonSection';
-import { __ } from '../../helpers/i18n';
+import { __ } from '../../../helpers/i18n';
 
 import './Login.scss';
 

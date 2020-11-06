@@ -1,7 +1,7 @@
 import React from 'react';
-import { ButtonsContainer } from '../../../components/Layout';
-import { Button } from '../../../components/Common';
-import { __ } from '../../../helpers/i18n';
+import { ButtonsContainer } from '../../../../components/Layout';
+import { Button } from '../../../../components/Common';
+import { __ } from '../../../../helpers/i18n';
 
 import './ButtonSection.scss';
 

@@ -3,11 +3,11 @@ import GoogleLogin from 'react-google-login';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { __ } from '../../../../helpers/i18n';
-import { auth, modal } from '../../../../actions';
+import { __ } from '../../../../../helpers/i18n';
+import { auth, modal } from '../../../../../actions';
 
-import { Button } from '../../../../components/Common';
-import ApiService from '../../../../services/api-service';
+import { Button } from '../../../../../components/Common';
+import ApiService from '../../../../../services/api-service';
 
 import './GoogleButton.scss';
 

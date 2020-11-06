@@ -9,16 +9,7 @@ import { createBrowserHistory } from 'history';
 import flatpickr from 'flatpickr';
 import { Polish } from 'flatpickr/dist/l10n/pl';
 import reducers from './reducers';
-import {
-  Login,
-  DashboardAdmin,
-  DashboardWorker,
-  DashboardUser,
-  Register,
-  RestorePass,
-  Page404,
-  UserActivation,
-} from './views';
+import { DashboardAdmin, DashboardWorker, DashboardUser, Page404 } from './views';
 import {
   OnlineContent,
   OfflineContent,
@@ -30,6 +21,7 @@ import {
   Modal,
   ErrorBoundary,
 } from './components/Common';
+import { EmailConfirm, Login, Register, RestorePass, UserActivation } from './views/Auth';
 import { Invoice, PaymentFailed } from './views/DashboardCommon';
 import { NotificationContainer } from './components/Notifications';
 import AppOffline from './components/AppOffline';
@@ -81,6 +73,8 @@ const App = () => {
                 <Route path="/restore-pass/" component={RestorePass} />
                 <Route path="/restore-pass/:userId/:updateToken" component={RestorePass} />
                 <Route path="/user-activation/:invitationId/:updateToken" component={UserActivation} />
+
+                <Route path="/email-confirmation/:invitationId/:updateToken" component={EmailConfirm} />
 
                 <Route path="/payment-success/:paymentId" component={Invoice} />
                 <Route path="/payment-failed/" component={PaymentFailed} />

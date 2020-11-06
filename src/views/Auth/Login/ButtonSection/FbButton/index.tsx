@@ -2,8 +2,8 @@ import React from 'react';
 import FacebookLogin from 'react-facebook-login';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { auth } from '../../../../actions';
-import { __ } from '../../../../helpers/i18n';
+import { auth } from '../../../../../actions';
+import { __ } from '../../../../../helpers/i18n';
 
 import './FbButton.scss';
 

@@ -4,15 +4,15 @@ import { connect } from 'react-redux';
 
 import { ItfApiForm } from 'itf_formbuilder_react';
 import { AddInvitedUserReq, UserRes } from 'smartbox-types';
-import { notifications, auth } from '../../actions';
-import { ApplicationState } from '../../reducers';
-import ApiService from '../../services/api-service';
+import { notifications, auth } from '../../../actions';
+import { ApplicationState } from '../../../reducers';
+import ApiService from '../../../services/api-service';
 
-import { Spinner, Button, Logo } from '../../components/Common';
-import { formOnTranslateString } from '../../utils/trans-form';
-import { FormContainer, ButtonsContainer, PageContent, PageHeader } from '../../components/Layout';
-import { history } from '../../App';
-import { __ } from '../../helpers/i18n';
+import { Spinner, Button, Logo } from '../../../components/Common';
+import { formOnTranslateString } from '../../../utils/trans-form';
+import { FormContainer, ButtonsContainer, PageContent, PageHeader } from '../../../components/Layout';
+import { history } from '../../../App';
+import { __ } from '../../../helpers/i18n';
 
 interface Props {
   match: any;
