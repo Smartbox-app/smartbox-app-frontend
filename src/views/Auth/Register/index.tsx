@@ -66,7 +66,7 @@ const Register = ({ successNotification }: Props) => (
         }}
         onSavedSuccessfully={() => {
           successNotification(__('notification.accountRegistered'));
-          history.push('/');
+          history.push('/register/mail-was-send');
         }}
         onTranslateString={formOnTranslateString}
       />

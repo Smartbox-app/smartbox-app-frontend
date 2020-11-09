@@ -21,7 +21,7 @@ import {
   Modal,
   ErrorBoundary,
 } from './components/Common';
-import { EmailConfirm, Login, Register, RestorePass, UserActivation } from './views/Auth';
+import { EmailConfirm, Login, Register, RestorePass, UserActivation, EmailSend } from './views/Auth';
 import { Invoice, PaymentFailed } from './views/DashboardCommon';
 import { NotificationContainer } from './components/Notifications';
 import AppOffline from './components/AppOffline';
@@ -69,7 +69,8 @@ const App = () => {
               <Switch>
                 <Route exact path="/" render={() => <Redirect to="/login" />} />
                 <Route path="/login" component={Login} />
-                <Route path="/register" component={Register} />
+                <Route exact path="/register" component={Register} />
+                <Route path="/register/mail-was-send" component={EmailSend} />
                 <Route path="/restore-pass/" component={RestorePass} />
                 <Route path="/restore-pass/:userId/:updateToken" component={RestorePass} />
                 <Route path="/user-activation/:invitationId/:updateToken" component={UserActivation} />
