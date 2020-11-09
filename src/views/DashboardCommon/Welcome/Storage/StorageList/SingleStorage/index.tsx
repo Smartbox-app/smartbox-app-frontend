@@ -21,10 +21,13 @@ const SingleStorage = ({ single, user }: Props) => (
     onClick={() => history.push(`/${UserService.getSlugByRole(user.role)}/single-rent/${single.id}`)}
   >
     <div className="storage">
-      <p className="sec-info">{single.stockName}</p>
+      <p className="sec-info">
+        {single.stockName}
+        <i className="fa fa-info-circle" aria-hidden="true" />
+      </p>
       <p className="main-info">
         <strong>
-          {__('application.miniStorage')}: {single.number}
+          {__('application.miniStorage')} {__('application.shortenNumber')}: {single.number}
         </strong>
       </p>
       <p className="details">

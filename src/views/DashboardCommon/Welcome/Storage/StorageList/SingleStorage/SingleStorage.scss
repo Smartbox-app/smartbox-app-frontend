@@ -3,7 +3,7 @@
 
 .single-wrapper {
   padding: $main-spacing / 4;
-  width: 50%;
+  width: 100%;
 
   .storage {
     display: flex;
@@ -50,6 +50,13 @@
     .sec-info {
       font-size: 0.7rem;
       width: 90%;
+
+      i {
+        position: absolute;
+        top: 0px;
+        right: -5px;
+        font-size: 1rem;
+      }
     }
 
     .size {
@@ -73,9 +80,25 @@
   }
 }
 
+@include gt-xs {
+  .single-wrapper {
+    width: 50%;
+
+    .storage {
+      .sec-info {
+        i {
+          top: -10px;
+          right: -10px;
+        }
+      }
+    }
+  }
+}
+
 @include gt-sm {
   .single-wrapper {
-    width: 33%;
+    width: 33.33%;
+
     .storage {
       height: $big-box-size;
       justify-content: space-between;
@@ -95,8 +118,14 @@
         font-weight: 500;
       }
 
-      .sec-info, .details {
+      .sec-info,
+      .details {
         font-size: 0.9rem;
+
+        i {
+          font-size: 1.4rem;
+          right: -20px;
+        }
       }
     }
   }
