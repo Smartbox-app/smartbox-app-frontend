@@ -57,8 +57,9 @@
       "toExplain": "Do wyjaśnienia",
       "toCheck": "Do sprawdzenia",
       "debt": "Zaległości",
+      "outOfService": "Wyłączony",
 
-      "storeManagement": "Zarządaj mini magazynami:",
+      "storeManagement": "Zarządaj swoimi mini magazynami:",
       "offers": "Oferta:",
       "storagesPlan": "Plan placu:",
 

@@ -87,17 +87,28 @@ $buttonSize: 40px;
       }
     }
 
-    .out-of-service-text,
+    .out-of-service-text {
+      fill: #000;
+    }
+
     .to-explain-text {
       fill: #fff;
     }
 
-    .to-explain,
-    .out-of-service {
+    .to-explain {
       fill: $color-text;
 
       &:hover {
         fill: lighten($color-text, 15%);
+      }
+    }
+
+    .out-of-service {
+      fill: #ccc;
+      color: $color-text;
+
+      &:hover {
+        fill: lighten(#ccc, 5%);;
       }
     }
 

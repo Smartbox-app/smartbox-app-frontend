@@ -21,6 +21,9 @@ const MapLegend = () => (
       <li className="single single-no-paid-extension">
         <span>{__('application.debt')}</span>
       </li>
+      <li className="single out-of-service">
+        <span>{__('application.outOfService')}</span>
+      </li>
     </ul>
   </div>
 );
