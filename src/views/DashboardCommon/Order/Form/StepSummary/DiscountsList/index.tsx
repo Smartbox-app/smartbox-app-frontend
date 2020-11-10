@@ -46,8 +46,10 @@ const DiscountsList = ({ showModal, countedPrice, successNotification, codeDisco
         }
         return setPriceName(__('application.withDicoutnPricing'));
       case 'cardPricing':
+        setHelpText(false);
         return setPriceName(__('application.cardPricing'));
       default:
+        setHelpText(false);
         return setPriceName(__('application.standardPrice'));
     }
   };
