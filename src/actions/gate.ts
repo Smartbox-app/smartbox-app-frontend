@@ -19,3 +19,20 @@ export const askGateToOpen = (geo: Coordinate) => async (disaptch: any) => {
     geo,
   );
 };
+
+export const askGateToOpenStuff = (stockId: string) => async (disaptch: any) => {
+  await ApiService.patch(
+    disaptch,
+    'ASK_GATE_TO_OPEN_SUCCESS',
+    'ASK_GATE_TO_OPEN_FAILED',
+    () => {
+      disaptch(successNotification('Otwieram bramę zdalnie'));
+      disaptch(gateOpenStartAnimation());
+    },
+    () => {
+      disaptch(successNotification('Błąd podczas otwierania bramy zdalnie'));
+    },
+    `stock/open-gate-by-staff/${stockId}`,
+    'LOADING',
+  );
+};
