@@ -62,7 +62,7 @@ const WorkerEdit = ({
   };
 
   if (rentId === '' || canWorkerEdit()) {
-    return <p>Nie możesz wykonywać akcji na tej skrytce!</p>;
+    return <p>Nie możesz wykonywać akcji na tym mini magazynie!</p>;
   }
 
   return (

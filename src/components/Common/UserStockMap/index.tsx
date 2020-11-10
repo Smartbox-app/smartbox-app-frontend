@@ -54,7 +54,7 @@ class UserStockMap extends React.Component<Props> {
     return (
       <div ref={this.element}>
         <p className="user-box">
-          Twoja skrytka ma numer: <strong>{boxNumberToMarkWay}</strong>
+          Twój mini magazyn ma numer: <strong>{boxNumberToMarkWay}</strong>
         </p>
         <SimpleStockMap />
       </div>

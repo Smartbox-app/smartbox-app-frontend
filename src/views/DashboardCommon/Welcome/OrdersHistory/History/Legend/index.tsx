@@ -5,7 +5,7 @@ import './Legend.scss';
 const Legend = () => (
   <div className="history-legend">
     <span className="legend-color active-stock" />
-    <p className="legend-desc">Aktywne magazyny</p>
+    <p className="legend-desc">Aktywne mini magazyny</p>
     <span className="legend-color payment-issue" />
     <p className="legend-desc">Niedokończony proces</p>
     <span className="legend-color ended" />
