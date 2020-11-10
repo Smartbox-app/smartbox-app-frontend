@@ -2137,9 +2137,9 @@
   resolved "https://registry.yarnpkg.com/@xtuc/long/-/long-4.2.2.tgz#d291c6a4e97989b5c61d9acf396ae4fe133a718d"
   integrity sha512-NuHqBY1PB/D8xU6s/thBgOAiAP7HOYDQ32+BFZILJ8ivkUkAHQnWfn6WhL79Owj1qmUnoN/YPhktdIoucipkAQ==
 
-"ITF_FormBuilder_translation_tool@git+https://gitlab.com/IT.focus/ITF_FormBuilder_translation_tool.git":
+"ITF_FormBuilder_translation_tool@https://gitlab.com/IT.focus/ITF_FormBuilder_translation_tool.git":
   version "1.0.0"
-  resolved "git+https://gitlab.com/IT.focus/ITF_FormBuilder_translation_tool.git#cca2c43937c71a9fc19c20fe0b3499f13cf4a982"
+  resolved "https://gitlab.com/IT.focus/ITF_FormBuilder_translation_tool.git#cca2c43937c71a9fc19c20fe0b3499f13cf4a982"
 
 abab@^2.0.0:
   version "2.0.4"
@@ -6513,9 +6513,9 @@ istanbul-reports@^2.2.6:
   version "1.0.0"
   resolved "git+https://gitlab.com/IT.focus/itf_formbuilder.git#a457cc49c2a01a318a12510db854e8a21368ce0a"
 
-"itf_formbuilder_react@git+https://gitlab.com/IT.focus/itf_formbuilder_react.git":
+"itf_formbuilder_react@https://gitlab.com/IT.focus/itf_formbuilder_react.git":
   version "1.0.0"
-  resolved "git+https://gitlab.com/IT.focus/itf_formbuilder_react.git#0d3d46e783ac07a14dd2ebe92d6736a44e18c477"
+  resolved "https://gitlab.com/IT.focus/itf_formbuilder_react.git#9345985a409f6e985c64c5a980b1558f76938909"
   dependencies:
     itf_formbuilder "git+https://gitlab.com/IT.focus/itf_formbuilder.git"
     react "^16.8.3"
@@ -10646,7 +10646,7 @@ slick-carousel@^1.8.1:
 
 "smartbox-types@https://gitlab.com/itdotfocus/smartbox/smartbox-types.git":
   version "1.0.0"
-  resolved "https://gitlab.com/itdotfocus/smartbox/smartbox-types.git#3d73557f165060c47a7eb8e24853084e48993922"
+  resolved "https://gitlab.com/itdotfocus/smartbox/smartbox-types.git#2680a98e5b8933df9a17618bc8a16d4b36c8dc83"
 
 snapdragon-node@^2.0.1:
   version "2.1.1"
