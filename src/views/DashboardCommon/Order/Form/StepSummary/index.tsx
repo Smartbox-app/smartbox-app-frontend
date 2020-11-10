@@ -137,21 +137,39 @@ const StepSummary = ({
     }
   };
 
-  const handleChange = (e: any) => {
-    if (watch().paymentType !== `${MainPaymentWay.card}`) {
-      if (countedPrice?.name === 'firstRentFreePracing') {
-        successNotification(
-          'Promocja 1zł za pierwszy tydzień obowiązuje tylko przy płatności kartą. Cena została zmieniona.',
-        );
-        updateFormData({
-          isFirstRent: false,
-        });
+  const paymentChangeOnly = (e: any): boolean => {
+    switch (e.target.id) {
+      case 'paymentTypeBlik': {
+        return true;
       }
-    } else {
-      updateFormData({
-        isFirstRent: true,
-      });
-      successNotification('Promocja 1zł za pierwszy tydzień aktywna. Cena została zmieniona.');
+      case 'paymentTypeCard': {
+        return true;
+      }
+      case 'paymentTypeBank': {
+        return true;
+      }
+      default:
+        return false;
+    }
+  };
+
+  const handleChange = (e: any) => {
+    if (paymentChangeOnly(e)) {
+      if (watch().paymentType !== `${MainPaymentWay.card}`) {
+        if (countedPrice?.name === 'firstRentFreePracing') {
+          successNotification(
+            'Promocja 1zł za pierwszy tydzień obowiązuje tylko przy płatności kartą. Cena została zmieniona.',
+          );
+          updateFormData({
+            isFirstRent: false,
+          });
+        }
+      } else {
+        updateFormData({
+          isFirstRent: true,
+        });
+        successNotification('Promocja 1zł za pierwszy tydzień aktywna. Cena została zmieniona.');
+      }
     }
   };
 
