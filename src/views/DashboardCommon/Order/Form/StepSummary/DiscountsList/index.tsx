@@ -56,6 +56,7 @@ const DiscountsList = ({ showModal, countedPrice, successNotification, codeDisco
 
   useEffect(() => {
     getText();
+    setHelpText(false);
   }, [countedPrice]);
 
   return (
