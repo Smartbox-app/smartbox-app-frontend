@@ -32,7 +32,9 @@ export const fetchBoxAvailability = (stockId: string) => async (dispatch: any) =
     'FETCH_BOX_AVAILABILITY_SUCCESS',
     'FETCH_BOX_AVAILABILITY_FAILED',
     null,
-    null,
+    () => {
+      history.push('/');
+    },
     `rent/box-group/availability/${stockId}`,
   );
 };
