@@ -25,13 +25,13 @@ interface Props {
 
 const DiscountsList = ({ showModal, countedPrice, successNotification, codeDiscount }: Props) => {
   const [priceName, setPriceName] = useState(countedPrice.name);
-  const [helpText, setHelpTexte]: [boolean, any] = useState(false);
+  const [helpText, setHelpText]: [boolean, any] = useState(false);
 
   const getText = () => {
     switch (countedPrice.name) {
       case 'firstRentFreePracing':
         if (codeDiscount !== 0) {
-          setHelpTexte(true);
+          setHelpText(true);
           successNotification(
             'Zastosowano korzystniejszą promocje. Kod nie zostal użyty. Można go wykorzystać ponownie.',
           );
@@ -39,7 +39,7 @@ const DiscountsList = ({ showModal, countedPrice, successNotification, codeDisco
         return setPriceName(__('application.firstRentFreePracing'));
       case 'withDicoutnPricing':
         if (codeDiscount !== 0) {
-          setHelpTexte(true);
+          setHelpText(true);
           successNotification(
             'Zastosowano korzystniejszą promocje. Kod nie zostal użyty. Można go wykorzystać ponownie.',
           );
