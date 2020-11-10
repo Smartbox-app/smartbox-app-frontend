@@ -166,6 +166,10 @@
       "32": {
         "text": "Skrytka zostła zarezerwowana!",
         "__type_alias_do_not_touch": "ApiErrorCode.BoxIsReserved"
+      },
+      "33": {
+        "text": "Użytkownik został zablokowany!",
+        "__type_alias_do_not_touch": "ApiErrorCode.UserIsBlocked"
       }
     }
   }
