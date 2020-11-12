@@ -23,7 +23,7 @@ const ModalContent = ({ children }: Props) => {
   }, []);
 
   return (
-    <div className="modal-content" style={{ maxHeight: `${maxHeight}px` }}>
+    <div className="" style={{ maxHeight: `${maxHeight}px` }}>
       <div ref={ref}>{children}</div>
     </div>
   );

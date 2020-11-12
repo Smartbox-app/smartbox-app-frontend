@@ -13,7 +13,7 @@
   z-index: 998;
   animation-name: showModal;
   animation-duration: 0.15s;
-  transition: opacity $transition-time ease-in-out;
+  transition: all $transition-time ease-in-out;
   opacity: 0;
 
   &.visible {
@@ -34,11 +34,12 @@
   .modal-body {
     position: relative;
     z-index: 1000;
-    height: 90vh;
+    height: 95vh;
     max-width: 90%;
     width: 100%;
     transform: scale(0.9);
     transition: transform $transition-time ease-in-out;
+    overflow: auto;
 
     p {
       max-width: 500px;
