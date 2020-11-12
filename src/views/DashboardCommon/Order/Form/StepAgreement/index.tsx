@@ -57,7 +57,7 @@ const StepSummary = ({
   const { handleSubmit } = useForm();
 
   const onSubmit = (data: any) => {
-    const dataCollectionExtendRent: ExtendRentalReq = {
+    const commonCollection = {
       finishAt: formData.dateEnd,
       cost: countedPrice.value,
       discountCode: formData.discountCode,
@@ -74,18 +74,18 @@ const StepSummary = ({
       companyCity: formData.companyCity || '',
       companyPostCode: formData.companyPostCode || '',
       nip: formData.nip || '',
+    };
+
+    const dataCollectionExtendRent: ExtendRentalReq = {
+      ...commonCollection,
       isPaySavedCard: false,
     };
+
     const dataCollectionRent: RentBoxReq = {
+      ...commonCollection,
       startAt: formData.dateStart,
       stockId: stock.id,
       size: Number(formData.size),
-      companyName: formData.companyName || '',
-      companyStreet: formData.companyStreet || '',
-      companyCity: formData.companyCity || '',
-      companyPostCode: formData.companyPostCode || '',
-      nip: formData.nip || '',
-      ...dataCollectionExtendRent,
     };
 
     if (match.params.rentId) {
