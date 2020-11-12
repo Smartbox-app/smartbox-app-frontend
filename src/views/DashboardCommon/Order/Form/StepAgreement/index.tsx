@@ -34,7 +34,7 @@ interface Props extends RouteComponentProps<RouteProps> {
   isResignationMarked: boolean;
   stock: StockList;
   sentExtendRentRequest: (rentId: string, data: ExtendRentalReq, role: UserRole) => void;
-  sentRentBoxRequest: (data: RentBoxReq | any, nextStep: string, role: UserRole) => void;
+  sentRentBoxRequest: (data: RentBoxReq, nextStep: string, role: UserRole) => void;
 }
 
 const StepSummary = ({
@@ -57,10 +57,7 @@ const StepSummary = ({
   const { handleSubmit } = useForm();
 
   const onSubmit = (data: any) => {
-    const dataCollection = {
-      stockId: stock.id,
-      size: Number(formData.size),
-      startAt: formData.dateStart,
+    const dataCollectionExtendRent: ExtendRentalReq = {
       finishAt: formData.dateEnd,
       cost: countedPrice.value,
       discountCode: formData.discountCode,
@@ -72,26 +69,31 @@ const StepSummary = ({
       isCompany: formData.isCompany || false,
       phone: formData.phone,
       mailToSendInvoice: formData.mailToSendInvoice,
-      companyName: formData.companyName,
-      companyStreet: formData.companyStreet,
-      companyCity: formData.companyCity,
-      companyPostCode: formData.companyPostCode,
-      nip: formData.nip,
+      companyName: formData.companyName || '',
+      companyStreet: formData.companyStreet || '',
+      companyCity: formData.companyCity || '',
+      companyPostCode: formData.companyPostCode || '',
+      nip: formData.nip || '',
+      isPaySavedCard: false,
+    };
+    const dataCollectionRent: RentBoxReq = {
+      startAt: formData.dateStart,
+      stockId: stock.id,
+      size: Number(formData.size),
+      companyName: formData.companyName || '',
+      companyStreet: formData.companyStreet || '',
+      companyCity: formData.companyCity || '',
+      companyPostCode: formData.companyPostCode || '',
+      nip: formData.nip || '',
+      ...dataCollectionExtendRent,
     };
 
     if (match.params.rentId) {
       // rent extension
-      sentExtendRentRequest(
-        match.params.rentId,
-        {
-          ...dataCollection,
-          isPaySavedCard: false,
-        },
-        user.role,
-      );
+      sentExtendRentRequest(match.params.rentId, dataCollectionExtendRent, user.role);
     } else {
       // new Rent blik/creditcart
-      sentRentBoxRequest(dataCollection, 'payment', user.role);
+      sentRentBoxRequest(dataCollectionRent, 'payment', user.role);
     }
   };
 
