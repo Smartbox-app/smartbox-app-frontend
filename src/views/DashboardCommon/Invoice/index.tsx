@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import { Button } from '../../../components/Common';
 import { LogoContainer, PageContent, ButtonsContainer, Section } from '../../../components/Layout';
 import { __ } from '../../../helpers/i18n';
-import { modal, singleRent, user } from '../../../actions';
+import { singleRent, user } from '../../../actions';
 
 import './Invoice.scss';
 

@@ -3,20 +3,17 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { modal, order } from '../../../../../../../actions';
 import { SectionHeader } from '../../../../../../../components/Layout';
-import { __ } from '../../../../../../../helpers/i18n';
 import { ApplicationState } from '../../../../../../../reducers';
 
 import './BankListModal.scss';
-import { Button } from '../../../../../../../components/Common';
 
 interface Props {
   bankList: any[];
-  selectedPaymentMethodDetail: any;
   setPaymentMethod: (paymentId: string) => void;
   hideModal: () => void;
 }
 
-const BankListModal = ({ bankList, setPaymentMethod, selectedPaymentMethodDetail, hideModal }: Props) => {
+const BankListModal = ({ bankList, setPaymentMethod, hideModal }: Props) => {
   const handleChange = (event: any) => {
     setPaymentMethod(event.target.value);
   };

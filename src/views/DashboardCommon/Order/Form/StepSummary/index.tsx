@@ -5,7 +5,7 @@ import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { UserRes, IPricingResult } from 'smartbox-types';
-import { Button, CheckBox, Alert } from '../../../../../components/Common';
+import { Button, CheckBox } from '../../../../../components/Common';
 import { order, modal, notifications } from '../../../../../actions';
 import { ButtonsContainer } from '../../../../../components/Layout';
 import { history } from '../../../../../App';
@@ -21,9 +21,9 @@ import CompanyDetailsForm from './CompanyDetailsForm';
 import Discount from './DiscountsList';
 import PaymentMethods from './PaymentMethods';
 import SummaryTable from './SummaryTable';
+import TenantDetailsForm from './TenantDetailsForm';
 
 import './StepSummary.scss';
-import TenantDetailsForm from './TenantDetailsForm';
 
 interface RouteProps {
   step: string;
