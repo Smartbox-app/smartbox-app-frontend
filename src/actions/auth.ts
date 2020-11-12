@@ -95,7 +95,9 @@ export const emailVerification = (userId: string, updateToken: string) => async 
     dispatch,
     'EMAIL_VERIFICATION_SUCCESS',
     'EMAIL_VERIFICATION_FAILED',
-    null,
+    () => {
+      dispatch(notifications.successNotification(__('notification.useEmailVerificationSuccess')));
+    },
     null,
     `user/active/${userId}/${updateToken}`,
     'LOADING',

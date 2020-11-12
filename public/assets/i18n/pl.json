@@ -225,6 +225,7 @@
       "invoiceSent": "Wysłano fakturę na maila!",
       "rentFinishManually": "Umowa zakończona!",
       "workerPositionChanged": "Zmieniono stanowisko!",
+      "useEmailVerificationSuccess": "Adres mail został zweryfikowny poprawnie!",
       "logInSuccess": "Zalogowano poprawnie."
     }
   }
