@@ -2,20 +2,24 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { ReactSVG } from 'react-svg';
 import { bindActionCreators } from 'redux';
-import { Coordinate } from 'smartbox-types';
+import { Coordinate, UserRes } from 'smartbox-types';
 import { Button } from '../../../../components/Common';
 import { __ } from '../../../../helpers/i18n';
 import { ApplicationState } from '../../../../reducers';
 import { gate } from '../../../../actions';
+import { isUser } from '../../../../utils/role-check';
 
 import './Gate.scss';
 
 interface Props {
   startAnimation: boolean;
+  user: UserRes;
+  stockId: string;
   askGateToOpen: (geo: Coordinate) => void;
+  askGateToOpenStuff: (stockId: string) => void;
 }
 
-const Gate = ({ startAnimation, askGateToOpen }: Props) => {
+const Gate = ({ startAnimation, user, stockId, askGateToOpen, askGateToOpenStuff }: Props) => {
   const [geoCoord, setGeoCoord] = useState({
     lon: '0',
     lat: '0',
@@ -38,7 +42,7 @@ const Gate = ({ startAnimation, askGateToOpen }: Props) => {
   };
 
   useEffect(() => {
-    getLocation();
+    isUser(user.role) && getLocation();
   }, []);
 
   const noGpsCords = (
@@ -51,19 +55,20 @@ const Gate = ({ startAnimation, askGateToOpen }: Props) => {
   const gateOpenningAnimation = (
     <div className="gate-animation">
       <ReactSVG src={`${startAnimation ? '/assets/images/Group46.svg' : '/assets/images/Group39.svg'}`} />
-      <span>{startAnimation ? __('application.theGateOpens') : __('application.slideToOpenGate')}</span>
       <div className="slide-to-open">
         <Button
-          text={__('application.openGate')}
+          text={isUser(user.role) ? __('application.openGate') : __('application.openGateStuff')}
           big
           primary
-          click={() => askGateToOpen(geoCoord)}
-          disabled={startAnimation}
+          click={() => (isUser(user.role) ? askGateToOpen(geoCoord) : askGateToOpenStuff(stockId))}
+          disabled={isUser(user.role) ? startAnimation : false}
         />
       </div>
     </div>
   );
-
+  if (!isUser(user.role)) {
+    return <div className="open-gate-wrapper">{gateOpenningAnimation}</div>;
+  }
   return (
     <div className="open-gate-wrapper">
       <div className="animation-wrapper">{geoCoord.lat === '0' ? noGpsCords : gateOpenningAnimation}</div>
@@ -73,6 +78,8 @@ const Gate = ({ startAnimation, askGateToOpen }: Props) => {
 
 const mapStateToProps = (state: ApplicationState) => ({
   startAnimation: state.gate.startAnimation,
+  user: state.user.details,
+  stockId: state.stock.list[0]?.id,
 });
 
 const mapDispatchToProps = (dispatch: any) =>

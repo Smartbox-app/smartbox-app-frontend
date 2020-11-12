@@ -15,7 +15,7 @@
 
 @include gt-lg {
   .section-wrapper {
-    margin: 0 auto;
+    margin: $main-spacing auto 0;
   }
 
   .section-full-width {

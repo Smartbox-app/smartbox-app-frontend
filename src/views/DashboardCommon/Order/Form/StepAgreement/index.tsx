@@ -5,7 +5,7 @@ import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { RentBoxReq, UserRole, IPricingResult, UserRes, StockList, ExtendRentalReq } from 'smartbox-types';
-import { Button } from '../../../../../components/Common';
+import { Alert, Button } from '../../../../../components/Common';
 import { order } from '../../../../../actions';
 import { ButtonsContainer } from '../../../../../components/Layout';
 import { history } from '../../../../../App';
@@ -34,7 +34,7 @@ interface Props extends RouteComponentProps<RouteProps> {
   isResignationMarked: boolean;
   stock: StockList;
   sentExtendRentRequest: (rentId: string, data: ExtendRentalReq, role: UserRole) => void;
-  sentRentBoxRequest: (data: RentBoxReq | any, nextStep: string, role: UserRole) => void;
+  sentRentBoxRequest: (data: RentBoxReq, nextStep: string, role: UserRole) => void;
 }
 
 const StepSummary = ({
@@ -57,10 +57,7 @@ const StepSummary = ({
   const { handleSubmit } = useForm();
 
   const onSubmit = (data: any) => {
-    const dataCollection = {
-      stockId: stock.id,
-      size: Number(formData.size),
-      startAt: formData.dateStart,
+    const commonCollection = {
       finishAt: formData.dateEnd,
       cost: countedPrice.value,
       discountCode: formData.discountCode,
@@ -72,26 +69,31 @@ const StepSummary = ({
       isCompany: formData.isCompany || false,
       phone: formData.phone,
       mailToSendInvoice: formData.mailToSendInvoice,
-      companyName: formData.companyName,
-      companyStreet: formData.companyStreet,
-      companyCity: formData.companyCity,
-      companyPostCode: formData.companyPostCode,
-      nip: formData.nip,
+      companyName: formData.companyName || '',
+      companyStreet: formData.companyStreet || '',
+      companyCity: formData.companyCity || '',
+      companyPostCode: formData.companyPostCode || '',
+      nip: formData.nip || '',
+    };
+
+    const dataCollectionExtendRent: ExtendRentalReq = {
+      ...commonCollection,
+      isPaySavedCard: false,
+    };
+
+    const dataCollectionRent: RentBoxReq = {
+      ...commonCollection,
+      startAt: formData.dateStart,
+      stockId: stock.id,
+      size: Number(formData.size),
     };
 
     if (match.params.rentId) {
       // rent extension
-      sentExtendRentRequest(
-        match.params.rentId,
-        {
-          ...dataCollection,
-          isPaySavedCard: false,
-        },
-        user.role,
-      );
+      sentExtendRentRequest(match.params.rentId, dataCollectionExtendRent, user.role);
     } else {
       // new Rent blik/creditcart
-      sentRentBoxRequest(dataCollection, 'payment', user.role);
+      sentRentBoxRequest(dataCollectionRent, 'payment', user.role);
     }
   };
 
@@ -101,9 +103,10 @@ const StepSummary = ({
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <FormHeader title="Umowa zamówienia:" />
+      <FormHeader title={__('application.orderAgreement')} />
       <AgreementWrapper />
       <ScrollPosition />
+      <Alert type="notice" text={__('application.orderAgreementAcceptation')} />
       <ButtonsContainer max>
         <Button outline text={__('application.back')} click={() => onBack()} />
         <Button

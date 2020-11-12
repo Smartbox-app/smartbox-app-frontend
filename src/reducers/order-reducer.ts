@@ -87,6 +87,10 @@ interface SentExtendRentRequestSuccess {
   payload: string;
 }
 
+interface ClearOrderFormAgreementSuccess {
+  type: 'CLEAR_ORDER_FORM_AGREEMENT_SUCCESS';
+}
+
 type Action =
   | FormStepSuccess
   | FetchBoxAvailability
@@ -99,6 +103,7 @@ type Action =
   | SaveBankList
   | ClearPaymentMethodSuccess
   | SentExtendRentRequestSuccess
+  | ClearOrderFormAgreementSuccess
   | BlikPaymentFinishSuccess;
 
 const initialState: OrderState = {
@@ -148,7 +153,6 @@ export default (state: OrderState = initialState, action: Action): any => {
   switch (action.type) {
     case 'FORM_STEP_SUCCESS': {
       const newFormData: FormType = { ...state.formData, ...action.payload };
-
       const { calculate } = usePricing();
 
       const data: ICalculateProps = {
@@ -254,6 +258,36 @@ export default (state: OrderState = initialState, action: Action): any => {
       return {
         ...state,
         blikPaymentCompletedSuccessfully: true,
+      };
+
+    case 'CLEAR_ORDER_FORM_AGREEMENT_SUCCESS':
+      return {
+        ...state,
+        isAgreementAccepted: false,
+        isResignationMarked: false,
+        paymentId: '',
+        paymentSuccess: false,
+        selectedPayment: MainPaymentWay.card,
+        formData: {
+          durationInDays: 7,
+          discount: 0,
+          size: '',
+          isFirstRent: true,
+          dateStart: new Date(),
+          dateEnd: addDays(new Date(), 7),
+          discountCode: '',
+          card: {
+            discount: 0,
+            durationInWeeks: 0,
+          },
+          firstName: '',
+          lastName: '',
+          street: '',
+          city: '',
+          postCode: '',
+          phone: '',
+          mailToSendInvoice: '',
+        },
       };
 
     default:

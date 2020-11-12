@@ -33,6 +33,7 @@
     "Value too long (max. {0})": "Wartość za długa (max. {0})",
     "Value too low. Min. {0}.": "Wartość za mała. Min. {0}.",
     "Value too short (min. {0})": "Wartość za krótka (min. {0})",
+    "Value%": "Wartość [%]",
     "_API_ERROR_CODES_": {
       "0": {
         "text": "Wystąpił błąd!",
@@ -67,7 +68,7 @@
         "__type_alias_do_not_touch": "ApiErrorCode.InvalidPrice"
       },
       "8": {
-        "text": "Brak wolnej skrytki o tym rozmiarze!",
+        "text": "Brak wolnego mini magazynu o tym rozmiarze!",
         "__type_alias_do_not_touch": "ApiErrorCode.NoFreeBoxInThisSize"
       },
       "9": {
@@ -87,7 +88,7 @@
         "__type_alias_do_not_touch": "ApiErrorCode.TooLateForCahnge"
       },
       "13": {
-        "text": "Brak wolnych skrytek!",
+        "text": "Brak wolnych mini magazynów!",
         "__type_alias_do_not_touch": "ApiErrorCode.NotFreeBox"
       },
       "14": {
@@ -99,7 +100,7 @@
         "__type_alias_do_not_touch": "ApiErrorCode.CardHasBeenUsedWithDiscount"
       },
       "16": {
-        "text": "Błędny numer skrytki!",
+        "text": "Błędny numer mini magazynu!",
         "__type_alias_do_not_touch": "ApiErrorCode.InvalidBoxNumber"
       },
       "17": {
@@ -119,7 +120,7 @@
         "__type_alias_do_not_touch": "ApiErrorCode.StckIdIsRequiredForWorkerRole"
       },
       "21": {
-        "text": "Nie odnaleziono skrytki o wskazanym numerze!",
+        "text": "Nie odnaleziono mini magazynu o wskazanym numerze!",
         "__type_alias_do_not_touch": "ApiErrorCode.NoFoundBoxNumberOnStock"
       },
       "22": {
@@ -147,7 +148,7 @@
         "__type_alias_do_not_touch": "ApiErrorCode.InvalidGroup"
       },
       "28": {
-        "text": "Skrytka o wybranym numerze jest zarezerwowana!",
+        "text": "Mini magazyn o wybranym numerze jest zarezerwowana!",
         "__type_alias_do_not_touch": "ApiErrorCode.BoxNumberIsReserved"
       },
       "29": {
@@ -159,8 +160,28 @@
         "__type_alias_do_not_touch": "ApiErrorCode.InvalidUserType"
       },
       "31": {
-        "text": "@@@@@@@@@@@@@@@TODO: Translate ApiErrorCode.CompanyDataIsRequired!",
+        "text": "Dane firmy są wymagane!",
         "__type_alias_do_not_touch": "ApiErrorCode.CompanyDataIsRequired"
+      },
+      "32": {
+        "text": "Mini magazyn zostł zarezerwowana!",
+        "__type_alias_do_not_touch": "ApiErrorCode.BoxIsReserved"
+      },
+      "33": {
+        "text": "Użytkownik został zablokowany!",
+        "__type_alias_do_not_touch": "ApiErrorCode.UserIsBlocked"
+      },
+      "34": {
+        "text": "Wynajem zablokowany. Posiadasz nieopłacony wynajem!",
+        "__type_alias_do_not_touch": "ApiErrorCode.YouHaveNoPaidBoxes"
+      },
+      "35": {
+        "text": "Nieposiadasz uprawnień do otwarcia bramy!",
+        "__type_alias_do_not_touch": "ApiErrorCode.NoAccessToTheGate"
+      },
+      "36": {
+        "text": "@@@@@@@@@@@@@@@TODO: Translate ApiErrorCode.FirstActiveUser!",
+        "__type_alias_do_not_touch": "ApiErrorCode.FirstActiveUser"
       }
     }
   }

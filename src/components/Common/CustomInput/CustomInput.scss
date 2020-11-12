@@ -5,4 +5,10 @@
   .label {
     text-transform: capitalize;
   }
+  input {
+    &::placeholder {
+      color: $color-disabled;
+      text-transform: capitalize;
+    }
+  }
 }

@@ -5,9 +5,7 @@ import { bindActionCreators } from 'redux';
 import { Button } from '../../../components/Common';
 import { LogoContainer, PageContent, ButtonsContainer, Section } from '../../../components/Layout';
 import { __ } from '../../../helpers/i18n';
-import { modal, singleRent } from '../../../actions';
-
-import Form from './Form';
+import { singleRent, user } from '../../../actions';
 
 import './Invoice.scss';
 
@@ -16,16 +14,17 @@ interface RouteProps {
 }
 
 interface Props extends RouteComponentProps<RouteProps> {
-  showModal: (content: React.ReactNode) => void;
   getMyRentList: () => void;
   fetchMyRentHistory: () => void;
+  fetchMyData: () => void;
 }
 
-const Invoice = ({ showModal, match, getMyRentList, fetchMyRentHistory }: Props) => {
+const Invoice = ({ getMyRentList, fetchMyRentHistory, fetchMyData }: Props) => {
   useEffect(() => {
     getMyRentList();
     fetchMyRentHistory();
-  }, [])
+    fetchMyData();
+  }, []);
   return (
     <PageContent>
       <Section>
@@ -44,8 +43,8 @@ const Invoice = ({ showModal, match, getMyRentList, fetchMyRentHistory }: Props)
 const mapDispatchToProps = (dispatch: any) =>
   bindActionCreators(
     {
-      ...modal,
       ...singleRent,
+      ...user,
     },
     dispatch,
   );

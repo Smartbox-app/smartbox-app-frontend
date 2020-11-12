@@ -27,6 +27,7 @@ interface Props extends RouteComponentProps<RouteProps> {
   user: UserRes;
   boxAvailability: BoxGroupAvailability[];
   stockId: StockList;
+  clearOrderAgreement: () => void;
   updateFormData: (data: any) => void;
   fetchBoxAvailability: (stockId: string) => void;
 }
@@ -39,8 +40,10 @@ const StepSize = ({
   formData,
   user,
   boxAvailability,
+  clearOrderAgreement,
 }: Props) => {
   useEffect(() => {
+    clearOrderAgreement();
     if (stockId && stockId.id !== '') {
       fetchBoxAvailability(stockId.id);
     } else {

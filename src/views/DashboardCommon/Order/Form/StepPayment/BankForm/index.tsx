@@ -28,7 +28,7 @@ const BankForm = ({ user, paymentId, sentExecutePaymentWithTpayRequest, bankGrou
 
   return (
     <div className="form-step-payment-blik">
-      <PageHeader title="Za chwilę zostaniesz przekerowany na stronę banku" />
+      <PageHeader title="Za chwilę zostaniesz przekierowany na stronę banku" />
       <Spinner />
     </div>
   );

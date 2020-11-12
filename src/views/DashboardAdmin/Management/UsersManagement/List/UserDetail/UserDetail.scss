@@ -1,0 +1,39 @@
+@import '../../../../../../config/variables';
+@import '../../../../../../config/mixins';
+
+.user-detail-wrapper {
+  .addresses-wrapper {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .single-address {
+    border: 1px solid $color-disabled;
+    border-radius: $main-spacing;
+    flex: 0 0 100%;
+    margin: $main-spacing;
+    padding: $main-spacing;
+
+    display: flex;
+    flex-direction: row;
+
+    .single-address-logo {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 3rem;
+      margin: $main-spacing $main-spacing * 1;
+      color: $color-disabled;
+
+      @include gt-sm {
+        font-size: 5rem;
+        margin: $main-spacing $main-spacing * 3;
+      }
+    }
+
+    .single-address-header {
+      font-weight: bold;
+      color: $color-primary;
+    }
+  }
+}

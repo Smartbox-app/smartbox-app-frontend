@@ -9,6 +9,7 @@ import UserService from '../../../services/user-service';
 import { __ } from '../../../helpers/i18n';
 
 import { BoxMapManagement } from '../../DashboardCommon';
+import Gate from "../../DashboardCommon/SingleRentDetail/Gate";
 
 import WorkersManagement from './WorkersManagement';
 import UsersManagement from './UsersManagement';
@@ -56,6 +57,12 @@ const Management = ({ user }: Props) => (
           to: `/${UserService.getSlugByRole(user.role)}/management/stock-discount/list`,
           text: `${__('application.stockSale')}`,
         },
+        {
+          className: 'tab',
+          activeClassName: 'active',
+          to: `/${UserService.getSlugByRole(user.role)}/management/gate`,
+          text: `${__('application.gate')}`,
+        },
       ]}
     />
 
@@ -70,6 +77,7 @@ const Management = ({ user }: Props) => (
       <Route path={`/${UserService.getSlugByRole(user.role)}/management/map`} component={BoxMapManagement} />
       <Route path={`/${UserService.getSlugByRole(user.role)}/management/invitations`} component={InvitesSent} />
       <Route path={`/${UserService.getSlugByRole(user.role)}/management/stock-discount`} component={StockDiscount} />
+      <Route path={`/${UserService.getSlugByRole(user.role)}/management/gate`} component={Gate} />
     </Switch>
   </Section>
 );

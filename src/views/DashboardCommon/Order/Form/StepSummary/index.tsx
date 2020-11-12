@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { UserRes, IPricingResult } from 'smartbox-types';
 import { Button, CheckBox } from '../../../../../components/Common';
-import { order } from '../../../../../actions';
+import { order, modal, notifications } from '../../../../../actions';
 import { ButtonsContainer } from '../../../../../components/Layout';
 import { history } from '../../../../../App';
 import { FormType } from '../../../../../types/order-form';
@@ -21,9 +21,9 @@ import CompanyDetailsForm from './CompanyDetailsForm';
 import Discount from './DiscountsList';
 import PaymentMethods from './PaymentMethods';
 import SummaryTable from './SummaryTable';
+import TenantDetailsForm from './TenantDetailsForm';
 
 import './StepSummary.scss';
-import TenantDetailsForm from './TenantDetailsForm';
 
 interface RouteProps {
   step: string;
@@ -36,9 +36,20 @@ interface Props extends RouteComponentProps<RouteProps> {
   user: UserRes;
   selectedPaymentMethod: any;
   updateFormData: (data: any) => void;
+  showModal: (content: React.ReactNode) => void;
+  successNotification: (text: string) => void;
 }
 
-const StepSummary = ({ formData, countedPrice, updateFormData, user, selectedPaymentMethod, match }: Props) => {
+const StepSummary = ({
+  formData,
+  countedPrice,
+  updateFormData,
+  user,
+  selectedPaymentMethod,
+  match,
+  showModal,
+  successNotification,
+}: Props) => {
   const [invoiceNeeded, setInvoiceNeeded] = useState(false);
   useEffect(() => {
     if (formData.size.length === 0) {
@@ -50,17 +61,22 @@ const StepSummary = ({ formData, countedPrice, updateFormData, user, selectedPay
     paymentType: `${MainPaymentWay.card}`,
     firstName: user.firstName || '',
     lastName: user.lastName || '',
-    street: '',
-    city: '',
-    postCode: '',
+    street: user.street || '',
+    city: user.city || '',
+    postCode: user.postCode || '',
     mailToSendInvoice: user.email || '',
     phone: user.phone || '',
+
+    nip: formData.nip || '',
+    companyPostCode: formData.companyPostCode || '',
+    companyCity: formData.companyCity || '',
+    companyStreet: formData.companyStreet || '',
+    companyName: formData.companyName || '',
   };
 
-  const { handleSubmit, register, watch, control, errors } = useForm({ defaultValues, mode: 'onChange' });
+  const { handleSubmit, register, watch, control, errors } = useForm({ defaultValues });
 
   const onSubmit = (data: any) => {
-    console.log('onSubmit', data);
     updateFormData(data);
     history.push(`/${UserService.getSlugByRole(user.role)}/order/step/agreement/${match.params.rentId || ''}`);
   };
@@ -103,14 +119,68 @@ const StepSummary = ({ formData, countedPrice, updateFormData, user, selectedPay
     return true;
   };
 
+  const companyData = (): boolean => {
+    if (invoiceNeeded) {
+      if (
+        watch().companyName !== '' &&
+        watch().companyStreet !== '' &&
+        watch().companyCity !== '' &&
+        watch().companyPostCode !== '' &&
+        watch().nip !== ''
+      ) {
+        return false;
+      } else {
+        return true;
+      }
+    } else {
+      return false;
+    }
+  };
+
+  const paymentChangeOnly = (e: any): boolean => {
+    switch (e.target.id) {
+      case 'paymentTypeBlik': {
+        return true;
+      }
+      case 'paymentTypeCard': {
+        return true;
+      }
+      case 'paymentTypeBank': {
+        return true;
+      }
+      default:
+        return false;
+    }
+  };
+
+  const handleChange = (e: any) => {
+    if (paymentChangeOnly(e)) {
+      if (watch().paymentType !== `${MainPaymentWay.card}`) {
+        if (countedPrice?.name === 'firstRentFreePracing') {
+          successNotification(
+            'Promocja 1zł za pierwszy tydzień obowiązuje tylko przy płatności kartą. Cena została zmieniona.',
+          );
+          updateFormData({
+            isFirstRent: true,
+          });
+        }
+      } else {
+        updateFormData({
+          isFirstRent: true,
+        });
+        successNotification('Promocja 1zł za pierwszy tydzień aktywna. Cena została zmieniona.');
+      }
+    }
+  };
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="form-step-two">
+    <form onSubmit={handleSubmit(onSubmit)} className="form-step-two" onChange={handleChange}>
       <Discount />
       <FormHeader title="Podsumowanie zamówienia:" />
       <SummaryTable dateStart={formData.dateStart} dateEnd={formData.dateEnd} countedPrice={countedPrice.value} />
       <PaymentMethods register={register} />
       <TenantDetailsForm register={register} control={control} errors={errors} />
-      <p>Fakturę wystawimy na dane odbiorcy. Możesz też podać inne dane, na przykład Twojej firmy.</p>
+      <p>Fakturę wystawimy na dane najemcy. Możesz też podać inne dane, na przykład Twojej firmy.</p>
       <CheckBox
         name="iNeedInvoice"
         checked={invoiceNeeded}
@@ -120,7 +190,12 @@ const StepSummary = ({ formData, countedPrice, updateFormData, user, selectedPay
       {invoiceNeeded && <CompanyDetailsForm register={register} errors={errors} control={control} />}
       <ButtonsContainer max>
         <Button outline text={__('application.back')} click={() => onBack()} />
-        <Button type="submit" primary text="Przejdź do umowy" disabled={dataVerification() || tenantData()} />
+        <Button
+          type="submit"
+          primary
+          text="Przejdź do umowy"
+          disabled={dataVerification() || tenantData() || companyData()}
+        />
       </ButtonsContainer>
     </form>
   );
@@ -137,6 +212,8 @@ const mapDispatchToProps = (dispatch: any) =>
   bindActionCreators(
     {
       ...order,
+      ...modal,
+      ...notifications,
     },
     dispatch,
   );

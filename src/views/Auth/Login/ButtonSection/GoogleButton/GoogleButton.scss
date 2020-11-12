@@ -1,0 +1,25 @@
+@import '../../../../../config/variables.scss';
+@import '../../../../../config/mixins.scss';
+
+.google-button-custom {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: $login-form-width;
+  width: $login-button-size;
+  height: $login-button-height;
+  border-radius: $login-button-height /2 !important;
+  border: 2px solid #DB4437 !important;
+  margin: $main-spacing;
+
+  &:hover {
+    box-shadow: #DB4437 0px 2px 2px 0px, #DB4437 0px 0px 1px 0px;
+    border: 2px solid lighten(#DB4437, 15%) !important;
+  }
+
+  span {
+    font-size: 1.1rem;
+    font-family: $font-primary;
+  }
+}

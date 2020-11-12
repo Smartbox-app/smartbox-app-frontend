@@ -3,7 +3,7 @@
 
 .single-wrapper {
   padding: $main-spacing / 4;
-  width: 50%;
+  width: 100%;
 
   .storage {
     display: flex;
@@ -20,6 +20,7 @@
     background-image: url(/assets/icons/storage-background.svg);
     background-repeat: no-repeat;
     background-size: contain;
+    background-position: right;
     color: #fff;
     border: 2px solid darken($color-primary, 10%);
 
@@ -40,11 +41,22 @@
       display: flex;
       width: 90%;
       justify-content: center;
+
+      strong {
+        text-align: center;
+      }
     }
 
     .sec-info {
       font-size: 0.7rem;
       width: 90%;
+
+      i {
+        position: absolute;
+        top: 0px;
+        right: -5px;
+        font-size: 1rem;
+      }
     }
 
     .size {
@@ -68,9 +80,25 @@
   }
 }
 
+@include gt-xs {
+  .single-wrapper {
+    width: 50%;
+
+    .storage {
+      .sec-info {
+        i {
+          top: -10px;
+          right: -10px;
+        }
+      }
+    }
+  }
+}
+
 @include gt-sm {
   .single-wrapper {
-    width: 25%;
+    width: 33.33%;
+
     .storage {
       height: $big-box-size;
       justify-content: space-between;
@@ -86,12 +114,18 @@
       align-items: center;
 
       .main-info {
-        font-size: 1.5rem;
+        font-size: 1.4rem;
         font-weight: 500;
       }
 
-      .sec-info, .details {
+      .sec-info,
+      .details {
         font-size: 0.9rem;
+
+        i {
+          font-size: 1.4rem;
+          right: -20px;
+        }
       }
     }
   }

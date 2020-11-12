@@ -18,8 +18,16 @@
   font-size: 0.9rem;
 }
 
-.active {
-  color: $color-active;
+.active-stock {
+  color: $color-primary;
+}
+
+.payment-issue {
+  color: $color-tertiary;
+}
+
+.ended {
+  color: $color-disabled;
 }
 
 .history-line {

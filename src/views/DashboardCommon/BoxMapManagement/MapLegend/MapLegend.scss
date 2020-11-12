@@ -13,14 +13,17 @@
     flex: 0 0 100%;
 
     .single {
-      flex: 0 0 50%;
-      text-align: center;
+      flex: 1 1 50%;
+      text-align: start;
       padding: $main-spacing /2;
+      text-indent: 25px;
       font-weight: 500;
-      font-size: 0.9rem;
+      font-size: 0.8rem;
       height: $main-spacing * 4;
       line-height: 20px;
       position: relative;
+      text-wrap: none;
+      white-space: nowrap;
 
       span{
         &::before {
@@ -79,6 +82,14 @@
   }
 }
 
+.out-of-service {
+  span{
+    &::before {
+      background-color: #ccc;
+    }
+  }
+}
+
 @include gt-sm {
   .map-legend-wrapper {
 
@@ -86,13 +97,13 @@
 
       .single {
         flex: 0 0 30%;
-        font-size: 1rem;
-        line-height: 30px;
+        font-size: 0.9rem;
+        text-indent: 27px;
 
         span{
           &::before {
-            width: 30px;
-            height: 30px;
+            width: 25px;
+            height: 25px;
           }
         }
       }
@@ -106,9 +117,11 @@
     .legend-list {
 
       .single {
-        flex: 0 0 20%;
-        font-size: 1rem;
+        flex: 0 0 16.66%;
+        font-size: 0.9rem;
         line-height: 30px;
+        text-indent: 31px;
+        vertical-align: center;
 
         span{
           &::before {

@@ -3,21 +3,23 @@ import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { UserRole, UserRes } from 'smartbox-types';
 import { bindActionCreators } from 'redux';
-import { stock } from '../../../actions';
+import { stock, user } from '../../../actions';
 import { rememberRedirect } from '../../../utils/remeber-redirect';
 import { ApplicationState } from '../../../reducers';
 
 interface Props {
   user: UserRes;
-  getStockList: () => void;
   component: any;
+  getStockList: () => void;
+  fetchMyData: () => void;
   exact?: boolean;
   path?: string;
 }
 
-const RouteUser = ({ user, exact, path, component, getStockList }: Props) => {
+const RouteUser = ({ user, exact, path, component, getStockList, fetchMyData }: Props) => {
   useEffect(() => {
     getStockList();
+    fetchMyData();
   }, []);
 
   if (!user || user.role !== UserRole.user) {
@@ -31,6 +33,6 @@ const mapStateToProps = (state: ApplicationState) => ({
   user: state.user.details,
 });
 
-const mapDispatchToProps = (dispatch: any) => bindActionCreators({ ...stock }, dispatch);
+const mapDispatchToProps = (dispatch: any) => bindActionCreators({ ...stock, ...user }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(RouteUser);

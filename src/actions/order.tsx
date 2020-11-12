@@ -20,6 +20,8 @@ export const formAgreementReaded = () => ({ type: 'FORM_AGREEMENT_READED_SUCCESS
 
 export const formResignationMarked = () => ({ type: 'FORM_RESIGNATION_MARKED_SUCCESS' });
 
+export const clearOrderAgreement = () => ({ type: 'CLEAR_ORDER_FORM_AGREEMENT_SUCCESS' });
+
 export const saveBanks = () => async (dispatch: any) => {
   await ApiService.get(dispatch, 'SAVE_BANKS_LIST_SUCCESS', 'SAVE_BANKS_LIST_FAILED', null, null, 'payment/bank-list');
 };
@@ -30,7 +32,9 @@ export const fetchBoxAvailability = (stockId: string) => async (dispatch: any) =
     'FETCH_BOX_AVAILABILITY_SUCCESS',
     'FETCH_BOX_AVAILABILITY_FAILED',
     null,
-    null,
+    () => {
+      history.push('/');
+    },
     `rent/box-group/availability/${stockId}`,
   );
 };
@@ -107,9 +111,10 @@ export const sentExecutePaymentWithTpayRequest = (paymentId: string, group: stri
     'SENT_EXECUTE_PAYMENT_WITH_TPAY_REQUEST_SUCCESS',
     'SENT_EXECUTE_PAYMENT_WITH_TPAY_REQUEST_FAILED',
     (res: UrlRes) => {
-      const win = window.open(res.url, '_blank');
+      // const win = window.open(res.url, '_blank');
+      const win = window.open(res.url, '_self');
       win?.focus();
-      history.push('/');
+      // history.push('/');
     },
     null,
     `rent/execut-payment-with-tpay/${paymentId}/${group}`,

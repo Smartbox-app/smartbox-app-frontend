@@ -1,6 +1,6 @@
 import { AuthLoginRequest, AuthLoginResult } from 'smartbox-types';
 import ApiService from '../services/api-service';
-import { notifications } from '../actions';
+import { notifications, order } from '../actions';
 import { history } from '../App';
 import { hideModal } from './modal';
 import { getRememberedRedirect, clearRememberedRedirect } from '../utils/remeber-redirect';
@@ -68,6 +68,7 @@ export const logout = () => async (dispatch: any) => {
       dispatch(notifications.successNotification(__('notification.logOutSuccess')));
       dispatch({ type: 'REFRESH_API_TABLE' });
       dispatch({ type: 'REFRESH_API_GRID' });
+      dispatch(order.clearOrderAgreement());
     },
     null,
     'auth/logout',

@@ -19,9 +19,16 @@
     margin-bottom: $main-spacing*2;
     color: $color-primary;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    @include gt-sm {
+      flex-direction: row;
+    }
 
     p {
-      font-size: 1.2rem;
+      font-size: 1.1rem;
     }
 
     strong {

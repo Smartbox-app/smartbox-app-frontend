@@ -19,6 +19,7 @@
       "resend": "Wyślij ponownie",
       "save": "Zapisz",
       "lack": "Brak",
+      "lackOfData": "Brak danych",
       "end": "Zakończ",
       "delete": "Usuń",
       "move": "Przenieś",
@@ -30,13 +31,17 @@
       "changeUserAssigment": "Zmień przypisanie",
       "state": "Status",
       "active": "Aktywuj",
+      "stock": "Plac",
+      "period": "Okres",
       "changeStatus": "Zmień status",
       "notApplicable": "Nie dotyczy",
+      "miniStorage": "Mini magazyn",
+      "shortenNumber": "nr",
       "changesSavedSuccess": "Zapisano zmiany",
 
       "workers": "Pracownicy",
       "users": "Użytkownicy",
-      "boxes": "Skrzynki",
+      "boxes": "Mini magazyny",
       "gate": "Brama",
       "discountsCodes": "Kody rabatowe",
       "stockSale": "Promocje",
@@ -53,16 +58,17 @@
       "toExplain": "Do wyjaśnienia",
       "toCheck": "Do sprawdzenia",
       "debt": "Zaległości",
+      "outOfService": "Wyłączony",
 
-      "storeManagement": "Zarządaj magazynami:",
+      "storeManagement": "Zarządzaj swoimi mini magazynami:",
       "offers": "Oferta:",
       "storagesPlan": "Plan placu:",
 
       "startDate": "Data rozpoczęcia",
       "endDate": "Data zakończenia",
       "storePlaceName": "Nazwa placu",
-      "storeSize": "Rozmiar skrytki",
-      "storeNumber": "Numer skrytki",
+      "storeSize": "Rozmiar mini magazynu",
+      "storeNumber": "Numer mini magazynu",
       "storeState": "Status wynajmu",
       "rentedBy": "Wynajęte przez",
       "phone": "Telefon",
@@ -76,7 +82,7 @@
       "owner": "właściciel",
       "firstName": "imię",
 
-      "singleStoreDetail": "Szczegóły wybranej skrytki:",
+      "singleStoreDetail": "Szczegóły wybranego mini magazynu:",
       "showEditOptions": "Pokaż opcje edycji",
       "hideEditOptions": "Ukryj opcje edycji",
       "changesIrreversible": "Poniższe zmiany są nieodwracalne!",
@@ -95,9 +101,10 @@
 
       "clickHere": "Kliknij tutaj",
       "404Text": "Coś poszło nie tak, żądana strona nie istnieje.",
+      "ApplicationError": "Wystąpił błąd w aplikacji.",
 
-      "orderFormPickSize": "Proszę wybrać rozmiar magazynu:",
-      "newStock": "Nowy magazyn",
+      "orderFormPickSize": "Proszę wybrać rozmiar mini magazynu:",
+      "newStock": "Nowy mini magazyn",
       "14daysResign": "Rezygnuję z możliwości 14 dniowego wypowiedzenia i zgadzam się na uruchomienie usługi.",
 
       "discounts": "Promocje:",
@@ -107,6 +114,7 @@
       "inviteList": "Lista wysłanych zaproszeń",
       "doYouWantDeleteInvite": "Czy jesteś pewien, że chcesz usunąć zaproszenie",
       "changeUserRole": "Zmień rolę",
+      "userDetails": "Szczegóły",
       "invitations": "Zaproszenia",
       "inviteWorker": "Zaproś pracowników",
       "inviteUser": "Zaproś użytkownika",
@@ -118,6 +126,7 @@
 
       "rentDetail": "Szczegóły najmu",
       "openGate": "Otwórz bramę",
+      "openGateStuff": "Otwórz bramę zdalnie",
       "theGateOpens": "Brama się otwiera",
       "slideToOpenGate": "Przesuń suwak aby otworzyć bramę",
       "endRental": "Czy jesteś pewien, że chcesz zakończyć tę umowę?",
@@ -131,7 +140,7 @@
       "workerRoleChange": "Zmień stanowisko pracownika.",
 
       "createStockDisc" : "Utwórz zniżkę",
-      "createDiscountCode" : "Utwórz kod zniżkowy",
+      "createDiscountCode" : "Utwórz kod rabatowy",
       "editStockDiscount" : "Edytujesz zniżkę",
       "creatStockDiscount" : "Tworzysz zniżkę",
 
@@ -178,6 +187,21 @@
       "nip": "nip",
       "companyStreet": "Adres",
       "companyName": "Nazwa firmy",
+
+      "customerDetails": "Szczegóły klienta",
+      "customerData": "Dane osobowe",
+      "customerCompanyData": "Dane firmowe",
+
+      "newOrder": "Nowe zamówienie",
+      "extendsOrder": "Przedłużanie zamówienia",
+      "orderStepSize": "Rozmiar",
+      "orderStepDate": "Termin",
+      "orderStepSummary": "Podsumowanie",
+      "orderStepAgreement": "Umowa",
+      "orderStepPayment": "Płatność",
+
+      "orderAgreement": "Umowa wynajmu",
+      "orderAgreementAcceptation": "Aby kontynuować zapoznaj się z umową oraz zaakceptuj wymagane zgody.",
 
       "welcome": "Hello world"
     },

@@ -48,9 +48,20 @@ const initialState: RentsStatus = {
 export default (state: RentsStatus = initialState, action: Action): any => {
   switch (action.type) {
     case 'FETCH_MY_RENT_HISTORY_SUCCESS': {
+      const active: MyRentList[] = [];
+      const other: MyRentList[] = [];
+
+      action.payload.forEach((d: MyRentList) => {
+        if (d.status === RentStatus.rented) {
+          active.push(d);
+        } else {
+          other.push(d);
+        }
+      });
+
       return {
         ...state,
-        rentsHistoryList: action.payload,
+        rentsHistoryList: [...active, ...other],
       };
     }
     case 'FETCH_MY_RENT_STORY_SUCCESS': {

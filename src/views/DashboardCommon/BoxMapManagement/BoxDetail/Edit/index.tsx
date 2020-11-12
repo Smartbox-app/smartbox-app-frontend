@@ -26,7 +26,7 @@ const Edit = ({ selectedBoxId, user, rentId, singleBoxDetailStatus, display }: P
     {isAdmin(user.role) && rentId !== '' && singleBoxDetailStatus === RentStatus.rented && (
       <Position selectedBoxId={selectedBoxId} rentId={rentId} />
     )}
-    {isWorker(user.role) && <WorkerEdit selectedBoxId={selectedBoxId} rentId={rentId} />}
+    {isWorker(user.role) && <WorkerEdit rentId={rentId} selectedBoxId={selectedBoxId} />}
   </div>
 );
 

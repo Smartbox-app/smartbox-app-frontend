@@ -25,35 +25,38 @@ interface Props {
 
 const DiscountsList = ({ showModal, countedPrice, successNotification, codeDiscount }: Props) => {
   const [priceName, setPriceName] = useState(countedPrice.name);
-  const [helpText, setHelpTexte]: [boolean, any] = useState(false);
+  const [helpText, setHelpText]: [boolean, any] = useState(false);
 
   const getText = () => {
     switch (countedPrice.name) {
       case 'firstRentFreePracing':
         if (codeDiscount !== 0) {
-          setHelpTexte(true);
+          setHelpText(true);
           successNotification(
-            'Zastosowano korzystniejszą promocje. Kod nie zostal użyty. Można go wykorzystać ponownie.',
+            'Zastosowano korzystniejszą promocje. Kod nie został użyty. Można go wykorzystać ponownie.',
           );
         }
         return setPriceName(__('application.firstRentFreePracing'));
       case 'withDicoutnPricing':
         if (codeDiscount !== 0) {
-          setHelpTexte(true);
+          setHelpText(true);
           successNotification(
-            'Zastosowano korzystniejszą promocje. Kod nie zostal użyty. Można go wykorzystać ponownie.',
+            'Zastosowano korzystniejszą promocje. Kod nie został użyty. Można go wykorzystać ponownie.',
           );
         }
         return setPriceName(__('application.withDicoutnPricing'));
       case 'cardPricing':
+        setHelpText(false);
         return setPriceName(__('application.cardPricing'));
       default:
+        setHelpText(false);
         return setPriceName(__('application.standardPrice'));
     }
   };
 
   useEffect(() => {
     getText();
+    setHelpText(false);
   }, [countedPrice]);
 
   return (
@@ -61,7 +64,7 @@ const DiscountsList = ({ showModal, countedPrice, successNotification, codeDisco
       <FormHeader title={__('application.usedDiscount')} />
       <div className="discount-wrapper">
         <p>{priceName}</p>
-        {helpText && <p>Zastosowano korzystniejszą promocje. Kod nie zostal użyty. Można go wykorzystać ponownie.</p>}
+        {helpText && <p>Zastosowano korzystniejszą promocje. Kod nie został użyty. Można go wykorzystać ponownie.</p>}
       </div>
       <ButtonsContainer>
         <Button text={__('application.useDiscountCode')} primary click={() => showModal(<DiscountCode />)} />

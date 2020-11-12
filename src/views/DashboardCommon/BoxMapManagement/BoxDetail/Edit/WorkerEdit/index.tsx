@@ -1,28 +1,37 @@
-import React from 'react';
 import { ItfApiForm } from 'itf_formbuilder_react';
-import ReactSelect from 'react-select';
+import React from 'react';
 import { connect } from 'react-redux';
+import ReactSelect from 'react-select';
 import ReactCreatableSelect from 'react-select/creatable';
 import { bindActionCreators } from 'redux';
-import { ChangeStatusReq, StockList } from 'smartbox-types';
+import { BoxListItem, ChangeStatusReq, RentStatus, StockList } from 'smartbox-types';
 import { boxes, modal, notifications } from '../../../../../../actions';
-import { FormContainer, ButtonsContainer } from '../../../../../../components/Layout';
 import { Button, Spinner } from '../../../../../../components/Common';
+import { ButtonsContainer, FormContainer } from '../../../../../../components/Layout';
+import { __ } from '../../../../../../helpers/i18n';
 import { ApplicationState } from '../../../../../../reducers';
 import ApiService from '../../../../../../services/api-service';
 import { formOnTranslateString } from '../../../../../../utils/trans-form';
-import { __ } from '../../../../../../helpers/i18n';
 
 interface Props {
-  selectedBoxId: string;
   rentId: string;
+  selectedBoxId: string;
   stock: StockList;
+  boxesGroup: BoxListItem[] | null;
   hideModal: () => void;
   successNotification: (text: string) => void;
   fetchBoxStatuses: (stockId: string) => void;
 }
 
-const Status = ({ selectedBoxId, hideModal, successNotification, rentId, stock, fetchBoxStatuses }: Props) => {
+const WorkerEdit = ({
+  hideModal,
+  successNotification,
+  rentId,
+  stock,
+  fetchBoxStatuses,
+  boxesGroup,
+  selectedBoxId,
+}: Props) => {
   const submitButton = (
     <ButtonsContainer>
       <Button text={__('application.changeStatus')} type="submit" danger />
@@ -41,7 +50,21 @@ const Status = ({ selectedBoxId, hideModal, successNotification, rentId, stock, 
       },
       'PATCH',
     );
-  if (rentId === '') return <p>Nie możesz wykonywać akcji na tej skrytce!</p>;
+
+  const canWorkerEdit = (): boolean => {
+    let result = true;
+    boxesGroup?.forEach((box: BoxListItem) => {
+      if (box.number === `${selectedBoxId}` && box.status === RentStatus.toCheck) {
+        result = false;
+      }
+    });
+    return result;
+  };
+
+  if (rentId === '' || canWorkerEdit()) {
+    return <p>Nie możesz wykonywać akcji na tym mini magazynie!</p>;
+  }
+
   return (
     <FormContainer className="box-status-form">
       <ItfApiForm
@@ -68,8 +91,9 @@ const Status = ({ selectedBoxId, hideModal, successNotification, rentId, stock, 
 const mapStateToProps = (state: ApplicationState) => ({
   stockId: state.rent.stockId,
   stock: state.stock.list[0],
+  boxesGroup: state.boxes.boxesGroup,
 });
 
 const mapDispatchToProps = (dispatch: any) => bindActionCreators({ ...boxes, ...modal, ...notifications }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(Status);
+export default connect(mapStateToProps, mapDispatchToProps)(WorkerEdit);
