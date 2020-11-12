@@ -89,3 +89,16 @@ export const getUserLoginGoogleData = () => async (dispatch: any) => {
     'auth/login-google/redirect',
   );
 };
+
+export const emailVerification = (userId: string, updateToken: string) => async (dispatch: any) => {
+  await ApiService.post(
+    dispatch,
+    'EMAIL_VERIFICATION_SUCCESS',
+    'EMAIL_VERIFICATION_FAILED',
+    null,
+    null,
+    `user/active/${userId}/${updateToken}`,
+    'LOADING',
+    {},
+  );
+};
