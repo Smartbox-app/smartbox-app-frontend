@@ -7,9 +7,9 @@ import { Button } from '../../../../components/Common';
 import { __ } from '../../../../helpers/i18n';
 import { ApplicationState } from '../../../../reducers';
 import { gate } from '../../../../actions';
+import { isUser } from '../../../../utils/role-check';
 
 import './Gate.scss';
-import { isUser } from '../../../../utils/role-check';
 
 interface Props {
   startAnimation: boolean;
@@ -57,11 +57,11 @@ const Gate = ({ startAnimation, user, stockId, askGateToOpen, askGateToOpenStuff
       <ReactSVG src={`${startAnimation ? '/assets/images/Group46.svg' : '/assets/images/Group39.svg'}`} />
       <div className="slide-to-open">
         <Button
-          text={__('application.openGate')}
+          text={isUser(user.role) ? __('application.openGate') : __('application.openGateStuff')}
           big
           primary
           click={() => (isUser(user.role) ? askGateToOpen(geoCoord) : askGateToOpenStuff(stockId))}
-          disabled={startAnimation}
+          disabled={isUser(user.role) ? startAnimation : false}
         />
       </div>
     </div>
