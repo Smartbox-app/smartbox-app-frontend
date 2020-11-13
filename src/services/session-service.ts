@@ -1,4 +1,4 @@
-import { UserRes } from 'smartbox-types';
+import { UserCommonEntity } from '../reducers/user-reducer';
 
 export default class SessionService {
   static setCurrentLanguage(lang: string) {
@@ -9,8 +9,7 @@ export default class SessionService {
     return JSON.parse(localStorage.getItem('language') || 'null') || 'pl';
   }
 
-  // @TODO: fix user type
-  static setUser(user: any) {
+  static setUser(user: UserCommonEntity) {
     return localStorage.setItem('user', JSON.stringify(user));
   }
 
@@ -27,7 +26,7 @@ export default class SessionService {
     return JSON.parse(localStorage.getItem('user') || 'false');
   }
 
-  static getUser(): UserRes {
+  static getUser(): UserCommonEntity {
     return JSON.parse(localStorage.getItem('user') || 'null');
   }
 }

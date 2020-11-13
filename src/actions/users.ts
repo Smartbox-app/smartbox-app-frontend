@@ -52,3 +52,5 @@ export const fetchSingleUser = (userId: string) => async (dispatch: any) => {
 export const fetchMyData = () => async (dispatch: any) => {
   await ApiService.get(dispatch, 'GET_MY_DETAILS_SUCCESS', 'GET_MY_DETAILS_FAILED', null, null, 'user/me');
 };
+
+export const acceptationCookies = () => ({ type: 'ACCEPTATION_COOKIES', payload: true });

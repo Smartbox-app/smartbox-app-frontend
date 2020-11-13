@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Route, Redirect, Switch } from 'react-router-dom';
-import { Main } from '../../components/Layout';
+import { Footer, Main } from '../../components/Layout';
 import { __ } from '../../helpers/i18n';
 import { Welcome, Order, Profile, Contact } from '../DashboardCommon';
 import { MenuItemType } from '../../types/menu-item';
@@ -9,6 +9,7 @@ import { MenuItemType } from '../../types/menu-item';
 import DashboardContainer from '../../components/Layout/DashboardContainer';
 import Navigation from '../../components/Layout/Navigation';
 import SingleRentDetail from '../DashboardCommon/SingleRentDetail';
+import { Cookies } from '../../components/Common';
 
 const DashboardUser = () => {
   const menuItems: MenuItemType[] = [
@@ -42,6 +43,8 @@ const DashboardUser = () => {
           <Route exact path="/user/single-rent/:orderId" component={SingleRentDetail} />
         </Switch>
       </Main>
+      <Footer />
+      <Cookies />
     </DashboardContainer>
   );
 };

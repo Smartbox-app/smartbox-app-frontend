@@ -23,6 +23,7 @@ import LoginLogo from './LoginLogo';
 import ConfirmModal from './ConfirmModal';
 import Row from './Row';
 import ErrorBoundary from './ErrorBoundary';
+import Cookies from './Cookies';
 
 export {
   Alert,
@@ -50,4 +51,5 @@ export {
   ProgressIndicator,
   Carousel,
   Tabs,
+  Cookies,
 };
