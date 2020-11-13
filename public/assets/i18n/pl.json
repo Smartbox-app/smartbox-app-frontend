@@ -172,6 +172,7 @@
       "thanks": "Dziękujemy za korzystanie z naszych usług.",
       "invoiceWasSent": "Dokument potwierdzający zakup został wysłany na wskazany e-mail.",
       "backToApp": "Wróć do aplikacji",
+      "reSendVerificationMail": "Wyślij wiadomość ponownie",
       "generateInvoice": "Wygeneruj fakturę",
 
       "week": "Tydzień",

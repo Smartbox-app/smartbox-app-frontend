@@ -97,9 +97,23 @@ export const emailVerification = (userId: string, updateToken: string) => async 
     'EMAIL_VERIFICATION_FAILED',
     () => {
       dispatch(notifications.successNotification(__('notification.useEmailVerificationSuccess')));
+      history.push('/');
     },
     null,
     `user/active/${userId}/${updateToken}`,
+    'LOADING',
+    {},
+  );
+};
+
+export const emailVerificationResendMail = () => async (dispatch: any) => {
+  await ApiService.post(
+    dispatch,
+    'EMAIL_VERIFICATION_RESEND_MAIL_SUCCESS',
+    'EMAIL_VERIFICATION_RESEND_MAIL_FAILED',
+    null,
+    null,
+    'user/resend-active-email',
     'LOADING',
     {},
   );
