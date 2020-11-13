@@ -12,7 +12,7 @@ import ApiService from '../services/api-service';
 import { history } from '../App';
 import UserService from '../services/user-service';
 import BlikWaitingModal from '../views/DashboardCommon/Order/Form/StepPayment/BlikForm/BlikWaitingModal';
-import { modal, notifications } from './index';
+import { modal, notifications, singleRent, user } from './index';
 
 export const updateFormData = (data: any) => ({ type: 'FORM_STEP_SUCCESS', payload: data });
 
@@ -98,6 +98,23 @@ export const checkPaymentStatus = (paymentId: string) => async (dispatch: any) =
       if (data) {
         dispatch({ type: 'REFRESH_API_TABLE' });
         dispatch(blikPaymentFinishSuccess());
+      }
+    },
+    null,
+    `payment/is-paid/${paymentId}`,
+  );
+};
+
+export const checkIfStockIsRented = (paymentId: string) => async (dispatch: any) => {
+  await ApiService.get(
+    dispatch,
+    'CHECK_STOCK_STATUS_SUCCESS',
+    'CHECK_STOCK_STATUS_FAILED',
+    (data: boolean) => {
+      if (data) {
+        dispatch(singleRent.getMyRentList());
+        dispatch(singleRent.fetchMyRentHistory());
+        dispatch(user.fetchMyData());
       }
     },
     null,

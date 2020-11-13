@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import { Button } from '../../../components/Common';
 import { LogoContainer, PageContent, ButtonsContainer, Section } from '../../../components/Layout';
 import { __ } from '../../../helpers/i18n';
-import { singleRent, user } from '../../../actions';
+import { order } from '../../../actions';
 
 import './Invoice.scss';
 
@@ -14,16 +14,15 @@ interface RouteProps {
 }
 
 interface Props extends RouteComponentProps<RouteProps> {
-  getMyRentList: () => void;
-  fetchMyRentHistory: () => void;
-  fetchMyData: () => void;
+  checkIfStockIsRented: (paymentId: string) => void;
 }
 
-const Invoice = ({ getMyRentList, fetchMyRentHistory, fetchMyData }: Props) => {
+const Invoice = ({ checkIfStockIsRented, match }: Props) => {
   useEffect(() => {
-    getMyRentList();
-    fetchMyRentHistory();
-    fetchMyData();
+    checkIfStockIsRented(match.params.paymentId);
+    // getMyRentList();
+    // fetchMyRentHistory();
+    // fetchMyData();
   }, []);
   return (
     <PageContent>
@@ -43,8 +42,7 @@ const Invoice = ({ getMyRentList, fetchMyRentHistory, fetchMyData }: Props) => {
 const mapDispatchToProps = (dispatch: any) =>
   bindActionCreators(
     {
-      ...singleRent,
-      ...user,
+      ...order,
     },
     dispatch,
   );
