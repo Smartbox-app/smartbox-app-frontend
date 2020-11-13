@@ -32,7 +32,7 @@
   }
 
   &::placeholder {
-    color: darken($color-primary, 10%);
+    color: $color-disabled;
   }
 
   &:read-only {
