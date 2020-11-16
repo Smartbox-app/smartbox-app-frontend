@@ -18,11 +18,11 @@ const Contact = ({ user }: Props) => {
     postCode: '63-400',
     street: 'ul. Wylotowa 13',
     adminContact: 'p.drobnikowski@smartbox.pl',
-    adminPhone: '0048777888999',
+    adminPhone: '0048665519467',
     technicalContact: 'a.pawlowski@smartbox.pl',
-    technicalPhone: '0048777888999',
+    technicalPhone: '0048665519467',
     helpContact: 'pomoc@smartbox.pl',
-    helpPhone: '00487665519467',
+    helpPhone: '0048665519467',
   };
   return (
     <Section full>
