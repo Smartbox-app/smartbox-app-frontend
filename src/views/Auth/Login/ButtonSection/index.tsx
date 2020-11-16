@@ -10,8 +10,8 @@ import './ButtonSection.scss';
 const ButtonsSection = () => (
   <div className="login-buttons-section">
     <ButtonsContainer max column>
-      <FbButton />
       <Button text={__('application.login')} big type="submit" primary rounded />
+      <FbButton />
       <Button text={__('application.register')} big to="/register" outline rounded />
     </ButtonsContainer>
     <p className="lost-pass">
