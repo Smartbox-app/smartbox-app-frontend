@@ -71,7 +71,7 @@ const App = () => {
                 <Route path="/login" component={Login} />
                 <Route exact path="/register" component={Register} />
                 <Route path="/register/mail-was-send" component={EmailSend} />
-                <Route path="/restore-pass/" component={RestorePass} />
+                <Route exact path="/restore-pass/" component={RestorePass} />
                 <Route path="/restore-pass/:userId/:updateToken" component={RestorePass} />
                 <Route path="/user-activation/:invitationId/:updateToken" component={UserActivation} />
 
