@@ -14,8 +14,6 @@ import { __ } from '../../../../../helpers/i18n';
 
 import NewCode from '../NewCode';
 
-import './Form.scss';
-
 interface Props {
   showModal: (content: React.ReactNode) => void;
   successNotification: (text: string) => void;
@@ -42,7 +40,7 @@ const Form = ({ showModal, successNotification }: Props) => {
 
   return (
     <FieldsColumn>
-      <FormContainer className="gift-form">
+      <FormContainer>
         <ItfApiForm
           formId="addGiftForm"
           schemaMayBeDynamic={false}

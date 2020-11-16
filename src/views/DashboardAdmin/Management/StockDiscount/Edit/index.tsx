@@ -15,8 +15,6 @@ import { formOnTranslateString } from '../../../../../utils/trans-form';
 import { apiTable, modal, notifications } from '../../../../../actions';
 import { __ } from '../../../../../helpers/i18n';
 
-import './Edit.scss';
-
 interface Props {
   discountId: string;
   hideModal: () => void;
@@ -45,7 +43,7 @@ const Edit = ({ discountId, successNotification, hideModal, refreshApiTableData 
     );
 
   return (
-    <FormContainer className="gift-form">
+    <FormContainer>
       <FormHeader title={__('application.editStockDiscount')} />
       <FieldsColumn>
         <ItfApiForm

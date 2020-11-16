@@ -1,10 +1,10 @@
-import { addHours, addMinutes } from "date-fns";
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { ItfApiForm } from 'itf_formbuilder_react';
 import ReactSelect from 'react-select';
 import ReactCreatableSelect from 'react-select/creatable';
-import { AddGiftReq, DiscountReq, GiftRes } from 'smartbox-types';
+import { addMinutes } from 'date-fns';
+import { DiscountReq } from 'smartbox-types';
 import { connect } from 'react-redux';
 import flatpickr from 'flatpickr';
 import { FormContainer, ButtonsContainer, FieldsColumn } from '../../../../../components/Layout';
@@ -14,8 +14,6 @@ import ApiService from '../../../../../services/api-service';
 import { formOnTranslateString } from '../../../../../utils/trans-form';
 import { apiTable, modal, notifications } from '../../../../../actions';
 import { __ } from '../../../../../helpers/i18n';
-
-import './Add.scss';
 
 interface Props {
   fetchApiTableData: (url: string) => void;
@@ -44,7 +42,7 @@ const FormStockDiscount = ({ fetchApiTableData, hideModal, successNotification }
     );
 
   return (
-    <FormContainer className="gift-form">
+    <FormContainer>
       <FormHeader title={__('application.creatStockDiscount')} />
       <FieldsColumn>
         <ItfApiForm
@@ -57,7 +55,7 @@ const FormStockDiscount = ({ fetchApiTableData, hideModal, successNotification }
           submitButton={submitButton}
           onSavedSuccessfully={() => {
             hideModal();
-            fetchApiTableData('stock/discount/list')
+            fetchApiTableData('stock/discount/list');
             successNotification(__('notification.stockDiscountCreated'));
           }}
           onTranslateString={formOnTranslateString}

@@ -37,7 +37,7 @@ const DiscountCode = ({ hideModal, updateFormData, successNotification }: Props)
     );
 
   return (
-    <FormContainer className="gift-form">
+    <FormContainer>
       <FormHeader title="Podaj Twój kod rabatowy" />
       <ItfApiForm
         formId="getGiftForm"
