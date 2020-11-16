@@ -12,8 +12,6 @@ import ApiService from '../../../../../services/api-service';
 import { formOnTranslateString } from '../../../../../utils/trans-form';
 import { __ } from '../../../../../helpers/i18n';
 
-import './UpdatePass.scss';
-
 interface Props {
   successNotification: (text: string) => void;
   hideModal: () => void;
@@ -39,7 +37,7 @@ const UpdatePass = ({ successNotification, hideModal }: Props) => {
     );
 
   return (
-    <FormContainer className="gift-form">
+    <FormContainer>
       <FormHeader title="Zmieniasz swoje hasło do serwisu" />
       <FieldsColumn>
         <ItfApiForm

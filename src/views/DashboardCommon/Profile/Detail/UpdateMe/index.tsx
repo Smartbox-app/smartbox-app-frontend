@@ -12,8 +12,6 @@ import { formOnTranslateString } from '../../../../../utils/trans-form';
 import { __ } from '../../../../../helpers/i18n';
 import { modal, notifications, user } from '../../../../../actions';
 
-import './UpdateMe.scss';
-
 interface Props {
   hideModal: () => void;
   fetchMyData: () => void;
@@ -40,7 +38,7 @@ const UpdateMe = ({ successNotification, hideModal, fetchMyData }: Props) => {
     );
 
   return (
-    <FormContainer className="gift-form">
+    <FormContainer>
       <FormHeader title="Edytujesz swoje dane" />
       <FieldsColumn>
         <ItfApiForm

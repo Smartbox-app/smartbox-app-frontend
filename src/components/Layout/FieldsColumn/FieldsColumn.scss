@@ -3,8 +3,8 @@
 
 .fields-column {
   display: flex;
-  margin: 0 -1 * $main-spacing;
-  width: 300px;
+  margin: 0 auto;
+  width: 100%;
 
   form {
     display: flex;
@@ -12,15 +12,11 @@
     flex-direction: row;
     flex: 1;
     overflow: hidden;
-    margin: 0 $main-spacing;
-    margin-left: -10px;
 
     .form-field {
       display: flex;
       flex: 1 0 100%;
-      padding: $main-spacing $main-spacing;
-      box-sizing: border-box;
-      margin: 0 $main-spacing;
+      padding: $main-spacing 0;
     }
 
     .form-buttons {
@@ -28,7 +24,6 @@
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
-      padding: $main-spacing;
     }
 
     .form-field-title {
