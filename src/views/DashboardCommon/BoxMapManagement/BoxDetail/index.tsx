@@ -51,10 +51,6 @@ const BoxDetail = ({ selectedBoxId, singleBoxDetail, rentId, user }: Props) => {
             {`${singleBoxDetail.status}`}
           </DescriptionRow>
 
-          <DescriptionRow icon="fa-flag" text="Płatność">
-            {singleBoxDetail?.owner ? 'Brak danych' : '---'}
-          </DescriptionRow>
-
           <DescriptionRow icon="fa-mobile" text={__('application.phone')}>
             {singleBoxDetail?.owner?.phone ? (
               <a href={`tel:${singleBoxDetail.owner.phone}`}>{singleBoxDetail.owner.phone}</a>
