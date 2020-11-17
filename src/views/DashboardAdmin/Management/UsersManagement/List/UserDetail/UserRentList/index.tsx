@@ -31,9 +31,6 @@ const UserRentList = ({ rentList }: Props) => {
       <h4>Aktualne wynajęcia:</h4>
 
       <div className="content">
-        {/*<div className="single-address-logo">*/}
-        {/*  <i className={`fa fa-file-o`} aria-hidden="true" />*/}
-        {/*</div>*/}
         <div className="rent-list">{data}</div>
       </div>
     </div>
