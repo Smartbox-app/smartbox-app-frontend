@@ -1,6 +1,6 @@
 import React from 'react';
 import { UserListRes } from 'smartbox-types';
-import { SectionHeader } from '../../../../../../components/Layout';
+import { SimpleHeader } from '../../../../../../components/Layout';
 import { __ } from '../../../../../../helpers/i18n';
 
 import './UserDetail.scss';
@@ -15,7 +15,7 @@ interface Props {
 const UserDetail = ({ userId, userData }: Props) => {
   return (
     <div className="user-detail-wrapper">
-      <SectionHeader title={__('application.customerDetails')} />
+      <SimpleHeader title={__('application.customerDetails')} />
       <div className="single-address-content">
         <div className="addresses-wrapper">
           <DataGroup
