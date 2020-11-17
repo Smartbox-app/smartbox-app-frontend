@@ -55,6 +55,9 @@ const StepSummary = ({
     if (formData.size.length === 0) {
       history.push(`/${UserService.getSlugByRole(user.role)}/order/step/size`);
     }
+    if (formData.nip) {
+      setInvoiceNeeded(true);
+    }
   });
 
   const defaultValues = {
