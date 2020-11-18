@@ -124,13 +124,15 @@
 
   &.with-icon {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
 
     .button-img {
-      width: $button-img-size;
-      height: $button-img-size;
+      width: $button-img-size*1;
+      height: $button-img-size*1;
+      margin-right: $main-spacing * 2;
+      margin-left: $main-spacing;
     }
   }
 

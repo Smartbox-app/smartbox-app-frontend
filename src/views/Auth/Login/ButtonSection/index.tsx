@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { ButtonsContainer } from '../../../../components/Layout';
 import { Button } from '../../../../components/Common';
 import FbButton from './FbButton';
+import GoogleButton from './GoogleButton';
 import { __ } from '../../../../helpers/i18n';
 
 import './ButtonSection.scss';
@@ -12,6 +13,7 @@ const ButtonsSection = () => (
     <ButtonsContainer max column>
       <Button text={__('application.login')} big type="submit" primary rounded />
       <FbButton />
+      <GoogleButton />
       <Button text={__('application.register')} big to="/register" outline rounded />
     </ButtonsContainer>
     <p className="lost-pass">

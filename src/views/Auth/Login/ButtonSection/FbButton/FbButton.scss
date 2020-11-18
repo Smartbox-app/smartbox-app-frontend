@@ -24,10 +24,13 @@
 }
 
 .fa.fa-facebook {
-  margin-left: 2px;
-  display: block;
-  width: $main-spacing*3;
-  height: $main-spacing*2;
+  //margin-left: $main-spacing;
+  width: $main-spacing*4;
+  height: $main-spacing*4;
   line-height: $main-spacing*2.5;
   text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.2rem;
 }

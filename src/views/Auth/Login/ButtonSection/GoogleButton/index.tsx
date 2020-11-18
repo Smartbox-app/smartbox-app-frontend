@@ -28,17 +28,24 @@ const GoogleButton = ({ loginWithGoogle, showModal, getUserLoginGoogleData }: Pr
   };
 
   const logInHandle = async (e: any) => {
-    const openedWindow = window.open(
-      `${ApiService.url}auth/login-google`,
-      'Logowanie - Konta Google',
-      'height=700,width=600',
-    );
-
+    // const openedWindow = window.open(
+    //   `${ApiService.url}auth/login-google`,
+    //   'Logowanie - Konta Google',
+    //   'height=700,width=600',
+    // );
+    window.open(`${ApiService.url}auth/login-google`, '_self');
   };
 
   return (
     <>
-      <Button text="test" primary click={(event: any) => logInHandle(event)} />
+      <Button
+        text={`${__('application.continueWith')} Google`}
+        click={(event: any) => logInHandle(event)}
+        className="google-button-custom"
+        icon="btn_google.svg"
+        rounded
+        outline
+      />
       <GoogleLogin
         clientId="615946111684-fif6ftu4rca6tjpbvhdh1r6eb8cqnt58.apps.googleusercontent.com"
         buttonText={`${__('application.continueWith')} Google`}
