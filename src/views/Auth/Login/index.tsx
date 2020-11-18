@@ -21,6 +21,7 @@ import './Login.scss';
 
 interface Props {
   user: UserRes;
+  loading: boolean;
   login: (userData: AuthLoginRequest) => void;
   saveUser: (userData: AuthLoginResult) => void;
   successNotification: (text: string) => void;
@@ -57,8 +58,9 @@ class Login extends React.Component<Props> {
   };
 
   render() {
-    const { user, saveUser, successNotification } = this.props;
+    const { user, saveUser, successNotification, loading } = this.props;
     if (user) return this.getRedirect();
+    if (loading) return <Spinner big />;
     return (
       <PageContent>
         <div className="login-logo-wrapper">

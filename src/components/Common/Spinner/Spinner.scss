@@ -55,6 +55,14 @@
       border-width: 3px;
     }
   }
+
+  &.big {
+    .spinner {
+      width: 100px;
+      height: 100px;
+      border-width: 10px;
+    }
+  }
 }
 
 @keyframes spinner-animation {
