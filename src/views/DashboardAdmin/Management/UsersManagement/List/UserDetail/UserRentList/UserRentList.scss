@@ -7,7 +7,6 @@
   border: 1px solid #aaa;
   border-radius: $main-spacing;
 
-
   .content {
     display: flex;
     flex-direction: row;
@@ -25,14 +24,33 @@
     align-items: center;
     flex: 0 1 100%;
 
+    p {
+      min-width: 100px;
+      text-align: center;
+    }
 
     .box-rent {
       background: #00a45a;
       padding: $main-spacing/2 $main-spacing;
       margin-right: $main-spacing;
       border-radius: 5px;
-      border: 2px solid darken( #00a45a, 10%)
+      border: 2px solid darken(#00a45a, 10%);
+      min-width: 50px;
+      text-align: center;
     }
+    .rented {
+      background: $color-danger;
+      border: 2px solid darken($color-danger, 10%);
+    }
+    .to-check {
+      background: $color-primary;
+      border: 2px solid darken($color-primary, 10%);
+    }
+    .no-paid-extension {
+      background: $color-tertiary;
+      border: 2px solid darken($color-tertiary, 10%);
+    }
+
     .dates-rent {
       margin-right: $main-spacing;
     }
@@ -51,5 +69,4 @@
       margin: $main-spacing $main-spacing * 3;
     }
   }
-
 }

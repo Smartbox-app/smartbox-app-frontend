@@ -13,6 +13,7 @@ interface Props {
 
 const FbButton = ({ loginWithFacebook }: Props) => {
   const responseFacebook = (data: any) => {
+    console.log('responseFacebook', data);
     loginWithFacebook(data);
   };
 

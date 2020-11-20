@@ -1,18 +1,29 @@
-import React from 'react';
-import { UserListRes } from 'smartbox-types';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { UserListRes, UserRes } from 'smartbox-types';
+import { user } from '../../../../../../actions';
 import { SimpleHeader } from '../../../../../../components/Layout';
 import { __ } from '../../../../../../helpers/i18n';
 
 import './UserDetail.scss';
+import { ApplicationState } from '../../../../../../reducers';
 import DataGroup from './DataGroup';
 import UserRentList from './UserRentList';
 
 interface Props {
   userId: string;
   userData: UserListRes;
+  fetchSingleUser: (userId: string) => void;
+  singleUser: UserRes | any;
 }
 
-const UserDetail = ({ userId, userData }: Props) => {
+const UserDetail = ({ userId, userData, fetchSingleUser, singleUser }: Props) => {
+  useEffect(() => {
+    fetchSingleUser(userId);
+  }, []);
+
+  console.log('singleUser', singleUser);
   return (
     <div className="user-detail-wrapper">
       <SimpleHeader title={__('application.customerDetails')} />
@@ -22,42 +33,41 @@ const UserDetail = ({ userId, userData }: Props) => {
             icon="fa-home"
             title={__('application.customerData')}
             rowData={[
-              `${userData?.firstName} ${userData?.lastName}`,
-              userData?.phone,
-              userData?.street,
-              userData?.city,
-              userData?.postCode,
+              `${singleUser?.firstName} ${singleUser?.lastName}`,
+              singleUser?.phone,
+              singleUser?.street,
+              singleUser?.city,
+              singleUser?.postCode,
             ]}
           />
           <DataGroup
             icon="fa-file-o"
             title={__('application.customerCompanyData')}
             rowData={[
-              userData?.companyData?.name,
-              userData?.companyData?.street,
-              userData?.companyData?.city,
-              userData?.companyData?.postCode,
-              userData?.companyData?.nip,
+              singleUser?.companyData?.name,
+              singleUser?.companyData?.street,
+              singleUser?.companyData?.city,
+              singleUser?.companyData?.postCode,
+              singleUser?.companyData?.nip,
             ]}
           />
-          <UserRentList
-            rentList={[
-              {
-                number: 502,
-                startDate: new Date(),
-                endDate: new Date(),
-              },
-              {
-                number: 501,
-                startDate: new Date(),
-                endDate: new Date(),
-              },
-            ]}
-          />
+          <UserRentList rentList={singleUser?.activeRents || []} />
         </div>
       </div>
     </div>
   );
 };
 
-export default UserDetail;
+const mapStateToProps = (state: ApplicationState) => ({
+  singleUser: state.user.singleUser,
+});
+
+const mapDispatchToProps = (dispatch: any) =>
+  bindActionCreators(
+    {
+      ...user,
+    },
+    dispatch,
+  );
+
+export default connect(mapStateToProps, mapDispatchToProps)(UserDetail);

@@ -54,3 +54,14 @@ export const fetchMyData = () => async (dispatch: any) => {
 };
 
 export const acceptationCookies = () => ({ type: 'ACCEPTATION_COOKIES', payload: true });
+
+export const fetchUserDetailsForAdmin = (userId: string) => async (dispatch: any) => {
+  await ApiService.get(
+    dispatch,
+    'FETCH_USER_DETAILS_FOR_ADMIN_SUCCESS',
+    'FETCH_USER_DETAILS_FOR_ADMIN_FAILED',
+    null,
+    null,
+    `user/details/${userId}`,
+  );
+};

@@ -180,7 +180,7 @@
         "__type_alias_do_not_touch": "ApiErrorCode.NoAccessToTheGate"
       },
       "36": {
-        "text": "@@@@@@@@@@@@@@@TODO: Translate ApiErrorCode.FirstActiveUser!",
+        "text": "Aktywacja użytkownika wymagana!",
         "__type_alias_do_not_touch": "ApiErrorCode.FirstActiveUser"
       }
     }

@@ -1,12 +1,12 @@
 import React from 'react';
-import { RentStatus } from 'smartbox-types';
+import { RentStatus, ActiveRentsForUserDetails } from 'smartbox-types';
 import { Alert } from '../../../../../../../components/Common';
 import { dateOnly } from '../../../../../../../utils/format-date';
 
 import './UserRentList.scss';
 
 interface Props {
-  rentList: any[];
+  rentList: ActiveRentsForUserDetails[];
 }
 
 const UserRentList = ({ rentList }: Props) => {
@@ -14,17 +14,34 @@ const UserRentList = ({ rentList }: Props) => {
     return <Alert type="notice" text={'Brak wynajęć'} />;
   }
 
-  const data = rentList.map((s: any) => {
-    return (
-      <div className="single-rent" key={s}>
-        <p className="box-rent">{s.number}</p>
-        <p className="dates-rent">
-          {dateOnly(s.startDate, 5)}-{dateOnly(s.endDate)}
-        </p>
-        <p>{RentStatus.rented}</p>
-      </div>
-    );
-  });
+  const colorDecider = (s: RentStatus) => {
+    switch (s) {
+      case RentStatus.noPaidExtension:
+        return 'no-paid-extension';
+      case RentStatus.noPaidExtensionWithWarning:
+        return 'no-paid-extension';
+      case RentStatus.toCheck:
+        return 'to-check';
+      case RentStatus.rented:
+        return 'rented';
+      default:
+        return '';
+    }
+  };
+
+  const data =
+    rentList.length > 0 &&
+    rentList.map((s: ActiveRentsForUserDetails) => {
+      return (
+        <div className="single-rent" key={s.id}>
+          <p className={`box-rent ${colorDecider(s.status)}`}>{s.number}</p>
+          <p className="dates-rent">
+            {dateOnly(s.startAt, 5)}-{dateOnly(s.finishAt)}
+          </p>
+          <p>{s.status}</p>
+        </div>
+      );
+    });
 
   return (
     <div className="list-wrapper">
