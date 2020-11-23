@@ -25,6 +25,8 @@ const FbButton = ({ loginWithFacebook }: Props) => {
       callback={responseFacebook}
       icon="fa-facebook"
       textButton={`${__('application.continueWith')} Facebook`}
+      isMobile={false}
+      redirectUri="https://app.smartbox.dev2.itdotfocus.com/login"
     />
   );
 };
