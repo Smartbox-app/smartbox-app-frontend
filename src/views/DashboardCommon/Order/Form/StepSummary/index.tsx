@@ -164,7 +164,7 @@ const StepSummary = ({
             'Promocja 1zł za pierwszy tydzień obowiązuje tylko przy płatności kartą. Cena została zmieniona.',
           );
           updateFormData({
-            isFirstRent: true,
+            isFirstRent: false,
           });
         }
       } else {
