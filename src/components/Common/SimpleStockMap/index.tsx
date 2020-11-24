@@ -13,6 +13,8 @@ interface State {
   scrollLeft: number;
   scrollTop: number;
   mapScale: number;
+  mapMoveDistance: number;
+  mapMoveHeight: number;
 }
 
 class SimpleStockMap extends React.Component<Props, State> {
@@ -27,6 +29,8 @@ class SimpleStockMap extends React.Component<Props, State> {
       grabStartY: 0,
       scrollLeft: 0,
       scrollTop: 0,
+      mapMoveDistance: 0,
+      mapMoveHeight: 0,
       mapScale: 100,
     };
   }
@@ -62,6 +66,17 @@ class SimpleStockMap extends React.Component<Props, State> {
     }
   };
 
+  private handleTouchesDown = (e: TouchEvent | any, el: HTMLElement): any => {
+    this.setState({
+      isMouseDown: true,
+      grabStartX: e.touches[0].pageX - el.offsetLeft,
+      grabStartY: e.touches[0].pageY - el.offsetTop,
+      scrollLeft: el.scrollLeft,
+      scrollTop: el.scrollTop,
+    });
+    el.classList.add('grab');
+  };
+
   private handleMouseDown = (e: MouseEvent, el: HTMLElement): any => {
     this.setState({
       isMouseDown: true,
@@ -94,10 +109,29 @@ class SimpleStockMap extends React.Component<Props, State> {
     const mousePositionX = e.pageX - el.offsetLeft;
     const mousePositionY = e.pageY - el.offsetTop;
     const mapMoveDistance = mousePositionX - grabStartX;
-    const mapMoveHieght = mousePositionY - grabStartY;
+    const mapMoveHeight = mousePositionY - grabStartY;
 
     el.scrollLeft = scrollLeft - mapMoveDistance;
-    el.scrollTop = scrollTop - mapMoveHieght;
+    el.scrollTop = scrollTop - mapMoveHeight;
+  };
+
+  private handleTouchMove = (e: TouchEvent | any, el: HTMLElement): any => {
+    const { isMouseDown, grabStartX, grabStartY, scrollLeft, scrollTop } = this.state;
+    if (!isMouseDown) return;
+    e.preventDefault();
+
+    const mousePositionX = e.changedTouches[e.changedTouches.length - 1].pageX - el.offsetLeft;
+    const mousePositionY = e.changedTouches[e.changedTouches.length - 1].pageX - el.offsetTop;
+    const mapMoveDistance = mousePositionX - grabStartX;
+    const mapMoveHeight = mousePositionY - grabStartY;
+
+    this.setState({
+      mapMoveDistance: scrollLeft - mapMoveDistance,
+      mapMoveHeight: scrollTop - mapMoveHeight,
+    });
+
+    el.scrollLeft = scrollLeft - mapMoveDistance;
+    el.scrollTop = scrollTop - mapMoveHeight;
   };
 
   public componentDidMount(): void {
@@ -107,18 +141,41 @@ class SimpleStockMap extends React.Component<Props, State> {
       false,
     );
     this.element.current.addEventListener(
+      'touchstart',
+      (e: MouseEvent) => this.handleTouchesDown(e, this.element.current),
+      false,
+    );
+
+    this.element.current.addEventListener(
       'mouseup',
       (e: MouseEvent) => this.handleMouseUp(e, this.element.current),
       false,
     );
+    // this.element.current.addEventListener(
+    //   'touchend',
+    //   (e: MouseEvent) => this.handleMouseUp(e, this.element.current),
+    //   false,
+    // );
+    // this.element.current.addEventListener(
+    //   'touchcancel',
+    //   (e: MouseEvent) => this.handleMouseUp(e, this.element.current),
+    //   false,
+    // );
+
     this.element.current.addEventListener(
       'mouseleave',
       (e: MouseEvent) => this.handleMouseLeave(e, this.element.current),
       false,
     );
+
     this.element.current.addEventListener(
       'mousemove',
       (e: MouseEvent) => this.handleMouseMove(e, this.element.current),
+      false,
+    );
+    this.element.current.addEventListener(
+      'touchmove',
+      (e: MouseEvent) => this.handleTouchMove(e, this.element.current),
       false,
     );
   }
