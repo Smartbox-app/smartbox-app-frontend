@@ -129,10 +129,9 @@
     align-items: center;
 
     .button-img {
-      width: $button-img-size*1;
-      height: $button-img-size*1;
-      margin-right: $main-spacing * 2;
-      margin-left: $main-spacing;
+      width: $button-img-size * 1.5;
+      height: $button-img-size * 1.5;
+      margin: $main-spacing;
     }
   }
 
