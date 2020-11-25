@@ -5,17 +5,16 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
 
-  width: $login-form-width;
-  width: $login-button-size;
   height: $login-button-height;
-  border-radius: $login-button-height /2 !important;
-  border: 2px solid #DB4437 !important;
-  margin: $main-spacing;
+  border-radius: $login-button-height / 2 !important;
+  border: 2px solid #db4437 !important;
+  margin: $main-spacing 0 !important;
 
   &:hover {
-    box-shadow: #DB4437 0px 2px 2px 0px, #DB4437 0px 0px 1px 0px;
-    border: 2px solid lighten(#DB4437, 15%) !important;
+    box-shadow: #db4437 0 2px 2px 0, #db4437 0 0 1px 0;
+    border: 2px solid lighten(#db4437, 15%) !important;
   }
 
   span {

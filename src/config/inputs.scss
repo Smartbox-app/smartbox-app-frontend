@@ -73,17 +73,21 @@
   &.hidden {
     display: none;
   }
-}
+  .input-wrapper {
+    position: relative;
+    margin-bottom: $main-spacing / 4;
+    width:100%;
+    //display: flex;
+    //justify-content: center;
+    //align-items: center;
+    //flex-direction: column;
 
-.input-wrapper {
-  position: relative;
-  margin-bottom: $main-spacing / 4;
-
-  label {
-    font-size: 0.8rem;
-    font-weight: 400;
-    display: block;
-    margin-bottom: 5px;
+    label {
+      font-size: 0.8rem;
+      font-weight: 400;
+      display: block;
+      margin-bottom: 5px;
+    }
   }
 }
 

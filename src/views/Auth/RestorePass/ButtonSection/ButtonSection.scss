@@ -2,14 +2,10 @@
 @import '../../../../config/mixins.scss';
 
 .login-buttons-section {
-  margin-bottom: $main-spacing * 2;
 
   .button {
-    width: $login-button-size;
     min-height: $login-button-height;
     border-radius: $login-button-height /2 ;
-    font-size: 1.2rem;
-    margin-bottom: $main-spacing * 2;
   }
 }
 .lost-pass {
