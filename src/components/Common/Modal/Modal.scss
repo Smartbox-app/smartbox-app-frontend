@@ -33,9 +33,11 @@
   }
 
   .modal-body {
-    position: relative;
     z-index: 1000;
-    top: 0%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
     height: 90vh;
     max-width: 90%;
     width: 100%;
