@@ -22,6 +22,7 @@ const FbButton = ({ loginWithFacebook }: Props) => {
       appId="3560212837341431"
       fields="name,email"
       language="pl"
+      cssClass="facebook-button-custom"
       callback={responseFacebook}
       icon="fa-facebook"
       textButton={`${__('application.continueWith')} Facebook`}

@@ -1,36 +1,38 @@
 @import '../../../../../config/variables.scss';
 @import '../../../../../config/mixins.scss';
 
-.buttons-container {
+.kep-login-facebook {
+  height: $login-button-height;
+  border-radius: $login-button-height / 2 !important;
+  margin: $main-spacing 0;
 
-  .kep-login-facebook {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    width: $login-button-size !important;
-    height: $login-button-height !important;
-    border-radius: $login-button-height /2 !important;
-    background-color: $color-facebook !important;
-    border: 2px solid #4c69ba !important;
-    color: #fff;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 2px 2px 0px, rgba(0, 0, 0, 0.24) 0px 0px 1px 0px;
-    font-size: 1.1rem;
-    font-family: $font-primary;
-    text-transform: none;
-    font-weight: 500;
-    margin: $main-spacing;
-  }
-}
-
-.fa.fa-facebook {
-  //margin-left: $main-spacing;
-  width: $main-spacing*4;
-  height: $main-spacing*4;
-  line-height: $main-spacing*2.5;
-  text-align: center;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 1.2rem;
+}
+
+.facebook-button-custom {
+  height: $login-button-height;
+  border-radius: $login-button-height / 2;
+  margin: $main-spacing 0;
+  background: $color-facebook;
+  border: none;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  color: #fff;
+  font-size: 1.1rem;
+  width: 100%;
+
+  &:hover {
+    background: lighten($color-facebook, 5%);
+    cursor: pointer;
+  }
+
+  .fa-facebook {
+    margin-right: 10px;
+    font-size: 1.1rem;
+  }
 }
