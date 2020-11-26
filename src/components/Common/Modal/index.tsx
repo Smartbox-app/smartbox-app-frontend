@@ -33,9 +33,9 @@ class ModalWrapper extends React.Component<Props> {
         >
           <div className="modal-body">
             <ModalContent>
-              <div className="modal-content">{modal.content}</div>
+              {modal.content}
               {modal.isClosable && (
-                <span className="modal-exit" onClick={() => hideModal()}>
+                <span className="modal-exit" role="button" tabIndex={0} onClick={() => hideModal()}>
                   &times;
                 </span>
               )}

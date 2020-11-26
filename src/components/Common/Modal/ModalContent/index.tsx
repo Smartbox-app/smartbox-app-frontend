@@ -14,7 +14,7 @@ const ModalContent = ({ children }: Props) => {
 
   const observer = new ResizeObserver((entries) => {
     entries.forEach((entry) => {
-      setMaxHeight(Math.round(entry.contentRect.height + 20));
+      setMaxHeight(Math.round(entry.contentRect.height + 40));
     });
   });
 
@@ -23,7 +23,7 @@ const ModalContent = ({ children }: Props) => {
   }, []);
 
   return (
-    <div className="" style={{ maxHeight: `${maxHeight}px` }}>
+    <div className="modal-content" style={{ maxHeight: `${maxHeight}px` }}>
       <div ref={ref}>{children}</div>
     </div>
   );
