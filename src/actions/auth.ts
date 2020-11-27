@@ -1,4 +1,4 @@
-import { AuthLoginRequest, AuthLoginResult } from 'smartbox-types';
+import { AuthLoginRequest, AuthLoginResult, UserRes } from 'smartbox-types';
 import ApiService from '../services/api-service';
 import { notifications, order } from '../actions';
 import { history } from '../App';
@@ -78,16 +78,7 @@ export const logout = () => async (dispatch: any) => {
 export const clearUserSession = () => ({ type: 'CLEAR_USER_SESSION' });
 
 export const getUserLoginGoogleData = () => async (dispatch: any) => {
-  await ApiService.get(
-    dispatch,
-    'LOGIN_SUCCESS',
-    'LOGIN_WITH_Google_FAILED',
-    (data: any) => {
-      console.log('getUserLoginGoogleData', data);
-    },
-    null,
-    'auth/login-google/redirect',
-  );
+  await ApiService.get(dispatch, 'LOGIN_SUCCESS', 'LOGIN_WITH_Google_FAILED', null, null, 'auth/login-google/redirect');
 };
 
 export const emailVerification = (userId: string, updateToken: string) => async (dispatch: any) => {
@@ -116,5 +107,25 @@ export const emailVerificationResendMail = () => async (dispatch: any) => {
     'user/resend-active-email',
     'LOADING',
     {},
+  );
+};
+
+export const authGmailUser = (googleToken: string) => async (dispatch: any) => {
+  await ApiService.get(
+    dispatch,
+    'LOGIN_SUCCESS',
+    'EMAIL_VERIFICATION_RESEND_MAIL_FAILED',
+    (response: { user: UserRes }) => {
+      dispatch(notifications.successNotification(__('notification.logInSuccess')));
+      const redirect = getRememberedRedirect();
+
+      if (redirect && redirect.role === response.user.role) {
+        history.push(redirect.to);
+        clearRememberedRedirect();
+      }
+    },
+    null,
+    `auth/login-by-google-token/${googleToken}`,
+    'LOADING',
   );
 };

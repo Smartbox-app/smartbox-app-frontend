@@ -21,7 +21,7 @@ import {
   Modal,
   ErrorBoundary,
 } from './components/Common';
-import { EmailConfirm, Login, Register, RestorePass, UserActivation, EmailSend } from './views/Auth';
+import { EmailConfirm, Login, Register, RestorePass, UserActivation, EmailSend, GoogleAuth } from './views/Auth';
 import { Invoice, PaymentFailed } from './views/DashboardCommon';
 import { NotificationContainer } from './components/Notifications';
 import AppOffline from './components/AppOffline';
@@ -73,6 +73,7 @@ const App = () => {
                 <Route path="/register/mail-was-send" component={EmailSend} />
                 <Route exact path="/restore-pass/" component={RestorePass} />
                 <Route path="/restore-pass/:userId/:updateToken" component={RestorePass} />
+                <Route path="/google-success/:googleToken" component={GoogleAuth} />
                 <Route path="/user-activation/:invitationId/:updateToken" component={UserActivation} />
 
                 <Route exact path="/email-confirmation/:userId/:updateToken" component={EmailConfirm} />
