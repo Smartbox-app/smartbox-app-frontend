@@ -2,18 +2,20 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { modal, order } from '../../../../../../../actions';
+import { Spinner } from '../../../../../../../components/Common';
 import { SectionHeader } from '../../../../../../../components/Layout';
 import { ApplicationState } from '../../../../../../../reducers';
 
 import './BankListModal.scss';
 
 interface Props {
+  loading: boolean;
   bankList: any[];
   setPaymentMethod: (paymentId: string) => void;
   hideModal: () => void;
 }
 
-const BankListModal = ({ bankList, setPaymentMethod, hideModal }: Props) => {
+const BankListModal = ({ loading, bankList, setPaymentMethod, hideModal }: Props) => {
   const handleChange = (event: any) => {
     setPaymentMethod(event.target.value);
   };
@@ -32,9 +34,7 @@ const BankListModal = ({ bankList, setPaymentMethod, hideModal }: Props) => {
               onChange={handleChange}
               onClick={() => hideModal()}
             />
-            <div className="img-wrapper">
-              <img src={bank.img} alt="bank-img" />
-            </div>
+            <div className="img-wrapper">{loading ? <Spinner /> : <img src={bank.img} alt="bank-img" />}</div>
           </label>
         ))}
       </div>
@@ -45,6 +45,7 @@ const BankListModal = ({ bankList, setPaymentMethod, hideModal }: Props) => {
 const mapStateToProps = (state: ApplicationState) => ({
   bankList: state.order.bankList,
   selectedPaymentMethodDetail: state.order.selectedPaymentMethodDetail,
+  loading: state.spinner.loading,
 });
 
 const mapDispatchToProps = (dispatch: any) =>
