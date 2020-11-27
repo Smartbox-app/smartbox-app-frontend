@@ -1,8 +1,31 @@
 @import '../../../../config/variables.scss';
+@import '../../../../config/mixins.scss';
 
-.buttons-container {
+.register-buttons-section {
+  width: $login-button-size;
+  margin: 0 auto;
+  padding: 0;
 
-  .register-control-button {
+  .button {
+    width: 100%;
+    font-size: 1.1rem;
     min-height: $login-button-height;
+    border-radius: $login-button-height /2 ;
+  }
+}
+.lost-pass {
+  text-align: center;
+}
+
+@include gt-sm {
+  .register-buttons-section {
+    width: $login-button-size * 1.1;
+
+  }
+}
+
+@include gt-md {
+  .register-buttons-section {
+    width: $login-button-size * 1.2;
   }
 }
