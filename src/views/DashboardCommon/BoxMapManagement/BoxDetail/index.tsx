@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { bindActionCreators } from 'redux';
 import { RentDetailsRes, UserRes } from 'smartbox-types';
 import { connect } from 'react-redux';
+import { boxes } from '../../../../actions';
 import { ButtonsContainer, SectionHeader } from '../../../../components/Layout';
 import { Button } from '../../../../components/Common';
 import { ApplicationState } from '../../../../reducers';
@@ -18,10 +20,17 @@ interface Props {
   selectedBoxId: string;
   rentId: string;
   user: UserRes;
+  boxDataCleanUp: () => void;
 }
 
-const BoxDetail = ({ selectedBoxId, singleBoxDetail, rentId, user }: Props) => {
+const BoxDetail = ({ boxDataCleanUp, selectedBoxId, singleBoxDetail, rentId, user }: Props) => {
   const [optionDisplayState, optionDisplayToggle] = useState(false);
+
+  useEffect(() => {
+    return () => {
+      boxDataCleanUp();
+    };
+  }, []);
 
   const isThisBoxFree = (data: string): boolean => data === '';
 
@@ -99,4 +108,6 @@ const mapStateToProps = (state: ApplicationState) => ({
   user: state.user.details,
 });
 
-export default connect(mapStateToProps)(BoxDetail);
+const mapDispatchToProps = (dispatch: any) => bindActionCreators({ ...boxes }, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(BoxDetail);

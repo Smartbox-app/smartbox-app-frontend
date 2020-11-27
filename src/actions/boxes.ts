@@ -21,3 +21,5 @@ export const fetchSingleBoxDetails = (rentId: string) => async (dispatch: any) =
     `rent/details/${rentId}`,
   );
 };
+
+export const boxDataCleanUp = () => ({ type: 'CLEAN_SINGLE_BOX_DETAILS_SUCCESS' });
