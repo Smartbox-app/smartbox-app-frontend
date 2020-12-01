@@ -10,7 +10,7 @@
   width: 100%;
 }
 
-@include gt-sm {
+@include gt-xs {
   .notification-container {
     width: 350px;
   }

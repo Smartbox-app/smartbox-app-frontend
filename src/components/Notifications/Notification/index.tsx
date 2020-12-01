@@ -19,7 +19,7 @@ class Notification extends React.Component<Props> {
 
   componentDidMount() {
     this.timeout = setTimeout(() => {
-      this.hideNotification();
+      // this.hideNotification();
     }, 5000);
   }
 

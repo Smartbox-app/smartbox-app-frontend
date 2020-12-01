@@ -1,18 +1,24 @@
 @import "../../../config/variables";
+@import "../../../config/mixins";
 
 .notification {
   font-family: $font-primary;
   animation-name: show;
   animation-duration: $transition-time;
-  border-radius: $main-spacing;
   cursor: pointer;
-
-  padding: $main-spacing / 2;
+  padding: 0;
   z-index: 999;
 
   .alert {
     margin: 0;
     box-shadow: 0 0 $main-spacing/2 0 rgba(0, 0, 0, 0.25);
+  }
+}
+
+@include gt-xs {
+  .notification {
+    padding: $main-spacing / 2;
+    border-radius: $main-spacing;
   }
 }
 

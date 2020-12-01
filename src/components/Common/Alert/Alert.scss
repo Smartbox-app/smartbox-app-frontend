@@ -11,6 +11,11 @@
   color: #fff;
   font-size: 1.1rem;
 
+  .notification-marker {
+    margin-right: 10px;
+    font-size: 1.2rem;
+  };
+
   &.alert-error {
     background: rgba($color-danger, 0.95);
   }
