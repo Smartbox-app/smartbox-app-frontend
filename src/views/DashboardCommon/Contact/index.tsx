@@ -29,23 +29,22 @@ const Contact = ({ user }: Props) => {
       <h2>Zapraszamy do kontaktu:</h2>
       <div className="department-wrapper">
         <SingleDepartment
-          organisationRole="Administrator"
-          name="Piotr Drobnikowski"
-          phone={contactData.adminPhone}
-          mail={contactData.adminContact}
+          organisationRole="Biuro obsługi klienta"
+          name="Monika Zarwalska-Lis"
+          phone="665519467"
+          mail="monika@smartbox-storage.pl"
+          openHour="8:00"
+          closeHour="16:00"
         />
         <SingleDepartment
           organisationRole="Pomoc techniczna"
-          name="Adam Pawłowski"
-          phone={contactData.adminPhone}
-          mail={contactData.technicalContact}
+          name="Adrian Pawłowski"
+          phone="731400331"
+          mail="adrian@smartbox-storage.pl"
+          openHour="8:00"
+          closeHour="16:00"
         />
-        <SingleDepartment
-          organisationRole="Pomoc ogólna"
-          name=""
-          phone={contactData.helpPhone}
-          mail={contactData.helpContact}
-        />
+        <SingleDepartment organisationRole="" name="Pomoc ogólna" phone="" mail="pomoc@smartbox-storage.pl" />
       </div>
     </Section>
   );

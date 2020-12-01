@@ -22,6 +22,7 @@
 
   .department-row.clickable {
     line-height: 30px;
+    margin-bottom: 0;
   }
 
   .department-row {
@@ -33,7 +34,7 @@
     }
 
     span {
-      width: 50px;
+      width: 30px;
       text-align: center;
       font-size: 1.2rem;
     }
