@@ -6,9 +6,7 @@
   flex-direction: row;
   background: #ffffff;
   flex-wrap: wrap;
-  margin-left: -$main-spacing;
-  margin-right: -$main-spacing;
-  max-width: 100%;
+  width: 100%;
 
   @include gt-xs {
     max-width: 80vw;
