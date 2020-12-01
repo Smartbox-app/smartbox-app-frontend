@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Route, Redirect, Switch } from 'react-router-dom';
-import { Footer, Main } from '../../components/Layout';
+import { Main } from '../../components/Layout';
 import { __ } from '../../helpers/i18n';
 import { Welcome, Order, Profile, Contact } from '../DashboardCommon';
 import { MenuItemType } from '../../types/menu-item';
@@ -43,7 +43,6 @@ const DashboardUser = () => {
           <Route exact path="/user/single-rent/:orderId" component={SingleRentDetail} />
         </Switch>
       </Main>
-      <Footer />
       <Cookies />
     </DashboardContainer>
   );

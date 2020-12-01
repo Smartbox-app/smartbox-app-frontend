@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Redirect, Switch } from 'react-router-dom';
-import { Main, Section, Footer } from '../../components/Layout';
+import { Main, Section } from '../../components/Layout';
 import DashboardContainer from '../../components/Layout/DashboardContainer';
 import { MenuItemType } from '../../types/menu-item';
 import Navigation from '../../components/Layout/Navigation';
@@ -36,7 +36,6 @@ const DashboardWorker = () => {
           </Section>
         </Switch>
       </Main>
-      <Footer />
     </DashboardContainer>
   );
 };
