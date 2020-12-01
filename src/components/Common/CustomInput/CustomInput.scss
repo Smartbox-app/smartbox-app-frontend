@@ -2,9 +2,11 @@
 @import '../../../config/mixins';
 
 .custom-input {
+
   .label {
-    text-transform: capitalize;
+    text-transform: lowercase;
   }
+
   input {
     &::placeholder {
       color: $color-disabled;
