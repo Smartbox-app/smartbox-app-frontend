@@ -2,11 +2,11 @@
 @import '../../../config/mixins.scss';
 
 .logo-container {
+  display: none;
   order: 0;
   justify-content: center;
-  padding: $main-spacing * 2;
+  padding: $main-spacing * 1;
   padding-left: 0;
-  display: none;
 
   &:hover {
     cursor: pointer;
@@ -15,7 +15,7 @@
   img {
     display: block;
     height: 100px;
-    min-width: 270px;
+    width: auto;
   }
 
   &.small {
@@ -30,12 +30,13 @@
   }
 }
 
-@include gt-xs {
+@include gt-sm {
   .logo-container {
-    margin-top: $main-spacing * 3;
+    display: flex;
+
     img {
-      height: $main-logo-size / 2;
-      margin-bottom: $main-spacing * 2;
+      height: 50px;
+      min-width: 170px;
     }
   }
 }
