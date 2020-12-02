@@ -15,7 +15,7 @@
   }
 }
 
-@include gt-xs {
+@include gt-sm {
   .notification {
     padding: $main-spacing / 2;
     border-radius: $main-spacing;
