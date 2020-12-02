@@ -13,6 +13,7 @@ import FieldsColumn from './FieldsColumn';
 import FieldsGrid from './FieldsGrid';
 import FormHeader from './FormHeader';
 import SimpleHeader from './SimpleHeader';
+import MobileLogoContainer from './MobileLogoContainer';
 
 export {
   Main,
@@ -30,4 +31,5 @@ export {
   FieldsGrid,
   FormHeader,
   SimpleHeader,
+  MobileLogoContainer,
 };

@@ -2,6 +2,7 @@ import React from 'react';
 import { Route, Redirect, Switch } from 'react-router-dom';
 import { Main, Section } from '../../components/Layout';
 import DashboardContainer from '../../components/Layout/DashboardContainer';
+import MobileLogoContainer from '../../components/Layout/MobileLogoContainer';
 import { MenuItemType } from '../../types/menu-item';
 import Navigation from '../../components/Layout/Navigation';
 import { Invoice } from '../DashboardCommon';
@@ -25,6 +26,7 @@ const DashboardWorker = () => {
 
   return (
     <DashboardContainer>
+      <MobileLogoContainer />
       <Navigation menuItems={menuItems} />
       <Main>
         <Switch>

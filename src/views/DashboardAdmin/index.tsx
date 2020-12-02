@@ -2,6 +2,7 @@ import React from 'react';
 import { Route, Redirect, Switch } from 'react-router-dom';
 
 import { Main, DashboardContainer, Navigation } from '../../components/Layout';
+import MobileLogoContainer from "../../components/Layout/MobileLogoContainer";
 import { Invoice } from '../DashboardCommon';
 
 import { MenuItemType } from '../../types/menu-item';
@@ -27,6 +28,7 @@ const DashboardAdmin = () => {
 
   return (
     <DashboardContainer>
+      <MobileLogoContainer />
       <Navigation menuItems={menuItems} />
       <Main>
         <Switch>
