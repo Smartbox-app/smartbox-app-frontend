@@ -1,0 +1,33 @@
+@import '../../../config/variables';
+@import '../../../config/mixins';
+
+@for $i from 1 through 20 {
+  .scale-#{$i * 10} {
+    svg {
+      transform: scale($i * 0.1);
+    }
+  }
+}
+.map-scale {
+  .min {
+    color: $color-disabled;
+  }
+}
+
+.map-wrapper .map-scale .min {
+  color: $color-disabled;
+
+  &:hover {
+    color: $color-disabled;
+    cursor: not-allowed;
+  }
+}
+
+.map-wrapper .map-scale .max {
+  color: $color-disabled;
+
+  &:hover {
+    color: $color-disabled;
+    cursor: not-allowed;
+  }
+}

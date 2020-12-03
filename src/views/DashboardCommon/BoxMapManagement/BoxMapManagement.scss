@@ -12,14 +12,6 @@ $buttonSize: 40px;
   cursor: grabbing;
 }
 
-@for $i from 7 through 15 {
-  .scale-#{$i * 10} {
-    svg {
-      transform: scale($i * 0.1);
-    }
-  }
-}
-
 .user-box {
   padding: 0 $main-spacing;
 }

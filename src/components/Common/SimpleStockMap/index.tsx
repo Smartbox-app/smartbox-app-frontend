@@ -4,6 +4,8 @@ import { bindActionCreators } from 'redux';
 import { ApplicationState } from '../../../reducers';
 import { ReactComponent as ReactStockMap } from './ostrow_1.2.svg';
 
+import './SimpleStockMap.scss';
+
 interface Props {}
 
 interface State {
@@ -35,10 +37,11 @@ class SimpleStockMap extends React.Component<Props, State> {
     };
   }
 
-  private mapScaleUpHandle = () => {
+  private mapScaleUpHandle = (e: any) => {
+    e.stopPropagation();
     const mapWrapperElement = this.element.current;
     const { mapScale } = this.state;
-    if (mapScale < 150) {
+    if (mapScale < 200) {
       const name = `scale-${mapScale}`;
       mapWrapperElement.classList.remove(name);
       this.setState({
@@ -50,10 +53,11 @@ class SimpleStockMap extends React.Component<Props, State> {
     }
   };
 
-  private mapScaleDownHandle = () => {
+  private mapScaleDownHandle = (e: any) => {
+    e.stopPropagation();
     const mapWrapperElement = this.element.current;
     const { mapScale } = this.state;
-    if (mapScale > 70) {
+    if (mapScale > 30) {
       const name = `scale-${mapScale}`;
       mapWrapperElement.classList.remove(name);
 
@@ -204,11 +208,20 @@ class SimpleStockMap extends React.Component<Props, State> {
   }
 
   render() {
+    const { mapScale } = this.state;
     return (
       <div className="map-wrapper scale-100" ref={this.element}>
         <div className="map-scale">
-          <span role="button" className="fa fa-plus-circle" onClick={() => this.mapScaleUpHandle()} />
-          <span role="button" className="fa fa-minus-circle" onClick={() => this.mapScaleDownHandle()} />
+          <span
+            role="button"
+            className={`fa fa-plus-circle ${mapScale === 200 ? 'max' : ''}`}
+            onClick={this.mapScaleUpHandle}
+          />
+          <span
+            role="button"
+            className={`fa fa-minus-circle ${mapScale === 30 ? 'min' : ''}`}
+            onClick={this.mapScaleDownHandle}
+          />
         </div>
         <ReactStockMap id="svg-map" />
       </div>
