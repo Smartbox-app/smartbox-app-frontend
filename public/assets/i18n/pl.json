@@ -215,6 +215,7 @@
       "userUnblocked": "Odblokowano użytkownika.",
       "userMovedSuccess": "Poprawnie przeniesiono użytkownika.",
       "userStatusChanged": "Poprawnie zmieniono status.",
+      "userAssigmentChanged": "Poprawnie zmieniono przypisanie.",
       "invitationSendProperly": "Poprawnie wysłano zaproszenie.",
       "discountCodeRead": "Poprawnie odczytano kod rabatowy.",
       "passChangedSuccess": "Poprawnie zmieniono hasło.",
