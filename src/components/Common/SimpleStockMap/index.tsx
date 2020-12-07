@@ -125,7 +125,7 @@ class SimpleStockMap extends React.Component<Props, State> {
     e.preventDefault();
 
     const mousePositionX = e.changedTouches[e.changedTouches.length - 1].pageX - el.offsetLeft;
-    const mousePositionY = e.changedTouches[e.changedTouches.length - 1].pageX - el.offsetTop;
+    const mousePositionY = e.changedTouches[e.changedTouches.length - 1].pageY - el.offsetTop;
     const mapMoveDistance = mousePositionX - grabStartX;
     const mapMoveHeight = mousePositionY - grabStartY;
 
@@ -136,6 +136,7 @@ class SimpleStockMap extends React.Component<Props, State> {
 
     el.scrollLeft = scrollLeft - mapMoveDistance;
     el.scrollTop = scrollTop - mapMoveHeight;
+    window.scroll(0, window.scrollY - mapMoveHeight);
   };
 
   public componentDidMount(): void {
