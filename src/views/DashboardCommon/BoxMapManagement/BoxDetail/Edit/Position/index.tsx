@@ -7,7 +7,7 @@ import { bindActionCreators } from 'redux';
 import { ChangeStatusReq, StockList } from 'smartbox-types';
 import { boxes, modal, notifications } from '../../../../../../actions';
 import { FormContainer, ButtonsContainer } from '../../../../../../components/Layout';
-import { Button, Spinner } from '../../../../../../components/Common';
+import { Alert, Button, Spinner } from '../../../../../../components/Common';
 import { ApplicationState } from '../../../../../../reducers';
 import ApiService from '../../../../../../services/api-service';
 import { formOnTranslateString } from '../../../../../../utils/trans-form';
@@ -18,13 +18,13 @@ import './Position.scss';
 interface Props {
   rentId: string;
   stock: StockList;
-  selectedBoxId: string;
   hideModal: () => void;
   successNotification: (text: string) => void;
   fetchBoxStatuses: (stockId: string) => void;
+  showModal: (content: React.ReactNode) => void;
 }
 
-const Position = ({ rentId, stock, successNotification, fetchBoxStatuses, hideModal }: Props) => {
+const Position = ({ rentId, stock, successNotification, fetchBoxStatuses, hideModal, showModal }: Props) => {
   const submitButton = (
     <ButtonsContainer>
       <Button text={__('application.move')} type="submit" danger />
@@ -34,14 +34,34 @@ const Position = ({ rentId, stock, successNotification, fetchBoxStatuses, hideMo
   const fetchUrl = `rent/form/change-user-box/${rentId}`;
   const sendUrl = `rent/user-box/${rentId}`;
 
-  const customSendFetcher = (formId: string, values: ChangeStatusReq) =>
-    ApiService.sendForm(
-      sendUrl,
-      {
-        ...values,
-      },
-      'PATCH',
+  const customSendFetcher = (formId: string, values: ChangeStatusReq) => {
+    showModal(
+      <>
+        <Alert type="primary" text={__('application.userWillNotGetMailWithInformation')} />
+        <Alert type="primary" text={__('application.actionCanNotBeUnDone')} />
+        <ButtonsContainer max>
+          <Button text={__('application.cancel')} danger click={() => hideModal()} />
+          <Button
+            success
+            type="submit"
+            text={__('application.understood')}
+            click={async () => {
+              await hideModal();
+              await ApiService.sendForm(
+                sendUrl,
+                {
+                  ...values,
+                },
+                'PATCH',
+              );
+              await successNotification(__('notification.userStatusChanged'));
+              await fetchBoxStatuses(stock.id);
+            }}
+          />
+        </ButtonsContainer>
+      </>,
     );
+  };
 
   return (
     <FormContainer className="box-status-form">

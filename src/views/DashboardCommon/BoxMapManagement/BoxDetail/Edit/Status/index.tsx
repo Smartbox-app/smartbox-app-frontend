@@ -7,7 +7,7 @@ import { bindActionCreators } from 'redux';
 import { ChangeStatusReq, StockList } from 'smartbox-types';
 import { boxes, modal, notifications, stock } from '../../../../../../actions';
 import { FormContainer, ButtonsContainer } from '../../../../../../components/Layout';
-import { Button, Spinner } from '../../../../../../components/Common';
+import { Alert, Button, Spinner } from '../../../../../../components/Common';
 import { ApplicationState } from '../../../../../../reducers';
 import ApiService from '../../../../../../services/api-service';
 import { formOnTranslateString } from '../../../../../../utils/trans-form';
@@ -21,9 +21,10 @@ interface Props {
   hideModal: () => void;
   successNotification: (text: string) => void;
   fetchBoxStatuses: (stockId: string) => void;
+  showModal: (content: React.ReactNode) => void;
 }
 
-const Status = ({ selectedBoxId, hideModal, stock, successNotification, fetchBoxStatuses }: Props) => {
+const Status = ({ selectedBoxId, hideModal, stock, successNotification, fetchBoxStatuses, showModal }: Props) => {
   const submitButton = (
     <ButtonsContainer>
       <Button text={__('application.changeStatus')} type="submit" danger />
@@ -33,15 +34,35 @@ const Status = ({ selectedBoxId, hideModal, stock, successNotification, fetchBox
   const fetchUrl = 'rent/form/change-status';
   const sendUrl = `rent/status/${stock.id}`;
 
-  const customSendFetcher = (formId: string, values: ChangeStatusReq) =>
-    ApiService.sendForm(
-      sendUrl,
-      {
-        ...values,
-        number: selectedBoxId,
-      },
-      'PATCH',
+  const customSendFetcher = (formId: string, values: ChangeStatusReq) => {
+    showModal(
+      <>
+        <Alert type="primary" text={__('application.userWillNotGetMailWithInformation')} />
+        <Alert type="primary" text={__('application.actionCanNotBeUnDone')} />
+        <ButtonsContainer max>
+          <Button text={__('application.cancel')} danger click={() => hideModal()} />
+          <Button
+            success
+            type="submit"
+            text={__('application.understood')}
+            click={async () => {
+              await hideModal();
+              await ApiService.sendForm(
+                sendUrl,
+                {
+                  ...values,
+                  number: selectedBoxId,
+                },
+                'PATCH',
+              );
+              await successNotification(__('notification.userStatusChanged'));
+              await fetchBoxStatuses(stock.id);
+            }}
+          />
+        </ButtonsContainer>
+      </>,
     );
+  };
 
   return (
     <FormContainer className="box-status-form">
@@ -53,11 +74,6 @@ const Status = ({ selectedBoxId, hideModal, stock, successNotification, fetchBox
         sendFetcher={customSendFetcher}
         submitButton={submitButton}
         loadingInfo={<Spinner transparent />}
-        onSavedSuccessfully={() => {
-          hideModal();
-          successNotification(__('notification.userStatusChanged'));
-          fetchBoxStatuses(stock.id);
-        }}
         onTranslateString={formOnTranslateString}
         thirdPartyComponents={{ ReactSelect, ReactCreatableSelect }}
       />
