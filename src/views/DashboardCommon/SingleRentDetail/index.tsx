@@ -3,6 +3,7 @@ import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { MyRentList } from 'smartbox-types';
+import UserStockMap from '../../../components/Common/UserStockMap';
 import { Section, SectionHeader } from '../../../components/Layout';
 
 import { singleRent } from '../../../actions';
@@ -18,12 +19,13 @@ interface RouteProps {
 }
 interface Props extends RouteComponentProps<RouteProps> {
   loading: boolean;
+  showUserStockMap: boolean;
   singleRent: MyRentList;
   getSingleRent: (rentId: string) => void;
   getMyRentList: () => void;
 }
 
-const SingleRentDetail = ({ loading, match, getSingleRent, singleRent, getMyRentList }: Props) => {
+const SingleRentDetail = ({ loading, showUserStockMap, match, getSingleRent, singleRent, getMyRentList }: Props) => {
   useEffect(() => {
     (async function() {
       await getMyRentList();
@@ -35,8 +37,14 @@ const SingleRentDetail = ({ loading, match, getSingleRent, singleRent, getMyRent
     <Section full>
       <SectionHeader title={__('application.rentDetail')} />
       <Action rentId={singleRent.id} />
-      <Details singleRent={singleRent} />
-      <Gate />
+      {!showUserStockMap ? (
+        <>
+          <Details singleRent={singleRent} />
+          <Gate />
+        </>
+      ) : (
+        <UserStockMap boxNumberToMarkWay={Number(singleRent.number)} />
+      )}
     </Section>
   );
 };
@@ -44,6 +52,7 @@ const SingleRentDetail = ({ loading, match, getSingleRent, singleRent, getMyRent
 const mapStateToProps = (state: ApplicationState) => ({
   singleRent: state.rent.singleRent,
   loading: state.spinner.loading,
+  showUserStockMap: state.rent.showUserStockMap,
 });
 
 const mapDispatchToProps = (dispatch: any) =>

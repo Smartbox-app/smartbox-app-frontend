@@ -5,6 +5,7 @@ export type RentsStatus = {
   rentsList: MyRentList[];
   rentsHistoryList: MyRentList[];
   stockId: string;
+  showUserStockMap: boolean;
 };
 
 interface BoxGroup {
@@ -27,7 +28,11 @@ interface FetchMyRentHistory {
   payload: MyRentList[];
 }
 
-type Action = BoxGroup | GetSingleRent | GetMySingleRent | FetchMyRentHistory;
+interface ShowMapToggle {
+  type: 'TOGGLE_SHOW_USER_STOCK_MAP';
+}
+
+type Action = BoxGroup | GetSingleRent | GetMySingleRent | FetchMyRentHistory | ShowMapToggle;
 
 const initialState: RentsStatus = {
   singleRent: {
@@ -43,6 +48,7 @@ const initialState: RentsStatus = {
   rentsList: [],
   rentsHistoryList: [],
   stockId: '',
+  showUserStockMap: false,
 };
 
 export default (state: RentsStatus = initialState, action: Action): any => {
@@ -90,7 +96,12 @@ export default (state: RentsStatus = initialState, action: Action): any => {
         };
       }
     }
-
+    case 'TOGGLE_SHOW_USER_STOCK_MAP': {
+      return {
+        ...state,
+        showUserStockMap: !state.showUserStockMap,
+      };
+    }
     default:
       return state;
   }

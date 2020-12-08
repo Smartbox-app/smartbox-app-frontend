@@ -5,7 +5,6 @@ import { MyRentList, RentStatus, UserRes } from 'smartbox-types';
 import { modal, order, singleRent, notifications } from '../../../../actions';
 import { history } from '../../../../App';
 import { Button, ConfirmModal } from '../../../../components/Common';
-import UserStockMap from '../../../../components/Common/UserStockMap';
 import { ButtonsContainer } from '../../../../components/Layout';
 import { __ } from '../../../../helpers/i18n';
 import { ApplicationState } from '../../../../reducers';
@@ -13,6 +12,7 @@ import UserService from '../../../../services/user-service';
 
 interface Props {
   rentId: string;
+  showUserStockMap: boolean;
   user: UserRes;
   rent: MyRentList;
   showModal: (content: React.ReactNode) => void;
@@ -20,6 +20,7 @@ interface Props {
   updateFormData: (data: any) => void;
   successNotification: (text: string) => void;
   getMyRentList: () => void;
+  toggleShowUserStockMap: () => void;
 }
 
 const Action = ({
@@ -29,7 +30,9 @@ const Action = ({
   updateFormData,
   rent,
   user,
+  showUserStockMap,
   getMyRentList,
+  toggleShowUserStockMap,
   successNotification,
 }: Props) => {
   const handleExtendingOrderData = (rentId: string) => {
@@ -40,9 +43,9 @@ const Action = ({
   return (
     <ButtonsContainer max>
       <Button
-        text={__('application.showOnStockMap')}
+        text={!showUserStockMap ? __('application.showOnStockMap') : __('application.showDetail')}
         success
-        click={() => showModal(<UserStockMap boxNumberToMarkWay={Number(rent.number)} />)}
+        click={() => toggleShowUserStockMap()}
       />
       <Button
         text={__('application.goToAgreement')}
@@ -77,6 +80,7 @@ const Action = ({
 const mapStateToProps = (state: ApplicationState) => ({
   rent: state.rent.singleRent,
   user: state.user.details,
+  showUserStockMap: state.rent.showUserStockMap,
 });
 
 const mapDispatchToProps = (dispatch: any) =>
