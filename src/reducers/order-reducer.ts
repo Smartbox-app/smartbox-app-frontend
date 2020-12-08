@@ -1,12 +1,6 @@
 import { addDays } from 'date-fns';
-import { BoxGroupAvailability, usePricing, ICalculateProps, IPricingResult } from 'smartbox-types';
+import { BoxGroupAvailability, usePricing, ICalculateProps, IPricingResult, PaymentType } from 'smartbox-types';
 import { FormType } from '../types/order-form';
-
-export enum MainPaymentWay {
-  'card',
-  'blik',
-  'other',
-}
 
 export type PaymentMethodDetail = {
   id: string;
@@ -27,7 +21,7 @@ export type OrderState = {
   isResignationMarked: boolean;
   blikPaymentCompletedSuccessfully: boolean;
   bankList: any;
-  selectedPayment: MainPaymentWay;
+  selectedPayment: PaymentType;
   selectedPaymentMethodDetail: PaymentMethodDetail;
 };
 
@@ -61,7 +55,7 @@ interface SaveBankList {
 
 interface SetPaymentMethod {
   type: 'SET_PAYMENT_METHOD_SUCCESS';
-  payload: PaymentMethodDetail | MainPaymentWay;
+  payload: PaymentMethodDetail | PaymentType;
 }
 
 interface PickPaymentMethod {
@@ -138,7 +132,7 @@ const initialState: OrderState = {
   isAgreementAccepted: false,
   isResignationMarked: false,
   bankList: [],
-  selectedPayment: MainPaymentWay.card,
+  selectedPayment: PaymentType.card,
   selectedPaymentMethodDetail: {
     id: '',
     name: '',
@@ -243,7 +237,7 @@ export default (state: OrderState = initialState, action: Action): any => {
     case 'CLEAR_PAYMENT_METHOD_SUCCESS':
       return {
         ...state,
-        selectedPayment: MainPaymentWay.card,
+        selectedPayment: PaymentType.card,
         isResignationMarked: false,
         selectedPaymentMethodDetail: {
           id: '',
@@ -267,7 +261,7 @@ export default (state: OrderState = initialState, action: Action): any => {
         isResignationMarked: false,
         paymentId: '',
         paymentSuccess: false,
-        selectedPayment: MainPaymentWay.card,
+        selectedPayment: PaymentType.card,
         formData: {
           durationInDays: 7,
           discount: 0,

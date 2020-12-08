@@ -2,10 +2,10 @@ import React, { useEffect } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { ReactSVG } from 'react-svg';
+import { PaymentType } from 'smartbox-types';
 import { modal, order } from '../../../../../../actions';
 import FormHeader from '../../../../../../components/Layout/FormHeader';
 import { ApplicationState } from '../../../../../../reducers';
-import { MainPaymentWay } from '../../../../../../reducers/order-reducer';
 
 import BankListModal from './BankListModal';
 
@@ -59,7 +59,7 @@ const PaymentMethods = ({ showModal, saveBanks, selectedPaymentMethod, register,
             type="radio"
             id="paymentTypeCard"
             name="paymentType"
-            value={MainPaymentWay.card}
+            value={PaymentType.card}
             ref={register({ required: true })}
             onChange={(event: any) => pickPaymentType(Number(event.target.value))}
           />
@@ -76,7 +76,7 @@ const PaymentMethods = ({ showModal, saveBanks, selectedPaymentMethod, register,
             type="radio"
             id="paymentTypeBlik"
             name="paymentType"
-            value={MainPaymentWay.blik}
+            value={PaymentType.blik}
             ref={register({ required: true })}
             onChange={(event: any) => pickPaymentType(Number(event.target.value))}
           />
@@ -93,7 +93,7 @@ const PaymentMethods = ({ showModal, saveBanks, selectedPaymentMethod, register,
             type="radio"
             id="paymentTypeBank"
             name="paymentType"
-            value={MainPaymentWay.other}
+            value={PaymentType.transfer}
             ref={register({ required: true })}
             onChange={(event: any) => pickPaymentType(Number(event.target.value))}
           />

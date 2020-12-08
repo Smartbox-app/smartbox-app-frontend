@@ -4,7 +4,7 @@ import { RouteComponentProps, withRouter } from 'react-router-dom';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { UserRes, IPricingResult } from 'smartbox-types';
+import { UserRes, IPricingResult, PaymentType } from 'smartbox-types';
 import { Button, CheckBox } from '../../../../../components/Common';
 import { order, modal, notifications } from '../../../../../actions';
 import { ButtonsContainer } from '../../../../../components/Layout';
@@ -14,7 +14,6 @@ import { FormType } from '../../../../../types/order-form';
 import FormHeader from '../../../../../components/Layout/FormHeader';
 import UserService from '../../../../../services/user-service';
 import { ApplicationState } from '../../../../../reducers';
-import { MainPaymentWay } from '../../../../../reducers/order-reducer';
 import { __ } from '../../../../../helpers/i18n';
 import CompanyDetailsForm from './CompanyDetailsForm';
 
@@ -61,7 +60,7 @@ const StepSummary = ({
   });
 
   const defaultValues = {
-    paymentType: `${MainPaymentWay.card}`,
+    paymentType: `${PaymentType.card}`,
     firstName: user.firstName || '',
     lastName: user.lastName || '',
     street: user.street || '',
@@ -91,13 +90,13 @@ const StepSummary = ({
   const dataVerification = (): boolean => {
     if (typeof watch().paymentType !== 'string') {
       return true;
-    } else if (Number(watch().paymentType) === MainPaymentWay.other && selectedPaymentMethod.id === '') {
+    } else if (Number(watch().paymentType) === PaymentType.transfer && selectedPaymentMethod.id === '') {
       return true;
-    } else if (Number(watch().paymentType) === MainPaymentWay.other && selectedPaymentMethod.id !== '') {
+    } else if (Number(watch().paymentType) === PaymentType.transfer && selectedPaymentMethod.id !== '') {
       return false;
     } else if (
-      Number(watch().paymentType) === MainPaymentWay.blik ||
-      Number(watch().paymentType) === MainPaymentWay.card
+      Number(watch().paymentType) === PaymentType.blik ||
+      Number(watch().paymentType) === PaymentType.card
     ) {
       return false;
     } else {
@@ -159,7 +158,7 @@ const StepSummary = ({
   const handleChange = (e: any) => {
     if (user.rentCount === 0) {
       if (paymentChangeOnly(e)) {
-        if (watch().paymentType !== `${MainPaymentWay.card}`) {
+        if (watch().paymentType !== `${PaymentType.card}`) {
           if (countedPrice?.name === 'firstRentFreePracing') {
             successNotification(
               'Promocja 1zł za pierwszy tydzień obowiązuje tylko przy płatności kartą. Cena została zmieniona.',

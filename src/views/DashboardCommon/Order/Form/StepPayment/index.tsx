@@ -3,9 +3,8 @@ import { withRouter } from 'react-router-dom';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { UserRes } from 'smartbox-types';
+import { PaymentType, UserRes } from 'smartbox-types';
 import { order } from '../../../../../actions';
-import { MainPaymentWay } from '../../../../../reducers/order-reducer';
 import UserService from '../../../../../services/user-service';
 import { FormType } from '../../../../../types/order-form';
 import { ApplicationState } from '../../../../../reducers';
@@ -20,7 +19,7 @@ import './StepPayment.scss';
 interface Props {
   user: UserRes;
   formData: FormType;
-  selectedPayment: MainPaymentWay;
+  selectedPayment: PaymentType;
 }
 
 const StepPayment = ({ formData, selectedPayment, user }: Props) => {
@@ -32,11 +31,11 @@ const StepPayment = ({ formData, selectedPayment, user }: Props) => {
 
   const formToRender = () => {
     switch (selectedPayment) {
-      case MainPaymentWay.card:
+      case PaymentType.card:
         return <CreditCardForm />;
-      case MainPaymentWay.blik:
+      case PaymentType.blik:
         return <BlikForm />;
-      case MainPaymentWay.other:
+      case PaymentType.transfer:
         return <BankForm />;
       default:
         return <CreditCardForm />;

@@ -5,6 +5,7 @@ import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { RentBoxReq, UserRole, IPricingResult, UserRes, StockList, ExtendRentalReq } from 'smartbox-types';
+import { PaymentType } from 'smartbox-types/src/payment/payment-entity';
 import { Alert, Button } from '../../../../../components/Common';
 import { order } from '../../../../../actions';
 import { ButtonsContainer } from '../../../../../components/Layout';
@@ -33,6 +34,7 @@ interface Props extends RouteComponentProps<RouteProps> {
   isAgreementAccepted: boolean;
   isResignationMarked: boolean;
   stock: StockList;
+  paymentType: PaymentType;
   sentExtendRentRequest: (rentId: string, data: ExtendRentalReq, role: UserRole) => void;
   sentRentBoxRequest: (data: RentBoxReq, nextStep: string, role: UserRole) => void;
 }
@@ -46,6 +48,7 @@ const StepSummary = ({
   countedPrice,
   stock,
   match,
+  paymentType,
   sentExtendRentRequest,
 }: Props): any => {
   useEffect(() => {
@@ -79,6 +82,7 @@ const StepSummary = ({
     const dataCollectionExtendRent: ExtendRentalReq = {
       ...commonCollection,
       isPaySavedCard: false,
+      type: paymentType,
     };
 
     const dataCollectionRent: RentBoxReq = {
@@ -86,6 +90,7 @@ const StepSummary = ({
       startAt: formData.dateStart,
       stockId: stock.id,
       size: Number(formData.size),
+      type: paymentType,
     };
 
     if (match.params.rentId) {
@@ -129,6 +134,7 @@ const mapStateToProps = (state: ApplicationState) => ({
   stock: state.stock.list[0],
   rentId: state.rent.singleRent.id,
   selectedPaymentMethodDetailId: state.order.selectedPaymentMethodDetail.id,
+  paymentType: state.order.selectedPayment,
 });
 
 const mapDispatchToProps = (dispatch: any) =>
