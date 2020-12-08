@@ -184,15 +184,15 @@
         "__type_alias_do_not_touch": "ApiErrorCode.FirstActiveUser"
       },
       "37": {
-        "text": "@@@@@@@@@@@@@@@TODO: Translate ApiErrorCode.PaymentIsntBlikType!",
+        "text": "Płatność nie jest oznaczona jako blik!",
         "__type_alias_do_not_touch": "ApiErrorCode.PaymentIsntBlikType"
       },
       "38": {
-        "text": "@@@@@@@@@@@@@@@TODO: Translate ApiErrorCode.PaymentIsntTransferType!",
+        "text": "Płatność nie jest oznaczona jako przelew!",
         "__type_alias_do_not_touch": "ApiErrorCode.PaymentIsntTransferType"
       },
       "39": {
-        "text": "@@@@@@@@@@@@@@@TODO: Translate ApiErrorCode.PaymentIsntCardType!",
+        "text": "Płatność nie jest oznaczona jako karta!",
         "__type_alias_do_not_touch": "ApiErrorCode.PaymentIsntCardType"
       }
     }

@@ -21,6 +21,7 @@ interface Props {
   hideModal: () => void;
   successNotification: (text: string) => void;
   fetchBoxStatuses: (stockId: string) => void;
+  showModal: (content: React.ReactNode) => void;
 }
 
 const WorkerEdit = ({
@@ -31,25 +32,42 @@ const WorkerEdit = ({
   fetchBoxStatuses,
   boxesGroup,
   selectedBoxId,
+  showModal,
 }: Props) => {
   const submitButton = (
     <ButtonsContainer>
-      <Button text={__('application.changeStatus')} type="submit" danger />
+      <Button text={__('application.changeStatus')} danger />
     </ButtonsContainer>
   );
 
   const fetchUrl = 'rent/form/change-status-after-checked';
   const sendUrl = `rent/status-after-checked/${rentId}`;
 
-  const customSendFetcher = (formId: string, values: ChangeStatusReq) =>
-    ApiService.sendForm(
-      sendUrl,
-      {
-        ...values,
-        // number: selectedBoxId,
-      },
-      'PATCH',
+  const customSendFetcher = (formId: string, values: ChangeStatusReq) => {
+    showModal(
+      <>
+        Tutaj pojawi się informacja że o zmanach trzeba poinformwać kogoś.
+        <ButtonsContainer max>
+          <Button
+            primary
+            type="submit"
+            text="Rozumiem"
+            click={() => {
+              hideModal();
+              ApiService.sendForm(
+                sendUrl,
+                {
+                  ...values,
+                  // number: selectedBoxId,
+                },
+                'PATCH',
+              );
+            }}
+          />
+        </ButtonsContainer>
+      </>,
     );
+  };
 
   const canWorkerEdit = (): boolean => {
     let result = true;

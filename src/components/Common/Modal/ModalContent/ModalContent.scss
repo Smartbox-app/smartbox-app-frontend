@@ -11,7 +11,6 @@
   box-shadow: 0 0 $main-spacing * 1.5 $main-spacing / -2 rgba(0, 0, 0, 0.5);
   border-radius: $main-spacing / 5;
   background-color: darken($color-background, 1%);
-  overflow: scroll;
 
   @include gt-sm {
     min-width: 500px;
