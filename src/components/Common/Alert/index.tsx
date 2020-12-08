@@ -14,6 +14,9 @@ const marker = (type: string) => {
   } else if (type === 'error') {
     // eslint-disable-next-line no-unused-expressions
     return <i className="fa fa-times-circle notification-marker" aria-hidden="true" />;
+  } else if (type === 'primary') {
+    // eslint-disable-next-line no-unused-expressions
+    return <i className="fa fa-exclamation-circle notification-marker" aria-hidden="true" />;
   }
 };
 

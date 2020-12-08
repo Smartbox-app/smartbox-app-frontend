@@ -28,6 +28,10 @@
     background: rgba($color-warning, 0.95);
   }
 
+  &.alert-primary {
+    background: rgba($color-primary, 0.95);
+  }
+
   &.alert-success {
     background: rgba($color-success, 0.95);
   }
