@@ -8,6 +8,7 @@
   padding: $main-spacing/2;
   position: absolute;
   right: 10px;
+  z-index: 999;
 
   &:hover {
     cursor: pointer;
