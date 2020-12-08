@@ -182,6 +182,18 @@
       "36": {
         "text": "Aktywacja użytkownika wymagana!",
         "__type_alias_do_not_touch": "ApiErrorCode.FirstActiveUser"
+      },
+      "37": {
+        "text": "@@@@@@@@@@@@@@@TODO: Translate ApiErrorCode.PaymentIsntBlikType!",
+        "__type_alias_do_not_touch": "ApiErrorCode.PaymentIsntBlikType"
+      },
+      "38": {
+        "text": "@@@@@@@@@@@@@@@TODO: Translate ApiErrorCode.PaymentIsntTransferType!",
+        "__type_alias_do_not_touch": "ApiErrorCode.PaymentIsntTransferType"
+      },
+      "39": {
+        "text": "@@@@@@@@@@@@@@@TODO: Translate ApiErrorCode.PaymentIsntCardType!",
+        "__type_alias_do_not_touch": "ApiErrorCode.PaymentIsntCardType"
       }
     }
   }

@@ -127,7 +127,7 @@ class Table extends React.Component<Props> {
 
   render() {
     const desktop = window.matchMedia('(min-width: 920px)').matches;
-    let content = null;
+    let content:any = null;
     if (!this.props.data || this.props.data.items.length === 0) {
       return <Alert type="notice" text="Brak danych do wyświetlenia." />;
     }

@@ -10638,11 +10638,11 @@ slick-carousel@^1.8.1:
 
 "smartbox-tables@git+https://gitlab.com/itdotfocus/smartbox/smartbox-tables.git":
   version "1.0.0"
-  resolved "git+https://gitlab.com/itdotfocus/smartbox/smartbox-tables.git#6b4a7f0056869084701dcede79eaf85b0e08c6db"
+  resolved "git+https://gitlab.com/itdotfocus/smartbox/smartbox-tables.git#b4955dfbd30f4d04835fd55a83773e2a08bf181c"
 
 "smartbox-types@git+https://gitlab.com/itdotfocus/smartbox/smartbox-types.git":
   version "1.0.0"
-  resolved "git+https://gitlab.com/itdotfocus/smartbox/smartbox-types.git#d68688d88a6cc4913a6053df277db600bd6aa6fd"
+  resolved "git+https://gitlab.com/itdotfocus/smartbox/smartbox-types.git#272b08f82964bd35e06ff427f88952cff91c75ca"
 
 snapdragon-node@^2.0.1:
   version "2.1.1"
@@ -11474,10 +11474,10 @@ typedarray@^0.0.6:
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
 
-typescript@~3.7.2:
-  version "3.7.5"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.7.5.tgz#0692e21f65fd4108b9330238aac11dd2e177a1ae"
-  integrity sha512-/P5lkRXkWHNAbcJIiHPfRoKqyd7bsyCma1hZNUGfn20qm64T6ZBlrzprymeu918H+mB/0rIg2gGK/BXkhhYgBw==
+typescript@^3.7.2:
+  version "3.9.7"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.9.7.tgz#98d600a5ebdc38f40cb277522f12dc800e9e25fa"
+  integrity sha512-BLbiRkiBzAwsjut4x/dsibSTB6yWpwT5qWmC2OfuCg3GgVQCSgMs4vEctYPhsaGtd0AeuuHMkjZ2h2WG8MSzRw==
 
 unicode-canonical-property-names-ecmascript@^1.0.4:
   version "1.0.4"
