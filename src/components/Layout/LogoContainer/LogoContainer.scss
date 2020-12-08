@@ -36,7 +36,7 @@
 
     img {
       height: 50px;
-      min-width: 170px;
+      min-width: 215px;
     }
   }
 }
@@ -46,7 +46,8 @@
     display: flex;
 
     img {
-      height: $main-logo-size;
+      min-width: 260px;
+      height: 60px;
     }
   }
 }
