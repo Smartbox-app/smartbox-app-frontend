@@ -6,7 +6,7 @@ import ReactCreatableSelect from 'react-select/creatable';
 import { bindActionCreators } from 'redux';
 import { BoxListItem, ChangeStatusReq, RentStatus, StockList } from 'smartbox-types';
 import { boxes, modal, notifications } from '../../../../../../actions';
-import { Button, Spinner } from '../../../../../../components/Common';
+import { Alert, Button, Spinner } from '../../../../../../components/Common';
 import { ButtonsContainer, FormContainer } from '../../../../../../components/Layout';
 import { __ } from '../../../../../../helpers/i18n';
 import { ApplicationState } from '../../../../../../reducers';
@@ -36,7 +36,7 @@ const WorkerEdit = ({
 }: Props) => {
   const submitButton = (
     <ButtonsContainer>
-      <Button text={__('application.changeStatus')} danger />
+      <Button text={__('application.changeStatus')} type="submit" danger />
     </ButtonsContainer>
   );
 
@@ -46,22 +46,25 @@ const WorkerEdit = ({
   const customSendFetcher = (formId: string, values: ChangeStatusReq) => {
     showModal(
       <>
-        Tutaj pojawi się informacja że o zmanach trzeba poinformwać kogoś.
+        <Alert type="primary" text={__('application.userWillNotGetMailWithInformation')} />
+        <Alert type="primary" text={__('application.actionCanNotBeUnDone')} />
         <ButtonsContainer max>
+          <Button text={__('application.cancel')} danger click={() => hideModal()} />
           <Button
-            primary
+            success
             type="submit"
-            text="Rozumiem"
-            click={() => {
-              hideModal();
-              ApiService.sendForm(
+            text={__('application.understood')}
+            click={async () => {
+              await hideModal();
+              await ApiService.sendForm(
                 sendUrl,
                 {
                   ...values,
-                  // number: selectedBoxId,
                 },
                 'PATCH',
               );
+              await successNotification(__('notification.userStatusChanged'));
+              await fetchBoxStatuses(stock.id);
             }}
           />
         </ButtonsContainer>
@@ -93,11 +96,6 @@ const WorkerEdit = ({
         sendFetcher={customSendFetcher}
         submitButton={submitButton}
         loadingInfo={<Spinner transparent />}
-        onSavedSuccessfully={() => {
-          hideModal();
-          successNotification(__('notification.userStatusChanged'));
-          fetchBoxStatuses(stock.id);
-        }}
         onErrorsWhileSaving={() => hideModal()}
         onTranslateString={formOnTranslateString}
         thirdPartyComponents={{ ReactSelect, ReactCreatableSelect }}

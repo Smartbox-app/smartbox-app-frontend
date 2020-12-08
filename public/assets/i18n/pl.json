@@ -13,6 +13,7 @@
       "back": "Wróć",
       "next": "Dalej",
       "change": "Zmień",
+      "understood": "Rozumiem",
       "create": "Utwórz",
       "cancel": "Anuluj",
       "send": "Wyślij",
@@ -203,6 +204,9 @@
 
       "orderAgreement": "Umowa wynajmu",
       "orderAgreementAcceptation": "Aby kontynuować zapoznaj się z umową oraz zaakceptuj wymagane zgody.",
+
+      "userWillNotGetMailWithInformation":"Użytkownik nie zostanie automatycznie poinformowany o zmianie statusu, pamiętaj aby powiadomić go ręcznie.",
+      "actionCanNotBeUnDone": "Nie można cofnąć tej akcji, czy jesteś pewien?",
 
       "welcome": "Hello world"
     },
