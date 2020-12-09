@@ -45,8 +45,8 @@ const BlikWaitingModal = ({
 
   return (
     <div className="blik-waiting-modal">
-      <h3>Dziękujemy za wybór naszej firmy</h3>
-      <p>Proszę potwierdzić płatność kodem PIN w aplikacji BLIK</p>
+      <h3>{__('application.thanksForBuy')}</h3>
+      <p>{__('application.confirmBlik')}</p>
       {!paymentSuccess && <Spinner />}
     </div>
   );

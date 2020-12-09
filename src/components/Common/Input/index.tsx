@@ -1,6 +1,5 @@
 import * as React from 'react';
 import './Input.scss';
-import Icon from '../Icon';
 
 interface Props {
   type: string;
@@ -88,7 +87,6 @@ const Input = (props: Props) => {
       <div className={containerClass}>
         {label}
         <div className="input-wrapper">
-          {/*<Icon className="input-icon" noWrapper icon={props.type} />*/}
           <input
             className={`input ${props.dark ? 'dark' : ''} input-${props.type} ${errorClass(props.input.errors)}`}
             id={props.input.name}

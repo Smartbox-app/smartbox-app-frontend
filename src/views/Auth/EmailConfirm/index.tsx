@@ -1,17 +1,10 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { auth } from '../../../actions';
-import { Button, Spinner } from '../../../components/Common';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
-import {
-  ButtonsContainer,
-  FormContainer,
-  LogoContainer,
-  PageContent,
-  Section,
-  SectionHeader,
-} from '../../../components/Layout';
+import { auth } from '../../../actions';
+import { Spinner } from '../../../components/Common';
+import { FormContainer, LogoContainer, PageContent, Section, SectionHeader } from '../../../components/Layout';
 import { __ } from '../../../helpers/i18n';
 import { ApplicationState } from '../../../reducers';
 
@@ -33,8 +26,8 @@ const EmailConfirm = ({ emailVerification, match }: Props) => {
       <Section>
         <FormContainer>
           <LogoContainer />
-          <SectionHeader title="Dziękujemy za rejestrację" />
-          <p className="">Trwa weryfikacja maila....</p>
+          <SectionHeader title={__('application.thanksForRegister')} />
+          <p className="">{__('application.mailVerificationInProgress')}</p>
           <Spinner />
         </FormContainer>
       </Section>

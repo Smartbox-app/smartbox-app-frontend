@@ -208,6 +208,11 @@
 
       "userWillNotGetMailWithInformation":"Użytkownik nie zostanie automatycznie poinformowany o zmianie statusu, pamiętaj aby powiadomić go ręcznie.",
       "actionCanNotBeUnDone": "Nie można cofnąć tej akcji, czy jesteś pewien?",
+      "thanksForBuy": "Dziękujemy za wybór naszej firmy",
+      "confirmBlik": "Proszę potwierdzić płatność kodem PIN w aplikacji BLIK",
+
+      "thanksForRegister": "Dziękujemy za rejestrację",
+      "mailVerificationInProgress": "Trwa weryfikacja maila....",
 
       "welcome": "Hello world"
     },
