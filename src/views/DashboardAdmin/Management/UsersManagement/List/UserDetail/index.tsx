@@ -23,7 +23,6 @@ const UserDetail = ({ userId, userData, fetchSingleUser, singleUser }: Props) =>
     fetchSingleUser(userId);
   }, []);
 
-  console.log('singleUser', singleUser);
   return (
     <div className="user-detail-wrapper">
       <SimpleHeader title={__('application.customerDetails')} />

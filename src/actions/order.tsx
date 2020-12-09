@@ -150,7 +150,6 @@ export const sentExtendRentRequest = (rentId: string, data: ExtendRentalReq, rol
     'SENT_EXTEND_RENT_SUCCESS',
     'SENT_EXTEND_RENT_FAILED',
     (suc: any) => {
-      console.log('suc', suc);
       history.push(`/${UserService.getSlugByRole(role)}/order/step/payment/${rentId}`);
     },
     null,

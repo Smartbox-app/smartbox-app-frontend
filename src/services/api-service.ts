@@ -41,7 +41,6 @@ export default class ApiService {
           dispatch({ type: loadingAction, payload: false });
           break;
         case ApiResult.error:
-          console.log(' ApiResult.error', data);
           // @TODO: optional 404 handling
           if (data.error_code === ApiErrorCode.NoSuchObjectWithThisId) {
             history.push('/');
