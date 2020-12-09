@@ -84,21 +84,16 @@ const BoxDetail = ({ boxDataCleanUp, selectedBoxId, singleBoxDetail, rentId, use
         </>
       )}
 
-      <ButtonsContainer max>
-        <Button
-          className={`custom-icon-button ${!optionDisplayState ? '' : 'rotate'}`}
-          primary
-          text={!optionDisplayState ? __('application.showEditOptions') : __('application.hideEditOptions')}
-          click={() => optionDisplayToggle(!optionDisplayState)}
-          icon="arrow-down-white.svg"
-        />
-      </ButtonsContainer>
-      <Edit
-        display={optionDisplayState}
-        selectedBoxId={selectedBoxId}
-        rentId={rentId}
-        singleBoxDetailStatus={singleBoxDetail.status}
-      />
+      {/*<ButtonsContainer max>*/}
+      {/*  <Button*/}
+      {/*    className={`custom-icon-button ${!optionDisplayState ? '' : 'rotate'}`}*/}
+      {/*    primary*/}
+      {/*    text={!optionDisplayState ? __('application.showEditOptions') : __('application.hideEditOptions')}*/}
+      {/*    click={() => optionDisplayToggle(!optionDisplayState)}*/}
+      {/*    icon="arrow-down-white.svg"*/}
+      {/*  />*/}
+      {/*</ButtonsContainer>*/}
+      <Edit display selectedBoxId={selectedBoxId} rentId={rentId} singleBoxDetailStatus={singleBoxDetail.status} />
     </div>
   );
 };

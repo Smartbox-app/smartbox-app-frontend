@@ -10,6 +10,7 @@ import Status from './Status';
 import WorkerEdit from './WorkerEdit';
 
 import './Edit.scss';
+import { Alert } from '../../../../../components/Common';
 
 interface Props {
   selectedBoxId: string;
@@ -21,11 +22,9 @@ interface Props {
 
 const Edit = ({ selectedBoxId, user, rentId, singleBoxDetailStatus, display }: Props) => (
   <div className={`edit-wrapper ${display && 'show-me'}`}>
-    <p>{__('application.changesIrreversible')}</p>
+    <Alert text={__('application.changesIrreversible')} type="primary" />
     {isAdmin(user.role) && <Status selectedBoxId={selectedBoxId} />}
-    {isAdmin(user.role) && rentId !== '' && singleBoxDetailStatus === RentStatus.rented && (
-      <Position rentId={rentId} />
-    )}
+    {isAdmin(user.role) && rentId !== '' && singleBoxDetailStatus === RentStatus.rented && <Position rentId={rentId} />}
     {isWorker(user.role) && <WorkerEdit rentId={rentId} selectedBoxId={selectedBoxId} />}
   </div>
 );
