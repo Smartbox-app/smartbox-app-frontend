@@ -12,7 +12,7 @@ import ApiService from '../services/api-service';
 import { history } from '../App';
 import UserService from '../services/user-service';
 import BlikWaitingModal from '../views/DashboardCommon/Order/Form/StepPayment/BlikForm/BlikWaitingModal';
-import { modal, notifications, singleRent, user } from './index';
+import { modal, notifications, singleRent, user, paymentStatus } from './index';
 
 export const updateFormData = (data: any) => ({ type: 'FORM_STEP_SUCCESS', payload: data });
 
@@ -115,6 +115,7 @@ export const checkIfStockIsRented = (paymentId: string) => async (dispatch: any)
         dispatch(singleRent.getMyRentList());
         dispatch(singleRent.fetchMyRentHistory());
         dispatch(user.fetchMyData());
+        dispatch(paymentStatus.paymentStatusChanged(data));
       }
     },
     null,
@@ -128,10 +129,8 @@ export const sentExecutePaymentWithTpayRequest = (paymentId: string, group: stri
     'SENT_EXECUTE_PAYMENT_WITH_TPAY_REQUEST_SUCCESS',
     'SENT_EXECUTE_PAYMENT_WITH_TPAY_REQUEST_FAILED',
     (res: UrlRes) => {
-      // const win = window.open(res.url, '_blank');
       const win = window.open(res.url, '_self');
       win?.focus();
-      // history.push('/');
     },
     null,
     `rent/execut-payment-with-tpay/${paymentId}/${group}`,

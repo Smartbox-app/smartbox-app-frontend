@@ -11,8 +11,10 @@ import * as singleRent from './single-rent';
 import * as stock from './stock';
 import * as gate from './gate';
 import * as invitations from './invitations';
+import * as paymentStatus from './payment-status';
 
 export {
+  paymentStatus,
   appStatus,
   apiTable,
   auth,
