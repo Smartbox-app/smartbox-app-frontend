@@ -1,6 +1,10 @@
 @import '../../../config/variables';
 @import '../../../config/mixins';
 
+.contact-wrapper {
+  margin-top: 30px;
+}
+
 .department-wrapper {
   display: flex;
   justify-content: center;

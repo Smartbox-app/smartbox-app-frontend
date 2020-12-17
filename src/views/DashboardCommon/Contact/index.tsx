@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { UserRes } from 'smartbox-types';
-import { Section } from '../../../components/Layout';
+import { Section, SectionHeader } from '../../../components/Layout';
 import { ApplicationState } from '../../../reducers';
 import SingleDepartment from './SingleDepartment';
 
@@ -25,28 +25,30 @@ const Contact = ({ user }: Props) => {
     helpPhone: '0048665519467',
   };
   return (
-    <Section full>
-      <h2>Zapraszamy do kontaktu:</h2>
-      <div className="department-wrapper">
-        <SingleDepartment
-          organisationRole="Biuro obsługi klienta"
-          name="Monika Zarwalska-Lis"
-          phone="665519467"
-          mail="monika@smartbox-storage.pl"
-          openHour="8:00"
-          closeHour="16:00"
-        />
-        <SingleDepartment
-          organisationRole="Pomoc techniczna"
-          name="Adrian Pawłowski"
-          phone="731400331"
-          mail="adrian@smartbox-storage.pl"
-          openHour="8:00"
-          closeHour="16:00"
-        />
-        <SingleDepartment organisationRole="" name="Pomoc ogólna" phone="" mail="pomoc@smartbox-storage.pl" />
-      </div>
-    </Section>
+    <div className="contact-wrapper">
+      <Section full>
+        <SectionHeader title="Zapraszamy do kontaktu:" />
+        <div className="department-wrapper">
+          <SingleDepartment
+            organisationRole="Biuro obsługi klienta"
+            name="Monika Zarwalska-Lis"
+            phone="665519467"
+            mail="monika@smartbox-storage.pl"
+            openHour="8:00"
+            closeHour="16:00"
+          />
+          <SingleDepartment
+            organisationRole="Pomoc techniczna"
+            name="Adrian Pawłowski"
+            phone="731400331"
+            mail="adrian@smartbox-storage.pl"
+            openHour="8:00"
+            closeHour="16:00"
+          />
+          <SingleDepartment organisationRole="" name="Pomoc ogólna" phone="" mail="pomoc@smartbox-storage.pl" />
+        </div>
+      </Section>
+    </div>
   );
 };
 
