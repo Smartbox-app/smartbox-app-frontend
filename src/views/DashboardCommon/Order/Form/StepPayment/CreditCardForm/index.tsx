@@ -13,6 +13,8 @@ import { __ } from '../../../../../../helpers/i18n';
 import { ApplicationState } from '../../../../../../reducers';
 import UserService from '../../../../../../services/user-service';
 import { order } from '../../../../../../actions';
+import { encryptMessage } from '../../../../../../utils/crypt';
+import ApiService from '../../../../../../services/api-service';
 
 interface RouteProps {
   step: string;
@@ -27,15 +29,25 @@ interface Props extends RouteComponentProps<RouteProps> {
 
 const CreditCardForm = ({ user, sentExecutePaymentRequest, paymentId, match }: Props) => {
   const { handleSubmit, register, errors, control, watch } = useForm();
-  const onSubmit = (data: any) => {
-    const readyData: ExecutePaymentReq = {
+  const onSubmit = async (data: any) => {
+    // eslint-disable-next-line max-len
+    const msg = `${data.cardNumber}|${data.expirationDateMonth.value}/${data.expirationDateYear.value.slice(2)}|${
+      data.cvv
+    }|${ApiService.url}`;
+    const encryptedMsg = await encryptMessage(msg);
+
+    const readyData: ExecutePaymentReq | any = {
       paymentId: match.params.rentId || paymentId,
       name: data.owner,
       cardNumber: data.cardNumber,
       expiryDate: `${data.expirationDateMonth.value}/${data.expirationDateYear.value.slice(2)}`,
       cvv: data.cvv,
+      encryptedMsg: encryptedMsg,
     };
-    sentExecutePaymentRequest(readyData, true);
+
+    console.log('readyData', readyData);
+
+    // sentExecutePaymentRequest(readyData, true);
   };
 
   const onBack = () => {

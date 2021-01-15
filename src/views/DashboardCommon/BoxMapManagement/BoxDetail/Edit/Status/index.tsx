@@ -6,7 +6,7 @@ import ReactCreatableSelect from 'react-select/creatable';
 import { bindActionCreators } from 'redux';
 import { ChangeStatusReq, StockList } from 'smartbox-types';
 import { boxes, modal, notifications, stock } from '../../../../../../actions';
-import { FormContainer, ButtonsContainer } from '../../../../../../components/Layout';
+import { FormContainer, ButtonsContainer, SimpleHeader } from '../../../../../../components/Layout';
 import { Alert, Button, Spinner } from '../../../../../../components/Common';
 import { ApplicationState } from '../../../../../../reducers';
 import ApiService from '../../../../../../services/api-service';
@@ -35,16 +35,25 @@ const Status = ({ selectedBoxId, hideModal, stock, successNotification, fetchBox
   const sendUrl = `rent/status/${stock.id}`;
 
   const customSendFetcher = (formId: string, values: ChangeStatusReq) => {
+    console.log('ChangeStatusReq', values);
     showModal(
       <>
-        <Alert type="primary" text={__('application.userWillNotGetMailWithInformation')} />
-        <Alert type="primary" text={__('application.actionCanNotBeUnDone')} />
-        <ButtonsContainer max>
+        {values.status === null || values.status.length === 0 ? (
+          <Alert type="error" text="Nie wybrałeś statusu" />
+        ) : (
+          <div className="modal-alert-wrapper">
+            <Alert type="primary" text={__('application.userWillNotGetMailWithInformation')} />
+            <Alert type="primary" text={__('application.actionCanNotBeUnDone')} />
+          </div>
+        )}
+
+        <ButtonsContainer>
           <Button text={__('application.cancel')} danger click={() => hideModal()} />
           <Button
             success
             type="submit"
             text={__('application.understood')}
+            disabled={values.status === null || values.status.length === 0}
             click={async () => {
               await hideModal();
               await ApiService.sendForm(

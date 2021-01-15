@@ -27,6 +27,7 @@
     "font-awesome": "^4.7.0",
     "history": "^4.10.1",
     "itf_formbuilder_react": "git+https://gitlab.com/IT.focus/itf_formbuilder_react.git",
+    "jsencrypt": "^3.0.0-rc.1",
     "node-polyglot": "^2.4.0",
     "node-sass": "^4.13.0",
     "react": "^16.12.0",
