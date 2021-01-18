@@ -207,6 +207,7 @@
       "orderAgreementAcceptation": "Aby kontynuować zapoznaj się z umową oraz zaakceptuj wymagane zgody.",
 
       "userWillNotGetMailWithInformation":"Użytkownik nie zostanie automatycznie poinformowany o zmianie statusu, pamiętaj aby powiadomić go ręcznie.",
+      "userWillGetMailWithInformation":"Użytkownik zostanie automatycznie poinformowany o zmianie statusu.",
       "actionCanNotBeUnDone": "Nie można cofnąć tej akcji, czy jesteś pewien?",
       "thanksForBuy": "Dziękujemy za wybór naszej firmy",
       "confirmBlik": "Proszę potwierdzić płatność kodem PIN w aplikacji BLIK",

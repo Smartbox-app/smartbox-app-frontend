@@ -42,7 +42,7 @@ const Status = ({ selectedBoxId, hideModal, stock, successNotification, fetchBox
           <Alert type="error" text="Nie wybrałeś statusu" />
         ) : (
           <div className="modal-alert-wrapper">
-            <Alert type="primary" text={__('application.userWillNotGetMailWithInformation')} />
+            <Alert type="warning" text={__('application.userWillNotGetMailWithInformation')} />
             <Alert type="primary" text={__('application.actionCanNotBeUnDone')} />
           </div>
         )}

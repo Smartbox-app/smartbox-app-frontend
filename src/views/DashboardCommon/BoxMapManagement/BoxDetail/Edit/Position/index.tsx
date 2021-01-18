@@ -37,8 +37,10 @@ const Position = ({ rentId, stock, successNotification, fetchBoxStatuses, hideMo
   const customSendFetcher = (formId: string, values: ChangeStatusReq) => {
     showModal(
       <>
-        <Alert type="primary" text={__('application.userWillNotGetMailWithInformation')} />
-        <Alert type="primary" text={__('application.actionCanNotBeUnDone')} />
+        <div className="modal-alert-wrapper">
+          <Alert type="primary" text={__('application.userWillGetMailWithInformation')} />
+          <Alert type="primary" text={__('application.actionCanNotBeUnDone')} />
+        </div>
         <ButtonsContainer max>
           <Button text={__('application.cancel')} danger click={() => hideModal()} />
           <Button
@@ -54,7 +56,7 @@ const Position = ({ rentId, stock, successNotification, fetchBoxStatuses, hideMo
                 },
                 'PATCH',
               );
-              await successNotification(__('notification.userStatusChanged'));
+              await successNotification(__('notification.userMovedSuccess'));
               await fetchBoxStatuses(stock.id);
             }}
           />
@@ -75,7 +77,6 @@ const Position = ({ rentId, stock, successNotification, fetchBoxStatuses, hideMo
         loadingInfo={<Spinner transparent />}
         onSavedSuccessfully={() => {
           hideModal();
-          successNotification(__('notification.userMovedSuccess'));
           fetchBoxStatuses(stock.id);
         }}
         onTranslateString={formOnTranslateString}

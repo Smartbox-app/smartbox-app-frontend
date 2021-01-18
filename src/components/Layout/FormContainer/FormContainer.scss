@@ -7,6 +7,10 @@
   flex-direction: column;
   width: 100%;
 
+  [class*="placeholder"]{
+    color: $color-text !important;
+  }
+
   form {
     flex: 1;
     display: flex;
