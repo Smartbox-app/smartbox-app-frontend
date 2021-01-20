@@ -265,7 +265,7 @@ export default (state: OrderState = initialState, action: Action): any => {
         formData: {
           durationInDays: 7,
           discount: 0,
-          size: '',
+          size: state.formData.size,
           isFirstRent: true,
           dateStart: new Date(),
           dateEnd: addDays(new Date(), 7),

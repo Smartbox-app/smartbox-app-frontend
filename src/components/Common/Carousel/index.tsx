@@ -1,8 +1,16 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Slider from 'react-slick';
 import { ReactSVG } from 'react-svg';
-import { usePricing } from 'smartbox-types';
+import { bindActionCreators } from 'redux';
+import { usePricing, UserRole } from 'smartbox-types';
+import { order } from '../../../actions';
+import { history } from '../../../App';
 import { __ } from '../../../helpers/i18n';
+import { ApplicationState } from '../../../reducers';
+import UserService from '../../../services/user-service';
+import { ButtonsContainer } from '../../Layout';
+import { Button } from '../index';
 import CustomArrow from './CustomArrow';
 
 import 'slick-carousel/slick/slick.css';
@@ -11,11 +19,15 @@ import './Carousel.scss';
 
 interface Props {
   imagesList: number[];
+  userRole: UserRole;
+  updateFormData: (data: any) => void;
 }
 
 class Carousel extends Component<Props> {
   private dataToDisplay = (listToPrint: any) => {
     const { pricing } = usePricing();
+    const { updateFormData, userRole } = this.props;
+
     return listToPrint.map((data: '3' | '6' | '9' | '12', key: number) => {
       const { weekly, monthly } = pricing[data];
       return (
@@ -29,6 +41,17 @@ class Carousel extends Component<Props> {
             </p>
           </div>
           <ReactSVG src={`/assets/icons/${data}c.svg`} />
+          <ButtonsContainer max>
+            <Button
+              text={__('application.newStock')}
+              outline
+              icon="plus.svg"
+              click={() => {
+                updateFormData({ size: `${data}` });
+                history.push(`/${UserService.getSlugByRole(userRole)}/order/step/size`);
+              }}
+            />
+          </ButtonsContainer>
         </div>
       );
     });
@@ -55,4 +78,16 @@ class Carousel extends Component<Props> {
   }
 }
 
-export default Carousel;
+const mapStateToProps = (state: ApplicationState) => ({
+  userRole: state.user.details.role,
+});
+
+const mapDispatchToProps = (dispatch: any) =>
+  bindActionCreators(
+    {
+      ...order,
+    },
+    dispatch,
+  );
+
+export default connect(mapStateToProps, mapDispatchToProps)(Carousel);

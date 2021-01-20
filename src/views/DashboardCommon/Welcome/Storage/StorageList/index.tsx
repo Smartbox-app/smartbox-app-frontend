@@ -18,7 +18,7 @@ const StorageInfo = ({ list }: Props) => {
   return (
     <div className="storage-info-wrapper">
       {dataToDisplay}
-      <ButtonForNew />
+      {/*<ButtonForNew />*/}
     </div>
   );
 };
