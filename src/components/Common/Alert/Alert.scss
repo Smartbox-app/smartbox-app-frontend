@@ -1,10 +1,10 @@
-@import "../../../config/variables";
+@import '../../../config/variables';
 
 .alert:not(.alert-simple) {
   margin: $main-spacing 0;
   outline: none;
   font-weight: 400;
-  padding: $main-spacing;
+  padding: $main-spacing/2 $main-spacing;
   text-align: center;
   text-decoration: none;
   width: 100%;
@@ -14,7 +14,7 @@
   .notification-marker {
     margin-right: 10px;
     font-size: 1.2rem;
-  };
+  }
 
   &.alert-error {
     background: rgba($color-danger, 0.95);
