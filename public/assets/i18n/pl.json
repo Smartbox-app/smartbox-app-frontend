@@ -214,6 +214,7 @@
 
       "thanksForRegister": "Dziękujemy za rejestrację",
       "mailVerificationInProgress": "Trwa weryfikacja maila....",
+      "noActiveRent": "Nie posiadasz aktywnych wynajmów",
 
       "welcome": "Hello world"
     },
