@@ -7,6 +7,8 @@
   background: #ffffff;
   flex-wrap: wrap;
   width: 100%;
+  max-height: 80vh;
+  overflow: scroll;
 
   @include gt-xs {
     max-width: 80vw;
@@ -25,11 +27,15 @@
     justify-content: center;
     align-items: center;
     padding: $main-spacing;
-    background: #eee;
+    background: #fff;
     border-radius: $main-spacing;
-    height: 60px;
+    height: 80px;
     border: 2px solid $color-disabled;
     max-width: 150px;
+
+    &:hover {
+      border-color: $color-primary-light;
+    }
   }
 
   .single-bank {
