@@ -12,7 +12,7 @@ import FormHeader from '../../../../../../components/Layout/FormHeader';
 import { __ } from '../../../../../../helpers/i18n';
 import { ApplicationState } from '../../../../../../reducers';
 import UserService from '../../../../../../services/user-service';
-import { order } from '../../../../../../actions';
+import { order, paymentStatus } from '../../../../../../actions';
 import { encryptMessage } from '../../../../../../utils/crypt';
 import ApiService from '../../../../../../services/api-service';
 
@@ -24,67 +24,35 @@ interface RouteProps {
 interface Props extends RouteComponentProps<RouteProps> {
   paymentId: string;
   user: UserRes;
+  func: any;
   sentExecutePaymentRequest: (data: ExecutePaymentReq, develop?: boolean) => void;
+  getCardForm: (paymentId: string) => void;
 }
 
-const CreditCardForm = ({ user, sentExecutePaymentRequest, paymentId, match }: Props) => {
-  const { handleSubmit, register, errors, control, watch } = useForm();
-  const onSubmit = async (data: any) => {
-    // eslint-disable-next-line max-len
-    const msg = `${data.cardNumber}|${data.expirationDateMonth.value}/${data.expirationDateYear.value.slice(2)}|${
-      data.cvv
-    }|${ApiService.url}`;
-    const encryptedMsg = await encryptMessage(msg);
-
-    const readyData: ExecutePaymentReq | any = {
-      paymentId: match.params.rentId || paymentId,
-      name: data.owner,
-      cardNumber: data.cardNumber,
-      expiryDate: `${data.expirationDateMonth.value}/${data.expirationDateYear.value.slice(2)}`,
-      cvv: data.cvv,
-      encryptedMsg: encryptedMsg,
-    };
-
-    console.log('readyData', readyData);
-
-    // sentExecutePaymentRequest(readyData, true);
-  };
-
-  const onBack = () => {
-    history.push(`/${UserService.getSlugByRole(user.role)}/order/step/agreement/${match.params.rentId || ''}`);
-  };
-
-  const submitValidation = (): boolean => {
-    if (watch().cardNumber === '') {
-      return true;
-    } else if (watch().cvv === '') {
-      return true;
-    } else if (watch().owner === '') {
-      return true;
-    } else return watch().cvv === '';
-  };
+const CreditCardForm = ({ func, user, sentExecutePaymentRequest, paymentId, match, getCardForm }: Props) => {
+  useEffect(() => {
+    paymentId ? getCardForm(paymentId) : history.push(`/${UserService.getSlugByRole(user.role)}/main`);
+  }, []);
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="form-step-payment">
-      <FormHeader title={__('application.fillData')} />
-      <CreditCardInput register={register} errors={errors} control={control} />
-      <ButtonsContainer max>
-        <Button outline text={__('application.back')} click={() => onBack()} />
-        <Button type="submit" primary text={__('application.pay')} disabled={submitValidation()} />
-      </ButtonsContainer>
-    </form>
+    <>
+      <div className="form-container" />
+      {eval(func)}
+    </>
   );
 };
 
 const mapStateToProps = (state: ApplicationState) => ({
   paymentId: state.order.paymentId,
   user: state.user.details,
+  func: state.paymentStatus.func,
 });
 
 const mapDispatchToProps = (dispatch: any) =>
   bindActionCreators(
     {
       ...order,
+      ...paymentStatus,
     },
     dispatch,
   );
