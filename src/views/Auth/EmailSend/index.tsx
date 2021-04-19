@@ -27,7 +27,7 @@ const EmailSend = ({ emailVerificationResendMail }: Props) => {
           <LogoContainer />
           <SectionHeader title="Dziękujemy za rejestrację" />
           <p className="">Aby dokończyć rejestrację proszę zweryfikować maila.</p>
-          <p className="">Wiadomość została wysłana na podany address mail.</p>
+          <p className="">Wiadomość została wysłana na podany adres mail.</p>
           <ButtonsContainer max>
             {/*<Button*/}
             {/*  primary*/}
