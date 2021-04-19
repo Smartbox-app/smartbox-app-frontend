@@ -29,10 +29,10 @@ const CreditCardForm = ({ func, user, sentExecutePaymentRequest, paymentId, matc
   }, []);
 
   return (
-    <>
+    <div className="credit-card-input-wrapper">
       <div className="form-container" />
       {eval(func)}
-    </>
+    </div>
   );
 };
 
