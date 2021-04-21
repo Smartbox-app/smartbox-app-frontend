@@ -91,13 +91,10 @@ const StepSummary = ({
     if (typeof watch().paymentType !== 'string') {
       return true;
     } else if (Number(watch().paymentType) === PaymentType.transfer && selectedPaymentMethod.id === '') {
-      return true;
+      return false; // TODO fix to work with tpay
     } else if (Number(watch().paymentType) === PaymentType.transfer && selectedPaymentMethod.id !== '') {
       return false;
-    } else if (
-      Number(watch().paymentType) === PaymentType.blik ||
-      Number(watch().paymentType) === PaymentType.card
-    ) {
+    } else if (Number(watch().paymentType) === PaymentType.blik || Number(watch().paymentType) === PaymentType.card) {
       return false;
     } else {
       return true;
