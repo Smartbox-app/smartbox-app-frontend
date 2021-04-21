@@ -1,0 +1,39 @@
+@import '../../../../../../config/variables';
+@import '../../../../../../config/mixins';
+
+.credit-card-input-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#pay-button {
+  display: flex;
+  flex-direction: column;
+  white-space: nowrap;
+  margin: $main-spacing / 2 0;
+  background: lighten($color-background, 10%);
+  cursor: pointer;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  width: 275px;
+
+  transition: $transition-time background-color, $transition-time border-color;
+  box-shadow: $box-shadow-small rgba($color-text, 0.25);
+  text-transform: none;
+  border: 2px solid #A5C312;
+  color: #A5C312;
+  padding: 8px 20px;
+  font-weight: 400;
+
+  img {
+    width: 150px;
+    height: auto;
+  }
+
+  &:hover {
+    box-shadow: inset 0 -1px 1px -1px #A5C312;
+  }
+}
