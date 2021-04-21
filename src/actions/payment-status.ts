@@ -18,8 +18,5 @@ export const getCardForm = (paymentId: string) => async (dispatch: any) => {
     const data = await response.text();
     dispatch(saveFrom(data));
   } finally {
-    // console.log('body', data);
-    // console.log('text', data.text());
-    // console.log('data', typeof data);
   }
 };

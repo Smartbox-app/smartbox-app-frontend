@@ -13,6 +13,7 @@ import { history } from '../App';
 import UserService from '../services/user-service';
 import BlikWaitingModal from '../views/DashboardCommon/Order/Form/StepPayment/BlikForm/BlikWaitingModal';
 import { modal, notifications, singleRent, user, paymentStatus } from './index';
+import { saveFrom } from './payment-status';
 
 export const updateFormData = (data: any) => ({ type: 'FORM_STEP_SUCCESS', payload: data });
 
@@ -128,9 +129,10 @@ export const sentExecutePaymentWithTpayRequest = (paymentId: string, group: stri
     dispatch,
     'SENT_EXECUTE_PAYMENT_WITH_TPAY_REQUEST_SUCCESS',
     'SENT_EXECUTE_PAYMENT_WITH_TPAY_REQUEST_FAILED',
-    (res: UrlRes) => {
-      const win = window.open(res.url, '_self');
-      win?.focus();
+    (res: UrlRes | any) => {
+      // const win = window.open(res.html);
+      // win?.focus();
+      dispatch(saveFrom(res.html));
     },
     null,
     `rent/execut-payment-with-tpay/${paymentId}/${group}`,
