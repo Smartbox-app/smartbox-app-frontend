@@ -61,7 +61,8 @@ const Register = ({ successNotification }: Props) => (
                 />
               );
             default:
-              throw new Error('Unknown field type!');
+                return null;
+              // throw new Error('Unknown field type!');
           }
         }}
         onSavedSuccessfully={() => {
