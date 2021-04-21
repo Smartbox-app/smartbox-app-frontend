@@ -25,7 +25,7 @@ interface Props {
 const StepPayment = ({ formData, selectedPayment, user }: Props) => {
   useEffect(() => {
     if (formData.size.length === 0) {
-      // history.push(`/${UserService.getSlugByRole(user.role)}/order/step/size`);
+      history.push(`/${UserService.getSlugByRole(user.role)}/order/step/size`);
     }
   });
 
@@ -34,7 +34,7 @@ const StepPayment = ({ formData, selectedPayment, user }: Props) => {
       case PaymentType.card:
         return <CreditCardForm />;
       case PaymentType.blik:
-        return <BlikForm />;
+        return <BankForm />; //TODO ?? Blik form gets strange error
       case PaymentType.transfer:
         return <BankForm />;
       default:

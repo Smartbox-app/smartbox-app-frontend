@@ -124,7 +124,7 @@ export const checkIfStockIsRented = (paymentId: string) => async (dispatch: any)
   );
 };
 
-export const sentExecutePaymentWithTpayRequest = (paymentId: string, group: string) => async (dispatch: any) => {
+export const sentExecutePaymentWithTpayRequest = (paymentId: string, group = '0') => async (dispatch: any) => {
   await ApiService.get(
     dispatch,
     'SENT_EXECUTE_PAYMENT_WITH_TPAY_REQUEST_SUCCESS',
@@ -135,7 +135,7 @@ export const sentExecutePaymentWithTpayRequest = (paymentId: string, group: stri
       dispatch(saveFrom(res.html));
     },
     null,
-    `rent/execut-payment-with-tpay/${paymentId}/${group}`,
+    `rent/execut-payment-with-tpay/${paymentId}/114`,
   );
 };
 

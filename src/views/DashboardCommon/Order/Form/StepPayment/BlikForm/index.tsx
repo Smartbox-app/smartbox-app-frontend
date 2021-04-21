@@ -1,19 +1,10 @@
-import React from 'react';
-import { useForm } from 'react-hook-form';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router';
 import { bindActionCreators } from 'redux';
-import { ExecuteBlikPaymentReq, UserRes } from 'smartbox-types';
-import { history } from '../../../../../../App';
 import { Button, Spinner } from '../../../../../../components/Common';
-import { ButtonsContainer, FormHeader } from '../../../../../../components/Layout';
-import { __ } from '../../../../../../helpers/i18n';
 import { ApplicationState } from '../../../../../../reducers';
-import UserService from '../../../../../../services/user-service';
 import { modal, order } from '../../../../../../actions';
-
-import BlikInput from './BlikInput';
-import BlikWaitingModal from './BlikWaitingModal';
 
 interface RouteProps {
   step: string;
@@ -21,51 +12,34 @@ interface RouteProps {
 }
 
 interface Props extends RouteComponentProps<RouteProps> {
-  user: UserRes;
   paymentId: string;
-  sentExecutePaymentWithBlikRequest: (data: any) => void;
-  showModal: (content: React.ReactNode) => void;
+  func: any;
+  loading: boolean;
+  sentExecutePaymentWithTpayRequest: (paymentId: string) => void;
 }
 
-const BlikForm = ({ user, paymentId, sentExecutePaymentWithBlikRequest, showModal, match }: Props) => {
-  const defaultValues = {
-    blikInput: '',
-  };
-  const { handleSubmit, register, watch } = useForm({ defaultValues });
-
-  const onSubmit = (data: any) => {
-    const req: ExecuteBlikPaymentReq = {
-      paymentId,
-      code: data.blikInput,
-    };
-    sentExecutePaymentWithBlikRequest(req);
-    showModal(<Spinner />);
-  };
-
-  const onBack = () => {
-    history.push(`/${UserService.getSlugByRole(user.role)}/order/step/agreement/${match.params.rentId || ''}`);
-  };
+const BlikForm = ({ paymentId, sentExecutePaymentWithTpayRequest, loading, func }: Props) => {
+  useEffect(() => {
+    sentExecutePaymentWithTpayRequest(paymentId);
+  }, []);
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="form-step-payment-blik">
-      <FormHeader title={__('application.enter6DigitCode')} />
-      <BlikInput register={register} />
-      <ButtonsContainer max>
-        <Button outline text={__('application.back')} click={() => onBack()} />
-        <Button
-          type="submit"
-          primary
-          text={__('application.pay')}
-          disabled={watch().blikInput === '' || watch().blikInput.length !== 6}
-        />
-      </ButtonsContainer>
-    </form>
+    <div className="form-step-payment-blik">
+      {loading ? (
+        <Spinner />
+      ) : (
+        <div className="bank-input-wrapper">
+          <div dangerouslySetInnerHTML={{ __html: func || '' }} />
+        </div>
+      )}
+    </div>
   );
 };
 
 const mapStateToProps = (state: ApplicationState) => ({
   paymentId: state.order.paymentId,
-  user: state.user.details,
+  loading: state.spinner.loading,
+  func: state.paymentStatus.func,
 });
 
 const mapDispatchToProps = (dispatch: any) =>
