@@ -88,7 +88,10 @@ const PaymentMethods = ({ showModal, saveBanks, selectedPaymentMethod, register,
           </div>
         </label>
 
-        <label htmlFor="paymentTypeBank" onClick={() => showModal(<BankListModal />)}>
+        <label
+          htmlFor="paymentTypeBank"
+          // onClick={() => showModal(<BankListModal />)}
+        >
           <input
             type="radio"
             id="paymentTypeBank"
