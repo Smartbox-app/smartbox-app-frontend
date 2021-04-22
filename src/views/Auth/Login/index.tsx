@@ -98,7 +98,7 @@ class Login extends React.Component<Props> {
                     />
                   );
                 default:
-                  throw new Error('Unknown field type!');
+                  return null;
               }
             }}
             onSavedSuccessfully={(data: AuthLoginResult) => {

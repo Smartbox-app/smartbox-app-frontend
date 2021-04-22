@@ -81,7 +81,7 @@ const RestorePass = ({ successNotification, match }: Props) => {
               case 'variablePlaceholder':
                 return null;
               default:
-                throw new Error('Unknown field type!');
+                return null;
             }
           }}
           onSavedSuccessfully={() => {
