@@ -15,8 +15,14 @@ const Cookies = ({ isRulesAndRodoAccepted, acceptationCookies }: Props) => {
   return (
     <div className={`cookies-information ${isRulesAndRodoAccepted ? 'hide-cookies-bar' : ''}`}>
       <p>
-        Ta strona używa ciastek. Korzystając ze strony wyrażasz zgodę na używanie cookie, zgodnie z aktualnymi
-        ustawieniami przeglądarki.
+        W tej aplikacji używamy plików cookies w celu zapewnienia użytkownikom efektywnego korzystania ze strony, a
+        także narzędzi analitycznych, promocyjnych i reklamowych w celu reklamy, badania rynku oraz badania preferencji
+        użytkowników. Korzystając z Aplikacji Smart Box, możesz wyrazić zgodę na korzystanie z plików cookies oraz
+        wymienionych narzędzi. Więcej informacji na temat plików cookies oraz stosowanych narzędzi znajdziesz w naszej{' '}
+        <a target="_blank" href="/assets/20210422_Polityka_Prywatnosci_SmartBox.pdf">
+          <u>Polityki prywatności</u>
+        </a>
+        .
       </p>
       <span className="exit" onClick={() => acceptationCookies()}>
         &times;
