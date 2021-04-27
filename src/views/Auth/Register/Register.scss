@@ -21,7 +21,11 @@
     }
   }
 
-  .input {
+  .checkbox {
+    margin: 10px auto 25px;
+  }
+
+  .input  {
     border: 2px solid $color-primary;
     height: $login-button-height;
     border-radius: $login-button-height/2;
@@ -41,6 +45,10 @@
 @include gt-sm {
   .register-form {
     max-width: $login-form-width;
+
+    .checkbox {
+      margin: 10px 30px 10px 35px;
+    }
     .register-input {
       label {
         margin-left: $main-spacing * 5;

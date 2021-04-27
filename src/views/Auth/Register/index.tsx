@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import ApiService from '../../../services/api-service';
 import { FormContainer, PageContent } from '../../../components/Layout';
-import { Spinner, LoginLogo, Input } from '../../../components/Common';
+import { Spinner, LoginLogo, Input, CheckBox } from '../../../components/Common';
 import { translateErrors } from '../../../utils/errors-trans';
 import { formOnTranslateString } from '../../../utils/trans-form';
 import { notifications } from '../../../actions';
@@ -58,6 +58,29 @@ const Register = ({ successNotification }: Props) => (
                     onFocus,
                     onBlur,
                   }}
+                />
+              );
+            case 'checkbox':
+              return (
+                <CheckBox
+                  key={fieldHtmlId}
+                  name={field.id}
+                  checked={currentValue}
+                  handleChange={() => onChange(!currentValue)}
+                  errors={translateErrors(errors)}
+                  label={
+                    <small>
+                      Zapoznałem/am się z postanowieniami{' '}
+                      <a target="_blank" href="/assets/20210422_Regulamin_aplikacji_Smart Box.pdf">
+                        <u>Regulaminu</u>
+                      </a>{' '}
+                      i{' '}
+                      <a target="_blank" href="/assets/20210422_Polityka_Prywatnosci_SmartBox.pdf">
+                        <u>Polityki prywatności</u>
+                      </a>{' '}
+                      oraz akceptuję ich treść
+                    </small>
+                  }
                 />
               );
             default:
