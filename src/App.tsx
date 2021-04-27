@@ -79,7 +79,9 @@ const App = () => {
                 <Route exact path="/email-confirmation/:userId/:updateToken" component={EmailConfirm} />
 
                 <Route path="/payment-success/:paymentId" component={Invoice} />
+                <Route path="/payment_finish_screen/ok" component={Invoice} />
                 <Route path="/payment-failed/" component={PaymentFailed} />
+                <Route path="/payment_finish_screen/error" component={PaymentFailed} />
 
                 <RouteAdmin path="/admin" component={DashboardAdmin} />
                 <RouteWorker path="/worker" component={DashboardWorker} />

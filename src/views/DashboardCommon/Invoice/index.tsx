@@ -23,19 +23,22 @@ interface Props extends RouteComponentProps<RouteProps> {
 }
 
 const Invoice = ({ isPaid, getMyRentList, fetchMyRentHistory, fetchMyData, checkIfStockIsRented, match }: Props) => {
-  useEffect(() => {
-    const timer = setInterval(() => {
-      checkIfStockIsRented(match.params.paymentId);
-    }, 3000);
-    return () => {
-      clearInterval(timer);
-    };
-  }, [isPaid]);
+  // useEffect(() => {
+  //   if (!match.params.paymentId) {
+  //   } else {
+  //     const timer = setInterval(() => {
+  //       checkIfStockIsRented(match.params.paymentId);
+  //     }, 3000);
+  //     return () => {
+  //       clearInterval(timer);
+  //     };
+  //   }
+  // }, [isPaid]);
   return (
     <PageContent>
       <Section>
         <LogoContainer />
-        {!isPaid ? (
+        {match.params.paymentId ? (
           <>
             <Spinner big />
             <p className="content-text">Trwa przetwarzanie płatności</p>
