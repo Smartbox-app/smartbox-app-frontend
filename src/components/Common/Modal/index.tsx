@@ -28,8 +28,8 @@ class ModalWrapper extends React.Component<Props> {
       <>
         <div
           className={`modal ${modal.isVisible ? 'visible' : ''} ${modal.isFullscreen ? 'full-screen' : ''}`}
-          onClick={this.handleClickOutside}
           id="modal"
+          onMouseDown={this.handleClickOutside}
         >
           <div className="modal-body">
             <ModalContent>
