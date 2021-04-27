@@ -5,6 +5,7 @@ import { Button, Alert, Pagination } from '../../Common';
 import { formatPrice } from '../../../utils/format-price';
 
 import './Table.scss';
+import { fullDate } from '../../../utils/format-date';
 
 interface Props {
   scheme: TableSchema;
@@ -60,7 +61,7 @@ const formatValue = (value: any, field: TableSchemaField, allValues: any) => {
       return value !== null && <img src={value} alt={field.name} />;
     }
     case FieldType.Date: {
-      return value === null || value === undefined ? 'Nieustalono' : new Date(value).toLocaleString();
+      return value === null || value === undefined ? 'Nieustalono' : fullDate(value);
     }
     case FieldType.Boolean: {
       return value === null ? 'Domyślnie' : value ? 'Tak' : 'Nie';
@@ -127,7 +128,7 @@ class Table extends React.Component<Props> {
 
   render() {
     const desktop = window.matchMedia('(min-width: 920px)').matches;
-    let content:any = null;
+    let content: any = null;
     if (!this.props.data || this.props.data.items.length === 0) {
       return <Alert type="notice" text="Brak danych do wyświetlenia." />;
     }
@@ -145,7 +146,7 @@ class Table extends React.Component<Props> {
             <td className={`${header.mobile ? 'mobile' : ''}`} key={`${header.field}_${rowIndex}`}>
               {header.buttons
                 ? header.buttons.map((button: any, index: number) => (
-                  <Button
+                    <Button
                       key={index}
                       primary={button.type === 'primary'}
                       danger={button.type === 'danger'}
@@ -154,7 +155,7 @@ class Table extends React.Component<Props> {
                       click={button.click ? () => button.click(row) : null}
                       text={button.name}
                     />
-                ))
+                  ))
                 : formatValue(row[header.field], header, row)}
             </td>
           ))}
