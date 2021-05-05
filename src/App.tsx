@@ -75,6 +75,7 @@ const App = () => {
                 <Route path="/restore-pass/:userId/:updateToken" component={RestorePass} />
                 <Route path="/google-success/:googleToken" component={GoogleAuth} />
                 <Route path="/user-activation/:invitationId/:updateToken" component={UserActivation} />
+                <Route path="/join-from-invitation/:invitationId/:updateToken" component={UserActivation} />
 
                 <Route exact path="/email-confirmation/:userId/:updateToken" component={EmailConfirm} />
 
