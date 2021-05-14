@@ -2,7 +2,7 @@ import * as React from 'react';
 import './Alert.scss';
 
 interface AlertProps {
-  type: string;
+  type: string | 'error' | 'notice' | 'warning' | 'primary' | 'success' | 'disabled';
   text: string;
   simple?: boolean;
   notification?: boolean;
