@@ -15,6 +15,7 @@
   align-items: center;
   margin: 0;
   border-top: 3px solid darken($color-primary, 10%);
+  z-index: 999;
 
   @include gt-xs {
     height: 200px;

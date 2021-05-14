@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Route, Redirect, Switch } from 'react-router-dom';
 import { Main } from '../../components/Layout';
-import MobileLogoContainer from "../../components/Layout/MobileLogoContainer";
+import MobileLogoContainer from '../../components/Layout/MobileLogoContainer';
 import { __ } from '../../helpers/i18n';
 import { Welcome, Order, Profile, Contact } from '../DashboardCommon';
 import { MenuItemType } from '../../types/menu-item';
