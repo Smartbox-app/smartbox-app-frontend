@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { ExecutePaymentReq, UserRes } from 'smartbox-types';
 import { history } from '../../../../../../App';
-import { Button } from '../../../../../../components/Common';
+import { Alert, Button, Spinner } from '../../../../../../components/Common';
 import { ButtonsContainer } from '../../../../../../components/Layout';
 import { __ } from '../../../../../../helpers/i18n';
 import { ApplicationState } from '../../../../../../reducers';
@@ -22,17 +22,25 @@ interface Props extends RouteComponentProps<RouteProps> {
   paymentId: string;
   user: UserRes;
   func: any;
+  loading: boolean;
   sentExecutePaymentRequest: (data: ExecutePaymentReq, develop?: boolean) => void;
   getCardForm: (paymentId: string) => void;
 }
 
-const CreditCardForm = ({ func, user, sentExecutePaymentRequest, paymentId, match, getCardForm }: Props) => {
+const CreditCardForm = ({ func, user, sentExecutePaymentRequest, paymentId, match, getCardForm, loading }: Props) => {
+  const [autoPayment, setAutoPayment] = useState(false);
   useEffect(() => {
     paymentId ? getCardForm(paymentId) : history.push(`/${UserService.getSlugByRole(user.role)}/order/step/size`);
   }, []);
 
   useEffect(() => {
-    eval(func);
+    console.log('func', func);
+    console.log('func.length', func?.length);
+    if (func?.length <= 3) {
+      setAutoPayment(true);
+    } else {
+      eval(func);
+    }
     return () => {};
   }, [func]);
 
@@ -42,10 +50,27 @@ const CreditCardForm = ({ func, user, sentExecutePaymentRequest, paymentId, matc
 
   return (
     <div className="credit-card-input-wrapper">
-      <div className="pay-button-container" />
-      <ButtonsContainer max>
-        <Button outline text={__('application.back')} click={() => onBack()} />
-      </ButtonsContainer>
+      {autoPayment ? (
+        <>
+          {loading ? (
+            <Spinner />
+          ) : (
+            <>
+              <Alert type="success" text="Płatność automatycznie zakończona powodzeniem." />
+              <ButtonsContainer max>
+                <Button outline text={__('application.backToHome')} to="/" />
+              </ButtonsContainer>
+            </>
+          )}
+        </>
+      ) : (
+        <>
+          <div className="pay-button-container" />
+          <ButtonsContainer max>
+            <Button outline text={__('application.back')} click={() => onBack()} />
+          </ButtonsContainer>
+        </>
+      )}
     </div>
   );
 };
@@ -54,6 +79,7 @@ const mapStateToProps = (state: ApplicationState) => ({
   paymentId: state.order.paymentId,
   user: state.user.details,
   func: state.paymentStatus.func,
+  loading: state.spinner.loading,
 });
 
 const mapDispatchToProps = (dispatch: any) =>
