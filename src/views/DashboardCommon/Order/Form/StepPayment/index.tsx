@@ -22,27 +22,27 @@ interface Props {
   selectedPayment: PaymentType;
 }
 
+const formToRender = (selectedPayment) => {
+  switch (selectedPayment) {
+    case PaymentType.card:
+      return <CreditCardForm />;
+    case PaymentType.blik:
+      return <BankForm />; //TODO ?? Blik form gets strange error
+    case PaymentType.transfer:
+      return <BankForm />;
+    default:
+      return <CreditCardForm />;
+  }
+};
+
 const StepPayment = ({ formData, selectedPayment, user }: Props) => {
   useEffect(() => {
     if (formData.size.length === 0) {
       history.push(`/${UserService.getSlugByRole(user.role)}/order/step/size`);
     }
-  });
+  }, []);
 
-  const formToRender = () => {
-    switch (selectedPayment) {
-      case PaymentType.card:
-        return <CreditCardForm />;
-      case PaymentType.blik:
-        return <BankForm />; //TODO ?? Blik form gets strange error
-      case PaymentType.transfer:
-        return <BankForm />;
-      default:
-        return <CreditCardForm />;
-    }
-  };
-
-  return <>{formToRender()}</>;
+  return <>{formToRender(selectedPayment)}</>;
 };
 
 const mapStateToProps = (state: ApplicationState) => ({

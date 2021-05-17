@@ -14,16 +14,22 @@ interface Props {
 }
 
 class ScrollPosition extends Component<Props> {
-  componentDidMount() {
-    const el = document.querySelector('.order-agreement-wrapper');
-    el && el.addEventListener('scroll', () => this.onScroll(el));
-  }
-
   private onScroll = (el: any) => {
-    if (el.scrollTop > (el.children[0].scrollHeight - el.clientHeight)) {
+    if (el.scrollTop > el.children[0].scrollHeight - el.clientHeight) {
       this.props.formAgreementReaded();
     }
   };
+  componentDidMount(): void {
+    const el = document.querySelector('.order-agreement-wrapper');
+    console.log('componentDidMount', el);
+    el && el.addEventListener('scroll', () => this.onScroll(el), false);
+  }
+
+  componentWillUnmount(): void {
+    const el = document.querySelector('.order-agreement-wrapper');
+    console.log('componentWillUnmount', el);
+    el && el.removeEventListener('scroll', () => this.onScroll(el), false);
+  }
 
   render() {
     const { isResignationMarked, formResignationMarked, isAgreementAccepted } = this.props;

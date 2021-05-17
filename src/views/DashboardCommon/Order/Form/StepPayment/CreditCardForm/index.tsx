@@ -4,6 +4,9 @@ import { RouteComponentProps, withRouter } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { ExecutePaymentReq, UserRes } from 'smartbox-types';
 import { history } from '../../../../../../App';
+import { Button } from '../../../../../../components/Common';
+import { ButtonsContainer } from '../../../../../../components/Layout';
+import { __ } from '../../../../../../helpers/i18n';
 import { ApplicationState } from '../../../../../../reducers';
 import UserService from '../../../../../../services/user-service';
 import { order, paymentStatus } from '../../../../../../actions';
@@ -25,13 +28,24 @@ interface Props extends RouteComponentProps<RouteProps> {
 
 const CreditCardForm = ({ func, user, sentExecutePaymentRequest, paymentId, match, getCardForm }: Props) => {
   useEffect(() => {
-    paymentId ? getCardForm(paymentId) : history.push(`/${UserService.getSlugByRole(user.role)}/main`);
+    paymentId ? getCardForm(paymentId) : history.push(`/${UserService.getSlugByRole(user.role)}/order/step/size`);
   }, []);
+
+  useEffect(() => {
+    eval(func);
+    return () => {};
+  }, [func]);
+
+  const onBack = () => {
+    history.push(`/${UserService.getSlugByRole(user.role)}/order/step/agreement/${match.params.rentId || ''}`);
+  };
 
   return (
     <div className="credit-card-input-wrapper">
-      <div className="form-container" />
-      {eval(func)}
+      <div className="pay-button-container" />
+      <ButtonsContainer max>
+        <Button outline text={__('application.back')} click={() => onBack()} />
+      </ButtonsContainer>
     </div>
   );
 };
