@@ -5,23 +5,34 @@ import ReactSelect from 'react-select';
 import ReactCreatableSelect from 'react-select/creatable';
 import { bindActionCreators } from 'redux';
 import { AddGiftReq } from 'smartbox-types';
+import { history } from '../../../../../App';
 import { FormContainer, ButtonsContainer, FieldsColumn, FormHeader } from '../../../../../components/Layout';
 import { Button, Spinner } from '../../../../../components/Common';
+import { ApplicationState } from '../../../../../reducers';
+import { UserCommonEntity } from '../../../../../reducers/user-reducer';
 import ApiService from '../../../../../services/api-service';
+import UserService from '../../../../../services/user-service';
 import { formOnTranslateString } from '../../../../../utils/trans-form';
 import { __ } from '../../../../../helpers/i18n';
 import { modal, notifications, user } from '../../../../../actions';
 
 interface Props {
+  user: UserCommonEntity;
   hideModal: () => void;
   fetchMyData: () => void;
   successNotification: (text: string) => void;
 }
 
-const UpdateMe = ({ successNotification, hideModal, fetchMyData }: Props) => {
+const UpdateMe = ({ successNotification, user, fetchMyData }: Props) => {
   const submitButton = (
-    <ButtonsContainer>
-      <Button text={__('application.change')} type="submit" primary />
+    <ButtonsContainer max>
+      <Button
+        text={__('application.back')}
+        type="button"
+        primary
+        to={`/${UserService.getSlugByRole(user.role)}/profile/detail`}
+      />
+      <Button text={__('application.change')} type="submit" success />
     </ButtonsContainer>
   );
 
@@ -49,10 +60,10 @@ const UpdateMe = ({ successNotification, hideModal, fetchMyData }: Props) => {
           schemaFetcher={() => ApiService.loadForm(fetchUrl)}
           sendFetcher={customSendFetcher}
           submitButton={submitButton}
-          onSavedSuccessfully={() => {
+          onSavedSuccessfully={async () => {
             successNotification(__('notification.dataChangedSuccess'));
-            fetchMyData();
-            hideModal();
+            await fetchMyData();
+            history.push(`/${UserService.getSlugByRole(user.role)}/profile/detail`);
           }}
           onTranslateString={formOnTranslateString}
           thirdPartyComponents={{ ReactSelect, ReactCreatableSelect }}
@@ -62,6 +73,10 @@ const UpdateMe = ({ successNotification, hideModal, fetchMyData }: Props) => {
   );
 };
 
+const mapStateToProps = (state: ApplicationState) => ({
+  user: state.user.details,
+});
+
 const mapDispatchToProps = (dispatch: any) => bindActionCreators({ ...modal, ...notifications, ...user }, dispatch);
 
-export default connect(null, mapDispatchToProps)(UpdateMe);
+export default connect(mapStateToProps, mapDispatchToProps)(UpdateMe);
