@@ -32,7 +32,7 @@ const Contact = ({ user }: Props) => {
           <SingleDepartment
             organisationRole="Biuro obsługi klienta"
             name="Monika Zarwalska-Lis"
-            phone="665519467"
+            phone="731400331"
             mail="monika@smartbox-storage.pl"
             openHour="8:00"
             closeHour="16:00"
