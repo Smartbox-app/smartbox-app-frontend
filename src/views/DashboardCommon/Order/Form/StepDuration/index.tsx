@@ -14,6 +14,7 @@ import { FormType } from '../../../../../types/order-form';
 import { ApplicationState } from '../../../../../reducers';
 import UserService from '../../../../../services/user-service';
 import { __ } from '../../../../../helpers/i18n';
+import { firstRentChecker } from '../../../../../utils/isFirstRent';
 
 import Price from './Price';
 
@@ -58,8 +59,6 @@ const StepDuration = ({
     dateEnd: match.params.rentId ? addDays(new Date(rent.finishAt), 7) : addDays(formData.dateEnd, 0),
   };
 
-  const firstRentChecker = (u: UserRes): boolean => u.rentCount === 0;
-
   useEffect(() => {
     clearPaymentDetails();
     if (formData.size === '') {
@@ -95,8 +94,6 @@ const StepDuration = ({
     history.push(`/${UserService.getSlugByRole(user.role)}/order/step/size/${match.params.rentId || ''}`);
   };
 
-  const isItFirstRent = (u: UserRes): boolean => u.rentCount === 0;
-
   return (
     <FormContext {...methods}>
       <form onSubmit={handleSubmit(onSubmit)} className="form-step-two">
@@ -113,7 +110,7 @@ const StepDuration = ({
               updateFormData({
                 durationInDays: differenceInCalendarDays(formData.dateEnd, selected[0]),
                 dateStart: selected[0],
-                isFirstRent: isItFirstRent(user),
+                isFirstRent: firstRentChecker(user),
               });
               return selected;
             }}
@@ -129,7 +126,7 @@ const StepDuration = ({
               updateFormData({
                 durationInDays: differenceInCalendarDays(selected[0], formData.dateStart),
                 dateEnd: selected[0],
-                isFirstRent: isItFirstRent(user),
+                isFirstRent: firstRentChecker(user),
               });
               return selected;
             }}
