@@ -3,6 +3,7 @@ import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { MyRentList } from 'smartbox-types';
+import { Alert } from '../../../components/Common';
 import UserStockMap from '../../../components/Common/UserStockMap';
 import { Section, SectionHeader } from '../../../components/Layout';
 
@@ -13,6 +14,7 @@ import { ApplicationState } from '../../../reducers';
 import Action from './Action';
 import Details from './Details';
 import Gate from './Gate';
+import MissingPaymentAlert from './MissingPaymentAlert';
 
 interface RouteProps {
   orderId: string;
@@ -36,6 +38,7 @@ const SingleRentDetail = ({ loading, showUserStockMap, match, getSingleRent, sin
   return (
     <Section full>
       <SectionHeader title={__('application.rentDetail')} />
+      <MissingPaymentAlert />
       <Action rentId={singleRent.id} />
       {!showUserStockMap ? (
         <>

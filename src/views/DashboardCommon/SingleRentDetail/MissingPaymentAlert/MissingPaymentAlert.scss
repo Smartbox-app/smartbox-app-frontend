@@ -1,0 +1,35 @@
+@import "../../../../config/variables";
+@import "../../../../config/mixins";
+
+.missing-payment-alert-wrapper {
+  background-color: #ffe8e6;
+  padding: $main-spacing;
+  border-radius: $main-spacing /3;
+  box-shadow: 0 0 0 1px #db2828 inset, 0 0 0 0 transparent;
+  margin: $main-spacing 0;
+
+  .main-info {
+    color: #db2828;
+    font-weight: 500;
+    letter-spacing: .5px;
+    text-align: center;
+    font-size: 1.1rem;
+    margin-bottom: $main-spacing * 2;
+  }
+
+  .date-wrapper {
+    max-width: 300px;
+    display: flex;
+    align-items: stretch;
+    flex-direction: column;
+    margin: 0 auto;
+  }
+
+  .single-line {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+}
