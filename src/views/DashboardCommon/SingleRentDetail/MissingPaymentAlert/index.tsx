@@ -1,8 +1,8 @@
 import { addDays, differenceInCalendarDays } from 'date-fns';
-import React from 'react';
+import React, { useCallback } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { MyRentList } from 'smartbox-types';
+import { MyRentList, usePricing } from 'smartbox-types';
 import { singleRent } from '../../../../actions';
 import { Button } from '../../../../components/Common';
 import { ButtonsContainer } from '../../../../components/Layout';
@@ -16,30 +16,33 @@ interface Props {
   singleRent: MyRentList;
 }
 
-const countMissingPayment = (singleRent: MyRentList): number => {
-  return 1200;
-};
-
 const MissingPaymentAlert = ({ singleRent }: Props) => {
-  console.log('asd');
+  const { pricing } = usePricing();
+
+  const countPayPeriods = useCallback(
+    (date: Date) => Math.ceil(differenceInCalendarDays(new Date(), new Date(date)) / 7),
+    [],
+  );
+
+  const calc = useCallback((singleRent: MyRentList): number => {
+    const { weekly } = pricing[singleRent.size || 3];
+    return weekly * countPayPeriods(singleRent.finishAt);
+  }, []);
 
   return (
     <div className="missing-payment-alert-wrapper">
       <p className="main-info">Na tym wynajmie znajduje się zaległość</p>
       <div className="date-wrapper">
         <p className="single-line">
-          zakończenie wynajmu: <strong>{dateOnly(singleRent.finishAt)}</strong>
+          Zakończenie wynajmu: <strong>{dateOnly(singleRent.finishAt)}</strong>
         </p>
         <p className="single-line">
-          zaległych okresów płatności:{' '}
-          <strong>
-            {Math.ceil(differenceInCalendarDays(addDays(new Date(), 1), new Date(singleRent.finishAt)) / 7)}
-          </strong>
+          Zaległych okresów płatności: <strong>{countPayPeriods(singleRent.finishAt)}</strong>
         </p>
       </div>
       <div className="date-wrapper">
         <p className="single-line">
-          kwota zaległości: <strong>{formatPrice(countMissingPayment(singleRent))}</strong>
+          Kwota zaległości: <strong>{formatPrice(calc(singleRent))}</strong>
         </p>
       </div>
       <ButtonsContainer>
