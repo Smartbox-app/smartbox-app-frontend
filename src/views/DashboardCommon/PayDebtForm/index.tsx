@@ -1,15 +1,14 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { differenceInCalendarDays } from 'date-fns';
 import { bindActionCreators } from 'redux';
-import { MyRentList } from 'smartbox-types';
+import { MyRentList, usePricing } from 'smartbox-types';
 import { paymentStatus, singleRent } from '../../../actions';
-import { payNotPaidRentForm } from '../../../actions/payment-status';
 import { Button, Spinner } from '../../../components/Common';
 import { ButtonsContainer, FormContainer } from '../../../components/Layout';
 import FormHeader from '../../../components/Layout/FormHeader';
-import { __ } from '../../../helpers/i18n';
 import { ApplicationState } from '../../../reducers';
 import AgreementWrapper from '../Order/Form/StepAgreement/AgreementWrapper';
 import ScrollPosition from '../Order/Form/StepAgreement/ScrollPosition';
@@ -42,16 +41,24 @@ const PayDebtForm = ({
   func,
 }: Props) => {
   useEffect(() => {
-    (async function() {
+    (async () => {
       await getMyRentList();
       await getSingleRent(match.params.rentId);
     })();
   }, []);
 
+  const countPayPeriods = useCallback(
+    (date: Date) => Math.ceil(differenceInCalendarDays(new Date(), new Date(date)) / 7),
+    [],
+  );
+  const { pricing } = usePricing();
+  const calc = useCallback((singleRent: MyRentList): number => {
+    const { weekly } = pricing[singleRent.size || 3];
+    return weekly * countPayPeriods(singleRent.finishAt);
+  }, []);
+
   const submit = (data) => {
     payNotPaidRentForm(match.params.rentId);
-    console.log('match', match.params.rentId);
-    console.log('data', data);
   };
   const { handleSubmit } = useForm();
 
@@ -69,7 +76,7 @@ const PayDebtForm = ({
     <FormContainer>
       <form onSubmit={handleSubmit(submit)}>
         <FormHeader title="Opłacenie kary umownej:" />
-        <SummaryTable dateStart={singleRent.finishAt} dateEnd={new Date()} countedPrice={200} />
+        <SummaryTable dateStart={singleRent.finishAt} dateEnd={new Date()} countedPrice={calc(singleRent)} />
         <AgreementWrapper />
         <ScrollPosition />
         <ButtonsContainer max>
