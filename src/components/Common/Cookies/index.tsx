@@ -19,7 +19,7 @@ const Cookies = ({ isRulesAndRodoAccepted, acceptationCookies }: Props) => {
         także narzędzi analitycznych, promocyjnych i reklamowych w celu reklamy, badania rynku oraz badania preferencji
         użytkowników. Korzystając z Aplikacji Smartbox, możesz wyrazić zgodę na korzystanie z plików cookies oraz
         wymienionych narzędzi. Więcej informacji na temat plików cookies oraz stosowanych narzędzi znajdziesz w naszej{' '}
-        <a target="_blank" href="/assets/20210422_Polityka_Prywatnosci_SmartBox.pdf">
+        <a target="_blank" href="/assets/20210422_Polityka_Prywatnosci_Smartbox.pdf">
           <u>Polityki&nbsp;prywatności</u>
         </a>
         .
