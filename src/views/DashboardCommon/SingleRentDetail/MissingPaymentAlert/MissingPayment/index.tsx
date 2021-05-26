@@ -1,4 +1,4 @@
-import { differenceInCalendarDays } from 'date-fns';
+import { addDays, differenceInCalendarDays } from 'date-fns';
 import React, { useCallback } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -39,6 +39,9 @@ const MissingPayment = ({ singleRent }: Props) => {
         </p>
       </div>
       <div className="date-wrapper">
+        <p className="single-line">
+          Termin płatności: <strong>{dateOnly(addDays(new Date(singleRent.finishAt), 13))}</strong>
+        </p>
         <p className="single-line">
           Kwota zaległości: <strong>{formatPrice(calc(singleRent))}</strong>
         </p>
