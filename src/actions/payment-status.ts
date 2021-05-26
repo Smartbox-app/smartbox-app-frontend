@@ -20,3 +20,24 @@ export const getCardForm = (paymentId: string) => async (dispatch: any) => {
   } finally {
   }
 };
+
+export const payNotPaidRentForm = (rentId: string) => async (dispatch: any) => {
+  dispatch({ type: 'LOADING', payload: true });
+  const headers = {
+    'Content-Type': 'application/json',
+  };
+
+  try {
+    const response = await fetch(`${ApiService.url}rent/pay-not-paid-rent/${rentId}`, {
+      method: 'PATCH',
+      headers,
+      credentials: 'include',
+    });
+
+    const data = await response.json();
+    console.log('data', data);
+    dispatch(saveFrom(data));
+  } finally {
+    dispatch({ type: 'LOADING', payload: false });
+  }
+};

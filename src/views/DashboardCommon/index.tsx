@@ -6,5 +6,6 @@ import Profile from './Profile';
 import Contact from './Contact';
 import Invoice from './Invoice';
 import PaymentFailed from './PaymentFailed';
+import PayDebtForm from './PayDebtForm';
 
-export { Welcome, Order, BoxMapManagement, SingleRentDetail, Profile, Contact, Invoice, PaymentFailed };
+export { Welcome, Order, BoxMapManagement, SingleRentDetail, Profile, Contact, Invoice, PaymentFailed, PayDebtForm };

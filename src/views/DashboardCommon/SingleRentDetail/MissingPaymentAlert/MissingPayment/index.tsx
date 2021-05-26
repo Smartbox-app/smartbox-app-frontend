@@ -7,14 +7,17 @@ import { singleRent } from '../../../../../actions';
 import { Button } from '../../../../../components/Common';
 import { ButtonsContainer } from '../../../../../components/Layout';
 import { ApplicationState } from '../../../../../reducers';
+import { UserCommonEntity } from '../../../../../reducers/user-reducer';
+import UserService from '../../../../../services/user-service';
 import { dateOnly } from '../../../../../utils/format-date';
 import { formatPrice } from '../../../../../utils/format-price';
 
 interface Props {
   singleRent: MyRentList;
+  user: UserCommonEntity;
 }
 
-const MissingPayment = ({ singleRent }: Props) => {
+const MissingPayment = ({ singleRent, user }: Props) => {
   const { pricing } = usePricing();
 
   const countPayPeriods = useCallback(
@@ -47,7 +50,12 @@ const MissingPayment = ({ singleRent }: Props) => {
         </p>
       </div>
       <ButtonsContainer>
-        <Button text="Opłać zaległość" type="button" danger />
+        <Button
+          text="Opłać zaległość"
+          type="button"
+          danger
+          to={`/${UserService.getSlugByRole(user.role)}/pay-debt/${singleRent.id}`}
+        />
       </ButtonsContainer>
     </div>
   );
@@ -55,6 +63,7 @@ const MissingPayment = ({ singleRent }: Props) => {
 
 const mapStateToProps = (state: ApplicationState) => ({
   singleRent: state.rent.singleRent,
+  user: state.user.details,
 });
 
 const mapDispatchToProps = (dispatch: any) =>

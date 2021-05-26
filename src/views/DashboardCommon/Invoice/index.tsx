@@ -38,7 +38,8 @@ const Invoice = ({ isPaid, getMyRentList, fetchMyRentHistory, fetchMyData, check
     <PageContent>
       <Section>
         <LogoContainer />
-        {match.params.paymentId ? (
+        {/*{match.params.paymentId ? (*/}
+        {false ? (
           <>
             <Spinner big />
             <p className="content-text">Trwa przetwarzanie płatności</p>

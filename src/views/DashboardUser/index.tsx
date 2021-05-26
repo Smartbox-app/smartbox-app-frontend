@@ -4,7 +4,7 @@ import { Route, Redirect, Switch } from 'react-router-dom';
 import { Main } from '../../components/Layout';
 import MobileLogoContainer from '../../components/Layout/MobileLogoContainer';
 import { __ } from '../../helpers/i18n';
-import { Welcome, Order, Profile, Contact } from '../DashboardCommon';
+import { Welcome, Order, Profile, Contact, PayDebtForm } from '../DashboardCommon';
 import { MenuItemType } from '../../types/menu-item';
 
 import DashboardContainer from '../../components/Layout/DashboardContainer';
@@ -43,6 +43,7 @@ const DashboardUser = () => {
           <Route path="/user/contact" component={Contact} />
           <Route path="/user/order/step/:step/:rentId?" component={Order} />
           <Route exact path="/user/single-rent/:orderId" component={SingleRentDetail} />
+          <Route exact path="/user/pay-debt/:rentId" component={PayDebtForm} />
         </Switch>
       </Main>
       <Cookies />
