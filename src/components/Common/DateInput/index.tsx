@@ -32,7 +32,7 @@ const DateInput = ({ name, value, onChange, label, minDate, maxDate, register }:
       )}
       <Flatpickr
         name={name}
-        ref={register}
+        ref={register({ name })}
         onChange={(data: any) => {
           onChange(data);
         }}
