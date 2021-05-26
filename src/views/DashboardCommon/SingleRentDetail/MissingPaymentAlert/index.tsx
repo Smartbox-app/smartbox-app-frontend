@@ -1,11 +1,11 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
-import { MyRentList, RentStatus, usePricing } from 'smartbox-types';
+import { MyRentList, RentStatus } from 'smartbox-types';
 import { ApplicationState } from '../../../../reducers';
 import MissingPayment from './MissingPayment';
+import StockBlocked from './StockBlocked';
 
 import './MissingPaymentAlert.scss';
-import StockBlocked from './StockBlocked';
 
 interface Props {
   singleRent: MyRentList;
