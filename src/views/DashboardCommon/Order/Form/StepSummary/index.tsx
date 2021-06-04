@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { UserRes, IPricingResult, PaymentType } from 'smartbox-types';
 import { Button, CheckBox } from '../../../../../components/Common';
-import { order, modal, notifications } from '../../../../../actions';
+import { order, modal, notifications, user } from '../../../../../actions';
 import { ButtonsContainer } from '../../../../../components/Layout';
 import { history } from '../../../../../App';
 import { FormType } from '../../../../../types/order-form';
@@ -35,6 +35,7 @@ interface Props extends RouteComponentProps<RouteProps> {
   user: UserRes;
   selectedPaymentMethod: any;
   updateFormData: (data: any) => void;
+  fetchMyData: () => void;
   showModal: (content: React.ReactNode) => void;
   successNotification: (text: string) => void;
 }
@@ -42,6 +43,7 @@ interface Props extends RouteComponentProps<RouteProps> {
 const StepSummary = ({
   formData,
   countedPrice,
+  fetchMyData,
   updateFormData,
   user,
   selectedPaymentMethod,
@@ -51,13 +53,14 @@ const StepSummary = ({
 }: Props) => {
   const [invoiceNeeded, setInvoiceNeeded] = useState(false);
   useEffect(() => {
+    fetchMyData();
     if (formData.size.length === 0) {
       history.push(`/${UserService.getSlugByRole(user.role)}/order/step/size`);
     }
     if (formData.nip) {
       setInvoiceNeeded(true);
     }
-  });
+  }, []);
 
   const defaultValues = {
     paymentType: `${PaymentType.card}`,
@@ -69,11 +72,11 @@ const StepSummary = ({
     mailToSendInvoice: user.email || '',
     phone: user.phone || '',
 
-    nip: formData.nip || '',
-    companyPostCode: formData.companyPostCode || '',
-    companyCity: formData.companyCity || '',
-    companyStreet: formData.companyStreet || '',
-    companyName: formData.companyName || '',
+    nip: user.companyData.nip || '',
+    companyPostCode: user.companyData.postCode || '',
+    companyCity: user.companyData.city || '',
+    companyStreet: user.companyData.street || '',
+    companyName: user.companyData.name || '',
   };
 
   const { handleSubmit, register, watch, control, errors } = useForm({ defaultValues });
@@ -215,6 +218,7 @@ const mapDispatchToProps = (dispatch: any) =>
       ...order,
       ...modal,
       ...notifications,
+      ...user,
     },
     dispatch,
   );
