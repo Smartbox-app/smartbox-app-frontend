@@ -51,8 +51,6 @@ const mapStateToProps = (state: ApplicationState) => ({
   modal: state.modal,
 });
 
-function mapDispatchToProps(dispatch: any) {
-  return bindActionCreators({ ...modal }, dispatch);
-}
+const mapDispatchToProps = (dispatch: any) => bindActionCreators({ ...modal }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(ModalWrapper);

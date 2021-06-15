@@ -22,8 +22,10 @@ const ModalContent = ({ children }: Props) => {
     observer.observe(ref.current!);
   }, []);
 
+  const fullScreen = ref.current?.parentElement?.parentElement?.parentElement?.classList.contains('full-screen');
   return (
-    <div className="modal-content" style={{ maxHeight: `${maxHeight}px` }}>
+    // <div className="modal-content" style={fullScreen ? {} : { maxHeight: `${maxHeight}px` }}>
+    <div className="modal-content">
       <div ref={ref}>{children}</div>
     </div>
   );
