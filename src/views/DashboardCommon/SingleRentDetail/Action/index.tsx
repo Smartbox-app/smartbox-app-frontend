@@ -9,6 +9,7 @@ import { ButtonsContainer } from '../../../../components/Layout';
 import { __ } from '../../../../helpers/i18n';
 import { ApplicationState } from '../../../../reducers';
 import UserService from '../../../../services/user-service';
+import EndingModal from './EndingModal';
 
 interface Props {
   rentId: string;
@@ -53,25 +54,7 @@ const Action = ({
         click={() => handleExtendingOrderData(rentId)}
         disabled={rent.status !== RentStatus.rented}
       />
-      <Button
-        text={__('application.end')}
-        danger
-        click={() =>
-          showModal(
-            <ConfirmModal
-              mainText={__('application.endRental')}
-              approveButtonText={__('application.end')}
-              approveAction={async () => {
-                successNotification(__('notification.rentFinishManually'));
-                await endMyRent(rentId);
-                await getMyRentList();
-                history.push('/user/main');
-              }}
-              cancelButtonText={__('application.back')}
-            />,
-          )
-        }
-      />
+      <Button text={__('application.end')} danger click={() => showModal(<EndingModal />)} />
       <Button text={__('application.back')} primary to={`/${UserService.getSlugByRole(user.role)}`} />
     </ButtonsContainer>
   );
