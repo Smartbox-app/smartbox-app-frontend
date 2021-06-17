@@ -34,8 +34,6 @@ const CreditCardForm = ({ func, user, sentExecutePaymentRequest, paymentId, matc
   }, []);
 
   useEffect(() => {
-    console.log('func', func);
-    console.log('func.length', func?.length);
     if (func?.length <= 3) {
       setAutoPayment(true);
     } else {

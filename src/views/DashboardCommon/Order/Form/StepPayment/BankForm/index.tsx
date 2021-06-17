@@ -3,13 +3,16 @@ import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { UserRes } from 'smartbox-types';
-import { PageHeader } from '../../../../../../components/Layout';
+import { history } from '../../../../../../App';
+import { ButtonsContainer, PageHeader } from '../../../../../../components/Layout';
+import { __ } from '../../../../../../helpers/i18n';
 import { ApplicationState } from '../../../../../../reducers';
 import { PaymentMethodDetail } from '../../../../../../reducers/order-reducer';
 import { modal, order } from '../../../../../../actions';
 
 import './BankForm.scss';
-import { Spinner } from '../../../../../../components/Common';
+import { Button, Spinner } from '../../../../../../components/Common';
+import UserService from '../../../../../../services/user-service';
 
 interface RouteProps {
   step: string;
@@ -25,19 +28,26 @@ interface Props extends RouteComponentProps<RouteProps> {
   loading: boolean;
 }
 
-const BankForm = ({ func, paymentId, sentExecutePaymentWithTpayRequest, bankGroup, loading }: Props) => {
+const BankForm = ({ func, paymentId, sentExecutePaymentWithTpayRequest, bankGroup, loading, user, match }: Props) => {
   useEffect(() => {
     sentExecutePaymentWithTpayRequest(paymentId, bankGroup.id);
   }, []);
-
+  const onBack = () => {
+    history.push(`/${UserService.getSlugByRole(user.role)}/order/step/agreement/${match.params.rentId || ''}`);
+  };
   return (
     <div className="form-step-payment-blik">
       {loading ? (
         <Spinner />
       ) : (
-        <div className="bank-input-wrapper">
-          <div dangerouslySetInnerHTML={{ __html: func || '' }} />
-        </div>
+        <>
+          <div className="bank-input-wrapper">
+            <div dangerouslySetInnerHTML={{ __html: func || '' }} />
+          </div>
+          <ButtonsContainer max>
+            <Button outline text={__('application.back')} click={() => onBack()} />
+          </ButtonsContainer>
+        </>
       )}
     </div>
   );
