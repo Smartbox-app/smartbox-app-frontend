@@ -71,27 +71,7 @@ const PaymentMethods = ({ showModal, saveBanks, selectedPaymentMethod, register,
           </div>
         </label>
 
-        {/*<label htmlFor="paymentTypeBlik">*/}
-        {/*  <input*/}
-        {/*    type="radio"*/}
-        {/*    id="paymentTypeBlik"*/}
-        {/*    name="paymentType"*/}
-        {/*    value={PaymentType.blik}*/}
-        {/*    ref={register({ required: true })}*/}
-        {/*    onChange={(event: any) => pickPaymentType(Number(event.target.value))}*/}
-        {/*  />*/}
-        {/*  <div className="payment-label">*/}
-        {/*    <div className="label-img">*/}
-        {/*      <img className="payment-img" src="/assets/images/150.png" alt="LogoBanku" />*/}
-        {/*    </div>*/}
-        {/*    <span>Blik</span>*/}
-        {/*  </div>*/}
-        {/*</label>*/}
-
-        <label
-          htmlFor="paymentTypeBank"
-          // onClick={() => showModal(<BankListModal />)}
-        >
+        <label htmlFor="paymentTypeBank">
           <input
             type="radio"
             id="paymentTypeBank"

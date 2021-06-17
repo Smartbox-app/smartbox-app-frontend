@@ -21,13 +21,11 @@ class ScrollPosition extends Component<Props> {
   };
   componentDidMount(): void {
     const el = document.querySelector('.order-agreement-wrapper');
-    console.log('componentDidMount', el);
     el && el.addEventListener('scroll', () => this.onScroll(el), false);
   }
 
   componentWillUnmount(): void {
     const el = document.querySelector('.order-agreement-wrapper');
-    console.log('componentWillUnmount', el);
     el && el.removeEventListener('scroll', () => this.onScroll(el), false);
   }
 

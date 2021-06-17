@@ -156,7 +156,7 @@ const StepSummary = ({
   };
 
   const handleChange = (e: any) => {
-    if (user.rentCount === 0) {
+    if (!(user.rentCount > 0)) {
       if (paymentChangeOnly(e)) {
         if (watch().paymentType !== `${PaymentType.card}`) {
           if (countedPrice?.name === 'firstRentFreePracing') {

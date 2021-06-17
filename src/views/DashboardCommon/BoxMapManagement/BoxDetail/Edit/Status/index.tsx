@@ -35,7 +35,6 @@ const Status = ({ selectedBoxId, hideModal, stock, successNotification, fetchBox
   const sendUrl = `rent/status/${stock.id}`;
 
   const customSendFetcher = (formId: string, values: ChangeStatusReq) => {
-    console.log('ChangeStatusReq', values);
     showModal(
       <>
         {values.status === null || values.status.length === 0 ? (

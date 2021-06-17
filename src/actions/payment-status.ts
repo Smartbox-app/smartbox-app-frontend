@@ -35,7 +35,6 @@ export const payNotPaidRentForm = (rentId: string) => async (dispatch: any) => {
     });
 
     const data = await response.json();
-    console.log('data', data);
     dispatch(saveFrom(data));
   } finally {
     dispatch({ type: 'LOADING', payload: false });
