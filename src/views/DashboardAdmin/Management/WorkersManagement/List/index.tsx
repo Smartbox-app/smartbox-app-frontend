@@ -58,11 +58,14 @@ class List extends React.Component<Props> {
   private getAssignButton = (value: any, field: TableSchemaField, userData: IUser) => {
     if (isWorker(userData.role)) {
       return (
-        <Button
-          text={__('application.changeUserAssigment')}
-          primary
-          click={() => this.props.showModal(<EditAssign userId={userData.id} />)}
-        />
+        <ButtonsContainer max>
+          <Button
+            // text={__('application.changeUserAssigment')}
+            text={__('application.change')}
+            primary
+            click={() => this.props.showModal(<EditAssign userId={userData.id} />)}
+          />
+        </ButtonsContainer>
       );
     } else {
       return __('application.notApplicable');
@@ -71,9 +74,17 @@ class List extends React.Component<Props> {
 
   private getLockButton = (value: boolean, field: TableSchemaField, userData: IUser) => {
     if (userData.status === UserStatus.blocked) {
-      return <Button text={__('application.active')} success click={() => this.props.enableUser(userData.id)} />;
+      return (
+        <ButtonsContainer max>
+          <Button text={__('application.active')} success click={() => this.props.enableUser(userData.id)} />
+        </ButtonsContainer>
+      );
     } else {
-      return <Button text={__('application.block')} danger click={() => this.props.blockUser(userData.id)} />;
+      return (
+        <ButtonsContainer max>
+          <Button text={__('application.block')} danger click={() => this.props.blockUser(userData.id)} />
+        </ButtonsContainer>
+      );
     }
   };
 

@@ -2,6 +2,7 @@
 @import "../../../config/mixins.scss";
 
 .button {
+  min-width: 95px;
   padding: $main-spacing $main-spacing;
   white-space: nowrap;
   margin: $main-spacing / 2 0;
