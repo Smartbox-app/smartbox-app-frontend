@@ -73,22 +73,22 @@
       "storeState": "Status wynajmu",
       "rentedBy": "Wynajęte przez",
       "phone": "Telefon",
-      "userRole": "rola",
+      "userRole": "Stanowisko",
       "continueWith": "Zaloguj się z",
 
       "ccv": "numer CVV",
       "ccNumber": "numer karty kredytowej",
       "expiryDate": "ważność karty",
-      "lastName": "nazwisko",
+      "lastName": "Nazwisko",
       "owner": "właściciel",
-      "firstName": "imię",
+      "firstName": "Imię",
 
       "singleStoreDetail": "Szczegóły wybranego mini magazynu:",
       "showEditOptions": "Pokaż opcje edycji",
       "hideEditOptions": "Ukryj opcje edycji",
       "changesIrreversible": "Poniższe zmiany są nieodwracalne!",
 
-      "mail": "e-mail",
+      "mail": "E-mail",
 
       "login": "Zaloguj się",
       "register": "Zarejestruj się",
