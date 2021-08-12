@@ -117,6 +117,12 @@ const StepSize = ({
     />
   ));
 
+  const isMyBoxAvailable = (size: string) => {
+    const box = boxAvailability.find((b: BoxGroupAvailability) => b.size.toString() === size.toString());
+
+    return box && box.available;
+  };
+
   return (
     <FormContainer className="step-size-wrapper">
       <FormHeader no-margin title={__('application.orderFormPickSize')} />
@@ -125,7 +131,12 @@ const StepSize = ({
 
         <ButtonsContainer max>
           <Button disabled text={__('application.back')} />
-          <Button type="submit" primary text={__('application.next')} disabled={watch().size === ''} />
+          <Button
+            type="submit"
+            primary
+            text={__('application.next')}
+            disabled={watch().size === '' || !isMyBoxAvailable(watch().size)}
+          />
         </ButtonsContainer>
       </form>
     </FormContainer>
