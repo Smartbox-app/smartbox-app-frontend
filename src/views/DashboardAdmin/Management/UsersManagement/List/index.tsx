@@ -31,6 +31,7 @@ class List extends React.Component<Props> {
         type: FieldType.Custom,
         customRender: (value, field, userData) => this.getLockButton(value, field, userData),
       })
+      .removeFields('role')
       .addFieldAtTheEnd({
         name: __('application.actions'),
         field: 'actions',

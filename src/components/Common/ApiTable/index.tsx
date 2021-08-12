@@ -53,7 +53,12 @@ const searchComponent = (
     searchElement = null;
   } else if (searchableValues && typeof searchableValues === 'object') {
     searchElement = (
-      <select className="input" placeholder="Wybierz szukaną wartość">
+      <select
+        className="input"
+        placeholder="Wybierz szukaną wartość"
+        onChange={(e) => handleSearchQueryChange(e.target.value)}
+      >
+        <option value={''}>Wybierz</option>
         {Object.keys(searchableValues as TableFieldSearchableValues).map((key) => (
           <option value={key} key={key}>
             {searchableValues[key]}
