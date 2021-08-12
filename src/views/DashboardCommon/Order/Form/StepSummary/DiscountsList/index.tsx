@@ -28,6 +28,7 @@ const DiscountsList = ({ showModal, countedPrice, successNotification, codeDisco
   const [helpText, setHelpText]: [boolean, any] = useState(false);
 
   const getText = () => {
+    console.log('COUNTERPRICE', countedPrice);
     switch (countedPrice.name) {
       case 'firstRentFreePracing':
         if (codeDiscount !== 0) {
