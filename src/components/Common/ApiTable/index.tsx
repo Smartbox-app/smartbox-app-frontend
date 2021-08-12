@@ -133,6 +133,11 @@ class ApiTable<T> extends Component<Props> {
       this.state.searchBy = defaultSearchField.field;
       this.state.searchQuery = String(defaultSearchField.defaultSearch);
     }
+    const defaultSortFieldield = this.props.scheme.fields.find((f) => f.defaultSort === true) as TableSchemaField;
+    if (defaultSortFieldield) {
+      this.state.sortBy = defaultSortFieldield.field;
+      this.state.sortDirBack = defaultSortFieldield.oppositeSortDir === true;
+    }
   }
 
   private buildUrl(): string {
@@ -161,7 +166,7 @@ class ApiTable<T> extends Component<Props> {
       const field = scheme.fields.find((f) => f.defaultSort === true) as TableSchemaField;
       return {
         sortBy: field.field,
-        sortDirBack: field.oppositeSortDir !== true,
+        sortDirBack: field.oppositeSortDir === true,
       };
     }
   }
