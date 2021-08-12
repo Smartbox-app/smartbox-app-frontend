@@ -1,28 +1,29 @@
-$font-primary: "AzoSans", sans-serif;
+$font-primary: 'AzoSans', sans-serif;
 $basic-font-size: 14px;
 
 //COLORS
-$color-primary: #0674BD;
-$color-primary-light: lighten(#0674BD, 20%);
-$color-secoundary: #003E67;
+$color-primary: #0674bd;
+$color-primary-light: lighten(#0674bd, 20%);
+$color-secondary: #003e67;
 $color-tertiary: #FBB03B;
+$color-facebook: #4267B2;
 
 $color-text-alter: #fff;
 $color-text: #000;
 $color-text-button: #fff;
 
 $color-background: #ffffff;
-$color-background-darken: darken($color-background, 4%);;
+$color-background-darken: darken($color-background, 4%);
 
 $color-danger: #a51727;
 $color-notice: #bb9c71;
 $color-success: #00a45a;
 $color-inactive: #b3b2b2;
-$color-active: #FF6500;
+$color-active: #ff6500;
 $color-disabled: #aaa;
 
 $color-warning: #ec8628;
-$standard-shadow: 0px 0px 8px 8px rgba(0,0,0,0.05);
+$standard-shadow: 0px 0px 8px 8px rgba(0, 0, 0, 0.05);
 $box-shadow-small: 0px 0px 8px 8px darken($color-background, 4%);
 $box-shadow-input: 0 10px 20px -20px;
 
@@ -38,16 +39,17 @@ $footer-height: 60px;
 $box-map-width: 3500px;
 
 $single-option-width: 150px;
-$single-option-height: 165px;
-$single-option-width-big: 330px; 
-$single-option-height-big: 270px;
+$single-option-height: 160px;
+
+$single-option-width-big: 330px;
+$single-option-height-big: 260px;
 
 $main-min-height-mobile: calc(100vh - 80px);
-$main-min-height: calc(100vh - 190px);
+$main-min-height: calc(100vh - 60px - 60px);
 
 $login-form-width: 400px;
-$login-button-size: 300px;
-$login-button-hight: 60px;
+$login-button-size: 280px;
+$login-button-height: 60px;
 
 $menu-icon-small: 15px;
 $menu-icon-medium: 20px;
@@ -59,10 +61,13 @@ $carousel-big: 500px;
 
 $transition-time: 0.3s;
 
+$box-size: 100px;
+$big-box-size: 150px;
+
 $breakpoints: (
   xs: 368px,
   sm: 768px,
   md: 920px,
   lg: 1200px,
-  xl: 1368px
+  xl: 1368px,
 );

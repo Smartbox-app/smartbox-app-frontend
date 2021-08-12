@@ -9,6 +9,11 @@ import LogoContainer from './LogoContainer';
 import Section from './Section';
 import SectionHeader from './SectionHeader';
 import Navigation from './Navigation';
+import FieldsColumn from './FieldsColumn';
+import FieldsGrid from './FieldsGrid';
+import FormHeader from './FormHeader';
+import SimpleHeader from './SimpleHeader';
+import MobileLogoContainer from './MobileLogoContainer';
 
 export {
   Main,
@@ -22,4 +27,9 @@ export {
   Section,
   SectionHeader,
   Navigation,
+  FieldsColumn,
+  FieldsGrid,
+  FormHeader,
+  SimpleHeader,
+  MobileLogoContainer,
 };

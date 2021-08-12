@@ -1,0 +1,38 @@
+@import '../../../../../config/variables.scss';
+@import '../../../../../config/mixins.scss';
+
+.kep-login-facebook {
+  height: $login-button-height;
+  border-radius: $login-button-height / 2 !important;
+  margin: $main-spacing 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.facebook-button-custom {
+  height: $login-button-height;
+  border-radius: $login-button-height / 2;
+  margin: $main-spacing 0;
+  background: $color-facebook;
+  border: none;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  color: #fff;
+  font-size: 1.1rem;
+  width: 100%;
+
+  &:hover {
+    background: lighten($color-facebook, 5%);
+    cursor: pointer;
+  }
+
+  .fa-facebook {
+    margin-right: 10px;
+    font-size: 1.1rem;
+  }
+}

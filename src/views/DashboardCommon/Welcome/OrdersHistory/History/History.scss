@@ -11,29 +11,38 @@
 .history-list {
   display: flex;
   flex-direction: column;
+
   width: 100%;
   color: $color-inactive;
   font-weight: 600;
-  font-size: .8rem;
+  font-size: 0.9rem;
 }
 
-.active {
-  color: $color-active;
+.active-stock {
+  color: $color-primary;
+}
+
+.payment-issue {
+  color: $color-tertiary;
+}
+
+.ended {
+  color: $color-disabled;
 }
 
 .history-line {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
   flex-wrap: nowrap;
   width: 100%;
-  padding: $main-spacing/2  0;
+  height: 30px;
   border-bottom: 1px solid $color-inactive;
 }
 
-.line-cell {
-  flex: 0 0 40%;
-}
-
-.line-cell.small {
-  flex: 0 0 20%;
+.header {
+  text-transform: uppercase;
+  font-weight: 600;
+  color: $color-disabled;
 }

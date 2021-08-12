@@ -1,0 +1,30 @@
+import React from 'react';
+import { Input } from '../../../../components/Common';
+
+import './StockSelect.scss';
+
+const StockSelect = () => {
+  return (
+    <div className="stock-select-wrapper">
+      <Input
+        className="form-field field-type-staticSelect"
+        type="select"
+        input={{
+          label: 'Wybór placu:',
+          name: 'stockId',
+          id: 'stockId',
+          placeholder: 'Wybór placu:',
+          onChange: (e: any) => e.target.value,
+        }}
+        options={[
+          {
+            value: 'Warszawa-Łomianki',
+            name: 'Warszawa-Łomianki',
+          },
+        ]}
+      />
+    </div>
+  );
+};
+
+export default StockSelect;

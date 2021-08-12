@@ -20,13 +20,19 @@ import Pagination from './Pagination';
 import Tabs from './Tabs';
 import Modal from './Modal';
 import LoginLogo from './LoginLogo';
+import ConfirmModal from './ConfirmModal';
+import Row from './Row';
+import ErrorBoundary from './ErrorBoundary';
+import Cookies from './Cookies';
 
 export {
   Alert,
   ApiTable,
   Modal,
+  ErrorBoundary,
   Pagination,
   Table,
+  Row,
   Spinner,
   OnlineContent,
   OfflineContent,
@@ -36,6 +42,7 @@ export {
   RouteAdmin,
   Button,
   CheckBox,
+  ConfirmModal,
   Icon,
   Input,
   Logo,
@@ -44,4 +51,5 @@ export {
   ProgressIndicator,
   Carousel,
   Tabs,
+  Cookies,
 };

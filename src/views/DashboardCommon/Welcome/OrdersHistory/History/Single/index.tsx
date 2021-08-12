@@ -1,4 +1,5 @@
 import React from 'react';
+import { MyRentList, RentStatus } from 'smartbox-types';
 import { dateOnly } from '../../../../../../utils/format-date';
 
 export interface SingleHistory {
@@ -10,16 +11,32 @@ export interface SingleHistory {
 }
 
 interface Props {
-  single: SingleHistory;
+  single: MyRentList;
 }
 
+const colorStatusCalc = (s: string): string => {
+  switch (s) {
+    case RentStatus.rented: {
+      return 'active-stock';
+    }
+    case RentStatus.failure: {
+      return 'payment-issue';
+    }
+    case RentStatus.finished: {
+      return 'ended';
+    }
+    default:
+      return '';
+  }
+};
+
 const Single = ({ single }: Props) => (
-  <li className={`history-line ${single.isActive ? 'active' : ''}`}>
+  <li className={`history-line ${colorStatusCalc(single.status)}`}>
     <span className="line-cell">
-      {dateOnly(single.startDate, 5)}-{dateOnly(single.endDate)}
+      {dateOnly(single.startAt, 5)}-{dateOnly(single.finishAt)}
     </span>
     <span className="line-cell small">{single.size}m2</span>
-    <span className="line-cell">{single.location}</span>
+    <span className="line-cell">{single.stockName}</span>
   </li>
 );
 export default Single;

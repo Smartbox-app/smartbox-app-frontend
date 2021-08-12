@@ -3,6 +3,7 @@
 
 html {
   font-size: 14px;
+  font-family: $font-primary;
 }
 
 @include gt-sm {
@@ -31,10 +32,10 @@ h2 {
 
 h3 {
   font-family: $font-primary;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   font-weight: 500;
-  margin-bottom: $main-spacing * 2;
-  margin-top: $main-spacing * 3;
+  margin-bottom: $main-spacing * 1;
+  margin-top: $main-spacing * 2;
   color: $color-primary;
 
   &.no-margin {

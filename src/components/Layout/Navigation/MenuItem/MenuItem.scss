@@ -4,14 +4,14 @@
 .main-menu-item {
   display: flex;
   flex-direction: column;
-  flex: 0 0 25%;
+  flex: 1 0 25%;
   border-top: 2px solid $color-inactive;
   text-align: center;
   justify-content: center;
   align-items: center;
   padding: $main-spacing;
   color: $color-inactive;
-  border: none;
+  //border: none;
 
   &:link {
     color: $color-inactive;
@@ -40,7 +40,7 @@
       color: $color-primary;
     }
   }
-  
+
   &.active .main-menu-item_logo {
     fill: $color-primary;
   }
@@ -68,12 +68,12 @@
   .main-menu-item {
     border-top: none;
     border-bottom: 2px solid $color-inactive;
-  
+
     &:hover {
       border-top: none;
       border-bottom: 2px solid $color-primary-light;
     }
-  
+
     &.active {
       border-top: none;
       border-bottom: 2px solid $color-primary;
@@ -95,9 +95,8 @@
     border-top: none;
     border-bottom: none;
     flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    
+    justify-content: flex-end;
+
     .main-menu-item_logo {
       width: $menu-icon-big;
       height: $menu-icon-big;

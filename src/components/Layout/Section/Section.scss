@@ -3,30 +3,32 @@
 
 .section-wrapper {
   width: 100%;
-  padding: $main-spacing $main-spacing*2;
+  padding: $main-spacing*2 $main-spacing;
+}
+
+@include gt-xs {
+  .section-wrapper {
+    padding: $main-spacing*2 $main-spacing*2;
+  }
 }
 
 @include gt-sm {
   .section-wrapper {
-    width: map-get($breakpoints, sm);
     margin: 0 auto;
-    padding: $main-spacing;
+    padding: 0;
   }
 }
 
 @include gt-lg {
   .section-wrapper {
-    margin: 0 auto;
+    margin: $main-spacing auto 0;
   }
 
   .section-full-width {
     width: 100%;
-    max-width: map-get($breakpoints, lg);
-    min-width: map-get($breakpoints, sm);
   }
 
   .section-half-width {
     width: 50%;
-    max-width: map-get($breakpoints, lg) /2;
   }
 }

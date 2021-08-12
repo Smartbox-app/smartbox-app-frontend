@@ -4,5 +4,6 @@
     "../smartbox-back/"
   ],
   "output": "src/data/errorsTranslations.json",
-  "langs": ["pl"]
+  "langs": ["pl"],
+  "includeApiErrorCodesFromTypes": true
 }

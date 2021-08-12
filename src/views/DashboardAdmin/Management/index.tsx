@@ -6,10 +6,17 @@ import { Tabs } from '../../../components/Common';
 import { Section } from '../../../components/Layout';
 import { ApplicationState } from '../../../reducers';
 import UserService from '../../../services/user-service';
+import { __ } from '../../../helpers/i18n';
+
+import { BoxMapManagement } from '../../DashboardCommon';
+import Gate from "../../DashboardCommon/SingleRentDetail/Gate";
 
 import WorkersManagement from './WorkersManagement';
-import BoxMapManagement from './BoxMapManagement';
-import DiscountCodes from '../DiscountCodes';
+import UsersManagement from './UsersManagement';
+
+import StockDiscount from './StockDiscount';
+import StockSelect from './StockSelect';
+import InvitesSent from './InvitesSent';
 
 interface Props {
   user: UserRes;
@@ -17,28 +24,48 @@ interface Props {
 
 const Management = ({ user }: Props) => (
   <Section full>
+    <StockSelect />
     <Tabs
       tabs={[
         {
           className: 'tab',
           activeClassName: 'active',
+          to: `/${UserService.getSlugByRole(user.role)}/management/users/list`,
+          text: `${__('application.users')}`,
+        },
+        {
+          className: 'tab',
+          activeClassName: 'active',
           to: `/${UserService.getSlugByRole(user.role)}/management/workers/list`,
-          text: 'Pracownicy',
+          text: `${__('application.workers')}`,
+        },
+        {
+          className: 'tab',
+          activeClassName: 'active',
+          to: `/${UserService.getSlugByRole(user.role)}/management/invitations`,
+          text: `${__('application.invitations')}`,
         },
         {
           className: 'tab',
           activeClassName: 'active',
           to: `/${UserService.getSlugByRole(user.role)}/management/map`,
-          text: 'Skrzynki',
+          text: `${__('application.boxes')}`,
         },
         {
           className: 'tab',
           activeClassName: 'active',
-          to: `/${UserService.getSlugByRole(user.role)}/management/discount`,
-          text: 'Kody rabatowe',
+          to: `/${UserService.getSlugByRole(user.role)}/management/stock-discount/list`,
+          text: `${__('application.stockSale')}`,
+        },
+        {
+          className: 'tab',
+          activeClassName: 'active',
+          to: `/${UserService.getSlugByRole(user.role)}/management/gate`,
+          text: `${__('application.gate')}`,
         },
       ]}
     />
+
     <Switch>
       <Route
         exact
@@ -46,8 +73,11 @@ const Management = ({ user }: Props) => (
         render={() => <Redirect to={`/${UserService.getSlugByRole(user.role)}/management/workers`} />}
       />
       <Route path={`/${UserService.getSlugByRole(user.role)}/management/workers`} component={WorkersManagement} />
+      <Route path={`/${UserService.getSlugByRole(user.role)}/management/users`} component={UsersManagement} />
       <Route path={`/${UserService.getSlugByRole(user.role)}/management/map`} component={BoxMapManagement} />
-      <Route path={`/${UserService.getSlugByRole(user.role)}/management/discount`} component={DiscountCodes} />
+      <Route path={`/${UserService.getSlugByRole(user.role)}/management/invitations`} component={InvitesSent} />
+      <Route path={`/${UserService.getSlugByRole(user.role)}/management/stock-discount`} component={StockDiscount} />
+      <Route path={`/${UserService.getSlugByRole(user.role)}/management/gate`} component={Gate} />
     </Switch>
   </Section>
 );

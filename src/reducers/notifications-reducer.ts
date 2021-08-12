@@ -1,6 +1,7 @@
 import uuidv4 from 'uuid/v4';
 import { ApiErrorCode } from 'smartbox-types';
 import { SingleNotification } from '../types/notifications';
+import { translateApiErrorCode } from '../utils/trans-form';
 
 interface HideNotification {
   type: 'HIDE_NOTIFICATION';
@@ -23,20 +24,14 @@ export type NotificationState = SingleNotification[];
 
 const initialState: NotificationState = [];
 
-const getError = (error: ApiErrorCode) => {
-  switch (error) {
-    case ApiErrorCode.InvalidLoginData:
-      return 'Niepoprawne dane logowania.';
-    default:
-      return 'Wystąpił błąd';
-  }
-};
+const getError = (error: ApiErrorCode) => translateApiErrorCode(error, 'pl');
 
 const getErrorNotification = (text: string) => ({
   type: 'error',
   text,
   id: uuidv4(),
 });
+
 const getSuccessNotification = (text: string) => ({
   type: 'success',
   text,

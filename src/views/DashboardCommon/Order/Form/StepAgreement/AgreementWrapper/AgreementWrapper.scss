@@ -3,6 +3,7 @@
 
 .order-agreement-wrapper {
   display: flex;
+  min-height: 25vh;
   max-height: 50vh;
   overflow-y: scroll;
   margin: $main-spacing*2 0;

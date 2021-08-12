@@ -1,0 +1,17 @@
+@import '../../../config/variables';
+@import '../../../config/mixins';
+
+.contact-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 30px auto 0;
+}
+
+.department-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  flex-direction: column;
+}

@@ -1,48 +1,88 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import FormHeader from '../../../../../../components/Layout/FormHeader';
 import { ButtonsContainer } from '../../../../../../components/Layout';
 import { Button } from '../../../../../../components/Common';
-import { modal } from '../../../../../../actions';
+import { modal, notifications } from '../../../../../../actions';
+import { __ } from '../../../../../../helpers/i18n';
 import { ApplicationState } from '../../../../../../reducers';
 
-import RadioDiscout from './RadioDiscout';
-import DiscoutCode from './DiscountCode';
+import DiscountCode from './DiscountCode';
 
 import './DiscountsList.scss';
 
 interface Props {
-  register: any;
-  discoutsList: any[];
+  countedPrice: {
+    name: string;
+    value: number;
+  };
+  codeDiscount: number;
   showModal: (content: React.ReactNode) => void;
+  successNotification: (text: string) => void;
 }
 
-const DiscountsList = ({ register, showModal, discoutsList }: Props) => {
-  const dataToDisplay = discoutsList.map((data: any) => (
-    <RadioDiscout text={data.text} value={data.value} register={register} />
-  ));
+const DiscountsList = ({ showModal, countedPrice, successNotification, codeDiscount }: Props) => {
+  const [priceName, setPriceName] = useState(countedPrice.name);
+  const [helpText, setHelpText]: [boolean, any] = useState(false);
+
+  const getText = () => {
+    switch (countedPrice.name) {
+      case 'firstRentFreePracing':
+        if (codeDiscount !== 0) {
+          setHelpText(true);
+          successNotification(
+            'Zastosowano korzystniejszą promocje. Kod nie został użyty. Można go wykorzystać ponownie.',
+          );
+        }
+        return setPriceName(__('application.firstRentFreePracing'));
+      case 'withDicoutnPricing':
+        if (codeDiscount !== 0) {
+          setHelpText(true);
+          successNotification(
+            'Zastosowano korzystniejszą promocje. Kod nie został użyty. Można go wykorzystać ponownie.',
+          );
+        }
+        return setPriceName(__('application.withDicoutnPricing'));
+      case 'cardPricing':
+        setHelpText(false);
+        return setPriceName(__('application.cardPricing'));
+      default:
+        setHelpText(false);
+        return setPriceName(__('application.standardPrice'));
+    }
+  };
+
+  useEffect(() => {
+    getText();
+    setHelpText(false);
+  }, [countedPrice]);
 
   return (
     <div>
-      <FormHeader title="Zastosowane rabaty:" />
-      <div className="discounts-list-wrapper">{dataToDisplay}</div>
+      <FormHeader title={__('application.usedDiscount')} />
+      <div className="discount-wrapper">
+        <p>{priceName}</p>
+        {helpText && <p>Zastosowano korzystniejszą promocje. Kod nie został użyty. Można go wykorzystać ponownie.</p>}
+      </div>
       <ButtonsContainer>
-        <Button text="Dodaj kod rabatowy" primary click={() => showModal(<DiscoutCode />)} />
+        <Button text={__('application.useDiscountCode')} primary click={() => showModal(<DiscountCode />)} />
       </ButtonsContainer>
     </div>
   );
 };
 
 const mapStateToProps = (state: ApplicationState) => ({
-  discoutsList: state.order.discountList,
+  countedPrice: state.order.countedPrice,
+  codeDiscount: state.order.formData.card.discount,
 });
 
 const mapDispatchToProps = (dispatch: any) =>
   bindActionCreators(
     {
       ...modal,
+      ...notifications,
     },
     dispatch,
   );

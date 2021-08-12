@@ -18,11 +18,11 @@ interface Props {
 
 const Form = ({ user }: Props) => (
   <Switch>
-    <Route path={`/${UserService.getSlugByRole(user.role)}/order/step/size`} component={StepSize} />
-    <Route path={`/${UserService.getSlugByRole(user.role)}/order/step/duration`} component={StepDuration} />
-    <Route path={`/${UserService.getSlugByRole(user.role)}/order/step/summary`} component={StepSummary} />
-    <Route path={`/${UserService.getSlugByRole(user.role)}/order/step/agreement`} component={StepAgreement} />
-    <Route path={`/${UserService.getSlugByRole(user.role)}/order/step/payment`} component={StepPayment} />
+    <Route path={`/${UserService.getSlugByRole(user.role)}/order/step/size/:rentId?`} component={StepSize} />
+    <Route path={`/${UserService.getSlugByRole(user.role)}/order/step/duration/:rentId?`} component={StepDuration} />
+    <Route path={`/${UserService.getSlugByRole(user.role)}/order/step/summary/:rentId?`} component={StepSummary} />
+    <Route path={`/${UserService.getSlugByRole(user.role)}/order/step/agreement/:rentId?`} component={StepAgreement} />
+    <Route path={`/${UserService.getSlugByRole(user.role)}/order/step/payment/:rentId?`} component={StepPayment} />
   </Switch>
 );
 

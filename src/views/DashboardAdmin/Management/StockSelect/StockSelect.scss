@@ -1,0 +1,13 @@
+@import "../../../../config/variables.scss";
+
+.stock-select-wrapper {
+  margin-bottom: $main-spacing *3;
+
+  #stockId {
+    padding: 0;
+    background-image: url('/assets/icons/arrow-down.svg');
+    background-position: 98% 50%;
+    background-repeat: no-repeat;
+    background-size: 10px;
+  }
+}

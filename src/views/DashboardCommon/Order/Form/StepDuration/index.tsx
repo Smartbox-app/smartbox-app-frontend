@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useForm, Controller, FormContext } from 'react-hook-form';
-import { withRouter } from 'react-router-dom';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { addDays, differenceInCalendarDays } from 'date-fns';
-import { IPricingResult, UserRes } from 'smartbox-types';
+import { addDays, differenceInCalendarDays, endOfDay, startOfDay, startOfToday } from 'date-fns';
+import { IPricingResult, MyRentList, StockList, UserRes } from 'smartbox-types';
 import { DateInput, Button } from '../../../../../components/Common';
 import { order } from '../../../../../actions';
 import { ButtonsContainer } from '../../../../../components/Layout';
@@ -13,43 +13,85 @@ import { history } from '../../../../../App';
 import { FormType } from '../../../../../types/order-form';
 import { ApplicationState } from '../../../../../reducers';
 import UserService from '../../../../../services/user-service';
+import { __ } from '../../../../../helpers/i18n';
+import { firstRentChecker } from '../../../../../utils/isFirstRent';
 
 import Price from './Price';
 
 import './StepDuration.scss';
 
-interface Props {
-  history: any;
-  formData: FormType;
-  countedPrice: IPricingResult;
-  user: UserRes;
-  updateFormData: (data: any) => void;
+interface RouteProps {
+  step: string;
+  rentId: string;
 }
 
-const StepDuration = ({ formData, countedPrice, updateFormData, user }: Props) => {
-  useEffect(() => {
-    if (formData.size.length === 0) {
-      history.push(`/${UserService.getSlugByRole(user.role)}/order/step/size`);
-    }
-  });
+interface Props extends RouteComponentProps<RouteProps> {
+  history: any;
+  formData: FormType;
+  stockDiscount: StockList;
+  countedPrice: IPricingResult;
+  user: UserRes;
+  rent: MyRentList;
+  updateFormData: (data: any) => void;
+  clearPaymentDetails: () => void;
+}
 
-  const [dateStartMin, setDateStart] = useState(new Date());
-  const [dateEndMin, setDateEnd] = useState(addDays(new Date(), 7));
+const StepDuration = ({
+  clearPaymentDetails,
+  formData,
+  countedPrice,
+  updateFormData,
+  user,
+  match,
+  rent,
+  stockDiscount,
+}: Props) => {
+  const setMinDate = (addAmount = 0, end?: boolean) =>
+    match.params.rentId
+      ? addDays(startOfDay(new Date(rent.finishAt)), addAmount)
+      : addDays(end ? formData.dateStart : startOfToday(), addAmount);
+
+  const setMaxDateToExtend = () =>
+    match.params.rentId ? addDays(endOfDay(new Date(rent.finishAt)), 0) : addDays(new Date(), 7);
 
   const defaultValues = {
-    dateStart: formData.dateStart,
-    dateEnd: formData.dateEnd,
+    dateStart: match.params.rentId ? addDays(new Date(rent.finishAt), 0) : addDays(formData.dateStart, 0),
+    dateEnd: match.params.rentId ? addDays(new Date(rent.finishAt), 7) : addDays(formData.dateEnd, 0),
   };
+
+  useEffect(() => {
+    clearPaymentDetails();
+    if (formData.size === '') {
+      history.push(`/${UserService.getSlugByRole(user.role)}/order/step/size`);
+    } else if (match.params.rentId) {
+      updateFormData({
+        durationInDays: formData.durationInDays,
+        dateStart: setMinDate(),
+        dateEnd: setMinDate(formData.durationInDays),
+        size: rent.size,
+        isFirstRent: firstRentChecker(user),
+        discount: stockDiscount.discount,
+      });
+    } else {
+      updateFormData({
+        durationInDays: formData.durationInDays,
+        dateStart: setMinDate(),
+        dateEnd: setMinDate(formData.durationInDays),
+        isFirstRent: firstRentChecker(user),
+        discount: stockDiscount.discount,
+      });
+    }
+  }, []);
 
   const { register, handleSubmit, control } = useForm({ defaultValues });
   const methods = useForm();
 
-  const onSubmit = (data: any) => {
-    history.push(`/${UserService.getSlugByRole(user.role)}/order/step/summary`);
+  const onSubmit = () => {
+    history.push(`/${UserService.getSlugByRole(user.role)}/order/step/summary/${match.params.rentId || ''}`);
   };
 
   const onBack = () => {
-    history.push(`/${UserService.getSlugByRole(user.role)}/order/step/size`);
+    history.push(`/${UserService.getSlugByRole(user.role)}/order/step/size/${match.params.rentId || ''}`);
   };
 
   return (
@@ -62,14 +104,13 @@ const StepDuration = ({ formData, countedPrice, updateFormData, user }: Props) =
             as={DateInput}
             register={register({ required: true })}
             label="Wybierz datę rozpoczęcia wynajmu:"
-            minDate={addDays(new Date(), 0)}
-            maxDate={addDays(new Date(), 7)}
+            minDate={setMinDate()}
+            maxDate={setMaxDateToExtend()}
             onChange={([selected]) => {
-              setDateStart(selected[0]);
               updateFormData({
-                durationInDays: differenceInCalendarDays(dateEndMin, selected[0]),
-                discount: 0,
+                durationInDays: differenceInCalendarDays(formData.dateEnd, selected[0]),
                 dateStart: selected[0],
+                isFirstRent: firstRentChecker(user),
               });
               return selected;
             }}
@@ -80,13 +121,12 @@ const StepDuration = ({ formData, countedPrice, updateFormData, user }: Props) =
             as={DateInput}
             register={register({ required: true })}
             label="Wybierz datę zakończenia wynajmu:"
-            minDate={addDays(dateStartMin, 7)}
+            minDate={setMinDate(7, true)}
             onChange={([selected]) => {
-              setDateEnd(selected[0]);
               updateFormData({
-                durationInDays: differenceInCalendarDays(selected[0], dateStartMin),
-                discount: 0,
+                durationInDays: differenceInCalendarDays(selected[0], formData.dateStart),
                 dateEnd: selected[0],
+                isFirstRent: firstRentChecker(user),
               });
               return selected;
             }}
@@ -94,8 +134,8 @@ const StepDuration = ({ formData, countedPrice, updateFormData, user }: Props) =
         </div>
         <Price countedPrice={countedPrice.value} />
         <ButtonsContainer max>
-          <Button outline text="Wróć" click={() => onBack()} />
-          <Button type="submit" primary text="Dalej" />
+          <Button outline text={__('application.back')} click={() => onBack()} disabled={!!match.params.rentId} />
+          <Button type="submit" primary text={__('application.next')} />
         </ButtonsContainer>
       </form>
     </FormContext>
@@ -106,6 +146,8 @@ const mapStateToProps = (state: ApplicationState) => ({
   formData: state.order.formData,
   countedPrice: state.order.countedPrice,
   user: state.user.details,
+  rent: state.rent.singleRent,
+  stockDiscount: state.stock.list[0],
 });
 
 const mapDispatchToProps = (dispatch: any) =>
@@ -116,4 +158,5 @@ const mapDispatchToProps = (dispatch: any) =>
     dispatch,
   );
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(StepDuration));
+const StepDurationWithRouter = withRouter(StepDuration);
+export default connect(mapStateToProps, mapDispatchToProps)(StepDurationWithRouter);

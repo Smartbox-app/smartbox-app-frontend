@@ -11,12 +11,26 @@
     display:block;
     width: 15px;
     height: 15px;
-    background-color: $color-active;
     border-radius: 3px;
     margin-right: $main-spacing /2;
   }
+
   .legend-desc {
     margin: 0;
     font-size: .7rem;
+    padding-right: $main-spacing;
+    text-align: start;
+  }
+
+  .active-stock {
+    background-color: $color-primary;
+  }
+
+  .payment-issue {
+    background-color: $color-tertiary;
+  }
+
+  .ended {
+    background-color: $color-disabled;
   }
 }

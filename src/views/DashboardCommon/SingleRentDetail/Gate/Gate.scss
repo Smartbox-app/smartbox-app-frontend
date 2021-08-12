@@ -1,0 +1,47 @@
+@import '../../../../config/variables';
+@import '../../../../config/mixins';
+
+.open-gate-wrapper {
+  margin-bottom: 60px;
+  top: 60px;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.animation-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin: $main-spacing*2;
+
+  .no-gps-cords {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  span {
+    font-size: 1.5rem;
+    text-align: center;
+  }
+}
+
+.gate-animation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  .slide-to-open {
+    margin: $main-spacing*2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+}

@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { withRouter } from 'react-router-dom';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { RentBoxReq, UserRole, IPricingResult, UserRes } from 'smartbox-types';
-import { Button } from '../../../../../components/Common';
+import { RentBoxReq, UserRole, IPricingResult, UserRes, StockList, ExtendRentalReq } from 'smartbox-types';
+import { PaymentType } from 'smartbox-types/src/payment/payment-entity';
+import { Alert, Button } from '../../../../../components/Common';
 import { order } from '../../../../../actions';
 import { ButtonsContainer } from '../../../../../components/Layout';
 import { history } from '../../../../../App';
@@ -17,18 +18,25 @@ import UserService from '../../../../../services/user-service';
 import AgreementWrapper from './AgreementWrapper';
 import ScrollPosition from './ScrollPosition';
 import { ApplicationState } from '../../../../../reducers';
+import { __ } from '../../../../../helpers/i18n';
 
 import './StepAgreement.scss';
 
-interface Props {
-  history: any;
+interface RouteProps {
+  step: string;
+  rentId: string;
+}
+
+interface Props extends RouteComponentProps<RouteProps> {
   formData: FormType;
   countedPrice: IPricingResult;
   user: UserRes;
   isAgreementAccepted: boolean;
   isResignationMarked: boolean;
-  updateFormData: (data: any) => void;
-  sentRentBoxRequest: (data: RentBoxReq | any, nextStep: string, role: UserRole) => void;
+  stock: StockList;
+  paymentType: PaymentType;
+  sentExtendRentRequest: (rentId: string, data: ExtendRentalReq, role: UserRole) => void;
+  sentRentBoxRequest: (data: RentBoxReq, nextStep: string, role: UserRole) => void;
 }
 
 const StepSummary = ({
@@ -38,41 +46,74 @@ const StepSummary = ({
   isResignationMarked,
   sentRentBoxRequest,
   countedPrice,
-}: Props) => {
+  stock,
+  match,
+  paymentType,
+  sentExtendRentRequest,
+}: Props): any => {
   useEffect(() => {
     if (formData.size.length === 0) {
       history.push(`/${UserService.getSlugByRole(user.role)}/order/step/size`);
     }
-  });
+  }, []);
 
   const { handleSubmit } = useForm();
 
   const onSubmit = (data: any) => {
-    sentRentBoxRequest(
-      {
-        stockId: undefined,
-        size: Number(formData.size),
-        startAt: formData.dateStart,
-        finishAt: formData.dateEnd,
-        cost: countedPrice.value,
-        discountCode: formData.discountCode,
-      },
-      'payment',
-      user.role,
-    );
+    const commonCollection = {
+      finishAt: formData.dateEnd,
+      cost: countedPrice.value,
+      discountCode: formData.discountCode,
+      firstName: formData.firstName,
+      lastName: formData.lastName,
+      street: formData.street,
+      city: formData.city,
+      postCode: formData.postCode,
+      isCompany: formData.isCompany || false,
+      phone: formData.phone,
+      mailToSendInvoice: formData.mailToSendInvoice,
+      companyName: formData.companyName || '',
+      companyStreet: formData.companyStreet || '',
+      companyCity: formData.companyCity || '',
+      companyPostCode: formData.companyPostCode || '',
+      nip: formData.nip || '',
+    };
+
+    const dataCollectionExtendRent: ExtendRentalReq = {
+      ...commonCollection,
+      isPaySavedCard: false,
+      type: paymentType,
+    };
+
+    const dataCollectionRent: RentBoxReq = {
+      ...commonCollection,
+      startAt: formData.dateStart,
+      stockId: stock.id,
+      size: Number(formData.size),
+      type: paymentType,
+    };
+
+    if (match.params.rentId) {
+      // rent extension
+      sentExtendRentRequest(match.params.rentId, dataCollectionExtendRent, user.role);
+    } else {
+      // new Rent blik/creditcart
+      sentRentBoxRequest(dataCollectionRent, 'payment', user.role);
+    }
   };
 
   const onBack = () => {
-    history.push(`/${UserService.getSlugByRole(user.role)}/order/step/summary`);
+    history.push(`/${UserService.getSlugByRole(user.role)}/order/step/summary/${match.params.rentId || ''}`);
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <FormHeader title="Umowa zamówienia:" />
+      <FormHeader title={__('application.orderAgreement')} />
       <AgreementWrapper />
       <ScrollPosition />
+      <Alert type="notice" text={__('application.orderAgreementAcceptation')} />
       <ButtonsContainer max>
-        <Button outline text="Wróć" click={() => onBack()} />
+        <Button outline text={__('application.back')} click={() => onBack()} />
         <Button
           type="submit"
           primary
@@ -90,6 +131,10 @@ const mapStateToProps = (state: ApplicationState) => ({
   user: state.user.details,
   isAgreementAccepted: state.order.isAgreementAccepted,
   isResignationMarked: state.order.isResignationMarked,
+  stock: state.stock.list[0],
+  rentId: state.rent.singleRent.id,
+  selectedPaymentMethodDetailId: state.order.selectedPaymentMethodDetail.id,
+  paymentType: state.order.selectedPayment,
 });
 
 const mapDispatchToProps = (dispatch: any) =>

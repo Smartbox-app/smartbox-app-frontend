@@ -1,13 +1,15 @@
 import React from 'react';
 
 import { withRouter, RouteComponentProps } from 'react-router';
-import { Section, SectionHeader } from '../../../components/Layout';
+import { FormContainer, Section, SectionHeader } from '../../../components/Layout';
 import { ProgressIndicator } from '../../../components/Common';
 
 import Form from './Form/Index';
+import { __ } from '../../../helpers/i18n';
 
 interface RouteProps {
   step: string;
+  rentId: string;
 }
 
 type Props = RouteComponentProps<RouteProps>;
@@ -32,33 +34,35 @@ const Order = ({ match }: Props) => {
 
   return (
     <Section>
-      <SectionHeader title="Nowe zamówienie:" />
+      <SectionHeader title={match.params.rentId ? __('application.extendsOrder') : __('application.newOrder')} />
       <ProgressIndicator
         current={getStepByName(match.params.step)}
         stepList={[
           {
             value: 1,
-            desc: 'Rozmiar',
+            desc: __('application.orderStepSize'),
           },
           {
             value: 2,
-            desc: 'Termin',
+            desc: __('application.orderStepDate'),
           },
           {
             value: 3,
-            desc: 'Podsumowanie',
+            desc: __('application.orderStepSummary'),
           },
           {
             value: 4,
-            desc: 'Umowa',
+            desc: __('application.orderStepAgreement'),
           },
           {
             value: 5,
-            desc: 'Płatność',
+            desc: __('application.orderStepPayment'),
           },
         ]}
       />
-      <Form />
+      <FormContainer>
+        <Form />
+      </FormContainer>
     </Section>
   );
 };

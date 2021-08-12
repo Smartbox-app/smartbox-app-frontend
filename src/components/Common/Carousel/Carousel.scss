@@ -10,13 +10,80 @@
   margin: auto;
 }
 
+.offer-svg-wrapper {
+  padding: 0 $main-spacing*4;
+  height: 100%;
+  position: relative;
+
+  .offer-description {
+    margin-bottom: $main-spacing*2;
+    color: $color-primary;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    @include gt-sm {
+      flex-direction: row;
+    }
+
+    p {
+      font-size: 1.1rem;
+    }
+
+    strong {
+      font-size: 1.5rem;
+      margin-right: $main-spacing;
+    }
+
+  }
+
+  svg {
+    width: 100%;
+    min-height: 250px;
+    max-height: 250px;
+
+    @include gt-md {
+      min-height: 300px;
+      max-height: 300px;
+    }
+  }
+
+  .cls-1 {
+    fill:#dadada;
+  }
+  .cls-2 {
+    fill:#bfbfbf;
+  }
+  .cls-3 {
+    fill:#e6e6e6;
+  }
+  .cls-4 {
+    fill:#999;
+  }
+  .cls-5 {
+    fill: #000;
+    stroke:#000;
+    stroke-miterlimit:10;
+    font-size: 10px;
+  }
+  .cls-6 {
+    font-size:10px;
+    font-family: Montserrat-Regular, Montserrat, sans-serif;
+  }
+  .cls-7 {
+    font-size:52.55px;
+    font-family: Montserrat-Bold, Montserrat, sans-serif;
+    font-weight:700;
+  }
+}
+
 .slick-list {
   position: relative;
 }
 
 .slick-slider {
-  width: 100%;
-  min-height: $carousel-small;
+  min-width: 100%;
 }
 
 .slick-dots  {
@@ -44,9 +111,5 @@
 @include gt-sm {
   .slick-slider {
     width: 100%;
-    min-height: $carousel-big;
-  }
-  .slick-slide img {
-    min-height: $carousel-big;
   }
 }

@@ -1,20 +1,26 @@
 import React from 'react';
 import { ItfApiForm } from 'itf_formbuilder_react';
+import { connect } from 'react-redux';
 import ReactSelect from 'react-select';
 import ReactCreatableSelect from 'react-select/creatable';
-import { AddGiftReq, GiftRes } from 'smartbox-types';
-import { FormContainer, ButtonsContainer } from '../../../../../components/Layout';
+import { bindActionCreators } from 'redux';
+import { AddGiftReq } from 'smartbox-types';
+import { modal, notifications } from '../../../../../actions';
+import { FormContainer, ButtonsContainer, FormHeader, FieldsColumn } from '../../../../../components/Layout';
 import { Button, Spinner } from '../../../../../components/Common';
 import ApiService from '../../../../../services/api-service';
 import { formOnTranslateString } from '../../../../../utils/trans-form';
-import { successNotification } from '../../../../../actions/notifications';
+import { __ } from '../../../../../helpers/i18n';
 
-import './UpdatePass.scss';
+interface Props {
+  successNotification: (text: string) => void;
+  hideModal: () => void;
+}
 
-const UpdatePass = () => {
+const UpdatePass = ({ successNotification, hideModal }: Props) => {
   const submitButton = (
     <ButtonsContainer>
-      <Button text="Zmień" type="submit" primary />
+      <Button text={__('application.change')} type="submit" primary />
     </ButtonsContainer>
   );
 
@@ -31,23 +37,36 @@ const UpdatePass = () => {
     );
 
   return (
-    <FormContainer className="gift-form">
-      <ItfApiForm
-        formId="addGiftForm"
-        schemaMayBeDynamic={false}
-        schemaCacheEnabled={false}
-        loadingInfo={<Spinner transparent />}
-        schemaFetcher={() => ApiService.loadForm(fetchUrl)}
-        sendFetcher={customSendFetcher}
-        submitButton={submitButton}
-        onSavedSuccessfully={() => {
-          successNotification('Poprawnie zmieniono hasło');
-        }}
-        onTranslateString={formOnTranslateString}
-        thirdPartyComponents={{ ReactSelect, ReactCreatableSelect }}
-      />
+    <FormContainer>
+      <FormHeader title="Zmieniasz swoje hasło do serwisu" />
+      <FieldsColumn>
+        <ItfApiForm
+          formId="changePass"
+          schemaMayBeDynamic={false}
+          schemaCacheEnabled={false}
+          loadingInfo={<Spinner transparent />}
+          schemaFetcher={() => ApiService.loadForm(fetchUrl)}
+          sendFetcher={customSendFetcher}
+          submitButton={submitButton}
+          onSavedSuccessfully={() => {
+            successNotification(__('notification.passChangedSuccess'));
+            hideModal();
+          }}
+          onTranslateString={formOnTranslateString}
+          thirdPartyComponents={{ ReactSelect, ReactCreatableSelect }}
+        />
+      </FieldsColumn>
     </FormContainer>
   );
 };
 
-export default UpdatePass;
+const mapDispatchToProps = (dispatch: any) =>
+  bindActionCreators(
+    {
+      ...modal,
+      ...notifications,
+    },
+    dispatch,
+  );
+
+export default connect(null, mapDispatchToProps)(UpdatePass);

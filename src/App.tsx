@@ -9,7 +9,7 @@ import { createBrowserHistory } from 'history';
 import flatpickr from 'flatpickr';
 import { Polish } from 'flatpickr/dist/l10n/pl';
 import reducers from './reducers';
-import { Login, DashboardAdmin, DashboardWorker, DashboardUser, Register, RestorPass, Page404 } from './views';
+import { DashboardAdmin, DashboardWorker, DashboardUser, Page404 } from './views';
 import {
   OnlineContent,
   OfflineContent,
@@ -19,7 +19,10 @@ import {
   RouteUser,
   RouteWorker,
   Modal,
+  ErrorBoundary,
 } from './components/Common';
+import { EmailConfirm, Login, Register, RestorePass, UserActivation, EmailSend, GoogleAuth } from './views/Auth';
+import { Invoice, PaymentFailed } from './views/DashboardCommon';
 import { NotificationContainer } from './components/Notifications';
 import AppOffline from './components/AppOffline';
 import { i18n } from './helpers/i18n';
@@ -62,18 +65,33 @@ const App = () => {
           <UpdateInfoBar />
           <NotificationContainer />
           <Router history={history}>
-            <Switch>
-              <Route exact path="/" render={() => <Redirect to="/login" />} />
-              <Route path="/login" component={Login} />
-              <Route path="/register" component={Register} />
-              <Route exact path="/restore-pass/" component={RestorPass} />
-              <Route path="/restore-pass/:userId/:updateToken" component={RestorPass} />
-              <RouteAdmin path="/admin" component={DashboardAdmin} />
-              <RouteWorker path="/worker" component={DashboardWorker} />
-              <RouteUser path="/user" component={DashboardUser} />
-              <Route path="/404" component={Page404} />
-              <Route render={() => <Redirect to="/404" />} />
-            </Switch>
+            <ErrorBoundary>
+              <Switch>
+                <Route exact path="/" render={() => <Redirect to="/login" />} />
+                <Route path="/login" component={Login} />
+                <Route exact path="/register" component={Register} />
+                <Route path="/register/mail-was-send" component={EmailSend} />
+                <Route exact path="/restore-pass/" component={RestorePass} />
+                <Route path="/restore-pass/:userId/:updateToken" component={RestorePass} />
+                <Route path="/google-success/:googleToken" component={GoogleAuth} />
+                <Route path="/user-activation/:invitationId/:updateToken" component={UserActivation} />
+                <Route path="/join-from-invitation/:invitationId/:updateToken" component={UserActivation} />
+
+                <Route exact path="/email-confirmation/:userId/:updateToken" component={EmailConfirm} />
+
+                <Route path="/payment-success/:paymentId" component={Invoice} />
+                <Route path="/payment_finish_screen/ok" component={Invoice} />
+                <Route path="/payment-failed/" component={PaymentFailed} />
+                <Route path="/payment_finish_screen/error" component={PaymentFailed} />
+
+                <RouteAdmin path="/admin" component={DashboardAdmin} />
+                <RouteWorker path="/worker" component={DashboardWorker} />
+                <RouteUser path="/user" component={DashboardUser} />
+
+                <Route exact path="/404" component={Page404} />
+                <Route render={() => <Redirect to="/404" />} />
+              </Switch>
+            </ErrorBoundary>
           </Router>
           <Modal />
         </OnlineContent>

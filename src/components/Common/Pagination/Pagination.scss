@@ -11,9 +11,12 @@
 
     .previous,
     .next {
-      flex: 0 1 100%;
+      flex: 0 1 20%;
       margin: 0;
       text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     li {

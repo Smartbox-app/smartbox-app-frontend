@@ -25,12 +25,12 @@
       display: none;
     }
   }
-  
+
   &.prev {
-    left: -$main-spacing;
+    left: $main-spacing;
   }
 
   &.next {
-    right: -$main-spacing;
+    right: $main-spacing;
   }
 }

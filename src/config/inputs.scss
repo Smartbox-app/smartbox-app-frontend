@@ -1,15 +1,23 @@
-@import "./variables";
+@import './variables';
+
+%input-base-bordering {
+  border: 1px solid $color-disabled;
+  border-bottom: 2px solid $color-disabled;
+
+  &:focus {
+    border: 1px solid $color-primary;
+    border-bottom: 2px solid $color-primary;
+  }
+
+}
 
 %input-base {
-  border: 1px solid $color-primary;
-  outline: none;
   padding: $main-spacing;
-  color: $color-text;
-  display: block;
   width: 100%;
-  line-height: $basic-font-size * 1.3;
-  transition: 0.3s background-color;
+  height: $main-spacing * 4;
   filter: none;
+
+  @extend %input-base-bordering;
 
   &:hover {
     background-color: darken($color-background, 2%);
@@ -24,7 +32,7 @@
   }
 
   &::placeholder {
-    color: darken($color-primary, 10%);
+    color: $color-disabled;
   }
 
   &:read-only {
@@ -56,6 +64,7 @@
   width: 100%;
   display: flex;
   flex-direction: column;
+  padding: 0;
 
   &.nomargin {
     margin-bottom: 0;
@@ -64,24 +73,27 @@
   &.hidden {
     display: none;
   }
-}
+  .input-wrapper {
+    position: relative;
+    margin-bottom: $main-spacing / 4;
+    width:100%;
+    //display: flex;
+    //justify-content: center;
+    //align-items: center;
+    //flex-direction: column;
 
-.input-wrapper {
-  position: relative;
-  margin-bottom: $main-spacing / 4;
-
-  label {
-    font-size: 0.8rem;
-    font-weight: 400;
-    display: block;
-    margin-bottom: 5px;
+    label {
+      font-size: 0.8rem;
+      font-weight: 400;
+      display: block;
+      margin-bottom: 5px;
+    }
   }
 }
 
 .input,
 .flatpickr-input {
   @extend %input-base;
-  border-bottom: 1px solid $color-primary;
 }
 
 select,
@@ -90,19 +102,24 @@ select,
   -moz-appearance: none;
   -webkit-border-radius: 0px;
   border-radius: 0px;
-  background-image: url("/assets/icons/arrow-down.svg");
-  background-position: 99% 50%;
+  background-image: url('/assets/icons/arrow-down.svg');
+  background-position: 98% 50%;
   background-repeat: no-repeat;
   background-size: 10px;
+
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 .input-autocomplete-option {
+  margin-left: 5px;
   padding: $main-spacing / 2 $main-spacing;
   cursor: pointer;
   background-color: lighten($color-background, 20%);
 
   &:hover {
-    background-color: lighten($color-background, 10%);
+    background-color: lighten(#906090, 10%);
   }
 }
 
@@ -129,8 +146,9 @@ select:-webkit-autofill:hover,
 select:-webkit-autofill:focus {
   -webkit-text-fill-color: $color-text;
   -webkit-box-shadow: 0 0 0px 1000px $color-text inset;
-  box-shadow: 0 0 0px 1000px $color-text inset;
+  box-shadow: 0 0 0px 1000px $color-background inset;
   transition: background-color 5000s ease-in-out 0s;
+  background-color: $color-background !important;
 }
 
 textarea {
@@ -143,13 +161,13 @@ textarea {
   display: block;
 }
 
-[type="checkbox"]:checked,
-[type="checkbox"]:not(:checked) {
+[type='checkbox']:checked,
+[type='checkbox']:not(:checked) {
   position: absolute;
   left: -9999px;
 }
-[type="checkbox"]:checked + label,
-[type="checkbox"]:not(:checked) + label {
+[type='checkbox']:checked + label,
+[type='checkbox']:not(:checked) + label {
   position: relative;
   cursor: pointer;
   line-height: 20px;
@@ -158,91 +176,109 @@ textarea {
   padding-left: 2rem;
 }
 
-[type="checkbox"]:checked + label:before,
-[type="checkbox"]:not(:checked) + label:before {
-  content: "";
+[type='checkbox']:checked + label:before,
+[type='checkbox']:not(:checked) + label:before {
+  content: '';
   position: absolute;
   left: 0;
   top: 50%;
   transform: translateY(-50%);
-  border: 1px solid $color-primary;
-  width: 1rem;
-  height: 1rem;
   background: #fff;
   width: $main-spacing * 2;
   height: $main-spacing * 2;
-  background: #fff;
-  border: 2px solid $color-primary;
+
+  @extend %input-base-bordering;
+  border-bottom-width: 1px;
 }
 
-[type="checkbox"]:checked + label:after,
-[type="checkbox"]:not(:checked) + label:after {
-  content: "";
+[type='checkbox']:checked + label:before {
+  border-color: $color-primary;
+}
+
+[type='checkbox']:checked + label:after,
+[type='checkbox']:not(:checked) + label:after {
+  content: '';
   width: ($main-spacing * 1.4);
   height: ($main-spacing * 1.4);
   background: $color-primary;
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  left: 5px;
+  left: 4px;
   transition: background-color 0.2s ease, opacity 0.2s ease;
 }
-[type="checkbox"]:not(:checked) + label:after {
+[type='checkbox']:not(:checked) + label:after {
   opacity: 0;
   -webkit-transform: translateY(-50%) scale(0);
   transform: scale(0);
-  &:hover {
-    background: red;
-  }
 }
-[type="checkbox"]:checked + label:after {
+
+[type='checkbox']:checked + label:after {
   opacity: 1;
   transform: translateY(-50%) scale(1);
   background: $color-primary;
-  background-image: url('/public/assets/icons/arrow-down.svg');
 }
 
-[type="checkbox"]:hover + label:after {
+[type='checkbox']:hover + label:after {
   opacity: 1;
   background: lighten($color-primary, 10%);
 }
 
 .form-container {
-  [class*="control"] {
+
+  [class*='IndicatorsContainer'] {
+    max-height: 40px;
     display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  [class*='ValueContainer'] {
+    display: flex;
+    align-content: center;
+  }
+
+  [class*='control'] {
+    @extend %input-base-bordering;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     flex-direction: row;
     border-radius: 0;
-    border: 1px solid $color-primary;
-    border-bottom: 1px solid $color-primary;
     outline: none;
     color: $color-text;
     width: 100%;
-    line-height: $basic-font-size * 1.3;
     transition: 0.3s background-color;
     box-sizing: border-box;
-    min-height: 35px;
+    max-height: 40px;
 
-    [class*="placeholder"] {
+    div {
+      max-height: 40px;
+      display: flex;
+      align-content: center;
+    }
+
+    [class*='placeholder'] {
       color: $color-text-alter;
       font-size: 13.333px;
       font-family: $font-primary;
     }
   }
 
-  [class*="menu"] {
-    margin: 0;
+  [class*='menu'] {
+    margin: $main-spacing /2 0 0;
     border-radius: 0;
     padding: 0;
     font-family: $font-primary;
     font-size: 13.333px;
-
   }
 }
 
 .error {
-  [class*="control"],
+  [class*='control'],
   input {
     border: 1px solid $color-danger;
+    border-bottom: 2px solid $color-danger;
     font-family: $font-primary;
   }
 }

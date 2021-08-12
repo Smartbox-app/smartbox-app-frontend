@@ -3,20 +3,21 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { ItfApiForm } from 'itf_formbuilder_react';
 import { GetGiftReq, GiftRes } from 'smartbox-types';
-import { Button } from '../../../../../../../components/Common';
+import { Button, Spinner } from '../../../../../../../components/Common';
 import { FormContainer, ButtonsContainer } from '../../../../../../../components/Layout';
-import { modal, order } from '../../../../../../../actions';
+import { modal, notifications, order } from '../../../../../../../actions';
 import FormHeader from '../../../../../../../components/Layout/FormHeader';
 import ApiService from '../../../../../../../services/api-service';
-import { successNotification } from '../../../../../../../actions/notifications';
 import { formOnTranslateString } from '../../../../../../../utils/trans-form';
+import { __ } from '../../../../../../../helpers/i18n';
 
 interface Props {
   hideModal: () => void;
   updateFormData: (data: any) => void;
+  successNotification: (text: string) => void;
 }
 
-const DiscoutCode = ({ hideModal, updateFormData }: Props) => {
+const DiscountCode = ({ hideModal, updateFormData, successNotification }: Props) => {
   const submitButton = (
     <ButtonsContainer>
       <Button text="Dodaj" type="submit" primary />
@@ -36,21 +37,28 @@ const DiscoutCode = ({ hideModal, updateFormData }: Props) => {
     );
 
   return (
-    <FormContainer className="gift-form">
+    <FormContainer>
       <FormHeader title="Podaj Twój kod rabatowy" />
       <ItfApiForm
         formId="getGiftForm"
         schemaMayBeDynamic={false}
         schemaCacheEnabled={false}
+        loadingInfo={<Spinner small />}
         schemaFetcher={() => ApiService.loadForm(fetchUrl)}
         sendFetcher={customSendFetcher}
         submitButton={submitButton}
         onSavedSuccessfully={(data: GiftRes) => {
-          successNotification('Poprawnie odczytano kod rabatowy');
+          successNotification(__('notification.discountCodeRead'));
           updateFormData({
-            discount: data.discount,
             discountCode: data.code,
+            card: {
+              discount: data.discount,
+              durationInWeeks: data.duration,
+            },
           });
+          hideModal();
+        }}
+        onErrorsWhileSaving={() => {
           hideModal();
         }}
         onTranslateString={formOnTranslateString}
@@ -64,8 +72,9 @@ const mapDispatchToProps = (dispatch: any) =>
     {
       ...modal,
       ...order,
+      ...notifications,
     },
     dispatch,
   );
 
-export default connect(null, mapDispatchToProps)(DiscoutCode);
+export default connect(null, mapDispatchToProps)(DiscountCode);

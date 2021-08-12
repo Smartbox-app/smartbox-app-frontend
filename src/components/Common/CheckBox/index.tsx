@@ -6,11 +6,12 @@ interface Props {
   name: string;
   checked: boolean;
   handleChange: (checked: boolean) => void;
-  label?: string;
+  label?: string | React.ReactNode;
   disabled?: boolean;
+  errors?: any;
 }
 
-const CheckBox = ({ label, name, checked, handleChange, disabled }: Props) => (
+const CheckBox = ({ label, name, checked, handleChange, disabled, errors }: Props) => (
   <div className={`checkbox ${disabled ? 'checkbox-disabled' : ''}`}>
     <input
       type="checkbox"
@@ -21,6 +22,12 @@ const CheckBox = ({ label, name, checked, handleChange, disabled }: Props) => (
       disabled={disabled}
     />
     <label htmlFor={name}>{label}</label>
+    {errors &&
+      errors.map((error: any) => (
+        <small key={error} className="text-danger">
+          {error.messageCompiled}
+        </small>
+      ))}
   </div>
 );
 

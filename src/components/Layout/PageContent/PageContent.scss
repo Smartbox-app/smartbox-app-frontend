@@ -2,13 +2,20 @@
 @import "../../../config/mixins.scss";
 
 .page-content {
-  padding: $main-spacing * 2 $main-spacing * 2;
+  padding: 0;
   flex: 1 0 auto;
   display: flex;
   flex-direction: column;
   position: relative;
   min-height: 100vh;
   background-color: $color-background;
+  width: 100%;
+}
+
+@include gt-xs {
+  .page-content {
+    padding: $main-spacing * 2 $main-spacing * 2;
+  }
 }
 
 @include gt-sm {

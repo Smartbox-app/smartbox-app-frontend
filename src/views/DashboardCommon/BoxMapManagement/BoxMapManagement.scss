@@ -1,0 +1,122 @@
+@import '../../../config/variables.scss';
+@import '../../../config/mixins.scss';
+
+$buttonSize: 40px;
+
+.user-map-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.grab {
+  cursor: grabbing;
+}
+
+.user-box {
+  padding: 0 $main-spacing;
+}
+
+.map-wrapper {
+  overflow-x: scroll;
+  overflow-y: hidden;
+  min-height: 450px;
+
+  border: 1px solid darken($color-background, 5%);
+  max-width: map-get($breakpoints, lg);
+
+  .map-scale {
+    position: absolute;
+    z-index: 20;
+
+    span {
+      display: block;
+      margin: $main-spacing;
+      font-size: $buttonSize;
+      height: $buttonSize;
+      width: $buttonSize;
+      line-height: $buttonSize;
+      text-align: center;
+      color: $color-primary;
+
+      &:hover {
+        cursor: pointer;
+        color: darken($color-primary, 5%);
+      }
+    }
+  }
+
+  svg {
+    width: $box-map-width;
+    transform-origin: top left;
+
+    .st9 {
+      z-index: 100;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+
+    .storage {
+      background: transparent;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+
+    .free {
+      fill: $color-success;
+
+      &:hover {
+        fill: lighten($color-success, 5%);
+      }
+    }
+
+    .reserved,
+    .rented {
+      fill: $color-danger;
+      &:hover {
+        fill: lighten($color-danger, 5%);
+      }
+    }
+
+    .out-of-service-text {
+      fill: #000;
+    }
+
+    .to-explain-text {
+      fill: #fff;
+    }
+
+    .to-explain {
+      fill: $color-text;
+
+      &:hover {
+        fill: lighten($color-text, 15%);
+      }
+    }
+
+    .out-of-service {
+      fill: #ccc;
+      color: $color-text;
+
+      &:hover {
+        fill: lighten(#ccc, 5%);;
+      }
+    }
+
+    .to-check {
+      fill: $color-primary;
+      &:hover {
+        fill: lighten($color-primary, 5%);
+      }
+    }
+
+    .no-paid-extension,
+    .no-paid-extension-with-warning {
+      fill: $color-tertiary;
+      &:hover {
+        fill: lighten($color-tertiary, 5%);
+      }
+    }
+  }
+}

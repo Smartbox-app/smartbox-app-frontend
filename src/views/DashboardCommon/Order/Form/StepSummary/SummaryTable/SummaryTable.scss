@@ -5,11 +5,12 @@
   display: flex;
   flex: 0 0 100%;
   flex-direction: row;
-  
+
   .row {
     display: flex;
     flex-direction: column;
     flex: 0 0 33.333%;
+    max-width: 33.3333%;
     margin: $main-spacing;
     margin-left: 0;
     margin-right: 0;
@@ -26,7 +27,11 @@
     .fat {
       display: flex;
       font-weight: 600;
-      font-size: 1.3rem;
+      font-size: 1.1rem;
+
+      @include gt-sm {
+        font-size: 1.3rem;
+      }
     }
   }
 }

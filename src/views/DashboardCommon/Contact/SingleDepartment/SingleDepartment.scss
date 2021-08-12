@@ -1,0 +1,91 @@
+@import '../../../../config/variables';
+@import '../../../../config/mixins';
+
+.department {
+  margin: $main-spacing 0;
+  background-color: #fafbff;
+  border: 1px solid darken(#fafbff, 3%);
+  box-shadow: 2px 2px 2px 1px darken(#fafbff, 3%);
+  padding: $main-spacing;
+  position: relative;
+  overflow: hidden;
+  width: 300px;
+
+  @include gt-sm {
+    width: 500px;
+  }
+
+  .content {
+    position: relative;
+    z-index: 300;
+  }
+
+  .department-row.clickable {
+    line-height: 30px;
+    margin-bottom: 0;
+  }
+
+  .department-row {
+    z-index: 155;
+
+    strong,
+    a {
+      color: #000;
+    }
+
+    span {
+      width: 30px;
+      text-align: center;
+      font-size: 1.2rem;
+    }
+  }
+
+  .main {
+    font-size: 1.5rem;
+    color: $color-primary;
+  }
+
+  .organisation-role {
+    font-size: 0.85rem;
+  }
+
+  .detail {
+    width: 320px;
+    height: 320px;
+    background: $color-primary;
+    border-radius: 50%;
+
+    position: absolute;
+    right: -200px;
+    top: -55px;
+
+    @include gt-sm {
+      right: -150px;
+    }
+
+    &:before {
+      content: '';
+      width: 350px;
+      height: 350px;
+      background: $color-disabled;
+      border-radius: 50%;
+
+      position: absolute;
+      right: -70px;
+      top: 25px;
+      z-index: 105;
+    }
+    &:after {
+      content: '';
+      width: 350px;
+      height: 350px;
+      background: lighten($color-disabled, 5%);
+      border-radius: 50%;
+
+      position: absolute;
+      right: -100px;
+      top: 50px;
+      z-index: 105;
+    }
+  }
+}

@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import { ApplicationState } from '../../../../../../reducers';
 import { order } from '../../../../../../actions';
 import { CheckBox } from '../../../../../../components/Common';
+import { __ } from '../../../../../../helpers/i18n';
 
 interface Props {
   isResignationMarked: boolean;
@@ -13,16 +14,20 @@ interface Props {
 }
 
 class ScrollPosition extends Component<Props> {
-  componentDidMount() {
-    const el = document.querySelector('.order-agreement-wrapper');
-    el && el.addEventListener('scroll', () => this.onScroll(el));
-  }
-
   private onScroll = (el: any) => {
-    if (el.scrollTop > el.scrollTopMax * 0.95) {
+    if (el.scrollTop > el.children[0].scrollHeight - el.clientHeight) {
       this.props.formAgreementReaded();
     }
   };
+  componentDidMount(): void {
+    const el = document.querySelector('.order-agreement-wrapper');
+    el && el.addEventListener('scroll', () => this.onScroll(el), false);
+  }
+
+  componentWillUnmount(): void {
+    const el = document.querySelector('.order-agreement-wrapper');
+    el && el.removeEventListener('scroll', () => this.onScroll(el), false);
+  }
 
   render() {
     const { isResignationMarked, formResignationMarked, isAgreementAccepted } = this.props;
@@ -33,7 +38,7 @@ class ScrollPosition extends Component<Props> {
           checked={isResignationMarked}
           disabled={!isAgreementAccepted}
           handleChange={() => formResignationMarked()}
-          label="Rezygnuje z możliwości 14 dniowego wypowiedzenia i zgadza się na uruchomienie usługi."
+          label={__('application.14daysResign')}
         />
       </>
     );
