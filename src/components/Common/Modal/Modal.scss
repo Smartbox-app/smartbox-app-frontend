@@ -4,24 +4,17 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
-  overflow-y: scroll;
-  -webkit-overflow-scrolling: touch;
-  background: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.25);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 998;
   animation-name: showModal;
   animation-duration: 0.15s;
-  transition: all $transition-time ease-in-out;
+  transition: opacity $transition-time/2 ease-in-out;
   opacity: 0;
-  padding: 5px;
-
-  //@include gt-md {
-  //  align-items: stretch;
-  //}
 
   &.visible {
     opacity: 1;
@@ -32,8 +25,8 @@
   }
 
   .modal-wrapper {
-    max-height: 90vh;
-    max-width: 90vw;
+    width: 100%;
+    height: 100%;
     display: flex;
     align-items: center;
   }
