@@ -1,6 +1,11 @@
 @import '../../../../../../config/variables';
 @import '../../../../../../config/mixins';
 
+.payment-wrapper {
+  width: 275px;
+  margin: 0 auto;
+}
+
 .bank-input-wrapper {
   display: flex;
   justify-content: center;

@@ -76,12 +76,14 @@ const PayDebtForm = ({
   if (func) {
     return (
       <FormContainer>
-        <div className="bank-input-wrapper">
-          <div dangerouslySetInnerHTML={{ __html: func.payload || '' }} />
+        <div className="payment-wrapper">
+          <div className="bank-input-wrapper">
+            <div dangerouslySetInnerHTML={{ __html: func.payload || '' }} />
+          </div>
+          <ButtonsContainer max>
+            <Button outline text={__('application.back')} click={() => onBack()} />
+          </ButtonsContainer>
         </div>
-        <ButtonsContainer max>
-          <Button outline text={__('application.back')} click={() => onBack()} />
-        </ButtonsContainer>
       </FormContainer>
     );
   }

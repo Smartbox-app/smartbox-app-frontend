@@ -62,12 +62,12 @@ const CreditCardForm = ({ func, user, sentExecutePaymentRequest, paymentId, matc
           )}
         </>
       ) : (
-        <>
+        <div className="payment-wrapper">
           <div className="pay-button-container" />
           <ButtonsContainer max>
             <Button outline text={__('application.back')} click={() => onBack()} />
           </ButtonsContainer>
-        </>
+        </div>
       )}
     </div>
   );
