@@ -81,6 +81,10 @@ interface SentExtendRentRequestSuccess {
   payload: string;
 }
 
+interface ClearOrder {
+  type: 'CLEAR_ORDER';
+}
+
 interface ClearOrderFormAgreementSuccess {
   type: 'CLEAR_ORDER_FORM_AGREEMENT_SUCCESS';
 }
@@ -98,6 +102,7 @@ type Action =
   | ClearPaymentMethodSuccess
   | SentExtendRentRequestSuccess
   | ClearOrderFormAgreementSuccess
+  | ClearOrder
   | BlikPaymentFinishSuccess;
 
 const initialState: OrderState = {
@@ -253,6 +258,10 @@ export default (state: OrderState = initialState, action: Action): any => {
         ...state,
         blikPaymentCompletedSuccessfully: true,
       };
+
+    case 'CLEAR_ORDER': {
+      return initialState;
+    }
 
     case 'CLEAR_ORDER_FORM_AGREEMENT_SUCCESS':
       return {

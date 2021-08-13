@@ -22,6 +22,7 @@ export const formAgreementReaded = () => ({ type: 'FORM_AGREEMENT_READED_SUCCESS
 export const formResignationMarked = () => ({ type: 'FORM_RESIGNATION_MARKED_SUCCESS' });
 
 export const clearOrderAgreement = () => ({ type: 'CLEAR_ORDER_FORM_AGREEMENT_SUCCESS' });
+export const clearOrder = () => ({ type: 'CLEAR_ORDER' });
 
 export const saveBanks = () => async (dispatch: any) => {
   await ApiService.get(dispatch, 'SAVE_BANKS_LIST_SUCCESS', 'SAVE_BANKS_LIST_FAILED', null, null, 'payment/bank-list');

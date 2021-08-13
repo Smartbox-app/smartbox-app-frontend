@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { MyRentList, RentStatus, UserRes } from 'smartbox-types';
 import { modal, order, singleRent, notifications } from '../../../../actions';
+import { clearOrder } from '../../../../actions/order';
 import { history } from '../../../../App';
 import { Button, ConfirmModal } from '../../../../components/Common';
 import { ButtonsContainer } from '../../../../components/Layout';
@@ -22,6 +23,7 @@ interface Props {
   successNotification: (text: string) => void;
   getMyRentList: () => void;
   toggleShowUserStockMap: () => void;
+  clearOrder: () => void;
 }
 
 const Action = ({
@@ -31,12 +33,14 @@ const Action = ({
   updateFormData,
   rent,
   user,
+  clearOrder,
   showUserStockMap,
   getMyRentList,
   toggleShowUserStockMap,
   successNotification,
 }: Props) => {
   const handleExtendingOrderData = (rentId: string) => {
+    clearOrder();
     updateFormData({ size: rent.size });
     history.push(`/${UserService.getSlugByRole(user.role)}/order/step/duration/${rentId}`);
   };
