@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { differenceInCalendarDays } from 'date-fns';
 import { bindActionCreators } from 'redux';
@@ -13,6 +13,9 @@ import { ApplicationState } from '../../../reducers';
 import AgreementWrapper from '../Order/Form/StepAgreement/AgreementWrapper';
 import ScrollPosition from '../Order/Form/StepAgreement/ScrollPosition';
 import SummaryTable from '../Order/Form/StepSummary/SummaryTable';
+import UserService from '../../../services/user-service';
+import { history } from '../../../App';
+import { __ } from '../../../helpers/i18n';
 
 interface RouteProps {
   rentId: string;
@@ -26,6 +29,7 @@ interface Props extends RouteComponentProps<RouteProps> {
   getSingleRent: (rentId: string) => void;
   getMyRentList: () => void;
   payNotPaidRentForm: (rentId: string) => void;
+  resetPaymentForm: () => void;
   func: any;
 }
 
@@ -38,6 +42,7 @@ const PayDebtForm = ({
   getMyRentList,
   getSingleRent,
   payNotPaidRentForm,
+  resetPaymentForm,
   func,
 }: Props) => {
   useEffect(() => {
@@ -52,6 +57,7 @@ const PayDebtForm = ({
     [],
   );
   const { pricing } = usePricing();
+
   const calc = useCallback((singleRent: MyRentList): number => {
     const { weekly } = pricing[singleRent.size || 3];
     return weekly * countPayPeriods(singleRent.finishAt);
@@ -62,14 +68,23 @@ const PayDebtForm = ({
   };
   const { handleSubmit } = useForm();
 
-  if (func)
+  //
+  const onBack = () => {
+    resetPaymentForm();
+  };
+
+  if (func) {
     return (
       <FormContainer>
         <div className="bank-input-wrapper">
           <div dangerouslySetInnerHTML={{ __html: func.payload || '' }} />
         </div>
+        <ButtonsContainer max>
+          <Button outline text={__('application.back')} click={() => onBack()} />
+        </ButtonsContainer>
       </FormContainer>
     );
+  }
   if (loading) return <Spinner overlay />;
 
   return (
