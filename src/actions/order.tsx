@@ -7,6 +7,7 @@ import {
   UrlRes,
   ApiErrorCode,
   ExtendRentalReq,
+  PaymentStatus,
 } from 'smartbox-types';
 import ApiService from '../services/api-service';
 import { history } from '../App';
@@ -46,8 +47,12 @@ export const sentRentBoxRequest = (data: RentBoxReq, nextStep: string, role: Use
     dispatch,
     'SENT_RENT_BOX_REQUEST_SUCCESS',
     'SENT_RENT_BOX_REQUEST_FAILED',
-    () => {
-      history.push(`/${UserService.getSlugByRole(role)}/order/step/${nextStep}`);
+    (result: { paymentId: string; status: PaymentStatus }) => {
+      if (result.status === PaymentStatus.succes) {
+        history.push(`/payment-success/${result.paymentId}`);
+      } else {
+        history.push(`/${UserService.getSlugByRole(role)}/order/step/${nextStep}`);
+      }
     },
     null,
     'rent/new',

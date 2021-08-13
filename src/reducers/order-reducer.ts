@@ -1,5 +1,12 @@
 import { addDays } from 'date-fns';
-import { BoxGroupAvailability, usePricing, ICalculateProps, IPricingResult, PaymentType } from 'smartbox-types';
+import {
+  BoxGroupAvailability,
+  ICalculateProps,
+  IPricingResult,
+  PaymentStatus,
+  PaymentType,
+  usePricing,
+} from 'smartbox-types';
 import { FormType } from '../types/order-form';
 
 export type PaymentMethodDetail = {
@@ -32,7 +39,10 @@ interface FormStepSuccess {
 
 interface SentRentBoxRequestSuccess {
   type: 'SENT_RENT_BOX_REQUEST_SUCCESS';
-  payload: string;
+  payload: {
+    paymentId: string;
+    status: PaymentStatus;
+  };
 }
 
 interface FetchBoxAvailability {
@@ -189,7 +199,7 @@ export default (state: OrderState = initialState, action: Action): any => {
     case 'SENT_RENT_BOX_REQUEST_SUCCESS': {
       return {
         ...state,
-        paymentId: action.payload,
+        paymentId: action.payload.paymentId,
       };
     }
     case 'SENT_EXTEND_RENT_SUCCESS': {
