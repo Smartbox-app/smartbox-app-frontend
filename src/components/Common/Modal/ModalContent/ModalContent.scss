@@ -1,5 +1,5 @@
-@import "../../../../config/variables.scss";
-@import "../../../../config/mixins.scss";
+@import '../../../../config/variables.scss';
+@import '../../../../config/mixins.scss';
 
 .modal-content {
   position: relative;
@@ -7,6 +7,8 @@
   padding: 20px $main-spacing $main-spacing;
   transition: $transition-time;
   height: 100%;
+  width: 100%;
+  overflow: auto;
   box-shadow: 0 0 $main-spacing * 1.5 $main-spacing / -2 rgba(0, 0, 0, 0.5);
   border-radius: $main-spacing / 5;
   background-color: darken($color-background, 1%);

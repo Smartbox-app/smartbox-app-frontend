@@ -1,4 +1,4 @@
-@import "../../../config/mixins";
+@import '../../../config/mixins';
 
 .modal {
   position: fixed;
@@ -39,15 +39,15 @@
   }
 
   .modal-body {
-    z-index: 1000;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
     position: relative;
-    max-height: 90vh;
-    width: 90vh;
+    z-index: 1000;
+    overflow: auto;
+    height: 90vh;
+    max-width: 90%;
+    width: 100%;
+    position: relative;
     transform: scale(0.9);
-    transition: transform $transition-time ease-in-out;
+    transition: transform $transition-time/2 ease-in-out;
 
     p {
       max-width: 500px;

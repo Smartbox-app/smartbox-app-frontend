@@ -41,9 +41,7 @@ export const fetchSingleUser = (userId: string) => async (dispatch: any) => {
     dispatch,
     'FETCH_SINGLE_USER_SUCCESS',
     'FETCH_SINGLE_USER_FAILED',
-    () => {
-      dispatch(successNotification('Pobrano dane!'));
-    },
+    null,
     null,
     `user/details/${userId}`,
   );
