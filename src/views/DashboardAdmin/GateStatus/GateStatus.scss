@@ -1,0 +1,65 @@
+@import '../../../config/variables';
+@import '../../../config/mixins';
+
+.gate-status {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+
+  margin: $main-spacing * 5 0 $main-spacing;
+
+  @include gt-sm {
+    margin-top: $main-spacing;
+  }
+
+  .single-status {
+    margin-bottom: $main-spacing/2;
+    color: $color-text-alter;
+    display: flex;
+    flex: 1;
+    font-size: 0.9rem;
+
+    @include gt-sm {
+      flex: 0 1 auto;
+    }
+
+    &.ok {
+      background-color: $color-success;
+
+      .status-icon {
+        background-color: darken($color-success, 5%);
+      }
+    }
+    &.slow {
+      background-color: $color-warning;
+      .status-icon {
+        background-color: darken($color-warning, 5%);
+      }
+    }
+    &.connection-lost {
+      background-color: $color-danger;
+      .status-icon {
+        background-color: darken($color-danger, 5%);
+      }
+    }
+  }
+
+  .status-icon,
+  .status-body {
+    padding: $main-spacing;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .status-id {
+    font-size: 0.7rem;
+    font-weight: 500;
+  }
+
+  .status-last-connection-label {
+    font-size: 0.7rem;
+    font-weight: 500;
+    margin-bottom: 0;
+  }
+}

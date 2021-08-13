@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Redirect, Switch } from 'react-router-dom';
 
 import { Main, DashboardContainer, Navigation } from '../../components/Layout';
-import MobileLogoContainer from "../../components/Layout/MobileLogoContainer";
+import MobileLogoContainer from '../../components/Layout/MobileLogoContainer';
 import { Invoice } from '../DashboardCommon';
 
 import { MenuItemType } from '../../types/menu-item';
@@ -11,6 +11,7 @@ import { __ } from '../../helpers/i18n';
 import Management from './Management';
 import Profile from '../DashboardCommon/Profile';
 import SingleRentDetail from '../DashboardCommon/SingleRentDetail';
+import GateStatus from './GateStatus';
 
 const DashboardAdmin = () => {
   const menuItems: MenuItemType[] = [
@@ -30,6 +31,7 @@ const DashboardAdmin = () => {
     <DashboardContainer>
       <MobileLogoContainer />
       <Navigation menuItems={menuItems} />
+      <GateStatus />
       <Main>
         <Switch>
           <Route exact path="/admin" render={() => <Redirect to="/admin/management" />} />

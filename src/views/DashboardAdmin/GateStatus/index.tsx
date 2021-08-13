@@ -1,0 +1,93 @@
+import React, { useEffect, useState } from 'react';
+import { GateHealthCheckStatus, GatesStatusForAdminRes } from 'smartbox-types';
+import { Spinner } from '../../../components/Common';
+import { fullDate } from '../../../utils/format-date';
+import ApiService from '../../../services/api-service';
+
+import './GateStatus.scss';
+
+const GateStatus = () => {
+  const [status, setStatus] = useState<GatesStatusForAdminRes>();
+  const [loading, setLoading] = useState<boolean>();
+
+  const getStatus = async () => {
+    await ApiService.callFetch('GET', 'gate/admin-status', (newStatus: GatesStatusForAdminRes) => {
+      setStatus(newStatus);
+    });
+  };
+
+  useEffect(() => {
+    getStatus();
+
+    const int = setInterval(() => {
+      getStatus();
+    }, 15000);
+
+    return () => {
+      clearInterval(int);
+    };
+  }, []);
+
+  const getStatusClass = (status: GateHealthCheckStatus) => {
+    switch (status) {
+      case GateHealthCheckStatus.ConnectionLost:
+        return 'connection-lost';
+      case GateHealthCheckStatus.Slow:
+        return 'slow';
+      case GateHealthCheckStatus.Ok:
+        return 'ok';
+      default:
+        return '';
+    }
+  };
+
+  const getStatusText = (status: GateHealthCheckStatus) => {
+    switch (status) {
+      case GateHealthCheckStatus.ConnectionLost:
+        return 'Utracono połączenie';
+      case GateHealthCheckStatus.Slow:
+        return 'Połączenie powolne';
+      case GateHealthCheckStatus.Ok:
+        return 'Połączenie OK';
+      default:
+        return '';
+    }
+  };
+
+  const getIcon = (status: GateHealthCheckStatus) => {
+    switch (status) {
+      case GateHealthCheckStatus.ConnectionLost:
+        return 'times-circle';
+      case GateHealthCheckStatus.Slow:
+        return 'exclamation-circle';
+      case GateHealthCheckStatus.Ok:
+        return 'check-circle';
+      default:
+        return '';
+    }
+  };
+
+  if (!status) return <Spinner />;
+
+  return (
+    <div className="gate-status">
+      {status.map((s) => (
+        <div className={`single-status ${getStatusClass(s.status)}`}>
+          <div className="status-icon">
+            <span className={`fa fa-${getIcon(s.status)}`} />
+          </div>
+          <div className="status-body">
+            <div className="status-id">{s.id}</div>
+            <p className="status-last-connection-label">Ostatnie połączenie</p>
+            <div className="status-connection-date">{fullDate(s.lastConnection)}</div>
+            <div>{s.isOpen}</div>
+
+            <div>{getStatusText(s.status)} </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+export default GateStatus;
