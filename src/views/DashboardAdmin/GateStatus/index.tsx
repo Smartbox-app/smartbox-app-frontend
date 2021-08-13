@@ -77,7 +77,10 @@ const GateStatus = () => {
             <span className={`fa fa-${getIcon(s.status)}`} />
           </div>
           <div className="status-body">
-            <div className="status-id">{s.id}</div>
+            <div className="status-id">
+              Brama<strong className="status-place-value">{s.id}</strong>na placu
+              <strong className="status-place-value">{s.stockName}</strong>
+            </div>
             <p className="status-last-connection-label">Ostatnie połączenie</p>
             <div className="status-connection-date">{fullDate(s.lastConnection)}</div>
             <div>{s.isOpen}</div>
