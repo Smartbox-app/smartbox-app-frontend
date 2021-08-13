@@ -44,7 +44,7 @@
       "users": "Użytkownicy",
       "boxes": "Mini magazyny",
       "gate": "Brama",
-      "smsNotifications": "Sms",
+      "smsNotifications": "SMS",
       "discountsCodes": "Kody rabatowe",
       "stockSale": "Promocje",
       "salesList": "Lista promocji",
@@ -52,8 +52,8 @@
       "deleteSingleSale": "Czy jesteś pewien, że chcesz usunąć zniżkę?",
       "generalDiscounts": "Rabaty generalne",
 
-      "sendSms": "Wyślij sms",
-      "smsSent": "Wysłano sms",
+      "sendSms": "Wyślij SMS",
+      "smsSent": "Wysłano SMS",
 
       "history": "Historia wynajęć:",
       "lackOfHistory": "Brak historii wynajmu",
