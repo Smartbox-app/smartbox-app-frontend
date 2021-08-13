@@ -1,5 +1,5 @@
-@import "../../../config/variables";
-@import "../../../config/mixins.scss";
+@import '../../../config/variables';
+@import '../../../config/mixins.scss';
 
 .button {
   min-width: 95px;
@@ -137,7 +137,7 @@
   }
 
   &.only-icon {
-      padding: $main-spacing;
+    padding: $main-spacing;
 
     .button-img {
       width: $button-img-size;
@@ -145,10 +145,9 @@
       margin: 0;
     }
   }
-
 }
 
-@include gt-xs {
+@include gt-sm {
   .button {
     width: auto;
     padding: $main-spacing $main-spacing * 2;

@@ -2,10 +2,12 @@
 @import '../../../config/mixins.scss';
 
 .buttons-container {
-  display: flex;
-  justify-content: flex-end;
-  flex-wrap: wrap;
-  align-items: center;
+  @include gt-sm {
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    align-items: center;
+  }
 
   &.max {
     justify-content: stretch;
@@ -27,7 +29,7 @@
   }
 }
 
-@include gt-xs {
+@include gt-sm {
   .buttons-container {
     .button:not(:first-child) {
       margin-left: 5px;

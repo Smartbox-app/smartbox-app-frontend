@@ -3,13 +3,7 @@
 
 .section-wrapper {
   width: 100%;
-  padding: $main-spacing*2 $main-spacing;
-}
-
-@include gt-xs {
-  .section-wrapper {
-    padding: $main-spacing*2 $main-spacing*2;
-  }
+  padding: $main-spacing $main-spacing;
 }
 
 @include gt-sm {
