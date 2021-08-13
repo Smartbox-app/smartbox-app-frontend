@@ -1,18 +1,18 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { UserRes } from 'smartbox-types';
-import { SimpleHeader } from '../../../../../components/Layout';
-import { ApplicationState } from '../../../../../reducers';
-import { __ } from '../../../../../helpers/i18n';
-import { Row } from '../../../../../components/Common';
+import { SimpleHeader } from '../../../components/Layout';
+import { ApplicationState } from '../../../reducers';
+import { __ } from '../../../helpers/i18n';
+import { Row } from '../../../components/Common';
 
-import './Content.scss';
+// import './UserData.scss';
 
 interface Props {
   user: UserRes;
 }
 
-const Content = ({ user }: Props) => (
+const UserData = ({ user }: Props) => (
   <div className="content-wrapper">
     <SimpleHeader title="Dane użytkownika:" />
     <Row label={__('application.firstName')} content={user.firstName} />
@@ -39,4 +39,4 @@ const mapStateToProps = (state: ApplicationState) => ({
   user: state.user.details,
 });
 
-export default connect(mapStateToProps)(Content);
+export default connect(mapStateToProps)(UserData);

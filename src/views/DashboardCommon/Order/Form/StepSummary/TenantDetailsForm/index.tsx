@@ -7,9 +7,10 @@ interface Props {
   register: any;
   errors: any;
   control: any;
+  disabled?: boolean;
 }
 
-const TenantDetailsForm = ({ register, errors, control }: Props) => {
+const TenantDetailsForm = ({ register, errors, control, disabled }: Props) => {
   return (
     <div className="form-field">
       <FormHeader title="Dane najemcy:" />
@@ -17,12 +18,14 @@ const TenantDetailsForm = ({ register, errors, control }: Props) => {
         register={register({ required: formOnTranslateString('Field required.') })}
         errors={errors}
         control={control}
+        disabled={disabled}
         id="firstName"
       />
       <CustomInput
         register={register({ required: formOnTranslateString('Field required.') })}
         errors={errors}
         control={control}
+        disabled={disabled}
         id="lastName"
       />
       <CustomInput
@@ -30,6 +33,7 @@ const TenantDetailsForm = ({ register, errors, control }: Props) => {
         errors={errors}
         control={control}
         id="street"
+        disabled={disabled}
         placeholder="ul. Główna 12/3"
       />
       <CustomInput
@@ -37,6 +41,7 @@ const TenantDetailsForm = ({ register, errors, control }: Props) => {
         errors={errors}
         control={control}
         id="city"
+        disabled={disabled}
         placeholder="Warszawa"
       />
       <CustomInput
@@ -50,6 +55,7 @@ const TenantDetailsForm = ({ register, errors, control }: Props) => {
         errors={errors}
         control={control}
         id="postCode"
+        disabled={disabled}
         placeholder="00-001"
       />
 
@@ -65,6 +71,7 @@ const TenantDetailsForm = ({ register, errors, control }: Props) => {
         control={control}
         type="email"
         id="mailToSendInvoice"
+        disabled={disabled}
         placeholder="example@gmail.com"
       />
       <CustomInput
@@ -77,6 +84,7 @@ const TenantDetailsForm = ({ register, errors, control }: Props) => {
         })}
         errors={errors}
         control={control}
+        disabled={disabled}
         id="phone"
       />
     </div>

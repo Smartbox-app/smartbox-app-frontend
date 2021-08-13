@@ -36,6 +36,7 @@
 
   &:read-only {
     background-color: lighten($color-background, 20%);
+    color: rgba($color-text, 0.5);
   }
 }
 
@@ -217,6 +218,12 @@ textarea {
   opacity: 1;
   transform: translateY(-50%) scale(1);
   background: $color-primary;
+}
+
+[type='checkbox']:checked:disabled + label:after {
+  opacity: 1;
+  transform: translateY(-50%) scale(1);
+  background: $color-disabled;
 }
 
 [type='checkbox']:hover + label:after {

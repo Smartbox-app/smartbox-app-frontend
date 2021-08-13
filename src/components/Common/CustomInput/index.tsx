@@ -11,9 +11,10 @@ interface Props {
   id: string;
   placeholder?: string;
   type?: string;
+  disabled?: boolean;
 }
 
-const CustomInput = ({ register, errors, control, id, type, placeholder }: Props) => {
+const CustomInput = ({ register, errors, control, id, type, placeholder, disabled }: Props) => {
   return (
     <label htmlFor="form-field" title={id} className="custom-input">
       <p className="label">{__(`application.${id}`)}:</p>
@@ -23,6 +24,7 @@ const CustomInput = ({ register, errors, control, id, type, placeholder }: Props
         name={id}
         ref={register}
         placeholder={placeholder || __(`application.${id}`)}
+        disabled={disabled}
       />
       <div className="form-field-errors">
         <ErrorMessage errors={errors} name={id} />

@@ -9,8 +9,8 @@ import { UserCommonEntity } from '../../../../reducers/user-reducer';
 import UserService from '../../../../services/user-service';
 
 import UpdatePass from './UpdatePass';
-import Content from './Content';
 import { __ } from '../../../../helpers/i18n';
+import UserData from '../../../../components/Common/UserData';
 
 interface Props {
   user: UserCommonEntity;
@@ -24,7 +24,7 @@ const Detail = ({ showModal, user }: Props) => (
       <Button text={__('application.edit')} primary to={`/${UserService.getSlugByRole(user.role)}/profile/update-me`} />
       <Button text={__('application.changPassword')} primary click={() => showModal(<UpdatePass />)} />
     </ButtonsContainer>
-    <Content />
+    <UserData />
   </>
 );
 

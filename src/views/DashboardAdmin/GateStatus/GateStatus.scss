@@ -6,10 +6,29 @@
   display: flex;
   flex-wrap: wrap;
 
-  margin: $main-spacing * 5 0 $main-spacing;
+  margin-top: $main-spacing * 5;
+  margin-bottom: $main-spacing;
+  margin-left: auto;
+  margin-right: auto;
 
   @include gt-sm {
     margin-top: $main-spacing;
+  }
+
+  @include gt-sm {
+    width: 90vw;
+  }
+
+  @include gt-md {
+    width: 80vw;
+  }
+
+  @include gt-lg {
+    width: 80vw;
+  }
+
+  @include gt-xl {
+    width: 65vw;
   }
 
   .single-status {

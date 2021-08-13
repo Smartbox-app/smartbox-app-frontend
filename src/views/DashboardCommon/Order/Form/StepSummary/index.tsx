@@ -23,6 +23,7 @@ import SummaryTable from './SummaryTable';
 import TenantDetailsForm from './TenantDetailsForm';
 
 import './StepSummary.scss';
+import UserData from '../../../../../components/Common/UserData';
 
 interface RouteProps {
   step: string;
@@ -61,6 +62,14 @@ const StepSummary = ({
     }
     if (formData.nip) {
       setInvoiceNeeded(true);
+    }
+
+    if (user.rentCount > 0) {
+      if (user.companyData && user.companyData.nip) {
+        setInvoiceNeeded(true);
+      } else {
+        setInvoiceNeeded(false);
+      }
     }
   }, []);
 
@@ -185,15 +194,22 @@ const StepSummary = ({
       <FormHeader title="Podsumowanie zamówienia:" />
       <SummaryTable dateStart={formData.dateStart} dateEnd={formData.dateEnd} countedPrice={countedPrice.value} />
       {countedPrice.value > 0 && <PaymentMethods register={register} />}
-      <TenantDetailsForm register={register} control={control} errors={errors} />
-      <p>Fakturę wystawimy na dane najemcy. Możesz też podać inne dane, na przykład Twojej firmy.</p>
+
+      <TenantDetailsForm register={register} control={control} errors={errors} disabled={user.rentCount > 0} />
+      {user.rentCount === 0 && (
+        <p>Fakturę wystawimy na dane najemcy. Możesz też podać inne dane, na przykład Twojej firmy.</p>
+      )}
       <CheckBox
+        disabled={user.rentCount > 0}
         name="iNeedInvoice"
         checked={invoiceNeeded}
         handleChange={() => setInvoiceNeeded(!invoiceNeeded)}
         label="Chcę dodać inne dane lub potrzebuję faktury na firmę"
       />
-      {invoiceNeeded && <CompanyDetailsForm register={register} errors={errors} control={control} />}
+      {invoiceNeeded && (
+        <CompanyDetailsForm register={register} errors={errors} control={control} disabled={user.rentCount > 0} />
+      )}
+
       <ButtonsContainer max>
         <Button outline text={__('application.back')} click={() => onBack()} />
         <Button
