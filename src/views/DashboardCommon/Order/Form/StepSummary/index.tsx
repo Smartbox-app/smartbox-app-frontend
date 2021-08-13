@@ -184,7 +184,7 @@ const StepSummary = ({
       <Discount />
       <FormHeader title="Podsumowanie zamówienia:" />
       <SummaryTable dateStart={formData.dateStart} dateEnd={formData.dateEnd} countedPrice={countedPrice.value} />
-      <PaymentMethods register={register} />
+      {countedPrice.value > 0 && <PaymentMethods register={register} />}
       <TenantDetailsForm register={register} control={control} errors={errors} />
       <p>Fakturę wystawimy na dane najemcy. Możesz też podać inne dane, na przykład Twojej firmy.</p>
       <CheckBox
