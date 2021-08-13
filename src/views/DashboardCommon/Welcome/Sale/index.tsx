@@ -16,14 +16,19 @@ interface Props {
 }
 
 const Sale = ({ discountsList, getStockDiscountsList, user }: Props) => {
+  useEffect(() => {
+    getStockDiscountsList();
+  }, []);
+
   const isFirstWeekSale = () => {
     return firstRentChecker(user);
   };
 
   const createText = (list: DiscountList[]) => {
     const result = isFirstWeekSale() ? ['Pierwszy tydzień za 1zł'] : [];
+
     list.forEach((el: any) => {
-      el.discount && result.push(`Zniżka ${el.discount}% na placu: ${el.name}`);
+      if (el.discount) result.push(`Zniżka ${el.discount}% na placu: ${el.name}`);
     });
     return result;
   };
