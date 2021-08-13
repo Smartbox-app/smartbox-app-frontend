@@ -8,7 +8,6 @@
     border: 1px solid $color-primary;
     border-bottom: 2px solid $color-primary;
   }
-
 }
 
 %input-base {
@@ -47,7 +46,8 @@
   display: flex;
   flex-direction: column;
 
-  input {
+  input,
+  textarea {
     @extend %input-base;
   }
 }
@@ -76,7 +76,7 @@
   .input-wrapper {
     position: relative;
     margin-bottom: $main-spacing / 4;
-    width:100%;
+    width: 100%;
     //display: flex;
     //justify-content: center;
     //align-items: center;
@@ -225,7 +225,6 @@ textarea {
 }
 
 .form-container {
-
   [class*='IndicatorsContainer'] {
     max-height: 40px;
     display: flex;
@@ -266,7 +265,7 @@ textarea {
   }
 
   [class*='menu'] {
-    margin: $main-spacing /2 0 0;
+    margin: $main-spacing / 2 0 0;
     border-radius: 0;
     padding: 0;
     font-family: $font-primary;

@@ -44,12 +44,16 @@
       "users": "Użytkownicy",
       "boxes": "Mini magazyny",
       "gate": "Brama",
+      "smsNotifications": "Sms",
       "discountsCodes": "Kody rabatowe",
       "stockSale": "Promocje",
       "salesList": "Lista promocji",
       "createSale": "Utwórz zniżkę",
       "deleteSingleSale": "Czy jesteś pewien, że chcesz usunąć zniżkę?",
       "generalDiscounts": "Rabaty generalne",
+
+      "sendSms": "Wyślij sms",
+      "smsSent": "Wysłano sms",
 
       "history": "Historia wynajęć:",
       "lackOfHistory": "Brak historii wynajmu",
@@ -142,10 +146,10 @@
       "workerAssignChange": "Zmień przypisanie pracownika.",
       "workerRoleChange": "Zmień stanowisko pracownika.",
 
-      "createStockDisc" : "Utwórz zniżkę",
-      "createDiscountCode" : "Utwórz kod rabatowy",
-      "editStockDiscount" : "Edytujesz zniżkę",
-      "creatStockDiscount" : "Tworzysz zniżkę",
+      "createStockDisc": "Utwórz zniżkę",
+      "createDiscountCode": "Utwórz kod rabatowy",
+      "editStockDiscount": "Edytujesz zniżkę",
+      "creatStockDiscount": "Tworzysz zniżkę",
 
       "pay": "Zapłać",
       "fillData": "Podaj dane:",
@@ -207,8 +211,8 @@
       "orderAgreement": "Umowa wynajmu",
       "orderAgreementAcceptation": "Aby kontynuować zapoznaj się z umową oraz zaakceptuj wymagane zgody.",
 
-      "userWillNotGetMailWithInformation":"Użytkownik nie zostanie automatycznie poinformowany o zmianie statusu, pamiętaj aby powiadomić go ręcznie.",
-      "userWillGetMailWithInformation":"Użytkownik zostanie automatycznie poinformowany o zmianie statusu.",
+      "userWillNotGetMailWithInformation": "Użytkownik nie zostanie automatycznie poinformowany o zmianie statusu, pamiętaj aby powiadomić go ręcznie.",
+      "userWillGetMailWithInformation": "Użytkownik zostanie automatycznie poinformowany o zmianie statusu.",
       "actionCanNotBeUnDone": "Nie można cofnąć tej akcji, czy jesteś pewien?",
       "thanksForBuy": "Dziękujemy za wybór naszej firmy",
       "confirmBlik": "Proszę potwierdzić płatność kodem PIN w aplikacji BLIK",
@@ -221,7 +225,7 @@
     },
     "notification": {
       "accountRegistered": "Konto zostało zarejestrowane",
-      "stockDiscountCreated" : "Utworzono zniżkę",
+      "stockDiscountCreated": "Utworzono zniżkę",
       "logOutSuccess": "Wylogowano poprawnie",
       "discCodeCreated": "Poprawnie utworzono kod rabatowy",
       "userBlocked": "Zablokowano użytkownika",

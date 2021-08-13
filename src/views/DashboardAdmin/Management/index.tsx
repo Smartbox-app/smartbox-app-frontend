@@ -9,7 +9,7 @@ import UserService from '../../../services/user-service';
 import { __ } from '../../../helpers/i18n';
 
 import { BoxMapManagement } from '../../DashboardCommon';
-import Gate from "../../DashboardCommon/SingleRentDetail/Gate";
+import Gate from '../../DashboardCommon/SingleRentDetail/Gate';
 
 import WorkersManagement from './WorkersManagement';
 import UsersManagement from './UsersManagement';
@@ -17,6 +17,7 @@ import UsersManagement from './UsersManagement';
 import StockDiscount from './StockDiscount';
 import StockSelect from './StockSelect';
 import InvitesSent from './InvitesSent';
+import SMS from './SMS';
 
 interface Props {
   user: UserRes;
@@ -63,6 +64,12 @@ const Management = ({ user }: Props) => (
           to: `/${UserService.getSlugByRole(user.role)}/management/gate`,
           text: `${__('application.gate')}`,
         },
+        {
+          className: 'tab',
+          activeClassName: 'active',
+          to: `/${UserService.getSlugByRole(user.role)}/management/sms`,
+          text: `${__('application.smsNotifications')}`,
+        },
       ]}
     />
 
@@ -78,6 +85,7 @@ const Management = ({ user }: Props) => (
       <Route path={`/${UserService.getSlugByRole(user.role)}/management/invitations`} component={InvitesSent} />
       <Route path={`/${UserService.getSlugByRole(user.role)}/management/stock-discount`} component={StockDiscount} />
       <Route path={`/${UserService.getSlugByRole(user.role)}/management/gate`} component={Gate} />
+      <Route path={`/${UserService.getSlugByRole(user.role)}/management/sms`} component={SMS} />
     </Switch>
   </Section>
 );
