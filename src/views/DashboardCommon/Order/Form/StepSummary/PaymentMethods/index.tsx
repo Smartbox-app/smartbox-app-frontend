@@ -28,6 +28,8 @@ const PaymentMethods = ({ showModal, saveBanks, selectedPaymentMethod, register,
     saveBanks();
   }, []);
 
+  console.log('SLECTED METHOD', selectedPaymentMethod);
+
   const selectedPayment = () => {
     if (selectedPaymentMethod.id === '') {
       return (

@@ -34,6 +34,7 @@ interface Props extends RouteComponentProps<RouteProps> {
   countedPrice: IPricingResult;
   user: UserRes;
   selectedPaymentMethod: any;
+  selectedPayment: PaymentType;
   updateFormData: (data: any) => void;
   fetchMyData: () => void;
   showModal: (content: React.ReactNode) => void;
@@ -47,6 +48,7 @@ const StepSummary = ({
   updateFormData,
   user,
   selectedPaymentMethod,
+  selectedPayment,
   match,
   showModal,
   successNotification,
@@ -63,7 +65,7 @@ const StepSummary = ({
   }, []);
 
   const defaultValues = {
-    paymentType: `${PaymentType.card}`,
+    paymentType: `${selectedPayment || PaymentType.card}`,
     firstName: user.firstName || '',
     lastName: user.lastName || '',
     street: user.street || '',
@@ -210,6 +212,7 @@ const mapStateToProps = (state: ApplicationState) => ({
   countedPrice: state.order.countedPrice,
   user: state.user.details,
   selectedPaymentMethod: state.order.selectedPaymentMethodDetail,
+  selectedPayment: state.order.selectedPayment,
 });
 
 const mapDispatchToProps = (dispatch: any) =>
