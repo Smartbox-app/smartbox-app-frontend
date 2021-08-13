@@ -71,7 +71,7 @@ const TenantDetailsForm = ({ register, errors, control, disabled }: Props) => {
         control={control}
         type="email"
         id="mailToSendInvoice"
-        disabled={disabled}
+        disabled
         placeholder="example@gmail.com"
       />
       <CustomInput
@@ -84,7 +84,7 @@ const TenantDetailsForm = ({ register, errors, control, disabled }: Props) => {
         })}
         errors={errors}
         control={control}
-        disabled={disabled}
+        disabled
         id="phone"
       />
     </div>
