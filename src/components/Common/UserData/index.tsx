@@ -27,11 +27,11 @@ const UserData = ({ user }: Props) => (
     <Row label={__('application.postCode')} content={user.postCode} />
 
     <SimpleHeader title="Dane kontaktowe firmy:" />
-    <Row label={__('application.companyName')} content={user.companyData.name} />
+    <Row label={__('application.companyName')} content={user.companyData.companyName} />
     <Row label={__('application.nip')} content={user.companyData.nip} />
-    <Row label={__('application.city')} content={user.companyData.city} />
-    <Row label={__('application.street')} content={user.companyData.street} />
-    <Row label={__('application.postCode')} content={user.companyData.postCode} />
+    <Row label={__('application.city')} content={user.companyData.companyCity} />
+    <Row label={__('application.street')} content={user.companyData.companyStreet} />
+    <Row label={__('application.postCode')} content={user.companyData.companyPostCode} />
   </div>
 );
 

@@ -84,18 +84,13 @@ const StepSummary = ({
     phone: user.phone || '',
 
     nip: user.companyData.nip || '',
-    companyPostCode: user.companyData.postCode || '',
-    companyCity: user.companyData.city || '',
-    companyStreet: user.companyData.street || '',
-    companyName: user.companyData.name || '',
+    companyPostCode: user.companyData.companyPostCode || '',
+    companyCity: user.companyData.companyCity || '',
+    companyStreet: user.companyData.companyStreet || '',
+    companyName: user.companyData.companyName || '',
   };
 
   const { handleSubmit, register, watch, control, errors } = useForm({ defaultValues });
-
-  const onSubmit = (data: any) => {
-    updateFormData(data);
-    history.push(`/${UserService.getSlugByRole(user.role)}/order/step/agreement/${match.params.rentId || ''}`);
-  };
 
   const onBack = () => {
     history.push(`/${UserService.getSlugByRole(user.role)}/order/step/duration/${match.params.rentId || ''}`);
@@ -148,6 +143,12 @@ const StepSummary = ({
     } else {
       return false;
     }
+  };
+
+  const onSubmit = (data: any) => {
+    console.log('DATAAAAA', data, invoiceNeeded);
+    updateFormData({ ...data, isCompany: invoiceNeeded });
+    history.push(`/${UserService.getSlugByRole(user.role)}/order/step/agreement/${match.params.rentId || ''}`);
   };
 
   const paymentChangeOnly = (e: any): boolean => {

@@ -18,14 +18,14 @@ const TenantDetailsForm = ({ register, errors, control, disabled }: Props) => {
         register={register({ required: formOnTranslateString('Field required.') })}
         errors={errors}
         control={control}
-        disabled={disabled}
+        disabled
         id="firstName"
       />
       <CustomInput
         register={register({ required: formOnTranslateString('Field required.') })}
         errors={errors}
         control={control}
-        disabled={disabled}
+        disabled
         id="lastName"
       />
       <CustomInput
