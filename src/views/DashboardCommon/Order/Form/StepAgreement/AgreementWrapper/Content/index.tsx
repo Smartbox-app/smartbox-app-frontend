@@ -8,12 +8,20 @@ const Content = () => (
     <strong>[ROZDZIAŁ I: POSTANOWIENIA WSTĘPNE]</strong>
     <strong>§ 1.</strong>
     <strong>Postanowienia ogólne</strong>
-    1.Regulamin Aplikacji (dalej: ”Regulamin”) określazasady zawierania umów pomiędzy Operatorem aUżytkownikiem, w tym
-    prawa i obowiązki Stron,zakres odpowiedzialności Stron i inne warunki umów,których przedmiotem będzie świadczenie
-    UsługElektronicznych w ramach Aplikacji oraz NajemSchowka za pomocą Aplikacji. 2.W razie sprzeczności pomiędzy
-    postanowieniamiRegulaminu a postanowieniami umowy odrębnejStrony związane są treścią zawartej umowy odrębnej.
-    <br />
-    3.Integralną część Regulaminu stanowi Politykaprywatności, regulująca kwestie związane z ochronądanych osobowych.
+    <ol>
+      <li>
+        Regulamin Aplikacji (dalej: ”Regulamin”) określa zasady zawierania umów pomiędzy Operatorem a Użytkownikiem, w
+        tym prawa i obowiązki Stron, zakres odpowiedzialności Stron i inne warunki umów, których przedmiotem będzie
+        świadczenie UsługElektronicznych w ramach Aplikacji oraz NajemSchowka za pomocą Aplikacji.
+      </li>
+      <li>
+        W razie sprzeczności pomiędzy postanowieniamiRegulaminu a postanowieniami umowy odrębnejStrony związane są
+        treścią zawartej umowy odrębnej.
+      </li>
+      <li>
+        Integralną część Regulaminu stanowi Politykaprywatności, regulująca kwestie związane z ochronądanych osobowych.
+      </li>
+    </ol>
     <br />
     <strong>§ 2.</strong> <strong>Definicje </strong> Użyte w Regulaminie pojęcia oznaczają, co następuje:1)akcje
     specjalne — przez „akcje specjalne” należyrozumieć wszelkie działania promocyjne, reklamowe,marketingowe etc., które

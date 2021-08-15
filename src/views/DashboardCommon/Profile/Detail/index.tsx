@@ -6,7 +6,6 @@ import { Button } from '../../../../components/Common';
 import { modal } from '../../../../actions';
 import { ApplicationState } from '../../../../reducers';
 import { UserCommonEntity } from '../../../../reducers/user-reducer';
-import UserService from '../../../../services/user-service';
 
 import UpdatePass from './UpdatePass';
 import { __ } from '../../../../helpers/i18n';
@@ -21,7 +20,6 @@ const Detail = ({ showModal, user }: Props) => (
   <>
     <SectionHeader title={__('application.profileDetail')} />
     <ButtonsContainer>
-      <Button text={__('application.edit')} primary to={`/${UserService.getSlugByRole(user.role)}/profile/update-me`} />
       <Button text={__('application.changPassword')} primary click={() => showModal(<UpdatePass />)} />
     </ButtonsContainer>
     <UserData />
