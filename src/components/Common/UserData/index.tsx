@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { UserRes } from 'smartbox-types';
+import { UserRes, UserRole } from 'smartbox-types';
 import { SimpleHeader } from '../../../components/Layout';
 import { ApplicationState } from '../../../reducers';
 import { __ } from '../../../helpers/i18n';
@@ -12,28 +12,39 @@ interface Props {
   user: UserRes;
 }
 
-const UserData = ({ user }: Props) => (
-  <div className="content-wrapper">
-    <SimpleHeader title="Dane użytkownika:" />
-    <Row label={__('application.firstName')} content={user.firstName} />
-    <Row label={__('application.lastName')} content={user.lastName} />
-    <Row label={__('application.userRole')} content={user.role} />
+const UserData = ({ user }: Props) => {
+  const { role } = user;
+  return (
+    <div className="content-wrapper">
+      <SimpleHeader title="Dane użytkownika:" />
+      <Row label={__('application.firstName')} content={user.firstName} />
+      <Row label={__('application.lastName')} content={user.lastName} />
+      <Row label={__('application.userRole')} content={user.role} />
 
-    <SimpleHeader title="Dane kontaktowe:" />
-    <Row label={__('application.mail')} content={user.email} />
-    <Row label={__('application.phone')} content={user.phone} />
-    <Row label={__('application.city')} content={user.city} />
-    <Row label={__('application.street')} content={user.street} />
-    <Row label={__('application.postCode')} content={user.postCode} />
+      <SimpleHeader title="Dane kontaktowe:" />
+      <Row label={__('application.mail')} content={user.email} />
+      <Row label={__('application.phone')} content={user.phone} />
+      {role === UserRole.user && (
+        <>
+          <Row label={__('application.city')} content={user.city} />
+          <Row label={__('application.street')} content={user.street} />
+          <Row label={__('application.postCode')} content={user.postCode} />
+        </>
+      )}
 
-    <SimpleHeader title="Dane kontaktowe firmy:" />
-    <Row label={__('application.companyName')} content={user.companyData.companyName} />
-    <Row label={__('application.nip')} content={user.companyData.nip} />
-    <Row label={__('application.city')} content={user.companyData.companyCity} />
-    <Row label={__('application.street')} content={user.companyData.companyStreet} />
-    <Row label={__('application.postCode')} content={user.companyData.companyPostCode} />
-  </div>
-);
+      {role === UserRole.user && (
+        <>
+          <SimpleHeader title="Dane kontaktowe firmy:" />
+          <Row label={__('application.companyName')} content={user.companyData.companyName} />
+          <Row label={__('application.nip')} content={user.companyData.nip} />
+          <Row label={__('application.city')} content={user.companyData.companyCity} />
+          <Row label={__('application.street')} content={user.companyData.companyStreet} />
+          <Row label={__('application.postCode')} content={user.companyData.companyPostCode} />
+        </>
+      )}
+    </div>
+  );
+};
 
 const mapStateToProps = (state: ApplicationState) => ({
   user: state.user.details,
