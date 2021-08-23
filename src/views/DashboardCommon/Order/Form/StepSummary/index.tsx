@@ -146,7 +146,6 @@ const StepSummary = ({
   };
 
   const onSubmit = (data: any) => {
-    console.log('DATAAAAA', data, invoiceNeeded);
     updateFormData({ ...data, isCompany: invoiceNeeded });
     history.push(`/${UserService.getSlugByRole(user.role)}/order/step/agreement/${match.params.rentId || ''}`);
   };
