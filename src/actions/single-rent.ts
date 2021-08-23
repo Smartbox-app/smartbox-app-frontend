@@ -8,6 +8,7 @@ export const fetchMyRentHistory = () => async (dispatch: any) => {
     null,
     null,
     'rent/story',
+    'LOADING_RENT_HISTORY',
   );
 };
 

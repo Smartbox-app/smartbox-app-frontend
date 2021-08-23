@@ -19,11 +19,12 @@ interface Props {
   userName: string;
   rentsList: MyRentList[];
   rentsHistoryList: MyRentList[];
+  loading: boolean;
   getMyRentList: () => void;
   fetchMyRentHistory: () => void;
 }
 
-const Welcome = ({ userName, getMyRentList, rentsList, fetchMyRentHistory, rentsHistoryList }: Props) => {
+const Welcome = ({ userName, getMyRentList, rentsList, fetchMyRentHistory, rentsHistoryList, loading }: Props) => {
   useEffect(() => {
     getMyRentList();
     fetchMyRentHistory();
@@ -35,7 +36,7 @@ const Welcome = ({ userName, getMyRentList, rentsList, fetchMyRentHistory, rents
         <SectionHeader title={`${__('application.hi')} ${userName}`} noMargin />
       </Section>
       <Sale />
-      <Storage myRentList={rentsList} />
+      <Storage myRentList={rentsList} loading={loading} />
       <OrdersHistory rentsHistoryList={rentsHistoryList} />
       <Offers />
     </div>
@@ -46,6 +47,7 @@ const mapStateToProps = (state: ApplicationState) => ({
   userName: state.user.details.firstName,
   rentsList: state.rent.rentsList,
   rentsHistoryList: state.rent.rentsHistoryList,
+  loading: state.rent.loading,
 });
 
 const mapDispatchToProps = (dispatch: any) =>

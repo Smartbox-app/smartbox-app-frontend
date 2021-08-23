@@ -19,7 +19,7 @@ const GoogleAuth = ({ match, authGmailUser }: Props) => {
   }, []);
   return (
     <div>
-      <Spinner big />
+      <Spinner />
     </div>
   );
 };

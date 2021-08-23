@@ -41,7 +41,7 @@ const Invoice = ({ isPaid, getMyRentList, fetchMyRentHistory, fetchMyData, check
         {/*{match.params.paymentId ? (*/}
         {false ? (
           <>
-            <Spinner big />
+            <Spinner />
             <p className="content-text">Trwa przetwarzanie płatności</p>
           </>
         ) : (

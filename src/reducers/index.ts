@@ -11,7 +11,7 @@ import boxesReducer, { Boxes } from './boxes-reducer';
 import rentReducer, { RentsStatus } from './rent-reducer';
 import stockReducer, { StockStatus } from './stock-reducer';
 import gateReducer, { GateState } from './gate-reducer';
-import paymentStatusReducer, { PaymentStatusState } from './payment-status-reducer'
+import paymentStatusReducer, { PaymentStatusState } from './payment-status-reducer';
 
 import { Modal } from '../types/modal';
 
