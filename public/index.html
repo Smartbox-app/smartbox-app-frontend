@@ -5,10 +5,7 @@
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
-    <meta
-      name="description"
-      content="Web site created using create-react-app"
-    />
+    <meta name="description" content="SmartBox" />
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
     <!--
       manifest.json provides metadata used when your web app is installed on a
@@ -74,9 +71,9 @@
             (this.shimId = function() {
               return o;
             }),
-            'undefined' != typeof window &&
-            window._rollbarShims &&
-            (window._rollbarShims[o] = { handler: e, messages: [] });
+              'undefined' != typeof window &&
+                window._rollbarShims &&
+                (window._rollbarShims[o] = { handler: e, messages: [] });
           }
           function a(r, e) {
             if (r) {
@@ -86,17 +83,17 @@
               var t = new p(e);
               return n(function() {
                 e.captureUncaught &&
-                ((t._rollbarOldOnError = r.onerror), i.captureUncaughtExceptions(r, t, !0), i.wrapGlobals(r, t, !0)),
-                e.captureUnhandledRejections && i.captureUnhandledRejections(r, t, !0);
+                  ((t._rollbarOldOnError = r.onerror), i.captureUncaughtExceptions(r, t, !0), i.wrapGlobals(r, t, !0)),
+                  e.captureUnhandledRejections && i.captureUnhandledRejections(r, t, !0);
                 var n = e.autoInstrument;
                 return (
                   e.enabled !== !1 &&
-                  (void 0 === n || n === !0 || ('object' == typeof n && n.network)) &&
-                  r.addEventListener &&
-                  (r.addEventListener('load', t.captureLoad.bind(t)),
+                    (void 0 === n || n === !0 || ('object' == typeof n && n.network)) &&
+                    r.addEventListener &&
+                    (r.addEventListener('load', t.captureLoad.bind(t)),
                     r.addEventListener('DOMContentLoaded', t.captureDomContentLoaded.bind(t))),
-                    (r[o] = t),
-                    t
+                  (r[o] = t),
+                  t
                 );
               })();
             }
@@ -137,7 +134,7 @@
               c = d.parentNode;
             (s.crossOrigin = ''),
               (s.src = t.rollbarJsUrl),
-            o || (s.async = !0),
+              o || (s.async = !0),
               (s.onload = s.onreadystatechange = n(function() {
                 if (!(i || (this.readyState && 'loaded' !== this.readyState && 'complete' !== this.readyState))) {
                   s.onload = s.onreadystatechange = null;
@@ -157,8 +154,8 @@
                     'function' == typeof e
                       ? e
                       : function() {
-                        return e || {};
-                      }),
+                          return e || {};
+                        }),
                   'function' != typeof r)
                 )
                   return r;
@@ -172,15 +169,15 @@
                     } catch (o) {
                       var e = o;
                       throw (e &&
-                      ('string' == typeof e && (e = new String(e)),
+                        ('string' == typeof e && (e = new String(e)),
                         (e._rollbarContext = n() || {}),
                         (e._rollbarContext._wrappedSource = r.toString()),
                         (window._rollbarWrappedError = e)),
-                        e);
+                      e);
                     }
                   }),
-                    (r._rollbar_wrapped._isWrap = !0),
-                    r.hasOwnProperty)
+                  (r._rollbar_wrapped._isWrap = !0),
+                  r.hasOwnProperty)
                 )
                   for (var t in r) r.hasOwnProperty(t) && (r._rollbar_wrapped[t] = r[t]);
                 return r._rollbar_wrapped;
@@ -190,7 +187,7 @@
             });
           for (
             var u = 'log,debug,info,warn,warning,error,critical,global,configure,handleUncaughtException,handleUnhandledRejection,captureEvent,captureDomContentLoaded,captureLoad'.split(
-              ',',
+                ',',
               ),
               f = 0;
             f < u.length;
@@ -216,17 +213,17 @@
           }
           function n(r, e, o, n) {
             r._rollbarWrappedError &&
-            (n[4] || (n[4] = r._rollbarWrappedError),
-            n[5] || (n[5] = r._rollbarWrappedError._rollbarContext),
+              (n[4] || (n[4] = r._rollbarWrappedError),
+              n[5] || (n[5] = r._rollbarWrappedError._rollbarContext),
               (r._rollbarWrappedError = null)),
               e.handleUncaughtException.apply(e, n),
-            o && o.apply(r, n);
+              o && o.apply(r, n);
           }
           function t(r, e, o) {
             if (r) {
               'function' == typeof r._rollbarURH &&
-              r._rollbarURH.belongsToShim &&
-              r.removeEventListener('unhandledrejection', r._rollbarURH);
+                r._rollbarURH.belongsToShim &&
+                r.removeEventListener('unhandledrejection', r._rollbarURH);
               var n = function(r) {
                 var o, n, t;
                 try {
@@ -245,7 +242,7 @@
                   t = '[unhandledrejection] error getting `detail` from event';
                 }
                 o || (o = '[unhandledrejection] error getting `reason` from event'),
-                e && e.handleUnhandledRejection && e.handleUnhandledRejection(o, n);
+                  e && e.handleUnhandledRejection && e.handleUnhandledRejection(o, n);
               };
               (n.belongsToShim = o), (r._rollbarURH = n), r.addEventListener('unhandledrejection', n);
             }
@@ -303,11 +300,11 @@
             for (var o, n, t; (o = e.shift()); )
               (n = o.method),
                 (t = o.args),
-              this[n] &&
-              'function' == typeof this[n] &&
-              ('captureDomContentLoaded' === n || 'captureLoad' === n
-                ? this[n].apply(this, [t[0], o.ts])
-                : this[n].apply(this, t));
+                this[n] &&
+                  'function' == typeof this[n] &&
+                  ('captureDomContentLoaded' === n || 'captureLoad' === n
+                    ? this[n].apply(this, [t[0], o.ts])
+                    : this[n].apply(this, t));
             return this;
           }),
             (r.exports = o);
@@ -339,7 +336,7 @@
       ]);
       // End Rollbar Snippet
     </script>
-    <title>SMARTBOX storage</title>
+    <title>SmartBox storage</title>
     <style>
       * {
         margin: 0;
@@ -401,7 +398,7 @@
         logoContainer.classList.add('logo-container');
 
         var oImg = document.createElement('img');
-        oImg.setAttribute('src', '/assets/images/Smartbox-logo-color.png');
+        oImg.setAttribute('src', '/assets/images/SmartBox-logo-color.png');
         logoContainer.appendChild(oImg);
 
         var elemDiv = document.createElement('div');

@@ -71,11 +71,11 @@ const Register = ({ successNotification }: Props) => (
                   label={
                     <small>
                       Zapoznałem/am się z postanowieniami{' '}
-                      <a target="_blank" href="/assets/20210422_Regulamin_aplikacji_Smartbox.pdf">
+                      <a target="_blank" href="/assets/20210422_Regulamin_aplikacji_SmartBox.pdf">
                         <u>Regulaminu</u>
                       </a>{' '}
                       i{' '}
-                      <a target="_blank" href="/assets/20210422_Polityka_Prywatnosci_Smartbox.pdf">
+                      <a target="_blank" href="/assets/20210422_Polityka_Prywatnosci_SmartBox.pdf">
                         <u>Polityki prywatności</u>
                       </a>{' '}
                       oraz akceptuję ich treść

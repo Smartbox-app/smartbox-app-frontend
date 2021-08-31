@@ -17,9 +17,9 @@ const Cookies = ({ isRulesAndRodoAccepted, acceptationCookies }: Props) => {
       <p>
         W tej aplikacji używamy plików cookies w celu zapewnienia użytkownikom efektywnego korzystania ze strony, a
         także narzędzi analitycznych, promocyjnych i reklamowych w celu reklamy, badania rynku oraz badania preferencji
-        użytkowników. Korzystając z Aplikacji Smartbox, możesz wyrazić zgodę na korzystanie z plików cookies oraz
+        użytkowników. Korzystając z Aplikacji SmartBox, możesz wyrazić zgodę na korzystanie z plików cookies oraz
         wymienionych narzędzi. Więcej informacji na temat plików cookies oraz stosowanych narzędzi znajdziesz w naszej{' '}
-        <a target="_blank" href="/assets/20210422_Polityka_Prywatnosci_Smartbox.pdf">
+        <a target="_blank" href="/assets/20210422_Polityka_Prywatnosci_SmartBox.pdf">
           <u>Polityce&nbsp;prywatności</u>
         </a>
         .

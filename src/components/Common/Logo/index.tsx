@@ -11,8 +11,8 @@ interface Props {
 
 const Logo = ({ user }: Props): any => (
   <img
-    src="/assets/images/Smartbox-logo-color.png"
-    alt="Smartbox"
+    src="/assets/images/SmartBox-logo-color.png"
+    alt="SmartBox"
     onClick={() => history.push(`/${UserService.getSlugByRole(user.role)}`)}
   />
 );

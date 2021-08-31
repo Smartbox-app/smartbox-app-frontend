@@ -4,7 +4,7 @@ import './Content.scss';
 
 const Content = () => (
   <p className="agreement-content-wrapper">
-    <strong>Regulamin Aplikacji Smartbox</strong>
+    <strong>Regulamin Aplikacji SmartBox</strong>
     <strong>[ROZDZIAŁ I: POSTANOWIENIA WSTĘPNE]</strong>
     <strong>§ 1.</strong>
     <strong>Postanowienia ogólne</strong>
@@ -27,7 +27,7 @@ const Content = () => (
     specjalne — przez „akcje specjalne” należyrozumieć wszelkie działania promocyjne, reklamowe,marketingowe etc., które
     są realizowane przezOperatora na potrzeby popularyzacji Aplikacji. Akcjąspecjalną może być np. akcja promocyjna
     realizowanaprzez wyłącznie przez Operatora lub przez Operatorawe współpracy z Partnerem;2)Aplikacja — „przez
-    Aplikację” należy rozumiećautorskie, oryginalne oprogramowanie pod nazwąSmartbox, które Operator oferuje
+    Aplikację” należy rozumiećautorskie, oryginalne oprogramowanie pod nazwąSmartBox, które Operator oferuje
     swoimUżytkownikom w ramach posiadanej infrastruktury,przy czym oprogramowanie to jest udostępnianeUżytkownikom w
     formule SaaS na potrzebykorzystania ze Schowków w ramach najmu.Operatorowi przysługują wszelkie prawa
     doprzedmiotowego oprogramowania i może on udzielaćlicencji na korzystanie z niego wedle własnegouznania; 3)awaria—
@@ -91,10 +91,10 @@ const Content = () => (
     niego charakteruzawodowego;32)Schowek — przez „Schowek” należyrozumieć skrytkę znajdującą się w punktachwskazanych
     przez Operatora, która umożliwiaprzechowywanie rzeczy ruchomych przezUżytkownika. Pełna lista Schowków znajduje się
     namapie zamieszczanej przez Operatora w Aplikacji;33)Strony — przez „Strony” należy rozumiećOperatora oraz
-    Użytkownika;34)System Smartbox — przez „SystemSmartbox” należy rozumieć wszelką infrastrukturętechniczną,
+    Użytkownika;34)System SmartBox — przez „SystemSmartBox” należy rozumieć wszelką infrastrukturętechniczną,
     oprogramowanie wspierające działanieAplikacji, bazy danych tworzone na potrzeby Aplikacjioraz wszelkie inne
     niezbędne elementy, które należądo Operatora i są wykorzystywane przez Operatora dorealizowania Umów z Użytkownikami
-    za pomocąAplikacji. Użytkownik nie posiada innego dostępu doSystemu Smartbox niż za pośrednictwem Aplikacji;35)Umowa
+    za pomocąAplikacji. Użytkownik nie posiada innego dostępu doSystemu SmartBox niż za pośrednictwem Aplikacji;35)Umowa
     Najmu — przez „Umowę Najmu”należy rozumieć umowę najmu dotyczącą Schowkazawartą pomiędzy Operatorem i
     Użytkownikiem,której szczegółowa treść zależy od parametrówwybranych przez Użytkownika przy składaniuDyspozycji
     Najmu;36)Umowa o Usługi Elektroniczne — przez„Umowę o Usługi Elektroniczne” należy rozumiećumowę o świadczenie Usług
