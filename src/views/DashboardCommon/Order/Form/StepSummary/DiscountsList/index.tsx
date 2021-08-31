@@ -5,13 +5,14 @@ import { bindActionCreators } from 'redux';
 import FormHeader from '../../../../../../components/Layout/FormHeader';
 import { ButtonsContainer } from '../../../../../../components/Layout';
 import { Button } from '../../../../../../components/Common';
-import { modal, notifications } from '../../../../../../actions';
+import { modal, notifications, order } from '../../../../../../actions';
 import { __ } from '../../../../../../helpers/i18n';
 import { ApplicationState } from '../../../../../../reducers';
 
 import DiscountCode from './DiscountCode';
 
 import './DiscountsList.scss';
+import { resetDiscountCode } from '../../../../../../actions/order';
 
 interface Props {
   countedPrice: {
@@ -21,9 +22,10 @@ interface Props {
   codeDiscount: number;
   showModal: (content: React.ReactNode) => void;
   successNotification: (text: string) => void;
+  resetDiscountCode: () => void;
 }
 
-const DiscountsList = ({ showModal, countedPrice, successNotification, codeDiscount }: Props) => {
+const DiscountsList = ({ showModal, countedPrice, resetDiscountCode, successNotification, codeDiscount }: Props) => {
   const [priceName, setPriceName] = useState(countedPrice.name);
   const [helpText, setHelpText]: [boolean, any] = useState(false);
 
@@ -32,6 +34,7 @@ const DiscountsList = ({ showModal, countedPrice, successNotification, codeDisco
       case 'firstRentFreePracing':
         if (codeDiscount !== 0) {
           setHelpText(true);
+          resetDiscountCode();
           successNotification(
             'Zastosowano korzystniejszą promocje. Kod nie został użyty. Można go wykorzystać ponownie.',
           );
@@ -40,6 +43,7 @@ const DiscountsList = ({ showModal, countedPrice, successNotification, codeDisco
       case 'withDicoutnPricing':
         if (codeDiscount !== 0) {
           setHelpText(true);
+          resetDiscountCode();
           successNotification(
             'Zastosowano korzystniejszą promocje. Kod nie został użyty. Można go wykorzystać ponownie.',
           );
@@ -83,6 +87,7 @@ const mapDispatchToProps = (dispatch: any) =>
     {
       ...modal,
       ...notifications,
+      ...order,
     },
     dispatch,
   );

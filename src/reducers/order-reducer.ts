@@ -91,6 +91,10 @@ interface SentExtendRentRequestSuccess {
   payload: string;
 }
 
+interface ResetDiscountCode {
+  type: 'RESET_DISCOUNT_CODE';
+}
+
 interface ClearOrder {
   type: 'CLEAR_ORDER';
 }
@@ -113,6 +117,7 @@ type Action =
   | SentExtendRentRequestSuccess
   | ClearOrderFormAgreementSuccess
   | ClearOrder
+  | ResetDiscountCode
   | BlikPaymentFinishSuccess;
 
 const initialState: OrderState = {
@@ -190,6 +195,14 @@ export default (state: OrderState = initialState, action: Action): any => {
         };
       }
 
+      return {
+        ...state,
+        formData: newFormData,
+      };
+    }
+
+    case 'RESET_DISCOUNT_CODE': {
+      const newFormData: FormType = { ...state.formData, discountCode: '' };
       return {
         ...state,
         formData: newFormData,

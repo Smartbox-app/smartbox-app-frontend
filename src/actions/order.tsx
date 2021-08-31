@@ -18,6 +18,8 @@ import { saveFrom } from './payment-status';
 
 export const updateFormData = (data: any) => ({ type: 'FORM_STEP_SUCCESS', payload: data });
 
+export const resetDiscountCode = () => ({ type: 'RESET_DISCOUNT_CODE' });
+
 export const formAgreementReaded = () => ({ type: 'FORM_AGREEMENT_READED_SUCCESS' });
 
 export const formResignationMarked = () => ({ type: 'FORM_RESIGNATION_MARKED_SUCCESS' });
