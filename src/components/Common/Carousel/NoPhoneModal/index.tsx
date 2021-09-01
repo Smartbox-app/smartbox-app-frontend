@@ -1,17 +1,17 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { UserRes } from 'smartbox-types';
 import { modal } from '../../../../actions';
 import { history } from '../../../../App';
 import { ApplicationState } from '../../../../reducers';
-import { UserCommonEntity } from '../../../../reducers/user-reducer';
 import UserService from '../../../../services/user-service';
 import { ButtonsContainer, SectionHeader } from '../../../Layout';
 import Alert from '../../Alert';
 import Button from '../../Button';
 
 interface Props {
-  user: UserCommonEntity;
+  user: UserRes;
   hideModal: () => void;
 }
 

@@ -1,18 +1,7 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { ApplicationState } from '../../../reducers';
-
+import React, { useState } from 'react';
 import './Cookies.scss';
-import { user } from '../../../actions';
-import { useState } from 'react';
 
-interface Props {
-  isRulesAndRodoAccepted: boolean;
-  acceptationCookies: () => void;
-}
-
-const Cookies = ({ isRulesAndRodoAccepted, acceptationCookies }: Props) => {
+const Cookies = () => {
   const areAccepted = () => {
     try {
       return JSON.parse(localStorage.getItem('cookies') || 'false');
@@ -47,16 +36,4 @@ const Cookies = ({ isRulesAndRodoAccepted, acceptationCookies }: Props) => {
   );
 };
 
-const mapStateToProps = (state: ApplicationState) => ({
-  isRulesAndRodoAccepted: state?.user?.details?.isRulesAndRodoAccepted,
-});
-
-const mapDispatchToProps = (dispatch: any) =>
-  bindActionCreators(
-    {
-      ...user,
-    },
-    dispatch,
-  );
-
-export default connect(mapStateToProps, mapDispatchToProps)(Cookies);
+export default Cookies;

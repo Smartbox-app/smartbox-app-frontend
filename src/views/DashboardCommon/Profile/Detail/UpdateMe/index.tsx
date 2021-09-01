@@ -4,12 +4,11 @@ import { ItfApiForm } from 'itf_formbuilder_react';
 import ReactSelect from 'react-select';
 import ReactCreatableSelect from 'react-select/creatable';
 import { bindActionCreators } from 'redux';
-import { AddGiftReq } from 'smartbox-types';
+import { AddGiftReq, UserRes } from 'smartbox-types';
 import { history } from '../../../../../App';
 import { FormContainer, ButtonsContainer, FieldsColumn, FormHeader } from '../../../../../components/Layout';
 import { Button, Spinner } from '../../../../../components/Common';
 import { ApplicationState } from '../../../../../reducers';
-import { UserCommonEntity } from '../../../../../reducers/user-reducer';
 import ApiService from '../../../../../services/api-service';
 import UserService from '../../../../../services/user-service';
 import { formOnTranslateString } from '../../../../../utils/trans-form';
@@ -17,8 +16,7 @@ import { __ } from '../../../../../helpers/i18n';
 import { modal, notifications, user } from '../../../../../actions';
 
 interface Props {
-  user: UserCommonEntity;
-  hideModal: () => void;
+  user: UserRes;
   fetchMyData: () => void;
   successNotification: (text: string) => void;
 }

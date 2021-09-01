@@ -1,18 +1,18 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { UserRes } from 'smartbox-types';
 import { ButtonsContainer, SectionHeader } from '../../../../components/Layout';
 import { Button } from '../../../../components/Common';
 import { modal } from '../../../../actions';
 import { ApplicationState } from '../../../../reducers';
-import { UserCommonEntity } from '../../../../reducers/user-reducer';
 
 import UpdatePass from './UpdatePass';
 import { __ } from '../../../../helpers/i18n';
 import UserData from '../../../../components/Common/UserData';
 
 interface Props {
-  user: UserCommonEntity;
+  user: UserRes;
   showModal: (content: React.ReactNode) => void;
 }
 

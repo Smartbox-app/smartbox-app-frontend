@@ -2,19 +2,18 @@ import { addDays, differenceInCalendarDays } from 'date-fns';
 import React, { useCallback } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { MyRentList, usePricing } from 'smartbox-types';
+import { MyRentList, usePricing, UserRes } from 'smartbox-types';
 import { singleRent } from '../../../../../actions';
 import { Button } from '../../../../../components/Common';
 import { ButtonsContainer } from '../../../../../components/Layout';
 import { ApplicationState } from '../../../../../reducers';
-import { UserCommonEntity } from '../../../../../reducers/user-reducer';
 import UserService from '../../../../../services/user-service';
 import { dateOnly } from '../../../../../utils/format-date';
 import { formatPrice } from '../../../../../utils/format-price';
 
 interface Props {
   singleRent: MyRentList;
-  user: UserCommonEntity;
+  user: UserRes;
 }
 
 const MissingPayment = ({ singleRent, user }: Props) => {
