@@ -10,7 +10,6 @@ import { MenuItemType } from '../../types/menu-item';
 import DashboardContainer from '../../components/Layout/DashboardContainer';
 import Navigation from '../../components/Layout/Navigation';
 import SingleRentDetail from '../DashboardCommon/SingleRentDetail';
-import { Cookies } from '../../components/Common';
 
 const DashboardUser = () => {
   const menuItems: MenuItemType[] = [
@@ -46,7 +45,6 @@ const DashboardUser = () => {
           <Route exact path="/user/pay-debt/:rentId" component={PayDebtForm} />
         </Switch>
       </Main>
-      <Cookies />
     </DashboardContainer>
   );
 };

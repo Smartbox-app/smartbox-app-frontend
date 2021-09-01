@@ -32,16 +32,17 @@ const Edit = ({ discountId, successNotification, hideModal, refreshApiTableData 
   const fetchUrl = `stock/form/update-stock-discount/${discountId}`;
   const sendUrl = `stock/discount/${discountId}`;
 
-  const customSendFetcher = (formId: string, values: DiscountReq) =>
-    ApiService.sendForm(
+  const customSendFetcher = (formId: string, values: DiscountReq) => {
+    console.log(values);
+    return ApiService.sendForm(
       sendUrl,
       {
         ...values,
-        expireAt: addMinutes(values.expireAt, 1439),
+        expireAt: addMinutes(new Date(values.expireAt), 1439),
       },
       'PATCH',
     );
-
+  };
   return (
     <FormContainer>
       <FormHeader title={__('application.editStockDiscount')} />

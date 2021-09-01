@@ -5,6 +5,7 @@ import { ApplicationState } from '../../../reducers';
 
 import './Cookies.scss';
 import { user } from '../../../actions';
+import { useState } from 'react';
 
 interface Props {
   isRulesAndRodoAccepted: boolean;
@@ -12,8 +13,23 @@ interface Props {
 }
 
 const Cookies = ({ isRulesAndRodoAccepted, acceptationCookies }: Props) => {
+  const areAccepted = () => {
+    try {
+      return JSON.parse(localStorage.getItem('cookies') || 'false');
+    } catch (e) {
+      return false;
+    }
+  };
+
+  const [accepted, setAccepted] = useState<boolean>(areAccepted());
+
+  const accept = () => {
+    localStorage.setItem('cookies', JSON.stringify(true));
+    setAccepted(true);
+  };
+
   return (
-    <div className={`cookies-information ${isRulesAndRodoAccepted ? 'hide-cookies-bar' : ''}`}>
+    <div className={`cookies-information ${accepted ? 'hide-cookies-bar' : ''}`}>
       <p>
         W tej aplikacji używamy plików cookies w celu zapewnienia użytkownikom efektywnego korzystania ze strony, a
         także narzędzi analitycznych, promocyjnych i reklamowych w celu reklamy, badania rynku oraz badania preferencji
@@ -24,7 +40,7 @@ const Cookies = ({ isRulesAndRodoAccepted, acceptationCookies }: Props) => {
         </a>
         .
       </p>
-      <span className="exit" onClick={() => acceptationCookies()}>
+      <span className="exit" onClick={accept}>
         &times;
       </span>
     </div>

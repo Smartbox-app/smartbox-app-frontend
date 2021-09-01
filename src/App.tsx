@@ -20,6 +20,7 @@ import {
   RouteWorker,
   Modal,
   ErrorBoundary,
+  Cookies,
 } from './components/Common';
 import { EmailConfirm, Login, Register, RestorePass, UserActivation, EmailSend, GoogleAuth } from './views/Auth';
 import { Invoice, PaymentFailed } from './views/DashboardCommon';
@@ -94,6 +95,7 @@ const App = () => {
             </ErrorBoundary>
           </Router>
           <Modal />
+          <Cookies />
         </OnlineContent>
         <OfflineContent>
           <AppOffline />
