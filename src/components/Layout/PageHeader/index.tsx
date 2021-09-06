@@ -8,7 +8,7 @@ interface Props {
 const PageHeader = ({ title }: Props) => (
   <div className="page-header-container">
     <div className="page-header">
-      <h1>{title}</h1>
+      <h2>{title}</h2>
     </div>
   </div>
 );

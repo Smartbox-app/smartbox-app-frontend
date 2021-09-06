@@ -4,7 +4,7 @@ import { Carousel } from '../../../../components/Common';
 import { __ } from '../../../../helpers/i18n';
 
 const index = () => (
-  <Section half>
+  <Section half highlight>
     <SectionHeader title={__('application.offers')} />
     <Carousel imagesList={[3, 6, 9, 12]} />
   </Section>

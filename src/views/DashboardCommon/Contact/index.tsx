@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { UserRes } from 'smartbox-types';
-import { Section, SectionHeader } from '../../../components/Layout';
+import { PageHeader, Section, SectionHeader } from '../../../components/Layout';
 import { ApplicationState } from '../../../reducers';
 import SingleDepartment from './SingleDepartment';
 
@@ -27,16 +27,17 @@ const Contact = ({ user }: Props) => {
   return (
     <div className="contact-wrapper">
       <Section full>
-        <SectionHeader title="Zapraszamy do kontaktu:" />
+        <PageHeader title="Zapraszamy do kontaktu:" />
         <div className="department-wrapper">
           <SingleDepartment
             organisationRole="Biuro obsługi klienta"
-            name="Monika Zarwalska-Lis"
-            phone="731400331"
-            mail="monika@smartbox-storage.pl"
+            name="Piotr Drobnikowski"
+            phone="510298876"
+            mail="pomoc@smartbox-storage.pl"
             openHour="8:00"
             closeHour="16:00"
           />
+
           <SingleDepartment
             organisationRole="Pomoc techniczna"
             name="Adrian Pawłowski"

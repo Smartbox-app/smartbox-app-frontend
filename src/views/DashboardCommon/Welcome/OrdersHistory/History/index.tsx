@@ -24,6 +24,7 @@ const History = ({ data }: Props) => {
     <div className="history-wrapper">
       <p className="history-line header">
         <span className="header-cell">{__('application.period')}</span>
+        <span className="header-cell">{__('application.number')}</span>
         <span className="header-cell">{__('application.orderStepSize')}</span>
         <span className="header-cell">{__('application.stock')}</span>
       </p>

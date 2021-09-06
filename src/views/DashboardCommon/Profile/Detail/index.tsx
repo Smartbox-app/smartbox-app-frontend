@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { UserRes } from 'smartbox-types';
-import { ButtonsContainer, SectionHeader } from '../../../../components/Layout';
+import { ButtonsContainer, PageHeader, SectionHeader } from '../../../../components/Layout';
 import { Button } from '../../../../components/Common';
 import { modal } from '../../../../actions';
 import { ApplicationState } from '../../../../reducers';
@@ -18,7 +18,7 @@ interface Props {
 
 const Detail = ({ showModal, user }: Props) => (
   <>
-    <SectionHeader title={__('application.profileDetail')} />
+    <PageHeader title={__('application.profileDetail')} />
     <ButtonsContainer>
       <Button text={__('application.changPassword')} primary click={() => showModal(<UpdatePass />)} />
     </ButtonsContainer>

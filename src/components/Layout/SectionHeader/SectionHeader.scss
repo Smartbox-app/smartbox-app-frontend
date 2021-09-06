@@ -1,5 +1,5 @@
-@import "../../../config/variables";
-@import "../../../config/mixins";
+@import '../../../config/variables';
+@import '../../../config/mixins';
 
 .section-header-container {
   display: flex;
@@ -11,6 +11,12 @@
     display: flex;
     align-items: center;
     width: 100%;
+
+    h3 {
+      color: $color-text;
+      font-weight: 700;
+      margin-top: 0;
+    }
   }
 
   .no-margin {
@@ -21,7 +27,7 @@
 @include gt-sm {
   .section-header-container {
     margin-bottom: $main-spacing * 1.5;
-    
+
     .section-header {
       max-width: $page-header-width;
     }

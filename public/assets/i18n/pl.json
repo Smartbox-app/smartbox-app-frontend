@@ -74,6 +74,7 @@
       "storePlaceName": "Nazwa placu",
       "storeSize": "Rozmiar mini magazynu",
       "storeNumber": "Numer mini magazynu",
+      "number": "Numer",
       "storeState": "Status wynajmu",
       "rentedBy": "Wynajęte przez",
       "phone": "Telefon",

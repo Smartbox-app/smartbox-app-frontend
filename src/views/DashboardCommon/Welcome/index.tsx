@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import { bindActionCreators } from 'redux';
 import { MyRentList } from 'smartbox-types';
-import { Section, SectionHeader } from '../../../components/Layout';
+import { PageHeader, Section, SectionHeader } from '../../../components/Layout';
 import { ApplicationState } from '../../../reducers';
 import { __ } from '../../../helpers/i18n';
 
@@ -33,7 +33,7 @@ const Welcome = ({ userName, getMyRentList, rentsList, fetchMyRentHistory, rents
   return (
     <div className="welcome-wrapper">
       <Section full>
-        <SectionHeader title={`${__('application.hi')} ${userName}`} noMargin />
+        <PageHeader title={`${__('application.hi')} ${userName}`} />
       </Section>
       <Sale />
       <Storage myRentList={rentsList} loading={loading} />

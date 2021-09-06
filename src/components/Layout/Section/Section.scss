@@ -23,6 +23,19 @@
   }
 
   .section-half-width {
-    width: 50%;
+    width: 49%;
+  }
+}
+
+.section-highlight {
+  background: darken($color-background, 2%);
+  padding: $main-spacing;
+  margin: $main-spacing 0;
+  box-shadow: 0 0 3px 3px lighten($color-disabled, 30%);
+  border: 1px solid $color-primary;
+  border-radius: 2px;
+
+  @include gt-md {
+    padding: $main-spacing * 1.5;
   }
 }
