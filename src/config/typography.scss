@@ -1,5 +1,5 @@
-@import "./variables";
-@import "./mixins.scss";
+@import './variables';
+@import './mixins.scss';
 
 html {
   font-size: 14px;
@@ -26,8 +26,12 @@ body {
 
 h2 {
   font-family: $font-primary;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   font-weight: 500;
+
+  @include gt-sm {
+    font-size: 1.5rem;
+  }
 }
 
 h3 {

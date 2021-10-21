@@ -19,6 +19,7 @@
   font-weight: 300;
   width: 100%;
   font-family: $font-primary;
+  border-radius: 5px;
 
   transition: $transition-time background-color, $transition-time border-color;
   box-shadow: $box-shadow-small rgba($color-text, 0.25);

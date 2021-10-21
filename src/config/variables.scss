@@ -5,14 +5,14 @@ $basic-font-size: 14px;
 $color-primary: #0674bd;
 $color-primary-light: lighten(#0674bd, 20%);
 $color-secondary: #003e67;
-$color-tertiary: #FBB03B;
-$color-facebook: #4267B2;
+$color-tertiary: #fbb03b;
+$color-facebook: #4267b2;
 
 $color-text-alter: #fff;
 $color-text: #000;
 $color-text-button: #fff;
 
-$color-background: #ffffff;
+$color-background: #fafafa;
 $color-background-darken: darken($color-background, 4%);
 
 $color-danger: #a51727;
@@ -44,7 +44,7 @@ $single-option-height: 160px;
 $single-option-width-big: 330px;
 $single-option-height-big: 260px;
 
-$main-min-height-mobile: calc(100vh - 80px);
+$main-min-height-mobile: calc(100vh - 120px);
 $main-min-height: calc(100vh - 60px - 60px);
 
 $login-form-width: 400px;

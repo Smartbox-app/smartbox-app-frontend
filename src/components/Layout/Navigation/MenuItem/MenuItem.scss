@@ -17,11 +17,10 @@
     color: $color-inactive;
   }
   &:visited {
-    color: $color-inactive
+    color: $color-inactive;
   }
 
   &:hover {
-    background-color: lighten($color-background, 30%);
     border-top: 2px solid $color-primary-light;
     color: $color-primary-light;
     cursor: pointer;
@@ -55,7 +54,6 @@
     margin-bottom: $main-spacing/2;
     fill: $color-inactive;
   }
-
 }
 
 @include gt-sm {
@@ -86,7 +84,6 @@
     width: $menu-icon-big;
     height: $menu-icon-big;
   }
-
 }
 
 @include gt-lg {

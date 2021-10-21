@@ -9,7 +9,7 @@ interface Props {
 const SectionHeader = ({ title, noMargin }: Props) => (
   <div className="section-header-container">
     <div className="section-header">
-      <h3 className={`${noMargin ? 'no-margin' : ''}`}>{title}</h3<Log>
+      <h3 className={`${noMargin ? 'no-margin' : ''}`}>{title}</h3>
     </div>
   </div>
 );

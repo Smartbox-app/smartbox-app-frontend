@@ -28,12 +28,11 @@
 }
 
 .section-highlight {
-  background: darken($color-background, 2%);
   padding: $main-spacing;
   margin: $main-spacing 0;
-  box-shadow: 0 0 3px 3px lighten($color-disabled, 30%);
-  border: 1px solid $color-primary;
-  border-radius: 2px;
+  box-shadow: 0 15px 20px -15px lighten(rgba(#000, 0.4), 30%);
+  border-radius: 10px;
+  background: lighten($color-background, 10%);
 
   @include gt-md {
     padding: $main-spacing * 1.5;
