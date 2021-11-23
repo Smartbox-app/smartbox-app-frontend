@@ -94,6 +94,7 @@
     "eslint-plugin-prettier": "^3.1.2",
     "eslint-plugin-react": "^7.17.0",
     "itf_formbuilder_translation_tool": "git+https://gitlab.com/IT.focus/itf_formbuilder_translation_tool.git",
-    "prettier": "^1.19.1"
+    "prettier": "^1.19.1",
+    "react-app-rewire-alias": "^1.1.5"
   }
 }
