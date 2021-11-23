@@ -61,8 +61,7 @@
     "eject": "react-scripts eject",
     "lint:fix": "eslint './src/**/*.{ts,tsx}'",
     "trans-form-errors": "node node_modules/itf_formbuilder_translation_tool",
-    "prepare-translations": "node ./node_modules/ITF_FormBuilder_translation_tool/dist/index.js",
-    "upr": "yarn upgrade smartbox-types smartbox-tables && yarn prepare-translations"
+    "prepare-translations": "node ./node_modules/ITF_FormBuilder_translation_tool/dist/index.js"
   },
   "eslintConfig": {
     "extends": "react-app"
