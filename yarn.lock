@@ -9523,6 +9523,11 @@ react-app-polyfill@^1.0.6:
     regenerator-runtime "^0.13.3"
     whatwg-fetch "^3.0.0"
 
+react-app-rewire-alias@^1.1.5:
+  version "1.1.5"
+  resolved "https://registry.yarnpkg.com/react-app-rewire-alias/-/react-app-rewire-alias-1.1.5.tgz#a764e9003cf0b8c6dc5d6b15d2b03b49b007b43e"
+  integrity sha512-jy4glytSWEJ3R+49aqwKEYn59bmwGI4DPqtZuJYEVc6FcqIFOjSqBiEuijsBF7INUmOeGWR7/DwUAyHqa81mgg==
+
 react-app-rewired@^2.1.5:
   version "2.1.6"
   resolved "https://registry.yarnpkg.com/react-app-rewired/-/react-app-rewired-2.1.6.tgz#33ee3076a7f34d6a7c94e649cac67e7c8c580de8"
@@ -10640,14 +10645,6 @@ slick-carousel@^1.8.1:
   version "1.8.1"
   resolved "https://registry.yarnpkg.com/slick-carousel/-/slick-carousel-1.8.1.tgz#a4bfb29014887bb66ce528b90bd0cda262cc8f8d"
   integrity sha512-XB9Ftrf2EEKfzoQXt3Nitrt/IPbT+f1fgqBdoxO3W/+JYvtEOW6EgxnWfr9GH6nmULv7Y2tPmEX3koxThVmebA==
-
-"smartbox-tables@git+https://gitlab.com/itdotfocus/smartbox/smartbox-tables.git":
-  version "1.0.0"
-  resolved "git+https://gitlab.com/itdotfocus/smartbox/smartbox-tables.git#ca2dc12f425568f8cc8122e4d30e668be9104166"
-
-"smartbox-types@git+https://gitlab.com/itdotfocus/smartbox/smartbox-types.git":
-  version "1.0.0"
-  resolved "git+https://gitlab.com/itdotfocus/smartbox/smartbox-types.git#257fb9ad5a863329fe657622e41dc6e3b0881d22"
 
 snapdragon-node@^2.0.1:
   version "2.1.1"
