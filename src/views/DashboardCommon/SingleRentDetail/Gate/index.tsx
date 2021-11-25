@@ -54,12 +54,20 @@ const Gate = ({ startAnimation, user, stockId, askGateToOpen, askGateToOpenStuff
     </div>
   );
 
+  const getButtonText = () => {
+    if (startAnimation) {
+      return 'application.openingGate'
+    }
+
+    return isUser(user.role) ? 'application.openGate' : 'application.openGateStuff'
+  };
+
   const gateOpenningAnimation = (
     <div className="gate-animation">
       <ReactSVG src={`${startAnimation ? '/assets/images/Group46.svg' : '/assets/images/Group39.svg'}`} />
       <div className="slide-to-open">
         <Button
-          text={isUser(user.role) ? __('application.openGate') : __('application.openGateStuff')}
+          text={__(getButtonText())}
           big
           primary
           click={() => (isUser(user.role) ? askGateToOpen(geoCoord) : askGateToOpenStuff(stockId))}
