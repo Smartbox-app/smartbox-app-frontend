@@ -2,7 +2,7 @@ import { Coordinate } from 'smartbox-types';
 import ApiService from '../services/api-service';
 import { successNotification } from './notifications';
 
-export const gateOpenStartAnimation = () => ({ type: 'GATE_OPEN_START_ANIMATION', payload: true });
+export const gateOpenStartAnimation = (open:boolean = true) => ({ type: 'GATE_OPEN_START_ANIMATION', payload: open });
 
 export const askGateToOpen = (geo: Coordinate) => async (disaptch: any) => {
   await ApiService.patch(

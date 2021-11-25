@@ -17,9 +17,10 @@ interface Props {
   stockId: string;
   askGateToOpen: (geo: Coordinate) => void;
   askGateToOpenStuff: (stockId: string) => void;
+  gateOpenStartAnimation: (open?: boolean) => void;
 }
 
-const Gate = ({ startAnimation, user, stockId, askGateToOpen, askGateToOpenStuff }: Props) => {
+const Gate = ({ startAnimation, user, stockId, askGateToOpen, askGateToOpenStuff, gateOpenStartAnimation }: Props) => {
   const [geoCoord, setGeoCoord] = useState({
     lon: '0',
     lat: '0',
@@ -43,6 +44,7 @@ const Gate = ({ startAnimation, user, stockId, askGateToOpen, askGateToOpenStuff
 
   useEffect(() => {
     isUser(user.role) && getLocation();
+    gateOpenStartAnimation(false);
   }, []);
 
   const noGpsCords = (
