@@ -176,6 +176,7 @@
       "fillFormToCreatAccount": "Proszę wypełnić poniższy formularz, żeby utworzyć konto.",
 
       "invoiceCreateData": "Generowanie faktury - dane",
+      "paymentProcess": "Płatność jest przetwarzana.",
       "paymentSuccess": "Płatność zakończyła się pozytywnie.",
       "thanks": "Dziękujemy za korzystanie z naszych usług.",
       "invoiceWasSent": "Dokument potwierdzający zakup został wysłany na wskazany e-mail.",

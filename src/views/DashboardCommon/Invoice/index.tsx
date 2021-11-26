@@ -46,7 +46,7 @@ const Invoice = ({ isPaid, getMyRentList, fetchMyRentHistory, fetchMyData, check
           </>
         ) : (
           <>
-            <p className="content-text">{__('application.paymentSuccess')}</p>
+            <p className="content-text">{__('application.paymentProcess')}</p>
             <p className="content-text">{__('application.thanks')}</p>
             <p className="content-text">{__('application.invoiceWasSent')}</p>
             <ButtonsContainer max>
