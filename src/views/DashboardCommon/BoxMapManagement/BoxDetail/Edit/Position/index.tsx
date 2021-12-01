@@ -103,8 +103,8 @@ const Position = ({rentId, stock, successNotification, fetchBoxStatuses, hideMod
                                     required={field.required}
                                     onChange={(value: any) => onChange(value.value)}
                                     options={reactSelectOptions}
-                                    noOptionsMessage={() => 'Brak magazynu tej wielkości'}
-                                    placeholder={"Wybierz..."}
+                                    noOptionsMessage={() => __('application.lackOfThisSizeStorage')}
+                                    placeholder={__('application.selectPlaceholder')}
                                     isSearchable={false}
                                     meta={{
                                         error: errors.length ? __(errors[0].messageWithPlaceholders, errors[0].params) : null,
