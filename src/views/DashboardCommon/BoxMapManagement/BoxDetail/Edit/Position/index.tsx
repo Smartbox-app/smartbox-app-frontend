@@ -90,7 +90,7 @@ const Position = ({rentId, stock, successNotification, fetchBoxStatuses, hideMod
                 ) => {
                     const optionsArray = field.options.possibleValues;
                     const reactSelectOptions = field.options
-                        ? Object.keys(optionsArray).map((item: any) => ({label: item, value: optionsArray[item]}))
+                        ? Object.keys(optionsArray).map((item: any) => ({ label: optionsArray[item], value: item }))
                         : ([{label: '', value: ''}] as any);
 
                     return (
