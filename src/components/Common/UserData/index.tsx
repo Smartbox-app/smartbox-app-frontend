@@ -17,13 +17,13 @@ const UserData = ({ user }: Props) => {
   return (
     <div className="content-wrapper">
       <Section highlight>
-        <SectionHeader title="Dane użytkownika:" />
+        <SectionHeader title= {__('application.userData')}/>
         <Row label={__('application.firstName')} content={user.firstName} />
         <Row label={__('application.lastName')} content={user.lastName} />
         <Row label={__('application.userRole')} content={user.role} />
       </Section>
       <Section highlight>
-        <SectionHeader title="Dane kontaktowe:" />
+        <SectionHeader title={__('application.contactData')} />
         <Row label={__('application.mail')} content={user.email} />
         <Row label={__('application.phone')} content={user.phone} />
         {role === UserRole.user && (
@@ -36,7 +36,7 @@ const UserData = ({ user }: Props) => {
       </Section>
       {role === UserRole.user && (
         <Section highlight>
-          <SectionHeader title="Dane kontaktowe firmy:" />
+          <SectionHeader title={__('application."contactCompanyData"')} />
           <Row label={__('application.companyName')} content={user.companyData.companyName} />
           <Row label={__('application.nip')} content={user.companyData.nip} />
           <Row label={__('application.city')} content={user.companyData.companyCity} />

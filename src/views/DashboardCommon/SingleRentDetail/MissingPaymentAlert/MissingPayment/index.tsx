@@ -10,6 +10,7 @@ import { ApplicationState } from '../../../../../reducers';
 import UserService from '../../../../../services/user-service';
 import { dateOnly } from '../../../../../utils/format-date';
 import { formatPrice } from '../../../../../utils/format-price';
+import {__} from "../../../../../helpers/i18n";
 
 interface Props {
   singleRent: MyRentList;
@@ -31,26 +32,26 @@ const MissingPayment = ({ singleRent, user }: Props) => {
 
   return (
     <div className="missing-payment-alert-wrapper">
-      <p className="main-info">Na tym wynajmie znajduje się zaległość</p>
+      <p className="main-info">{__('application.debtOnRent')}</p>
       <div className="date-wrapper">
         <p className="single-line">
-          Zakończenie wynajmu: <strong>{dateOnly(singleRent.finishAt)}</strong>
+            {__('application.rentFinished')}{' '}<strong>{dateOnly(singleRent.finishAt)}</strong>
         </p>
         <p className="single-line">
-          Zaległych okresów płatności: <strong>{countPayPeriods(singleRent.finishAt)}</strong>
+            {__('application.debtPeriods')}{' '}<strong>{countPayPeriods(singleRent.finishAt)}</strong>
         </p>
       </div>
       <div className="date-wrapper">
         <p className="single-line">
-          Termin płatności: <strong>{dateOnly(addDays(new Date(singleRent.finishAt), 13))}</strong>
+            {__('application.paymentTerm')}{' '}<strong>{dateOnly(addDays(new Date(singleRent.finishAt), 13))}</strong>
         </p>
         <p className="single-line">
-          Kwota zaległości: <strong>{formatPrice(calc(singleRent))}</strong>
+            {__('application.debtAmount')}{' '}<strong>{formatPrice(calc(singleRent))}</strong>
         </p>
       </div>
       <ButtonsContainer>
         <Button
-          text="Opłać zaległość"
+          text={__('application.payOffDebt')}
           type="button"
           danger
           to={`/${UserService.getSlugByRole(user.role)}/pay-debt/${singleRent.id}`}

@@ -68,6 +68,8 @@
       "storeManagement": "Zarządzaj swoimi mini magazynami:",
       "offers": "Oferta:",
       "storagesPlan": "Plan placu:",
+      "stockSelect": "Wybór placu:",
+      "onStock": "na placu",
 
       "startDate": "Data rozpoczęcia",
       "endDate": "Data zakończenia",
@@ -80,6 +82,7 @@
       "phone": "Telefon",
       "userRole": "Stanowisko",
       "continueWith": "Zaloguj się z",
+      "yourStoreNumber": "Twój mini magazyn ma numer:",
 
       "ccv": "numer CVV",
       "ccNumber": "numer karty kredytowej",
@@ -108,6 +111,7 @@
       "statutes": "Regulaminu",
       "privacyPolices": "Polityki prywatności",
       "acceptContent": "oraz akceptuję ich treść",
+      "changePasswordToService": "Zmieniasz swoje hasło do serwisu",
 
       "clickHere": "Kliknij tutaj",
       "404Text": "Coś poszło nie tak, żądana strona nie istnieje.",
@@ -140,9 +144,21 @@
       "openGateStuff": "Otwórz bramę zdalnie",
       "theGateOpens": "Brama się otwiera",
       "slideToOpenGate": "Przesuń suwak aby otworzyć bramę",
+      "lostConnection": "Utracono połączenie",
+      "slowConnection": "Połączenie powolne",
+      "okConnection": "Połączenie OK",
+      "lastConnection": "Ostatnie połączenie",
+
       "endRental": "Czy jesteś pewien, że chcesz zakończyć tę umowę?",
       "youCanNotEndRentNow": "Nie można zakończyć wynajmu z zaległościami",
       "shareYourLoc": "Udostępnij swoją lokalizację by otworzyć bramę",
+      "debtOnRent": "Na tym wynajmie znajduje się zaległość",
+      "rentFinished": "Zakończenie wynajmu:",
+      "debtPeriods": "Zaległych okresów płatności:",
+      "paymentTerm": "Termin płatności:",
+      "debtAmount": "Kwota zaległości:",
+      "payOffDebt": "Opłać zaległość",
+      "boxWasBlockedDueNoPayment": "Twój schowek został zablokowany ze względu na brak płatności, prosimy o kontakt z administratorem.",
 
       "profileDetail": "Szczegóły Profilu",
       "preInvitationForWorker": "Wyślij zaproszenie dla pracownika",
@@ -205,6 +221,10 @@
       "customerDetails": "Szczegóły klienta",
       "customerData": "Dane osobowe",
       "customerCompanyData": "Dane firmowe",
+
+      "userData": "Dane użytkownika:",
+      "contactData": "Dane kontaktowe:",
+      "contactCompanyData": "Dane kontaktowe firmy:",
 
       "newOrder": "Nowe zamówienie",
       "extendsOrder": "Przedłużanie zamówienia",

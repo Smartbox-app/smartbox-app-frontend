@@ -5,6 +5,7 @@ import { fullDate } from '../../../utils/format-date';
 import ApiService from '../../../services/api-service';
 
 import './GateStatus.scss';
+import {__} from "../../../helpers/i18n";
 
 const GateStatus = () => {
   const [status, setStatus] = useState<GatesStatusForAdminRes>();
@@ -44,11 +45,11 @@ const GateStatus = () => {
   const getStatusText = (status: GateHealthCheckStatus) => {
     switch (status) {
       case GateHealthCheckStatus.ConnectionLost:
-        return 'Utracono połączenie';
+        return __('application.lostConnection');
       case GateHealthCheckStatus.Slow:
-        return 'Połączenie powolne';
+        return __('application.slowConnection');
       case GateHealthCheckStatus.Ok:
-        return 'Połączenie OK';
+        return __('application.okConnection');
       default:
         return '';
     }
@@ -78,10 +79,10 @@ const GateStatus = () => {
           </div>
           <div className="status-body">
             <div className="status-id">
-              Brama<strong className="status-place-value">{s.id}</strong>na placu
+              {__('application.gate')}<strong className="status-place-value">{s.id}</strong>{__('application.onStock')}
               <strong className="status-place-value">{s.stockName}</strong>
             </div>
-            <p className="status-last-connection-label">Ostatnie połączenie</p>
+            <p className="status-last-connection-label">{__('application.lastConnection')}</p>
             <div className="status-connection-date">{fullDate(s.lastConnection)}</div>
             <div>{s.isOpen}</div>
 
