@@ -175,7 +175,6 @@
       "forTime": "Na czas",
       "weeksAmount": "tygodni",
 
-      "accountHasBeenActivated": "Konto zostało aktywowane.",
       "welcomeOnPlatform": "Witaj na platformie SmartBox.",
       "fillFormToCreatAccount": "Proszę wypełnić poniższy formularz, żeby utworzyć konto.",
 
@@ -258,7 +257,8 @@
       "rentFinishManually": "Umowa zakończona",
       "workerPositionChanged": "Zmieniono stanowisko",
       "useEmailVerificationSuccess": "Adres mail został zweryfikowny poprawnie",
-      "logInSuccess": "Zalogowano poprawnie"
+      "logInSuccess": "Zalogowano poprawnie",
+      "accountHasBeenActivated": "Konto zostało aktywowane."
     }
   }
 }

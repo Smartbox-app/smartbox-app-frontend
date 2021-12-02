@@ -37,7 +37,7 @@ const UserActivation = ({ successNotification, match, logout, userRole }: Props)
     );
 
   const success = () => {
-    successNotification(__('application.accountHasBeenActivated'));
+    successNotification(__('notification.accountHasBeenActivated'));
     history.push('/');
   };
 
