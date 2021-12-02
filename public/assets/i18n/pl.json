@@ -222,7 +222,11 @@
       "mailVerificationInProgress": "Trwa weryfikacja maila....",
       "noActiveRent": "Nie posiadasz aktywnych wynajmów",
 
-      "welcome": "Hello world"
+      "welcome": "Hello world",
+
+      "offlineInfo": "Korzystasz z aplikacji w wersji offline.",
+      "turnOnNet": "Połącz się z internetem aby korzystać z aplikacji."
+
     },
     "notification": {
       "accountRegistered": "Konto zostało zarejestrowane",
