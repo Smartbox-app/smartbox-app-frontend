@@ -104,6 +104,10 @@
       "restorePass": "Przywróć hasło",
       "pass": "Hasło",
       "repPass": "Powtórz hasło",
+      "readTheProvisions": "Zapoznałem/am się z postanowieniami",
+      "statutes": "Regulaminu",
+      "privacyPolices": "Polityki prywatności",
+      "acceptContent": "oraz akceptuję ich treść",
 
       "clickHere": "Kliknij tutaj",
       "404Text": "Coś poszło nie tak, żądana strona nie istnieje.",
@@ -219,6 +223,8 @@
       "confirmBlik": "Proszę potwierdzić płatność kodem PIN w aplikacji BLIK",
 
       "thanksForRegister": "Dziękujemy za rejestrację",
+      "toEndRegisterVerifyMail": "Aby dokończyć rejestrację proszę zweryfikować maila.",
+      "msgWasSentOnEmail": "Wiadomość została wysłana na podany adres mail.",
       "mailVerificationInProgress": "Trwa weryfikacja maila....",
       "noActiveRent": "Nie posiadasz aktywnych wynajmów",
 

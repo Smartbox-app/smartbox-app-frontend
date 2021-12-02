@@ -70,15 +70,15 @@ const Register = ({ successNotification }: Props) => (
                   errors={translateErrors(errors)}
                   label={
                     <small>
-                      Zapoznałem/am się z postanowieniami{' '}
+                        {__('application.readTheProvisions')}{' '}
                       <a target="_blank" href="/assets/20210422_Regulamin_aplikacji_SmartBox.pdf">
-                        <u>Regulaminu</u>
+                        <u>{__('application.statutes')}</u>
                       </a>{' '}
                       i{' '}
                       <a target="_blank" href="/assets/20210422_Polityka_Prywatnosci_SmartBox.pdf">
-                        <u>Polityki prywatności</u>
+                        <u>{__('application.privacyPolices')}</u>
                       </a>{' '}
-                      oraz akceptuję ich treść
+                        {__('application.acceptContent')}
                     </small>
                   }
                 />
