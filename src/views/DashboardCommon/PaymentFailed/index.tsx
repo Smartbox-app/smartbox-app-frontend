@@ -5,6 +5,7 @@ import { Button } from '../../../components/Common';
 import { LogoContainer, PageContent, ButtonsContainer, Section } from '../../../components/Layout';
 import { ApplicationState } from '../../../reducers';
 import { modal } from '../../../actions';
+import {__} from "../../../helpers/i18n";
 
 interface Props {
   paymentId: string;
@@ -17,10 +18,10 @@ const PaymentFailed = ({ showModal, paymentId }: Props) => {
       <Section>
         <LogoContainer />
         <p className="content-text">
-          Płatność zakończyła się <strong>niepowodzeniem</strong>.
+            {__('application.paymentFinished')}{' '}<strong>{__('application.withFailure')}</strong>.
         </p>
         <ButtonsContainer max>
-          <Button success text="Wróć do aplikacji" to="/" />
+          <Button success text={__('application.backToApp')} to="/" />
         </ButtonsContainer>
       </Section>
     </PageContent>

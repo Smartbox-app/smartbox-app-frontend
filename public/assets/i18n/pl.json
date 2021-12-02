@@ -181,6 +181,8 @@
 
       "invoiceCreateData": "Generowanie faktury - dane",
       "paymentSuccess": "Płatność zakończyła się pozytywnie.",
+      "paymentFinished": "Płatność zakończyła się",
+      "withFailure": "niepowodzeniem",
       "thanks": "Dziękujemy za korzystanie z naszych usług.",
       "invoiceWasSent": "Dokument potwierdzający zakup został wysłany na wskazany e-mail.",
       "backToApp": "Wróć do aplikacji",
