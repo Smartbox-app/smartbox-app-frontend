@@ -55,6 +55,8 @@ const StepSummary = ({
   successNotification,
 }: Props) => {
   const [invoiceNeeded, setInvoiceNeeded] = useState(false);
+  const isFirstRent = !user.rentCount;
+
   useEffect(() => {
     fetchMyData();
     if (formData.size.length === 0) {
@@ -64,7 +66,7 @@ const StepSummary = ({
       setInvoiceNeeded(true);
     }
 
-    if (user.rentCount > 0) {
+    if (!isFirstRent) {
       if (user.companyData && user.companyData.nip) {
         setInvoiceNeeded(true);
       } else {
@@ -72,6 +74,7 @@ const StepSummary = ({
       }
     }
   }, []);
+
 
   const defaultValues = {
     paymentType: `${selectedPayment || PaymentType.card}`,
@@ -167,7 +170,7 @@ const StepSummary = ({
   };
 
   const handleChange = (e: any) => {
-    if (!(user.rentCount > 0)) {
+    if (isFirstRent) {
       if (paymentChangeOnly(e)) {
         if (watch().paymentType !== `${PaymentType.card}`) {
           if (countedPrice?.name === 'firstRentFreePracing') {
@@ -193,19 +196,20 @@ const StepSummary = ({
       <SummaryTable dateStart={formData.dateStart} dateEnd={formData.dateEnd} countedPrice={countedPrice.value} />
       {countedPrice.value > 0 && <PaymentMethods register={register} />}
 
-      <TenantDetailsForm register={register} control={control} errors={errors} disabled={user.rentCount > 0} />
-      {user.rentCount === 0 && (
-        <p>Fakturę wystawimy na dane najemcy. Możesz też podać inne dane, na przykład Twojej firmy.</p>
+      <TenantDetailsForm register={register} control={control} errors={errors} disabled={!isFirstRent} />
+      {isFirstRent && (
+          <>
+              <p>Fakturę wystawimy na dane najemcy. Możesz też podać inne dane, na przykład Twojej firmy.</p>
+              <CheckBox
+                  name="iNeedInvoice"
+                  checked={invoiceNeeded}
+                  handleChange={() => setInvoiceNeeded(!invoiceNeeded)}
+                  label="Chcę dodać inne dane lub potrzebuję faktury na firmę"
+              />
+          </>
       )}
-      <CheckBox
-        disabled={user.rentCount > 0}
-        name="iNeedInvoice"
-        checked={invoiceNeeded}
-        handleChange={() => setInvoiceNeeded(!invoiceNeeded)}
-        label="Chcę dodać inne dane lub potrzebuję faktury na firmę"
-      />
-      {invoiceNeeded && (
-        <CompanyDetailsForm register={register} errors={errors} control={control} disabled={user.rentCount > 0} />
+      {invoiceNeeded  && (
+        <CompanyDetailsForm register={register} errors={errors} control={control} disabled={!isFirstRent} />
       )}
 
       <ButtonsContainer max>

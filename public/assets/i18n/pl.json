@@ -26,6 +26,7 @@
       "move": "Przenieś",
       "contact": "Kontakt",
       "min8Char": "Minimum 8 znaków",
+      "selectPlaceholder": "Wybierz..",
       "block": "Blokuj",
       "actions": "Akcje",
       "userAssigment": "Przypisanie",
@@ -39,6 +40,7 @@
       "miniStorage": "Mini magazyn",
       "shortenNumber": "nr",
       "changesSavedSuccess": "Zapisano zmiany",
+      "lackOfThisSizeStorage": "Brak magazynu tej wielkości",
 
       "workers": "Pracownicy",
       "users": "Użytkownicy",
@@ -142,6 +144,7 @@
 
       "rentDetail": "Szczegóły najmu",
       "openGate": "Otwórz bramę",
+      "openingGate": "Otwieranie bramy",
       "openGateStuff": "Otwórz bramę zdalnie",
       "theGateOpens": "Brama się otwiera",
       "slideToOpenGate": "Przesuń suwak aby otworzyć bramę",
@@ -200,6 +203,7 @@
       "fillFormToCreatAccount": "Proszę wypełnić poniższy formularz, żeby utworzyć konto.",
 
       "invoiceCreateData": "Generowanie faktury - dane",
+      "paymentProcess": "Płatność jest przetwarzana.",
       "paymentSuccess": "Płatność zakończyła się pozytywnie.",
       "paymentFinished": "Płatność zakończyła się",
       "withFailure": "niepowodzeniem",
