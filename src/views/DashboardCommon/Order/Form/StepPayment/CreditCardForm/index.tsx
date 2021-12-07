@@ -54,7 +54,7 @@ const CreditCardForm = ({ func, user, sentExecutePaymentRequest, paymentId, matc
             <Spinner />
           ) : (
             <>
-              <Alert type="success" text="Płatność automatycznie zakończona powodzeniem." />
+              <Alert type="success" text={__('notification.paymentFinishedSuccess')} />
               <ButtonsContainer max>
                 <Button outline text={__('application.backToHome')} to="/" />
               </ButtonsContainer>

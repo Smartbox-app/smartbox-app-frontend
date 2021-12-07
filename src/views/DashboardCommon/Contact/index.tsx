@@ -7,6 +7,7 @@ import { ApplicationState } from '../../../reducers';
 import SingleDepartment from './SingleDepartment';
 
 import './Contact.scss';
+import {__} from "../../../helpers/i18n";
 
 interface Props {
   user: UserRes;
@@ -27,7 +28,7 @@ const Contact = ({ user }: Props) => {
   return (
     <div className="contact-wrapper">
       <Section full>
-        <PageHeader title="Zapraszamy do kontaktu:" />
+        <PageHeader title={__('application.welcomeToContact')} />
         <div className="department-wrapper">
           <SingleDepartment
             organisationRole="Biuro obsługi klienta"

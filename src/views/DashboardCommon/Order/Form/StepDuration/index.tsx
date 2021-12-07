@@ -103,7 +103,7 @@ const StepDuration = ({
             control={control}
             as={DateInput}
             register={register({ required: true })}
-            label="Wybierz datę rozpoczęcia wynajmu:"
+            label={__('application.selectStartRentDate')}
             minDate={setMinDate()}
             maxDate={setMaxDateToExtend()}
             onChange={([selected]) => {
@@ -120,7 +120,7 @@ const StepDuration = ({
             control={control}
             as={DateInput}
             register={register({ required: true })}
-            label="Wybierz datę zakończenia wynajmu:"
+            label={__('application.selectEndRentDate')}
             minDate={setMinDate(7, true)}
             onChange={([selected]) => {
               updateFormData({

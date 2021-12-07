@@ -122,6 +122,7 @@
       "14daysResign": "Proszę o rozpoczęcie świadczenia usługi przed upływem 14 dni. Zdaję sobie sprawę, że po wykonaniu w pełni usługi przez usługodawcę utracę prawo do odstąpienia od umowy bez podania przyczyn.",
 
       "discounts": "Promocje:",
+      "noDiscountsToShow": "Brak promocji do wyświetlenia",
 
       "workersList": "Lista pracowników",
       "usersList": "Lista użytkowników",
@@ -180,6 +181,9 @@
       "usedDiscount": "Zastosowana cena:",
       "useDiscountCode": "Użyj kodu rabatowego",
 
+      "selectStartRentDate": "Wybierz datę rozpoczęcia wynajmu:",
+      "selectEndRentDate": "Wybierz datę zakończenia wynajmu:",
+      "priceForSelectedPeriod": "Cena za wybrany okres to:",
       "firstRentFreePracing": "Rabat pierwszego wynajmu",
       "withDicoutnPricing": "Cena uwzględnia zniżkę ogólną placu",
       "cardPricing": "Zniżka za wykorzystanie jednorazowego kodu rabatowego",
@@ -188,6 +192,7 @@
       "giftCodeGenerated": "Wygenerowano kod",
       "giftCod": "Kod",
       "giftCodDiscount": "Zniżka",
+      "discount": "Zniżka",
       "forTime": "Na czas",
       "weeksAmount": "tygodni",
 
@@ -224,7 +229,7 @@
 
       "userData": "Dane użytkownika:",
       "contactData": "Dane kontaktowe:",
-      "contactCompanyData": "Dane kontaktowe firmy:",
+      "welcomeToContact": "Zapraszamy do kontaktu:",
 
       "newOrder": "Nowe zamówienie",
       "extendsOrder": "Przedłużanie zamówienia",
@@ -233,6 +238,7 @@
       "orderStepSummary": "Podsumowanie",
       "orderStepAgreement": "Umowa",
       "orderStepPayment": "Płatność",
+      "goToPayment": "Przejdź do płatności",
 
       "orderAgreement": "Umowa wynajmu",
       "orderAgreementAcceptation": "Aby kontynuować zapoznaj się z umową oraz zaakceptuj wymagane zgody.",
@@ -252,8 +258,9 @@
       "welcome": "Hello world",
 
       "offlineInfo": "Korzystasz z aplikacji w wersji offline.",
-      "turnOnNet": "Połącz się z internetem aby korzystać z aplikacji."
+      "turnOnNet": "Połącz się z internetem aby korzystać z aplikacji.",
 
+      "firstWeekForOneOnlyCard": "Pierwszy tydzień za 1zł. Promocja obowiązuje tylko przy płatności kartą."
     },
     "notification": {
       "accountRegistered": "Konto zostało zarejestrowane",
@@ -278,7 +285,10 @@
       "workerPositionChanged": "Zmieniono stanowisko",
       "useEmailVerificationSuccess": "Adres mail został zweryfikowny poprawnie",
       "logInSuccess": "Zalogowano poprawnie",
-      "accountHasBeenActivated": "Konto zostało aktywowane."
+      "paymentFinishedSuccess": "Płatność automatycznie zakończona powodzeniem",
+      "firstWeekForOneOnlyCard": "Promocja 1zł za pierwszy tydzień obowiązuje tylko przy płatności kartą",
+      "firstWeekForOneActive": "Promocja 1zł za pierwszy tydzień aktywna",
+      "priceChanged": "Cena została zmieniona"
     }
   }
 }
