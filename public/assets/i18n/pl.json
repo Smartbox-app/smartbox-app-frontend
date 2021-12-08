@@ -112,6 +112,7 @@
       "readTheProvisions": "Zapoznałem/am się z postanowieniami",
       "statutes": "Regulaminu",
       "privacyPolices": "Polityki prywatności",
+      "privacyPolicy": "Polityce prywatności",
       "acceptContent": "oraz akceptuję ich treść",
       "changePasswordToService": "Zmieniasz swoje hasło do serwisu",
 
@@ -274,7 +275,8 @@
       "offlineInfo": "Korzystasz z aplikacji w wersji offline.",
       "turnOnNet": "Połącz się z internetem aby korzystać z aplikacji.",
 
-      "firstWeekForOneOnlyCard": "Pierwszy tydzień za 1zł. Promocja obowiązuje tylko przy płatności kartą."
+      "firstWeekForOneOnlyCard": "Pierwszy tydzień za 1zł. Promocja obowiązuje tylko przy płatności kartą.",
+      "privacyPoliceInfo": "W tej aplikacji używamy plików cookies w celu zapewnienia użytkownikom efektywnego korzystania ze strony, a\n        także narzędzi analitycznych, promocyjnych i reklamowych w celu reklamy, badania rynku oraz badania preferencji\n        użytkowników. Korzystając z Aplikacji SmartBox, możesz wyrazić zgodę na korzystanie z plików cookies oraz\n        wymienionych narzędzi. Więcej informacji na temat plików cookies oraz stosowanych narzędzi znajdziesz w naszej"
     },
     "notification": {
       "accountRegistered": "Konto zostało zarejestrowane",

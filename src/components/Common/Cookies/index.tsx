@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './Cookies.scss';
+import {__} from "../../../helpers/i18n";
 
 const Cookies = () => {
   const areAccepted = () => {
@@ -20,12 +21,9 @@ const Cookies = () => {
   return (
     <div className={`cookies-information ${accepted ? 'hide-cookies-bar' : ''}`}>
       <p>
-        W tej aplikacji używamy plików cookies w celu zapewnienia użytkownikom efektywnego korzystania ze strony, a
-        także narzędzi analitycznych, promocyjnych i reklamowych w celu reklamy, badania rynku oraz badania preferencji
-        użytkowników. Korzystając z Aplikacji SmartBox, możesz wyrazić zgodę na korzystanie z plików cookies oraz
-        wymienionych narzędzi. Więcej informacji na temat plików cookies oraz stosowanych narzędzi znajdziesz w naszej{' '}
+        {__('application.privacyPoliceInfo')}{' '}
         <a target="_blank" href="/assets/20210422_Polityka_Prywatnosci_SmartBox.pdf">
-          <u>Polityce&nbsp;prywatności</u>
+          <u>{__('application.privacyPolicy')}</u>
         </a>
         .
       </p>
