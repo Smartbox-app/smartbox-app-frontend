@@ -163,6 +163,10 @@
       "debtAmount": "Kwota zaległości:",
       "payOffDebt": "Opłać zaległość",
       "boxWasBlockedDueNoPayment": "Twój schowek został zablokowany ze względu na brak płatności, prosimy o kontakt z administratorem.",
+      "penaltyPayment": "Opłacenie kary umownej:",
+      "startTerm": "Termin rozpoczęcia:",
+      "finishTerm": "Termin zakończenia:",
+      "paymentForRent": "Opłata za wynajem:",
 
       "profileDetail": "Szczegóły Profilu",
       "preInvitationForWorker": "Wyślij zaproszenie dla pracownika",
@@ -178,6 +182,8 @@
 
       "pay": "Zapłać",
       "fillData": "Podaj dane:",
+      "rentierData": "Dane najemcy:",
+      "companyData": "Dane firmy:",
       "code": "Kod:",
       "enter6DigitCode": "Przepisz 6 cyfrowy kod BLIK:",
 
@@ -212,6 +218,8 @@
       "backToApp": "Wróć do aplikacji",
       "reSendVerificationMail": "Wyślij wiadomość ponownie",
       "generateInvoice": "Wygeneruj fakturę",
+      "infoToOptionalInvoice": "Fakturę wystawimy na dane najemcy. Możesz też podać inne dane, na przykład Twojej firmy.",
+      "wantOptionalInvoice": "Chcę dodać inne dane lub potrzebuję faktury na firmę",
 
       "week": "Tydzień",
       "month": "Miesiąc",
@@ -240,9 +248,11 @@
       "orderStepSize": "Rozmiar",
       "orderStepDate": "Termin",
       "orderStepSummary": "Podsumowanie",
+      "orderSummary": "Podsumowanie zamówienia:",
       "orderStepAgreement": "Umowa",
       "orderStepPayment": "Płatność",
       "goToPayment": "Przejdź do płatności",
+      "goToOrder": "Przejdź do umowy",
 
       "orderAgreement": "Umowa wynajmu",
       "orderAgreementAcceptation": "Aby kontynuować zapoznaj się z umową oraz zaakceptuj wymagane zgody.",

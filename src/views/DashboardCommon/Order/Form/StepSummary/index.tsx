@@ -192,19 +192,19 @@ const StepSummary = ({
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="form-step-two" onChange={handleChange}>
       <Discount />
-      <FormHeader title="Podsumowanie zamówienia:" />
+      <FormHeader title={__('application.orderSummary')} />
       <SummaryTable dateStart={formData.dateStart} dateEnd={formData.dateEnd} countedPrice={countedPrice.value} />
       {countedPrice.value > 0 && <PaymentMethods register={register} />}
 
       <TenantDetailsForm register={register} control={control} errors={errors} disabled={!isFirstRent} />
       {isFirstRent && (
           <>
-              <p>Fakturę wystawimy na dane najemcy. Możesz też podać inne dane, na przykład Twojej firmy.</p>
+              <p>{__('application.infoToOptionalInvoice')}</p>
               <CheckBox
                   name="iNeedInvoice"
                   checked={invoiceNeeded}
                   handleChange={() => setInvoiceNeeded(!invoiceNeeded)}
-                  label="Chcę dodać inne dane lub potrzebuję faktury na firmę"
+                  label={__('application.wantOptionalInvoice')}
               />
           </>
       )}
@@ -217,7 +217,7 @@ const StepSummary = ({
         <Button
           type="submit"
           primary
-          text="Przejdź do umowy"
+          text={__('application.goToOrder')}
           disabled={dataVerification() || tenantData() || companyData()}
         />
       </ButtonsContainer>

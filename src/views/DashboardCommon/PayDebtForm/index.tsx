@@ -92,7 +92,7 @@ const PayDebtForm = ({
   return (
     <FormContainer>
       <form onSubmit={handleSubmit(submit)}>
-        <FormHeader title="Opłacenie kary umownej:" />
+        <FormHeader title={__('application.penaltyPayment')} />
         <SummaryTable dateStart={singleRent.finishAt} dateEnd={new Date()} countedPrice={calc(singleRent)} />
         <AgreementWrapper />
         <ScrollPosition />
@@ -100,7 +100,7 @@ const PayDebtForm = ({
           <Button
             type="submit"
             primary
-            text="Przejdź do płatności"
+            text={__('application.goToPayment')}
             disabled={!isAgreementAccepted || !isResignationMarked}
           />
         </ButtonsContainer>

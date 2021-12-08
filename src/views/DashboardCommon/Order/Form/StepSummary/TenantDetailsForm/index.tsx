@@ -2,6 +2,7 @@ import React from 'react';
 import CustomInput from '../../../../../../components/Common/CustomInput';
 import FormHeader from '../../../../../../components/Layout/FormHeader';
 import { formOnTranslateString } from '../../../../../../utils/trans-form';
+import {__} from "../../../../../../helpers/i18n";
 
 interface Props {
   register: any;
@@ -13,7 +14,7 @@ interface Props {
 const TenantDetailsForm = ({ register, errors, control, disabled }: Props) => {
   return (
     <div className="form-field">
-      <FormHeader title="Dane najemcy:" />
+      <FormHeader title={__('application.rentierData')} />
       <CustomInput
         register={register({ required: formOnTranslateString('Field required.') })}
         errors={errors}

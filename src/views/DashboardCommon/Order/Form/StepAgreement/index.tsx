@@ -117,7 +117,7 @@ const StepSummary = ({
         <Button
           type="submit"
           primary
-          text="Przejdź do płatności"
+          text={__('application.goToPayment')}
           disabled={!isAgreementAccepted || !isResignationMarked}
         />
       </ButtonsContainer>
