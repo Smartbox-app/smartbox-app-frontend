@@ -25,7 +25,7 @@ const EmailSend = ({ emailVerificationResendMail }: Props) => {
       <Section>
         <FormContainer>
           <LogoContainer />
-          <SectionHeader title={__('application.thanksForRegister')} />
+          <SectionHeader title='application.thanksForRegister'/>
           <p className="">{__('application.toEndRegisterVerifyMail')}</p>
           <p className="">{__('application.msgWasSentOnEmail')}</p>
           <ButtonsContainer max>

@@ -36,7 +36,7 @@ const BoxDetail = ({ boxDataCleanUp, selectedBoxId, singleBoxDetail, rentId, use
 
   return (
     <div className="detail-wrapper">
-      <SectionHeader title={__('application.singleStoreDetail')} />
+      <SectionHeader title='application.singleStoreDetail' />
 
       <DescriptionRow icon="fa-lock" text={__('application.storeNumber')}>
         {selectedBoxId}

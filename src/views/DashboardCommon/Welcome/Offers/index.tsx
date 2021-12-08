@@ -5,7 +5,7 @@ import { __ } from '../../../../helpers/i18n';
 
 const index = () => (
   <Section half highlight>
-    <SectionHeader title={__('application.offers')} />
+    <SectionHeader title='application.offers'/>
     <Carousel imagesList={[3, 6, 9, 12]} />
   </Section>
 );

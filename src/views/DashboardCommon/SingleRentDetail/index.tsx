@@ -39,7 +39,7 @@ const SingleRentDetail = ({ loading, showUserStockMap, match, getSingleRent, sin
 
   return (
     <Section full>
-      <SectionHeader title={__('application.rentDetail')} />
+      <SectionHeader title='application.rentDetail' />
       <MissingPaymentAlert />
       <Action rentId={singleRent.id} />
       {!showUserStockMap ? (

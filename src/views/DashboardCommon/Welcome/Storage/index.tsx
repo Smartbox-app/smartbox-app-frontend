@@ -12,7 +12,7 @@ interface Props {
 
 const Storage = ({ myRentList, loading }: Props) => (
   <Section full highlight>
-    <SectionHeader title={__('application.storeManagement')} />
+    <SectionHeader title='application.storeManagement' />
     {loading ? <Spinner /> : <StorageList list={myRentList} />}
   </Section>
 );

@@ -36,7 +36,7 @@ const Order = ({ match }: Props) => {
 
   return (
     <Section>
-      <SectionHeader title={match.params.rentId ? __('application.extendsOrder') : __('application.newOrder')} />
+      <SectionHeader title={match.params.rentId ? 'application.extendsOrder' : 'application.newOrder'} />
       <ProgressIndicator
         current={getStepByName(match.params.step)}
         stepList={[

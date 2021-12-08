@@ -37,7 +37,7 @@ const Sale = ({ discountsList, getStockDiscountsList, user }: Props) => {
 
   return (
     <Section full highlight>
-      <SectionHeader title={__('application.discounts')} />
+      <SectionHeader title='application.discounts' />
       <Discounts discounts={createText(discountsList)} />
     </Section>
   );
