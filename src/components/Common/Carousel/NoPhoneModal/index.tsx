@@ -9,6 +9,7 @@ import UserService from '../../../../services/user-service';
 import { ButtonsContainer, SectionHeader } from '../../../Layout';
 import Alert from '../../Alert';
 import Button from '../../Button';
+import {__} from "../../../../helpers/i18n";
 
 interface Props {
   user: UserRes;
@@ -18,12 +19,12 @@ interface Props {
 const NoPhoneModal = ({ hideModal, user }: Props) => {
   return (
     <div>
-      <SectionHeader title="Numer telefonu jest wymagany" />
-      <Alert type="primary" text="Proszę uzupełnić swój profil o numer telefonu." />
+      <SectionHeader title='application.phoneNumberIsRequired' />
+      <Alert type="primary" text='application.fillPhoneNumber'/>
       <ButtonsContainer>
-        <Button text="Anuluj" click={() => hideModal()} danger />
+        <Button text={__('application.cancel')} click={() => hideModal()} danger />
         <Button
-          text="Przejdź do profilu"
+          text={__('application.goToProfile')}
           success
           click={() => {
             hideModal();
