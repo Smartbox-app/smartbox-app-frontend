@@ -29,7 +29,7 @@ const EditAssign = ({ userId, successNotification, hideModal }: Props) => {
 
   return (
     <>
-      <PageHeader title={__('application.workerAssignChange')} />
+      <PageHeader title='application.workerAssignChange' />
 
       <FormContainer>
         <ItfApiForm

@@ -28,7 +28,7 @@ const Contact = ({ user }: Props) => {
   return (
     <div className="contact-wrapper">
       <Section full>
-        <PageHeader title={__('application.welcomeToContact')} />
+        <PageHeader title='application.welcomeToContact' />
         <div className="department-wrapper">
           <SingleDepartment
             organisationRole="Biuro obsługi klienta"

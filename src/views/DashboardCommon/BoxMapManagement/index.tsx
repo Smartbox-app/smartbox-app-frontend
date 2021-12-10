@@ -173,7 +173,7 @@ class BoxMapManagement extends React.Component<Props> {
     const { stock, user } = this.props;
     return (
       <div className="user-map-wrapper" ref={this.element}>
-        <PageHeader title={`${__('application.storagesPlan')}`} />
+        <PageHeader title='application.storagesPlan' />
         {(isAdmin(user.role) || isWorker(user.role)) && <MapLegend />}
         {stock?.id ? (
           <>

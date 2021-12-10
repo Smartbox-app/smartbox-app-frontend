@@ -28,7 +28,7 @@ const Add = ({ successNotification }: Props) => {
 
   return (
     <>
-      <PageHeader title={__('application.preInvitation')} />
+      <PageHeader title='application.preInvitation' />
       <ButtonsContainer>
         <Button to="/admin/management/workers/list" text='application.back' primary />
       </ButtonsContainer>

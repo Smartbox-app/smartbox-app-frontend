@@ -18,7 +18,7 @@ interface Props {
 
 const Detail = ({ showModal, user }: Props) => (
   <>
-    <PageHeader title={__('application.profileDetail')} />
+    <PageHeader title='application.profileDetail' />
     <ButtonsContainer>
       <Button text='application.changPassword' primary click={() => showModal(<UpdatePass />)} />
     </ButtonsContainer>

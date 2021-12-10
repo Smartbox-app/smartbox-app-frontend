@@ -30,7 +30,7 @@ const EditRoleForm = ({ userId, successNotification, hideModal, refreshApiTableD
 
   return (
     <>
-      <PageHeader title={__('application.workerRoleChange')} />
+      <PageHeader title='application.workerRoleChange' />
       <FormContainer>
         <ItfApiForm
           formId="addOrderForm"

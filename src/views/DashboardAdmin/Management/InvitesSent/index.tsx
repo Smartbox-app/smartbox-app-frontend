@@ -49,7 +49,7 @@ class InvitesSent extends React.Component<Props> {
   render() {
     return (
       <Section full>
-        <PageHeader title={__('application.inviteList')} />
+        <PageHeader title='application.inviteList' />
         <ButtonsContainer>
           <Button text='application.inviteUser' primary to="/admin/management/workers/add" />
         </ButtonsContainer>

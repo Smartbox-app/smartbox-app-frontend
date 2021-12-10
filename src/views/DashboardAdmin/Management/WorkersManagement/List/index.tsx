@@ -90,7 +90,7 @@ class List extends React.Component<Props> {
   render() {
     return (
       <Section full>
-        <PageHeader title={__('application.workersList')} />
+        <PageHeader title='application.workersList' />
         <ButtonsContainer>
           <Button text='application.inviteUser' primary to="/admin/management/workers/add" />
           <Button text='application.historyWorker' primary to="/admin/management/workers/history" />
