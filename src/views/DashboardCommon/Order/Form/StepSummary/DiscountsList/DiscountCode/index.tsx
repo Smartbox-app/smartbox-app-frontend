@@ -20,7 +20,7 @@ interface Props {
 const DiscountCode = ({ hideModal, updateFormData, successNotification }: Props) => {
   const submitButton = (
     <ButtonsContainer>
-      <Button text="Dodaj" type="submit" primary />
+      <Button text='application.standardPrice' type="submit" primary />
     </ButtonsContainer>
   );
 
@@ -38,7 +38,7 @@ const DiscountCode = ({ hideModal, updateFormData, successNotification }: Props)
 
   return (
     <FormContainer>
-      <FormHeader title="Podaj Twój kod rabatowy" />
+      <FormHeader title='application.passYourDiscountCode' />
       <ItfApiForm
         formId="getGiftForm"
         schemaMayBeDynamic={false}
