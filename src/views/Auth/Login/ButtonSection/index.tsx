@@ -9,10 +9,10 @@ import './ButtonSection.scss';
 
 const ButtonsSection = () => (
   <div className="login-buttons-section">
-    <Button text={__('application.login')} big type="submit" primary rounded />
+    <Button text='application.login' big type="submit" primary rounded />
     <FbButton />
     <GoogleButton />
-    <Button text={__('application.register')} big to="/register" outline rounded />
+    <Button text='application.register' big to="/register" outline rounded />
     <p className="lost-pass">
       {__('application.forgotPass')}{' '}
       <Link className="light" to="/restore-pass">

@@ -56,7 +56,7 @@ const CreditCardForm = ({ func, user, sentExecutePaymentRequest, paymentId, matc
             <>
               <Alert type="success" text={__('notification.paymentFinishedSuccess')} />
               <ButtonsContainer max>
-                <Button outline text={__('application.backToHome')} to="/" />
+                <Button outline text='application.backToHome' to="/" />
               </ButtonsContainer>
             </>
           )}
@@ -65,7 +65,7 @@ const CreditCardForm = ({ func, user, sentExecutePaymentRequest, paymentId, matc
         <div className="payment-wrapper">
           <div className="pay-button-container" />
           <ButtonsContainer max>
-            <Button outline text={__('application.back')} click={() => onBack()} />
+            <Button outline text='application.back' click={() => onBack()} />
           </ButtonsContainer>
         </div>
       )}

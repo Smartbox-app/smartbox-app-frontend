@@ -19,7 +19,7 @@ interface Props {
 const Add = ({ successNotification }: Props) => {
   const submitButton = (
     <ButtonsContainer>
-      <Button text={__('application.sendInvitation')} type="submit" primary />
+      <Button text='application.sendInvitation' type="submit" primary />
     </ButtonsContainer>
   );
 
@@ -30,7 +30,7 @@ const Add = ({ successNotification }: Props) => {
     <>
       <PageHeader title={__('application.preInvitation')} />
       <ButtonsContainer>
-        <Button to="/admin/management/workers/list" text={__('application.back')} primary />
+        <Button to="/admin/management/workers/list" text='application.back' primary />
       </ButtonsContainer>
 
       <FormContainer>

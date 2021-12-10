@@ -25,12 +25,12 @@ const UpdateMe = ({ successNotification, user, fetchMyData }: Props) => {
   const submitButton = (
     <ButtonsContainer max>
       <Button
-        text={__('application.back')}
+        text='application.back'
         type="button"
         primary
         to={`/${UserService.getSlugByRole(user.role)}/profile/detail`}
       />
-      <Button text={__('application.change')} type="submit" success />
+      <Button text='application.change' type="submit" success />
     </ButtonsContainer>
   );
 

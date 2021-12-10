@@ -54,8 +54,8 @@ class List extends React.Component<Props> {
     return (
       <Section full>
         <ButtonsContainer>
-          <Button text={__('application.createDiscountCode')} primary click={() => showModal(<DiscountCodes />)} />
-          <Button text={__('application.createStockDisc')} primary click={() => showModal(<Add />)} />
+          <Button text='application.createDiscountCode' primary click={() => showModal(<DiscountCodes />)} />
+          <Button text='application.createStockDisc' primary click={() => showModal(<Add />)} />
         </ButtonsContainer>
         <ApiTable scheme={this.scheme} apiEndpointSubUrl="stock/discount/list" />
       </Section>

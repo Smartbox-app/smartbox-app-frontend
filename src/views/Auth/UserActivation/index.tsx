@@ -43,7 +43,7 @@ const UserActivation = ({ successNotification, match, logout, userRole }: Props)
 
   const subButton = (
     <ButtonsContainer max>
-      <Button text={__('application.send')} type="submit" big primary rounded />
+      <Button text='application.send' type="submit" big primary rounded />
     </ButtonsContainer>
   );
 

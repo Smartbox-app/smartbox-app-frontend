@@ -22,7 +22,7 @@ const Invoice = ({ paymentId, successNotification, hideModal }: Props) => {
 
   const submitButton = (
     <ButtonsContainer max>
-      <Button text={__('application.generateInvoice')} type="submit" primary />
+      <Button text='application.generateInvoice' type="submit" primary />
     </ButtonsContainer>
   );
 

@@ -34,7 +34,7 @@ const EmailSend = ({ emailVerificationResendMail }: Props) => {
             {/*  text={__('application.reSendVerificationMail')}*/}
             {/*  click={() => emailVerificationResendMail()}*/}
             {/*/>*/}
-            <Button success text={__('application.backToApp')} to="/" />
+            <Button success text='application.backToApp' to="/" />
           </ButtonsContainer>
         </FormContainer>
       </Section>

@@ -51,7 +51,7 @@ class InvitesSent extends React.Component<Props> {
       <Section full>
         <PageHeader title={__('application.inviteList')} />
         <ButtonsContainer>
-          <Button text={__('application.inviteUser')} primary to="/admin/management/workers/add" />
+          <Button text='application.inviteUser' primary to="/admin/management/workers/add" />
         </ButtonsContainer>
         <ApiTable scheme={this.scheme} apiEndpointSubUrl="user/invitation-list" />
       </Section>

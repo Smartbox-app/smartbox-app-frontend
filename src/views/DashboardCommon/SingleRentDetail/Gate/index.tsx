@@ -67,7 +67,7 @@ const Gate = ({ startAnimation, user, stockId, askGateToOpen, askGateToOpenStuff
       <ReactSVG src={`${startAnimation ? '/assets/images/Group46.svg' : '/assets/images/Group39.svg'}`} />
       <div className="slide-to-open">
         <Button
-          text={__(getButtonText())}
+          text={getButtonText()}
           big
           primary
           click={() => (isUser(user.role) ? askGateToOpen(geoCoord) : askGateToOpenStuff(stockId))}

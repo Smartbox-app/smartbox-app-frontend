@@ -213,11 +213,11 @@ const StepSummary = ({
       )}
 
       <ButtonsContainer max>
-        <Button outline text={__('application.back')} click={() => onBack()} />
+        <Button outline text='application.back' click={() => onBack()} />
         <Button
           type="submit"
           primary
-          text={__('application.goToOrder')}
+          text='application.goToOrder'
           disabled={dataVerification() || tenantData() || companyData()}
         />
       </ButtonsContainer>

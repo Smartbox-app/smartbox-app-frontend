@@ -21,7 +21,7 @@ const PaymentFailed = ({ showModal, paymentId }: Props) => {
             {__('application.paymentFinished')}{' '}<strong>{__('application.withFailure')}</strong>.
         </p>
         <ButtonsContainer max>
-          <Button success text={__('application.backToApp')} to="/" />
+          <Button success text='application.backToApp' to="/" />
         </ButtonsContainer>
       </Section>
     </PageContent>

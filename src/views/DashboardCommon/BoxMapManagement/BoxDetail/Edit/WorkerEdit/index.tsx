@@ -36,7 +36,7 @@ const WorkerEdit = ({
 }: Props) => {
   const submitButton = (
     <ButtonsContainer>
-      <Button text={__('application.changeStatus')} type="submit" danger />
+      <Button text='application.changeStatus' type="submit" danger />
     </ButtonsContainer>
   );
 
@@ -49,11 +49,11 @@ const WorkerEdit = ({
         <Alert type="primary" text={__('application.userWillNotGetMailWithInformation')} />
         <Alert type="primary" text={__('application.actionCanNotBeUnDone')} />
         <ButtonsContainer max>
-          <Button text={__('application.cancel')} danger click={() => hideModal()} />
+          <Button text='application.cancel' danger click={() => hideModal()} />
           <Button
             success
             type="submit"
-            text={__('application.understood')}
+            text='application.understood'
             click={async () => {
               await hideModal();
               await ApiService.sendForm(

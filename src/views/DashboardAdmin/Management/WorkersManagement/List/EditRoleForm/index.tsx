@@ -21,7 +21,7 @@ interface Props {
 const EditRoleForm = ({ userId, successNotification, hideModal, refreshApiTableData }: Props) => {
   const submitButton = (
     <ButtonsContainer>
-      <Button text={__('application.save')} type="submit" primary />
+      <Button text='application.save' type="submit" primary />
     </ButtonsContainer>
   );
 

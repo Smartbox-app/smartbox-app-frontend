@@ -47,7 +47,7 @@ class Carousel extends Component<Props> {
           <ReactSVG src={`/assets/icons/${data}c.svg`} />
           <ButtonsContainer max>
             <Button
-              text={__('application.newStock')}
+              text='application.newStock'
               outline
               icon="plus.svg"
               click={() => {

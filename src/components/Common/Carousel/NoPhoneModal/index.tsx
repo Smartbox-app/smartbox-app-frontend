@@ -22,9 +22,9 @@ const NoPhoneModal = ({ hideModal, user }: Props) => {
       <SectionHeader title='application.phoneNumberIsRequired' />
       <Alert type="primary" text='application.fillPhoneNumber'/>
       <ButtonsContainer>
-        <Button text={__('application.cancel')} click={() => hideModal()} danger />
+        <Button text='application.cancel' click={() => hideModal()} danger />
         <Button
-          text={__('application.goToProfile')}
+          text='application.goToProfile'
           success
           click={() => {
             hideModal();

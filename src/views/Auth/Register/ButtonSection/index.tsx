@@ -8,8 +8,8 @@ import './ButtonSection.scss';
 const ButtonSection = () => (
   <div className="register-buttons-section">
     <ButtonsContainer max column>
-      <Button text={__('application.send')} type="submit" big primary rounded className="register-control-button" />
-      <Button text={__('application.back')} to="/" big outline rounded className="register-control-button" />
+      <Button text='application.send' type="submit" big primary rounded className="register-control-button" />
+      <Button text='application.back' to="/" big outline rounded className="register-control-button" />
     </ButtonsContainer>
   </div>
 );

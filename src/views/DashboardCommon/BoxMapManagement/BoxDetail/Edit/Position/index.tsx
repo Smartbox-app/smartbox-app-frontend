@@ -27,7 +27,7 @@ interface Props {
 const Position = ({rentId, stock, successNotification, fetchBoxStatuses, hideModal, showModal}: Props) => {
     const submitButton = (
         <ButtonsContainer>
-            <Button text={__('application.move')} type="submit" danger/>
+            <Button text='application.move' type="submit" danger/>
         </ButtonsContainer>
     );
 
@@ -42,11 +42,11 @@ const Position = ({rentId, stock, successNotification, fetchBoxStatuses, hideMod
                     <Alert type="primary" text={__('application.actionCanNotBeUnDone')}/>
                 </div>
                 <ButtonsContainer max>
-                    <Button text={__('application.cancel')} danger click={() => hideModal()}/>
+                    <Button text='application.cancel' danger click={() => hideModal()}/>
                     <Button
                         success
                         type="submit"
-                        text={__('application.understood')}
+                        text='application.understood'
                         click={async () => {
                             await hideModal();
                             await ApiService.sendForm(

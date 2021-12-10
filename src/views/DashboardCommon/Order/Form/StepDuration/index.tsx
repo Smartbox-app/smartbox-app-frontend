@@ -134,8 +134,8 @@ const StepDuration = ({
         </div>
         <Price countedPrice={countedPrice.value} />
         <ButtonsContainer max>
-          <Button outline text={__('application.back')} click={() => onBack()} disabled={!!match.params.rentId} />
-          <Button type="submit" primary text={__('application.next')} />
+          <Button outline text='application.back' click={() => onBack()} disabled={!!match.params.rentId} />
+          <Button type="submit" primary text='application.next' />
         </ButtonsContainer>
       </form>
     </FormContext>

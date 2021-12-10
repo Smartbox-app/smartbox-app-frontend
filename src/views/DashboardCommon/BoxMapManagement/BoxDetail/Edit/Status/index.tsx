@@ -27,7 +27,7 @@ interface Props {
 const Status = ({ selectedBoxId, hideModal, stock, successNotification, fetchBoxStatuses, showModal }: Props) => {
   const submitButton = (
     <ButtonsContainer>
-      <Button text={__('application.changeStatus')} type="submit" danger />
+      <Button text='application.changeStatus' type="submit" danger />
     </ButtonsContainer>
   );
 
@@ -47,11 +47,11 @@ const Status = ({ selectedBoxId, hideModal, stock, successNotification, fetchBox
         )}
 
         <ButtonsContainer>
-          <Button text={__('application.cancel')} danger click={() => hideModal()} />
+          <Button text='application.cancel' danger click={() => hideModal()} />
           <Button
             success
             type="submit"
-            text={__('application.understood')}
+            text='application.understood'
             disabled={values.status === null || values.status.length === 0}
             click={async () => {
               await hideModal();

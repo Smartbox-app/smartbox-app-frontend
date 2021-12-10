@@ -21,7 +21,7 @@ interface Props {
 const SMS = ({ successNotification }: Props) => {
   const submitButton = (
     <ButtonsContainer>
-      <Button text={__('application.send')} type="submit" primary />
+      <Button text='application.send' type="submit" primary />
     </ButtonsContainer>
   );
 

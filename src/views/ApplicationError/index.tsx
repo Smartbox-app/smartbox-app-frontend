@@ -12,7 +12,7 @@ const ApplicationError = () => (
       <h1>{__('application.ApplicationError')}</h1>
       <SectionHeader title='application.404Text' />
       <ButtonsContainer>
-        <Button primary rounded to="/" text={__('application.backToHome')} />
+        <Button primary rounded to="/" text='application.backToHome' />
       </ButtonsContainer>
     </div>
   </DashboardContainer>

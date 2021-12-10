@@ -51,7 +51,7 @@ const MissingPayment = ({ singleRent, user }: Props) => {
       </div>
       <ButtonsContainer>
         <Button
-          text={__('application.payOffDebt')}
+          text='application.payOffDebt'
           type="button"
           danger
           to={`/${UserService.getSlugByRole(user.role)}/pay-debt/${singleRent.id}`}

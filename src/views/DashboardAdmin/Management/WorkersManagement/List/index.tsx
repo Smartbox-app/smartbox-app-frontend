@@ -60,8 +60,7 @@ class List extends React.Component<Props> {
       return (
         <ButtonsContainer max>
           <Button
-            // text={__('application.changeUserAssigment')}
-            text={__('application.change')}
+            text='application.change'
             primary
             click={() => this.props.showModal(<EditAssign userId={userData.id} />)}
           />
@@ -76,13 +75,13 @@ class List extends React.Component<Props> {
     if (userData.status === UserStatus.blocked) {
       return (
         <ButtonsContainer max>
-          <Button text={__('application.active')} success click={() => this.props.enableUser(userData.id)} />
+          <Button text='application.active' success click={() => this.props.enableUser(userData.id)} />
         </ButtonsContainer>
       );
     } else {
       return (
         <ButtonsContainer max>
-          <Button text={__('application.block')} danger click={() => this.props.blockUser(userData.id)} />
+          <Button text='application.block' danger click={() => this.props.blockUser(userData.id)} />
         </ButtonsContainer>
       );
     }
@@ -93,8 +92,8 @@ class List extends React.Component<Props> {
       <Section full>
         <PageHeader title={__('application.workersList')} />
         <ButtonsContainer>
-          <Button text={__('application.inviteUser')} primary to="/admin/management/workers/add" />
-          <Button text={__('application.historyWorker')} primary to="/admin/management/workers/history" />
+          <Button text='application.inviteUser' primary to="/admin/management/workers/add" />
+          <Button text='application.historyWorker' primary to="/admin/management/workers/history" />
         </ButtonsContainer>
         <ApiTable scheme={this.scheme} apiEndpointSubUrl={`user/list/${UserType.staff}`} />
       </Section>

@@ -20,7 +20,7 @@ interface Props {
 const UpdatePass = ({ successNotification, hideModal }: Props) => {
   const submitButton = (
     <ButtonsContainer>
-      <Button text={__('application.change')} type="submit" primary />
+      <Button text='application.change' type="submit" primary />
     </ButtonsContainer>
   );
 

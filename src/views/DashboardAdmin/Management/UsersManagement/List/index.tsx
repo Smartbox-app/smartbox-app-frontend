@@ -48,9 +48,9 @@ class List extends React.Component<Props> {
 
   private getLockButton = (value: boolean, field: TableSchemaField, userData: IUser) => {
     if (userData.status === UserStatus.blocked) {
-      return <Button text={__('application.active')} success click={() => this.props.enableUser(userData.id)} />;
+      return <Button text='application.active' success click={() => this.props.enableUser(userData.id)} />;
     } else {
-      return <Button text={__('application.block')} danger click={() => this.props.blockUser(userData.id)} />;
+      return <Button text='application.block' danger click={() => this.props.blockUser(userData.id)} />;
     }
   };
 
@@ -59,8 +59,8 @@ class List extends React.Component<Props> {
       <Section full>
         <PageHeader title={__('application.usersList')} />
         <ButtonsContainer>
-          <Button text={__('application.inviteUser')} primary to="/admin/management/workers/add" />
-          <Button text={__('application.historyWorker')} primary to="/admin/management/workers/history" />
+          <Button text='application.inviteUser' primary to="/admin/management/workers/add" />
+          <Button text='application.historyWorker' primary to="/admin/management/workers/history" />
         </ButtonsContainer>
         <ApiTable scheme={this.scheme} apiEndpointSubUrl={`user/list/${UserType.client}`} />
       </Section>

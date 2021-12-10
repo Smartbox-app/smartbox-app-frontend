@@ -71,7 +71,7 @@ const DiscountsList = ({ showModal, countedPrice, resetDiscountCode, successNoti
         {helpText && <p>Zastosowano korzystniejszą promocje. Kod nie został użyty. Można go wykorzystać ponownie.</p>}
       </div>
       <ButtonsContainer>
-        <Button text={__('application.useDiscountCode')} primary click={() => showModal(<DiscountCode />)} />
+        <Button text='application.useDiscountCode' primary click={() => showModal(<DiscountCode />)} />
       </ButtonsContainer>
     </div>
   );

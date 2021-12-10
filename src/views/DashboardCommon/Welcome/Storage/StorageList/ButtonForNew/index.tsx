@@ -16,7 +16,7 @@ interface Props {
 const ButtonForNew = ({ user }: Props) => (
   <div className="new-storage single-wrapper">
     <Button
-      text={__('application.newStock')}
+      text='application.newStock'
       outline
       icon="plus.svg"
       to={`/${UserService.getSlugByRole(user.role)}/order/step/size`}

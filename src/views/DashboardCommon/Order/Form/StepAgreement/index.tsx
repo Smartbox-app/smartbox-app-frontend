@@ -113,11 +113,11 @@ const StepSummary = ({
       <ScrollPosition />
       <Alert type="notice" text={__('application.orderAgreementAcceptation')} />
       <ButtonsContainer max>
-        <Button outline text={__('application.back')} click={() => onBack()} />
+        <Button outline text='application.back' click={() => onBack()} />
         <Button
           type="submit"
           primary
-          text={__('application.goToPayment')}
+          text='application.goToPayment'
           disabled={!isAgreementAccepted || !isResignationMarked}
         />
       </ButtonsContainer>

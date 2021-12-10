@@ -20,7 +20,7 @@ const Detail = ({ showModal, user }: Props) => (
   <>
     <PageHeader title={__('application.profileDetail')} />
     <ButtonsContainer>
-      <Button text={__('application.changPassword')} primary click={() => showModal(<UpdatePass />)} />
+      <Button text='application.changPassword' primary click={() => showModal(<UpdatePass />)} />
     </ButtonsContainer>
     <UserData />
   </>

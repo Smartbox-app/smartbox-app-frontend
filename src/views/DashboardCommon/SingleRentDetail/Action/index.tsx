@@ -48,18 +48,18 @@ const Action = ({
   return (
     <ButtonsContainer max>
       <Button
-        text={!showUserStockMap ? __('application.showOnStockMap') : __('application.showDetail')}
+        text={!showUserStockMap ? 'application.showOnStockMap' : 'application.showDetail'}
         success
         click={() => toggleShowUserStockMap()}
       />
       <Button
-        text={__('application.goToAgreement')}
+        text='application.goToAgreement'
         success
         click={() => handleExtendingOrderData(rentId)}
         disabled={rent.status !== RentStatus.rented}
       />
-      <Button text={__('application.end')} danger click={() => showModal(<EndingModal />)} />
-      <Button text={__('application.back')} primary to={`/${UserService.getSlugByRole(user.role)}`} />
+      <Button text='application.end' danger click={() => showModal(<EndingModal />)} />
+      <Button text='application.back' primary to={`/${UserService.getSlugByRole(user.role)}`} />
     </ButtonsContainer>
   );
 };

@@ -45,7 +45,7 @@ const BankForm = ({ func, paymentId, sentExecutePaymentWithTpayRequest, bankGrou
             <div dangerouslySetInnerHTML={{ __html: func || '' }} />
           </div>
           <ButtonsContainer max>
-            <Button outline text={__('application.back')} click={() => onBack()} />
+            <Button outline text='application.back' click={() => onBack()} />
           </ButtonsContainer>
         </div>
       )}

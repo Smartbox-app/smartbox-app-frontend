@@ -25,7 +25,7 @@ interface Props {
 const Edit = ({ discountId, successNotification, hideModal, refreshApiTableData }: Props) => {
   const submitButton = (
     <ButtonsContainer>
-      <Button text={__('application.save')} type="submit" primary />
+      <Button text='application.save' type="submit" primary />
     </ButtonsContainer>
   );
 

@@ -81,7 +81,7 @@ const PayDebtForm = ({
             <div dangerouslySetInnerHTML={{ __html: func.payload || '' }} />
           </div>
           <ButtonsContainer max>
-            <Button outline text={__('application.back')} click={() => onBack()} />
+            <Button outline text='application.back' click={() => onBack()} />
           </ButtonsContainer>
         </div>
       </FormContainer>
@@ -100,7 +100,7 @@ const PayDebtForm = ({
           <Button
             type="submit"
             primary
-            text={__('application.goToPayment')}
+            text='application.goToPayment'
             disabled={!isAgreementAccepted || !isResignationMarked}
           />
         </ButtonsContainer>

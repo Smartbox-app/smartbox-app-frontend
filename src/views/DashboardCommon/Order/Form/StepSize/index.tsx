@@ -130,11 +130,11 @@ const StepSize = ({
         <div className="options-wrapper">{options}</div>
 
         <ButtonsContainer max>
-          <Button disabled text={__('application.back')} />
+          <Button disabled text='application.back' />
           <Button
             type="submit"
             primary
-            text={__('application.next')}
+            text='application.next'
             disabled={watch().size === '' || !isMyBoxAvailable(watch().size)}
           />
         </ButtonsContainer>

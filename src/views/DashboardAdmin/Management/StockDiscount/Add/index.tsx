@@ -24,7 +24,7 @@ interface Props {
 const FormStockDiscount = ({ fetchApiTableData, hideModal, successNotification }: Props) => {
   const submitButton = (
     <ButtonsContainer>
-      <Button text={__('application.create')} type="submit" primary />
+      <Button text='application.create' type="submit" primary />
     </ButtonsContainer>
   );
 
