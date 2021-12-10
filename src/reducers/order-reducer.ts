@@ -8,6 +8,7 @@ import {
   usePricing,
 } from 'smartbox-types';
 import { FormType } from '../types/order-form';
+import {__} from "../helpers/i18n";
 
 export type PaymentMethodDetail = {
   id: string;
@@ -148,7 +149,7 @@ const initialState: OrderState = {
     value: 0,
   },
   boxAvailability: [],
-  discountList: [{ text: 'Jednorazowy rabat 5%', value: 5 }],
+  discountList: [{ text: __('application.disposableDiscount5'), value: 5 }],
   isAgreementAccepted: false,
   isResignationMarked: false,
   bankList: [],
