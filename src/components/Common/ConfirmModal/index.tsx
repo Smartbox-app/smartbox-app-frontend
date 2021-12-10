@@ -18,13 +18,13 @@ interface Props {
 
 const ConfirmModal = ({
   mainText,
-  cancelButtonText = __('application.cancel'),
+  cancelButtonText = 'application.cancel',
   approveButtonText,
   approveAction,
   hideModal,
 }: Props) => (
   <div className="confirm-modal-wrapper">
-    <p>{mainText}</p>
+    <p>{__(mainText)}</p>
     <ButtonsContainer>
       <Button click={() => hideModal()} text={cancelButtonText} success />
       <Button
