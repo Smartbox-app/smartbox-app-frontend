@@ -190,6 +190,8 @@
       "activeStores": "Aktywne mini magazyny",
       "unfinishedProcess": "Niedokończony proces",
       "finished": "Zakończone",
+      "lackOfRent": "Brak wynajęć",
+      "currentRents": "Aktualne wynajęcia:",
 
       "profileDetail": "Szczegóły Profilu",
       "preInvitationForWorker": "Wyślij zaproszenie dla pracownika",
