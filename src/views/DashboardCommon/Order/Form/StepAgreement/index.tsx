@@ -108,7 +108,7 @@ const StepSummary = ({
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <FormHeader title={__('application.orderAgreement')} />
+      <FormHeader title='application.orderAgreement' />
       <AgreementWrapper />
       <ScrollPosition />
       <Alert type="notice" text={__('application.orderAgreementAcceptation')} />

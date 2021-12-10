@@ -192,7 +192,7 @@ const StepSummary = ({
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="form-step-two" onChange={handleChange}>
       <Discount />
-      <FormHeader title={__('application.orderSummary')} />
+      <FormHeader title='application.orderSummary' />
       <SummaryTable dateStart={formData.dateStart} dateEnd={formData.dateEnd} countedPrice={countedPrice.value} />
       {countedPrice.value > 0 && <PaymentMethods register={register} />}
 

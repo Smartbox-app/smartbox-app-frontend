@@ -14,7 +14,7 @@ interface Props {
 const TenantDetailsForm = ({ register, errors, control, disabled }: Props) => {
   return (
     <div className="form-field">
-      <FormHeader title={__('application.rentierData')} />
+      <FormHeader title='application.rentierData' />
       <CustomInput
         register={register({ required: formOnTranslateString('Field required.') })}
         errors={errors}

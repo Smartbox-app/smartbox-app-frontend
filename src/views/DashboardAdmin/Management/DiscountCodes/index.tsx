@@ -6,7 +6,7 @@ import Form from './Form';
 
 const DiscountCodes = () => (
   <>
-    <FormHeader title={__('application.generateGiftCode')} />
+    <FormHeader title='application.generateGiftCode' />
     <Form />
   </>
 );

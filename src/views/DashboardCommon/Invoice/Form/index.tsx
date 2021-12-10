@@ -28,7 +28,7 @@ const Invoice = ({ paymentId, successNotification, hideModal }: Props) => {
 
   return (
     <FormContainer className="invoice-form">
-      <FormHeader title={__('application.invoiceCreateData')} />
+      <FormHeader title='application.invoiceCreateData' />
       <ItfApiForm
         formId="nip-form"
         schemaMayBeDynamic={false}

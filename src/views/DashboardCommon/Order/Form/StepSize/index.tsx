@@ -125,7 +125,7 @@ const StepSize = ({
 
   return (
     <FormContainer className="step-size-wrapper">
-      <FormHeader no-margin title={__('application.orderFormPickSize')} />
+      <FormHeader no-margin title='application.orderFormPickSize' />
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="options-wrapper">{options}</div>
 

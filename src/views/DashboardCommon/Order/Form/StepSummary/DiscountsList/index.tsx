@@ -65,7 +65,7 @@ const DiscountsList = ({ showModal, countedPrice, resetDiscountCode, successNoti
 
   return (
     <div>
-      <FormHeader title={__('application.usedDiscount')} />
+      <FormHeader title='application.usedDiscount' />
       <div className="discount-wrapper">
         <p>{priceName}</p>
         {helpText && <p>Zastosowano korzystniejszą promocje. Kod nie został użyty. Można go wykorzystać ponownie.</p>}

@@ -43,7 +43,7 @@ const FormStockDiscount = ({ fetchApiTableData, hideModal, successNotification }
 
   return (
     <FormContainer>
-      <FormHeader title={__('application.creatStockDiscount')} />
+      <FormHeader title='application.creatStockDiscount' />
       <FieldsColumn>
         <ItfApiForm
           formId="addStockDiscountForm"

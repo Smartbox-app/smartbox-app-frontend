@@ -45,7 +45,7 @@ const Edit = ({ discountId, successNotification, hideModal, refreshApiTableData 
   };
   return (
     <FormContainer>
-      <FormHeader title={__('application.editStockDiscount')} />
+      <FormHeader title='application.editStockDiscount' />
       <FieldsColumn>
         <ItfApiForm
           formId="editStockDiscountForm"

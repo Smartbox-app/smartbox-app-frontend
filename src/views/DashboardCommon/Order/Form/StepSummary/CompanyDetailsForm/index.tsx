@@ -15,7 +15,7 @@ interface Props {
 const CompanyDetailsForm = ({ register, errors, control, disabled }: Props) => {
   return (
     <div className="form-field">
-      <FormHeader title={__('application.companyData')} />
+      <FormHeader title='application.companyData' />
       <CustomInput
         register={register({ required: formOnTranslateString('Field required.') })}
         errors={errors}

@@ -92,7 +92,7 @@ const PayDebtForm = ({
   return (
     <FormContainer>
       <form onSubmit={handleSubmit(submit)}>
-        <FormHeader title={__('application.penaltyPayment')} />
+        <FormHeader title='application.penaltyPayment' />
         <SummaryTable dateStart={singleRent.finishAt} dateEnd={new Date()} countedPrice={calc(singleRent)} />
         <AgreementWrapper />
         <ScrollPosition />

@@ -38,7 +38,7 @@ const UpdatePass = ({ successNotification, hideModal }: Props) => {
 
   return (
     <FormContainer>
-      <FormHeader title={__('application.changePasswordToService')} />
+      <FormHeader title='application.changePasswordToService' />
       <FieldsColumn>
         <ItfApiForm
           formId="changePass"
