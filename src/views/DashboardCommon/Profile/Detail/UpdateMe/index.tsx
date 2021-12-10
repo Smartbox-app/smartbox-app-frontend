@@ -48,7 +48,7 @@ const UpdateMe = ({ successNotification, user, fetchMyData }: Props) => {
 
   return (
     <FormContainer>
-      <FormHeader title="Edytujesz swoje dane" />
+      <FormHeader title={__('application.editYourData')} />
       <FieldsColumn>
         <ItfApiForm
           formId="EditUserProfileData"

@@ -48,6 +48,7 @@
       "stock": "Plac",
       "period": "Okres",
       "changeStatus": "Zmień status",
+      "notChooseStatus": "Nie wybrałeś statusu",
       "notApplicable": "Nie dotyczy",
       "miniStorage": "Mini magazyn",
       "shortenNumber": "nr",
@@ -80,6 +81,7 @@
       "outOfService": "Wyłączony",
 
       "storeManagement": "Zarządzaj swoimi mini magazynami:",
+      "youCanNotEditStore": "Nie możesz wykonywać akcji na tym mini magazynie!",
       "offers": "Oferta:",
       "storagesPlan": "Plan placu:",
       "stockSelect": "Wybór placu:",
@@ -108,6 +110,7 @@
       "singleStoreDetail": "Szczegóły wybranego mini magazynu:",
       "showEditOptions": "Pokaż opcje edycji",
       "hideEditOptions": "Ukryj opcje edycji",
+      "editYourData": "Edytujesz swoje dane",
       "changesIrreversible": "Poniższe zmiany są nieodwracalne!",
       "phoneNumberIsRequired": "Numer telefonu jest wymagany",
       "fillPhoneNumber": "Proszę uzupełnić swój profil o numer telefonu.",
@@ -184,6 +187,9 @@
       "startTerm": "Termin rozpoczęcia:",
       "finishTerm": "Termin zakończenia:",
       "paymentForRent": "Opłata za wynajem:",
+      "activeStores": "Aktywne mini magazyny",
+      "unfinishedProcess": "Niedokończony proces",
+      "finished": "Zakończone",
 
       "profileDetail": "Szczegóły Profilu",
       "preInvitationForWorker": "Wyślij zaproszenie dla pracownika",

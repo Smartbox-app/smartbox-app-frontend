@@ -83,7 +83,7 @@ const WorkerEdit = ({
   };
 
   if (rentId === '' || canWorkerEdit()) {
-    return <p>Nie możesz wykonywać akcji na tym mini magazynie!</p>;
+    return <p>{__('application.youCanNotEditStore')}</p>;
   }
 
   return (

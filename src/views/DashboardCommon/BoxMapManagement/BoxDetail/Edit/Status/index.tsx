@@ -38,7 +38,7 @@ const Status = ({ selectedBoxId, hideModal, stock, successNotification, fetchBox
     showModal(
       <>
         {values.status === null || values.status.length === 0 ? (
-          <Alert type="error" text="Nie wybrałeś statusu" />
+          <Alert type="error" text={__('application.notChooseStatus')} />
         ) : (
           <div className="modal-alert-wrapper">
             <Alert type="warning" text={__('application.userWillNotGetMailWithInformation')} />
