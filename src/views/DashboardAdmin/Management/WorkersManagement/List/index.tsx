@@ -47,7 +47,7 @@ class List extends React.Component<Props> {
         mobile: true,
         buttons: [
           {
-            name: __('application.changeUserRole'),
+            name: 'application.changeUserRole',
             type: 'primary',
             click: (data: any) => this.props.showModal(<EditRoleForm userId={data.id} />),
           },

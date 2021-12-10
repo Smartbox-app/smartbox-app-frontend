@@ -25,12 +25,12 @@ class InvitesSent extends React.Component<Props> {
       mobile: true,
       buttons: [
         {
-          name: __('application.resend'),
+          name: 'application.resend',
           type: 'primary',
           click: (data: any) => this.props.resendInvitations(data.id),
         },
         {
-          name: __('application.delete'),
+          name: 'application.delete',
           type: 'danger',
           click: (data: any) =>
             this.props.showModal(

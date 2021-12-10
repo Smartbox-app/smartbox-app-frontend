@@ -29,12 +29,12 @@ class List extends React.Component<Props> {
       mobile: true,
       buttons: [
         {
-          name: __('application.edit'),
+          name: 'application.edit',
           type: 'primary',
           click: (data: any) => showModal(<Edit discountId={data.discountId} />),
         },
         {
-          name: __('application.delete'),
+          name: 'application.delete',
           type: 'danger',
           click: (data: any) =>
             showModal(

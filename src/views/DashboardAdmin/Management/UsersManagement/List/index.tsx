@@ -38,7 +38,7 @@ class List extends React.Component<Props> {
         mobile: true,
         buttons: [
           {
-            name: __('application.userDetails'),
+            name: 'application.userDetails',
             type: 'primary',
             click: (data: UserListRes) => this.props.showModal(<UserDetail userId={data.id} userData={data} />),
           },
