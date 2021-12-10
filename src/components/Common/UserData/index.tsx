@@ -18,30 +18,30 @@ const UserData = ({ user }: Props) => {
     <div className="content-wrapper">
       <Section highlight>
         <SectionHeader title='application.userData'/>
-        <Row label={__('application.firstName')} content={user.firstName} />
-        <Row label={__('application.lastName')} content={user.lastName} />
-        <Row label={__('application.userRole')} content={user.role} />
+        <Row label='application.firstName' content={user.firstName} />
+        <Row label='application.lastName' content={user.lastName} />
+        <Row label='application.userRole' content={user.role} />
       </Section>
       <Section highlight>
         <SectionHeader title='application.contactData' />
-        <Row label={__('application.mail')} content={user.email} />
-        <Row label={__('application.phone')} content={user.phone} />
+        <Row label='application.mail' content={user.email} />
+        <Row label='application.phone' content={user.phone} />
         {role === UserRole.user && (
           <>
-            <Row label={__('application.city')} content={user.city} />
-            <Row label={__('application.street')} content={user.street} />
-            <Row label={__('application.postCode')} content={user.postCode} />
+            <Row label='application.city' content={user.city} />
+            <Row label='application.street' content={user.street} />
+            <Row label='application.postCode' content={user.postCode} />
           </>
         )}
       </Section>
       {role === UserRole.user && (
         <Section highlight>
           <SectionHeader title='application.contactCompanyData' />
-          <Row label={__('application.companyName')} content={user.companyData.companyName} />
-          <Row label={__('application.nip')} content={user.companyData.nip} />
-          <Row label={__('application.city')} content={user.companyData.companyCity} />
-          <Row label={__('application.street')} content={user.companyData.companyStreet} />
-          <Row label={__('application.postCode')} content={user.companyData.companyPostCode} />
+          <Row label='application.companyName' content={user.companyData.companyName} />
+          <Row label='application.nip' content={user.companyData.nip} />
+          <Row label='application.city' content={user.companyData.companyCity} />
+          <Row label='application.street' content={user.companyData.companyStreet} />
+          <Row label='application.postCode' content={user.companyData.companyPostCode} />
         </Section>
       )}
     </div>

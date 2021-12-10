@@ -10,8 +10,8 @@ interface Props {
 
 const Row = ({ label, content }: Props) => (
   <div className="row">
-    <p className="row-label">{label}:</p>
-    <strong className="row-content">{content || `${__('application.lack')}`}</strong>
+    <p className="row-label">{__(label)}:</p>
+    <strong className="row-content">{content || __('application.lack')}</strong>
   </div>
 );
 

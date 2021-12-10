@@ -12,15 +12,15 @@ interface Props {
 
 const Details = ({ singleRent }: Props) => (
   <div className="details-wrapper">
-    <Row label={__('application.startDate')} content={`${dateOnly(singleRent ? singleRent.startAt : new Date())}`} />
-    <Row label={__('application.endDate')} content={`${dateOnly(singleRent ? singleRent.finishAt : new Date())}`} />
-    <Row label={__('application.storePlaceName')} content={singleRent.stockName || `${__('application.lack')}`} />
+    <Row label='application.startDate' content={`${dateOnly(singleRent ? singleRent.startAt : new Date())}`} />
+    <Row label='application.endDate' content={`${dateOnly(singleRent ? singleRent.finishAt : new Date())}`} />
+    <Row label='application.storePlaceName' content={singleRent.stockName || __('application.lack')} />
     <Row
-      label={__('application.storeSize')}
-      content={<div className="size">{singleRent.size}m</div> || `${__('application.lack')}`}
+      label='application.storeSize'
+      content={<div className="size">{singleRent.size}m</div> || __('application.lack')}
     />
-    <Row label={__('application.storeNumber')} content={singleRent.number || `${__('application.lack')}`} />
-    <Row label={__('application.storeState')} content={singleRent.status || `${__('application.lack')}`} />
+    <Row label='application.storeNumber' content={singleRent.number || __('application.lack')} />
+    <Row label='application.storeState' content={singleRent.status || __('application.lack')} />
   </div>
 );
 
