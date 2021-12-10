@@ -25,7 +25,7 @@ const UserDetail = ({ userId, userData, fetchSingleUser, singleUser }: Props) =>
 
   return (
     <div className="user-detail-wrapper">
-      <SimpleHeader title={__('application.customerDetails')} />
+      <SimpleHeader title='application.customerDetails' />
       <div className="single-address-content">
         <div className="addresses-wrapper">
           <DataGroup
