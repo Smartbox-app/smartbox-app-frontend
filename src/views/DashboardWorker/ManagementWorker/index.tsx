@@ -24,13 +24,13 @@ const Management = ({ user }: Props) => (
           className: 'tab',
           activeClassName: 'active',
           to: `/${UserService.getSlugByRole(user.role)}/management/map`,
-          text: `${__('application.boxes')}`,
+          text: 'application.boxes',
         },
         {
           className: 'tab',
           activeClassName: 'active',
           to: `/${UserService.getSlugByRole(user.role)}/management/gate`,
-          text: `${__('application.gate')}`,
+          text: 'application.gate',
         },
       ]}
     />
