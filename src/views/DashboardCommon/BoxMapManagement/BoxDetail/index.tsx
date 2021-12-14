@@ -38,29 +38,29 @@ const BoxDetail = ({ boxDataCleanUp, selectedBoxId, singleBoxDetail, rentId, use
     <div className="detail-wrapper">
       <SectionHeader title='application.singleStoreDetail' />
 
-      <DescriptionRow icon="fa-lock" text={__('application.storeNumber')}>
+      <DescriptionRow icon="fa-lock" text='application.storeNumber'>
         {selectedBoxId}
       </DescriptionRow>
 
       {isAdmin(user.role) && (
         <>
-          <DescriptionRow icon="fa-user" text={__('application.rentedBy')}>
+          <DescriptionRow icon="fa-user" text='application.rentedBy'>
             {singleBoxDetail.owner ? `${singleBoxDetail.owner.firstName} ${singleBoxDetail.owner.lastName}` : '---'}
           </DescriptionRow>
 
-          <DescriptionRow icon="fa-calendar" text={__('application.startDate')}>
+          <DescriptionRow icon="fa-calendar" text='application.startDate'>
             {`${isThisBoxFree(rentId) ? '---' : dateOnly(singleBoxDetail.startAt)}`}
           </DescriptionRow>
 
-          <DescriptionRow icon="fa-calendar" text={__('application.endDate')}>
+          <DescriptionRow icon="fa-calendar" text='application.endDate'>
             {`${isThisBoxFree(rentId) ? '---' : dateOnly(singleBoxDetail.finishAt)}`}
           </DescriptionRow>
 
-          <DescriptionRow icon="fa-arrow-right" text={__('application.storeState')}>
+          <DescriptionRow icon="fa-arrow-right" text='application.storeState'>
             {`${singleBoxDetail.status}`}
           </DescriptionRow>
 
-          <DescriptionRow icon="fa-mobile" text={__('application.phone')}>
+          <DescriptionRow icon="fa-mobile" text='application.phone'>
             {singleBoxDetail?.owner?.phone ? (
               <a href={`tel:${singleBoxDetail.owner.phone}`}>{singleBoxDetail.owner.phone}</a>
             ) : (
@@ -68,7 +68,7 @@ const BoxDetail = ({ boxDataCleanUp, selectedBoxId, singleBoxDetail, rentId, use
             )}
           </DescriptionRow>
 
-          <DescriptionRow icon="fa-envelope" text={__('application.mail')}>
+          <DescriptionRow icon="fa-envelope" text='application.mail'>
             {isThisBoxFree(rentId) ? (
               '---'
             ) : (
