@@ -1,6 +1,7 @@
 import React from 'react';
 
 import './CheckBox.scss';
+import {__} from "../../../helpers/i18n";
 
 interface Props {
   name: string;
@@ -21,7 +22,7 @@ const CheckBox = ({ label, name, checked, handleChange, disabled, errors }: Prop
       checked={!!checked}
       disabled={disabled}
     />
-    <label htmlFor={name}>{label}</label>
+    <label htmlFor={name}>{__(label)}</label>
     {errors &&
       errors.map((error: any) => (
         <small key={error} className="text-danger">

@@ -38,7 +38,7 @@ class ScrollPosition extends Component<Props> {
           checked={isResignationMarked}
           disabled={!isAgreementAccepted}
           handleChange={() => formResignationMarked()}
-          label={__('application.14daysResign')}
+          label='application.14daysResign'
         />
       </>
     );

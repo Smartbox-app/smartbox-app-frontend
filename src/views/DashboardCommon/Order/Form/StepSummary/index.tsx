@@ -204,7 +204,7 @@ const StepSummary = ({
                   name="iNeedInvoice"
                   checked={invoiceNeeded}
                   handleChange={() => setInvoiceNeeded(!invoiceNeeded)}
-                  label={__('application.wantOptionalInvoice')}
+                  label='application.wantOptionalInvoice'
               />
           </>
       )}
