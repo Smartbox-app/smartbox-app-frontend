@@ -42,23 +42,23 @@ const Order = ({ match }: Props) => {
         stepList={[
           {
             value: 1,
-            desc: __('application.orderStepSize'),
+            desc: 'application.orderStepSize',
           },
           {
             value: 2,
-            desc: __('application.orderStepDate'),
+            desc: 'application.orderStepDate',
           },
           {
             value: 3,
-            desc: __('application.orderStepSummary'),
+            desc: 'application.orderStepSummary',
           },
           {
             value: 4,
-            desc: __('application.orderStepAgreement'),
+            desc: 'application.orderStepAgreement',
           },
           {
             value: 5,
-            desc: __('application.orderStepPayment'),
+            desc: 'application.orderStepPayment',
           },
         ]}
       />

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import './Item.scss';
+import {__} from "../../../../helpers/i18n";
 
 interface Props {
   value: string;
@@ -17,7 +18,7 @@ class Item extends Component<Props> {
         <div className={`item-icon ${done ? 'item-done' : ''} ${current ? 'item-current' : ''}`}>
           {done ? <span className="fa fa-check" /> : order}
         </div>
-        <div className="item-description">{value}</div>
+        <div className="item-description">{__(value)}</div>
       </div>
     );
   }
