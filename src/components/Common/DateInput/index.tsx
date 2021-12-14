@@ -6,6 +6,7 @@ import { Polish } from 'flatpickr/dist/l10n/pl';
 
 import 'flatpickr/dist/themes/airbnb.css';
 import './DateInput.scss';
+import {__} from "../../../helpers/i18n";
 
 flatpickr.localize(Polish);
 flatpickr.defaultConfig.time_24hr = true;
@@ -27,7 +28,7 @@ const DateInput = ({ name, value, onChange, label, minDate, maxDate, register }:
     <div className="data-picker-wrapper">
       {label && (
         <label htmlFor={name} className="data-picker-label">
-          {label}
+          {__(label)}
         </label>
       )}
       <Flatpickr
