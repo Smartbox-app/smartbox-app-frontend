@@ -30,7 +30,7 @@ const UserDetail = ({ userId, userData, fetchSingleUser, singleUser }: Props) =>
         <div className="addresses-wrapper">
           <DataGroup
             icon="fa-home"
-            title={__('application.customerData')}
+            title='application.customerData'
             rowData={[
               `${singleUser?.firstName} ${singleUser?.lastName}`,
               singleUser?.phone,
@@ -41,7 +41,7 @@ const UserDetail = ({ userId, userData, fetchSingleUser, singleUser }: Props) =>
           />
           <DataGroup
             icon="fa-file-o"
-            title={__('application.customerCompanyData')}
+            title='application.customerCompanyData'
             rowData={[
               singleUser?.companyData?.name,
               singleUser?.companyData?.street,
