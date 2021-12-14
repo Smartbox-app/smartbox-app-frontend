@@ -56,7 +56,7 @@ const FormStockDiscount = ({ fetchApiTableData, hideModal, successNotification }
           onSavedSuccessfully={() => {
             hideModal();
             fetchApiTableData('stock/discount/list');
-            successNotification(__('notification.stockDiscountCreated'));
+            successNotification('notification.stockDiscountCreated');
           }}
           onTranslateString={formOnTranslateString}
           thirdPartyComponents={{ ReactSelect, ReactCreatableSelect, flatpickr }}

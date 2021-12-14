@@ -42,7 +42,7 @@ const Add = ({ successNotification }: Props) => {
           sendFetcher={(formId: string, values: any) => ApiService.sendForm(sendUrl, values)}
           submitButton={submitButton}
           onSavedSuccessfully={() => {
-            successNotification(__('notification.invitationSendProperly'));
+            successNotification('notification.invitationSendProperly');
             history.push('/admin/management/workers/list');
           }}
           onTranslateString={formOnTranslateString}

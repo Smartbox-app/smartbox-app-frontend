@@ -41,7 +41,7 @@ const EditRoleForm = ({ userId, successNotification, hideModal, refreshApiTableD
           sendFetcher={(formId: string, values: any) => ApiService.sendForm(sendUrl, values, 'PATCH')}
           submitButton={submitButton}
           onSavedSuccessfully={() => {
-            successNotification(__('notification.workerPositionChanged'));
+            successNotification('notification.workerPositionChanged');
             refreshApiTableData();
             hideModal();
           }}

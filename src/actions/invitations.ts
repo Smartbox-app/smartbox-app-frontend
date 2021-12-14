@@ -9,7 +9,7 @@ export const deleteSentInvitations = (invitationId: string) => async (dispatch: 
     '',
     '',
     () => {
-      dispatch(successNotification(__('notification.invitationDeleted')));
+      dispatch(successNotification('notification.invitationDeleted'));
       dispatch(apiTable.refreshApiTableData());
     },
     null,
@@ -23,7 +23,7 @@ export const resendInvitations = (invitationId: string) => async (dispatch: any)
     '',
     '',
     () => {
-      dispatch(successNotification(__('notification.invitationResent')));
+      dispatch(successNotification('notification.invitationResent'));
     },
     null,
     `user/resend-invitation/${invitationId}`,

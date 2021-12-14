@@ -63,7 +63,7 @@ const Status = ({ selectedBoxId, hideModal, stock, successNotification, fetchBox
                 },
                 'PATCH',
               );
-              await successNotification(__('notification.userStatusChanged'));
+              await successNotification('notification.userStatusChanged');
               await fetchBoxStatuses(stock.id);
             }}
           />

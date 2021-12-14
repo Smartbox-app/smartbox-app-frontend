@@ -10,7 +10,7 @@ export const blockUser = (userId: string) => async (dispatch: any) => {
     'BLOCK_USER_SUCCESS',
     'BLOCK_USER_FAILED',
     () => {
-      dispatch(successNotification(__('notification.userBlocked')));
+      dispatch(successNotification('notification.userBlocked'));
       dispatch(refreshApiTableData());
     },
     null,
@@ -26,7 +26,7 @@ export const enableUser = (userId: string) => async (dispatch: any) => {
     'ENABLE_USER_SUCCESS',
     'ENABLE_USER_FAILED',
     () => {
-      dispatch(successNotification(__('notification.userUnblocked')));
+      dispatch(successNotification('notification.userUnblocked'));
       dispatch(refreshApiTableData());
     },
     null,

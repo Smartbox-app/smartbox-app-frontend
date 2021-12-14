@@ -49,7 +49,7 @@ const UpdatePass = ({ successNotification, hideModal }: Props) => {
           sendFetcher={customSendFetcher}
           submitButton={submitButton}
           onSavedSuccessfully={() => {
-            successNotification(__('notification.passChangedSuccess'));
+            successNotification('notification.passChangedSuccess');
             hideModal();
           }}
           onTranslateString={formOnTranslateString}

@@ -50,7 +50,7 @@ const Form = ({ showModal, successNotification }: Props) => {
           sendFetcher={customSendFetcher}
           submitButton={submitButton}
           onSavedSuccessfully={(data: GiftRes) => {
-            successNotification(__('notification.discCodeCreated'));
+            successNotification('notification.discCodeCreated');
             showModal(<NewCode newCodeProps={data} />);
           }}
           onTranslateString={formOnTranslateString}

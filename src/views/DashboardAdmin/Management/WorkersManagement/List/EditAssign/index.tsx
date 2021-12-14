@@ -41,7 +41,7 @@ const EditAssign = ({ userId, successNotification, hideModal }: Props) => {
           sendFetcher={(formId: string, values: any) => ApiService.sendForm(sendUrl, values, 'PATCH')}
           submitButton={submitButton}
           onSavedSuccessfully={() => {
-            successNotification(__('notification.userAssigmentChanged'));
+            successNotification('notification.userAssigmentChanged');
             hideModal();
           }}
           onTranslateString={formOnTranslateString}

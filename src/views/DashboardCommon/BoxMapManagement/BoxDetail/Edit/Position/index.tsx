@@ -56,7 +56,7 @@ const Position = ({rentId, stock, successNotification, fetchBoxStatuses, hideMod
                                 },
                                 'PATCH',
                             );
-                            await successNotification(__('notification.userMovedSuccess'));
+                            await successNotification('notification.userMovedSuccess');
                             await fetchBoxStatuses(stock.id);
                         }}
                     />

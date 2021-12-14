@@ -39,7 +39,7 @@ const Invoice = ({ paymentId, successNotification, hideModal }: Props) => {
         submitButton={submitButton}
         onSavedSuccessfully={(data: any) => {
           if (data === null) {
-            successNotification(__('notification.invoiceSent'));
+            successNotification('notification.invoiceSent');
             hideModal();
           }
         }}

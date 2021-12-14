@@ -102,7 +102,7 @@ class Login extends React.Component<Props> {
               }
             }}
             onSavedSuccessfully={(data: AuthLoginResult) => {
-              successNotification(__('notification.logInSuccess'));
+              successNotification('notification.logInSuccess');
               store.dispatch(saveUser(data));
             }}
             onTranslateString={formOnTranslateString}

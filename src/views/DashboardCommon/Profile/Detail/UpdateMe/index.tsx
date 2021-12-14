@@ -59,7 +59,7 @@ const UpdateMe = ({ successNotification, user, fetchMyData }: Props) => {
           sendFetcher={customSendFetcher}
           submitButton={submitButton}
           onSavedSuccessfully={async () => {
-            successNotification(__('notification.dataChangedSuccess'));
+            successNotification('notification.dataChangedSuccess');
             await fetchMyData();
             history.push(`/${UserService.getSlugByRole(user.role)}/profile/detail`);
           }}

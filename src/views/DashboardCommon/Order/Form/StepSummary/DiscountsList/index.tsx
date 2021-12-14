@@ -35,18 +35,14 @@ const DiscountsList = ({ showModal, countedPrice, resetDiscountCode, successNoti
         if (codeDiscount !== 0) {
           setHelpText(true);
           resetDiscountCode();
-          successNotification(
-              __('application.appliedBetterDiscount'),
-          );
+          successNotification('application.appliedBetterDiscount',);
         }
         return setPriceName('application.firstRentFreePracing');
       case 'withDicoutnPricing':
         if (codeDiscount !== 0) {
           setHelpText(true);
           resetDiscountCode();
-          successNotification(
-              __('application.appliedBetterDiscount'),
-          );
+          successNotification('application.appliedBetterDiscount',);
         }
         return setPriceName('application.withDicoutnPricing');
       case 'cardPricing':

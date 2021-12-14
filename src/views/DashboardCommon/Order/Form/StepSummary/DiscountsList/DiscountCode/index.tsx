@@ -48,7 +48,7 @@ const DiscountCode = ({ hideModal, updateFormData, successNotification }: Props)
         sendFetcher={customSendFetcher}
         submitButton={submitButton}
         onSavedSuccessfully={(data: GiftRes) => {
-          successNotification(__('notification.discountCodeRead'));
+          successNotification('notification.discountCodeRead');
           updateFormData({
             discountCode: data.code,
             card: {

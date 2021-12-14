@@ -40,7 +40,7 @@ export const login = (userData: AuthLoginRequest) => async (dispatch: any) => {
     'LOGIN_SUCCESS',
     'LOGIN_FAILED',
     (response: AuthLoginResult) => {
-      dispatch(notifications.successNotification(__('notification.logInSuccess')));
+      dispatch(notifications.successNotification('notification.logInSuccess'));
       dispatch({ type: 'REFRESH_API_TABLE' });
       dispatch({ type: 'REFRESH_API_GRID' });
       dispatch(hideModal());
@@ -65,7 +65,7 @@ export const logout = () => async (dispatch: any) => {
     'LOGOUT',
     'LOGOUT',
     () => {
-      dispatch(notifications.successNotification(__('notification.logOutSuccess')));
+      dispatch(notifications.successNotification('notification.logOutSuccess'));
       dispatch({ type: 'REFRESH_API_TABLE' });
       dispatch({ type: 'REFRESH_API_GRID' });
       dispatch(order.clearOrderAgreement());
@@ -87,7 +87,7 @@ export const emailVerification = (userId: string, updateToken: string) => async 
     'EMAIL_VERIFICATION_SUCCESS',
     'EMAIL_VERIFICATION_FAILED',
     () => {
-      dispatch(notifications.successNotification(__('notification.useEmailVerificationSuccess')));
+      dispatch(notifications.successNotification('notification.useEmailVerificationSuccess'));
       history.push('/');
     },
     null,
@@ -116,7 +116,7 @@ export const authGmailUser = (googleToken: string) => async (dispatch: any) => {
     'LOGIN_SUCCESS',
     'EMAIL_VERIFICATION_RESEND_MAIL_FAILED',
     (response: { user: UserRes }) => {
-      dispatch(notifications.successNotification(__('notification.logInSuccess')));
+      dispatch(notifications.successNotification('notification.logInSuccess'));
       const redirect = getRememberedRedirect();
 
       if (redirect && redirect.role === response.user.role) {

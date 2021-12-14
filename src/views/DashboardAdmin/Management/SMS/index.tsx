@@ -44,7 +44,7 @@ const SMS = ({ successNotification }: Props) => {
             sendFetcher={customSendFetcher}
             submitButton={submitButton}
             onSavedSuccessfully={() => {
-              successNotification(__('application.smsSent'));
+              successNotification('application.smsSent');
             }}
             onTranslateString={formOnTranslateString}
             thirdPartyComponents={{ ReactSelect, ReactCreatableSelect, flatpickr }}

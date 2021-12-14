@@ -11,7 +11,7 @@ export const askGateToOpen = (geo: Coordinate) => async (disaptch: any) => {
     'ASK_GATE_TO_OPEN_SUCCESS',
     'ASK_GATE_TO_OPEN_FAILED',
     () => {
-      disaptch(successNotification(__("notification.gateOpening")));
+      disaptch(successNotification("notification.gateOpening"));
       disaptch(gateOpenStartAnimation());
     },
     null,
@@ -27,11 +27,11 @@ export const askGateToOpenStuff = (stockId: string) => async (disaptch: any) => 
     'ASK_GATE_TO_OPEN_SUCCESS',
     'ASK_GATE_TO_OPEN_FAILED',
     () => {
-      disaptch(successNotification(__("notification.gateRemoteOpening")));
+      disaptch(successNotification("notification.gateRemoteOpening"));
       disaptch(gateOpenStartAnimation());
     },
     () => {
-      disaptch(successNotification(__("notification.gateRemoteOpeningError")));
+      disaptch(successNotification("notification.gateRemoteOpeningError"));
     },
     `stock/open-gate-by-staff/${stockId}`,
     'LOADING',

@@ -56,7 +56,7 @@ const Edit = ({ discountId, successNotification, hideModal, refreshApiTableData 
           sendFetcher={customSendFetcher}
           submitButton={submitButton}
           onSavedSuccessfully={() => {
-            successNotification(__('application.changesSavedSuccess'));
+            successNotification('application.changesSavedSuccess');
             refreshApiTableData();
             hideModal();
           }}
