@@ -19,7 +19,7 @@ const StorageInfo = ({ list }: Props) => {
 
   return (
     <div className="storage-info-wrapper">
-      {list.length !== 0 ? dataToDisplay : <Alert type="notice" text={__('application.noActiveRent')} />}
+      {list.length !== 0 ? dataToDisplay : <Alert type="notice" text='application.noActiveRent' />}
     </div>
   );
 };

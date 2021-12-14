@@ -46,8 +46,8 @@ const WorkerEdit = ({
   const customSendFetcher = (formId: string, values: ChangeStatusReq) => {
     showModal(
       <>
-        <Alert type="primary" text={__('application.userWillNotGetMailWithInformation')} />
-        <Alert type="primary" text={__('application.actionCanNotBeUnDone')} />
+        <Alert type="primary" text='application.userWillNotGetMailWithInformation' />
+        <Alert type="primary" text='application.actionCanNotBeUnDone' />
         <ButtonsContainer max>
           <Button text='application.cancel' danger click={() => hideModal()} />
           <Button

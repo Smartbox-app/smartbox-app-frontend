@@ -111,7 +111,7 @@ const StepSummary = ({
       <FormHeader title='application.orderAgreement' />
       <AgreementWrapper />
       <ScrollPosition />
-      <Alert type="notice" text={__('application.orderAgreementAcceptation')} />
+      <Alert type="notice" text='application.orderAgreementAcceptation' />
       <ButtonsContainer max>
         <Button outline text='application.back' click={() => onBack()} />
         <Button

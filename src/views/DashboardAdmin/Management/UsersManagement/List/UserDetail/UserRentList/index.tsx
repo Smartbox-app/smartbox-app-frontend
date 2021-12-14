@@ -12,7 +12,7 @@ interface Props {
 
 const UserRentList = ({ rentList }: Props) => {
   if (rentList.length === 0) {
-    return <Alert type="notice" text={__('application.lackOfRent')} />;
+    return <Alert type="notice" text='application.lackOfRent'/>;
   }
 
   const colorDecider = (s: RentStatus) => {

@@ -38,11 +38,11 @@ const Status = ({ selectedBoxId, hideModal, stock, successNotification, fetchBox
     showModal(
       <>
         {values.status === null || values.status.length === 0 ? (
-          <Alert type="error" text={__('application.notChooseStatus')} />
+          <Alert type="error" text='application.notChooseStatus' />
         ) : (
           <div className="modal-alert-wrapper">
-            <Alert type="warning" text={__('application.userWillNotGetMailWithInformation')} />
-            <Alert type="primary" text={__('application.actionCanNotBeUnDone')} />
+            <Alert type="warning" text='application.userWillNotGetMailWithInformation' />
+            <Alert type="primary" text='application.actionCanNotBeUnDone' />
           </div>
         )}
 

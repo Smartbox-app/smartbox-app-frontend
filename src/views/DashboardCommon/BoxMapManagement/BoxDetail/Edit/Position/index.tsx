@@ -38,8 +38,8 @@ const Position = ({rentId, stock, successNotification, fetchBoxStatuses, hideMod
         showModal(
             <>
                 <div className="modal-alert-wrapper">
-                    <Alert type="primary" text={__('application.userWillGetMailWithInformation')}/>
-                    <Alert type="primary" text={__('application.actionCanNotBeUnDone')}/>
+                    <Alert type="primary" text='application.userWillGetMailWithInformation'/>
+                    <Alert type="primary" text='application.actionCanNotBeUnDone'/>
                 </div>
                 <ButtonsContainer max>
                     <Button text='application.cancel' danger click={() => hideModal()}/>

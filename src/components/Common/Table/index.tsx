@@ -131,7 +131,7 @@ class Table extends React.Component<Props> {
     const desktop = window.matchMedia('(min-width: 920px)').matches;
     let content: any = null;
     if (!this.props.data || this.props.data.items.length === 0) {
-      return <Alert type="notice" text={__('application.lackOfDataToShow')} />;
+      return <Alert type="notice" text='application.lackOfDataToShow' />;
     }
 
     if (desktop) {
