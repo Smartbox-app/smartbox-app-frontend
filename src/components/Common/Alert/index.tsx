@@ -12,7 +12,7 @@ const marker = (type: string) => {
   if (type === 'success') {
     // eslint-disable-next-line no-unused-expressions
     return <i className="fa fa-check-circle notification-marker" aria-hidden="true" />;
-  } else if (type === 'errorNotification' || type === 'error') {
+  } else if (type === 'error-notification' || type === 'error') {
     // eslint-disable-next-line no-unused-expressions
     return <i className="fa fa-times-circle notification-marker" aria-hidden="true" />;
   } else if (type === 'primary') {

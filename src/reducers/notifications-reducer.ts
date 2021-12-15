@@ -27,7 +27,7 @@ const initialState: NotificationState = [];
 const getError = (error: ApiErrorCode) => translateApiErrorCode(error, 'pl');
 
 const getErrorNotification = (text: string) => ({
-  type: 'error',
+  type: 'error-notification',
   text,
   id: uuidv4(),
 });

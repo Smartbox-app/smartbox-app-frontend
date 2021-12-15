@@ -231,7 +231,6 @@
       "firstRentFreePracing": "Rabat pierwszego wynajmu",
       "withDicoutnPricing": "Cena uwzględnia zniżkę ogólną placu",
       "cardPricing": "Zniżka za wykorzystanie jednorazowego kodu rabatowego",
-      "standardPrice": "Standardowa cena",
       "generateGiftCode": "Generowanie kodów zniżkowych",
       "giftCodeGenerated": "Wygenerowano kod",
       "giftCod": "Kod",
@@ -276,6 +275,7 @@
 
       "userData": "Dane użytkownika:",
       "contactData": "Dane kontaktowe:",
+      "contactCompanyData": "Dane kontaktowe firmy:",
       "welcomeToContact": "Zapraszamy do kontaktu:",
 
       "newOrder": "Nowe zamówienie",
