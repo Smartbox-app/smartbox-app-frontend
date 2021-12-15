@@ -20,7 +20,7 @@ const Navigation = ({ logout, menuItems }: Props) => {
   const basicItems: MenuItemType[] = [
     {
       icon: 'logout.svg',
-      text: `${__('application.logout')}`,
+      text: 'application.logout',
       onClick: logout,
       customClass: 'logout-button',
     },

@@ -14,12 +14,12 @@ const DashboardWorker = () => {
   const menuItems: MenuItemType[] = [
     {
       icon: 'settings.svg',
-      text: __('application.management'),
+      text: 'application.management',
       address: '/worker/management',
     },
     {
       icon: 'account.svg',
-      text: __('application.account'),
+      text: 'application.account',
       address: '/worker/profile',
     },
   ];

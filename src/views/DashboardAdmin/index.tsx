@@ -17,12 +17,12 @@ const DashboardAdmin = () => {
   const menuItems: MenuItemType[] = [
     {
       icon: 'settings.svg',
-      text: __('application.management'),
+      text: 'application.management',
       address: '/admin/management',
     },
     {
       icon: 'account.svg',
-      text: __('application.account'),
+      text: 'application.account',
       address: '/admin/profile',
     },
   ];

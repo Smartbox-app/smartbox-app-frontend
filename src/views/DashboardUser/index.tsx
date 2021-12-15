@@ -15,17 +15,17 @@ const DashboardUser = () => {
   const menuItems: MenuItemType[] = [
     {
       icon: 'dashboard.svg',
-      text: __('application.home'),
+      text: 'application.home',
       address: '/user/main',
     },
     {
       icon: 'account.svg',
-      text: __('application.account'),
+      text: 'application.account',
       address: '/user/profile',
     },
     {
       icon: 'email.svg',
-      text: __('application.contact'),
+      text: 'application.contact',
       address: '/user/contact',
     },
   ];
