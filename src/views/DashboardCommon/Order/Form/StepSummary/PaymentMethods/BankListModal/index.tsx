@@ -7,7 +7,6 @@ import { SectionHeader } from '../../../../../../../components/Layout';
 import { ApplicationState } from '../../../../../../../reducers';
 
 import './BankListModal.scss';
-import {__} from "../../../../../../../helpers/i18n";
 
 interface Props {
   loading: boolean;

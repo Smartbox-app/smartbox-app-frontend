@@ -1,4 +1,3 @@
-import { __ } from '../helpers/i18n';
 import ApiService from '../services/api-service';
 import { apiTable } from './index';
 import { successNotification } from './notifications';

@@ -18,7 +18,6 @@ import UserService from '../../../../../services/user-service';
 import AgreementWrapper from './AgreementWrapper';
 import ScrollPosition from './ScrollPosition';
 import { ApplicationState } from '../../../../../reducers';
-import { __ } from '../../../../../helpers/i18n';
 
 import './StepAgreement.scss';
 

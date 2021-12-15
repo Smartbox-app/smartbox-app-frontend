@@ -6,7 +6,6 @@ import { Tabs } from '../../../components/Common';
 import { Section } from '../../../components/Layout';
 import { ApplicationState } from '../../../reducers';
 import UserService from '../../../services/user-service';
-import { __ } from '../../../helpers/i18n';
 
 import { BoxMapManagement } from '../../DashboardCommon';
 import Gate from '../../DashboardCommon/SingleRentDetail/Gate';

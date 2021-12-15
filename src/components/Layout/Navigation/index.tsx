@@ -4,7 +4,6 @@ import { bindActionCreators } from 'redux';
 import { auth } from '../../../actions';
 
 import { MenuItemType } from '../../../types/menu-item';
-import { __ } from '../../../helpers/i18n';
 
 import MenuItem from './MenuItem';
 import LogoContainer from '../LogoContainer';

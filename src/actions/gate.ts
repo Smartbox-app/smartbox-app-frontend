@@ -1,7 +1,6 @@
 import { Coordinate } from 'smartbox-types';
 import ApiService from '../services/api-service';
 import { successNotification } from './notifications';
-import {__} from "../helpers/i18n";
 
 export const gateOpenStartAnimation = (open:boolean = true) => ({ type: 'GATE_OPEN_START_ANIMATION', payload: open });
 

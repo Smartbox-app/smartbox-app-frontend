@@ -2,7 +2,6 @@ import React from 'react';
 import { MyRentList } from 'smartbox-types';
 import { Section, SectionHeader } from '../../../../components/Layout';
 import StorageList from './StorageList';
-import { __ } from '../../../../helpers/i18n';
 import { Spinner } from '../../../../components/Common';
 
 interface Props {

@@ -7,7 +7,6 @@ import { ApplicationState } from '../../../reducers';
 import SingleDepartment from './SingleDepartment';
 
 import './Contact.scss';
-import {__} from "../../../helpers/i18n";
 
 interface Props {
   user: UserRes;

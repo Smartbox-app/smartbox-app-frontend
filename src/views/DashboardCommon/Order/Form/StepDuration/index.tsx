@@ -13,7 +13,6 @@ import { history } from '../../../../../App';
 import { FormType } from '../../../../../types/order-form';
 import { ApplicationState } from '../../../../../reducers';
 import UserService from '../../../../../services/user-service';
-import { __ } from '../../../../../helpers/i18n';
 import { firstRentChecker } from '../../../../../utils/isFirstRent';
 
 import Price from './Price';

@@ -13,7 +13,6 @@ import FormHeader from '../../../../../components/Layout/FormHeader';
 import ApiService from '../../../../../services/api-service';
 import { formOnTranslateString } from '../../../../../utils/trans-form';
 import { apiTable, modal, notifications } from '../../../../../actions';
-import { __ } from '../../../../../helpers/i18n';
 
 interface Props {
   discountId: string;

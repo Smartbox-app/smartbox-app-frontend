@@ -5,7 +5,6 @@ import { MyRentList, RentStatus } from 'smartbox-types';
 import { modal, notifications, order, singleRent } from '../../../../../actions';
 import { history } from '../../../../../App';
 import { ConfirmModal } from '../../../../../components/Common';
-import { __ } from '../../../../../helpers/i18n';
 import { ApplicationState } from '../../../../../reducers';
 
 interface Props {

@@ -11,7 +11,6 @@ import { Alert, Button, Spinner } from '../../../../../../components/Common';
 import { ApplicationState } from '../../../../../../reducers';
 import ApiService from '../../../../../../services/api-service';
 import { formOnTranslateString } from '../../../../../../utils/trans-form';
-import { __ } from '../../../../../../helpers/i18n';
 
 import './Status.scss';
 

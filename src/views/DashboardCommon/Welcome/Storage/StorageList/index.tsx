@@ -6,7 +6,6 @@ import SingleStorage from './SingleStorage';
 import ButtonForNew from './ButtonForNew';
 
 import './StorageList.scss';
-import { __ } from '../../../../../helpers/i18n';
 
 interface Props {
   list: MyRentList[];

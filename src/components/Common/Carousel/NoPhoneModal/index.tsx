@@ -9,7 +9,6 @@ import UserService from '../../../../services/user-service';
 import { ButtonsContainer, SectionHeader } from '../../../Layout';
 import Alert from '../../Alert';
 import Button from '../../Button';
-import {__} from "../../../../helpers/i18n";
 
 interface Props {
   user: UserRes;

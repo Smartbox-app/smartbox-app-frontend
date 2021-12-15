@@ -8,7 +8,6 @@ import { BoxListItem, RentStatus, StockList, UserRes } from 'smartbox-types';
 import { boxes, modal, stock } from '../../../actions';
 import { Spinner } from '../../../components/Common';
 import { PageHeader } from '../../../components/Layout';
-import { __ } from '../../../helpers/i18n';
 import { ApplicationState } from '../../../reducers';
 import { isAdmin, isWorker } from '../../../utils/role-check';
 

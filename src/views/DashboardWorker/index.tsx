@@ -7,7 +7,6 @@ import { MenuItemType } from '../../types/menu-item';
 import Navigation from '../../components/Layout/Navigation';
 import { Invoice } from '../DashboardCommon';
 import Profile from '../DashboardCommon/Profile';
-import { __ } from '../../helpers/i18n';
 import ManagementWorker from './ManagementWorker';
 
 const DashboardWorker = () => {

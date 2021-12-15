@@ -9,7 +9,6 @@ import { modal, notifications, order } from '../../../../../../../actions';
 import FormHeader from '../../../../../../../components/Layout/FormHeader';
 import ApiService from '../../../../../../../services/api-service';
 import { formOnTranslateString } from '../../../../../../../utils/trans-form';
-import { __ } from '../../../../../../../helpers/i18n';
 
 interface Props {
   hideModal: () => void;

@@ -7,7 +7,6 @@ import { clearOrder } from '../../../../actions/order';
 import { history } from '../../../../App';
 import { Button, ConfirmModal } from '../../../../components/Common';
 import { ButtonsContainer } from '../../../../components/Layout';
-import { __ } from '../../../../helpers/i18n';
 import { ApplicationState } from '../../../../reducers';
 import UserService from '../../../../services/user-service';
 import EndingModal from './EndingModal';

@@ -1,6 +1,5 @@
 import { UserStatus } from 'smartbox-types';
 import ApiService from '../services/api-service';
-import { __ } from '../helpers/i18n';
 import { refreshApiTableData } from './api-table';
 import { successNotification } from './notifications';
 

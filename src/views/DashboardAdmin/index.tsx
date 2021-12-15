@@ -6,7 +6,6 @@ import MobileLogoContainer from '../../components/Layout/MobileLogoContainer';
 import { Invoice } from '../DashboardCommon';
 
 import { MenuItemType } from '../../types/menu-item';
-import { __ } from '../../helpers/i18n';
 
 import Management from './Management';
 import Profile from '../DashboardCommon/Profile';

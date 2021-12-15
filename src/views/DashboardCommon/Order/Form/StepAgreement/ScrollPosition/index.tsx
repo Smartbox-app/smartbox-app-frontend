@@ -4,7 +4,6 @@ import { bindActionCreators } from 'redux';
 import { ApplicationState } from '../../../../../../reducers';
 import { order } from '../../../../../../actions';
 import { CheckBox } from '../../../../../../components/Common';
-import { __ } from '../../../../../../helpers/i18n';
 
 interface Props {
   isResignationMarked: boolean;

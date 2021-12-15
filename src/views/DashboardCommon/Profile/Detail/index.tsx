@@ -8,7 +8,6 @@ import { modal } from '../../../../actions';
 import { ApplicationState } from '../../../../reducers';
 
 import UpdatePass from './UpdatePass';
-import { __ } from '../../../../helpers/i18n';
 import UserData from '../../../../components/Common/UserData';
 
 interface Props {

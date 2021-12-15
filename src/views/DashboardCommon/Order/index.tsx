@@ -5,7 +5,6 @@ import { FormContainer, Section, SectionHeader } from '../../../components/Layou
 import { ProgressIndicator } from '../../../components/Common';
 
 import Form from './Form/Index';
-import { __ } from '../../../helpers/i18n';
 import { useDispatch } from 'react-redux';
 import { order } from '../../../actions';
 

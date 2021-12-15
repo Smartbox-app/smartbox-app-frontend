@@ -15,7 +15,6 @@ import { FormContainer, PageContent } from '../../../components/Layout';
 import { ApplicationState } from '../../../reducers';
 
 import ButtonsSection from './ButtonSection';
-import { __ } from '../../../helpers/i18n';
 
 import './Login.scss';
 

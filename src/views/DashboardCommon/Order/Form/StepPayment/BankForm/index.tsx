@@ -5,7 +5,6 @@ import { bindActionCreators } from 'redux';
 import { UserRes } from 'smartbox-types';
 import { history } from '../../../../../../App';
 import { ButtonsContainer, PageHeader } from '../../../../../../components/Layout';
-import { __ } from '../../../../../../helpers/i18n';
 import { ApplicationState } from '../../../../../../reducers';
 import { PaymentMethodDetail } from '../../../../../../reducers/order-reducer';
 import { modal, order } from '../../../../../../actions';

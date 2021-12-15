@@ -3,7 +3,6 @@ import CustomInput from '../../../../../../components/Common/CustomInput';
 import FormHeader from '../../../../../../components/Layout/FormHeader';
 import { formOnTranslateString } from '../../../../../../utils/trans-form';
 import { validateNip } from '../../../../../../utils/validate-nip';
-import {__} from "../../../../../../helpers/i18n";
 
 interface Props {
   register: any;

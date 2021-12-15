@@ -15,7 +15,6 @@ import ScrollPosition from '../Order/Form/StepAgreement/ScrollPosition';
 import SummaryTable from '../Order/Form/StepSummary/SummaryTable';
 import UserService from '../../../services/user-service';
 import { history } from '../../../App';
-import { __ } from '../../../helpers/i18n';
 
 interface RouteProps {
   rentId: string;

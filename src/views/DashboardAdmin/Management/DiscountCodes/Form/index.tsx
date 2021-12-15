@@ -10,7 +10,6 @@ import { Button, Spinner } from '../../../../../components/Common';
 import ApiService from '../../../../../services/api-service';
 import { formOnTranslateString } from '../../../../../utils/trans-form';
 import { modal, notifications } from '../../../../../actions';
-import { __ } from '../../../../../helpers/i18n';
 
 import NewCode from '../NewCode';
 

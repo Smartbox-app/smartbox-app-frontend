@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { UserRes, UserRole } from 'smartbox-types';
 import { SimpleHeader, Section, SectionHeader } from '../../../components/Layout';
 import { ApplicationState } from '../../../reducers';
-import { __ } from '../../../helpers/i18n';
 import { Row } from '../../../components/Common';
 
 // import './UserData.scss';

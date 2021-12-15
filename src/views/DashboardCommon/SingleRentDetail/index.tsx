@@ -8,7 +8,6 @@ import UserStockMap from '../../../components/Common/UserStockMap';
 import { Section, SectionHeader } from '../../../components/Layout';
 
 import { singleRent } from '../../../actions';
-import { __ } from '../../../helpers/i18n';
 import { ApplicationState } from '../../../reducers';
 
 import Action from './Action';

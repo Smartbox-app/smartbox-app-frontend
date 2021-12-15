@@ -13,8 +13,6 @@ import { ApplicationState } from '../../../../../reducers';
 
 import FormHeader from '../../../../../components/Layout/FormHeader';
 import UserService from '../../../../../services/user-service';
-import { __ } from '../../../../../helpers/i18n';
-
 import './StepSize.scss';
 
 interface RouteProps {

@@ -7,7 +7,6 @@ import UserService from '../../../../../../services/user-service';
 import { ApplicationState } from '../../../../../../reducers';
 
 import './ButtonForNew.scss';
-import { __ } from '../../../../../../helpers/i18n';
 
 interface Props {
   user: UserRes;

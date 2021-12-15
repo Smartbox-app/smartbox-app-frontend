@@ -10,7 +10,6 @@ import { FormContainer, ButtonsContainer, FormHeader, FieldsColumn } from '../..
 import { Button, Spinner } from '../../../../../components/Common';
 import ApiService from '../../../../../services/api-service';
 import { formOnTranslateString } from '../../../../../utils/trans-form';
-import { __ } from '../../../../../helpers/i18n';
 
 interface Props {
   successNotification: (text: string) => void;

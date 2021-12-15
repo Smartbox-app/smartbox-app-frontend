@@ -3,7 +3,6 @@ import { MyRentList } from 'smartbox-types';
 import { Pagination } from '../../../../components/Common';
 import { Section, SectionHeader } from '../../../../components/Layout';
 import History from './History';
-import { __ } from '../../../../helpers/i18n';
 
 interface Props {
   rentsHistoryList: MyRentList[];

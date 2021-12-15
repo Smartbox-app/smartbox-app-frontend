@@ -4,7 +4,6 @@ import { notifications, order } from '../actions';
 import { history } from '../App';
 import { hideModal } from './modal';
 import { getRememberedRedirect, clearRememberedRedirect } from '../utils/remeber-redirect';
-import { __ } from '../helpers/i18n';
 
 export const saveUser = (userData: AuthLoginResult) => ({ type: 'LOGIN_SUCCESS', payload: userData });
 

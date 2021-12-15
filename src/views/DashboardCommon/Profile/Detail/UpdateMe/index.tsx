@@ -12,7 +12,6 @@ import { ApplicationState } from '../../../../../reducers';
 import ApiService from '../../../../../services/api-service';
 import UserService from '../../../../../services/user-service';
 import { formOnTranslateString } from '../../../../../utils/trans-form';
-import { __ } from '../../../../../helpers/i18n';
 import { modal, notifications, user } from '../../../../../actions';
 
 interface Props {

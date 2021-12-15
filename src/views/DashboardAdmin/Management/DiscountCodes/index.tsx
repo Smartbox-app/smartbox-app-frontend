@@ -1,6 +1,5 @@
 import React from 'react';
 import { FormHeader } from '../../../../components/Layout';
-import { __ } from '../../../../helpers/i18n';
 
 import Form from './Form';
 

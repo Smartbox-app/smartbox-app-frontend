@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { RentStatus, UserRes } from 'smartbox-types';
-import { __ } from '../../../../../helpers/i18n';
 import { ApplicationState } from '../../../../../reducers';
 import { isAdmin, isWorker } from '../../../../../utils/role-check';
 

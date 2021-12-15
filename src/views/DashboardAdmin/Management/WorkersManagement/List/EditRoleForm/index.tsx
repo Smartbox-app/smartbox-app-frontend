@@ -7,7 +7,6 @@ import { bindActionCreators } from 'redux';
 import { apiTable, modal, notifications } from '../../../../../../actions';
 import { Button, Spinner } from '../../../../../../components/Common';
 import { ButtonsContainer, FormContainer, PageHeader } from '../../../../../../components/Layout';
-import { __ } from '../../../../../../helpers/i18n';
 import ApiService from '../../../../../../services/api-service';
 import { formOnTranslateString } from '../../../../../../utils/trans-form';
 

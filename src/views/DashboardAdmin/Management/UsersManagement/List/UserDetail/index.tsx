@@ -4,7 +4,6 @@ import { bindActionCreators } from 'redux';
 import { UserListRes, UserRes } from 'smartbox-types';
 import { user } from '../../../../../../actions';
 import { SimpleHeader } from '../../../../../../components/Layout';
-import { __ } from '../../../../../../helpers/i18n';
 
 import './UserDetail.scss';
 import { ApplicationState } from '../../../../../../reducers';

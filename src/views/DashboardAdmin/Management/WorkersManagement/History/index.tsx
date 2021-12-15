@@ -5,7 +5,6 @@ import { StockList, UserRes } from 'smartbox-types';
 import { ApiTable, Button, Spinner } from '../../../../../components/Common';
 import { ApplicationState } from '../../../../../reducers';
 import { InteractiveTableSchema } from '../../../../../utils/table-schema-utils';
-import { __ } from '../../../../../helpers/i18n';
 import { ButtonsContainer, PageHeader, Section, SectionHeader } from '../../../../../components/Layout';
 
 interface Props {

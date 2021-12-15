@@ -1,7 +1,6 @@
 import React from 'react';
 import { Section, SectionHeader } from '../../../../components/Layout';
 import { Carousel } from '../../../../components/Common';
-import { __ } from '../../../../helpers/i18n';
 
 const index = () => (
   <Section half highlight>

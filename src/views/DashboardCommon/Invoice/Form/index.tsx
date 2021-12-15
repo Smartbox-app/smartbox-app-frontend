@@ -7,7 +7,6 @@ import { Spinner, Button } from '../../../../components/Common';
 import ApiService from '../../../../services/api-service';
 import { formOnTranslateString } from '../../../../utils/trans-form';
 import { notifications, modal } from '../../../../actions';
-import { __ } from '../../../../helpers/i18n';
 
 interface Props {
   paymentId: string;
