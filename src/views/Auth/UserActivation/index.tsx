@@ -54,7 +54,7 @@ const UserActivation = ({ successNotification, match, logout, userRole }: Props)
       </div>
       <FormContainer className="login-form">
         <PageHeader title='application.welcomeOnPlatform' />
-        <p>{__('application.fillFormToCreatAccount')}</p>
+        <p>{__('application.fillFormToCreateAccount')}</p>
         <ItfApiForm
           formId="UserActivationForm"
           schemaMayBeDynamic={false}
