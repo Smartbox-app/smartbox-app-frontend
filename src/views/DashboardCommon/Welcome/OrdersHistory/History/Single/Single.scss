@@ -1,5 +1,7 @@
+@import "../../../../../../config/variables";
+
 .line-cell {
   flex: 1;
   line-height: 1;
-  padding-right: 16px;
+  padding-right: $table-item-spacing;
 }
