@@ -17,7 +17,7 @@ const Details = ({ singleRent }: Props) => (
     <Row label={__('application.storePlaceName')} content={singleRent.stockName || `${__('application.lack')}`} />
     <Row
       label={__('application.storeSize')}
-      content={<div className="size">{singleRent.size}m</div> || `${__('application.lack')}`}
+      content={<div className="size">{singleRent.size} m</div> || `${__('application.lack')}`}
     />
     <Row label={__('application.storeNumber')} content={singleRent.number || `${__('application.lack')}`} />
     <Row label={__('application.storeState')} content={singleRent.status || `${__('application.lack')}`} />

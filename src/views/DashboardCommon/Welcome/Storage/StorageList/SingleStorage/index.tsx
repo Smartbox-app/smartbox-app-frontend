@@ -35,7 +35,7 @@ const SingleStorage = ({ single, user }: Props) => {
         </p>
         <p className="details">
           <span className="date">{dateOnly(single.finishAt)}</span>
-          <span className="size">{single.size}m</span>
+          <span className="size">{single.size} m</span>
         </p>
       </div>
     </div>
