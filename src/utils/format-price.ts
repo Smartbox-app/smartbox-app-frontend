@@ -6,5 +6,5 @@ export function formatThousands(n: number, isHtml = false, toFixed = 2): string 
 }
 
 export function formatPrice(n: number, isHtml = false): string {
-  return `${formatThousands(n, isHtml)}zł`;
+  return `${formatThousands(n, isHtml)} zł`;
 }
