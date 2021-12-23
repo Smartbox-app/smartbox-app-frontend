@@ -37,7 +37,7 @@ const Single = ({ single }: Props) => (
       {dateOnly(single.startAt, 5)}-{dateOnly(single.finishAt)}
     </span>
     <span className="line-cell">{single.number}</span>
-    <span className="line-cell small">{single.size}m2</span>
+    <span className="line-cell small">{single.size} m²</span>
     <span className="line-cell">{single.stockName}</span>
   </li>
 );

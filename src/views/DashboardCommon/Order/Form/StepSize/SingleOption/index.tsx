@@ -44,7 +44,7 @@ const SingleOption = ({ register, singleOptionData, disable, loading }: Props) =
             </div>
           )}
           <p className="img-description">
-            {singleOptionData.sizeX}m x {singleOptionData.sizeY}m x {singleOptionData.sizeZ}m
+            {singleOptionData.sizeX} m x {singleOptionData.sizeY} m x {singleOptionData.sizeZ} m
           </p>
         </div>
       </label>
