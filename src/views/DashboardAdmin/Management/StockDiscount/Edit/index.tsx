@@ -13,6 +13,7 @@ import FormHeader from '../../../../../components/Layout/FormHeader';
 import ApiService from '../../../../../services/api-service';
 import { formOnTranslateString } from '../../../../../utils/trans-form';
 import { apiTable, modal, notifications } from '../../../../../actions';
+import { ReactSelectOverride } from '../../../../../components/Common/ReactSelectOverride';
 
 interface Props {
   discountId: string;
@@ -24,7 +25,7 @@ interface Props {
 const Edit = ({ discountId, successNotification, hideModal, refreshApiTableData }: Props) => {
   const submitButton = (
     <ButtonsContainer>
-      <Button text='application.save' type="submit" primary />
+      <Button text="application.save" type="submit" primary />
     </ButtonsContainer>
   );
 
@@ -44,7 +45,7 @@ const Edit = ({ discountId, successNotification, hideModal, refreshApiTableData 
   };
   return (
     <FormContainer>
-      <FormHeader title='application.editStockDiscount' />
+      <FormHeader title="application.editStockDiscount" />
       <FieldsColumn>
         <ItfApiForm
           formId="editStockDiscountForm"
@@ -60,7 +61,7 @@ const Edit = ({ discountId, successNotification, hideModal, refreshApiTableData 
             hideModal();
           }}
           onTranslateString={formOnTranslateString}
-          thirdPartyComponents={{ ReactSelect, ReactCreatableSelect, flatpickr }}
+          thirdPartyComponents={{ ReactSelect: ReactSelectOverride, ReactCreatableSelect, flatpickr }}
         />
       </FieldsColumn>
     </FormContainer>

@@ -6,6 +6,7 @@ import ReactCreatableSelect from 'react-select/creatable';
 import { bindActionCreators } from 'redux';
 import { modal, notifications } from '../../../../../../actions';
 import { Button, Spinner } from '../../../../../../components/Common';
+import { ReactSelectOverride } from '../../../../../../components/Common/ReactSelectOverride';
 import { ButtonsContainer, FormContainer, PageHeader } from '../../../../../../components/Layout';
 import ApiService from '../../../../../../services/api-service';
 import { formOnTranslateString } from '../../../../../../utils/trans-form';
@@ -19,7 +20,7 @@ interface Props {
 const EditAssign = ({ userId, successNotification, hideModal }: Props) => {
   const submitButton = (
     <ButtonsContainer>
-      <Button text='application.save' type="submit" primary />
+      <Button text="application.save" type="submit" primary />
     </ButtonsContainer>
   );
 
@@ -28,7 +29,7 @@ const EditAssign = ({ userId, successNotification, hideModal }: Props) => {
 
   return (
     <>
-      <PageHeader title='application.workerAssignChange' />
+      <PageHeader title="application.workerAssignChange" />
 
       <FormContainer>
         <ItfApiForm
@@ -44,7 +45,7 @@ const EditAssign = ({ userId, successNotification, hideModal }: Props) => {
             hideModal();
           }}
           onTranslateString={formOnTranslateString}
-          thirdPartyComponents={{ ReactSelect, ReactCreatableSelect }}
+          thirdPartyComponents={{ ReactSelect: ReactSelectOverride, ReactCreatableSelect }}
         />
       </FormContainer>
     </>

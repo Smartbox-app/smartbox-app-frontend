@@ -13,6 +13,7 @@ import FormHeader from '../../../../../components/Layout/FormHeader';
 import ApiService from '../../../../../services/api-service';
 import { formOnTranslateString } from '../../../../../utils/trans-form';
 import { apiTable, modal, notifications } from '../../../../../actions';
+import { ReactSelectOverride } from '../../../../../components/Common/ReactSelectOverride';
 
 interface Props {
   fetchApiTableData: (url: string) => void;
@@ -23,7 +24,7 @@ interface Props {
 const FormStockDiscount = ({ fetchApiTableData, hideModal, successNotification }: Props) => {
   const submitButton = (
     <ButtonsContainer>
-      <Button text='application.create' type="submit" primary />
+      <Button text="application.create" type="submit" primary />
     </ButtonsContainer>
   );
 
@@ -42,7 +43,7 @@ const FormStockDiscount = ({ fetchApiTableData, hideModal, successNotification }
 
   return (
     <FormContainer>
-      <FormHeader title='application.creatStockDiscount' />
+      <FormHeader title="application.creatStockDiscount" />
       <FieldsColumn>
         <ItfApiForm
           formId="addStockDiscountForm"
@@ -58,7 +59,7 @@ const FormStockDiscount = ({ fetchApiTableData, hideModal, successNotification }
             successNotification('notification.stockDiscountCreated');
           }}
           onTranslateString={formOnTranslateString}
-          thirdPartyComponents={{ ReactSelect, ReactCreatableSelect, flatpickr }}
+          thirdPartyComponents={{ ReactSelect: ReactSelectOverride, ReactCreatableSelect, flatpickr }}
         />
       </FieldsColumn>
     </FormContainer>

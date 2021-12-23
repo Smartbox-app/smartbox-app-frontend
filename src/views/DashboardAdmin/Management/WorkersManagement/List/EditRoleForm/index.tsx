@@ -6,6 +6,7 @@ import ReactCreatableSelect from 'react-select/creatable';
 import { bindActionCreators } from 'redux';
 import { apiTable, modal, notifications } from '../../../../../../actions';
 import { Button, Spinner } from '../../../../../../components/Common';
+import { ReactSelectOverride } from '../../../../../../components/Common/ReactSelectOverride';
 import { ButtonsContainer, FormContainer, PageHeader } from '../../../../../../components/Layout';
 import ApiService from '../../../../../../services/api-service';
 import { formOnTranslateString } from '../../../../../../utils/trans-form';
@@ -20,7 +21,7 @@ interface Props {
 const EditRoleForm = ({ userId, successNotification, hideModal, refreshApiTableData }: Props) => {
   const submitButton = (
     <ButtonsContainer>
-      <Button text='application.save' type="submit" primary />
+      <Button text="application.save" type="submit" primary />
     </ButtonsContainer>
   );
 
@@ -29,7 +30,7 @@ const EditRoleForm = ({ userId, successNotification, hideModal, refreshApiTableD
 
   return (
     <>
-      <PageHeader title='application.workerRoleChange' />
+      <PageHeader title="application.workerRoleChange" />
       <FormContainer>
         <ItfApiForm
           formId="addOrderForm"
@@ -45,7 +46,7 @@ const EditRoleForm = ({ userId, successNotification, hideModal, refreshApiTableD
             hideModal();
           }}
           onTranslateString={formOnTranslateString}
-          thirdPartyComponents={{ ReactSelect, ReactCreatableSelect }}
+          thirdPartyComponents={{ ReactSelect: ReactSelectOverride, ReactCreatableSelect }}
         />
       </FormContainer>
     </>

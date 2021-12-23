@@ -12,6 +12,7 @@ import { formOnTranslateString } from '../../../../../utils/trans-form';
 import { modal, notifications } from '../../../../../actions';
 
 import NewCode from '../NewCode';
+import { ReactSelectOverride } from '../../../../../components/Common/ReactSelectOverride';
 
 interface Props {
   showModal: (content: React.ReactNode) => void;
@@ -21,7 +22,7 @@ interface Props {
 const Form = ({ showModal, successNotification }: Props) => {
   const submitButton = (
     <ButtonsContainer>
-      <Button text='application.create' type="submit" primary />
+      <Button text="application.create" type="submit" primary />
     </ButtonsContainer>
   );
 
@@ -53,7 +54,7 @@ const Form = ({ showModal, successNotification }: Props) => {
             showModal(<NewCode newCodeProps={data} />);
           }}
           onTranslateString={formOnTranslateString}
-          thirdPartyComponents={{ ReactSelect, ReactCreatableSelect }}
+          thirdPartyComponents={{ ReactSelect: ReactSelectOverride, ReactCreatableSelect }}
         />
       </FormContainer>
     </FieldsColumn>

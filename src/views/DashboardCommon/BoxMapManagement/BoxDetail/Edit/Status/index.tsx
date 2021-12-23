@@ -13,6 +13,7 @@ import ApiService from '../../../../../../services/api-service';
 import { formOnTranslateString } from '../../../../../../utils/trans-form';
 
 import './Status.scss';
+import { ReactSelectOverride } from '../../../../../../components/Common/ReactSelectOverride';
 
 interface Props {
   selectedBoxId: string;
@@ -26,7 +27,7 @@ interface Props {
 const Status = ({ selectedBoxId, hideModal, stock, successNotification, fetchBoxStatuses, showModal }: Props) => {
   const submitButton = (
     <ButtonsContainer>
-      <Button text='application.changeStatus' type="submit" danger />
+      <Button text="application.changeStatus" type="submit" danger />
     </ButtonsContainer>
   );
 
@@ -37,20 +38,20 @@ const Status = ({ selectedBoxId, hideModal, stock, successNotification, fetchBox
     showModal(
       <>
         {values.status === null || values.status.length === 0 ? (
-          <Alert type="error" text='application.notChooseStatus' />
+          <Alert type="error" text="application.notChooseStatus" />
         ) : (
           <div className="modal-alert-wrapper">
-            <Alert type="warning" text='application.userWillNotGetMailWithInformation' />
-            <Alert type="primary" text='application.actionCanNotBeUnDone' />
+            <Alert type="warning" text="application.userWillNotGetMailWithInformation" />
+            <Alert type="primary" text="application.actionCanNotBeUnDone" />
           </div>
         )}
 
         <ButtonsContainer>
-          <Button text='application.cancel' danger click={() => hideModal()} />
+          <Button text="application.cancel" danger click={() => hideModal()} />
           <Button
             success
             type="submit"
-            text='application.understood'
+            text="application.understood"
             disabled={values.status === null || values.status.length === 0}
             click={async () => {
               await hideModal();
@@ -82,7 +83,7 @@ const Status = ({ selectedBoxId, hideModal, stock, successNotification, fetchBox
         submitButton={submitButton}
         loadingInfo={<Spinner transparent />}
         onTranslateString={formOnTranslateString}
-        thirdPartyComponents={{ ReactSelect, ReactCreatableSelect }}
+        thirdPartyComponents={{ ReactSelect: ReactSelectOverride, ReactCreatableSelect }}
       />
     </FormContainer>
   );

@@ -13,6 +13,7 @@ import ApiService from '../../../../../services/api-service';
 import UserService from '../../../../../services/user-service';
 import { formOnTranslateString } from '../../../../../utils/trans-form';
 import { modal, notifications, user } from '../../../../../actions';
+import { ReactSelectOverride } from '../../../../../components/Common/ReactSelectOverride';
 
 interface Props {
   user: UserRes;
@@ -24,12 +25,12 @@ const UpdateMe = ({ successNotification, user, fetchMyData }: Props) => {
   const submitButton = (
     <ButtonsContainer max>
       <Button
-        text='application.back'
+        text="application.back"
         type="button"
         primary
         to={`/${UserService.getSlugByRole(user.role)}/profile/detail`}
       />
-      <Button text='application.change' type="submit" success />
+      <Button text="application.change" type="submit" success />
     </ButtonsContainer>
   );
 
@@ -47,7 +48,7 @@ const UpdateMe = ({ successNotification, user, fetchMyData }: Props) => {
 
   return (
     <FormContainer>
-      <FormHeader title='application.editYourData' />
+      <FormHeader title="application.editYourData" />
       <FieldsColumn>
         <ItfApiForm
           formId="EditUserProfileData"
@@ -63,7 +64,7 @@ const UpdateMe = ({ successNotification, user, fetchMyData }: Props) => {
             history.push(`/${UserService.getSlugByRole(user.role)}/profile/detail`);
           }}
           onTranslateString={formOnTranslateString}
-          thirdPartyComponents={{ ReactSelect, ReactCreatableSelect }}
+          thirdPartyComponents={{ ReactSelect: ReactSelectOverride, ReactCreatableSelect }}
         />
       </FieldsColumn>
     </FormContainer>

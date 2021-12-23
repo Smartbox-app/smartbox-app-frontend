@@ -12,6 +12,7 @@ import FormHeader from '../../../../components/Layout/FormHeader';
 import ApiService from '../../../../services/api-service';
 import { formOnTranslateString } from '../../../../utils/trans-form';
 import { notifications } from '../../../../actions';
+import { ReactSelectOverride } from '../../../../components/Common/ReactSelectOverride';
 
 interface Props {
   successNotification: (text: string) => void;
@@ -20,7 +21,7 @@ interface Props {
 const SMS = ({ successNotification }: Props) => {
   const submitButton = (
     <ButtonsContainer>
-      <Button text='application.send' type="submit" primary />
+      <Button text="application.send" type="submit" primary />
     </ButtonsContainer>
   );
 
@@ -31,7 +32,7 @@ const SMS = ({ successNotification }: Props) => {
 
   return (
     <Section full>
-      <PageHeader title='application.sendSms' />
+      <PageHeader title="application.sendSms" />
       <FormContainer>
         <FieldsColumn>
           <ItfApiForm
@@ -46,7 +47,7 @@ const SMS = ({ successNotification }: Props) => {
               successNotification('application.smsSent');
             }}
             onTranslateString={formOnTranslateString}
-            thirdPartyComponents={{ ReactSelect, ReactCreatableSelect, flatpickr }}
+            thirdPartyComponents={{ ReactSelect: ReactSelectOverride, ReactCreatableSelect, flatpickr }}
           />
         </FieldsColumn>
       </FormContainer>

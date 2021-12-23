@@ -82,7 +82,7 @@
         "__type_alias_do_not_touch": "ApiErrorCode.PayFirst"
       },
       "11": {
-        "text": "Nie można wynonać zmiany przy obecnym statusie!",
+        "text": "Nie można wykonać zmiany przy obecnym statusie!",
         "__type_alias_do_not_touch": "ApiErrorCode.CantChangeThisBoxOnThisStatus"
       },
       "12": {

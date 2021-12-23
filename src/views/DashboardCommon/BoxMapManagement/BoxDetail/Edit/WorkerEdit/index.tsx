@@ -24,6 +24,8 @@ interface Props {
   showModal: (content: React.ReactNode) => void;
 }
 
+const ReactSelectOverride = () => <ReactSelect menuPortalTarget={document.querySelector('body')} />;
+
 const WorkerEdit = ({
   hideModal,
   successNotification,
@@ -36,7 +38,7 @@ const WorkerEdit = ({
 }: Props) => {
   const submitButton = (
     <ButtonsContainer>
-      <Button text='application.changeStatus' type="submit" danger />
+      <Button text="application.changeStatus" type="submit" danger />
     </ButtonsContainer>
   );
 
@@ -46,14 +48,14 @@ const WorkerEdit = ({
   const customSendFetcher = (formId: string, values: ChangeStatusReq) => {
     showModal(
       <>
-        <Alert type="primary" text='application.userWillNotGetMailWithInformation' />
-        <Alert type="primary" text='application.actionCanNotBeUnDone' />
+        <Alert type="primary" text="application.userWillNotGetMailWithInformation" />
+        <Alert type="primary" text="application.actionCanNotBeUnDone" />
         <ButtonsContainer max>
-          <Button text='application.cancel' danger click={() => hideModal()} />
+          <Button text="application.cancel" danger click={() => hideModal()} />
           <Button
             success
             type="submit"
-            text='application.understood'
+            text="application.understood"
             click={async () => {
               await hideModal();
               await ApiService.sendForm(
@@ -98,7 +100,7 @@ const WorkerEdit = ({
         loadingInfo={<Spinner transparent />}
         onErrorsWhileSaving={() => hideModal()}
         onTranslateString={formOnTranslateString}
-        thirdPartyComponents={{ ReactSelect, ReactCreatableSelect }}
+        thirdPartyComponents={{ ReactSelect: ReactSelectOverride, ReactCreatableSelect }}
       />
     </FormContainer>
   );
