@@ -10,7 +10,6 @@ import { FormContainer, ButtonsContainer, FormHeader, FieldsColumn } from '../..
 import { Button, Spinner } from '../../../../../components/Common';
 import ApiService from '../../../../../services/api-service';
 import { formOnTranslateString } from '../../../../../utils/trans-form';
-import { __ } from '../../../../../helpers/i18n';
 
 interface Props {
   successNotification: (text: string) => void;
@@ -20,7 +19,7 @@ interface Props {
 const UpdatePass = ({ successNotification, hideModal }: Props) => {
   const submitButton = (
     <ButtonsContainer>
-      <Button text={__('application.change')} type="submit" primary />
+      <Button text='application.change' type="submit" primary />
     </ButtonsContainer>
   );
 
@@ -38,7 +37,7 @@ const UpdatePass = ({ successNotification, hideModal }: Props) => {
 
   return (
     <FormContainer>
-      <FormHeader title="Zmieniasz swoje hasło do serwisu" />
+      <FormHeader title='application.changePasswordToService' />
       <FieldsColumn>
         <ItfApiForm
           formId="changePass"
@@ -49,7 +48,7 @@ const UpdatePass = ({ successNotification, hideModal }: Props) => {
           sendFetcher={customSendFetcher}
           submitButton={submitButton}
           onSavedSuccessfully={() => {
-            successNotification(__('notification.passChangedSuccess'));
+            successNotification('notification.passChangedSuccess');
             hideModal();
           }}
           onTranslateString={formOnTranslateString}

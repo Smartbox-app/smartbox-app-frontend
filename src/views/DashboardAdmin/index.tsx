@@ -6,7 +6,6 @@ import MobileLogoContainer from '../../components/Layout/MobileLogoContainer';
 import { Invoice } from '../DashboardCommon';
 
 import { MenuItemType } from '../../types/menu-item';
-import { __ } from '../../helpers/i18n';
 
 import Management from './Management';
 import Profile from '../DashboardCommon/Profile';
@@ -17,12 +16,12 @@ const DashboardAdmin = () => {
   const menuItems: MenuItemType[] = [
     {
       icon: 'settings.svg',
-      text: __('application.management'),
+      text: 'application.management',
       address: '/admin/management',
     },
     {
       icon: 'account.svg',
-      text: __('application.account'),
+      text: 'application.account',
       address: '/admin/profile',
     },
   ];

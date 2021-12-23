@@ -36,7 +36,7 @@ const WorkerEdit = ({
 }: Props) => {
   const submitButton = (
     <ButtonsContainer>
-      <Button text={__('application.changeStatus')} type="submit" danger />
+      <Button text='application.changeStatus' type="submit" danger />
     </ButtonsContainer>
   );
 
@@ -46,14 +46,14 @@ const WorkerEdit = ({
   const customSendFetcher = (formId: string, values: ChangeStatusReq) => {
     showModal(
       <>
-        <Alert type="primary" text={__('application.userWillNotGetMailWithInformation')} />
-        <Alert type="primary" text={__('application.actionCanNotBeUnDone')} />
+        <Alert type="primary" text='application.userWillNotGetMailWithInformation' />
+        <Alert type="primary" text='application.actionCanNotBeUnDone' />
         <ButtonsContainer max>
-          <Button text={__('application.cancel')} danger click={() => hideModal()} />
+          <Button text='application.cancel' danger click={() => hideModal()} />
           <Button
             success
             type="submit"
-            text={__('application.understood')}
+            text='application.understood'
             click={async () => {
               await hideModal();
               await ApiService.sendForm(
@@ -63,7 +63,7 @@ const WorkerEdit = ({
                 },
                 'PATCH',
               );
-              await successNotification(__('notification.userStatusChanged'));
+              await successNotification('notification.userStatusChanged');
               await fetchBoxStatuses(stock.id);
             }}
           />
@@ -83,7 +83,7 @@ const WorkerEdit = ({
   };
 
   if (rentId === '' || canWorkerEdit()) {
-    return <p>Nie możesz wykonywać akcji na tym mini magazynie!</p>;
+    return <p>{__('application.youCanNotEditStore')}</p>;
   }
 
   return (

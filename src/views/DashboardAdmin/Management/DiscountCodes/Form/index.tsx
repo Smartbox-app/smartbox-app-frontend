@@ -10,7 +10,6 @@ import { Button, Spinner } from '../../../../../components/Common';
 import ApiService from '../../../../../services/api-service';
 import { formOnTranslateString } from '../../../../../utils/trans-form';
 import { modal, notifications } from '../../../../../actions';
-import { __ } from '../../../../../helpers/i18n';
 
 import NewCode from '../NewCode';
 
@@ -22,7 +21,7 @@ interface Props {
 const Form = ({ showModal, successNotification }: Props) => {
   const submitButton = (
     <ButtonsContainer>
-      <Button text={__('application.create')} type="submit" primary />
+      <Button text='application.create' type="submit" primary />
     </ButtonsContainer>
   );
 
@@ -50,7 +49,7 @@ const Form = ({ showModal, successNotification }: Props) => {
           sendFetcher={customSendFetcher}
           submitButton={submitButton}
           onSavedSuccessfully={(data: GiftRes) => {
-            successNotification(__('notification.discCodeCreated'));
+            successNotification('notification.discCodeCreated');
             showModal(<NewCode newCodeProps={data} />);
           }}
           onTranslateString={formOnTranslateString}

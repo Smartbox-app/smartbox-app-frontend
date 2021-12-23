@@ -18,7 +18,6 @@ import UserService from '../../../../../services/user-service';
 import AgreementWrapper from './AgreementWrapper';
 import ScrollPosition from './ScrollPosition';
 import { ApplicationState } from '../../../../../reducers';
-import { __ } from '../../../../../helpers/i18n';
 
 import './StepAgreement.scss';
 
@@ -108,17 +107,17 @@ const StepSummary = ({
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <FormHeader title={__('application.orderAgreement')} />
+      <FormHeader title='application.orderAgreement' />
       <AgreementWrapper />
       <span className="separator"/>
       <ScrollPosition />
-      <Alert type="notice" text={__('application.orderAgreementAcceptation')} />
+      <Alert type="notice" text='application.orderAgreementAcceptation' />
       <ButtonsContainer max>
-        <Button outline text={__('application.back')} click={() => onBack()} />
+        <Button outline text='application.back' click={() => onBack()} />
         <Button
           type="submit"
           primary
-          text="Przejdź do płatności"
+          text='application.goToPayment'
           disabled={!isAgreementAccepted || !isResignationMarked}
         />
       </ButtonsContainer>

@@ -5,6 +5,7 @@ import { ApplicationState } from '../../../reducers';
 import SimpleStockMap from '../SimpleStockMap';
 
 import './UserStockMap.scss';
+import {__} from "../../../helpers/i18n";
 
 interface Props {
   boxNumberToMarkWay: number;
@@ -54,7 +55,7 @@ class UserStockMap extends React.Component<Props> {
     return (
       <div ref={this.element}>
         <p className="user-box">
-          Twój mini magazyn ma numer: <strong>{boxNumberToMarkWay}</strong>
+          {__('application.yourStoreNumber')}{' '}<strong>{boxNumberToMarkWay}</strong>
         </p>
         <SimpleStockMap />
       </div>

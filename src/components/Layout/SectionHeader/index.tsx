@@ -1,5 +1,6 @@
 import React from 'react';
 import './SectionHeader.scss';
+import {__} from "../../../helpers/i18n";
 
 interface Props {
   title: string;
@@ -9,7 +10,7 @@ interface Props {
 const SectionHeader = ({ title, noMargin }: Props) => (
   <div className="section-header-container">
     <div className="section-header">
-      <h3 className={`${noMargin ? 'no-margin' : ''}`}>{title}</h3>
+      <h3 className={`${noMargin ? 'no-margin' : ''}`}>{__(title)}</h3>
     </div>
   </div>
 );

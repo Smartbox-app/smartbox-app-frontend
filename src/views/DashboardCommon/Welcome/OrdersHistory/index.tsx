@@ -3,7 +3,6 @@ import { MyRentList } from 'smartbox-types';
 import { Pagination } from '../../../../components/Common';
 import { Section, SectionHeader } from '../../../../components/Layout';
 import History from './History';
-import { __ } from '../../../../helpers/i18n';
 
 interface Props {
   rentsHistoryList: MyRentList[];
@@ -17,7 +16,7 @@ const OrdersHistory = ({ rentsHistoryList }: Props) => {
 
   return (
     <Section half highlight>
-      <SectionHeader title={__('application.history')} />
+      <SectionHeader title='application.history' />
       <History data={rentsHistoryList.slice(startFrom(), startFrom() + listLength)} />
       {rentsHistoryList.length > listLength && (
         <Pagination

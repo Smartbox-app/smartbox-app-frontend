@@ -18,12 +18,12 @@ interface Props {
 const NoPhoneModal = ({ hideModal, user }: Props) => {
   return (
     <div>
-      <SectionHeader title="Numer telefonu jest wymagany" />
-      <Alert type="primary" text="Proszę uzupełnić swój profil o numer telefonu." />
+      <SectionHeader title='application.phoneNumberIsRequired' />
+      <Alert type="primary" text='application.fillPhoneNumber'/>
       <ButtonsContainer>
-        <Button text="Anuluj" click={() => hideModal()} danger />
+        <Button text='application.cancel' click={() => hideModal()} danger />
         <Button
-          text="Przejdź do profilu"
+          text='application.goToProfile'
           success
           click={() => {
             hideModal();

@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { RentStatus, UserRes } from 'smartbox-types';
-import { __ } from '../../../../../helpers/i18n';
 import { ApplicationState } from '../../../../../reducers';
 import { isAdmin, isWorker } from '../../../../../utils/role-check';
 
@@ -22,7 +21,7 @@ interface Props {
 
 const Edit = ({ selectedBoxId, user, rentId, singleBoxDetailStatus, display }: Props) => (
   <div className={`edit-wrapper ${display && 'show-me'}`}>
-    <Alert text={__('application.changesIrreversible')} type="primary" />
+    <Alert text='application.changesIrreversible' type="primary" />
     {isAdmin(user.role) && <Status selectedBoxId={selectedBoxId} />}
     {isAdmin(user.role) && rentId !== '' && singleBoxDetailStatus === RentStatus.rented && <Position rentId={rentId} />}
     {isWorker(user.role) && <WorkerEdit rentId={rentId} selectedBoxId={selectedBoxId} />}

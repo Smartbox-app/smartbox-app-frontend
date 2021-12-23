@@ -13,7 +13,6 @@ import FormHeader from '../../../../../components/Layout/FormHeader';
 import ApiService from '../../../../../services/api-service';
 import { formOnTranslateString } from '../../../../../utils/trans-form';
 import { apiTable, modal, notifications } from '../../../../../actions';
-import { __ } from '../../../../../helpers/i18n';
 
 interface Props {
   discountId: string;
@@ -25,7 +24,7 @@ interface Props {
 const Edit = ({ discountId, successNotification, hideModal, refreshApiTableData }: Props) => {
   const submitButton = (
     <ButtonsContainer>
-      <Button text={__('application.save')} type="submit" primary />
+      <Button text='application.save' type="submit" primary />
     </ButtonsContainer>
   );
 
@@ -45,7 +44,7 @@ const Edit = ({ discountId, successNotification, hideModal, refreshApiTableData 
   };
   return (
     <FormContainer>
-      <FormHeader title={__('application.editStockDiscount')} />
+      <FormHeader title='application.editStockDiscount' />
       <FieldsColumn>
         <ItfApiForm
           formId="editStockDiscountForm"
@@ -56,7 +55,7 @@ const Edit = ({ discountId, successNotification, hideModal, refreshApiTableData 
           sendFetcher={customSendFetcher}
           submitButton={submitButton}
           onSavedSuccessfully={() => {
-            successNotification(__('application.changesSavedSuccess'));
+            successNotification('application.changesSavedSuccess');
             refreshApiTableData();
             hideModal();
           }}

@@ -5,6 +5,7 @@ import { IPricingResult } from 'smartbox-types';
 import { ApplicationState } from '../../../../../../../reducers';
 
 import './RadioDiscount.scss';
+import {__} from "../../../../../../../helpers/i18n";
 
 interface Props {
   text: string;
@@ -16,12 +17,11 @@ interface Props {
 const RadioDiscount = ({ value, text, register, countedPrice }: Props) => {
   const getName = (data: string): string => {
     switch (data) {
-      case 'withoutDiscountPricing':
-        return 'Standardowa cena';
       case 'withDicoutnPricing':
-        return `Zastosowano rabat: ${countedPrice?.value}%`;
+        return `${__('application.usedDiscount')} ${countedPrice?.value}%`;
+      case 'withoutDiscountPricing':
       default:
-        return 'Standardowa cena';
+        return __('application.standardPrice');
     }
   };
   return (

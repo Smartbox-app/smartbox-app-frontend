@@ -11,7 +11,6 @@ import { Alert, Button, Spinner } from '../../../../../../components/Common';
 import { ApplicationState } from '../../../../../../reducers';
 import ApiService from '../../../../../../services/api-service';
 import { formOnTranslateString } from '../../../../../../utils/trans-form';
-import { __ } from '../../../../../../helpers/i18n';
 
 import './Status.scss';
 
@@ -27,7 +26,7 @@ interface Props {
 const Status = ({ selectedBoxId, hideModal, stock, successNotification, fetchBoxStatuses, showModal }: Props) => {
   const submitButton = (
     <ButtonsContainer>
-      <Button text={__('application.changeStatus')} type="submit" danger />
+      <Button text='application.changeStatus' type="submit" danger />
     </ButtonsContainer>
   );
 
@@ -38,20 +37,20 @@ const Status = ({ selectedBoxId, hideModal, stock, successNotification, fetchBox
     showModal(
       <>
         {values.status === null || values.status.length === 0 ? (
-          <Alert type="error" text="Nie wybrałeś statusu" />
+          <Alert type="error" text='application.notChooseStatus' />
         ) : (
           <div className="modal-alert-wrapper">
-            <Alert type="warning" text={__('application.userWillNotGetMailWithInformation')} />
-            <Alert type="primary" text={__('application.actionCanNotBeUnDone')} />
+            <Alert type="warning" text='application.userWillNotGetMailWithInformation' />
+            <Alert type="primary" text='application.actionCanNotBeUnDone' />
           </div>
         )}
 
         <ButtonsContainer>
-          <Button text={__('application.cancel')} danger click={() => hideModal()} />
+          <Button text='application.cancel' danger click={() => hideModal()} />
           <Button
             success
             type="submit"
-            text={__('application.understood')}
+            text='application.understood'
             disabled={values.status === null || values.status.length === 0}
             click={async () => {
               await hideModal();
@@ -63,7 +62,7 @@ const Status = ({ selectedBoxId, hideModal, stock, successNotification, fetchBox
                 },
                 'PATCH',
               );
-              await successNotification(__('notification.userStatusChanged'));
+              await successNotification('notification.userStatusChanged');
               await fetchBoxStatuses(stock.id);
             }}
           />

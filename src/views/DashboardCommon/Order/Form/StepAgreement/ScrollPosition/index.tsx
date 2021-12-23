@@ -4,7 +4,6 @@ import { bindActionCreators } from 'redux';
 import { ApplicationState } from '../../../../../../reducers';
 import { order } from '../../../../../../actions';
 import { CheckBox } from '../../../../../../components/Common';
-import { __ } from '../../../../../../helpers/i18n';
 
 interface Props {
   isResignationMarked: boolean;
@@ -39,7 +38,7 @@ class ScrollPosition extends Component<Props> {
           hide={!isAgreementAccepted}
           disabled={!isAgreementAccepted}
           handleChange={() => formResignationMarked()}
-          label={__('application.14daysResign')}
+          label='application.14daysResign'
         />
       </>
     );

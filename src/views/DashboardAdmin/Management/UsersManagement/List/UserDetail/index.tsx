@@ -4,7 +4,6 @@ import { bindActionCreators } from 'redux';
 import { UserListRes, UserRes } from 'smartbox-types';
 import { user } from '../../../../../../actions';
 import { SimpleHeader } from '../../../../../../components/Layout';
-import { __ } from '../../../../../../helpers/i18n';
 
 import './UserDetail.scss';
 import { ApplicationState } from '../../../../../../reducers';
@@ -25,12 +24,12 @@ const UserDetail = ({ userId, userData, fetchSingleUser, singleUser }: Props) =>
 
   return (
     <div className="user-detail-wrapper">
-      <SimpleHeader title={__('application.customerDetails')} />
+      <SimpleHeader title='application.customerDetails' />
       <div className="single-address-content">
         <div className="addresses-wrapper">
           <DataGroup
             icon="fa-home"
-            title={__('application.customerData')}
+            title='application.customerData'
             rowData={[
               `${singleUser?.firstName} ${singleUser?.lastName}`,
               singleUser?.phone,
@@ -41,7 +40,7 @@ const UserDetail = ({ userId, userData, fetchSingleUser, singleUser }: Props) =>
           />
           <DataGroup
             icon="fa-file-o"
-            title={__('application.customerCompanyData')}
+            title='application.customerCompanyData'
             rowData={[
               singleUser?.companyData?.name,
               singleUser?.companyData?.street,

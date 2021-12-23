@@ -8,7 +8,6 @@ import { modal } from '../../../../actions';
 import { ApplicationState } from '../../../../reducers';
 
 import UpdatePass from './UpdatePass';
-import { __ } from '../../../../helpers/i18n';
 import UserData from '../../../../components/Common/UserData';
 
 interface Props {
@@ -18,9 +17,9 @@ interface Props {
 
 const Detail = ({ showModal, user }: Props) => (
   <>
-    <PageHeader title={__('application.profileDetail')} />
+    <PageHeader title='application.profileDetail' />
     <ButtonsContainer>
-      <Button text={__('application.changPassword')} primary click={() => showModal(<UpdatePass />)} />
+      <Button text='application.changPassword' primary click={() => showModal(<UpdatePass />)} />
     </ButtonsContainer>
     <UserData />
   </>

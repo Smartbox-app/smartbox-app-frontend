@@ -26,7 +26,7 @@ const BlikWaitingModal = ({
 }: Props) => {
   const intervalCallBack = () => {
     if (blikPaymentCompletedSuccessfully) {
-      successNotification('Płatność zakończyła się sukcesem');
+      successNotification('application.paymentSuccess');
       hideModal();
       history.push(`/payment-success/${paymentId}`);
     }

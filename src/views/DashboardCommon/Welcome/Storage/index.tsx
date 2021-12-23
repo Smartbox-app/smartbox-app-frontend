@@ -2,7 +2,6 @@ import React from 'react';
 import { MyRentList } from 'smartbox-types';
 import { Section, SectionHeader } from '../../../../components/Layout';
 import StorageList from './StorageList';
-import { __ } from '../../../../helpers/i18n';
 import { Spinner } from '../../../../components/Common';
 
 interface Props {
@@ -12,7 +11,7 @@ interface Props {
 
 const Storage = ({ myRentList, loading }: Props) => (
   <Section full highlight>
-    <SectionHeader title={__('application.storeManagement')} />
+    <SectionHeader title='application.storeManagement' />
     {loading ? <Spinner /> : <StorageList list={myRentList} />}
   </Section>
 );

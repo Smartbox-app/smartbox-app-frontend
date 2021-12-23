@@ -9,7 +9,6 @@ import { modal, notifications, order } from '../../../../../../../actions';
 import FormHeader from '../../../../../../../components/Layout/FormHeader';
 import ApiService from '../../../../../../../services/api-service';
 import { formOnTranslateString } from '../../../../../../../utils/trans-form';
-import { __ } from '../../../../../../../helpers/i18n';
 
 interface Props {
   hideModal: () => void;
@@ -20,7 +19,7 @@ interface Props {
 const DiscountCode = ({ hideModal, updateFormData, successNotification }: Props) => {
   const submitButton = (
     <ButtonsContainer>
-      <Button text="Dodaj" type="submit" primary />
+      <Button text='application.standardPrice' type="submit" primary />
     </ButtonsContainer>
   );
 
@@ -38,7 +37,7 @@ const DiscountCode = ({ hideModal, updateFormData, successNotification }: Props)
 
   return (
     <FormContainer>
-      <FormHeader title="Podaj Twój kod rabatowy" />
+      <FormHeader title='application.passYourDiscountCode' />
       <ItfApiForm
         formId="getGiftForm"
         schemaMayBeDynamic={false}
@@ -48,7 +47,7 @@ const DiscountCode = ({ hideModal, updateFormData, successNotification }: Props)
         sendFetcher={customSendFetcher}
         submitButton={submitButton}
         onSavedSuccessfully={(data: GiftRes) => {
-          successNotification(__('notification.discountCodeRead'));
+          successNotification('notification.discountCodeRead');
           updateFormData({
             discountCode: data.code,
             card: {

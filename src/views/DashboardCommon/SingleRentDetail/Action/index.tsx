@@ -7,7 +7,6 @@ import { clearOrder } from '../../../../actions/order';
 import { history } from '../../../../App';
 import { Button, ConfirmModal } from '../../../../components/Common';
 import { ButtonsContainer } from '../../../../components/Layout';
-import { __ } from '../../../../helpers/i18n';
 import { ApplicationState } from '../../../../reducers';
 import UserService from '../../../../services/user-service';
 import EndingModal from './EndingModal';
@@ -48,18 +47,18 @@ const Action = ({
   return (
     <ButtonsContainer max>
       <Button
-        text={!showUserStockMap ? __('application.showOnStockMap') : __('application.showDetail')}
+        text={!showUserStockMap ? 'application.showOnStockMap' : 'application.showDetail'}
         success
         click={() => toggleShowUserStockMap()}
       />
       <Button
-        text={__('application.goToAgreement')}
+        text='application.goToAgreement'
         success
         click={() => handleExtendingOrderData(rentId)}
         disabled={rent.status !== RentStatus.rented}
       />
-      <Button text={__('application.end')} danger click={() => showModal(<EndingModal />)} />
-      <Button text={__('application.back')} primary to={`/${UserService.getSlugByRole(user.role)}`} />
+      <Button text='application.end' danger click={() => showModal(<EndingModal />)} />
+      <Button text='application.back' primary to={`/${UserService.getSlugByRole(user.role)}`} />
     </ButtonsContainer>
   );
 };

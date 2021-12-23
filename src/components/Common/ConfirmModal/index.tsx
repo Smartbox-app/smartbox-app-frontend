@@ -6,6 +6,7 @@ import { Button } from '..';
 import { modal } from '../../../actions';
 
 import './ConfirmModal.scss';
+import {__} from "../../../helpers/i18n";
 
 interface Props {
   mainText: string;
@@ -17,13 +18,13 @@ interface Props {
 
 const ConfirmModal = ({
   mainText,
-  cancelButtonText = 'Anuluj',
+  cancelButtonText = 'application.cancel',
   approveButtonText,
   approveAction,
   hideModal,
 }: Props) => (
   <div className="confirm-modal-wrapper">
-    <p>{mainText}</p>
+    <p>{__(mainText)}</p>
     <ButtonsContainer>
       <Button click={() => hideModal()} text={cancelButtonText} success />
       <Button

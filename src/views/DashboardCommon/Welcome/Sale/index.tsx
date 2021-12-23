@@ -26,18 +26,18 @@ const Sale = ({ discountsList, getStockDiscountsList, user }: Props) => {
 
   const createText = (list: DiscountList[]) => {
     const result = isFirstWeekSale()
-      ? ['Pierwszy tydzień za 1zł. Promocja obowiązuje tylko przy płatności kartą.']
+      ? [__('application.firstWeekForOneOnlyCard')]
       : [];
 
     list.forEach((el: any) => {
-      if (el.discount) result.push(`Zniżka ${el.discount}% na placu: ${el.name}`);
+      if (el.discount) result.push(`${__('application.discount')} ${el.discount}% ${__('application.onStock')} ${el.name}`);
     });
     return result;
   };
 
   return (
     <Section full highlight>
-      <SectionHeader title={__('application.discounts')} />
+      <SectionHeader title='application.discounts' />
       <Discounts discounts={createText(discountsList)} />
     </Section>
   );

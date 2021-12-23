@@ -12,6 +12,7 @@ import { formatPrice } from '../../../utils/format-price';
 import { ApplicationState } from '../../../reducers';
 
 import './ApiTable.scss';
+import {__} from "../../../helpers/i18n";
 
 interface SelectOption {
   value: string;
@@ -55,10 +56,10 @@ const searchComponent = (
     searchElement = (
       <select
         className="input"
-        placeholder="Wybierz szukaną wartość"
+        placeholder={__("application.selectSearchedValue")}
         onChange={(e) => handleSearchQueryChange(e.target.value)}
       >
-        <option value={''}>Wybierz</option>
+        <option value={''}>{__('application.select')}</option>
         {Object.keys(searchableValues as TableFieldSearchableValues).map((key) => (
           <option value={key} key={key}>
             {searchableValues[key]}
@@ -82,7 +83,7 @@ const searchComponent = (
       <input
         className="input"
         type="text"
-        placeholder="Wpisz szukaną wartość"
+        placeholder={__('application.typeSearchedValue')}
         value={search.searchQuery}
         onChange={(e) => handleSearchQueryChange(e.target.value)}
       />
@@ -91,11 +92,11 @@ const searchComponent = (
 
   return (
     <div className="search-box">
-      <h3>Wyszukiwanie</h3>
+      <h3>{__('application.search')}</h3>
       <div className="search-fields">
         <div className="search-field">
           <select className="input" value={search.searchBy} onChange={(e) => handleSearchByChange(e.target.value)}>
-            <option value="">Wybierz pole, które chcesz przeszukać</option>
+            <option value="">{__('application.chooseFieldToSearch')}</option>
             {allFields
               .filter((field) => field.searchable === true)
               .map((field) => (

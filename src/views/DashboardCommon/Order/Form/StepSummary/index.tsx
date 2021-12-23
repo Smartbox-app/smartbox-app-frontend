@@ -174,9 +174,7 @@ const StepSummary = ({
       if (paymentChangeOnly(e)) {
         if (watch().paymentType !== `${PaymentType.card}`) {
           if (countedPrice?.name === 'firstRentFreePracing') {
-            successNotification(
-              'Promocja 1zł za pierwszy tydzień obowiązuje tylko przy płatności kartą. Cena została zmieniona.',
-            );
+            successNotification(`${__('notification.firstWeekForOneOnlyCard')} ${__('notification.priceChanged')}`);
             updateFormData({
               isFirstRent: false,
             });
@@ -185,7 +183,7 @@ const StepSummary = ({
           updateFormData({
             isFirstRent: true,
           });
-          successNotification('Promocja 1zł za pierwszy tydzień aktywna. Cena została zmieniona.');
+          successNotification(`${__('notification.firstWeekForOneActive')} ${__('notification.priceChanged')}`);
         }
       }
     }
@@ -194,19 +192,19 @@ const StepSummary = ({
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="form-step-two" onChange={handleChange}>
       <Discount />
-      <FormHeader title="Podsumowanie zamówienia:" />
+      <FormHeader title='application.orderSummary' />
       <SummaryTable dateStart={formData.dateStart} dateEnd={formData.dateEnd} countedPrice={countedPrice.value} />
       {countedPrice.value > 0 && <PaymentMethods register={register} />}
 
       <TenantDetailsForm register={register} control={control} errors={errors} disabled={!isFirstRent} />
       {isFirstRent && (
           <>
-              <p>Fakturę wystawimy na dane najemcy. Możesz też podać inne dane, na przykład Twojej firmy.</p>
+              <p>{__('application.infoToOptionalInvoice')}</p>
               <CheckBox
                   name="iNeedInvoice"
                   checked={invoiceNeeded}
                   handleChange={() => setInvoiceNeeded(!invoiceNeeded)}
-                  label="Chcę dodać inne dane lub potrzebuję faktury na firmę"
+                  label='application.wantOptionalInvoice'
               />
           </>
       )}
@@ -215,11 +213,11 @@ const StepSummary = ({
       )}
 
       <ButtonsContainer max>
-        <Button outline text={__('application.back')} click={() => onBack()} />
+        <Button outline text='application.back' click={() => onBack()} />
         <Button
           type="submit"
           primary
-          text="Przejdź do umowy"
+          text='application.goToOrder'
           disabled={dataVerification() || tenantData() || companyData()}
         />
       </ButtonsContainer>

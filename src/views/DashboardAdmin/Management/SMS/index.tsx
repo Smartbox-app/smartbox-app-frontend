@@ -12,7 +12,6 @@ import FormHeader from '../../../../components/Layout/FormHeader';
 import ApiService from '../../../../services/api-service';
 import { formOnTranslateString } from '../../../../utils/trans-form';
 import { notifications } from '../../../../actions';
-import { __ } from '../../../../helpers/i18n';
 
 interface Props {
   successNotification: (text: string) => void;
@@ -21,7 +20,7 @@ interface Props {
 const SMS = ({ successNotification }: Props) => {
   const submitButton = (
     <ButtonsContainer>
-      <Button text={__('application.send')} type="submit" primary />
+      <Button text='application.send' type="submit" primary />
     </ButtonsContainer>
   );
 
@@ -32,7 +31,7 @@ const SMS = ({ successNotification }: Props) => {
 
   return (
     <Section full>
-      <PageHeader title={__('application.sendSms')} />
+      <PageHeader title='application.sendSms' />
       <FormContainer>
         <FieldsColumn>
           <ItfApiForm
@@ -44,7 +43,7 @@ const SMS = ({ successNotification }: Props) => {
             sendFetcher={customSendFetcher}
             submitButton={submitButton}
             onSavedSuccessfully={() => {
-              successNotification(__('application.smsSent'));
+              successNotification('application.smsSent');
             }}
             onTranslateString={formOnTranslateString}
             thirdPartyComponents={{ ReactSelect, ReactCreatableSelect, flatpickr }}

@@ -27,7 +27,7 @@ interface Props {
 const Position = ({rentId, stock, successNotification, fetchBoxStatuses, hideModal, showModal}: Props) => {
     const submitButton = (
         <ButtonsContainer>
-            <Button text={__('application.move')} type="submit" danger/>
+            <Button text='application.move' type="submit" danger/>
         </ButtonsContainer>
     );
 
@@ -38,15 +38,15 @@ const Position = ({rentId, stock, successNotification, fetchBoxStatuses, hideMod
         showModal(
             <>
                 <div className="modal-alert-wrapper">
-                    <Alert type="primary" text={__('application.userWillGetMailWithInformation')}/>
-                    <Alert type="primary" text={__('application.actionCanNotBeUnDone')}/>
+                    <Alert type="primary" text='application.userWillGetMailWithInformation'/>
+                    <Alert type="primary" text='application.actionCanNotBeUnDone'/>
                 </div>
                 <ButtonsContainer max>
-                    <Button text={__('application.cancel')} danger click={() => hideModal()}/>
+                    <Button text='application.cancel' danger click={() => hideModal()}/>
                     <Button
                         success
                         type="submit"
-                        text={__('application.understood')}
+                        text='application.understood'
                         click={async () => {
                             await hideModal();
                             await ApiService.sendForm(
@@ -56,7 +56,7 @@ const Position = ({rentId, stock, successNotification, fetchBoxStatuses, hideMod
                                 },
                                 'PATCH',
                             );
-                            await successNotification(__('notification.userMovedSuccess'));
+                            await successNotification('notification.userMovedSuccess');
                             await fetchBoxStatuses(stock.id);
                         }}
                     />

@@ -12,7 +12,6 @@ import { ApplicationState } from '../../../../../reducers';
 import ApiService from '../../../../../services/api-service';
 import UserService from '../../../../../services/user-service';
 import { formOnTranslateString } from '../../../../../utils/trans-form';
-import { __ } from '../../../../../helpers/i18n';
 import { modal, notifications, user } from '../../../../../actions';
 
 interface Props {
@@ -25,12 +24,12 @@ const UpdateMe = ({ successNotification, user, fetchMyData }: Props) => {
   const submitButton = (
     <ButtonsContainer max>
       <Button
-        text={__('application.back')}
+        text='application.back'
         type="button"
         primary
         to={`/${UserService.getSlugByRole(user.role)}/profile/detail`}
       />
-      <Button text={__('application.change')} type="submit" success />
+      <Button text='application.change' type="submit" success />
     </ButtonsContainer>
   );
 
@@ -48,7 +47,7 @@ const UpdateMe = ({ successNotification, user, fetchMyData }: Props) => {
 
   return (
     <FormContainer>
-      <FormHeader title="Edytujesz swoje dane" />
+      <FormHeader title='application.editYourData' />
       <FieldsColumn>
         <ItfApiForm
           formId="EditUserProfileData"
@@ -59,7 +58,7 @@ const UpdateMe = ({ successNotification, user, fetchMyData }: Props) => {
           sendFetcher={customSendFetcher}
           submitButton={submitButton}
           onSavedSuccessfully={async () => {
-            successNotification(__('notification.dataChangedSuccess'));
+            successNotification('notification.dataChangedSuccess');
             await fetchMyData();
             history.push(`/${UserService.getSlugByRole(user.role)}/profile/detail`);
           }}

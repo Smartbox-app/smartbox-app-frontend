@@ -13,8 +13,6 @@ import { ApplicationState } from '../../../../../reducers';
 
 import FormHeader from '../../../../../components/Layout/FormHeader';
 import UserService from '../../../../../services/user-service';
-import { __ } from '../../../../../helpers/i18n';
-
 import './StepSize.scss';
 
 interface RouteProps {
@@ -125,16 +123,16 @@ const StepSize = ({
 
   return (
     <FormContainer className="step-size-wrapper">
-      <FormHeader no-margin title={__('application.orderFormPickSize')} />
+      <FormHeader no-margin title='application.orderFormPickSize' />
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="options-wrapper">{options}</div>
 
         <ButtonsContainer max>
-          <Button disabled text={__('application.back')} />
+          <Button disabled text='application.back' />
           <Button
             type="submit"
             primary
-            text={__('application.next')}
+            text='application.next'
             disabled={watch().size === '' || !isMyBoxAvailable(watch().size)}
           />
         </ButtonsContainer>

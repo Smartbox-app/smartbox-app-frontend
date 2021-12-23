@@ -15,7 +15,6 @@ import { FormContainer, PageContent } from '../../../components/Layout';
 import { ApplicationState } from '../../../reducers';
 
 import ButtonsSection from './ButtonSection';
-import { __ } from '../../../helpers/i18n';
 
 import './Login.scss';
 
@@ -102,7 +101,7 @@ class Login extends React.Component<Props> {
               }
             }}
             onSavedSuccessfully={(data: AuthLoginResult) => {
-              successNotification(__('notification.logInSuccess'));
+              successNotification('notification.logInSuccess');
               store.dispatch(saveUser(data));
             }}
             onTranslateString={formOnTranslateString}

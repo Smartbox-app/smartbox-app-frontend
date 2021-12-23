@@ -35,26 +35,22 @@ const DiscountsList = ({ showModal, countedPrice, resetDiscountCode, successNoti
         if (codeDiscount !== 0) {
           setHelpText(true);
           resetDiscountCode();
-          successNotification(
-            'Zastosowano korzystniejszą promocje. Kod nie został użyty. Można go wykorzystać ponownie.',
-          );
+          successNotification('application.appliedBetterDiscount',);
         }
-        return setPriceName(__('application.firstRentFreePracing'));
+        return setPriceName('application.firstRentFreePracing');
       case 'withDicoutnPricing':
         if (codeDiscount !== 0) {
           setHelpText(true);
           resetDiscountCode();
-          successNotification(
-            'Zastosowano korzystniejszą promocje. Kod nie został użyty. Można go wykorzystać ponownie.',
-          );
+          successNotification('application.appliedBetterDiscount',);
         }
-        return setPriceName(__('application.withDicoutnPricing'));
+        return setPriceName('application.withDicoutnPricing');
       case 'cardPricing':
         setHelpText(false);
-        return setPriceName(__('application.cardPricing'));
+        return setPriceName('application.cardPricing');
       default:
         setHelpText(false);
-        return setPriceName(__('application.standardPrice'));
+        return setPriceName('application.standardPrice');
     }
   };
 
@@ -65,13 +61,13 @@ const DiscountsList = ({ showModal, countedPrice, resetDiscountCode, successNoti
 
   return (
     <div>
-      <FormHeader title={__('application.usedDiscount')} />
+      <FormHeader title='application.usedPrice' />
       <div className="discount-wrapper">
-        <p>{priceName}</p>
-        {helpText && <p>Zastosowano korzystniejszą promocje. Kod nie został użyty. Można go wykorzystać ponownie.</p>}
+        <p>{__(priceName)}</p>
+        {helpText && <p>{__('application.appliedBetterDiscount')}</p>}
       </div>
       <ButtonsContainer>
-        <Button text={__('application.useDiscountCode')} primary click={() => showModal(<DiscountCode />)} />
+        <Button text='application.useDiscountCode' primary click={() => showModal(<DiscountCode />)} />
       </ButtonsContainer>
     </div>
   );

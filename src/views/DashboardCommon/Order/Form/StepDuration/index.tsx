@@ -13,7 +13,6 @@ import { history } from '../../../../../App';
 import { FormType } from '../../../../../types/order-form';
 import { ApplicationState } from '../../../../../reducers';
 import UserService from '../../../../../services/user-service';
-import { __ } from '../../../../../helpers/i18n';
 import { firstRentChecker } from '../../../../../utils/isFirstRent';
 
 import Price from './Price';
@@ -103,7 +102,7 @@ const StepDuration = ({
             control={control}
             as={DateInput}
             register={register({ required: true })}
-            label="Wybierz datę rozpoczęcia wynajmu:"
+            label='application.selectStartRentDate'
             minDate={setMinDate()}
             maxDate={setMaxDateToExtend()}
             onChange={([selected]) => {
@@ -120,7 +119,7 @@ const StepDuration = ({
             control={control}
             as={DateInput}
             register={register({ required: true })}
-            label="Wybierz datę zakończenia wynajmu:"
+            label='application.selectEndRentDate'
             minDate={setMinDate(7, true)}
             onChange={([selected]) => {
               updateFormData({
@@ -134,8 +133,8 @@ const StepDuration = ({
         </div>
         <Price countedPrice={countedPrice.value} />
         <ButtonsContainer max>
-          <Button outline text={__('application.back')} click={() => onBack()} disabled={!!match.params.rentId} />
-          <Button type="submit" primary text={__('application.next')} />
+          <Button outline text='application.back' click={() => onBack()} disabled={!!match.params.rentId} />
+          <Button type="submit" primary text='application.next' />
         </ButtonsContainer>
       </form>
     </FormContext>

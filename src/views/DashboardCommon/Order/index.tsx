@@ -5,7 +5,6 @@ import { FormContainer, Section, SectionHeader } from '../../../components/Layou
 import { ProgressIndicator } from '../../../components/Common';
 
 import Form from './Form/Index';
-import { __ } from '../../../helpers/i18n';
 import { useDispatch } from 'react-redux';
 import { order } from '../../../actions';
 
@@ -36,29 +35,29 @@ const Order = ({ match }: Props) => {
 
   return (
     <Section>
-      <SectionHeader title={match.params.rentId ? __('application.extendsOrder') : __('application.newOrder')} />
+      <SectionHeader title={match.params.rentId ? 'application.extendsOrder' : 'application.newOrder'} />
       <ProgressIndicator
         current={getStepByName(match.params.step)}
         stepList={[
           {
             value: 1,
-            desc: __('application.orderStepSize'),
+            desc: 'application.orderStepSize',
           },
           {
             value: 2,
-            desc: __('application.orderStepDate'),
+            desc: 'application.orderStepDate',
           },
           {
             value: 3,
-            desc: __('application.orderStepSummary'),
+            desc: 'application.orderStepSummary',
           },
           {
             value: 4,
-            desc: __('application.orderStepAgreement'),
+            desc: 'application.orderStepAgreement',
           },
           {
             value: 5,
-            desc: __('application.orderStepPayment'),
+            desc: 'application.orderStepPayment',
           },
         ]}
       />

@@ -1,14 +1,13 @@
 import React from 'react';
-import {FormContainer, FormHeader} from '../../../../components/Layout';
-import { __ } from '../../../../helpers/i18n';
+import { FormContainer, FormHeader } from '../../../../components/Layout';
 
 import Form from './Form';
 
 const DiscountCodes = () => (
-    <FormContainer>
-        <FormHeader title={__('application.generateGiftCode')}/>
-        <Form/>
-    </FormContainer>
+  <FormContainer>
+    <FormHeader title="application.generateGiftCode" />
+    <Form />
+  </FormContainer>
 );
 
 export default DiscountCodes;

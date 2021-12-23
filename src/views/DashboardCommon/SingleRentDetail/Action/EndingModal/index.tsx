@@ -5,7 +5,6 @@ import { MyRentList, RentStatus } from 'smartbox-types';
 import { modal, notifications, order, singleRent } from '../../../../../actions';
 import { history } from '../../../../../App';
 import { ConfirmModal } from '../../../../../components/Common';
-import { __ } from '../../../../../helpers/i18n';
 import { ApplicationState } from '../../../../../reducers';
 
 interface Props {
@@ -19,25 +18,25 @@ const EndingModal = ({ endMyRent, successNotification, getMyRentList, rent }: Pr
   if (rent.status !== RentStatus.rented) {
     return (
       <ConfirmModal
-        mainText={__('application.youCanNotEndRentNow')}
-        approveButtonText={__('application.understood')}
+        mainText='application.youCanNotEndRentNow'
+        approveButtonText='application.understood'
         approveAction={() => {}}
-        cancelButtonText={__('application.back')}
+        cancelButtonText='application.back'
       />
     );
   }
 
   return (
     <ConfirmModal
-      mainText={__('application.endRental')}
-      approveButtonText={__('application.end')}
+      mainText='application.endRental'
+      approveButtonText='application.end'
       approveAction={async () => {
-        successNotification(__('notification.rentFinishManually'));
+        successNotification('notification.rentFinishManually');
         await endMyRent(rent.id);
         await getMyRentList();
         history.push('/user/main');
       }}
-      cancelButtonText={__('application.back')}
+      cancelButtonText='application.back'
     />
   );
 };

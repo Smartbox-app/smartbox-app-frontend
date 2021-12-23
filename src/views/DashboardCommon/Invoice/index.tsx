@@ -12,7 +12,7 @@ const Invoice = () => (
             <p className="content-text">{__('application.thanks')}</p>
             <p className="content-text">{__('application.invoiceWasSent')}</p>
             <ButtonsContainer max>
-                <Button success text={__('application.backToApp')} to="/"/>
+                <Button success text='application.backToApp' to="/"/>
             </ButtonsContainer>
         </Section>
     </PageContent>

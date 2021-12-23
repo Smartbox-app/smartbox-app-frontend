@@ -6,7 +6,6 @@ import { ExecutePaymentReq, UserRes } from 'smartbox-types';
 import { history } from '../../../../../../App';
 import { Alert, Button, Spinner } from '../../../../../../components/Common';
 import { ButtonsContainer } from '../../../../../../components/Layout';
-import { __ } from '../../../../../../helpers/i18n';
 import { ApplicationState } from '../../../../../../reducers';
 import UserService from '../../../../../../services/user-service';
 import { order, paymentStatus } from '../../../../../../actions';
@@ -54,9 +53,9 @@ const CreditCardForm = ({ func, user, sentExecutePaymentRequest, paymentId, matc
             <Spinner />
           ) : (
             <>
-              <Alert type="success" text="Płatność automatycznie zakończona powodzeniem." />
+              <Alert type="success" text='notification.paymentFinishedSuccess' />
               <ButtonsContainer max>
-                <Button outline text={__('application.backToHome')} to="/" />
+                <Button outline text='application.backToHome' to="/" />
               </ButtonsContainer>
             </>
           )}
@@ -65,7 +64,7 @@ const CreditCardForm = ({ func, user, sentExecutePaymentRequest, paymentId, matc
         <div className="payment-wrapper">
           <div className="pay-button-container" />
           <ButtonsContainer max>
-            <Button outline text={__('application.back')} click={() => onBack()} />
+            <Button outline text='application.back' click={() => onBack()} />
           </ButtonsContainer>
         </div>
       )}

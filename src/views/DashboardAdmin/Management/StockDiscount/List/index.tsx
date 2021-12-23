@@ -29,18 +29,18 @@ class List extends React.Component<Props> {
       mobile: true,
       buttons: [
         {
-          name: __('application.edit'),
+          name: 'application.edit',
           type: 'primary',
           click: (data: any) => showModal(<Edit discountId={data.discountId} />),
         },
         {
-          name: __('application.delete'),
+          name: 'application.delete',
           type: 'danger',
           click: (data: any) =>
             showModal(
               <ConfirmModal
-                approveButtonText={__('application.delete')}
-                mainText={__('application.deleteSingleSale')}
+                approveButtonText='application.delete'
+                mainText='application.deleteSingleSale'
                 approveAction={() => deleteStockDiscount(data.discountId)}
               />,
             ),
@@ -54,8 +54,8 @@ class List extends React.Component<Props> {
     return (
       <Section full>
         <ButtonsContainer>
-          <Button text={__('application.createDiscountCode')} primary click={() => showModal(<DiscountCodes />)} />
-          <Button text={__('application.createStockDisc')} primary click={() => showModal(<Add />)} />
+          <Button text='application.createDiscountCode' primary click={() => showModal(<DiscountCodes />)} />
+          <Button text='application.createStockDisc' primary click={() => showModal(<Add />)} />
         </ButtonsContainer>
         <ApiTable scheme={this.scheme} apiEndpointSubUrl="stock/discount/list" />
       </Section>

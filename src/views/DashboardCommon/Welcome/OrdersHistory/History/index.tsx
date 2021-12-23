@@ -17,7 +17,7 @@ const History = ({ data }: Props) => {
     data.length > 0 ? (
       data.map((single: MyRentList, key: number) => <Single single={single} key={`history-${key}`} />)
     ) : (
-      <Alert type="notice" text={__('application.lackOfHistory')} />
+      <Alert type="notice" text='application.lackOfHistory' />
     );
 
   return (

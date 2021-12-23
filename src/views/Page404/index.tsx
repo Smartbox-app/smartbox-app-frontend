@@ -11,7 +11,7 @@ const Page404 = () => (
     <h1>404</h1>
     <h2>{__('application.404Text')}</h2>
     <ButtonsContainer>
-      <Button primary rounded to="/" text={__('application.backToHome')} />
+      <Button primary rounded to="/" text='application.backToHome' />
     </ButtonsContainer>
   </div>
 );

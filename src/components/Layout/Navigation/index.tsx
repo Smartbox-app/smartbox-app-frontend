@@ -4,7 +4,6 @@ import { bindActionCreators } from 'redux';
 import { auth } from '../../../actions';
 
 import { MenuItemType } from '../../../types/menu-item';
-import { __ } from '../../../helpers/i18n';
 
 import MenuItem from './MenuItem';
 import LogoContainer from '../LogoContainer';
@@ -20,7 +19,7 @@ const Navigation = ({ logout, menuItems }: Props) => {
   const basicItems: MenuItemType[] = [
     {
       icon: 'logout.svg',
-      text: `${__('application.logout')}`,
+      text: 'application.logout',
       onClick: logout,
       customClass: 'logout-button',
     },
