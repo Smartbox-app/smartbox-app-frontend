@@ -9,3 +9,9 @@
     height: 450px;
   }
 }
+
+.separator{
+  height: 2px;
+  margin-bottom: $main-spacing;
+  background-color: $color-disabled;
+}

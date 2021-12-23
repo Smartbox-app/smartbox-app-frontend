@@ -35,6 +35,7 @@ class ScrollPosition extends Component<Props> {
         <CheckBox
           name="resignation"
           checked={isResignationMarked}
+          hide={!isAgreementAccepted}
           disabled={!isAgreementAccepted}
           handleChange={() => formResignationMarked()}
           label='application.14daysResign'

@@ -38,10 +38,10 @@ class Carousel extends Component<Props> {
         <div key={`carousel-${key}`} className="offer-svg-wrapper">
           <div className="offer-description">
             <p>
-              {__('application.week')}: <strong>{weekly}zł</strong>
+              {__('application.week')}: <strong>{weekly} zł</strong>
             </p>
             <p>
-              {__('application.month')}: <strong>{monthly}zł</strong>
+              {__('application.month')}: <strong>{monthly} zł</strong>
             </p>
           </div>
           <ReactSVG src={`/assets/icons/${data}c.svg`} />

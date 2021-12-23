@@ -9,3 +9,11 @@
     }
   }
 }
+
+.checkbox-hide {
+  label {
+    &:before{
+      display: none;
+    }
+  }
+}

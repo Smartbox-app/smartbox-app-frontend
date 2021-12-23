@@ -10,10 +10,11 @@ interface Props {
   label?: string | React.ReactNode;
   disabled?: boolean;
   errors?: any;
+  hide?: boolean;
 }
 
-const CheckBox = ({ label, name, checked, handleChange, disabled, errors }: Props) => (
-  <div className={`checkbox ${disabled ? 'checkbox-disabled' : ''}`}>
+const CheckBox = ({ label, name, checked, handleChange, disabled, errors, hide }: Props) => (
+  <div className={`checkbox ${disabled ? 'checkbox-disabled' : ''} ${hide && 'checkbox-hide'}`}>
     <input
       type="checkbox"
       id={name}
