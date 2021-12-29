@@ -10,6 +10,7 @@ import { InteractiveTableSchema } from '../../../../../utils/table-schema-utils'
 import { modal, user } from '../../../../../actions';
 import EditRoleForm from '../../WorkersManagement/List/EditRoleForm';
 import UserDetail from './UserDetail';
+import UserEdit from "./UserEdit";
 
 interface Props {
   showModal: (content: React.ReactNode) => void;
@@ -41,6 +42,11 @@ class List extends React.Component<Props> {
             name: 'application.userDetails',
             type: 'primary',
             click: (data: UserListRes) => this.props.showModal(<UserDetail userId={data.id} userData={data} />),
+          },
+          {
+              name: 'application.edit',
+              type: 'primary',
+              click: (data: UserListRes) => this.props.showModal(<UserEdit userId={data.id}/>),
           },
         ],
       });
