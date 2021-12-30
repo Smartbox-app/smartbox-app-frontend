@@ -4,12 +4,18 @@ import { bindActionCreators } from 'redux';
 import { ApplicationState } from '../../../reducers';
 
 import './DashboardContainer.scss';
+import {Footer} from "../index";
 
 interface Props {
   children: React.ReactNode;
 }
 
-const DashboardContainer = ({ children }: Props) => <div className="dashboard-container">{children}</div>;
+const DashboardContainer = ({children}: Props) =>
+    <div className="dashboard-container">
+      {children}
+      <Footer/>
+    </div>;
+
 const mapStateToProps = (state: ApplicationState) => ({
   user: state.user.details,
 });
