@@ -7,27 +7,27 @@ main {
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  margin-bottom: 190px;
+  margin-bottom: $main-bottom-spacing-lg;
   width: 100vw;
 }
 
 @include gt-xs {
   main {
-    margin-bottom: 130px;
+    margin-bottom: $main-bottom-spacing-md;
   }
 }
 
 @include gt-sm {
   main {
     min-height: 0;
-    margin: 0 auto 70px auto;
+    margin: 0 auto $main-bottom-spacing-sm auto;
     width: 90vw;
   }
 }
 
 @include gt-md {
   main {
-    margin: 0 auto 70px auto;
+    margin: 0 auto $main-bottom-spacing-sm auto;
     width: 80vw;
   }
 }
