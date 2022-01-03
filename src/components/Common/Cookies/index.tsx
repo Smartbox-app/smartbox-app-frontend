@@ -23,7 +23,7 @@ const Cookies = () => {
       <p>
         {__('application.privacyPoliceInfo')}{' '}
         <a target="_blank" href="/assets/20210422_Polityka_Prywatnosci_SmartBox.pdf">
-          <u>{__('application.privacyPolicy')}</u>
+          <u>{__('application.privacyPolicy1')}</u>
         </a>
         .
       </p>

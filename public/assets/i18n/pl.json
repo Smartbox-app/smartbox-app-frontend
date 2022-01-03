@@ -130,9 +130,11 @@
       "repPass": "Powtórz hasło",
       "readTheProvisions": "Zapoznałem/am się z postanowieniami",
       "acceptConditions": "Zaakceptuj warunki",
+      "statute": "Regulamin",
       "statutes": "Regulaminu",
       "privacyPolices": "Polityki prywatności",
-      "privacyPolicy": "Polityce prywatności",
+      "privacyPolicy": "Polityka prywatności",
+      "privacyPolicy1": "Polityce prywatności",
       "acceptContent": "oraz akceptuję ich treść",
       "changePasswordToService": "Zmieniasz swoje hasło do serwisu",
 
