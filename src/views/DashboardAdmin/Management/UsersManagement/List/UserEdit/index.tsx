@@ -28,42 +28,39 @@ const UserEdit = ({ userId, successNotification, hideModal, refreshApiTableData 
         </ButtonsContainer>
     );
 
-    const fetchUrl = `user/form/edit-user-data/${userId}`;
-    const sendUrl = `user/list`;
+    const fetchUrl = `user/form/update-user/${userId}`;
+    const sendUrl = `user/someone/${userId}`;
 
     const customSendFetcher = (formId: string, values: DiscountReq) => {
-        // console.log(values);
-        // return ApiService.sendForm(
-        //     sendUrl,
-        //     {
-        //         ...values,
-        //         expireAt: addMinutes(new Date(values.expireAt), 1439),
-        //     },
-        //     'PATCH',
-        // );
+        console.log(values);
+        return ApiService.sendForm(
+            sendUrl,
+            {
+                ...values,
+            },
+            'PATCH',
+        );
     };
 
     return (
         <FormContainer>
             <FormHeader title={__('application.editUserData')} />
             <FieldsColumn>
-                {userId}
-
-                {/*<ItfApiForm*/}
-                {/*    formId="editStockDiscountForm"*/}
-                {/*    schemaMayBeDynamic={false}*/}
-                {/*    schemaCacheEnabled={false}*/}
-                {/*    loadingInfo={<Spinner transparent />}*/}
-                {/*    schemaFetcher={() => ApiService.loadForm(fetchUrl)}*/}
-                {/*    sendFetcher={customSendFetcher}*/}
-                {/*    submitButton={submitButton}*/}
-                {/*    onSavedSuccessfully={() => {*/}
-                {/*        successNotification(__('application.changesSavedSuccess'));*/}
-                {/*        refreshApiTableData();*/}
-                {/*        hideModal();*/}
-                {/*    }}*/}
-                {/*    onTranslateString={formOnTranslateString}*/}
-                {/*/>*/}
+                <ItfApiForm
+                    formId="editStockDiscountForm"
+                    schemaMayBeDynamic={false}
+                    schemaCacheEnabled={false}
+                    loadingInfo={<Spinner transparent />}
+                    schemaFetcher={() => ApiService.loadForm(fetchUrl)}
+                    sendFetcher={customSendFetcher}
+                    submitButton={submitButton}
+                    onSavedSuccessfully={() => {
+                        successNotification(__('application.changesSavedSuccess'));
+                        refreshApiTableData();
+                        hideModal();
+                    }}
+                    onTranslateString={formOnTranslateString}
+                />
             </FieldsColumn>
         </FormContainer>
     );
