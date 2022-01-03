@@ -12,7 +12,7 @@ const Footer = () => (
            href="/assets/20210422_Polityka_Prywatnosci_SmartBox.pdf">
             {__('application.privacyPolicy')}
         </a>
-        <p>&copy; SmartBox Sp.z.o.o.</p>
+        <p>&copy; SmartBox sp. z o.o.</p>
     </footer>
 );
 
