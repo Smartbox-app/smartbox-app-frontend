@@ -42,10 +42,10 @@ const UserDetail = ({ userId, userData, fetchSingleUser, singleUser }: Props) =>
             icon="fa-file-o"
             title='application.customerCompanyData'
             rowData={[
-              singleUser?.companyData?.name,
-              singleUser?.companyData?.street,
-              singleUser?.companyData?.city,
-              singleUser?.companyData?.postCode,
+              singleUser?.companyData?.companyName,
+              singleUser?.companyData?.companyStreet,
+              singleUser?.companyData?.companyCity,
+              singleUser?.companyData?.companyPostCode,
               singleUser?.companyData?.nip,
             ]}
           />
