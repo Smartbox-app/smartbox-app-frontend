@@ -44,6 +44,6 @@
   }
 
   @include gt-sm {
-    //width: 500px;
+    max-width: 500px;
   }
 }

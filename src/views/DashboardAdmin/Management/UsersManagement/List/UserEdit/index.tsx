@@ -24,7 +24,7 @@ interface Props {
 const UserEdit = ({ userId, successNotification, hideModal, refreshApiTableData }: Props) => {
     const submitButton = (
         <ButtonsContainer>
-            <Button text={__('application.save')} type="submit" primary />
+            <Button text='application.save' type="submit" primary />
         </ButtonsContainer>
     );
 
@@ -44,7 +44,7 @@ const UserEdit = ({ userId, successNotification, hideModal, refreshApiTableData 
 
     return (
         <FormContainer>
-            <FormHeader title={__('application.editUserData')} />
+            <FormHeader title='application.editUserData' />
             <FieldsColumn>
                 <ItfApiForm
                     formId="editStockDiscountForm"
