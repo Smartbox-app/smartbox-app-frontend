@@ -59,7 +59,7 @@ const StepSize = ({
 
   const onSubmit = async (data: any) => {
     updateFormData(data);
-    await getStockList();
+    await getStockList(); //waiting for fetch list with stock discount before load data to discount variable in next step
     history.push(`/${UserService.getSlugByRole(user.role)}/order/step/duration`);
   };
 
