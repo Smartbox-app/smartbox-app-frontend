@@ -28,6 +28,7 @@ interface Props extends RouteComponentProps<RouteProps> {
   clearOrderAgreement: () => void;
   updateFormData: (data: any) => void;
   fetchBoxAvailability: (stockId: string) => void;
+  getStockList: () => void;
 }
 
 const StepSize = ({
@@ -39,6 +40,7 @@ const StepSize = ({
   user,
   boxAvailability,
   clearOrderAgreement,
+  getStockList
 }: Props) => {
   useEffect(() => {
     clearOrderAgreement();
@@ -55,8 +57,9 @@ const StepSize = ({
 
   const { register, handleSubmit, watch } = useForm({ defaultValues });
 
-  const onSubmit = (data: any) => {
+  const onSubmit = async (data: any) => {
     updateFormData(data);
+    await getStockList(); //waiting for fetch list with stock discount before load data to discount variable in next step
     history.push(`/${UserService.getSlugByRole(user.role)}/order/step/duration`);
   };
 
