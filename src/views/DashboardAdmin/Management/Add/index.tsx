@@ -30,7 +30,7 @@ const Add = ({ successNotification }: Props) => {
     <>
       <PageHeader title="application.preInvitation" />
       <ButtonsContainer>
-        <Button to="/admin/management/workers/list" text="application.back" primary />
+        <Button to="/admin/management/invitations" text="application.back" primary />
       </ButtonsContainer>
 
       <FormContainer>
