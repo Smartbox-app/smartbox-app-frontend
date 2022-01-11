@@ -26,7 +26,7 @@ const History = ({ data }: Props) => {
         <span className="header-cell">{__('application.period')}</span>
         <span className="header-cell">{__('application.number')}</span>
         <span className="header-cell">{__('application.orderStepSize')}</span>
-        <span className="header-cell">{__('application.stock')}</span>
+        <span className="header-cell last">{__('application.stock')}</span>
       </p>
       <ul className="history-list">{dataToDisplay}</ul>
       <Legend />
