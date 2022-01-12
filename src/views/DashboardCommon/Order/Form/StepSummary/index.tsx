@@ -174,7 +174,7 @@ const StepSummary = ({
       if (paymentChangeOnly(e)) {
         if (watch().paymentType !== `${PaymentType.card}`) {
           if (countedPrice?.name === 'firstRentFreePracing') {
-            successNotification(`${__('notification.firstWeekForOneOnlyCard')} ${__('notification.priceChanged')}`);
+            successNotification(`${__('notification.firstWeekForOneOnlyCard')}. ${__('notification.priceChanged')}`);
             updateFormData({
               isFirstRent: false,
             });
@@ -183,7 +183,7 @@ const StepSummary = ({
           updateFormData({
             isFirstRent: true,
           });
-          successNotification(`${__('notification.firstWeekForOneActive')} ${__('notification.priceChanged')}`);
+          successNotification(`${__('notification.firstWeekForOneActive')}. ${__('notification.priceChanged')}`);
         }
       }
     }
