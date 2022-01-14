@@ -35,14 +35,14 @@ const DiscountsList = ({ showModal, countedPrice, resetDiscountCode, successNoti
         if (codeDiscount !== 0) {
           setHelpText(true);
           resetDiscountCode();
-          successNotification('application.appliedBetterDiscount',);
+          successNotification('notification.appliedBetterDiscount',);
         }
         return setPriceName('application.firstRentFreePracing');
       case 'withDicoutnPricing':
         if (codeDiscount !== 0) {
           setHelpText(true);
           resetDiscountCode();
-          successNotification('application.appliedBetterDiscount',);
+          successNotification('notification.appliedBetterDiscount',);
         }
         return setPriceName('application.withDicoutnPricing');
       case 'cardPricing':
@@ -64,7 +64,7 @@ const DiscountsList = ({ showModal, countedPrice, resetDiscountCode, successNoti
       <FormHeader title='application.usedPrice' />
       <div className="discount-wrapper">
         <p>{__(priceName)}</p>
-        {helpText && <p>{__('application.appliedBetterDiscount')}</p>}
+        {helpText && <p>{__('notification.appliedBetterDiscount')}</p>}
       </div>
       <ButtonsContainer>
         <Button text='application.useDiscountCode' primary click={() => showModal(<DiscountCode />)} />
