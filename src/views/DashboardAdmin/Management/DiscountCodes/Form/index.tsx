@@ -39,25 +39,23 @@ const Form = ({ showModal, successNotification }: Props) => {
     );
 
   return (
-    <FieldsColumn>
-      <FormContainer>
-        <ItfApiForm
-          formId="addGiftForm"
-          schemaMayBeDynamic={false}
-          schemaCacheEnabled={false}
-          loadingInfo={<Spinner transparent />}
-          schemaFetcher={() => ApiService.loadForm(fetchUrl)}
-          sendFetcher={customSendFetcher}
-          submitButton={submitButton}
-          onSavedSuccessfully={(data: GiftRes) => {
-            successNotification('notification.discCodeCreated');
-            showModal(<NewCode newCodeProps={data} />);
-          }}
-          onTranslateString={formOnTranslateString}
-          thirdPartyComponents={{ ReactSelect: ReactSelectOverride, ReactCreatableSelect }}
-        />
-      </FormContainer>
-    </FieldsColumn>
+      <FieldsColumn>
+          <ItfApiForm
+              formId="addGiftForm"
+              schemaMayBeDynamic={false}
+              schemaCacheEnabled={false}
+              loadingInfo={<Spinner transparent/>}
+              schemaFetcher={() => ApiService.loadForm(fetchUrl)}
+              sendFetcher={customSendFetcher}
+              submitButton={submitButton}
+              onSavedSuccessfully={(data: GiftRes) => {
+                  successNotification('notification.discCodeCreated');
+                  showModal(<NewCode newCodeProps={data}/>);
+              }}
+              onTranslateString={formOnTranslateString}
+              thirdPartyComponents={{ReactSelect: ReactSelectOverride, ReactCreatableSelect}}
+          />
+      </FieldsColumn>
   );
 };
 

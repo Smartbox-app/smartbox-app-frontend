@@ -2,7 +2,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { TableFieldSearchableValues, TableSchema, TableSchemaField } from 'smartbox-tables';
+import Flatpickr from 'react-flatpickr';
+import { FieldType, TableFieldSearchableValues, TableSchema, TableSchemaField } from 'smartbox-tables';
 import Spinner from '../Spinner';
 import Table from '../Table';
 import debounce from '../../../utils/debounce';
@@ -12,7 +13,7 @@ import { formatPrice } from '../../../utils/format-price';
 import { ApplicationState } from '../../../reducers';
 
 import './ApiTable.scss';
-import {__} from "../../../helpers/i18n";
+import { __ } from '../../../helpers/i18n';
 
 interface SelectOption {
   value: string;
@@ -42,7 +43,8 @@ const searchComponent = (
   };
 
   const handleSearchByChange = (searchBy: string) => {
-    onSearchChange(searchBy, search.searchQuery);
+    handleSearchQueryChange('');
+    onSearchChange(searchBy, '');
   };
 
   let searchElement;
@@ -56,7 +58,7 @@ const searchComponent = (
     searchElement = (
       <select
         className="input"
-        placeholder={__("application.selectSearchedValue")}
+        placeholder={__('application.selectSearchedValue')}
         onChange={(e) => handleSearchQueryChange(e.target.value)}
       >
         <option value={''}>{__('application.select')}</option>
@@ -77,6 +79,26 @@ const searchComponent = (
             </option>
           ))}
       </select>
+    );
+  } else if (fields.type && [FieldType.Date].includes(fields.type)) {
+    searchElement = (
+      <div className="date-fields-group">
+        <div className="filter-field">
+          <Flatpickr
+            placeholder="Wybierz datę"
+            options={{
+              defaultDate: search.searchQuery ? new Date(search.searchQuery) : undefined,
+              enableTime: false,
+
+              locale: 'pl',
+            }}
+            onChange={(date: Date[]) => {
+              if (date && date.length === 1) handleSearchQueryChange(date[0].getTime().toString());
+              else handleSearchQueryChange('');
+            }}
+          />
+        </div>
+      </div>
     );
   } else {
     searchElement = (

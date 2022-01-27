@@ -24,9 +24,9 @@ class History extends React.Component<Props> {
     const { stockId } = this.props;
     return (
       <Section full>
-        <PageHeader title='application.historyWorker' />
+        <PageHeader title="application.historyWorker" />
         <ButtonsContainer>
-          <Button text='application.back' primary to="/admin/management/workers/list" />
+          <Button text="application.back" primary to="/admin/management/workers/list" />
         </ButtonsContainer>
         {stockId?.id ? (
           <>

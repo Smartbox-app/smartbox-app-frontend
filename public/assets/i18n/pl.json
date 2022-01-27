@@ -344,12 +344,11 @@
       "logInSuccess": "Zalogowano poprawnie",
       "appliedBetterDiscount": "Zastosowano korzystniejszą promocje. Kod nie został użyty. Można go wykorzystać ponownie.",
       "paymentFinishedSuccess": "Płatność automatycznie zakończona powodzeniem",
-      "firstWeekForOneOnlyCard": "Promocja 1zł za pierwszy tydzień obowiązuje tylko przy płatności kartą",
-      "firstWeekForOneActive": "Promocja 1zł za pierwszy tydzień aktywna",
+      "firstWeekForOneOnlyCard": "Promocja 1zł za pierwszy tydzień obowiązuje tylko przy płatności kartą. Cena została zmieniona",
+      "firstWeekForOneActive": "Promocja 1zł za pierwszy tydzień aktywna. Cena została zmieniona",
       "gateOpening": "Otwieram bramę",
       "gateRemoteOpening": "Otwieram bramę zdalnie",
-      "gateRemoteOpeningError": "Błąd podczas otwierania bramy zdalnie",
-      "priceChanged": "Cena została zmieniona"
+      "gateRemoteOpeningError": "Błąd podczas otwierania bramy zdalnie"
     }
   }
 }
