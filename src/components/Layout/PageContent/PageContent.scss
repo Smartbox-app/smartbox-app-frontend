@@ -1,5 +1,5 @@
-@import "../../../config/variables";
-@import "../../../config/mixins.scss";
+@import '../../../config/variables';
+@import '../../../config/mixins.scss';
 
 .page-content {
   padding: 0;
@@ -10,11 +10,15 @@
   min-height: 100vh;
   background-color: $color-background;
   width: 100%;
+  @include safe-padding-bottom(0px);
+  @include safe-padding-top(0px);
 }
 
 @include gt-xs {
   .page-content {
     padding: $main-spacing * 2 $main-spacing * 2;
+    @include safe-padding-bottom($main-spacing * 2);
+    @include safe-padding-top($main-spacing * 2);
   }
 }
 

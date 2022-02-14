@@ -35,7 +35,6 @@
     position: relative;
     z-index: 1000;
     overflow: auto;
-    height: 90vh;
     max-width: 90%;
     width: 100%;
     position: relative;
@@ -75,7 +74,7 @@
   }
 }
 
-@include gt-xs {
+@include gt-sm {
   .modal {
     .modal-body {
       width: auto;

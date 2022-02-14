@@ -3,9 +3,11 @@
 
 footer {
   position: absolute;
-  bottom: 60px;
+
+  @include safe-bottom(60px);
+
   width: 100%;
-  height: $footer-height *2;
+  height: $footer-height * 2;
   padding: $main-spacing 0;
   background-color: $color-primary;
 
@@ -17,14 +19,13 @@ footer {
   p {
     margin: 0;
     padding: $main-spacing $table-item-spacing;
-    font-size: .75rem;
+    font-size: 0.75rem;
     color: $color-text-button;
   }
 
   .footerLink {
-
     padding: $main-spacing $table-item-spacing;
-    font-size: .75rem;
+    font-size: 0.75rem;
     color: $color-text-button;
   }
 }
@@ -34,7 +35,7 @@ footer {
     flex-direction: row;
     height: $footer-height;
 
-    .p{
+    .p {
       padding: $main-spacing/2 $table-item-spacing;
     }
 

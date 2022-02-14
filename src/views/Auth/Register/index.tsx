@@ -70,15 +70,15 @@ const Register = ({ successNotification }: Props) => (
                   errors={translateErrors(errors)}
                   label={
                     <small>
-                        {__('application.readTheProvisions')}{' '}
-                      <a target="_blank" href="/assets/20210422_Regulamin_aplikacji_SmartBox.pdf">
+                      {__('application.readTheProvisions')}{' '}
+                      <a target="_blank" href="/assets/2022_02_01_Regulamin_aplikacji_SmartBox.pdf">
                         <u>{__('application.statutes')}</u>
                       </a>{' '}
                       i{' '}
-                      <a target="_blank" href="/assets/20210422_Polityka_Prywatnosci_SmartBox.pdf">
+                      <a target="_blank" href="/assets/2022_01_01_Polityka_Prywatnosci_SmartBox.pdf">
                         <u>{__('application.privacyPolices')}</u>
                       </a>{' '}
-                        {__('application.acceptContent')}
+                      {__('application.acceptContent')}
                     </small>
                   }
                 />
