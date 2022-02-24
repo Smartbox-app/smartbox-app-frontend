@@ -31,6 +31,8 @@ import { appStatus } from './actions/app-status';
 
 import 'flatpickr/dist/flatpickr.min.css';
 import 'flatpickr/dist/themes/airbnb.css';
+import BannerAndroid from './components/Common/BannerAndroid';
+import BannerIos from './components/Common/BanneriOS';
 
 flatpickr.localize(Polish);
 flatpickr.defaultConfig.time_24hr = true;
@@ -90,10 +92,12 @@ const App = () => {
                 <RouteUser path="/user" component={DashboardUser} />
 
                 <Route exact path="/404" component={Page404} />
-                <Route render={() => <Redirect to="/404" />} />
+                <Route component={Page404} />
               </Switch>
             </ErrorBoundary>
           </Router>
+          <BannerAndroid />
+          <BannerIos />
           <Modal />
           <Cookies />
         </OnlineContent>

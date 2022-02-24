@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './Cookies.scss';
-import {__} from "../../../helpers/i18n";
+import { __ } from '../../../helpers/i18n';
 
 const Cookies = () => {
   const areAccepted = () => {
@@ -22,7 +22,7 @@ const Cookies = () => {
     <div className={`cookies-information ${accepted ? 'hide-cookies-bar' : ''}`}>
       <p>
         {__('application.privacyPoliceInfo')}{' '}
-        <a target="_blank" href="/assets/20210422_Polityka_Prywatnosci_SmartBox.pdf">
+        <a target="_blank" href="/assets/2022_01_01_Polityka_Prywatnosci_SmartBox.pdf">
           <u>{__('application.privacyPolicy1')}</u>
         </a>
         .

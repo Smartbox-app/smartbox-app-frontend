@@ -1,0 +1,53 @@
+@import '../../../config/variables.scss';
+
+.android-banner {
+  position: fixed;
+  z-index: 2000;
+  left: 0;
+  right: 0;
+  top: 10px;
+  text-align: center;
+
+  .banner-icon {
+    display: inline-flex;
+
+    svg {
+      width: $main-spacing * 1.5;
+      height: $main-spacing * 1.5;
+    }
+  }
+
+  .banner-text {
+    box-shadow: $box-shadow-small;
+    font-size: 0.85rem;
+    background-color: $color-primary;
+    padding: $main-spacing;
+    margin-bottom: $main-spacing;
+    color: #fff;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    svg {
+      fill: #fff;
+    }
+    &:before {
+      position: absolute;
+      content: '';
+      height: 0;
+      width: 0;
+      border: 10px solid transparent;
+      border-bottom: 10px solid $color-primary;
+      top: -20px;
+      right: 20px;
+      margin: 0 auto;
+    }
+  }
+
+  .banner-close {
+    border: none;
+    background: none;
+    color: #fff;
+    font-size: 1.6rem;
+  }
+}
