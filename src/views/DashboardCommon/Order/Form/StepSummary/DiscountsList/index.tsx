@@ -20,12 +20,20 @@ interface Props {
     value: number;
   };
   codeDiscount: number;
+  codeDuration: number;
   showModal: (content: React.ReactNode) => void;
   successNotification: (text: string) => void;
   resetDiscountCode: () => void;
 }
 
-const DiscountsList = ({ showModal, countedPrice, resetDiscountCode, successNotification, codeDiscount }: Props) => {
+const DiscountsList = ({
+  showModal,
+  countedPrice,
+  resetDiscountCode,
+  successNotification,
+  codeDiscount,
+  codeDuration,
+}: Props) => {
   const [priceName, setPriceName] = useState(countedPrice.name);
   const [helpText, setHelpText]: [boolean, any] = useState(false);
 
@@ -35,14 +43,14 @@ const DiscountsList = ({ showModal, countedPrice, resetDiscountCode, successNoti
         if (codeDiscount !== 0) {
           setHelpText(true);
           resetDiscountCode();
-          successNotification('notification.appliedBetterDiscount',);
+          successNotification('notification.appliedBetterDiscount');
         }
         return setPriceName('application.firstRentFreePracing');
       case 'withDicoutnPricing':
         if (codeDiscount !== 0) {
           setHelpText(true);
           resetDiscountCode();
-          successNotification('notification.appliedBetterDiscount',);
+          successNotification('notification.appliedBetterDiscount');
         }
         return setPriceName('application.withDicoutnPricing');
       case 'cardPricing':
@@ -61,13 +69,21 @@ const DiscountsList = ({ showModal, countedPrice, resetDiscountCode, successNoti
 
   return (
     <div>
-      <FormHeader title='application.usedPrice' />
+      <FormHeader title="application.usedPrice" />
       <div className="discount-wrapper">
         <p>{__(priceName)}</p>
+        {countedPrice.name === 'cardPricing' && (
+          <div className="card-pricing-details">
+            <strong>{codeDiscount}%</strong> {__('application.forTime').toLowerCase()}{' '}
+            <strong>
+              {codeDuration} {__('application.weeksAmount')}
+            </strong>
+          </div>
+        )}
         {helpText && <p>{__('notification.appliedBetterDiscount')}</p>}
       </div>
       <ButtonsContainer>
-        <Button text='application.useDiscountCode' primary click={() => showModal(<DiscountCode />)} />
+        <Button text="application.useDiscountCode" primary click={() => showModal(<DiscountCode />)} />
       </ButtonsContainer>
     </div>
   );
@@ -76,6 +92,7 @@ const DiscountsList = ({ showModal, countedPrice, resetDiscountCode, successNoti
 const mapStateToProps = (state: ApplicationState) => ({
   countedPrice: state.order.countedPrice,
   codeDiscount: state.order.formData.card.discount,
+  codeDuration: state.order.formData.card.durationInWeeks,
 });
 
 const mapDispatchToProps = (dispatch: any) =>

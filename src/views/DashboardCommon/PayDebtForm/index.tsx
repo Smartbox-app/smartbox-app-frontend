@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { connect, useSelector } from 'react-redux';
+import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { differenceInCalendarDays } from 'date-fns';
 import { bindActionCreators } from 'redux';
@@ -13,8 +13,7 @@ import { ApplicationState } from '../../../reducers';
 import AgreementWrapper from '../Order/Form/StepAgreement/AgreementWrapper';
 import ScrollPosition from '../Order/Form/StepAgreement/ScrollPosition';
 import SummaryTable from '../Order/Form/StepSummary/SummaryTable';
-import UserService from '../../../services/user-service';
-import { history } from '../../../App';
+import { LockInfo } from '../Order/Form/StepPayment/LockInfo';
 
 interface RouteProps {
   rentId: string;
@@ -79,8 +78,9 @@ const PayDebtForm = ({
           <div className="bank-input-wrapper">
             <div dangerouslySetInnerHTML={{ __html: func.payload || '' }} />
           </div>
+          <LockInfo />
           <ButtonsContainer max>
-            <Button outline text='application.back' click={() => onBack()} />
+            <Button outline text="application.back" click={() => onBack()} />
           </ButtonsContainer>
         </div>
       </FormContainer>
@@ -91,7 +91,7 @@ const PayDebtForm = ({
   return (
     <FormContainer>
       <form onSubmit={handleSubmit(submit)}>
-        <FormHeader title='application.penaltyPayment' />
+        <FormHeader title="application.penaltyPayment" />
         <SummaryTable dateStart={singleRent.finishAt} dateEnd={new Date()} countedPrice={calc(singleRent)} />
         <AgreementWrapper />
         <ScrollPosition />
@@ -99,7 +99,7 @@ const PayDebtForm = ({
           <Button
             type="submit"
             primary
-            text='application.goToPayment'
+            text="application.goToPayment"
             disabled={!isAgreementAccepted || !isResignationMarked}
           />
         </ButtonsContainer>

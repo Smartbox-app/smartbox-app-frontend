@@ -12,6 +12,8 @@ import { modal, order } from '../../../../../../actions';
 import './BankForm.scss';
 import { Button, Spinner } from '../../../../../../components/Common';
 import UserService from '../../../../../../services/user-service';
+import { __ } from '../../../../../../helpers/i18n';
+import { LockInfo } from '../LockInfo';
 
 interface RouteProps {
   step: string;
@@ -43,8 +45,9 @@ const BankForm = ({ func, paymentId, sentExecutePaymentWithTpayRequest, bankGrou
           <div className="bank-input-wrapper">
             <div dangerouslySetInnerHTML={{ __html: func || '' }} />
           </div>
+          <LockInfo />
           <ButtonsContainer max>
-            <Button outline text='application.back' click={() => onBack()} />
+            <Button outline text="application.back" click={() => onBack()} />
           </ButtonsContainer>
         </div>
       )}

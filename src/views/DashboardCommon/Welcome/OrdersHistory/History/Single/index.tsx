@@ -4,6 +4,7 @@ import { dateOnly } from '../../../../../../utils/format-date';
 import './Single.scss';
 
 export interface SingleHistory {
+  createdAt: Date;
   startDate: Date;
   endDate: Date;
   size: number;
@@ -33,12 +34,16 @@ const colorStatusCalc = (s: string): string => {
 
 const Single = ({ single }: Props) => (
   <li className={`history-line ${colorStatusCalc(single.status)}`}>
+    <span className="line-cell">{dateOnly(single.createdAt)}</span>
     <span className="line-cell">
       {dateOnly(single.startAt, 5)} - {dateOnly(single.finishAt)}
     </span>
-    <span className="line-cell">{single.number}</span>
-    <span className="line-cell small">{single.size} m²</span>
-    <span className="line-cell last">{single.stockName}</span>
+    <span className="line-cell desktop">{single.number}</span>
+    <span className="line-cell small desktop">{single.size} m²</span>
+    <span className="line-cell last desktop">{single.stockName}</span>
+    <span className="line-cell last mobile">
+      <strong>{single.number}</strong>, {single.size} m², {single.stockName}
+    </span>
   </li>
 );
 export default Single;

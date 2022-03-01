@@ -48,6 +48,7 @@
       "active": "Aktywuj",
       "stock": "Plac",
       "period": "Okres",
+      "createdAt": "Utworzono",
       "changeStatus": "Zmień status",
       "notChooseStatus": "Nie wybrałeś statusu",
       "notApplicable": "Nie dotyczy",
@@ -208,8 +209,8 @@
       "preInvitationForWorker": "Wyślij zaproszenie dla pracownika",
       "preInvitation": "Wyślij zaproszenie",
 
-      "workerAssignChange": "Zmień przypisanie pracownika.",
-      "workerRoleChange": "Zmień stanowisko pracownika.",
+      "workerAssignChange": "Zmień przypisanie pracownika",
+      "workerRoleChange": "Zmień stanowisko pracownika",
 
       "createStockDisc": "Utwórz zniżkę",
       "createDiscountCode": "Utwórz kod rabatowy",
@@ -242,7 +243,7 @@
       "forTime": "Na czas",
       "weeksAmount": "tygodni",
 
-      "welcomeOnPlatform": "Witaj na platformie SmartBox.",
+      "welcomeOnPlatform": "Witaj na platformie Smartbox.",
       "fillFormToCreateAccount": "Proszę wypełnić poniższy formularz, żeby utworzyć konto.",
 
       "invoiceCreateData": "Generowanie faktury - dane",
@@ -317,7 +318,11 @@
       "firstWeekForOneOnlyCard": "Pierwszy tydzień za 1zł. Promocja obowiązuje tylko przy płatności kartą.",
       "updateInfo": "Rozwijamy się dla Ciebie, dodajemy nowe możliwości i poprawiamy błędy. Dostępna jest nowsza wersja aplikacji.\nKliknij tutaj aby zaktualizować.",
       "updateFinishedInfo": "Zaktualizowano aplikację. Kliknij tutaj aby użyć najnowszej wersji i skorzystać z wszystkich funkcji.",
-      "privacyPoliceInfo": "W tej aplikacji używamy plików cookies w celu zapewnienia użytkownikom efektywnego korzystania ze strony, a\ntakże narzędzi analitycznych, promocyjnych i reklamowych w celu reklamy, badania rynku oraz badania preferencji\n        użytkowników. Korzystając z Aplikacji SmartBox, możesz wyrazić zgodę na korzystanie z plików cookies oraz\n        wymienionych narzędzi. Więcej informacji na temat plików cookies oraz stosowanych narzędzi znajdziesz w naszej"
+      "privacyPoliceInfo": "W tej aplikacji używamy plików cookies w celu zapewnienia użytkownikom efektywnego korzystania ze strony, a\ntakże narzędzi analitycznych, promocyjnych i reklamowych w celu reklamy, badania rynku oraz badania preferencji\n        użytkowników. Korzystając z Aplikacji Smartbox, możesz wyrazić zgodę na korzystanie z plików cookies oraz\n        wymienionych narzędzi. Więcej informacji na temat plików cookies oraz stosowanych narzędzi znajdziesz w naszej",
+
+      "orderInfo": "Dane",
+
+      "dontForgetToBringLock": "Tylko nie zapomnij o zabraniu własnej kłódki!"
     },
     "notification": {
       "accountRegistered": "Konto zostało zarejestrowane",

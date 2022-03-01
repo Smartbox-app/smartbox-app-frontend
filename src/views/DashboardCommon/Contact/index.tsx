@@ -13,36 +13,25 @@ interface Props {
 }
 
 const Contact = ({ user }: Props) => {
-  const contactData = {
-    city: 'Ostrów Wielkopolski',
-    postCode: '63-400',
-    street: 'ul. Wylotowa 13',
-    adminContact: 'p.drobnikowski@smartbox.pl',
-    adminPhone: '0048665519467',
-    technicalContact: 'a.pawlowski@smartbox.pl',
-    technicalPhone: '0048665519467',
-    helpContact: 'pomoc@smartbox.pl',
-    helpPhone: '0048665519467',
-  };
   return (
     <div className="contact-wrapper">
       <Section full>
-        <PageHeader title='application.welcomeToContact' />
+        <PageHeader title="application.welcomeToContact" />
         <div className="department-wrapper">
           <SingleDepartment
             organisationRole="Biuro obsługi klienta"
-            name="Piotr Drobnikowski"
+            name="Adrian Pawłowski"
             phone="510298876"
-            mail="pomoc@smartbox-storage.pl"
+            mail="kontakt@smartbox-storage.pl"
             openHour="8:00"
             closeHour="16:00"
           />
 
           <SingleDepartment
             organisationRole="Pomoc techniczna"
-            name="Adrian Pawłowski"
+            name="Piotr Drobnikowski"
             phone="731400331"
-            mail="adrian@smartbox-storage.pl"
+            mail="kontakt@smartbox-storage.pl"
             openHour="8:00"
             closeHour="16:00"
           />

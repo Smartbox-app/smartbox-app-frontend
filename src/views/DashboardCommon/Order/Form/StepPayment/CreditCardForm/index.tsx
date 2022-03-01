@@ -11,6 +11,7 @@ import UserService from '../../../../../../services/user-service';
 import { order, paymentStatus } from '../../../../../../actions';
 
 import './CreditCardForm.scss';
+import { LockInfo } from '../LockInfo';
 
 interface RouteProps {
   step: string;
@@ -53,9 +54,9 @@ const CreditCardForm = ({ func, user, sentExecutePaymentRequest, paymentId, matc
             <Spinner />
           ) : (
             <>
-              <Alert type="success" text='notification.paymentFinishedSuccess' />
+              <Alert type="success" text="notification.paymentFinishedSuccess" />
               <ButtonsContainer max>
-                <Button outline text='application.backToHome' to="/" />
+                <Button outline text="application.backToHome" to="/" />
               </ButtonsContainer>
             </>
           )}
@@ -63,8 +64,9 @@ const CreditCardForm = ({ func, user, sentExecutePaymentRequest, paymentId, matc
       ) : (
         <div className="payment-wrapper">
           <div className="pay-button-container" />
+          <LockInfo />
           <ButtonsContainer max>
-            <Button outline text='application.back' click={() => onBack()} />
+            <Button outline text="application.back" click={() => onBack()} />
           </ButtonsContainer>
         </div>
       )}

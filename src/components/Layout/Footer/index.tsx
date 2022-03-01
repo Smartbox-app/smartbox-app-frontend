@@ -10,7 +10,7 @@ const Footer = () => (
     <a className="footerLink" target="_blank" href="/assets/2022_01_01_Polityka_Prywatnosci_SmartBox.pdf">
       {__('application.privacyPolicy')}
     </a>
-    <p>&copy; SmartBox sp. z o.o.</p>
+    <p>&copy; SmartBox Sp. J.</p>
   </footer>
 );
 

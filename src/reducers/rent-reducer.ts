@@ -43,6 +43,7 @@ type Action = BoxGroup | GetSingleRent | GetMySingleRent | FetchMyRentHistory | 
 const initialState: RentsStatus = {
   singleRent: {
     id: '',
+    createdAt: new Date(),
     startAt: new Date(),
     finishAt: new Date(),
     status: RentStatus.free,

@@ -104,7 +104,7 @@ const CreditCardInput = ({ register, errors, control }: Props) => {
             control={control}
             defaultValue={optionsMonth[0]}
             options={optionsMonth}
-            as={<Select styles={customStyles} />}
+            as={<Select styles={customStyles} menuPortalTarget={document.body} />}
           />
 
           <Controller
@@ -113,7 +113,7 @@ const CreditCardInput = ({ register, errors, control }: Props) => {
             control={control}
             defaultValue={yearMonth[0]}
             options={yearMonth}
-            as={<Select styles={customStyles} />}
+            as={<Select styles={customStyles} menuPortalTarget={document.body} />}
           />
         </div>
       </div>

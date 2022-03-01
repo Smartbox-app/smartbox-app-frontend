@@ -1,6 +1,5 @@
 import React from 'react';
 import { ItfApiForm } from 'itf_formbuilder_react';
-import ReactSelect from 'react-select';
 import { connect } from 'react-redux';
 import ReactCreatableSelect from 'react-select/creatable';
 import { bindActionCreators } from 'redux';
@@ -92,7 +91,7 @@ const Position = ({ rentId, stock, successNotification, fetchBoxStatuses, hideMo
             <div className="form-field">
               <label htmlFor={fieldHtmlId}>
                 <p>{field.title}</p>
-                <ReactSelect
+                <ReactSelectOverride
                   id={fieldHtmlId}
                   name={fieldHtmlId}
                   required={field.required}

@@ -14,12 +14,13 @@
   width: 100%;
   color: $color-inactive;
   font-weight: 600;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
 }
 
 .header-cell {
   flex: 1;
   margin-right: $table-item-spacing;
+  font-size: 0.9rem;
 }
 
 .active-stock {
@@ -43,14 +44,40 @@
   width: 100%;
   padding: 7.5px 0;
   border-bottom: 1px solid $color-inactive;
+
+  .desktop {
+    display: none;
+  }
+
+  @include gt-sm {
+    .mobile {
+      display: none;
+    }
+    .desktop {
+      display: flex;
+    }
+  }
 }
 
 .header {
-  text-transform: uppercase;
   font-weight: 600;
   color: $color-disabled;
+
+  .desktop {
+    display: none;
+  }
+
+  @include gt-sm {
+    .mobile {
+      display: none;
+    }
+    .desktop {
+      display: flex;
+    }
+  }
 }
 
 .last {
   margin-right: 0;
+  flex: 1.5 1 0;
 }

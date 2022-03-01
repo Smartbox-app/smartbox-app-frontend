@@ -19,7 +19,7 @@ interface Props {
 const DiscountCode = ({ hideModal, updateFormData, successNotification }: Props) => {
   const submitButton = (
     <ButtonsContainer>
-      <Button text='application.standardPrice' type="submit" primary />
+      <Button text="application.save" type="submit" primary />
     </ButtonsContainer>
   );
 
@@ -37,7 +37,7 @@ const DiscountCode = ({ hideModal, updateFormData, successNotification }: Props)
 
   return (
     <FormContainer>
-      <FormHeader title='application.passYourDiscountCode' />
+      <FormHeader title="application.passYourDiscountCode" />
       <ItfApiForm
         formId="getGiftForm"
         schemaMayBeDynamic={false}
@@ -48,6 +48,7 @@ const DiscountCode = ({ hideModal, updateFormData, successNotification }: Props)
         submitButton={submitButton}
         onSavedSuccessfully={(data: GiftRes) => {
           successNotification('notification.discountCodeRead');
+          console.log('GOT GIFT DATA', data);
           updateFormData({
             discountCode: data.code,
             card: {
