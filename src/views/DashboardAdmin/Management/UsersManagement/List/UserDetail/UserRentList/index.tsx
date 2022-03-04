@@ -4,7 +4,7 @@ import { Alert } from '../../../../../../../components/Common';
 import { dateOnly } from '../../../../../../../utils/format-date';
 
 import './UserRentList.scss';
-import {__} from "../../../../../../../helpers/i18n";
+import { __ } from '../../../../../../../helpers/i18n';
 
 interface Props {
   rentList: ActiveRentsForUserDetails[];
@@ -12,7 +12,7 @@ interface Props {
 
 const UserRentList = ({ rentList }: Props) => {
   if (rentList.length === 0) {
-    return <Alert type="notice" text='application.lackOfRent'/>;
+    return <Alert type="notice" text="application.lackOfRent" />;
   }
 
   const colorDecider = (s: RentStatus) => {
@@ -20,7 +20,7 @@ const UserRentList = ({ rentList }: Props) => {
       case RentStatus.noPaidExtension:
         return 'no-paid-extension';
       case RentStatus.noPaidExtensionWithWarning:
-        return 'no-paid-extension';
+        return 'no-paid-extension-with-warning';
       case RentStatus.toCheck:
         return 'to-check';
       case RentStatus.rented:

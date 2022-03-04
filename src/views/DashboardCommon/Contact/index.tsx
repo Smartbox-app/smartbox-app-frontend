@@ -21,7 +21,7 @@ const Contact = ({ user }: Props) => {
           <SingleDepartment
             organisationRole="Biuro obsługi klienta"
             name="Adrian Pawłowski"
-            phone="510298876"
+            phone="731400331"
             mail="kontakt@smartbox-storage.pl"
             openHour="8:00"
             closeHour="16:00"
@@ -30,7 +30,7 @@ const Contact = ({ user }: Props) => {
           <SingleDepartment
             organisationRole="Pomoc techniczna"
             name="Piotr Drobnikowski"
-            phone="731400331"
+            phone="510298876"
             mail="kontakt@smartbox-storage.pl"
             openHour="8:00"
             closeHour="16:00"

@@ -57,6 +57,10 @@
       background: $color-tertiary;
       border: 2px solid darken($color-tertiary, 10%);
     }
+    .no-paid-extension {
+      background: darken($color-tertiary, 5%);
+      border: 2px solid darken($color-tertiary, 20%);
+    }
 
     .dates-rent {
       margin-right: $main-spacing;
