@@ -7,6 +7,7 @@ import { ProgressIndicator } from '../../../components/Common';
 import Form from './Form/Index';
 import { useDispatch } from 'react-redux';
 import { order } from '../../../actions';
+import { getStockDiscountsList } from '../../../actions/stock';
 
 interface RouteProps {
   step: string;
@@ -16,6 +17,12 @@ interface RouteProps {
 type Props = RouteComponentProps<RouteProps>;
 
 const Order = ({ match }: Props) => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getStockDiscountsList());
+  });
+
   const getStepByName = (stepName: string) => {
     switch (stepName) {
       case 'size':
