@@ -21,7 +21,7 @@ const Order = ({ match }: Props) => {
 
   useEffect(() => {
     dispatch(getStockDiscountsList());
-  });
+  }, []);
 
   const getStepByName = (stepName: string) => {
     switch (stepName) {
