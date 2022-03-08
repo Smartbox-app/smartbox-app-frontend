@@ -34,14 +34,14 @@ const colorStatusCalc = (s: string): string => {
 
 const Single = ({ single }: Props) => (
   <li className={`history-line ${colorStatusCalc(single.status)}`}>
-    <span className="line-cell">{dateOnly(single.createdAt)}</span>
-    <span className="line-cell">
+    <span className="line-cell created">{dateOnly(single.createdAt)}</span>
+    <span className="line-cell period">
       {dateOnly(single.startAt, 5)} - {dateOnly(single.finishAt)}
     </span>
-    <span className="line-cell desktop">{single.number}</span>
-    <span className="line-cell small desktop">{single.size} m²</span>
-    <span className="line-cell last desktop">{single.stockName}</span>
-    <span className="line-cell last mobile">
+    <span className="line-cell number desktop">{single.number}</span>
+    <span className="line-cell size small desktop">{single.size} m²</span>
+    <span className="line-cell stock last desktop">{single.stockName}</span>
+    <span className="line-cell data last mobile">
       <strong>{single.number}</strong>, {single.size} m², {single.stockName}
     </span>
   </li>

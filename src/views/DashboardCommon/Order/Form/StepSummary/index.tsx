@@ -75,7 +75,6 @@ const StepSummary = ({
     }
   }, []);
 
-
   const defaultValues = {
     paymentType: `${selectedPayment || PaymentType.card}`,
     firstName: user.firstName || '',
@@ -172,8 +171,8 @@ const StepSummary = ({
   const handleChange = (e: any) => {
     if (isFirstRent) {
       if (paymentChangeOnly(e)) {
-        if (watch().paymentType !== `${PaymentType.card}`) {
-          if (countedPrice?.name === 'firstRentFreePracing') {
+        if (Number(watch().paymentType) !== PaymentType.card) {
+          if (countedPrice?.name === 'firstRentFreePricing') {
             successNotification('notification.firstWeekForOneOnlyCard');
             updateFormData({
               isFirstRent: false,
@@ -192,32 +191,32 @@ const StepSummary = ({
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="form-step-two" onChange={handleChange}>
       <Discount />
-      <FormHeader title='application.orderSummary' />
+      <FormHeader title="application.orderSummary" />
       <SummaryTable dateStart={formData.dateStart} dateEnd={formData.dateEnd} countedPrice={countedPrice.value} />
       {countedPrice.value > 0 && <PaymentMethods register={register} />}
 
       <TenantDetailsForm register={register} control={control} errors={errors} disabled={!isFirstRent} />
       {isFirstRent && (
-          <>
-              <p>{__('application.infoToOptionalInvoice')}</p>
-              <CheckBox
-                  name="iNeedInvoice"
-                  checked={invoiceNeeded}
-                  handleChange={() => setInvoiceNeeded(!invoiceNeeded)}
-                  label='application.wantOptionalInvoice'
-              />
-          </>
+        <>
+          <p>{__('application.infoToOptionalInvoice')}</p>
+          <CheckBox
+            name="iNeedInvoice"
+            checked={invoiceNeeded}
+            handleChange={() => setInvoiceNeeded(!invoiceNeeded)}
+            label="application.wantOptionalInvoice"
+          />
+        </>
       )}
-      {invoiceNeeded  && (
+      {invoiceNeeded && (
         <CompanyDetailsForm register={register} errors={errors} control={control} disabled={!isFirstRent} />
       )}
 
       <ButtonsContainer max>
-        <Button outline text='application.back' click={() => onBack()} />
+        <Button outline text="application.back" click={() => onBack()} />
         <Button
           type="submit"
           primary
-          text='application.goToOrder'
+          text="application.goToOrder"
           disabled={dataVerification() || tenantData() || companyData()}
         />
       </ButtonsContainer>
