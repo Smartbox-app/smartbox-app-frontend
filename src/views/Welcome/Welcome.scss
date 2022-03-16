@@ -29,11 +29,8 @@ main {
 
 .welcome-right {
   height: 100%;
-
-  @include gt-sm {
-    flex: 0 0 50%;
-    width: 100%;
-  }
+  flex: 0 0 50%;
+  width: 100%;
 }
 
 .swiper-container {
@@ -64,6 +61,7 @@ main {
 }
 
 .notification-container {
+  pointer-events: none;
   height:100%
 }
 

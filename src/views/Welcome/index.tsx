@@ -13,10 +13,12 @@ const slides: Slide[] = [
     header: '',
     text: (
       <>
-        <img src="/assets/images/Slide1/1.png" id="s1i1" className="slide-img"></img>
-        <img src="/assets/images/Slide1/2.png" id="s1i2" className="slide-img"></img>
-        <img src="/assets/images/Slide1/3.png" id="s1i3" className="slide-img"></img>
-        <img src="/assets/images/Slide1/4.png" id="s1i4" className="slide-img"></img>
+        <div>
+          <img src="/assets/images/Slide1/1.png" className="slide1img1 slide-img"></img>
+          <img src="/assets/images/Slide1/2.png" className="slide1img2 slide-img"></img>
+          <img src="/assets/images/Slide1/3.png" className="slide1img3 slide-img"></img>
+          <img src="/assets/images/Slide1/4.png" className="slide1img4 slide-img"></img>
+        </div>
       </>
     )
   },
@@ -24,10 +26,12 @@ const slides: Slide[] = [
     header: '',
     text: (
       <>
-        <img src="/assets/images/Slide2/1.png" id="s2i1" className="slide-img"></img>
-        <img src="/assets/images/Slide2/2.png" id="s2i2" className="slide-img"></img>
-        <img src="/assets/images/Slide2/3.png" id="s2i3" className="slide-img"></img>
-        <img src="/assets/images/Slide2/4.png" id="s2i4" className="slide-img"></img>
+        <div>
+          <img src="/assets/images/Slide2/1.png" className="slide2img1 slide-img"></img>
+          <img src="/assets/images/Slide2/2.png" className="slide2img2 slide-img"></img>
+          <img src="/assets/images/Slide2/3.png" className="slide2img3 slide-img"></img>
+          <img src="/assets/images/Slide2/4.png" className="slide2img4 slide-img"></img>
+        </div>
       </>
     )
   },
@@ -35,9 +39,11 @@ const slides: Slide[] = [
     header: '',
     text: (
       <>
-        <img src="/assets/images/Slide3/1.png" id="s3i1" className="slide-img"></img>
-        <img src="/assets/images/Slide3/2.png" id="s3i2" className="slide-img"></img>
-        <img src="/assets/images/Slide3/3.png" id="s3i3" className="slide-img"></img>
+        <div>
+          <img src="/assets/images/Slide3/1.png" className="slide3img1 slide-img"></img>
+          <img src="/assets/images/Slide3/2.png" className="slide3img2 slide-img"></img>
+          <img src="/assets/images/Slide3/3.png" className="slide3img3 slide-img"></img>
+        </div>
       </>
     )
   },
@@ -55,7 +61,7 @@ const Welcome = () => {
   return (
     <Main>
       <div className="welcome-right">
-        <Swiper pagination={{el: '.swiper-pagination', clickable: true}}>{items}</Swiper>
+        <Swiper pagination={{ el: '.swiper-pagination', clickable: true }} key={"a"}>{items}</Swiper>
       </div>
     </Main>
   );

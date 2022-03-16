@@ -1,5 +1,17 @@
 @import './variables.scss';
 
+@mixin or-port {
+  @media  screen and (orientation: portrait){
+    @content;
+  }
+}
+
+@mixin or-land {
+  @media screen and (orientation: landscape){
+    @content;
+  }
+}
+
 @mixin lt-xs {
   @media screen and(max-width: map-get($breakpoints, xs) - 1) {
     @content;

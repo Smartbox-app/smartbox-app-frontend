@@ -18,7 +18,7 @@ const SingleSlide = ({ item, last }: Props) => {
         <div className="slide-subheader">{subheader}</div>
         <div className="slide-description">{text}</div>
         <ButtonsContainer>
-          <Button big text="Zarejestruj się" to="/register" />
+          <Button big text="Zarejestruj się" to="/register" className="register-button"/>
         </ButtonsContainer>
       </div>
     </div>
