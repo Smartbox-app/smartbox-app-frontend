@@ -9,7 +9,7 @@ import { createBrowserHistory } from 'history';
 import flatpickr from 'flatpickr';
 import { Polish } from 'flatpickr/dist/l10n/pl';
 import reducers from './reducers';
-import { DashboardAdmin, DashboardWorker, DashboardUser, Page404 } from './views';
+import { DashboardAdmin, DashboardWorker, DashboardUser, Page404, Welcome } from './views';
 import {
   OnlineContent,
   OfflineContent,
@@ -70,7 +70,8 @@ const App = () => {
           <Router history={history}>
             <ErrorBoundary>
               <Switch>
-                <Route exact path="/" render={() => <Redirect to="/login" />} />
+                <Route exact path="/" render={() => <Redirect to="/welcome" />} />
+                <Route path="/welcome" component={Welcome} />
                 <Route path="/login" component={Login} />
                 <Route exact path="/register" component={Register} />
                 <Route path="/register/mail-was-send" component={EmailSend} />

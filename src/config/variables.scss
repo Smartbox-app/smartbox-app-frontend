@@ -1,6 +1,8 @@
 $font-primary: 'AzoSans', sans-serif;
 $basic-font-size: 14px;
 
+$border-radius: 5px;
+
 //COLORS
 $color-primary: #0674bd;
 $color-primary-light: lighten(#0674bd, 20%);
@@ -11,6 +13,8 @@ $color-facebook: #4267b2;
 $color-text-alter: #fff;
 $color-text: #000;
 $color-text-button: #fff;
+$color-text-light: #fff;
+
 
 $color-background: #fafafa;
 $color-background-darken: darken($color-background, 4%);
@@ -68,6 +72,12 @@ $breakpoints: (
   lg: 1200px,
   xl: 1368px,
 );
+
+//SPACING
+$main-spacing: 10px;
+
+//SHADOWS
+$soft-shadow: 0 0 $main-spacing * 2.5 (-$main-spacing/2) rgba(0, 0, 0, 0.15);
 
 //SPACING
 $main-spacing: 10px;
