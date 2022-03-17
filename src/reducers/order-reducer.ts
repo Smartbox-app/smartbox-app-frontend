@@ -8,7 +8,7 @@ import {
   usePricing,
 } from 'smartbox-types';
 import { FormType } from '../types/order-form';
-import {__} from "../helpers/i18n";
+import { __ } from "../helpers/i18n";
 
 export type PaymentMethodDetail = {
   id: string;
@@ -290,7 +290,7 @@ export default (state: OrderState = initialState, action: Action): any => {
     case 'CLEAR_ORDER_FORM_AGREEMENT_SUCCESS':
       return {
         ...state,
-        isAgreementAccepted: false,
+        isAgreementAccepted: true,
         isResignationMarked: false,
         paymentId: '',
         paymentSuccess: false,

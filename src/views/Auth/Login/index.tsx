@@ -62,7 +62,7 @@ class Login extends React.Component<Props> {
     if (user) return this.getRedirect();
     if (loading) return <Spinner />;
     return (
-      <PageContent>
+      <PageContent bg>
         <div className="login-logo-wrapper">
           <Logo />
         </div>

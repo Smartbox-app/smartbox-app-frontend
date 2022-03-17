@@ -4,6 +4,7 @@
 .slider-wrapper {
   position: relative;
   padding: $main-spacing * 2;
+  @include safe-padding-bottom($main-spacing * 4);
 }
 
 .slick-slide img {

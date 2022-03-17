@@ -8,31 +8,16 @@
   font-size: 0.8rem;
   word-break: normal;
 
-  &.created {
+  &.period {
     flex: 0 0 25%;
   }
-  &.period {
+  &.number {
+    flex: 0 0 20%;
+  }
+  &.size {
+    flex: 0 0 20%;
+  }
+  &.stock {
     flex: 0 0 35%;
-  }
-  &.data {
-    flex: 0 0 40%;
-  }
-
-  @include gt-sm {
-    &.created {
-      flex: 0 0 17%;
-    }
-    &.period {
-      flex: 0 0 21%;
-    }
-    &.number {
-      flex: 0 0 15%;
-    }
-    &.size {
-      flex: 0 0 15%;
-    }
-    &.stock {
-      flex: 0 0 22%;
-    }
   }
 }

@@ -12,6 +12,11 @@
   width: 100%;
   @include safe-padding-bottom(0px);
   @include safe-padding-top(0px);
+
+  &.bg {
+    background-image: url('/assets/images/bg.jpg');
+    background-size: cover;
+  }
 }
 
 @include gt-xs {

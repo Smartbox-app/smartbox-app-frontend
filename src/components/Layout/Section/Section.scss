@@ -4,6 +4,7 @@
 .section-wrapper {
   width: 100%;
   padding: $main-spacing $main-spacing;
+  padding-bottom: $main-spacing * 3;
 }
 
 @include gt-sm {

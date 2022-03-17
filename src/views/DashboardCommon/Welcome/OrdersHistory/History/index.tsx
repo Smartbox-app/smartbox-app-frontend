@@ -23,12 +23,10 @@ const History = ({ data }: Props) => {
   return (
     <div className="history-wrapper">
       <div className="history-line header">
-        <span className="header-cell created">{__('application.createdAt')}</span>
         <span className="header-cell period">{__('application.period')}</span>
-        <span className="header-cell number desktop">{__('application.number')}</span>
-        <span className="header-cell size desktop">{__('application.orderStepSize')}</span>
-        <span className="header-cell stock last desktop">{__('application.stock')}</span>
-        <span className="header-cell data last mobile">{__('application.orderInfo')}</span>
+        <span className="header-cell number">{__('application.number')}</span>
+        <span className="header-cell size">{__('application.orderStepSize')}</span>
+        <span className="header-cell stock last">{__('application.stock')}</span>
       </div>
       <ul className="history-list">{dataToDisplay}</ul>
       <Legend />

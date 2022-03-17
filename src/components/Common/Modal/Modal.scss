@@ -40,7 +40,7 @@
     position: relative;
     transform: scale(0.9);
     transition: transform $transition-time/2 ease-in-out;
-
+    max-height: 80%;
     p {
       max-width: 500px;
       font-size: 0.9rem;

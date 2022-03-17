@@ -13,20 +13,20 @@ interface Props {
 }
 
 class ScrollPosition extends Component<Props> {
-  private onScroll = (el: any) => {
-    if (el.scrollTop > el.children[0].scrollHeight - el.clientHeight) {
-      this.props.formAgreementReaded();
-    }
-  };
-  componentDidMount(): void {
-    const el = document.querySelector('.order-agreement-wrapper');
-    el && el.addEventListener('scroll', () => this.onScroll(el), false);
-  }
+  // private onScroll = (el: any) => {
+  //   if (el.scrollTop > el.children[0].scrollHeight - el.clientHeight) {
+  //     this.props.formAgreementReaded();
+  //   }
+  // };
+  // componentDidMount(): void {
+  //   const el = document.querySelector('.order-agreement-wrapper');
+  //   el && el.addEventListener('scroll', () => this.onScroll(el), false);
+  // }
 
-  componentWillUnmount(): void {
-    const el = document.querySelector('.order-agreement-wrapper');
-    el && el.removeEventListener('scroll', () => this.onScroll(el), false);
-  }
+  // componentWillUnmount(): void {
+  //   const el = document.querySelector('.order-agreement-wrapper');
+  //   el && el.removeEventListener('scroll', () => this.onScroll(el), false);
+  // }
 
   render() {
     const { isResignationMarked, formResignationMarked, isAgreementAccepted } = this.props;
@@ -35,10 +35,10 @@ class ScrollPosition extends Component<Props> {
         <CheckBox
           name="resignation"
           checked={isResignationMarked}
-          hide={!isAgreementAccepted}
-          disabled={!isAgreementAccepted}
+          // hide={!isAgreementAccepted}
+          // disabled={!isAgreementAccepted}
           handleChange={() => formResignationMarked()}
-          label='application.14daysResign'
+          label="application.14daysResign"
         />
       </>
     );

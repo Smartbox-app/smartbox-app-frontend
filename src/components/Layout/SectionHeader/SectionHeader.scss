@@ -20,13 +20,17 @@
   }
 
   .no-margin {
-    margin-bottom: $main-spacing;
+    margin-bottom: 0;
   }
 }
 
 @include gt-sm {
   .section-header-container {
     margin-bottom: $main-spacing * 1.5;
+
+    &.no-margin {
+      margin-bottom: 0;
+    }
 
     .section-header {
       max-width: $page-header-width;

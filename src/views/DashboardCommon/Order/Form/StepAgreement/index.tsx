@@ -104,22 +104,32 @@ const StepSummary = ({
   const onBack = () => {
     history.push(`/${UserService.getSlugByRole(user.role)}/order/step/summary/${match.params.rentId || ''}`);
   };
-
+  const desktop = window.matchMedia('(min-width: 920px)').matches;
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <FormHeader title='application.orderAgreement' />
-      <AgreementWrapper />
-      <span className="separator"/>
-      <ScrollPosition />
-      <Alert type="notice" text='application.orderAgreementAcceptation' />
-      <ButtonsContainer max>
-        <Button outline text='application.back' click={() => onBack()} />
-        <Button
-          type="submit"
-          primary
-          text='application.goToPayment'
-          disabled={!isAgreementAccepted || !isResignationMarked}
+      <FormHeader title="application.orderAgreement" />
+      {/* <AgreementWrapper /> */}
+      {desktop && (
+        <object
+          className="rules-embed"
+          data="/assets/2022_02_01_Regulamin_aplikacji_SmartBox.pdf#toolbar=0&navpanes=0&scrollbar=0"
+          type="application/pdf"
         />
+      )}
+      <a
+        className="button button-primary"
+        target="_blank"
+        href="/assets/2022_02_01_Regulamin_aplikacji_SmartBox.pdf"
+        title="Regulamin"
+      >
+        Kliknij aby otworzyć regulamin
+      </a>
+      <span className="separator" />
+      <ScrollPosition />
+      <Alert type="notice" text="application.orderAgreementAcceptation" />
+      <ButtonsContainer max>
+        <Button outline text="application.back" click={() => onBack()} />
+        <Button type="submit" primary text="application.goToPayment" disabled={!isResignationMarked} />
       </ButtonsContainer>
     </form>
   );
