@@ -1,4 +1,5 @@
-@import "../../../config/variables.scss";
+@import '../../../config/variables.scss';
+@import '../../../config/mixins.scss';
 
 .update-info-bar {
   background-color: $color-primary;
@@ -8,12 +9,11 @@
   font-size: 0.9rem;
   transition: $transition-time background-color;
   position: fixed;
-  top: 0;
   left: 0;
   width: 100%;
   z-index: 999999;
   box-shadow: 0 0 $main-spacing / 2 $main-spacing / 4 rgba(0, 0, 0, 0.5);
-
+  @include safe-top(0);
   &:hover {
     background-color: lighten($color-primary, 10%);
   }

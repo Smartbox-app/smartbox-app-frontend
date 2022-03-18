@@ -59,11 +59,11 @@ const Welcome = () => {
   ));
 
   return (
-    <Main>
-      <div className="welcome-right">
-        <Swiper pagination={{ el: '.swiper-pagination', clickable: true }}>{items}</Swiper>
-      </div>
-    </Main>
+    // <Main>
+    <div className="welcome-container">
+      <Swiper pagination={{ el: '.swiper-pagination', clickable: true }}>{items}</Swiper>
+    </div>
+    // </Main>
   );
 };
 
