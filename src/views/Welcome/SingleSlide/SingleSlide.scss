@@ -12,7 +12,7 @@
 
 .slide-logo {
   margin: $main-spacing auto;
-  max-width: 200px;
+  max-width: 150px;
   z-index: 2;
   @include safe-padding-top($main-spacing);
 }
@@ -26,7 +26,7 @@
   justify-content: space-between;
   height: 100%;
 
-  @include safe-padding-bottom($main-spacing * 6);
+  @include safe-padding-bottom(65px);
 
   overflow: hidden;
   text-shadow: 0 1px 0 rgba($color-text, 0.3);
@@ -63,11 +63,16 @@
 }
 
 .slide-description {
-  height: 100%;
+  height: calc(100% - 135px);
   position: relative;
   max-width: 600px;
   margin: 0 auto;
   width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .logo-slider {
@@ -81,170 +86,19 @@
   color: white;
 }
 
-.slide-img {
-  position: absolute;
-}
-// .slide1img1 {
-//   width: 80%;
-
-//   // @include or-land {
-//   //   height: 35%;
-//   //   bottom: 58%;
-//   //   right: calc(50% - 4.5vh * 5);
-//   // }
-//   // @include or-port {
-//   //   height: 35%;
-//   //   bottom: 58%;
-//   //   right: calc(50% - 4.5vh * 5);
-//   // }
+// .slide-img {
+//   position: absolute;
 // }
-
-.slide1img2 {
-  @include or-land {
-    height: 31%;
-    top: 40%;
-    left: calc(50% - 2.6vh * 5);
-  }
-  @include or-port {
-    height: 31%;
-    top: 40%;
-    left: calc(50% - 2.6vh * 5);
-    //right: 17%;
-  }
-}
-
-.slide1img3 {
-  @include or-land {
-    height: 13%;
-    top: 60%;
-    left: calc(50% - 4vh * 5);
-  }
-  @include or-port {
-    height: 13%;
-    top: 60%;
-    left: calc(50% - 4vh * 5);
-  }
-}
-
-.slide1img4 {
-  @include or-land {
-    height: 13%;
-    top: 60%;
-    right: calc(50% - 4.4vh * 5);
-  }
-  @include or-port {
-    height: 13%;
-    top: 60%;
-    right: calc(50% - 4.4vh * 5);
-  }
-}
-
-// .slide2img1 {
-//   width: 80%;
-//   // @include or-land {
-//   //   height: 50%;
-//   //   top: 20%;
-//   //   left: 25%;
-//   // }
-//   // @include or-port {
-//   //   height: 35%;
-//   //   bottom: 58%;
-//   //   right: calc(50% - 4.5vh * 5);
-//   // }
-// }
-
-.slide2img2 {
-  @include or-land {
-    width: 20%;
-    top: 15%;
-    right: 31.5%;
-  }
-  @include or-port {
-    height: 31%;
-    top: 35%;
-    left: calc(50% - 2.2vh * 5);
-    //right: 17%;
-  }
-}
-
-.slide2img3 {
-  @include or-land {
-    width: 20%;
-    top: 65%;
-    right: 30%;
-  }
-  @include or-port {
-    height: 13.5%;
-    top: 59%;
-    left: 59%;
-  }
-}
-
-.slide2img4 {
-  @include or-land {
-    width: 20%;
-    top: 40%;
-    right: 30%;
-  }
-  @include or-port {
-    height: 15%;
-    top: 62%;
-    right: 50%;
-  }
-}
-
-// .slide3img1 {
-//   width: 80%;
-//   //   @include or-land {
-//   //     height: 50%;
-//   //     top: 20%;
-//   //     left: 25%;
-//   //   }
-//   //   @include or-port {
-//   //     height: 35%;
-//   //     bottom: 58%;
-//   //     right: calc(50% - 4.5vh * 5);
-//   //   }
-// }
-
-.slide3img2 {
-  @include or-land {
-    width: 20%;
-    top: 15%;
-    right: 31.5%;
-  }
-  @include or-port {
-    height: 28%;
-    top: 35%;
-    left: calc(50% - 1.7vh * 5);
-    //right: 17%;
-  }
-}
-
-.slide3img3 {
-  @include or-land {
-    width: 20%;
-    top: 65%;
-    right: 30%;
-  }
-  @include or-port {
-    height: 19%;
-    top: 62%;
-    left: calc(50% - 2.5vh * 5);
-  }
-}
 
 .slide-img-1 {
-  width: 100%;
-  left: 50%;
-  transform: translateX(-50%);
+  height: 50%;
 }
 
 .slide-img-2 {
   max-width: 35%;
-  max-height: 25%;
-  left: 60%;
-  transform: translate(-50%, -50%);
+  max-height: 30%;
+  right: 10%;
+  transform: translate(50%, -35%);
 
   top: 45vh;
   @include gt-sm {
@@ -256,22 +110,28 @@
   max-width: 35%;
   max-height: 25%;
   top: 60%;
-  left: 60%;
-  transform: translate(-50%, -50%);
+  left: 50%;
+  position: absolute;
+  transform: translate(-50%, 0) rotate(-5deg);
+  margin-left: -10vh;
 }
 
 .slide-img-4 {
   max-width: 35%;
   max-height: 25%;
   top: 60%;
-  left: 60%;
-  transform: translate(-50%, -50%);
 }
 
 .swiper-button,
 .swiper-buttons-container {
   width: 100%;
   max-width: 300px;
+}
+
+.swiper-button {
+  &.back {
+    background: #eee;
+  }
 }
 
 .slide-overlayer {

@@ -7,14 +7,14 @@
   padding: 0;
 
   .button {
-    margin: 0;
     font-size: 1.1rem;
     width: 100%;
     height: $login-button-height;
-    border-radius: $login-button-height /2 ;
+    border-radius: $login-button-height / 2;
   }
 
-  .kep-login-facebook, .google-button-custom {
+  .kep-login-facebook,
+  .google-button-custom {
     width: 100%;
     font-size: 1.1rem;
   }
@@ -31,7 +31,6 @@
 @include gt-sm {
   .login-buttons-section {
     width: $login-button-size * 1.1;
-
   }
 }
 

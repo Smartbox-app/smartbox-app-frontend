@@ -28,7 +28,7 @@ const SingleSlide = ({ item, last }: Props) => {
           </ButtonsContainer>
         )}
         <ButtonsContainer className="swiper-buttons-container">
-          <Button text="application.back" to="/login" className="swiper-button" big />
+          <Button text="application.back" to="/login" className="swiper-button back" big />
         </ButtonsContainer>
       </div>
     </div>
