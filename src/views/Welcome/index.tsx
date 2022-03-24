@@ -15,8 +15,8 @@ const slides: Slide[] = [
       <>
         <img src="/assets/images/Slide1/1.png" className="slide-img slide-img-1"></img>
         <img src="/assets/images/Slide1/2.png" className="slide-img slide-img-2"></img>
-        {/* <img src="/assets/images/Slide1/3.png" className="slide-img slide-img-3"></img>
-          <img src="/assets/images/Slide1/4.png" className="slide-img slide-img-4"></img> */}
+        <img src="/assets/images/Slide1/3.png" className="slide-img slide-img-3"></img>
+        <img src="/assets/images/Slide1/4.png" className="slide-img slide-img-4"></img>
       </>
     ),
   },
@@ -25,9 +25,9 @@ const slides: Slide[] = [
     content: (
       <>
         <img src="/assets/images/Slide2/1.png" className="slide-img slide-img-1"></img>
-        <img src="/assets/images/Slide2/2.png" className="slide-img  slide-img-2"></img>
-        {/* <img src="/assets/images/Slide2/3.png" className="slide2img3 slide-img"></img>
-          <img src="/assets/images/Slide2/4.png" className="slide2img4 slide-img"></img> */}
+        <img src="/assets/images/Slide2/2.png" className="slide-img slide-img-2"></img>
+        <img src="/assets/images/Slide2/3.png" className="slide-img slide-img-3"></img>
+        <img src="/assets/images/Slide2/4.png" className="slide-img slide-img-4"></img>
       </>
     ),
   },
