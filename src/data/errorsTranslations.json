@@ -166,7 +166,7 @@
         "__type_alias_do_not_touch": "ApiErrorCode.CompanyDataIsRequired"
       },
       "32": {
-        "text": "Mini magazyn zostł zarezerwowana!",
+        "text": "Mini magazyn został już zarezerwowany!",
         "__type_alias_do_not_touch": "ApiErrorCode.BoxIsReserved"
       },
       "33": {

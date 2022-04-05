@@ -1,3 +1,6 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/control-has-associated-label */
+/* eslint-disable jsx-a11y/interactive-supports-focus */
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -6,212 +9,102 @@ import { ReactComponent as ReactStockMap } from './ostrow_1.2.svg';
 
 import './SimpleStockMap.scss';
 
-interface Props {}
-
 interface State {
   isMouseDown: boolean;
-  grabStartX: number;
-  grabStartY: number;
-  scrollLeft: number;
-  scrollTop: number;
+  left: number;
+  top: number;
+  x: number;
+  y: number;
   mapScale: number;
-  mapMoveDistance: number;
-  mapMoveHeight: number;
 }
 
-class SimpleStockMap extends React.Component<Props, State> {
-  private element: React.RefObject<any>;
+class SimpleStockMap extends React.Component<{}, State> {
+  private element: React.RefObject<HTMLDivElement>;
 
-  constructor(props: Props) {
+  constructor(props: {}) {
     super(props);
     this.element = React.createRef();
     this.state = {
       isMouseDown: false,
-      grabStartX: 0,
-      grabStartY: 0,
-      scrollLeft: 0,
-      scrollTop: 0,
-      mapMoveDistance: 0,
-      mapMoveHeight: 0,
+      left: 0,
+      top: 0,
+      x: 0,
+      y: 0,
       mapScale: 100,
     };
   }
 
   private mapScaleUpHandle = (e: any) => {
     e.stopPropagation();
-    const mapWrapperElement = this.element.current;
     const { mapScale } = this.state;
     if (mapScale < 200) {
-      const name = `scale-${mapScale}`;
-      mapWrapperElement.classList.remove(name);
       this.setState({
         mapScale: mapScale + 10,
       });
-
-      const newName = `scale-${mapScale + 10}`;
-      mapWrapperElement.classList.add(newName);
     }
   };
 
   private mapScaleDownHandle = (e: any) => {
     e.stopPropagation();
-    const mapWrapperElement = this.element.current;
     const { mapScale } = this.state;
     if (mapScale > 30) {
-      const name = `scale-${mapScale}`;
-      mapWrapperElement.classList.remove(name);
-
       this.setState({
         mapScale: mapScale - 10,
       });
-
-      const newName = `scale-${mapScale - 10}`;
-      mapWrapperElement.classList.add(newName);
     }
   };
 
-  private handleTouchesDown = (e: TouchEvent | any, el: HTMLElement): any => {
+  private handleContainerTouchStart = (e: React.TouchEvent<HTMLDivElement> | React.MouseEvent<HTMLDivElement>) => {
+    const el = this.element.current;
+    if (!el) return;
+    const clientX =
+      e.type === 'touchstart'
+        ? (e as React.TouchEvent<HTMLDivElement>).touches[0].clientX
+        : (e as React.MouseEvent<HTMLDivElement>).clientX;
+    const clientY =
+      e.type === 'touchstart'
+        ? (e as React.TouchEvent<HTMLDivElement>).touches[0].clientY
+        : (e as React.MouseEvent<HTMLDivElement>).clientY;
     this.setState({
+      left: el.scrollLeft,
+      top: el.scrollTop,
+      x: clientX,
+      y: clientY,
       isMouseDown: true,
-      grabStartX: e.touches[0].pageX - el.offsetLeft,
-      grabStartY: e.touches[0].pageY - el.offsetTop,
-      scrollLeft: el.scrollLeft,
-      scrollTop: el.scrollTop,
     });
-    el.classList.add('grab');
   };
 
-  private handleMouseDown = (e: MouseEvent, el: HTMLElement): any => {
-    this.setState({
-      isMouseDown: true,
-      grabStartX: e.pageX - el.offsetLeft,
-      grabStartY: e.pageY - el.offsetTop,
-      scrollLeft: el.scrollLeft,
-      scrollTop: el.scrollTop,
-    });
-    el.classList.add('grab');
+  private handleContainerMove = (e: React.TouchEvent<HTMLDivElement> | React.MouseEvent<HTMLDivElement>) => {
+    const { left, top, x, y, isMouseDown } = this.state;
+
+    if (!this.element || !this.element.current || !isMouseDown) return;
+
+    const clientX =
+      e.type === 'touchstart'
+        ? (e as React.TouchEvent<HTMLDivElement>).touches[0].clientX
+        : (e as React.MouseEvent<HTMLDivElement>).clientX;
+    const clientY =
+      e.type === 'touchstart'
+        ? (e as React.TouchEvent<HTMLDivElement>).touches[0].clientY
+        : (e as React.MouseEvent<HTMLDivElement>).clientY;
+
+    const dx = clientX - x;
+    const dy = clientY - y;
+
+    this.element.current.scrollTop = top - dy;
+    this.element.current.scrollLeft = left - dx;
   };
 
-  private handleMouseUp = (e: MouseEvent, el: HTMLElement): any => {
+  private handleContainerUp = () => {
     this.setState({
       isMouseDown: false,
     });
-    el.classList.remove('grab');
   };
-
-  private handleMouseLeave = (e: MouseEvent, el: HTMLElement): any => {
-    this.setState({
-      isMouseDown: false,
-    });
-    el.classList.remove('grab');
-  };
-
-  private handleMouseMove = (e: MouseEvent, el: HTMLElement): any => {
-    const { isMouseDown, grabStartX, grabStartY, scrollLeft, scrollTop } = this.state;
-    if (!isMouseDown) return;
-    e.preventDefault();
-    const mousePositionX = e.pageX - el.offsetLeft;
-    const mousePositionY = e.pageY - el.offsetTop;
-    const mapMoveDistance = mousePositionX - grabStartX;
-    const mapMoveHeight = mousePositionY - grabStartY;
-
-    el.scrollLeft = scrollLeft - mapMoveDistance;
-    el.scrollTop = scrollTop - mapMoveHeight;
-  };
-
-  private handleTouchMove = (e: TouchEvent | any, el: HTMLElement): any => {
-    const { isMouseDown, grabStartX, grabStartY, scrollLeft, scrollTop } = this.state;
-    if (!isMouseDown) return;
-    e.preventDefault();
-
-    const mousePositionX = e.changedTouches[e.changedTouches.length - 1].pageX - el.offsetLeft;
-    const mousePositionY = e.changedTouches[e.changedTouches.length - 1].pageY - el.offsetTop;
-    const mapMoveDistance = mousePositionX - grabStartX;
-    const mapMoveHeight = mousePositionY - grabStartY;
-
-    this.setState({
-      mapMoveDistance: scrollLeft - mapMoveDistance,
-      mapMoveHeight: scrollTop - mapMoveHeight,
-    });
-
-    el.scrollLeft = scrollLeft - mapMoveDistance;
-    el.scrollTop = scrollTop - mapMoveHeight;
-    window.scroll(0, window.scrollY - mapMoveHeight);
-  };
-
-  public componentDidMount(): void {
-    this.element.current.addEventListener(
-      'mousedown',
-      (e: MouseEvent) => this.handleMouseDown(e, this.element.current),
-      false,
-    );
-    this.element.current.addEventListener(
-      'touchstart',
-      (e: MouseEvent) => this.handleTouchesDown(e, this.element.current),
-      false,
-    );
-
-    this.element.current.addEventListener(
-      'mouseup',
-      (e: MouseEvent) => this.handleMouseUp(e, this.element.current),
-      false,
-    );
-    // this.element.current.addEventListener(
-    //   'touchend',
-    //   (e: MouseEvent) => this.handleMouseUp(e, this.element.current),
-    //   false,
-    // );
-    // this.element.current.addEventListener(
-    //   'touchcancel',
-    //   (e: MouseEvent) => this.handleMouseUp(e, this.element.current),
-    //   false,
-    // );
-
-    this.element.current.addEventListener(
-      'mouseleave',
-      (e: MouseEvent) => this.handleMouseLeave(e, this.element.current),
-      false,
-    );
-
-    this.element.current.addEventListener(
-      'mousemove',
-      (e: MouseEvent) => this.handleMouseMove(e, this.element.current),
-      false,
-    );
-    this.element.current.addEventListener(
-      'touchmove',
-      (e: MouseEvent) => this.handleTouchMove(e, this.element.current),
-      false,
-    );
-  }
-
-  public componentWillUnmount(): void {
-    this.element.current.removeEventListener(
-      'mousedown',
-      (e: MouseEvent) => this.handleMouseDown(e, this.element.current),
-      false,
-    );
-    this.element.current.removeEventListener(
-      'mouseup',
-      (e: MouseEvent) => this.handleMouseUp(e, this.element.current),
-      false,
-    );
-    this.element.current.removeEventListener(
-      'mouseleave',
-      (e: MouseEvent) => this.handleMouseLeave(e, this.element.current),
-      false,
-    );
-    this.element.current.removeEventListener(
-      'mousemove',
-      (e: MouseEvent) => this.handleMouseMove(e, this.element.current),
-      false,
-    );
-  }
 
   render() {
-    const { mapScale } = this.state;
+    const { mapScale, isMouseDown } = this.state;
     return (
-      <div className="map-wrapper scale-100" ref={this.element}>
+      <div className={`map-wrapper scale-${mapScale} ${isMouseDown ? 'grab' : ''}`}>
         <div className="map-scale">
           <span
             role="button"
@@ -224,7 +117,17 @@ class SimpleStockMap extends React.Component<Props, State> {
             onClick={this.mapScaleDownHandle}
           />
         </div>
-        <ReactStockMap id="svg-map" />
+        {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
+        <div
+          ref={this.element}
+          className="map-container"
+          onTouchStart={this.handleContainerTouchStart}
+          onMouseDown={this.handleContainerTouchStart}
+          onMouseMove={this.handleContainerMove}
+          onMouseUp={this.handleContainerUp}
+        >
+          <ReactStockMap id="svg-map" />
+        </div>
       </div>
     );
   }

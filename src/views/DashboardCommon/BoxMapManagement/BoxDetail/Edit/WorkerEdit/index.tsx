@@ -12,6 +12,7 @@ import { __ } from '../../../../../../helpers/i18n';
 import { ApplicationState } from '../../../../../../reducers';
 import ApiService from '../../../../../../services/api-service';
 import { formOnTranslateString } from '../../../../../../utils/trans-form';
+import { ReactSelectOverride } from '../../../../../../components/Common/ReactSelectOverride';
 
 interface Props {
   rentId: string;
@@ -23,8 +24,6 @@ interface Props {
   fetchBoxStatuses: (stockId: string) => void;
   showModal: (content: React.ReactNode) => void;
 }
-
-const ReactSelectOverride = () => <ReactSelect menuPortalTarget={document.querySelector('body')} />;
 
 const WorkerEdit = ({
   hideModal,

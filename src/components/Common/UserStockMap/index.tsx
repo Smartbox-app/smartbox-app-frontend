@@ -5,7 +5,7 @@ import { ApplicationState } from '../../../reducers';
 import SimpleStockMap from '../SimpleStockMap';
 
 import './UserStockMap.scss';
-import {__} from "../../../helpers/i18n";
+import { __ } from '../../../helpers/i18n';
 
 interface Props {
   boxNumberToMarkWay: number;
@@ -23,6 +23,7 @@ class UserStockMap extends React.Component<Props> {
     if (list) {
       list.forEach((singleElement: any) => {
         if (Number(singleElement.id) === boxToMark) {
+          singleElement.classList.remove('not-my-box');
           singleElement.classList.add('my-box');
         } else {
           singleElement.classList.add('not-my-box');
@@ -39,15 +40,28 @@ class UserStockMap extends React.Component<Props> {
     }
   };
 
-  public componentDidMount(): void {
+  private setMarker = () => {
     const { boxNumberToMarkWay } = this.props;
-    const row = boxNumberToMarkWay && Math.floor(boxNumberToMarkWay / 100);
+    setTimeout(() => {
+      const row = boxNumberToMarkWay && Math.floor(boxNumberToMarkWay / 100);
 
-    const catchElement = this.element.current?.children[1].querySelectorAll(`.row${row}00`);
-    this.arrowMarker(catchElement);
+      const catchElement = this.element.current?.children[1].querySelectorAll(`.row${row}00`);
+      this.arrowMarker(catchElement);
 
-    const myBox = this.element.current?.querySelectorAll('#kontenery .storage');
-    this.boxMarker(myBox, boxNumberToMarkWay);
+      const myBox = this.element.current?.querySelectorAll('#kontenery .storage');
+      this.boxMarker(myBox, boxNumberToMarkWay);
+    });
+  };
+
+  componentDidMount() {
+    this.setMarker();
+  }
+
+  componentDidUpdate(prevProps: Props) {
+    const { boxNumberToMarkWay } = this.props;
+    if (boxNumberToMarkWay !== prevProps.boxNumberToMarkWay && boxNumberToMarkWay) {
+      this.setMarker();
+    }
   }
 
   render() {
@@ -55,7 +69,7 @@ class UserStockMap extends React.Component<Props> {
     return (
       <div ref={this.element}>
         <p className="user-box">
-          {__('application.yourStoreNumber')}{' '}<strong>{boxNumberToMarkWay}</strong>
+          {__('application.yourStoreNumber')} <strong>{boxNumberToMarkWay}</strong>
         </p>
         <SimpleStockMap />
       </div>

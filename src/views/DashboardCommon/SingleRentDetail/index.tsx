@@ -28,7 +28,7 @@ interface Props extends RouteComponentProps<RouteProps> {
 
 const SingleRentDetail = ({ loading, showUserStockMap, match, getSingleRent, singleRent, getMyRentList }: Props) => {
   useEffect(() => {
-    (async function() {
+    (async () => {
       await getMyRentList();
       await getSingleRent(match.params.orderId);
     })();
@@ -38,7 +38,7 @@ const SingleRentDetail = ({ loading, showUserStockMap, match, getSingleRent, sin
 
   return (
     <Section full>
-      <SectionHeader title='application.rentDetail' />
+      <SectionHeader title="application.rentDetail" />
       <MissingPaymentAlert />
       <Action rentId={singleRent.id} />
       {!showUserStockMap ? (

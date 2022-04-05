@@ -33,7 +33,6 @@ const Edit = ({ discountId, successNotification, hideModal, refreshApiTableData 
   const sendUrl = `stock/discount/${discountId}`;
 
   const customSendFetcher = (formId: string, values: DiscountReq) => {
-    console.log(values);
     return ApiService.sendForm(
       sendUrl,
       {

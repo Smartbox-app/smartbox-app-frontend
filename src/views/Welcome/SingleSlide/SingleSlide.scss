@@ -107,8 +107,8 @@
 }
 
 .slide-img-3 {
-  max-width: 35%;
-  max-height: 25%;
+  max-width: 25%;
+  max-height: 13vh;
   top: 61%;
   left: 50%;
   position: absolute;
@@ -117,13 +117,14 @@
 }
 
 .slide-img-4 {
-  max-width: 42%;
-  max-height: 25%;
-  top: 85%;
+  max-width: 25%;
+  max-height: 13vh;
+  top: 61%;
   left: 50%;
   position: absolute;
-  transform: translate( 60%, 0) rotate(-5deg);
-  margin-left: -10vh;
+  transform: translate(-50%, 0) rotate(-55deg);
+  margin-left: -5vh;
+  margin-top: 12vh;
 }
 
 .swiper-button,
