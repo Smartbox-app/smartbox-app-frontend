@@ -17,6 +17,7 @@ import StockDiscount from './StockDiscount';
 import StockSelect from './StockSelect';
 import InvitesSent from './InvitesSent';
 import SMS from './SMS';
+import Settings from './Settings';
 
 interface Props {
   user: UserRes;
@@ -37,7 +38,7 @@ const Management = ({ user }: Props) => (
           className: 'tab',
           activeClassName: 'active',
           to: `/${UserService.getSlugByRole(user.role)}/management/workers/list`,
-          text: 'application.workers'
+          text: 'application.workers',
         },
         {
           className: 'tab',
@@ -69,6 +70,12 @@ const Management = ({ user }: Props) => (
           to: `/${UserService.getSlugByRole(user.role)}/management/sms`,
           text: 'application.smsNotifications',
         },
+        {
+          className: 'tab',
+          activeClassName: 'active',
+          to: `/${UserService.getSlugByRole(user.role)}/management/settings`,
+          text: 'application.settings',
+        },
       ]}
     />
 
@@ -85,6 +92,7 @@ const Management = ({ user }: Props) => (
       <Route path={`/${UserService.getSlugByRole(user.role)}/management/stock-discount`} component={StockDiscount} />
       <Route path={`/${UserService.getSlugByRole(user.role)}/management/gate`} component={Gate} />
       <Route path={`/${UserService.getSlugByRole(user.role)}/management/sms`} component={SMS} />
+      <Route path={`/${UserService.getSlugByRole(user.role)}/management/settings`} component={Settings} />
     </Switch>
   </Section>
 );

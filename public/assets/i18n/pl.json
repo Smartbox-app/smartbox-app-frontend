@@ -68,6 +68,7 @@
       "createSale": "Utwórz zniżkę",
       "deleteSingleSale": "Czy jesteś pewien, że chcesz usunąć zniżkę?",
       "generalDiscounts": "Rabaty generalne",
+      "settings": "Ustawienia",
 
       "sendSms": "Wyślij SMS",
       "smsSent": "Wysłano SMS",
@@ -323,6 +324,14 @@
       "orderInfo": "Dane",
 
       "dontForgetToBringLock": "Tylko nie zapomnij o zabraniu własnej kłódki!"
+    },
+    "settings": {
+      "tax": "Stawka VAT",
+      "tax_placeholder": "23",
+      "invoice_description": "Opis faktury",
+      "invoice_description_placeholder": "Faktura....",
+      "saved": "Zapisano ustawienia",
+      "description": "Podaj stawkę procentową w postaci liczby 23 (bez dodatkowych znaków) lub zw albo np. Możesz również uzupełnić opis który znajdzie się na fakturze."
     },
     "notification": {
       "accountRegistered": "Konto zostało zarejestrowane",
