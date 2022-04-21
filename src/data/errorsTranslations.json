@@ -196,6 +196,10 @@
       "39": {
         "text": "Płatność nie jest oznaczona jako karta!",
         "__type_alias_do_not_touch": "ApiErrorCode.PaymentIsntCardType"
+      },
+      "40": {
+        "text": "Niepoprawna stawka podatku!",
+        "__type_alias_do_not_touch": "ApiErrorCode.InvalidTaxValue"
       }
     }
   }
