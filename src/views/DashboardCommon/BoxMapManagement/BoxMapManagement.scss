@@ -17,8 +17,9 @@ $buttonSize: 40px;
 }
 
 .map-wrapper {
-  overflow-x: scroll;
-  overflow-y: hidden;
+  overflow: hidden;
+  pointer-events: all;
+  touch-action: none;
   min-height: 450px;
 
   border: 1px solid darken($color-background, 5%);
@@ -100,7 +101,7 @@ $buttonSize: 40px;
       color: $color-text;
 
       &:hover {
-        fill: lighten(#ccc, 5%);;
+        fill: lighten(#ccc, 5%);
       }
     }
 

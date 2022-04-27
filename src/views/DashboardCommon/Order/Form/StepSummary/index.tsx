@@ -23,6 +23,7 @@ import SummaryTable from './SummaryTable';
 import TenantDetailsForm from './TenantDetailsForm';
 
 import './StepSummary.scss';
+import UserData from '../../../../../components/Common/UserData';
 
 interface RouteProps {
   step: string;
@@ -34,6 +35,7 @@ interface Props extends RouteComponentProps<RouteProps> {
   countedPrice: IPricingResult;
   user: UserRes;
   selectedPaymentMethod: any;
+  selectedPayment: PaymentType;
   updateFormData: (data: any) => void;
   fetchMyData: () => void;
   showModal: (content: React.ReactNode) => void;
@@ -47,11 +49,14 @@ const StepSummary = ({
   updateFormData,
   user,
   selectedPaymentMethod,
+  selectedPayment,
   match,
   showModal,
   successNotification,
 }: Props) => {
   const [invoiceNeeded, setInvoiceNeeded] = useState(false);
+  const isFirstRent = !user.rentCount;
+
   useEffect(() => {
     fetchMyData();
     if (formData.size.length === 0) {
@@ -60,10 +65,18 @@ const StepSummary = ({
     if (formData.nip) {
       setInvoiceNeeded(true);
     }
+
+    if (!isFirstRent) {
+      if (user.companyData && user.companyData.nip) {
+        setInvoiceNeeded(true);
+      } else {
+        setInvoiceNeeded(false);
+      }
+    }
   }, []);
 
   const defaultValues = {
-    paymentType: `${PaymentType.card}`,
+    paymentType: `${selectedPayment || PaymentType.card}`,
     firstName: user.firstName || '',
     lastName: user.lastName || '',
     street: user.street || '',
@@ -73,18 +86,13 @@ const StepSummary = ({
     phone: user.phone || '',
 
     nip: user.companyData.nip || '',
-    companyPostCode: user.companyData.postCode || '',
-    companyCity: user.companyData.city || '',
-    companyStreet: user.companyData.street || '',
-    companyName: user.companyData.name || '',
+    companyPostCode: user.companyData.companyPostCode || '',
+    companyCity: user.companyData.companyCity || '',
+    companyStreet: user.companyData.companyStreet || '',
+    companyName: user.companyData.companyName || '',
   };
 
   const { handleSubmit, register, watch, control, errors } = useForm({ defaultValues });
-
-  const onSubmit = (data: any) => {
-    updateFormData(data);
-    history.push(`/${UserService.getSlugByRole(user.role)}/order/step/agreement/${match.params.rentId || ''}`);
-  };
 
   const onBack = () => {
     history.push(`/${UserService.getSlugByRole(user.role)}/order/step/duration/${match.params.rentId || ''}`);
@@ -139,6 +147,11 @@ const StepSummary = ({
     }
   };
 
+  const onSubmit = (data: any) => {
+    updateFormData({ ...data, isCompany: invoiceNeeded });
+    history.push(`/${UserService.getSlugByRole(user.role)}/order/step/agreement/${match.params.rentId || ''}`);
+  };
+
   const paymentChangeOnly = (e: any): boolean => {
     switch (e.target.id) {
       case 'paymentTypeBlik': {
@@ -156,13 +169,11 @@ const StepSummary = ({
   };
 
   const handleChange = (e: any) => {
-    if (!(user.rentCount > 0)) {
+    if (isFirstRent) {
       if (paymentChangeOnly(e)) {
-        if (watch().paymentType !== `${PaymentType.card}`) {
-          if (countedPrice?.name === 'firstRentFreePracing') {
-            successNotification(
-              'Promocja 1zł za pierwszy tydzień obowiązuje tylko przy płatności kartą. Cena została zmieniona.',
-            );
+        if (Number(watch().paymentType) !== PaymentType.card) {
+          if (countedPrice?.name === 'firstRentFreePricing') {
+            successNotification('notification.firstWeekForOneOnlyCard');
             updateFormData({
               isFirstRent: false,
             });
@@ -171,7 +182,7 @@ const StepSummary = ({
           updateFormData({
             isFirstRent: true,
           });
-          successNotification('Promocja 1zł za pierwszy tydzień aktywna. Cena została zmieniona.');
+          successNotification('notification.firstWeekForOneActive');
         }
       }
     }
@@ -180,24 +191,32 @@ const StepSummary = ({
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="form-step-two" onChange={handleChange}>
       <Discount />
-      <FormHeader title="Podsumowanie zamówienia:" />
+      <FormHeader title="application.orderSummary" />
       <SummaryTable dateStart={formData.dateStart} dateEnd={formData.dateEnd} countedPrice={countedPrice.value} />
-      <PaymentMethods register={register} />
-      <TenantDetailsForm register={register} control={control} errors={errors} />
-      <p>Fakturę wystawimy na dane najemcy. Możesz też podać inne dane, na przykład Twojej firmy.</p>
-      <CheckBox
-        name="iNeedInvoice"
-        checked={invoiceNeeded}
-        handleChange={() => setInvoiceNeeded(!invoiceNeeded)}
-        label="Chcę dodać inne dane lub potrzebuję faktury na firmę"
-      />
-      {invoiceNeeded && <CompanyDetailsForm register={register} errors={errors} control={control} />}
+      {countedPrice.value > 0 && <PaymentMethods register={register} />}
+
+      <TenantDetailsForm register={register} control={control} errors={errors} disabled={!isFirstRent} />
+      {isFirstRent && (
+        <>
+          <p>{__('application.infoToOptionalInvoice')}</p>
+          <CheckBox
+            name="iNeedInvoice"
+            checked={invoiceNeeded}
+            handleChange={() => setInvoiceNeeded(!invoiceNeeded)}
+            label="application.wantOptionalInvoice"
+          />
+        </>
+      )}
+      {invoiceNeeded && (
+        <CompanyDetailsForm register={register} errors={errors} control={control} disabled={!isFirstRent} />
+      )}
+
       <ButtonsContainer max>
-        <Button outline text={__('application.back')} click={() => onBack()} />
+        <Button outline text="application.back" click={() => onBack()} />
         <Button
           type="submit"
           primary
-          text="Przejdź do umowy"
+          text="application.goToOrder"
           disabled={dataVerification() || tenantData() || companyData()}
         />
       </ButtonsContainer>
@@ -210,6 +229,7 @@ const mapStateToProps = (state: ApplicationState) => ({
   countedPrice: state.order.countedPrice,
   user: state.user.details,
   selectedPaymentMethod: state.order.selectedPaymentMethodDetail,
+  selectedPayment: state.order.selectedPayment,
 });
 
 const mapDispatchToProps = (dispatch: any) =>

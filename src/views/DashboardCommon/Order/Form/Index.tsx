@@ -1,5 +1,5 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React, { useEffect } from 'react';
+import { connect, useDispatch } from 'react-redux';
 import { Switch, Route } from 'react-router';
 
 import { UserRes } from 'smartbox-types';
@@ -16,15 +16,20 @@ interface Props {
   user: UserRes;
 }
 
-const Form = ({ user }: Props) => (
-  <Switch>
-    <Route path={`/${UserService.getSlugByRole(user.role)}/order/step/size/:rentId?`} component={StepSize} />
-    <Route path={`/${UserService.getSlugByRole(user.role)}/order/step/duration/:rentId?`} component={StepDuration} />
-    <Route path={`/${UserService.getSlugByRole(user.role)}/order/step/summary/:rentId?`} component={StepSummary} />
-    <Route path={`/${UserService.getSlugByRole(user.role)}/order/step/agreement/:rentId?`} component={StepAgreement} />
-    <Route path={`/${UserService.getSlugByRole(user.role)}/order/step/payment/:rentId?`} component={StepPayment} />
-  </Switch>
-);
+const Form = ({ user }: Props) => {
+  return (
+    <Switch>
+      <Route path={`/${UserService.getSlugByRole(user.role)}/order/step/size/:rentId?`} component={StepSize} />
+      <Route path={`/${UserService.getSlugByRole(user.role)}/order/step/duration/:rentId?`} component={StepDuration} />
+      <Route path={`/${UserService.getSlugByRole(user.role)}/order/step/summary/:rentId?`} component={StepSummary} />
+      <Route
+        path={`/${UserService.getSlugByRole(user.role)}/order/step/agreement/:rentId?`}
+        component={StepAgreement}
+      />
+      <Route path={`/${UserService.getSlugByRole(user.role)}/order/step/payment/:rentId?`} component={StepPayment} />
+    </Switch>
+  );
+};
 
 const mapStateToProps = (state: ApplicationState) => ({
   user: state.user.details,

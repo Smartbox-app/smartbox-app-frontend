@@ -3,13 +3,8 @@
 
 .section-wrapper {
   width: 100%;
-  padding: $main-spacing*2 $main-spacing;
-}
-
-@include gt-xs {
-  .section-wrapper {
-    padding: $main-spacing*2 $main-spacing*2;
-  }
+  padding: $main-spacing $main-spacing;
+  padding-bottom: $main-spacing * 3;
 }
 
 @include gt-sm {
@@ -29,6 +24,18 @@
   }
 
   .section-half-width {
-    width: 50%;
+    width: 49%;
+  }
+}
+
+.section-highlight {
+  padding: $main-spacing;
+  margin: $main-spacing 0;
+  box-shadow: 0 15px 20px -15px lighten(rgba(#000, 0.4), 30%);
+  border-radius: 10px;
+  background: lighten($color-background, 10%);
+
+  @include gt-md {
+    padding: $main-spacing * 1.5;
   }
 }

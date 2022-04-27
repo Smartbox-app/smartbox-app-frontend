@@ -13,7 +13,10 @@ const Logo = ({ user }: Props): any => (
   <img
     src="/assets/images/Smartbox-logo-color.png"
     alt="Smartbox"
-    onClick={() => history.push(`/${UserService.getSlugByRole(user.role)}`)}
+    onClick={() => {
+      if (user) history.push(`/${UserService.getSlugByRole(user.role)}`);
+      else history.push('/');
+    }}
   />
 );
 

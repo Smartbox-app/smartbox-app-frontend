@@ -8,7 +8,6 @@ import UserService from '../../../services/user-service';
 import { ApplicationState } from '../../../reducers';
 
 import Detail from './Detail';
-import UpdateMe from './Detail/UpdateMe';
 
 interface Props {
   user: UserRes;
@@ -24,7 +23,6 @@ const Profile = ({ user }: Props) => {
           render={() => <Redirect to={`/${UserService.getSlugByRole(user.role)}/profile/detail`} />}
         />
         <Route path={`/${UserService.getSlugByRole(user.role)}/profile/detail`} component={Detail} />
-        <Route path={`/${UserService.getSlugByRole(user.role)}/profile/update-me`} component={UpdateMe} />
       </Switch>
     </Section>
   );

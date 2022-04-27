@@ -14,6 +14,8 @@ export default (state: PaymentStatusState = initialState, action: any) => {
       return { ...state, isPaid: action.payload };
     case 'GET_CREDIT_CARD_FORM_SUCCESS':
       return { ...state, func: action.payload };
+    case 'RESET_PAYMENT_FORM':
+      return { ...state, func: null };
     default:
       return state;
   }

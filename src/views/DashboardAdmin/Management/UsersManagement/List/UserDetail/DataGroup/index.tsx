@@ -1,6 +1,7 @@
 import React from 'react';
 
 import './DataGroup.scss';
+import {__} from "../../../../../../../helpers/i18n";
 
 interface Props {
   rowData: string[];
@@ -13,7 +14,7 @@ const DataGroup = ({ rowData, icon, title }: Props) => {
 
   return (
     <div className="single-address">
-      <h4>{title}:</h4>
+      <h4>{__(title)}:</h4>
 
       <div className="content">
         <div className="single-address-logo">

@@ -1,12 +1,8 @@
 import { UserRole, UserRes } from 'smartbox-types';
 import SessionService from '../services/session-service';
 
-export interface UserCommonEntity extends UserRes {
-  isRulesAndRodoAccepted: boolean;
-}
-
 export type UserState = {
-  details: UserCommonEntity;
+  details: UserRes;
   singleUser: UserRes | any;
 };
 
@@ -28,16 +24,12 @@ interface ClearUserSession {
   type: 'CLEAR_USER_SESSION';
 }
 
-interface AcceptationCookies {
-  type: 'ACCEPTATION_COOKIES';
-}
-
 interface GetMyDetails {
   type: 'GET_MY_DETAILS_SUCCESS';
   payload: UserRes;
 }
 
-type Action = Login | Logout | FetchSingleUser | ClearUserSession | AcceptationCookies | GetMyDetails;
+type Action = Login | Logout | FetchSingleUser | ClearUserSession | GetMyDetails;
 
 const initialState: UserState = {
   details: SessionService.getUser(),
@@ -55,7 +47,7 @@ const initialState: UserState = {
 export default (state: UserState = initialState, action: Action): any => {
   switch (action.type) {
     case 'LOGIN_SUCCESS': {
-      const user = { ...state.details, ...action.payload.user, isRulesAndRodoAccepted: false };
+      const { user } = action.payload;
       SessionService.setUser(user);
       return {
         ...state,
@@ -63,19 +55,7 @@ export default (state: UserState = initialState, action: Action): any => {
       };
     }
     case 'GET_MY_DETAILS_SUCCESS': {
-      const user = {
-        ...action.payload,
-        isRulesAndRodoAccepted: state.details.isRulesAndRodoAccepted,
-      };
-      SessionService.setUser(user);
-      return {
-        ...state,
-        details: user,
-      };
-    }
-
-    case 'ACCEPTATION_COOKIES': {
-      const user = { ...state.details, isRulesAndRodoAccepted: true };
+      const user = action.payload;
       SessionService.setUser(user);
       return {
         ...state,

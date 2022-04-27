@@ -3,12 +3,11 @@ import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { MyRentList } from 'smartbox-types';
-import { Alert } from '../../../components/Common';
+import { Alert, Spinner } from '../../../components/Common';
 import UserStockMap from '../../../components/Common/UserStockMap';
 import { Section, SectionHeader } from '../../../components/Layout';
 
 import { singleRent } from '../../../actions';
-import { __ } from '../../../helpers/i18n';
 import { ApplicationState } from '../../../reducers';
 
 import Action from './Action';
@@ -29,15 +28,17 @@ interface Props extends RouteComponentProps<RouteProps> {
 
 const SingleRentDetail = ({ loading, showUserStockMap, match, getSingleRent, singleRent, getMyRentList }: Props) => {
   useEffect(() => {
-    (async function() {
+    (async () => {
       await getMyRentList();
       await getSingleRent(match.params.orderId);
     })();
   }, []);
 
+  if (loading) return <Spinner />;
+
   return (
     <Section full>
-      <SectionHeader title={__('application.rentDetail')} />
+      <SectionHeader title="application.rentDetail" />
       <MissingPaymentAlert />
       <Action rentId={singleRent.id} />
       {!showUserStockMap ? (

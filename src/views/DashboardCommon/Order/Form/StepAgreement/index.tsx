@@ -5,7 +5,7 @@ import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { RentBoxReq, UserRole, IPricingResult, UserRes, StockList, ExtendRentalReq } from 'smartbox-types';
-import { PaymentType } from 'smartbox-types/src/payment/payment-entity';
+import { PaymentType } from 'smartbox-types';
 import { Alert, Button } from '../../../../../components/Common';
 import { order } from '../../../../../actions';
 import { ButtonsContainer } from '../../../../../components/Layout';
@@ -18,7 +18,6 @@ import UserService from '../../../../../services/user-service';
 import AgreementWrapper from './AgreementWrapper';
 import ScrollPosition from './ScrollPosition';
 import { ApplicationState } from '../../../../../reducers';
-import { __ } from '../../../../../helpers/i18n';
 
 import './StepAgreement.scss';
 
@@ -105,21 +104,32 @@ const StepSummary = ({
   const onBack = () => {
     history.push(`/${UserService.getSlugByRole(user.role)}/order/step/summary/${match.params.rentId || ''}`);
   };
-
+  const desktop = window.matchMedia('(min-width: 920px)').matches;
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <FormHeader title={__('application.orderAgreement')} />
-      <AgreementWrapper />
-      <ScrollPosition />
-      <Alert type="notice" text={__('application.orderAgreementAcceptation')} />
-      <ButtonsContainer max>
-        <Button outline text={__('application.back')} click={() => onBack()} />
-        <Button
-          type="submit"
-          primary
-          text="Przejdź do płatności"
-          disabled={!isAgreementAccepted || !isResignationMarked}
+      <FormHeader title="application.orderAgreement" />
+      {/* <AgreementWrapper /> */}
+      {desktop && (
+        <object
+          className="rules-embed"
+          data="/assets/2022_02_01_Regulamin_aplikacji_SmartBox.pdf#toolbar=0&navpanes=0&scrollbar=0"
+          type="application/pdf"
         />
+      )}
+      <a
+        className="button button-primary"
+        target="_blank"
+        href="/assets/2022_02_01_Regulamin_aplikacji_SmartBox.pdf"
+        title="Regulamin"
+      >
+        Kliknij aby otworzyć regulamin
+      </a>
+      <span className="separator" />
+      <ScrollPosition />
+      <Alert type="notice" text="application.orderAgreementAcceptation" />
+      <ButtonsContainer max>
+        <Button outline text="application.back" click={() => onBack()} />
+        <Button type="submit" primary text="application.goToPayment" disabled={!isResignationMarked} />
       </ButtonsContainer>
     </form>
   );

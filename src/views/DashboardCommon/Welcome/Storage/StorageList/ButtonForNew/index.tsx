@@ -7,7 +7,6 @@ import UserService from '../../../../../../services/user-service';
 import { ApplicationState } from '../../../../../../reducers';
 
 import './ButtonForNew.scss';
-import { __ } from '../../../../../../helpers/i18n';
 
 interface Props {
   user: UserRes;
@@ -16,7 +15,7 @@ interface Props {
 const ButtonForNew = ({ user }: Props) => (
   <div className="new-storage single-wrapper">
     <Button
-      text={__('application.newStock')}
+      text='application.newStock'
       outline
       icon="plus.svg"
       to={`/${UserService.getSlugByRole(user.role)}/order/step/size`}

@@ -82,7 +82,7 @@
         "__type_alias_do_not_touch": "ApiErrorCode.PayFirst"
       },
       "11": {
-        "text": "Nie można wynonać zmiany przy obecnym statusie!",
+        "text": "Nie można wykonać zmiany przy obecnym statusie!",
         "__type_alias_do_not_touch": "ApiErrorCode.CantChangeThisBoxOnThisStatus"
       },
       "12": {
@@ -166,7 +166,7 @@
         "__type_alias_do_not_touch": "ApiErrorCode.CompanyDataIsRequired"
       },
       "32": {
-        "text": "Mini magazyn zostł zarezerwowana!",
+        "text": "Mini magazyn został już zarezerwowany!",
         "__type_alias_do_not_touch": "ApiErrorCode.BoxIsReserved"
       },
       "33": {
@@ -196,6 +196,10 @@
       "39": {
         "text": "Płatność nie jest oznaczona jako karta!",
         "__type_alias_do_not_touch": "ApiErrorCode.PaymentIsntCardType"
+      },
+      "40": {
+        "text": "Niepoprawna stawka podatku!",
+        "__type_alias_do_not_touch": "ApiErrorCode.InvalidTaxValue"
       }
     }
   }

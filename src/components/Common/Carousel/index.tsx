@@ -3,15 +3,14 @@ import { connect } from 'react-redux';
 import Slider from 'react-slick';
 import { ReactSVG } from 'react-svg';
 import { bindActionCreators } from 'redux';
-import { usePricing, UserRole } from 'smartbox-types';
+import { usePricing, UserRole, UserRes } from 'smartbox-types';
 import { order, modal } from '../../../actions';
 import { history } from '../../../App';
 import { __ } from '../../../helpers/i18n';
 import { ApplicationState } from '../../../reducers';
-import { UserCommonEntity } from '../../../reducers/user-reducer';
 import UserService from '../../../services/user-service';
 import { ButtonsContainer } from '../../Layout';
-import { Button, ConfirmModal } from '../index';
+import { Button } from '../index';
 import CustomArrow from './CustomArrow';
 
 import 'slick-carousel/slick/slick.css';
@@ -22,7 +21,7 @@ import NoPhoneModal from './NoPhoneModal';
 interface Props {
   imagesList: number[];
   userRole: UserRole;
-  user: UserCommonEntity;
+  user: UserRes;
   updateFormData: (data: any) => void;
   showModal: (content: React.ReactNode) => void;
   hideModal: () => void;
@@ -39,16 +38,16 @@ class Carousel extends Component<Props> {
         <div key={`carousel-${key}`} className="offer-svg-wrapper">
           <div className="offer-description">
             <p>
-              {__('application.week')}: <strong>{weekly}zł</strong>
+              {__('application.week')}: <strong>{weekly} zł</strong>
             </p>
             <p>
-              {__('application.month')}: <strong>{monthly}zł</strong>
+              {__('application.month')}: <strong>{monthly} zł</strong>
             </p>
           </div>
           <ReactSVG src={`/assets/icons/${data}c.svg`} />
           <ButtonsContainer max>
             <Button
-              text={__('application.newStock')}
+              text='application.newStock'
               outline
               icon="plus.svg"
               click={() => {

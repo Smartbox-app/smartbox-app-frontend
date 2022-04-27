@@ -8,7 +8,6 @@ import { BoxListItem, RentStatus, StockList, UserRes } from 'smartbox-types';
 import { boxes, modal, stock } from '../../../actions';
 import { Spinner } from '../../../components/Common';
 import { PageHeader } from '../../../components/Layout';
-import { __ } from '../../../helpers/i18n';
 import { ApplicationState } from '../../../reducers';
 import { isAdmin, isWorker } from '../../../utils/role-check';
 
@@ -173,7 +172,7 @@ class BoxMapManagement extends React.Component<Props> {
     const { stock, user } = this.props;
     return (
       <div className="user-map-wrapper" ref={this.element}>
-        <PageHeader title={`${__('application.storagesPlan')}`} />
+        <PageHeader title='application.storagesPlan' />
         {(isAdmin(user.role) || isWorker(user.role)) && <MapLegend />}
         {stock?.id ? (
           <>

@@ -17,16 +17,17 @@ const History = ({ data }: Props) => {
     data.length > 0 ? (
       data.map((single: MyRentList, key: number) => <Single single={single} key={`history-${key}`} />)
     ) : (
-      <Alert type="notice" text={__('application.lackOfHistory')} />
+      <Alert type="notice" text="application.lackOfHistory" />
     );
 
   return (
     <div className="history-wrapper">
-      <p className="history-line header">
-        <span className="header-cell">{__('application.period')}</span>
-        <span className="header-cell">{__('application.orderStepSize')}</span>
-        <span className="header-cell">{__('application.stock')}</span>
-      </p>
+      <div className="history-line header">
+        <span className="header-cell period">{__('application.period')}</span>
+        <span className="header-cell number">{__('application.number')}</span>
+        <span className="header-cell size">{__('application.orderStepSize')}</span>
+        <span className="header-cell stock last">{__('application.stock')}</span>
+      </div>
       <ul className="history-list">{dataToDisplay}</ul>
       <Legend />
     </div>

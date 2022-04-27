@@ -2,42 +2,54 @@
 @import '../../../config/mixins.scss';
 
 footer {
-    position: relative;
-    padding: $main-spacing;
-    width: 100%;
+  position: absolute;
+
+  // @include safe-bottom(60px);
+  bottom: 60px;
+
+  width: 100%;
+  height: $footer-height * 2;
+  padding: $main-spacing 0;
+  background-color: $color-primary;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+
+  p {
+    margin: 0;
+    padding: $main-spacing $table-item-spacing;
+    font-size: 0.75rem;
+    color: $color-text-button;
+  }
+
+  .footerLink {
+    padding: $main-spacing $table-item-spacing;
+    font-size: 0.75rem;
+    color: $color-text-button;
+  }
+}
+
+@include gt-xs {
+  footer {
+    flex-direction: row;
     height: $footer-height;
-    text-align: right;
-    background-color: $color-background;
 
-    p {
-        font-size: .75rem;
-        color: $color-text;
+    .p {
+      padding: $main-spacing/2 $table-item-spacing;
     }
 
-    a {
-        .menu-footer_logo {
-            vertical-align: middle;
-            display: inline-block;
-            height: $footer-height /2.5;
-            margin: 0 10px;
-        }
-
-        &:link,
-        &:visited,
-        &:hover,
-        &:target {
-            outline: none;
-            cursor: pointer;
-        }
+    .footerLink {
+      padding: $main-spacing/2 $table-item-spacing;
+      border-right: solid 2px rgba($color-background, 0.5);
     }
-
-    small {
-        font-size: 75%;
-    }
+  }
 }
 
 @include gt-sm {
-    footer {
-      margin: 0 auto;
-    }
+  footer {
+    bottom: 0px;
   }
+}

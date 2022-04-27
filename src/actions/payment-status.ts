@@ -40,3 +40,5 @@ export const payNotPaidRentForm = (rentId: string) => async (dispatch: any) => {
     dispatch({ type: 'LOADING', payload: false });
   }
 };
+
+export const resetPaymentForm = () => ({ type: 'RESET_PAYMENT_FORM' });

@@ -85,14 +85,14 @@ const CreditCardInput = ({ register, errors, control }: Props) => {
         <label htmlFor="card-number">
           <span>{__('application.ccNumber')}:</span>
           <input type="text" placeholder="0000 0000 0000 0000" name="cardNumber" ref={register({ required: true })} />
-          {errors.cardNumber && <p className="input-error-wrapper">Pole wymagane</p>}
+          {errors.cardNumber && <p className="input-error-wrapper">{__('application.requiredField')}</p>}
         </label>
       </div>
       <div className="user-wrapper">
         <label htmlFor="owner">
           <span>{__('application.owner')}:</span>
           <input type="text" placeholder="Jan Kowalski" name="owner" ref={register({ required: true })} />
-          {errors.owner && <p className="input-error-wrapper">Pole wymagane</p>}
+          {errors.owner && <p className="input-error-wrapper">{__('application.requiredField')}</p>}
         </label>
       </div>
       <div className="expiration-date-wrapper">
@@ -104,7 +104,7 @@ const CreditCardInput = ({ register, errors, control }: Props) => {
             control={control}
             defaultValue={optionsMonth[0]}
             options={optionsMonth}
-            as={<Select styles={customStyles} />}
+            as={<Select styles={customStyles} menuPortalTarget={document.body} />}
           />
 
           <Controller
@@ -113,7 +113,7 @@ const CreditCardInput = ({ register, errors, control }: Props) => {
             control={control}
             defaultValue={yearMonth[0]}
             options={yearMonth}
-            as={<Select styles={customStyles} />}
+            as={<Select styles={customStyles} menuPortalTarget={document.body} />}
           />
         </div>
       </div>
@@ -121,7 +121,7 @@ const CreditCardInput = ({ register, errors, control }: Props) => {
         <label htmlFor="cvv">
           <span>{__('application.ccv')}:</span>
           <input type="text" placeholder="123" name="cvv" ref={register({ required: true })} />
-          {errors.owner && <p className="input-error-wrapper">Pole wymagane</p>}
+          {errors.owner && <p className="input-error-wrapper">{__('application.requiredField')}</p>}
         </label>
       </div>
     </div>

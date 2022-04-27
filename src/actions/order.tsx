@@ -7,6 +7,7 @@ import {
   UrlRes,
   ApiErrorCode,
   ExtendRentalReq,
+  PaymentStatus,
 } from 'smartbox-types';
 import ApiService from '../services/api-service';
 import { history } from '../App';
@@ -17,11 +18,14 @@ import { saveFrom } from './payment-status';
 
 export const updateFormData = (data: any) => ({ type: 'FORM_STEP_SUCCESS', payload: data });
 
+export const resetDiscountCode = () => ({ type: 'RESET_DISCOUNT_CODE' });
+
 export const formAgreementReaded = () => ({ type: 'FORM_AGREEMENT_READED_SUCCESS' });
 
 export const formResignationMarked = () => ({ type: 'FORM_RESIGNATION_MARKED_SUCCESS' });
 
 export const clearOrderAgreement = () => ({ type: 'CLEAR_ORDER_FORM_AGREEMENT_SUCCESS' });
+export const clearOrder = () => ({ type: 'CLEAR_ORDER' });
 
 export const saveBanks = () => async (dispatch: any) => {
   await ApiService.get(dispatch, 'SAVE_BANKS_LIST_SUCCESS', 'SAVE_BANKS_LIST_FAILED', null, null, 'payment/bank-list');
@@ -45,8 +49,12 @@ export const sentRentBoxRequest = (data: RentBoxReq, nextStep: string, role: Use
     dispatch,
     'SENT_RENT_BOX_REQUEST_SUCCESS',
     'SENT_RENT_BOX_REQUEST_FAILED',
-    () => {
-      history.push(`/${UserService.getSlugByRole(role)}/order/step/${nextStep}`);
+    (result: { paymentId: string; status: PaymentStatus }) => {
+      if (result.status === PaymentStatus.succes) {
+        history.push(`/payment-success/${result.paymentId}`);
+      } else {
+        history.push(`/${UserService.getSlugByRole(role)}/order/step/${nextStep}`);
+      }
     },
     null,
     'rent/new',

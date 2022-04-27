@@ -1,9 +1,10 @@
 import React from 'react';
+import {__} from "../../../../../helpers/i18n";
 
 const StockBlocked = () => (
   <div className="missing-payment-alert-wrapper">
     <p className="main-info">
-      Twój schowek został zablokowany, ze względu na brak płatności, prosimy o kontakt z administratorem.
+        {__('application.boxWasBlockedDueNoPayment')}
     </p>
   </div>
 );

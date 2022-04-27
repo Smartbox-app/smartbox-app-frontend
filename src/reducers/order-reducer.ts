@@ -1,6 +1,14 @@
 import { addDays } from 'date-fns';
-import { BoxGroupAvailability, usePricing, ICalculateProps, IPricingResult, PaymentType } from 'smartbox-types';
+import {
+  BoxGroupAvailability,
+  ICalculateProps,
+  IPricingResult,
+  PaymentStatus,
+  PaymentType,
+  usePricing,
+} from 'smartbox-types';
 import { FormType } from '../types/order-form';
+import { __ } from "../helpers/i18n";
 
 export type PaymentMethodDetail = {
   id: string;
@@ -32,7 +40,10 @@ interface FormStepSuccess {
 
 interface SentRentBoxRequestSuccess {
   type: 'SENT_RENT_BOX_REQUEST_SUCCESS';
-  payload: string;
+  payload: {
+    paymentId: string;
+    status: PaymentStatus;
+  };
 }
 
 interface FetchBoxAvailability {
@@ -81,6 +92,14 @@ interface SentExtendRentRequestSuccess {
   payload: string;
 }
 
+interface ResetDiscountCode {
+  type: 'RESET_DISCOUNT_CODE';
+}
+
+interface ClearOrder {
+  type: 'CLEAR_ORDER';
+}
+
 interface ClearOrderFormAgreementSuccess {
   type: 'CLEAR_ORDER_FORM_AGREEMENT_SUCCESS';
 }
@@ -98,6 +117,8 @@ type Action =
   | ClearPaymentMethodSuccess
   | SentExtendRentRequestSuccess
   | ClearOrderFormAgreementSuccess
+  | ClearOrder
+  | ResetDiscountCode
   | BlikPaymentFinishSuccess;
 
 const initialState: OrderState = {
@@ -128,7 +149,7 @@ const initialState: OrderState = {
     value: 0,
   },
   boxAvailability: [],
-  discountList: [{ text: 'Jednorazowy rabat 5%', value: 5 }],
+  discountList: [{ text: __('application.disposableDiscount5'), value: 5 }],
   isAgreementAccepted: false,
   isResignationMarked: false,
   bankList: [],
@@ -181,10 +202,18 @@ export default (state: OrderState = initialState, action: Action): any => {
       };
     }
 
+    case 'RESET_DISCOUNT_CODE': {
+      const newFormData: FormType = { ...state.formData, discountCode: '' };
+      return {
+        ...state,
+        formData: newFormData,
+      };
+    }
+
     case 'SENT_RENT_BOX_REQUEST_SUCCESS': {
       return {
         ...state,
-        paymentId: action.payload,
+        paymentId: action.payload.paymentId,
       };
     }
     case 'SENT_EXTEND_RENT_SUCCESS': {
@@ -254,10 +283,14 @@ export default (state: OrderState = initialState, action: Action): any => {
         blikPaymentCompletedSuccessfully: true,
       };
 
+    case 'CLEAR_ORDER': {
+      return initialState;
+    }
+
     case 'CLEAR_ORDER_FORM_AGREEMENT_SUCCESS':
       return {
         ...state,
-        isAgreementAccepted: false,
+        isAgreementAccepted: true,
         isResignationMarked: false,
         paymentId: '',
         paymentSuccess: false,

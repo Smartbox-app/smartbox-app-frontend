@@ -1,6 +1,7 @@
 import React from 'react';
 
 import './CheckBox.scss';
+import {__} from "../../../helpers/i18n";
 
 interface Props {
   name: string;
@@ -9,10 +10,11 @@ interface Props {
   label?: string | React.ReactNode;
   disabled?: boolean;
   errors?: any;
+  hide?: boolean;
 }
 
-const CheckBox = ({ label, name, checked, handleChange, disabled, errors }: Props) => (
-  <div className={`checkbox ${disabled ? 'checkbox-disabled' : ''}`}>
+const CheckBox = ({ label, name, checked, handleChange, disabled, errors, hide }: Props) => (
+  <div className={`checkbox ${disabled ? 'checkbox-disabled' : ''} ${hide && 'checkbox-hide'}`}>
     <input
       type="checkbox"
       id={name}
@@ -21,7 +23,7 @@ const CheckBox = ({ label, name, checked, handleChange, disabled, errors }: Prop
       checked={!!checked}
       disabled={disabled}
     />
-    <label htmlFor={name}>{label}</label>
+    <label htmlFor={name}>{__(label)}</label>
     {errors &&
       errors.map((error: any) => (
         <small key={error} className="text-danger">

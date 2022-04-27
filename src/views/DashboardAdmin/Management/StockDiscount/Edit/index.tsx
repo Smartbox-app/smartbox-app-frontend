@@ -13,7 +13,7 @@ import FormHeader from '../../../../../components/Layout/FormHeader';
 import ApiService from '../../../../../services/api-service';
 import { formOnTranslateString } from '../../../../../utils/trans-form';
 import { apiTable, modal, notifications } from '../../../../../actions';
-import { __ } from '../../../../../helpers/i18n';
+import { ReactSelectOverride } from '../../../../../components/Common/ReactSelectOverride';
 
 interface Props {
   discountId: string;
@@ -25,26 +25,26 @@ interface Props {
 const Edit = ({ discountId, successNotification, hideModal, refreshApiTableData }: Props) => {
   const submitButton = (
     <ButtonsContainer>
-      <Button text={__('application.save')} type="submit" primary />
+      <Button text="application.save" type="submit" primary />
     </ButtonsContainer>
   );
 
   const fetchUrl = `stock/form/update-stock-discount/${discountId}`;
   const sendUrl = `stock/discount/${discountId}`;
 
-  const customSendFetcher = (formId: string, values: DiscountReq) =>
-    ApiService.sendForm(
+  const customSendFetcher = (formId: string, values: DiscountReq) => {
+    return ApiService.sendForm(
       sendUrl,
       {
         ...values,
-        expireAt: addMinutes(values.expireAt, 1439),
+        expireAt: addMinutes(new Date(values.expireAt), 1439),
       },
       'PATCH',
     );
-
+  };
   return (
     <FormContainer>
-      <FormHeader title={__('application.editStockDiscount')} />
+      <FormHeader title="application.editStockDiscount" />
       <FieldsColumn>
         <ItfApiForm
           formId="editStockDiscountForm"
@@ -55,12 +55,12 @@ const Edit = ({ discountId, successNotification, hideModal, refreshApiTableData 
           sendFetcher={customSendFetcher}
           submitButton={submitButton}
           onSavedSuccessfully={() => {
-            successNotification(__('application.changesSavedSuccess'));
+            successNotification('application.changesSavedSuccess');
             refreshApiTableData();
             hideModal();
           }}
           onTranslateString={formOnTranslateString}
-          thirdPartyComponents={{ ReactSelect, ReactCreatableSelect, flatpickr }}
+          thirdPartyComponents={{ ReactSelect: ReactSelectOverride, ReactCreatableSelect, flatpickr }}
         />
       </FieldsColumn>
     </FormContainer>

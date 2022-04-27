@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { withRouter, RouteComponentProps } from 'react-router';
 import { FormContainer, Section, SectionHeader } from '../../../components/Layout';
 import { ProgressIndicator } from '../../../components/Common';
 
 import Form from './Form/Index';
-import { __ } from '../../../helpers/i18n';
+import { useDispatch } from 'react-redux';
+import { order } from '../../../actions';
+import { getStockDiscountsList } from '../../../actions/stock';
 
 interface RouteProps {
   step: string;
@@ -15,6 +17,12 @@ interface RouteProps {
 type Props = RouteComponentProps<RouteProps>;
 
 const Order = ({ match }: Props) => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getStockDiscountsList());
+  }, []);
+
   const getStepByName = (stepName: string) => {
     switch (stepName) {
       case 'size':
@@ -34,29 +42,29 @@ const Order = ({ match }: Props) => {
 
   return (
     <Section>
-      <SectionHeader title={match.params.rentId ? __('application.extendsOrder') : __('application.newOrder')} />
+      <SectionHeader title={match.params.rentId ? 'application.extendsOrder' : 'application.newOrder'} />
       <ProgressIndicator
         current={getStepByName(match.params.step)}
         stepList={[
           {
             value: 1,
-            desc: __('application.orderStepSize'),
+            desc: 'application.orderStepSize',
           },
           {
             value: 2,
-            desc: __('application.orderStepDate'),
+            desc: 'application.orderStepDate',
           },
           {
             value: 3,
-            desc: __('application.orderStepSummary'),
+            desc: 'application.orderStepSummary',
           },
           {
             value: 4,
-            desc: __('application.orderStepAgreement'),
+            desc: 'application.orderStepAgreement',
           },
           {
             value: 5,
-            desc: __('application.orderStepPayment'),
+            desc: 'application.orderStepPayment',
           },
         ]}
       />

@@ -15,7 +15,6 @@ import { FormContainer, PageContent } from '../../../components/Layout';
 import { ApplicationState } from '../../../reducers';
 
 import ButtonsSection from './ButtonSection';
-import { __ } from '../../../helpers/i18n';
 
 import './Login.scss';
 
@@ -61,9 +60,9 @@ class Login extends React.Component<Props> {
   render() {
     const { user, saveUser, successNotification, loading } = this.props;
     if (user) return this.getRedirect();
-    if (loading) return <Spinner big />;
+    if (loading) return <Spinner />;
     return (
-      <PageContent>
+      <PageContent bg>
         <div className="login-logo-wrapper">
           <Logo />
         </div>
@@ -102,7 +101,7 @@ class Login extends React.Component<Props> {
               }
             }}
             onSavedSuccessfully={(data: AuthLoginResult) => {
-              successNotification(__('notification.logInSuccess'));
+              successNotification('notification.logInSuccess');
               store.dispatch(saveUser(data));
             }}
             onTranslateString={formOnTranslateString}

@@ -6,8 +6,8 @@ import ReactCreatableSelect from 'react-select/creatable';
 import { bindActionCreators } from 'redux';
 import { modal, notifications } from '../../../../../../actions';
 import { Button, Spinner } from '../../../../../../components/Common';
+import { ReactSelectOverride } from '../../../../../../components/Common/ReactSelectOverride';
 import { ButtonsContainer, FormContainer, PageHeader } from '../../../../../../components/Layout';
-import { __ } from '../../../../../../helpers/i18n';
 import ApiService from '../../../../../../services/api-service';
 import { formOnTranslateString } from '../../../../../../utils/trans-form';
 
@@ -20,7 +20,7 @@ interface Props {
 const EditAssign = ({ userId, successNotification, hideModal }: Props) => {
   const submitButton = (
     <ButtonsContainer>
-      <Button text={__('application.save')} type="submit" primary />
+      <Button text="application.save" type="submit" primary />
     </ButtonsContainer>
   );
 
@@ -29,7 +29,7 @@ const EditAssign = ({ userId, successNotification, hideModal }: Props) => {
 
   return (
     <>
-      <PageHeader title={__('application.workerAssignChange')} />
+      <PageHeader title="application.workerAssignChange" />
 
       <FormContainer>
         <ItfApiForm
@@ -41,11 +41,11 @@ const EditAssign = ({ userId, successNotification, hideModal }: Props) => {
           sendFetcher={(formId: string, values: any) => ApiService.sendForm(sendUrl, values, 'PATCH')}
           submitButton={submitButton}
           onSavedSuccessfully={() => {
-            successNotification(__('notification.userAssigmentChanged'));
+            successNotification('notification.userAssigmentChanged');
             hideModal();
           }}
           onTranslateString={formOnTranslateString}
-          thirdPartyComponents={{ ReactSelect, ReactCreatableSelect }}
+          thirdPartyComponents={{ ReactSelect: ReactSelectOverride, ReactCreatableSelect }}
         />
       </FormContainer>
     </>

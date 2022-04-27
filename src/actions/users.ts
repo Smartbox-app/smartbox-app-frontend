@@ -1,6 +1,5 @@
 import { UserStatus } from 'smartbox-types';
 import ApiService from '../services/api-service';
-import { __ } from '../helpers/i18n';
 import { refreshApiTableData } from './api-table';
 import { successNotification } from './notifications';
 
@@ -10,7 +9,7 @@ export const blockUser = (userId: string) => async (dispatch: any) => {
     'BLOCK_USER_SUCCESS',
     'BLOCK_USER_FAILED',
     () => {
-      dispatch(successNotification(__('notification.userBlocked')));
+      dispatch(successNotification('notification.userBlocked'));
       dispatch(refreshApiTableData());
     },
     null,
@@ -26,7 +25,7 @@ export const enableUser = (userId: string) => async (dispatch: any) => {
     'ENABLE_USER_SUCCESS',
     'ENABLE_USER_FAILED',
     () => {
-      dispatch(successNotification(__('notification.userUnblocked')));
+      dispatch(successNotification('notification.userUnblocked'));
       dispatch(refreshApiTableData());
     },
     null,
@@ -41,9 +40,7 @@ export const fetchSingleUser = (userId: string) => async (dispatch: any) => {
     dispatch,
     'FETCH_SINGLE_USER_SUCCESS',
     'FETCH_SINGLE_USER_FAILED',
-    () => {
-      dispatch(successNotification('Pobrano dane!'));
-    },
+    null,
     null,
     `user/details/${userId}`,
   );

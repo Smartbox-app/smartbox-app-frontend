@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import { bindActionCreators } from 'redux';
 import { MyRentList } from 'smartbox-types';
-import { Section, SectionHeader } from '../../../components/Layout';
+import { PageHeader, Section, SectionHeader } from '../../../components/Layout';
 import { ApplicationState } from '../../../reducers';
 import { __ } from '../../../helpers/i18n';
 
@@ -19,11 +19,12 @@ interface Props {
   userName: string;
   rentsList: MyRentList[];
   rentsHistoryList: MyRentList[];
+  loading: boolean;
   getMyRentList: () => void;
   fetchMyRentHistory: () => void;
 }
 
-const Welcome = ({ userName, getMyRentList, rentsList, fetchMyRentHistory, rentsHistoryList }: Props) => {
+const Welcome = ({ userName, getMyRentList, rentsList, fetchMyRentHistory, rentsHistoryList, loading }: Props) => {
   useEffect(() => {
     getMyRentList();
     fetchMyRentHistory();
@@ -32,10 +33,10 @@ const Welcome = ({ userName, getMyRentList, rentsList, fetchMyRentHistory, rents
   return (
     <div className="welcome-wrapper">
       <Section full>
-        <SectionHeader title={`${__('application.hi')} ${userName}`} noMargin />
+        <PageHeader title={`${__('application.hi')} ${userName}`} />
       </Section>
       <Sale />
-      <Storage myRentList={rentsList} />
+      <Storage myRentList={rentsList} loading={loading} />
       <OrdersHistory rentsHistoryList={rentsHistoryList} />
       <Offers />
     </div>
@@ -46,6 +47,7 @@ const mapStateToProps = (state: ApplicationState) => ({
   userName: state.user.details.firstName,
   rentsList: state.rent.rentsList,
   rentsHistoryList: state.rent.rentsHistoryList,
+  loading: state.rent.loading,
 });
 
 const mapDispatchToProps = (dispatch: any) =>

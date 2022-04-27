@@ -1,46 +1,37 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { ApplicationState } from '../../../reducers';
-
+import React, { useState } from 'react';
 import './Cookies.scss';
-import { user } from '../../../actions';
+import { __ } from '../../../helpers/i18n';
 
-interface Props {
-  isRulesAndRodoAccepted: boolean;
-  acceptationCookies: () => void;
-}
+const Cookies = () => {
+  const areAccepted = () => {
+    try {
+      return JSON.parse(localStorage.getItem('cookies') || 'false');
+    } catch (e) {
+      return false;
+    }
+  };
 
-const Cookies = ({ isRulesAndRodoAccepted, acceptationCookies }: Props) => {
+  const [accepted, setAccepted] = useState<boolean>(areAccepted());
+
+  const accept = () => {
+    localStorage.setItem('cookies', JSON.stringify(true));
+    setAccepted(true);
+  };
+
   return (
-    <div className={`cookies-information ${isRulesAndRodoAccepted ? 'hide-cookies-bar' : ''}`}>
+    <div className={`cookies-information ${accepted ? 'hide-cookies-bar' : ''}`}>
       <p>
-        W tej aplikacji używamy plików cookies w celu zapewnienia użytkownikom efektywnego korzystania ze strony, a
-        także narzędzi analitycznych, promocyjnych i reklamowych w celu reklamy, badania rynku oraz badania preferencji
-        użytkowników. Korzystając z Aplikacji Smartbox, możesz wyrazić zgodę na korzystanie z plików cookies oraz
-        wymienionych narzędzi. Więcej informacji na temat plików cookies oraz stosowanych narzędzi znajdziesz w naszej{' '}
-        <a target="_blank" href="/assets/20210422_Polityka_Prywatnosci_Smartbox.pdf">
-          <u>Polityce&nbsp;prywatności</u>
+        {__('application.privacyPoliceInfo')}{' '}
+        <a target="_blank" href="/assets/2022_01_01_Polityka_Prywatnosci_SmartBox.pdf">
+          <u>{__('application.privacyPolicy1')}</u>
         </a>
         .
       </p>
-      <span className="exit" onClick={() => acceptationCookies()}>
+      <span className="exit" onClick={accept}>
         &times;
       </span>
     </div>
   );
 };
 
-const mapStateToProps = (state: ApplicationState) => ({
-  isRulesAndRodoAccepted: state?.user?.details?.isRulesAndRodoAccepted,
-});
-
-const mapDispatchToProps = (dispatch: any) =>
-  bindActionCreators(
-    {
-      ...user,
-    },
-    dispatch,
-  );
-
-export default connect(mapStateToProps, mapDispatchToProps)(Cookies);
+export default Cookies;

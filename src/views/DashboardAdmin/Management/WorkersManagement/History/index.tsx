@@ -5,7 +5,6 @@ import { StockList, UserRes } from 'smartbox-types';
 import { ApiTable, Button, Spinner } from '../../../../../components/Common';
 import { ApplicationState } from '../../../../../reducers';
 import { InteractiveTableSchema } from '../../../../../utils/table-schema-utils';
-import { __ } from '../../../../../helpers/i18n';
 import { ButtonsContainer, PageHeader, Section, SectionHeader } from '../../../../../components/Layout';
 
 interface Props {
@@ -25,9 +24,9 @@ class History extends React.Component<Props> {
     const { stockId } = this.props;
     return (
       <Section full>
-        <PageHeader title={__('application.historyWorker')} />
+        <PageHeader title="application.historyWorker" />
         <ButtonsContainer>
-          <Button text={__('application.back')} primary to="/admin/management/workers/list" />
+          <Button text="application.back" primary to="/admin/management/workers/list" />
         </ButtonsContainer>
         {stockId?.id ? (
           <>

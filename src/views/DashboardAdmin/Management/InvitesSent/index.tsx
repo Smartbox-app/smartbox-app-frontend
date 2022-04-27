@@ -25,19 +25,19 @@ class InvitesSent extends React.Component<Props> {
       mobile: true,
       buttons: [
         {
-          name: __('application.resend'),
+          name: 'application.resend',
           type: 'primary',
           click: (data: any) => this.props.resendInvitations(data.id),
         },
         {
-          name: __('application.delete'),
+          name: 'application.delete',
           type: 'danger',
           click: (data: any) =>
             this.props.showModal(
               <ConfirmModal
-                approveButtonText={__('application.delete')}
-                mainText={__('application.doYouWantDeleteInvite')}
-                cancelButtonText={__('application.cancel')}
+                approveButtonText='application.delete'
+                mainText='application.doYouWantDeleteInvite'
+                cancelButtonText='application.cancel'
                 approveAction={() => this.props.deleteSentInvitations(data.id)}
               />,
             ),
@@ -49,9 +49,9 @@ class InvitesSent extends React.Component<Props> {
   render() {
     return (
       <Section full>
-        <PageHeader title={__('application.inviteList')} />
+        <PageHeader title='application.inviteList' />
         <ButtonsContainer>
-          <Button text={__('application.inviteUser')} primary to="/admin/management/workers/add" />
+          <Button text='application.inviteUser' primary to="/admin/management/workers/add" />
         </ButtonsContainer>
         <ApiTable scheme={this.scheme} apiEndpointSubUrl="user/invitation-list" />
       </Section>

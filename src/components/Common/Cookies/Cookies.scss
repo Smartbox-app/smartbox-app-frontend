@@ -35,7 +35,7 @@
     margin: 0;
     text-align: center;
 
-    @include gt-md{
+    @include gt-md {
       margin: 0 auto;
       max-width: 75vw;
     }
@@ -50,7 +50,7 @@
     position: absolute;
     color: #fff;
     top: -10px;
-    right: 5%;
+    right: 5px;
     font-size: 2rem;
 
     &:hover {
@@ -59,6 +59,6 @@
   }
 }
 
-.hide-cookies-bar{
+.hide-cookies-bar {
   display: none;
 }

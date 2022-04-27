@@ -16,13 +16,13 @@ $icon-size: $main-spacing * 4;
   .item-icon {
     width: $icon-size;
     height: $icon-size;
-    border-radius: $icon-size /2;
+    border-radius: $icon-size / 2;
     background: #fff;
     color: $color-disabled;
-    border: 1px solid $color-disabled;
     display: flex;
     justify-content: center;
     align-items: center;
+    box-shadow: 0 5px 10px -5px lighten(rgba(#000, 0.4), 30%);
   }
 
   .item-current {
@@ -62,7 +62,6 @@ $icon-size: $main-spacing * 4;
 
 @include gt-sm {
   .ittem-wrapper {
-
     .item-description {
       font-size: 1rem;
       font-weight: 400;

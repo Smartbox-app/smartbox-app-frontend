@@ -26,7 +26,7 @@ const EmailConfirm = ({ emailVerification, match }: Props) => {
       <Section>
         <FormContainer>
           <LogoContainer />
-          <SectionHeader title={__('application.thanksForRegister')} />
+          <SectionHeader title='application.thanksForRegister' />
           <p className="">{__('application.mailVerificationInProgress')}</p>
           <Spinner />
         </FormContainer>

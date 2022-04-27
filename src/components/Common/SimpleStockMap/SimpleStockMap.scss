@@ -5,6 +5,7 @@
   .scale-#{$i * 10} {
     svg {
       transform: scale($i * 0.1);
+      // width: 3500px * ($i * 0.1);
     }
   }
 }
@@ -30,4 +31,10 @@
     color: $color-disabled;
     cursor: not-allowed;
   }
+}
+
+.map-container {
+  width: 100%;
+  overflow: auto;
+  min-height: 450px;
 }

@@ -70,15 +70,15 @@ const Register = ({ successNotification }: Props) => (
                   errors={translateErrors(errors)}
                   label={
                     <small>
-                      Zapoznałem/am się z postanowieniami{' '}
-                      <a target="_blank" href="/assets/20210422_Regulamin_aplikacji_Smartbox.pdf">
-                        <u>Regulaminu</u>
+                      {__('application.readTheProvisions')}{' '}
+                      <a target="_blank" href="/assets/2022_02_01_Regulamin_aplikacji_SmartBox.pdf">
+                        <u>{__('application.statutes')}</u>
                       </a>{' '}
                       i{' '}
-                      <a target="_blank" href="/assets/20210422_Polityka_Prywatnosci_Smartbox.pdf">
-                        <u>Polityki prywatności</u>
+                      <a target="_blank" href="/assets/2022_01_01_Polityka_Prywatnosci_SmartBox.pdf">
+                        <u>{__('application.privacyPolices')}</u>
                       </a>{' '}
-                      oraz akceptuję ich treść
+                      {__('application.acceptContent')}
                     </small>
                   }
                 />
@@ -88,7 +88,7 @@ const Register = ({ successNotification }: Props) => (
           }
         }}
         onSavedSuccessfully={() => {
-          successNotification(__('notification.accountRegistered'));
+          successNotification('notification.accountRegistered');
           history.push('/register/mail-was-send');
         }}
         onTranslateString={formOnTranslateString}

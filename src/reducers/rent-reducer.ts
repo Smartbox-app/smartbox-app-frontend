@@ -6,6 +6,7 @@ export type RentsStatus = {
   rentsHistoryList: MyRentList[];
   stockId: string;
   showUserStockMap: boolean;
+  loading: boolean;
 };
 
 interface BoxGroup {
@@ -32,11 +33,17 @@ interface ShowMapToggle {
   type: 'TOGGLE_SHOW_USER_STOCK_MAP';
 }
 
-type Action = BoxGroup | GetSingleRent | GetMySingleRent | FetchMyRentHistory | ShowMapToggle;
+interface LoadingRentHistory {
+  type: 'LOADING_RENT_HISTORY';
+  payload: boolean;
+}
+
+type Action = BoxGroup | GetSingleRent | GetMySingleRent | FetchMyRentHistory | ShowMapToggle | LoadingRentHistory;
 
 const initialState: RentsStatus = {
   singleRent: {
     id: '',
+    createdAt: new Date(),
     startAt: new Date(),
     finishAt: new Date(),
     status: RentStatus.free,
@@ -49,6 +56,7 @@ const initialState: RentsStatus = {
   rentsHistoryList: [],
   stockId: '',
   showUserStockMap: false,
+  loading: false,
 };
 
 export default (state: RentsStatus = initialState, action: Action): any => {
@@ -100,6 +108,12 @@ export default (state: RentsStatus = initialState, action: Action): any => {
       return {
         ...state,
         showUserStockMap: !state.showUserStockMap,
+      };
+    }
+    case 'LOADING_RENT_HISTORY': {
+      return {
+        ...state,
+        loading: action.payload,
       };
     }
     default:

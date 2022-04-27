@@ -9,7 +9,7 @@ import { createBrowserHistory } from 'history';
 import flatpickr from 'flatpickr';
 import { Polish } from 'flatpickr/dist/l10n/pl';
 import reducers from './reducers';
-import { DashboardAdmin, DashboardWorker, DashboardUser, Page404 } from './views';
+import { DashboardAdmin, DashboardWorker, DashboardUser, Page404, Welcome } from './views';
 import {
   OnlineContent,
   OfflineContent,
@@ -20,6 +20,7 @@ import {
   RouteWorker,
   Modal,
   ErrorBoundary,
+  Cookies,
 } from './components/Common';
 import { EmailConfirm, Login, Register, RestorePass, UserActivation, EmailSend, GoogleAuth } from './views/Auth';
 import { Invoice, PaymentFailed } from './views/DashboardCommon';
@@ -30,6 +31,8 @@ import { appStatus } from './actions/app-status';
 
 import 'flatpickr/dist/flatpickr.min.css';
 import 'flatpickr/dist/themes/airbnb.css';
+import BannerAndroid from './components/Common/BannerAndroid';
+import BannerIos from './components/Common/BanneriOS';
 
 flatpickr.localize(Polish);
 flatpickr.defaultConfig.time_24hr = true;
@@ -68,6 +71,7 @@ const App = () => {
             <ErrorBoundary>
               <Switch>
                 <Route exact path="/" render={() => <Redirect to="/login" />} />
+                <Route path="/welcome" component={Welcome} />
                 <Route path="/login" component={Login} />
                 <Route exact path="/register" component={Register} />
                 <Route path="/register/mail-was-send" component={EmailSend} />
@@ -89,11 +93,14 @@ const App = () => {
                 <RouteUser path="/user" component={DashboardUser} />
 
                 <Route exact path="/404" component={Page404} />
-                <Route render={() => <Redirect to="/404" />} />
+                <Route component={Page404} />
               </Switch>
             </ErrorBoundary>
           </Router>
+          <BannerAndroid />
+          <BannerIos />
           <Modal />
+          <Cookies />
         </OnlineContent>
         <OfflineContent>
           <AppOffline />

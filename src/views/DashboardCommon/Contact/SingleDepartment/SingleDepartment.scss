@@ -4,12 +4,12 @@
 .department {
   margin: $main-spacing 0;
   background-color: #fafbff;
-  border: 1px solid darken(#fafbff, 3%);
-  box-shadow: 2px 2px 2px 1px darken(#fafbff, 3%);
   padding: $main-spacing;
   position: relative;
   overflow: hidden;
   width: 300px;
+  box-shadow: 0 15px 20px -15px lighten(rgba(#000, 0.4), 30%);
+  border-radius: 10px;
 
   @include gt-sm {
     width: 500px;

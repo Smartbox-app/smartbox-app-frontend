@@ -6,8 +6,8 @@ import ReactCreatableSelect from 'react-select/creatable';
 import { bindActionCreators } from 'redux';
 import { apiTable, modal, notifications } from '../../../../../../actions';
 import { Button, Spinner } from '../../../../../../components/Common';
+import { ReactSelectOverride } from '../../../../../../components/Common/ReactSelectOverride';
 import { ButtonsContainer, FormContainer, PageHeader } from '../../../../../../components/Layout';
-import { __ } from '../../../../../../helpers/i18n';
 import ApiService from '../../../../../../services/api-service';
 import { formOnTranslateString } from '../../../../../../utils/trans-form';
 
@@ -21,7 +21,7 @@ interface Props {
 const EditRoleForm = ({ userId, successNotification, hideModal, refreshApiTableData }: Props) => {
   const submitButton = (
     <ButtonsContainer>
-      <Button text={__('application.save')} type="submit" primary />
+      <Button text="application.save" type="submit" primary />
     </ButtonsContainer>
   );
 
@@ -30,7 +30,7 @@ const EditRoleForm = ({ userId, successNotification, hideModal, refreshApiTableD
 
   return (
     <>
-      <PageHeader title={__('application.workerRoleChange')} />
+      <PageHeader title="application.workerRoleChange" />
       <FormContainer>
         <ItfApiForm
           formId="addOrderForm"
@@ -41,12 +41,12 @@ const EditRoleForm = ({ userId, successNotification, hideModal, refreshApiTableD
           sendFetcher={(formId: string, values: any) => ApiService.sendForm(sendUrl, values, 'PATCH')}
           submitButton={submitButton}
           onSavedSuccessfully={() => {
-            successNotification(__('notification.workerPositionChanged'));
+            successNotification('notification.workerPositionChanged');
             refreshApiTableData();
             hideModal();
           }}
           onTranslateString={formOnTranslateString}
-          thirdPartyComponents={{ ReactSelect, ReactCreatableSelect }}
+          thirdPartyComponents={{ ReactSelect: ReactSelectOverride, ReactCreatableSelect }}
         />
       </FormContainer>
     </>

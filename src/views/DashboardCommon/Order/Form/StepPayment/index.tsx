@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { PaymentType, UserRes } from 'smartbox-types';
-import { order } from '../../../../../actions';
+import { order, paymentStatus } from '../../../../../actions';
 import UserService from '../../../../../services/user-service';
 import { FormType } from '../../../../../types/order-form';
 import { ApplicationState } from '../../../../../reducers';
@@ -20,6 +20,7 @@ interface Props {
   user: UserRes;
   formData: FormType;
   selectedPayment: PaymentType;
+  resetPaymentForm: () => void;
 }
 
 const formToRender = (selectedPayment) => {
@@ -35,11 +36,15 @@ const formToRender = (selectedPayment) => {
   }
 };
 
-const StepPayment = ({ formData, selectedPayment, user }: Props) => {
+const StepPayment = ({ formData, selectedPayment, user, resetPaymentForm }: Props) => {
   useEffect(() => {
     if (formData.size.length === 0) {
       history.push(`/${UserService.getSlugByRole(user.role)}/order/step/size`);
     }
+
+    return () => {
+      resetPaymentForm();
+    };
   }, []);
 
   return <>{formToRender(selectedPayment)}</>;
@@ -55,6 +60,7 @@ const mapDispatchToProps = (dispatch: any) =>
   bindActionCreators(
     {
       ...order,
+      ...paymentStatus,
     },
     dispatch,
   );

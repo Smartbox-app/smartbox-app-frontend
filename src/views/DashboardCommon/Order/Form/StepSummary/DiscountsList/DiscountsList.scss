@@ -5,10 +5,10 @@
   display: flex;
   flex: 0 0 100%;
   flex-direction: column;
-  margin-left: -$main-spacing *2;
-  margin-right: -$main-spacing *2;
+  margin-left: -$main-spacing * 2;
+  margin-right: -$main-spacing * 2;
 
-  input[type=radio] {
+  input[type='radio'] {
     display: none;
   }
 }
@@ -35,4 +35,8 @@
     flex: 0 0 100%;
     flex-direction: row;
   }
+}
+
+.card-pricing-details {
+  text-align: center;
 }

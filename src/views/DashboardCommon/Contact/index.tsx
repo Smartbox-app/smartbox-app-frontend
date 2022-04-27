@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { UserRes } from 'smartbox-types';
-import { Section, SectionHeader } from '../../../components/Layout';
+import { PageHeader, Section, SectionHeader } from '../../../components/Layout';
 import { ApplicationState } from '../../../reducers';
 import SingleDepartment from './SingleDepartment';
 
@@ -13,35 +13,25 @@ interface Props {
 }
 
 const Contact = ({ user }: Props) => {
-  const contactData = {
-    city: 'Ostrów Wielkopolski',
-    postCode: '63-400',
-    street: 'ul. Wylotowa 13',
-    adminContact: 'p.drobnikowski@smartbox.pl',
-    adminPhone: '0048665519467',
-    technicalContact: 'a.pawlowski@smartbox.pl',
-    technicalPhone: '0048665519467',
-    helpContact: 'pomoc@smartbox.pl',
-    helpPhone: '0048665519467',
-  };
   return (
     <div className="contact-wrapper">
       <Section full>
-        <SectionHeader title="Zapraszamy do kontaktu:" />
+        <PageHeader title="application.welcomeToContact" />
         <div className="department-wrapper">
           <SingleDepartment
             organisationRole="Biuro obsługi klienta"
-            name="Monika Zarwalska-Lis"
+            name="Adrian Pawłowski"
             phone="731400331"
-            mail="monika@smartbox-storage.pl"
+            mail="kontakt@smartbox-storage.pl"
             openHour="8:00"
             closeHour="16:00"
           />
+
           <SingleDepartment
             organisationRole="Pomoc techniczna"
-            name="Adrian Pawłowski"
-            phone="731400331"
-            mail="adrian@smartbox-storage.pl"
+            name="Piotr Drobnikowski"
+            phone="510298876"
+            mail="kontakt@smartbox-storage.pl"
             openHour="8:00"
             closeHour="16:00"
           />

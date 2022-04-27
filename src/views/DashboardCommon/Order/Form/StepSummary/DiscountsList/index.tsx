@@ -5,13 +5,14 @@ import { bindActionCreators } from 'redux';
 import FormHeader from '../../../../../../components/Layout/FormHeader';
 import { ButtonsContainer } from '../../../../../../components/Layout';
 import { Button } from '../../../../../../components/Common';
-import { modal, notifications } from '../../../../../../actions';
+import { modal, notifications, order } from '../../../../../../actions';
 import { __ } from '../../../../../../helpers/i18n';
 import { ApplicationState } from '../../../../../../reducers';
 
 import DiscountCode from './DiscountCode';
 
 import './DiscountsList.scss';
+import { resetDiscountCode } from '../../../../../../actions/order';
 
 interface Props {
   countedPrice: {
@@ -19,11 +20,20 @@ interface Props {
     value: number;
   };
   codeDiscount: number;
+  codeDuration: number;
   showModal: (content: React.ReactNode) => void;
   successNotification: (text: string) => void;
+  resetDiscountCode: () => void;
 }
 
-const DiscountsList = ({ showModal, countedPrice, successNotification, codeDiscount }: Props) => {
+const DiscountsList = ({
+  showModal,
+  countedPrice,
+  resetDiscountCode,
+  successNotification,
+  codeDiscount,
+  codeDuration,
+}: Props) => {
   const [priceName, setPriceName] = useState(countedPrice.name);
   const [helpText, setHelpText]: [boolean, any] = useState(false);
 
@@ -32,25 +42,23 @@ const DiscountsList = ({ showModal, countedPrice, successNotification, codeDisco
       case 'firstRentFreePracing':
         if (codeDiscount !== 0) {
           setHelpText(true);
-          successNotification(
-            'Zastosowano korzystniejszą promocje. Kod nie został użyty. Można go wykorzystać ponownie.',
-          );
+          resetDiscountCode();
+          successNotification('notification.appliedBetterDiscount');
         }
-        return setPriceName(__('application.firstRentFreePracing'));
+        return setPriceName('application.firstRentFreePracing');
       case 'withDicoutnPricing':
         if (codeDiscount !== 0) {
           setHelpText(true);
-          successNotification(
-            'Zastosowano korzystniejszą promocje. Kod nie został użyty. Można go wykorzystać ponownie.',
-          );
+          resetDiscountCode();
+          successNotification('notification.appliedBetterDiscount');
         }
-        return setPriceName(__('application.withDicoutnPricing'));
+        return setPriceName('application.withDicoutnPricing');
       case 'cardPricing':
         setHelpText(false);
-        return setPriceName(__('application.cardPricing'));
+        return setPriceName('application.cardPricing');
       default:
         setHelpText(false);
-        return setPriceName(__('application.standardPrice'));
+        return setPriceName('application.standardPrice');
     }
   };
 
@@ -61,13 +69,21 @@ const DiscountsList = ({ showModal, countedPrice, successNotification, codeDisco
 
   return (
     <div>
-      <FormHeader title={__('application.usedDiscount')} />
+      <FormHeader title="application.usedPrice" />
       <div className="discount-wrapper">
-        <p>{priceName}</p>
-        {helpText && <p>Zastosowano korzystniejszą promocje. Kod nie został użyty. Można go wykorzystać ponownie.</p>}
+        <p>{__(priceName)}</p>
+        {countedPrice.name === 'cardPricing' && (
+          <div className="card-pricing-details">
+            <strong>{codeDiscount}%</strong> {__('application.forTime').toLowerCase()}{' '}
+            <strong>
+              {codeDuration} {__('application.weeksAmount')}
+            </strong>
+          </div>
+        )}
+        {helpText && <p>{__('notification.appliedBetterDiscount')}</p>}
       </div>
       <ButtonsContainer>
-        <Button text={__('application.useDiscountCode')} primary click={() => showModal(<DiscountCode />)} />
+        <Button text="application.useDiscountCode" primary click={() => showModal(<DiscountCode />)} />
       </ButtonsContainer>
     </div>
   );
@@ -76,6 +92,7 @@ const DiscountsList = ({ showModal, countedPrice, successNotification, codeDisco
 const mapStateToProps = (state: ApplicationState) => ({
   countedPrice: state.order.countedPrice,
   codeDiscount: state.order.formData.card.discount,
+  codeDuration: state.order.formData.card.durationInWeeks,
 });
 
 const mapDispatchToProps = (dispatch: any) =>
@@ -83,6 +100,7 @@ const mapDispatchToProps = (dispatch: any) =>
     {
       ...modal,
       ...notifications,
+      ...order,
     },
     dispatch,
   );

@@ -1,29 +1,29 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { UserRes } from 'smartbox-types';
 import { modal } from '../../../../actions';
 import { history } from '../../../../App';
 import { ApplicationState } from '../../../../reducers';
-import { UserCommonEntity } from '../../../../reducers/user-reducer';
 import UserService from '../../../../services/user-service';
 import { ButtonsContainer, SectionHeader } from '../../../Layout';
 import Alert from '../../Alert';
 import Button from '../../Button';
 
 interface Props {
-  user: UserCommonEntity;
+  user: UserRes;
   hideModal: () => void;
 }
 
 const NoPhoneModal = ({ hideModal, user }: Props) => {
   return (
     <div>
-      <SectionHeader title="Numer telefonu jest wymagany" />
-      <Alert type="primary" text="Proszę uzupełnić swój profil o numer telefonu." />
+      <SectionHeader title='application.phoneNumberIsRequired' />
+      <Alert type="primary" text='application.fillPhoneNumber'/>
       <ButtonsContainer>
-        <Button text="Anuluj" click={() => hideModal()} danger />
+        <Button text='application.cancel' click={() => hideModal()} danger />
         <Button
-          text="Przejdź do profilu"
+          text='application.goToProfile'
           success
           click={() => {
             hideModal();

@@ -15,6 +15,7 @@ const LogoContainer = ({ small, onlyBottomMargin, className }: Props): any => (
       onlyBottomMargin ? 'only-bottom-margin' : ''
     }`}
   >
+    <h1 className="hidden">Smartbox</h1>
     <Logo />
   </div>
 );

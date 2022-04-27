@@ -4,21 +4,19 @@ import { ItfApiForm } from 'itf_formbuilder_react';
 import ReactSelect from 'react-select';
 import ReactCreatableSelect from 'react-select/creatable';
 import { bindActionCreators } from 'redux';
-import { AddGiftReq } from 'smartbox-types';
+import { AddGiftReq, UserRes } from 'smartbox-types';
 import { history } from '../../../../../App';
 import { FormContainer, ButtonsContainer, FieldsColumn, FormHeader } from '../../../../../components/Layout';
 import { Button, Spinner } from '../../../../../components/Common';
 import { ApplicationState } from '../../../../../reducers';
-import { UserCommonEntity } from '../../../../../reducers/user-reducer';
 import ApiService from '../../../../../services/api-service';
 import UserService from '../../../../../services/user-service';
 import { formOnTranslateString } from '../../../../../utils/trans-form';
-import { __ } from '../../../../../helpers/i18n';
 import { modal, notifications, user } from '../../../../../actions';
+import { ReactSelectOverride } from '../../../../../components/Common/ReactSelectOverride';
 
 interface Props {
-  user: UserCommonEntity;
-  hideModal: () => void;
+  user: UserRes;
   fetchMyData: () => void;
   successNotification: (text: string) => void;
 }
@@ -27,12 +25,12 @@ const UpdateMe = ({ successNotification, user, fetchMyData }: Props) => {
   const submitButton = (
     <ButtonsContainer max>
       <Button
-        text={__('application.back')}
+        text="application.back"
         type="button"
         primary
         to={`/${UserService.getSlugByRole(user.role)}/profile/detail`}
       />
-      <Button text={__('application.change')} type="submit" success />
+      <Button text="application.change" type="submit" success />
     </ButtonsContainer>
   );
 
@@ -50,7 +48,7 @@ const UpdateMe = ({ successNotification, user, fetchMyData }: Props) => {
 
   return (
     <FormContainer>
-      <FormHeader title="Edytujesz swoje dane" />
+      <FormHeader title="application.editYourData" />
       <FieldsColumn>
         <ItfApiForm
           formId="EditUserProfileData"
@@ -61,12 +59,12 @@ const UpdateMe = ({ successNotification, user, fetchMyData }: Props) => {
           sendFetcher={customSendFetcher}
           submitButton={submitButton}
           onSavedSuccessfully={async () => {
-            successNotification(__('notification.dataChangedSuccess'));
+            successNotification('notification.dataChangedSuccess');
             await fetchMyData();
             history.push(`/${UserService.getSlugByRole(user.role)}/profile/detail`);
           }}
           onTranslateString={formOnTranslateString}
-          thirdPartyComponents={{ ReactSelect, ReactCreatableSelect }}
+          thirdPartyComponents={{ ReactSelect: ReactSelectOverride, ReactCreatableSelect }}
         />
       </FieldsColumn>
     </FormContainer>

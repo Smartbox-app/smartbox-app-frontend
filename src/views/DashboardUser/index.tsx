@@ -3,30 +3,28 @@ import React from 'react';
 import { Route, Redirect, Switch } from 'react-router-dom';
 import { Main } from '../../components/Layout';
 import MobileLogoContainer from '../../components/Layout/MobileLogoContainer';
-import { __ } from '../../helpers/i18n';
 import { Welcome, Order, Profile, Contact, PayDebtForm } from '../DashboardCommon';
 import { MenuItemType } from '../../types/menu-item';
 
 import DashboardContainer from '../../components/Layout/DashboardContainer';
 import Navigation from '../../components/Layout/Navigation';
 import SingleRentDetail from '../DashboardCommon/SingleRentDetail';
-import { Cookies } from '../../components/Common';
 
 const DashboardUser = () => {
   const menuItems: MenuItemType[] = [
     {
       icon: 'dashboard.svg',
-      text: __('application.home'),
+      text: 'application.home',
       address: '/user/main',
     },
     {
       icon: 'account.svg',
-      text: __('application.account'),
+      text: 'application.account',
       address: '/user/profile',
     },
     {
       icon: 'email.svg',
-      text: __('application.contact'),
+      text: 'application.contact',
       address: '/user/contact',
     },
   ];
@@ -46,7 +44,6 @@ const DashboardUser = () => {
           <Route exact path="/user/pay-debt/:rentId" component={PayDebtForm} />
         </Switch>
       </Main>
-      <Cookies />
     </DashboardContainer>
   );
 };

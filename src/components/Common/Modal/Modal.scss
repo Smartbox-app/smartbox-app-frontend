@@ -1,27 +1,20 @@
-@import "../../../config/mixins";
+@import '../../../config/mixins';
 
 .modal {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
-  overflow-y: scroll;
-  -webkit-overflow-scrolling: touch;
-  background: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.25);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 998;
   animation-name: showModal;
   animation-duration: 0.15s;
-  transition: all $transition-time ease-in-out;
+  transition: opacity $transition-time/2 ease-in-out;
   opacity: 0;
-  padding: 5px;
-
-  //@include gt-md {
-  //  align-items: stretch;
-  //}
 
   &.visible {
     opacity: 1;
@@ -32,23 +25,23 @@
   }
 
   .modal-wrapper {
-    max-height: 90vh;
-    max-width: 90vw;
+    width: 100%;
+    height: 100%;
     display: flex;
     align-items: center;
   }
 
   .modal-body {
-    z-index: 1000;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
     position: relative;
-    max-height: 90vh;
-    width: 90vh;
+    z-index: 1000;
+    overflow: auto;
+    max-width: 90%;
+    width: 100%;
+    position: relative;
     transform: scale(0.9);
-    transition: transform $transition-time ease-in-out;
-
+    transition: transform $transition-time/2 ease-in-out;
+    max-height: 80%;
+    height: 100%;
     p {
       max-width: 500px;
       font-size: 0.9rem;
@@ -66,7 +59,7 @@
 
 .modal-exit {
   color: $color-primary;
-  font-size: 2.5rem;
+  font-size: 2rem;
   font-weight: 700;
   position: absolute;
   top: 15px;
@@ -82,7 +75,7 @@
   }
 }
 
-@include gt-xs {
+@include gt-sm {
   .modal {
     .modal-body {
       width: auto;

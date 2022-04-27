@@ -10,6 +10,7 @@ import { InteractiveTableSchema } from '../../../../../utils/table-schema-utils'
 import { modal, user } from '../../../../../actions';
 import EditRoleForm from '../../WorkersManagement/List/EditRoleForm';
 import UserDetail from './UserDetail';
+import UserEdit from "./UserEdit";
 
 interface Props {
   showModal: (content: React.ReactNode) => void;
@@ -31,15 +32,21 @@ class List extends React.Component<Props> {
         type: FieldType.Custom,
         customRender: (value, field, userData) => this.getLockButton(value, field, userData),
       })
+      .removeFields('role')
       .addFieldAtTheEnd({
         name: __('application.actions'),
         field: 'actions',
         mobile: true,
         buttons: [
           {
-            name: __('application.userDetails'),
+            name: 'application.userDetails',
             type: 'primary',
             click: (data: UserListRes) => this.props.showModal(<UserDetail userId={data.id} userData={data} />),
+          },
+          {
+              name: 'application.edit',
+              type: 'primary',
+              click: (data: UserListRes) => this.props.showModal(<UserEdit userId={data.id}/>),
           },
         ],
       });
@@ -47,19 +54,19 @@ class List extends React.Component<Props> {
 
   private getLockButton = (value: boolean, field: TableSchemaField, userData: IUser) => {
     if (userData.status === UserStatus.blocked) {
-      return <Button text={__('application.active')} success click={() => this.props.enableUser(userData.id)} />;
+      return <Button text='application.active' success click={() => this.props.enableUser(userData.id)} />;
     } else {
-      return <Button text={__('application.block')} danger click={() => this.props.blockUser(userData.id)} />;
+      return <Button text='application.block' danger click={() => this.props.blockUser(userData.id)} />;
     }
   };
 
   render() {
     return (
       <Section full>
-        <PageHeader title={__('application.usersList')} />
+        <PageHeader title='application.usersList' />
         <ButtonsContainer>
-          <Button text={__('application.inviteUser')} primary to="/admin/management/workers/add" />
-          <Button text={__('application.historyWorker')} primary to="/admin/management/workers/history" />
+          <Button text='application.inviteUser' primary to="/admin/management/workers/add" />
+          <Button text='application.historyWorker' primary to="/admin/management/workers/history" />
         </ButtonsContainer>
         <ApiTable scheme={this.scheme} apiEndpointSubUrl={`user/list/${UserType.client}`} />
       </Section>

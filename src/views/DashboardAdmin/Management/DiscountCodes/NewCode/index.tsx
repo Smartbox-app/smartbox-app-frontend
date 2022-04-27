@@ -11,7 +11,7 @@ interface Props {
 
 const NewCode = ({ newCodeProps }: Props) => (
   <div className="new-code-wrapper">
-    <SectionHeader title={__('application.giftCodeGenerated')} />
+    <SectionHeader title='application.giftCodeGenerated'/>
     <p>
       {__('application.giftCod')}: <strong>{newCodeProps.code}</strong>
     </p>

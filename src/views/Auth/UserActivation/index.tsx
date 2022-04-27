@@ -37,13 +37,13 @@ const UserActivation = ({ successNotification, match, logout, userRole }: Props)
     );
 
   const success = () => {
-    successNotification(__('application.accountHasBeenActivated'));
+    successNotification('notification.accountHasBeenActivated');
     history.push('/');
   };
 
   const subButton = (
     <ButtonsContainer max>
-      <Button text={__('application.send')} type="submit" big primary rounded />
+      <Button text='application.send' type="submit" big primary rounded />
     </ButtonsContainer>
   );
 
@@ -53,8 +53,8 @@ const UserActivation = ({ successNotification, match, logout, userRole }: Props)
         <Logo />
       </div>
       <FormContainer className="login-form">
-        <PageHeader title={__('application.welcomeOnPlatform')} />
-        <p>{__('application.fillFormToCreatAccount')}</p>
+        <PageHeader title='application.welcomeOnPlatform' />
+        <p>{__('application.fillFormToCreateAccount')}</p>
         <ItfApiForm
           formId="UserActivationForm"
           schemaMayBeDynamic={false}

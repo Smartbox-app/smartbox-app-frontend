@@ -7,7 +7,6 @@ import { Spinner, Button } from '../../../../components/Common';
 import ApiService from '../../../../services/api-service';
 import { formOnTranslateString } from '../../../../utils/trans-form';
 import { notifications, modal } from '../../../../actions';
-import { __ } from '../../../../helpers/i18n';
 
 interface Props {
   paymentId: string;
@@ -22,13 +21,13 @@ const Invoice = ({ paymentId, successNotification, hideModal }: Props) => {
 
   const submitButton = (
     <ButtonsContainer max>
-      <Button text={__('application.generateInvoice')} type="submit" primary />
+      <Button text='application.generateInvoice' type="submit" primary />
     </ButtonsContainer>
   );
 
   return (
     <FormContainer className="invoice-form">
-      <FormHeader title={__('application.invoiceCreateData')} />
+      <FormHeader title='application.invoiceCreateData' />
       <ItfApiForm
         formId="nip-form"
         schemaMayBeDynamic={false}
@@ -39,7 +38,7 @@ const Invoice = ({ paymentId, successNotification, hideModal }: Props) => {
         submitButton={submitButton}
         onSavedSuccessfully={(data: any) => {
           if (data === null) {
-            successNotification(__('notification.invoiceSent'));
+            successNotification('notification.invoiceSent');
             hideModal();
           }
         }}

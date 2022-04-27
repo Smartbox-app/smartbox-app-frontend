@@ -18,6 +18,8 @@
   margin: 0 auto;
   justify-content: flex-end;
   align-items: center;
+  // @include safe-padding-bottom(0px);
+  // @include safe-height-with-bottom-inset($main-spacing * 6);
   height: $main-spacing * 6;
 }
 

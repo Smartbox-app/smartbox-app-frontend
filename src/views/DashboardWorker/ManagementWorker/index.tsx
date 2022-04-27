@@ -6,7 +6,6 @@ import { Tabs } from '../../../components/Common';
 import { Section } from '../../../components/Layout';
 import { ApplicationState } from '../../../reducers';
 import UserService from '../../../services/user-service';
-import { __ } from '../../../helpers/i18n';
 import { BoxMapManagement } from '../../DashboardCommon';
 import StockSelect from '../../DashboardAdmin/Management/StockSelect';
 import Gate from '../../DashboardCommon/SingleRentDetail/Gate';
@@ -24,13 +23,13 @@ const Management = ({ user }: Props) => (
           className: 'tab',
           activeClassName: 'active',
           to: `/${UserService.getSlugByRole(user.role)}/management/map`,
-          text: `${__('application.boxes')}`,
+          text: 'application.boxes',
         },
         {
           className: 'tab',
           activeClassName: 'active',
           to: `/${UserService.getSlugByRole(user.role)}/management/gate`,
-          text: `${__('application.gate')}`,
+          text: 'application.gate',
         },
       ]}
     />

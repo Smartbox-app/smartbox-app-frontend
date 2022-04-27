@@ -2,34 +2,32 @@
 @import '../../../config/mixins.scss';
 
 main {
-  min-height: $main-min-height-mobile;
   display: flex;
   flex: 0 0 100%;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  margin-bottom: 60px;
+  margin-bottom: $main-bottom-spacing-lg;
   width: 100vw;
-  overflow: hidden;
+}
 
-  footer {
-    justify-self: flex-end;
-    align-self: flex-end;
+@include gt-xs {
+  main {
+    margin-bottom: $main-bottom-spacing-md;
   }
 }
 
 @include gt-sm {
   main {
-    min-height: $main-min-height;
-    margin: 0 auto;
+    min-height: 0;
+    margin: 0 auto $main-bottom-spacing-sm auto;
     width: 90vw;
   }
 }
 
 @include gt-md {
   main {
-    min-height: $main-min-height;
-    margin: 0 auto;
+    margin: 0 auto $main-bottom-spacing-sm auto;
     width: 80vw;
   }
 }

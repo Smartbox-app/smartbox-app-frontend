@@ -8,7 +8,6 @@
     border: 1px solid $color-primary;
     border-bottom: 2px solid $color-primary;
   }
-
 }
 
 %input-base {
@@ -37,6 +36,7 @@
 
   &:read-only {
     background-color: lighten($color-background, 20%);
+    color: rgba($color-text, 0.5);
   }
 }
 
@@ -47,7 +47,8 @@
   display: flex;
   flex-direction: column;
 
-  input {
+  input,
+  textarea {
     @extend %input-base;
   }
 }
@@ -76,7 +77,7 @@
   .input-wrapper {
     position: relative;
     margin-bottom: $main-spacing / 4;
-    width:100%;
+    width: 100%;
     //display: flex;
     //justify-content: center;
     //align-items: center;
@@ -219,13 +220,18 @@ textarea {
   background: $color-primary;
 }
 
+[type='checkbox']:checked:disabled + label:after {
+  opacity: 1;
+  transform: translateY(-50%) scale(1);
+  background: $color-disabled;
+}
+
 [type='checkbox']:hover + label:after {
   opacity: 1;
   background: lighten($color-primary, 10%);
 }
 
 .form-container {
-
   [class*='IndicatorsContainer'] {
     max-height: 40px;
     display: flex;
@@ -266,7 +272,7 @@ textarea {
   }
 
   [class*='menu'] {
-    margin: $main-spacing /2 0 0;
+    margin: $main-spacing / 2 0 0;
     border-radius: 0;
     padding: 0;
     font-family: $font-primary;
@@ -281,4 +287,9 @@ textarea {
     border-bottom: 2px solid $color-danger;
     font-family: $font-primary;
   }
+}
+
+input,
+select {
+  font-size: 100%;
 }

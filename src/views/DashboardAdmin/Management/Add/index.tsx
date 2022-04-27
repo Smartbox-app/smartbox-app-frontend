@@ -10,7 +10,7 @@ import ApiService from '../../../../services/api-service';
 import { formOnTranslateString } from '../../../../utils/trans-form';
 import { notifications } from '../../../../actions';
 import { history } from '../../../../App';
-import { __ } from '../../../../helpers/i18n';
+import { ReactSelectOverride } from '../../../../components/Common/ReactSelectOverride';
 
 interface Props {
   successNotification: (text: string) => void;
@@ -19,7 +19,7 @@ interface Props {
 const Add = ({ successNotification }: Props) => {
   const submitButton = (
     <ButtonsContainer>
-      <Button text={__('application.sendInvitation')} type="submit" primary />
+      <Button text="application.sendInvitation" type="submit" primary />
     </ButtonsContainer>
   );
 
@@ -28,9 +28,9 @@ const Add = ({ successNotification }: Props) => {
 
   return (
     <>
-      <PageHeader title={__('application.preInvitation')} />
+      <PageHeader title="application.preInvitation" />
       <ButtonsContainer>
-        <Button to="/admin/management/workers/list" text={__('application.back')} primary />
+        <Button to="/admin/management/invitations" text="application.back" primary />
       </ButtonsContainer>
 
       <FormContainer>
@@ -42,11 +42,11 @@ const Add = ({ successNotification }: Props) => {
           sendFetcher={(formId: string, values: any) => ApiService.sendForm(sendUrl, values)}
           submitButton={submitButton}
           onSavedSuccessfully={() => {
-            successNotification(__('notification.invitationSendProperly'));
+            successNotification('notification.invitationSendProperly');
             history.push('/admin/management/workers/list');
           }}
           onTranslateString={formOnTranslateString}
-          thirdPartyComponents={{ ReactSelect, ReactCreatableSelect }}
+          thirdPartyComponents={{ ReactSelect: ReactSelectOverride, ReactCreatableSelect }}
         />
       </FormContainer>
     </>

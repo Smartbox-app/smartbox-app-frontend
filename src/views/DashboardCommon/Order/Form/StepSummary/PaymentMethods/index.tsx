@@ -10,6 +10,7 @@ import { ApplicationState } from '../../../../../../reducers';
 import BankListModal from './BankListModal';
 
 import './PaymentMethods.scss';
+import {__} from "../../../../../../helpers/i18n";
 
 interface Props {
   selectedPaymentMethod: {
@@ -35,7 +36,7 @@ const PaymentMethods = ({ showModal, saveBanks, selectedPaymentMethod, register,
           <div className="label-img">
             <ReactSVG src="/assets/icons/wallet.svg" />
           </div>
-          <span>Inne</span>
+          <span>{__('application.others')}</span>
         </>
       );
     } else {
@@ -52,7 +53,7 @@ const PaymentMethods = ({ showModal, saveBanks, selectedPaymentMethod, register,
 
   return (
     <div>
-      <FormHeader title="Metody płatności:" />
+      <FormHeader title='application.paymentMethods' />
       <div className="payment-methods-wrapper">
         <label htmlFor="paymentTypeCard">
           <input
@@ -67,7 +68,7 @@ const PaymentMethods = ({ showModal, saveBanks, selectedPaymentMethod, register,
             <div className="label-img">
               <ReactSVG src="/assets/icons/credit-card.svg" />
             </div>
-            <span>Karta płatnicza</span>
+            <span>{__('application.creditCard')}</span>
           </div>
         </label>
 

@@ -13,8 +13,6 @@ import { ApplicationState } from '../../../../../reducers';
 
 import FormHeader from '../../../../../components/Layout/FormHeader';
 import UserService from '../../../../../services/user-service';
-import { __ } from '../../../../../helpers/i18n';
-
 import './StepSize.scss';
 
 interface RouteProps {
@@ -30,6 +28,7 @@ interface Props extends RouteComponentProps<RouteProps> {
   clearOrderAgreement: () => void;
   updateFormData: (data: any) => void;
   fetchBoxAvailability: (stockId: string) => void;
+  getStockList: () => void;
 }
 
 const StepSize = ({
@@ -41,6 +40,7 @@ const StepSize = ({
   user,
   boxAvailability,
   clearOrderAgreement,
+  getStockList
 }: Props) => {
   useEffect(() => {
     clearOrderAgreement();
@@ -57,8 +57,9 @@ const StepSize = ({
 
   const { register, handleSubmit, watch } = useForm({ defaultValues });
 
-  const onSubmit = (data: any) => {
+  const onSubmit = async (data: any) => {
     updateFormData(data);
+    await getStockList(); //waiting for fetch list with stock discount before load data to discount variable in next step
     history.push(`/${UserService.getSlugByRole(user.role)}/order/step/duration`);
   };
 
@@ -117,15 +118,26 @@ const StepSize = ({
     />
   ));
 
+  const isMyBoxAvailable = (size: string) => {
+    const box = boxAvailability.find((b: BoxGroupAvailability) => b.size.toString() === size.toString());
+
+    return box && box.available;
+  };
+
   return (
     <FormContainer className="step-size-wrapper">
-      <FormHeader no-margin title={__('application.orderFormPickSize')} />
+      <FormHeader no-margin title='application.orderFormPickSize' />
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="options-wrapper">{options}</div>
 
         <ButtonsContainer max>
-          <Button disabled text={__('application.back')} />
-          <Button type="submit" primary text={__('application.next')} disabled={watch().size === ''} />
+          <Button disabled text='application.back' />
+          <Button
+            type="submit"
+            primary
+            text='application.next'
+            disabled={watch().size === '' || !isMyBoxAvailable(watch().size)}
+          />
         </ButtonsContainer>
       </form>
     </FormContainer>

@@ -33,7 +33,7 @@ const RestorePass = ({ successNotification, match }: Props) => {
   const notificationText = match.params.updateToken
     ? `${__('notification.newPassSet')}`
     : `${__('notification.msgSend')}`;
-  const buttonText = match.params.updateToken ? `${__('application.setNewPass')}` : `${__('application.restorePass')}`;
+  const buttonText = match.params.updateToken ? 'application.setNewPass' : 'application.restorePass';
 
   const setValues = (values: any) =>
     match.params.updateToken

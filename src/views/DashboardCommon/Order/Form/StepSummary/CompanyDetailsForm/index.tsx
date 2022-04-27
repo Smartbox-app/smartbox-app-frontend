@@ -8,17 +8,19 @@ interface Props {
   register: any;
   errors: any;
   control: any;
+  disabled?: boolean;
 }
 
-const CompanyDetailsForm = ({ register, errors, control }: Props) => {
+const CompanyDetailsForm = ({ register, errors, control, disabled }: Props) => {
   return (
     <div className="form-field">
-      <FormHeader title="Dane firmy:" />
+      <FormHeader title='application.companyData' />
       <CustomInput
         register={register({ required: formOnTranslateString('Field required.') })}
         errors={errors}
         control={control}
         id="companyName"
+        disabled={disabled}
         placeholder={formOnTranslateString('')}
       />
       <CustomInput
@@ -26,6 +28,7 @@ const CompanyDetailsForm = ({ register, errors, control }: Props) => {
         errors={errors}
         control={control}
         id="companyStreet"
+        disabled={disabled}
         placeholder="ul. Główna 12/3"
       />
       <CustomInput
@@ -33,6 +36,7 @@ const CompanyDetailsForm = ({ register, errors, control }: Props) => {
         errors={errors}
         control={control}
         id="companyCity"
+        disabled={disabled}
         placeholder="Warszawa"
       />
       <CustomInput
@@ -46,16 +50,18 @@ const CompanyDetailsForm = ({ register, errors, control }: Props) => {
         errors={errors}
         control={control}
         id="companyPostCode"
+        disabled={disabled}
         placeholder="00-001"
       />
       <CustomInput
         register={register({
           required: formOnTranslateString('Field required.'),
-          validate: (data: any) => (validateNip(data) || formOnTranslateString('Invalid NIP.')),
+          validate: (data: any) => validateNip(data) || formOnTranslateString('Invalid NIP.'),
         })}
         errors={errors}
         control={control}
         id="nip"
+        disabled={disabled}
         placeholder="NIP"
       />
     </div>

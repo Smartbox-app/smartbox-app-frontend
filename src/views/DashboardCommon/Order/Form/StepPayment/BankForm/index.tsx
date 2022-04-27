@@ -5,7 +5,6 @@ import { bindActionCreators } from 'redux';
 import { UserRes } from 'smartbox-types';
 import { history } from '../../../../../../App';
 import { ButtonsContainer, PageHeader } from '../../../../../../components/Layout';
-import { __ } from '../../../../../../helpers/i18n';
 import { ApplicationState } from '../../../../../../reducers';
 import { PaymentMethodDetail } from '../../../../../../reducers/order-reducer';
 import { modal, order } from '../../../../../../actions';
@@ -13,6 +12,8 @@ import { modal, order } from '../../../../../../actions';
 import './BankForm.scss';
 import { Button, Spinner } from '../../../../../../components/Common';
 import UserService from '../../../../../../services/user-service';
+import { __ } from '../../../../../../helpers/i18n';
+import { LockInfo } from '../LockInfo';
 
 interface RouteProps {
   step: string;
@@ -40,14 +41,15 @@ const BankForm = ({ func, paymentId, sentExecutePaymentWithTpayRequest, bankGrou
       {loading ? (
         <Spinner />
       ) : (
-        <>
+        <div className="payment-wrapper">
           <div className="bank-input-wrapper">
             <div dangerouslySetInnerHTML={{ __html: func || '' }} />
           </div>
+          <LockInfo />
           <ButtonsContainer max>
-            <Button outline text={__('application.back')} click={() => onBack()} />
+            <Button outline text="application.back" click={() => onBack()} />
           </ButtonsContainer>
-        </>
+        </div>
       )}
     </div>
   );

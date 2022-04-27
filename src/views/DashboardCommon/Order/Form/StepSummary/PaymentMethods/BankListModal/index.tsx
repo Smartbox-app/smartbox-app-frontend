@@ -22,7 +22,7 @@ const BankListModal = ({ loading, bankList, setPaymentMethod, hideModal }: Props
 
   return (
     <>
-      <SectionHeader title="Proszę wybrać:" />
+      <SectionHeader title='application.pleaseChoose' />
       <div className="bank-list-wrapper">
         {bankList.map((bank: any) => (
           <label key={bank.id} className="single-bank" htmlFor={`payment-${bank.id}`}>

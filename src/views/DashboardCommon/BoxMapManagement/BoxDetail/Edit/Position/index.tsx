@@ -1,6 +1,5 @@
 import React from 'react';
 import { ItfApiForm } from 'itf_formbuilder_react';
-import ReactSelect from 'react-select';
 import { connect } from 'react-redux';
 import ReactCreatableSelect from 'react-select/creatable';
 import { bindActionCreators } from 'redux';
@@ -14,6 +13,7 @@ import { formOnTranslateString } from '../../../../../../utils/trans-form';
 import { __ } from '../../../../../../helpers/i18n';
 
 import './Position.scss';
+import { ReactSelectOverride } from '../../../../../../components/Common/ReactSelectOverride';
 
 interface Props {
   rentId: string;
@@ -27,7 +27,7 @@ interface Props {
 const Position = ({ rentId, stock, successNotification, fetchBoxStatuses, hideModal, showModal }: Props) => {
   const submitButton = (
     <ButtonsContainer>
-      <Button text={__('application.move')} type="submit" danger />
+      <Button text="application.move" type="submit" danger />
     </ButtonsContainer>
   );
 
@@ -38,15 +38,15 @@ const Position = ({ rentId, stock, successNotification, fetchBoxStatuses, hideMo
     showModal(
       <>
         <div className="modal-alert-wrapper">
-          <Alert type="primary" text={__('application.userWillGetMailWithInformation')} />
-          <Alert type="primary" text={__('application.actionCanNotBeUnDone')} />
+          <Alert type="primary" text="application.userWillGetMailWithInformation" />
+          <Alert type="primary" text="application.actionCanNotBeUnDone" />
         </div>
         <ButtonsContainer max>
-          <Button text={__('application.cancel')} danger click={() => hideModal()} />
+          <Button text="application.cancel" danger click={() => hideModal()} />
           <Button
             success
             type="submit"
-            text={__('application.understood')}
+            text="application.understood"
             click={async () => {
               await hideModal();
               await ApiService.sendForm(
@@ -56,7 +56,7 @@ const Position = ({ rentId, stock, successNotification, fetchBoxStatuses, hideMo
                 },
                 'PATCH',
               );
-              await successNotification(__('notification.userMovedSuccess'));
+              await successNotification('notification.userMovedSuccess');
               await fetchBoxStatuses(stock.id);
             }}
           />
@@ -80,7 +80,34 @@ const Position = ({ rentId, stock, successNotification, fetchBoxStatuses, hideMo
           fetchBoxStatuses(stock.id);
         }}
         onTranslateString={formOnTranslateString}
-        thirdPartyComponents={{ ReactSelect, ReactCreatableSelect }}
+        thirdPartyComponents={{ ReactSelect: ReactSelectOverride, ReactCreatableSelect }}
+        onRenderFullField={(field: any, errors: any, fieldHtmlId: string, currentValue: any, onChange: any) => {
+          const optionsArray = field.options.possibleValues;
+          const reactSelectOptions = field.options
+            ? Object.keys(optionsArray).map((item: any) => ({ label: optionsArray[item], value: item }))
+            : ([{ label: '', value: '' }] as any);
+
+          return (
+            <div className="form-field">
+              <label htmlFor={fieldHtmlId}>
+                <p>{field.title}</p>
+                <ReactSelectOverride
+                  id={fieldHtmlId}
+                  name={fieldHtmlId}
+                  required={field.required}
+                  onChange={(value: any) => onChange(value.value)}
+                  options={reactSelectOptions}
+                  noOptionsMessage={() => __('application.lackOfThisSizeStorage')}
+                  placeholder={__('application.selectPlaceholder')}
+                  isSearchable={false}
+                  meta={{
+                    error: errors.length ? __(errors[0].messageWithPlaceholders, errors[0].params) : null,
+                  }}
+                />
+              </label>
+            </div>
+          );
+        }}
       />
     </FormContainer>
   );
