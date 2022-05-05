@@ -4,10 +4,9 @@ import SessionService from './session-service';
 import { store, history } from '../App';
 
 export default class ApiService {
-  static url =
-    process.env.REACT_APP_API_URL === 'string'
-      ? `${process.env.REACT_APP_API_URL.trim()}/`
-      : 'http://localhost:3001/';
+  static url = process.env.REACT_APP_API_URL === 'string'
+    ? `${process.env.REACT_APP_API_URL.trim()}/`
+    : 'http://localhost:3001/';
 
   static call = async (
     dispatch: any,
