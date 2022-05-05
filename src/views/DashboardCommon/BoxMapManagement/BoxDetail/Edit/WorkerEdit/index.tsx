@@ -1,7 +1,6 @@
 import { ItfApiForm } from 'itf_formbuilder_react';
 import React from 'react';
 import { connect } from 'react-redux';
-import ReactSelect from 'react-select';
 import ReactCreatableSelect from 'react-select/creatable';
 import { bindActionCreators } from 'redux';
 import { BoxListItem, ChangeStatusReq, RentStatus, StockList } from 'smartbox-types';
