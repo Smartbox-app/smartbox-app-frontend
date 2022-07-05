@@ -38,7 +38,7 @@ const Gate = ({ startAnimation, user, stockId, askGateToOpen, askGateToOpenStuff
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(showPosition);
     } else {
-      console.log('Geo Location not supported by browser');
+      console.log('Geo Location is not supported by browser');
     }
   };
 
@@ -56,10 +56,10 @@ const Gate = ({ startAnimation, user, stockId, askGateToOpen, askGateToOpenStuff
 
   const getButtonText = () => {
     if (startAnimation) {
-      return 'application.openingGate'
+      return 'application.openingGate';
     }
 
-    return isUser(user.role) ? 'application.openGate' : 'application.openGateStuff'
+    return isUser(user.role) ? 'application.openGate' : 'application.openGateStuff';
   };
 
   const gateOpenningAnimation = (
