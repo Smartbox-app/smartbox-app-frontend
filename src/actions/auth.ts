@@ -1,13 +1,15 @@
 import { AuthLoginRequest, AuthLoginResult, UserRes } from 'smartbox-types';
+import { ReactFacebookLoginInfo } from 'react-facebook-login';
 import ApiService from '../services/api-service';
 import { notifications, order } from '../actions';
 import { history } from '../App';
 import { hideModal } from './modal';
 import { getRememberedRedirect, clearRememberedRedirect } from '../utils/remeber-redirect';
 
+
 export const saveUser = (userData: AuthLoginResult) => ({ type: 'LOGIN_SUCCESS', payload: userData });
 
-export const loginWithFacebook = (data: any) => async (dispatch: any) => {
+export const loginWithFacebook = (data: ReactFacebookLoginInfo) => async (dispatch: any) => {
   await ApiService.post(
     dispatch,
     'LOGIN_SUCCESS',

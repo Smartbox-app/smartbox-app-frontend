@@ -6,6 +6,7 @@ import { modal } from '../../../../actions';
 import { history } from '../../../../App';
 import { ApplicationState } from '../../../../reducers';
 import UserService from '../../../../services/user-service';
+import UpdateMe from '../../../../views/DashboardCommon/Profile/Detail/UpdateMe';
 import { ButtonsContainer, SectionHeader } from '../../../Layout';
 import Alert from '../../Alert';
 import Button from '../../Button';
@@ -18,19 +19,9 @@ interface Props {
 const NoPhoneModal = ({ hideModal, user }: Props) => {
   return (
     <div>
-      <SectionHeader title='application.phoneNumberIsRequired' />
-      <Alert type="primary" text='application.fillPhoneNumber'/>
-      <ButtonsContainer>
-        <Button text='application.cancel' click={() => hideModal()} danger />
-        <Button
-          text='application.goToProfile'
-          success
-          click={() => {
-            hideModal();
-            history.push(`/${UserService.getSlugByRole(user.role)}/profile`);
-          }}
-        />
-      </ButtonsContainer>
+      <SectionHeader title="application.phoneNumberIsRequired" />
+      <Alert type="primary" text="application.fillPhoneNumber" />
+      <UpdateMe />
     </div>
   );
 };

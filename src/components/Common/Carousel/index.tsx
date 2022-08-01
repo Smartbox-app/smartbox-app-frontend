@@ -47,11 +47,11 @@ class Carousel extends Component<Props> {
           <ReactSVG src={`/assets/icons/${data}c.svg`} />
           <ButtonsContainer max>
             <Button
-              text='application.newStock'
+              text="application.newStock"
               outline
               icon="plus.svg"
               click={() => {
-                if (user.phone.length < 7) {
+                if (!user.phone || user.phone.length < 7) {
                   showModal(<NoPhoneModal />);
                 } else {
                   updateFormData({ size: `${data}` });

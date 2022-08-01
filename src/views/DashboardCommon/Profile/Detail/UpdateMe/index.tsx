@@ -1,5 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import { ItfApiForm } from 'itf_formbuilder_react';
 import ReactSelect from 'react-select';
 import ReactCreatableSelect from 'react-select/creatable';
@@ -22,13 +22,17 @@ interface Props {
 }
 
 const UpdateMe = ({ successNotification, user, fetchMyData }: Props) => {
+  const dispatch = useDispatch();
+
   const submitButton = (
-    <ButtonsContainer max>
+    <ButtonsContainer>
       <Button
-        text="application.back"
+        text="application.cancel"
         type="button"
-        primary
-        to={`/${UserService.getSlugByRole(user.role)}/profile/detail`}
+        danger
+        click={() => {
+          dispatch(modal.hideModal());
+        }}
       />
       <Button text="application.change" type="submit" success />
     </ButtonsContainer>
@@ -48,7 +52,6 @@ const UpdateMe = ({ successNotification, user, fetchMyData }: Props) => {
 
   return (
     <FormContainer>
-      <FormHeader title="application.editYourData" />
       <FieldsColumn>
         <ItfApiForm
           formId="EditUserProfileData"
@@ -61,7 +64,7 @@ const UpdateMe = ({ successNotification, user, fetchMyData }: Props) => {
           onSavedSuccessfully={async () => {
             successNotification('notification.dataChangedSuccess');
             await fetchMyData();
-            history.push(`/${UserService.getSlugByRole(user.role)}/profile/detail`);
+            dispatch(modal.hideModal());
           }}
           onTranslateString={formOnTranslateString}
           thirdPartyComponents={{ ReactSelect: ReactSelectOverride, ReactCreatableSelect }}
