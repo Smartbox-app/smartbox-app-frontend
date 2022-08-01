@@ -118,12 +118,7 @@ export const authGmailUser = (googleToken: string) => async (dispatch: any) => {
     'EMAIL_VERIFICATION_RESEND_MAIL_FAILED',
     (response: { user: UserRes }) => {
       dispatch(notifications.successNotification('notification.logInSuccess'));
-      const redirect = getRememberedRedirect();
-
-      if (redirect && redirect.role === response.user.role) {
-        history.push(redirect.to);
-        clearRememberedRedirect();
-      }
+      history.push('/');
     },
     null,
     `auth/login-by-google-token/${googleToken}`,
