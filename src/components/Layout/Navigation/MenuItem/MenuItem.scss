@@ -1,102 +1,97 @@
-@import '../../../../config/variables.scss';
-@import '../../../../config/mixins.scss';
+@use "sass:color";
+@use '../../../../config/variables.scss';
+@use '../../../../config/mixins.scss';
 
 .main-menu-item {
   display: flex;
   flex-direction: column;
-  flex: 1 0 25%;
-  border-top: 2px solid $color-inactive;
+  flex: 0 0 25%;
+  border-top: 2px solid variables.$color-inactive;
   text-align: center;
   justify-content: center;
   align-items: center;
-  padding: $main-spacing;
-  color: $color-inactive;
-  //border: none;
-
-  &:link {
-    color: $color-inactive;
-  }
-  &:visited {
-    color: $color-inactive;
-  }
+  padding: variables.$main-spacing;
+  color: variables.$color-inactive !important;
 
   &:hover {
-    border-top: 2px solid $color-primary-light;
-    color: $color-primary-light;
+    background-color: color.adjust(variables.$color-background, $lightness: 30%);
+    border-top: 2px solid variables.$color-primary-light;
+    color: variables.$color-primary-light;
     cursor: pointer;
 
     .main-menu-item_text {
-      color: $color-primary-light;
+      color: variables.$color-primary;
     }
   }
 
   &.active {
-    border-top: 2px solid $color-primary;
+    border-top: 2px solid variables.$color-primary;
     font-weight: 500;
-    color: $color-inactive;
+    color: variables.$color-inactive;
 
     .main-menu-item_text {
-      color: $color-primary;
+      color: variables.$color-primary;
     }
   }
 
   &.active .main-menu-item_logo {
-    fill: $color-primary;
+    fill: variables.$color-primary;
   }
 
   &:hover .main-menu-item_logo {
-    fill: $color-primary-light;
+    fill: variables.$color-primary-light;
   }
 
   .main-menu-item_logo {
-    width: $menu-icon-small;
-    height: $menu-icon-small;
-    margin-bottom: $main-spacing/2;
-    fill: $color-inactive;
+    width: 15px;
+    height: 15px;
+    margin-bottom: calc(variables.$main-spacing / 2);
+    fill: variables.$color-inactive;
   }
 }
 
-@include gt-sm {
+@include mixins.gt-sm {
   .main-menu-item_logo {
-    width: $menu-icon-medium;
-    height: $menu-icon-medium;
-    margin-bottom: $main-spacing;
-    fill: $color-inactive;
+    width: 20px;
+    height: 20px;
+    margin-bottom: variables.$main-spacing;
+    fill: variables.$color-inactive;
   }
   .main-menu-item {
     border-top: none;
-    border-bottom: 2px solid $color-inactive;
+    border-bottom: 2px solid variables.$color-inactive;
 
     &:hover {
       border-top: none;
-      border-bottom: 2px solid $color-primary-light;
+      border-bottom: 2px solid variables.$color-primary-light;
     }
 
     &.active {
       border-top: none;
-      border-bottom: 2px solid $color-primary;
+      border-bottom: 2px solid variables.$color-primary;
     }
   }
 }
 
-@include gt-md {
+@include mixins.gt-md {
   .main-menu-item_logo {
-    width: $menu-icon-big;
-    height: $menu-icon-big;
+    width: variables.$menu-icon-big;
+    height: variables.$menu-icon-big;
   }
 }
 
-@include gt-lg {
+@include mixins.gt-lg {
   .main-menu-item {
     display: flex;
     border-top: none;
     border-bottom: none;
     flex-direction: row;
-    justify-content: flex-end;
+    justify-content: center;
+    align-items: center;
 
     .main-menu-item_logo {
-      width: $menu-icon-big;
-      height: $menu-icon-big;
+      width: variables.$menu-icon-big;
+      height: variables.$menu-icon-big;
       margin-right: 10px;
       margin-bottom: 0;
     }
@@ -112,7 +107,7 @@
     }
 
     .main-menu-item_text {
-      line-height: $menu-icon-big;
+      line-height: variables.$menu-icon-big;
       font-size: 1.3rem;
       font-weight: 400;
     }

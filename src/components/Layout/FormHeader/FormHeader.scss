@@ -1,31 +1,31 @@
-@import '../../../config/variables';
-@import '../../../config/mixins';
+@use "../../../config/variables";
+@use "../../../config/mixins";
 
 .form-header-container {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin-top: $main-spacing * 2;
+  margin-top: variables.$main-spacing * 2;
 
-  .form-header {
-    color: $color-text;
+  .section-header {
+    color: variables.$color-text;
     display: flex;
     align-items: center;
     width: 100%;
-    margin-bottom: $main-spacing;
+    margin-bottom: variables.$main-spacing;
   }
 
   .no-margin {
-    margin-bottom: $main-spacing;
+    margin-bottom: variables.$main-spacing;
   }
 }
 
-@include gt-sm {
-  .form-header-container {
-    margin-bottom: $main-spacing * 1.5;
+@include mixins.gt-sm {
+  .section-header-container {
+    margin-bottom: variables.$main-spacing * 1.5;
 
-    .form-header {
-      max-width: $page-header-width;
+    .section-header {
+      max-width: variables.$page-header-width;
     }
   }
 }

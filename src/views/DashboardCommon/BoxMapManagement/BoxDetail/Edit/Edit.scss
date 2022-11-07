@@ -1,9 +1,9 @@
-@import '../../../../../config/variables.scss';
-@import '../../../../../config/mixins.scss';
+@use '../../../../../config/variables.scss';
+@use '../../../../../config/mixins.scss';
 
 .edit-wrapper {
   position: relative;
-  transition: all $transition-time/1.5 ease-in-out;
+  transition: all variables.$transition-time/1.5 ease-in-out;
   height: 0;
   opacity: 0;
   line-height: 0;
@@ -17,5 +17,5 @@
 }
 
 .modal-alert-wrapper {
-  padding: $main-spacing*2 0;
+  padding: variables.$main-spacing*2 0;
 }

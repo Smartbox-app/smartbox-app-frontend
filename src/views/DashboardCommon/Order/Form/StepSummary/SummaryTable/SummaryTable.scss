@@ -1,5 +1,5 @@
-@import '../../../../../../config/variables.scss';
-@import '../../../../../../config/mixins.scss';
+@use '../../../../../../config/variables.scss';
+@use '../../../../../../config/mixins.scss';
 
 .order-summary-wrapper {
   display: flex;
@@ -11,7 +11,7 @@
     flex-direction: column;
     flex: 0 0 33.333%;
     max-width: 33.3333%;
-    margin: $main-spacing;
+    margin: variables.$main-spacing;
     margin-left: 0;
     margin-right: 0;
 
@@ -19,8 +19,8 @@
       display: flex;
       width: 100%;
       justify-content: center;
-      color: $color-primary;
-      padding: $main-spacing 0;
+      color: variables.$color-primary;
+      padding: variables.$main-spacing 0;
       text-align: center;
     }
 
@@ -29,14 +29,14 @@
       font-weight: 600;
       font-size: 1.1rem;
 
-      @include gt-sm {
+      @include mixins.gt-sm {
         font-size: 1.3rem;
       }
     }
   }
 }
 
-@include gt-sm {
+@include mixins.gt-sm {
   .order-summary-wrapper {
     .row {
 

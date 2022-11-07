@@ -1,5 +1,5 @@
-@import '../../../config/variables.scss';
-@import '../../../config/mixins.scss';
+@use '../../../config/variables.scss';
+@use '../../../config/mixins.scss';
 
 .fields-column {
   display: flex;
@@ -16,7 +16,7 @@
     .form-field {
       display: flex;
       flex: 1 0 100%;
-      padding: $main-spacing 0;
+      padding: variables.$main-spacing 0;
     }
 
     .form-buttons {
@@ -30,20 +30,20 @@
       font-size: 0.8rem;
     }
 
-    @include gt-md {
+    @include mixins.gt-md {
       .form-field {
         flex: 0 0 100%;
       }
     }
 
-    @include gt-lg {
+    @include mixins.gt-lg {
       .form-field {
         flex: 0 0 100%;
       }
     }
   }
 
-  @include gt-sm {
+  @include mixins.gt-sm {
     max-width: 500px;
   }
 }

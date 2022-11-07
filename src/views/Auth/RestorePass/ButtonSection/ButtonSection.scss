@@ -1,31 +1,31 @@
-@import '../../../../config/variables.scss';
-@import '../../../../config/mixins.scss';
+@use '../../../../config/variables.scss';
+@use '../../../../config/mixins.scss';
 
 .restore-pass-buttons-section {
-  width: $login-button-size;
+  width: variables.$login-button-size;
   margin: 0 auto;
   padding: 0;
 
   .button {
     width: 100%;
     font-size: 1.1rem;
-    min-height: $login-button-height;
-    border-radius: $login-button-height /2 ;
+    min-height: variables.$login-button-height;
+    border-radius: variables.$login-button-height /2 ;
   }
 }
 .lost-pass {
   text-align: center;
 }
 
-@include gt-sm {
+@include mixins.gt-sm {
   .restore-pass-buttons-section {
-    width: $login-button-size * 1.1;
+    width: variables.$login-button-size * 1.1;
 
   }
 }
 
-@include gt-md {
+@include mixins.gt-md {
   .restore-pass-buttons-section {
-    width: $login-button-size * 1.2;
+    width: variables.$login-button-size * 1.2;
   }
 }

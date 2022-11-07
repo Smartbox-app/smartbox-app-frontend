@@ -1,5 +1,5 @@
-@import '../../../../../config/variables.scss';
-@import '../../../../../config/mixins.scss';
+@use '../../../../../config/variables.scss';
+@use '../../../../../config/mixins.scss';
 
 .calendars-picker-wrapper {
   display: flex;
@@ -8,13 +8,13 @@
   align-items: center;
 
   .data-picker-wrapper {
-    margin-bottom: $main-spacing * 2;
+    margin-bottom: variables.$main-spacing * 2;
     display: flex;
     flex-direction: column;
   }
 }
 
-@include gt-sm {
+@include mixins.gt-sm {
   .calendars-picker-wrapper {
     flex-direction: row;
     justify-content: space-around;

@@ -1,21 +1,21 @@
-@import '../../../../config/variables.scss';
-@import '../../../../config/mixins.scss';
+@use '../../../../config/variables.scss';
+@use '../../../../config/mixins.scss';
 
 .modal-content {
   position: relative;
   z-index: 1;
-  padding: $main-spacing;
-  padding-top: $main-spacing/3;
-  transition: $transition-time;
+  padding: variables.$main-spacing;
+  padding-top: variables.$main-spacing/3;
+  transition: variables.$transition-time;
   overflow: auto;
   height: 100%;
-  box-shadow: 0 0 $main-spacing * 1.5 $main-spacing / -2 rgba(0, 0, 0, 0.5);
-  border-radius: $main-spacing / 5;
-  background-color: $color-background;
+  box-shadow: 0 0 variables.$main-spacing * 1.5 variables.$main-spacing / -2 rgba(0, 0, 0, 0.5);
+  border-radius: variables.$main-spacing / 5;
+  background-color: variables.$color-background;
   height: 100%;
   width: 100%;
-  // padding-top: $main-spacing * 3;
-  @include gt-sm {
+  padding-top: variables.$main-spacing * 3;
+  @include mixins.gt-sm {
     min-width: 500px;
   }
 }

@@ -1,12 +1,13 @@
-@import '../../../../../../config/variables.scss';
-@import '../../../../../../config/mixins.scss';
+@use "sass:color";
+@use '../../../../../../config/variables.scss';
+@use '../../../../../../config/mixins.scss';
 
 .discounts-list-wrapper {
   display: flex;
   flex: 0 0 100%;
   flex-direction: column;
-  margin-left: -$main-spacing * 2;
-  margin-right: -$main-spacing * 2;
+  margin-left: -(variables.$main-spacing) * 2;
+  margin-right: -(variables.$main-spacing) * 2;
 
   input[type='radio'] {
     display: none;
@@ -17,9 +18,9 @@
   display: flex;
   flex-direction: column;
   background: #fff;
-  margin: $main-spacing/2 0;
-  padding: $main-spacing;
-  box-shadow: 0 0 1px 2px lighten($color-disabled, 25%);
+  margin: variables.$main-spacing/2 0;
+  padding: variables.$main-spacing;
+  box-shadow: 0 0 1px 2px color.adjust(variables.$color-disabled, $lightness: 25%);
   cursor: default;
   position: relative;
   justify-content: center;
@@ -29,7 +30,7 @@
   }
 }
 
-@include gt-sm {
+@include mixins.gt-sm {
   .discounts-list-wrapper {
     display: flex;
     flex: 0 0 100%;

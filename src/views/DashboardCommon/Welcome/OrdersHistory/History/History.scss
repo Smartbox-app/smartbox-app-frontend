@@ -1,8 +1,8 @@
-@import '../../../../../config/variables.scss';
-@import '../../../../../config/mixins.scss';
+@use '../../../../../config/variables.scss';
+@use '../../../../../config/mixins.scss';
 
 .history-wrapper {
-  margin: $main-spacing 0;
+  margin: variables.$main-spacing 0;
   display: flex;
   flex: 0 0 100%;
   flex-direction: column;
@@ -12,14 +12,14 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  color: $color-inactive;
+  color: variables.$color-inactive;
   font-weight: 600;
   font-size: 0.8rem;
 }
 
 .header-cell {
   flex: 1;
-  padding-right: $table-item-spacing/4;
+  padding-right: variables.$table-item-spacing/4;
   font-size: 0.8rem;
 
   word-break: normal;
@@ -39,15 +39,15 @@
 }
 
 .active-stock {
-  color: $color-primary;
+  color: variables.$color-primary;
 }
 
 .payment-issue {
-  color: $color-tertiary;
+  color: variables.$color-tertiary;
 }
 
 .ended {
-  color: $color-disabled;
+  color: variables.$color-disabled;
 }
 
 .history-line {
@@ -58,12 +58,12 @@
   flex-wrap: nowrap;
   width: 100%;
   padding: 7.5px 0;
-  border-bottom: 1px solid $color-inactive;
+  border-bottom: 1px solid variables.$color-inactive;
 }
 
 .header {
   font-weight: 600;
-  color: $color-disabled;
+  color: variables.$color-disabled;
 }
 
 .last {

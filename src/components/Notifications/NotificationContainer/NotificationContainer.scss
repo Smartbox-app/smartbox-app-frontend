@@ -1,16 +1,17 @@
-@import '../../../config/variables';
-@import '../../../config/mixins.scss';
+@use "sass:map";
+@use "../../../config/variables";
+@use "../../../config/mixins.scss";
 
 .notification-container {
-  font-family: $font-primary;
+  font-family: variables.$font-primary;
   position: fixed;
   right: 0;
   z-index: 999;
   width: 100%;
-  @include safe-top(0px);
+  @include mixins.safe-top(0px);
 }
 
-@include gt-sm {
+@media screen and (min-width: map.get(variables.$breakpoints, sm)) {
   .notification-container {
     top: 0;
     width: 350px;

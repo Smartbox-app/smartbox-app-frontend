@@ -1,6 +1,6 @@
-@import '../../../config/variables.scss';
+@use '../../../config/variables.scss';
 
 .confirm-modal-wrapper {
-  margin: $main-spacing;
+  margin: variables.$main-spacing;
   margin-bottom: 0;
 }

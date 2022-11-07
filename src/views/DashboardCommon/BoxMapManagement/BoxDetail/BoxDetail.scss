@@ -1,5 +1,5 @@
-@import '../../../../config/variables.scss';
-@import '../../../../config/mixins.scss';
+@use '../../../../config/variables.scss';
+@use '../../../../config/mixins.scss';
 
 .detail-wrapper {
   display: flex;
@@ -11,11 +11,11 @@
     display: flex;
 
     strong {
-      margin-left: $main-spacing /2;
+      margin-left: variables.$main-spacing /2;
     }
 
     .fa {
-      color: $color-primary;
+      color: variables.$color-primary;
       flex: 0 0 12%;
       justify-content: center;
       align-items: center;
@@ -28,7 +28,7 @@
     flex-direction: row;
 
     .button-img {
-      margin-right: $main-spacing;
+      margin-right: variables.$main-spacing;
     }
   }
   .rotate {

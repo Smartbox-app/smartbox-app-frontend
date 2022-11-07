@@ -1,5 +1,5 @@
-@import '../../../../config/variables.scss';
-@import '../../../../config/mixins.scss';
+@use '../../../../config/variables.scss';
+@use '../../../../config/mixins.scss';
 
 .bar-wrapper {
   width: 100%;
@@ -13,26 +13,21 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background: $color-disabled;
-    height: $main-spacing/5;
+    background: variables.$color-disabled;
+    height: 2px;
     flex: 0 0 100%;
-    margin-top: $main-spacing * 2;
+    margin-top: variables.$main-spacing * 2;
 
-    box-shadow:
-    0 2.8px 2.2px rgba(0, 0, 0, 0.034),
-    0 6.7px 5.3px rgba(0, 0, 0, 0.048),
-    0 12.5px 10px rgba(0, 0, 0, 0.06),
-    0 22.3px 17.9px rgba(0, 0, 0, 0.072),
-  ;
-
+    box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034), 0 6.7px 5.3px rgba(0, 0, 0, 0.048),
+      0 12.5px 10px rgba(0, 0, 0, 0.06), 0 22.3px 17.9px rgba(0, 0, 0, 0.072);
   }
 
   .bar-done {
-    background: $color-success;
+    background: variables.$color-success;
   }
 }
 
-@include gt-sm {
+@include mixins.gt-sm {
   .bar-wrapper {
     .bar {
       margin-top: 20px;

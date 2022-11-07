@@ -1,9 +1,9 @@
-@import "../../../config/variables.scss";
-@import "../../../config/mixins.scss";
+@use "../../../config/variables.scss";
+@use "../../../config/mixins.scss";
 
 .fields-grid {
   display: flex;
-  margin: 0 -1 * $main-spacing;
+  margin: 0 -1 * variables.$main-spacing;
 
   form {
     display: flex;
@@ -12,7 +12,7 @@
     flex: 1;
     .form-field {
       flex: 0 0 100%;
-      padding: $main-spacing $main-spacing;
+      padding: variables.$main-spacing variables.$main-spacing;
       justify-content: flex-start;
     }
 
@@ -25,26 +25,26 @@
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
-      padding: $main-spacing;
+      padding: variables.$main-spacing;
     }
 
     .form-field-title {
       font-size: 0.8rem;
     }
 
-    @include gt-md {
+    @include mixins.gt-md {
       .form-field {
         flex: 0 0 50%;
       }
     }
 
-    @include gt-lg {
+    @include mixins.gt-lg {
       .form-field {
         flex: 0 0 33.333%;
       }
     }
 
-    @include gt-xl {
+    @include mixins.gt-xl {
       .form-field {
         flex: 0 0 25%;
       }

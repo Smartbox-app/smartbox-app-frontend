@@ -1,8 +1,8 @@
-@import '../../../config/variables.scss';
-@import '../../../config/mixins.scss';
+@use '../../../config/variables.scss';
+@use '../../../config/mixins.scss';
 
 .login-form {
-  max-width: $login-form-width * 0.8;
+  max-width: variables.$login-form-width * 0.8;
   margin: 0 auto;
   max-height: auto;
 }
@@ -16,7 +16,7 @@
   }
 
   label {
-    margin-left: $main-spacing * 3;
+    margin-left: variables.$main-spacing * 3;
   }
 
   &:first-of-type {
@@ -24,22 +24,22 @@
   }
 
   .input {
-    border: 2px solid $color-primary;
-    height: $login-button-height;
-    width: $login-button-size;
-    border-radius: $login-button-height/2;
-    padding-left: $main-spacing *2;
-    padding-right: $main-spacing *2;
-    background-color: $color-background;
+    border: 2px solid variables.$color-primary;
+    height: variables.$login-button-height;
+    width: variables.$login-button-size;
+    border-radius: variables.$login-button-height/2;
+    padding-left: variables.$main-spacing *2;
+    padding-right: variables.$main-spacing *2;
+    background-color: variables.$color-background;
 
     &:active, &:focus {
-      border-color: $color-active;
-      background-color: $color-background;
+      border-color: variables.$color-active;
+      background-color: variables.$color-background;
     }
   }
 }
 
-@include gt-xs {
+@include mixins.gt-xs {
   .login-input {
     &:first-of-type {
       margin-top: 25%;
@@ -47,19 +47,19 @@
   }
 }
 
-@include gt-sm {
+@include mixins.gt-sm {
   .login-form {
-    max-width: $login-form-width;
+    max-width: variables.$login-form-width;
     margin: 0 auto;
     max-height: none;
   }
 
   .login-input {
     label {
-      margin-left: $main-spacing * 5;
+      margin-left: variables.$main-spacing * 5;
     }
     .input {
-      width: $login-button-size * 1.2;
+      width: variables.$login-button-size * 1.2;
     }
 
     &:first-of-type {

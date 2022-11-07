@@ -40,7 +40,7 @@ const StepSize = ({
   user,
   boxAvailability,
   clearOrderAgreement,
-  getStockList
+  getStockList,
 }: Props) => {
   useEffect(() => {
     clearOrderAgreement();
@@ -126,16 +126,16 @@ const StepSize = ({
 
   return (
     <FormContainer className="step-size-wrapper">
-      <FormHeader no-margin title='application.orderFormPickSize' />
+      <FormHeader no-margin title="application.orderFormPickSize" />
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="options-wrapper">{options}</div>
 
         <ButtonsContainer max>
-          <Button disabled text='application.back' />
+          <Button disabled text="application.back" />
           <Button
             type="submit"
             primary
-            text='application.next'
+            text="application.next"
             disabled={watch().size === '' || !isMyBoxAvailable(watch().size)}
           />
         </ButtonsContainer>
