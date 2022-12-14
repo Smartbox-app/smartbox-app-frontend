@@ -1,5 +1,5 @@
-@import '../../../../../../config/variables';
-@import '../../../../../../config/mixins';
+@use '../../../../../../config/variables';
+@use '../../../../../../config/mixins';
 
 .payment-methods-wrapper {
   display: flex;
@@ -18,15 +18,15 @@
   .payment-label {
     display: flex;
     flex-direction: row;
-    min-height: $main-spacing * 6.5;
+    min-height: variables.$main-spacing * 6.5;
     justify-content: flex-start;
     align-items: center;
     border: 1px solid #000;
-    padding: $main-spacing;
-    margin: $main-spacing 0;
+    padding: variables.$main-spacing;
+    margin: variables.$main-spacing 0;
 
     svg {
-      height: $main-spacing * 4;
+      height: variables.$main-spacing * 4;
     }
 
     &:hover {
@@ -35,15 +35,15 @@
   }
 
   input[type='radio']:checked + .payment-label {
-    box-shadow: inset 0 0 0px 1px $color-primary;
-    border: 1px solid $color-primary;
+    box-shadow: inset 0 0 0px 1px variables.$color-primary;
+    border: 1px solid variables.$color-primary;
   }
 
   input[type='radio']:checked + svg {
-    color: $color-success;
+    color: variables.$color-success;
   }
 
   .payment-img {
-    max-height: $main-spacing * 4;
+    max-height: variables.$main-spacing * 4;
   }
 }

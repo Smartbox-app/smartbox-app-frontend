@@ -1,4 +1,4 @@
-@import '../../config/variables.scss';
+@use '../../config/variables.scss';
 
 /**
  * Swiper 5.3.0
@@ -221,7 +221,7 @@
 /* Common Styles */
 .swiper-pagination-fraction,
 .swiper-pagination-custom {
-  bottom: $main-spacing * 2;
+  bottom: variables.$main-spacing * 2;
   left: 0;
   width: 100%;
 }
@@ -253,8 +253,8 @@
   transform: scale(0.33);
 }
 .swiper-pagination-bullet {
-  width: $main-spacing * 1.5;
-  height: $main-spacing * 1.5;
+  width: variables.$main-spacing * 1.5;
+  height: variables.$main-spacing * 1.5;
   display: inline-block;
   border-radius: 100%;
   background: #e1e1e1;
@@ -282,20 +282,20 @@ button.swiper-pagination-bullet {
   transform: translate3d(0px, -50%, 0);
 }
 .swiper-container-vertical > .swiper-pagination-bullets .swiper-pagination-bullet {
-  margin: $main-spacing 0;
+  margin: variables.$main-spacing 0;
   display: block;
 }
 .swiper-container-vertical > .swiper-pagination-bullets.swiper-pagination-bullets-dynamic {
   top: 50%;
   transform: translateY(-50%);
-  width: $main-spacing;
+  width: variables.$main-spacing;
 }
 .swiper-container-vertical > .swiper-pagination-bullets.swiper-pagination-bullets-dynamic .swiper-pagination-bullet {
   display: inline-block;
   transition: 200ms transform, 200ms top;
 }
 .swiper-container-horizontal > .swiper-pagination-bullets .swiper-pagination-bullet {
-  margin: 0 $main-spacing * 0.75;
+  margin: 0 variables.$main-spacing * 0.75;
 }
 .swiper-container-horizontal > .swiper-pagination-bullets.swiper-pagination-bullets-dynamic {
   left: 50%;

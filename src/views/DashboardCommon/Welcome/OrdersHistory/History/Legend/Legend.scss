@@ -1,36 +1,36 @@
-@import '../../../../../../config/variables.scss';
-@import '../../../../../../config/mixins.scss';
+@use '../../../../../../config/variables.scss';
+@use '../../../../../../config/mixins.scss';
 
 .history-legend {
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-top: $main-spacing /4;
+  margin-top: variables.$main-spacing /4;
 
   .legend-color {
     display:block;
     width: 15px;
     height: 15px;
     border-radius: 3px;
-    margin-right: $main-spacing /2;
+    margin-right: variables.$main-spacing /2;
   }
 
   .legend-desc {
     margin: 0;
     font-size: .7rem;
-    padding-right: $main-spacing;
+    padding-right: variables.$main-spacing;
     text-align: start;
   }
 
   .active-stock {
-    background-color: $color-primary;
+    background-color: variables.$color-primary;
   }
 
   .payment-issue {
-    background-color: $color-tertiary;
+    background-color: variables.$color-tertiary;
   }
 
   .ended {
-    background-color: $color-disabled;
+    background-color: variables.$color-disabled;
   }
 }

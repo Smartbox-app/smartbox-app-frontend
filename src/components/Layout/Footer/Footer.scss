@@ -1,55 +1,29 @@
-@import '../../../config/variables';
-@import '../../../config/mixins.scss';
+@use "sass:map";
+@use '../../../config/variables';
+@use '../../../config/mixins.scss';
 
 footer {
-  position: absolute;
-
-  // @include safe-bottom(60px);
-  bottom: 60px;
-
+  position: relative;
+  padding: variables.$main-spacing;
   width: 100%;
-  height: $footer-height * 2;
-  padding: $main-spacing 0;
-  background-color: $color-primary;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  text-align: center;
+  height: 60px;
+  text-align: end;
+  background-color: #fff;
 
   p {
-    margin: 0;
-    padding: $main-spacing $table-item-spacing;
     font-size: 0.75rem;
-    color: $color-text-button;
+    color: variables.$color-text;
   }
 
   .footerLink {
-    padding: $main-spacing $table-item-spacing;
-    font-size: 0.75rem;
-    color: $color-text-button;
+    padding: variables.$main-spacing/2 variables.$table-item-spacing;
+    border-right: solid 2px rgba(variables.$color-background, 0.5);
   }
 }
 
-@include gt-xs {
+@include mixins.gt-sm {
   footer {
-    flex-direction: row;
-    height: $footer-height;
-
-    .p {
-      padding: $main-spacing/2 $table-item-spacing;
-    }
-
-    .footerLink {
-      padding: $main-spacing/2 $table-item-spacing;
-      border-right: solid 2px rgba($color-background, 0.5);
-    }
-  }
-}
-
-@include gt-sm {
-  footer {
-    bottom: 0px;
+    margin: 0 auto;
+    max-width: map.get(variables.$breakpoints, sm);
   }
 }

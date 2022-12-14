@@ -1,10 +1,11 @@
-@import '../../../config/variables';
+@use "../../../config/variables";
 
 .alert:not(.alert-simple) {
-  margin: $main-spacing 0;
+  font-family: 'Roboto', sans-serif;
+  margin: variables.$main-spacing 0;
   outline: none;
   font-weight: 400;
-  padding: $main-spacing * 1.5;
+  padding: calc(variables.$main-spacing / 1.5);
   text-align: center;
   text-decoration: none;
   width: 100%;
@@ -17,42 +18,42 @@
   }
 
   &.alert-error {
-    background: rgba($color-danger, 0.95);
+    background: rgba(variables.$color-danger, 0.95);
   }
 
   &.alert-notice {
-    background: rgba($color-notice, 0.95);
+    background: rgba(variables.$color-notice, 0.95);
   }
 
   &.alert-warning {
-    background: rgba($color-warning, 0.95);
+    background: rgba(variables.$color-warning, 0.95);
   }
 
   &.alert-primary {
-    background: rgba($color-primary, 0.95);
+    background: rgba(variables.$color-primary, 0.95);
   }
 
   &.alert-success {
-    background: rgba($color-success, 0.95);
+    background: rgba(variables.$color-success, 0.95);
   }
 
   &.alert-disabled {
-    background: rgba($color-disabled, 0.95);
+    background: rgba(variables.$color-disabled, 0.95);
   }
 }
 
 .alert {
   &.alert-simple {
     &.alert-error {
-      color: $color-danger;
+      color: variables.$color-danger;
     }
 
     &.alert-notice {
-      color: $color-notice;
+      color: variables.$color-notice;
     }
 
     &.alert-success {
-      color: $color-success;
+      color: variables.$color-success;
     }
   }
 }

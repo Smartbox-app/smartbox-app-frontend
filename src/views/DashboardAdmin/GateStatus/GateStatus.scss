@@ -1,71 +1,72 @@
-@import '../../../config/variables';
-@import '../../../config/mixins';
+@use "sass:color";
+@use '../../../config/variables';
+@use '../../../config/mixins';
 
 .gate-status {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
 
-  margin-top: $main-spacing;
-  margin-bottom: $main-spacing;
+  margin-top: variables.$main-spacing;
+  margin-bottom: variables.$main-spacing;
   margin-left: auto;
   margin-right: auto;
 
-  @include gt-sm {
-    margin-top: $main-spacing;
+  @include mixins.gt-sm {
+    margin-top: variables.$main-spacing;
   }
 
-  @include gt-sm {
+  @include mixins.gt-sm {
     width: 90vw;
   }
 
-  @include gt-md {
+  @include mixins.gt-md {
     width: 80vw;
   }
 
-  @include gt-lg {
+  @include mixins.gt-lg {
     width: 80vw;
   }
 
-  @include gt-xl {
+  @include mixins.gt-xl {
     width: 65vw;
   }
 
   .single-status {
-    margin-bottom: $main-spacing/2;
-    color: $color-text-alter;
+    margin-bottom: variables.$main-spacing/2;
+    color: variables.$color-text-alter;
     display: flex;
     flex: 1;
     font-size: 0.9rem;
 
-    @include gt-sm {
+    @include mixins.gt-sm {
       flex: 0 1 auto;
     }
 
     &.ok {
-      background-color: $color-success;
+      background-color: variables.$color-success;
 
       .status-icon {
-        background-color: darken($color-success, 5%);
+        background-color: color.adjust(variables.$color-success, $lightness: -5%);
       }
     }
     &.slow {
-      background-color: $color-warning;
+      background-color: variables.$color-warning;
       .status-icon {
-        background-color: darken($color-warning, 5%);
+        background-color: color.adjust(variables.$color-warning, $lightness: -5%);
       }
     }
     &.connection-lost {
-      background-color: $color-danger;
+      background-color: variables.$color-danger;
       .status-icon {
-        background-color: darken($color-danger, 5%);
+        background-color: color.adjust(variables.$color-danger, $lightness: -5%);
       }
     }
   }
 
   .status-icon,
   .status-body {
-    padding: $main-spacing;
+    padding: variables.$main-spacing;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -83,6 +84,6 @@
   }
 
   .status-place-value {
-    margin: 0 $main-spacing/4;
+    margin: 0 variables.$main-spacing/4;
   }
 }

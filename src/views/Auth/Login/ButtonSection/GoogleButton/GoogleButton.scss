@@ -1,5 +1,6 @@
-@import '../../../../../config/variables.scss';
-@import '../../../../../config/mixins.scss';
+@use "sass:color";
+@use '../../../../../config/variables.scss';
+@use '../../../../../config/mixins.scss';
 
 .google-button-custom {
   display: flex;
@@ -7,18 +8,18 @@
   justify-content: center;
   width: 100%;
 
-  height: $login-button-height;
-  border-radius: $login-button-height / 2 !important;
+  height: variables.$login-button-height;
+  border-radius: variables.$login-button-height / 2 !important;
   border: 2px solid #db4437 !important;
-  margin: $main-spacing 0 !important;
+  margin: variables.$main-spacing 0 !important;
 
   &:hover {
     box-shadow: #db4437 0 2px 2px 0, #db4437 0 0 1px 0;
-    border: 2px solid lighten(#db4437, 15%) !important;
+    border: 2px solid color.adjust(#db4437, $lightness: 15%) !important;
   }
 
   span {
     font-size: 1.1rem;
-    font-family: $font-primary;
+    font-family: variables.$font-primary;
   }
 }

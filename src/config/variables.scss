@@ -1,3 +1,4 @@
+@use "sass:color";
 $font-primary: 'AzoSans', sans-serif;
 $basic-font-size: 14px;
 
@@ -5,19 +6,17 @@ $border-radius: 5px;
 
 //COLORS
 $color-primary: #0674bd;
-$color-primary-light: lighten(#0674bd, 20%);
-$color-secondary: #003e67;
+$color-primary-light: color.adjust(#0674bd, $lightness: 20%);
+$color-secoundary: #003e67;
 $color-tertiary: #fbb03b;
-$color-facebook: #4267b2;
 
 $color-text-alter: #fff;
 $color-text: #000;
 $color-text-button: #fff;
 $color-text-light: #fff;
 
-
 $color-background: #fafafa;
-$color-background-darken: darken($color-background, 4%);
+$color-background-darken: color.adjust($color-background, $lightness: -4%);
 
 $color-danger: #a51727;
 $color-notice: #bb9c71;
@@ -28,7 +27,7 @@ $color-disabled: #aaa;
 
 $color-warning: #ec8628;
 $standard-shadow: 0px 0px 8px 8px rgba(0, 0, 0, 0.05);
-$box-shadow-small: 0px 0px 8px 8px darken($color-background, 4%);
+$box-shadow-small: 0px 0px 8px 8px color.adjust($color-background, $lightness: -4%);
 $box-shadow-input: 0 10px 20px -20px;
 
 // SIZING
@@ -83,5 +82,5 @@ $soft-shadow: 0 0 $main-spacing * 2.5 (-$main-spacing/2) rgba(0, 0, 0, 0.15);
 $main-spacing: 10px;
 $table-item-spacing: 16px;
 $main-bottom-spacing-sm: $footer-height + $main-spacing;
-$main-bottom-spacing-md: $footer-height * 2  + $main-spacing;
+$main-bottom-spacing-md: $footer-height * 2 + $main-spacing;
 $main-bottom-spacing-lg: $footer-height * 2 + 60px + $main-spacing;

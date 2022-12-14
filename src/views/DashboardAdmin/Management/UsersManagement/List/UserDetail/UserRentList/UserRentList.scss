@@ -1,11 +1,12 @@
-@import '../../../../../../../config/variables';
-@import '../../../../../../../config/mixins';
+@use "sass:color";
+@use '../../../../../../../config/variables';
+@use '../../../../../../../config/mixins';
 
 .list-wrapper {
-  margin: $main-spacing;
-  padding: $main-spacing;
+  margin: variables.$main-spacing;
+  padding: variables.$main-spacing;
   border: 1px solid #aaa;
-  border-radius: $main-spacing;
+  border-radius: variables.$main-spacing;
 
   .content {
     display: flex;
@@ -38,32 +39,32 @@
 
     .box-rent {
       background: #00a45a;
-      padding: $main-spacing/2 $main-spacing;
-      margin-right: $main-spacing;
+      padding: variables.$main-spacing/2 variables.$main-spacing;
+      margin-right: variables.$main-spacing;
       border-radius: 5px;
-      border: 2px solid darken(#00a45a, 10%);
+      border: 2px solid color.adjust(#00a45a, $lightness: -10%);
       min-width: 50px;
       text-align: center;
     }
     .rented {
-      background: $color-danger;
-      border: 2px solid darken($color-danger, 10%);
+      background: variables.$color-danger;
+      border: 2px solid color.adjust(variables.$color-danger, $lightness: -10%);
     }
     .to-check {
-      background: $color-primary;
-      border: 2px solid darken($color-primary, 10%);
+      background: variables.$color-primary;
+      border: 2px solid color.adjust(variables.$color-primary, $lightness: -10%);
     }
     .no-paid-extension {
-      background: $color-tertiary;
-      border: 2px solid darken($color-tertiary, 10%);
+      background: variables.$color-tertiary;
+      border: 2px solid color.adjust(variables.$color-tertiary, $lightness: -10%);
     }
     .no-paid-extension {
-      background: darken($color-tertiary, 5%);
-      border: 2px solid darken($color-tertiary, 20%);
+      background: color.adjust(variables.$color-tertiary, $lightness: -5%);
+      border: 2px solid color.adjust(variables.$color-tertiary, $lightness: -20%);
     }
 
     .dates-rent {
-      margin-right: $main-spacing;
+      margin-right: variables.$main-spacing;
     }
   }
 
@@ -72,12 +73,12 @@
     justify-content: center;
     align-items: center;
     font-size: 3rem;
-    margin: $main-spacing $main-spacing * 1;
-    color: $color-disabled;
+    margin: variables.$main-spacing variables.$main-spacing * 1;
+    color: variables.$color-disabled;
 
-    @include gt-sm {
+    @include mixins.gt-sm {
       font-size: 5rem;
-      margin: $main-spacing $main-spacing * 3;
+      margin: variables.$main-spacing variables.$main-spacing * 3;
     }
   }
 }

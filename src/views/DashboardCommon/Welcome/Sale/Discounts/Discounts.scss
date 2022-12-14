@@ -1,8 +1,8 @@
-@import '../../../../../config/variables.scss';
-@import '../../../../../config/mixins.scss';
+@use '../../../../../config/variables.scss';
+@use '../../../../../config/mixins.scss';
 
 .no-discounts {
-  color: $color-inactive;
+  color: variables.$color-inactive;
 }
 
 .discounts-wrapper {
@@ -11,9 +11,9 @@
 }
 
 .single-discont {
-  background-color: $color-active;
-  padding: $main-spacing;
-  margin: $main-spacing/2 0;
+  background-color: variables.$color-active;
+  padding: variables.$main-spacing;
+  margin: calc(variables.$main-spacing / 2) 0;
   color: #fff;
   text-transform: uppercase;
   font-weight: 600;

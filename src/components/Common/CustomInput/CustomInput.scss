@@ -1,5 +1,5 @@
-@import '../../../config/variables';
-@import '../../../config/mixins';
+@use '../../../config/variables';
+@use '../../../config/mixins';
 
 .custom-input {
 
@@ -9,7 +9,7 @@
 
   input {
     &::placeholder {
-      color: $color-disabled;
+      color: variables.$color-disabled;
       text-transform: capitalize;
     }
   }

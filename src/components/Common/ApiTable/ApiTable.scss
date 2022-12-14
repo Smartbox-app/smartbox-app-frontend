@@ -1,32 +1,32 @@
-@import '../../../config/variables.scss';
-@import '../../../config/mixins.scss';
+@use "sass:map";
+@use '../../../config/variables';
 
 .search-box {
-    .search-fields {
-    margin: $main-spacing 0;
+  .search-fields {
+    margin: variables.$main-spacing 0;
     display: flex;
     flex-direction: column;
+  }
+
+  .search-field {
+    margin-bottom: variables.$main-spacing;
+  }
+}
+
+@media screen and (min-width: map.get(variables.$breakpoints, sm)) {
+  .search-box {
+    .search-fields {
+      flex-direction: row;
     }
 
     .search-field {
-        margin-bottom: $main-spacing;
+      flex: 0 1 300px;
+      margin-bottom: 0;
+      padding-right: variables.$main-spacing;
     }
-}
 
-@include gt-sm {
-    .search-box {
-        .search-fields {
-        flex-direction: row;
-        }
-
-        .search-field {
-            flex: 0 1 300px;
-            margin-bottom: 0;
-            padding-right: $main-spacing;
-        }
-
-        .search-query {
-            flex: 1;
-        }
+    .search-query {
+      flex: 1;
     }
+  }
 }

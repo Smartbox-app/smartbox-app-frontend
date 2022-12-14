@@ -1,4 +1,4 @@
-@import "../../config/variables.scss";
+@use "../../config/variables.scss";
 
 .app-status {
   position: fixed;
@@ -7,17 +7,17 @@
   top: 0;
   left: 0;
   z-index: 9999999;
-  background-color: $color-primary;
+  background-color: variables.$color-primary;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   text-align: center;
-  padding: $main-spacing;
+  padding: variables.$main-spacing;
 
   .app-status-title {
     font-size: 1.5rem;
-    margin-bottom: $main-spacing;
+    margin-bottom: variables.$main-spacing;
   }
 }
 
@@ -25,5 +25,5 @@
   fill: #fff;
   width: 80px;
   height: 80px;
-  margin: $main-spacing * 2 0;
+  margin: variables.$main-spacing * 2 0;
 }

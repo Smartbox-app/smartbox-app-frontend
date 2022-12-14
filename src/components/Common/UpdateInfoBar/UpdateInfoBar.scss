@@ -1,24 +1,24 @@
-@import '../../../config/variables.scss';
-@import '../../../config/mixins.scss';
+@use "sass:color";
+@use '../../../config/variables.scss';
 
 .update-info-bar {
-  background-color: $color-primary;
-  padding: $main-spacing;
+  background-color: variables.$color-primary;
+  padding: variables.$main-spacing;
   display: block;
   cursor: pointer;
   font-size: 0.9rem;
-  transition: $transition-time background-color;
+  transition: variables.$transition-time background-color;
   position: fixed;
   left: 0;
   width: 100%;
   z-index: 999999;
-  box-shadow: 0 0 $main-spacing / 2 $main-spacing / 4 rgba(0, 0, 0, 0.5);
-  @include safe-top(0);
+  box-shadow: 0 0 calc(variables.$main-spacing / 4) / 2 calc(variables.$main-spacing / 4) rgba(0, 0, 0, 0.5);
+
   &:hover {
-    background-color: lighten($color-primary, 10%);
+    background-color: color.adjust(variables.$color-primary, $lightness: 10%);
   }
 
   .update-info-icon {
-    margin-right: $main-spacing / 4;
+    margin-right: calc(variables.$main-spacing / 4);
   }
 }

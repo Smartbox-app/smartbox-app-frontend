@@ -1,43 +1,43 @@
-@import '../../../config/variables.scss';
-@import '../../../config/mixins.scss';
+@use '../../../config/variables.scss';
+@use '../../../config/mixins.scss';
 
 %card-input {
-  border: 1px solid $color-disabled;
-  border-bottom: 2px solid $color-disabled;
-  padding: $main-spacing;
+  border: 1px solid variables.$color-disabled;
+  border-bottom: 2px solid variables.$color-disabled;
+  padding: variables.$main-spacing;
   width: 100%;
   background: #fff;
-  height: $main-spacing * 4;
+  height: variables.$main-spacing * 4;
   position: relative;
 
   &:focus {
-    border-bottom: 2px solid $color-primary;
+    border-bottom: 2px solid variables.$color-primary;
   }
 }
 
 .credit-card-input-wrapper {
   display: flex;
   flex-wrap: wrap;
-  border-radius: $main-spacing;
+  border-radius: variables.$main-spacing;
   width: 100%;
-  margin: $main-spacing * 2 0;
+  margin: variables.$main-spacing * 2 0;
 
   .input-error-wrapper {
     position: absolute;
     top: 50%;
-    right: $main-spacing;
+    right: variables.$main-spacing;
     transform: translateY(-50%);
-    color: $color-danger;
+    color: variables.$color-danger;
   }
 
   .card-number-wrapper {
     width: 100%;
-    margin-top: $main-spacing * 2;
+    margin-top: variables.$main-spacing * 2;
     position: relative;
 
     span {
       font-size: 0.7rem;
-      color: $color-disabled;
+      color: variables.$color-disabled;
       text-transform: uppercase;
       font-weight: 600;
     }
@@ -50,7 +50,7 @@
   .user-wrapper {
     display: flex;
     width: 100%;
-    margin-top: $main-spacing;
+    margin-top: variables.$main-spacing;
     position: relative;
 
     label {
@@ -59,7 +59,7 @@
 
     span {
       font-size: 0.7rem;
-      color: $color-disabled;
+      color: variables.$color-disabled;
       text-transform: uppercase;
       font-weight: 600;
     }
@@ -72,13 +72,13 @@
   .expiration-date-wrapper {
     display: flex;
     width: 50%;
-    margin-top: $main-spacing;
+    margin-top: variables.$main-spacing;
     flex-direction: column;
     position: relative;
 
     span {
       font-size: 0.7rem;
-      color: $color-disabled;
+      color: variables.$color-disabled;
       text-transform: uppercase;
       font-weight: 600;
       margin-top: 3px;
@@ -95,13 +95,13 @@
   .cvv-wrapper {
     display: flex;
     width: 50%;
-    margin-top: $main-spacing;
+    margin-top: variables.$main-spacing;
     flex-direction: column;
     position: relative;
 
     input {
       @extend %card-input;
-      @include gt-sm{
+      @include mixins.gt-sm{
         margin-top: -2px;
 
       }
@@ -109,7 +109,7 @@
 
     span {
       font-size: 0.7rem;
-      color: $color-disabled;
+      color: variables.$color-disabled;
       text-transform: uppercase;
       font-weight: 600;
     }

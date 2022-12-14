@@ -1,17 +1,18 @@
-@import '../../../../config/variables';
-@import '../../../../config/mixins';
+@use "sass:color";
+@use '../../../../config/variables';
+@use '../../../../config/mixins';
 
 .department {
-  margin: $main-spacing 0;
+  margin: variables.$main-spacing 0;
   background-color: #fafbff;
-  padding: $main-spacing;
+  padding: variables.$main-spacing;
   position: relative;
   overflow: hidden;
   width: 300px;
-  box-shadow: 0 15px 20px -15px lighten(rgba(#000, 0.4), 30%);
+  box-shadow: 0 15px 20px -15px color.adjust(rgba(#000, 0.4), $lightness: 30%);
   border-radius: 10px;
 
-  @include gt-sm {
+  @include mixins.gt-sm {
     width: 500px;
   }
 
@@ -42,7 +43,7 @@
 
   .main {
     font-size: 1.5rem;
-    color: $color-primary;
+    color: variables.$color-primary;
   }
 
   .organisation-role {
@@ -52,14 +53,14 @@
   .detail {
     width: 320px;
     height: 320px;
-    background: $color-primary;
+    background: variables.$color-primary;
     border-radius: 50%;
 
     position: absolute;
     right: -200px;
     top: -55px;
 
-    @include gt-sm {
+    @include mixins.gt-sm {
       right: -150px;
     }
 
@@ -67,7 +68,7 @@
       content: '';
       width: 350px;
       height: 350px;
-      background: $color-disabled;
+      background: variables.$color-disabled;
       border-radius: 50%;
 
       position: absolute;
@@ -79,7 +80,7 @@
       content: '';
       width: 350px;
       height: 350px;
-      background: lighten($color-disabled, 5%);
+      background: color.adjust(variables.$color-disabled, $lightness: 5%);
       border-radius: 50%;
 
       position: absolute;

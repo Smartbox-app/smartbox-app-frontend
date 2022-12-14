@@ -1,7 +1,7 @@
-@import "../../../../config/variables.scss";
+@use "../../../../config/variables.scss";
 
 .stock-select-wrapper {
-  margin-bottom: $main-spacing *3;
+  margin-bottom: variables.$main-spacing *3;
 
   #stockId {
     padding: 0;

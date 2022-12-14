@@ -1,4 +1,4 @@
-@import '../../../config/variables.scss';
+@use '../../../config/variables.scss';
 
 .banner-ios {
   position: fixed;
@@ -12,17 +12,17 @@
     display: inline-flex;
 
     svg {
-      width: $main-spacing * 1.5;
-      height: $main-spacing * 1.5;
+      width: variables.$main-spacing * 1.5;
+      height: variables.$main-spacing * 1.5;
     }
   }
 
   .banner-text {
-    box-shadow: $box-shadow-small;
+    box-shadow: variables.$box-shadow-small;
     font-size: 0.85rem;
-    background-color: $color-primary;
-    padding: $main-spacing;
-    margin-bottom: $main-spacing;
+    background-color: variables.$color-primary;
+    padding: variables.$main-spacing;
+    margin-bottom: variables.$main-spacing;
     color: #fff;
     position: relative;
     display: flex;
@@ -37,7 +37,7 @@
       height: 0;
       width: 0;
       border: 10px solid transparent;
-      border-top: 10px solid $color-primary;
+      border-top: 10px solid variables.$color-primary;
       bottom: -20px;
       left: 0;
       right: 0;

@@ -1,6 +1,7 @@
-@import './Swiper.scss';
-@import '../../config/variables.scss';
-@import '../../config/mixins.scss';
+@use "sass:color";
+@use 'Swiper.scss';
+@use '../../config/variables.scss';
+@use '../../config/mixins.scss';
 
 .welcome-container {
   height: 100%;
@@ -16,8 +17,8 @@
   height: 100%;
   background-image: linear-gradient(
     to bottom,
-    rgba(darken($color-secondary, 50%), 0),
-    rgba(darken($color-text, 40%), 0.55)
+    rgba(color.adjust(variables.$color-secoundary, $lightness: -50%), 0),
+    rgba(color.adjust(variables.$color-text, $lightness: -40%), 0.55)
   );
 }
 
@@ -25,8 +26,8 @@
   // bottom: 0 !important;
   left: 50%;
   transform: translate(-50%, 0);
-  @include safe-bottom(0);
-  padding: $main-spacing * 2 0;
+  @include mixins.safe-bottom(0);
+  padding: variables.$main-spacing * 2 0;
 }
 
 .swiper-wrapper {

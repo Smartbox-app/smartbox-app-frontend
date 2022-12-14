@@ -1,11 +1,9 @@
 import React, { useEffect } from 'react';
-
+import { useDispatch } from 'react-redux';
 import { withRouter, RouteComponentProps } from 'react-router';
 import { FormContainer, Section, SectionHeader } from '../../../components/Layout';
 import { ProgressIndicator } from '../../../components/Common';
-
 import Form from './Form/Index';
-import { useDispatch } from 'react-redux';
 import { order } from '../../../actions';
 import { getStockDiscountsList } from '../../../actions/stock';
 

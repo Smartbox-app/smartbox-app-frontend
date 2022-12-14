@@ -1,5 +1,5 @@
-@import '../../../../../config/variables.scss';
-@import '../../../../../config/mixins.scss';
+@use '../../../../../config/variables.scss';
+@use '../../../../../config/mixins.scss';
 
 .order-summary-wrapper {
   width: 100%;
@@ -7,8 +7,8 @@
 
 .separator {
   height: 2px;
-  margin-bottom: $main-spacing;
-  background-color: $color-disabled;
+  margin-bottom: variables.$main-spacing;
+  background-color: variables.$color-disabled;
 }
 
 .rules-embed {

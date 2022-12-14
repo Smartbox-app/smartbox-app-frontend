@@ -1,8 +1,8 @@
-@import '../../../config/variables.scss';
-@import '../../../config/mixins.scss';
+@use '../../../config/variables.scss';
+@use '../../../config/mixins.scss';
 
 .register-form {
-  max-width: $login-form-width * 0.8;
+  max-width: variables.$login-form-width * 0.8;
   margin: 0 auto;
 
   .register-input {
@@ -14,10 +14,10 @@
     }
 
     label {
-      margin-left: $main-spacing * 3;
+      margin-left: variables.$main-spacing * 3;
     }
     small.text-danger {
-      margin-left: $main-spacing * 3;
+      margin-left: variables.$main-spacing * 3;
     }
   }
 
@@ -26,40 +26,40 @@
   }
 
   .input  {
-    border: 2px solid $color-primary;
-    height: $login-button-height;
-    border-radius: $login-button-height/2;
+    border: 2px solid variables.$color-primary;
+    height: variables.$login-button-height;
+    border-radius: variables.$login-button-height/2;
     margin: 0 auto;
-    padding-left: $main-spacing * 3;
-    padding-right: $main-spacing * 3;
-    background-color: $color-background;
+    padding-left: variables.$main-spacing * 3;
+    padding-right: variables.$main-spacing * 3;
+    background-color: variables.$color-background;
 
     &:active,
     &:focus {
-      border-color: $color-active;
-      background-color: $color-background;
+      border-color: variables.$color-active;
+      background-color: variables.$color-background;
     }
   }
 }
 
-@include gt-sm {
+@include mixins.gt-sm {
   .register-form {
-    max-width: $login-form-width;
+    max-width: variables.$login-form-width;
 
     .checkbox {
       margin: 10px 30px 10px 35px;
     }
     .register-input {
       label {
-        margin-left: $main-spacing * 5;
+        margin-left: variables.$main-spacing * 5;
       }
 
       small.text-danger {
-        margin-left: $main-spacing * 5;
+        margin-left: variables.$main-spacing * 5;
       }
 
       .input {
-        width: $login-button-size * 1.2;
+        width: variables.$login-button-size * 1.2;
       }
     }
   }

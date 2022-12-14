@@ -1,61 +1,50 @@
-@import './variables.scss';
-
-@mixin or-port {
-  @media  screen and (orientation: portrait){
-    @content;
-  }
-}
-
-@mixin or-land {
-  @media screen and (orientation: landscape){
-    @content;
-  }
-}
+@use "sass:map";
+@use 'variables.scss';
 
 @mixin lt-xs {
-  @media screen and(max-width: map-get($breakpoints, xs) - 1) {
+  @media screen and (max-width: map.get(variables.$breakpoints, xs) - 1) {
     @content;
   }
 }
 
 @mixin lt-sm {
-  @media screen and(max-width: map-get($breakpoints, sm) - 1) {
+  @media screen and (max-width: map.get(variables.$breakpoints, sm) - 1) {
     @content;
   }
 }
 
 @mixin lt-md {
-  @media screen and(max-width: map-get($breakpoints, md) - 1) {
+  @media screen and (max-width: map.get(variables.$breakpoints, md) - 1) {
     @content;
   }
 }
 
 @mixin gt-xs {
-  @media screen and(min-width: map-get($breakpoints, xs)) {
+  @media screen and (min-width: map.get(variables.$breakpoints, xs)) {
     @content;
   }
 }
 
 @mixin gt-sm {
-  @media screen and(min-width: map-get($breakpoints, sm)) {
+  @media screen and (min-width: map.get(variables.$breakpoints, sm)) {
     @content;
   }
 }
 
 @mixin gt-md {
-  @media screen and(min-width: map-get($breakpoints, md)) {
+  @media screen and (min-width: map.get(variables.$breakpoints, md)) {
     @content;
   }
 }
 
 @mixin gt-lg {
-  @media screen and(min-width: map-get($breakpoints, lg)) {
+  @media screen and (min-width: map.get(variables.$breakpoints, lg)) {
     @content;
   }
 }
 
 @mixin gt-xl {
-  @media screen and(min-width: map-get($breakpoints, xl)) {
+  @media screen and (min-width: map.get(variables.$breakpoints, xl)) {
     @content;
   }
 }
