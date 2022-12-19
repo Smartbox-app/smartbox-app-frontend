@@ -2,7 +2,7 @@ import React from 'react';
 import { Input } from '../../../../components/Common';
 
 import './StockSelect.scss';
-import {__} from "../../../../helpers/i18n";
+import { __ } from '../../../../helpers/i18n';
 
 const StockSelect = () => {
   return (
@@ -19,8 +19,8 @@ const StockSelect = () => {
         }}
         options={[
           {
-            value: 'Warszawa-Łomianki',
-            name: 'Warszawa-Łomianki',
+            value: 'Ostrów Wielkopolski',
+            name: 'Ostrów Wielkopolski',
           },
         ]}
       />
