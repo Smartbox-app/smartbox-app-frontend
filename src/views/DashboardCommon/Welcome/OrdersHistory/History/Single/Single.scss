@@ -1,10 +1,10 @@
-@use '../../../../../../config/variables';
-@use '../../../../../../config/mixins';
+@import '../../../../../../config/variables';
+@import '../../../../../../config/mixins';
 
 .line-cell {
   line-height: 1;
 
-  padding-right: variables.$table-item-spacing/4;
+  padding-right: $table-item-spacing/4;
   font-size: 0.8rem;
   word-break: normal;
 

@@ -1,14 +1,14 @@
-@use '../../../../../../../config/variables';
-@use '../../../../../../../config/mixins';
+@import '../../../../../../../config/variables';
+@import '../../../../../../../config/mixins';
 
 .blik-input-wrapper {
   position: relative;
   display: flex;
   flex-direction: column;
   max-width: 220px;
-  margin: variables.$main-spacing * 2 auto;
+  margin: $main-spacing * 2 auto;
 
-  @include mixins.gt-md {
+  @include gt-md {
     max-width: 300px;
   }
 
@@ -18,22 +18,22 @@
   }
 
   .blik-input-label {
-    color: variables.$color-primary;
+    color: $color-primary;
     font-weight: 600;
   }
 
   .blik-input {
-    padding: variables.$main-spacing;
-    letter-spacing: variables.$main-spacing;
+    padding: $main-spacing;
+    letter-spacing: $main-spacing;
     text-align: center;
-    font-size: variables.$main-spacing * 3;
-    color: variables.$color-primary;
+    font-size: $main-spacing * 3;
+    color: $color-primary;
 
-    border: 2px solid variables.$color-primary;
-    border-radius: variables.$main-spacing /2;
+    border: 2px solid $color-primary;
+    border-radius: $main-spacing /2;
 
-    @include mixins.gt-md {
-      font-size: variables.$main-spacing * 5;
+    @include gt-md {
+      font-size: $main-spacing * 5;
     }
   }
 

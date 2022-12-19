@@ -1,11 +1,10 @@
-@use "sass:color";
-@use '../../../../../config/variables.scss';
-@use '../../../../../config/mixins.scss';
+@import '../../../../../config/variables.scss';
+@import '../../../../../config/mixins.scss';
 
 .kep-login-facebook {
-  height: variables.$login-button-height;
-  border-radius: variables.$login-button-height / 2 !important;
-  margin: variables.$main-spacing 0;
+  height: $login-button-height;
+  border-radius: $login-button-height / 2 !important;
+  margin: $main-spacing 0;
 
   display: flex;
   justify-content: center;
@@ -13,10 +12,10 @@
 }
 
 .facebook-button-custom {
-  height: variables.$login-button-height;
-  border-radius: variables.$login-button-height / 2;
-  margin: variables.$main-spacing 0;
-  // background: variables.$color-facebook;
+  height: $login-button-height;
+  border-radius: $login-button-height / 2;
+  margin: $main-spacing 0;
+  background: $color-facebook;
   border: none;
 
   display: flex;
@@ -28,7 +27,7 @@
   width: 100%;
 
   &:hover {
-    // background: color.adjust(variables.$color-facebook, $lightness: 5%);
+    background: lighten($color-facebook, 5%);
     cursor: pointer;
   }
 

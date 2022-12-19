@@ -1,12 +1,12 @@
-@use '../../../../../../../config/variables';
-@use '../../../../../../../config/mixins';
+@import '../../../../../../../config/variables';
+@import '../../../../../../../config/mixins';
 
 .single-address {
-  border: 1px solid variables.$color-disabled;
-  border-radius: variables.$main-spacing;
+  border: 1px solid $color-disabled;
+  border-radius: $main-spacing;
   flex: 0 0 100%;
-  margin: variables.$main-spacing;
-  padding: variables.$main-spacing;
+  margin: $main-spacing;
+  padding: $main-spacing;
 
   display: flex;
   flex-direction: column;
@@ -21,17 +21,17 @@
     justify-content: center;
     align-items: center;
     font-size: 3rem;
-    margin: variables.$main-spacing variables.$main-spacing * 1;
-    color: variables.$color-disabled;
+    margin: $main-spacing $main-spacing * 1;
+    color: $color-disabled;
 
-    @include mixins.gt-sm {
+    @include gt-sm {
       font-size: 5rem;
-      margin: variables.$main-spacing variables.$main-spacing * 3;
+      margin: $main-spacing $main-spacing * 3;
     }
   }
 
   .single-address-header {
     font-weight: bold;
-    color: variables.$color-primary;
+    color: $color-primary;
   }
 }

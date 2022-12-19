@@ -1,10 +1,10 @@
-@use '../../../../config/variables.scss';
-@use '../../../../config/mixins.scss';
+@import '../../../../config/variables.scss';
+@import '../../../../config/mixins.scss';
 
 .map-legend-wrapper {
   display: flex;
   flex-direction: column;
-  margin-bottom: variables.$main-spacing;
+  margin-bottom: $main-spacing;
 
   .legend-list {
     display: flex;
@@ -13,19 +13,19 @@
     flex: 0 0 100%;
 
     .single {
-      flex: 0 0 50%;
-      text-align: center;
-      padding: variables.$main-spacing / 2;
-      border: 2px solid #fff;
+      flex: 1 1 50%;
+      text-align: start;
+      padding: $main-spacing /2;
+      text-indent: 25px;
       font-weight: 500;
       font-size: 0.8rem;
-      height: variables.$main-spacing * 4;
+      height: $main-spacing * 4;
       line-height: 20px;
       position: relative;
       text-wrap: none;
       white-space: nowrap;
 
-      span {
+      span{
         &::before {
           position: absolute;
           display: block;
@@ -43,23 +43,23 @@
 }
 
 .single-free {
-  span {
+  span{
     &::before {
-      background-color: variables.$color-success;
+      background-color: $color-success;
     }
   }
 }
 
 .single-reserved {
-  span {
+  span{
     &::before {
-      background-color: variables.$color-danger;
+      background-color: $color-danger;
     }
   }
 }
 
 .single-to-explain {
-  span {
+  span{
     &::before {
       background-color: #000;
     }
@@ -67,30 +67,40 @@
 }
 
 .single-to-check {
-  span {
+  span{
     &::before {
-      background-color: variables.$color-primary;
+      background-color: $color-primary;
     }
   }
 }
 
 .single-no-paid-extension {
-  span {
+  span{
     &::before {
-      background-color: variables.$color-tertiary;
+      background-color: $color-tertiary;
     }
   }
 }
 
-@include mixins.gt-sm {
+.out-of-service {
+  span{
+    &::before {
+      background-color: #ccc;
+    }
+  }
+}
+
+@include gt-sm {
   .map-legend-wrapper {
+
     .legend-list {
+
       .single {
         flex: 0 0 30%;
         font-size: 0.9rem;
         text-indent: 27px;
 
-        span {
+        span{
           &::before {
             width: 25px;
             height: 25px;
@@ -101,9 +111,11 @@
   }
 }
 
-@include mixins.gt-lg {
+@include gt-lg {
   .map-legend-wrapper {
+
     .legend-list {
+
       .single {
         flex: 0 0 16.66%;
         font-size: 0.9rem;
@@ -111,7 +123,7 @@
         text-indent: 31px;
         vertical-align: center;
 
-        span {
+        span{
           &::before {
             width: 30px;
             height: 30px;

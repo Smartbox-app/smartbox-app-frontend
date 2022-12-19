@@ -1,14 +1,14 @@
-@use '../../../config/variables.scss';
-@use '../../../config/mixins.scss';
+@import '../../../config/variables.scss';
+@import '../../../config/mixins.scss';
 
 .login-logo-wrapper {
-  margin: variables.$main-spacing auto variables.$main-spacing *4;
-  max-width: variables.$login-button-size * 0.8;
+  margin: $main-spacing auto $main-spacing *4;
+  max-width: $login-button-size * 0.8;
 }
 
-@include mixins.gt-sm {
+@include gt-sm {
   .login-logo-wrapper {
-    max-width: variables.$login-button-size * 1.2;
-    margin: variables.$main-spacing*5 auto;
+    max-width: $login-button-size * 1.2;
+    margin: $main-spacing*5 auto;
   }
 }

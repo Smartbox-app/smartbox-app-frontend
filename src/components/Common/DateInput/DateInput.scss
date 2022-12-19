@@ -1,10 +1,11 @@
-@use '../../../config/variables.scss';
-@use '../../../config/mixins.scss';
+@import '../../../config/variables.scss';
+@import '../../../config/mixins.scss';
 
 .date-input-style {
+
 }
 
 .data-picker-label {
   font-size: 0.8rem;
-  margin-bottom: calc(variables.$main-spacing / 2);
+  margin-bottom: $main-spacing /2;
 }

@@ -1,8 +1,8 @@
-@use '../../../config/variables';
-@use '../../../config/mixins.scss';
+@import '../../../config/variables';
+@import '../../../config/mixins.scss';
 
 .buttons-container {
-  @include mixins.gt-sm {
+  @include gt-sm {
     display: flex;
     justify-content: flex-end;
     flex-wrap: wrap;
@@ -24,19 +24,16 @@
   }
 }
 
-@include mixins.lt-xs {
+@include lt-xs {
   .buttons-container {
     .button {
-      margin-bottom: calc(variables.$main-spacing / 4);
-
-      &:not(:first-child) {
-        margin-top: 0;
-      }
+      margin-bottom: $main-spacing / 4;
+      margin-top: 0;
     }
   }
 }
 
-@include mixins.gt-xs {
+@include gt-sm {
   .buttons-container {
     .button:not(:first-child) {
       margin-left: 5px;

@@ -1,5 +1,5 @@
-@use '../../../../../../../config/variables';
-@use '../../../../../../../config/mixins';
+@import '../../../../../../../config/variables';
+@import '../../../../../../../config/mixins';
 
 .bank-list-wrapper {
   display: flex;
@@ -10,11 +10,11 @@
   max-height: 80vh;
   overflow-y: scroll;
 
-  @include mixins.gt-xs {
+  @include gt-xs {
     max-width: 80vw;
   }
 
-  @include mixins.gt-sm {
+  @include gt-sm {
     flex-direction: row;
     overflow: auto;
   }
@@ -27,15 +27,15 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: variables.$main-spacing;
+    padding: $main-spacing;
     background: #fff;
-    border-radius: variables.$main-spacing;
+    border-radius: $main-spacing;
     height: 80px;
-    border: 2px solid variables.$color-disabled;
+    border: 2px solid $color-disabled;
     max-width: 150px;
 
     &:hover {
-      border-color: variables.$color-primary-light;
+      border-color: $color-primary-light;
     }
   }
 
@@ -44,21 +44,21 @@
     justify-content: center;
     align-items: center;
     flex: 0 0 50%;
-    padding: variables.$main-spacing;
+    padding: $main-spacing;
 
-    @include mixins.gt-xs {
+    @include gt-xs {
       flex: 0 0 50%;
     }
 
-    @include mixins.gt-sm {
+    @include gt-sm {
       flex: 0 0 33.333%;
     }
 
-    @include mixins.gt-md {
+    @include gt-md {
       flex: 0 0 25%;
     }
 
-    @include mixins.gt-lg {
+    @include gt-lg {
       flex: 0 0 20%;
     }
 
@@ -68,6 +68,6 @@
   }
 
   input[type='radio']:checked + .img-wrapper {
-    border: 2px solid variables.$color-primary;
+    border: 2px solid $color-primary;
   }
 }

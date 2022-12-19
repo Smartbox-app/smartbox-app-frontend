@@ -1,5 +1,5 @@
-@use '../../../config/variables';
-@use '../../../config/mixins';
+@import '../../../config/variables';
+@import '../../../config/mixins';
 
 @for $i from 1 through 20 {
   .scale-#{$i * 10} {
@@ -11,24 +11,24 @@
 }
 .map-scale {
   .min {
-    color: variables.$color-disabled;
+    color: $color-disabled;
   }
 }
 
 .map-wrapper .map-scale .min {
-  color: variables.$color-disabled;
+  color: $color-disabled;
 
   &:hover {
-    color: variables.$color-disabled;
+    color: $color-disabled;
     cursor: not-allowed;
   }
 }
 
 .map-wrapper .map-scale .max {
-  color: variables.$color-disabled;
+  color: $color-disabled;
 
   &:hover {
-    color: variables.$color-disabled;
+    color: $color-disabled;
     cursor: not-allowed;
   }
 }

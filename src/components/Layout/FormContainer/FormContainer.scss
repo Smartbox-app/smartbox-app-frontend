@@ -1,5 +1,5 @@
-@use "../../../config/variables.scss";
-@use "../../../config/mixins.scss";
+@import '../../../config/variables.scss';
+@import '../../../config/mixins.scss';
 
 .form-container {
   flex: 1;
@@ -9,7 +9,7 @@
   // padding: 0 $main-spacing;
 
   [class*='placeholder'] {
-    color: variables.$color-text !important;
+    color: $color-text !important;
   }
 
   form {
@@ -26,9 +26,9 @@
   }
 }
 
-@include mixins.gt-sm {
+@include gt-sm {
   .form-container {
     margin: 0 auto;
-    max-width: variables.$max-form-width * 1.4;
+    max-width: $max-form-width * 1.4;
   }
 }

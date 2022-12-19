@@ -1,9 +1,8 @@
-@use "sass:color";
-@use '../../../../../../config/variables.scss';
-@use '../../../../../../config/mixins.scss';
+@import '../../../../../../config/variables.scss';
+@import '../../../../../../config/mixins.scss';
 
 .single-wrapper {
-  padding: variables.$main-spacing / 4;
+  padding: $main-spacing / 4;
   width: 100%;
 
   .storage {
@@ -14,27 +13,27 @@
     position: relative;
 
     width: 100%;
-    height: variables.$box-size;
+    height: $box-size;
     cursor: pointer;
-    margin: variables.$main-spacing/2 0;
+    margin: $main-spacing/2 0;
 
-    background: variables.$color-primary;
+    background: $color-primary;
     background-image: url(/assets/icons/storage-background.svg);
     background-repeat: no-repeat;
     background-size: contain;
     background-position: right;
     color: #fff;
-    border: 2px solid color.adjust(variables.$color-primary, $lightness: -10%);
+    border: 2px solid darken($color-primary, 10%);
 
     &:hover {
-      box-shadow: 0 0 2px 1px variables.$color-primary-light;
+      box-shadow: 0 0 2px 1px $color-primary-light;
     }
 
     &.warning {
-      border-color: variables.$color-danger;
+      border-color: $color-danger;
 
       .storage-warning-overlay {
-        background-color: rgba(color.adjust(variables.$color-danger, $lightness: 10%), 0.75);
+        background-color: rgba(lighten($color-danger, 10%), 0.75);
         position: absolute;
         top: 0;
         left: 0;
@@ -95,7 +94,7 @@
   }
 }
 
-@include mixins.gt-xs {
+@include gt-xs {
   .single-wrapper {
     width: 50%;
 
@@ -110,22 +109,22 @@
   }
 }
 
-@include mixins.gt-sm {
+@include gt-sm {
   .single-wrapper {
     width: 33.33%;
 
     .storage {
-      height: variables.$big-box-size;
+      height: $big-box-size;
       justify-content: space-between;
-      padding: variables.$main-spacing;
+      padding: $main-spacing;
     }
   }
 }
 
-@include mixins.gt-md {
+@include gt-md {
   .single-wrapper {
     .storage {
-      height: variables.$big-box-size;
+      height: $big-box-size;
       align-items: center;
 
       .main-info {

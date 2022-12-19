@@ -1,10 +1,10 @@
-@use '../../../../../../config/variables.scss';
-@use '../../../../../../config/mixins.scss';
+@import '../../../../../../config/variables.scss';
+@import '../../../../../../config/mixins.scss';
 
 .order-agreement-wrapper {
   display: flex;
   min-height: 25vh;
   max-height: 50vh;
   overflow-y: scroll;
-  margin: variables.$main-spacing*2 0;
+  margin: $main-spacing*2 0;
 }

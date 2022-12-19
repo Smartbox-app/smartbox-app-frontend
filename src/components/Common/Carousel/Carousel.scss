@@ -1,9 +1,10 @@
-@use '../../../config/variables.scss';
-@use '../../../config/mixins.scss';
+@import '../../../config/variables.scss';
+@import '../../../config/mixins.scss';
 
 .slider-wrapper {
   position: relative;
-  padding: variables.$main-spacing * 2;
+  padding: $main-spacing * 2;
+  @include safe-padding-bottom($main-spacing * 4);
 }
 
 .slick-slide img {
@@ -11,19 +12,19 @@
 }
 
 .offer-svg-wrapper {
-  padding: 0 variables.$main-spacing * 2;
+  padding: 0 $main-spacing * 2;
   height: 100%;
   position: relative;
 
   .offer-description {
-    margin-bottom: variables.$main-spacing * 2;
-    color: variables.$color-primary;
+    margin-bottom: $main-spacing * 2;
+    color: $color-primary;
     text-align: center;
     display: flex;
     flex-direction: column;
     justify-content: center;
 
-    @include mixins.gt-sm {
+    @include gt-sm {
       flex-direction: row;
     }
 
@@ -33,7 +34,7 @@
 
     strong {
       font-size: 1.5rem;
-      margin-right: variables.$main-spacing;
+      margin-right: $main-spacing;
     }
   }
 
@@ -42,7 +43,7 @@
     min-height: 250px;
     max-height: 250px;
 
-    @include mixins.gt-md {
+    @include gt-md {
       min-height: 300px;
       max-height: 300px;
     }
@@ -85,11 +86,27 @@
   min-width: 100%;
 }
 
-.slick-dots li.slick-active button::before {
-  color: variables.$color-primary;
+.slick-dots {
+  li {
+    &:hover {
+      button {
+        &::before {
+          color: lighten($color-primary, 10%);
+        }
+      }
+    }
+  }
+
+  li.slick-active {
+    button {
+      &::before {
+        color: $color-primary;
+      }
+    }
+  }
 }
 
-@include mixins.gt-sm {
+@include gt-sm {
   .slick-slider {
     width: 100%;
   }

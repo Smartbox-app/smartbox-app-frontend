@@ -1,5 +1,5 @@
-@use '../../../config/variables.scss';
-@use '../../../config/mixins.scss';
+@import '../../../config/variables.scss';
+@import '../../../config/mixins.scss';
 
 .slide-container {
   background-size: cover;
@@ -11,14 +11,14 @@
 }
 
 .slide-logo {
-  margin: variables.$main-spacing auto;
+  margin: $main-spacing auto;
   max-width: 150px;
   z-index: 2;
-  @include mixins.safe-padding-top(variables.$main-spacing);
+  @include safe-padding-top($main-spacing);
 }
 
 .slide-content {
-  padding: variables.$main-spacing * 1.5;
+  padding: $main-spacing * 1.5;
   z-index: 2;
   display: flex;
   flex-direction: column;
@@ -26,10 +26,10 @@
   justify-content: space-between;
   height: 100%;
 
-  @include mixins.safe-padding-bottom(65px);
+  @include safe-padding-bottom(65px);
 
   overflow: hidden;
-  text-shadow: 0 1px 0 rgba(variables.$color-text, 0.3);
+  text-shadow: 0 1px 0 rgba($color-text, 0.3);
   // background-color: rgba($color-secondary, 0.75);
   /*
   background-image: linear-gradient(
@@ -44,9 +44,9 @@
 .slide-header {
   font-size: 2.2rem;
   font-weight: 700;
-  margin-top: variables.$main-spacing * 3;
-  margin-bottom: variables.$main-spacing * 3;
-  color: variables.$color-text;
+  margin-top: $main-spacing * 3;
+  margin-bottom: $main-spacing * 3;
+  color: $color-text;
   text-align: center;
   text-transform: uppercase;
   white-space: nowrap;
@@ -56,8 +56,8 @@
 .slide-subheader {
   font-size: 1.6rem;
   font-weight: 700;
-  margin-bottom: variables.$main-spacing * 3;
-  color: variables.$color-text-light;
+  margin-bottom: $main-spacing * 3;
+  color: $color-text-light;
   text-align: center;
   // border-left: 3px solid $color-secondary;
 }
@@ -76,7 +76,7 @@
 }
 
 .logo-slider {
-  @include mixins.gt-sm {
+  @include gt-sm {
     // display: none;
   }
 }
@@ -101,7 +101,7 @@
   transform: translate(50%, -35%);
 
   top: 45vh;
-  @include mixins.gt-sm {
+  @include gt-sm {
     top: 50vh;
   }
 }

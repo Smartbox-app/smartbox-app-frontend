@@ -1,12 +1,12 @@
-@use '../../../../../../config/variables.scss';
+@import '../../../../../../config/variables.scss';
 
 .price-wrapper {
-  margin: variables.$main-spacing*3 auto;
+  margin: $main-spacing*3 auto;
   p {
     text-align: center;
 
     strong {
-      color: variables.$color-primary;
+      color: $color-primary;
       font-size: 1.5rem;
     }
   }

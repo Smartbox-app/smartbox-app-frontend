@@ -1,10 +1,10 @@
-@use '../../../../../config/variables.scss';
-@use '../../../../../config/mixins.scss';
+@import '../../../../../config/variables.scss';
+@import '../../../../../config/mixins.scss';
 
 .new-code-wrapper {
   
   strong {
-    color: variables.$color-primary;
+    color: $color-primary;
     font-size: 1.2rem;
   }
 }

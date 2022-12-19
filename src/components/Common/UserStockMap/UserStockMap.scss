@@ -1,16 +1,16 @@
-@use '../../../config/variables';
-@use '../../../config/mixins';
+@import '../../../config/variables';
+@import '../../../config/mixins';
 
 .my-box {
   rect {
-    fill: variables.$color-primary;
+    fill: $color-primary;
     z-index: 1000;
   }
 }
 
 .not-my-box {
   rect {
-    fill: variables.$color-disabled;
+    fill: $color-disabled;
     z-index: 1000;
   }
 }

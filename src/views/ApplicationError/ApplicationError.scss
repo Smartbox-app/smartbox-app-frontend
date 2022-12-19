@@ -1,5 +1,5 @@
-@use "../../config/variables";
-@use "../../config/mixins";
+@import "../../config/variables";
+@import "../../config/mixins";
 
 .application-error {
   width: 100vw;
@@ -9,14 +9,14 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  color: variables.$color-primary;
-  padding: variables.$main-spacing;
+  color: $color-primary;
+  padding: $main-spacing;
 
   h1 {
     font-weight: 700;
     font-size: 1.8rem;
 
-    @include mixins.gt-sm {
+    @include gt-sm {
       font-size: 3rem;
     }
   }

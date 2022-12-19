@@ -1,16 +1,15 @@
-@use "sass:color";
-@use '../../../config/variables.scss';
-@use '../../../config/mixins.scss';
+@import '../../../config/variables.scss';
+@import '../../../config/mixins.scss';
 
 .input-container {
   position: relative;
-  margin-bottom: variables.$main-spacing * 2;
+  margin-bottom: $main-spacing * 2;
   width: 100%;
   display: flex;
   flex-direction: column;
 
   ::placeholder {
-    color: rgba(variables.$color-text, 0.5);
+    color: rgba($color-text, 0.5);
   }
 
   &.nomargin {
@@ -23,52 +22,38 @@
 
   .text-help {
     margin-left: 50px;
-    color: variables.$color-disabled;
+    color: $color-disabled;
     font-size: 0.75rem;
   }
 
   label {
-    color: variables.$color-text;
+    color: $color-text;
     font-size: 0.85rem;
     font-weight: 500;
-    margin-bottom: calc(variables.$main-spacing / 4);
+    margin-bottom: $main-spacing / 4;
   }
   .input {
-    background: transparent;
-    color: variables.$color-text;
+    // background: transparent;
+    color: $color-text;
     border: none;
-    border-bottom: 2px solid variables.$color-primary;
-    padding: variables.$main-spacing * 1.5;
+    border-bottom: 2px solid $color-primary;
+    padding: $main-spacing * 1.5;
     padding-left: 1rem;
     font-size: 1rem;
-    font-family: variables.$font-primary;
+    font-family: $font-primary;
     font-weight: 300;
-    box-shadow: variables.$box-shadow-input rgba(variables.$color-text, 0.25);
+    box-shadow: $box-shadow-input rgba($color-text, 0.25);
 
     &:focus {
-      background: rgba(variables.$color-text, 0.1);
-      box-shadow: variables.$box-shadow-small rgba(variables.$color-text, 0.25);
-    }
-
-    &:-webkit-autofill,
-    &:-webkit-autofill:hover,
-    &:-webkit-autofill:focus {
-      -webkit-text-fill-color: variables.$color-text !important;
-      -webkit-box-shadow: 0 0 0px 1000px variables.$color-primary inset !important;
-      box-shadow: 0 0 0px 1000px variables.$color-primary inset !important;
-      transition: background-color 5000s ease-in-out 0s !important;
+      background: rgba($color-text, 0.1);
+      box-shadow: $box-shadow-small rgba($color-text, 0.25);
     }
   }
-}
-
-.input-wrapper {
-  position: relative;
-  margin-bottom: calc(variables.$main-spacing / 4);
 }
 
 .input-icon {
   position: absolute;
-  left: calc(variables.$main-spacing / 2);
+  left: $main-spacing/2;
   top: 50%;
   transform: translateY(-50%);
   width: 1.2rem;
@@ -76,6 +61,6 @@
 }
 
 .text-danger {
-  color: color.adjust(variables.$color-danger, $lightness: 20%);
+  color: lighten($color-danger, 20%);
   font-size: 0.8rem;
 }

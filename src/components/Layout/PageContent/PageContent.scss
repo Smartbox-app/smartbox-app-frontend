@@ -1,17 +1,17 @@
-@use "../../../config/variables";
-@use "../../../config/mixins.scss";
+@import '../../../config/variables';
+@import '../../../config/mixins.scss';
 
 .page-content {
-  padding: variables.$main-spacing * 2 variables.$main-spacing * 2;
+  padding: 0;
   flex: 1 0 auto;
   display: flex;
   flex-direction: column;
   position: relative;
   min-height: 100vh;
-  background-color: variables.$color-background;
+  background-color: $color-background;
   width: 100%;
-  // @include safe-padding-bottom(0px);
-  // @include safe-padding-top(0px);
+  @include safe-padding-bottom(0px);
+  @include safe-padding-top(0px);
 
   &.bg {
     background-image: url('/assets/images/bg.jpg');
@@ -19,16 +19,16 @@
   }
 }
 
-@include mixins.gt-xs {
+@include gt-xs {
   .page-content {
-    padding: variables.$main-spacing * 2 variables.$main-spacing * 2;
-    // @include safe-padding-bottom($main-spacing * 2);
-    // @include safe-padding-top($main-spacing * 2);
+    padding: $main-spacing * 2 $main-spacing * 2;
+    @include safe-padding-bottom($main-spacing * 2);
+    @include safe-padding-top($main-spacing * 2);
   }
 }
 
-@include mixins.gt-sm {
+@include gt-sm {
   .page-content {
-    padding: variables.$main-spacing variables.$main-spacing * 3;
+    padding: $main-spacing $main-spacing * 3;
   }
 }

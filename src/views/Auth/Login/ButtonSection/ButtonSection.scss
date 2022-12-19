@@ -1,16 +1,16 @@
-@use '../../../../config/variables.scss';
-@use '../../../../config/mixins.scss';
+@import '../../../../config/variables.scss';
+@import '../../../../config/mixins.scss';
 
 .login-buttons-section {
-  width: variables.$login-button-size;
+  width: $login-button-size;
   margin: 0 auto;
   padding: 0;
 
   .button {
     font-size: 1.1rem;
     width: 100%;
-    height: variables.$login-button-height;
-    border-radius: variables.$login-button-height / 2;
+    height: $login-button-height;
+    border-radius: $login-button-height / 2;
   }
 
   .kep-login-facebook,
@@ -28,14 +28,14 @@
   text-align: center;
 }
 
-@include mixins.gt-sm {
+@include gt-sm {
   .login-buttons-section {
-    width: variables.$login-button-size * 1.1;
+    width: $login-button-size * 1.1;
   }
 }
 
-@include mixins.gt-md {
+@include gt-md {
   .login-buttons-section {
-    width: variables.$login-button-size * 1.2;
+    width: $login-button-size * 1.2;
   }
 }

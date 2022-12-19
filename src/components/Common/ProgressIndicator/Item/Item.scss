@@ -1,8 +1,7 @@
-@use "sass:color";
-@use '../../../../config/variables.scss';
-@use '../../../../config/mixins.scss';
+@import '../../../../config/variables.scss';
+@import '../../../../config/mixins.scss';
 
-$icon-size: variables.$main-spacing * 4;
+$icon-size: $main-spacing * 4;
 
 .item-wrapper {
   display: flex;
@@ -19,18 +18,17 @@ $icon-size: variables.$main-spacing * 4;
     height: $icon-size;
     border-radius: $icon-size / 2;
     background: #fff;
-    color: variables.$color-disabled;
-    border: 2px solid variables.$color-disabled;
+    color: $color-disabled;
     display: flex;
     justify-content: center;
     align-items: center;
-    box-shadow: 0 5px 10px -5px color.adjust(rgba(#000, 0.4), $lightness: 30%);
+    box-shadow: 0 5px 10px -5px lighten(rgba(#000, 0.4), 30%);
   }
 
   .item-current {
-    background: variables.$color-primary;
-    color: #fff;
-    border: 2px solid variables.$color-primary;
+    background: $color-primary;
+    color: $color-text-button;
+    border: 2px solid $color-primary;
 
     &::after {
       display: block;
@@ -41,7 +39,7 @@ $icon-size: variables.$main-spacing * 4;
       fill: #aaa;
       width: 16px;
       height: 16px;
-      color: variables.$color-disabled;
+      color: $color-disabled;
       top: -16px;
       left: 50%;
       transform: translateX(-50%);
@@ -50,19 +48,19 @@ $icon-size: variables.$main-spacing * 4;
   }
 
   .item-done {
-    background: variables.$color-success;
-    border: 2px solid variables.$color-success;
+    background: $color-success;
+    border: 2px solid $color-success;
     color: #fff;
   }
 
   .item-description {
-    margin-top: variables.$main-spacing;
+    margin-top: $main-spacing;
     font-size: 0.7rem;
     font-weight: 400;
   }
 }
 
-@include mixins.gt-sm {
+@include gt-sm {
   .ittem-wrapper {
     .item-description {
       font-size: 1rem;

@@ -1,33 +1,31 @@
-@use '../../../config/variables';
-@use '../../../config/mixins.scss';
+@import '../../../config/variables';
+@import '../../../config/mixins';
 
 .notification {
-  font-family: variables.$font-primary;
+  font-family: $font-primary;
   animation-name: show;
-  animation-duration: variables.$transition-time;
-  border-radius: variables.$main-spacing;
+  animation-duration: $transition-time;
   cursor: pointer;
-
-  padding: calc(variables.$main-spacing / 2);
+  padding: 0;
   z-index: 999;
 
   .alert {
     margin: 0;
-    box-shadow: 0 0 calc(variables.$main-spacing / 2) 0 rgba(0, 0, 0, 0.25);
+    box-shadow: 0 0 $main-spacing/2 0 rgba(0, 0, 0, 0.25);
   }
 }
 
-@include mixins.gt-sm {
+@include gt-sm {
   .notification {
-    padding: variables.$main-spacing / 2;
-    border-radius: variables.$main-spacing;
+    padding: $main-spacing / 2;
+    border-radius: $main-spacing;
   }
 }
 
 @keyframes show {
   0% {
     opacity: 0;
-    margin-top: -(variables.$main-spacing);
+    margin-top: -$main-spacing;
   }
   100% {
     opacity: 1;

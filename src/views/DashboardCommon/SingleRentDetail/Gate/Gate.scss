@@ -1,5 +1,5 @@
-@use '../../../../config/variables';
-@use '../../../../config/mixins';
+@import '../../../../config/variables';
+@import '../../../../config/mixins';
 
 .open-gate-wrapper {
   margin-bottom: 60px;
@@ -16,7 +16,7 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  margin: variables.$main-spacing*2;
+  margin: $main-spacing*2;
 
   .no-gps-cords {
     display: flex;
@@ -38,7 +38,7 @@
   flex-direction: column;
 
   .slide-to-open {
-    margin: variables.$main-spacing*2;
+    margin: $main-spacing*2;
     display: flex;
     align-items: center;
     justify-content: center;

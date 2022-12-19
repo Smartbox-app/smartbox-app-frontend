@@ -1,12 +1,12 @@
-@use '../../../config/variables';
-@use '../../../config/mixins.scss';
+@import '../../../config/variables';
+@import '../../../config/mixins.scss';
 
 .dashboard-container {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
   position: relative;
-  @include mixins.safe-padding-top(0px);
+  @include safe-padding-top(0px);
 
   &.bg {
     background-image: url('/assets/images/bg.jpg');
@@ -14,8 +14,9 @@
   }
 }
 
-@include mixins.gt-sm {
+@include gt-sm {
   .dashboard-container {
+    padding-top: 0;
     flex-direction: column;
   }
 }

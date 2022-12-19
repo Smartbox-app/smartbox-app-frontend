@@ -1,8 +1,8 @@
-@use '../../../config/variables';
-@use '../../../config/mixins';
+@import '../../../config/variables';
+@import '../../../config/mixins';
 
 .content-text {
   font-size: 1.3rem;
   text-align: center;
-  margin: variables.$main-spacing*3;
+  margin: $main-spacing*3;
 }

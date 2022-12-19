@@ -1,6 +1,5 @@
-@use "sass:map";
-@use '../../../config/variables.scss';
-@use '../../../config/mixins.scss';
+@import '../../../config/variables.scss';
+@import '../../../config/mixins.scss';
 
 main {
   display: flex;
@@ -8,24 +7,32 @@ main {
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  margin-bottom: variables.$main-bottom-spacing-lg;
+  margin-bottom: $main-bottom-spacing-lg;
   width: 100vw;
 }
 
-@include mixins.gt-xs {
+@include gt-xs {
   main {
-    margin-bottom: variables.$main-bottom-spacing-md;
+    margin-bottom: $main-bottom-spacing-md;
   }
 }
 
-@include mixins.gt-sm {
+@include gt-sm {
   main {
-    margin: 0 auto;
-    max-width: map.get(variables.$breakpoints, sm);
+    min-height: 0;
+    margin: 0 auto $main-bottom-spacing-sm auto;
+    width: 90vw;
   }
 }
 
-@include mixins.gt-lg {
+@include gt-md {
+  main {
+    margin: 0 auto $main-bottom-spacing-sm auto;
+    width: 80vw;
+  }
+}
+
+@include gt-lg {
   main {
     display: flex;
     width: 80vw;
@@ -33,7 +40,7 @@ main {
   }
 }
 
-@include mixins.gt-xl {
+@include gt-xl {
   main {
     display: flex;
     width: 65vw;

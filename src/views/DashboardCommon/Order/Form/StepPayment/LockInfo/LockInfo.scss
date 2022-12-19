@@ -1,12 +1,12 @@
-@use '../../../../../../config/variables.scss';
+@import '../../../../../../config/variables.scss';
 
 .lock-info {
   text-align: center;
   max-width: 250px;
-  margin: variables.$main-spacing * 2 auto;
+  margin: $main-spacing * 2 auto;
 
   .lock-info-text {
-    margin: variables.$main-spacing * 2 0;
+    margin: $main-spacing * 2 0;
     font-weight: 500;
   }
 

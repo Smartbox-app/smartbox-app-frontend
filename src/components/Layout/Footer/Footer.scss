@@ -1,29 +1,55 @@
-@use "sass:map";
-@use '../../../config/variables';
-@use '../../../config/mixins.scss';
+@import '../../../config/variables';
+@import '../../../config/mixins.scss';
 
 footer {
-  position: relative;
-  padding: variables.$main-spacing;
+  position: absolute;
+
+  // @include safe-bottom(60px);
+  bottom: 60px;
+
   width: 100%;
-  height: 60px;
-  text-align: end;
-  background-color: #fff;
+  height: $footer-height * 2;
+  padding: $main-spacing 0;
+  background-color: $color-primary;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
 
   p {
+    margin: 0;
+    padding: $main-spacing $table-item-spacing;
     font-size: 0.75rem;
-    color: variables.$color-text;
+    color: $color-text-button;
   }
 
   .footerLink {
-    padding: variables.$main-spacing/2 variables.$table-item-spacing;
-    border-right: solid 2px rgba(variables.$color-background, 0.5);
+    padding: $main-spacing $table-item-spacing;
+    font-size: 0.75rem;
+    color: $color-text-button;
   }
 }
 
-@include mixins.gt-sm {
+@include gt-xs {
   footer {
-    margin: 0 auto;
-    max-width: map.get(variables.$breakpoints, sm);
+    flex-direction: row;
+    height: $footer-height;
+
+    .p {
+      padding: $main-spacing/2 $table-item-spacing;
+    }
+
+    .footerLink {
+      padding: $main-spacing/2 $table-item-spacing;
+      border-right: solid 2px rgba($color-background, 0.5);
+    }
+  }
+}
+
+@include gt-sm {
+  footer {
+    bottom: 0px;
   }
 }

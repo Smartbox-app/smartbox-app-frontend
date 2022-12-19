@@ -1,29 +1,28 @@
-@use "sass:color";
-@use '../../../config/variables';
-@use '../../../config/mixins.scss';
+@import "../../../config/variables";
+@import "../../../config/mixins.scss";
 
 .table {
   width: 100%;
-  margin: variables.$main-spacing 0;
+  margin: $main-spacing 0;
   font-size: 0.9rem;
   display: block;
   overflow-x: scroll;
 
   thead {
     font-weight: 400;
-    color: variables.$color-text-alter;
-    margin-bottom: variables.$main-spacing * 2;
+    color: $color-text;
+    margin-bottom: $main-spacing * 2;
     height: 60px;
     font-size: 0.85rem;
 
     th {
-      padding: variables.$main-spacing;
+      padding: $main-spacing;
     }
   }
 
   td,
   th {
-    padding: calc(variables.$main-spacing / 4) variables.$main-spacing;
+    padding: $main-spacing/4 $main-spacing;
     text-align: center;
     vertical-align: middle;
     white-space: nowrap;
@@ -31,7 +30,7 @@
   }
 
   tr {
-    border-bottom: 1px solid color.adjust(variables.$color-primary, $lightness: -15%);
+    border-bottom: 1px solid darken($color-primary, 15%);
   }
 
   img {
@@ -60,7 +59,7 @@
     cursor: pointer;
 
     &.active {
-      color: variables.$color-primary;
+      color: $color-primary;
     }
   }
 
@@ -72,37 +71,37 @@
 .list {
   .list-element {
     font-size: 0.9rem;
-    margin-bottom: calc(variables.$main-spacing / 2);
-    border-bottom: 1px solid variables.$color-primary;
+    margin-bottom: $main-spacing / 2;
+    border-bottom: 1px solid $color-primary;
     cursor: pointer;
     &:nth-child(odd) {
-      background: color.adjust(variables.$color-background, $lightness: 10%);
+      background: lighten($color-background, 10%);
     }
 
     &.toggled {
       .list-row {
         max-height: 250px;
         opacity: 1;
-        padding: calc(variables.$main-spacing / 2);
+        padding: $main-spacing/2;
       }
     }
   }
 
   .list-row {
-    border-bottom: 1px solid color.adjust(variables.$color-background, $lightness: 15%);
+    border-bottom: 1px solid lighten($color-background, 15%);
     justify-content: space-between;
     display: flex;
     max-height: 0;
     opacity: 0;
     transition: 0.3s all;
-    padding: 0 calc(variables.$main-spacing / 2);
+    padding: 0 $main-spacing/2;
 
     &:last-child {
       border-bottom: none;
     }
 
     &.mobile {
-      padding: calc(variables.$main-spacing / 2);
+      padding: $main-spacing/2;
       max-height: 250px;
       opacity: 1;
     }
@@ -124,14 +123,14 @@
     flex-wrap: wrap;
 
     .button {
-      margin: calc(variables.$main-spacing / 4);
+      margin: $main-spacing/4;
       flex: 1 1 auto;
       width: auto;
     }
   }
 }
 
-@include mixins.gt-md {
+@include gt-md {
   .table {
     th,
     td {

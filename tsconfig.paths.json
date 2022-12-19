@@ -2,8 +2,12 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "smartbox-tables": ["../smartbox-back/tables"],
-      "smartbox-types": ["../smartbox-back/types"]
+      "smartbox-tables": [
+        "../smartbox-back/tables"
+      ],
+      "smartbox-types": [
+        "../smartbox-back/types"
+      ]
     }
   }
 }

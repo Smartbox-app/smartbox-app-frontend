@@ -1,43 +1,43 @@
-@use '../../../../../../config/variables.scss';
-@use '../../../../../../config/mixins.scss';
+@import '../../../../../../config/variables.scss';
+@import '../../../../../../config/mixins.scss';
 
 .new-storage {
   width: 100%;
 
   .button {
     width: 100%;
-    height: variables.$box-size;
+    height: $box-size;
 
     &:hover {
-      box-shadow: 0 0 2px 1px variables.$color-primary-light;
+      box-shadow: 0 0 2px 1px $color-primary-light;
     }
   }
 }
 
-@include mixins.gt-xs {
+@include gt-xs {
   .new-storage {
     width: 50%;
   }
 }
 
-@include mixins.gt-sm {
+@include gt-sm {
   .new-storage {
     width: 33.33%;
 
     .button {
-      height: variables.$big-box-size;
+      height: $big-box-size;
     }
   }
 }
 
-@include mixins.gt-md {
+@include gt-md {
   .new-storage {
 
     .button {
       font-size: 1.3rem;
 
       .button-img {
-        margin-bottom: variables.$main-spacing;
+        margin-bottom: $main-spacing;
       }
     }
   }

@@ -1,4 +1,4 @@
-@use "../../../config/variables.scss";
+@import '../../../config/variables.scss';
 
 .spinner-container {
   min-height: 300px;
@@ -6,13 +6,13 @@
   height: 100%;
   top: 0;
   left: 0;
-  background: variables.$color-background;
+  background: $color-background;
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 10;
   opacity: 1;
-  transition: variables.$transition-time all;
+  transition: $transition-time all;
 
   &.overlay {
     position: absolute;
@@ -33,10 +33,10 @@
     position: absolute;
     width: 51px;
     height: 51px;
-    border: 6px solid variables.$color-primary;
+    border: 3px solid $color-primary;
     border-radius: 50%;
     animation: spinner-animation 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-    border-color: variables.$color-primary transparent transparent transparent;
+    border-color: $color-primary transparent transparent transparent;
     &:nth-child(1) {
       animation-delay: -0.45s;
     }

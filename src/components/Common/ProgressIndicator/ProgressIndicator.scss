@@ -1,13 +1,13 @@
-@use '../../../config/variables.scss';
-@use '../../../config/mixins.scss';
+@import '../../../config/variables.scss';
+@import '../../../config/mixins.scss';
 
 .progress-indicator-wrapper {
   display: flex;
   flex-direction: row;
-  flex-wrap: wrap;
-  margin-bottom: variables.$main-spacing * 1;
+  flex-wrap: nowrap;
+  margin-bottom: $main-spacing * 1;
   width: 100%;
-  margin-top: variables.$main-spacing;
+  margin-top: $main-spacing;
   margin-left: -5px;
 
   .single-stamp {
@@ -20,9 +20,9 @@
   }
 }
 
-@include mixins.gt-xs {
+@include gt-xs {
   .progress-indicator-wrapper {
-    margin-top: variables.$main-spacing * 3;
-    margin-bottom: variables.$main-spacing * 3;
+    margin-top: $main-spacing * 2;
+    margin-bottom: $main-spacing * 2;
   }
 }

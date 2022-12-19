@@ -1,17 +1,15 @@
-@use "sass:color";
-@use "sass:map";
-@use "../../../config/variables.scss";
-@use "../../../config/mixins.scss";
+@import "../../../config/variables.scss";
+@import "../../../config/mixins.scss";
 
 .tabs {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  margin: variables.$main-spacing 0;
+  margin: $main-spacing 0;
   overflow: hidden;
 
-  @include mixins.gt-xs {
-    flex-wrap: nowrap;
+  @include gt-xs{
+    //flex-wrap: nowrap;
   }
 
   .warning {
@@ -20,13 +18,13 @@
     &::before {
       position: absolute;
       content: '';
-      background-image: url('/assets/icons/alert.svg');
+      background-image: url("/assets/icons/alert.svg");
       background-repeat: no-repeat;
       background-size: 30px;
       right: 10px;
       width: 30px;
       height: 30px;
-      background-color: color.adjust(red, $lightness: 20%);
+      background-color: lighten(red, 20%);
       border-radius: 50%;
     }
   }
@@ -38,25 +36,25 @@
     justify-content: center;
     align-items: center;
     text-align: center;
-    padding: variables.$main-spacing calc(variables.$main-spacing / 2);
-    font-family: variables.$font-primary;
-    color: #000;
-    border-bottom: 2px solid variables.$color-primary;
+    padding: $main-spacing $main-spacing/2;
+    font-family: $font-primary;
+    color: $color-text;
+    border-bottom: 2px solid $color-primary;
     font-weight: 500;
 
     &:hover {
-      background-color: color.adjust(variables.$color-background, $lightness: 30%);
-      background: variables.$color-primary-light;
+      background-color: lighten($color-background, 30%);
+      background: $color-primary-light;
     }
 
     &.active {
-      border-bottom: 2px solid variables.$color-primary;
-      background: variables.$color-primary-light;
+      border-bottom: 2px solid $color-primary;
+      background: $color-primary-light;
     }
   }
 }
 
-@media screen and (min-width: map.get(variables.$breakpoints, xs)) {
+@include gt-xs {
   .tabs {
     flex-direction: row;
 
@@ -66,7 +64,7 @@
   }
 }
 
-@include mixins.gt-sm {
+@include gt-sm {
   .tabs {
     flex-wrap: nowrap;
   }

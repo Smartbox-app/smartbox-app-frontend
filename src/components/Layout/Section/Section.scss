@@ -1,36 +1,41 @@
-@use "sass:map";
-@use '../../../config/variables.scss';
-@use '../../../config/mixins.scss';
+@import '../../../config/variables.scss';
+@import '../../../config/mixins.scss';
 
 .section-wrapper {
   width: 100%;
-  padding: variables.$main-spacing;
-  padding-left: variables.$main-spacing * 2;
-  padding-right: variables.$main-spacing * 2;
+  padding: $main-spacing $main-spacing;
+  padding-bottom: $main-spacing * 3;
 }
 
-@include mixins.gt-sm {
+@include gt-sm {
   .section-wrapper {
-    width: map.get(variables.$breakpoints, sm);
     margin: 0 auto;
-    padding-left: variables.$main-spacing * 2;
-    padding-right: variables.$main-spacing * 2;
+    padding: 0;
   }
 }
 
-@include mixins.gt-lg {
+@include gt-lg {
   .section-wrapper {
-    width: map.get(variables.$breakpoints, sm);
-    margin: 0 auto;
-    padding-left: variables.$main-spacing * 2;
-    padding-right: variables.$main-spacing * 2;
+    margin: $main-spacing auto 0;
   }
 
   .section-full-width {
-    width: map.get(variables.$breakpoints, lg);
+    width: 100%;
   }
 
   .section-half-width {
-    width: calc(map.get(variables.$breakpoints, lg) / 2);
+    width: 49%;
+  }
+}
+
+.section-highlight {
+  padding: $main-spacing;
+  margin: $main-spacing 0;
+  box-shadow: 0 15px 20px -15px lighten(rgba(#000, 0.4), 30%);
+  border-radius: 10px;
+  background: lighten($color-background, 10%);
+
+  @include gt-md {
+    padding: $main-spacing * 1.5;
   }
 }

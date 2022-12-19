@@ -1,22 +1,22 @@
-@use "../../../config/variables.scss";
+@import "../../../config/variables.scss";
 
 .icon-wrapper {
   svg {
     width: 100%;
     height: 100%;
-    fill: variables.$color-primary;
+    fill: $color-primary;
   }
 
   &.light {
     svg {
-      fill: variables.$color-text;
+      fill: $color-text;
     }
   }
   &:not(.no-wrapper) {
-    padding: calc(variables.$main-spacing / 1.5);
-    background: variables.$color-text;
-    width: variables.$main-spacing * 4;
-    height: variables.$main-spacing * 4;
+    padding: $main-spacing/1.5;
+    background: $color-text;
+    width: $main-spacing * 4;
+    height: $main-spacing * 4;
   }
 
   &.transparent {

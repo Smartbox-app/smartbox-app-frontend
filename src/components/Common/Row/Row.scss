@@ -1,16 +1,15 @@
-@use "sass:color";
-@use '../../../config/variables.scss';
-@use '../../../config/mixins.scss';
+@import '../../../config/variables.scss';
+@import '../../../config/mixins.scss';
 
 .row {
-  padding: variables.$main-spacing;
-  border-bottom: 1px solid color.adjust(variables.$color-primary, $lightness: -8%);
+  padding: $main-spacing;
+  border-bottom: 1px solid darken($color-primary, 8%);
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
   flex-direction: column;
 
-  @include mixins.gt-xs {
+  @include gt-xs {
     align-items: center;
     flex-direction: row;
   }
@@ -23,11 +22,11 @@
   }
 
   .row-label {
-    color: color.adjust(variables.$color-primary, $lightness: 5%);
+    color: lighten($color-primary, 5%);
     font-weight: 600;
     width: 35%;
 
-    @include mixins.gt-sm {
+    @include gt-sm {
       width: 25%;
     }
   }

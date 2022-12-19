@@ -1,7 +1,5 @@
-@use "sass:color";
-@use "sass:map";
-@use '../../../config/variables.scss';
-@use '../../../config/mixins.scss';
+@import '../../../config/variables.scss';
+@import '../../../config/mixins.scss';
 
 $buttonSize: 40px;
 
@@ -15,7 +13,7 @@ $buttonSize: 40px;
 }
 
 .user-box {
-  padding: 0 variables.$main-spacing;
+  padding: 0 $main-spacing;
 }
 
 .map-wrapper {
@@ -24,8 +22,8 @@ $buttonSize: 40px;
   touch-action: none;
   min-height: 450px;
 
-  border: 1px solid color.adjust(variables.$color-background, $lightness: -5%);
-  max-width: map.get(variables.$breakpoints, lg);
+  border: 1px solid darken($color-background, 5%);
+  max-width: map-get($breakpoints, lg);
 
   .map-scale {
     position: absolute;
@@ -33,23 +31,23 @@ $buttonSize: 40px;
 
     span {
       display: block;
-      margin: variables.$main-spacing;
+      margin: $main-spacing;
       font-size: $buttonSize;
       height: $buttonSize;
       width: $buttonSize;
       line-height: $buttonSize;
       text-align: center;
-      color: variables.$color-primary;
+      color: $color-primary;
 
       &:hover {
         cursor: pointer;
-        color: color.adjust(variables.$color-primary, $lightness: -5%);
+        color: darken($color-primary, 5%);
       }
     }
   }
 
   svg {
-    width: variables.$box-map-width;
+    width: $box-map-width;
     transform-origin: top left;
 
     .st9 {
@@ -67,18 +65,18 @@ $buttonSize: 40px;
     }
 
     .free {
-      fill: variables.$color-success;
+      fill: $color-success;
 
       &:hover {
-        fill: color.adjust(variables.$color-success, $lightness: 5%);
+        fill: lighten($color-success, 5%);
       }
     }
 
     .reserved,
     .rented {
-      fill: variables.$color-danger;
+      fill: $color-danger;
       &:hover {
-        fill: color.adjust(variables.$color-danger, $lightness: 5%);
+        fill: lighten($color-danger, 5%);
       }
     }
 
@@ -91,34 +89,34 @@ $buttonSize: 40px;
     }
 
     .to-explain {
-      fill: variables.$color-text;
+      fill: $color-text;
 
       &:hover {
-        fill: color.adjust(variables.$color-text, $lightness: 15%);
+        fill: lighten($color-text, 15%);
       }
     }
 
     .out-of-service {
       fill: #ccc;
-      color: variables.$color-text;
+      color: $color-text;
 
       &:hover {
-        fill: color.adjust(#ccc, $lightness: 5%);
+        fill: lighten(#ccc, 5%);
       }
     }
 
     .to-check {
-      fill: variables.$color-primary;
+      fill: $color-primary;
       &:hover {
-        fill: color.adjust(variables.$color-primary, $lightness: 5%);
+        fill: lighten($color-primary, 5%);
       }
     }
 
     .no-paid-extension,
     .no-paid-extension-with-warning {
-      fill: variables.$color-tertiary;
+      fill: $color-tertiary;
       &:hover {
-        fill: color.adjust(variables.$color-tertiary, $lightness: 5%);
+        fill: lighten($color-tertiary, 5%);
       }
     }
   }

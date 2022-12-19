@@ -1,25 +1,23 @@
-@use "../../../../../config/variables.scss";
-@use "../../../../../config/mixins.scss";
+@import '../../../../../config/variables.scss';
+@import '../../../../../config/mixins.scss';
 
-.step-one-wrapper {
-  .step-size-wrapper {
-    form {
-      width: 100%;
-    }
-
-    .options-wrapper {
-      display: flex;
-      flex-direction: row;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      align-items: center;
-    }
+.step-size-wrapper {
+  form {
+    width: 100%;
   }
 
-  @include mixins.gt-sm {
-    .options-wrapper {
-      flex-direction: row;
-      margin-bottom: variables.$main-spacing * 2;
-    }
+  .options-wrapper {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+@include gt-sm {
+  .options-wrapper {
+    flex-direction: row;
+    margin-bottom: $main-spacing * 2;
   }
 }

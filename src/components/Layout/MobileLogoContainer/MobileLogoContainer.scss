@@ -1,11 +1,11 @@
-@use '../../../config/variables';
-@use '../../../config/mixins.scss';
+@import '../../../config/variables';
+@import '../../../config/mixins.scss';
 
 .mobile-logo-container {
   order: 0;
   display: flex;
   justify-content: flex-end;
-  padding: variables.$main-spacing/2;
+  padding: $main-spacing/2;
   z-index: 900;
 
   &:hover {
@@ -20,17 +20,17 @@
 
   &.small {
     img {
-      height: variables.$main-logo-size / 3.5;
+      height: $main-logo-size / 3.5;
     }
   }
 
   &.only-bottom-margin {
     padding: 0;
-    margin-bottom: variables.$main-spacing * 2;
+    margin-bottom: $main-spacing * 2;
   }
 }
 
-@include mixins.gt-sm {
+@include gt-sm {
   .mobile-logo-container {
     display: none;
   }

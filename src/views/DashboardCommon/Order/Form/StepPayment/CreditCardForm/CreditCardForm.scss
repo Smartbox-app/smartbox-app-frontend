@@ -1,6 +1,5 @@
-@use "sass:color";
-@use '../../../../../../config/variables';
-@use '../../../../../../config/mixins';
+@import '../../../../../../config/variables';
+@import '../../../../../../config/mixins';
 
 .credit-card-input-wrapper {
   display: flex;
@@ -24,8 +23,8 @@
   display: flex;
   flex-direction: column;
   white-space: nowrap;
-  margin: variables.$main-spacing / 2 0;
-  background: color.adjust(variables.$color-background, $lightness: 10%);
+  margin: $main-spacing / 2 0;
+  background: lighten($color-background, 10%);
   cursor: pointer;
   text-align: center;
   align-items: center;
@@ -33,8 +32,8 @@
   font-size: 1.5rem;
   width: 275px;
 
-  transition: variables.$transition-time background-color, variables.$transition-time border-color;
-  box-shadow: variables.$box-shadow-small rgba(variables.$color-text, 0.25);
+  transition: $transition-time background-color, $transition-time border-color;
+  box-shadow: $box-shadow-small rgba($color-text, 0.25);
   text-transform: none;
   border: 2px solid #A5C312;
   color: #A5C312;

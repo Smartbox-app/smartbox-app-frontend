@@ -1,12 +1,13 @@
-@use "sass:color";
-@use '../../../config/variables';
-@use '../../../config/mixins.scss';
+@import '../../../config/variables';
+@import '../../../config/mixins.scss';
 
 .button {
-  padding: variables.$main-spacing variables.$main-spacing * 2;
-  margin: calc(variables.$main-spacing / 2) 0;
-  background: color.adjust(variables.$color-background, $lightness: 10%);
-  color: variables.$color-text;
+  min-width: 95px;
+  padding: $main-spacing $main-spacing;
+  white-space: nowrap;
+  margin: $main-spacing / 2 0;
+  background: lighten($color-background, 10%);
+  color: $color-text;
   border: none;
   display: flex;
   cursor: pointer;
@@ -17,17 +18,18 @@
   font-size: 1rem;
   font-weight: 300;
   width: 100%;
-  font-family: variables.$font-primary;
+  font-family: $font-primary;
+  border-radius: 5px;
 
-  transition: variables.$transition-time background-color, variables.$transition-time border-color;
-  box-shadow: variables.$box-shadow-small rgba(variables.$color-text, 0.25);
+  transition: $transition-time background-color, $transition-time border-color;
+  box-shadow: $box-shadow-small rgba($color-text, 0.25);
 
   &:link {
-    color: variables.$color-text;
+    color: $color-text;
   }
 
   &:visited {
-    color: variables.$color-text;
+    color: $color-text;
   }
 
   &.auto {
@@ -39,63 +41,62 @@
   }
 
   &.button-primary {
-    background: variables.$color-primary;
-    color: variables.$color-text-button;
+    background: $color-primary;
+    color: $color-text-button;
     &:hover {
-      background: color.adjust(variables.$color-primary, $lightness: 10%);
+      background: lighten($color-primary, 10%);
     }
   }
 
   &.button-danger {
-    background: variables.$color-danger;
-    color: variables.$color-text-button;
+    background: $color-danger;
+    color: $color-text-button;
     &:hover {
-      background: color.adjust(variables.$color-danger, $lightness: 10%);
+      background: lighten($color-danger, 10%);
     }
   }
 
   &.button-success {
-    background: variables.$color-success;
-    color: variables.$color-text-button;
+    background: $color-success;
+    color: $color-text-button;
     &:hover {
-      background: color.adjust(variables.$color-success, $lightness: 10%);
+      background: lighten($color-success, 10%);
     }
   }
 
   &.button-tertiary {
-    background: variables.$color-tertiary;
+    background: $color-tertiary;
     text-transform: uppercase;
-    color: variables.$color-text-button;
+    color: $color-text-button;
     &:hover {
-      background: color.adjust(variables.$color-tertiary, $lightness: 10%);
+      background: lighten($color-tertiary, 10%);
     }
   }
 
   &.button-small {
-    padding: variables.$main-spacing variables.$main-spacing;
+    padding: $main-spacing/2 $main-spacing;
     font-size: 0.9rem;
   }
 
   &.button-big {
     font-size: 1.2rem;
-    padding: variables.$main-spacing * 1.5;
+    padding: $main-spacing * 1.5;
     font-weight: 500;
 
-    @include mixins.gt-md {
+    @include gt-md {
       font-size: 1.5rem;
     }
   }
 
   &.button-outline {
     text-transform: none;
-    border: 2px solid variables.$color-primary;
-    color: variables.$color-primary;
-    background: transparent;
-    padding: 9px 20px;
+    border: 2px solid $color-primary;
+    color: $color-primary;
+    padding: 8px 20px;
     font-weight: 500;
 
     &:hover {
-      box-shadow: inset 0 -1px 1px -1px variables.$color-primary;
+      box-shadow: inset 0 -1px 1px -1px $color-primary;
     }
 
     &.disabled,
@@ -106,7 +107,7 @@
 
       &:hover {
         background: #aaa;
-        color: variables.$color-text-button;
+        color: $color-text-button;
       }
     }
   }
@@ -114,12 +115,12 @@
   &.disabled,
   &:disabled {
     background: #aaa;
-    color: variables.$color-text-button;
+    color: $color-text-button;
     cursor: not-allowed;
 
     &:hover {
       background: #aaa;
-      color: variables.$color-text-button;
+      color: $color-text-button;
     }
   }
 
@@ -130,27 +131,27 @@
     align-items: center;
 
     .button-img {
-      width: variables.$button-img-size * 1;
-      height: variables.$button-img-size * 1;
-      margin: variables.$main-spacing;
+      width: $button-img-size * 1;
+      height: $button-img-size * 1;
+      margin: $main-spacing;
     }
   }
 
   &.only-icon {
-    padding: 10px;
+    padding: $main-spacing;
 
     .button-img {
-      width: variables.$button-img-size;
-      height: variables.$button-img-size;
+      width: $button-img-size;
+      height: $button-img-size;
       margin: 0;
     }
   }
 }
 
-@include mixins.gt-xs {
+@include gt-sm {
   .button {
     width: auto;
-    padding: variables.$main-spacing variables.$main-spacing * 2;
-    margin: variables.$main-spacing / 2 0;
+    padding: $main-spacing $main-spacing * 2;
+    margin: $main-spacing / 2 0;
   }
 }

@@ -1,5 +1,5 @@
-@use '../../../../config/variables.scss';
-@use '../../../../config/mixins.scss';
+@import '../../../../config/variables.scss';
+@import '../../../../config/mixins.scss';
 
 .custom-arrow {
   position: absolute;
@@ -9,17 +9,16 @@
   z-index: 10;
 
   &:hover {
-    &.next,
-    &.prev {
-      color: variables.$color-primary-light;
+
+    &.next, &.prev {
+      color: $color-primary-light;
     }
   }
 
-  &.next,
-  &.prev {
+  &.next, &.prev {
     font-size: 2rem;
     line-height: normal;
-    color: variables.$color-primary;
+    color: $color-primary;
     display: block;
 
     &::before {
@@ -28,10 +27,10 @@
   }
 
   &.prev {
-    left: -(variables.$main-spacing);
+    left: $main-spacing;
   }
 
   &.next {
-    right: -(variables.$main-spacing);
+    right: $main-spacing;
   }
 }

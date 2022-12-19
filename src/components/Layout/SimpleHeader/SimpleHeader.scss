@@ -1,5 +1,5 @@
-@use "../../../config/variables";
-@use "../../../config/mixins";
+@import "../../../config/variables";
+@import "../../../config/mixins";
 
 .simple-header-container {
   display: flex;
@@ -7,22 +7,22 @@
   justify-content: space-between;
 
   .simple-header {
-    color: variables.$color-text;
+    color: $color-text;
     display: flex;
     align-items: center;
     width: 100%;
   }
 
   .no-margin {
-    margin-bottom: variables.$main-spacing;
+    margin-bottom: $main-spacing;
   }
 }
 
-@include mixins.gt-sm {
+@include gt-sm {
   .section-header-container {
 
     .simple-header {
-      max-width: variables.$page-header-width;
+      max-width: $page-header-width;
     }
   }
 }
