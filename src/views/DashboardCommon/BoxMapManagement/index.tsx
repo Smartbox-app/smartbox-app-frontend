@@ -1,10 +1,9 @@
 /* eslint-disable class-methods-use-this */
 /* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { BoxListItem, RentStatus, StockList, UserRes } from 'smartbox-types';
+import React, { useEffect, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { BoxListItem, RentStatus, UserRes } from 'smartbox-types';
 import { boxes, modal, stock } from '../../../actions';
 import { Spinner } from '../../../components/Common';
 import { PageHeader } from '../../../components/Layout';
@@ -17,188 +16,168 @@ import './BoxMapManagement.scss';
 
 import MapLegend from './MapLegend';
 import SimpleStockMap from '../../../components/Common/SimpleStockMap';
+import { useParams } from 'react-router';
+import { findAncestor } from '../../../utils/find-ancestor';
 
-interface Props {
-  boxesGroup: BoxListItem[] | null;
-  stock: StockList;
-  user: UserRes;
+const BoxMapManagement = () => {
+    const element = useRef<HTMLDivElement | null>(null);
+    const dispatch = useDispatch();
+    const { stockId } = useParams<{ stockId: string }>();
+    const stockList = useSelector((state: ApplicationState) => state.stock.list);
+    const user = useSelector((state: ApplicationState) => state.user.details);
+    const { boxesGroup } = useSelector((state: ApplicationState) => state.boxes);
 
-  showModal: (content: React.ReactNode) => void;
-  fetchBoxStatuses: (stockId: string) => void;
-  fetchSingleBoxDetails: (rentId: string) => void;
-  getStockList: () => void;
+    const statusColorMarker = () => {
+        const catchElements = element.current?.querySelectorAll('#kontenery .storage');
+        if (!catchElements) return;
 
-  boxNumberToMarkWay?: number;
-}
+        catchElements.forEach((singleElement: Element) => {
+            clearBoxStatus(singleElement);
+            setBoxStatus(singleElement.id, singleElement);
+        });
+    };
 
-class BoxMapManagement extends React.Component<Props> {
-  private element: any;
+    const eventListenerAdding = () => {
+        if (isAdmin(user.role) || isWorker(user.role)) {
+            const catchElements = element.current?.querySelectorAll('#kontenery .storage');
 
-  constructor(props: Props) {
-    super(props);
-    this.element = React.createRef();
-  }
+            console.log('FOUND', catchElements, element.current);
 
-  private statusColorMarker = () => {
-    const catchElement = this.element.current?.querySelectorAll('#kontenery .storage');
-    catchElement.forEach((singleElement: any) => {
-      this.clearBoxStatus(singleElement);
-      this.setBoxStatus(singleElement.id, singleElement);
-    });
-  };
+            if (!catchElements) return;
 
-  private eventListenerAdding = () => {
-    const { user } = this.props;
-
-    if (isAdmin(user.role) || isWorker(user.role)) {
-      const catchElement = this.element.current.querySelectorAll('#kontenery .storage');
-      catchElement.forEach((singleElement: any) => {
-        singleElement.addEventListener('click', this.handleEventModal, false);
-      });
-    }
-  };
-
-  async componentDidMount() {
-    const { fetchBoxStatuses, stock, getStockList, user } = this.props;
-    if (isAdmin(user.role) || isWorker(user.role)) {
-      await getStockList();
-    }
-    await this.eventListenerAdding();
-
-    if (stock && (isAdmin(user.role) || isWorker(user.role))) {
-      await fetchBoxStatuses(stock.id);
-    }
-  }
-
-  public componentDidUpdate(prevProps: Readonly<Props>): void {
-    const { fetchBoxStatuses, stock, boxesGroup, user } = this.props;
-    if (stock && (isAdmin(user.role) || isWorker(user.role))) {
-      boxesGroup === null && fetchBoxStatuses(stock.id);
-    }
-
-    if (stock && (isAdmin(user.role) || isWorker(user.role))) {
-      this.statusColorMarker();
-    }
-  }
-
-  componentWillUnmount() {
-    const catchElement = this.element.current.querySelectorAll('#kontenery .storage');
-    catchElement.forEach((singleElement: any) => {
-      singleElement.removeEventListener('click', this.handleEventModal, false);
-    });
-  }
-
-  private clearBoxStatus = (singleElement: any): void => {
-    singleElement.firstElementChild.classList.remove('to-check');
-    singleElement.firstElementChild.classList.remove('rented');
-    singleElement.firstElementChild.classList.remove('reserved');
-    singleElement.firstElementChild.classList.remove('to-explain');
-    singleElement.lastElementChild.classList.remove('to-explain-text');
-    singleElement.firstElementChild.classList.remove('no-paid-extension');
-    singleElement.firstElementChild.classList.remove('no-paid-extension-with-warning');
-    singleElement.firstElementChild.classList.remove('out-of-service');
-    singleElement.lastElementChild.classList.remove('out-of-service-text');
-    singleElement.firstElementChild.classList.add('free');
-  };
-
-  private setBoxStatus = (boxId: string, singleElement: any): void => {
-    const { boxesGroup } = this.props;
-    boxesGroup?.forEach((singleBox: BoxListItem): void => {
-      if (singleBox.number === boxId) {
-        switch (singleBox.status) {
-          case RentStatus.toCheck:
-            singleElement.firstElementChild.classList.add('to-check');
-            break;
-          case RentStatus.rented:
-            singleElement.firstElementChild.classList.add('rented');
-            break;
-
-          case RentStatus.reserved:
-            singleElement.firstElementChild.classList.add('reserved');
-            break;
-          case RentStatus.toExplain:
-            singleElement.firstElementChild.classList.add('to-explain');
-            singleElement.lastElementChild.classList.add('to-explain-text');
-            break;
-          case RentStatus.noPaidExtension:
-            singleElement.firstElementChild.classList.add('no-paid-extension');
-            break;
-          case RentStatus.noPaidExtensionWithWarning:
-            singleElement.firstElementChild.classList.add('no-paid-extension-with-warning');
-            break;
-          case RentStatus.outOfService:
-            singleElement.firstElementChild.classList.add('out-of-service');
-            singleElement.lastElementChild.classList.add('out-of-service-text');
-            break;
-          case RentStatus.free:
-            singleElement.firstElementChild.classList.remove('to-check');
-            singleElement.firstElementChild.classList.remove('rented');
-            singleElement.firstElementChild.classList.remove('reserved');
-            singleElement.firstElementChild.classList.remove('to-explain');
-            singleElement.lastElementChild.classList.remove('to-explain-text');
-            singleElement.firstElementChild.classList.remove('no-paid-extension');
-            singleElement.firstElementChild.classList.remove('no-paid-extension-with-warning');
-            singleElement.firstElementChild.classList.remove('out-of-service');
-            singleElement.lastElementChild.classList.remove('out-of-service-text');
-            singleElement.firstElementChild.classList.add('free');
-            break;
-          default:
-            break;
+            catchElements.forEach((singleElement: Element) => {
+                singleElement.addEventListener('click', handleEventModal, false);
+            });
         }
-      } else {
-        singleElement.firstElementChild.classList.add('free');
-      }
-    });
-  };
+    };
 
-  handleEventModal = (e: any): any => {
-    const { showModal, boxesGroup, fetchSingleBoxDetails, user } = this.props;
-    const selectedBoxId = e.target.parentElement.id;
-    let selectedRentId = '';
+    useEffect(() => {
+        if (isAdmin(user.role) || isWorker(user.role)) {
+            dispatch(stock.getStockList());
+        }
+    }, []);
 
-    boxesGroup?.find((singleBox: BoxListItem): void => {
-      if (singleBox.number === selectedBoxId && singleBox.status !== RentStatus.free) {
-        selectedRentId = singleBox.rentId;
-      }
-    });
+    useEffect(() => {
+        if(!element || !element.current) return;
+        eventListenerAdding();
 
-    if (selectedRentId !== '' && isAdmin(user.role)) {
-      fetchSingleBoxDetails(selectedRentId);
+        if (stock && (isAdmin(user.role) || isWorker(user.role))) {
+            dispatch(boxes.fetchBoxStatuses(stockId));
+        }
+
+        return () => {
+            const catchElement = element.current?.querySelectorAll('#kontenery .storage');
+            catchElement?.forEach((singleElement: any) => {
+                singleElement.removeEventListener('click', handleEventModal, false);
+            });
+        }
+    }, [stockId, element, element.current])
+
+    useEffect(() => {
+        if (stock && (isAdmin(user.role) || isWorker(user.role))) {
+            if (boxesGroup === null) {
+                dispatch(boxes.fetchBoxStatuses(stockId));
+            }
+        }
+
+        if (stock && (isAdmin(user.role) || isWorker(user.role))) {
+            statusColorMarker();
+        }
+    }, [boxesGroup])
+
+
+
+    const clearBoxStatus = (singleElement: Element): void => {
+        singleElement.firstElementChild?.classList.remove('to-check');
+        singleElement.firstElementChild?.classList.remove('rented');
+        singleElement.firstElementChild?.classList.remove('reserved');
+        singleElement.firstElementChild?.classList.remove('to-explain');
+        singleElement.lastElementChild?.classList.remove('to-explain-text');
+        singleElement.firstElementChild?.classList.remove('no-paid-extension');
+        singleElement.firstElementChild?.classList.remove('no-paid-extension-with-warning');
+        singleElement.firstElementChild?.classList.remove('out-of-service');
+        singleElement.lastElementChild?.classList.remove('out-of-service-text');
+        singleElement.firstElementChild?.classList.add('free');
+    };
+
+    const setBoxStatus = (boxId: string, singleElement: Element): void => {
+        boxesGroup?.forEach((singleBox: BoxListItem): void => {
+            if (singleBox.number === boxId) {
+                switch (singleBox.status) {
+                    case RentStatus.toCheck:
+                        singleElement.firstElementChild?.classList.add('to-check');
+                        break;
+                    case RentStatus.rented:
+                        singleElement.firstElementChild?.classList.add('rented');
+                        break;
+
+                    case RentStatus.reserved:
+                        singleElement.firstElementChild?.classList.add('reserved');
+                        break;
+                    case RentStatus.toExplain:
+                        singleElement.firstElementChild?.classList.add('to-explain');
+                        singleElement.lastElementChild?.classList.add('to-explain-text');
+                        break;
+                    case RentStatus.noPaidExtension:
+                        singleElement.firstElementChild?.classList.add('no-paid-extension');
+                        break;
+                    case RentStatus.noPaidExtensionWithWarning:
+                        singleElement.firstElementChild?.classList.add('no-paid-extension-with-warning');
+                        break;
+                    case RentStatus.outOfService:
+                        singleElement.firstElementChild?.classList.add('out-of-service');
+                        singleElement.lastElementChild?.classList.add('out-of-service-text');
+                        break;
+                    case RentStatus.free:
+                        singleElement.firstElementChild?.classList.remove('to-check', 'rented', 'reserved', 'to-explain', 'no-paid-extension', 'no-paid-extension-with-warning', 'out-of-service');
+                        singleElement.firstElementChild?.classList.remove('rented');
+                        singleElement.lastElementChild?.classList.remove('to-explain-text', 'out-of-service-text');
+                        singleElement.firstElementChild?.classList.add('free');
+                        break;
+                    default:
+                        break;
+                }
+            } else {
+                singleElement.firstElementChild?.classList.add('free');
+            }
+        });
     }
-    showModal(<BoxDetail selectedBoxId={selectedBoxId} rentId={selectedRentId} />);
-  };
 
-  render() {
-    const { stock, user } = this.props;
+
+    const handleEventModal = (e: any): any => {
+        
+        const parent = findAncestor(e.target, '.storage');
+        const selectedBoxId = parent.id;
+        console.log('TARGET', parent, selectedBoxId);
+        let selectedRentId = '';
+
+        boxesGroup?.find((singleBox: BoxListItem): void => {
+            if (singleBox.number === selectedBoxId && singleBox.status !== RentStatus.free) {
+                selectedRentId = singleBox.rentId;
+            }
+        });
+
+        if (selectedRentId !== '' && isAdmin(user.role)) {
+            dispatch(boxes.fetchSingleBoxDetails(selectedRentId))
+        }
+        dispatch(modal.showModal(<BoxDetail selectedBoxId={selectedBoxId} rentId={selectedRentId} />));
+    };
+
+    const selectedStock = stockList.find(stock => stock.id === stockId);
+
     return (
-      <div className="user-map-wrapper" ref={this.element}>
-        <PageHeader title='application.storagesPlan' />
-        {(isAdmin(user.role) || isWorker(user.role)) && <MapLegend />}
-        {stock?.id ? (
-          <>
-            <SimpleStockMap />
-          </>
-        ) : (
-          <Spinner />
-        )}
-      </div>
+        <div className="user-map-wrapper" ref={element}>
+            <PageHeader title='application.storagesPlan' />
+            {(isAdmin(user.role) || isWorker(user.role)) && <MapLegend />}
+            {selectedStock?.id ? (
+                <>
+                    <SimpleStockMap map={selectedStock.map} />
+                </>
+            ) : (
+                <Spinner />
+            )}
+        </div>
     );
-  }
 }
-const mapStateToProps = (state: ApplicationState) => ({
-  boxesGroup: state.boxes.boxesGroup,
-  user: state.user.details,
-  stock: state.stock.list[0],
-});
 
-const mapDispatchToProps = (dispatch: any) =>
-  bindActionCreators(
-    {
-      ...modal,
-      ...boxes,
-      ...stock,
-    },
-    dispatch,
-  );
-
-export default connect(mapStateToProps, mapDispatchToProps)(BoxMapManagement);
+export default BoxMapManagement

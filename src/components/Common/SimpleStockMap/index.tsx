@@ -18,10 +18,14 @@ interface State {
   mapScale: number;
 }
 
-class SimpleStockMap extends React.Component<{}, State> {
+interface Props {
+    map: string;
+}
+
+class SimpleStockMap extends React.Component<Props, State> {
   private element: React.RefObject<HTMLDivElement>;
 
-  constructor(props: {}) {
+  constructor(props: Props) {
     super(props);
     this.element = React.createRef();
     this.state = {
@@ -37,7 +41,7 @@ class SimpleStockMap extends React.Component<{}, State> {
   private mapScaleUpHandle = (e: any) => {
     e.stopPropagation();
     const { mapScale } = this.state;
-    if (mapScale < 200) {
+    if (mapScale < 300) {
       this.setState({
         mapScale: mapScale + 10,
       });
@@ -103,6 +107,8 @@ class SimpleStockMap extends React.Component<{}, State> {
 
   render() {
     const { mapScale, isMouseDown } = this.state;
+    const { map } = this.props;
+    const base64data = btoa(unescape(encodeURIComponent(map)));
     return (
       <div className={`map-wrapper scale-${mapScale} ${isMouseDown ? 'grab' : ''}`}>
         <div className="map-scale">
@@ -126,7 +132,9 @@ class SimpleStockMap extends React.Component<{}, State> {
           onMouseMove={this.handleContainerMove}
           onMouseUp={this.handleContainerUp}
         >
-          <ReactStockMap id="svg-map" />
+            <div id="svg-map" dangerouslySetInnerHTML={{__html: map}} />
+          {/* <ReactStockMap id="svg-map" /> */}
+          {/* <img id="svg-map" src={`data:image/svg+xml;base64,${base64data}`} /> */}
         </div>
       </div>
     );
