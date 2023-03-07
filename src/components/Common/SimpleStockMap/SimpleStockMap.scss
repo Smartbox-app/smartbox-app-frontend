@@ -1,7 +1,7 @@
 @import '../../../config/variables';
 @import '../../../config/mixins';
 
-@for $i from 1 through 20 {
+@for $i from 1 through 30 {
   .scale-#{$i * 10} {
     svg {
       transform: scale($i * 0.1);
@@ -13,6 +13,10 @@
   .min {
     color: $color-disabled;
   }
+}
+
+#svg-map {
+    text-align: center;
 }
 
 .map-wrapper .map-scale .min {

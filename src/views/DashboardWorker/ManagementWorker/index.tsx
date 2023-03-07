@@ -7,7 +7,6 @@ import { Section } from '../../../components/Layout';
 import { ApplicationState } from '../../../reducers';
 import UserService from '../../../services/user-service';
 import { BoxMapManagement } from '../../DashboardCommon';
-import StockSelect from '../../DashboardAdmin/Management/StockSelect';
 import Gate from '../../DashboardCommon/SingleRentDetail/Gate';
 
 interface Props {
@@ -16,7 +15,6 @@ interface Props {
 
 const Management = ({ user }: Props) => (
   <Section full>
-    <StockSelect />
     <Tabs
       tabs={[
         {

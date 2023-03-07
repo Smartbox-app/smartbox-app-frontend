@@ -14,10 +14,11 @@ import WorkersManagement from './WorkersManagement';
 import UsersManagement from './UsersManagement';
 
 import StockDiscount from './StockDiscount';
-import StockSelect from './StockSelect';
 import InvitesSent from './InvitesSent';
 import SMS from './SMS';
 import Settings from './Settings';
+import { Stocks } from '../Stocks';
+import { MapManagement } from './Map';
 
 interface Props {
   user: UserRes;
@@ -25,7 +26,6 @@ interface Props {
 
 const Management = ({ user }: Props) => (
   <Section full>
-    <StockSelect />
     <Tabs
       tabs={[
         {
@@ -87,7 +87,7 @@ const Management = ({ user }: Props) => (
       />
       <Route path={`/${UserService.getSlugByRole(user.role)}/management/workers`} component={WorkersManagement} />
       <Route path={`/${UserService.getSlugByRole(user.role)}/management/users`} component={UsersManagement} />
-      <Route path={`/${UserService.getSlugByRole(user.role)}/management/map`} component={BoxMapManagement} />
+      <Route path={`/${UserService.getSlugByRole(user.role)}/management/map`} component={MapManagement} />
       <Route path={`/${UserService.getSlugByRole(user.role)}/management/invitations`} component={InvitesSent} />
       <Route path={`/${UserService.getSlugByRole(user.role)}/management/stock-discount`} component={StockDiscount} />
       <Route path={`/${UserService.getSlugByRole(user.role)}/management/gate`} component={Gate} />
