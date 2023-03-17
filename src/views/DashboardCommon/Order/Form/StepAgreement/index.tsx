@@ -32,7 +32,7 @@ interface Props extends RouteComponentProps<RouteProps> {
   user: UserRes;
   isAgreementAccepted: boolean;
   isResignationMarked: boolean;
-  stock: StockList;
+  stockId: string;
   paymentType: PaymentType;
   sentExtendRentRequest: (rentId: string, data: ExtendRentalReq, role: UserRole) => void;
   sentRentBoxRequest: (data: RentBoxReq, nextStep: string, role: UserRole) => void;
@@ -45,14 +45,14 @@ const StepSummary = ({
   isResignationMarked,
   sentRentBoxRequest,
   countedPrice,
-  stock,
+  stockId,
   match,
   paymentType,
   sentExtendRentRequest,
 }: Props): any => {
   useEffect(() => {
-    if (formData.size.length === 0) {
-      history.push(`/${UserService.getSlugByRole(user.role)}/order/step/size`);
+    if (!formData.size) {
+      history.push(`/${UserService.getSlugByRole(user.role)}/order/step/stock`);
     }
   }, []);
 
@@ -87,7 +87,7 @@ const StepSummary = ({
     const dataCollectionRent: RentBoxReq = {
       ...commonCollection,
       startAt: formData.dateStart,
-      stockId: stock.id,
+      stockId: stockId,
       size: Number(formData.size),
       type: paymentType,
     };
@@ -141,7 +141,7 @@ const mapStateToProps = (state: ApplicationState) => ({
   user: state.user.details,
   isAgreementAccepted: state.order.isAgreementAccepted,
   isResignationMarked: state.order.isResignationMarked,
-  stock: state.stock.list[0],
+  stockId: state.order.formData.stock,
   rentId: state.rent.singleRent.id,
   selectedPaymentMethodDetailId: state.order.selectedPaymentMethodDetail.id,
   paymentType: state.order.selectedPayment,

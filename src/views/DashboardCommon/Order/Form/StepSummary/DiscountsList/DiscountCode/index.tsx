@@ -9,10 +9,11 @@ import { modal, notifications, order } from '../../../../../../../actions';
 import FormHeader from '../../../../../../../components/Layout/FormHeader';
 import ApiService from '../../../../../../../services/api-service';
 import { formOnTranslateString } from '../../../../../../../utils/trans-form';
+import { FormType } from '../../../../../../../types/order-form';
 
 interface Props {
   hideModal: () => void;
-  updateFormData: (data: any) => void;
+  updateFormData: (data: Partial<FormType>) => void;
   successNotification: (text: string) => void;
 }
 

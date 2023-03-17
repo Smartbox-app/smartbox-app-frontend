@@ -18,7 +18,7 @@ const ButtonForNew = ({ user }: Props) => (
       text='application.newStock'
       outline
       icon="plus.svg"
-      to={`/${UserService.getSlugByRole(user.role)}/order/step/size`}
+      to={`/${UserService.getSlugByRole(user.role)}/order/step/stock`}
     />
   </div>
 );

@@ -2,10 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { MyRentList, RentStatus, UserRes } from 'smartbox-types';
+import { FormType } from '../../../../types/order-form';
 import { modal, order, singleRent, notifications } from '../../../../actions';
-import { clearOrder } from '../../../../actions/order';
 import { history } from '../../../../App';
-import { Button, ConfirmModal } from '../../../../components/Common';
+import { Button } from '../../../../components/Common';
 import { ButtonsContainer } from '../../../../components/Layout';
 import { ApplicationState } from '../../../../reducers';
 import UserService from '../../../../services/user-service';
@@ -18,7 +18,7 @@ interface Props {
   rent: MyRentList;
   showModal: (content: React.ReactNode) => void;
   endMyRent: (rentId: string) => void;
-  updateFormData: (data: any) => void;
+  updateFormData: (data: Partial<FormType>) => void;
   successNotification: (text: string) => void;
   getMyRentList: () => void;
   toggleShowUserStockMap: () => void;
@@ -27,20 +27,17 @@ interface Props {
 
 const Action = ({
   showModal,
-  endMyRent,
   rentId,
   updateFormData,
   rent,
   user,
   clearOrder,
   showUserStockMap,
-  getMyRentList,
   toggleShowUserStockMap,
-  successNotification,
 }: Props) => {
   const handleExtendingOrderData = (rentId: string) => {
     clearOrder();
-    updateFormData({ size: rent.size });
+    updateFormData({ size: rent.size.toString(), stock: rent.stockId });
     history.push(`/${UserService.getSlugByRole(user.role)}/order/step/duration/${rentId}`);
   };
 

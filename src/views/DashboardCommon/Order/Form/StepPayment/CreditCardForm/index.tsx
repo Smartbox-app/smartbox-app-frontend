@@ -30,7 +30,7 @@ interface Props extends RouteComponentProps<RouteProps> {
 const CreditCardForm = ({ func, user, sentExecutePaymentRequest, paymentId, match, getCardForm, loading }: Props) => {
   const [autoPayment, setAutoPayment] = useState(false);
   useEffect(() => {
-    paymentId ? getCardForm(paymentId) : history.push(`/${UserService.getSlugByRole(user.role)}/order/step/size`);
+    paymentId ? getCardForm(paymentId) : history.push(`/${UserService.getSlugByRole(user.role)}/order/step/stock`);
   }, []);
 
   useEffect(() => {

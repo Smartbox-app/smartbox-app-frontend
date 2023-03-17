@@ -17,22 +17,23 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import './Carousel.scss';
 import NoPhoneModal from './NoPhoneModal';
+import { FormType } from '../../../types/order-form';
 
 interface Props {
-  imagesList: number[];
+  imagesList: (3 | 6 | 9 | 12)[];
   userRole: UserRole;
   user: UserRes;
-  updateFormData: (data: any) => void;
+  updateFormData: (data: Partial<FormType>) => void;
   showModal: (content: React.ReactNode) => void;
   hideModal: () => void;
 }
 
 class Carousel extends Component<Props> {
-  private dataToDisplay = (listToPrint: any) => {
+  private dataToDisplay = (listToPrint: (3 | 6 | 9 | 12)[]) => {
     const { pricing } = usePricing();
-    const { updateFormData, userRole, user, showModal, hideModal } = this.props;
+    const { updateFormData, userRole, user, showModal } = this.props;
 
-    return listToPrint.map((data: '3' | '6' | '9' | '12', key: number) => {
+    return listToPrint.map((data: 3 | 6 | 9 | 12, key: number) => {
       const { weekly, monthly } = pricing[data];
       return (
         <div key={`carousel-${key}`} className="offer-svg-wrapper">
@@ -54,8 +55,8 @@ class Carousel extends Component<Props> {
                 if (!user.phone || user.phone.length < 7) {
                   showModal(<NoPhoneModal />);
                 } else {
-                  updateFormData({ size: `${data}` });
-                  history.push(`/${UserService.getSlugByRole(userRole)}/order/step/size`);
+                  updateFormData({ size: data.toString() });
+                  history.push(`/${UserService.getSlugByRole(userRole)}/order/step/stock`);
                 }
               }}
             />

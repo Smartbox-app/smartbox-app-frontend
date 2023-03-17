@@ -49,6 +49,7 @@ const initialState: RentsStatus = {
     status: RentStatus.free,
     size: 0,
     stockName: '',
+    stockId: '',
     number: '',
     getProps: () => [],
   },

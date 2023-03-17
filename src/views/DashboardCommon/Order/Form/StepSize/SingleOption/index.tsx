@@ -8,7 +8,7 @@ import { Spinner } from '../../../../../../components/Common';
 
 export type SingleOptionType = {
   name: string;
-  value: number;
+  value: string;
   id: string;
   sizeX: number;
   sizeY: number;

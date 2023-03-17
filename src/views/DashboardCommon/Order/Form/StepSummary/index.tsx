@@ -36,7 +36,7 @@ interface Props extends RouteComponentProps<RouteProps> {
   user: UserRes;
   selectedPaymentMethod: any;
   selectedPayment: PaymentType;
-  updateFormData: (data: any) => void;
+  updateFormData: (data: Partial<FormType>) => void;
   fetchMyData: () => void;
   showModal: (content: React.ReactNode) => void;
   successNotification: (text: string) => void;
@@ -59,8 +59,8 @@ const StepSummary = ({
 
   useEffect(() => {
     fetchMyData();
-    if (formData.size.length === 0) {
-      history.push(`/${UserService.getSlugByRole(user.role)}/order/step/size`);
+    if (!formData.size) {
+      history.push(`/${UserService.getSlugByRole(user.role)}/order/step/stock`);
     }
     if (formData.nip) {
       setInvoiceNeeded(true);

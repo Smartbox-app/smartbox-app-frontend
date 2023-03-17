@@ -27,11 +27,12 @@ interface RouteProps {
 interface Props extends RouteComponentProps<RouteProps> {
   history: any;
   formData: FormType;
-  stockDiscount: StockList;
+  stocks: StockList[];
+  stockId: string;
   countedPrice: IPricingResult;
   user: UserRes;
   rent: MyRentList;
-  updateFormData: (data: any) => void;
+  updateFormData: (data: Partial<FormType>) => void;
   clearPaymentDetails: () => void;
 }
 
@@ -43,7 +44,7 @@ const StepDuration = ({
   user,
   match,
   rent,
-  stockDiscount,
+  stocks,
 }: Props) => {
   const setMinDate = (addAmount = 0, end?: boolean) =>
     match.params.rentId
@@ -60,16 +61,17 @@ const StepDuration = ({
 
   useEffect(() => {
     clearPaymentDetails();
-    if (formData.size === '') {
-      history.push(`/${UserService.getSlugByRole(user.role)}/order/step/size`);
+    const discount = stocks.find(stock => stock.id === formData.stock)?.discount;
+    if (formData.size === null) {
+      history.push(`/${UserService.getSlugByRole(user.role)}/order/step/stock`);
     } else if (match.params.rentId) {
       updateFormData({
         durationInDays: formData.durationInDays,
         dateStart: setMinDate(),
         dateEnd: setMinDate(formData.durationInDays),
-        size: rent.size,
+        size: rent.size.toString(),
         isFirstRent: firstRentChecker(user),
-        discount: stockDiscount.discount,
+        discount: discount,
       });
     } else {
       updateFormData({
@@ -77,7 +79,7 @@ const StepDuration = ({
         dateStart: setMinDate(),
         dateEnd: setMinDate(formData.durationInDays),
         isFirstRent: firstRentChecker(user),
-        discount: stockDiscount.discount,
+        discount: discount,
       });
     }
   }, []);
@@ -90,7 +92,7 @@ const StepDuration = ({
   };
 
   const onBack = () => {
-    history.push(`/${UserService.getSlugByRole(user.role)}/order/step/size/${match.params.rentId || ''}`);
+    history.push(`/${UserService.getSlugByRole(user.role)}/order/step/stock/${match.params.rentId || ''}`);
   };
 
   return (
@@ -146,7 +148,7 @@ const mapStateToProps = (state: ApplicationState) => ({
   countedPrice: state.order.countedPrice,
   user: state.user.details,
   rent: state.rent.singleRent,
-  stockDiscount: state.stock.list[0],
+  stocks: state.stock.list,
 });
 
 const mapDispatchToProps = (dispatch: any) =>

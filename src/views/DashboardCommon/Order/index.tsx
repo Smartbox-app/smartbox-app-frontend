@@ -6,7 +6,6 @@ import { ProgressIndicator } from '../../../components/Common';
 
 import Form from './Form/Index';
 import { useDispatch } from 'react-redux';
-import { order } from '../../../actions';
 import { getStockDiscountsList } from '../../../actions/stock';
 
 interface RouteProps {
@@ -25,16 +24,18 @@ const Order = ({ match }: Props) => {
 
   const getStepByName = (stepName: string) => {
     switch (stepName) {
-      case 'size':
+      case 'stock':
         return 1;
-      case 'duration':
+      case 'size':
         return 2;
-      case 'summary':
+      case 'duration':
         return 3;
-      case 'agreement':
+      case 'summary':
         return 4;
-      case 'payment':
+      case 'agreement':
         return 5;
+      case 'payment':
+        return 6;
       default:
         return 1;
     }
@@ -48,22 +49,26 @@ const Order = ({ match }: Props) => {
         stepList={[
           {
             value: 1,
-            desc: 'application.orderStepSize',
+            desc: 'application.orderStepStock',
           },
           {
             value: 2,
-            desc: 'application.orderStepDate',
+            desc: 'application.orderStepSize',
           },
           {
             value: 3,
-            desc: 'application.orderStepSummary',
+            desc: 'application.orderStepDate',
           },
           {
             value: 4,
-            desc: 'application.orderStepAgreement',
+            desc: 'application.orderStepSummary',
           },
           {
             value: 5,
+            desc: 'application.orderStepAgreement',
+          },
+          {
+            value: 6,
             desc: 'application.orderStepPayment',
           },
         ]}

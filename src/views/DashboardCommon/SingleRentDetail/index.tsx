@@ -3,7 +3,7 @@ import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { MyRentList } from 'smartbox-types';
-import { Alert, Spinner } from '../../../components/Common';
+import { Spinner } from '../../../components/Common';
 import UserStockMap from '../../../components/Common/UserStockMap';
 import { Section, SectionHeader } from '../../../components/Layout';
 
@@ -47,7 +47,7 @@ const SingleRentDetail = ({ loading, showUserStockMap, match, getSingleRent, sin
           <Gate />
         </>
       ) : (
-        <UserStockMap boxNumberToMarkWay={Number(singleRent.number)} />
+        <UserStockMap boxNumberToMarkWay={Number(singleRent.number)} stockId={singleRent.stockId} />
       )}
     </Section>
   );

@@ -19,7 +19,6 @@ const StockSelect = ({ onChange }: Props) => {
     }, [value])
 
     useEffect(() => {
-        console.log('list', list);
         if (list && list[0])
             setValue(list[0].id)
     }, [list])

@@ -15,8 +15,9 @@ import UserService from '../services/user-service';
 import BlikWaitingModal from '../views/DashboardCommon/Order/Form/StepPayment/BlikForm/BlikWaitingModal';
 import { modal, notifications, singleRent, user, paymentStatus } from './index';
 import { saveFrom } from './payment-status';
+import { FormType } from 'src/types/order-form';
 
-export const updateFormData = (data: any) => ({ type: 'FORM_STEP_SUCCESS', payload: data });
+export const updateFormData = (data: Partial<FormType>) => ({ type: 'FORM_STEP_SUCCESS', payload: data });
 
 export const resetDiscountCode = () => ({ type: 'RESET_DISCOUNT_CODE' });
 

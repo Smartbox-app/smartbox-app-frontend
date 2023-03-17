@@ -6,6 +6,7 @@ import { UserRes } from 'smartbox-types';
 import UserService from '../../../../services/user-service';
 import { ApplicationState } from '../../../../reducers';
 
+import StepStock from './StepStock';
 import StepSize from './StepSize';
 import StepDuration from './StepDuration';
 import StepPayment from './StepPayment';
@@ -19,6 +20,7 @@ interface Props {
 const Form = ({ user }: Props) => {
   return (
     <Switch>
+      <Route path={`/${UserService.getSlugByRole(user.role)}/order/step/stock/:rentId?`} component={StepStock} />
       <Route path={`/${UserService.getSlugByRole(user.role)}/order/step/size/:rentId?`} component={StepSize} />
       <Route path={`/${UserService.getSlugByRole(user.role)}/order/step/duration/:rentId?`} component={StepDuration} />
       <Route path={`/${UserService.getSlugByRole(user.role)}/order/step/summary/:rentId?`} component={StepSummary} />

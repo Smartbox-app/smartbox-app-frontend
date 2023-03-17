@@ -41,8 +41,6 @@ const BoxMapManagement = () => {
         if (isAdmin(user.role) || isWorker(user.role)) {
             const catchElements = element.current?.querySelectorAll('#kontenery .storage');
 
-            console.log('FOUND', catchElements, element.current);
-
             if (!catchElements) return;
 
             catchElements.forEach((singleElement: Element) => {
@@ -148,7 +146,6 @@ const BoxMapManagement = () => {
         
         const parent = findAncestor(e.target, '.storage');
         const selectedBoxId = parent.id;
-        console.log('TARGET', parent, selectedBoxId);
         let selectedRentId = '';
 
         boxesGroup?.find((singleBox: BoxListItem): void => {

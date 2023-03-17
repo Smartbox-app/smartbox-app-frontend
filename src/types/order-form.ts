@@ -1,7 +1,10 @@
+import { StockList } from "../../../smartbox-back/types/stock";
+
 export interface FormType {
   durationInDays: number;
   discount: number;
-  size: string;
+  stock: string;
+  size: string | null;
   isFirstRent: boolean;
   dateStart: Date;
   dateEnd: Date;

@@ -35,7 +35,7 @@ export type OrderState = {
 
 interface FormStepSuccess {
   type: 'FORM_STEP_SUCCESS';
-  payload: any;
+  payload: Partial<FormType>;
 }
 
 interface SentRentBoxRequestSuccess {
@@ -125,7 +125,8 @@ const initialState: OrderState = {
   formData: {
     durationInDays: 7,
     discount: 0,
-    size: '',
+    stock: '',
+    size: null,
     isFirstRent: true,
     dateStart: new Date(),
     dateEnd: addDays(new Date(), 7),

@@ -38,8 +38,8 @@ const formToRender = (selectedPayment) => {
 
 const StepPayment = ({ formData, selectedPayment, user, resetPaymentForm }: Props) => {
   useEffect(() => {
-    if (formData.size.length === 0) {
-      history.push(`/${UserService.getSlugByRole(user.role)}/order/step/size`);
+    if (!formData.size) {
+      history.push(`/${UserService.getSlugByRole(user.role)}/order/step/stock`);
     }
 
     return () => {

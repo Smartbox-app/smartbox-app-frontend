@@ -10,6 +10,7 @@ import { StockList } from '../../../../../smartbox-back/types/stock';
 
 interface Props {
     boxNumberToMarkWay: number;
+    stockId: string;
     stockList: StockList[];
 }
 
@@ -67,13 +68,14 @@ class UserStockMap extends React.Component<Props> {
     }
 
     render() {
-        const { boxNumberToMarkWay, stockList } = this.props;
+        const { boxNumberToMarkWay, stockList, stockId } = this.props;
+        const map = stockList.find(stock => stock.id === stockId)?.map;
         return (
             <div ref={this.element}>
                 <p className="user-box">
                     {__('application.yourStoreNumber')} <strong>{boxNumberToMarkWay}</strong>
                 </p>
-                <SimpleStockMap map={stockList[0].map} />
+                <SimpleStockMap map={map || ''} />
             </div>
         );
     }
