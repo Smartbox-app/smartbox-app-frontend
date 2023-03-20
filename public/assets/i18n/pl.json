@@ -7,6 +7,7 @@
             "how_it_works": "Jak to działa?",
             "management": "Zarządzanie",
             "stocks": "Place",
+            "gates": "Bramy",
             "account": "Konto",
             "logout": "Wyloguj",
             "home": "Home",
@@ -298,7 +299,12 @@
             "editStock": "Edytuj plac",
             "stockManage": "Zarządzaj placem",
             "confirmStockDelete": "Czy na pewno chcesz usunąć plac? Usunięcie nie będzie możliwe jeżeli na placu zostały przeprowadzone jakieś operacje.",
-            "stockDeleted": "Usunięto plac"
+            "stockDeleted": "Usunięto plac",
+            "gatesList": "Lista bram",
+            "addGate": "Dodaj sterownik",
+            "editGate": "Edytuj sterownik",
+            "confirmGateDelete": "Czy na pewno chcesz usunąć sterownik? Bez sterownika otwarcie bramy nie będzie możliwe.",
+            "gateDeleted": "Usunięto sterownik"
         },
         "settings": {
             "tax": "Stawka VAT",
@@ -339,7 +345,9 @@
             "gateRemoteOpening": "Otwieram bramę zdalnie",
             "gateRemoteOpeningError": "Błąd podczas otwierania bramy zdalnie",
             "stockAddedCorrectly": "Dodano nowy plac",
-            "stockUpdatedCorrectly": "Zaktualizowano plac"
+            "stockUpdatedCorrectly": "Zaktualizowano plac",
+            "gateAddedCorrectly": "Dodano nową bramę",
+            "gateUpdatedCorrectly": "Zaktualizowano bramę"
         }
     }
 }

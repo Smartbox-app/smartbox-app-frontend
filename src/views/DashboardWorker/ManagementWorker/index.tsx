@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Switch, Route, Redirect } from 'react-router';
 import { UserRes } from 'smartbox-types';
+import { GateManagement } from '../../../views/DashboardCommon/GateManagement';
 import { Tabs } from '../../../components/Common';
 import { Section } from '../../../components/Layout';
 import { ApplicationState } from '../../../reducers';
@@ -39,7 +40,7 @@ const Management = ({ user }: Props) => (
         render={() => <Redirect to={`/${UserService.getSlugByRole(user.role)}/management/map`} />}
       />
       <Route path={`/${UserService.getSlugByRole(user.role)}/management/map`} component={BoxMapManagement} />
-      <Route path={`/${UserService.getSlugByRole(user.role)}/management/gate`} component={Gate} />
+      <Route path={`/${UserService.getSlugByRole(user.role)}/management/gate`} component={GateManagement} />
     </Switch>
   </Section>
 );

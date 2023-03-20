@@ -44,7 +44,7 @@ const SingleRentDetail = ({ loading, showUserStockMap, match, getSingleRent, sin
       {!showUserStockMap ? (
         <>
           <Details singleRent={singleRent} />
-          <Gate />
+          <Gate stockId={singleRent.stockId} />
         </>
       ) : (
         <UserStockMap boxNumberToMarkWay={Number(singleRent.number)} stockId={singleRent.stockId} />

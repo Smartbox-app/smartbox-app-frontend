@@ -12,6 +12,7 @@ import Profile from '../DashboardCommon/Profile';
 import SingleRentDetail from '../DashboardCommon/SingleRentDetail';
 import GateStatus from './GateStatus';
 import { Stocks } from './Stocks';
+import { Gates } from './Gates';
 
 const DashboardAdmin = () => {
   const menuItems: MenuItemType[] = [
@@ -24,6 +25,11 @@ const DashboardAdmin = () => {
       icon: 'dashboard.svg',
       text: 'application.stocks',
       address: '/admin/stocks',
+    },
+    {
+      icon: 'dashboard.svg',
+      text: 'application.gates',
+      address: '/admin/gates',
     },
     {
       icon: 'account.svg',
@@ -44,6 +50,7 @@ const DashboardAdmin = () => {
           <Route path="/admin/profile" component={Profile} />
           <Route path="/admin/invoice/" component={Invoice} />
           <Route path={`/admin/stocks`} component={Stocks} />
+          <Route path={`/admin/gates`} component={Gates} />
           <Route exact path="/admin/single-rent/:orderId" component={SingleRentDetail} />
         </Switch>
       </Main>

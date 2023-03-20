@@ -40,6 +40,9 @@ const StepSize = ({
     getStockList
 }: Props) => {
     useEffect(() => {
+        if(!formData.size) {
+            history.push(`/${UserService.getSlugByRole(user.role)}/main`);
+        }
         clearOrderAgreement();
     }, []);
 

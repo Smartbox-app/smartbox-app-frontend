@@ -9,7 +9,6 @@ import {__} from "../../../helpers/i18n";
 
 const GateStatus = () => {
   const [status, setStatus] = useState<GatesStatusForAdminRes>();
-  const [loading, setLoading] = useState<boolean>();
 
   const getStatus = async () => {
     await ApiService.callFetch('GET', 'gate/admin-status', (newStatus: GatesStatusForAdminRes) => {

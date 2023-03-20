@@ -4,14 +4,14 @@ import { successNotification } from './notifications';
 
 export const gateOpenStartAnimation = (open:boolean = true) => ({ type: 'GATE_OPEN_START_ANIMATION', payload: open });
 
-export const askGateToOpen = (geo: Coordinate) => async (disaptch: any) => {
+export const askGateToOpen = (geo: Coordinate) => async (dispatch: any) => {
   await ApiService.patch(
-    disaptch,
+    dispatch,
     'ASK_GATE_TO_OPEN_SUCCESS',
     'ASK_GATE_TO_OPEN_FAILED',
     () => {
-      disaptch(successNotification("notification.gateOpening"));
-      disaptch(gateOpenStartAnimation());
+      dispatch(successNotification("notification.gateOpening"));
+      dispatch(gateOpenStartAnimation());
     },
     null,
     `stock/open-gate/${geo.lat}/${geo.lon}`,
@@ -20,17 +20,17 @@ export const askGateToOpen = (geo: Coordinate) => async (disaptch: any) => {
   );
 };
 
-export const askGateToOpenStuff = (stockId: string) => async (disaptch: any) => {
+export const askGateToOpenStuff = (stockId: string) => async (dispatch: any) => {
   await ApiService.patch(
-    disaptch,
+    dispatch,
     'ASK_GATE_TO_OPEN_SUCCESS',
     'ASK_GATE_TO_OPEN_FAILED',
     () => {
-      disaptch(successNotification("notification.gateRemoteOpening"));
-      disaptch(gateOpenStartAnimation());
+      dispatch(successNotification("notification.gateRemoteOpening"));
+      dispatch(gateOpenStartAnimation());
     },
     () => {
-      disaptch(successNotification("notification.gateRemoteOpeningError"));
+      dispatch(successNotification("notification.gateRemoteOpeningError"));
     },
     `stock/open-gate-by-staff/${stockId}`,
     'LOADING',

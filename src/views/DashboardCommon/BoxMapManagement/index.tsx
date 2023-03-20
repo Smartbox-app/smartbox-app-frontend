@@ -26,6 +26,7 @@ const BoxMapManagement = () => {
     const stockList = useSelector((state: ApplicationState) => state.stock.list);
     const user = useSelector((state: ApplicationState) => state.user.details);
     const { boxesGroup } = useSelector((state: ApplicationState) => state.boxes);
+    
 
     const statusColorMarker = () => {
         const catchElements = element.current?.querySelectorAll('#kontenery .storage');
@@ -53,13 +54,13 @@ const BoxMapManagement = () => {
         if (isAdmin(user.role) || isWorker(user.role)) {
             dispatch(stock.getStockList());
         }
+        console.log('BOXESGROUP', boxesGroup);
     }, []);
 
     useEffect(() => {
-        if(!element || !element.current) return;
-        eventListenerAdding();
 
-        if (stock && (isAdmin(user.role) || isWorker(user.role))) {
+
+        if (stockId && (isAdmin(user.role) || isWorker(user.role))) {
             dispatch(boxes.fetchBoxStatuses(stockId));
         }
 
@@ -72,7 +73,7 @@ const BoxMapManagement = () => {
     }, [stockId, element, element.current])
 
     useEffect(() => {
-        if (stock && (isAdmin(user.role) || isWorker(user.role))) {
+        if (stockId && (isAdmin(user.role) || isWorker(user.role))) {
             if (boxesGroup === null) {
                 dispatch(boxes.fetchBoxStatuses(stockId));
             }
@@ -81,6 +82,10 @@ const BoxMapManagement = () => {
         if (stock && (isAdmin(user.role) || isWorker(user.role))) {
             statusColorMarker();
         }
+        console.log('BOXES GROUP', boxesGroup);
+
+        if(!element || !element.current) return;
+        eventListenerAdding();
     }, [boxesGroup])
 
 
@@ -153,6 +158,8 @@ const BoxMapManagement = () => {
                 selectedRentId = singleBox.rentId;
             }
         });
+
+        console.log('HANDLEEVENT', boxesGroup, selectedBoxId, selectedRentId);
 
         if (selectedRentId !== '' && isAdmin(user.role)) {
             dispatch(boxes.fetchSingleBoxDetails(selectedRentId))

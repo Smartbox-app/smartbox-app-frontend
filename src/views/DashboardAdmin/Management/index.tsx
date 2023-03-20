@@ -7,9 +7,6 @@ import { Section } from '../../../components/Layout';
 import { ApplicationState } from '../../../reducers';
 import UserService from '../../../services/user-service';
 
-import { BoxMapManagement } from '../../DashboardCommon';
-import Gate from '../../DashboardCommon/SingleRentDetail/Gate';
-
 import WorkersManagement from './WorkersManagement';
 import UsersManagement from './UsersManagement';
 
@@ -17,8 +14,8 @@ import StockDiscount from './StockDiscount';
 import InvitesSent from './InvitesSent';
 import SMS from './SMS';
 import Settings from './Settings';
-import { Stocks } from '../Stocks';
 import { MapManagement } from './Map';
+import { GateManagement } from '../../../views/DashboardCommon/GateManagement';
 
 interface Props {
   user: UserRes;
@@ -90,7 +87,7 @@ const Management = ({ user }: Props) => (
       <Route path={`/${UserService.getSlugByRole(user.role)}/management/map`} component={MapManagement} />
       <Route path={`/${UserService.getSlugByRole(user.role)}/management/invitations`} component={InvitesSent} />
       <Route path={`/${UserService.getSlugByRole(user.role)}/management/stock-discount`} component={StockDiscount} />
-      <Route path={`/${UserService.getSlugByRole(user.role)}/management/gate`} component={Gate} />
+      <Route path={`/${UserService.getSlugByRole(user.role)}/management/gate`} component={GateManagement} />
       <Route path={`/${UserService.getSlugByRole(user.role)}/management/sms`} component={SMS} />
       <Route path={`/${UserService.getSlugByRole(user.role)}/management/settings`} component={Settings} />
     </Switch>
