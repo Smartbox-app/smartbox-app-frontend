@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { ApplicationState } from 'src/reducers';
+import { ApplicationState } from '../../../../reducers';
 import { Input } from '../../../../components/Common';
 import { __ } from "../../../../helpers/i18n";
 import './StockSelect.scss';

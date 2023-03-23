@@ -35,6 +35,7 @@ const Edit = () => {
             <FormContainer>
                 <ItfApiForm
                     formId="editGate"
+                    schemaCacheEnabled={false}
                     schemaMayBeDynamic={true}
                     loadingInfo={<Spinner transparent />}
                     schemaFetcher={() => ApiService.loadForm(fetchUrl)}

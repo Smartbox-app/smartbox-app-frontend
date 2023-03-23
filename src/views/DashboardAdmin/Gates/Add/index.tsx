@@ -33,6 +33,7 @@ const Add = () => {
             <FormContainer>
                 <ItfApiForm
                     formId="addGate"
+                    schemaCacheEnabled={false}
                     schemaMayBeDynamic={true}
                     loadingInfo={<Spinner transparent />}
                     schemaFetcher={() => ApiService.loadForm(fetchUrl)}

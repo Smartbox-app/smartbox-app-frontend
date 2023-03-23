@@ -15,7 +15,7 @@ import UserService from '../services/user-service';
 import BlikWaitingModal from '../views/DashboardCommon/Order/Form/StepPayment/BlikForm/BlikWaitingModal';
 import { modal, notifications, singleRent, user, paymentStatus } from './index';
 import { saveFrom } from './payment-status';
-import { FormType } from 'src/types/order-form';
+import { FormType } from '../types/order-form';
 
 export const updateFormData = (data: Partial<FormType>) => ({ type: 'FORM_STEP_SUCCESS', payload: data });
 

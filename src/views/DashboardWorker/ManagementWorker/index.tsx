@@ -9,6 +9,7 @@ import { ApplicationState } from '../../../reducers';
 import UserService from '../../../services/user-service';
 import { BoxMapManagement } from '../../DashboardCommon';
 import Gate from '../../DashboardCommon/SingleRentDetail/Gate';
+import { MapManagement } from './Map';
 
 interface Props {
   user: UserRes;
@@ -39,7 +40,7 @@ const Management = ({ user }: Props) => (
         path={`/${UserService.getSlugByRole(user.role)}/management`}
         render={() => <Redirect to={`/${UserService.getSlugByRole(user.role)}/management/map`} />}
       />
-      <Route path={`/${UserService.getSlugByRole(user.role)}/management/map`} component={BoxMapManagement} />
+      <Route path={`/${UserService.getSlugByRole(user.role)}/management/map`} component={MapManagement} />
       <Route path={`/${UserService.getSlugByRole(user.role)}/management/gate`} component={GateManagement} />
     </Switch>
   </Section>

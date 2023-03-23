@@ -35,6 +35,7 @@ const Add = () => {
             <FormContainer>
                 <ItfApiForm
                     formId="addStock"
+                    schemaCacheEnabled={false}
                     schemaMayBeDynamic={true}
                     loadingInfo={<Spinner transparent />}
                     schemaFetcher={() => ApiService.loadForm(fetchUrl)}

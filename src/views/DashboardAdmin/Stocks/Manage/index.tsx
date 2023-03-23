@@ -35,7 +35,8 @@ const Manage = () => {
             <FormContainer>
                 <ItfApiForm
                     formId="manageStock"
-                    schemaMayBeDynamic={false}
+                    schemaMayBeDynamic={true}
+                    schemaCacheEnabled={false}
                     loadingInfo={<Spinner transparent />}
                     schemaFetcher={() => ApiService.loadForm(fetchUrl)}
                     sendFetcher={(formId: string, values: any) => ApiService.sendForm(sendUrl, values, 'PATCH')}
