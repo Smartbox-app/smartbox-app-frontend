@@ -19,10 +19,11 @@ interface Props {
     selectedBoxId: string;
     rentId: string;
     user: UserRes;
+    stockId: string;
     boxDataCleanUp: () => void;
 }
 
-const BoxDetail = ({ boxDataCleanUp, selectedBoxId, singleBoxDetail, rentId, user }: Props) => {
+const BoxDetail = ({ boxDataCleanUp, selectedBoxId, singleBoxDetail, rentId, user, stockId }: Props) => {
     const [optionDisplayState, optionDisplayToggle] = useState(false);
 
     useEffect(() => {
@@ -82,7 +83,7 @@ const BoxDetail = ({ boxDataCleanUp, selectedBoxId, singleBoxDetail, rentId, use
                     </DescriptionRow>
                 </>
             )}
-            <Edit display selectedBoxId={selectedBoxId} rentId={rentId} singleBoxDetailStatus={singleBoxDetail.status} />
+            <Edit display selectedBoxId={selectedBoxId} rentId={rentId} singleBoxDetailStatus={singleBoxDetail.status} stockId={stockId} />
         </div>
     );
 };

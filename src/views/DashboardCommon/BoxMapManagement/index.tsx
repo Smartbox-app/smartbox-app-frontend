@@ -54,7 +54,6 @@ const BoxMapManagement = () => {
         if (isAdmin(user.role) || isWorker(user.role)) {
             dispatch(stock.getStockList());
         }
-        console.log('BOXESGROUP', boxesGroup);
     }, []);
 
     useEffect(() => {
@@ -82,7 +81,6 @@ const BoxMapManagement = () => {
         if (stock && (isAdmin(user.role) || isWorker(user.role))) {
             statusColorMarker();
         }
-        console.log('BOXES GROUP', boxesGroup);
 
         if(!element || !element.current) return;
         eventListenerAdding();
@@ -159,12 +157,10 @@ const BoxMapManagement = () => {
             }
         });
 
-        console.log('HANDLEEVENT', boxesGroup, selectedBoxId, selectedRentId);
-
         if (selectedRentId !== '' && isAdmin(user.role)) {
             dispatch(boxes.fetchSingleBoxDetails(selectedRentId))
         }
-        dispatch(modal.showModal(<BoxDetail selectedBoxId={selectedBoxId} rentId={selectedRentId} />));
+        dispatch(modal.showModal(<BoxDetail selectedBoxId={selectedBoxId} rentId={selectedRentId} stockId={stockId} />));
     };
 
     const selectedStock = stockList.find(stock => stock.id === stockId);

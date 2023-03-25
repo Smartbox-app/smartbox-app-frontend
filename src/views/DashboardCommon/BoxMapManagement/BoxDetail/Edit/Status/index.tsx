@@ -17,19 +17,22 @@ import { ReactSelectOverride } from '../../../../../../components/Common/ReactSe
 
 interface Props {
   selectedBoxId: string;
-  stock: StockList | undefined;
+  stocks: StockList[];
+  stockId: string;
   hideModal: () => void;
   successNotification: (text: string) => void;
   fetchBoxStatuses: (stockId: string) => void;
   showModal: (content: React.ReactNode) => void;
 }
 
-const Status = ({ selectedBoxId, hideModal, stock, successNotification, fetchBoxStatuses, showModal }: Props) => {
+const Status = ({ selectedBoxId, hideModal, stocks, successNotification, fetchBoxStatuses, stockId, showModal }: Props) => {
   const submitButton = (
     <ButtonsContainer>
       <Button text="application.changeStatus" type="submit" danger />
     </ButtonsContainer>
   );
+
+  const stock = stocks.find(stock => stock.id === stockId);
 
   if(!stock) return null;
 
@@ -92,8 +95,7 @@ const Status = ({ selectedBoxId, hideModal, stock, successNotification, fetchBox
 };
 
 const mapStateToProps = (state: ApplicationState) => ({
-  stockId: state.rent.stockId,
-  stock: state.stock.list.find(stock => stock.id === state.rent.stockId)
+  stocks: state.stock.list
 });
 
 const mapDispatchToProps = (dispatch: any) =>

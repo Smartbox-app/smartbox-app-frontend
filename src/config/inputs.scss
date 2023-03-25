@@ -31,12 +31,11 @@
   }
 
   &::placeholder {
-    color: $color-disabled;
+    color: rgba($color-text, 0.25);
   }
 
   &:read-only {
-    background-color: lighten($color-background, 20%);
-    color: rgba($color-text, 0.5);
+    background-color: darken($color-background, 20%);
   }
 }
 
