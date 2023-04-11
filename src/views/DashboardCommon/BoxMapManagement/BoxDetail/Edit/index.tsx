@@ -24,7 +24,7 @@ const Edit = ({ selectedBoxId, user, rentId, singleBoxDetailStatus, display, sto
     <div className={`edit-wrapper ${display && 'show-me'}`}>
         <Alert text='application.changesIrreversible' type="primary" />
         {isAdmin(user.role) && <Status selectedBoxId={selectedBoxId} stockId={stockId} />}
-        {isAdmin(user.role) && rentId !== '' && singleBoxDetailStatus === RentStatus.rented && <Position rentId={rentId} />}
+        {isAdmin(user.role) && rentId !== '' && singleBoxDetailStatus === RentStatus.rented && <Position rentId={rentId} stockId={stockId} />}
         {isWorker(user.role) && <WorkerEdit rentId={rentId} selectedBoxId={selectedBoxId} />}
     </div>
 );

@@ -3,11 +3,10 @@ import { ItfApiForm } from 'itf_formbuilder_react';
 import { connect } from 'react-redux';
 import ReactCreatableSelect from 'react-select/creatable';
 import { bindActionCreators } from 'redux';
-import { ChangeStatusReq, StockList } from 'smartbox-types';
+import { ChangeStatusReq } from 'smartbox-types';
 import { boxes, modal, notifications } from '../../../../../../actions';
 import { FormContainer, ButtonsContainer } from '../../../../../../components/Layout';
 import { Alert, Button, Spinner } from '../../../../../../components/Common';
-import { ApplicationState } from '../../../../../../reducers';
 import ApiService from '../../../../../../services/api-service';
 import { formOnTranslateString } from '../../../../../../utils/trans-form';
 import { __ } from '../../../../../../helpers/i18n';
@@ -17,14 +16,14 @@ import { ReactSelectOverride } from '../../../../../../components/Common/ReactSe
 
 interface Props {
   rentId: string;
-  stock: StockList;
+  stockId: string;
   hideModal: () => void;
   successNotification: (text: string) => void;
   fetchBoxStatuses: (stockId: string) => void;
   showModal: (content: React.ReactNode) => void;
 }
 
-const Position = ({ rentId, stock, successNotification, fetchBoxStatuses, hideModal, showModal }: Props) => {
+const Position = ({ rentId, stockId, successNotification, fetchBoxStatuses, hideModal, showModal }: Props) => {
   const submitButton = (
     <ButtonsContainer>
       <Button text="application.move" type="submit" danger />
@@ -57,7 +56,7 @@ const Position = ({ rentId, stock, successNotification, fetchBoxStatuses, hideMo
                 'PATCH',
               );
               await successNotification('notification.userMovedSuccess');
-              await fetchBoxStatuses(stock.id);
+              await fetchBoxStatuses(stockId);
             }}
           />
         </ButtonsContainer>
@@ -77,7 +76,7 @@ const Position = ({ rentId, stock, successNotification, fetchBoxStatuses, hideMo
         loadingInfo={<Spinner transparent />}
         onSavedSuccessfully={() => {
           hideModal();
-          fetchBoxStatuses(stock.id);
+          fetchBoxStatuses(stockId);
         }}
         onTranslateString={formOnTranslateString}
         thirdPartyComponents={{ ReactSelect: ReactSelectOverride, ReactCreatableSelect }}
@@ -113,10 +112,6 @@ const Position = ({ rentId, stock, successNotification, fetchBoxStatuses, hideMo
   );
 };
 
-const mapStateToProps = (state: ApplicationState) => ({
-  stock: state.stock.list[0],
-});
-
 const mapDispatchToProps = (dispatch: any) => bindActionCreators({ ...modal, ...boxes, ...notifications }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(Position);
+export default connect(null, mapDispatchToProps)(Position);
