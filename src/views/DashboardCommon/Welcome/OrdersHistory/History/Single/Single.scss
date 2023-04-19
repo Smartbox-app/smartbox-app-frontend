@@ -1,0 +1,23 @@
+@import '../../../../../../config/variables';
+@import '../../../../../../config/mixins';
+
+.line-cell {
+  line-height: 1;
+
+  padding-right: $table-item-spacing/4;
+  font-size: 0.8rem;
+  word-break: normal;
+
+  &.period {
+    flex: 0 0 25%;
+  }
+  &.number {
+    flex: 0 0 20%;
+  }
+  &.size {
+    flex: 0 0 20%;
+  }
+  &.stock {
+    flex: 0 0 35%;
+  }
+}

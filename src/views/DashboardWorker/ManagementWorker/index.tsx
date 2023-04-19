@@ -1,0 +1,53 @@
+import React from 'react';
+import { connect } from 'react-redux';
+import { Switch, Route, Redirect } from 'react-router';
+import { UserRes } from 'smartbox-types';
+import { GateManagement } from '../../../views/DashboardCommon/GateManagement';
+import { Tabs } from '../../../components/Common';
+import { Section } from '../../../components/Layout';
+import { ApplicationState } from '../../../reducers';
+import UserService from '../../../services/user-service';
+import { BoxMapManagement } from '../../DashboardCommon';
+import Gate from '../../DashboardCommon/SingleRentDetail/Gate';
+import { MapManagement } from './Map';
+
+interface Props {
+  user: UserRes;
+}
+
+const Management = ({ user }: Props) => (
+  <Section full>
+    <Tabs
+      tabs={[
+        {
+          className: 'tab',
+          activeClassName: 'active',
+          to: `/${UserService.getSlugByRole(user.role)}/management/map`,
+          text: 'application.boxes',
+        },
+        {
+          className: 'tab',
+          activeClassName: 'active',
+          to: `/${UserService.getSlugByRole(user.role)}/management/gate`,
+          text: 'application.gate',
+        },
+      ]}
+    />
+
+    <Switch>
+      <Route
+        exact
+        path={`/${UserService.getSlugByRole(user.role)}/management`}
+        render={() => <Redirect to={`/${UserService.getSlugByRole(user.role)}/management/map`} />}
+      />
+      <Route path={`/${UserService.getSlugByRole(user.role)}/management/map`} component={MapManagement} />
+      <Route path={`/${UserService.getSlugByRole(user.role)}/management/gate`} component={GateManagement} />
+    </Switch>
+  </Section>
+);
+
+const mapStateToProps = (state: ApplicationState) => ({
+  user: state.user.details,
+});
+
+export default connect(mapStateToProps)(Management);

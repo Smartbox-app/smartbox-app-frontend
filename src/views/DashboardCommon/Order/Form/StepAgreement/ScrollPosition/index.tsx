@@ -7,31 +7,38 @@ import { CheckBox } from '../../../../../../components/Common';
 
 interface Props {
   isResignationMarked: boolean;
+  isAgreementAccepted: boolean;
   formAgreementReaded: () => void;
   formResignationMarked: () => void;
 }
 
 class ScrollPosition extends Component<Props> {
-  componentDidMount() {
-    const el = document.querySelector('.order-agreement-wrapper');
-    el && el.addEventListener('scroll', () => this.onScroll(el));
-  }
+  // private onScroll = (el: any) => {
+  //   if (el.scrollTop > el.children[0].scrollHeight - el.clientHeight) {
+  //     this.props.formAgreementReaded();
+  //   }
+  // };
+  // componentDidMount(): void {
+  //   const el = document.querySelector('.order-agreement-wrapper');
+  //   el && el.addEventListener('scroll', () => this.onScroll(el), false);
+  // }
 
-  private onScroll = (el: any) => {
-    if (el.scrollTop > 1330) {
-      this.props.formAgreementReaded();
-    }
-  };
+  // componentWillUnmount(): void {
+  //   const el = document.querySelector('.order-agreement-wrapper');
+  //   el && el.removeEventListener('scroll', () => this.onScroll(el), false);
+  // }
 
   render() {
-    const { isResignationMarked, formResignationMarked } = this.props;
+    const { isResignationMarked, formResignationMarked, isAgreementAccepted } = this.props;
     return (
       <>
         <CheckBox
           name="resignation"
           checked={isResignationMarked}
+          // hide={!isAgreementAccepted}
+          // disabled={!isAgreementAccepted}
           handleChange={() => formResignationMarked()}
-          label="Rezygnuje z możliwości 14 dniowego wypowiedzenia i zgadza się na uruchomienie usługi."
+          label="application.14daysResign"
         />
       </>
     );
@@ -40,6 +47,7 @@ class ScrollPosition extends Component<Props> {
 
 const mapStateToProps = (state: ApplicationState) => ({
   isResignationMarked: state.order.isResignationMarked,
+  isAgreementAccepted: state.order.isAgreementAccepted,
 });
 
 const mapDispatchToProps = (dispatch: any) => bindActionCreators({ ...order }, dispatch);

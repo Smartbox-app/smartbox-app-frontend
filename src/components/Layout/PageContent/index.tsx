@@ -4,8 +4,9 @@ import './PageContent.scss';
 
 interface Props {
   children: React.ReactNode;
+  bg?: boolean;
 }
 
-const PageContent = ({ children }: Props) => <div className="page-content">{children}</div>;
+const PageContent = ({ children, bg }: Props) => <div className={`page-content ${bg ? 'bg' : ''}`}>{children}</div>;
 
 export default PageContent;

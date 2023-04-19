@@ -1,0 +1,18 @@
+@import '../../../../config/variables';
+@import '../../../../config/mixins';
+
+.details-wrapper {
+  .size {
+    position: relative;
+    &::after {
+      position: absolute;
+      content: '2';
+      display: block;
+      width: 10px;
+      height: 10px;
+      top: 0;
+      right: -10px;
+      font-size: 0.7rem;
+    }
+  }
+}

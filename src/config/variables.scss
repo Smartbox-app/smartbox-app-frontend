@@ -1,48 +1,59 @@
-$font-primary: "AzoSans", sans-serif;
+$font-primary: 'AzoSans', sans-serif;
 $basic-font-size: 14px;
 
+$border-radius: 5px;
+
 //COLORS
-$color-primary: #0674BD;
-$color-primary-light: lighten(#0674BD, 20%);
-$color-secoundary: #003E67;
-$color-tertiary: #FBB03B;
+$color-primary: #0674bd;
+$color-primary-light: lighten(#0674bd, 20%);
+$color-secondary: #003e67;
+$color-tertiary: #fbb03b;
+$color-facebook: #4267b2;
 
 $color-text-alter: #fff;
 $color-text: #000;
 $color-text-button: #fff;
+$color-text-light: #fff;
 
-$color-background: #ffffff;
+
+$color-background: #fafafa;
+$color-background-darken: darken($color-background, 4%);
 
 $color-danger: #a51727;
 $color-notice: #bb9c71;
 $color-success: #00a45a;
 $color-inactive: #b3b2b2;
-$color-active: #FF6500;
+$color-active: #ff6500;
 $color-disabled: #aaa;
 
 $color-warning: #ec8628;
-$standard-shadow: 0px 0px 8px 8px rgba(0,0,0,0.05);
+$standard-shadow: 0px 0px 8px 8px rgba(0, 0, 0, 0.05);
 $box-shadow-small: 0px 0px 8px 8px darken($color-background, 4%);
 $box-shadow-input: 0 10px 20px -20px;
 
-//SPACING
-$main-spacing: 10px;
+// SIZING
 $page-header-width: 500px;
 $main-logo-size: 200px;
-
-// sizing
 $max-form-width: 500px;
+$credit-card-width: 330px;
+$footer-height: 60px;
 
-$main-min-height-mobile: calc(100vh - 80px);
-$main-min-height: calc(100vh - 190px);
+$single-option-width: 150px;
+$single-option-height: 160px;
+
+$single-option-width-big: 330px;
+$single-option-height-big: 260px;
+
+$main-min-height-mobile: calc(100vh - 120px);
+$main-min-height: calc(100vh - 60px - 60px);
 
 $login-form-width: 400px;
-$login-button-size: 300px;
-$login-button-hight: 60px;
+$login-button-size: 280px;
+$login-button-height: 60px;
 
 $menu-icon-small: 15px;
 $menu-icon-medium: 20px;
-$menu-icon-big: 30px;
+$menu-icon-big: 28px;
 $button-img-size: 20px;
 
 $carousel-small: 300px;
@@ -50,10 +61,26 @@ $carousel-big: 500px;
 
 $transition-time: 0.3s;
 
+$box-size: 100px;
+$big-box-size: 150px;
+
 $breakpoints: (
   xs: 368px,
   sm: 768px,
   md: 920px,
   lg: 1200px,
-  xl: 1368px
+  xl: 1368px,
 );
+
+//SPACING
+$main-spacing: 10px;
+
+//SHADOWS
+$soft-shadow: 0 0 $main-spacing * 2.5 (-$main-spacing/2) rgba(0, 0, 0, 0.15);
+
+//SPACING
+$main-spacing: 10px;
+$table-item-spacing: 16px;
+$main-bottom-spacing-sm: $footer-height + $main-spacing;
+$main-bottom-spacing-md: $footer-height * 2  + $main-spacing;
+$main-bottom-spacing-lg: $footer-height * 2 + 60px + $main-spacing;

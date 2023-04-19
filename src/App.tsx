@@ -6,8 +6,10 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import { Route, Router, Switch, Redirect } from 'react-router-dom';
 import { WorkBoxProvider } from 'react-workbox';
 import { createBrowserHistory } from 'history';
+import flatpickr from 'flatpickr';
+import { Polish } from 'flatpickr/dist/l10n/pl';
 import reducers from './reducers';
-import { Login, DashboardAdmin, DashboardWorker, DashboardUser, Register } from './views';
+import { DashboardAdmin, DashboardWorker, DashboardUser, Page404, Welcome } from './views';
 import {
   OnlineContent,
   OfflineContent,
@@ -17,11 +19,23 @@ import {
   RouteUser,
   RouteWorker,
   Modal,
+  ErrorBoundary,
+  Cookies,
 } from './components/Common';
+import { EmailConfirm, Login, Register, RestorePass, UserActivation, EmailSend, GoogleAuth } from './views/Auth';
+import { Invoice, PaymentFailed } from './views/DashboardCommon';
 import { NotificationContainer } from './components/Notifications';
 import AppOffline from './components/AppOffline';
 import { i18n } from './helpers/i18n';
 import { appStatus } from './actions/app-status';
+
+import 'flatpickr/dist/flatpickr.min.css';
+import 'flatpickr/dist/themes/airbnb.css';
+import BannerAndroid from './components/Common/BannerAndroid';
+import BannerIos from './components/Common/BanneriOS';
+
+flatpickr.localize(Polish);
+flatpickr.defaultConfig.time_24hr = true;
 
 const createStoreWithMiddleware = composeWithDevTools(applyMiddleware(reduxThunk))(createStore);
 
@@ -54,17 +68,39 @@ const App = () => {
           <UpdateInfoBar />
           <NotificationContainer />
           <Router history={history}>
-            <Switch>
-              <Route exact path="/" render={() => <Redirect to="/login" />} />
-              <Route path="/login" component={Login} />
-              <Route path="/register" component={Register} />
-              <RouteAdmin path="/admin" component={DashboardAdmin} />
-              <RouteWorker path="/worker" component={DashboardWorker} />
-              <RouteUser path="/user" component={DashboardUser} />
-              <Route render={() => <Redirect to="/404" />} />
-            </Switch>
+            <ErrorBoundary>
+              <Switch>
+                <Route exact path="/" render={() => <Redirect to="/login" />} />
+                <Route path="/welcome" component={Welcome} />
+                <Route path="/login" component={Login} />
+                <Route exact path="/register" component={Register} />
+                <Route path="/register/mail-was-send" component={EmailSend} />
+                <Route exact path="/restore-pass/" component={RestorePass} />
+                <Route path="/restore-pass/:userId/:updateToken" component={RestorePass} />
+                <Route path="/google-success/:googleToken" component={GoogleAuth} />
+                <Route path="/user-activation/:invitationId/:updateToken" component={UserActivation} />
+                <Route path="/join-from-invitation/:invitationId/:updateToken" component={UserActivation} />
+
+                <Route exact path="/email-confirmation/:userId/:updateToken" component={EmailConfirm} />
+
+                <Route path="/payment-success/:paymentId" component={Invoice} />
+                <Route path="/payment_finish_screen/ok" component={Invoice} />
+                <Route path="/payment-failed/" component={PaymentFailed} />
+                <Route path="/payment_finish_screen/error" component={PaymentFailed} />
+
+                <RouteAdmin path="/admin" component={DashboardAdmin} />
+                <RouteWorker path="/worker" component={DashboardWorker} />
+                <RouteUser path="/user" component={DashboardUser} />
+
+                <Route exact path="/404" component={Page404} />
+                <Route component={Page404} />
+              </Switch>
+            </ErrorBoundary>
           </Router>
+          <BannerAndroid />
+          <BannerIos />
           <Modal />
+          <Cookies />
         </OnlineContent>
         <OfflineContent>
           <AppOffline />

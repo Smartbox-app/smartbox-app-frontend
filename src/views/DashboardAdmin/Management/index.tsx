@@ -7,9 +7,15 @@ import { Section } from '../../../components/Layout';
 import { ApplicationState } from '../../../reducers';
 import UserService from '../../../services/user-service';
 
-import WorkersManagement from '../WorkersManagement';
-import BoxMapManagement from '../BoxMapManagement';
-import DiscountCodes from '../DiscountCodes';
+import WorkersManagement from './WorkersManagement';
+import UsersManagement from './UsersManagement';
+
+import StockDiscount from './StockDiscount';
+import InvitesSent from './InvitesSent';
+import SMS from './SMS';
+import Settings from './Settings';
+import { MapManagement } from './Map';
+import { GateManagement } from '../../../views/DashboardCommon/GateManagement';
 
 interface Props {
   user: UserRes;
@@ -22,23 +28,54 @@ const Management = ({ user }: Props) => (
         {
           className: 'tab',
           activeClassName: 'active',
+          to: `/${UserService.getSlugByRole(user.role)}/management/users/list`,
+          text: 'application.users',
+        },
+        {
+          className: 'tab',
+          activeClassName: 'active',
           to: `/${UserService.getSlugByRole(user.role)}/management/workers/list`,
-          text: 'Pracownicy',
+          text: 'application.workers',
+        },
+        {
+          className: 'tab',
+          activeClassName: 'active',
+          to: `/${UserService.getSlugByRole(user.role)}/management/invitations`,
+          text: 'application.invitations',
         },
         {
           className: 'tab',
           activeClassName: 'active',
           to: `/${UserService.getSlugByRole(user.role)}/management/map`,
-          text: 'Skrzynki',
+          text: 'application.boxes',
         },
         {
           className: 'tab',
           activeClassName: 'active',
-          to: `/${UserService.getSlugByRole(user.role)}/management/discount`,
-          text: 'Kody rabatowe',
+          to: `/${UserService.getSlugByRole(user.role)}/management/stock-discount/list`,
+          text: 'application.stockSale',
+        },
+        {
+          className: 'tab',
+          activeClassName: 'active',
+          to: `/${UserService.getSlugByRole(user.role)}/management/gate`,
+          text: 'application.gate',
+        },
+        {
+          className: 'tab',
+          activeClassName: 'active',
+          to: `/${UserService.getSlugByRole(user.role)}/management/sms`,
+          text: 'application.smsNotifications',
+        },
+        {
+          className: 'tab',
+          activeClassName: 'active',
+          to: `/${UserService.getSlugByRole(user.role)}/management/settings`,
+          text: 'application.settings',
         },
       ]}
     />
+
     <Switch>
       <Route
         exact
@@ -46,8 +83,13 @@ const Management = ({ user }: Props) => (
         render={() => <Redirect to={`/${UserService.getSlugByRole(user.role)}/management/workers`} />}
       />
       <Route path={`/${UserService.getSlugByRole(user.role)}/management/workers`} component={WorkersManagement} />
-      <Route path={`/${UserService.getSlugByRole(user.role)}/management/map`} component={BoxMapManagement} />
-      <Route path={`/${UserService.getSlugByRole(user.role)}/management/discount`} component={DiscountCodes} />
+      <Route path={`/${UserService.getSlugByRole(user.role)}/management/users`} component={UsersManagement} />
+      <Route path={`/${UserService.getSlugByRole(user.role)}/management/map`} component={MapManagement} />
+      <Route path={`/${UserService.getSlugByRole(user.role)}/management/invitations`} component={InvitesSent} />
+      <Route path={`/${UserService.getSlugByRole(user.role)}/management/stock-discount`} component={StockDiscount} />
+      <Route path={`/${UserService.getSlugByRole(user.role)}/management/gate`} component={GateManagement} />
+      <Route path={`/${UserService.getSlugByRole(user.role)}/management/sms`} component={SMS} />
+      <Route path={`/${UserService.getSlugByRole(user.role)}/management/settings`} component={Settings} />
     </Switch>
   </Section>
 );

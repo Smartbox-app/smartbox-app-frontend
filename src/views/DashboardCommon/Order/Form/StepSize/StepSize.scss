@@ -1,19 +1,16 @@
-@import "../../../../../config/variables.scss";
-@import "../../../../../config/mixins.scss";
+@import '../../../../../config/variables.scss';
+@import '../../../../../config/mixins.scss';
 
 .step-size-wrapper {
-
   form {
     width: 100%;
   }
 
   .options-wrapper {
-    margin-left: -10px;
-    margin-right: -10px;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
   }
 }

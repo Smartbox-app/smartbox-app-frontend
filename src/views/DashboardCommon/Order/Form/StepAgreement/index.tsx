@@ -1,15 +1,16 @@
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { withRouter } from 'react-router-dom';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { RentBoxReq, UserRole, IPricingResult, UserRes } from 'smartbox-types';
-import { Button } from '../../../../../components/Common';
+import { RentBoxReq, UserRole, IPricingResult, UserRes, StockList, ExtendRentalReq } from 'smartbox-types';
+import { PaymentType } from 'smartbox-types';
+import { Alert, Button } from '../../../../../components/Common';
 import { order } from '../../../../../actions';
 import { ButtonsContainer } from '../../../../../components/Layout';
 import { history } from '../../../../../App';
-import { Form } from '../../../../../reducers/order-reducer';
+import { FormType } from '../../../../../types/order-form';
 
 import FormHeader from '../../../../../components/Layout/FormHeader';
 import UserService from '../../../../../services/user-service';
@@ -20,69 +21,115 @@ import { ApplicationState } from '../../../../../reducers';
 
 import './StepAgreement.scss';
 
-interface Props {
-  history: any;
-  formData: Form;
+interface RouteProps {
+  step: string;
+  rentId: string;
+}
+
+interface Props extends RouteComponentProps<RouteProps> {
+  formData: FormType;
   countedPrice: IPricingResult;
   user: UserRes;
   isAgreementAccepted: boolean;
   isResignationMarked: boolean;
-  updateFormData: (data: any) => void;
-  formGoNextStep: (data: number) => void;
-  sentRentBoxRequest: (data: RentBoxReq | any, nextStep: number, role: UserRole) => void;
+  stockId: string;
+  paymentType: PaymentType;
+  sentExtendRentRequest: (rentId: string, data: ExtendRentalReq, role: UserRole) => void;
+  sentRentBoxRequest: (data: RentBoxReq, nextStep: string, role: UserRole) => void;
 }
 
 const StepSummary = ({
   formData,
-  formGoNextStep,
   user,
   isAgreementAccepted,
   isResignationMarked,
   sentRentBoxRequest,
   countedPrice,
-}: Props) => {
+  stockId,
+  match,
+  paymentType,
+  sentExtendRentRequest,
+}: Props): any => {
   useEffect(() => {
-    if (formData.size.length === 0) {
-      history.push(`/${UserService.getSlugByRole(user.role)}/order/step/1`);
-      formGoNextStep(1);
+    if (!formData.size) {
+      history.push(`/${UserService.getSlugByRole(user.role)}/order/step/stock`);
     }
-  });
+  }, []);
 
   const { handleSubmit } = useForm();
 
   const onSubmit = (data: any) => {
-    sentRentBoxRequest(
-      {
-        stockId: undefined,
-        size: Number(formData.size),
-        startAt: formData.dateStart,
-        finishAt: formData.dateEnd,
-        cost: countedPrice.value,
-        discountCode: formData.discountCode,
-      },
-      5,
-      user.role,
-    );
+    const commonCollection = {
+      finishAt: formData.dateEnd,
+      cost: countedPrice.value,
+      discountCode: formData.discountCode,
+      firstName: formData.firstName,
+      lastName: formData.lastName,
+      street: formData.street,
+      city: formData.city,
+      postCode: formData.postCode,
+      isCompany: formData.isCompany || false,
+      phone: formData.phone,
+      mailToSendInvoice: formData.mailToSendInvoice,
+      companyName: formData.companyName || '',
+      companyStreet: formData.companyStreet || '',
+      companyCity: formData.companyCity || '',
+      companyPostCode: formData.companyPostCode || '',
+      nip: formData.nip || '',
+    };
+
+    const dataCollectionExtendRent: ExtendRentalReq = {
+      ...commonCollection,
+      isPaySavedCard: false,
+      type: paymentType,
+    };
+
+    const dataCollectionRent: RentBoxReq = {
+      ...commonCollection,
+      startAt: formData.dateStart,
+      stockId: stockId,
+      size: Number(formData.size),
+      type: paymentType,
+    };
+
+    if (match.params.rentId) {
+      // rent extension
+      sentExtendRentRequest(match.params.rentId, dataCollectionExtendRent, user.role);
+    } else {
+      // new Rent blik/creditcart
+      sentRentBoxRequest(dataCollectionRent, 'payment', user.role);
+    }
   };
 
   const onBack = () => {
-    formGoNextStep(3);
-    history.push(`/${UserService.getSlugByRole(user.role)}/order/step/3`);
+    history.push(`/${UserService.getSlugByRole(user.role)}/order/step/summary/${match.params.rentId || ''}`);
   };
-
+  const desktop = window.matchMedia('(min-width: 920px)').matches;
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <FormHeader title="Umowa zamówienia:" />
-      <AgreementWrapper />
-      <ScrollPosition />
-      <ButtonsContainer max>
-        <Button outline text="Wróć" click={() => onBack()} />
-        <Button
-          type="submit"
-          primary
-          text="Przejdź do płatności"
-          disabled={!isAgreementAccepted || !isResignationMarked}
+      <FormHeader title="application.orderAgreement" />
+      {/* <AgreementWrapper /> */}
+      {desktop && (
+        <object
+          className="rules-embed"
+          data="/assets/2022_02_01_Regulamin_aplikacji_SmartBox.pdf#toolbar=0&navpanes=0&scrollbar=0"
+          type="application/pdf"
         />
+      )}
+      <a
+        className="button button-primary"
+        target="_blank"
+        href="/assets/2022_02_01_Regulamin_aplikacji_SmartBox.pdf"
+        title="Regulamin"
+      >
+        Kliknij aby otworzyć regulamin
+      </a>
+      <span className="separator" />
+      <ScrollPosition />
+      <Alert type="notice" text="application.orderAgreementAcceptation" />
+      <ButtonsContainer max>
+        <Button outline text="application.back" click={() => onBack()} />
+        <Button type="submit" primary text="application.goToPayment" disabled={!isResignationMarked} />
       </ButtonsContainer>
     </form>
   );
@@ -94,6 +141,10 @@ const mapStateToProps = (state: ApplicationState) => ({
   user: state.user.details,
   isAgreementAccepted: state.order.isAgreementAccepted,
   isResignationMarked: state.order.isResignationMarked,
+  stockId: state.order.formData.stock,
+  rentId: state.rent.singleRent.id,
+  selectedPaymentMethodDetailId: state.order.selectedPaymentMethodDetail.id,
+  paymentType: state.order.selectedPayment,
 });
 
 const mapDispatchToProps = (dispatch: any) =>

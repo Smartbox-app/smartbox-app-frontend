@@ -3,7 +3,7 @@ import SessionService from '../services/session-service';
 
 export type UserState = {
   details: UserRes;
-  singleUser: UserRes;
+  singleUser: UserRes | any;
 };
 
 interface Login {
@@ -55,9 +55,7 @@ export default (state: UserState = initialState, action: Action): any => {
       };
     }
     case 'GET_MY_DETAILS_SUCCESS': {
-      const user = {
-        ...action.payload,
-      };
+      const user = action.payload;
       SessionService.setUser(user);
       return {
         ...state,

@@ -3,3 +3,7 @@
 @import "./config/variables.scss";
 @import "./config/typography.scss";
 @import "./config/inputs.scss";
+
+.noscroll {
+    overflow: hidden !important;
+}

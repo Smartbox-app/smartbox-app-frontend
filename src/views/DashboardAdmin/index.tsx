@@ -1,45 +1,59 @@
 import React from 'react';
 import { Route, Redirect, Switch } from 'react-router-dom';
 
-import { Main, Footer, DashboardContainer, Navigation } from '../../components/Layout';
-import { Welcome, Order } from '../DashboardCommon';
+import { Main, DashboardContainer, Navigation } from '../../components/Layout';
+import MobileLogoContainer from '../../components/Layout/MobileLogoContainer';
+import { Invoice } from '../DashboardCommon';
 
 import { MenuItemType } from '../../types/menu-item';
-import { __ } from '../../helpers/i18n';
 
 import Management from './Management';
+import Profile from '../DashboardCommon/Profile';
+import SingleRentDetail from '../DashboardCommon/SingleRentDetail';
+import GateStatus from './GateStatus';
+import { Stocks } from './Stocks';
+import { Gates } from './Gates';
 
 const DashboardAdmin = () => {
   const menuItems: MenuItemType[] = [
     {
-      icon: 'dashboard.svg',
-      text: __('application.home'),
-      address: '/admin/main',
-    },
-    {
-      icon: 'dashboard.svg',
-      text: __('application.managment'),
+      icon: 'settings.svg',
+      text: 'application.management',
       address: '/admin/management',
     },
     {
+      icon: 'dashboard.svg',
+      text: 'application.stocks',
+      address: '/admin/stocks',
+    },
+    {
+      icon: 'dashboard.svg',
+      text: 'application.gates',
+      address: '/admin/gates',
+    },
+    {
       icon: 'account.svg',
-      text: __('application.account'),
-      address: '/admin/account',
+      text: 'application.account',
+      address: '/admin/profile',
     },
   ];
 
   return (
     <DashboardContainer>
+      <MobileLogoContainer />
       <Navigation menuItems={menuItems} />
+      <GateStatus />
       <Main>
         <Switch>
-          <Route exact path="/admin" render={() => <Redirect to="/admin/main" />} />
-          <Route path="/admin/main" component={Welcome} />
-          <Route path="/admin/order/:step" component={Order} />
-          <Route path="/admin/management" component={Management} />
+          <Route exact path="/admin" render={() => <Redirect to="/admin/management" />} />
+          <Route path="/admin/management/" component={Management} />
+          <Route path="/admin/profile" component={Profile} />
+          <Route path="/admin/invoice/" component={Invoice} />
+          <Route path={`/admin/stocks`} component={Stocks} />
+          <Route path={`/admin/gates`} component={Gates} />
+          <Route exact path="/admin/single-rent/:orderId" component={SingleRentDetail} />
         </Switch>
       </Main>
-      <Footer />
     </DashboardContainer>
   );
 };

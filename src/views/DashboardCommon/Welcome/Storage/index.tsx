@@ -1,38 +1,18 @@
 import React from 'react';
+import { MyRentList } from 'smartbox-types';
 import { Section, SectionHeader } from '../../../../components/Layout';
 import StorageList from './StorageList';
+import { Spinner } from '../../../../components/Common';
 
-const Storage = () => (
-  <Section full>
-    <SectionHeader title="Zarządaj magazynami" />
-    <StorageList
-      list={[
-        {
-          size: 12,
-          location: 'Warszawa, Mokotów',
-        },
-        {
-          size: 6,
-          location: 'Wrocław, Fabryczna',
-        },
-        {
-          size: 6,
-          location: 'Wrocław, Fabryczna',
-        },
-        {
-          size: 6,
-          location: 'Wrocław, Fabryczna',
-        },
-        {
-          size: 6,
-          location: 'Wrocław, Fabryczna',
-        },
-        {
-          size: 6,
-          location: 'Wrocław, Fabryczna',
-        },
-      ]}
-    />
+interface Props {
+  myRentList: MyRentList[];
+  loading: boolean;
+}
+
+const Storage = ({ myRentList, loading }: Props) => (
+  <Section full highlight>
+    <SectionHeader title='application.storeManagement' />
+    {loading ? <Spinner /> : <StorageList list={myRentList} />}
   </Section>
 );
 

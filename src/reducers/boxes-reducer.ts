@@ -1,22 +1,23 @@
 import { BoxListItem, RentDetailsRes, RentStatus, BoxGroupAvailability } from 'smartbox-types';
 
 export type Boxes = {
-  boxesGroup: BoxListItem[];
+  boxesGroup: BoxListItem[] | null;
   singleBoxDetail: RentDetailsRes;
 };
 
 const initialState: Boxes = {
-  boxesGroup: [],
+  boxesGroup: null,
   singleBoxDetail: {
     number: '',
     startAt: new Date(),
     finishAt: new Date(),
     status: RentStatus.free,
     owner: {
-      email: '-',
-      firstName: '---',
+      email: '',
+      firstName: '',
       lastName: '',
       rentCount: 0,
+      phone: '',
     },
   },
 };
@@ -36,7 +37,11 @@ interface BoxGroup {
   payload: BoxGroupAvailability[];
 }
 
-type Action = FetchBoxStatuses | FetchSingleBoxDetails | BoxGroup;
+interface CleanUp {
+  type: 'CLEAN_SINGLE_BOX_DETAILS_SUCCESS';
+}
+
+type Action = FetchBoxStatuses | FetchSingleBoxDetails | BoxGroup | CleanUp;
 
 export default (state: Boxes = initialState, action: Action): any => {
   switch (action.type) {
@@ -51,6 +56,25 @@ export default (state: Boxes = initialState, action: Action): any => {
       return {
         ...state,
         singleBoxDetail: action.payload,
+      };
+    }
+
+    case 'CLEAN_SINGLE_BOX_DETAILS_SUCCESS': {
+      return {
+        ...state,
+        singleBoxDetail: {
+          number: '',
+          startAt: new Date(),
+          finishAt: new Date(),
+          status: RentStatus.free,
+          owner: {
+            email: '',
+            firstName: '',
+            lastName: '',
+            rentCount: 0,
+            phone: '',
+          },
+        },
       };
     }
 

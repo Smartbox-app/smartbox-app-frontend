@@ -1,0 +1,41 @@
+@import '../../../../config/variables.scss';
+@import '../../../../config/mixins.scss';
+
+.login-buttons-section {
+  width: $login-button-size;
+  margin: 0 auto;
+  padding: 0;
+
+  .button {
+    font-size: 1.1rem;
+    width: 100%;
+    height: $login-button-height;
+    border-radius: $login-button-height / 2;
+  }
+
+  .kep-login-facebook,
+  .google-button-custom {
+    width: 100%;
+    font-size: 1.1rem;
+  }
+
+  link {
+    font-size: 1.1rem;
+  }
+}
+
+.lost-pass {
+  text-align: center;
+}
+
+@include gt-sm {
+  .login-buttons-section {
+    width: $login-button-size * 1.1;
+  }
+}
+
+@include gt-md {
+  .login-buttons-section {
+    width: $login-button-size * 1.2;
+  }
+}

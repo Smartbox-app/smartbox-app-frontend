@@ -1,11 +1,13 @@
-@import "../../../config/variables";
-@import "../../../config/mixins.scss";
+@import '../../../config/variables';
+@import '../../../config/mixins.scss';
 
 .buttons-container {
-  display: flex;
-  justify-content: flex-end;
-  flex-wrap: wrap;
-  align-items: center;
+  @include gt-sm {
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    align-items: center;
+  }
 
   &.max {
     justify-content: stretch;
@@ -16,21 +18,22 @@
   &.column {
     flex-direction: column;
   }
+
+  &.space-between {
+    justify-content: space-between;
+  }
 }
 
 @include lt-xs {
   .buttons-container {
     .button {
       margin-bottom: $main-spacing / 4;
-
-      &:not(:first-child) {
-        margin-top: 0;
-      }
+      margin-top: 0;
     }
   }
 }
 
-@include gt-xs {
+@include gt-sm {
   .buttons-container {
     .button:not(:first-child) {
       margin-left: 5px;

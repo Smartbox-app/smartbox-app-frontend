@@ -2,6 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 
 import './Tabs.scss';
+import {__} from "../../../helpers/i18n";
 
 interface Tab {
   to: string;
@@ -23,7 +24,7 @@ const Tabs = ({ tabs }: TabsProps) => {
       activeClassName={`active ${tab.activeClassName ? tab.activeClassName : ''}`}
       to={tab.to}
     >
-      {tab.text}
+      {__(tab.text)}
     </NavLink>
   ));
   return <div className="tabs">{displayTabs}</div>;

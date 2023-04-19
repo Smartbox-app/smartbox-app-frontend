@@ -1,0 +1,41 @@
+@import './Swiper.scss';
+@import '../../config/variables.scss';
+@import '../../config/mixins.scss';
+
+.welcome-container {
+  height: 100%;
+  // height: 100vh;
+  flex: 0 0 50%;
+  width: 100%;
+}
+
+.swiper-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  height: 100%;
+  background-image: linear-gradient(
+    to bottom,
+    rgba(darken($color-secondary, 50%), 0),
+    rgba(darken($color-text, 40%), 0.55)
+  );
+}
+
+.swiper-pagination-bullets {
+  // bottom: 0 !important;
+  left: 50%;
+  transform: translate(-50%, 0);
+  @include safe-bottom(0);
+  padding: $main-spacing * 2 0;
+}
+
+.swiper-wrapper {
+  flex: 1;
+}
+
+.swiper-slide {
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}

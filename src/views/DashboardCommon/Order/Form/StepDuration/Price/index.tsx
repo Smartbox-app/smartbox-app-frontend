@@ -2,6 +2,7 @@ import React from 'react';
 import { formatPrice } from '../../../../../../utils/format-price';
 
 import './Price.scss';
+import {__} from "../../../../../../helpers/i18n";
 
 interface Props {
   countedPrice: number;
@@ -10,7 +11,7 @@ interface Props {
 const Price = ({ countedPrice }: Props) => (
   <div className="price-wrapper">
     <p>
-      Cena za wybrany okres to: <strong>{formatPrice(countedPrice)}</strong>
+        {__('application.priceForSelectedPeriod')}{' '}<strong>{formatPrice(countedPrice)}</strong>
     </p>
   </div>
 );

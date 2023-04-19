@@ -1,19 +1,26 @@
 import React from 'react';
-import Section from '../Section';
-
 import './Footer.scss';
+import { __ } from '../../../helpers/i18n';
 
 const Footer = () => (
-  <Section full>
-    <footer>
-      <p>
-        &copy; SMARTBOX Sp.z.o.o. Wykonanie
-        <a target="_blank" rel="noopener noreferrer" href="https://itdotfocus.com/pl/o-nas">
-          <img className="menu-footer_logo" src="/assets/logo_IT_focus.png" alt="IT.focus" />
-        </a>
-      </p>
-    </footer>
-  </Section>
+  <footer>
+    <a
+      className="footerLink"
+      target="_blank"
+      rel="noreferrer noopener"
+      href="https://smartbox-storage.pl/jak-to-dziala/"
+    >
+      {__('application.how_it_works')}
+    </a>
+    <a className="footerLink" target="_blank" href="/assets/2022_02_01_Regulamin_aplikacji_SmartBox.pdf">
+      {__('application.statute')}
+    </a>
+    <a className="footerLink" target="_blank" href="/assets/2022_01_01_Polityka_Prywatnosci_SmartBox.pdf">
+      {__('application.privacyPolicy')}
+    </a>
+
+    <p>&copy; SmartBox Sp. J.</p>
+  </footer>
 );
 
 export default Footer;

@@ -9,8 +9,7 @@ export default class SessionService {
     return JSON.parse(localStorage.getItem('language') || 'null') || 'pl';
   }
 
-  // @TODO: fix user type
-  static setUser(user: any) {
+  static setUser(user: UserRes) {
     return localStorage.setItem('user', JSON.stringify(user));
   }
 

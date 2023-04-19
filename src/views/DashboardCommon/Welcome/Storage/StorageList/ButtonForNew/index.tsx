@@ -14,7 +14,12 @@ interface Props {
 
 const ButtonForNew = ({ user }: Props) => (
   <div className="new-storage single-wrapper">
-    <Button text="Nowy magazyn" outline icon="plus.svg" to={`/${UserService.getSlugByRole(user.role)}/order/step/1`} />
+    <Button
+      text='application.newStock'
+      outline
+      icon="plus.svg"
+      to={`/${UserService.getSlugByRole(user.role)}/order/step/stock`}
+    />
   </div>
 );
 

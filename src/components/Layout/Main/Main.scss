@@ -1,37 +1,49 @@
 @import '../../../config/variables.scss';
 @import '../../../config/mixins.scss';
 
-body {
-  margin: 0;
-}
-
 main {
-  background-color: $color-background;
-  min-height: $main-min-height-mobile;
   display: flex;
   flex: 0 0 100%;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
+  margin-bottom: $main-bottom-spacing-lg;
+  width: 100vw;
+}
 
-  footer {
-    justify-self: flex-end;
-    align-self: flex-end;
+@include gt-xs {
+  main {
+    margin-bottom: $main-bottom-spacing-md;
   }
 }
 
 @include gt-sm {
   main {
-    min-height: $main-min-height;
-    margin: 0 auto;
-    max-width: 100%;
+    min-height: 0;
+    margin: 0 auto $main-bottom-spacing-sm auto;
+    width: 90vw;
+  }
+}
+
+@include gt-md {
+  main {
+    margin: 0 auto $main-bottom-spacing-sm auto;
+    width: 80vw;
   }
 }
 
 @include gt-lg {
   main {
     display: flex;
-    max-width: 100vw;
+    width: 80vw;
+    flex-direction: row;
+  }
+}
+
+@include gt-xl {
+  main {
+    display: flex;
+    width: 65vw;
     flex-direction: row;
   }
 }

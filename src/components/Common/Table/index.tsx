@@ -5,6 +5,8 @@ import { Button, Alert, Pagination } from '../../Common';
 import { formatPrice } from '../../../utils/format-price';
 
 import './Table.scss';
+import { fullDate } from '../../../utils/format-date';
+import {__} from "../../../helpers/i18n";
 
 interface Props {
   scheme: TableSchema;
@@ -60,10 +62,10 @@ const formatValue = (value: any, field: TableSchemaField, allValues: any) => {
       return value !== null && <img src={value} alt={field.name} />;
     }
     case FieldType.Date: {
-      return value === null || value === undefined ? 'Nieustalono' : new Date(value).toLocaleString();
+      return value === null || value === undefined ? __('application.notEstablished') : fullDate(value);
     }
     case FieldType.Boolean: {
-      return value === null ? 'Domyślnie' : value ? 'Tak' : 'Nie';
+      return value === null ? __('application.default') : value ? __('application.yes'): __('application.no');
     }
     case FieldType.Price: {
       return value === (null || undefined) ? '-' : formatPrice(value);
@@ -127,9 +129,9 @@ class Table extends React.Component<Props> {
 
   render() {
     const desktop = window.matchMedia('(min-width: 920px)').matches;
-    let content = null;
+    let content: any = null;
     if (!this.props.data || this.props.data.items.length === 0) {
-      return <Alert type="notice" text="Brak danych do wyświetlenia." />;
+      return <Alert type="notice" text='application.lackOfDataToShow' />;
     }
 
     if (desktop) {
@@ -145,8 +147,7 @@ class Table extends React.Component<Props> {
             <td className={`${header.mobile ? 'mobile' : ''}`} key={`${header.field}_${rowIndex}`}>
               {header.buttons
                 ? header.buttons.map((button: any, index: number) => (
-                  <Button
-                      small
+                    <Button
                       key={index}
                       primary={button.type === 'primary'}
                       danger={button.type === 'danger'}
@@ -155,7 +156,7 @@ class Table extends React.Component<Props> {
                       click={button.click ? () => button.click(row) : null}
                       text={button.name}
                     />
-                ))
+                  ))
                 : formatValue(row[header.field], header, row)}
             </td>
           ))}
@@ -173,7 +174,7 @@ class Table extends React.Component<Props> {
     } else {
       content = (
         <div className="list">
-          <p>Naciśnij na rekord aby pokazać/ukryć szczegóły.</p>
+          <p>{__('application.clickToShowHideDetails')}</p>
           {this.props.data.items.map((row: any, rowIndex: number) => (
             <div
               className={`list-element ${this.state.toggled === rowIndex ? 'toggled' : ''}`}
@@ -186,7 +187,6 @@ class Table extends React.Component<Props> {
                     <div className="list-buttons">
                       {header.buttons.map((button: any, index: number) => (
                         <Button
-                          small
                           key={index}
                           primary={button.type === 'primary'}
                           danger={button.type === 'danger'}

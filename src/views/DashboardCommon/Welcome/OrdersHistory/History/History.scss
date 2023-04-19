@@ -14,26 +14,58 @@
   width: 100%;
   color: $color-inactive;
   font-weight: 600;
-  font-size: .8rem;
+  font-size: 0.8rem;
 }
 
-.active {
-  color: $color-active;
+.header-cell {
+  flex: 1;
+  padding-right: $table-item-spacing/4;
+  font-size: 0.8rem;
+
+  word-break: normal;
+
+  &.period {
+    flex: 0 0 25%;
+  }
+  &.number {
+    flex: 0 0 20%;
+  }
+  &.size {
+    flex: 0 0 20%;
+  }
+  &.stock {
+    flex: 0 0 35%;
+  }
+}
+
+.active-stock {
+  color: $color-primary;
+}
+
+.payment-issue {
+  color: $color-tertiary;
+}
+
+.ended {
+  color: $color-disabled;
 }
 
 .history-line {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
   flex-wrap: nowrap;
   width: 100%;
-  padding: $main-spacing/2  0;
+  padding: 7.5px 0;
   border-bottom: 1px solid $color-inactive;
 }
 
-.line-cell {
-  flex: 0 0 40%;
+.header {
+  font-weight: 600;
+  color: $color-disabled;
 }
 
-.line-cell.small {
-  flex: 0 0 20%;
+.last {
+  margin-right: 0;
 }

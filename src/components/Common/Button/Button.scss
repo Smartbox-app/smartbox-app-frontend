@@ -1,8 +1,10 @@
-@import "../../../config/variables";
-@import "../../../config/mixins.scss";
+@import '../../../config/variables';
+@import '../../../config/mixins.scss';
 
 .button {
-  padding: $main-spacing $main-spacing * 2;
+  min-width: 95px;
+  padding: $main-spacing $main-spacing;
+  white-space: nowrap;
   margin: $main-spacing / 2 0;
   background: lighten($color-background, 10%);
   color: $color-text;
@@ -17,6 +19,7 @@
   font-weight: 300;
   width: 100%;
   font-family: $font-primary;
+  border-radius: 5px;
 
   transition: $transition-time background-color, $transition-time border-color;
   box-shadow: $box-shadow-small rgba($color-text, 0.25);
@@ -61,8 +64,17 @@
     }
   }
 
+  &.button-tertiary {
+    background: $color-tertiary;
+    text-transform: uppercase;
+    color: $color-text-button;
+    &:hover {
+      background: lighten($color-tertiary, 10%);
+    }
+  }
+
   &.button-small {
-    padding: $main-spacing $main-spacing;
+    padding: $main-spacing/2 $main-spacing;
     font-size: 0.9rem;
   }
 
@@ -80,8 +92,7 @@
     text-transform: none;
     border: 2px solid $color-primary;
     color: $color-primary;
-    background: transparent;
-    padding: 9px 20px;
+    padding: 8px 20px;
     font-weight: 500;
 
     &:hover {
@@ -115,18 +126,19 @@
 
   &.with-icon {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
-    
+
     .button-img {
-      width: $button-img-size;
-      height: $button-img-size;
+      width: $button-img-size * 1;
+      height: $button-img-size * 1;
+      margin: $main-spacing;
     }
   }
 
   &.only-icon {
-      padding: $main-spacing;
+    padding: $main-spacing;
 
     .button-img {
       width: $button-img-size;
@@ -134,11 +146,12 @@
       margin: 0;
     }
   }
-
 }
 
-@include gt-xs {
+@include gt-sm {
   .button {
     width: auto;
+    padding: $main-spacing $main-spacing * 2;
+    margin: $main-spacing / 2 0;
   }
 }

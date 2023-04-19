@@ -1,0 +1,9 @@
+@import '../../../../../../config/variables';
+@import '../../../../../../config/mixins';
+
+.user-detail-wrapper {
+  .addresses-wrapper {
+    display: flex;
+    flex-direction: column;
+  }
+}

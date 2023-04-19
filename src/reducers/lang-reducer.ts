@@ -1,3 +1,4 @@
+import { MyRentList } from "smartbox-types";
 import { i18n } from '../helpers/i18n';
 import SessionService from '../services/session-service';
 
@@ -16,7 +17,13 @@ interface ChangeLanguage {
 
 type Action = ToggleLangList | HideLangList | ChangeLanguage;
 
-const initialState: any = {
+export type LangStatus = {
+  toggled: boolean;
+  current: string;
+  available: string[];
+};
+
+const initialState: LangStatus = {
   toggled: false,
   current: SessionService.getCurrentLanguage(),
   available: ['pl', 'en'],

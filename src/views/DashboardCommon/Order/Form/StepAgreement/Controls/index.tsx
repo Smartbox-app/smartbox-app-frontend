@@ -10,7 +10,7 @@ interface Props {
 const Controls = ({ isAccepted }: Props) => (
   <div className="controls-wrapper">
     {isAccepted ? (
-      <Button text="Zaakceptuj warunki" primary big rounded />
+      <Button text='application.acceptConditions' primary big rounded />
     ) : (
       <Button text="" success big rounded onlyIcon icon="check.svg" />
     )}

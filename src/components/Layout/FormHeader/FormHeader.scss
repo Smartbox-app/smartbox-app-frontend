@@ -1,16 +1,18 @@
-@import "../../../config/variables";
-@import "../../../config/mixins";
+@import '../../../config/variables';
+@import '../../../config/mixins';
 
-.section-header-container {
+.form-header-container {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  margin-top: $main-spacing * 2;
 
-  .section-header {
+  .form-header {
     color: $color-text;
     display: flex;
     align-items: center;
     width: 100%;
+    margin-bottom: $main-spacing;
   }
 
   .no-margin {
@@ -19,10 +21,10 @@
 }
 
 @include gt-sm {
-  .section-header-container {
+  .form-header-container {
     margin-bottom: $main-spacing * 1.5;
-    
-    .section-header {
+
+    .form-header {
       max-width: $page-header-width;
     }
   }

@@ -1,4 +1,4 @@
-@import "../../../config/variables";
+@import '../../../config/variables';
 
 .pagination {
   margin: $main-spacing 0;
@@ -11,9 +11,12 @@
 
     .previous,
     .next {
-      flex: 0 1 100%;
+      flex: 0 1 20%;
       margin: 0;
       text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     li {
@@ -23,6 +26,7 @@
 
   li {
     margin: $main-spacing / 2;
+    border-radius: 5px;
   }
 
   a {
@@ -40,6 +44,14 @@
   .previous {
     background-color: $color-primary;
     transition: 0.3s background-color;
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+
+    a {
+      color: #fff;
+      padding: 5px 10px;
+    }
 
     &:hover {
       background-color: lighten($color-primary, 10%);

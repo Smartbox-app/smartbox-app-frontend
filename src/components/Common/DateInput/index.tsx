@@ -2,11 +2,11 @@ import React from 'react';
 import Flatpickr from 'react-flatpickr';
 import { useForm } from 'react-hook-form';
 import flatpickr from 'flatpickr'; // Check out other cool Themes: https://flatpickr.js.org/themes/
-import 'flatpickr/dist/themes/airbnb.css';
-
-import './DateInput.scss';
 import { Polish } from 'flatpickr/dist/l10n/pl';
-import { format } from 'date-fns';
+
+import 'flatpickr/dist/themes/airbnb.css';
+import './DateInput.scss';
+import {__} from "../../../helpers/i18n";
 
 flatpickr.localize(Polish);
 flatpickr.defaultConfig.time_24hr = true;
@@ -23,29 +23,21 @@ interface Props {
 
 const DateInput = ({ name, value, onChange, label, minDate, maxDate, register }: Props) => {
   const { errors } = useForm();
-  // const { register } = useFormContext();
-  const setDefaultVaule = (data: any) => {
-    if (data[0]) {
-      return format(data[0], 'yyyy-MM-dd');
-    } else {
-      return format(data, 'yyyy-MM-dd');
-    }
-  };
 
   return (
     <div className="data-picker-wrapper">
       {label && (
         <label htmlFor={name} className="data-picker-label">
-          {label}
+          {__(label)}
         </label>
       )}
       <Flatpickr
         name={name}
-        ref={register}
+        ref={register({ name })}
         onChange={(data: any) => {
           onChange(data);
         }}
-        defaultValue={setDefaultVaule(value)}
+        value={value}
         options={{
           allowInput: false,
           inline: true,

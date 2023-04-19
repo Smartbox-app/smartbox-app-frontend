@@ -5,11 +5,27 @@
   display: flex;
   flex: 0 0 100%;
   flex-direction: column;
-  margin-left: -$main-spacing *2;
-  margin-right: -$main-spacing *2;
+  margin-left: -$main-spacing * 2;
+  margin-right: -$main-spacing * 2;
 
-  input[type=radio] {
+  input[type='radio'] {
     display: none;
+  }
+}
+
+.discount-wrapper {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  margin: $main-spacing/2 0;
+  padding: $main-spacing;
+  box-shadow: 0 0 1px 2px lighten($color-disabled, 25%);
+  cursor: default;
+  position: relative;
+  justify-content: center;
+
+  p {
+    text-align: center;
   }
 }
 
@@ -19,4 +35,8 @@
     flex: 0 0 100%;
     flex-direction: row;
   }
+}
+
+.card-pricing-details {
+  text-align: center;
 }

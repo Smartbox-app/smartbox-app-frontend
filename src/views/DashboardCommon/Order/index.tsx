@@ -1,54 +1,83 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React, { useEffect } from 'react';
 
-import { Section, SectionHeader } from '../../../components/Layout';
+import { withRouter, RouteComponentProps } from 'react-router';
+import { FormContainer, Section, SectionHeader } from '../../../components/Layout';
 import { ProgressIndicator } from '../../../components/Common';
-import { ApplicationState } from '../../../reducers';
 
 import Form from './Form/Index';
+import { useDispatch } from 'react-redux';
+import { getStockDiscountsList } from '../../../actions/stock';
 
-interface Props {
-  userName: string;
-  formStep: number;
+interface RouteProps {
+  step: string;
+  rentId: string;
 }
 
-const Order = ({ userName, formStep }: Props) => (
-  <>
+type Props = RouteComponentProps<RouteProps>;
+
+const Order = ({ match }: Props) => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getStockDiscountsList());
+  }, []);
+
+  const getStepByName = (stepName: string) => {
+    switch (stepName) {
+      case 'stock':
+        return 1;
+      case 'size':
+        return 2;
+      case 'duration':
+        return 3;
+      case 'summary':
+        return 4;
+      case 'agreement':
+        return 5;
+      case 'payment':
+        return 6;
+      default:
+        return 1;
+    }
+  };
+
+  return (
     <Section>
-      <SectionHeader title="Nowe zamówienie:" />
+      <SectionHeader title={match.params.rentId ? 'application.extendsOrder' : 'application.newOrder'} />
       <ProgressIndicator
-        current={formStep}
-        data={[
+        current={getStepByName(match.params.step)}
+        stepList={[
           {
             value: 1,
-            desc: 'Rozmiar',
+            desc: 'application.orderStepStock',
           },
           {
             value: 2,
-            desc: 'Termin',
+            desc: 'application.orderStepSize',
           },
           {
             value: 3,
-            desc: 'Podsumowanie',
+            desc: 'application.orderStepDate',
           },
           {
             value: 4,
-            desc: 'Umowa',
+            desc: 'application.orderStepSummary',
           },
           {
             value: 5,
-            desc: 'Płatność',
+            desc: 'application.orderStepAgreement',
+          },
+          {
+            value: 6,
+            desc: 'application.orderStepPayment',
           },
         ]}
       />
-      <Form />
+      <FormContainer>
+        <Form />
+      </FormContainer>
     </Section>
-  </>
-);
+  );
+};
 
-const mapStateToProps = (state: ApplicationState) => ({
-  userName: state.user.details.firstName,
-  formStep: state.order.formStep,
-});
-
-export default connect(mapStateToProps)(Order);
+export default withRouter(Order);

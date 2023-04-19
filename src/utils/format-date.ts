@@ -1,6 +1,14 @@
+import { format } from 'date-fns';
+
 export function dateOnly(n: Date | string, slice?: number): any {
+  if (n === null) return '---';
   if (slice) {
-    return new Date(n).toLocaleDateString().slice(0, slice);
+    return format(new Date(n), 'dd.MM.yyyy').slice(0, slice);
   }
-  return new Date(n).toLocaleDateString();
+  return format(new Date(n), 'dd.MM.yyyy');
 }
+
+export const fullDate = (d: Date | string): Date | string => {
+  if (d === null) return '---';
+  return format(new Date(d), 'dd.MM.yyyy HH:mm');
+};

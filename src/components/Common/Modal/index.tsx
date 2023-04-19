@@ -6,6 +6,7 @@ import { Modal } from '../../../types/modal';
 import { ApplicationState } from '../../../reducers';
 
 import './Modal.scss';
+import ModalContent from './ModalContent';
 
 interface Props {
   modal: Modal;
@@ -27,16 +28,18 @@ class ModalWrapper extends React.Component<Props> {
       <>
         <div
           className={`modal ${modal.isVisible ? 'visible' : ''} ${modal.isFullscreen ? 'full-screen' : ''}`}
-          onClick={this.handleClickOutside}
           id="modal"
+          onMouseDown={this.handleClickOutside}
         >
           <div className="modal-body">
-            <div className="modal-content">{modal.content}</div>
-            {modal.isClosable && (
-              <span className="modal-exit" onClick={() => hideModal()}>
-                &times;
-              </span>
-            )}
+            <ModalContent>
+              {modal.content}
+              {modal.isClosable && (
+                <span className="modal-exit" role="button" tabIndex={0} onClick={() => hideModal()}>
+                  &times;
+                </span>
+              )}
+            </ModalContent>
           </div>
         </div>
       </>
@@ -48,8 +51,6 @@ const mapStateToProps = (state: ApplicationState) => ({
   modal: state.modal,
 });
 
-function mapDispatchToProps(dispatch: any) {
-  return bindActionCreators({ ...modal }, dispatch);
-}
+const mapDispatchToProps = (dispatch: any) => bindActionCreators({ ...modal }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(ModalWrapper);

@@ -1,15 +1,18 @@
-@import "../../../config/variables";
-@import "../../../config/mixins.scss";
+@import '../../../config/variables';
+@import '../../../config/mixins.scss';
 
 .notification-container {
+  font-family: $font-primary;
   position: fixed;
-  top: 0;
   right: 0;
   z-index: 999;
   width: 100%;
+  @include safe-top(0px);
 }
+
 @include gt-sm {
   .notification-container {
+    top: 0;
     width: 350px;
   }
 }

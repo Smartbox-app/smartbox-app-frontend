@@ -1,79 +1,117 @@
 @import '../../../config/variables.scss';
 @import '../../../config/mixins.scss';
 
+%card-input {
+  border: 1px solid $color-disabled;
+  border-bottom: 2px solid $color-disabled;
+  padding: $main-spacing;
+  width: 100%;
+  background: #fff;
+  height: $main-spacing * 4;
+  position: relative;
+
+  &:focus {
+    border-bottom: 2px solid $color-primary;
+  }
+}
+
 .credit-card-input-wrapper {
   display: flex;
   flex-wrap: wrap;
-  background-color: lighten($color-primary, 10%);
-  border: 1px solid $color-disabled;
   border-radius: $main-spacing;
-  padding: $main-spacing;
-  width: 330px;
+  width: 100%;
+  margin: $main-spacing * 2 0;
 
-  span {
-    color: #fff;
-    font-weight: 500;
-    margin-bottom: $main-spacing/2;
-    text-transform: uppercase;
-  }
-  .row {
-    margin-bottom: $main-spacing;
-  }
-
-  label {
-    display: flex;
-    flex-direction: column;
-    margin: 0 $main-spacing/2;
-  }
-
-  input {
-    padding: $main-spacing/2 $main-spacing;
+  .input-error-wrapper {
+    position: absolute;
+    top: 50%;
+    right: $main-spacing;
+    transform: translateY(-50%);
+    color: $color-danger;
   }
 
   .card-number-wrapper {
     width: 100%;
-    margin-left: -$main-spacing/2;
-    margin-top: $main-spacing;
+    margin-top: $main-spacing * 2;
+    position: relative;
+
+    span {
+      font-size: 0.7rem;
+      color: $color-disabled;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    input {
+      @extend %card-input;
+    }
   }
 
   .user-wrapper {
-    width: 100%;
     display: flex;
-    margin-left: -$main-spacing/2;
-    margin-right: -$main-spacing/2;
+    width: 100%;
+    margin-top: $main-spacing;
+    position: relative;
 
     label {
-      width: 50%;
-      margin: 0 $main-spacing/2;
+      width: 100%;
+    }
+
+    span {
+      font-size: 0.7rem;
+      color: $color-disabled;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    input {
+      @extend %card-input;
     }
   }
 
   .expiration-date-wrapper {
-    width: 100%;
     display: flex;
-    flex-wrap: nowrap;
-    margin-left: -$main-spacing/2;
-    margin-right: -$main-spacing/2;
-    label {
-      width: 50%;
+    width: 50%;
+    margin-top: $main-spacing;
+    flex-direction: column;
+    position: relative;
+
+    span {
+      font-size: 0.7rem;
+      color: $color-disabled;
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-top: 3px;
+    }
+
+    .expiration-date {
       display: flex;
-      justify-content: flex-end;
-      margin: 0 $main-spacing/2;
+      flex-direction: row;
+      width: 100%;
+
     }
   }
 
   .cvv-wrapper {
-    margin-left: -$main-spacing/2;
-  }
-}
+    display: flex;
+    width: 50%;
+    margin-top: $main-spacing;
+    flex-direction: column;
+    position: relative;
 
-@include gt-sm {
-  .credit-card-input-wrapper {
-    width: 450px;
-    margin: 0 auto;
+    input {
+      @extend %card-input;
+      @include gt-sm{
+        margin-top: -2px;
 
-    .row {
-      margin-bottom: $main-spacing;
+      }
+    }
+
+    span {
+      font-size: 0.7rem;
+      color: $color-disabled;
+      text-transform: uppercase;
+      font-weight: 600;
     }
   }
 }

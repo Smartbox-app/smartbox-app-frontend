@@ -7,5 +7,25 @@ import * as user from './users';
 import * as order from './order';
 import * as apiTable from './api-table';
 import * as boxes from './boxes';
+import * as singleRent from './single-rent';
+import * as stock from './stock';
+import * as gate from './gate';
+import * as invitations from './invitations';
+import * as paymentStatus from './payment-status';
 
-export { appStatus, apiTable, auth, boxes, modal, notifications, lang, user, order };
+export {
+  paymentStatus,
+  appStatus,
+  apiTable,
+  auth,
+  boxes,
+  modal,
+  notifications,
+  lang,
+  user,
+  order,
+  singleRent,
+  stock,
+  gate,
+  invitations,
+};

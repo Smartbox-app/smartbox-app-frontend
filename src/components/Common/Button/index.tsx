@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import './Button.scss';
+import {__} from "../../../helpers/i18n";
 
 interface ButtonProps {
   to?: string;
@@ -11,6 +12,7 @@ interface ButtonProps {
   success?: boolean;
   outline?: boolean;
   disabled?: boolean;
+  tertiary?: boolean;
   auto?: boolean;
   type?: string;
   text: string;
@@ -35,6 +37,7 @@ const Button = (props: ButtonProps): any => {
     danger,
     primary,
     success,
+    tertiary,
     small,
     disabled,
     outline,
@@ -70,14 +73,14 @@ const Button = (props: ButtonProps): any => {
     ${outline ? 'button-outline' : ''} ${big ? 'button-big' : ''}
     ${small ? 'button-small' : ''} ${auto ? 'auto' : ''}
     ${icon ? 'with-icon' : ''} ${onlyIcon ? 'only-icon' : ''}
-    ${disabled ? 'disabled' : ''} ${rounded ? 'rounded' : ''}`;
+    ${disabled ? 'disabled' : ''} ${rounded ? 'rounded' : ''} ${tertiary ? 'button-tertiary' : ''}`;
 
   if (to) {
     if (disabled) {
       return (
         <a className={buttonClass}>
           {icon && imgComponent}
-          {!onlyIcon && text}
+          {!onlyIcon && __(text)}
         </a>
       );
     }
@@ -85,14 +88,14 @@ const Button = (props: ButtonProps): any => {
       return (
         <a target="_blank" rel="noopener noreferrer" className={buttonClass} href={to}>
           {icon && imgComponent}
-          {!onlyIcon && text}
+          {!onlyIcon && __(text)}
         </a>
       );
     }
     return (
       <Link className={buttonClass} to={to}>
         {icon && imgComponent}
-        {!onlyIcon && text}
+        {!onlyIcon && __(text)}
       </Link>
     );
   }
@@ -100,7 +103,7 @@ const Button = (props: ButtonProps): any => {
   return (
     <button type={setButtonType(type) || 'button'} disabled={disabled} onClick={click} className={buttonClass}>
       {icon && imgComponent}
-      {!onlyIcon && text}
+      {!onlyIcon && __(text)}
     </button>
   );
 };

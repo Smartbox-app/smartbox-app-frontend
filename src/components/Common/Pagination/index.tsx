@@ -2,6 +2,7 @@ import React from 'react';
 import ReactPaginate from 'react-paginate';
 
 import './Pagination.scss';
+import {__} from "../../../helpers/i18n";
 
 interface Props {
   pageCount: number;
@@ -16,8 +17,8 @@ const Pagination = ({ pageCount, initialPage, onPageChange }: Props) => {
     <ReactPaginate
       containerClassName="pagination"
       onPageChange={({ selected }) => onPageChange && onPageChange(selected + 1)}
-      previousLabel="Poprzednia"
-      nextLabel="Następna"
+      previousLabel={__('application.previous')}
+      nextLabel={__('application.next2')}
       initialPage={(initialPage || 1) - 1}
       pageCount={pageCount}
       pageRangeDisplayed={5}

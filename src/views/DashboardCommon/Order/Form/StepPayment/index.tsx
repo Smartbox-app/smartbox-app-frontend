@@ -1,82 +1,58 @@
 import React, { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
 import { withRouter } from 'react-router-dom';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { ExecutePaymentReq, UserRes, IPricingResult } from 'smartbox-types';
-import { Button } from '../../../../../components/Common';
-import { order } from '../../../../../actions';
-import { ButtonsContainer } from '../../../../../components/Layout';
-import { history } from '../../../../../App';
-import { Form } from '../../../../../reducers/order-reducer';
-import FormHeader from '../../../../../components/Layout/FormHeader';
+import { PaymentType, UserRes } from 'smartbox-types';
+import { order, paymentStatus } from '../../../../../actions';
 import UserService from '../../../../../services/user-service';
-import CreditCardInput from '../../../../../components/Common/CreditCardInput';
+import { FormType } from '../../../../../types/order-form';
 import { ApplicationState } from '../../../../../reducers';
+import { history } from '../../../../../App';
+
+import BankForm from './BankForm';
+import CreditCardForm from './CreditCardForm';
+import BlikForm from './BlikForm';
 
 import './StepPayment.scss';
 
 interface Props {
-  history: any;
-  formData: Form;
-  countedPrice: IPricingResult;
-  paymentId: string;
   user: UserRes;
-  formGoNextStep: (data: number) => void;
-  sentExecutePaymentRequest: (data: ExecutePaymentReq) => void;
+  formData: FormType;
+  selectedPayment: PaymentType;
+  resetPaymentForm: () => void;
 }
 
-const StepPayment = ({ formData, formGoNextStep, user, sentExecutePaymentRequest, paymentId }: Props) => {
+const formToRender = (selectedPayment) => {
+  switch (selectedPayment) {
+    case PaymentType.card:
+      return <CreditCardForm />;
+    case PaymentType.blik:
+      return <BankForm />; //TODO ?? Blik form gets strange error
+    case PaymentType.transfer:
+      return <BankForm />;
+    default:
+      return <CreditCardForm />;
+  }
+};
+
+const StepPayment = ({ formData, selectedPayment, user, resetPaymentForm }: Props) => {
   useEffect(() => {
-    if (formData.size.length === 0) {
-      history.push(`/${UserService.getSlugByRole(user.role)}/order/step/1`);
-      formGoNextStep(1);
+    if (!formData.size) {
+      history.push(`/${UserService.getSlugByRole(user.role)}/order/step/stock`);
     }
-  });
-  const defaultValues = {
-    cardNumber: '5214 9688 1896 5732',
-    firstName: 'Krzysiek',
-    lastName: 'Nowak',
-    month: '05',
-    year: 2021,
-    cvv: 123,
-  };
 
-  const { handleSubmit, register, errors } = useForm({ defaultValues });
-
-  const onSubmit = (data: any) => {
-    const readyData = {
-      paymentId, // TODO zebrać z poprzedniego etapu
-      name: data.firstName + data.lastName,
-      cardNumber: data.cardNumber,
-      expiryDate: data.month + data.year.slice(2),
-      cvv: data.cvv,
+    return () => {
+      resetPaymentForm();
     };
-    sentExecutePaymentRequest(readyData);
-  };
+  }, []);
 
-  const onBack = () => {
-    formGoNextStep(4);
-    history.push(`/${UserService.getSlugByRole(user.role)}/order/step/4`);
-  };
-
-  return (
-    <form onSubmit={handleSubmit(onSubmit)} className="form-step-payment">
-      <FormHeader title="Podaj dane:" />
-      <CreditCardInput register={register} errors={errors} />
-      <ButtonsContainer max>
-        <Button outline text="Wróć" click={() => onBack()} />
-        <Button type="submit" primary text="Zapłać" />
-      </ButtonsContainer>
-    </form>
-  );
+  return <>{formToRender(selectedPayment)}</>;
 };
 
 const mapStateToProps = (state: ApplicationState) => ({
   formData: state.order.formData,
-  countedPrice: state.order.countedPrice,
-  paymentId: state.order.paymentId,
+  selectedPayment: state.order.selectedPayment,
   user: state.user.details,
 });
 
@@ -84,6 +60,7 @@ const mapDispatchToProps = (dispatch: any) =>
   bindActionCreators(
     {
       ...order,
+      ...paymentStatus,
     },
     dispatch,
   );

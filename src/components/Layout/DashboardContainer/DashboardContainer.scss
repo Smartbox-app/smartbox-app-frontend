@@ -2,13 +2,21 @@
 @import '../../../config/mixins.scss';
 
 .dashboard-container {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  position: relative;
+  @include safe-padding-top(0px);
+
+  &.bg {
+    background-image: url('/assets/images/bg.jpg');
+    background-size: cover;
+  }
 }
 
 @include gt-sm {
-    .dashboard-container {
-        flex-direction: column;
-    }
+  .dashboard-container {
+    padding-top: 0;
+    flex-direction: column;
+  }
 }

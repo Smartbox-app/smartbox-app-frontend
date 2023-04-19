@@ -1,0 +1,57 @@
+import React, { useEffect, useState, useCallback } from 'react';
+
+import { Icon } from '..';
+
+import './BanneriOS.scss';
+
+const BannerIos = () => {
+  const [isIos, setIsIos] = useState<boolean>();
+  const [isComponentVisible, setComponentVisible] = useState<boolean>(false);
+
+  // Detects if device is on iOS
+  const isIosFn = useCallback(() => {
+    const userAgent = window.navigator.userAgent.toLowerCase();
+    return /iphone|ipad|ipod/.test(userAgent);
+  }, []);
+  // Detects if device is in standalone mode
+  //@ts-ignore for ios
+  const isInStandaloneMode = useCallback(() => 'standalone' in window.navigator && window.navigator.standalone, []);
+
+  useEffect(() => {
+    // Checks if should display install popup notification:
+    if (isIosFn() && !isInStandaloneMode()) {
+      setIsIos(true);
+    }
+    const displayed = !!localStorage.getItem('banner-displayed');
+    setComponentVisible(!displayed);
+  }, []);
+
+  const hide = () => {
+    localStorage.setItem('banner-displayed', 'true');
+    setComponentVisible(false);
+  };
+
+  return (
+    <div className="banner-ios">
+      {isComponentVisible && (
+        <>
+          {isIos && (
+            <div className="banner-text">
+              <div>
+                <strong>Zainstaluj aplikację</strong>. Naciśnij{' '}
+                <div className="banner-icon">
+                  <Icon icon="ios-share" noWrapper />
+                </div>{' '}
+                i "dodaj do ekranu początkowego"
+              </div>
+              <button onClick={hide} className="banner-close">
+                &times;
+              </button>
+            </div>
+          )}
+        </>
+      )}
+    </div>
+  );
+};
+export default BannerIos;

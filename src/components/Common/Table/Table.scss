@@ -10,7 +10,7 @@
 
   thead {
     font-weight: 400;
-    color: $color-text-alter;
+    color: $color-text;
     margin-bottom: $main-spacing * 2;
     height: 60px;
     font-size: 0.85rem;
@@ -56,7 +56,6 @@
 
   .sort {
     font-size: 0.75rem;
-    vertical-align: middle;
     cursor: pointer;
 
     &.active {

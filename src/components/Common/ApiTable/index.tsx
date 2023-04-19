@@ -2,7 +2,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { TableFieldSearchableValues, TableSchema, TableSchemaField } from 'smartbox-tables';
+import Flatpickr from 'react-flatpickr';
+import { FieldType, TableFieldSearchableValues, TableSchema, TableSchemaField } from 'smartbox-tables';
 import Spinner from '../Spinner';
 import Table from '../Table';
 import debounce from '../../../utils/debounce';
@@ -12,6 +13,7 @@ import { formatPrice } from '../../../utils/format-price';
 import { ApplicationState } from '../../../reducers';
 
 import './ApiTable.scss';
+import { __ } from '../../../helpers/i18n';
 
 interface SelectOption {
   value: string;
@@ -41,7 +43,8 @@ const searchComponent = (
   };
 
   const handleSearchByChange = (searchBy: string) => {
-    onSearchChange(searchBy, search.searchQuery);
+    handleSearchQueryChange('');
+    onSearchChange(searchBy, '');
   };
 
   let searchElement;
@@ -53,7 +56,12 @@ const searchComponent = (
     searchElement = null;
   } else if (searchableValues && typeof searchableValues === 'object') {
     searchElement = (
-      <select className="input" placeholder="Wybierz szukaną wartość">
+      <select
+        className="input"
+        placeholder={__('application.selectSearchedValue')}
+        onChange={(e) => handleSearchQueryChange(e.target.value)}
+      >
+        <option value={''}>{__('application.select')}</option>
         {Object.keys(searchableValues as TableFieldSearchableValues).map((key) => (
           <option value={key} key={key}>
             {searchableValues[key]}
@@ -72,12 +80,32 @@ const searchComponent = (
           ))}
       </select>
     );
+  } else if (fields.type && [FieldType.Date].includes(fields.type)) {
+    searchElement = (
+      <div className="date-fields-group">
+        <div className="filter-field">
+          <Flatpickr
+            placeholder="Wybierz datę"
+            options={{
+              defaultDate: search.searchQuery ? new Date(search.searchQuery) : undefined,
+              enableTime: false,
+
+              locale: 'pl',
+            }}
+            onChange={(date: Date[]) => {
+              if (date && date.length === 1) handleSearchQueryChange(date[0].getTime().toString());
+              else handleSearchQueryChange('');
+            }}
+          />
+        </div>
+      </div>
+    );
   } else {
     searchElement = (
       <input
         className="input"
         type="text"
-        placeholder="Wpisz szukaną wartość"
+        placeholder={__('application.typeSearchedValue')}
         value={search.searchQuery}
         onChange={(e) => handleSearchQueryChange(e.target.value)}
       />
@@ -86,11 +114,11 @@ const searchComponent = (
 
   return (
     <div className="search-box">
-      <h4>Wyszukiwanie</h4>
+      <h3>{__('application.search')}</h3>
       <div className="search-fields">
         <div className="search-field">
           <select className="input" value={search.searchBy} onChange={(e) => handleSearchByChange(e.target.value)}>
-            <option value="">Wybierz pole, które chcesz przeszukać</option>
+            <option value="">{__('application.chooseFieldToSearch')}</option>
             {allFields
               .filter((field) => field.searchable === true)
               .map((field) => (
@@ -133,6 +161,11 @@ class ApiTable<T> extends Component<Props> {
       this.state.searchBy = defaultSearchField.field;
       this.state.searchQuery = String(defaultSearchField.defaultSearch);
     }
+    const defaultSortFieldield = this.props.scheme.fields.find((f) => f.defaultSort === true) as TableSchemaField;
+    if (defaultSortFieldield) {
+      this.state.sortBy = defaultSortFieldield.field;
+      this.state.sortDirBack = defaultSortFieldield.oppositeSortDir === true;
+    }
   }
 
   private buildUrl(): string {
@@ -161,7 +194,7 @@ class ApiTable<T> extends Component<Props> {
       const field = scheme.fields.find((f) => f.defaultSort === true) as TableSchemaField;
       return {
         sortBy: field.field,
-        sortDirBack: field.oppositeSortDir !== true,
+        sortDirBack: field.oppositeSortDir === true,
       };
     }
   }
@@ -171,8 +204,10 @@ class ApiTable<T> extends Component<Props> {
   }
 
   componentDidUpdate(prevProps: Props) {
-    if (this.props.data.uuid !== prevProps.data.uuid) {
-      this.fetch();
+    if (this.props.data.uuid) {
+      if (this.props.data.uuid !== prevProps.data.uuid) {
+        this.fetch();
+      }
     }
   }
 
@@ -249,19 +284,6 @@ class ApiTable<T> extends Component<Props> {
             this.props.selectSearchByOption,
           )}
         {table}
-        {data && data.totalValue >= 0 && (
-          <div>
-            <span>
-              Podsumowanie tabeli:
-              <p>
-                Łączna wartość: <strong>{formatPrice(data.totalValue)}</strong>
-              </p>
-              <p>
-                Łączna brakująca kwota: <strong>{formatPrice(data.totalToPay)}</strong>
-              </p>
-            </span>
-          </div>
-        )}
       </>
     );
   }
