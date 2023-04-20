@@ -1,65 +1,53 @@
 import React, { useEffect, useState } from 'react';
-import { connect } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import { ReactSVG } from 'react-svg';
 import { bindActionCreators } from 'redux';
-import { Coordinate, UserRes } from 'smartbox-types';
-import { Button } from '../../../../components/Common';
+import { Coordinate } from 'smartbox-types';
+import { Button, Spinner } from '../../../../components/Common';
 import { __ } from '../../../../helpers/i18n';
 import { ApplicationState } from '../../../../reducers';
-import { gate } from '../../../../actions';
+import { gate, modal } from '../../../../actions';
 import { isUser } from '../../../../utils/role-check';
 
 import './Gate.scss';
+import { OpenGateByForceModal } from '../../../../components/Common/OpenGateByForceModal';
 
 interface Props {
-    startAnimation: boolean;
-    user: UserRes;
     stockId: string;
-    askGateToOpen: (geo: Coordinate) => void;
-    askGateToOpenStuff: (stockId: string) => void;
-    gateOpenStartAnimation: (open?: boolean) => void;
 }
 
-const Gate = ({ startAnimation, user, stockId, askGateToOpen, askGateToOpenStuff, gateOpenStartAnimation }: Props) => {
-    const [geoCoord, setGeoCoord] = useState({
-        lon: '0',
-        lat: '0',
-    });
+const Gate = ({ stockId }: Props) => {
+    const dispatch = useDispatch();
+    const user = useSelector((state: ApplicationState) => state.user.details);
+    const startAnimation = useSelector((state: ApplicationState) => state.gate.startAnimation);
+    const [loading, setLoading] = useState<boolean>(false);
 
-    const showPosition = (position: any) => {
+    const openGateByLocation = (position: any) => {
         const location: Coordinate = {
             lon: position.coords.longitude,
             lat: position.coords.latitude,
         };
-        setGeoCoord(location);
+        dispatch(gate.askGateToOpen(stockId, location));
+        setLoading(false);
     };
 
-    const getLocation = () => {
+    const handleError = () => {
+        dispatch(modal.showModal(<OpenGateByForceModal cantRead stockId={stockId} latlon={{ lat: '0', lon: '0' }} />))
+        setLoading(false);
+    }
+
+    const tryToOpenGateByLocation = () => {
         if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(showPosition);
+            navigator.geolocation.getCurrentPosition(openGateByLocation, handleError);
         } else {
-            console.log('Geo Location is not supported by browser');
+            dispatch(modal.showModal(<OpenGateByForceModal notSupported stockId={stockId} latlon={{ lat: '0', lon: '0' }} />))
+            setLoading(false);
         }
     };
 
     useEffect(() => {
-        isUser(user.role) && getLocation();
-    }, []);
-
-    useEffect(() => {
-        gateOpenStartAnimation(false);
-        setGeoCoord({
-            lat: '0',
-            lon: '0'
-        })
+        dispatch(gate.gateOpenStartAnimation(false));
     }, [stockId])
-
-    const noGpsCords = (
-        <div className="no-gps-cords">
-            <ReactSVG src="/assets/images/Group37.svg" />
-            <span>{__('application.shareYourLoc')}</span>
-        </div>
-    );
 
     const getButtonText = () => {
         if (startAnimation) {
@@ -69,8 +57,19 @@ const Gate = ({ startAnimation, user, stockId, askGateToOpen, askGateToOpenStuff
         return isUser(user.role) ? 'application.openGate' : 'application.openGateStuff';
     };
 
+    const handleClick = () => {
+        setLoading(true);
+        if (!isUser(user.role)) {
+            dispatch(gate.askGateToOpenByStaff(stockId))
+            setLoading(false);
+        } else {
+            tryToOpenGateByLocation();
+        }
+    }
+
     const gateOpenningAnimation = (
         <div className="gate-animation">
+            {loading && <Spinner overlay halfTransparent />}
             <ReactSVG src={`${startAnimation ? '/assets/images/Group46.svg' : '/assets/images/Group39.svg'}`} />
             <div className="slide-to-open">
                 <Button
@@ -78,7 +77,7 @@ const Gate = ({ startAnimation, user, stockId, askGateToOpen, askGateToOpenStuff
                     big
                     type='button'
                     primary
-                    click={() => (isUser(user.role) ? askGateToOpen(geoCoord) : askGateToOpenStuff(stockId))}
+                    click={handleClick}
                     disabled={isUser(user.role) ? startAnimation : false}
                 />
             </div>
@@ -89,7 +88,7 @@ const Gate = ({ startAnimation, user, stockId, askGateToOpen, askGateToOpenStuff
     }
     return (
         <div className="open-gate-wrapper">
-            <div className="animation-wrapper">{geoCoord.lat === '0' ? noGpsCords : gateOpenningAnimation}</div>
+            <div className="animation-wrapper">{gateOpenningAnimation}</div>
         </div>
     );
 };

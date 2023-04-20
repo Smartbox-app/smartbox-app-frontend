@@ -1,28 +1,27 @@
 {
   "files": {
-    "main.css": "/static/css/main.3c8c6904.chunk.css",
-    "main.js": "/static/js/main.14751624.chunk.js",
-    "main.js.map": "/static/js/main.14751624.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.4d2a1434.js",
-    "runtime-main.js.map": "/static/js/runtime-main.4d2a1434.js.map",
-    "static/css/2.1c0efb29.chunk.css": "/static/css/2.1c0efb29.chunk.css",
-    "static/js/2.c54562f9.chunk.js": "/static/js/2.c54562f9.chunk.js",
-    "static/js/2.c54562f9.chunk.js.map": "/static/js/2.c54562f9.chunk.js.map",
+    "main.css": "/static/css/main.8ff6594a.chunk.css",
+    "main.js": "/static/js/main.6f176ba9.chunk.js",
+    "main.js.map": "/static/js/main.6f176ba9.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.c8540731.js",
+    "runtime-main.js.map": "/static/js/runtime-main.c8540731.js.map",
+    "static/css/2.7269b20c.chunk.css": "/static/css/2.7269b20c.chunk.css",
+    "static/js/2.a5e150ec.chunk.js": "/static/js/2.a5e150ec.chunk.js",
+    "static/js/2.a5e150ec.chunk.js.map": "/static/js/2.a5e150ec.chunk.js.map",
     "index.html": "/index.html",
-    "precache-manifest.dd0fb731d2ae5469eaff8e211ea46b60.js": "/precache-manifest.dd0fb731d2ae5469eaff8e211ea46b60.js",
+    "precache-manifest.167ff585e618b08e1af475d6a5ed09fd.js": "/precache-manifest.167ff585e618b08e1af475d6a5ed09fd.js",
     "service-worker.js": "/service-worker.js",
-    "static/css/2.1c0efb29.chunk.css.map": "/static/css/2.1c0efb29.chunk.css.map",
-    "static/css/main.3c8c6904.chunk.css.map": "/static/css/main.3c8c6904.chunk.css.map",
-    "static/js/2.c54562f9.chunk.js.LICENSE.txt": "/static/js/2.c54562f9.chunk.js.LICENSE.txt",
+    "static/css/2.7269b20c.chunk.css.map": "/static/css/2.7269b20c.chunk.css.map",
+    "static/css/main.8ff6594a.chunk.css.map": "/static/css/main.8ff6594a.chunk.css.map",
+    "static/js/2.a5e150ec.chunk.js.LICENSE.txt": "/static/js/2.a5e150ec.chunk.js.LICENSE.txt",
     "static/media/font-awesome.min.css": "/static/media/fontawesome-webfont.fee66e71.woff",
-    "static/media/nowa_mapa.c2a6aa95.svg": "/static/media/nowa_mapa.c2a6aa95.svg",
     "static/media/slick-theme.css": "/static/media/slick.f97e3bbf.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.4d2a1434.js",
-    "static/css/2.1c0efb29.chunk.css",
-    "static/js/2.c54562f9.chunk.js",
-    "static/css/main.3c8c6904.chunk.css",
-    "static/js/main.14751624.chunk.js"
+    "static/js/runtime-main.c8540731.js",
+    "static/css/2.7269b20c.chunk.css",
+    "static/js/2.a5e150ec.chunk.js",
+    "static/css/main.8ff6594a.chunk.css",
+    "static/js/main.6f176ba9.chunk.js"
   ]
 }

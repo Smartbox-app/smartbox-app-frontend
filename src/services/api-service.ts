@@ -48,7 +48,7 @@ export default class ApiService {
             history.push('/');
           } else {
             dispatch({ type: failedAction, payload: data.result });
-            if (failedCb) failedCb();
+            if (failedCb) failedCb(data);
             dispatch(notifications.errorNotification(data.error_code));
             dispatch({ type: loadingAction, payload: false });
           }

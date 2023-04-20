@@ -200,6 +200,10 @@
       "40": {
         "text": "Niepoprawna stawka podatku!",
         "__type_alias_do_not_touch": "ApiErrorCode.InvalidTaxValue"
+      },
+      "41": {
+        "text": "Błąd połączenia z bramą!",
+        "__type_alias_do_not_touch": "ApiErrorCode.ErrorConnectingToGate"
       }
     }
   }

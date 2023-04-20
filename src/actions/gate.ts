@@ -1,38 +1,64 @@
-import { Coordinate } from 'smartbox-types';
+import React from 'react';
+import { ApiErrorCode, Coordinate } from 'smartbox-types';
 import ApiService from '../services/api-service';
 import { successNotification } from './notifications';
+import { modal } from '.';
+import { OpenGateByForceModal } from '../components/Common/OpenGateByForceModal';
 
-export const gateOpenStartAnimation = (open:boolean = true) => ({ type: 'GATE_OPEN_START_ANIMATION', payload: open });
+export const gateOpenStartAnimation = (open: boolean = true) => ({ type: 'GATE_OPEN_START_ANIMATION', payload: open });
 
-export const askGateToOpen = (geo: Coordinate) => async (dispatch: any) => {
-  await ApiService.patch(
-    dispatch,
-    'ASK_GATE_TO_OPEN_SUCCESS',
-    'ASK_GATE_TO_OPEN_FAILED',
-    () => {
-      dispatch(successNotification("notification.gateOpening"));
-      dispatch(gateOpenStartAnimation());
-    },
-    null,
-    `stock/open-gate/${geo.lat}/${geo.lon}`,
-    'LOADING',
-    geo,
-  );
+export const askGateToOpen = (stockId: string, geo: Coordinate) => async (dispatch: any) => {
+    await ApiService.patch(
+        dispatch,
+        'ASK_GATE_TO_OPEN_SUCCESS',
+        'ASK_GATE_TO_OPEN_FAILED',
+        () => {
+            dispatch(successNotification("notification.gateOpening"));
+            dispatch(gateOpenStartAnimation());
+        },
+        (result) => {
+            if (result.error_code === ApiErrorCode.UAreTooFarAway) {
+                dispatch(modal.showModal(React.createElement(OpenGateByForceModal, {
+                    stockId,
+                    latlon: geo,
+                    tooFarAway: true
+                })))
+            }
+        },
+        `stock/open-gate/${stockId}/${geo.lat}/${geo.lon}`,
+        'LOADING',
+        geo,
+    );
 };
 
-export const askGateToOpenStuff = (stockId: string) => async (dispatch: any) => {
-  await ApiService.patch(
-    dispatch,
-    'ASK_GATE_TO_OPEN_SUCCESS',
-    'ASK_GATE_TO_OPEN_FAILED',
-    () => {
-      dispatch(successNotification("notification.gateRemoteOpening"));
-      dispatch(gateOpenStartAnimation());
-    },
-    () => {
-      dispatch(successNotification("notification.gateRemoteOpeningError"));
-    },
-    `stock/open-gate-by-staff/${stockId}`,
-    'LOADING',
-  );
+export const askGateToOpenByForce = (stockId: string, geo: Coordinate) => async (dispatch: any) => {
+    await ApiService.patch(
+        dispatch,
+        'ASK_GATE_TO_OPEN_SUCCESS',
+        'ASK_GATE_TO_OPEN_FAILED',
+        () => {
+            dispatch(successNotification("notification.gateOpening"));
+            dispatch(gateOpenStartAnimation());
+        },
+        null,
+        `stock/open-gate-by-force//${stockId}/${geo.lat}/${geo.lon}`,
+        'LOADING',
+    );
+};
+
+export const askGateToOpenByStaff = (stockId: string) => async (dispatch: any) => {
+    await ApiService.patch(
+        dispatch,
+        'ASK_GATE_TO_OPEN_SUCCESS',
+        'ASK_GATE_TO_OPEN_FAILED',
+        () => {
+            dispatch(successNotification("notification.gateRemoteOpening"));
+            dispatch(gateOpenStartAnimation());
+        },
+        () => {
+            dispatch(successNotification("notification.gateRemoteOpeningError"));
+        },
+        `stock/open-gate-by-staff/${stockId}`,
+        'LOADING',
+    );
 };
