@@ -39,7 +39,7 @@
     font-size: 0.9rem;
 
     @include gt-sm {
-      flex: 0 1 auto;
+      flex: 0 1 33.3333%;
     }
 
     &.ok {
