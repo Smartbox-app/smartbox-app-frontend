@@ -10,6 +10,7 @@ import { history } from '../../../../../App';
 import { ReactSelectOverride } from '../../../../../components/Common/ReactSelectOverride';
 import { successNotification } from '../../../../../actions/notifications';
 import { useParams } from 'react-router';
+import { mapFields } from '../../../../../utils/fields-mapper';
 
 
 const Settings = () => {
@@ -40,6 +41,7 @@ const Settings = () => {
                         dispatch(successNotification('notification.stockUpdatedCorrectly'));
                         history.push('/admin/stocks');
                     }}
+                    onRenderFullField={mapFields}
                     onTranslateString={formOnTranslateString}
                     thirdPartyComponents={{ ReactSelect: ReactSelectOverride, ReactCreatableSelect }}
                 />

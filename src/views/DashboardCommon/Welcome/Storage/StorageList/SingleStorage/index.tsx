@@ -7,7 +7,7 @@ import { __ } from '../../../../../../helpers/i18n';
 
 import './SingleStorage.scss';
 import { useSelector } from 'react-redux';
-import { ApplicationState } from 'src/reducers';
+import { ApplicationState } from '../../../../../../reducers';
 
 interface Props {
     single: MyRentList;

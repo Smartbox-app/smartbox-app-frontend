@@ -331,7 +331,15 @@
             "tenantUnblocked": "Odblokowano franczyzobiorcę",
             "selectOrDragFile": "Upuść plik tutaj lub kliknij aby wybrać.",
             "slides": "Slajdy",
-            "addNextFile": "Dodaj kolejny plik"
+            "addNextFile": "Dodaj kolejny plik",
+            "addBox": "Dodaj skrytkę",
+            "editBox": "Edytuj skrytkę",
+            "boxDeleted": "Usunięto skrytkę",
+            "boxAdded": "Dodano skrytkę",
+            "boxEdited": "Edytowano skrytkę",
+            "deleteBoxText": "Czy na pewno chcesz usunąć skrytkę?",
+            "boxesList": "Lista skrytek",
+            "map": "Mapa"
         },
         "settings": {
             "tax": "Stawka VAT",

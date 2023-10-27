@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchMyData } from '../../actions/users';
-import { ApplicationState } from 'src/reducers';
+import { ApplicationState } from '../../reducers';
 import { getTenantById } from '../../actions/tenant';
 
 interface Props {

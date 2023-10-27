@@ -11,7 +11,7 @@ import { InteractiveTableSchema } from '../../../../utils/table-schema-utils';
 import { modal, user } from '../../../../actions';
 import UserDetail from './UserDetail';
 import UserEdit from "./UserEdit";
-import { ApplicationState } from 'src/reducers';
+import { ApplicationState } from '../../../../reducers';
 import UserService from '../../../../services/user-service';
 
 interface Props {

@@ -5,7 +5,7 @@ import { List } from './List';
 import { Manage } from './Manage';
 import UserService from '../../../services/user-service';
 import { useSelector } from 'react-redux';
-import { ApplicationState } from 'src/reducers';
+import { ApplicationState } from '../../../reducers';
 // import Edit from './Edit';
 
 const Stocks = () => {

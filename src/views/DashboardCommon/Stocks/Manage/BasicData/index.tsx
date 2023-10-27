@@ -10,6 +10,7 @@ import { history } from '../../../../../App';
 import { ReactSelectOverride } from '../../../../../components/Common/ReactSelectOverride';
 import { successNotification } from '../../../../../actions/notifications';
 import { useParams } from 'react-router';
+import { mapFields } from '../../../../../utils/fields-mapper';
 
 
 const BasicData = () => {
@@ -36,6 +37,7 @@ const BasicData = () => {
                     schemaFetcher={() => ApiService.loadForm(fetchUrl)}
                     sendFetcher={(formId: string, values: any) => ApiService.sendForm(sendUrl, values, 'PATCH')}
                     submitButton={submitButton}
+                    onRenderFullField={mapFields}
                     onSavedSuccessfully={() => {
                         dispatch(successNotification('notification.stockUpdatedCorrectly'));
                         history.push('/admin/stocks');

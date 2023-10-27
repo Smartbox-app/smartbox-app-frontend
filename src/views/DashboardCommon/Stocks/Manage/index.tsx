@@ -4,8 +4,10 @@ import { PageHeader, ButtonsContainer, Section } from '../../../../components/La
 import { Button, Tabs } from '../../../../components/Branded';
 import { Route, Switch, useParams } from 'react-router';
 import UserService from '../../../../services/user-service';
-import { ApplicationState } from 'src/reducers';
+import { ApplicationState } from '../../../..//reducers';
 import { BasicData } from './BasicData';
+import { Boxes } from './Boxes';
+import { Map } from './Map';
 
 
 const Manage = () => {
@@ -27,22 +29,27 @@ const Manage = () => {
                         to: `/${UserService.getSlugByRole(user.role)}/stocks/${stockId}`,
                         text: 'application.stockBasicData',
                     },
-                    {
-                        to: `/${UserService.getSlugByRole(user.role)}/stocks/${stockId}/settings`,
-                        text: 'application.stockSettings',
-                    },
+                    // {
+                    //     to: `/${UserService.getSlugByRole(user.role)}/stocks/${stockId}/settings`,
+                    //     text: 'application.stockSettings',
+                    // },
                     {
                         to: `/${UserService.getSlugByRole(user.role)}/stocks/${stockId}/boxes`,
                         text: 'application.stockBoxes',
+                    },
+                    {
+                        to: `/${UserService.getSlugByRole(user.role)}/stocks/${stockId}/map`,
+                        text: 'application.map',
                     },
 
                 ]}
             />
 
             <Switch>
-                <Route path={`/${UserService.getSlugByRole(user.role)}/stocks/:stockId`} component={BasicData} />
+                <Route exact path={`/${UserService.getSlugByRole(user.role)}/stocks/:stockId`} component={BasicData} />
                 <Route path={`/${UserService.getSlugByRole(user.role)}/stocks/:stockId/settings`} component={BasicData} />
-                <Route path={`/${UserService.getSlugByRole(user.role)}/stocks/:stockId/boxes`} component={BasicData} />
+                <Route path={`/${UserService.getSlugByRole(user.role)}/stocks/:stockId/boxes`} component={Boxes} />
+                <Route path={`/${UserService.getSlugByRole(user.role)}/stocks/:stockId/map`} component={Map} />
             </Switch>
 
         </Section>

@@ -5,7 +5,7 @@ import { UserRole, UserRes } from 'smartbox-types';
 import { bindActionCreators } from 'redux';
 import { stock, user } from '../../../actions';
 import { rememberRedirect } from '../../../utils/remeber-redirect';
-import { ApplicationState } from 'src/reducers';
+import { ApplicationState } from '../../../reducers';
 
 interface Props {
     component: any;

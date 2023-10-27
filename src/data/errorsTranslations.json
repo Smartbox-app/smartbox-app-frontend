@@ -221,6 +221,10 @@
             "45": {
                 "text": "Nie znaleziono takiego wynajmującego!",
                 "__type_alias_do_not_touch": "ApiErrorCode.TenantDoesNotExist"
+            },
+            "46": {
+                "text": "Nie możesz usunąć skrytki która nie jest pusta!",
+                "__type_alias_do_not_touch": "ApiErrorCode.CanNotDeleteNotEmptyBox"
             }
         }
     }

@@ -4,7 +4,7 @@ import Add from '../AddUser';
 import List from './List';
 import UserService from '../../../services/user-service';
 import { useSelector } from 'react-redux';
-import { ApplicationState } from 'src/reducers';
+import { ApplicationState } from '../../../reducers';
 
 const UsersManagement = () => {
   const user = useSelector((state: ApplicationState) => state.user.details);
