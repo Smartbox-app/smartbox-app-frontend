@@ -1,3 +1,4 @@
+@use "sass:math";
 @import '../../../../../../config/variables';
 @import '../../../../../../config/mixins';
 
@@ -23,7 +24,7 @@
   display: flex;
   flex-direction: column;
   white-space: nowrap;
-  margin: $main-spacing / 2 0;
+  margin: math.div($main-spacing, 2) 0;
   background: lighten($color-background, 10%);
   cursor: pointer;
   text-align: center;

@@ -4,22 +4,23 @@ import { bindActionCreators } from 'redux';
 import { Redirect } from 'react-router-dom';
 import { ItfApiForm } from 'itf_formbuilder_react';
 import { UserRole, AuthLoginRequest, AuthLoginResult, UserRes } from 'smartbox-types';
-import { Spinner, Input, Logo } from '../../../components/Common';
+import { Input } from '../../../components/Common';
+import { Logo, Spinner, PageContent } from '../../../components/Branded';
 import { auth, notifications } from '../../../actions';
 import ApiService from '../../../services/api-service';
-import { translateErrors } from '../../../utils/errors-trans';
 import { getRememberedRedirect, clearRememberedRedirect } from '../../../utils/remeber-redirect';
 import { store } from '../../../App';
 import { formOnTranslateString } from '../../../utils/trans-form';
-import { FormContainer, PageContent } from '../../../components/Layout';
+import { FormContainer } from '../../../components/Layout';
 import { ApplicationState } from '../../../reducers';
+import { mapFieldsBig } from '../../../utils/fields-mapper';
 
 import ButtonsSection from './ButtonSection';
 
 import './Login.scss';
 
 interface Props {
-  user: UserRes;
+  user: UserRes | null;
   loading: boolean;
   login: (userData: AuthLoginRequest) => void;
   saveUser: (userData: AuthLoginResult) => void;
@@ -36,6 +37,8 @@ class Login extends React.Component<Props> {
         return <Redirect to="/user" />;
       case UserRole.worker:
         return <Redirect to="/worker" />;
+      case UserRole.client:
+        return <Redirect to="/client" />;
       default:
         return null;
     }
@@ -75,31 +78,7 @@ class Login extends React.Component<Props> {
             schemaFetcher={() => ApiService.loadForm('auth/form/login')}
             sendFetcher={(formId: string, values: AuthLoginRequest) => ApiService.sendForm('auth/login', values)}
             submitButton={<ButtonsSection />}
-            onRenderFullField={(field, errors, fieldHtmlId, currentValue, onChange, onFocus, onBlur) => {
-              switch (field.type) {
-                case 'text':
-                  return (
-                    <Input
-                      key={fieldHtmlId}
-                      className="login-input"
-                      type={field.options.type}
-                      input={{
-                        label: formOnTranslateString(field.title),
-                        name: fieldHtmlId,
-                        id: fieldHtmlId,
-                        placeholder: field.placeholder,
-                        errors: translateErrors(errors),
-                        value: currentValue,
-                        onChange: (e: any) => onChange(e.target.value),
-                        onFocus,
-                        onBlur,
-                      }}
-                    />
-                  );
-                default:
-                  return null;
-              }
-            }}
+            onRenderFullField={mapFieldsBig}
             onSavedSuccessfully={(data: AuthLoginResult) => {
               successNotification('notification.logInSuccess');
               store.dispatch(saveUser(data));

@@ -1,7 +1,8 @@
 /* eslint-disable */
 import React from 'react';
 import { FieldType, TableResponse, TableSchema, TableSchemaField } from 'smartbox-tables';
-import { Button, Alert, Pagination } from '../../Common';
+import { Alert, Pagination } from '../../Common';
+import { Button } from '../../Branded';
 import { formatPrice } from '../../../utils/format-price';
 
 import './Table.scss';

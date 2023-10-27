@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux';
 import { UserRes, BoxGroupAvailability, StockList } from 'smartbox-types';
 import { order, stock } from '../../../../../actions';
 import { FormContainer, ButtonsContainer } from '../../../../../components/Layout';
-import { Button } from '../../../../../components/Common';
+import { Button } from '../../../../../components/Branded';
 import SingleOption from './SingleOption';
 import { FormType } from '../../../../../types/order-form';
 import { ApplicationState } from '../../../../../reducers';
@@ -22,7 +22,7 @@ interface RouteProps {
 interface Props extends RouteComponentProps<RouteProps> {
     history: any;
     formData: FormType;
-    user: UserRes;
+    user: UserRes | null;
     boxAvailability: BoxGroupAvailability[];
     list: StockList[];
     clearOrderAgreement: () => void;
@@ -40,7 +40,8 @@ const StepSize = ({
     getStockList
 }: Props) => {
     useEffect(() => {
-        if(!formData.size) {
+        if (!user) return;
+        if (!formData.size) {
             history.push(`/${UserService.getSlugByRole(user.role)}/main`);
         }
         clearOrderAgreement();
@@ -53,6 +54,7 @@ const StepSize = ({
     const { register, handleSubmit, watch } = useForm({ defaultValues });
 
     const onSubmit = async (data: Partial<FormType>) => {
+        if (!user) return;
         const discount = list.find(stock => stock.id === data.stock)?.discount;
         updateFormData({ ...data, discount });
         await getStockList(); //waiting for fetch list with stock discount before load data to discount variable in next step

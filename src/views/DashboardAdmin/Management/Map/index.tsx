@@ -9,6 +9,9 @@ import StockSelect from '../StockSelect';
 
 const MapManagement = () => {
     const user = useSelector((state: ApplicationState) => state.user.details);
+
+    if (!user) return null;
+
     const handleStockChange = (stockId: string) => {
         history.push(`/${UserService.getSlugByRole(user.role)}/management/map/${stockId}`)
     }

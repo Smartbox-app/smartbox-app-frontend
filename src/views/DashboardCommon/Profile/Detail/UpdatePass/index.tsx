@@ -1,13 +1,12 @@
 import React from 'react';
 import { ItfApiForm } from 'itf_formbuilder_react';
 import { connect } from 'react-redux';
-import ReactSelect from 'react-select';
 import ReactCreatableSelect from 'react-select/creatable';
 import { bindActionCreators } from 'redux';
 import { AddGiftReq } from 'smartbox-types';
 import { modal, notifications } from '../../../../../actions';
 import { FormContainer, ButtonsContainer, FormHeader, FieldsColumn } from '../../../../../components/Layout';
-import { Button, Spinner } from '../../../../../components/Common';
+import { Button, Spinner } from '../../../../../components/Branded';
 import ApiService from '../../../../../services/api-service';
 import { formOnTranslateString } from '../../../../../utils/trans-form';
 import { ReactSelectOverride } from '../../../../../components/Common/ReactSelectOverride';

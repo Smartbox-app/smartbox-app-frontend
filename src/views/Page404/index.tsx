@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Button } from '../../components/Common';
+import { Button } from '../../components/Branded';
 import { ButtonsContainer } from '../../components/Layout';
 import { __ } from '../../helpers/i18n';
 

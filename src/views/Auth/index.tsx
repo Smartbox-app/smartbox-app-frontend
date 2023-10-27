@@ -5,5 +5,6 @@ import RestorePass from './RestorePass';
 import UserActivation from './UserActivation';
 import EmailSend from './EmailSend';
 import GoogleAuth from './GoogleAuth';
+import { TenantActivation } from './TenantActivation';
 
-export { GoogleAuth, EmailConfirm, UserActivation, Login, Register, RestorePass, EmailSend };
+export { GoogleAuth, EmailConfirm, UserActivation, Login, Register, RestorePass, EmailSend, TenantActivation };

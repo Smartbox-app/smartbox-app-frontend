@@ -1,3 +1,4 @@
+@use "sass:math";
 @import '../../../config/variables.scss';
 @import '../../../config/mixins.scss';
 
@@ -12,13 +13,13 @@
   left: 0;
   width: 100%;
   z-index: 999999;
-  box-shadow: 0 0 $main-spacing / 2 $main-spacing / 4 rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 math.div($main-spacing, 2) math.div($main-spacing, 4) rgba(0, 0, 0, 0.5);
   @include safe-top(0);
   &:hover {
     background-color: lighten($color-primary, 10%);
   }
 
   .update-info-icon {
-    margin-right: $main-spacing / 4;
+    margin-right: math.div($main-spacing, 4);
   }
 }

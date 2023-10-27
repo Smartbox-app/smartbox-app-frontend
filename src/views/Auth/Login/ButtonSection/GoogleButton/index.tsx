@@ -1,7 +1,7 @@
 import React from 'react';
 import { __ } from '../../../../../helpers/i18n';
 
-import { Button } from '../../../../../components/Common';
+import { Button } from '../../../../../components/Branded';
 import ApiService from '../../../../../services/api-service';
 
 import './GoogleButton.scss';

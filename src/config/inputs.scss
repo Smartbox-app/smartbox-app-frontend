@@ -1,3 +1,4 @@
+@use "sass:math";
 @import './variables';
 
 %input-base-bordering {
@@ -55,7 +56,7 @@
 .form-field-errors {
   color: lighten($color-danger, 20%);
   font-size: 0.85rem;
-  margin-top: $main-spacing / 4;
+  margin-top: math.div($main-spacing, 4);
 }
 
 .input-container {
@@ -75,7 +76,7 @@
   }
   .input-wrapper {
     position: relative;
-    margin-bottom: $main-spacing / 4;
+    margin-bottom: math.div($main-spacing, 4);
     width: 100%;
     //display: flex;
     //justify-content: center;
@@ -114,7 +115,7 @@ select,
 
 .input-autocomplete-option {
   margin-left: 5px;
-  padding: $main-spacing / 2 $main-spacing;
+  padding: math.div($main-spacing, 2) $main-spacing;
   cursor: pointer;
   background-color: lighten($color-background, 20%);
 
@@ -271,7 +272,6 @@ textarea {
   }
 
   [class*='menu'] {
-    margin: $main-spacing / 2 0 0;
     border-radius: 0;
     padding: 0;
     font-family: $font-primary;

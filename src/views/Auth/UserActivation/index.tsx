@@ -8,11 +8,13 @@ import { notifications, auth } from '../../../actions';
 import { ApplicationState } from '../../../reducers';
 import ApiService from '../../../services/api-service';
 
-import { Spinner, Button, Logo } from '../../../components/Common';
+import { Spinner, Button, PageContent } from '../../../components/Branded';
+import { Logo } from '../../../components/Branded';
 import { formOnTranslateString } from '../../../utils/trans-form';
-import { FormContainer, ButtonsContainer, PageContent, PageHeader } from '../../../components/Layout';
+import { FormContainer, ButtonsContainer, PageHeader } from '../../../components/Layout';
 import { history } from '../../../App';
 import { __ } from '../../../helpers/i18n';
+import { mapFieldsBig } from '../../../utils/fields-mapper';
 
 interface Props {
   match: any;
@@ -64,6 +66,7 @@ const UserActivation = ({ successNotification, match, logout, userRole }: Props)
           sendFetcher={customSendFetcher}
           submitButton={subButton}
           onSavedSuccessfully={success}
+          onRenderFullField={mapFieldsBig}
           onTranslateString={formOnTranslateString}
         />
       </FormContainer>

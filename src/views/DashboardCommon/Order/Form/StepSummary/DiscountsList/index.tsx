@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 
 import FormHeader from '../../../../../../components/Layout/FormHeader';
 import { ButtonsContainer } from '../../../../../../components/Layout';
-import { Button } from '../../../../../../components/Common';
+import { Button } from '../../../../../../components/Branded';
 import { modal, notifications, order } from '../../../../../../actions';
 import { __ } from '../../../../../../helpers/i18n';
 import { ApplicationState } from '../../../../../../reducers';
@@ -12,7 +12,6 @@ import { ApplicationState } from '../../../../../../reducers';
 import DiscountCode from './DiscountCode';
 
 import './DiscountsList.scss';
-import { resetDiscountCode } from '../../../../../../actions/order';
 
 interface Props {
   countedPrice: {

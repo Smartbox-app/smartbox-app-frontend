@@ -1,3 +1,4 @@
+@use "sass:math";
 @import '../../../../../../../config/variables.scss';
 @import '../../../../../../../config/mixins.scss';
 
@@ -6,7 +7,7 @@ $discount-height: 50px;
 
 .radio-discount-wrapper {
   background: #fff;
-  margin: $main-spacing/2 $main-spacing;
+  margin: math.div($main-spacing, 2) $main-spacing;
   padding: $main-spacing /4;
   box-shadow: 0 0 3px 3px lighten($color-disabled, 30%);
   cursor: default;
@@ -20,7 +21,7 @@ $discount-height: 50px;
     bottom: 0;
     content: '';
     display: block;
-    border-radius: $main-spacing/4;
+    border-radius: math.div($main-spacing, 4);
     box-shadow: 0 0 3px 3px lighten($color-primary, 30%);
   }
 

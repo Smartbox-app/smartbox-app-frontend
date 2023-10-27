@@ -1,36 +1,34 @@
 import React, { useEffect } from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { UserRole, UserRes } from 'smartbox-types';
+import { connect, useSelector } from 'react-redux';
+import { UserRole } from 'smartbox-types';
 import { bindActionCreators } from 'redux';
 import { stock } from '../../../actions';
 import { rememberRedirect } from '../../../utils/remeber-redirect';
 import { ApplicationState } from '../../../reducers';
 
 interface Props {
-  user: UserRes;
-  getStockList: () => void;
-  component: any;
-  exact?: boolean;
-  path?: string;
+    getStockList: () => void;
+    component: any;
+    exact?: boolean;
+    path?: string;
 }
 
-const RouteAdmin = ({ user, exact, path, component, getStockList }: Props) => {
-  useEffect(() => {
-    getStockList();
-  }, []);
+const RouteAdmin = ({  exact, path, component, getStockList }: Props) => {
+    const user = useSelector((state: ApplicationState) => state.user.details);
 
-  if (!user || user.role !== UserRole.admin) {
-    return <Route render={() => <Redirect to="/" />} />;
-  }
-  rememberRedirect(UserRole.admin);
-  return <Route exact={exact} path={path} component={component} />;
+    useEffect(() => {
+        getStockList();
+    }, []);
+
+    if (!user || user.role !== UserRole.admin) {
+        return <Route render={() => <Redirect to="/" />} />;
+    }
+    rememberRedirect(UserRole.admin);
+    return <Route exact={exact} path={path} component={component} />;
 };
 
-const mapStateToProps = (state: ApplicationState) => ({
-  user: state.user.details,
-});
 
 const mapDispatchToProps = (dispatch: any) => bindActionCreators({ ...stock }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(RouteAdmin);
+export default connect(null, mapDispatchToProps)(RouteAdmin);

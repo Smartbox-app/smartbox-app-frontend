@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { auth } from '../../../actions';
-import { Spinner } from '../../../components/Common';
-import { FormContainer, LogoContainer, PageContent, Section, SectionHeader } from '../../../components/Layout';
+import { Spinner, LogoContainer, PageContent } from '../../../components/Branded';
+import { FormContainer, Section, SectionHeader } from '../../../components/Layout';
 import { __ } from '../../../helpers/i18n';
 import { ApplicationState } from '../../../reducers';
 

@@ -1,14 +1,13 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { ItfApiForm } from 'itf_formbuilder_react';
-import ReactSelect from 'react-select';
 import ReactCreatableSelect from 'react-select/creatable';
 import { addMinutes } from 'date-fns';
 import { DiscountReq } from 'smartbox-types';
 import { connect } from 'react-redux';
 import flatpickr from 'flatpickr';
 import { FormContainer, ButtonsContainer, FieldsColumn } from '../../../../../components/Layout';
-import { Button, Spinner } from '../../../../../components/Common';
+import { Button, Spinner } from '../../../../../components/Branded';
 import FormHeader from '../../../../../components/Layout/FormHeader';
 import ApiService from '../../../../../services/api-service';
 import { formOnTranslateString } from '../../../../../utils/trans-form';

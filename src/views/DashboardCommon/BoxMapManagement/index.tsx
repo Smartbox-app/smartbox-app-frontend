@@ -3,9 +3,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { BoxListItem, RentStatus, UserRes } from 'smartbox-types';
+import { BoxListItem, RentStatus } from 'smartbox-types';
 import { boxes, modal, stock } from '../../../actions';
-import { Spinner } from '../../../components/Common';
+import { Spinner } from '../../../components/Branded';
 import { PageHeader } from '../../../components/Layout';
 import { ApplicationState } from '../../../reducers';
 import { isAdmin, isWorker } from '../../../utils/role-check';
@@ -26,7 +26,6 @@ const BoxMapManagement = () => {
     const stockList = useSelector((state: ApplicationState) => state.stock.list);
     const user = useSelector((state: ApplicationState) => state.user.details);
     const { boxesGroup } = useSelector((state: ApplicationState) => state.boxes);
-    
 
     const statusColorMarker = () => {
         const catchElements = element.current?.querySelectorAll('#kontenery .storage');
@@ -39,6 +38,7 @@ const BoxMapManagement = () => {
     };
 
     const eventListenerAdding = () => {
+        if (!user) return;
         if (isAdmin(user.role) || isWorker(user.role)) {
             const catchElements = element.current?.querySelectorAll('#kontenery .storage');
 
@@ -51,14 +51,16 @@ const BoxMapManagement = () => {
     };
 
     useEffect(() => {
+        if (!user) return;
         if (isAdmin(user.role) || isWorker(user.role)) {
             dispatch(stock.getStockList());
         }
     }, []);
 
+
     useEffect(() => {
 
-
+        if (!user) return;
         if (stockId && (isAdmin(user.role) || isWorker(user.role))) {
             dispatch(boxes.fetchBoxStatuses(stockId));
         }
@@ -72,6 +74,7 @@ const BoxMapManagement = () => {
     }, [stockId, element, element.current])
 
     useEffect(() => {
+        if (!user) return;
         if (stockId && (isAdmin(user.role) || isWorker(user.role))) {
             if (boxesGroup === null) {
                 dispatch(boxes.fetchBoxStatuses(stockId));
@@ -82,7 +85,7 @@ const BoxMapManagement = () => {
             statusColorMarker();
         }
 
-        if(!element || !element.current) return;
+        if (!element || !element.current) return;
         eventListenerAdding();
     }, [boxesGroup])
 
@@ -146,7 +149,7 @@ const BoxMapManagement = () => {
 
 
     const handleEventModal = (e: any): any => {
-        
+
         const parent = findAncestor(e.target, '.storage');
         const selectedBoxId = parent.id;
         let selectedRentId = '';
@@ -157,13 +160,16 @@ const BoxMapManagement = () => {
             }
         });
 
-        if (selectedRentId !== '' && isAdmin(user.role)) {
+        if (selectedRentId !== '' && user && isAdmin(user.role)) {
             dispatch(boxes.fetchSingleBoxDetails(selectedRentId))
         }
         dispatch(modal.showModal(<BoxDetail selectedBoxId={selectedBoxId} rentId={selectedRentId} stockId={stockId} />));
     };
 
     const selectedStock = stockList.find(stock => stock.id === stockId);
+
+
+    if (!user) return null;
 
     return (
         <div className="user-map-wrapper" ref={element}>

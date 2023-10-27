@@ -9,6 +9,8 @@ export default class UserService {
         return 'user';
       case UserRole.worker:
         return 'worker';
+      case UserRole.client:
+        return 'client';
       default:
         return null;
     }

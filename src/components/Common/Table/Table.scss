@@ -1,3 +1,4 @@
+@use "sass:math";
 @import "../../../config/variables";
 @import "../../../config/mixins.scss";
 
@@ -22,7 +23,7 @@
 
   td,
   th {
-    padding: $main-spacing/4 $main-spacing;
+    padding: math.div($main-spacing, 4) $main-spacing;
     text-align: center;
     vertical-align: middle;
     white-space: nowrap;
@@ -71,7 +72,7 @@
 .list {
   .list-element {
     font-size: 0.9rem;
-    margin-bottom: $main-spacing / 2;
+    margin-bottom: math.div($main-spacing, 2);
     border-bottom: 1px solid $color-primary;
     cursor: pointer;
     &:nth-child(odd) {
@@ -82,7 +83,7 @@
       .list-row {
         max-height: 250px;
         opacity: 1;
-        padding: $main-spacing/2;
+        padding: math.div($main-spacing, 2);
       }
     }
   }
@@ -94,14 +95,14 @@
     max-height: 0;
     opacity: 0;
     transition: 0.3s all;
-    padding: 0 $main-spacing/2;
+    padding: 0 math.div($main-spacing, 2);
 
     &:last-child {
       border-bottom: none;
     }
 
     &.mobile {
-      padding: $main-spacing/2;
+      padding: math.div($main-spacing, 2);
       max-height: 250px;
       opacity: 1;
     }
@@ -123,7 +124,7 @@
     flex-wrap: wrap;
 
     .button {
-      margin: $main-spacing/4;
+      margin: math.div($main-spacing, 4);
       flex: 1 1 auto;
       width: auto;
     }

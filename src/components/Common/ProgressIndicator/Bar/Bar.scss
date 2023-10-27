@@ -1,3 +1,4 @@
+@use "sass:math";
 @import '../../../../config/variables.scss';
 @import '../../../../config/mixins.scss';
 
@@ -14,7 +15,7 @@
     justify-content: center;
     align-items: center;
     background: $color-disabled;
-    height: $main-spacing/5;
+    height: math.div($main-spacing, 5);
     flex: 0 0 100%;
     margin-top: $main-spacing * 2;
 

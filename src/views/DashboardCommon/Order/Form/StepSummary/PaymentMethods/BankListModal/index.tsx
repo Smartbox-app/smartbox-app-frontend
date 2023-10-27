@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { modal, order } from '../../../../../../../actions';
-import { Spinner } from '../../../../../../../components/Common';
+import { Spinner } from '../../../../../../../components/Branded';
 import { SectionHeader } from '../../../../../../../components/Layout';
 import { ApplicationState } from '../../../../../../../reducers';
 

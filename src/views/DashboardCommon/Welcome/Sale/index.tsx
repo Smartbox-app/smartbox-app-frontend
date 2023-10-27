@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { DiscountList, UserRes } from 'smartbox-types';
+import { DiscountList } from 'smartbox-types';
 import { stock } from '../../../../actions';
 import { Section, SectionHeader } from '../../../../components/Layout';
 import { ApplicationState } from '../../../../reducers';
@@ -12,10 +12,10 @@ import { firstRentChecker } from '../../../../utils/isFirstRent';
 interface Props {
   discountsList: DiscountList[];
   getStockDiscountsList: () => void;
-  user: UserRes;
 }
 
-const Sale = ({ discountsList, getStockDiscountsList, user }: Props) => {
+const Sale = ({ discountsList, getStockDiscountsList }: Props) => {
+    const user = useSelector((state: ApplicationState) => state.user.details!);
   useEffect(() => {
     getStockDiscountsList();
   }, []);
@@ -45,8 +45,7 @@ const Sale = ({ discountsList, getStockDiscountsList, user }: Props) => {
 
 const mapStateToProps = (state: ApplicationState) => ({
   discountsList: state.stock.discountsList,
-  user: state.user.details,
-});
+ });
 
 const mapDispatchToProps = (dispatch: any) =>
   bindActionCreators(

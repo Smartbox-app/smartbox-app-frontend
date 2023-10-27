@@ -1,6 +1,7 @@
 import React from 'react';
 import { ButtonsContainer, Section, SectionHeader } from '../../../../components/Layout';
-import { Button, Carousel } from '../../../../components/Common';
+import { Carousel } from '../../../../components/Common';
+import { Button } from '../../../../components/Branded';
 
 const index = () => (
   <Section half highlight>

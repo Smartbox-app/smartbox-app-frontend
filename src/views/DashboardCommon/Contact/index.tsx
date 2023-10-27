@@ -1,18 +1,11 @@
 import React from 'react';
-import { connect } from 'react-redux';
-
-import { UserRes } from 'smartbox-types';
-import { PageHeader, Section, SectionHeader } from '../../../components/Layout';
-import { ApplicationState } from '../../../reducers';
+import { PageHeader, Section } from '../../../components/Layout';
 import SingleDepartment from './SingleDepartment';
 
 import './Contact.scss';
 
-interface Props {
-  user: UserRes;
-}
 
-const Contact = ({ user }: Props) => {
+const Contact = () => {
   return (
     <div className="contact-wrapper">
       <Section full>
@@ -42,8 +35,6 @@ const Contact = ({ user }: Props) => {
   );
 };
 
-const mapStateToProps = (state: ApplicationState) => ({
-  user: state.user.details,
-});
 
-export default connect(mapStateToProps)(Contact);
+
+export default Contact;

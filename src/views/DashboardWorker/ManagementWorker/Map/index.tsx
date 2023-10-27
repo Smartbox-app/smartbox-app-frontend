@@ -8,7 +8,7 @@ import UserService from '../../../../services/user-service';
 import StockSelect from '../../../../views/DashboardAdmin/Management/StockSelect';
 
 const MapManagement = () => {
-    const user = useSelector((state: ApplicationState) => state.user.details);
+    const user = useSelector((state: ApplicationState) => state.user.details!);
     const handleStockChange = (stockId: string) => {
         history.push(`/${UserService.getSlugByRole(user.role)}/management/map/${stockId}`)
     }

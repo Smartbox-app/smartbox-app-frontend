@@ -1,9 +1,9 @@
 import { formOnTranslateString } from './trans-form';
 
-interface TranslatableObject {
+export interface TranslatableObject {
   messageWithPlaceholders: string;
   messageCompiled: string;
-  params: any[];
+  params: string[];
 }
 
 export const format = (s: string, params: any[]) => {
@@ -19,6 +19,7 @@ export const translateErrors = (data: TranslatableObject[]) => {
       messageCompiled: format(formOnTranslateString(data[0].messageWithPlaceholders), data[0].params),
       params: data[0].params,
     };
+    console.log('translated', returnData);
     return [returnData];
   } else {
     return data;

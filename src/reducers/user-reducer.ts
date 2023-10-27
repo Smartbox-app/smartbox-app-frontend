@@ -2,7 +2,7 @@ import { UserRole, UserRes } from 'smartbox-types';
 import SessionService from '../services/session-service';
 
 export type UserState = {
-  details: UserRes;
+  details: UserRes | null;
   singleUser: UserRes | any;
 };
 
@@ -32,7 +32,7 @@ interface GetMyDetails {
 type Action = Login | Logout | FetchSingleUser | ClearUserSession | GetMyDetails;
 
 const initialState: UserState = {
-  details: SessionService.getUser(),
+  details: null,
   singleUser: {
     rentCount: 0,
     id: '',
@@ -48,7 +48,6 @@ export default (state: UserState = initialState, action: Action): any => {
   switch (action.type) {
     case 'LOGIN_SUCCESS': {
       const { user } = action.payload;
-      SessionService.setUser(user);
       return {
         ...state,
         details: user,
@@ -56,7 +55,6 @@ export default (state: UserState = initialState, action: Action): any => {
     }
     case 'GET_MY_DETAILS_SUCCESS': {
       const user = action.payload;
-      SessionService.setUser(user);
       return {
         ...state,
         details: user,
@@ -64,12 +62,10 @@ export default (state: UserState = initialState, action: Action): any => {
     }
 
     case 'LOGOUT':
-      SessionService.clearUserSession();
       return { ...state, details: null };
 
     case 'CLEAR_USER_SESSION':
       SessionService.clearSessionStorage();
-      SessionService.clearUserSession();
       return { ...state, details: null };
 
     case 'FETCH_SINGLE_USER_SUCCESS':

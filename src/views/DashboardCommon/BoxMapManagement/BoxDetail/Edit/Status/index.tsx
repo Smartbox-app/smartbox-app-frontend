@@ -1,13 +1,13 @@
 import React from 'react';
 import { ItfApiForm } from 'itf_formbuilder_react';
-import ReactSelect from 'react-select';
 import { connect } from 'react-redux';
 import ReactCreatableSelect from 'react-select/creatable';
 import { bindActionCreators } from 'redux';
 import { ChangeStatusReq, StockList } from 'smartbox-types';
 import { boxes, modal, notifications, stock } from '../../../../../../actions';
-import { FormContainer, ButtonsContainer, SimpleHeader } from '../../../../../../components/Layout';
-import { Alert, Button, Spinner } from '../../../../../../components/Common';
+import { FormContainer, ButtonsContainer } from '../../../../../../components/Layout';
+import { Alert } from '../../../../../../components/Common';
+import { Button, Spinner } from '../../../../../../components/Branded';
 import { ApplicationState } from '../../../../../../reducers';
 import ApiService from '../../../../../../services/api-service';
 import { formOnTranslateString } from '../../../../../../utils/trans-form';
@@ -23,9 +23,10 @@ interface Props {
   successNotification: (text: string) => void;
   fetchBoxStatuses: (stockId: string) => void;
   showModal: (content: React.ReactNode) => void;
+  rentId?: string;
 }
 
-const Status = ({ selectedBoxId, hideModal, stocks, successNotification, fetchBoxStatuses, stockId, showModal }: Props) => {
+const Status = ({ selectedBoxId, hideModal, stocks, successNotification, fetchBoxStatuses, stockId, rentId, showModal }: Props) => {
   const submitButton = (
     <ButtonsContainer>
       <Button text="application.changeStatus" type="submit" danger />
@@ -37,7 +38,7 @@ const Status = ({ selectedBoxId, hideModal, stocks, successNotification, fetchBo
   if(!stock) return null;
 
   const fetchUrl = 'rent/form/change-status';
-  const sendUrl = `rent/status/${stock.id}`;
+  const sendUrl = `rent/status/${stock.id}/${rentId}`;
 
   const customSendFetcher = (formId: string, values: ChangeStatusReq) => {
     showModal(

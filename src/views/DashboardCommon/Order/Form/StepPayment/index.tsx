@@ -17,52 +17,53 @@ import BlikForm from './BlikForm';
 import './StepPayment.scss';
 
 interface Props {
-  user: UserRes;
-  formData: FormType;
-  selectedPayment: PaymentType;
-  resetPaymentForm: () => void;
+    user: UserRes | null;
+    formData: FormType;
+    selectedPayment: PaymentType;
+    resetPaymentForm: () => void;
 }
 
 const formToRender = (selectedPayment) => {
-  switch (selectedPayment) {
-    case PaymentType.card:
-      return <CreditCardForm />;
-    case PaymentType.blik:
-      return <BankForm />; //TODO ?? Blik form gets strange error
-    case PaymentType.transfer:
-      return <BankForm />;
-    default:
-      return <CreditCardForm />;
-  }
+    switch (selectedPayment) {
+        case PaymentType.card:
+            return <CreditCardForm />;
+        case PaymentType.blik:
+            return <BankForm />; //TODO ?? Blik form gets strange error
+        case PaymentType.transfer:
+            return <BankForm />;
+        default:
+            return <CreditCardForm />;
+    }
 };
 
 const StepPayment = ({ formData, selectedPayment, user, resetPaymentForm }: Props) => {
-  useEffect(() => {
-    if (!formData.size) {
-      history.push(`/${UserService.getSlugByRole(user.role)}/order/step/stock`);
-    }
+    useEffect(() => {
+        if (!formData.size) {
+            if (!user) return;
+            history.push(`/${UserService.getSlugByRole(user.role)}/order/step/stock`);
+        }
 
-    return () => {
-      resetPaymentForm();
-    };
-  }, []);
+        return () => {
+            resetPaymentForm();
+        };
+    }, []);
 
-  return <>{formToRender(selectedPayment)}</>;
+    return <>{formToRender(selectedPayment)}</>;
 };
 
 const mapStateToProps = (state: ApplicationState) => ({
-  formData: state.order.formData,
-  selectedPayment: state.order.selectedPayment,
-  user: state.user.details,
+    formData: state.order.formData,
+    selectedPayment: state.order.selectedPayment,
+    user: state.user.details,
 });
 
 const mapDispatchToProps = (dispatch: any) =>
-  bindActionCreators(
-    {
-      ...order,
-      ...paymentStatus,
-    },
-    dispatch,
-  );
+    bindActionCreators(
+        {
+            ...order,
+            ...paymentStatus,
+        },
+        dispatch,
+    );
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(StepPayment));

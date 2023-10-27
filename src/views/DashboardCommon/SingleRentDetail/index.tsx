@@ -3,7 +3,7 @@ import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { MyRentList } from 'smartbox-types';
-import { Spinner } from '../../../components/Common';
+import { Spinner } from '../../../components/Branded';
 import UserStockMap from '../../../components/Common/UserStockMap';
 import { Section, SectionHeader } from '../../../components/Layout';
 

@@ -2,7 +2,7 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { ButtonsContainer } from '../../Layout';
-import { Button } from '..';
+import { Button } from '../../Branded';
 import { modal } from '../../../actions';
 
 import './ConfirmModal.scss';

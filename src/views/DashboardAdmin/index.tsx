@@ -10,9 +10,9 @@ import { MenuItemType } from '../../types/menu-item';
 import Management from './Management';
 import Profile from '../DashboardCommon/Profile';
 import SingleRentDetail from '../DashboardCommon/SingleRentDetail';
-import GateStatus from './GateStatus';
-import { Stocks } from './Stocks';
-import { Gates } from './Gates';
+import GateStatus from '../DashboardCommon/GateStatus';
+import { Stocks } from '../DashboardCommon/Stocks';
+import { Gates } from '../DashboardCommon/Gates';
 
 const DashboardAdmin = () => {
   const menuItems: MenuItemType[] = [

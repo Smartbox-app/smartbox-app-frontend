@@ -9,24 +9,9 @@ export default class SessionService {
     return JSON.parse(localStorage.getItem('language') || 'null') || 'pl';
   }
 
-  static setUser(user: UserRes) {
-    return localStorage.setItem('user', JSON.stringify(user));
-  }
 
   static clearSessionStorage() {
     localStorage.clear();
     sessionStorage.clear();
-  }
-
-  static clearUserSession() {
-    localStorage.removeItem('user');
-  }
-
-  static isUserSet() {
-    return JSON.parse(localStorage.getItem('user') || 'false');
-  }
-
-  static getUser(): UserRes {
-    return JSON.parse(localStorage.getItem('user') || 'null');
   }
 }

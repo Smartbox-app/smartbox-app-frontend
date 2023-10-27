@@ -1,3 +1,4 @@
+@use "sass:math";
 @import "../../../config/variables.scss";
 
 .icon-wrapper {
@@ -13,7 +14,7 @@
     }
   }
   &:not(.no-wrapper) {
-    padding: $main-spacing/1.5;
+    padding: math.div($main-spacing, 1).5;
     background: $color-text;
     width: $main-spacing * 4;
     height: $main-spacing * 4;

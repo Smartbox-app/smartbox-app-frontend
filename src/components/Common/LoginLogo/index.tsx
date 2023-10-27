@@ -1,5 +1,5 @@
 import React from 'react';
-import { Logo } from '..';
+import { Logo } from '../../Branded';
 
 import './LoginLogo.scss';
 

@@ -14,27 +14,28 @@ import StepAgreement from './StepAgreement';
 import StepSummary from './StepSummary';
 
 interface Props {
-  user: UserRes;
+    user: UserRes | null;
 }
 
 const Form = ({ user }: Props) => {
-  return (
-    <Switch>
-      <Route path={`/${UserService.getSlugByRole(user.role)}/order/step/stock/:rentId?`} component={StepStock} />
-      <Route path={`/${UserService.getSlugByRole(user.role)}/order/step/size/:rentId?`} component={StepSize} />
-      <Route path={`/${UserService.getSlugByRole(user.role)}/order/step/duration/:rentId?`} component={StepDuration} />
-      <Route path={`/${UserService.getSlugByRole(user.role)}/order/step/summary/:rentId?`} component={StepSummary} />
-      <Route
-        path={`/${UserService.getSlugByRole(user.role)}/order/step/agreement/:rentId?`}
-        component={StepAgreement}
-      />
-      <Route path={`/${UserService.getSlugByRole(user.role)}/order/step/payment/:rentId?`} component={StepPayment} />
-    </Switch>
-  );
+    if (!user) return null;
+    return (
+        <Switch>
+            <Route path={`/${UserService.getSlugByRole(user.role)}/order/step/stock/:rentId?`} component={StepStock} />
+            <Route path={`/${UserService.getSlugByRole(user.role)}/order/step/size/:rentId?`} component={StepSize} />
+            <Route path={`/${UserService.getSlugByRole(user.role)}/order/step/duration/:rentId?`} component={StepDuration} />
+            <Route path={`/${UserService.getSlugByRole(user.role)}/order/step/summary/:rentId?`} component={StepSummary} />
+            <Route
+                path={`/${UserService.getSlugByRole(user.role)}/order/step/agreement/:rentId?`}
+                component={StepAgreement}
+            />
+            <Route path={`/${UserService.getSlugByRole(user.role)}/order/step/payment/:rentId?`} component={StepPayment} />
+        </Switch>
+    );
 };
 
 const mapStateToProps = (state: ApplicationState) => ({
-  user: state.user.details,
+    user: state.user.details,
 });
 
 export default connect(mapStateToProps)(Form);

@@ -1,6 +1,6 @@
 import React from 'react';
 import { ButtonsContainer } from '../../Layout';
-import { Button } from '..';
+import { Button } from '../../Branded';
 import { __ } from "../../../helpers/i18n";
 import { useDispatch } from 'react-redux';
 import { modal, gate } from '../../../actions';

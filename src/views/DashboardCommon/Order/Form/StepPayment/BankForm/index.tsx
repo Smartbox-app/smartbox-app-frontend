@@ -10,7 +10,7 @@ import { PaymentMethodDetail } from '../../../../../../reducers/order-reducer';
 import { modal, order } from '../../../../../../actions';
 
 import './BankForm.scss';
-import { Button, Spinner } from '../../../../../../components/Common';
+import { Button, Spinner } from '../../../../../../components/Branded';
 import UserService from '../../../../../../services/user-service';
 import { __ } from '../../../../../../helpers/i18n';
 import { LockInfo } from '../LockInfo';
@@ -22,7 +22,7 @@ interface RouteProps {
 
 interface Props extends RouteComponentProps<RouteProps> {
   bankGroup: PaymentMethodDetail;
-  user: UserRes;
+  user: UserRes | null;
   paymentId: string;
   sentExecutePaymentWithTpayRequest: (paymentId: string, group: string) => void;
   func: any;
@@ -34,6 +34,7 @@ const BankForm = ({ func, paymentId, sentExecutePaymentWithTpayRequest, bankGrou
     sentExecutePaymentWithTpayRequest(paymentId, bankGroup.id);
   }, []);
   const onBack = () => {
+    if(!user) return;
     history.push(`/${UserService.getSlugByRole(user.role)}/order/step/agreement/${match.params.rentId || ''}`);
   };
   return (

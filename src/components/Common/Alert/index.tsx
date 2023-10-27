@@ -1,6 +1,6 @@
 import * as React from 'react';
-import './Alert.scss';
 import {__} from "../../../helpers/i18n";
+import './Alert.scss';
 
 interface AlertProps {
   type: string | 'error' | 'error-notification' | 'notice' | 'warning' | 'primary' | 'success' | 'disabled';

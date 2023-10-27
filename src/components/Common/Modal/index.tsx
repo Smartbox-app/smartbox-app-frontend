@@ -1,6 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import styled from 'styled-components';
+import { lighten } from 'polished';
 import { modal } from '../../../actions';
 import { Modal } from '../../../types/modal';
 import { ApplicationState } from '../../../reducers';
@@ -8,10 +10,19 @@ import { ApplicationState } from '../../../reducers';
 import './Modal.scss';
 import ModalContent from './ModalContent';
 
+
 interface Props {
   modal: Modal;
   hideModal: () => void;
 }
+
+const StyledModalExit = styled.span`
+    color: ${props => props.theme.colors.primary};
+
+    &:hover {
+        color: ${props => lighten(0.2, props.theme.colors.primary)};
+      }
+`
 
 class ModalWrapper extends React.Component<Props> {
   private handleClickOutside = (e: any) => {
@@ -35,9 +46,9 @@ class ModalWrapper extends React.Component<Props> {
             <ModalContent>
               {modal.content}
               {modal.isClosable && (
-                <span className="modal-exit" role="button" tabIndex={0} onClick={() => hideModal()}>
+                <StyledModalExit className="modal-exit" role="button" tabIndex={0} onClick={() => hideModal()}>
                   &times;
-                </span>
+                </StyledModalExit>
               )}
             </ModalContent>
           </div>

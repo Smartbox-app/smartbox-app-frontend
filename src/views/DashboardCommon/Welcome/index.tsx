@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 
 import { bindActionCreators } from 'redux';
 import { MyRentList } from 'smartbox-types';
@@ -16,7 +16,6 @@ import Offers from './Offers';
 import './Welcome.scss';
 
 interface Props {
-  userName: string;
   rentsList: MyRentList[];
   rentsHistoryList: MyRentList[];
   loading: boolean;
@@ -24,7 +23,8 @@ interface Props {
   fetchMyRentHistory: () => void;
 }
 
-const Welcome = ({ userName, getMyRentList, rentsList, fetchMyRentHistory, rentsHistoryList, loading }: Props) => {
+const Welcome = ({ getMyRentList, rentsList, fetchMyRentHistory, rentsHistoryList, loading }: Props) => {
+    const user = useSelector((state: ApplicationState) => state.user.details!);
   useEffect(() => {
     getMyRentList();
     fetchMyRentHistory();
@@ -33,7 +33,7 @@ const Welcome = ({ userName, getMyRentList, rentsList, fetchMyRentHistory, rents
   return (
     <div className="welcome-wrapper">
       <Section full>
-        <PageHeader title={`${__('application.hi')} ${userName}`} />
+        <PageHeader title={`${__('application.hi')} ${user.firstName}`} />
       </Section>
       <Sale />
       <Storage myRentList={rentsList} loading={loading} />
@@ -44,7 +44,6 @@ const Welcome = ({ userName, getMyRentList, rentsList, fetchMyRentHistory, rents
 };
 
 const mapStateToProps = (state: ApplicationState) => ({
-  userName: state.user.details.firstName,
   rentsList: state.rent.rentsList,
   rentsHistoryList: state.rent.rentsHistoryList,
   loading: state.rent.loading,

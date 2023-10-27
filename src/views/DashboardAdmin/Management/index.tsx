@@ -1,101 +1,87 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import { Switch, Route, Redirect } from 'react-router';
 import { UserRes } from 'smartbox-types';
-import { Tabs } from '../../../components/Common';
+import { Tabs } from '../../../components/Branded';
 import { Section } from '../../../components/Layout';
 import { ApplicationState } from '../../../reducers';
 import UserService from '../../../services/user-service';
 
-import WorkersManagement from './WorkersManagement';
-import UsersManagement from './UsersManagement';
+import WorkersManagement from '../../DashboardCommon/WorkersManagement';
+import UsersManagement from '../../DashboardCommon/UsersManagement';
 
 import StockDiscount from './StockDiscount';
-import InvitesSent from './InvitesSent';
+import InvitesSent from '../../DashboardCommon/InvitesSent';
 import SMS from './SMS';
 import Settings from './Settings';
 import { MapManagement } from './Map';
 import { GateManagement } from '../../../views/DashboardCommon/GateManagement';
+import ClientsManagement from './ClientsManagement';
 
-interface Props {
-  user: UserRes;
+const Management = () => {
+    const user = useSelector((state: ApplicationState) => state.user.details);
+
+    if (!user) return null;
+
+    return <Section full>
+        <Tabs
+            tabs={[
+                {
+                    to: `/${UserService.getSlugByRole(user.role)}/management/users/list`,
+                    text: 'application.users',
+                },
+                {
+                    to: `/${UserService.getSlugByRole(user.role)}/management/workers/list`,
+                    text: 'application.workers',
+                },
+                {
+                    to: `/${UserService.getSlugByRole(user.role)}/management/clients/list`,
+                    text: 'application.tenants',
+                },
+                {
+                    to: `/${UserService.getSlugByRole(user.role)}/management/invitations`,
+                    text: 'application.invitations',
+                },
+                {
+                    to: `/${UserService.getSlugByRole(user.role)}/management/map`,
+                    text: 'application.boxes',
+                },
+                {
+                    to: `/${UserService.getSlugByRole(user.role)}/management/stock-discount/list`,
+                    text: 'application.stockSale',
+                },
+                {
+                    to: `/${UserService.getSlugByRole(user.role)}/management/gate`,
+                    text: 'application.gate',
+                },
+                {
+                    to: `/${UserService.getSlugByRole(user.role)}/management/sms`,
+                    text: 'application.smsNotifications',
+                },
+                {
+                    to: `/${UserService.getSlugByRole(user.role)}/management/settings`,
+                    text: 'application.settings',
+                },
+            ]}
+        />
+
+        <Switch>
+            <Route
+                exact
+                path={`/${UserService.getSlugByRole(user.role)}/management`}
+                render={() => <Redirect to={`/${UserService.getSlugByRole(user.role)}/management/workers`} />}
+            />
+            <Route path={`/${UserService.getSlugByRole(user.role)}/management/workers`} component={WorkersManagement} />
+            <Route path={`/${UserService.getSlugByRole(user.role)}/management/users`} component={UsersManagement} />
+            <Route path={`/${UserService.getSlugByRole(user.role)}/management/clients`} component={ClientsManagement} />
+            <Route path={`/${UserService.getSlugByRole(user.role)}/management/map`} component={MapManagement} />
+            <Route path={`/${UserService.getSlugByRole(user.role)}/management/invitations`} component={InvitesSent} />
+            <Route path={`/${UserService.getSlugByRole(user.role)}/management/stock-discount`} component={StockDiscount} />
+            <Route path={`/${UserService.getSlugByRole(user.role)}/management/gate`} component={GateManagement} />
+            <Route path={`/${UserService.getSlugByRole(user.role)}/management/sms`} component={SMS} />
+            <Route path={`/${UserService.getSlugByRole(user.role)}/management/settings`} component={Settings} />
+        </Switch>
+    </Section>
 }
 
-const Management = ({ user }: Props) => (
-  <Section full>
-    <Tabs
-      tabs={[
-        {
-          className: 'tab',
-          activeClassName: 'active',
-          to: `/${UserService.getSlugByRole(user.role)}/management/users/list`,
-          text: 'application.users',
-        },
-        {
-          className: 'tab',
-          activeClassName: 'active',
-          to: `/${UserService.getSlugByRole(user.role)}/management/workers/list`,
-          text: 'application.workers',
-        },
-        {
-          className: 'tab',
-          activeClassName: 'active',
-          to: `/${UserService.getSlugByRole(user.role)}/management/invitations`,
-          text: 'application.invitations',
-        },
-        {
-          className: 'tab',
-          activeClassName: 'active',
-          to: `/${UserService.getSlugByRole(user.role)}/management/map`,
-          text: 'application.boxes',
-        },
-        {
-          className: 'tab',
-          activeClassName: 'active',
-          to: `/${UserService.getSlugByRole(user.role)}/management/stock-discount/list`,
-          text: 'application.stockSale',
-        },
-        {
-          className: 'tab',
-          activeClassName: 'active',
-          to: `/${UserService.getSlugByRole(user.role)}/management/gate`,
-          text: 'application.gate',
-        },
-        {
-          className: 'tab',
-          activeClassName: 'active',
-          to: `/${UserService.getSlugByRole(user.role)}/management/sms`,
-          text: 'application.smsNotifications',
-        },
-        {
-          className: 'tab',
-          activeClassName: 'active',
-          to: `/${UserService.getSlugByRole(user.role)}/management/settings`,
-          text: 'application.settings',
-        },
-      ]}
-    />
-
-    <Switch>
-      <Route
-        exact
-        path={`/${UserService.getSlugByRole(user.role)}/management`}
-        render={() => <Redirect to={`/${UserService.getSlugByRole(user.role)}/management/workers`} />}
-      />
-      <Route path={`/${UserService.getSlugByRole(user.role)}/management/workers`} component={WorkersManagement} />
-      <Route path={`/${UserService.getSlugByRole(user.role)}/management/users`} component={UsersManagement} />
-      <Route path={`/${UserService.getSlugByRole(user.role)}/management/map`} component={MapManagement} />
-      <Route path={`/${UserService.getSlugByRole(user.role)}/management/invitations`} component={InvitesSent} />
-      <Route path={`/${UserService.getSlugByRole(user.role)}/management/stock-discount`} component={StockDiscount} />
-      <Route path={`/${UserService.getSlugByRole(user.role)}/management/gate`} component={GateManagement} />
-      <Route path={`/${UserService.getSlugByRole(user.role)}/management/sms`} component={SMS} />
-      <Route path={`/${UserService.getSlugByRole(user.role)}/management/settings`} component={Settings} />
-    </Switch>
-  </Section>
-);
-
-const mapStateToProps = (state: ApplicationState) => ({
-  user: state.user.details,
-});
-
-export default connect(mapStateToProps)(Management);
+export default Management;

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { auth } from '../../../actions';
-import { Spinner } from '../../../components/Common';
+import { Spinner } from '../../../components/Branded';
 
 interface RouteProps {
   googleToken: string;

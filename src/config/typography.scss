@@ -1,3 +1,4 @@
+@use "sass:math";
 @import './variables';
 @import './mixins.scss';
 
@@ -34,20 +35,19 @@ body {
 
 h2 {
   font-family: $font-primary;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   font-weight: 500;
 
   @include gt-sm {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
   }
 }
 
 h3 {
   font-family: $font-primary;
-  font-size: 1.2rem;
+  font-size: 1.05rem;
   font-weight: 500;
   margin-bottom: $main-spacing * 1;
-  margin-top: $main-spacing * 2;
   color: $color-primary;
 
   &.no-margin {
@@ -58,7 +58,7 @@ h3 {
 h4 {
   font-family: $font-primary;
   font-size: 1.1rem;
-  margin-bottom: $main-spacing/2;
+  margin-bottom: math.div($main-spacing, 2);
   color: $color-primary;
   font-weight: 400;
 }
@@ -66,7 +66,7 @@ h4 {
 h5 {
   font-family: $font-primary;
   font-size: 1.1rem;
-  margin-bottom: $main-spacing/2;
+  margin-bottom: math.div($main-spacing, 2);
 }
 
 strong,
@@ -80,7 +80,7 @@ small {
 
 p {
   line-height: normal;
-  margin: $main-spacing / 2 0;
+  margin: math.div($main-spacing, 2) 0;
   font-size: 0.9rem;
 
   @include gt-sm {

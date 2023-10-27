@@ -1,3 +1,4 @@
+@use "sass:math";
 @import '../../../config/variables';
 @import '../../../config/mixins.scss';
 
@@ -5,7 +6,7 @@
   order: 0;
   display: flex;
   justify-content: flex-end;
-  padding: $main-spacing/2;
+  padding: math.div($main-spacing, 2);
   z-index: 900;
 
   &:hover {

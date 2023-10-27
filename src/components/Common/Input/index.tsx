@@ -1,11 +1,15 @@
 import * as React from 'react';
+import { __ } from '../../../helpers/i18n';
+import { InputLabel } from '../InputLabel';
+import { InputHelp } from '../InputHelp';
+import { InputErrors } from '../InputErrors';
 import './Input.scss';
+import styled, { css } from 'styled-components';
 
 interface Props {
     type: string;
     input: any;
     error?: any;
-    errors?: any[];
     meta?: any;
     touched?: any;
     min?: number;
@@ -20,14 +24,28 @@ interface Props {
     onChange?: (value: string) => void;
     dark?: boolean;
     className?: string;
+    big?: boolean;
 }
 
 const errorClass = (errors: any[] | undefined) => (errors && errors.length ? 'is-invalid' : '');
 
+const StyledContainer = styled.div`
+&.big {
+    .input {
+        border: 2px solid ${props => props.theme.colors.primary};
+    }
+}
+&.compact {
+    .input {
+        border-bottom: 2px solid ${props => props.theme.colors.primary};
+    }
+}
+`
+
 const Input = (props: Props) => {
-    const containerClass = `input-container ${props.className || ''} ${props.max ? 'input-max' : ''} ${props.nomargin ? 'nomargin' : ''
+    const containerClass = `input-container ${props.big ? 'big' : 'compact'} ${props.className || ''} ${props.max ? 'input-max' : ''} ${props.nomargin ? 'nomargin' : ''
         } ${props.type === 'hidden' ? 'hidden' : ''}`;
-    const label = props.input.label && <label htmlFor={props.input.name}>{props.input.label} </label>;
+
     if (props.type === 'select') {
         const options = props.options
             ? props.options.map((option) => (
@@ -37,9 +55,9 @@ const Input = (props: Props) => {
             ))
             : null;
         return (
-            <div className={containerClass}>
+            <StyledContainer className={containerClass}>
                 <div className="input-wrapper">
-                    {label}
+                    <InputLabel label={props.input.label} name={props.input.name} />
                     <select
                         value={props.input.value || '0'}
                         className={`input input-${props.type} ${props.max ? 'input-max' : ''} ${props.nomargin ? 'nomargin' : ''
@@ -51,19 +69,14 @@ const Input = (props: Props) => {
                         {options}
                     </select>
                 </div>
-                {props.input.errors &&
-                    props.input.errors.map((error: any) => (
-                        <small key={error} className="text-danger">
-                            {error.messageCompiled}
-                        </small>
-                    ))}
-            </div>
+                {props.input.errors && <InputErrors big={props.big} errors={props.input.errors} />}
+            </StyledContainer>
         );
     } else if (props.type === 'textarea') {
         return (
-            <div className={containerClass}>
+            <StyledContainer className={containerClass}>
                 <div className="input-wrapper">
-                    {label}
+                    <InputLabel label={props.input.label} name={props.input.name} />
                     <textarea
                         className={`input input-${props.type} ${errorClass(props.input.errors)}`}
                         id={props.input.name}
@@ -72,18 +85,13 @@ const Input = (props: Props) => {
                         placeholder={props.input.placeholder}
                     />
                 </div>
-                {props.input.errors &&
-                    props.input.errors.map((error: any) => (
-                        <small key={error} className="text-danger">
-                            {error.messageCompiled}
-                        </small>
-                    ))}
-            </div>
+                {props.input.errors && <InputErrors big={props.big} errors={props.input.errors} />}
+            </StyledContainer>
         );
     } else {
         return (
-            <div className={containerClass}>
-                {label}
+            <StyledContainer className={containerClass}>
+                <InputLabel label={props.input.label} name={props.input.name} />
                 <div className="input-wrapper">
                     <input
                         className={`input ${props.dark ? 'dark' : ''} input-${props.type} ${errorClass(props.input.errors)}`}
@@ -96,14 +104,9 @@ const Input = (props: Props) => {
                         step={props.step || 1}
                     />
                 </div>
-                {props.input.errors &&
-                    props.input.errors.map((error: any) => (
-                        <small key={error} className="text-danger">
-                            {error.messageCompiled}
-                        </small>
-                    ))}
-                {props.help && <small className="text-help">{props.help}</small>}
-            </div>
+                {props.input.errors && <InputErrors big={props.big} errors={props.input.errors} />}
+                {props.help && <InputHelp text={props.help} />}
+            </StyledContainer>
         );
     }
 };

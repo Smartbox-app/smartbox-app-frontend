@@ -18,7 +18,7 @@ interface Props {
     singleBoxDetail: RentDetailsRes;
     selectedBoxId: string;
     rentId: string;
-    user: UserRes;
+    user: UserRes | null;
     stockId: string;
     boxDataCleanUp: () => void;
 }
@@ -31,6 +31,8 @@ const BoxDetail = ({ boxDataCleanUp, selectedBoxId, singleBoxDetail, rentId, use
             boxDataCleanUp();
         };
     }, []);
+
+    if(!user) return null;
 
     const isThisBoxFree = (data: string): boolean => data === '';
 

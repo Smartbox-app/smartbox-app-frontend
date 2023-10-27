@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router';
 import { bindActionCreators } from 'redux';
-import { Button, Spinner } from '../../../../../../components/Common';
+import { Spinner } from '../../../../../../components/Branded';
 import { ApplicationState } from '../../../../../../reducers';
 import { modal, order } from '../../../../../../actions';
 

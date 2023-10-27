@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Button } from '../../../components/Common';
-import { LogoContainer, PageContent, ButtonsContainer, Section } from '../../../components/Layout';
+import { Button, LogoContainer, PageContent } from '../../../components/Branded';
+import { ButtonsContainer, Section } from '../../../components/Layout';
 import { ApplicationState } from '../../../reducers';
 import { modal } from '../../../actions';
 import {__} from "../../../helpers/i18n";

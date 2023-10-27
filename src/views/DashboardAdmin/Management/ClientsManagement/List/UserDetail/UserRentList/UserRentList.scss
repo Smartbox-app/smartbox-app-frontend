@@ -1,0 +1,84 @@
+@use "sass:math";
+@import '../../../../../../../config/variables';
+@import '../../../../../../../config/mixins';
+
+.list-wrapper {
+  margin: $main-spacing;
+  padding: $main-spacing;
+  border: 1px solid #aaa;
+  border-radius: $main-spacing;
+
+  .content {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .rent-list {
+    display: flex;
+    flex-direction: column;
+    flex: 0 1 100%;
+  }
+
+  .single-rent {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex: 0 1 100%;
+    flex-wrap: wrap;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 5px;
+
+    &:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+    }
+    p {
+      min-width: 100px;
+      text-align: center;
+    }
+
+    .box-rent {
+      background: #00a45a;
+      padding: math.div($main-spacing, 2) $main-spacing;
+      margin-right: $main-spacing;
+      border-radius: 5px;
+      border: 2px solid darken(#00a45a, 10%);
+      min-width: 50px;
+      text-align: center;
+    }
+    .rented {
+      background: $color-danger;
+      border: 2px solid darken($color-danger, 10%);
+    }
+    .to-check {
+      background: $color-primary;
+      border: 2px solid darken($color-primary, 10%);
+    }
+    .no-paid-extension {
+      background: $color-tertiary;
+      border: 2px solid darken($color-tertiary, 10%);
+    }
+    .no-paid-extension {
+      background: darken($color-tertiary, 5%);
+      border: 2px solid darken($color-tertiary, 20%);
+    }
+
+    .dates-rent {
+      margin-right: $main-spacing;
+    }
+  }
+
+  .single-address-logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 3rem;
+    margin: $main-spacing $main-spacing * 1;
+    color: $color-disabled;
+
+    @include gt-sm {
+      font-size: 5rem;
+      margin: $main-spacing $main-spacing * 3;
+    }
+  }
+}

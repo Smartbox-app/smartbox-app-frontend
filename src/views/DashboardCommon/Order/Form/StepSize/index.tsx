@@ -3,10 +3,10 @@ import { useForm } from 'react-hook-form';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { UserRes, BoxGroupAvailability, StockList } from 'smartbox-types';
+import { UserRes, BoxGroupAvailability } from 'smartbox-types';
 import { order, stock } from '../../../../../actions';
 import { FormContainer, ButtonsContainer } from '../../../../../components/Layout';
-import { Button } from '../../../../../components/Common';
+import { Button } from '../../../../../components/Branded';
 import SingleOption, { SingleOptionType } from './SingleOption';
 import { FormType } from '../../../../../types/order-form';
 import { ApplicationState } from '../../../../../reducers';
@@ -22,7 +22,7 @@ interface RouteProps {
 interface Props extends RouteComponentProps<RouteProps> {
     history: any;
     formData: FormType;
-    user: UserRes;
+    user: UserRes | null;
     boxAvailability: BoxGroupAvailability[];
     updateFormData: (data: Partial<FormType>) => void;
     fetchBoxAvailability: (stockId: string) => void;
@@ -40,6 +40,7 @@ const StepSize = ({
 }: Props) => {
     const stockId = formData.stock;
     useEffect(() => {
+        if (!user) return;
         if (stockId && stockId !== '') {
             fetchBoxAvailability(stockId);
         } else {
@@ -54,6 +55,7 @@ const StepSize = ({
     const { register, handleSubmit, watch } = useForm({ defaultValues });
 
     const onSubmit = async (data: Partial<FormType>) => {
+        if(!user) return;
         updateFormData(data);
         await getStockList(); //waiting for fetch list with stock discount before load data to discount variable in next step
         history.push(`/${UserService.getSlugByRole(user.role)}/order/step/duration`);
@@ -115,7 +117,7 @@ const StepSize = ({
     ));
 
     const isMyBoxAvailable = (size: string | null) => {
-        if(!size) return false;
+        if (!size) return false;
         const box = boxAvailability.find((b: BoxGroupAvailability) => b.size.toString() === size);
 
         return box && box.available;

@@ -3,7 +3,7 @@ import { connect, useDispatch, useSelector } from 'react-redux';
 import { ReactSVG } from 'react-svg';
 import { bindActionCreators } from 'redux';
 import { Coordinate } from 'smartbox-types';
-import { Button, Spinner } from '../../../../components/Common';
+import { Button, Spinner } from '../../../../components/Branded';
 import { __ } from '../../../../helpers/i18n';
 import { ApplicationState } from '../../../../reducers';
 import { gate, modal } from '../../../../actions';
@@ -18,7 +18,7 @@ interface Props {
 
 const Gate = ({ stockId }: Props) => {
     const dispatch = useDispatch();
-    const user = useSelector((state: ApplicationState) => state.user.details);
+    const user = useSelector((state: ApplicationState) => state.user.details!);
     const startAnimation = useSelector((state: ApplicationState) => state.gate.startAnimation);
     const [loading, setLoading] = useState<boolean>(false);
 

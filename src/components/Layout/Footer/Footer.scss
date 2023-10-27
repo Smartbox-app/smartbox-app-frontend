@@ -1,3 +1,4 @@
+@use "sass:math";
 @import '../../../config/variables';
 @import '../../../config/mixins.scss';
 
@@ -38,11 +39,11 @@ footer {
     height: $footer-height;
 
     .p {
-      padding: $main-spacing/2 $table-item-spacing;
+      padding: math.div($main-spacing, 2) $table-item-spacing;
     }
 
     .footerLink {
-      padding: $main-spacing/2 $table-item-spacing;
+      padding: math.div($main-spacing, 2) $table-item-spacing;
       border-right: solid 2px rgba($color-background, 0.5);
     }
   }

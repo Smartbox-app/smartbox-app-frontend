@@ -12,6 +12,7 @@ import rentReducer, { RentsStatus } from './rent-reducer';
 import stockReducer, { StockStatus } from './stock-reducer';
 import gateReducer, { GateState } from './gate-reducer';
 import paymentStatusReducer, { PaymentStatusState } from './payment-status-reducer';
+import tenantReducer, { TenantState } from './tenant-reducer';
 
 import { Modal } from '../types/modal';
 
@@ -29,6 +30,7 @@ export interface ApplicationState {
   gate: GateState;
   lang: LangStatus;
   paymentStatus: PaymentStatusState;
+  tenant: TenantState;
 }
 
 const appReducer = combineReducers({
@@ -45,6 +47,7 @@ const appReducer = combineReducers({
   stock: stockReducer,
   gate: gateReducer,
   paymentStatus: paymentStatusReducer,
+  tenant: tenantReducer,
 });
 
 const rootReducer = (state: any, action: any) => appReducer(state, action);

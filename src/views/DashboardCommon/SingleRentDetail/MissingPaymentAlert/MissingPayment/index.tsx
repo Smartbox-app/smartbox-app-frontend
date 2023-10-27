@@ -1,10 +1,10 @@
 import { addDays, differenceInCalendarDays, differenceInDays } from 'date-fns';
 import React, { useCallback } from 'react';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { MyRentList, usePricing, UserRes } from 'smartbox-types';
+import { MyRentList, usePricing, } from 'smartbox-types';
 import { singleRent } from '../../../../../actions';
-import { Button } from '../../../../../components/Common';
+import { Button } from '../../../../../components/Branded';
 import { ButtonsContainer } from '../../../../../components/Layout';
 import { ApplicationState } from '../../../../../reducers';
 import UserService from '../../../../../services/user-service';
@@ -14,11 +14,11 @@ import { __ } from '../../../../../helpers/i18n';
 
 interface Props {
   singleRent: MyRentList;
-  user: UserRes;
 }
 
-const MissingPayment = ({ singleRent, user }: Props) => {
+const MissingPayment = ({ singleRent }: Props) => {
   const { pricing } = usePricing();
+  const user = useSelector((state: ApplicationState) => state.user.details!);
 
   const countPayPeriods = useCallback(
     (date: Date) => Math.ceil(differenceInCalendarDays(new Date(), new Date(date)) / 7),
@@ -69,7 +69,6 @@ const MissingPayment = ({ singleRent, user }: Props) => {
 
 const mapStateToProps = (state: ApplicationState) => ({
   singleRent: state.rent.singleRent,
-  user: state.user.details,
 });
 
 const mapDispatchToProps = (dispatch: any) =>

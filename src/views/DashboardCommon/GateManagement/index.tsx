@@ -11,6 +11,9 @@ import { SingleGate } from './SingleGate';
 
 const GateManagement = () => {
     const user = useSelector((state: ApplicationState) => state.user.details);
+
+    if (!user) return null;
+
     const handleStockChange = (gateId: string) => {
         history.push(`/${UserService.getSlugByRole(user.role)}/management/gate/${gateId}`)
     }

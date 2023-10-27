@@ -1,0 +1,36 @@
+@import '../../../config/variables.scss';
+
+.input-select-container {
+margin-bottom: $main-spacing * 2;
+    width: 100%;
+
+    &.big {
+        .input-select__control {
+            height: $login-button-height;
+            border-radius: $login-button-height/2;
+            padding-left: $main-spacing * 3;
+            padding-right: $main-spacing * 3;
+            background-color: $color-background;
+            display: flex;
+            max-width: 100%;
+        }
+    }
+
+    &.compact {
+        .input-select__control {
+            height: 40px;
+            background: lighten($color-background, 10%);
+            color: $color-text;
+            border: none;
+            font-size: 1rem;
+            font-family: $font-primary;
+            font-weight: 300;
+            box-shadow: $box-shadow-input rgba($color-text, 0.25);
+            display: flex;
+            &:focus {
+                background: rgba($color-text, 0.1);
+                box-shadow: $box-shadow-small rgba($color-text, 0.25);
+            }
+        }
+    }
+}

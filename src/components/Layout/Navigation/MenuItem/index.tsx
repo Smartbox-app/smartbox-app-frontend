@@ -24,12 +24,10 @@ class MenuItem extends React.Component<Props> {
   render(): any {
     const { address, icon, text, badge, customClass } = this.props;
     const fullIconLink = `/assets/icons/${icon}`;
-    const itemClass = `main-menu-item ${!icon ? 'sub-menu-item' : ''} ${customClass || ''}`;
 
     return (
       <CustomNavLink
         text={text}
-        itemClass={itemClass}
         address={address}
         fullIconLink={fullIconLink}
         handleItemClick={this.handleItemClick}

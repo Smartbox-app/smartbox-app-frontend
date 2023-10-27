@@ -4,7 +4,7 @@ import { ReactSVG } from 'react-svg';
 import './SingleOption.scss';
 import { connect } from 'react-redux';
 import { ApplicationState } from '../../../../../../reducers';
-import { Spinner } from '../../../../../../components/Common';
+import { Spinner } from '../../../../../../components/Branded';
 
 export type SingleOptionType = {
   name: string;

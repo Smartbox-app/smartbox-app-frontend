@@ -1,8 +1,9 @@
+@use "sass:math";
 @import '../../../../../../config/variables.scss';
 @import '../../../../../../config/mixins.scss';
 
 .single-wrapper {
-  padding: $main-spacing / 4;
+  padding: math.div($main-spacing, 4);
   width: 100%;
 
   .storage {
@@ -15,7 +16,7 @@
     width: 100%;
     height: $box-size;
     cursor: pointer;
-    margin: $main-spacing/2 0;
+    margin: math.div($main-spacing, 2) 0;
 
     background: $color-primary;
     background-image: url(/assets/icons/storage-background.svg);

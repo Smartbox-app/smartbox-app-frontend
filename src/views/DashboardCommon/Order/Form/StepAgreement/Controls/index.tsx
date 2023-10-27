@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from '../../../../../../components/Common';
+import { Button } from '../../../../../../components/Branded';
 
 import './Controls.scss';
 

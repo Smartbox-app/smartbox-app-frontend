@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { ItfApiForm } from 'itf_formbuilder_react';
 import { FormContainer, ButtonsContainer, FormHeader } from '../../../../components/Layout';
-import { Spinner, Button } from '../../../../components/Common';
+import { Spinner, Button } from '../../../../components/Branded';
 import ApiService from '../../../../services/api-service';
 import { formOnTranslateString } from '../../../../utils/trans-form';
 import { notifications, modal } from '../../../../actions';

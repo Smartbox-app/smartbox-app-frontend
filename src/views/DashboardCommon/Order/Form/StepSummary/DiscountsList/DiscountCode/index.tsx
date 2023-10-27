@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { ItfApiForm } from 'itf_formbuilder_react';
 import { GetGiftReq, GiftRes } from 'smartbox-types';
-import { Button, Spinner } from '../../../../../../../components/Common';
+import { Button, Spinner } from '../../../../../../../components/Branded';
 import { FormContainer, ButtonsContainer } from '../../../../../../../components/Layout';
 import { modal, notifications, order } from '../../../../../../../actions';
 import FormHeader from '../../../../../../../components/Layout/FormHeader';

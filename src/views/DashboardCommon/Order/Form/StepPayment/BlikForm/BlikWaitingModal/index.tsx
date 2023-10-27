@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { modal, notifications, order } from '../../../../../../../actions';
-import { Spinner } from '../../../../../../../components/Common';
+import { Spinner } from '../../../../../../../components/Branded';
 import { __ } from '../../../../../../../helpers/i18n';
 import { ApplicationState } from '../../../../../../../reducers';
 import { history } from '../../../../../../../App';

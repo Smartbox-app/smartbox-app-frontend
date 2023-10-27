@@ -2,8 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { UserRes } from 'smartbox-types';
-import { ButtonsContainer, PageHeader, SectionHeader } from '../../../../components/Layout';
-import { Button } from '../../../../components/Common';
+import { ButtonsContainer, PageHeader } from '../../../../components/Layout';
+import { Button } from '../../../../components/Branded';
 import { modal } from '../../../../actions';
 import { ApplicationState } from '../../../../reducers';
 
@@ -11,7 +11,7 @@ import UpdatePass from './UpdatePass';
 import UserData from '../../../../components/Common/UserData';
 
 interface Props {
-  user: UserRes;
+  user: UserRes | null;
   showModal: (content: React.ReactNode) => void;
 }
 

@@ -13,21 +13,22 @@ import { Alert } from '../../../../../components/Common';
 
 interface Props {
     selectedBoxId: string;
-    user: UserRes;
+    user: UserRes | null;
     rentId: string;
     singleBoxDetailStatus: RentStatus;
     display: boolean;
     stockId: string;
 }
 
-const Edit = ({ selectedBoxId, user, rentId, singleBoxDetailStatus, display, stockId }: Props) => (
-    <div className={`edit-wrapper ${display && 'show-me'}`}>
+const Edit = ({ selectedBoxId, user, rentId, singleBoxDetailStatus, display, stockId }: Props) => {
+    if(!user) return null;
+    return <div className={`edit-wrapper ${display && 'show-me'}`}>
         <Alert text='application.changesIrreversible' type="primary" />
-        {isAdmin(user.role) && <Status selectedBoxId={selectedBoxId} stockId={stockId} />}
+        {isAdmin(user.role) && <Status selectedBoxId={selectedBoxId} stockId={stockId} rentId={rentId} />}
         {isAdmin(user.role) && rentId !== '' && singleBoxDetailStatus === RentStatus.rented && <Position rentId={rentId} stockId={stockId} />}
         {isWorker(user.role) && <WorkerEdit rentId={rentId} selectedBoxId={selectedBoxId} />}
     </div>
-);
+}
 
 const mapStateToProps = (state: ApplicationState) => ({
     user: state.user.details,
