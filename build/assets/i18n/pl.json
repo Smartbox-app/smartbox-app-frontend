@@ -337,7 +337,9 @@
             "boxDeleted": "Usunięto skrytkę",
             "boxAdded": "Dodano skrytkę",
             "boxEdited": "Edytowano skrytkę",
-            "deleteBoxText": "Czy na pewno chcesz usunąć skrytkę?"
+            "deleteBoxText": "Czy na pewno chcesz usunąć skrytkę?",
+            "boxesList": "Lista skrytek",
+            "map": "Mapa"
         },
         "settings": {
             "tax": "Stawka VAT",

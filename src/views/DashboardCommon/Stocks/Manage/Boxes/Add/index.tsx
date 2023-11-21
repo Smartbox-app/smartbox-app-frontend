@@ -2,7 +2,7 @@ import React from 'react';
 import { ItfApiForm } from 'itf_formbuilder_react';
 import { useDispatch, useSelector } from 'react-redux';
 import ReactCreatableSelect from 'react-select/creatable';
-import { PageHeader, ButtonsContainer, FormContainer, Section } from '../../../../../../components/Layout';
+import { PageHeader, ButtonsContainer, FormContainer, Section, SimpleHeader } from '../../../../../../components/Layout';
 import { Button, Spinner } from '../../../../../../components/Branded';
 import ApiService from '../../../../../../services/api-service';
 import { formOnTranslateString } from '../../../../../../utils/trans-form';
@@ -32,8 +32,8 @@ const Add = () => {
     const sendUrl = 'box';
 
     return (
-        <Section>
-            <PageHeader title="application.addBox" />
+        <>
+            <SimpleHeader title="application.addBox" />
             <ButtonsContainer>
                 <Button to={`/${UserService.getSlugByRole(user.role)}/stocks/${stockId}/box`} text="application.back" primary />
             </ButtonsContainer>
@@ -55,7 +55,7 @@ const Add = () => {
                     thirdPartyComponents={{ ReactSelect: ReactSelectOverride, ReactCreatableSelect }}
                 />
             </FormContainer>
-        </Section>
+        </>
     );
 };
 
