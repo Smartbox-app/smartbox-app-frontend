@@ -71,6 +71,24 @@ const FieldsMapper = ({ field, fieldHtmlId, currentValue, errors, big, onFocus, 
                 onBlur,
             }}
         />
+        case 'number': return <Input
+            big={big}
+            key={fieldHtmlId}
+            className="register-input"
+            type={field.options.type}
+            help={field.descr}
+            input={{
+                label: formOnTranslateString(field.title),
+                name: fieldHtmlId,
+                id: fieldHtmlId,
+                placeholder: formOnTranslateString(field.placeholder),
+                errors: translateErrors(errors),
+                value: currentValue,
+                onChange: (e: any) => onChange(e.target.value),
+                onFocus,
+                onBlur,
+            }}
+        />
         case 'textarea': return <Input
             big={big}
             key={fieldHtmlId}

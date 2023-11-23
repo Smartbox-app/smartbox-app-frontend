@@ -22,11 +22,11 @@ const DashboardUser = () => {
       text: 'application.account',
       address: '/user/profile',
     },
-    {
-      icon: 'email.svg',
-      text: 'application.contact',
-      address: '/user/contact',
-    },
+    // {
+    //   icon: 'email.svg',
+    //   text: 'application.contact',
+    //   address: '/user/contact',
+    // },
   ];
 
   return (

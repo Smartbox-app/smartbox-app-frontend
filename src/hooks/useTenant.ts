@@ -50,7 +50,10 @@ const useTenant = (): UseTenant => {
             slides: [],
             name: 'SmartBox',
             contactEmail: '',
-            contactPhone: ''
+            contactPhone: '',
+            fontBold: '',
+            fontLight: '',
+            fontNormal: ''
         })
     }
 

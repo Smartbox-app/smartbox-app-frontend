@@ -5,6 +5,9 @@ import './SingleOption.scss';
 import { connect } from 'react-redux';
 import { ApplicationState } from '../../../../../../reducers';
 import { Spinner } from '../../../../../../components/Branded';
+import styled from 'styled-components';
+import { BoxGroupUserRes } from 'smartbox-types';
+import ApiService from '../../../../../../services/api-service';
 
 export type SingleOptionType = {
   name: string;
@@ -17,38 +20,75 @@ export type SingleOptionType = {
 };
 
 interface Props {
-  singleOptionData: SingleOptionType;
+  singleOptionData: BoxGroupUserRes;
   loading: boolean;
   register?: any;
   disable?: boolean;
 }
 
+const StyledSingleOptionWrapper = styled.div`
+input[type='radio']:checked + .single-option {
+  .radio-img {
+    border: 2px solid ${props => props.theme.colors.primary}
+  }
+}
+`
+
+const StyledImageDescription = styled.p`
+    color: ${props => props.theme.colors.primary};
+    font-weight: 700;
+    padding: 10px;
+}
+`
+
+const StyledSizeContainer = styled.div`
+background-color: ${props => props.theme.colors.primary};
+color: #fff;
+text-align: center;
+padding: 10px;
+`
+
+const StyledAreaVolumeContainer = styled.div`
+background-color: rtransparent;
+color: ${props => props.theme.colors.primary};
+text-align: center;
+padding: 10px;
+`
+
 const SingleOption = ({ register, singleOptionData, disable, loading }: Props) => {
   if (loading) return <Spinner />;
   return (
-    <div className="single-option-wrapper">
+    <StyledSingleOptionWrapper className="single-option-wrapper">
       <input
         name={singleOptionData.name}
         type="radio"
-        value={singleOptionData.value}
+        value={singleOptionData.id}
         id={singleOptionData.id}
         ref={register({ required: true })}
         disabled={disable}
       />
       <label htmlFor={singleOptionData.id} className={`single-option ${disable ? 'single-option-disable' : ''}`}>
         <div className="radio-img">
+       
           <span className={`img-value ${disable ? 'img-value-disabled' : ''}`}>{disable ? 'BRAK' : ''}</span>
-          {singleOptionData.imgAddress && (
+          {singleOptionData.image && (
             <div className="svg-wrapper">
-              <ReactSVG src={`/assets/icons/${singleOptionData.imgAddress}.svg`} />
+              <img src={`${ApiService.url}box-group-new/image/${singleOptionData.id}`} alt={singleOptionData.name} />
             </div>
           )}
-          <p className="img-description">
-            {singleOptionData.sizeX} m x {singleOptionData.sizeY} m x {singleOptionData.sizeZ} m
-          </p>
+   <StyledImageDescription className="img-description">
+            {singleOptionData.name}
+          </StyledImageDescription>
+          {singleOptionData.height && singleOptionData.width && singleOptionData.depth && <StyledSizeContainer>
+            sz. <strong>{singleOptionData.width}m</strong> x gł. <strong>{singleOptionData.depth}m</strong> x  wys. <strong>{singleOptionData.height}m</strong>
+            </StyledSizeContainer>}
+            {(singleOptionData.volume || singleOptionData.area) && <StyledAreaVolumeContainer>
+              {singleOptionData.area && <p>Powierzchnia: <strong>{singleOptionData.area}m²</strong></p>}
+              {singleOptionData.volume && <p>Objętość: <strong>{singleOptionData.volume}m³</strong></p>}
+              </StyledAreaVolumeContainer>}
         </div>
       </label>
-    </div>
+    </StyledSingleOptionWrapper>
   );
 };
 

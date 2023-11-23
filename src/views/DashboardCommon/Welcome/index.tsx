@@ -11,7 +11,7 @@ import { singleRent } from '../../../actions';
 import Storage from './Storage';
 import Sale from './Sale';
 import OrdersHistory from './OrdersHistory';
-import Offers from './Offers';
+import {Offers} from './Offers';
 
 import './Welcome.scss';
 
@@ -36,9 +36,10 @@ const Welcome = ({ getMyRentList, rentsList, fetchMyRentHistory, rentsHistoryLis
         <PageHeader title={`${__('application.hi')} ${user.firstName}`} />
       </Section>
       <Sale />
+      <Offers />
       <Storage myRentList={rentsList} loading={loading} />
       <OrdersHistory rentsHistoryList={rentsHistoryList} />
-      <Offers />
+    
     </div>
   );
 };

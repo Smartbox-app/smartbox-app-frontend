@@ -37,6 +37,8 @@ import BannerAndroid from './components/Common/BannerAndroid';
 import BannerIos from './components/Common/BanneriOS';
 import { CustomThemeProvider } from './providers';
 import { AppWrapper } from './components/AppWrapper';
+import GlobalStyle from './globalStyles';
+import { useTenant } from './hooks/useTenant';
 
 const DashboardAdmin = React.lazy(() => import('./views/DashboardAdmin'));
 const DashboardUser = React.lazy(() => import('./views/DashboardUser'));
@@ -51,6 +53,16 @@ const createStoreWithMiddleware = composeWithDevTools(applyMiddleware(reduxThunk
 export const store = createStoreWithMiddleware(reducers);
 
 export const history = createBrowserHistory({ basename: '/' });
+
+const AppGlobalStyles = () => {
+    const { tenant } = useTenant();
+
+    if (tenant && tenant.id) {
+        return <GlobalStyle tenantId={tenant.id} />
+    }
+
+    return <></>
+}
 
 const App = () => {
     const [loading, setLoading] = useState(true);
@@ -68,7 +80,7 @@ const App = () => {
         checkI18nLoaded();
     }, []);
 
-    if (loading) return <Spinner overlay />;
+    if (loading) return null;
 
     return (
         <WorkBoxProvider>
@@ -76,6 +88,7 @@ const App = () => {
                 <Router history={history}>
                     <CustomThemeProvider>
                         <AppWrapper>
+                            <AppGlobalStyles />
                             <OnlineContent>
                                 <UpdateInfoBar />
                                 <NotificationContainer />

@@ -76,7 +76,12 @@ class FileInput extends React.Component<Props, State> {
                 this.setState({
                     loadedFiles: input.value,
                 });
-            } else this.fileReader.readAsDataURL(input.value);
+            } else if(input.value instanceof Blob) {
+                this.fileReader.readAsDataURL(input.value);
+            } else {
+                this.setState({ cantRender: true })
+            }
+           
         }
         if (hasImage) {
             this.fetchImage();
@@ -104,7 +109,12 @@ class FileInput extends React.Component<Props, State> {
         }
     };
 
-    private hasImage = () => this.props.hasImage || this.props.input.value;
+    private hasImage = () => { 
+        const {hasImage, input} = this.props;
+        console.log(this.props.label, this.props.hasImage, this.props.input.value)
+        if(!hasImage && Array.isArray(input.value) && input.value.length === 0) return false;
+        return this.props.hasImage || this.props.input.value;
+    }
 
     private onDragEnter = (e: any) => {
         e.preventDefault();
@@ -206,7 +216,8 @@ class FileInput extends React.Component<Props, State> {
                 {!cantRender && input.value && loadedFiles.length === 0 && (
                     <img className="img-preview" src={this.props.input.value} />
                 )}
-                {((cantRender && !multiple) ||
+                {cantRender && input.value && <p>{input.value}</p>}
+                {/* {((cantRender && !multiple) ||
                     (multiple &&
                         cantRender &&
                         loadedFiles.length === 0 &&
@@ -215,7 +226,7 @@ class FileInput extends React.Component<Props, State> {
                             <span className="file-input-icon fa fa-plus" />
                             <p>{__('application.cant_render_file')}</p>
                         </div>
-                    )}
+                    )} */}
                 {multiple && loadedFiles.length > 0 && (
                     <div>
                         <span className="file-input-icon fa fa-plus" />
@@ -255,7 +266,7 @@ class FileInput extends React.Component<Props, State> {
                                 multiple={multiple}
                                 disabled={multiple && loadedFiles.length >= 10}
                                 // {...(this.props.isNotImage !== true ? { accept: accept || 'image/*' } : { accept: accept || '*' })}
-                                accept={'image/jpeg, image/png'}
+                                accept={accept}
                                 className={`input input-file ${this.props.max ? 'input-max' : ''} ${this.props.nomargin ? 'nomargin' : ''
                                     }`}
                                 id={this.props.input.name}

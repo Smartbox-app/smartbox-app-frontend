@@ -5,6 +5,7 @@ import './SingleOption.scss';
 import { connect } from 'react-redux';
 import { ApplicationState } from '../../../../../../reducers';
 import { Spinner } from '../../../../../../components/Branded';
+import styled from 'styled-components';
 
 interface Props {
     loading: boolean;
@@ -15,10 +16,16 @@ interface Props {
     address: string;
 }
 
+const StyledSingleOptionWrapper = styled.div`
+input[type='radio']:checked+.single-option {
+    border: 2px solid ${props => props.theme.colors.primary}
+}
+`
+
 const SingleOption = ({ register, name, address, value, disable, loading }: Props) => {
     if (loading) return <Spinner />;
     return (
-        <div className="single-stock-wrapper">
+        <StyledSingleOptionWrapper className="single-stock-wrapper">
             <input
                 name="stock"
                 type="radio"
@@ -31,7 +38,7 @@ const SingleOption = ({ register, name, address, value, disable, loading }: Prop
                 <h3>{name}</h3>
                 <span>{address}</span>
             </label>
-        </div>
+        </StyledSingleOptionWrapper>
     );
 };
 

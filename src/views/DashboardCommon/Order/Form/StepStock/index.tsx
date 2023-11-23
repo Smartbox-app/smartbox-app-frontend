@@ -41,9 +41,9 @@ const StepSize = ({
 }: Props) => {
     useEffect(() => {
         if (!user) return;
-        if (!formData.size) {
-            history.push(`/${UserService.getSlugByRole(user.role)}/main`);
-        }
+        // if (!formData.size) {
+        //     history.push(`/${UserService.getSlugByRole(user.role)}/main`);
+        // }
         clearOrderAgreement();
     }, []);
 

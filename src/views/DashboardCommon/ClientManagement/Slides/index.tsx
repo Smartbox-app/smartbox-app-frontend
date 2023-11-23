@@ -3,7 +3,7 @@ import { ItfApiForm } from 'itf_formbuilder_react';
 import { UserRole } from 'smartbox-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Spinner } from '../../../../components/Branded';
-import { ButtonsContainer } from '../../../../components/Layout';
+import { ButtonsContainer, Section } from '../../../../components/Layout';
 import ApiService from '../../../../services/api-service';
 import { formOnTranslateString } from '../../../../utils/trans-form';
 import { ApplicationState } from '../../../../reducers';
@@ -24,7 +24,7 @@ const ManageTenantSlides = ({ userId }: Props) => {
         </ButtonsContainer>
     );
 
-    if(!user) return null;
+    if (!user) return null;
 
     const fetchUrl = user.role === UserRole.admin && userId ? `tenant/form/admin-slides/${userId}` : 'tenant/form/slides';
     const sendUrl = user.role === UserRole.admin && userId ? `tenant/admin/slides/${userId}` : 'tenant/slides';
@@ -48,21 +48,23 @@ const ManageTenantSlides = ({ userId }: Props) => {
     };
 
     return (
-        <ItfApiForm
-            formId="tenantSlidesData"
-            schemaMayBeDynamic={true}
-            schemaCacheEnabled={false}
-            loadingInfo={<Spinner transparent />}
-            // useFormDataInsteadOfPlainObject
-            schemaFetcher={() => ApiService.loadForm(fetchUrl)}
-            sendFetcher={customSendFetcher}
-            submitButton={submitButton}
-            onRenderFullField={mapFields}
-            onSavedSuccessfully={() => {
-                dispatch(successNotification(__('application.tenantUpdated')));
-            }}
-            onTranslateString={formOnTranslateString}
-        />
+        <Section highlight>
+            <ItfApiForm
+                formId="tenantSlidesData"
+                schemaMayBeDynamic={true}
+                schemaCacheEnabled={false}
+                loadingInfo={<Spinner transparent />}
+                // useFormDataInsteadOfPlainObject
+                schemaFetcher={() => ApiService.loadForm(fetchUrl)}
+                sendFetcher={customSendFetcher}
+                submitButton={submitButton}
+                onRenderFullField={mapFields}
+                onSavedSuccessfully={() => {
+                    dispatch(successNotification(__('application.tenantUpdated')));
+                }}
+                onTranslateString={formOnTranslateString}
+            />
+        </Section>
     );
 };
 

@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { UserRes, BoxGroupAvailability } from 'smartbox-types';
+import { UserRes, BoxGroupAvailability, BoxGroupUserRes } from 'smartbox-types';
 import { order, stock } from '../../../../../actions';
 import { FormContainer, ButtonsContainer } from '../../../../../components/Layout';
 import { Button } from '../../../../../components/Branded';
@@ -14,6 +14,7 @@ import { ApplicationState } from '../../../../../reducers';
 import FormHeader from '../../../../../components/Layout/FormHeader';
 import UserService from '../../../../../services/user-service';
 import './StepSize.scss';
+import ApiService from '../../../../../services/api-service';
 
 interface RouteProps {
     step: string;
@@ -38,7 +39,11 @@ const StepSize = ({
     boxAvailability,
     getStockList
 }: Props) => {
+    
     const stockId = formData.stock;
+
+    const [boxGroups, setBoxGroups] = useState<BoxGroupUserRes[]>([]);
+
     useEffect(() => {
         if (!user) return;
         if (stockId && stockId !== '') {
@@ -61,58 +66,28 @@ const StepSize = ({
         history.push(`/${UserService.getSlugByRole(user.role)}/order/step/duration`);
     };
 
-    const boxList: SingleOptionType[] = [
-        {
-            name: 'size',
-            value: '3',
-            id: 'option3',
-            sizeX: 1.5,
-            sizeY: 2,
-            sizeZ: 2,
-            imgAddress: '3g',
-        },
-        {
-            name: 'size',
-            value: '6',
-            id: 'option6',
-            sizeX: 2,
-            sizeY: 2,
-            sizeZ: 3,
-            imgAddress: '6g',
-        },
-        {
-            name: 'size',
-            value: '9',
-            id: 'option9',
-            sizeX: 2,
-            sizeY: 2,
-            sizeZ: 4.5,
-            imgAddress: '9g',
-        },
-        {
-            name: 'size',
-            value: '12',
-            id: 'option12',
-            sizeX: 2,
-            sizeY: 2,
-            sizeZ: 6,
-            imgAddress: '12g',
-        },
-    ];
+    useEffect(() => {
+        ApiService.callFetch('GET', `box-group-new/all/${stockId}`, (boxes: BoxGroupUserRes[]) => {
+            setBoxGroups(boxes);
+        })
+    }, [])
+
+    
 
     const isThisBoxAvailability = (boxSize: string) => {
+        return true;
         if (boxAvailability.length > 1) {
             const currentBox = boxAvailability.find((box: BoxGroupAvailability) => box.size.toString() === boxSize);
             return currentBox?.available;
         }
     };
 
-    const options = boxList.map((data: SingleOptionType, index: number) => (
+    const options = boxGroups.map((data: BoxGroupUserRes, index: number) => (
         <SingleOption
             key={index}
             singleOptionData={data}
             register={register}
-            disable={!isThisBoxAvailability(data.value)}
+            disable={!isThisBoxAvailability(data.id)}
         />
     ));
 

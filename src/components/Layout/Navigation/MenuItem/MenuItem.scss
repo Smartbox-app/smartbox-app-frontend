@@ -23,12 +23,10 @@
 
   &:hover {
     border-top: 2px solid $color-primary-light;
-    color: $color-primary-light;
+
     cursor: pointer;
 
-    .main-menu-item_text {
-      color: $color-primary-light;
-    }
+
   }
 
   &.active {

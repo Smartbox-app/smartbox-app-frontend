@@ -1,4 +1,5 @@
 import * as React from 'react';
+import styled from 'styled-components';
 import './Spinner.scss';
 
 interface Props {
@@ -10,8 +11,17 @@ interface Props {
     fading?: boolean;
 }
 
+const StyledSpinnerContainer = styled.div``
+
+
+const StyledSpinner = styled.div`
+border: 3px solid  ${props => props.theme.colors.primary} ;
+border-color: ${props => props.theme.colors.primary} transparent transparent transparent;
+
+`
+
 const Spinner = ({ overlay, transparent, halfTransparent, dark, small, fading }: Props) => (
-    <div
+    <StyledSpinnerContainer
         className={`spinner-container ${overlay ? 'overlay' : ''}
     ${small ? 'small' : ''} ${transparent ? 'transparent' : ''} 
     ${halfTransparent ? 'half-transparent' : ''} 
@@ -19,8 +29,8 @@ const Spinner = ({ overlay, transparent, halfTransparent, dark, small, fading }:
     ${fading ? 'fading' : ''}
     `}
     >
-        <div className="spinner" />
-    </div>
+        <StyledSpinner className="spinner" />
+    </StyledSpinnerContainer>
 );
 
 export { Spinner };

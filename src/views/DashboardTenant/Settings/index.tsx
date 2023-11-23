@@ -4,6 +4,7 @@ import { ManageTenantLogo } from '../../../views/DashboardCommon/ClientManagemen
 import { ManageTenantBackground } from '../../../views/DashboardCommon/ClientManagement/Background';
 import { ManagaTenantData } from '../../../views/DashboardCommon/ClientManagement/TenantData';
 import { ManageTenantSlides } from '../../../views/DashboardCommon/ClientManagement/Slides';
+import { ManageTenantFonts } from '../../DashboardCommon/ClientManagement/Fonts';
 
 const Settings = () => {
     return (
@@ -12,6 +13,7 @@ const Settings = () => {
             <FormContainer>
                 <ManageTenantLogo />
                 <ManageTenantBackground />
+                <ManageTenantFonts />
                 <ManageTenantSlides />
                 <ManagaTenantData />
             </FormContainer>

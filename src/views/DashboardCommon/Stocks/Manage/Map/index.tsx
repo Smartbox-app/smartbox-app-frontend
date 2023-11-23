@@ -10,6 +10,7 @@ import styled from 'styled-components';
 const StyledMapContainer = styled.div`
 position: relative;
 height: 600px;
+border: 1px solid ${props => props.theme.colors.primary};
 background: #fff;`
 
 const Map = () => {

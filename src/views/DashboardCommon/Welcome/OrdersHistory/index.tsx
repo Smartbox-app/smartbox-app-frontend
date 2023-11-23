@@ -15,7 +15,7 @@ const OrdersHistory = ({ rentsHistoryList }: Props) => {
   const startFrom = (): number => (page - 1) * listLength;
 
   return (
-    <Section half highlight>
+    <Section highlight>
       <SectionHeader title='application.history' />
       <History data={rentsHistoryList.slice(startFrom(), startFrom() + listLength)} />
       {rentsHistoryList.length > listLength && (

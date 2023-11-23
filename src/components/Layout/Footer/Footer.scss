@@ -42,7 +42,8 @@ footer {
       padding: math.div($main-spacing, 2) $table-item-spacing;
     }
 
-    .footerLink {
+    a.footerLink {
+      color: $color-text-light;
       padding: math.div($main-spacing, 2) $table-item-spacing;
       border-right: solid 2px rgba($color-background, 0.5);
     }

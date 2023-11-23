@@ -5,6 +5,7 @@ import { List } from './List';
 import UserService from '../../../../../services/user-service';
 import { useSelector } from 'react-redux';
 import { ApplicationState } from '../../../../../reducers';
+import { Map } from '../Map';
 
 const Boxes = () => {
     const { stockId } = useParams<{ stockId: string}>();

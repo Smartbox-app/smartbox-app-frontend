@@ -37,10 +37,8 @@
     position: absolute;
     width: 51px;
     height: 51px;
-    border: 3px solid $color-primary;
     border-radius: 50%;
     animation: spinner-animation 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-    border-color: $color-primary transparent transparent transparent;
     &:nth-child(1) {
       animation-delay: -0.45s;
     }

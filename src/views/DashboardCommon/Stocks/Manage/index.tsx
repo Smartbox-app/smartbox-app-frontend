@@ -8,6 +8,7 @@ import { ApplicationState } from '../../../..//reducers';
 import { BasicData } from './BasicData';
 import { Boxes } from './Boxes';
 import { Map } from './Map';
+import { Groups } from './Groups';
 
 
 const Manage = () => {
@@ -38,6 +39,10 @@ const Manage = () => {
                         text: 'application.stockBoxes',
                     },
                     {
+                        to: `/${UserService.getSlugByRole(user.role)}/stocks/${stockId}/groups`,
+                        text: 'application.boxesGroups',
+                    },
+                    {
                         to: `/${UserService.getSlugByRole(user.role)}/stocks/${stockId}/map`,
                         text: 'application.map',
                     },
@@ -49,6 +54,7 @@ const Manage = () => {
                 <Route exact path={`/${UserService.getSlugByRole(user.role)}/stocks/:stockId`} component={BasicData} />
                 <Route path={`/${UserService.getSlugByRole(user.role)}/stocks/:stockId/settings`} component={BasicData} />
                 <Route path={`/${UserService.getSlugByRole(user.role)}/stocks/:stockId/boxes`} component={Boxes} />
+                <Route path={`/${UserService.getSlugByRole(user.role)}/stocks/:stockId/groups`} component={Groups} />
                 <Route path={`/${UserService.getSlugByRole(user.role)}/stocks/:stockId/map`} component={Map} />
             </Switch>
 

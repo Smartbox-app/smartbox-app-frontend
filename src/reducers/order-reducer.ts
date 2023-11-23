@@ -169,7 +169,7 @@ export default (state: OrderState = initialState, action: Action): any => {
   switch (action.type) {
     case 'FORM_STEP_SUCCESS': {
       const newFormData: FormType = { ...state.formData, ...action.payload };
-      const { calculate } = usePricing();
+      // const { calculate } = usePricing();
 
       const data: ICalculateProps = {
         durationInDays: newFormData.durationInDays,
@@ -183,18 +183,19 @@ export default (state: OrderState = initialState, action: Action): any => {
       };
 
       if (newFormData.durationInDays !== 0) {
-        const price = calculate(data);
-        return {
-          ...state,
-          formData: newFormData,
-          countedPrice: price,
-          discountList: [
-            {
-              text: price.name,
-              value: 0,
-            },
-          ],
-        };
+        // const price = calculate(data);
+        // const price =
+        // return {
+        //   ...state,
+        //   formData: newFormData,
+        //   countedPrice: price,
+        //   discountList: [
+        //     {
+        //       text: price.name,
+        //       value: 0,
+        //     },
+        //   ],
+        // };
       }
 
       return {

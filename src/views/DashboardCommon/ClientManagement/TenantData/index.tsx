@@ -3,7 +3,7 @@ import { ItfApiForm } from 'itf_formbuilder_react';
 import { UserRole } from 'smartbox-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Spinner } from '../../../../components/Branded';
-import { ButtonsContainer } from '../../../../components/Layout';
+import { ButtonsContainer, Section } from '../../../../components/Layout';
 import ApiService from '../../../../services/api-service';
 import { formOnTranslateString } from '../../../../utils/trans-form';
 import { ApplicationState } from '../../../../reducers';
@@ -25,7 +25,7 @@ const ManagaTenantData = ({ userId }: Props) => {
         </ButtonsContainer>
     );
 
-    if(!user) return null;
+    if (!user) return null;
 
     const fetchUrl = user.role === UserRole.admin && userId ? `tenant/form/admin-data/${userId}` : 'tenant/form/data';
     const sendUrl = user.role === UserRole.admin && userId ? `tenant/admin/data/${userId}` : 'tenant/data';
@@ -39,21 +39,23 @@ const ManagaTenantData = ({ userId }: Props) => {
     };
 
     return (
-        <ItfApiForm
-            formId="tenantDataForm"
-            schemaMayBeDynamic={true}
-            schemaCacheEnabled={false}
-            loadingInfo={<Spinner transparent />}
-            schemaFetcher={() => ApiService.loadForm(fetchUrl)}
-            sendFetcher={customSendFetcher}
-            submitButton={submitButton}
-            onRenderFullField={mapFields}
-            onSavedSuccessfully={() => {
-                dispatch(successNotification(__('application.tenantUpdated')));
-                if(!userId && user.tenantId) dispatch(getTenantById(user.tenantId));
-            }}
-            onTranslateString={formOnTranslateString}
-        />
+        <Section highlight>
+            <ItfApiForm
+                formId="tenantDataForm"
+                schemaMayBeDynamic={true}
+                schemaCacheEnabled={false}
+                loadingInfo={<Spinner transparent />}
+                schemaFetcher={() => ApiService.loadForm(fetchUrl)}
+                sendFetcher={customSendFetcher}
+                submitButton={submitButton}
+                onRenderFullField={mapFields}
+                onSavedSuccessfully={() => {
+                    dispatch(successNotification(__('application.tenantUpdated')));
+                    if (!userId && user.tenantId) dispatch(getTenantById(user.tenantId));
+                }}
+                onTranslateString={formOnTranslateString}
+            />
+        </Section>
     );
 };
 
