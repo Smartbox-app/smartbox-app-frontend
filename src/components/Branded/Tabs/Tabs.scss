@@ -10,7 +10,7 @@
   overflow: hidden;
   border-radius: 3px;
 
-  @include gt-xs{
+  @include gt-xs {
     margin-bottom: $main-spacing * 4;
   }
 
@@ -19,7 +19,7 @@
 
     &::before {
       position: absolute;
-      content: '';
+      content: "";
       background-image: url("/assets/icons/alert.svg");
       background-repeat: no-repeat;
       background-size: 30px;
@@ -40,7 +40,8 @@
     text-align: center;
     padding: $main-spacing math.div($main-spacing, 2);
     font-family: $font-primary;
-      font-weight: 300;
+    font-weight: 300;
+    font-size: 0.85rem;
 
     // &:hover {
     //   background-color: lighten($color-background, 30%);
@@ -48,8 +49,8 @@
     // }
 
     &.active {
-    //   border-bottom: 2px solid $color-primary;
-    //   background: $color-primary-light;
+      //   border-bottom: 2px solid $color-primary;
+      //   background: $color-primary-light;
       color: $color-text-light;
     }
   }

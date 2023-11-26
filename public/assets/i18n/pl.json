@@ -13,6 +13,7 @@
             "home": "Home",
             "edit": "Edytuj",
             "back": "Wróć",
+            "pricing": "Cennik",
             "next": "Dalej",
             "next2": "Następna",
             "previous": "Poprzednia",
@@ -249,8 +250,10 @@
             "generateInvoice": "Wygeneruj fakturę",
             "infoToOptionalInvoice": "Fakturę wystawimy na dane najemcy. Możesz też podać inne dane, na przykład Twojej firmy.",
             "wantOptionalInvoice": "Chcę dodać inne dane lub potrzebuję faktury na firmę",
+            "day": "Dzień",
             "week": "Tydzień",
             "month": "Miesiąc",
+            "year": "Rok",
             "nameTenant": "Imię i nazwisko",
             "street": "Ulica i numer",
             "postCode": "Kod pocztowy",
@@ -350,7 +353,12 @@
             "map": "Mapa",
             "fontLight": "Plik z fontem (cienka)",
             "fontNormal": "Plik z fontem (normalna)",
-            "fontBold": "Plik z fontem (pogrubiona)"
+            "fontBold": "Plik z fontem (pogrubiona)",
+            "quantity": "Ilość",
+            "price": "Cena",
+            "periodType": "Typ okresu",
+            "noPricingSet": "Cennik nie jest ustawiony",
+            "rentFrom": "Od"
         },
         "settings": {
             "tax": "Stawka VAT",

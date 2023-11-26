@@ -225,6 +225,30 @@
             "46": {
                 "text": "Nie możesz usunąć skrytki która nie jest pusta!",
                 "__type_alias_do_not_touch": "ApiErrorCode.CanNotDeleteNotEmptyBox"
+            },
+            "47": {
+                "text": "Wymagane jest określenie przynajmniej jednego okresu!",
+                "__type_alias_do_not_touch": "ApiErrorCode.NeedAtLestOnePricingPeriod"
+            },
+            "48": {
+                "text": "Okresy oraz ceny muszą być ustawione w kolejności rosnącej!",
+                "__type_alias_do_not_touch": "ApiErrorCode.PricesAndPeriodsNeedsToBeInAscendingOrder"
+            },
+            "49": {
+                "text": "Okres większy niż 28 dni nie jest dopuszczalny!",
+                "__type_alias_do_not_touch": "ApiErrorCode.PeriodMax28Days"
+            },
+            "50": {
+                "text": "Okres większy niż 4 tygodnie nie jest dopuszczalny!",
+                "__type_alias_do_not_touch": "ApiErrorCode.PeriodMax4Weeks"
+            },
+            "51": {
+                "text": "Okres większy niż 12 miesięcy nie jest dopuszczalny!",
+                "__type_alias_do_not_touch": "ApiErrorCode.PeriodMax12Months"
+            },
+            "52": {
+                "text": "Minimalna ilość okresów to 1!",
+                "__type_alias_do_not_touch": "ApiErrorCode.PeriodAtLeast1"
             }
         }
     }

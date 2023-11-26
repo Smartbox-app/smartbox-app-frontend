@@ -15,13 +15,11 @@ interface Props {
     min?: number;
     max?: boolean;
     step?: number;
-    value?: any;
     options?: any[];
     readonly?: boolean;
     required?: boolean;
     nomargin?: boolean;
     help?: string;
-    onChange?: (value: string) => void;
     dark?: boolean;
     className?: string;
     big?: boolean;

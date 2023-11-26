@@ -8,6 +8,7 @@ import { Spinner } from '../../../../../../components/Branded';
 import styled from 'styled-components';
 import { BoxGroupUserRes } from 'smartbox-types';
 import ApiService from '../../../../../../services/api-service';
+import { PriceInfo } from '../PriceInfo';
 
 export type SingleOptionType = {
   name: string;
@@ -86,6 +87,7 @@ const SingleOption = ({ register, singleOptionData, disable, loading }: Props) =
               {singleOptionData.area && <p>Powierzchnia: <strong>{singleOptionData.area}m²</strong></p>}
               {singleOptionData.volume && <p>Objętość: <strong>{singleOptionData.volume}m³</strong></p>}
               </StyledAreaVolumeContainer>}
+              <PriceInfo box={singleOptionData} />
         </div>
       </label>
     </StyledSingleOptionWrapper>

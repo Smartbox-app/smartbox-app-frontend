@@ -44,6 +44,12 @@ const List = () => {
             mobile: true,
             buttons: [
                 {
+                    name: 'application.pricing',
+                    type: 'primary',
+                    to: (data: BoxGroupListRes) => `/${UserService.getSlugByRole(user.role)}/stocks/${stockId}/groups/${data.id}/pricing`
+                    // click: (data: BoxGroupListRes) => dispatch(showModal(<Edit id={data.id} stockId={data.stockId} />)),
+                },
+                {
                     name: 'application.edit',
                     type: 'primary',
                     click: (data: BoxGroupListRes) => dispatch(showModal(<Edit id={data.id} stockId={data.stockId} />)),

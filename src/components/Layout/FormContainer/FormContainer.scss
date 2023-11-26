@@ -28,7 +28,7 @@
 
 @include gt-sm {
   .form-container {
-    margin: 0 auto;
+    margin: $main-spacing * 2 auto;
     max-width: $max-form-width * 1.4;
   }
 }

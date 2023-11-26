@@ -1,6 +1,6 @@
 /* eslint-disable */
 import React from 'react';
-import { FieldType, TableResponse, TableSchema, TableSchemaField } from 'smartbox-tables';
+import { FieldType, TableButton, TableResponse, TableSchema, TableSchemaField } from 'smartbox-tables';
 import { Alert, Pagination } from '../../Common';
 import { Button } from '../../Branded';
 import { formatPrice } from '../../../utils/format-price';
@@ -147,13 +147,13 @@ class Table extends React.Component<Props> {
           {this.props.scheme.fields.map((header: TableSchemaField, index: number) => (
             <td className={`${header.mobile ? 'mobile' : ''}`} key={`${header.field}_${rowIndex}`}>
               {header.buttons
-                ? header.buttons.map((button: any, index: number) => (
+                ? header.buttons.map((button: TableButton, index: number) => (
                     <Button
                       key={index}
                       primary={button.type === 'primary'}
                       danger={button.type === 'danger'}
                       success={button.type === 'success'}
-                      to={button.to ? `${button.to}${row.id}` : ''}
+                      to={button.to ? typeof button.to === 'string' ? `${button.to}${row.id}` : button.to(row) : ''}
                       click={button.click ? () => button.click(row) : null}
                       text={button.name}
                     />

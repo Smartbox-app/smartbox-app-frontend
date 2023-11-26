@@ -6,6 +6,7 @@ import UserService from '../../../../../services/user-service';
 import { useSelector } from 'react-redux';
 import { ApplicationState } from '../../../../../reducers';
 import { Map } from '../Map';
+import { Pricing } from './Pricing';
 
 const Groups = () => {
     const { stockId } = useParams<{ stockId: string}>();
@@ -18,6 +19,7 @@ const Groups = () => {
         <Route path={`/${UserService.getSlugByRole(user.role)}/stocks/:stockId/groups/add`} component={Add} />
         <Route path={`/${UserService.getSlugByRole(user.role)}/stocks/:stockId/groups/map`} component={Map} />
         <Route path={`/${UserService.getSlugByRole(user.role)}/stocks/:stockId/groups/list`} component={List} />
+        <Route path={`/${UserService.getSlugByRole(user.role)}/stocks/:stockId/groups/:groupId/pricing`} component={Pricing} />
     </Switch>
 }
 

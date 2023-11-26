@@ -12,6 +12,7 @@
   align-items: center;
   padding: $main-spacing;
   color: $color-inactive;
+  font-size: 0.9rem;
   //border: none;
 
   &:link {
@@ -53,16 +54,16 @@
   }
   .main-menu-item {
     border-top: none;
-    border-bottom: 2px solid $color-inactive;
+    border-bottom: none;
 
     &:hover {
       border-top: none;
-      border-bottom: 2px solid $color-primary-light;
+    border-bottom: none;
     }
 
     &.active {
       border-top: none;
-      border-bottom: 2px solid $color-primary;
+      border-bottom: none;
     }
   }
 }
