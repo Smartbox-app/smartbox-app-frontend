@@ -52,7 +52,7 @@ const PriceInfo = ({ box }: Props) => {
     const firstPricing = box.pricing[0];
 
     return <StyledPriceInfo>
-        {__('application.rentFrom')}<strong className='price-value'>{formatPrice(firstPricing.price)}</strong>/{formatQuantity(firstPricing.type, firstPricing.quantity)}
+        {__('application.rentFrom')}<strong className='price-value'>{formatPrice(firstPricing.price)}</strong>/<span>{firstPricing.quantity} {formatQuantity(firstPricing.type, firstPricing.quantity)}</span>
     </StyledPriceInfo>
 }
 

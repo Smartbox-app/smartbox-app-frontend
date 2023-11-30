@@ -168,3 +168,7 @@ export const sentExtendRentRequest = (rentId: string, data: ExtendRentalReq, rol
     data,
   );
 };
+
+// refactored
+export const setOrderStock = (stockId: string) => ({ type: 'SET_ORDER_STOCK', payload: stockId });
+export const setBoxGroup = (boxGroupId: string) => ({ type: 'SET_ORDER_BOX_GROUP', payload: boxGroupId });

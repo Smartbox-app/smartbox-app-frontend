@@ -28,7 +28,7 @@ const Add = () => {
         </ButtonsContainer>
     );
 
-    const fetchUrl = 'box/form';
+    const fetchUrl = `box/form/${stockId}`;
     const sendUrl = 'box';
 
     return (

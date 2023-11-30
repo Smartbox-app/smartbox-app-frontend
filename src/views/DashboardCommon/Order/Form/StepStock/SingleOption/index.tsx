@@ -1,15 +1,15 @@
-import React from 'react';
+import React, { ChangeEvent, ChangeEventHandler } from 'react';
 import { ReactSVG } from 'react-svg';
 
 import './SingleOption.scss';
-import { connect } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import { ApplicationState } from '../../../../../../reducers';
 import { Spinner } from '../../../../../../components/Branded';
 import styled from 'styled-components';
+import { setOrderStock } from '../../../../../../actions/order';
 
 interface Props {
     loading: boolean;
-    register?: any;
     disable?: boolean;
     name: string;
     value: string;
@@ -22,7 +22,14 @@ input[type='radio']:checked+.single-option {
 }
 `
 
-const SingleOption = ({ register, name, address, value, disable, loading }: Props) => {
+const SingleOption = ({ name, address, value, disable, loading }: Props) => {
+    const dispatch = useDispatch();
+    const stockId = useSelector((state: ApplicationState) => state.order.stockId);
+
+    const selectOption = (e: ChangeEvent<HTMLInputElement>) => {
+        dispatch(setOrderStock(value));
+    }
+
     if (loading) return <Spinner />;
     return (
         <StyledSingleOptionWrapper className="single-stock-wrapper">
@@ -31,7 +38,8 @@ const SingleOption = ({ register, name, address, value, disable, loading }: Prop
                 type="radio"
                 value={value}
                 id={value}
-                ref={register({ required: true })}
+                checked={value === stockId}
+                onChange={selectOption}
                 disabled={disable}
             />
             <label htmlFor={value} className={`single-option ${disable ? 'single-option-disable' : ''}`}>

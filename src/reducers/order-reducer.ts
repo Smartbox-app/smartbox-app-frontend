@@ -3,6 +3,7 @@ import {
   BoxGroupAvailability,
   ICalculateProps,
   IPricingResult,
+  PaymentMethod,
   PaymentStatus,
   PaymentType,
   usePricing,
@@ -19,6 +20,10 @@ export type PaymentMethodDetail = {
 };
 
 export type OrderState = {
+  // refactored
+  stockId: string;
+  boxGroupId: string;
+  //
   formData: FormType;
   paymentId: string;
   countedPrice: IPricingResult;
@@ -32,6 +37,16 @@ export type OrderState = {
   selectedPayment: PaymentType;
   selectedPaymentMethodDetail: PaymentMethodDetail;
 };
+
+interface SetOrderStock {
+  type: 'SET_ORDER_STOCK';
+  payload: string;
+}
+
+interface SetOrderBoxGroup {
+  type: 'SET_ORDER_BOX_GROUP';
+  payload: string;
+}
 
 interface FormStepSuccess {
   type: 'FORM_STEP_SUCCESS';
@@ -105,6 +120,10 @@ interface ClearOrderFormAgreementSuccess {
 }
 
 type Action =
+  // refactored
+  | SetOrderStock
+  | SetOrderBoxGroup
+  //
   | FormStepSuccess
   | FetchBoxAvailability
   | SentRentBoxRequestSuccess
@@ -122,6 +141,10 @@ type Action =
   | BlikPaymentFinishSuccess;
 
 const initialState: OrderState = {
+  // refactored
+  stockId: '',
+  boxGroupId: '',
+  //
   formData: {
     durationInDays: 7,
     discount: 0,
@@ -165,8 +188,21 @@ const initialState: OrderState = {
   blikPaymentCompletedSuccessfully: false,
 };
 
-export default (state: OrderState = initialState, action: Action): any => {
+export default (state: OrderState = initialState, action: Action): OrderState => {
   switch (action.type) {
+    case 'SET_ORDER_STOCK': {
+      return {
+        ...state,
+        stockId: action.payload,
+      }
+    };
+
+    case 'SET_ORDER_BOX_GROUP': {
+      return {
+        ...state,
+        boxGroupId: action.payload,
+      }
+    };
     case 'FORM_STEP_SUCCESS': {
       const newFormData: FormType = { ...state.formData, ...action.payload };
       // const { calculate } = usePricing();
@@ -256,7 +292,8 @@ export default (state: OrderState = initialState, action: Action): any => {
     case 'PICK_PAYMENT_TYPE_SUCCESS':
       return {
         ...state,
-        selectedPayment: action.payload,
+        // @TODO fix
+        selectedPayment: action.payload as any,
       };
 
     case 'SET_PAYMENT_METHOD_SUCCESS':
@@ -316,6 +353,7 @@ export default (state: OrderState = initialState, action: Action): any => {
           postCode: '',
           phone: '',
           mailToSendInvoice: '',
+          stock: ''
         },
       };
 

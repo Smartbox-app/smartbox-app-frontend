@@ -27,7 +27,7 @@ const Edit = ({ id, stockId }: Props) => {
         </ButtonsContainer>
     );
 
-    const fetchUrl = `box/form/${id}`;
+    const fetchUrl = `box/form/${stockId}/${id}`;
     const sendUrl = `box/${id}`;
 
     return (
@@ -43,7 +43,7 @@ const Edit = ({ id, stockId }: Props) => {
                 submitButton={submitButton}
                 onRenderFullField={mapFields}
                 onSavedSuccessfully={() => {
-                    dispatch(successNotification('notification.boxEdited'));
+                    dispatch(successNotification('application.boxEdited'));
                     dispatch(hideModal());
                     dispatch(refreshApiTableData());
                 }}

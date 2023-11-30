@@ -1,82 +1,46 @@
 import React, { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { UserRes, BoxGroupAvailability, StockList } from 'smartbox-types';
-import { order, stock } from '../../../../../actions';
+import { useDispatch, useSelector } from 'react-redux';
+import { order } from '../../../../../actions';
 import { FormContainer, ButtonsContainer } from '../../../../../components/Layout';
 import { Button } from '../../../../../components/Branded';
 import SingleOption from './SingleOption';
-import { FormType } from '../../../../../types/order-form';
 import { ApplicationState } from '../../../../../reducers';
 
 import FormHeader from '../../../../../components/Layout/FormHeader';
 import UserService from '../../../../../services/user-service';
 import './StepStock.scss';
 
-interface RouteProps {
-    step: string;
-}
-
-interface Props extends RouteComponentProps<RouteProps> {
-    history: any;
-    formData: FormType;
-    user: UserRes | null;
-    boxAvailability: BoxGroupAvailability[];
-    list: StockList[];
-    clearOrderAgreement: () => void;
-    updateFormData: (data: Partial<FormType>) => void;
-    getStockList: () => void;
-}
-
-const StepSize = ({
-    history,
-    updateFormData,
-    formData,
-    user,
-    list,
-    clearOrderAgreement,
-    getStockList
-}: Props) => {
+const StepStock = () => {
+    const dispatch = useDispatch();
+    const stockId = useSelector((state: ApplicationState) => state.order.stockId);
+    const list = useSelector((state: ApplicationState) => state.stock.list);
+    const user = useSelector((state: ApplicationState) => state.user.details!);
     useEffect(() => {
         if (!user) return;
         // if (!formData.size) {
         //     history.push(`/${UserService.getSlugByRole(user.role)}/main`);
         // }
-        clearOrderAgreement();
+        dispatch(order.clearOrderAgreement());
     }, []);
 
-    const defaultValues = {
-        stock: formData.stock,
-    };
 
-    const { register, handleSubmit, watch } = useForm({ defaultValues });
-
-    const onSubmit = async (data: Partial<FormType>) => {
-        if (!user) return;
-        const discount = list.find(stock => stock.id === data.stock)?.discount;
-        updateFormData({ ...data, discount });
-        await getStockList(); //waiting for fetch list with stock discount before load data to discount variable in next step
-        history.push(`/${UserService.getSlugByRole(user.role)}/order/step/size`);
-    };
-
-
+    if (!user) return null;
     return (
         <FormContainer className="step-stock-wrapper">
             <FormHeader no-margin title='application.orderFormPickStock' />
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form>
                 <div className="stocks-wrapper">{
-                    list.map(el => <SingleOption value={el.id} name={el.name} address={el.address} register={register} />)
+                    list.map(el => <SingleOption key={el.id} value={el.id} name={el.name} address={el.address} />)
                 }</div>
 
                 <ButtonsContainer max>
                     <Button disabled text='application.back' />
                     <Button
+                        to={`/${UserService.getSlugByRole(user!.role)}/order/step/size`}
                         type="submit"
                         primary
                         text='application.next'
-                        disabled={watch().stock === ''}
+                        disabled={!stockId}
                     />
                 </ButtonsContainer>
             </form>
@@ -84,22 +48,4 @@ const StepSize = ({
     );
 };
 
-const mapStateToProps = (state: ApplicationState) => ({
-    formData: state.order.formData,
-    countedPrice: state.order.countedPrice,
-    user: state.user.details,
-    boxAvailability: state.order.boxAvailability,
-    list: state.stock.list
-});
-
-const mapDispatchToProps = (dispatch: any) =>
-    bindActionCreators(
-        {
-            ...order,
-            ...stock,
-        },
-        dispatch,
-    );
-
-const StepSizeWithRouter = withRouter(StepSize);
-export default connect(mapStateToProps, mapDispatchToProps)(StepSizeWithRouter);
+export default StepStock;
