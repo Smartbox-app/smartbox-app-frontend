@@ -33,7 +33,7 @@ const SMS = ({ successNotification }: Props) => {
     <Section full>
       <PageHeader title="application.settings" />
       <p>{__('settings.description')}</p>
-      <FormContainer>
+      <FormContainer highlight>
         <FieldsColumn>
           <ItfApiForm
             formId="settingsForm"

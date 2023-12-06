@@ -1,11 +1,42 @@
-@import '../../../config/variables.scss';
-@import '../../../config/mixins.scss';
+@import "../../../config/variables.scss";
+@import "../../../config/mixins.scss";
 
-.date-input-style {
+.data-picker-wrapper {
+  width: 100%;
 
-}
+  &.big {
+    .flatpickr-input {
+      height: $login-button-height;
+      border-radius: $login-button-height/2;
+      margin: 0 auto;
+      padding-left: $main-spacing * 3;
+      padding-right: $main-spacing * 3;
+      background-color: $color-background;
 
-.data-picker-label {
-  font-size: 0.8rem;
-  margin-bottom: $main-spacing /2;
+      &:active,
+      &:focus {
+        border-color: $color-active;
+        background-color: $color-background;
+      }
+    }
+  }
+
+  &.compact {
+    .flatpickr-input {
+      background: lighten($color-background, 10%);
+      color: $color-text;
+      border: none;
+      padding: $main-spacing * 1.5;
+      padding-left: 1rem;
+      font-size: 1rem;
+      font-family: $font-primary;
+      font-weight: 300;
+      box-shadow: $box-shadow-input rgba($color-text, 0.25);
+
+      &:focus {
+        background: rgba($color-text, 0.1);
+        box-shadow: $box-shadow-small rgba($color-text, 0.25);
+      }
+    }
+  }
 }

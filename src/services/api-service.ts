@@ -53,7 +53,7 @@ export default class ApiService {
                 case ApiResult.ok:
                     dispatch({ type: successAction, payload: data.payload });
                     if (successCb) successCb(data.payload);
-                    dispatch({ type: loadingAction, payload: false });
+                    setTimeout(() => dispatch({ type: loadingAction, payload: false }), 200);
                     break;
                 case ApiResult.error:
                     // @TODO: optional 404 handling
@@ -63,20 +63,20 @@ export default class ApiService {
                         dispatch({ type: failedAction, payload: data.result });
                         if (failedCb) failedCb(data);
                         dispatch(notifications.errorNotification(data.error_code));
-                        dispatch({ type: loadingAction, payload: false });
+                        setTimeout(() => dispatch({ type: loadingAction, payload: false }), 200);
                     }
                     break;
                 default:
                     if (ApiService.is404(data)) {
                         history.push('/');
                     } else if (ApiService.is401(data)) {
-                        dispatch({ type: loadingAction, payload: false });
+                        setTimeout(() => dispatch({ type: loadingAction, payload: false }), 200);
                     } else if (ApiService.is502(data)) {
                         history.push('/');
                     } else {
                         dispatch({ type: failedAction, payload: ApiErrorCode.OtherError });
                         dispatch(notifications.errorNotification(ApiErrorCode.OtherError));
-                        dispatch({ type: loadingAction, payload: false });
+                        setTimeout(() => dispatch({ type: loadingAction, payload: false }), 200);
                     }
             }
         } catch (error) {

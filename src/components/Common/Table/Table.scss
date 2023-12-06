@@ -19,6 +19,10 @@
     th {
       padding: $main-spacing;
     }
+
+    tr {
+      background: transparent;
+    }
   }
 
   td,
@@ -30,8 +34,14 @@
     width: 50%;
   }
 
-  tr {
-    border-bottom: 1px solid darken($color-primary, 15%);
+  tbody {
+    tr {
+      // border-bottom: 1px solid darken($color-primary, 15%);
+
+      &:nth-child(odd) {
+        background-color: rgba(0, 0, 0, 0.02);
+      }
+    }
   }
 
   img {

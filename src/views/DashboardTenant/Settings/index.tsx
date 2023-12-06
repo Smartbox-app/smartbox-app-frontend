@@ -10,7 +10,7 @@ const Settings = () => {
     return (
         <Section full>
             <PageHeader title="application.editYourTenantData" />
-            <FormContainer>
+            <FormContainer highlight>
                 <ManageTenantLogo />
                 <ManageTenantBackground />
                 <ManageTenantFonts />

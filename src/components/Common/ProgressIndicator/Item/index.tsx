@@ -15,9 +15,15 @@ const StyledCurrentItem = styled.div<{ current?: boolean; done?: boolean }>`
 background: #fff;
 color: #eee;
 ${props => props.current && css`
-color: #ddd;
+color: #fff;
 background: ${props => props.theme.colors.primary};
 border: 2px solid${props => props.theme.colors.primary};
+`}
+
+${props => props.done && css`
+color: #fff;
+background: ${props => props.theme.colors.success};
+border: 2px solid${props => props.theme.colors.success};
 `}
 `
 

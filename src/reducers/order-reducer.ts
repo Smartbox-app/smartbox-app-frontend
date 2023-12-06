@@ -1,12 +1,11 @@
 import { addDays } from 'date-fns';
 import {
   BoxGroupAvailability,
+  CalculatedPriceRes,
   ICalculateProps,
   IPricingResult,
-  PaymentMethod,
   PaymentStatus,
   PaymentType,
-  usePricing,
 } from 'smartbox-types';
 import { FormType } from '../types/order-form';
 import { __ } from "../helpers/i18n";
@@ -23,6 +22,14 @@ export type OrderState = {
   // refactored
   stockId: string;
   boxGroupId: string;
+  minRentPeriod: number;
+  startDate: Date;
+  endDate: Date;
+  calculatedPrice: number;
+  loadingPrice: boolean;
+  discountCode: string;
+  // @TODO FIX
+  calculatedPriceDetails: any[];
   //
   formData: FormType;
   paymentId: string;
@@ -46,6 +53,31 @@ interface SetOrderStock {
 interface SetOrderBoxGroup {
   type: 'SET_ORDER_BOX_GROUP';
   payload: string;
+}
+
+interface SetMinRentPeriod {
+  type: 'SET_MIN_RENT_PERIOD';
+  payload: number;
+}
+
+interface SetRentStartDate {
+  type: 'SET_RENT_START_DATE';
+  payload: Date;
+}
+
+interface SetRentEndDate {
+  type: 'SET_RENT_END_DATE';
+  payload: Date;
+}
+
+interface SetCalculatedPrice {
+  type: 'CALCULATE_RENT_PRICE_SUCCESS';
+  payload: CalculatedPriceRes;
+}
+
+interface LoadingPrice {
+  type: 'LOADING_PRICE';
+  payload: boolean;
 }
 
 interface FormStepSuccess {
@@ -111,6 +143,11 @@ interface ResetDiscountCode {
   type: 'RESET_DISCOUNT_CODE';
 }
 
+interface SetDiscountCode {
+  type: 'SET_DISCOUNT_CODE';
+  payload: string;
+}
+
 interface ClearOrder {
   type: 'CLEAR_ORDER';
 }
@@ -123,6 +160,12 @@ type Action =
   // refactored
   | SetOrderStock
   | SetOrderBoxGroup
+  | SetMinRentPeriod
+  | SetRentStartDate
+  | SetRentEndDate
+  | SetCalculatedPrice
+  | LoadingPrice
+  | SetDiscountCode
   //
   | FormStepSuccess
   | FetchBoxAvailability
@@ -144,6 +187,13 @@ const initialState: OrderState = {
   // refactored
   stockId: '',
   boxGroupId: '',
+  minRentPeriod: 7,
+  startDate: new Date(),
+  endDate: addDays(new Date(), 7),
+  calculatedPrice: 0,
+  calculatedPriceDetails: [],
+  loadingPrice: false,
+  discountCode: '',
   //
   formData: {
     durationInDays: 7,
@@ -203,6 +253,44 @@ export default (state: OrderState = initialState, action: Action): OrderState =>
         boxGroupId: action.payload,
       }
     };
+
+    case 'SET_MIN_RENT_PERIOD': {
+      return {
+        ...state,
+        minRentPeriod: action.payload
+      }
+    };
+
+    
+    case 'SET_RENT_START_DATE': {
+      return {
+        ...state,
+        startDate: action.payload
+      }
+    };
+    
+    case 'SET_RENT_END_DATE': {
+      return {
+        ...state,
+        endDate: action.payload
+      }
+    };
+
+    case 'CALCULATE_RENT_PRICE_SUCCESS': {
+      return {
+        ...state,
+        calculatedPrice: action.payload.price,
+        calculatedPriceDetails: action.payload.details,
+      }
+    }
+
+    case 'LOADING_PRICE': {
+      return {
+        ...state,
+        loadingPrice: action.payload
+      }
+    }
+
     case 'FORM_STEP_SUCCESS': {
       const newFormData: FormType = { ...state.formData, ...action.payload };
       // const { calculate } = usePricing();
@@ -245,6 +333,14 @@ export default (state: OrderState = initialState, action: Action): OrderState =>
       return {
         ...state,
         formData: newFormData,
+        discountCode: '', 
+      };
+    }
+
+    case 'SET_DISCOUNT_CODE': {
+      return {
+        ...state,
+        discountCode: action.payload,
       };
     }
 

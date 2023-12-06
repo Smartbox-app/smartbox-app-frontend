@@ -1,23 +1,26 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import { useDispatch } from 'react-redux';
 import { ItfApiForm } from 'itf_formbuilder_react';
 import { GetGiftReq, GiftRes } from 'smartbox-types';
 import { Button, Spinner } from '../../../../../../../components/Branded';
 import { FormContainer, ButtonsContainer } from '../../../../../../../components/Layout';
-import { modal, notifications, order } from '../../../../../../../actions';
+import { notifications } from '../../../../../../../actions';
 import FormHeader from '../../../../../../../components/Layout/FormHeader';
 import ApiService from '../../../../../../../services/api-service';
 import { formOnTranslateString } from '../../../../../../../utils/trans-form';
-import { FormType } from '../../../../../../../types/order-form';
+import { setDiscountCode } from '../../../../../../../actions/order';
+import { hideModal } from '../../../../../../../actions/modal';
+
 
 interface Props {
-  hideModal: () => void;
-  updateFormData: (data: Partial<FormType>) => void;
-  successNotification: (text: string) => void;
+  stockId: string;
+  rentStart: Date;
+  rentEnd: Date;
 }
 
-const DiscountCode = ({ hideModal, updateFormData, successNotification }: Props) => {
+const DiscountCode = ({ stockId, rentEnd, rentStart }: Props) => {
+  const dispatch = useDispatch();
+
   const submitButton = (
     <ButtonsContainer>
       <Button text="application.save" type="submit" primary />
@@ -25,13 +28,15 @@ const DiscountCode = ({ hideModal, updateFormData, successNotification }: Props)
   );
 
   const fetchUrl = 'gift/form/get-gift-details';
-  const sendUrl = 'gift/details';
+  const sendUrl = `gift/details/${stockId}`;
 
   const customSendFetcher = (formId: string, values: GetGiftReq) =>
     ApiService.sendForm(
       sendUrl,
       {
         ...values,
+        startDate: rentStart,
+        endDate: rentEnd
       },
       'POST',
     );
@@ -48,18 +53,10 @@ const DiscountCode = ({ hideModal, updateFormData, successNotification }: Props)
         sendFetcher={customSendFetcher}
         submitButton={submitButton}
         onSavedSuccessfully={(data: GiftRes) => {
-          successNotification('notification.discountCodeRead');
-          updateFormData({
-            discountCode: data.code,
-            card: {
-              discount: data.discount,
-              durationInWeeks: data.duration,
-            },
-          });
-          hideModal();
-        }}
-        onErrorsWhileSaving={() => {
-          hideModal();
+          dispatch(notifications.successNotification('notification.discountCodeRead'));
+          dispatch(setDiscountCode(data.code));
+          dispatch(hideModal());
+
         }}
         onTranslateString={formOnTranslateString}
       />
@@ -67,14 +64,4 @@ const DiscountCode = ({ hideModal, updateFormData, successNotification }: Props)
   );
 };
 
-const mapDispatchToProps = (dispatch: any) =>
-  bindActionCreators(
-    {
-      ...modal,
-      ...order,
-      ...notifications,
-    },
-    dispatch,
-  );
-
-export default connect(null, mapDispatchToProps)(DiscountCode);
+export { DiscountCode }

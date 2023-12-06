@@ -28,7 +28,7 @@ const BasicData = () => {
 
     return (
 
-            <FormContainer>
+            <FormContainer highlight>
                 <ItfApiForm
                     formId="manageStock"
                     schemaMayBeDynamic={true}

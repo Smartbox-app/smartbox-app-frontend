@@ -249,6 +249,26 @@
             "52": {
                 "text": "Minimalna ilość okresów to 1!",
                 "__type_alias_do_not_touch": "ApiErrorCode.PeriodAtLeast1"
+            },
+            "53": {
+                "text": "Musisz podać cenę za 1 dzień wynajmu!",
+                "__type_alias_do_not_touch": "ApiErrorCode.YouNeedToSetPriceForOneDay"
+            },
+            "54": {
+                "text": "Wybrany okres czasowy jest zbyt krótki!",
+                "__type_alias_do_not_touch": "ApiErrorCode.RentPeriodTooShort"
+            },
+            "55": {
+                "text": "Plac nie posiada zniżki!",
+                "__type_alias_do_not_touch": "ApiErrorCode.NoDiscountSet"
+            },
+            "56": {
+                "text": "Kod zniżkowy jest nieprawidłowy!",
+                "__type_alias_do_not_touch": "ApiErrorCode.GiftCodeInvalid"
+            },
+            "57": {
+                "text": "Nie można usunąć kodu zniżkowego który został wykorzystany!",
+                "__type_alias_do_not_touch": "ApiErrorCode.CantRemoveUsedGift"
             }
         }
     }

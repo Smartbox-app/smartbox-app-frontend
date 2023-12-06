@@ -31,7 +31,7 @@ const SMS = ({ successNotification }: Props) => {
   return (
     <Section full>
       <PageHeader title="application.sendSms" />
-      <FormContainer>
+      <FormContainer highlight>
         <FieldsColumn>
           <ItfApiForm
             formId="sendSmsForm"

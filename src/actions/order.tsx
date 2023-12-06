@@ -19,6 +19,7 @@ import { FormType } from '../types/order-form';
 
 export const updateFormData = (data: Partial<FormType>) => ({ type: 'FORM_STEP_SUCCESS', payload: data });
 
+export const setDiscountCode = (code: string) => ({ type: 'SET_DISCOUNT_CODE', payload: code });
 export const resetDiscountCode = () => ({ type: 'RESET_DISCOUNT_CODE' });
 
 export const formAgreementReaded = () => ({ type: 'FORM_AGREEMENT_READED_SUCCESS' });
@@ -172,3 +173,20 @@ export const sentExtendRentRequest = (rentId: string, data: ExtendRentalReq, rol
 // refactored
 export const setOrderStock = (stockId: string) => ({ type: 'SET_ORDER_STOCK', payload: stockId });
 export const setBoxGroup = (boxGroupId: string) => ({ type: 'SET_ORDER_BOX_GROUP', payload: boxGroupId });
+export const setMinRentPeriod = (days: number) => ({ type: 'SET_MIN_RENT_PERIOD', payload: days });
+export const setRentStartDate = (days: number) => ({ type: 'SET_RENT_START_DATE', payload: days });
+export const setRentEndDate = (days: number) => ({ type: 'SET_RENT_END_DATE', payload: days });
+
+export const calculatePrice = (boxGroupId: string, start: Date, end: Date, code?: string) => async (
+  dispatch: any,
+) => {
+  await ApiService.get(
+    dispatch,
+    'CALCULATE_RENT_PRICE_SUCCESS',
+    'CALCULATE_RENT_PRICE_FAILED',
+    null,
+    null,
+    `box-group-new/price/${boxGroupId}/${start.toISOString()}/${end.toISOString()}/${code || ''}`,
+    'LOADING_PRICE',
+  );
+};

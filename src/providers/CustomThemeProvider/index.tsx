@@ -12,7 +12,8 @@ const CustomThemeProvider = ({ children }: Props) => {
     const theme = useMemo(() => ({
         colors: {
             primary: tenant?.colorPrimary || '#eee',
-            secondary: tenant?.colorPrimary || '#eee'
+            secondary: tenant?.colorPrimary || '#eee',
+            success: '#00a45a'
         }
     }), [tenant])
 

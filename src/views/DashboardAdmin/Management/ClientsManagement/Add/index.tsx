@@ -30,7 +30,7 @@ const AddTenant = () => {
                 <Button to="/admin/management/tenants" text="application.back" primary />
             </ButtonsContainer>
 
-            <FormContainer>
+            <FormContainer highlight>
                 <ItfApiForm
                     formId="addTenantForm"
                     schemaMayBeDynamic={false}

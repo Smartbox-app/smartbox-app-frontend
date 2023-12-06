@@ -7,10 +7,16 @@ import { modal, order } from '../../../../../../actions';
 import FormHeader from '../../../../../../components/Layout/FormHeader';
 import { ApplicationState } from '../../../../../../reducers';
 
-import BankListModal from './BankListModal';
-
 import './PaymentMethods.scss';
 import {__} from "../../../../../../helpers/i18n";
+import styled from 'styled-components';
+
+const StyledInput = styled.input`
+&:checked + .payment-label {
+  border: 1px solid ${props => props.theme.colors.primary};
+}
+
+`
 
 interface Props {
   selectedPaymentMethod: {
@@ -56,7 +62,7 @@ const PaymentMethods = ({ showModal, saveBanks, selectedPaymentMethod, register,
       <FormHeader title='application.paymentMethods' />
       <div className="payment-methods-wrapper">
         <label htmlFor="paymentTypeCard">
-          <input
+          <StyledInput
             type="radio"
             id="paymentTypeCard"
             name="paymentType"

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { connect, useSelector } from 'react-redux';
+import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { DiscountList } from 'smartbox-types';
 import { stock } from '../../../../actions';
@@ -7,7 +7,6 @@ import { Section, SectionHeader } from '../../../../components/Layout';
 import { ApplicationState } from '../../../../reducers';
 import Discounts from './Discounts';
 import { __ } from '../../../../helpers/i18n';
-import { firstRentChecker } from '../../../../utils/isFirstRent';
 
 interface Props {
   discountsList: DiscountList[];
@@ -15,19 +14,12 @@ interface Props {
 }
 
 const Sale = ({ discountsList, getStockDiscountsList }: Props) => {
-    const user = useSelector((state: ApplicationState) => state.user.details!);
   useEffect(() => {
     getStockDiscountsList();
   }, []);
 
-  const isFirstWeekSale = () => {
-    return firstRentChecker(user);
-  };
-
   const createText = (list: DiscountList[]) => {
-    const result = isFirstWeekSale()
-      ? [__('application.firstWeekForOneOnlyCard')]
-      : [];
+    const result: string[] = [];
 
     list.forEach((el: any) => {
       if (el.discount) result.push(`${__('application.discount')} ${el.discount}% ${__('application.onStock')} ${el.name}`);
@@ -45,7 +37,7 @@ const Sale = ({ discountsList, getStockDiscountsList }: Props) => {
 
 const mapStateToProps = (state: ApplicationState) => ({
   discountsList: state.stock.discountsList,
- });
+});
 
 const mapDispatchToProps = (dispatch: any) =>
   bindActionCreators(

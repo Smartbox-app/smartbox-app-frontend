@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { FieldAndEventFunction, FormFieldToRender } from 'itf_formbuilder_react';
-import { CheckBox, Input, InputPhone, InputSelect } from '..';
+import { CheckBox, DateInput, Input, InputPhone, InputSelect } from '..';
 import { formOnTranslateString } from '../../../utils/trans-form';
 import { TranslatableObject, translateErrors } from '../../../utils/errors-trans';
 import { __ } from '../../../helpers/i18n';
@@ -17,6 +17,10 @@ interface Props {
     onFocus: FieldAndEventFunction;
     onBlur: FieldAndEventFunction;
     big?: boolean;
+}
+
+const parseInputNumber = (value: unknown) => {
+    return typeof value === 'undefined' || (!value && value !== 0) ? value : Number(value);
 }
 
 const FieldsMapper = ({ field, fieldHtmlId, currentValue, errors, big, onFocus, onBlur, onChange }: Props) => {
@@ -75,7 +79,7 @@ const FieldsMapper = ({ field, fieldHtmlId, currentValue, errors, big, onFocus, 
             big={big}
             key={fieldHtmlId}
             className="register-input"
-            type={field.options.type}
+            type={field.type || field.options.type}
             help={field.descr}
             input={{
                 label: formOnTranslateString(field.title),
@@ -84,7 +88,7 @@ const FieldsMapper = ({ field, fieldHtmlId, currentValue, errors, big, onFocus, 
                 placeholder: formOnTranslateString(field.placeholder),
                 errors: translateErrors(errors),
                 value: currentValue,
-                onChange: (e: any) => onChange(e.target.value),
+                onChange: (e: any) => onChange(parseInputNumber(e.target.value)),
                 onFocus,
                 onBlur,
             }}
@@ -168,6 +172,18 @@ const FieldsMapper = ({ field, fieldHtmlId, currentValue, errors, big, onFocus, 
                 value={currentValue}
                 placeholder={field.placeholder}
                 errors={translateErrors(errors)}
+            />
+        )
+        case 'dateTime': return (
+            <DateInput
+                label={field.title}
+                value={currentValue}
+                name={fieldHtmlId}
+                inline={false}
+                errors={translateErrors(errors)}
+                onChange={(val: Date[]) => {
+                    onChange(val[0]);
+                }}
             />
         )
         case 'slides': return (

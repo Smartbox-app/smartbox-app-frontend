@@ -37,7 +37,7 @@ const Add = () => {
             <ButtonsContainer>
                 <Button to={`/${UserService.getSlugByRole(user.role)}/stocks/${stockId}/groups`} text="application.back" primary />
             </ButtonsContainer>
-            <FormContainer>
+            <FormContainer highlight>
                 <ItfApiForm
                     formId="addBoxGroup"
                     schemaCacheEnabled={false}

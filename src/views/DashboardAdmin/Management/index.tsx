@@ -10,7 +10,6 @@ import UserService from '../../../services/user-service';
 import WorkersManagement from '../../DashboardCommon/WorkersManagement';
 import UsersManagement from '../../DashboardCommon/UsersManagement';
 
-import StockDiscount from './StockDiscount';
 import InvitesSent from '../../DashboardCommon/InvitesSent';
 import SMS from './SMS';
 import Settings from './Settings';
@@ -47,10 +46,6 @@ const Management = () => {
                     text: 'application.boxes',
                 },
                 {
-                    to: `/${UserService.getSlugByRole(user.role)}/management/stock-discount/list`,
-                    text: 'application.stockSale',
-                },
-                {
                     to: `/${UserService.getSlugByRole(user.role)}/management/gate`,
                     text: 'application.gate',
                 },
@@ -76,7 +71,6 @@ const Management = () => {
             <Route path={`/${UserService.getSlugByRole(user.role)}/management/clients`} component={ClientsManagement} />
             <Route path={`/${UserService.getSlugByRole(user.role)}/management/map`} component={MapManagement} />
             <Route path={`/${UserService.getSlugByRole(user.role)}/management/invitations`} component={InvitesSent} />
-            <Route path={`/${UserService.getSlugByRole(user.role)}/management/stock-discount`} component={StockDiscount} />
             <Route path={`/${UserService.getSlugByRole(user.role)}/management/gate`} component={GateManagement} />
             <Route path={`/${UserService.getSlugByRole(user.role)}/management/sms`} component={SMS} />
             <Route path={`/${UserService.getSlugByRole(user.role)}/management/settings`} component={Settings} />

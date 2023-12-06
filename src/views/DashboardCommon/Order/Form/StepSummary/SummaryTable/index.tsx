@@ -4,6 +4,17 @@ import { dateOnly } from '../../../../../../utils/format-date';
 
 import './SummaryTable.scss';
 import {__} from "../../../../../../helpers/i18n";
+import styled from 'styled-components';
+import { darken } from 'polished';
+
+
+const StyledCell = styled.div`
+color: ${props => props.theme.colors.primary};
+`
+
+const StyledRow = styled.div`
+    border-bottom: 1px solid ${props => darken(0.1, props.theme.colors.primary)};
+`
 
 interface Props {
   dateStart: Date;
@@ -13,24 +24,24 @@ interface Props {
 
 const SummaryTable = ({ dateStart, dateEnd, countedPrice }: Props) => (
   <div className="order-summary-wrapper">
-    <div className="row">
-      <div className="cell">{__('application.startTerm')}</div>
-      <div className="cell fat">
+    <StyledRow className="row">
+      <StyledCell className="cell">{__('application.startTerm')}</StyledCell>
+      <StyledCell className="cell fat">
         <span>{dateOnly(dateStart)}</span>
-      </div>
-    </div>
-    <div className="row">
-      <div className="cell">{__('application.finishTerm')}</div>
-      <div className="cell fat">
+      </StyledCell>
+    </StyledRow>
+    <StyledRow className="row">
+      <StyledCell className="cell">{__('application.finishTerm')}</StyledCell>
+      <StyledCell className="cell fat">
         <span>{dateOnly(dateEnd)}</span>
-      </div>
-    </div>
-    <div className="row">
-      <div className="cell">{__('application.paymentForRent')}</div>
-      <div className="cell fat">
+      </StyledCell>
+    </StyledRow>
+    <StyledRow className="row">
+      <StyledCell className="cell">{__('application.paymentForRent')}</StyledCell>
+      <StyledCell className="cell fat">
         <span>{formatPrice(countedPrice)}</span>
-      </div>
-    </div>
+      </StyledCell>
+    </StyledRow>
   </div>
 );
 

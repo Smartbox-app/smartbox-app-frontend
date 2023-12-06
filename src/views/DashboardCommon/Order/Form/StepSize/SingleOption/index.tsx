@@ -1,15 +1,14 @@
 import React, { ChangeEvent } from 'react';
-import { ReactSVG } from 'react-svg';
 
 import './SingleOption.scss';
-import { connect, useDispatch, useSelector } from 'react-redux';
+import {  useDispatch, useSelector } from 'react-redux';
 import { ApplicationState } from '../../../../../../reducers';
 import { Spinner } from '../../../../../../components/Branded';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { BoxGroupUserRes } from 'smartbox-types';
 import ApiService from '../../../../../../services/api-service';
 import { PriceInfo } from '../PriceInfo';
-import { setBoxGroup } from '../../../../../../actions/order';
+import { setBoxGroup, setMinRentPeriod } from '../../../../../../actions/order';
 
 export type SingleOptionType = {
   name: string;
@@ -26,12 +25,17 @@ interface Props {
   disable?: boolean;
 }
 
-const StyledSingleOptionWrapper = styled.div`
+const StyledSingleOptionWrapper = styled.div<{ available: boolean }>`
 input[type='radio']:checked + .single-option {
   .radio-img {
     border: 2px solid ${props => props.theme.colors.primary}
   }
 }
+
+${props => !props.available && css`
+opacity: 0.3;
+cursor: not-allowed;
+`}
 `
 
 const StyledImageDescription = styled.p`
@@ -62,11 +66,12 @@ const SingleOption = ({ singleOptionData, disable }: Props) => {
 
   const selectOption = (e: ChangeEvent<HTMLInputElement>) => {
     dispatch(setBoxGroup(singleOptionData.id));
+    dispatch(setMinRentPeriod(singleOptionData.minRentPeriod));
   }
 
   if (loading) return <Spinner />;
   return (
-    <StyledSingleOptionWrapper className="single-option-wrapper">
+    <StyledSingleOptionWrapper available={singleOptionData.available} className="single-option-wrapper">
       <input
         name={singleOptionData.name}
         type="radio"

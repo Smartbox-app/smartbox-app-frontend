@@ -28,7 +28,7 @@ const Settings = () => {
 
     return (
 
-            <FormContainer>
+            <FormContainer highlight>
                 <ItfApiForm
                     formId="stockSettings"
                     schemaMayBeDynamic={true}

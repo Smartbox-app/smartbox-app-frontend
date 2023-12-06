@@ -9,6 +9,7 @@ import { BasicData } from './BasicData';
 import { Boxes } from './Boxes';
 import { Map } from './Map';
 import { Groups } from './Groups';
+import { Discounts } from './Discounts';
 
 
 const Manage = () => {
@@ -46,6 +47,10 @@ const Manage = () => {
                         to: `/${UserService.getSlugByRole(user.role)}/stocks/${stockId}/map`,
                         text: 'application.map',
                     },
+                    {
+                        to: `/${UserService.getSlugByRole(user.role)}/stocks/${stockId}/discounts`,
+                        text: 'application.stockSale',
+                    },
 
                 ]}
             />
@@ -55,6 +60,7 @@ const Manage = () => {
                 <Route path={`/${UserService.getSlugByRole(user.role)}/stocks/:stockId/settings`} component={BasicData} />
                 <Route path={`/${UserService.getSlugByRole(user.role)}/stocks/:stockId/boxes`} component={Boxes} />
                 <Route path={`/${UserService.getSlugByRole(user.role)}/stocks/:stockId/groups`} component={Groups} />
+                <Route path={`/${UserService.getSlugByRole(user.role)}/stocks/:stockId/discounts`} component={Discounts} />
                 <Route path={`/${UserService.getSlugByRole(user.role)}/stocks/:stockId/map`} component={Map} />
             </Switch>
 

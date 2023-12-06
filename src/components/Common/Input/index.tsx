@@ -40,6 +40,44 @@ const StyledContainer = styled.div`
 }
 `
 
+const StyledRadioOptionContainer = styled.div`
+display: flex;
+position: relative;
+cursor: pointer;
+margin-bottom: 10px;
+
+label {
+    cursor: pointer;
+}
+
+input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+p {
+    margin-left: 30px;
+    margin-top: 0;
+}
+`
+
+const StyledRadioCheck = styled.span<{ checked: boolean }>`
+position: absolute;
+top: 0;
+left: 0;
+height: 20px;
+width: 20px;
+border-radius: 50%;
+border: 1px solid ${props => props.theme.colors.primary};
+
+${props => props.checked && css`
+    background-color: ${props => props.theme.colors.primary}
+`}
+`
+
 const Input = (props: Props) => {
     const containerClass = `input-container ${props.big ? 'big' : 'compact'} ${props.className || ''} ${props.max ? 'input-max' : ''} ${props.nomargin ? 'nomargin' : ''
         } ${props.type === 'hidden' ? 'hidden' : ''}`;
@@ -86,6 +124,26 @@ const Input = (props: Props) => {
                 {props.input.errors && <InputErrors big={props.big} errors={props.input.errors} />}
             </StyledContainer>
         );
+    } else if (props.type === 'radio') {
+        return (
+            <StyledContainer className={containerClass}>
+                <InputLabel label={props.input.label} name={props.input.name} />
+                {props.options?.map(option => <StyledRadioOptionContainer key={option.value}>
+                    <label htmlFor={option.value}>
+                        <input name={props.input.name}
+                            id={option.value.toString()}
+                            onChange={props.input.onChange}
+                            type="radio"
+                            value={option.value}
+                            checked={props.input.value === option.value} />
+                        <p>
+                            {__(option.label)}
+                        </p>
+                        <StyledRadioCheck checked={props.input.value === option.value} />
+                    </label>
+                </StyledRadioOptionContainer>)}
+            </StyledContainer>
+        )
     } else {
         return (
             <StyledContainer className={containerClass}>

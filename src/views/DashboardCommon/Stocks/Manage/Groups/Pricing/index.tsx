@@ -2,8 +2,7 @@ import React, { useState, useEffect, ChangeEvent } from 'react';
 import { useParams } from 'react-router';
 import { useDispatch } from 'react-redux';
 import ApiService from '../../../../../../services/api-service';
-import { BoxGroupAdminClientRes } from 'smartbox-types';
-import { PricingType, SinglePricing } from '../../../../../../../../smartbox-back/types/box-group/pricing';
+import { BoxGroupAdminClientRes, PriceResolveType, PricingType, SinglePricing } from 'smartbox-types';
 import styled from 'styled-components';
 import { Alert, Input, InputSelect } from '../../../../../../components/Common';
 import { ButtonsContainer, FormContainer, SimpleHeader } from '../../../../../../components/Layout';
@@ -21,11 +20,13 @@ const Pricing = () => {
     const dispatch = useDispatch();
     const [group, setGroup] = useState<BoxGroupAdminClientRes>();
     const [pricing, setPricing] = useState<SinglePricing[]>([]);
+    const [priceResolveType, setPriceResolveType] = useState<PriceResolveType>(PriceResolveType.Proportional);
     const [loading, setLoading] = useState<boolean>(true);
 
     const getCurrentGroup = async () => {
         await ApiService.callFetch('GET', `box-group-new/${groupId}`, (data: BoxGroupAdminClientRes) => {
             setPricing(data.pricing);
+            setPriceResolveType(data.priceResolveType);
             setGroup(data);
         });
         setLoading(false);
@@ -75,7 +76,7 @@ const Pricing = () => {
         setLoading(true);
         await ApiService.callFetch('PATCH', `box-group-new/pricing/${groupId}`, () => {
             dispatch(successNotification('application.boxGroupEdited'))
-        }, null, pricing);
+        }, null, { pricing, priceResolveType });
         setLoading(false);
     }
 
@@ -85,9 +86,31 @@ const Pricing = () => {
 
     return <>
         <SimpleHeader title={`${__('application.pricing')} ${group?.name}`} />
-        <FormContainer>
+        <FormContainer highlight>
             {loading && <Spinner overlay halfTransparent />}
             {(!pricing || pricing.length === 0) && <Alert type='notice' text='application.noPricingSet' />}
+
+            <Input type='radio' input={{
+                name: 'priceResolveType',
+                label: 'application.priceResolveType',
+                value: priceResolveType,
+                onChange: (e: ChangeEvent<HTMLInputElement>) => setPriceResolveType(e.target.value as PriceResolveType)
+
+            }} options={[
+                {
+                    label: 'application.priceResolveProportional',
+                    value: PriceResolveType.Proportional,
+                },
+                {
+                    label: 'application.priceResolveRoundToNearest',
+                    value: PriceResolveType.RoundToNearestPeriod,
+                },
+                {
+                    label: 'application.priceResolveByDay',
+                    value: PriceResolveType.RestByDay,
+                },
+            ]} />
+
             {pricing && <ul>
                 {pricing.map((singlePricing, index: number) => <li key={index}>
                     <StyledSinglePricing>
@@ -132,8 +155,9 @@ const Pricing = () => {
                 </li>)}
             </ul>}
             <ButtonsContainer>
-                <Button text='application.add' primary click={addPricing} />
+                <Button text='application.add' click={addPricing} />
             </ButtonsContainer>
+            <hr />
             <ButtonsContainer>
                 <Button text='application.save' primary click={savePricing} />
             </ButtonsContainer>

@@ -1,13 +1,13 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useForm, Controller, FormContext } from 'react-hook-form';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 
 import { addDays, differenceInCalendarDays, endOfDay, startOfDay, startOfToday } from 'date-fns';
 import { IPricingResult, MyRentList, StockList, UserRes } from 'smartbox-types';
 import { DateInput } from '../../../../../components/Common';
-import { Button } from '../../../../../components/Branded';
+import { Button, Spinner } from '../../../../../components/Branded';
 import { order } from '../../../../../actions';
 import { ButtonsContainer } from '../../../../../components/Layout';
 import { history } from '../../../../../App';
@@ -19,6 +19,22 @@ import { firstRentChecker } from '../../../../../utils/isFirstRent';
 import Price from './Price';
 
 import './StepDuration.scss';
+import ApiService from '../../../../../services/api-service';
+import styled from 'styled-components';
+import { calculatePrice, setRentEndDate, setRentStartDate } from '../../../../../actions/order';
+
+const StyledCalendarPicker = styled.div`
+.flatpickr-day {
+    &.today {
+border-color: ${props => props.theme.colors.primary};
+    }
+
+    &.selected {
+        border-color: ${props => props.theme.colors.primary};
+        background-color: ${props => props.theme.colors.primary};
+    }
+}
+`
 
 interface RouteProps {
     step: string;
@@ -47,64 +63,68 @@ const StepDuration = ({
     rent,
     stocks,
 }: Props) => {
+    const dispatch = useDispatch();
+
+    const minRentPeriod = useSelector((state: ApplicationState) => state.order.minRentPeriod);
+    const boxGroupId = useSelector((state: ApplicationState) => state.order.boxGroupId);
+    const { startDate, endDate, calculatedPrice, loadingPrice } = useSelector((state: ApplicationState) => state.order);
+    const [loading, setLoading] = useState<boolean>(false);
+
+    useEffect(() => {
+        setLoading(true);
+      dispatch(calculatePrice(boxGroupId, startDate, endDate));
+    }, [startDate, endDate]);
+
     const setMinDate = (addAmount = 0, end?: boolean) =>
         match.params.rentId
             ? addDays(startOfDay(new Date(rent.finishAt)), addAmount)
             : addDays(end ? formData.dateStart : startOfToday(), addAmount);
 
     const setMaxDateToExtend = () =>
-        match.params.rentId ? addDays(endOfDay(new Date(rent.finishAt)), 0) : addDays(new Date(), 7);
+        match.params.rentId ? addDays(endOfDay(new Date(rent.finishAt)), 0) : addDays(new Date(), minRentPeriod);
 
     const defaultValues = {
         dateStart: match.params.rentId ? addDays(new Date(rent.finishAt), 0) : addDays(formData.dateStart, 0),
-        dateEnd: match.params.rentId ? addDays(new Date(rent.finishAt), 7) : addDays(formData.dateEnd, 0),
+        dateEnd: match.params.rentId ? addDays(new Date(rent.finishAt), minRentPeriod) : addDays(formData.dateEnd, 0),
     };
+    
 
     useEffect(() => {
         if (!user) return;
         clearPaymentDetails();
         const discount = stocks.find(stock => stock.id === formData.stock)?.discount;
-        if (formData.size === null) {
-            history.push(`/${UserService.getSlugByRole(user.role)}/order/step/stock`);
-        } else if (match.params.rentId) {
-            updateFormData({
-                durationInDays: formData.durationInDays,
-                dateStart: setMinDate(),
-                dateEnd: setMinDate(formData.durationInDays),
-                size: rent.size.toString(),
-                isFirstRent: firstRentChecker(user),
-                discount: discount,
-            });
-        } else {
-            updateFormData({
-                durationInDays: formData.durationInDays,
-                dateStart: setMinDate(),
-                dateEnd: setMinDate(formData.durationInDays),
-                isFirstRent: firstRentChecker(user),
-                discount: discount,
-            });
-        }
+    
+        // @TODO: handle
+        // if (match.params.rentId) {
+        //     updateFormData({
+        //         durationInDays: formData.durationInDays,
+        //         dateStart: setMinDate(),
+        //         dateEnd: setMinDate(formData.durationInDays),
+        //         size: rent.size.toString(),
+        //         isFirstRent: firstRentChecker(user),
+        //         discount: discount,
+        //     });
+        // } else {
+        //     updateFormData({
+        //         durationInDays: formData.durationInDays,
+        //         dateStart: setMinDate(),
+        //         dateEnd: setMinDate(formData.durationInDays),
+        //         isFirstRent: firstRentChecker(user),
+        //         discount: discount,
+        //     });
+        // }
     }, []);
 
-    const { register, handleSubmit, control } = useForm({ defaultValues });
+    const { register, control } = useForm({ defaultValues });
     const methods = useForm();
-
-    const onSubmit = () => {
-        if (!user) return;
-        history.push(`/${UserService.getSlugByRole(user.role)}/order/step/summary/${match.params.rentId || ''}`);
-    };
-
-    const onBack = () => {
-        if (!user) return;
-        history.push(`/${UserService.getSlugByRole(user.role)}/order/step/stock/${match.params.rentId || ''}`);
-    };
 
     if(!user) return null;
 
     return (
         <FormContext {...methods}>
-            <form onSubmit={handleSubmit(onSubmit)} className="form-step-two">
-                <div className="calendars-picker-wrapper">
+            <form className="form-step-two">
+                {loadingPrice && <Spinner halfTransparent overlay />}
+                <StyledCalendarPicker className="calendars-picker-wrapper">
                     <Controller
                         name="dateStart"
                         control={control}
@@ -114,12 +134,13 @@ const StepDuration = ({
                         minDate={setMinDate()}
                         maxDate={setMaxDateToExtend()}
                         onChange={([selected]) => {
-                            updateFormData({
-                                durationInDays: differenceInCalendarDays(formData.dateEnd, selected[0]),
-                                dateStart: selected[0],
-                                isFirstRent: firstRentChecker(user),
-                            });
-                            return selected;
+                            dispatch(setRentStartDate(selected[0]))
+                            // updateFormData({
+                            //     durationInDays: differenceInCalendarDays(formData.dateEnd, selected[0]),
+                            //     dateStart: selected[0],
+                            //     isFirstRent: firstRentChecker(user),
+                            // });
+                            // return selected;
                         }}
                     />
                     <Controller
@@ -128,21 +149,22 @@ const StepDuration = ({
                         as={DateInput}
                         register={register({ required: true })}
                         label='application.selectEndRentDate'
-                        minDate={setMinDate(7, true)}
+                        minDate={setMinDate(minRentPeriod, true)}
                         onChange={([selected]) => {
-                            updateFormData({
-                                durationInDays: differenceInCalendarDays(selected[0], formData.dateStart),
-                                dateEnd: selected[0],
-                                isFirstRent: firstRentChecker(user),
-                            });
-                            return selected;
+                            dispatch(setRentEndDate(selected[0]))
+                            // updateFormData({
+                            //     durationInDays: differenceInCalendarDays(selected[0], formData.dateStart),
+                            //     dateEnd: selected[0],
+                            //     isFirstRent: firstRentChecker(user),
+                            // });
+                            // return selected;
                         }}
                     />
-                </div>
-                <Price countedPrice={countedPrice.value} />
+                </StyledCalendarPicker>
+                <Price countedPrice={calculatedPrice} />
                 <ButtonsContainer max>
-                    <Button outline text='application.back' click={() => onBack()} disabled={!!match.params.rentId} />
-                    <Button type="submit" primary text='application.next' />
+                    <Button outline text='application.back' to={`/${UserService.getSlugByRole(user.role)}/order/step/stock/${match.params.rentId || ''}`} disabled={!!match.params.rentId} />
+                    <Button to={`/${UserService.getSlugByRole(user.role)}/order/step/summary/${match.params.rentId || ''}`} primary text='application.next' />
                 </ButtonsContainer>
             </form>
         </FormContext>

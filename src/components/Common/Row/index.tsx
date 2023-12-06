@@ -3,21 +3,26 @@ import { __ } from '../../../helpers/i18n';
 
 import './Row.scss';
 import styled from 'styled-components';
+import { darken } from 'polished';
 
 interface Props {
     label: string;
     content: React.ReactNode;
 }
 
+const StyledRow = styled.div`
+    border-bottom: 1px solid ${props => darken(0.1, props.theme.colors.primary)};
+`
+
 const StyledRowLabel = styled.p`
     color: ${props => props.theme.colors.primary};
 `
 
 const Row = ({ label, content }: Props) => (
-    <div className="row">
+    <StyledRow className="row">
         <StyledRowLabel className="row-label">{__(label)}:</StyledRowLabel>
         <strong className="row-content">{content || __('application.lack')}</strong>
-    </div>
+    </StyledRow>
 );
 
 export default Row;

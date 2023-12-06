@@ -37,7 +37,7 @@ const Add = ({ successNotification }: Props) => {
                 <Button to={`/${UserService.getSlugByRole(user.role)}/management/invitations`} text="application.back" primary />
             </ButtonsContainer>
 
-            <FormContainer>
+            <FormContainer highlight>
                 <ItfApiForm
                     formId="sendInvitationToUser"
                     schemaMayBeDynamic={false}
