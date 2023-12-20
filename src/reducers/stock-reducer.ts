@@ -10,7 +10,7 @@ const initialState: StockStatus = {
   discountsList: [],
 };
 
-interface FetchWorkersList {
+interface FetchStocksList {
   type: 'GET_STOCK_LIST_SUCCESS';
   payload: StockList[];
 }
@@ -20,7 +20,7 @@ interface FetchDiscountsList {
   payload: DiscountList[];
 }
 
-type Action = FetchWorkersList | FetchDiscountsList;
+type Action = FetchStocksList | FetchDiscountsList;
 
 export default (state: StockStatus = initialState, action: Action) => {
   switch (action.type) {

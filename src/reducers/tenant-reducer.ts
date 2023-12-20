@@ -1,20 +1,20 @@
-import { TenantEntity } from "smartbox-types";
+import { TenantForUsers } from "smartbox-types";
 
 interface SetTenant {
     type: 'SET_TENANT';
-    payload: TenantEntity;
+    payload: TenantForUsers;
 }
 
 type Action = SetTenant;
 
-export type TenantState = TenantEntity | null;
+export type TenantState = TenantForUsers | null;
 
 const initialState = null;
 
 export default (state: TenantState = initialState, action: Action) => {
     switch (action.type) {
         case 'SET_TENANT':
-            if(!state) return action.payload;
+            if (!state) return action.payload;
             return {
                 ...state,
                 ...action.payload

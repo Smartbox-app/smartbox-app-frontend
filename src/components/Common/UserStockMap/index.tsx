@@ -67,15 +67,16 @@ class UserStockMap extends React.Component<Props> {
         }
     }
 
+    // @TODO - handle map rendering
     render() {
         const { boxNumberToMarkWay, stockList, stockId } = this.props;
-        const map = stockList.find(stock => stock.id === stockId)?.map;
+        // const map = stockList.find(stock => stock.id === stockId)?.map;
         return (
             <div ref={this.element}>
                 <p className="user-box">
                     {__('application.yourStoreNumber')} <strong>{boxNumberToMarkWay}</strong>
                 </p>
-                <SimpleStockMap map={map || ''} />
+                {/* <SimpleStockMap map={map || ''} /> */}
             </div>
         );
     }

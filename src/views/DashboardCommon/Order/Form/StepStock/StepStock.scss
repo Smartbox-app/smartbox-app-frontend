@@ -12,6 +12,7 @@
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
+    gap: $main-spacing;
   }
 }
 
@@ -20,4 +21,14 @@
     flex-direction: row;
     margin-bottom: $main-spacing * 2;
   }
+}
+
+.stock-group {
+  flex: 0 0 100%;
+}
+
+
+.group-stocks-wrapper {
+  display: flex;
+  gap: $main-spacing;
 }

@@ -16,7 +16,7 @@ interface Props {
     userId?: string;
 }
 
-const ManagaTenantData = ({ userId }: Props) => {
+const ManageTenantData = ({ userId }: Props) => {
     const dispatch = useDispatch();
     const user = useSelector((state: ApplicationState) => state.user.details);
     const submitButton = (
@@ -59,4 +59,4 @@ const ManagaTenantData = ({ userId }: Props) => {
     );
 };
 
-export { ManagaTenantData }
+export { ManageTenantData }

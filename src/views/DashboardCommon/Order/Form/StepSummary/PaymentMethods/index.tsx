@@ -8,12 +8,14 @@ import FormHeader from '../../../../../../components/Layout/FormHeader';
 import { ApplicationState } from '../../../../../../reducers';
 
 import './PaymentMethods.scss';
-import {__} from "../../../../../../helpers/i18n";
+import { __ } from "../../../../../../helpers/i18n";
 import styled from 'styled-components';
+import { rgba } from 'polished';
 
 const StyledInput = styled.input`
 &:checked + .payment-label {
   border: 1px solid ${props => props.theme.colors.primary};
+  background-color: ${props => rgba(props.theme.colors.primary, 0.05)};
 }
 
 `
@@ -24,16 +26,12 @@ interface Props {
     name: string;
     img: string;
   };
-  saveBanks: () => void;
   showModal: (content: React.ReactNode) => void;
   pickPaymentType: (payment: any) => void;
   register?: any;
 }
 
-const PaymentMethods = ({ showModal, saveBanks, selectedPaymentMethod, register, pickPaymentType }: Props) => {
-  useEffect(() => {
-    saveBanks();
-  }, []);
+const PaymentMethods = ({ showModal, selectedPaymentMethod, register, pickPaymentType }: Props) => {
 
   const selectedPayment = () => {
     if (selectedPaymentMethod.id === '') {
@@ -96,7 +94,6 @@ const PaymentMethods = ({ showModal, saveBanks, selectedPaymentMethod, register,
 };
 
 const mapStateToProps = (state: ApplicationState) => ({
-  bankList: state.order.bankList,
   selectedPaymentMethod: state.order.selectedPaymentMethodDetail,
 });
 

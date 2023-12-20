@@ -3,22 +3,24 @@ import { Route, Redirect } from 'react-router-dom';
 import { connect, useSelector } from 'react-redux';
 import { UserRole } from 'smartbox-types';
 import { bindActionCreators } from 'redux';
-import { stock } from '../../../actions';
+import { stock, stockGroup } from '../../../actions';
 import { rememberRedirect } from '../../../utils/remeber-redirect';
 import { ApplicationState } from '../../../reducers';
 
 interface Props {
     getStockList: () => void;
+    getStockGroupsList: () => void;
     component: any;
     exact?: boolean;
     path?: string;
 }
 
-const RouteAdmin = ({  exact, path, component, getStockList }: Props) => {
+const RouteAdmin = ({  exact, path, component, getStockList, getStockGroupsList }: Props) => {
     const user = useSelector((state: ApplicationState) => state.user.details);
 
     useEffect(() => {
         getStockList();
+        getStockGroupsList();
     }, []);
 
     if (!user || user.role !== UserRole.admin) {
@@ -29,6 +31,6 @@ const RouteAdmin = ({  exact, path, component, getStockList }: Props) => {
 };
 
 
-const mapDispatchToProps = (dispatch: any) => bindActionCreators({ ...stock }, dispatch);
+const mapDispatchToProps = (dispatch: any) => bindActionCreators({ ...stock, ...stockGroup }, dispatch);
 
 export default connect(null, mapDispatchToProps)(RouteAdmin);

@@ -29,10 +29,6 @@ export const formResignationMarked = () => ({ type: 'FORM_RESIGNATION_MARKED_SUC
 export const clearOrderAgreement = () => ({ type: 'CLEAR_ORDER_FORM_AGREEMENT_SUCCESS' });
 export const clearOrder = () => ({ type: 'CLEAR_ORDER' });
 
-export const saveBanks = () => async (dispatch: any) => {
-  await ApiService.get(dispatch, 'SAVE_BANKS_LIST_SUCCESS', 'SAVE_BANKS_LIST_FAILED', null, null, 'payment/bank-list');
-};
-
 export const fetchBoxAvailability = (stockId: string) => async (dispatch: any) => {
   await ApiService.get(
     dispatch,
@@ -96,7 +92,6 @@ export const sentExecutePaymentWithBlikRequest = (data: ExecuteBlikPaymentReq) =
   );
 };
 
-export const setPaymentMethod = (paymentId: string) => ({ type: 'SET_PAYMENT_METHOD_SUCCESS', payload: paymentId });
 export const pickPaymentType = (paymentId: string) => ({ type: 'PICK_PAYMENT_TYPE_SUCCESS', payload: paymentId });
 export const blikPaymentFinishSuccess = () => ({ type: 'BLIK_PAYMENT_FINISH_SUCCESS' });
 

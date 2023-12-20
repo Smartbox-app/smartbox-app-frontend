@@ -6,9 +6,9 @@ import MobileLogoContainer from '../../components/Layout/MobileLogoContainer';
 import { MenuItemType } from '../../types/menu-item';
 import Management from './Management';
 import { Profile } from '../DashboardCommon';
-import { Stocks } from '../DashboardCommon/Stocks';
 import { Gates } from '../DashboardCommon/Gates';
 import GateStatus from '../DashboardCommon/GateStatus';
+import { StockGroups } from '../DashboardCommon/StockGroups';
 
 const DashboardTenant = () => {
     const menuItems: MenuItemType[] = [
@@ -44,7 +44,7 @@ const DashboardTenant = () => {
                     <Route exact path="/client" render={() => <Redirect to="/client/management" />} />
                     <Route path="/client/management/" component={Management} />
                     <Route path="/client/profile" component={Profile} />
-                    <Route path={`/client/stocks`} component={Stocks} />
+                    <Route path={`/client/stocks`} component={StockGroups} />
                     <Route path={`/client/gates`} component={Gates} />
                 </Switch>
             </Main>

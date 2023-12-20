@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { order } from '../../../../../actions';
-import { FormContainer, ButtonsContainer } from '../../../../../components/Layout';
+import { FormContainer, ButtonsContainer, SimpleHeader, Section } from '../../../../../components/Layout';
 import { Button } from '../../../../../components/Branded';
 import SingleOption from './SingleOption';
 import { ApplicationState } from '../../../../../reducers';
@@ -14,12 +14,11 @@ const StepStock = () => {
     const dispatch = useDispatch();
     const stockId = useSelector((state: ApplicationState) => state.order.stockId);
     const list = useSelector((state: ApplicationState) => state.stock.list);
+    const groupsList = useSelector((state: ApplicationState) => state.stockGroup.list);
     const user = useSelector((state: ApplicationState) => state.user.details!);
     useEffect(() => {
         if (!user) return;
-        // if (!formData.size) {
-        //     history.push(`/${UserService.getSlugByRole(user.role)}/main`);
-        // }
+
         dispatch(order.clearOrderAgreement());
     }, []);
 
@@ -30,8 +29,15 @@ const StepStock = () => {
             <FormHeader no-margin title='application.orderFormPickStock' />
             <form>
                 <div className="stocks-wrapper">{
-                    list.map(el => <SingleOption key={el.id} value={el.id} name={el.name} address={el.address} />)
-                }</div>
+                    groupsList.map(group => <Section key={group.id} highlight>
+                        <SimpleHeader title={group.name} />
+                        <div className="group-stocks-wrapper">
+                            {group.stocks.map(el => <SingleOption key={el.id} value={el.id} name={el.name} address={el.address} />)}
+                        </div>
+                    </Section>)
+                }
+                    {list.map(el => <SingleOption key={el.id} value={el.id} name={el.name} address={el.address} />)
+                    }</div>
 
                 <ButtonsContainer max>
                     <Button disabled text='application.back' />

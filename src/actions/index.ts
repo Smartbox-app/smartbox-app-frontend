@@ -9,6 +9,7 @@ import * as apiTable from './api-table';
 import * as boxes from './boxes';
 import * as singleRent from './single-rent';
 import * as stock from './stock';
+import * as stockGroup from './stock-group';
 import * as gate from './gate';
 import * as invitations from './invitations';
 import * as paymentStatus from './payment-status';
@@ -27,6 +28,7 @@ export {
   order,
   singleRent,
   stock,
+  stockGroup,
   gate,
   invitations,
   tenant

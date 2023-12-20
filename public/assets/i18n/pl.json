@@ -7,6 +7,7 @@
             "how_it_works": "Jak to działa?",
             "management": "Zarządzanie",
             "stocks": "Place",
+            "stockGroups": "Grupy placów",
             "gates": "Bramy",
             "account": "Konto",
             "logout": "Wyloguj",
@@ -319,8 +320,15 @@
             "orderInfo": "Dane",
             "dontForgetToBringLock": "Tylko nie zapomnij o zabraniu własnej kłódki!",
             "stocksList": "Lista placów",
+            "stockGroupsList": "Lista grup placów",
+            "addStockGroup": "Dodaj grupę placów",
+            "editStockGroup": "Edytuj grupę placów",
+            "deleteStockGroup": "Usuń grupę placów",
+            "addStockGroupDescription": "Możesz pogrupować place w sytuacji gdzie dany plac składa się z paru części - np. zewnętrzna i wewnętrzna.",
+            "confirmStockGroupDelete": "Czy na pewno chcesz usunąć grupę? Usunięcie grupy spowoduje rozgrupowanie placów wchodzących w jej skład.",
+            "stockGroupDeleted": "Usunięto grupę",
             "addStock": "Dodaj plac",
-            "addStockDescription": "Utwórz konfigurację placu. Podaj jego nazwę oraz adres. W polach dotyczących numerów kontenerów należy wpisać numery kontenerów w danym rozmiarze oddzielone przecinkiem - to jest podstawowa konfiguracja informująca system o wolnych kontenerach.",
+            "addStockDescription": "Utwórz konfigurację placu. Podaj jego nazwę oraz adres.",
             "addStockDescriptionImportant": "Ważne! Numery wolnych kontenerów mogą być w późniejszym czasie nadpisane, jednak może to spowodować nieprawidłowe działanie systemu wynajmu - jeżeli numery wpisane nie będą zgodne ze stanem faktycznym",
             "editStock": "Edytuj plac",
             "stockManage": "Zarządzaj placem",
@@ -364,6 +372,8 @@
             "deleteGroupText": "Czy na pewno chcesz grupę?",
             "boxGroupsList": "Lista grup",
             "map": "Mapa",
+            "prepareBoxMap": "Dostosuj układ kontenerów na placu",
+            "isMapActive": "Aktywuj mapę dla użytkowników",
             "fontLight": "Plik z fontem (cienka)",
             "fontNormal": "Plik z fontem (normalna)",
             "fontBold": "Plik z fontem (pogrubiona)",
@@ -375,7 +385,11 @@
             "deleteGiftConfirmation": "Czy na pewno chcesz usunąć ten kod zniżkowy?",
             "giftDeleted": "Usunięto kod zniżkowy",
             "giftActivated": "Aktywowano kod zniżkowy",
-            "giftDeactivated": "Deaktywowano kod zniżkowy"
+            "giftDeactivated": "Deaktywowano kod zniżkowy",
+            "mapSettingsUpdated": "Zaktalizowano ustawienia mapy",
+            "stockDetails": "Szczegóły placów",
+            "boxesShortcut": "kontenerów",
+            "stocksCount": "Ilość placów"
         },
         "settings": {
             "tax": "Stawka VAT",
@@ -419,7 +433,9 @@
             "stockUpdatedCorrectly": "Zaktualizowano plac",
             "gateAddedCorrectly": "Dodano nową bramę",
             "gateUpdatedCorrectly": "Zaktualizowano bramę",
-            "accountHasBeenActivated": "Konto zostało aktywowane"
+            "accountHasBeenActivated": "Konto zostało aktywowane",
+            "stockGroupAddedCorrectly": "Dodano nowy plac",
+            "stockGroupUpdatedCorrectly": "Zaktualizowano plac"
         }
     }
 }

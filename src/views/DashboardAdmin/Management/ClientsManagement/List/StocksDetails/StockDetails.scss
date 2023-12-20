@@ -1,0 +1,10 @@
+@import '../../../../../../config/variables.scss';
+
+.stock-details {
+    padding: $main-spacing / 2;
+}
+
+.stock-warning {
+    background-color: $color-danger;
+    color: #fff;
+}

@@ -1,0 +1,80 @@
+import React from 'react';
+import { ItfApiForm } from 'itf_formbuilder_react';
+import { IStock } from 'smartbox-types';
+import { useDispatch, useSelector } from 'react-redux';
+import { Button, Spinner } from '../../../../../../../components/Branded';
+import { ButtonsContainer, FormContainer } from '../../../../../../../components/Layout';
+import ApiService from '../../../../../../../services/api-service';
+import { formOnTranslateString } from '../../../../../../../utils/trans-form';
+import { ApplicationState } from '../../../../../../../reducers';
+import { successNotification } from '../../../../../../../actions/notifications';
+import { __ } from '../../../../../../../helpers/i18n';
+import { mapFields } from '../../../../../../../utils/fields-mapper';
+import { useParams } from 'react-router';
+
+interface Props {
+    stock: IStock;
+    refreshStock: () => void;
+    userId?: string;
+}
+
+const MapSettingsForm = ({ userId, stock, refreshStock }: Props) => {
+    const dispatch = useDispatch();
+    const { stockId } = useParams<{ stockId: string }>();
+    const user = useSelector((state: ApplicationState) => state.user.details!);
+
+    const fetchUrl = `stock/form/map/${stockId}`;
+    const sendUrl = `stock/${stockId}/map`;
+
+
+    const deleteMapBackground = async () => {
+        await ApiService.callFetch('DELETE', sendUrl, () => {
+            dispatch(successNotification(__('application.mapSettingsUpdated')));
+            if (!userId && user.tenantId) window.location.reload();
+        })
+    }
+
+    const submitButton = (
+        <ButtonsContainer>
+            {stock && stock.mapBackground && <Button
+                type="button"
+                danger
+                text="application.delete"
+                click={deleteMapBackground}
+            />}
+            <Button text="application.save" type="submit" primary />
+        </ButtonsContainer>
+    );
+
+    const customSendFetcher = (formId: string, values) => {
+        return ApiService.sendForm(
+            sendUrl,
+            values,
+            'PATCH',
+        );
+    };
+
+    return (
+        <FormContainer highlight>
+            <ItfApiForm
+                formId="mapSettingsForm"
+                schemaMayBeDynamic={false}
+                schemaCacheEnabled={false}
+                useFormDataInsteadOfPlainObject
+                loadingInfo={<Spinner transparent />}
+                schemaFetcher={() => ApiService.loadForm(fetchUrl)}
+                sendFetcher={customSendFetcher}
+                submitButton={submitButton}
+                onRenderFullField={mapFields}
+                onSavedSuccessfully={() => {
+                    dispatch(successNotification(__('application.mapSettingsUpdated')));
+                    refreshStock();
+
+                }}
+                onTranslateString={formOnTranslateString}
+            />
+        </FormContainer>
+    );
+};
+
+export { MapSettingsForm }

@@ -92,7 +92,7 @@ const StepDuration = ({
     useEffect(() => {
         if (!user) return;
         clearPaymentDetails();
-        const discount = stocks.find(stock => stock.id === formData.stock)?.discount;
+        // const discount = stocks.find(stock => stock.id === formData.stock)?.discount;
     
         // @TODO: handle
         // if (match.params.rentId) {

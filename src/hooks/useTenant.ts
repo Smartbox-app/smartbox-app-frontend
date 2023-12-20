@@ -1,28 +1,28 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router";
-import { TenantEntity } from "smartbox-types";
+import { TenantForUsers } from "smartbox-types";
 import { setTenant as setTenantAction } from '../actions/tenant'
 import ApiService from "../services/api-service";
 import { ApplicationState } from "src/reducers";
 
 interface UseTenant {
-    tenant: TenantEntity | null;
+    tenant: TenantForUsers | null;
 }
 
 const useTenant = (): UseTenant => {
     const dispatch = useDispatch();
     const tenantData = useSelector((state: ApplicationState) => state.tenant);
-    const [tenant, setTenant] = useState<TenantEntity | null>(tenantData);
+    const [tenant, setTenant] = useState<TenantForUsers | null>(tenantData);
     const location = useLocation();
     const queryParameters = new URLSearchParams(location.search);
 
     useEffect(() => {
-        if(!tenantData) fetchTenantData();
+        if (!tenantData) fetchTenantData();
     }, [])
 
     useEffect(() => {
-        if(tenantData) setTenant(tenantData);
+        if (tenantData) setTenant(tenantData);
     }, [tenantData])
 
     const fetchTenantData = async () => {
@@ -33,7 +33,7 @@ const useTenant = (): UseTenant => {
             return;
         }
 
-        await ApiService.callFetch('GET', `tenant/${clientId}`, (tenantRes: TenantEntity) => {
+        await ApiService.callFetch('GET', `tenant/${clientId}`, (tenantRes: TenantForUsers) => {
             setTenant(tenantRes);
             dispatch(setTenantAction(tenantRes));
         })

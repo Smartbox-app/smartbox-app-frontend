@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { FieldType, TableSchema, TableSchemaField, usersList } from 'smartbox-tables';
-import { IUser, UserListRes, UserStatus, UserType } from 'smartbox-types';
+import { FieldType, TableSchema, TableSchemaField, tenantsList } from 'smartbox-tables';
+import { IUser, UserClientListRes, UserListRes, UserStatus, UserType } from 'smartbox-types';
 import { ApiTable } from '../../../../../components/Common';
 import { Button } from '../../../../../components/Branded';
 import { ButtonsContainer, PageHeader, Section } from '../../../../../components/Layout';
@@ -11,6 +11,7 @@ import { InteractiveTableSchema } from '../../../../../utils/table-schema-utils'
 import { modal, user } from '../../../../../actions';
 import UserDetail from './UserDetail';
 import { TenantEdit } from '../Edit';
+import { StocksDetails } from './StocksDetails';
 
 interface Props {
     showModal: (content: React.ReactNode) => void;
@@ -23,7 +24,7 @@ class List extends React.Component<Props> {
 
     constructor(props: Props) {
         super(props);
-        this.scheme = new InteractiveTableSchema(usersList)
+        this.scheme = new InteractiveTableSchema(tenantsList)
             .modifyFieldStatic('status', {
                 name: __('application.state'),
                 field: 'status',
@@ -32,17 +33,23 @@ class List extends React.Component<Props> {
                 type: FieldType.Custom,
                 customRender: (value, field, userData) => this.getLockButton(value, field, userData),
             })
-            .removeFields('role')
+            .addFieldAfter('phone', {
+                name: __('application.stockDetails'),
+                field: 'stocks',
+                mobile: true,
+                type: FieldType.Custom,
+                customRender: (value, field, userData: UserClientListRes) => <StocksDetails user={userData} />
+            })
             .addFieldAtTheEnd({
                 name: __('application.actions'),
                 field: 'actions',
                 mobile: true,
                 buttons: [
-                    {
-                        name: 'application.userDetails',
-                        type: 'primary',
-                        click: (data: UserListRes) => this.props.showModal(<UserDetail userId={data.id} userData={data} />),
-                    },
+                    // {
+                    //     name: 'application.userDetails',
+                    //     type: 'primary',
+                    //     click: (data: UserListRes) => this.props.showModal(<UserDetail userId={data.id} userData={data} />),
+                    // },
                     {
                         name: 'application.edit',
                         type: 'primary',
@@ -66,7 +73,7 @@ class List extends React.Component<Props> {
                 <PageHeader title='application.tenantsList' />
                 <ButtonsContainer>
                     <Button text='application.addTenant' primary to="/admin/management/clients/add" />        </ButtonsContainer>
-                <ApiTable scheme={this.scheme} apiEndpointSubUrl={`user/list/${UserType.client}`} />
+                <ApiTable scheme={this.scheme} apiEndpointSubUrl={`user/tenants`} />
             </Section>
         );
     }

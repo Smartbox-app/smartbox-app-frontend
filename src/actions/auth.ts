@@ -121,7 +121,7 @@ export const authGmailUser = (googleToken: string) => async (dispatch: any) => {
       history.push('/');
     },
     null,
-    `auth/login-by-google-token/${googleToken}`,
+    `auth/login-by-google-token/${googleToken}}`,
     'LOADING',
   );
 };

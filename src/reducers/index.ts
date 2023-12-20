@@ -15,6 +15,7 @@ import paymentStatusReducer, { PaymentStatusState } from './payment-status-reduc
 import tenantReducer, { TenantState } from './tenant-reducer';
 
 import { Modal } from '../types/modal';
+import stockGroupReducer, { StockGroupStatus } from './stock-group-reducer';
 
 export interface ApplicationState {
   apiTable: ApiTableState;
@@ -27,6 +28,7 @@ export interface ApplicationState {
   notifications: NotificationState;
   rent: RentsStatus;
   stock: StockStatus;
+  stockGroup: StockGroupStatus;
   gate: GateState;
   lang: LangStatus;
   paymentStatus: PaymentStatusState;
@@ -45,6 +47,7 @@ const appReducer = combineReducers({
   boxes: boxesReducer,
   rent: rentReducer,
   stock: stockReducer,
+  stockGroup: stockGroupReducer,
   gate: gateReducer,
   paymentStatus: paymentStatusReducer,
   tenant: tenantReducer,

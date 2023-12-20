@@ -144,7 +144,6 @@ const mapStateToProps = (state: ApplicationState) => ({
     isResignationMarked: state.order.isResignationMarked,
     stockId: state.order.formData.stock,
     rentId: state.rent.singleRent.id,
-    selectedPaymentMethodDetailId: state.order.selectedPaymentMethodDetail.id,
     paymentType: state.order.selectedPayment,
 });
 

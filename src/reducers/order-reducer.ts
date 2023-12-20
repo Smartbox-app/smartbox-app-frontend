@@ -40,7 +40,6 @@ export type OrderState = {
   isAgreementAccepted: boolean;
   isResignationMarked: boolean;
   blikPaymentCompletedSuccessfully: boolean;
-  bankList: any;
   selectedPayment: PaymentType;
   selectedPaymentMethodDetail: PaymentMethodDetail;
 };
@@ -106,16 +105,6 @@ interface FormResignation {
   type: 'FORM_RESIGNATION_MARKED_SUCCESS';
 }
 
-interface SaveBankList {
-  type: 'SAVE_BANKS_LIST_SUCCESS';
-  payload: any;
-}
-
-interface SetPaymentMethod {
-  type: 'SET_PAYMENT_METHOD_SUCCESS';
-  payload: PaymentMethodDetail | PaymentType;
-}
-
 interface PickPaymentMethod {
   type: 'PICK_PAYMENT_TYPE_SUCCESS';
   payload: PaymentMethodDetail;
@@ -172,10 +161,8 @@ type Action =
   | SentRentBoxRequestSuccess
   | FormReaded
   | FormResignation
-  | SetPaymentMethod
   | PickPaymentMethod
   | CheckPaymentStatus
-  | SaveBankList
   | ClearPaymentMethodSuccess
   | SentExtendRentRequestSuccess
   | ClearOrderFormAgreementSuccess
@@ -226,7 +213,6 @@ const initialState: OrderState = {
   discountList: [{ text: __('application.disposableDiscount5'), value: 5 }],
   isAgreementAccepted: false,
   isResignationMarked: false,
-  bankList: [],
   selectedPayment: PaymentType.card,
   selectedPaymentMethodDetail: {
     id: '',
@@ -261,14 +247,14 @@ export default (state: OrderState = initialState, action: Action): OrderState =>
       }
     };
 
-    
+
     case 'SET_RENT_START_DATE': {
       return {
         ...state,
         startDate: action.payload
       }
     };
-    
+
     case 'SET_RENT_END_DATE': {
       return {
         ...state,
@@ -333,7 +319,7 @@ export default (state: OrderState = initialState, action: Action): OrderState =>
       return {
         ...state,
         formData: newFormData,
-        discountCode: '', 
+        discountCode: '',
       };
     }
 
@@ -375,27 +361,14 @@ export default (state: OrderState = initialState, action: Action): OrderState =>
         isResignationMarked: !state.isResignationMarked,
       };
     }
-    case 'SAVE_BANKS_LIST_SUCCESS':
-      const dataToRender: any[] = [];
-      for (const bank in action.payload) {
-        dataToRender.push(action.payload[bank]);
-      }
-      return {
-        ...state,
-        bankList: dataToRender,
-      };
+
 
     case 'PICK_PAYMENT_TYPE_SUCCESS':
+      console.log('PICKING PAYMENT TYPE', action.payload);
       return {
         ...state,
         // @TODO fix
         selectedPayment: action.payload as any,
-      };
-
-    case 'SET_PAYMENT_METHOD_SUCCESS':
-      return {
-        ...state,
-        selectedPaymentMethodDetail: state.bankList.find((singleBank: any) => singleBank.id === action.payload),
       };
 
     case 'CLEAR_PAYMENT_METHOD_SUCCESS':

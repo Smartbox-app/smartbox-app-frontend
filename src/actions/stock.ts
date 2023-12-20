@@ -25,6 +25,6 @@ export const getStockDiscountsList = () => async (dispatch: any) => {
     'FETCH_STOCK_DISCOUNTS_LIST_FAILED',
     null,
     null,
-    'stock/list',
+    'stock/discounts',
   );
 };

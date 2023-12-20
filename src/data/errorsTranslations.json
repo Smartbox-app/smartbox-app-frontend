@@ -269,6 +269,10 @@
             "57": {
                 "text": "Nie można usunąć kodu zniżkowego który został wykorzystany!",
                 "__type_alias_do_not_touch": "ApiErrorCode.CantRemoveUsedGift"
+            },
+            "58": {
+                "text": "Platforma jest nieaktywna!",
+                "__type_alias_do_not_touch": "ApiErrorCode.TenantNotActive"
             }
         }
     }

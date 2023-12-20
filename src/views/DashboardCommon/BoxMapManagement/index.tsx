@@ -170,20 +170,21 @@ const BoxMapManagement = () => {
 
 
     if (!user) return null;
-
-    return (
-        <div className="user-map-wrapper" ref={element}>
-            <PageHeader title='application.storagesPlan' />
-            {(isAdmin(user.role) || isWorker(user.role)) && <MapLegend />}
-            {selectedStock?.id ? (
-                <>
-                    <SimpleStockMap map={selectedStock.map} />
-                </>
-            ) : (
-                <Spinner />
-            )}
-        </div>
-    );
+    return null;
+    // @TODO - handle map rendering
+    // return (
+    //     <div className="user-map-wrapper" ref={element}>
+    //         <PageHeader title='application.storagesPlan' />
+    //         {(isAdmin(user.role) || isWorker(user.role)) && <MapLegend />}
+    //         {selectedStock?.id ? (
+    //             <>
+    //                 <SimpleStockMap map={selectedStock.map} />
+    //             </>
+    //         ) : (
+    //             <Spinner />
+    //         )}
+    //     </div>
+    // );
 }
 
 export default BoxMapManagement

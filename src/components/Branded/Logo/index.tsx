@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { useSelector } from 'react-redux';
-import { TenantEntity } from 'smartbox-types';
+import { TenantForUsers } from 'smartbox-types';
 import { useTenant } from '../../../hooks/useTenant';
 import { ApplicationState } from '../../../reducers';
 import { history } from '../../../App';
@@ -16,7 +16,7 @@ const Logo = () => {
         else history.push('/');
     }
 
-    const getTenantLogoPath = useCallback((tenant: TenantEntity) => {
+    const getTenantLogoPath = useCallback((tenant: TenantForUsers) => {
         if (!tenant.id) return tenant.logo;
         return `${ApiService.url}tenant/logo/${tenant.id}`;
     }, [tenant])
