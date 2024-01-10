@@ -18,7 +18,6 @@ const CompanyDetailsForm = ({ register, errors, control, disabled }: Props) => {
       <CustomInput
         register={register({ required: formOnTranslateString('Field required.') })}
         errors={errors}
-        control={control}
         id="companyName"
         disabled={disabled}
         placeholder={formOnTranslateString('')}
@@ -26,7 +25,6 @@ const CompanyDetailsForm = ({ register, errors, control, disabled }: Props) => {
       <CustomInput
         register={register({ required: formOnTranslateString('Field required.') })}
         errors={errors}
-        control={control}
         id="companyStreet"
         disabled={disabled}
         placeholder="ul. Główna 12/3"
@@ -34,7 +32,6 @@ const CompanyDetailsForm = ({ register, errors, control, disabled }: Props) => {
       <CustomInput
         register={register({ required: formOnTranslateString('Field required.') })}
         errors={errors}
-        control={control}
         id="companyCity"
         disabled={disabled}
         placeholder="Warszawa"
@@ -48,7 +45,6 @@ const CompanyDetailsForm = ({ register, errors, control, disabled }: Props) => {
           },
         })}
         errors={errors}
-        control={control}
         id="companyPostCode"
         disabled={disabled}
         placeholder="00-001"
@@ -59,7 +55,6 @@ const CompanyDetailsForm = ({ register, errors, control, disabled }: Props) => {
           validate: (data: any) => validateNip(data) || formOnTranslateString('Invalid NIP.'),
         })}
         errors={errors}
-        control={control}
         id="nip"
         disabled={disabled}
         placeholder="NIP"

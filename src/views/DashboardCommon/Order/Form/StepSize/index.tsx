@@ -10,6 +10,7 @@ import UserService from '../../../../../services/user-service';
 import ApiService from '../../../../../services/api-service';
 
 import './StepSize.scss';
+import { Alert } from '../../../../../components/Common';
 
 const StepSize = () => {
     const { stockId, boxGroupId } = useSelector((state: ApplicationState) => state.order);
@@ -35,9 +36,9 @@ const StepSize = () => {
             <FormHeader no-margin title='application.orderFormPickSize' />
             <form>
                 <div className="options-wrapper">{options}</div>
-
+            {boxGroups.length === 0 && <Alert type='notice' text='application.noBoxesInThisStock' />}
                 <ButtonsContainer max>
-                    <Button disabled text='application.back' />
+                    <Button text='application.back' to='/user/order/step/stock' />
                     <Button
                         type="submit"
                         primary

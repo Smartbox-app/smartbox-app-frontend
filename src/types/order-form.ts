@@ -6,8 +6,6 @@ export interface FormType {
   stock: string;
   size: string | null;
   isFirstRent: boolean;
-  dateStart: Date;
-  dateEnd: Date;
   discountCode: string;
   card: {
     discount: number;

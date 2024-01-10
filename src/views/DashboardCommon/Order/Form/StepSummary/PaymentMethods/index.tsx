@@ -77,7 +77,7 @@ const PaymentMethods = ({ showModal, selectedPaymentMethod, register, pickPaymen
         </label>
 
         <label htmlFor="paymentTypeBank">
-          <input
+          <StyledInput
             type="radio"
             id="paymentTypeBank"
             name="paymentType"

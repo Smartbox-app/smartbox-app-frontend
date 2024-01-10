@@ -17,21 +17,18 @@ const TenantDetailsForm = ({ register, errors, control, disabled }: Props) => {
       <CustomInput
         register={register({ required: formOnTranslateString('Field required.') })}
         errors={errors}
-        control={control}
         disabled
         id="firstName"
       />
       <CustomInput
         register={register({ required: formOnTranslateString('Field required.') })}
         errors={errors}
-        control={control}
         disabled
         id="lastName"
       />
       <CustomInput
         register={register({ required: formOnTranslateString('Field required.') })}
         errors={errors}
-        control={control}
         id="street"
         disabled={disabled}
         placeholder="ul. Główna 12/3"
@@ -39,7 +36,6 @@ const TenantDetailsForm = ({ register, errors, control, disabled }: Props) => {
       <CustomInput
         register={register({ required: formOnTranslateString('Field required.') })}
         errors={errors}
-        control={control}
         id="city"
         disabled={disabled}
         placeholder="Warszawa"
@@ -53,7 +49,6 @@ const TenantDetailsForm = ({ register, errors, control, disabled }: Props) => {
           },
         })}
         errors={errors}
-        control={control}
         id="postCode"
         disabled={disabled}
         placeholder="00-001"
@@ -68,7 +63,6 @@ const TenantDetailsForm = ({ register, errors, control, disabled }: Props) => {
           },
         })}
         errors={errors}
-        control={control}
         type="email"
         id="mailToSendInvoice"
         disabled
@@ -83,7 +77,6 @@ const TenantDetailsForm = ({ register, errors, control, disabled }: Props) => {
           },
         })}
         errors={errors}
-        control={control}
         disabled
         id="phone"
       />

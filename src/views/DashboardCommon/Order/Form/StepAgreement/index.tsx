@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 
 import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import { RentBoxReq, UserRole, IPricingResult, UserRes, ExtendRentalReq } from 'smartbox-types';
 import { PaymentType } from 'smartbox-types';
 import { Alert } from '../../../../../components/Common';
@@ -49,9 +49,10 @@ const StepSummary = ({
     paymentType,
     sentExtendRentRequest,
 }: Props): any => {
+    const order = useSelector((state: ApplicationState) => state.order);
     useEffect(() => {
         if(!user) return;
-        if (!formData.size) {
+        if (!order.boxGroupId) {
             history.push(`/${UserService.getSlugByRole(user.role)}/order/step/stock`);
         }
     }, []);
@@ -61,8 +62,8 @@ const StepSummary = ({
     const onSubmit = (data: any) => {
         if(!user) return;
         const commonCollection = {
-            finishAt: formData.dateEnd,
-            cost: countedPrice.value,
+            finishAt: order.endDate,
+            cost: order.calculatedPrice,
             discountCode: formData.discountCode,
             firstName: formData.firstName,
             lastName: formData.lastName,
@@ -87,9 +88,9 @@ const StepSummary = ({
 
         const dataCollectionRent: RentBoxReq = {
             ...commonCollection,
-            startAt: formData.dateStart,
-            stockId: stockId,
-            size: Number(formData.size),
+            startAt: order.startDate,
+            stockId: order.stockId,
+            boxGroupId: order.boxGroupId,
             type: paymentType,
         };
 

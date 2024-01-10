@@ -78,14 +78,14 @@ const StepDuration = ({
     const setMinDate = (addAmount = 0, end?: boolean) =>
         match.params.rentId
             ? addDays(startOfDay(new Date(rent.finishAt)), addAmount)
-            : addDays(end ? formData.dateStart : startOfToday(), addAmount);
+            : addDays(end ? startDate : startOfToday(), addAmount);
 
     const setMaxDateToExtend = () =>
         match.params.rentId ? addDays(endOfDay(new Date(rent.finishAt)), 0) : addDays(new Date(), minRentPeriod);
 
     const defaultValues = {
-        dateStart: match.params.rentId ? addDays(new Date(rent.finishAt), 0) : addDays(formData.dateStart, 0),
-        dateEnd: match.params.rentId ? addDays(new Date(rent.finishAt), minRentPeriod) : addDays(formData.dateEnd, 0),
+        dateStart: match.params.rentId ? addDays(new Date(rent.finishAt), 0) : addDays(startDate, 0),
+        dateEnd: match.params.rentId ? addDays(new Date(rent.finishAt), minRentPeriod) : addDays(endDate, 0),
     };
     
 

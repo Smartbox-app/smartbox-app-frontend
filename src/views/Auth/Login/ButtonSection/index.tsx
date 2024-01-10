@@ -15,8 +15,8 @@ const ButtonsSection = () => {
 
     return <div className="login-buttons-section">
         <Button text="application.login" big type="submit" primary rounded />
-        <FbButton />
-        <GoogleButton />
+        {/* <FbButton />
+        <GoogleButton /> */}
         <Button text="application.register" big to={tenant.slides.length > 0 ? "/welcome" : "register"} outline rounded />
         <p className="lost-pass">
             {__('application.forgotPass')}{' '}

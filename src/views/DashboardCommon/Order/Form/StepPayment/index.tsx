@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 
 import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import { PaymentType, UserRes } from 'smartbox-types';
 import { order, paymentStatus } from '../../../../../actions';
 import UserService from '../../../../../services/user-service';
@@ -12,13 +12,11 @@ import { history } from '../../../../../App';
 
 import BankForm from './BankForm';
 import CreditCardForm from './CreditCardForm';
-import BlikForm from './BlikForm';
 
 import './StepPayment.scss';
 
 interface Props {
     user: UserRes | null;
-    formData: FormType;
     selectedPayment: PaymentType;
     resetPaymentForm: () => void;
 }
@@ -36,9 +34,10 @@ const formToRender = (selectedPayment) => {
     }
 };
 
-const StepPayment = ({ formData, selectedPayment, user, resetPaymentForm }: Props) => {
+const StepPayment = ({ selectedPayment, user, resetPaymentForm }: Props) => {
+    const order = useSelector((state: ApplicationState) => state.order);
     useEffect(() => {
-        if (!formData.size) {
+        if (!order.boxGroupId) {
             if (!user) return;
             history.push(`/${UserService.getSlugByRole(user.role)}/order/step/stock`);
         }
@@ -52,7 +51,6 @@ const StepPayment = ({ formData, selectedPayment, user, resetPaymentForm }: Prop
 };
 
 const mapStateToProps = (state: ApplicationState) => ({
-    formData: state.order.formData,
     selectedPayment: state.order.selectedPayment,
     user: state.user.details,
 });

@@ -188,8 +188,6 @@ const initialState: OrderState = {
     stock: '',
     size: null,
     isFirstRent: true,
-    dateStart: new Date(),
-    dateEnd: addDays(new Date(), 7),
     discountCode: '',
     card: {
       discount: 0,
@@ -408,8 +406,6 @@ export default (state: OrderState = initialState, action: Action): OrderState =>
           discount: 0,
           size: state.formData.size,
           isFirstRent: true,
-          dateStart: new Date(),
-          dateEnd: addDays(new Date(), 7),
           discountCode: '',
           card: {
             discount: 0,

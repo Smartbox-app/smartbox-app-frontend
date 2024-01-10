@@ -11,18 +11,12 @@
     display: flex;
     align-items: center;
     width: 100%;
-    margin-bottom: $main-spacing;
-  }
-
-  .no-margin {
-    margin-bottom: $main-spacing;
+    margin: $main-spacing * 1.5 0;
   }
 }
 
 @include gt-sm {
   .form-header-container {
-    margin-bottom: $main-spacing * 1.5;
-
     .form-header {
       max-width: $page-header-width;
     }

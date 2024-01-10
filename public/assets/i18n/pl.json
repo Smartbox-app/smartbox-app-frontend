@@ -389,7 +389,8 @@
             "mapSettingsUpdated": "Zaktalizowano ustawienia mapy",
             "stockDetails": "Szczegóły placów",
             "boxesShortcut": "kontenerów",
-            "stocksCount": "Ilość placów"
+            "stocksCount": "Ilość placów",
+            "noBoxesInThisStock": "Brak magazynów"
         },
         "settings": {
             "tax": "Stawka VAT",
