@@ -54,7 +54,7 @@ const List = () => {
         <Section full>
             <PageHeader title='application.stockGroupsList' />
             <ButtonsContainer>
-                <Button text='application.addStockGroup' primary to={`/${UserService.getSlugByRole(user.role)}/stocks/groups/add`} />
+                <Button text='application.addStockGroup' primary to={`/${UserService.getSlugByRole(user.role)}/locations/groups/add`} />
             </ButtonsContainer>
             <ApiTable scheme={scheme} apiEndpointSubUrl={`stock-group/admin-list`} />
         </Section>

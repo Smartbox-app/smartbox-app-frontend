@@ -97,6 +97,7 @@ const StepSummary = ({
     const { handleSubmit, register, watch, control, errors } = useForm({ defaultValues });
 
     const dataVerification = (): boolean => {
+        console.log(watch().paymentType, selectedPaymentMethod);
         if (typeof watch().paymentType !== 'string') {
             return true;
         } else if (Number(watch().paymentType) === PaymentType.transfer && selectedPaymentMethod.id === '') {

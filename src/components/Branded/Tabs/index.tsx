@@ -32,7 +32,7 @@ const Tabs = ({ tabs }: TabsProps) => {
     const displayTabs = tabs.map((tab: Tab, index: number) => (
         <StyledTab
             key={index}
-            exact
+            exact={false}
             className="tab"
             activeClassName="active"
             to={tab.to}

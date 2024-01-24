@@ -20,6 +20,7 @@ interface Props {
 }
 
 const parseInputNumber = (value: unknown) => {
+    console.log('parsing', value);
     return typeof value === 'undefined' || (!value && value !== 0) ? value : Number(value);
 }
 
@@ -81,6 +82,7 @@ const FieldsMapper = ({ field, fieldHtmlId, currentValue, errors, big, onFocus, 
             className="register-input"
             type={field.type || field.options.type}
             help={field.descr}
+            step={field.options.step}
             input={{
                 label: formOnTranslateString(field.title),
                 name: fieldHtmlId,

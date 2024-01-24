@@ -45,7 +45,7 @@ const Pricing = () => {
         setPricing(prevPricing => prevPricing.map((pricing, index) => {
             if (indexToChange === index) return {
                 ...pricing,
-                price: Number(value)
+                price: !value && value !== "0" ? null : Number(value)
             }
             return pricing;
         }))
@@ -56,7 +56,7 @@ const Pricing = () => {
         setPricing(prevPricing => prevPricing.map((pricing, index) => {
             if (indexToChange === index) return {
                 ...pricing,
-                quantity: Number(value)
+                quantity: !value && value !== "0" ? null : Number(value)
             }
             return pricing;
         }))

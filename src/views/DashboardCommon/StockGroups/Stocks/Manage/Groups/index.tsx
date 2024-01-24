@@ -15,11 +15,11 @@ const Groups = () => {
     if (!user) return null;
 
     return <Switch>
-        <Route exact path={`/${UserService.getSlugByRole(user.role)}/stocks/:stockId/groups`} render={() => <Redirect to={`/${UserService.getSlugByRole(user.role)}/stocks/${stockId}/groups/list`} />} />
-        <Route path={`/${UserService.getSlugByRole(user.role)}/stocks/:stockId/groups/add`} component={Add} />
-        <Route path={`/${UserService.getSlugByRole(user.role)}/stocks/:stockId/groups/map`} component={Map} />
-        <Route path={`/${UserService.getSlugByRole(user.role)}/stocks/:stockId/groups/list`} component={List} />
-        <Route path={`/${UserService.getSlugByRole(user.role)}/stocks/:stockId/groups/:groupId/pricing`} component={Pricing} />
+        <Route exact path={`/${UserService.getSlugByRole(user.role)}/locations/stocks/:stockId/groups`} render={() => <Redirect to={`/${UserService.getSlugByRole(user.role)}/locations/stocks/${stockId}/groups/list`} />} />
+        <Route path={`/${UserService.getSlugByRole(user.role)}/locations/stocks/:stockId/groups/add`} component={Add} />
+        <Route path={`/${UserService.getSlugByRole(user.role)}/locations/stocks/:stockId/groups/map`} component={Map} />
+        <Route path={`/${UserService.getSlugByRole(user.role)}/locations/stocks/:stockId/groups/list`} component={List} />
+        <Route path={`/${UserService.getSlugByRole(user.role)}/locations/stocks/:stockId/groups/:groupId/pricing`} component={Pricing} />
     </Switch>
 }
 

@@ -46,7 +46,7 @@ const List = () => {
                 {
                     name: 'application.pricing',
                     type: 'primary',
-                    to: (data: BoxGroupListRes) => `/${UserService.getSlugByRole(user.role)}/stocks/${stockId}/groups/${data.id}/pricing`
+                    to: (data: BoxGroupListRes) => `/${UserService.getSlugByRole(user.role)}/locations/stocks/${stockId}/groups/${data.id}/pricing`
                     // click: (data: BoxGroupListRes) => dispatch(showModal(<Edit id={data.id} stockId={data.stockId} />)),
                 },
                 {
@@ -66,7 +66,7 @@ const List = () => {
         <>
             <SimpleHeader title='application.boxGroupsList' />
             <ButtonsContainer>
-                <Button text='application.addBoxGroup' primary to={`/${UserService.getSlugByRole(user.role)}/stocks/${stockId}/groups/add`} />
+                <Button text='application.addBoxGroup' primary to={`/${UserService.getSlugByRole(user.role)}/locations/stocks/${stockId}/groups/add`} />
             </ButtonsContainer>
             <ApiTable scheme={scheme} apiEndpointSubUrl={`box-group-new/list/${stockId}`} />
         </>

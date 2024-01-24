@@ -54,7 +54,7 @@ const PriceInfo = ({ box }: Props) => {
     if(!firstPricing.price || !firstPricing.quantity) return null;
 
     return <StyledPriceInfo>
-        {__('application.rentFrom')}<strong className='price-value'>{formatPrice(firstPricing.price)}</strong>/<span>{firstPricing.quantity} {formatQuantity(firstPricing.type, firstPricing.quantity)}</span>
+        {__('application.rentFrom')}<strong className='price-value'>{formatPrice(firstPricing.price || 0)}</strong>/<span>{firstPricing.quantity} {formatQuantity(firstPricing.type, firstPricing.quantity || 0)}</span>
     </StyledPriceInfo>
 }
 

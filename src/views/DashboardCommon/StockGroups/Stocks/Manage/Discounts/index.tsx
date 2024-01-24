@@ -12,8 +12,8 @@ const Discounts = () => {
     if (!user) return null;
 
     return <Switch>
-        <Route exact path={`/${UserService.getSlugByRole(user.role)}/stocks/:stockId/discounts`} render={() => <Redirect to={`/${UserService.getSlugByRole(user.role)}/stocks/${stockId}/discounts/list`} />} />
-        <Route path={`/${UserService.getSlugByRole(user.role)}/stocks/:stockId/discounts/list`} component={List} />
+        <Route exact path={`/${UserService.getSlugByRole(user.role)}/locations/stocks/:stockId/discounts`} render={() => <Redirect to={`/${UserService.getSlugByRole(user.role)}/locations/stocks/${stockId}/discounts/list`} />} />
+        <Route path={`/${UserService.getSlugByRole(user.role)}/locations/stocks/:stockId/discounts/list`} component={List} />
     </Switch>
 }
 

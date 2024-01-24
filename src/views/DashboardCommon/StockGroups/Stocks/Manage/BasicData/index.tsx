@@ -40,7 +40,7 @@ const BasicData = () => {
                     onRenderFullField={mapFields}
                     onSavedSuccessfully={() => {
                         dispatch(successNotification('notification.stockUpdatedCorrectly'));
-                        history.push('/admin/stocks');
+                        history.push('/admin/locations/stocks');
                     }}
                     onTranslateString={formOnTranslateString}
                     thirdPartyComponents={{ ReactSelect: ReactSelectOverride, ReactCreatableSelect }}

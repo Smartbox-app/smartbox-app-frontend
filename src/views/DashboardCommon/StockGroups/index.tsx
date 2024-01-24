@@ -16,21 +16,22 @@ const StockGroups = () => {
         <Tabs
             tabs={[
                 {
-                    to: `/${UserService.getSlugByRole(user.role)}/stocks/list`,
+                    to: `/${UserService.getSlugByRole(user.role)}/locations/stocks`,
                     text: 'application.stocks',
                 },
                 {
-                    to: `/${UserService.getSlugByRole(user.role)}/stocks/groups`,
+                    to: `/${UserService.getSlugByRole(user.role)}/locations/groups`,
                     text: 'application.stockGroups',
                 },
             ]}
         />
         <Switch>
-            <Route exact path={`/${UserService.getSlugByRole(user.role)}/stocks`} render={() => <Redirect to={`/${UserService.getSlugByRole(user.role)}/stocks/list`} />} />
-            <Route path={`/${UserService.getSlugByRole(user.role)}/stocks/add`} component={Add} />
-            <Route path={`/${UserService.getSlugByRole(user.role)}/stocks/list`} component={List} />
-            <Route path={`/${UserService.getSlugByRole(user.role)}/stocks/groups`} component={Groups} />
-            <Route path={`/${UserService.getSlugByRole(user.role)}/stocks/:stockId`} component={Manage} />
+            <Route exact path={`/${UserService.getSlugByRole(user.role)}/locations`} render={() => <Redirect to={`/${UserService.getSlugByRole(user.role)}/locations/stocks`} />} />
+            <Route exact path={`/${UserService.getSlugByRole(user.role)}/locations/stocks`} render={() => <Redirect to={`/${UserService.getSlugByRole(user.role)}/locations/stocks/list`} />} />
+            <Route path={`/${UserService.getSlugByRole(user.role)}/locations/stocks/add`} component={Add} />
+            <Route path={`/${UserService.getSlugByRole(user.role)}/locations/stocks/list`} component={List} />
+            <Route path={`/${UserService.getSlugByRole(user.role)}/locations/groups`} component={Groups} />
+            <Route path={`/${UserService.getSlugByRole(user.role)}/locations/stocks/:stockId`} component={Manage} />
         </Switch>
     </Section>
 }

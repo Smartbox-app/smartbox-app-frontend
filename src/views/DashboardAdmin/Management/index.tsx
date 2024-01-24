@@ -26,15 +26,15 @@ const Management = () => {
         <Tabs
             tabs={[
                 {
-                    to: `/${UserService.getSlugByRole(user.role)}/management/users/list`,
+                    to: `/${UserService.getSlugByRole(user.role)}/management/users`,
                     text: 'application.users',
                 },
                 {
-                    to: `/${UserService.getSlugByRole(user.role)}/management/workers/list`,
+                    to: `/${UserService.getSlugByRole(user.role)}/management/workers`,
                     text: 'application.workers',
                 },
                 {
-                    to: `/${UserService.getSlugByRole(user.role)}/management/clients/list`,
+                    to: `/${UserService.getSlugByRole(user.role)}/management/clients`,
                     text: 'application.tenants',
                 },
                 {
