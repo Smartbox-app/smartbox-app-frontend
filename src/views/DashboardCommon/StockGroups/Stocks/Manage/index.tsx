@@ -4,7 +4,7 @@ import { IStock } from 'smartbox-types';
 
 import { PageHeader, ButtonsContainer, Section } from '../../../../../components/Layout';
 import { Button, Tabs } from '../../../../../components/Branded';
-import { Route, Switch, useParams } from 'react-router';
+import { Redirect, Route, Switch, useParams } from 'react-router';
 import UserService from '../../../../../services/user-service';
 import { ApplicationState } from '../../../../../reducers';
 import { BasicData } from '../../../StockGroups/Stocks/Manage/BasicData';
@@ -32,19 +32,19 @@ const Manage = () => {
     const tabs = useMemo(() => {
         const elements = [
             {
-                to: `/${UserService.getSlugByRole(user!.role)}/stocks/${stockId}`,
+                to: `/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/data`,
                 text: 'application.stockBasicData',
             },
             {
-                to: `/${UserService.getSlugByRole(user!.role)}/stocks/${stockId}/groups`,
+                to: `/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/groups`,
                 text: 'application.boxesGroups',
             },
             {
-                to: `/${UserService.getSlugByRole(user!.role)}/stocks/${stockId}/discounts`,
+                to: `/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/discounts`,
                 text: 'application.stockSale',
             },
             {
-                to: `/${UserService.getSlugByRole(user!.role)}/stocks/${stockId}/boxes`,
+                to: `/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/boxes`,
                 text: 'application.stockBoxes',
             },
 
@@ -52,7 +52,7 @@ const Manage = () => {
 
         if (isMapActive) {
             elements.push({
-                to: `/${UserService.getSlugByRole(user!.role)}/stocks/${stockId}/map`,
+                to: `/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/map`,
                 text: 'application.map',
             })
         }
@@ -64,7 +64,7 @@ const Manage = () => {
         <Section>
             <PageHeader title="application.stockManage" />
             <ButtonsContainer>
-                <Button to="/admin/stocks" text="application.back" primary />
+                <Button to="/admin/locations/stocks" text="application.back" primary />
             </ButtonsContainer>
 
             <Tabs
@@ -72,12 +72,13 @@ const Manage = () => {
             />
 
             <Switch>
-                <Route exact path={`/${UserService.getSlugByRole(user!.role)}/stocks/:stockId`} component={BasicData} />
-                <Route path={`/${UserService.getSlugByRole(user!.role)}/stocks/:stockId/settings`} component={BasicData} />
-                <Route path={`/${UserService.getSlugByRole(user!.role)}/stocks/:stockId/boxes`} component={Boxes} />
-                <Route path={`/${UserService.getSlugByRole(user!.role)}/stocks/:stockId/groups`} component={Groups} />
-                <Route path={`/${UserService.getSlugByRole(user!.role)}/stocks/:stockId/discounts`} component={Discounts} />
-                {isMapActive && <Route path={`/${UserService.getSlugByRole(user!.role)}/stocks/:stockId/map`} component={Map} />}
+                <Route exact path={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/:stockId`} render={() => <Redirect to={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/data`} />} />
+                <Route exact path={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/:stockId/data`} component={BasicData} />
+                <Route path={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/:stockId/settings`} component={BasicData} />
+                <Route path={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/:stockId/boxes`} component={Boxes} />
+                <Route path={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/:stockId/groups`} component={Groups} />
+                <Route path={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/:stockId/discounts`} component={Discounts} />
+                {isMapActive && <Route path={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/:stockId/map`} component={Map} />}
             </Switch>
 
         </Section>

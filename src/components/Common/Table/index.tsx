@@ -191,7 +191,7 @@ class Table extends React.Component<Props> {
                           key={index}
                           primary={button.type === 'primary'}
                           danger={button.type === 'danger'}
-                          to={button.to ? `${button.to}${row.id}` : ''}
+                          to={button.to ? typeof button.to === 'string' ? `${button.to}${row.id}` : button.to(row) : ''}
                           click={button.click ? () => button.click(row) : null}
                           text={button.name}
                         />

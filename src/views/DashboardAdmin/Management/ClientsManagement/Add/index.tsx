@@ -27,7 +27,7 @@ const AddTenant = () => {
         <>
             <PageHeader title="application.addTenant" />
             <ButtonsContainer>
-                <Button to="/admin/management/tenants" text="application.back" primary />
+                <Button to="/admin/management/clients" text="application.back" primary />
             </ButtonsContainer>
 
             <FormContainer highlight>

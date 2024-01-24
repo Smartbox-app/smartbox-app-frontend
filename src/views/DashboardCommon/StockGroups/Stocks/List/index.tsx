@@ -33,7 +33,7 @@ const List = () => {
             {
                 name: 'application.manage',
                 type: 'primary',
-                click: (data: StockAdminList) => history.push(`/${UserService.getSlugByRole(user.role)}/stocks/${data.id}`),
+                click: (data: StockAdminList) => history.push(`/${UserService.getSlugByRole(user.role)}/locations/stocks/${data.id}`),
             },
         ],
     });
@@ -54,7 +54,7 @@ const List = () => {
         <Section full>
             <PageHeader title='application.stocksList' />
             <ButtonsContainer>
-                <Button text='application.addStock' primary to={`/${UserService.getSlugByRole(user.role)}/stocks/add`} />
+                <Button text='application.addStock' primary to={`/${UserService.getSlugByRole(user.role)}/locations/stocks/add`} />
             </ButtonsContainer>
             <ApiTable scheme={scheme} apiEndpointSubUrl={`stock/admin-list`} />
         </Section>

@@ -32,7 +32,7 @@ const Add = () => {
         <Section>
             <PageHeader title="application.addStock" />
             <ButtonsContainer>
-                <Button to={`/${UserService.getSlugByRole(user.role)}/stocks`} text="application.back" primary />
+                <Button to={`/${UserService.getSlugByRole(user.role)}/locations/stocks`} text="application.back" primary />
             </ButtonsContainer>
             <p>{__('application.addStockDescription')}</p>
             <FormContainer highlight>
@@ -47,7 +47,7 @@ const Add = () => {
                     onRenderFullField={mapFields}
                     onSavedSuccessfully={() => {
                         dispatch(successNotification('notification.stockAddedCorrectly'));
-                        history.push(`/${UserService.getSlugByRole(user.role)}/stocks`);
+                        history.push(`/${UserService.getSlugByRole(user.role)}/locations/stocks`);
                     }}
                     onTranslateString={formOnTranslateString}
                     thirdPartyComponents={{ ReactSelect: ReactSelectOverride, ReactCreatableSelect }}

@@ -20,7 +20,7 @@ const DashboardTenant = () => {
         {
             icon: 'dashboard.svg',
             text: 'application.stocks',
-            address: '/client/stocks',
+            address: '/client/locations',
         },
         {
             icon: 'dashboard.svg',
@@ -44,7 +44,7 @@ const DashboardTenant = () => {
                     <Route exact path="/client" render={() => <Redirect to="/client/management" />} />
                     <Route path="/client/management/" component={Management} />
                     <Route path="/client/profile" component={Profile} />
-                    <Route path={`/client/stocks`} component={StockGroups} />
+                    <Route path={`/client/locations`} component={StockGroups} />
                     <Route path={`/client/gates`} component={Gates} />
                 </Switch>
             </Main>

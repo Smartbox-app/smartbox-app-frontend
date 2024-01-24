@@ -8,9 +8,9 @@ import { List } from './List';
 const Groups = () => {
     const user = useSelector((state: ApplicationState) => state.user.details!);
     return <Switch>
-        <Route exact path={`/${UserService.getSlugByRole(user.role)}/stocks/groups`} render={() => <Redirect to={`/${UserService.getSlugByRole(user.role)}/stocks/groups/list`} />} />
-        <Route path={`/${UserService.getSlugByRole(user.role)}/stocks/groups/add`} component={Add} />
-        <Route path={`/${UserService.getSlugByRole(user.role)}/stocks/groups/list`} component={List} />
+        <Route exact path={`/${UserService.getSlugByRole(user.role)}/locations/groups`} render={() => <Redirect to={`/${UserService.getSlugByRole(user.role)}/locations/groups/list`} />} />
+        <Route path={`/${UserService.getSlugByRole(user.role)}/locations/groups/add`} component={Add} />
+        <Route path={`/${UserService.getSlugByRole(user.role)}/locations/groups/list`} component={List} />
     </Switch>;
 }
 

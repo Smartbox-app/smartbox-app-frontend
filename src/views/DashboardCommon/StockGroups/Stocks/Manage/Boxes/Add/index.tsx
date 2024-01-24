@@ -35,7 +35,7 @@ const Add = () => {
         <>
             <SimpleHeader title="application.addBox" />
             <ButtonsContainer>
-                <Button to={`/${UserService.getSlugByRole(user.role)}/stocks/${stockId}/box`} text="application.back" primary />
+                <Button to={`/${UserService.getSlugByRole(user.role)}/locations/stocks/${stockId}/boxes`} text="application.back" primary />
             </ButtonsContainer>
             <FormContainer highlight>
                 <ItfApiForm
@@ -49,7 +49,7 @@ const Add = () => {
                     onRenderFullField={mapFields}
                     onSavedSuccessfully={() => {
                         dispatch(successNotification('application.boxAdded'));
-                        history.push(`/${UserService.getSlugByRole(user.role)}/stocks/${stockId}/boxes`);
+                        history.push(`/${UserService.getSlugByRole(user.role)}/locations/stocks/${stockId}/boxes`);
                     }}
                     onTranslateString={formOnTranslateString}
                     thirdPartyComponents={{ ReactSelect: ReactSelectOverride, ReactCreatableSelect }}

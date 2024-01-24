@@ -24,7 +24,7 @@ const DashboardAdmin = () => {
     {
       icon: 'dashboard.svg',
       text: 'application.stocks',
-      address: '/admin/stocks',
+      address: '/admin/locations',
     },
     {
       icon: 'dashboard.svg',
@@ -49,7 +49,7 @@ const DashboardAdmin = () => {
           <Route path="/admin/management/" component={Management} />
           <Route path="/admin/profile" component={Profile} />
           <Route path="/admin/invoice/" component={Invoice} />
-          <Route path={`/admin/stocks`} component={StockGroups} />
+          <Route path={`/admin/locations`} component={StockGroups} />
           <Route path={`/admin/gates`} component={Gates} />
           <Route exact path="/admin/single-rent/:orderId" component={SingleRentDetail} />
         </Switch>
