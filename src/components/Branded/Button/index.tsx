@@ -11,6 +11,7 @@ interface ButtonProps {
     to?: string;
     click?: any;
     primary?: boolean;
+    secondary?: boolean;
     danger?: boolean;
     success?: boolean;
     outline?: boolean;
@@ -42,6 +43,13 @@ const buttonStyles = css`
             }
         }
 
+        &.button-secondary {
+            background: ${props => props.theme.colors.secondary};
+            &:hover {
+              background: ${props => lighten(0.1, props.theme.colors.secondary)};
+            }
+        }
+
         &.button-outline {
             border: 2px solid ${props => props.theme.colors.primary};
             color: ${props => props.theme.colors.primary};
@@ -62,6 +70,7 @@ const Button = (props: ButtonProps) => {
         className,
         danger,
         primary,
+        secondary,
         success,
         tertiary,
         small,
@@ -94,7 +103,7 @@ const Button = (props: ButtonProps) => {
     const imgComponent = <img className="button-img" src={imgLink} alt="img" />;
 
     const buttonClass = `button
-    ${className || ''} ${primary ? 'button-primary' : ''}
+    ${className || ''} ${primary ? 'button-primary' : ''} ${secondary ? 'button-secondary' : ''}
     ${danger ? 'button-danger' : ''} ${success ? 'button-success' : ''}
     ${outline ? 'button-outline' : ''} ${big ? 'button-big' : ''}
     ${small ? 'button-small' : ''} ${auto ? 'auto' : ''}

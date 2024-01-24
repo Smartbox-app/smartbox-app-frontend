@@ -53,7 +53,8 @@ const useTenant = (): UseTenant => {
             contactPhone: '',
             fontBold: '',
             fontLight: '',
-            fontNormal: ''
+            fontNormal: '',
+            additionalMailInfo: ''
         })
     }
 

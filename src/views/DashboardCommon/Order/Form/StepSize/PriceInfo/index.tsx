@@ -51,6 +51,8 @@ const formatQuantity = (type: PricingType, quantity: number) => {
 const PriceInfo = ({ box }: Props) => {
     const firstPricing = box.pricing[0];
 
+    if(!firstPricing.price || !firstPricing.quantity) return null;
+
     return <StyledPriceInfo>
         {__('application.rentFrom')}<strong className='price-value'>{formatPrice(firstPricing.price)}</strong>/<span>{firstPricing.quantity} {formatQuantity(firstPricing.type, firstPricing.quantity)}</span>
     </StyledPriceInfo>

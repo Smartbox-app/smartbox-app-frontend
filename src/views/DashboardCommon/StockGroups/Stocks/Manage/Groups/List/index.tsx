@@ -51,7 +51,7 @@ const List = () => {
                 },
                 {
                     name: 'application.edit',
-                    type: 'primary',
+                    type: 'secondary',
                     click: (data: BoxGroupListRes) => dispatch(showModal(<Edit id={data.id} stockId={data.stockId} />)),
                 },
                 {

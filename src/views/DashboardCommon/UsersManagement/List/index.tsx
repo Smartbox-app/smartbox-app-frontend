@@ -48,7 +48,7 @@ class List extends React.Component<Props> {
                     },
                     {
                         name: 'application.edit',
-                        type: 'primary',
+                        type: 'secondary',
                         click: (data: UserListRes) => this.props.showModal(<UserEdit userId={data.id} />),
                     },
                 ],

@@ -22,11 +22,11 @@ const DashboardTenant = () => {
             text: 'application.stocks',
             address: '/client/stocks',
         },
-        {
-            icon: 'dashboard.svg',
-            text: 'application.gates',
-            address: '/client/gates',
-        },
+        // {
+        //     icon: 'dashboard.svg',
+        //     text: 'application.gates',
+        //     address: '/client/gates',
+        // },
         {
             icon: 'account.svg',
             text: 'application.account',

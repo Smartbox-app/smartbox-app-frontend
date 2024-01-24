@@ -13,6 +13,7 @@ import { ReactSelectOverride } from '../../../components/Common/ReactSelectOverr
 import { ApplicationState } from '../../../reducers';
 import UserService from '../../../services/user-service';
 import { mapFields } from '../../../utils/fields-mapper';
+import { InviteWorkerReq } from '../../../../../smartbox-back/types/user';
 
 interface Props {
     successNotification: (text: string) => void;
@@ -43,7 +44,7 @@ const Add = ({ successNotification }: Props) => {
                     schemaMayBeDynamic={false}
                     loadingInfo={<Spinner transparent />}
                     schemaFetcher={() => ApiService.loadForm(fetchUrl)}
-                    sendFetcher={(formId: string, values: any) => ApiService.sendForm(sendUrl, values)}
+                    sendFetcher={(formId: string, values: InviteWorkerReq) => ApiService.sendForm(sendUrl, values)}
                     submitButton={submitButton}
                     onSavedSuccessfully={() => {
                         successNotification('notification.invitationSendProperly');
