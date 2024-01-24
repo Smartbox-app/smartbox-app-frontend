@@ -374,6 +374,7 @@
             "map": "Mapa",
             "prepareBoxMap": "Dostosuj układ kontenerów na placu",
             "isMapActive": "Aktywuj mapę dla użytkowników",
+            "stockHandling": "Obsługa placu",
             "fontLight": "Plik z fontem (cienka)",
             "fontNormal": "Plik z fontem (normalna)",
             "fontBold": "Plik z fontem (pogrubiona)",

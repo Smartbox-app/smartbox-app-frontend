@@ -70,7 +70,7 @@ class List extends React.Component<Props> {
                 <PageHeader title='application.usersList' />
                 <ButtonsContainer>
                     <Button text='application.inviteUser' primary to={`/${UserService.getSlugByRole(user.role)}/management/users/add`} />
-                    <Button text='application.historyWorker' primary to={`/${UserService.getSlugByRole(user.role)}/management/workers/history`} />
+                    <Button text='application.historyWorker' secondary to={`/${UserService.getSlugByRole(user.role)}/management/workers/history`} />
                 </ButtonsContainer>
                 <ApiTable scheme={this.scheme} apiEndpointSubUrl={`user/list/${UserType.user}`} />
             </Section>

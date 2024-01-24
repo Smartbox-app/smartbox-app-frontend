@@ -1,5 +1,6 @@
 import React from 'react';
 import { __ } from '../../../../../helpers/i18n';
+import styled from 'styled-components';
 
 interface Props {
   children: React.ReactNode;
@@ -7,10 +8,14 @@ interface Props {
   icon: string;
 }
 
+const StyledIcon = styled.span`
+  color: ${props => props.theme.colors.primary}
+`
+
 const DescriptionRow = ({ children, text, icon }: Props) => {
   return (
     <p className="single">
-      <span className={`fa ${icon}`} />
+      <StyledIcon className={`fa ${icon}`} />
       <div>
         <span>{__(text)}: </span>
         <strong>{children}</strong>

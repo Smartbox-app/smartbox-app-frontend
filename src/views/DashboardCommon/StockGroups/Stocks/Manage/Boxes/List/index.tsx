@@ -16,6 +16,7 @@ import { refreshApiTableData } from '../../../../../../../actions/api-table';
 import { useParams } from 'react-router';
 import { Edit } from '../Edit';
 import { ApplicationState } from '../../../../../../../reducers';
+import BoxDetail from '../../../../../../../views/DashboardCommon/BoxMapManagement/BoxDetail';
 
 const List = () => {
     const user = useSelector((state: ApplicationState) => state.user.details!);
@@ -36,7 +37,7 @@ const List = () => {
             approveAction={() => deleteBox(boxId)}
         />))
     }
-
+    
     const scheme = new InteractiveTableSchema(boxesList)
         .addFieldAtTheEnd({
             name: __('application.actions'),
@@ -44,8 +45,13 @@ const List = () => {
             mobile: true,
             buttons: [
                 {
-                    name: 'application.edit',
+                    name: 'application.manage',
                     type: 'primary',
+                    click: (data: BoxListRes) => dispatch(showModal(<BoxDetail box={data} stockId={stockId} />)),
+                },
+                {
+                    name: 'application.edit',
+                    type: 'secondary',
                     click: (data: BoxListRes) => dispatch(showModal(<Edit id={data.id} stockId={data.stockId} />)),
                 },
                 {

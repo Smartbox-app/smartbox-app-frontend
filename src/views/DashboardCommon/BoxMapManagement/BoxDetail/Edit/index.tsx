@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { RentStatus, UserRes } from 'smartbox-types';
 import { ApplicationState } from '../../../../../reducers';
-import { isAdmin, isWorker } from '../../../../../utils/role-check';
+import { isAdmin, isAdminOrTenant, isWorker } from '../../../../../utils/role-check';
 
 import Position from './Position';
 import Status from './Status';
@@ -18,15 +18,16 @@ interface Props {
     singleBoxDetailStatus: RentStatus;
     display: boolean;
     stockId: string;
+    callback?: () => void;
 }
 
-const Edit = ({ selectedBoxId, user, rentId, singleBoxDetailStatus, display, stockId }: Props) => {
-    if(!user) return null;
+const Edit = ({ selectedBoxId, user, rentId, singleBoxDetailStatus, display, stockId, callback }: Props) => {
+    if (!user) return null;
     return <div className={`edit-wrapper ${display && 'show-me'}`}>
         <Alert text='application.changesIrreversible' type="primary" />
-        {isAdmin(user.role) && <Status selectedBoxId={selectedBoxId} stockId={stockId} rentId={rentId} />}
-        {isAdmin(user.role) && rentId !== '' && singleBoxDetailStatus === RentStatus.rented && <Position rentId={rentId} stockId={stockId} />}
-        {isWorker(user.role) && <WorkerEdit rentId={rentId} selectedBoxId={selectedBoxId} />}
+        {isAdminOrTenant(user.role) && <Status callback={callback} selectedBoxId={selectedBoxId} stockId={stockId} rentId={rentId} />}
+        {isAdminOrTenant(user.role) && rentId !== '' && singleBoxDetailStatus === RentStatus.rented && <Position callback={callback} rentId={rentId} stockId={stockId} />}
+        {isWorker(user.role) && <WorkerEdit callback={callback} rentId={rentId} selectedBoxId={selectedBoxId} />}
     </div>
 }
 

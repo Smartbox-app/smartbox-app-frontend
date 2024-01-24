@@ -1,6 +1,6 @@
 import { ItfApiForm } from 'itf_formbuilder_react';
 import React from 'react';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import ReactCreatableSelect from 'react-select/creatable';
 import { bindActionCreators } from 'redux';
 import { BoxListItem, ChangeStatusReq, RentStatus, StockList } from 'smartbox-types';
@@ -13,28 +13,28 @@ import { ApplicationState } from '../../../../../../reducers';
 import ApiService from '../../../../../../services/api-service';
 import { formOnTranslateString } from '../../../../../../utils/trans-form';
 import { ReactSelectOverride } from '../../../../../../components/Common/ReactSelectOverride';
+import { refreshApiTableData } from '../../../../../../actions/api-table';
 
 interface Props {
   rentId: string;
   selectedBoxId: string;
-  stock: StockList;
   boxesGroup: BoxListItem[] | null;
   hideModal: () => void;
   successNotification: (text: string) => void;
-  fetchBoxStatuses: (stockId: string) => void;
   showModal: (content: React.ReactNode) => void;
+  callback?: () => void;
 }
 
 const WorkerEdit = ({
   hideModal,
   successNotification,
   rentId,
-  stock,
-  fetchBoxStatuses,
   boxesGroup,
   selectedBoxId,
   showModal,
+  callback
 }: Props) => {
+  const dispatch = useDispatch();
   const submitButton = (
     <ButtonsContainer>
       <Button text="application.changeStatus" type="submit" danger />
@@ -56,7 +56,7 @@ const WorkerEdit = ({
             type="submit"
             text="application.understood"
             click={async () => {
-              await hideModal();
+              hideModal();
               await ApiService.sendForm(
                 sendUrl,
                 {
@@ -64,8 +64,9 @@ const WorkerEdit = ({
                 },
                 'PATCH',
               );
-              await successNotification('notification.userStatusChanged');
-              await fetchBoxStatuses(stock.id);
+              successNotification('notification.userStatusChanged');
+              dispatch(refreshApiTableData());
+              if(callback) callback();
             }}
           />
         </ButtonsContainer>

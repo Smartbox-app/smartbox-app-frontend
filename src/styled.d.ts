@@ -5,7 +5,11 @@ declare module 'styled-components' {
         colors: {
             primary: string;
             secondary: string;
+            tertiary: string;
             success: string;
+            danger: string;
+            disabled: string;
+            toExplain: string;
         }
     }
 }

@@ -163,7 +163,7 @@ const BoxMapManagement = () => {
         if (selectedRentId !== '' && user && isAdmin(user.role)) {
             dispatch(boxes.fetchSingleBoxDetails(selectedRentId))
         }
-        dispatch(modal.showModal(<BoxDetail selectedBoxId={selectedBoxId} rentId={selectedRentId} stockId={stockId} />));
+        // dispatch(modal.showModal(<BoxDetail selectedBoxId={selectedBoxId} rentId={selectedRentId} stockId={stockId} />));
     };
 
     const selectedStock = stockList.find(stock => stock.id === stockId);

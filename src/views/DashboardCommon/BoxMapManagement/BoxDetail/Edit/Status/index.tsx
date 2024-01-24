@@ -1,6 +1,6 @@
 import React from 'react';
 import { ItfApiForm } from 'itf_formbuilder_react';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import ReactCreatableSelect from 'react-select/creatable';
 import { bindActionCreators } from 'redux';
 import { ChangeStatusReq, StockList } from 'smartbox-types';
@@ -14,31 +14,32 @@ import { formOnTranslateString } from '../../../../../../utils/trans-form';
 
 import './Status.scss';
 import { ReactSelectOverride } from '../../../../../../components/Common/ReactSelectOverride';
+import { refreshApiTableData } from '../../../../../../actions/api-table';
+import { mapFields } from '../../../../../../utils/fields-mapper';
 
 interface Props {
   selectedBoxId: string;
-  stocks: StockList[];
   stockId: string;
   hideModal: () => void;
   successNotification: (text: string) => void;
-  fetchBoxStatuses: (stockId: string) => void;
   showModal: (content: React.ReactNode) => void;
   rentId?: string;
+  callback?: () => void;
 }
 
-const Status = ({ selectedBoxId, hideModal, stocks, successNotification, fetchBoxStatuses, stockId, rentId, showModal }: Props) => {
+const Status = ({ selectedBoxId, hideModal, successNotification, stockId, rentId, showModal, callback }: Props) => {
+  const dispatch = useDispatch();
+
   const submitButton = (
     <ButtonsContainer>
       <Button text="application.changeStatus" type="submit" danger />
     </ButtonsContainer>
   );
 
-  const stock = stocks.find(stock => stock.id === stockId);
-
-  if(!stock) return null;
+  if (!stock) return null;
 
   const fetchUrl = 'rent/form/change-status';
-  const sendUrl = `rent/status/${stock.id}/${rentId}`;
+  const sendUrl = `rent/status/${stockId}/${rentId}`;
 
   const customSendFetcher = (formId: string, values: ChangeStatusReq) => {
     showModal(
@@ -65,12 +66,13 @@ const Status = ({ selectedBoxId, hideModal, stocks, successNotification, fetchBo
                 sendUrl,
                 {
                   ...values,
-                  number: selectedBoxId,
-                },
+                  boxId: selectedBoxId,
+                } as ChangeStatusReq,
                 'PATCH',
               );
               await successNotification('notification.userStatusChanged');
-              await fetchBoxStatuses(stock.id);
+              dispatch(refreshApiTableData());
+              if(callback) callback();
             }}
           />
         </ButtonsContainer>
@@ -89,6 +91,7 @@ const Status = ({ selectedBoxId, hideModal, stocks, successNotification, fetchBo
         submitButton={submitButton}
         loadingInfo={<Spinner transparent />}
         onTranslateString={formOnTranslateString}
+        onRenderFullField={mapFields}
         thirdPartyComponents={{ ReactSelect: ReactSelectOverride, ReactCreatableSelect }}
       />
     </FormContainer>

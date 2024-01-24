@@ -13,11 +13,15 @@ const CustomThemeProvider = ({ children }: Props) => {
         colors: {
             primary: tenant?.colorPrimary || '#eee',
             secondary: tenant?.colorSecondary || '#eee',
-            success: '#00a45a'
+            success: '#00a45a',
+            danger: '#a51727',
+            tertiary: '#fbb03b',
+            disabled: '#ccc',
+            toExplain: "#000",
         }
     }), [tenant])
 
-    if(!tenant) return null;
+    if (!tenant) return null;
 
     return <ThemeProvider theme={theme}>
         {children}

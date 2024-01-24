@@ -13,6 +13,7 @@ import { Map } from './Map';
 import { Groups } from './Groups';
 import { Discounts } from './Discounts';
 import ApiService from '../../../../../services/api-service';
+import { Handling } from './Handling';
 
 const Manage = () => {
     const { stockId } = useParams<{ stockId: string }>();
@@ -55,6 +56,10 @@ const Manage = () => {
                 to: `/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/map`,
                 text: 'application.map',
             })
+            elements.push({
+                to: `/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/handling`,
+                text: 'application.stockHandling',
+            })
         }
 
         return elements;
@@ -79,6 +84,7 @@ const Manage = () => {
                 <Route path={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/:stockId/groups`} component={Groups} />
                 <Route path={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/:stockId/discounts`} component={Discounts} />
                 {isMapActive && <Route path={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/:stockId/map`} component={Map} />}
+                {isMapActive && <Route path={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/:stockId/handling`} component={Handling} />}
             </Switch>
 
         </Section>

@@ -4,23 +4,8 @@ import ApiService from '../../../../../../services/api-service';
 import { BoxMapRes, IStock } from 'smartbox-types';
 import { Section, SimpleHeader } from '../../../../../../components/Layout';
 import { Spinner } from '../../../../../../components/Branded';
-import { SingleBox } from './SingleBox';
-import styled, { css } from 'styled-components';
 import { MapSettingsForm } from './MapSettingsForm';
-
-const StyledMapContainer = styled.div<{ height: number, width: number, background: string, stockId: string }>`
-position: relative;
-height: ${props => props.height}px;
-width: ${props => props.width}px;
-overflow: auto;
-border: 1px solid ${props => props.theme.colors.primary};
-${props => props.background && css`
-    background-image: url(${ApiService.url}stock/background/${props.stockId});
-    background-size: contain;
-    background-position: center;
-    background-repeat: no-repeat;
-    `}
-background-color: #fff;`
+import { MapView } from '../../../../MapView';
 
 const Map = () => {
     const { stockId } = useParams<{ stockId: string }>();
@@ -33,7 +18,6 @@ const Map = () => {
             setBoxes(data);
         })
         setLoading(false);
-
     }
 
     const getStock = async () => {
@@ -52,9 +36,8 @@ const Map = () => {
     return <Section full>
         <SimpleHeader title='application.map' />
         <MapSettingsForm stock={stock} refreshStock={getStock} />
-        <StyledMapContainer height={stock.mapHeight} width={stock.mapWidth} background={stock.mapBackground} stockId={stockId}>
-            {boxes.map(box => <SingleBox box={box} key={box.id} />)}
-        </StyledMapContainer>
+        <MapView stock={stock} boxes={boxes} />
+
     </Section>
 }
 
