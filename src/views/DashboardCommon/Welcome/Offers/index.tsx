@@ -1,11 +1,10 @@
 import React from 'react';
-import { ButtonsContainer, Section, SectionHeader } from '../../../../components/Layout';
-import { Carousel } from '../../../../components/Common';
+import { ButtonsContainer, Section } from '../../../../components/Layout';
 import { Button } from '../../../../components/Branded';
 import { useDispatch, useSelector } from 'react-redux';
 import { ApplicationState } from '../../../../reducers';
 import { showModal } from '../../../../actions/modal';
-import { NoPhoneModal } from '../../../../components/Common/Carousel/NoPhoneModal';
+import { NoPhoneModal } from '../../../../components/Common/NoPhoneModal';
 import UserService from '../../../../services/user-service';
 import { history } from '../../../../App';
 import './Offers.scss';

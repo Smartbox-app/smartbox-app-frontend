@@ -145,7 +145,7 @@ const Pricing = () => {
                             onChange: (value: ChangeEvent<HTMLInputElement>) => updateQuantity(index, value)
                         }} />
                         <Input type='number' input={{
-                            label: 'application.price',
+                            label: 'application.netPrice',
                             name: `price_${index}`,
                             value: singlePricing.price,
                             onChange: (value: ChangeEvent<HTMLInputElement>) => updatePrice(index, value)

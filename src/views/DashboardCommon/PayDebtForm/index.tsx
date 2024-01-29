@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { differenceInCalendarDays, differenceInDays } from 'date-fns';
 import { bindActionCreators } from 'redux';
-import { MyRentList, usePricing } from 'smartbox-types';
+import { MyRentList } from 'smartbox-types';
 import { paymentStatus, singleRent } from '../../../actions';
 import { Button, Spinner } from '../../../components/Branded';
 import { ButtonsContainer, FormContainer } from '../../../components/Layout';
@@ -31,6 +31,7 @@ interface Props extends RouteComponentProps<RouteProps> {
   func: any;
 }
 
+// @TODO handle
 const PayDebtForm = ({
   loading,
   isAgreementAccepted,
@@ -54,7 +55,7 @@ const PayDebtForm = ({
     (date: Date) => Math.ceil(differenceInCalendarDays(new Date(), new Date(date)) / 7),
     [],
   );
-  const { pricing } = usePricing();
+  // const { pricing } = usePricing();
 
   // const calc = useCallback((singleRent: MyRentList): number => {
   //   const { weekly } = pricing[singleRent.size || 3];
@@ -62,9 +63,10 @@ const PayDebtForm = ({
   // }, []);
 
   const calc = (singleRent: MyRentList) => {
-    const fullWeeks = Math.ceil(differenceInDays(new Date(), new Date(singleRent.finishAt)) / 7);
-    const cost = Math.max(1, Math.min(2, fullWeeks)) * pricing[singleRent.size || 3].weekly; // 100 - 200 PLN
-    return cost;
+    return 0;
+    // const fullWeeks = Math.ceil(differenceInDays(new Date(), new Date(singleRent.finishAt)) / 7);
+    // const cost = Math.max(1, Math.min(2, fullWeeks)) * pricing[singleRent.size || 3].weekly; // 100 - 200 PLN
+    // return cost;
   };
 
   const submit = (data) => {

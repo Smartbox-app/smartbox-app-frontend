@@ -43,6 +43,9 @@ type Action = BoxGroup | GetSingleRent | GetMySingleRent | FetchMyRentHistory | 
 const initialState: RentsStatus = {
   singleRent: {
     id: '',
+    boxId: '',
+    boxAdditionalInfo: '',
+    boxNumber: '',
     createdAt: new Date(),
     startAt: new Date(),
     finishAt: new Date(),

@@ -11,7 +11,6 @@ import Icon from './Icon';
 import Input from './Input';
 import DateInput from './DateInput';
 import ProgressIndicator from './ProgressIndicator';
-import Carousel from './Carousel';
 import ApiTable from './ApiTable';
 import Table from './Table';
 import Pagination from './Pagination';
@@ -51,7 +50,6 @@ export {
     LoginLogo,
     DateInput,
     ProgressIndicator,
-    Carousel,
     Cookies,
     FieldsMapper,
     InputPhone,

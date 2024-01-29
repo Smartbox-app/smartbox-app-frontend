@@ -54,7 +54,8 @@ const useTenant = (): UseTenant => {
             fontBold: '',
             fontLight: '',
             fontNormal: '',
-            additionalMailInfo: ''
+            additionalMailInfo: '',
+            tax: ''
         })
     }
 

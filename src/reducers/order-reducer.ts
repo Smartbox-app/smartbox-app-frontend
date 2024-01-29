@@ -2,8 +2,6 @@ import { addDays } from 'date-fns';
 import {
   BoxGroupAvailability,
   CalculatedPriceRes,
-  ICalculateProps,
-  IPricingResult,
   PaymentStatus,
   PaymentType,
 } from 'smartbox-types';
@@ -33,7 +31,6 @@ export type OrderState = {
   //
   formData: FormType;
   paymentId: string;
-  countedPrice: IPricingResult;
   boxAvailability: BoxGroupAvailability[];
   discountList: any[];
   paymentSuccess: boolean;
@@ -203,10 +200,6 @@ const initialState: OrderState = {
   },
   paymentId: '',
   paymentSuccess: false,
-  countedPrice: {
-    name: '',
-    value: 0,
-  },
   boxAvailability: [],
   discountList: [{ text: __('application.disposableDiscount5'), value: 5 }],
   isAgreementAccepted: false,
@@ -279,16 +272,6 @@ export default (state: OrderState = initialState, action: Action): OrderState =>
       const newFormData: FormType = { ...state.formData, ...action.payload };
       // const { calculate } = usePricing();
 
-      const data: ICalculateProps = {
-        durationInDays: newFormData.durationInDays,
-        discount: newFormData.discount,
-        size: Number(newFormData.size),
-        isFirstRent: newFormData.isFirstRent,
-        card: {
-          discount: newFormData.card.discount,
-          durationInWeeks: newFormData.card.durationInWeeks,
-        },
-      };
 
       if (newFormData.durationInDays !== 0) {
         // const price = calculate(data);

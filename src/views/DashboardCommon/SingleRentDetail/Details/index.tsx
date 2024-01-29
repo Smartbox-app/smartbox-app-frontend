@@ -5,13 +5,14 @@ import { __ } from '../../../../helpers/i18n';
 import { Row } from '../../../../components/Common';
 
 import './Details.scss';
+import { Section } from '../../../../components/Layout';
 
 interface Props {
   singleRent: MyRentList;
 }
 
 const Details = ({ singleRent }: Props) => (
-  <div className="details-wrapper">
+  <Section highlight>
     <Row label="application.startDate" content={`${dateOnly(singleRent ? singleRent.startAt : new Date())}`} />
     <Row label="application.endDate" content={`${dateOnly(singleRent ? singleRent.finishAt : new Date())}`} />
     <Row label="application.storePlaceName" content={singleRent.stockName || __('application.lack')} />
@@ -21,7 +22,7 @@ const Details = ({ singleRent }: Props) => (
     />
     <Row label="application.storeNumber" content={singleRent.number || __('application.lack')} />
     <Row label="application.storeState" content={singleRent.status || __('application.lack')} />
-  </div>
+  </Section>
 );
 
 export default Details;

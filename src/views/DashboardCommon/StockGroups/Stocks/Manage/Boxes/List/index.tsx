@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { boxesList } from 'smartbox-tables';
+import { FieldType, boxesList } from 'smartbox-tables';
 import { BoxListRes } from 'smartbox-types';
 import { ApiTable } from '../../../../../../../components/Common';
 import { Button } from '../../../../../../../components/Branded';
@@ -17,6 +17,7 @@ import { useParams } from 'react-router';
 import { Edit } from '../Edit';
 import { ApplicationState } from '../../../../../../../reducers';
 import BoxDetail from '../../../../../../../views/DashboardCommon/BoxMapManagement/BoxDetail';
+import { BoxStatus } from './BoxStatus';
 
 const List = () => {
     const user = useSelector((state: ApplicationState) => state.user.details!);
@@ -37,8 +38,16 @@ const List = () => {
             approveAction={() => deleteBox(boxId)}
         />))
     }
-    
+
     const scheme = new InteractiveTableSchema(boxesList)
+        .modifyFieldStatic('status', {
+            name: __('application.state'),
+            field: 'status',
+            mobile: true,
+            defaultSort: true,
+            type: FieldType.Custom,
+            customRender: (value, field, userData) => <BoxStatus box={userData} />,
+        })
         .addFieldAtTheEnd({
             name: __('application.actions'),
             field: 'actions',

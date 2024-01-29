@@ -273,6 +273,10 @@
             "58": {
                 "text": "Platforma jest nieaktywna!",
                 "__type_alias_do_not_touch": "ApiErrorCode.TenantNotActive"
+            },
+            "59": {
+                "text": "Nie możesz usunąć grupy posiadającej kontenery z innym statusem niż wolny!",
+                "__type_alias_do_not_touch": "ApiErrorCode.CanNotRemoveGroupWithRents"
             }
         }
     }

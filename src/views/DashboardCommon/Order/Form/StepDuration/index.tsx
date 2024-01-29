@@ -1,25 +1,23 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm, Controller, FormContext } from 'react-hook-form';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect, useDispatch, useSelector } from 'react-redux';
 
-import { addDays, differenceInCalendarDays, endOfDay, startOfDay, startOfToday } from 'date-fns';
-import { IPricingResult, MyRentList, StockList, UserRes } from 'smartbox-types';
+import { addDays, endOfDay, startOfDay, startOfToday } from 'date-fns';
+import { MyRentList, UserRes } from 'smartbox-types';
 import { DateInput } from '../../../../../components/Common';
 import { Button, Spinner } from '../../../../../components/Branded';
 import { order } from '../../../../../actions';
 import { ButtonsContainer } from '../../../../../components/Layout';
-import { history } from '../../../../../App';
 import { FormType } from '../../../../../types/order-form';
 import { ApplicationState } from '../../../../../reducers';
 import UserService from '../../../../../services/user-service';
-import { firstRentChecker } from '../../../../../utils/isFirstRent';
 
 import Price from './Price';
 
 import './StepDuration.scss';
-import ApiService from '../../../../../services/api-service';
+
 import styled from 'styled-components';
 import { calculatePrice, setRentEndDate, setRentStartDate } from '../../../../../actions/order';
 
@@ -44,9 +42,7 @@ interface RouteProps {
 interface Props extends RouteComponentProps<RouteProps> {
     history: any;
     formData: FormType;
-    stocks: StockList[];
     stockId: string;
-    countedPrice: IPricingResult;
     user: UserRes | null;
     rent: MyRentList;
     updateFormData: (data: Partial<FormType>) => void;
@@ -55,13 +51,9 @@ interface Props extends RouteComponentProps<RouteProps> {
 
 const StepDuration = ({
     clearPaymentDetails,
-    formData,
-    countedPrice,
-    updateFormData,
     user,
     match,
     rent,
-    stocks,
 }: Props) => {
     const dispatch = useDispatch();
 
@@ -72,7 +64,7 @@ const StepDuration = ({
 
     useEffect(() => {
         setLoading(true);
-      dispatch(calculatePrice(boxGroupId, startDate, endDate));
+        dispatch(calculatePrice(boxGroupId, startDate, endDate));
     }, [startDate, endDate]);
 
     const setMinDate = (addAmount = 0, end?: boolean) =>
@@ -87,13 +79,13 @@ const StepDuration = ({
         dateStart: match.params.rentId ? addDays(new Date(rent.finishAt), 0) : addDays(startDate, 0),
         dateEnd: match.params.rentId ? addDays(new Date(rent.finishAt), minRentPeriod) : addDays(endDate, 0),
     };
-    
+
 
     useEffect(() => {
         if (!user) return;
         clearPaymentDetails();
         // const discount = stocks.find(stock => stock.id === formData.stock)?.discount;
-    
+
         // @TODO: handle
         // if (match.params.rentId) {
         //     updateFormData({
@@ -118,7 +110,7 @@ const StepDuration = ({
     const { register, control } = useForm({ defaultValues });
     const methods = useForm();
 
-    if(!user) return null;
+    if (!user) return null;
 
     return (
         <FormContext {...methods}>
@@ -173,10 +165,8 @@ const StepDuration = ({
 
 const mapStateToProps = (state: ApplicationState) => ({
     formData: state.order.formData,
-    countedPrice: state.order.countedPrice,
     user: state.user.details,
     rent: state.rent.singleRent,
-    stocks: state.stock.list,
 });
 
 const mapDispatchToProps = (dispatch: any) =>

@@ -1,91 +1,57 @@
-import React, { RefObject } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { ApplicationState } from '../../../reducers';
-import SimpleStockMap from '../SimpleStockMap';
-
-import './UserStockMap.scss';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router';
+import ApiService from '../../../services/api-service';
+import { BoxMapRes, BoxMapUserRes, IStock } from 'smartbox-types';
+import { Section, SimpleHeader } from '../../../components/Layout';
+import { Spinner } from '../../../components/Branded';
+import { MapView } from '../../../views/DashboardCommon/MapView';
 import { __ } from '../../../helpers/i18n';
-import { StockList } from '../../../../../smartbox-back/types/stock';
 
 interface Props {
-    boxNumberToMarkWay: number;
+    boxId: string;
+    boxNumber: string;
+    boxAdditionalInfo: string;
     stockId: string;
-    stockList: StockList[];
 }
 
-class UserStockMap extends React.Component<Props> {
-    private element: React.RefObject<HTMLDivElement>;
+const UserStockMap = ({ boxId, stockId, boxNumber, boxAdditionalInfo }: Props) => {
+    const [stock, setStock] = useState<IStock>();
+    const [boxes, setBoxes] = useState<BoxMapUserRes[]>([]);
+    const [loading, setLoading] = useState<boolean>(true);
 
-    constructor(props: Props) {
-        super(props);
-        this.element = React.createRef();
+    const getBoxes = async () => {
+        await ApiService.callFetch('GET', `box/all/${stockId}`, (data: BoxMapRes[]) => {
+            setBoxes(data);
+        })
+        setLoading(false);
     }
 
-    private boxMarker = (list: NodeList | undefined, boxToMark: number): void => {
-        if (list) {
-            list.forEach((singleElement: any) => {
-                if (Number(singleElement.id) === boxToMark) {
-                    singleElement.classList.remove('not-my-box');
-                    singleElement.classList.add('my-box');
-                } else {
-                    singleElement.classList.add('not-my-box');
-                }
-            });
-        }
-    };
-
-    private arrowMarker = (list: NodeList | undefined): void => {
-        if (list) {
-            list.forEach((singleElement: any) => {
-                singleElement.classList.add('rented');
-            });
-        }
-    };
-
-    private setMarker = () => {
-        const { boxNumberToMarkWay } = this.props;
-        setTimeout(() => {
-            const row = boxNumberToMarkWay && Math.floor(boxNumberToMarkWay / 100);
-
-            const catchElement = this.element.current?.children[1].querySelectorAll(`.row${row}00`);
-            this.arrowMarker(catchElement);
-
-            const myBox = this.element.current?.querySelectorAll('#kontenery .storage');
-            this.boxMarker(myBox, boxNumberToMarkWay);
-        });
-    };
-
-    componentDidMount() {
-        this.setMarker();
+    const getStock = async () => {
+        await ApiService.callFetch('GET', `stock/${stockId}`, (res: IStock) => {
+            setStock(res);
+        })
     }
 
-    componentDidUpdate(prevProps: Props) {
-        const { boxNumberToMarkWay } = this.props;
-        if (boxNumberToMarkWay !== prevProps.boxNumberToMarkWay && boxNumberToMarkWay) {
-            this.setMarker();
-        }
-    }
+    useEffect(() => {
+        getStock();
+        getBoxes();
+    }, [])
 
-    // @TODO - handle map rendering
-    render() {
-        const { boxNumberToMarkWay, stockList, stockId } = this.props;
-        // const map = stockList.find(stock => stock.id === stockId)?.map;
-        return (
-            <div ref={this.element}>
-                <p className="user-box">
-                    {__('application.yourStoreNumber')} <strong>{boxNumberToMarkWay}</strong>
-                </p>
-                {/* <SimpleStockMap map={map || ''} /> */}
-            </div>
-        );
-    }
+    if (loading || !stock) return <Spinner />
+
+    return <Section full>
+        <Section highlight>
+            <p className="user-box">
+                {__('application.yourStoreNumber')} <strong>{boxNumber}</strong>
+            </p>
+            {!!boxAdditionalInfo && <p className="user-box">
+                {__('application.yourBoxAdditional')} <strong>{boxAdditionalInfo}</strong>
+            </p>}</Section>
+
+        <Section highlight>
+            <MapView stock={stock} boxes={boxes} user highlightId={boxId} />
+        </Section>
+    </Section>
 }
 
-const mapStateToProps = (state: ApplicationState) => ({
-    stockList: state.stock.list
-});
-
-const mapDispatchToProps = (dispatch: any) => bindActionCreators({}, dispatch);
-
-export default connect(mapStateToProps, mapDispatchToProps)(UserStockMap);
+export { UserStockMap }

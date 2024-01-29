@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 
 import { bindActionCreators } from 'redux';
 import { connect, useDispatch, useSelector } from 'react-redux';
-import { IPricingResult, PaymentType } from 'smartbox-types';
+import { PaymentType } from 'smartbox-types';
 import { CheckBox } from '../../../../../components/Common';
 import { Button, Spinner } from '../../../../../components/Branded';
 import { order, modal, notifications, user } from '../../../../../actions';
@@ -28,7 +28,6 @@ import { calculatePrice } from '../../../../../actions/order';
 
 interface Props {
     formData: FormType;
-    countedPrice: IPricingResult;
     selectedPaymentMethod: any;
     selectedPayment: PaymentType;
     updateFormData: (data: Partial<FormType>) => void;

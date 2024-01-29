@@ -4,7 +4,7 @@ import { RouteComponentProps, withRouter } from 'react-router-dom';
 
 import { bindActionCreators } from 'redux';
 import { connect, useSelector } from 'react-redux';
-import { RentBoxReq, UserRole, IPricingResult, UserRes, ExtendRentalReq } from 'smartbox-types';
+import { RentBoxReq, UserRole, UserRes, ExtendRentalReq } from 'smartbox-types';
 import { PaymentType } from 'smartbox-types';
 import { Alert } from '../../../../../components/Common';
 import { Button } from '../../../../../components/Branded';
@@ -28,7 +28,6 @@ interface RouteProps {
 
 interface Props extends RouteComponentProps<RouteProps> {
     formData: FormType;
-    countedPrice: IPricingResult;
     user: UserRes | null;
     isAgreementAccepted: boolean;
     isResignationMarked: boolean;
@@ -43,8 +42,6 @@ const StepSummary = ({
     user,
     isResignationMarked,
     sentRentBoxRequest,
-    countedPrice,
-    stockId,
     match,
     paymentType,
     sentExtendRentRequest,
@@ -140,7 +137,6 @@ const StepSummary = ({
 
 const mapStateToProps = (state: ApplicationState) => ({
     formData: state.order.formData,
-    countedPrice: state.order.countedPrice,
     user: state.user.details,
     isResignationMarked: state.order.isResignationMarked,
     stockId: state.order.formData.stock,

@@ -2,7 +2,7 @@ import { addDays, differenceInCalendarDays, differenceInDays } from 'date-fns';
 import React, { useCallback } from 'react';
 import { connect, useSelector } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { MyRentList, usePricing, } from 'smartbox-types';
+import { MyRentList, } from 'smartbox-types';
 import { singleRent } from '../../../../../actions';
 import { Button } from '../../../../../components/Branded';
 import { ButtonsContainer } from '../../../../../components/Layout';
@@ -16,8 +16,9 @@ interface Props {
   singleRent: MyRentList;
 }
 
+// @TODO HANDLE
 const MissingPayment = ({ singleRent }: Props) => {
-  const { pricing } = usePricing();
+  // const { pricing } = usePricing();
   const user = useSelector((state: ApplicationState) => state.user.details!);
 
   const countPayPeriods = useCallback(
@@ -31,9 +32,10 @@ const MissingPayment = ({ singleRent }: Props) => {
   // }, []);
 
   const calc = (singleRent: MyRentList) => {
-    const fullWeeks = Math.ceil(differenceInDays(new Date(), new Date(singleRent.finishAt)) / 7);
-    const cost = Math.max(1, Math.min(2, fullWeeks)) * pricing[singleRent.size || 3].weekly; // 100 - 200 PLN
-    return cost;
+    return 0;
+    // const fullWeeks = Math.ceil(differenceInDays(new Date(), new Date(singleRent.finishAt)) / 7);
+    // const cost = Math.max(1, Math.min(2, fullWeeks)) * pricing[singleRent.size || 3].weekly; // 100 - 200 PLN
+    // return cost;
   };
 
   return (

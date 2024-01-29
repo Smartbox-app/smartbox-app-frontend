@@ -3,11 +3,11 @@ import { bindActionCreators } from 'redux';
 import { BoxListRes, BoxMapRes, RentDetailsRes, RentStatus, UserRes } from 'smartbox-types';
 import { connect, useDispatch } from 'react-redux';
 import { boxes } from '../../../../actions';
-import { PageHeader, SectionHeader } from '../../../../components/Layout';
+import { PageHeader } from '../../../../components/Layout';
 import { ApplicationState } from '../../../../reducers';
 import { dateOnly } from '../../../../utils/format-date';
 import { __ } from '../../../../helpers/i18n';
-import { isAdmin, isAdminOrTenant } from '../../../../utils/role-check';
+import { isAdminOrTenant } from '../../../../utils/role-check';
 
 import DescriptionRow from './DescriptionRow';
 import Edit from './Edit';
@@ -28,7 +28,7 @@ const BoxDetail = ({ boxDataCleanUp, box: { rentId, id, identifier, status }, si
     const dispatch = useDispatch();
 
     useEffect(() => {
-        if(rentId) dispatch(boxes.fetchSingleBoxDetails(rentId));
+        if (rentId) dispatch(boxes.fetchSingleBoxDetails(rentId));
 
         return () => {
             boxDataCleanUp();
