@@ -92,7 +92,7 @@ const InputSelect = ({
 
     const handleChange = (val: null | any[] | any) => {
         if (multiple) onChange(val || []);
-        else if (typeof val !== 'undefined' || val !== null) onChange(val.value);
+        else if ((typeof val !== 'undefined') && val !== null) onChange(val.value);
         else onChange(null);
     };
 

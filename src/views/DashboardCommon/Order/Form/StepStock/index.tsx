@@ -32,7 +32,7 @@ const StepStock = () => {
                     groupsList.map(group => <Section key={group.id} highlight>
                         <SimpleHeader title={group.name} />
                         <div className="group-stocks-wrapper">
-                            {group.stocks.map(el => <SingleOption key={el.id} value={el.id} name={el.name} address={el.address} />)}
+                            {group.stocks.map(el => <SingleOption secondary key={el.id} value={el.id} name={el.name} address={el.address} />)}
                         </div>
                     </Section>)
                 }

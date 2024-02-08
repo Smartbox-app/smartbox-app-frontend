@@ -15,6 +15,7 @@
             "edit": "Edytuj",
             "back": "Wróć",
             "pricing": "Cennik",
+            "pricingIsSet": "Ustawiono cennik",
             "priceResolveType": "Sposób określenia ceny",
             "priceResolveProportional": "Proporcjonalnie - cena zostanie wyznaczona proporcjonalnie jako część pełnego okresu",
             "priceResolveRoundToNearest": "Traktuj częściowe okresy jako pełne",
@@ -383,7 +384,7 @@
             "price": "Cena",
             "netPrice": "Cena netto",
             "periodType": "Typ okresu",
-            "noPricingSet": "Cennik nie jest ustawiony",
+            "noPricingSet": "Cennik nie jest ustawiony - kontenery z tej grupy nie będą widoczne.",
             "rentFrom": "Od",
             "deleteGiftConfirmation": "Czy na pewno chcesz usunąć ten kod zniżkowy?",
             "giftDeleted": "Usunięto kod zniżkowy",
@@ -393,7 +394,13 @@
             "stockDetails": "Szczegóły placów",
             "boxesShortcut": "kontenerów",
             "stocksCount": "Ilość placów",
-            "noBoxesInThisStock": "Brak magazynów"
+            "noBoxesInThisStock": "Brak magazynów",
+            "invoiceConnectionOk": "Połączono z Fakturownią",
+            "invoiceConnectionBad": "Brak połączenia z Fakturownią",
+            "smsConnectionOk": "Połączono z SmsPlanet",
+            "smsConnectionBad": "Brak połączenia z SmsPlanet",
+            "tenantStatus": "Status franczyzobiorcy",
+            "status": "Status"
         },
         "settings": {
             "tax": "Stawka VAT",

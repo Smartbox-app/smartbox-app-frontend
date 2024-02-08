@@ -9,8 +9,11 @@ import { Profile } from '../DashboardCommon';
 import { Gates } from '../DashboardCommon/Gates';
 import GateStatus from '../DashboardCommon/GateStatus';
 import { StockGroups } from '../DashboardCommon/StockGroups';
+import { TenantStatus } from './TenantStatus';
+
 
 const DashboardTenant = () => {
+
     const menuItems: MenuItemType[] = [
         {
             icon: 'settings.svg',
@@ -39,6 +42,7 @@ const DashboardTenant = () => {
             <MobileLogoContainer />
             <Navigation menuItems={menuItems} />
             <GateStatus />
+            <TenantStatus />
             <Main>
                 <Switch>
                     <Route exact path="/client" render={() => <Redirect to="/client/management" />} />

@@ -5,7 +5,7 @@ import { fullDate } from '../../../utils/format-date';
 import ApiService from '../../../services/api-service';
 
 import './GateStatus.scss';
-import {__} from "../../../helpers/i18n";
+import { __ } from "../../../helpers/i18n";
 
 const GateStatus = () => {
   const [status, setStatus] = useState<GatesStatusForAdminRes>();
@@ -72,7 +72,7 @@ const GateStatus = () => {
   return (
     <div className="gate-status">
       {status.map((s) => (
-        <div className={`single-status ${getStatusClass(s.status)}`}>
+        <div className={`single-status ${getStatusClass(s.status)}`} key={s.id}>
           <div className="status-icon">
             <span className={`fa fa-${getIcon(s.status)}`} />
           </div>

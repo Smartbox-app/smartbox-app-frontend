@@ -2,9 +2,9 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { FieldType, boxesList } from 'smartbox-tables';
 import { BoxListRes } from 'smartbox-types';
-import { ApiTable } from '../../../../../../../components/Common';
+import { Alert, ApiTable } from '../../../../../../../components/Common';
 import { Button } from '../../../../../../../components/Branded';
-import { ButtonsContainer, PageHeader, Section, SimpleHeader } from '../../../../../../../components/Layout';
+import { ButtonsContainer, SimpleHeader } from '../../../../../../../components/Layout';
 import { __ } from '../../../../../../../helpers/i18n';
 import { InteractiveTableSchema } from '../../../../../../../utils/table-schema-utils';
 import UserService from '../../../../../../../services/user-service';
@@ -40,13 +40,21 @@ const List = () => {
     }
 
     const scheme = new InteractiveTableSchema(boxesList)
+        .modifyFieldStatic('pricing', {
+            name: __('application.pricingIsSet'),
+            field: 'pricing',
+            mobile: true,
+            defaultSort: true,
+            type: FieldType.Custom,
+            customRender: (value, field, boxData) => (boxData.pricing && boxData.pricing.length > 0) ? <Alert simple type='success' text='application.yes' /> : <Alert simple type='error' text='application.no' />
+        })
         .modifyFieldStatic('status', {
             name: __('application.state'),
             field: 'status',
             mobile: true,
             defaultSort: true,
             type: FieldType.Custom,
-            customRender: (value, field, userData) => <BoxStatus box={userData} />,
+            customRender: (value, field, boxData) => <BoxStatus box={boxData} />,
         })
         .addFieldAtTheEnd({
             name: __('application.actions'),

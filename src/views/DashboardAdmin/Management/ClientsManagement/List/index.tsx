@@ -12,6 +12,7 @@ import { modal, user } from '../../../../../actions';
 import UserDetail from './UserDetail';
 import { TenantEdit } from '../Edit';
 import { StocksDetails } from './StocksDetails';
+import { TenantStatus } from '../Status';
 
 interface Props {
     showModal: (content: React.ReactNode) => void;
@@ -54,6 +55,11 @@ class List extends React.Component<Props> {
                         name: 'application.edit',
                         type: 'primary',
                         click: (data: UserListRes) => this.props.showModal(<TenantEdit userId={data.id} />),
+                    },
+                    {
+                        name: 'application.status',
+                        type: 'secondary',
+                        click: (data: UserListRes) => this.props.showModal(<TenantStatus tenantId={data.tenantId!} />),
                     },
                 ],
             });

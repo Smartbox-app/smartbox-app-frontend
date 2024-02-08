@@ -277,6 +277,10 @@
             "59": {
                 "text": "Nie możesz usunąć grupy posiadającej kontenery z innym statusem niż wolny!",
                 "__type_alias_do_not_touch": "ApiErrorCode.CanNotRemoveGroupWithRents"
+            },
+            "60": {
+                "text": "Brak możliwości wystawienia faktury!",
+                "__type_alias_do_not_touch": "ApiErrorCode.NoInvoiceServiceData"
             }
         }
     }

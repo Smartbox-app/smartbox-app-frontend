@@ -1,8 +1,8 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { boxGroupsList } from 'smartbox-tables';
+import { FieldType, boxGroupsList } from 'smartbox-tables';
 import { BoxGroupListRes } from 'smartbox-types';
-import { ApiTable } from '../../../../../../../components/Common';
+import { Alert, ApiTable } from '../../../../../../../components/Common';
 import { Button } from '../../../../../../../components/Branded';
 import { ButtonsContainer, SimpleHeader } from '../../../../../../../components/Layout';
 import { __ } from '../../../../../../../helpers/i18n';
@@ -38,6 +38,14 @@ const List = () => {
     }
 
     const scheme = new InteractiveTableSchema(boxGroupsList)
+        .modifyFieldStatic('pricing', {
+            name: __('application.pricingIsSet'),
+            field: 'pricing',
+            mobile: true,
+            defaultSort: true,
+            type: FieldType.Custom,
+            customRender: (value, field, boxData) => (boxData.pricing && boxData.pricing.length > 0) ? <Alert simple type='success' text='application.yes' /> : <Alert simple type='error' text='application.no' />
+        })
         .addFieldAtTheEnd({
             name: __('application.actions'),
             field: 'actions',

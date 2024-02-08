@@ -8,13 +8,7 @@
     flex: 0 0 100%;
     justify-content: center;
     align-items: center;
-    margin-bottom: math.div($main-spacing, 2);
-
-    h3 {
-        margin: 0;
-        font-size: 1.1rem;
-        font-weight: 700;
-    }
+    padding: $main-spacing / 2;
 
     span {
         font-size: 0.9rem;
@@ -22,53 +16,7 @@
 
     input[type='radio'] {
         display: none;
-    
-    }
 
-    input[type='radio']:checked+.single-option {
-        .svg-wrapper {
-            .cls-1 {
-                fill: #066eb3;
-            }
-
-            .cls-2 {
-                fill: #0674bd;
-            }
-
-            .cls-3 {
-                fill: #055991;
-            }
-
-            .cls-4 {
-                font-size: 10.24px;
-            }
-
-            .cls-4,
-            .cls-6 {
-                fill: red;
-                font-family: Montserrat-SemiBold, Montserrat, sans-serif;
-                font-weight: 600;
-            }
-
-            .cls-5 {
-                stroke-miterlimit: 10;
-            }
-
-            .red {
-                stroke: red;
-            }
-
-            .cls-6 {
-                font-size: 10.24px;
-            }
-
-            .cls-7 {
-                font-size: 50px;
-                fill: #fbb03b;
-                font-family: Montserrat-Bold, Montserrat, sans-serif;
-                font-weight: 700;
-            }
-        }
     }
 
     .svg-wrapper {
@@ -81,16 +29,21 @@
     .single-option {
         cursor: pointer;
         position: relative;
+        height: 100%;
         width: 100%;
         display: flex;
         justify-content: center;
-        min-height: 100px;
+
         align-items: center;
         flex-direction: column;
         border-radius: 10px;
-        border: 2px solid $color-disabled;
+        border: 1px solid $color-disabled;
         padding: $main-spacing;
         text-align: center;
+
+        @include gt-sm {
+            min-height: 100px;
+        }
     }
 }
 
@@ -117,11 +70,6 @@
 }
 
 @include gt-sm {
-    .single-stock-wrapper {
-        margin-top: $main-spacing * 1;
-        margin-bottom: $main-spacing * 1;
-    }
-
     .single-option-disable {
         &::before {
             width: 100%;

@@ -7,22 +7,25 @@ import { ApplicationState } from '../../../../../../reducers';
 import { Spinner } from '../../../../../../components/Branded';
 import styled from 'styled-components';
 import { setOrderStock } from '../../../../../../actions/order';
+import { transparentize } from 'polished';
 
 interface Props {
     loading: boolean;
-    disable?: boolean;
     name: string;
     value: string;
     address: string;
+    disable?: boolean;
+    secondary?: boolean;
 }
 
 const StyledSingleOptionWrapper = styled.div`
 input[type='radio']:checked+.single-option {
-    border: 2px solid ${props => props.theme.colors.primary}
+    border: 1px solid ${props => props.theme.colors.primary};
+    background-color: ${props => transparentize(0.9, props.theme.colors.primary)};
 }
 `
 
-const SingleOption = ({ name, address, value, disable, loading }: Props) => {
+const SingleOption = ({ name, address, value, disable, loading, secondary }: Props) => {
     const dispatch = useDispatch();
     const stockId = useSelector((state: ApplicationState) => state.order.stockId);
 
@@ -43,7 +46,7 @@ const SingleOption = ({ name, address, value, disable, loading }: Props) => {
                 disabled={disable}
             />
             <label htmlFor={value} className={`single-option ${disable ? 'single-option-disable' : ''}`}>
-                <h3>{name}</h3>
+                {secondary ? <h4>{name}</h4> : <h3>{name}</h3>}
                 <span>{address}</span>
             </label>
         </StyledSingleOptionWrapper>
