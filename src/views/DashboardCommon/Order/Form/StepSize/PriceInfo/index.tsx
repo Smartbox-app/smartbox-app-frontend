@@ -12,7 +12,7 @@ interface Props {
 const StyledPriceInfo = styled.div`
 display: flex;
 justify-content: center;
-background-color: ${props => props.theme.colors.primary};
+background-color: ${props => props.theme.colors.secondary};
 color: #fff;
 font-size: 0.9rem;
 padding: 10px;

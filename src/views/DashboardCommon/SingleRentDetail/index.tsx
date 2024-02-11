@@ -44,7 +44,7 @@ const SingleRentDetail = ({ loading, showUserStockMap, match, getSingleRent, sin
       {!showUserStockMap ? (
         <>
           <Details singleRent={singleRent} />
-          {/* <Gate stockId={singleRent.stockId} /> */}
+          <Gate stockId={singleRent.stockId} />
         </>
       ) : (
         <UserStockMap boxId={singleRent.boxId} boxNumber={singleRent.boxNumber} boxAdditionalInfo={singleRent.boxAdditionalInfo} stockId={singleRent.stockId} />

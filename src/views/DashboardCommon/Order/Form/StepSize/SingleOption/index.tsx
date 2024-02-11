@@ -1,7 +1,7 @@
 import React, { ChangeEvent } from 'react';
 
 import './SingleOption.scss';
-import {  useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { ApplicationState } from '../../../../../../reducers';
 import { Spinner } from '../../../../../../components/Branded';
 import styled, { css } from 'styled-components';
@@ -26,6 +26,7 @@ interface Props {
 }
 
 const StyledSingleOptionWrapper = styled.div<{ available: boolean }>`
+position: relative;
 input[type='radio']:checked + .single-option {
   .radio-img {
     border: 2px solid ${props => props.theme.colors.primary}
@@ -33,8 +34,11 @@ input[type='radio']:checked + .single-option {
 }
 
 ${props => !props.available && css`
-opacity: 0.3;
 cursor: not-allowed;
+
+.radio-img {
+  opacity: 0.3;
+}
 `}
 `
 
@@ -46,7 +50,7 @@ const StyledImageDescription = styled.p`
 `
 
 const StyledSizeContainer = styled.div`
-background-color: ${props => props.theme.colors.primary};
+background-color: ${props => props.theme.colors.secondary};
 color: #fff;
 text-align: center;
 padding: 10px;
@@ -57,6 +61,11 @@ background-color: rtransparent;
 color: ${props => props.theme.colors.primary};
 text-align: center;
 padding: 10px;
+`
+
+const StyledImageValue = styled.span`
+color: ${props => props.theme.colors.primary};
+z-index: 1;
 `
 
 const SingleOption = ({ singleOptionData, disable }: Props) => {
@@ -71,7 +80,8 @@ const SingleOption = ({ singleOptionData, disable }: Props) => {
 
   if (loading) return <Spinner />;
   return (
-    <StyledSingleOptionWrapper available={singleOptionData.available} className="single-option-wrapper">
+    <StyledSingleOptionWrapper available={!singleOptionData.available} className="single-option-wrapper">
+      <StyledImageValue className={`img-value ${disable ? 'img-value-disabled' : ''}`}>{singleOptionData.available ? 'BRAK' : ''}</StyledImageValue>
       <input
         name={singleOptionData.name}
         type="radio"
@@ -79,12 +89,12 @@ const SingleOption = ({ singleOptionData, disable }: Props) => {
         id={singleOptionData.id}
         checked={singleOptionData.id === boxGroupId}
         onChange={selectOption}
-        disabled={!singleOptionData.available}
+        disabled={singleOptionData.available}
       />
-      <label htmlFor={singleOptionData.id} className={`single-option ${disable ? 'single-option-disable' : ''}`}>
+      <label htmlFor={singleOptionData.id} className={`single-option ${singleOptionData.available ? 'single-option-disable' : ''}`}>
         <div className="radio-img">
 
-          <span className={`img-value ${disable ? 'img-value-disabled' : ''}`}>{disable ? 'BRAK' : ''}</span>
+
           {singleOptionData.image && (
             <div className="svg-wrapper">
               <img src={`${ApiService.url}box-group-new/image/${singleOptionData.id}`} alt={singleOptionData.name} />

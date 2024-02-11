@@ -49,18 +49,6 @@
 
 .single-option-disable {
     cursor: not-allowed !important;
-
-
-    &::before {
-        content: '';
-        display: block;
-        width: 100%;
-        height: $single-option-height;
-        background-color: lighten($color-disabled, 1%);
-        position: absolute;
-        border-radius: 10px;
-        // box-shadow: 0 0 3px 3px lighten($color-disabled, 10%);
-    }
 }
 
 @include gt-xs {
