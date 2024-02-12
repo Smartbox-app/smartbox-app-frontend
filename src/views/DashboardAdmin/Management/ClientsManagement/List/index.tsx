@@ -34,13 +34,13 @@ class List extends React.Component<Props> {
                 type: FieldType.Custom,
                 customRender: (value, field, userData) => this.getLockButton(value, field, userData),
             })
-            .addFieldAfter('phone', {
-                name: __('application.stockDetails'),
-                field: 'stocks',
-                mobile: true,
-                type: FieldType.Custom,
-                customRender: (value, field, userData: UserClientListRes) => <StocksDetails user={userData} />
-            })
+            // .addFieldAfter('phone', {
+            //     name: __('application.stockDetails'),
+            //     field: 'stocks',
+            //     mobile: true,
+            //     type: FieldType.Custom,
+            //     customRender: (value, field, userData: UserClientListRes) => <StocksDetails user={userData} />
+            // })
             .addFieldAtTheEnd({
                 name: __('application.actions'),
                 field: 'actions',
@@ -54,12 +54,12 @@ class List extends React.Component<Props> {
                     {
                         name: 'application.edit',
                         type: 'primary',
-                        click: (data: UserListRes) => this.props.showModal(<TenantEdit userId={data.id} />),
+                        click: (data: UserClientListRes) => this.props.showModal(<TenantEdit userId={data.id} />),
                     },
                     {
                         name: 'application.status',
                         type: 'secondary',
-                        click: (data: UserListRes) => this.props.showModal(<TenantStatus tenantId={data.tenantId!} />),
+                        click: (data: UserClientListRes) => this.props.showModal(<TenantStatus tenantId={data.tenantId!} user={data} />),
                     },
                 ],
             });

@@ -61,6 +61,7 @@ const Position = ({ rentId, stockId, successNotification, hideModal, showModal, 
                 'PATCH',
               );
               successNotification('notification.userMovedSuccess');
+              if(callback) callback();
               dispatch(refreshApiTableData());
             }}
           />

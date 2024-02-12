@@ -37,7 +37,7 @@ ${props => !props.available && css`
 cursor: not-allowed;
 
 .radio-img {
-  opacity: 0.3;
+  opacity: 0.2;
 }
 `}
 `
@@ -80,8 +80,8 @@ const SingleOption = ({ singleOptionData, disable }: Props) => {
 
   if (loading) return <Spinner />;
   return (
-    <StyledSingleOptionWrapper available={!singleOptionData.available} className="single-option-wrapper">
-      <StyledImageValue className={`img-value ${disable ? 'img-value-disabled' : ''}`}>{singleOptionData.available ? 'BRAK' : ''}</StyledImageValue>
+    <StyledSingleOptionWrapper available={singleOptionData.available} className="single-option-wrapper">
+      <StyledImageValue className={`img-value ${disable ? 'img-value-disabled' : ''}`}>{!singleOptionData.available ? 'BRAK' : ''}</StyledImageValue>
       <input
         name={singleOptionData.name}
         type="radio"
@@ -89,9 +89,9 @@ const SingleOption = ({ singleOptionData, disable }: Props) => {
         id={singleOptionData.id}
         checked={singleOptionData.id === boxGroupId}
         onChange={selectOption}
-        disabled={singleOptionData.available}
+        disabled={!singleOptionData.available}
       />
-      <label htmlFor={singleOptionData.id} className={`single-option ${singleOptionData.available ? 'single-option-disable' : ''}`}>
+      <label htmlFor={singleOptionData.id} className={`single-option ${!singleOptionData.available ? 'single-option-disable' : ''}`}>
         <div className="radio-img">
 
 
