@@ -84,6 +84,7 @@ const List = () => {
             <SimpleHeader title='application.boxesList' />
             <ButtonsContainer>
                 <Button text='application.addBox' primary to={`/${UserService.getSlugByRole(user.role)}/locations/stocks/${stockId}/boxes/add`} />
+                <Button text='application.addBoxes' secondary to={`/${UserService.getSlugByRole(user.role)}/locations/stocks/${stockId}/boxes/add-multiple`} />
             </ButtonsContainer>
             <ApiTable scheme={scheme} apiEndpointSubUrl={`box/list/${stockId}`} />
         </>

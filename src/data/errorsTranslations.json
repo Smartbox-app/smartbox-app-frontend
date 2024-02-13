@@ -281,6 +281,18 @@
             "60": {
                 "text": "Brak możliwości wystawienia faktury!",
                 "__type_alias_do_not_touch": "ApiErrorCode.NoInvoiceServiceData"
+            },
+            "61": {
+                "text": "Osiągnięto limit kontenerów!",
+                "__type_alias_do_not_touch": "ApiErrorCode.BoxesLimitReached"
+            },
+            "62": {
+                "text": "Brak możliwości dodania takiej ilości kontenerów - zmniejsz ilość aby zmieścić się w limicie.",
+                "__type_alias_do_not_touch": "ApiErrorCode.TryingToAddTooManyBoxes"
+            },
+            "63": {
+                "text": "Osiągnięto limit placów!",
+                "__type_alias_do_not_touch": "ApiErrorCode.StocksLimitReached"
             }
         }
     }

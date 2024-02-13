@@ -1,6 +1,7 @@
 import React from 'react';
 import { Switch, Route, Redirect, useParams, } from 'react-router';
 import { Add } from './Add';
+import { AddBatch } from './AddBatch';
 import { List } from './List';
 import UserService from '../../../../../../services/user-service';
 import { useSelector } from 'react-redux';
@@ -16,6 +17,7 @@ const Boxes = () => {
     return <Switch>
         <Route exact path={`/${UserService.getSlugByRole(user.role)}/locations/stocks/:stockId/boxes`} render={() => <Redirect to={`/${UserService.getSlugByRole(user.role)}/locations/stocks/${stockId}/boxes/list`} />} />
         <Route path={`/${UserService.getSlugByRole(user.role)}/locations/stocks/:stockId/boxes/add`} component={Add} />
+        <Route path={`/${UserService.getSlugByRole(user.role)}/locations/stocks/:stockId/boxes/add-multiple`} component={AddBatch} />
         <Route path={`/${UserService.getSlugByRole(user.role)}/locations/stocks/:stockId/boxes/map`} component={Map} />
         <Route path={`/${UserService.getSlugByRole(user.role)}/locations/stocks/:stockId/boxes/list`} component={List} />
     </Switch>
