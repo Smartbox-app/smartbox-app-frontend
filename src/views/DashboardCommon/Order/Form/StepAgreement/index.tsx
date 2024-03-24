@@ -20,6 +20,7 @@ import ScrollPosition from './ScrollPosition';
 import { ApplicationState } from '../../../../../reducers';
 
 import './StepAgreement.scss';
+import ApiService from '../../../../../services/api-service';
 
 interface RouteProps {
     step: string;
@@ -47,6 +48,7 @@ const StepSummary = ({
     sentExtendRentRequest,
 }: Props): any => {
     const order = useSelector((state: ApplicationState) => state.order);
+    const tenant = useSelector((state: ApplicationState) => state.tenant);
     useEffect(() => {
         if(!user) return;
         if (!order.boxGroupId) {
@@ -104,6 +106,7 @@ const StepSummary = ({
         if(!user) return;
         history.push(`/${UserService.getSlugByRole(user.role)}/order/step/summary/${match.params.rentId || ''}`);
     };
+    if(!tenant) return null;
     const desktop = window.matchMedia('(min-width: 920px)').matches;
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -112,18 +115,11 @@ const StepSummary = ({
             {desktop && (
                 <object
                     className="rules-embed"
-                    data="/assets/2022_02_01_Regulamin_aplikacji_SmartBox.pdf#toolbar=0&navpanes=0&scrollbar=0"
+                    data={`${ApiService.url}tenant/agreement/${tenant.id}#toolbar=0&navpanes=0&scrollbar=0`}
                     type="application/pdf"
                 />
             )}
-            <a
-                className="button button-primary"
-                target="_blank"
-                href="/assets/2022_02_01_Regulamin_aplikacji_SmartBox.pdf"
-                title="Regulamin"
-            >
-                Kliknij aby otworzyć regulamin
-            </a>
+            <Button primary blank to={`${ApiService.url}tenant/agreement/${tenant.id}`} text='Kliknij aby otworzyć regulamin'/>
             <span className="separator" />
             <ScrollPosition />
             <Alert type="notice" text="application.orderAgreementAcceptation" />

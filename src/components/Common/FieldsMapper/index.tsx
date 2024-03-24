@@ -7,6 +7,8 @@ import { __ } from '../../../helpers/i18n';
 import FileInput from '../FileInput';
 import ApiService from '../../../services/api-service';
 import { SelectOption } from '../../../types/select';
+import { useSelector } from 'react-redux';
+import { ApplicationState } from 'src/reducers';
 
 interface Props {
     fieldHtmlId: string;
@@ -36,16 +38,18 @@ const FieldsMapper = ({ field, fieldHtmlId, currentValue, errors, big, onFocus, 
         return field.type;
     }, [])
 
-    console.log('INPUT', field.options)
+    const tenant = useSelector((state: ApplicationState) => state.tenant);
 
     const getCustomCheckboxLabel = useCallback((field: FormFieldToRender) => {
+        if (!tenant) return;
         if (field.options?.type === 'checkboxRules') return <small>
             {__('application.readTheProvisions')}{' '}
-            <a target="_blank" href="/assets/2022_02_01_Regulamin_aplikacji_SmartBox.pdf">
+
+            <a target="_blank" href={`${ApiService.url}tenant/rules/${tenant.id}`}>
                 <u>{__('application.statutes')}</u>
             </a>{' '}
             i{' '}
-            <a target="_blank" href="/assets/2022_01_01_Polityka_Prywatnosci_SmartBox.pdf">
+            <a target="_blank" href={`${ApiService.url}tenant/privacy/${tenant.id}`}>
                 <u>{__('application.privacyPolices')}</u>
             </a>{' '}
             {__('application.acceptContent')}
@@ -120,6 +124,7 @@ const FieldsMapper = ({ field, fieldHtmlId, currentValue, errors, big, onFocus, 
                 checked={currentValue}
                 handleChange={() => onChange(!currentValue)}
                 errors={translateErrors(errors)}
+                help={field.descr}
                 label={getCustomCheckboxLabel(field)}
             />
         );
@@ -148,6 +153,7 @@ const FieldsMapper = ({ field, fieldHtmlId, currentValue, errors, big, onFocus, 
                 label={field.title}
                 name={fieldHtmlId}
                 multiple={field.options && field.options.multipleChoices}
+                help={field.descr}
                 options={
                     field.options.possibleValues &&
                     field.options.possibleValues.map(

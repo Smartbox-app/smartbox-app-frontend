@@ -143,7 +143,8 @@
             "privacyPolices": "Polityki prywatności",
             "privacyPolicy": "Polityka prywatności",
             "privacyPolicy1": "Polityce prywatności",
-            "acceptContent": "oraz akceptuję ich treść. Administratorem twoich danych osobowych będzie SMARTBOX DROBNIKOWSKI SPÓŁKA JAWNA z siedzibą w miejscowości BIADASZKI. Twoje dane osobowe będą przetwarzane w celu związanym z zawarciem i wykonywaniem umowy o świadczenie usług SmartBox, kontaktu z administratorem, a także w celach marketingowych i analitycznych",
+            "agreement": "Umowa wynajmu dla klientów",
+            "acceptContent": "oraz akceptuję ich treść.",
             "changePasswordToService": "Zmieniasz swoje hasło do serwisu",
             "clickHere": "Kliknij tutaj",
             "clickToShowHideDetails": "Naciśnij na rekord aby pokazać/ukryć szczegóły.",
@@ -402,7 +403,17 @@
             "smsConnectionOk": "Połączono z SmsPlanet",
             "smsConnectionBad": "Brak połączenia z SmsPlanet",
             "tenantStatus": "Status franczyzobiorcy",
-            "status": "Status"
+            "status": "Status",
+            "colorRented": "Kolor wynajątego magazynu",
+            "colorReserved": "Kolor zarezerwowanego magazynu",
+            "colorFree": "Kolor wolnego magazynu",
+            "colorNoPaidExtension": "Kolor nieopłaconego przedłużenia magazynu",
+            "colorNoPaidExtensionWithWarning": "Kolor nieopłaconego przedłużenia magazynu z ostrzeżeniem",
+            "colorFinished": "Kolor zakończonego wynajmy",
+            "colorFailure": "Kolor dla niepowodzenia",
+            "colorToExplain": "Kolor dla magazynu ze statusem do wyjaśnienia",
+            "colorToCheck": "Kolor dla magazynu do sprawdzenia",
+            "colorOutOfService": "Kolor dla magazynu wyłączonego z użytku"
         },
         "settings": {
             "tax": "Stawka VAT",

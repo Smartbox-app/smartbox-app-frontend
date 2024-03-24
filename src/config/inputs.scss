@@ -171,9 +171,9 @@ textarea {
 [type='checkbox']:not(:checked) + label {
   position: relative;
   cursor: pointer;
-  line-height: 20px;
+  line-height: 25px;
+  font-size: 14px;
   display: inline-block;
-  font-weight: 600;
   padding-left: 2rem;
 }
 

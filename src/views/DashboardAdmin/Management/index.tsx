@@ -11,7 +11,7 @@ import WorkersManagement from '../../DashboardCommon/WorkersManagement';
 import UsersManagement from '../../DashboardCommon/UsersManagement';
 
 import InvitesSent from '../../DashboardCommon/InvitesSent';
-import SMS from './SMS';
+import SMS from '../../DashboardCommon/SMS';
 import Settings from './Settings';
 import { MapManagement } from './Map';
 import { GateManagement } from '../../../views/DashboardCommon/GateManagement';

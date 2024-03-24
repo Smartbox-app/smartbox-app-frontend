@@ -30,24 +30,30 @@ border: 1px solid ${props => props.theme.colors.primary};
 const StyledDraggableBox = styled(Rnd)`
 ${commonStyles}`
 
-const StyledBox = styled.div<{ status: RentStatus | null, user?: boolean }>`
+const StyledBox = styled.div<{ status: RentStatus | null, stock: IStock, user?: boolean }>`
 ${commonStyles}
 ${props => props.status && css`color: #fff;`}
 
 ${props => (props.status === RentStatus.free) && css`
-background-color: ${props.theme.colors.success}`};
+background-color: ${props.stock.colorFree}`};
 ${props => props.status === RentStatus.reserved && css`
-background-color: ${props.theme.colors.danger}`};
+background-color: ${props.stock.colorReserved}`};
 ${props => !props.user && props.status === RentStatus.rented && css`
-background-color: ${props.theme.colors.danger}`};
+background-color: ${props.stock.colorRented}`};
 ${props => props.status === RentStatus.toExplain && css`
-background-color: ${props.theme.colors.toExplain}`};
+background-color: ${props.stock.colorToExplain}`};
 ${props => props.status === RentStatus.toCheck && css`
-background-color: ${props.theme.colors.primary}`};
+background-color: ${props.stock.colorToCheck}`};
 ${props => props.status === RentStatus.noPaidExtension && css`
-background-color: ${props.theme.colors.tertiary}`};
+background-color: ${props.stock.colorNoPaidExtension}`};
+${props => props.status === RentStatus.noPaidExtensionWithWarning && css`
+background-color: ${props.stock.colorNoPaidExtensionWithWarning}`};
 ${props => props.status === RentStatus.outOfService && css`
-background-color: ${props.theme.colors.disabled}`};
+background-color: ${props.stock.colorOutOfService}`};
+${props => props.status === RentStatus.finished && css`
+background-color: ${props.stock.colorFinished}`};
+${props => props.status === RentStatus.failure && css`
+background-color: ${props.stock.colorFailure}`};
 
 ${props => props.user && props.status && css`background-color: ${props.theme.colors.success}`}
 
@@ -110,7 +116,7 @@ const SingleBox = ({ box, stock, admin, user, highlightId, onBoxClick }: Props) 
         return (box as BoxMapRes).status || RentStatus.free;
     }
 
-    if (admin || user) return <StyledBox status={getBoxStatus(box)} user={user} style={{
+    if (admin || user) return <StyledBox status={getBoxStatus(box)} user={user} stock={stock} style={{
         position: 'absolute',
         left: normalizePosition(box.x || 0), top: normalizePosition(box.y || 0), width: normalizeWidth(box), height: normalizeHeight(box)
     }}

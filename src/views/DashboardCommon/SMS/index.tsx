@@ -5,12 +5,13 @@ import ReactCreatableSelect from 'react-select/creatable';
 import { DiscountReq } from 'smartbox-types';
 import { connect } from 'react-redux';
 import flatpickr from 'flatpickr';
-import { FormContainer, ButtonsContainer, FieldsColumn, PageHeader, Section } from '../../../../components/Layout';
-import { Button, Spinner } from '../../../../components/Branded';
-import ApiService from '../../../../services/api-service';
-import { formOnTranslateString } from '../../../../utils/trans-form';
-import { notifications } from '../../../../actions';
-import { ReactSelectOverride } from '../../../../components/Common/ReactSelectOverride';
+import { FormContainer, ButtonsContainer, FieldsColumn, PageHeader, Section } from '../../../components/Layout';
+import { Button, Spinner } from '../../../components/Branded';
+import ApiService from '../../../services/api-service';
+import { formOnTranslateString } from '../../../utils/trans-form';
+import { notifications } from '../../../actions';
+import { ReactSelectOverride } from '../../../components/Common/ReactSelectOverride';
+import { mapFields } from '../../../utils/fields-mapper';
 
 interface Props {
   successNotification: (text: string) => void;
@@ -44,6 +45,7 @@ const SMS = ({ successNotification }: Props) => {
             onSavedSuccessfully={() => {
               successNotification('application.smsSent');
             }}
+            onRenderFullField={mapFields}
             onTranslateString={formOnTranslateString}
             thirdPartyComponents={{ ReactSelect: ReactSelectOverride, ReactCreatableSelect, flatpickr }}
           />

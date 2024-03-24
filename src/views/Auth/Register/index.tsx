@@ -1,7 +1,7 @@
 import React from 'react';
 import { ItfApiForm } from 'itf_formbuilder_react';
 import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import ApiService from '../../../services/api-service';
 import { FormContainer } from '../../../components/Layout';
 import { LoginLogo } from '../../../components/Common';
@@ -15,34 +15,43 @@ import { __ } from '../../../helpers/i18n';
 import ButtonSection from './ButtonSection';
 
 import './Register.scss';
+import { ApplicationState } from 'src/reducers';
 
 interface Props {
     successNotification: (text: string) => void;
     match: any;
 }
 
-const Register = ({ successNotification }: Props) => (
-    <PageContent>
-        <LoginLogo />
-        <FormContainer className="register-form">
-            <ItfApiForm
-                formId="UserActivationForm"
-                schemaMayBeDynamic={false}
-                schemaCacheEnabled={false}
-                loadingInfo={<Spinner transparent />}
-                schemaFetcher={() => ApiService.loadForm('user/form/add-user')}
-                sendFetcher={(formId: string, values: any) => ApiService.sendForm('user/new', values, 'POST')}
-                submitButton={<ButtonSection />}
-                onRenderFullField={mapFieldsBig}
-                onSavedSuccessfully={() => {
-                    successNotification('notification.accountRegistered');
-                    history.push('/register/mail-was-send');
-                }}
-                onTranslateString={formOnTranslateString}
-            />
-        </FormContainer>
-    </PageContent>
-);
+const Register = ({ successNotification }: Props) => {
+    const tenant = useSelector((state: ApplicationState) => state.tenant);
+
+    if (!tenant) {
+        history.push('/');
+    }
+
+    return (
+        <PageContent>
+            <LoginLogo />
+            <FormContainer className="register-form">
+                <ItfApiForm
+                    formId="UserActivationForm"
+                    schemaMayBeDynamic={false}
+                    schemaCacheEnabled={false}
+                    loadingInfo={<Spinner transparent />}
+                    schemaFetcher={() => ApiService.loadForm('user/form/add-user')}
+                    sendFetcher={(formId: string, values: any) => ApiService.sendForm('user/new', values, 'POST')}
+                    submitButton={<ButtonSection />}
+                    onRenderFullField={mapFieldsBig}
+                    onSavedSuccessfully={() => {
+                        successNotification('notification.accountRegistered');
+                        history.push('/register/mail-was-send');
+                    }}
+                    onTranslateString={formOnTranslateString}
+                />
+            </FormContainer>
+        </PageContent>
+    )
+}
 
 const mapDispatchToProps = (dispatch: any): any =>
     bindActionCreators({ successNotification: notifications.successNotification }, dispatch);

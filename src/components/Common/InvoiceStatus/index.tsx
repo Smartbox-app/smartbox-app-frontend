@@ -16,7 +16,7 @@ export const InvoiceStatus = ({ tenantId }: Props) => {
 
     useEffect(() => {
         getStatus();
-    })
+    }, [])
 
     return <div className="tenant-invoice-status"><Alert simple type={status ? 'success' : 'error'} text={status ? 'application.invoiceConnectionOk' : 'application.invoiceConnectionBad'} /></div>
 }

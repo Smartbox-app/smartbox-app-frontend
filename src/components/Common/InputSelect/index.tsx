@@ -8,6 +8,7 @@ import { TranslatableObject } from '../../../utils/errors-trans';
 import { InputErrors } from '../InputErrors';
 import './InputSelect.scss';
 import styled from 'styled-components';
+import { InputHelp } from '../InputHelp';
 
 
 interface Props {
@@ -15,6 +16,7 @@ interface Props {
     onChange: any;
     value: any;
     big?: boolean;
+    help?: string;
     placeholder: any;
     name: string;
     label?: string;
@@ -47,6 +49,7 @@ const InputSelect = ({
     multiple,
     errors,
     compact,
+    help,
     noMargin,
     big,
     readonly,
@@ -124,6 +127,7 @@ const InputSelect = ({
             ref={selector}
         />
         {errors && <InputErrors errors={errors} />}
+        {help && <InputHelp text={help} />}
     </StyledContainer>
 };
 

@@ -58,7 +58,10 @@ const useTenant = (): UseTenant => {
             tax: '',
             smsName: '',
             invoiceServiceApiKey: '',
-            invoiceServiceDomain: ''
+            invoiceServiceDomain: '',
+            privacy: '',
+            agreement: '',
+            rules: ''
         })
     }
 

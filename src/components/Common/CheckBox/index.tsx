@@ -4,6 +4,8 @@ import { TranslatableObject } from '../../../utils/errors-trans';
 import { __ } from "../../../helpers/i18n";
 import { InputErrors } from '../InputErrors';
 import './CheckBox.scss';
+import { InputHelp } from '../InputHelp';
+import styled from 'styled-components';
 
 interface Props {
     name: string;
@@ -13,10 +15,22 @@ interface Props {
     disabled?: boolean;
     errors?: TranslatableObject[];
     hide?: boolean;
+    help?: string;
 }
 
-const CheckBox = ({ label, name, checked, handleChange, disabled, errors, hide }: Props) => (
-    <div className={`checkbox ${disabled ? 'checkbox-disabled' : ''} ${hide && 'checkbox-hide'}`}>
+const StyledCheckbox = styled.div`
+    [type='checkbox']:checked + label:before {
+        border-color: ${props => props.theme.colors.primary};
+    }
+
+    [type='checkbox']:checked + label:after,
+    [type='checkbox']:not(:checked) + label:after {
+        background: ${props => props.theme.colors.primary};
+}
+`
+
+const CheckBox = ({ label, name, checked, handleChange, disabled, help, errors, hide }: Props) => (
+    <StyledCheckbox className={`checkbox ${disabled ? 'checkbox-disabled' : ''} ${hide && 'checkbox-hide'}`}>
         <input
             type="checkbox"
             id={name}
@@ -27,7 +41,8 @@ const CheckBox = ({ label, name, checked, handleChange, disabled, errors, hide }
         />
         <label htmlFor={name}>{__(label)}</label>
         {errors && <InputErrors errors={errors} />}
-    </div>
+        {help && <InputHelp text={help} />}
+    </StyledCheckbox>
 );
 
 export default CheckBox;

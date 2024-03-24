@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { FieldType, boxesList } from 'smartbox-tables';
-import { BoxListRes } from 'smartbox-types';
+import { BoxListRes, IStock } from 'smartbox-types';
 import { Alert, ApiTable } from '../../../../../../../components/Common';
 import { Button } from '../../../../../../../components/Branded';
 import { ButtonsContainer, SimpleHeader } from '../../../../../../../components/Layout';
@@ -22,7 +22,14 @@ import { BoxStatus } from './BoxStatus';
 const List = () => {
     const user = useSelector((state: ApplicationState) => state.user.details!);
     const dispatch = useDispatch();
+    const [stock, setStock] = useState<IStock>();
     const { stockId } = useParams<{ stockId: string }>();
+
+    const getStock = async () => {
+        await ApiService.callFetch('GET', `stock/${stockId}`, (res: IStock) => {
+            setStock(res);
+        })
+    }
 
     const deleteBox = async (boxId: string) => {
         await ApiService.callFetch('DELETE', `box/${boxId}`, () => {
@@ -39,6 +46,8 @@ const List = () => {
         />))
     }
 
+    useEffect(() => { getStock() }, [stockId])
+
     const scheme = new InteractiveTableSchema(boxesList)
         .modifyFieldStatic('pricing', {
             name: __('application.pricingIsSet'),
@@ -54,7 +63,7 @@ const List = () => {
             mobile: true,
             defaultSort: true,
             type: FieldType.Custom,
-            customRender: (value, field, boxData) => <BoxStatus box={boxData} />,
+            customRender: (value, field, boxData) => <BoxStatus box={boxData} stock={stock} />,
         })
         .addFieldAtTheEnd({
             name: __('application.actions'),

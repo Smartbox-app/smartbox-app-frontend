@@ -11,13 +11,13 @@ import { useTenant } from '../../../../hooks/useTenant';
 const ButtonsSection = () => {
     const { tenant } = useTenant();
 
-    if(!tenant) return null;
+    if (!tenant) return null;
 
     return <div className="login-buttons-section">
         <Button text="application.login" big type="submit" primary rounded />
         {/* <FbButton />
         <GoogleButton /> */}
-        <Button text="application.register" big to={tenant.slides.length > 0 ? "/welcome" : "register"} outline rounded />
+        {tenant.rules && tenant.privacy && <Button text="application.register" big to={tenant.slides.length > 0 ? "/welcome" : "register"} outline rounded />}
         <p className="lost-pass">
             {__('application.forgotPass')}{' '}
             <Link className="light" to="/restore-pass">

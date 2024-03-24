@@ -17,7 +17,7 @@ export const SmsStatus = ({ tenantId }: Props) => {
 
     useEffect(() => {
         getStatus();
-    })
+    }, []);
 
     return <div className="tenant-sms-status"><Alert simple type={status ? 'success' : 'error'} text={status ? 'application.smsConnectionOk' : 'application.smsConnectionBad'} /></div>
 }

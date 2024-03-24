@@ -5,6 +5,9 @@ import { ManageTenantBackground } from '../../../views/DashboardCommon/ClientMan
 import { ManageTenantData } from '../../../views/DashboardCommon/ClientManagement/TenantData';
 import { ManageTenantSlides } from '../../../views/DashboardCommon/ClientManagement/Slides';
 import { ManageTenantFonts } from '../../DashboardCommon/ClientManagement/Fonts';
+import { ManageTenantRules } from '../../../views/DashboardCommon/ClientManagement/Rules';
+import { ManageTenantPrivacy } from '../../../views/DashboardCommon/ClientManagement/Privacy';
+import { ManageTenantAgreement } from '../../../views/DashboardCommon/ClientManagement/Agreement';
 
 const Settings = () => {
     return (
@@ -16,6 +19,9 @@ const Settings = () => {
                 <ManageTenantFonts />
                 <ManageTenantSlides />
                 <ManageTenantData />
+                <ManageTenantRules />
+                <ManageTenantPrivacy />
+                <ManageTenantAgreement />
             </FormContainer>
         </Section>
     );

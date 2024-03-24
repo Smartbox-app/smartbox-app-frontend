@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Switch, Route, Redirect } from 'react-router';
 import { Tabs } from '../../../components/Branded';
@@ -9,25 +9,52 @@ import UserService from '../../../services/user-service';
 import UsersManagement from '../../DashboardCommon/UsersManagement';
 import { Settings } from '../Settings';
 import InvitesSent from '../../DashboardCommon/InvitesSent';
+import ApiService from '../../../services/api-service';
+import SMS from '../../DashboardCommon/SMS';
 
 const Management = () => {
     const user = useSelector((state: ApplicationState) => state.user.details!);
+    const tenant = useSelector((state: ApplicationState) => state.tenant);
+
+    const [smsStatus, setSmsStatus] = useState<boolean>();
+
+    const getStatus = async () => {
+        if (!tenant) return;
+        ApiService.callFetch('GET', `tenant/sms-service-status/${tenant.id}`, (response: boolean) => setSmsStatus(response));
+    }
+
+    useEffect(() => {
+        getStatus();
+    }, [])
+
+    const getTabs = () => {
+        const tabs = [
+            {
+                to: `/${UserService.getSlugByRole(user.role)}/management/users/list`,
+                text: 'application.users',
+            },
+            {
+                to: `/${UserService.getSlugByRole(user.role)}/management/invitations`,
+                text: 'application.invitations',
+            },
+            {
+                to: `/${UserService.getSlugByRole(user.role)}/management/settings`,
+                text: 'application.settings',
+            },
+        ]
+
+        if (smsStatus) {
+            tabs.push({
+                to: `/${UserService.getSlugByRole(user.role)}/management/sms`,
+                text: 'application.sendSms',
+            },)
+        }
+
+        return tabs;
+    }
     return <Section full>
         <Tabs
-            tabs={[
-                {
-                    to: `/${UserService.getSlugByRole(user.role)}/management/users/list`,
-                    text: 'application.users',
-                },
-                {
-                    to: `/${UserService.getSlugByRole(user.role)}/management/invitations`,
-                    text: 'application.invitations',
-                },
-                {
-                    to: `/${UserService.getSlugByRole(user.role)}/management/settings`,
-                    text: 'application.settings',
-                },
-            ]}
+            tabs={getTabs()}
         />
 
         <Switch>
@@ -39,6 +66,7 @@ const Management = () => {
             <Route path={`/${UserService.getSlugByRole(user.role)}/management/users`} component={UsersManagement} />
             <Route path={`/${UserService.getSlugByRole(user.role)}/management/settings`} component={Settings} />
             <Route path={`/${UserService.getSlugByRole(user.role)}/management/invitations`} component={InvitesSent} />
+            <Route path={`/${UserService.getSlugByRole(user.role)}/management/sms`} component={SMS} />
         </Switch>
     </Section>
 }

@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { differenceInCalendarDays, differenceInDays } from 'date-fns';
 import { bindActionCreators } from 'redux';
@@ -14,6 +14,7 @@ import ScrollPosition from '../Order/Form/StepAgreement/ScrollPosition';
 import SummaryTable from '../Order/Form/StepSummary/SummaryTable';
 import { LockInfo } from '../Order/Form/StepPayment/LockInfo';
 import './PayDebtForm.scss';
+import ApiService from '../../../services/api-service';
 
 interface RouteProps {
   rentId: string;
@@ -50,6 +51,8 @@ const PayDebtForm = ({
       await getSingleRent(match.params.rentId);
     })();
   }, []);
+
+  const tenant = useSelector((state: ApplicationState) => state.tenant);
 
   const countPayPeriods = useCallback(
     (date: Date) => Math.ceil(differenceInCalendarDays(new Date(), new Date(date)) / 7),
@@ -95,6 +98,7 @@ const PayDebtForm = ({
     );
   }
   if (loading) return <Spinner overlay />;
+  if(!tenant) return null;
   const desktop = window.matchMedia('(min-width: 920px)').matches;
   return (
     <FormContainer>
@@ -104,18 +108,12 @@ const PayDebtForm = ({
         {desktop && (
           <object
             className="rules-embed"
-            data="/assets/2022_02_01_Regulamin_aplikacji_SmartBox.pdf#toolbar=0&navpanes=0&scrollbar=0"
+            data={`${ApiService.url}tenant/agreement/${tenant.id}#toolbar=0&navpanes=0&scrollbar=0`}
             type="application/pdf"
           />
         )}
-        <a
-          className="button button-primary"
-          target="_blank"
-          href="/assets/2022_02_01_Regulamin_aplikacji_SmartBox.pdf"
-          title="Regulamin"
-        >
-          Kliknij aby otworzyć regulamin
-        </a>
+        <Button primary blank to={`${ApiService.url}tenant/agreement/${tenant.id}`} text='Kliknij aby otworzyć regulamin' />
+
         <span className="separator" />
         <ScrollPosition />
 
