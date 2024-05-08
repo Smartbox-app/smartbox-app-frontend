@@ -24,7 +24,7 @@ const StepSize = () => {
         })
     }, [])
 
-    const options = boxGroups.map((data: BoxGroupUserRes, index: number) => (
+    const options = [...boxGroups].sort((a, b) => a.area && b.area ? a.area - b.area : a.name > b.name ? 1 : -1).map((data: BoxGroupUserRes, index: number) => (
         <SingleOption
             key={data.id}
             singleOptionData={data}
@@ -36,7 +36,7 @@ const StepSize = () => {
             <FormHeader no-margin title='application.orderFormPickSize' />
             <form>
                 <div className="options-wrapper">{options}</div>
-            {boxGroups.length === 0 && <Alert type='notice' text='application.noBoxesInThisStock' />}
+                {boxGroups.length === 0 && <Alert type='notice' text='application.noBoxesInThisStock' />}
                 <ButtonsContainer max>
                     <Button text='application.back' to='/user/order/step/stock' />
                     <Button
