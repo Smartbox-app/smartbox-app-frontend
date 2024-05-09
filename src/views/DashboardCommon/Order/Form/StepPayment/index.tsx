@@ -14,6 +14,7 @@ import BankForm from './BankForm';
 import CreditCardForm from './CreditCardForm';
 
 import './StepPayment.scss';
+import { PaymentForm } from './PaymentForm';
 
 interface Props {
     user: UserRes | null;
@@ -47,7 +48,7 @@ const StepPayment = ({ selectedPayment, user, resetPaymentForm }: Props) => {
         };
     }, []);
 
-    return <>{formToRender(selectedPayment)}</>;
+    return <PaymentForm />
 };
 
 const mapStateToProps = (state: ApplicationState) => ({

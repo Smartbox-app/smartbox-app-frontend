@@ -61,7 +61,9 @@ const useTenant = (): UseTenant => {
             invoiceServiceDomain: '',
             privacy: '',
             agreement: '',
-            rules: ''
+            rules: '',
+            storeId: '',
+            sharedSecret: ''
         })
     }
 

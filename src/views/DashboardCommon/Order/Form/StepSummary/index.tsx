@@ -95,21 +95,6 @@ const StepSummary = ({
 
     const { handleSubmit, register, watch, control, errors } = useForm({ defaultValues });
 
-    const dataVerification = (): boolean => {
-        console.log(watch().paymentType, selectedPaymentMethod);
-        if (typeof watch().paymentType !== 'string') {
-            return true;
-        } else if (Number(watch().paymentType) === PaymentType.transfer && selectedPaymentMethod.id === '') {
-            return false; // TODO fix to work with tpay
-        } else if (Number(watch().paymentType) === PaymentType.transfer && selectedPaymentMethod.id !== '') {
-            return false;
-        } else if (Number(watch().paymentType) === PaymentType.blik || Number(watch().paymentType) === PaymentType.card) {
-            return false;
-        } else {
-            return true;
-        }
-    };
-
     const tenantData = (): boolean => {
         if (
             watch().firstName !== '' &&
@@ -192,7 +177,7 @@ const StepSummary = ({
             <DiscountsList stockId={stockId} />
             <FormHeader title="application.orderSummary" />
             <SummaryTable dateStart={startDate} dateEnd={endDate} countedPrice={calculatedPrice} />
-            {calculatedPrice > 0 && <PaymentMethods register={register} />}
+            {/* {calculatedPrice > 0 && <PaymentMethods register={register} />} */}
 
             <TenantDetailsForm register={register} control={control} errors={errors} disabled={!isFirstRent} />
             {isFirstRent && (
@@ -216,7 +201,7 @@ const StepSummary = ({
                     type="submit"
                     primary
                     text="application.goToOrder"
-                    disabled={dataVerification() || tenantData() || companyData()}
+                    disabled={tenantData() || companyData()}
                 />
             </ButtonsContainer>
         </form>

@@ -42,14 +42,6 @@ const Management = () => {
                     text: 'application.invitations',
                 },
                 {
-                    to: `/${UserService.getSlugByRole(user.role)}/management/map`,
-                    text: 'application.boxes',
-                },
-                {
-                    to: `/${UserService.getSlugByRole(user.role)}/management/gate`,
-                    text: 'application.gate',
-                },
-                {
                     to: `/${UserService.getSlugByRole(user.role)}/management/sms`,
                     text: 'application.smsNotifications',
                 },

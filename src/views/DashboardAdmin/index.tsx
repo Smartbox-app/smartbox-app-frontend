@@ -11,7 +11,6 @@ import Management from './Management';
 import Profile from '../DashboardCommon/Profile';
 import SingleRentDetail from '../DashboardCommon/SingleRentDetail';
 import GateStatus from '../DashboardCommon/GateStatus';
-import { Gates } from '../DashboardCommon/Gates';
 import { StockGroups } from '../DashboardCommon/StockGroups';
 
 const DashboardAdmin = () => {
@@ -27,11 +26,6 @@ const DashboardAdmin = () => {
       address: '/admin/locations',
     },
     {
-      icon: 'dashboard.svg',
-      text: 'application.gates',
-      address: '/admin/gates',
-    },
-    {
       icon: 'account.svg',
       text: 'application.account',
       address: '/admin/profile',
@@ -42,7 +36,6 @@ const DashboardAdmin = () => {
     <DashboardContainer>
       <MobileLogoContainer />
       <Navigation menuItems={menuItems} />
-      <GateStatus />
       <Main>
         <Switch>
           <Route exact path="/admin" render={() => <Redirect to="/admin/management" />} />
@@ -50,7 +43,6 @@ const DashboardAdmin = () => {
           <Route path="/admin/profile" component={Profile} />
           <Route path="/admin/invoice/" component={Invoice} />
           <Route path={`/admin/locations`} component={StockGroups} />
-          <Route path={`/admin/gates`} component={Gates} />
           <Route exact path="/admin/single-rent/:orderId" component={SingleRentDetail} />
         </Switch>
       </Main>

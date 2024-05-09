@@ -51,7 +51,7 @@ export const sentRentBoxRequest = (data: RentBoxReq, nextStep: string, role: Use
       if (result.status === PaymentStatus.succes) {
         history.push(`/payment-success/${result.paymentId}`);
       } else {
-        history.push(`/${UserService.getSlugByRole(role)}/order/step/${nextStep}`);
+        history.push(`/${UserService.getSlugByRole(role)}/order/step/${nextStep}/${result.paymentId}`);
       }
     },
     null,

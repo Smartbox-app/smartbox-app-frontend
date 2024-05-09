@@ -338,10 +338,10 @@
             "confirmStockDelete": "Czy na pewno chcesz usunąć plac? Usunięcie nie będzie możliwe jeżeli na placu zostały przeprowadzone jakieś operacje.",
             "stockDeleted": "Usunięto plac",
             "gatesList": "Lista bram",
-            "addGate": "Dodaj sterownik",
-            "editGate": "Edytuj sterownik",
-            "confirmGateDelete": "Czy na pewno chcesz usunąć sterownik? Bez sterownika otwarcie bramy nie będzie możliwe.",
-            "gateDeleted": "Usunięto sterownik",
+            "addGate": "Dodaj bramę",
+            "editGate": "Edytuj bramę",
+            "confirmGateDelete": "Czy na pewno chcesz usunąć bramę? Bez sterownika otwarcie bramy nie będzie możliwe.",
+            "gateDeleted": "Usunięto bramę",
             "stockBasicData": "Podstawowe informacje",
             "stockBoxes": "Kontenery",
             "boxesGroups": "Grupy",
@@ -413,7 +413,9 @@
             "colorFailure": "Kolor dla niepowodzenia",
             "colorToExplain": "Kolor dla magazynu ze statusem do wyjaśnienia",
             "colorToCheck": "Kolor dla magazynu do sprawdzenia",
-            "colorOutOfService": "Kolor dla magazynu wyłączonego z użytku"
+            "colorOutOfService": "Kolor dla magazynu wyłączonego z użytku",
+            "storeId": "StoreID - Identyfikator sklepu dla systemu płatności",
+            "sharedSecret": "SharedSecret - Unikalny klucz dla systemu płatności"
         },
         "settings": {
             "tax": "Stawka VAT",

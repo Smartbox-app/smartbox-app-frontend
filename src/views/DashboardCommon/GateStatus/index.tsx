@@ -7,11 +7,15 @@ import ApiService from '../../../services/api-service';
 import './GateStatus.scss';
 import { __ } from "../../../helpers/i18n";
 
-const GateStatus = () => {
+interface Props {
+  stockId: string;
+}
+
+const GateStatus = ({stockId}: Props) => {
   const [status, setStatus] = useState<GatesStatusForAdminRes>();
 
   const getStatus = async () => {
-    await ApiService.callFetch('GET', 'gate/admin-status', (newStatus: GatesStatusForAdminRes) => {
+    await ApiService.callFetch('GET', `gate/status/${stockId}`, (newStatus: GatesStatusForAdminRes) => {
       setStatus(newStatus);
     });
   };

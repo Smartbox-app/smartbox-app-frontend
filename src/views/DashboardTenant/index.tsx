@@ -6,8 +6,6 @@ import MobileLogoContainer from '../../components/Layout/MobileLogoContainer';
 import { MenuItemType } from '../../types/menu-item';
 import Management from './Management';
 import { Profile } from '../DashboardCommon';
-import { Gates } from '../DashboardCommon/Gates';
-import GateStatus from '../DashboardCommon/GateStatus';
 import { StockGroups } from '../DashboardCommon/StockGroups';
 import { TenantStatus } from './TenantStatus';
 
@@ -25,11 +23,6 @@ const DashboardTenant = () => {
             text: 'application.stocks',
             address: '/client/locations',
         },
-        // {
-        //     icon: 'dashboard.svg',
-        //     text: 'application.gates',
-        //     address: '/client/gates',
-        // },
         {
             icon: 'account.svg',
             text: 'application.account',
@@ -41,7 +34,6 @@ const DashboardTenant = () => {
         <DashboardContainer>
             <MobileLogoContainer />
             <Navigation menuItems={menuItems} />
-            <GateStatus />
             <TenantStatus />
             <Main>
                 <Switch>
@@ -49,7 +41,6 @@ const DashboardTenant = () => {
                     <Route path="/client/management/" component={Management} />
                     <Route path="/client/profile" component={Profile} />
                     <Route path={`/client/locations`} component={StockGroups} />
-                    <Route path={`/client/gates`} component={Gates} />
                 </Switch>
             </Main>
         </DashboardContainer>
