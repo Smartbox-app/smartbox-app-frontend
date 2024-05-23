@@ -11,10 +11,20 @@ import { isUser } from '../../../../utils/role-check';
 
 import './Gate.scss';
 import { OpenGateByForceModal } from '../../../../components/Common/OpenGateByForceModal';
+import styled from 'styled-components';
 
 interface Props {
     stockId: string;
 }
+
+const StyledGateImageContainer = styled.div`
+.gate-rect-1 {
+    fill: ${({ theme }) => theme.colors.primary};
+}
+.gate-rect-2 {
+    fill: ${({ theme }) => theme.colors.primary};
+}
+`
 
 const Gate = ({ stockId }: Props) => {
     const dispatch = useDispatch();
@@ -70,7 +80,9 @@ const Gate = ({ stockId }: Props) => {
     const gateOpenningAnimation = (
         <div className="gate-animation">
             {loading && <Spinner overlay halfTransparent />}
-            <ReactSVG src={`${startAnimation ? '/assets/images/Group46.svg' : '/assets/images/Group39.svg'}`} />
+            <StyledGateImageContainer>
+                <ReactSVG src={`${startAnimation ? '/assets/images/Group46.svg' : '/assets/images/Group39.svg'}`} />
+            </StyledGateImageContainer>
             <div className="slide-to-open">
                 <Button
                     text={getButtonText()}

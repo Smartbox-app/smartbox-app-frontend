@@ -20,29 +20,33 @@ padding: 10px;
 .price-value {
     margin-left: 5px;
 }
+
+.price-type {
+    margin-left: 5px;
+}
 `
 
 const formatQuantity = (type: PricingType, quantity: number) => {
-    switch(type) {
+    switch (type) {
         case PricingType.Day: {
-            if(quantity > 1) return 'dni'; 
+            if (quantity > 1) return 'dni';
             return 'dzień'
         }
         case PricingType.Week: {
-            if(quantity >= 5) return 'tygodni'
-            if(quantity > 1) return 'tygodnie';
+            if (quantity >= 5) return 'tygodni'
+            if (quantity > 1) return 'tygodnie';
             return 'tydzień'
         }
-    
+
         case PricingType.Month: {
-            if(quantity >= 5) return 'miesięcy'
-            if(quantity > 1) return 'miesiące';
+            if (quantity >= 5) return 'miesięcy'
+            if (quantity > 1) return 'miesiące';
             return 'miesiąc'
         }
-    
+
         case PricingType.Year: {
-            if(quantity >= 5) return 'lat'
-            if(quantity > 1) return 'lata';
+            if (quantity >= 5) return 'lat'
+            if (quantity > 1) return 'lata';
             return 'rok'
         }
     }
@@ -51,11 +55,11 @@ const formatQuantity = (type: PricingType, quantity: number) => {
 const PriceInfo = ({ box }: Props) => {
     const firstPricing = box.pricing[0];
 
-    if(!firstPricing.price || !firstPricing.quantity) return null;
+    if (!firstPricing.price || !firstPricing.quantity) return null;
 
     return <StyledPriceInfo>
-        {__('application.rentFrom')}<strong className='price-value'>{formatPrice(firstPricing.price || 0)}</strong>/<span>{firstPricing.quantity} {formatQuantity(firstPricing.type, firstPricing.quantity || 0)}</span>
+        {__('application.rentFrom')}<strong className='price-value'>{formatPrice(firstPricing.price || 0)}</strong><span className='price-type'>{firstPricing.isGross ? __('application.gross') : __('application.net')}</span>/<span>{firstPricing.quantity} {formatQuantity(firstPricing.type, firstPricing.quantity || 0)}</span>
     </StyledPriceInfo>
 }
 
-export { PriceInfo}
+export { PriceInfo }

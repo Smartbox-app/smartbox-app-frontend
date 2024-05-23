@@ -3,6 +3,8 @@
     "langNames": "pl",
     "phrases": {
         "application": {
+            "net": "netto",
+            "gross": "brutto",
             "hi": "Cześć",
             "how_it_works": "Jak to działa?",
             "management": "Zarządzanie",
@@ -205,7 +207,8 @@
             "penaltyPayment": "Opłacenie kary umownej:",
             "startTerm": "Termin rozpoczęcia:",
             "finishTerm": "Termin zakończenia:",
-            "paymentForRent": "Opłata za wynajem:",
+            "paymentForRent": "Opłata brutto za wynajem:",
+            "netPaymentForRent": "Opłata netto za wynajem:",
             "activeStores": "Aktywne mini magazyny",
             "unfinishedProcess": "Niedokończony proces",
             "finished": "Zakończone",
@@ -236,6 +239,7 @@
             "selectStartRentDate": "Wybierz datę rozpoczęcia wynajmu:",
             "selectEndRentDate": "Wybierz datę zakończenia wynajmu:",
             "priceForSelectedPeriod": "Cena brutto za wybrany okres to:",
+            "netPriceForSelectedPeriod": "Cena netto za wybrany okres to:",
             "firstRentFreePracing": "Rabat pierwszego wynajmu",
             "withDicoutnPricing": "Cena uwzględnia zniżkę ogólną placu",
             "cardPricing": "Zniżka za wykorzystanie jednorazowego kodu rabatowego",

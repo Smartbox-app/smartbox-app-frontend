@@ -6,6 +6,7 @@ import './Price.scss';
 
 interface Props {
   countedPrice: number;
+  isGross: boolean;
 }
 
 const StyledPrice = styled.strong`
@@ -13,10 +14,10 @@ const StyledPrice = styled.strong`
   font-size: 1.2rem;
 `
 
-const Price = ({ countedPrice }: Props) => (
+const Price = ({ countedPrice, isGross }: Props) => (
   <div className="price-wrapper">
     <p>
-        {__('application.priceForSelectedPeriod')}{' '}<StyledPrice>{formatPrice(countedPrice)}</StyledPrice>
+        {isGross ? __('application.priceForSelectedPeriod') : __('application.netPriceForSelectedPeriod')}{' '}<StyledPrice>{formatPrice(countedPrice)}</StyledPrice>
     </p>
   </div>
 );

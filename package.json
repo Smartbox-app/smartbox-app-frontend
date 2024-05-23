@@ -72,6 +72,7 @@
         "trans-form-errors": "node node_modules/itf_formbuilder_translation_tool",
         "prepare-translations": "node ./node_modules/ITF_FormBuilder_translation_tool/dist/index.js",
         "build-prod": "REACT_APP_URL=https://app.smartbox.dev2.itdotfocus.com REACT_APP_API_URL=https://api.smartbox.dev2.itdotfocus.com react-app-rewired build",
+        "build-new-prod": "REACT_APP_URL=https://smartbox-app.pl REACT_APP_API_URL=https://api.smartbox-app.pl react-app-rewired build",
         "build-staging": "REACT_APP_URL=https://app.smartbox-staging.dev2.itdotfocus.com REACT_APP_API_URL=https://api.smartbox-staging.dev2.itdotfocus.com react-app-rewired build",
         "build-windows-prod": "set REACT_APP_URL=https://app.smartbox.dev2.itdotfocus.com && set REACT_APP_API_URL=https://api.smartbox.dev2.itdotfocus.com && react-app-rewired build",
         "build-windows-staging": "set REACT_APP_URL=https://app.smartbox-staging.dev2.itdotfocus.com && set REACT_APP_API_URL=https://api.smartbox-staging.dev2.itdotfocus.com && react-app-rewired build"

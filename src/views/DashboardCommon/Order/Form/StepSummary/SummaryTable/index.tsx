@@ -19,7 +19,10 @@ const StyledRow = styled.div`
 interface Props {
   dateStart: Date;
   dateEnd: Date;
-  countedPrice: number;
+  countedPrice: {
+    value: number;
+    isGross: boolean;
+  };
 }
 
 const SummaryTable = ({ dateStart, dateEnd, countedPrice }: Props) => (
@@ -37,9 +40,9 @@ const SummaryTable = ({ dateStart, dateEnd, countedPrice }: Props) => (
       </StyledCell>
     </StyledRow>
     <StyledRow className="row">
-      <StyledCell className="cell">{__('application.paymentForRent')}</StyledCell>
+      <StyledCell className="cell">{countedPrice.isGross ? __('application.paymentForRent') :  __('application.netPaymentForRent')}</StyledCell>
       <StyledCell className="cell fat">
-        <span>{formatPrice(countedPrice)}</span>
+        <span>{formatPrice(countedPrice.value)}</span>
       </StyledCell>
     </StyledRow>
   </div>

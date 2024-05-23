@@ -153,7 +153,7 @@ const StepDuration = ({
                         }}
                     />
                 </StyledCalendarPicker>
-                <Price countedPrice={calculatedPrice} />
+                <Price countedPrice={calculatedPrice.value} isGross={calculatedPrice.isGross} />
                 <ButtonsContainer max>
                     <Button outline text='application.back' to={`/${UserService.getSlugByRole(user.role)}/order/step/stock/${match.params.rentId || ''}`} disabled={!!match.params.rentId} />
                     <Button to={`/${UserService.getSlugByRole(user.role)}/order/step/summary/${match.params.rentId || ''}`} primary text='application.next' />

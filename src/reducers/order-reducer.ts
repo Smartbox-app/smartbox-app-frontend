@@ -23,7 +23,7 @@ export type OrderState = {
   minRentPeriod: number;
   startDate: Date;
   endDate: Date;
-  calculatedPrice: number;
+  calculatedPrice: { value: number, isGross: boolean },
   loadingPrice: boolean;
   discountCode: string;
   // @TODO FIX
@@ -174,7 +174,7 @@ const initialState: OrderState = {
   minRentPeriod: 7,
   startDate: new Date(),
   endDate: addDays(new Date(), 7),
-  calculatedPrice: 0,
+  calculatedPrice: { value: 0, isGross: false },
   calculatedPriceDetails: [],
   loadingPrice: false,
   discountCode: '',

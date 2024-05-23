@@ -1,5 +1,7 @@
 import React from 'react';
-import {  MyRentList, RentStatus } from 'smartbox-types';
+import { MyRentList, RentStatus } from 'smartbox-types';
+import styled from 'styled-components';
+import { lighten } from 'polished';
 import { history } from '../../../../../../App';
 import UserService from '../../../../../../services/user-service';
 import { dateOnly } from '../../../../../../utils/format-date';
@@ -9,9 +11,19 @@ import './SingleStorage.scss';
 import { useSelector } from 'react-redux';
 import { ApplicationState } from '../../../../../../reducers';
 
+
 interface Props {
     single: MyRentList;
 }
+
+const StyledStorage = styled.div`
+background-color: ${({ theme }) => theme.colors.primary};
+border: 2px solid${({ theme }) => lighten(0.1, theme.colors.primary)};
+
+&:hover {
+    box-shadow: 0 0 2px 1px ${({ theme }) => lighten(0.1, theme.colors.primary)
+    };
+}`
 
 const SingleStorage = ({ single }: Props) => {
     const user = useSelector((state: ApplicationState) => state.user.details!);
@@ -22,7 +34,7 @@ const SingleStorage = ({ single }: Props) => {
             className="single-wrapper"
             onClick={() => history.push(`/${UserService.getSlugByRole(user.role)}/single-rent/${single.id}`)}
         >
-            <div className={`storage ${isWarning ? 'warning' : ''}`}>
+            <StyledStorage className={`storage ${isWarning ? 'warning' : ''}`}>
                 {isWarning && <div className="storage-warning-overlay" />}
                 <p className="sec-info">
                     {single.stockName}
@@ -37,7 +49,7 @@ const SingleStorage = ({ single }: Props) => {
                     <span className="date">{dateOnly(single.finishAt)}</span>
                     <span className="size">{single.size} m</span>
                 </p>
-            </div>
+            </StyledStorage>
         </div>
     );
 };

@@ -26,7 +26,8 @@ const useTenant = (): UseTenant => {
     }, [tenantData])
 
     const fetchTenantData = async () => {
-        const clientId = queryParameters.get('clientId');
+        const hostname = window.location.hostname.split('.');
+        const clientId = hostname.length === 3 ? hostname[0] : queryParameters.get('clientId');
 
         if (!clientId) {
             setDefaults();

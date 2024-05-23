@@ -18,17 +18,13 @@
     cursor: pointer;
     margin: math.div($main-spacing, 2) 0;
 
-    background: $color-primary;
     background-image: url(/assets/icons/storage-background.svg);
     background-repeat: no-repeat;
     background-size: contain;
     background-position: right;
     color: #fff;
-    border: 2px solid darken($color-primary, 10%);
+  
 
-    &:hover {
-      box-shadow: 0 0 2px 1px $color-primary-light;
-    }
 
     &.warning {
       border-color: $color-danger;

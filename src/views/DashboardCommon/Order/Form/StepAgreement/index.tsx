@@ -21,6 +21,7 @@ import { ApplicationState } from '../../../../../reducers';
 
 import './StepAgreement.scss';
 import ApiService from '../../../../../services/api-service';
+import { getCorrectPriceWithTax, getCorrectTaxPercentAmount } from '../../../../../utils/tax';
 
 interface RouteProps {
     step: string;
@@ -56,13 +57,20 @@ const StepSummary = ({
         }
     }, []);
 
+    const getCorrectPrice = (price: number, isGross: boolean, tax: string) => {
+        if(isGross) return price;
+        const taxValue = getCorrectTaxPercentAmount(tax);
+
+        return getCorrectPriceWithTax(price, taxValue); 
+    }
+
     const { handleSubmit } = useForm();
 
     const onSubmit = (data: any) => {
         if(!user) return;
         const commonCollection = {
             finishAt: order.endDate,
-            cost: order.calculatedPrice,
+            cost: getCorrectPrice(order.calculatedPrice.value, order.calculatedPrice.isGross, tenant!.tax),
             discountCode: formData.discountCode,
             firstName: formData.firstName,
             lastName: formData.lastName,
