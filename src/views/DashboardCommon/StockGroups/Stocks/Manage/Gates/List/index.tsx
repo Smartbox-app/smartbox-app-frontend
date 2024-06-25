@@ -69,7 +69,7 @@ const List = () => {
             <ButtonsContainer>
                 <Button text='application.addGate' primary to={`/${UserService.getSlugByRole(user.role)}/locations/stocks/${stockId}/gates/add`} />
             </ButtonsContainer>
-            <ApiTable scheme={scheme} apiEndpointSubUrl={`gate/list/${stockId}`} />
+            <ApiTable scheme={scheme} apiEndpointSubUrl={`gate/list/stock/${stockId}`} />
         </Section>
     );
 

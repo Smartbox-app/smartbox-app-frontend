@@ -2,19 +2,20 @@ import React, { useEffect, useState } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { ReactSVG } from 'react-svg';
 import { bindActionCreators } from 'redux';
-import { Coordinate } from 'smartbox-types';
+import { Coordinate, RentGate } from 'smartbox-types';
 import { Button, Spinner } from '../../../../components/Branded';
 import { __ } from '../../../../helpers/i18n';
 import { ApplicationState } from '../../../../reducers';
-import { gate, modal } from '../../../../actions';
+import { gate as gateActions, modal } from '../../../../actions';
 import { isUser } from '../../../../utils/role-check';
 
 import './Gate.scss';
 import { OpenGateByForceModal } from '../../../../components/Common/OpenGateByForceModal';
 import styled from 'styled-components';
+import { SimpleHeader } from 'src/components/Layout';
 
 interface Props {
-    stockId: string;
+    gate: RentGate;
 }
 
 const StyledGateImageContainer = styled.div`
@@ -26,7 +27,26 @@ const StyledGateImageContainer = styled.div`
 }
 `
 
-const Gate = ({ stockId }: Props) => {
+const StyledGateContainer = styled.div`
+border-left: 4px solid  ${({ theme }) => theme.colors.primary};
+padding-left: 16px;
+}
+`
+
+const StyledGateTitle = styled.h4`
+margin: 10px 0`
+
+const StyledGateDescription = styled.p`
+margin: 10px 0;
+display: flex;
+align-items: center;
+
+.gate-info-icon {
+    margin-right: 8px;
+}
+`
+
+const Gate = ({ gate }: Props) => {
     const dispatch = useDispatch();
     const user = useSelector((state: ApplicationState) => state.user.details!);
     const startAnimation = useSelector((state: ApplicationState) => state.gate.startAnimation);
@@ -37,12 +57,12 @@ const Gate = ({ stockId }: Props) => {
             lon: position.coords.longitude,
             lat: position.coords.latitude,
         };
-        dispatch(gate.askGateToOpen(stockId, location));
+        dispatch(gateActions.askGateToOpen(gate.id, location));
         setLoading(false);
     };
 
     const handleError = () => {
-        dispatch(modal.showModal(<OpenGateByForceModal cantRead stockId={stockId} latlon={{ lat: '0', lon: '0' }} />))
+        dispatch(modal.showModal(<OpenGateByForceModal cantRead gateId={gate.id} latlon={{ lat: '0', lon: '0' }} />))
         setLoading(false);
     }
 
@@ -50,14 +70,14 @@ const Gate = ({ stockId }: Props) => {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(openGateByLocation, handleError);
         } else {
-            dispatch(modal.showModal(<OpenGateByForceModal notSupported stockId={stockId} latlon={{ lat: '0', lon: '0' }} />))
+            dispatch(modal.showModal(<OpenGateByForceModal notSupported gateId={gate.id} latlon={{ lat: '0', lon: '0' }} />))
             setLoading(false);
         }
     };
 
     useEffect(() => {
-        dispatch(gate.gateOpenStartAnimation(false));
-    }, [stockId])
+        dispatch(gateActions.gateOpenStartAnimation(false));
+    }, [gate.id])
 
     const getButtonText = () => {
         if (startAnimation) {
@@ -70,7 +90,7 @@ const Gate = ({ stockId }: Props) => {
     const handleClick = () => {
         setLoading(true);
         if (!isUser(user.role)) {
-            dispatch(gate.askGateToOpenByStaff(stockId))
+            dispatch(gateActions.askGateToOpenByStaff(gate.id))
             setLoading(false);
         } else {
             tryToOpenGateByLocation();
@@ -78,22 +98,23 @@ const Gate = ({ stockId }: Props) => {
     }
 
     const gateOpenningAnimation = (
-        <div className="gate-animation">
+        <StyledGateContainer>
             {loading && <Spinner overlay halfTransparent />}
-            <StyledGateImageContainer>
+            <StyledGateTitle>{gate.name}</StyledGateTitle>
+            {gate.description && <StyledGateDescription><span className='fa fa-info-circle gate-info-icon' /> {gate.description}</StyledGateDescription>}
+            {/* <StyledGateImageContainer>
                 <ReactSVG src={`${startAnimation ? '/assets/images/Group46.svg' : '/assets/images/Group39.svg'}`} />
-            </StyledGateImageContainer>
-            <div className="slide-to-open">
+            </StyledGateImageContainer> */}
+            {gate.controlled && <div className="slide-to-open">
                 <Button
                     text={getButtonText()}
-                    big
                     type='button'
                     primary
                     click={handleClick}
                     disabled={isUser(user.role) ? startAnimation : false}
                 />
-            </div>
-        </div>
+            </div>}
+        </StyledGateContainer>
     );
     if (!isUser(user.role)) {
         return <div className="open-gate-wrapper">{gateOpenningAnimation}</div>;
@@ -113,7 +134,7 @@ const mapStateToProps = (state: ApplicationState) => ({
 const mapDispatchToProps = (dispatch: any) =>
     bindActionCreators(
         {
-            ...gate,
+            ...gateActions,
         },
         dispatch,
     );

@@ -7,14 +7,14 @@ import { modal, gate } from '../../../actions';
 import { Coordinate } from 'smartbox-types';
 
 interface Props {
-    stockId: string;
+    gateId: string;
     latlon: Coordinate;
     notSupported?: boolean;
     cantRead?: boolean;
     tooFarAway?: boolean;
 }
 
-const OpenGateByForceModal = ({ stockId, latlon, tooFarAway, notSupported, cantRead }: Props) => {
+const OpenGateByForceModal = ({ gateId, latlon, tooFarAway, notSupported, cantRead }: Props) => {
     const dispatch = useDispatch();
     return <div className="open-gate-by-force-modal-wrapper">
         {tooFarAway && <p>{__('application.openGateByForceConfirmationTooFarAway')}</p>}
@@ -25,7 +25,7 @@ const OpenGateByForceModal = ({ stockId, latlon, tooFarAway, notSupported, cantR
             <Button
                 success
                 click={() => {
-                    dispatch(gate.askGateToOpenByForce(stockId, latlon))
+                    dispatch(gate.askGateToOpenByForce(gateId, latlon))
                     dispatch(modal.hideModal())
                 }}
                 text={'application.openGate'}

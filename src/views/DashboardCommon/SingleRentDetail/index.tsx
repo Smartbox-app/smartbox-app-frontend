@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { MyRentList } from 'smartbox-types';
+import { MyRentDetails, MyRentList } from 'smartbox-types';
 import { Spinner } from '../../../components/Branded';
 import { UserStockMap } from '../../../components/Common/UserStockMap';
 import { Section, SectionHeader } from '../../../components/Layout';
@@ -14,27 +14,39 @@ import Action from './Action';
 import Details from './Details';
 import Gate from './Gate';
 import MissingPaymentAlert from './MissingPaymentAlert';
+import ApiService from '../../../services/api-service';
+import { OpenBox } from './OpenBox';
+import styled from 'styled-components';
 
 interface RouteProps {
   orderId: string;
 }
 interface Props extends RouteComponentProps<RouteProps> {
-  loading: boolean;
   showUserStockMap: boolean;
-  singleRent: MyRentList;
-  getSingleRent: (rentId: string) => void;
-  getMyRentList: () => void;
 }
 
-const SingleRentDetail = ({ loading, showUserStockMap, match, getSingleRent, singleRent, getMyRentList }: Props) => {
+const StyledGatesHeader = styled.div`
+font-weight: 700;
+margin: 20px 0 10px 0;`
+
+const SingleRentDetail = ({ showUserStockMap, match }: Props) => {
+  const [singleRent, setSingleRent] = useState<MyRentDetails>();
+  const [loading, setLoading] = useState(false);
+
+  const getSingleRent = async () => {
+    setLoading(true);
+    await ApiService.callFetch('GET', `rent/my-details/${match.params.orderId}`, (data: MyRentDetails) => {
+      setSingleRent(data);
+    });
+    setLoading(false);
+  }
+
   useEffect(() => {
-    (async () => {
-      await getMyRentList();
-      await getSingleRent(match.params.orderId);
-    })();
+    getSingleRent();
   }, []);
 
   if (loading) return <Spinner />;
+  if (!singleRent) return null;
 
   return (
     <Section full>
@@ -44,7 +56,13 @@ const SingleRentDetail = ({ loading, showUserStockMap, match, getSingleRent, sin
       {!showUserStockMap ? (
         <>
           <Details singleRent={singleRent} />
-          <Gate stockId={singleRent.stockId} />
+          <Section highlight>
+
+            <SectionHeader title='application.access' />
+            {singleRent.controlled && <OpenBox id={singleRent.boxId} />}
+            {singleRent.gates && singleRent.gates.length > 0 && <StyledGatesHeader>Bramy</StyledGatesHeader>}
+            {singleRent.gates.map(gate => <Gate key={gate.id} gate={gate} />)}
+          </Section>
         </>
       ) : (
         <UserStockMap boxId={singleRent.boxId} boxNumber={singleRent.boxNumber} boxAdditionalInfo={singleRent.boxAdditionalInfo} stockId={singleRent.stockId} />

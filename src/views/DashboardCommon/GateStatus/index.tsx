@@ -8,16 +8,24 @@ import './GateStatus.scss';
 import { __ } from "../../../helpers/i18n";
 
 interface Props {
-  stockId: string;
+  stockId?: string;
+  stockGroupId?: string;
 }
 
-const GateStatus = ({stockId}: Props) => {
+const GateStatus = ({ stockId, stockGroupId }: Props) => {
   const [status, setStatus] = useState<GatesStatusForAdminRes>();
 
   const getStatus = async () => {
-    await ApiService.callFetch('GET', `gate/status/${stockId}`, (newStatus: GatesStatusForAdminRes) => {
-      setStatus(newStatus);
-    });
+    if (stockId) {
+      await ApiService.callFetch('GET', `gate/status/stock/${stockId}`, (newStatus: GatesStatusForAdminRes) => {
+        setStatus(newStatus);
+      });
+    }
+    if (stockGroupId) {
+      await ApiService.callFetch('GET', `gate/status/group/${stockGroupId}`, (newStatus: GatesStatusForAdminRes) => {
+        setStatus(newStatus);
+      });
+    }
   };
 
   useEffect(() => {

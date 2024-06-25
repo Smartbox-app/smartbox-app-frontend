@@ -7,7 +7,7 @@ import { OpenGateByForceModal } from '../components/Common/OpenGateByForceModal'
 
 export const gateOpenStartAnimation = (open: boolean = true) => ({ type: 'GATE_OPEN_START_ANIMATION', payload: open });
 
-export const askGateToOpen = (stockId: string, geo: Coordinate) => async (dispatch: any) => {
+export const askGateToOpen = (gateId: string, geo: Coordinate) => async (dispatch: any) => {
     await ApiService.patch(
         dispatch,
         'ASK_GATE_TO_OPEN_SUCCESS',
@@ -19,19 +19,19 @@ export const askGateToOpen = (stockId: string, geo: Coordinate) => async (dispat
         (result) => {
             if (result.error_code === ApiErrorCode.UAreTooFarAway) {
                 dispatch(modal.showModal(React.createElement(OpenGateByForceModal, {
-                    stockId,
+                    gateId,
                     latlon: geo,
                     tooFarAway: true
                 })))
             }
         },
-        `stock/open-gate/${stockId}/${geo.lat}/${geo.lon}`,
+        `stock/open-gate/${gateId}/${geo.lat}/${geo.lon}`,
         'LOADING',
         geo,
     );
 };
 
-export const askGateToOpenByForce = (stockId: string, geo: Coordinate) => async (dispatch: any) => {
+export const askGateToOpenByForce = (gateId: string, geo: Coordinate) => async (dispatch: any) => {
     await ApiService.patch(
         dispatch,
         'ASK_GATE_TO_OPEN_SUCCESS',
@@ -41,12 +41,12 @@ export const askGateToOpenByForce = (stockId: string, geo: Coordinate) => async 
             dispatch(gateOpenStartAnimation());
         },
         null,
-        `stock/open-gate-by-force//${stockId}/${geo.lat}/${geo.lon}`,
+        `stock/open-gate-by-force/${gateId}/${geo.lat}/${geo.lon}`,
         'LOADING',
     );
 };
 
-export const askGateToOpenByStaff = (stockId: string) => async (dispatch: any) => {
+export const askGateToOpenByStaff = (gateId: string) => async (dispatch: any) => {
     await ApiService.patch(
         dispatch,
         'ASK_GATE_TO_OPEN_SUCCESS',
@@ -58,7 +58,7 @@ export const askGateToOpenByStaff = (stockId: string) => async (dispatch: any) =
         () => {
             dispatch(successNotification("notification.gateRemoteOpeningError"));
         },
-        `stock/open-gate-by-staff/${stockId}`,
+        `stock/open-gate-by-staff/${gateId}`,
         'LOADING',
     );
 };

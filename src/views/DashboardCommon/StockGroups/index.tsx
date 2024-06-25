@@ -7,8 +7,9 @@ import { ApplicationState } from '../../../reducers';
 import { Add } from './Stocks/Add';
 import { List } from './Stocks/List';
 import { Manage } from './Stocks/Manage';
-import { Groups } from './Groups';
 import { Section } from '../../../components/Layout';
+import { GroupsList } from './Groups/List';
+import { ManageGroup } from './Groups/Manage';
 
 const StockGroups = () => {
     const user = useSelector((state: ApplicationState) => state.user.details!);
@@ -28,9 +29,11 @@ const StockGroups = () => {
         <Switch>
             <Route exact path={`/${UserService.getSlugByRole(user.role)}/locations`} render={() => <Redirect to={`/${UserService.getSlugByRole(user.role)}/locations/stocks`} />} />
             <Route exact path={`/${UserService.getSlugByRole(user.role)}/locations/stocks`} render={() => <Redirect to={`/${UserService.getSlugByRole(user.role)}/locations/stocks/list`} />} />
+            <Route exact path={`/${UserService.getSlugByRole(user.role)}/locations/groups`} render={() => <Redirect to={`/${UserService.getSlugByRole(user.role)}/locations/groups/list`} />} />
             <Route path={`/${UserService.getSlugByRole(user.role)}/locations/stocks/add`} component={Add} />
             <Route path={`/${UserService.getSlugByRole(user.role)}/locations/stocks/list`} component={List} />
-            <Route path={`/${UserService.getSlugByRole(user.role)}/locations/groups`} component={Groups} />
+            <Route path={`/${UserService.getSlugByRole(user.role)}/locations/groups/list`} component={GroupsList} />
+            <Route path={`/${UserService.getSlugByRole(user.role)}/locations/groups/:stockGroupId`} component={ManageGroup} />
             <Route path={`/${UserService.getSlugByRole(user.role)}/locations/stocks/:stockId`} component={Manage} />
         </Switch>
     </Section>

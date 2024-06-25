@@ -29,8 +29,8 @@ const Add = () => {
         </ButtonsContainer>
     );
 
-    const fetchUrl = 'gate/form/add';
-    const sendUrl = `gate/admin/${stockId}`;
+    const fetchUrl = `gate/form/add-stock/${stockId}`;
+    const sendUrl = `gate/admin/stock/${stockId}`;
 
     return (
         <Section>

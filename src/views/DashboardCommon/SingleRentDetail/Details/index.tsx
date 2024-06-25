@@ -1,5 +1,5 @@
 import React from 'react';
-import { MyRentList } from 'smartbox-types';
+import { MyRentDetails, MyRentList } from 'smartbox-types';
 import { dateOnly } from '../../../../utils/format-date';
 import { __ } from '../../../../helpers/i18n';
 import { Row } from '../../../../components/Common';
@@ -8,7 +8,7 @@ import './Details.scss';
 import { Section } from '../../../../components/Layout';
 
 interface Props {
-  singleRent: MyRentList;
+  singleRent: MyRentDetails;
 }
 
 const Details = ({ singleRent }: Props) => (

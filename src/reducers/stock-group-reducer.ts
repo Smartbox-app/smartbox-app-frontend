@@ -1,4 +1,4 @@
-import { StockGroupEntity, StockGroupWithStocks } from 'smartbox-types';
+import { StockGroupData, StockGroupWithStocks } from 'smartbox-types';
 
 export interface StockGroupStatus {
     list: StockGroupWithStocks[];
@@ -10,7 +10,7 @@ const initialState: StockGroupStatus = {
 
 interface FetchStockGroupsList {
     type: 'GET_STOCK_GROUP_LIST_SUCCESS';
-    payload: StockGroupEntity[];
+    payload: StockGroupData[];
 }
 
 type Action = FetchStockGroupsList;

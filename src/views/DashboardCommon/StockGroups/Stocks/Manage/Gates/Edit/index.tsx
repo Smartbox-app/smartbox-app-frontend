@@ -49,7 +49,7 @@ const Edit = () => {
                     submitButton={submitButton}
                     onSavedSuccessfully={() => {
                         dispatch(successNotification('notification.gateUpdatedCorrectly'));
-                        history.push(`/${UserService.getSlugByRole(user.role)}/locations/stocks/${stockId}/groups`);
+                        history.push(`/${UserService.getSlugByRole(user.role)}/locations/stocks/${stockId}/gates`);
 
                     }}
                     onRenderFullField={mapFields}

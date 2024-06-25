@@ -14,7 +14,6 @@ import { Groups } from './Groups';
 import { Discounts } from './Discounts';
 import ApiService from '../../../../../services/api-service';
 import { Handling } from './Handling';
-import { StockGate } from './StockGate';
 import { Gates } from './Gates';
 
 const Manage = () => {
@@ -86,7 +85,6 @@ const Manage = () => {
                 <Route exact path={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/:stockId`} render={() => <Redirect to={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/data`} />} />
                 <Route exact path={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/:stockId/data`} component={BasicData} />
                 <Route path={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/:stockId/gates`} component={Gates} />
-                <Route exact path={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/:stockId/gate`} component={StockGate} />
                 <Route path={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/:stockId/settings`} component={BasicData} />
                 <Route path={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/:stockId/boxes`} component={Boxes} />
                 <Route path={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/:stockId/groups`} component={Groups} />
