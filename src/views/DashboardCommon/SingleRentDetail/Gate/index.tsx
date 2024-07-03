@@ -80,17 +80,6 @@ const Gate = ({ gate }: Props) => {
         dispatch(gateActions.gateOpenStartAnimation(false));
     }, [gate.id])
 
-    const [isOpening, setIsOpening] = useState(false);
-
-    const openGateKSM = async () => {
-        setIsOpening(true);
-        await ApiService.callFetch('GET', `gate/open/${gate.id}`, (res) => {
-            console.log(res);
-        })
-        setIsOpening(false);
-    }
-
-
     const getButtonText = () => {
         if (startAnimation) {
             return 'application.openingGate';
@@ -100,13 +89,9 @@ const Gate = ({ gate }: Props) => {
     };
 
     const handleClick = () => {
-        if(gate.controlled === AccessControl.none) return;
+        if (!gate.controlled) return;
 
-        if(gate.controlled === 'ksm') {
-            openGateKSM();
-            return;
-        }
-
+    
         setLoading(true);
         if (!isUser(user.role)) {
             dispatch(gateActions.askGateToOpenByStaff(gate.id))
@@ -124,13 +109,13 @@ const Gate = ({ gate }: Props) => {
             {/* <StyledGateImageContainer>
                 <ReactSVG src={`${startAnimation ? '/assets/images/Group46.svg' : '/assets/images/Group39.svg'}`} />
             </StyledGateImageContainer> */}
-            {(gate.controlled !== AccessControl.none) && <div className="slide-to-open">
+            {gate.controlled && <div className="slide-to-open">
                 <Button
                     text={getButtonText()}
                     type='button'
                     primary
                     click={handleClick}
-                    disabled={isOpening || (isUser(user.role) ? startAnimation : false)}
+                    disabled={(isUser(user.role) ? startAnimation : false)}
                 />
             </div>}
         </StyledGateContainer>
