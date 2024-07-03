@@ -15,12 +15,14 @@ import { Discounts } from './Discounts';
 import ApiService from '../../../../../services/api-service';
 import { Handling } from './Handling';
 import { Gates } from './Gates';
+import { Addons } from './Addons';
 
 const Manage = () => {
     const { stockId } = useParams<{ stockId: string }>();
     const user = useSelector((state: ApplicationState) => state.user.details);
+    const tenant = useSelector((state: ApplicationState) => state.tenant);
     const [isMapActive, setMapActive] = useState<boolean>(false);
-
+ 
     const getStockData = async () => {
         await ApiService.callFetch('GET', `stock/${stockId}`, (stock: IStock) => {
             setMapActive(stock.isMapActive)
@@ -67,6 +69,13 @@ const Manage = () => {
             })
         }
 
+        if(tenant?.allowAddonsToRent) {
+            elements.push({
+                to: `/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/addons`,
+                text: 'application.stockAddons',
+            })
+        }
+
         return elements;
     }, [isMapActive])
 
@@ -91,6 +100,7 @@ const Manage = () => {
                 <Route path={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/:stockId/discounts`} component={Discounts} />
                 {isMapActive && <Route path={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/:stockId/map`} component={Map} />}
                 {isMapActive && <Route path={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/:stockId/handling`} component={Handling} />}
+                {tenant?.allowAddonsToRent && <Route path={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/:stockId/addons`} component={Addons} />}
             </Switch>
 
         </Section>

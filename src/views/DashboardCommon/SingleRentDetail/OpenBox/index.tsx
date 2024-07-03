@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button } from "../../../../components/Branded";
 import { ButtonsContainer } from '../../../../components/Layout';
 import styled from 'styled-components';
+import ApiService from '../../../../services/api-service';
 
 interface Props {
     id: string;
@@ -12,5 +13,14 @@ display: flex;
 justify-content: center;`
 
 export const OpenBox = ({ id }: Props) => {
-    return <StyledContainer><Button big primary text="application.openBox" click={() => { }} /></StyledContainer>
+    const [isOpening, setIsOpening] = useState(false);
+    const openBox = async () => {
+        setIsOpening(true);
+        await ApiService.callFetch('GET', `box/open/${id}`, (res) => {
+            console.log(res);
+        })
+        setIsOpening(false);
+    }
+
+    return <StyledContainer><Button big primary disabled={isOpening} text="application.openBox" click={openBox} /></StyledContainer>
 }

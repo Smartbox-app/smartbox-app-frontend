@@ -41,8 +41,7 @@ const FieldsMapper = ({ field, fieldHtmlId, currentValue, errors, big, onFocus, 
     const tenant = useSelector((state: ApplicationState) => state.tenant);
 
     const getCustomCheckboxLabel = useCallback((field: FormFieldToRender) => {
-        if (!tenant) return;
-        if (field.options?.type === 'checkboxRules') return <small>
+        if (field.options?.type === 'checkboxRules' && tenant) return <small>
             {__('application.readTheProvisions')}{' '}
 
             <a target="_blank" href={`${ApiService.url}tenant/rules/${tenant.id}`}>

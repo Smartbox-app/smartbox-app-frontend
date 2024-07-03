@@ -76,6 +76,7 @@
             "smsNotifications": "SMS",
             "discountsCodes": "Kody rabatowe",
             "stockSale": "Promocje",
+            "stockAddons": "Dodatki",
             "salesList": "Lista promocji",
             "createSale": "Utwórz zniżkę",
             "deleteSingleSale": "Czy jesteś pewien, że chcesz usunąć zniżkę?",

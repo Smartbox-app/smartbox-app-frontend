@@ -7,6 +7,8 @@ import { ApplicationState } from '../../../reducers';
 import { modal } from '../../../actions';
 import {__} from "../../../helpers/i18n";
 
+import './PaymentFailed.scss';
+
 interface Props {
   paymentId: string;
   showModal: (content: React.ReactNode) => void;
@@ -20,7 +22,7 @@ const PaymentFailed = ({ showModal, paymentId }: Props) => {
         <p className="content-text">
             {__('application.paymentFinished')}{' '}<strong>{__('application.withFailure')}</strong>.
         </p>
-        <ButtonsContainer max>
+        <ButtonsContainer className='failure-button-container'>
           <Button success text='application.backToApp' to="/" />
         </ButtonsContainer>
       </Section>
