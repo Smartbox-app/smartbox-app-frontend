@@ -11,7 +11,7 @@ import UserService from '../../../../../../../services/user-service';
 import { showModal } from '../../../../../../../actions/modal';
 import { ConfirmModal } from '../../../../../../../components/Common';
 import ApiService from '../../../../../../../services/api-service';
-import { successNotification } from '../../../../../../../actions/notifications';
+import { errorNotification, errorNotificationText, successNotification } from '../../../../../../../actions/notifications';
 import { refreshApiTableData } from '../../../../../../../actions/api-table';
 import { useParams } from 'react-router';
 import { Edit } from '../Edit';
@@ -39,24 +39,28 @@ const List = () => {
     }
 
     const openBox = async (boxId: string) => {
-        await ApiService.callFetch('GET', `box/open/${boxId}`, (res) => {
-            console.log(res);
+        await ApiService.callFetch('GET', `box/open/${boxId}`, (isSuccess: boolean) => {
+            if(isSuccess) {
+                dispatch(successNotification('application.boxOpenedSuccessfully'));
+            } else {
+                dispatch(errorNotificationText('application.cannotOpenBox'));
+            }
         })
     }
 
     const confirmBoxDelete = (boxId: string) => {
         dispatch(showModal(<ConfirmModal
             approveButtonText='application.delete'
-            mainText='application.openBoxConfirmation'
-            approveAction={() => openBox(boxId)}
+            mainText='application.deleteBoxText'
+            approveAction={() => deleteBox(boxId)}
         />))
     }
 
     const confirmBoxOpen = (boxId: string) => {
         dispatch(showModal(<ConfirmModal
             approveButtonText='application.openBox'
-            mainText='application.deleteBoxText'
-            approveAction={() => deleteBox(boxId)}
+            mainText='application.openBoxConfirmation'
+            approveAction={() => openBox(boxId)}
         />))
     }
 
@@ -86,10 +90,10 @@ const List = () => {
             mobile: true,
             customRender: (value, field, boxData: BoxListRes) => (
                 <>
-                    {(stock?.accessControl === AccessControl.ksm && boxData.controlled) ? <Button type='primary' text='application.manage' click={() => confirmBoxOpen(boxData.id)} /> : undefined}
-                    <Button type='primary' text='application.manage' click={() => dispatch(showModal(<BoxDetail box={boxData} stockId={stockId} />))} />
-                    <Button type='secondary' text='application.edit' click={() => dispatch(showModal(<Edit id={boxData.id} stockId={boxData.stockId} />))} />
-                    <Button type='danger' text='application.delete' click={() => confirmBoxDelete(boxData.id)} />
+                    {(stock?.accessControl === AccessControl.ksm && boxData.controlled) ? <Button small text='application.openBox' click={() => confirmBoxOpen(boxData.id)} /> : undefined}
+                    <Button small primary text='application.manage' click={() => dispatch(showModal(<BoxDetail box={boxData} stockId={stockId} />))} />
+                    <Button small secondary text='application.edit' click={() => dispatch(showModal(<Edit id={boxData.id} stockId={boxData.stockId} />))} />
+                    <Button small danger text='application.delete' click={() => confirmBoxDelete(boxData.id)} />
                 </>
             )
         });

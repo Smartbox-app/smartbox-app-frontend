@@ -180,6 +180,8 @@
             "access": "Szczegóły dostępu",
             "openBoxConfirmation": "Czy na pewno chcesz otworzyć skrzynkę?",
             "openBox": "Otwórz skrzynkę",
+            "boxOpenedSuccessfully": "Poprawnie otwarto skrzynkę",
+            "cannotOpenBox": "Nie udało się otworzyć skrzynki",
             "openGate": "Otwórz bramę",
             "openingGate": "Otwieranie bramy",
             "openGateStuff": "Otwórz bramę zdalnie",

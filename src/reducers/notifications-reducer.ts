@@ -18,7 +18,12 @@ interface ErrorNotification {
   payload: ApiErrorCode;
 }
 
-type Action = HideNotification | SuccessNotification | ErrorNotification;
+interface ErrorNotificationText {
+  type: 'ERROR_NOTIFICATION_TEXT';
+  payload: string;
+}
+
+type Action = HideNotification | SuccessNotification | ErrorNotification | ErrorNotificationText;
 
 export type NotificationState = SingleNotification[];
 
@@ -46,6 +51,10 @@ export default (state = initialState, action: Action) => {
     }
     case 'ERROR_NOTIFICATION': {
       const notification = getErrorNotification(getError(action.payload));
+      return [...state, notification];
+    }
+    case 'ERROR_NOTIFICATION_TEXT': {
+      const notification = getErrorNotification(action.payload);
       return [...state, notification];
     }
     case 'HIDE_NOTIFICATION':

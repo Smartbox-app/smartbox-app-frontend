@@ -10,6 +10,11 @@ export const errorNotification = (error: ApiErrorCode) => ({
   payload: error,
 });
 
+export const errorNotificationText = (text: string) => ({
+  type: 'ERROR_NOTIFICATION_TEXT',
+  payload: text,
+});
+
 export const hideNotification = (id: string) => ({
   type: 'HIDE_NOTIFICATION',
   payload: id,
