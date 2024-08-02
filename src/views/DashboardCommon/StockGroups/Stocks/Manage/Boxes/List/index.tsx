@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { FieldType, boxesList } from 'smartbox-tables';
-import { BoxListRes, IStock } from 'smartbox-types';
+import { AccessControl, BoxListRes, IStock } from 'smartbox-types';
 import { Alert, ApiTable } from '../../../../../../../components/Common';
 import { Button } from '../../../../../../../components/Branded';
 import { ButtonsContainer, SimpleHeader } from '../../../../../../../components/Layout';
@@ -38,9 +38,23 @@ const List = () => {
         })
     }
 
+    const openBox = async (boxId: string) => {
+        await ApiService.callFetch('GET', `box/open/${boxId}`, (res) => {
+            console.log(res);
+        })
+    }
+
     const confirmBoxDelete = (boxId: string) => {
         dispatch(showModal(<ConfirmModal
             approveButtonText='application.delete'
+            mainText='application.openBoxConfirmation'
+            approveAction={() => openBox(boxId)}
+        />))
+    }
+
+    const confirmBoxOpen = (boxId: string) => {
+        dispatch(showModal(<ConfirmModal
+            approveButtonText='application.openBox'
             mainText='application.deleteBoxText'
             approveAction={() => deleteBox(boxId)}
         />))
@@ -68,24 +82,16 @@ const List = () => {
         .addFieldAtTheEnd({
             name: __('application.actions'),
             field: 'actions',
+            type: FieldType.Custom,
             mobile: true,
-            buttons: [
-                {
-                    name: 'application.manage',
-                    type: 'primary',
-                    click: (data: BoxListRes) => dispatch(showModal(<BoxDetail box={data} stockId={stockId} />)),
-                },
-                {
-                    name: 'application.edit',
-                    type: 'secondary',
-                    click: (data: BoxListRes) => dispatch(showModal(<Edit id={data.id} stockId={data.stockId} />)),
-                },
-                {
-                    name: 'application.delete',
-                    type: 'danger',
-                    click: (data: BoxListRes) => confirmBoxDelete(data.id),
-                }
-            ],
+            customRender: (value, field, boxData: BoxListRes) => (
+                <>
+                    {(stock?.accessControl === AccessControl.ksm && boxData.controlled) ? <Button type='primary' text='application.manage' click={() => confirmBoxOpen(boxData.id)} /> : undefined}
+                    <Button type='primary' text='application.manage' click={() => dispatch(showModal(<BoxDetail box={boxData} stockId={stockId} />))} />
+                    <Button type='secondary' text='application.edit' click={() => dispatch(showModal(<Edit id={boxData.id} stockId={boxData.stockId} />))} />
+                    <Button type='danger' text='application.delete' click={() => confirmBoxDelete(boxData.id)} />
+                </>
+            )
         });
 
     return (
