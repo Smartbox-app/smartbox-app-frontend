@@ -295,7 +295,7 @@
                 "__type_alias_do_not_touch": "ApiErrorCode.StocksLimitReached"
             },
             "64": {
-                "text": "Zamek jest w uśpiony, naciśnij przycisk na zamku aby go wybudzić.",
+                "text": "Zamek jest uśpiony, naciśnij przycisk na zamku aby go wybudzić.",
                 "__type_alias_do_not_touch": "ApiErrorCode.LockIsInSleepMode"
             }
         }

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { FieldType, boxesList } from 'smartbox-tables';
 import { AccessControl, BoxListRes, IStock } from 'smartbox-types';
 import { Alert, ApiTable } from '../../../../../../../components/Common';
-import { Button } from '../../../../../../../components/Branded';
+import { Button, Spinner } from '../../../../../../../components/Branded';
 import { ButtonsContainer, SimpleHeader } from '../../../../../../../components/Layout';
 import { __ } from '../../../../../../../helpers/i18n';
 import { InteractiveTableSchema } from '../../../../../../../utils/table-schema-utils';
@@ -23,6 +23,7 @@ const List = () => {
     const user = useSelector((state: ApplicationState) => state.user.details!);
     const dispatch = useDispatch();
     const [stock, setStock] = useState<IStock>();
+    const [isLoading, setIsLoading] = useState(false);
     const { stockId } = useParams<{ stockId: string }>();
 
     const getStock = async () => {
@@ -32,6 +33,7 @@ const List = () => {
     }
 
     const deleteBox = async (boxId: string) => {
+        setIsLoading(true);
         await ApiService.callFetch('DELETE', `box/${boxId}`, () => {
             dispatch(successNotification('application.boxDeleted'));
             dispatch(refreshApiTableData());
@@ -39,13 +41,15 @@ const List = () => {
     }
 
     const openBox = async (boxId: string) => {
+        setIsLoading(true);
         await ApiService.callFetch('GET', `box/open/${boxId}`, (isSuccess: boolean) => {
-            if(isSuccess) {
+            if (isSuccess) {
                 dispatch(successNotification('application.boxOpenedSuccessfully'));
             } else {
                 dispatch(errorNotificationText('application.cannotOpenBox'));
             }
         })
+        setIsLoading(false);
     }
 
     const confirmBoxDelete = (boxId: string) => {
@@ -90,16 +94,17 @@ const List = () => {
             mobile: true,
             customRender: (value, field, boxData: BoxListRes) => (
                 <>
-                    {(stock?.accessControl === AccessControl.ksm && boxData.controlled) ? <Button small text='application.openBox' click={() => confirmBoxOpen(boxData.id)} /> : undefined}
-                    <Button small primary text='application.manage' click={() => dispatch(showModal(<BoxDetail box={boxData} stockId={stockId} />))} />
-                    <Button small secondary text='application.edit' click={() => dispatch(showModal(<Edit id={boxData.id} stockId={boxData.stockId} />))} />
-                    <Button small danger text='application.delete' click={() => confirmBoxDelete(boxData.id)} />
+                    {(stock?.accessControl === AccessControl.ksm && boxData.controlled) ? <Button text='application.openBox' click={() => confirmBoxOpen(boxData.id)} /> : undefined}
+                    <Button primary text='application.manage' click={() => dispatch(showModal(<BoxDetail box={boxData} stockId={stockId} />))} />
+                    <Button secondary text='application.edit' click={() => dispatch(showModal(<Edit id={boxData.id} stockId={boxData.stockId} />))} />
+                    <Button danger text='application.delete' click={() => confirmBoxDelete(boxData.id)} />
                 </>
             )
         });
 
     return (
         <>
+            {isLoading && <Spinner overlay halfTransparent />}
             <SimpleHeader title='application.boxesList' />
             <ButtonsContainer>
                 <Button text='application.addBox' primary to={`/${UserService.getSlugByRole(user.role)}/locations/stocks/${stockId}/boxes/add`} />

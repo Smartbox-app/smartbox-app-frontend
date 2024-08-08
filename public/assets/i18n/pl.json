@@ -82,6 +82,12 @@
             "deleteSingleSale": "Czy jesteś pewien, że chcesz usunąć zniżkę?",
             "generalDiscounts": "Rabaty generalne",
             "settings": "Ustawienia",
+            "templates": "Szablony wiadomości",
+            "manageTemplate": "Zarządzaj szablonem",
+            "defaultTemplateUsed": "Domyślny szablon jest wykorzystywany",
+            "templateSet": "Ustawiono własny szablon wiadomości",
+            "templateSaved": "Zapisano szablon",
+            "templatesList": "Lista szablonów",
             "sendSms": "Wyślij SMS",
             "smsSent": "Wysłano SMS",
             "history": "Historia wynajęć:",
@@ -178,10 +184,10 @@
             "showDetail": "Pokaż detale",
             "rentDetail": "Szczegóły najmu",
             "access": "Szczegóły dostępu",
-            "openBoxConfirmation": "Czy na pewno chcesz otworzyć skrzynkę?",
-            "openBox": "Otwórz skrzynkę",
-            "boxOpenedSuccessfully": "Poprawnie otwarto skrzynkę",
-            "cannotOpenBox": "Nie udało się otworzyć skrzynki",
+            "openBoxConfirmation": "Czy na pewno chcesz otworzyć skrytkę?",
+            "openBox": "Otwórz skrytkę",
+            "boxOpenedSuccessfully": "Poprawnie otwarto skrytkę",
+            "cannotOpenBox": "Nie udało się otworzyć skrytki",
             "openGate": "Otwórz bramę",
             "openingGate": "Otwieranie bramy",
             "openGateStuff": "Otwórz bramę zdalnie",
@@ -426,7 +432,8 @@
             "colorToCheck": "Kolor dla magazynu do sprawdzenia",
             "colorOutOfService": "Kolor dla magazynu wyłączonego z użytku",
             "storeId": "StoreID - Identyfikator sklepu dla systemu płatności",
-            "sharedSecret": "SharedSecret - Unikalny klucz dla systemu płatności"
+            "sharedSecret": "SharedSecret - Unikalny klucz dla systemu płatności",
+            "templateImage": "Grafika w wiadomości"
         },
         "settings": {
             "tax": "Stawka VAT",
@@ -473,6 +480,19 @@
             "accountHasBeenActivated": "Konto zostało aktywowane",
             "stockGroupAddedCorrectly": "Dodano nowy plac",
             "stockGroupUpdatedCorrectly": "Zaktualizowano plac"
+        },
+        "templates": {
+            "user_blocked_email": "Użytkownik zablokowany",
+            "user_unblocked_email": "Użytkownik odblokowany",
+            "payment_success_email": "Płatność zakończona sukcesem",
+            "rental_extended_email": "Wynajem przedłużony",
+            "new_rental_email": "Nowy wynajem",
+            "no_payment_email": "Brak płatności",
+            "box_changed_email": "Zmiana schowka przez administratora",
+            "auto_payment_failed_email": "Automatyczna płatność zakończona porażką",
+            "extend_rental_email": "Wynajem wkrótce się kończy",
+            "rental_ends_today_email": "Wynajem kończy się dzisiaj",
+            "account_activated_email": "Konto aktywowane"
         }
     }
 }

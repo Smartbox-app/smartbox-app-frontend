@@ -59,9 +59,9 @@ const SingleRentDetail = ({ showUserStockMap, match }: Props) => {
           <Section highlight>
 
             <SectionHeader title='application.access' />
-            {singleRent.controlled && <OpenBox id={singleRent.boxId} />}
             {singleRent.gates && singleRent.gates.length > 0 && <StyledGatesHeader>Bramy</StyledGatesHeader>}
             {singleRent.gates.map(gate => <Gate key={gate.id} gate={gate} />)}
+            {singleRent.controlled && <OpenBox id={singleRent.boxId} />}
           </Section>
         </>
       ) : (

@@ -28,5 +28,5 @@ export const OpenBox = ({ id }: Props) => {
         setIsOpening(false);
     }
 
-    return <StyledContainer><Button big primary disabled={isOpening} text="application.openBox" click={openBox} /></StyledContainer>
+    return <StyledContainer><Button primary disabled={isOpening} text="application.openBox" click={openBox} /></StyledContainer>
 }
