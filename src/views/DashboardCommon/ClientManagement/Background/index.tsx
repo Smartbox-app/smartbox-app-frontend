@@ -10,7 +10,6 @@ import { ApplicationState } from '../../../../reducers';
 import { successNotification } from '../../../../actions/notifications';
 import { __ } from '../../../../helpers/i18n';
 import { mapFields } from '../../../../utils/fields-mapper';
-import { useTenant } from '../../../../hooks/useTenant';
 
 interface Props {
     userId?: string;
@@ -19,28 +18,14 @@ interface Props {
 const ManageTenantBackground = ({ userId }: Props) => {
     const dispatch = useDispatch();
     const user = useSelector((state: ApplicationState) => state.user.details);
-    const { tenant } = useTenant();
 
     if (!user) return null;
 
     const fetchUrl = user.role === UserRole.admin && userId ? `tenant/form/admin-background/${userId}` : 'tenant/form/background';
     const sendUrl = user.role === UserRole.admin && userId ? `tenant/admin/background/${userId}` : 'tenant/background';
 
-    const deleteImage = async () => {
-        await ApiService.callFetch('DELETE', sendUrl, () => {
-            dispatch(successNotification(__('application.tenantUpdated')));
-            if (!userId && user.tenantId) window.location.reload();
-        })
-    }
-
     const submitButton = (
         <ButtonsContainer>
-            {tenant && tenant.background && <Button
-                type="button"
-                danger
-                text="application.delete"
-                click={deleteImage}
-            />}
             <Button text="application.save" type="submit" primary />
         </ButtonsContainer>
     );

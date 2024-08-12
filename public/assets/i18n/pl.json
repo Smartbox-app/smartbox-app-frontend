@@ -484,15 +484,36 @@
         "templates": {
             "user_blocked_email": "Użytkownik zablokowany",
             "user_unblocked_email": "Użytkownik odblokowany",
+            "user_blocked_sms": "Użytkownik zablokowany",
+            "user_unblocked_sms": "Użytkownik odblokowany",
             "payment_success_email": "Płatność zakończona sukcesem",
             "rental_extended_email": "Wynajem przedłużony",
             "new_rental_email": "Nowy wynajem",
+            "rental_extended_sms": "Wynajem przedłużony",
+            "new_rental_sms": "Nowy wynajem",
             "no_payment_email": "Brak płatności",
             "box_changed_email": "Zmiana schowka przez administratora",
             "auto_payment_failed_email": "Automatyczna płatność zakończona porażką",
             "extend_rental_email": "Wynajem wkrótce się kończy",
             "rental_ends_today_email": "Wynajem kończy się dzisiaj",
-            "account_activated_email": "Konto aktywowane"
+            "no_payment_sms": "Brak płatności",
+            "box_changed_sms": "Zmiana schowka przez administratora",
+            "auto_payment_failed_sms": "Automatyczna płatność zakończona porażką",
+            "extend_rental_sms": "Wynajem wkrótce się kończy",
+            "rental_ends_today_sms": "Wynajem kończy się dzisiaj",
+            "account_activated_sms": "Konto aktywowane",
+            "account_activated_email": "Konto aktywowane",
+
+            "name": "Imię użytkownika",
+            "company": "Nazwa firmy",
+            "phone": "Nr kontaktowy do firmy",
+            "email": "Email kontaktowy do firmy",
+            "number": "Numer skrytki",
+            "cost": "Koszt skrytki",
+            "rentFrom": "Data rozpoczęcia wynajmu",
+            "rentUntil": "Data zakończenia wynajmu",
+            "oldNumber": "Stary numer skrytki",
+            "newNumber": "Nowy numer skrytki"
         }
     }
 }

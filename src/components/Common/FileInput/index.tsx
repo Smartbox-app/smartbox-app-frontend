@@ -4,6 +4,7 @@ import ApiService from '../../../services/api-service';
 import { Button } from '../../Branded/Button';
 import './FileInput.scss';
 import { __ } from '../../../helpers/i18n';
+import { ButtonsContainer } from '../../../components/Layout';
 
 interface Props {
     input: any;
@@ -76,12 +77,12 @@ class FileInput extends React.Component<Props, State> {
                 this.setState({
                     loadedFiles: input.value,
                 });
-            } else if(input.value instanceof Blob) {
+            } else if (input.value instanceof Blob) {
                 this.fileReader.readAsDataURL(input.value);
             } else {
                 this.setState({ cantRender: true })
             }
-           
+
         }
         if (hasImage) {
             this.fetchImage();
@@ -109,10 +110,10 @@ class FileInput extends React.Component<Props, State> {
         }
     };
 
-    private hasImage = () => { 
-        const {hasImage, input} = this.props;
+    private hasImage = () => {
+        const { hasImage, input } = this.props;
         console.log(this.props.label, this.props.hasImage, this.props.input.value)
-        if(!hasImage && Array.isArray(input.value) && input.value.length === 0) return false;
+        if (!hasImage && Array.isArray(input.value) && input.value.length === 0) return false;
         return this.props.hasImage || this.props.input.value;
     }
 
@@ -197,9 +198,21 @@ class FileInput extends React.Component<Props, State> {
                         cantRender: false,
                     });
                 }
-                input.onChange(null);
+                input.onChange(this.state.loadedFiles);
             },
         );
+    };
+
+    private deleteFile = (e: any) => {
+        const { input } = this.props;
+        e.preventDefault();
+        this.setState({
+            currentImg: null,
+            imgFileName: '',
+            cantRender: false,
+        }, () => {
+            input.onChange('');
+        });
     };
 
     render() {
@@ -213,7 +226,7 @@ class FileInput extends React.Component<Props, State> {
             <div className="img-preview-wrapper">
                 {loadedType === 'image' && <img className="img-preview" src={this.state.currentImg} />}
                 {loadedFiles.length === 0 && <p className="file-name">{this.state.imgFileName}</p>}
-                {!cantRender && input.value && loadedFiles.length === 0 && (
+                {!cantRender && input.value && loadedType !== 'image' && loadedFiles.length === 0 && (
                     <img className="img-preview" src={this.props.input.value} />
                 )}
                 {cantRender && input.value && <p>{input.value}</p>}
@@ -284,6 +297,9 @@ class FileInput extends React.Component<Props, State> {
                         </div>
                     </div>
                 </label>
+                {!multiple && loadedFiles.length === 0 && input.value && <ButtonsContainer>
+                    <Button text='application.delete' danger type='button' click={this.deleteFile} />
+                </ButtonsContainer>}
 
                 <ul>
                     {loadedFiles.map((file, index) => (

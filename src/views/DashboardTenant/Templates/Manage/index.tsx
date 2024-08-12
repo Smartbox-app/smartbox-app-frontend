@@ -10,6 +10,29 @@ import { successNotification } from '../../../../actions/notifications';
 import { formOnTranslateString } from '../../../../utils/trans-form';
 import { hideModal } from '../../../../actions/modal';
 import { TemplateType } from 'smartbox-types';
+import { __ } from '../../../../helpers/i18n';
+
+const allowedTags = {
+    [TemplateType.ACCOUNT_ACTIVATED_EMAIL]: ["name"],
+    [TemplateType.USER_BLOCKED_EMAIL]: ["name", "phone", "email"],
+    [TemplateType.USER_UNBLOCKED_EMAIL]: ["name", "company"],
+    [TemplateType.RENTAL_EXTENDED_MAIL]: ["name", "number", "rentUntil", "cost"],
+    [TemplateType.NEW_RENTAL_MAIL]: ["name", "number", "rentFrom", "rentUntil", "cost"],
+    [TemplateType.NO_PAYMENT_EMAIL]: ["name", "company"],
+    [TemplateType.BOX_CHANGED_EMAIL]: ["name", "oldNumber", "newNumber"],
+    [TemplateType.AUTO_PAYMENT_FAILED_EMAIL]: ["name", "company"],
+    [TemplateType.EXTEND_RENTAL_EMAIL]: ["name", "rentUntil", "number", "company"],
+    [TemplateType.RENTAL_ENDS_TODAY_EMAIL]: ["name", "number", "company"],
+    [TemplateType.USER_BLOCKED_SMS]: ["name", "phone", "email"],
+    [TemplateType.USER_UNBLOCKED_SMS]: ["name", "company",],
+    [TemplateType.NEW_RENTAL_SMS]: ["name", "number", "rentFrom", "rentUntil", "cost"],
+    [TemplateType.RENTAL_EXTENDED_SMS]: ["name", "number", "rentUntil", "cost"],
+    [TemplateType.NO_PAYMENT_SMS]: ["name", "company"],
+    [TemplateType.BOX_CHANGED_SMS]: ["name", "oldNumber", "newNumber"],
+    [TemplateType.AUTO_PAYMENT_FAILED_SMS]: ["name", "company",],
+    [TemplateType.EXTEND_RENTAL_SMS]: ["name", "rentUntil", "number", "company"],
+    [TemplateType.RENTAL_ENDS_TODAY_SMS]: ["name", "number", "company"],
+}
 
 export const Manage = () => {
     const { type, template } = useParams<{ type: 'email' | 'sms', template: TemplateType }>();
@@ -26,14 +49,19 @@ export const Manage = () => {
     const fetchUrl = `template/form-${type}/${template}`;
     const sendUrl = `template/${type}/${template}`;
 
+    const tagsToUse = allowedTags[template];
+
     return (
         <FormContainer>
             <FormHeader title="application.manageTemplate" />
+            <ul>
+                {tagsToUse.map(tag => <li key={tag}><strong>{`{{${tag}}}`}</strong> - {__(`templates.${tag}`)}</li>)}
+            </ul>
             <ItfApiForm
                 formId="manageTemplate"
                 schemaCacheEnabled={false}
                 schemaMayBeDynamic={true}
-                useFormDataInsteadOfPlainObject
+                useFormDataInsteadOfPlainObject={type === 'email'}
                 loadingInfo={<Spinner transparent />}
                 schemaFetcher={() => ApiService.loadForm(fetchUrl)}
                 sendFetcher={(formId: string, values) => {

@@ -9,7 +9,6 @@ const emailTemplates = [
     TemplateType.ACCOUNT_ACTIVATED_EMAIL,
     TemplateType.USER_BLOCKED_EMAIL,
     TemplateType.USER_UNBLOCKED_EMAIL,
-    TemplateType.PAYMENT_SUCCESS_EMAIL,
     TemplateType.RENTAL_EXTENDED_MAIL,
     TemplateType.NEW_RENTAL_MAIL,
     TemplateType.NO_PAYMENT_EMAIL,
@@ -17,6 +16,18 @@ const emailTemplates = [
     TemplateType.AUTO_PAYMENT_FAILED_EMAIL,
     TemplateType.EXTEND_RENTAL_EMAIL,
     TemplateType.RENTAL_ENDS_TODAY_EMAIL,
+]
+
+const smsTemplates = [
+    TemplateType.USER_BLOCKED_SMS,
+    TemplateType.USER_UNBLOCKED_SMS,
+    TemplateType.NEW_RENTAL_SMS,
+    TemplateType.RENTAL_EXTENDED_SMS,
+    TemplateType.NO_PAYMENT_SMS,
+    TemplateType.BOX_CHANGED_SMS,
+    TemplateType.AUTO_PAYMENT_FAILED_SMS,
+    TemplateType.EXTEND_RENTAL_SMS,
+    TemplateType.RENTAL_ENDS_TODAY_SMS,
 ]
 
 export const List = () => {
@@ -32,7 +43,7 @@ export const List = () => {
 
     const isSet = (templateToCheck: TemplateType) => {
         const found = allTemplates.find(template => template.type === templateToCheck);
-        if(!found) return false;
+        if (!found) return false;
         return !!found.content;
     }
 
@@ -44,11 +55,18 @@ export const List = () => {
         <>
             <PageHeader title='application.templatesList' />
             {isLoading && <Spinner overlay />}
-            {!isLoading && <ul>
-                {emailTemplates.map(template => (
-                    <SingleTemplate key={template} type='email' template={template} isSet={isSet(template)} />
-                ))}
-            </ul>}
+            {!isLoading && <>
+                <ul>
+                    {emailTemplates.map(template => (
+                        <SingleTemplate key={template} type='email' template={template} isSet={isSet(template)} />
+                    ))}
+                </ul>
+                <ul>
+                    {smsTemplates.map(template => (
+                        <SingleTemplate key={template} type='sms' template={template} isSet={isSet(template)} />
+                    ))}
+                </ul>
+            </>}
         </>
     )
 }
