@@ -98,6 +98,7 @@ const Manage = () => {
                 <Route path={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/:stockId/boxes`} component={Boxes} />
                 <Route path={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/:stockId/groups`} component={Groups} />
                 <Route path={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/:stockId/discounts`} component={Discounts} />
+                <Route path={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/:stockId/addons`} component={Addons} />
                 {isMapActive && <Route path={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/:stockId/map`} component={Map} />}
                 {isMapActive && <Route path={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/:stockId/handling`} component={Handling} />}
                 {tenant?.allowAddonsToRent && <Route path={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/:stockId/addons`} component={Addons} />}

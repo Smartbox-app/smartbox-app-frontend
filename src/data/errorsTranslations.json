@@ -228,7 +228,7 @@
             },
             "47": {
                 "text": "Wymagane jest określenie przynajmniej jednego okresu!",
-                "__type_alias_do_not_touch": "ApiErrorCode.NeedAtLestOnePricingPeriod"
+                "__type_alias_do_not_touch": "ApiErrorCode.NeedAtLeastOnePricingPeriod"
             },
             "48": {
                 "text": "Okresy oraz ceny muszą być ustawione w kolejności rosnącej!",
@@ -297,6 +297,10 @@
             "64": {
                 "text": "Zamek jest uśpiony, naciśnij przycisk na zamku aby go wybudzić.",
                 "__type_alias_do_not_touch": "ApiErrorCode.LockIsInSleepMode"
+            },
+            "65": {
+                "text": "Wymagane jest określenie przynajmniej jednego wariantu dodatku!",
+                "__type_alias_do_not_touch": "ApiErrorCode.NeedAtLeastOneAddonVariant"
             }
         }
     }
