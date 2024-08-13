@@ -20,8 +20,10 @@ import './StepDuration.scss';
 
 import styled from 'styled-components';
 import { calculatePrice, setRentEndDate, setRentStartDate } from '../../../../../actions/order';
+import { Addons } from './Addons';
 
 const StyledCalendarPicker = styled.div`
+margin: 0 -10px;
 .flatpickr-day {
     &.today {
 border-color: ${props => props.theme.colors.primary};
@@ -153,6 +155,9 @@ const StepDuration = ({
                         }}
                     />
                 </StyledCalendarPicker>
+
+                <Addons />
+
                 <Price countedPrice={calculatedPrice.value} isGross={calculatedPrice.isGross} />
                 <ButtonsContainer max>
                     <Button outline text='application.back' to={`/${UserService.getSlugByRole(user.role)}/order/step/stock/${match.params.rentId || ''}`} disabled={!!match.params.rentId} />

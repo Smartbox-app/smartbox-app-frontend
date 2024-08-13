@@ -29,6 +29,7 @@ interface Props {
 }
 
 const StyledContainer = styled.div`
+padding: 10px;
 &.big {
   .flatpickr-input {
         border: 2px solid ${props => props.theme.colors.primary};
@@ -39,6 +40,10 @@ const StyledContainer = styled.div`
         border-bottom: 2px solid ${props => props.theme.colors.primary};
     }
 }
+
+.flatpickr-calendar {
+  margin: 10px auto;
+  }
 `
 
 const DateInput = ({ name, value, onChange, label, errors, minDate, maxDate, big, register, inline = true }: Props) => {
