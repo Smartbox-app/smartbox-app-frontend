@@ -46,7 +46,7 @@ const StepSummary = ({
 }: Props) => {
     const dispatch = useDispatch();
     const [invoiceNeeded, setInvoiceNeeded] = useState(false);
-    const { calculatedPrice, calculatedPriceDetails, loadingPrice, discountCode, stockId, boxGroupId, startDate, endDate } = useSelector((state: ApplicationState) => state.order);
+    const { calculatedPrice, addons, orderAddons, loadingPrice, discountCode, stockId, boxGroupId, startDate, endDate } = useSelector((state: ApplicationState) => state.order);
     const user = useSelector((state: ApplicationState) => state.user.details!);
     const { step, rentId } = useParams<{ step: string, rentId: string }>();
     const isFirstRent = user && !user.rentCount;
@@ -176,7 +176,7 @@ const StepSummary = ({
             {loadingPrice && <Spinner overlay halfTransparent />}
             <DiscountsList stockId={stockId} />
             <FormHeader title="application.orderSummary" />
-            <SummaryTable dateStart={startDate} dateEnd={endDate} countedPrice={calculatedPrice} />
+            <SummaryTable dateStart={startDate} dateEnd={endDate} countedPrice={calculatedPrice} addons={addons} orderAddons={orderAddons} />
             {/* {calculatedPrice > 0 && <PaymentMethods register={register} />} */}
 
             <TenantDetailsForm register={register} control={control} errors={errors} disabled={!isFirstRent} />

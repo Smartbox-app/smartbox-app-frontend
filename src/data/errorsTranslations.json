@@ -301,6 +301,10 @@
             "65": {
                 "text": "Wymagane jest określenie przynajmniej jednego wariantu dodatku!",
                 "__type_alias_do_not_touch": "ApiErrorCode.NeedAtLeastOneAddonVariant"
+            },
+            "66": {
+                "text": "Nie wybrano wymaganego dodatku!",
+                "__type_alias_do_not_touch": "ApiErrorCode.RequiredAddonNotSelected"
             }
         }
     }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useForm, Controller, FormContext } from 'react-hook-form';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
@@ -19,7 +19,7 @@ import Price from './Price';
 import './StepDuration.scss';
 
 import styled from 'styled-components';
-import { calculatePrice, setRentEndDate, setRentStartDate } from '../../../../../actions/order';
+import { calculateAddonPrice, calculatePrice, setRentEndDate, setRentStartDate } from '../../../../../actions/order';
 import { Addons } from './Addons';
 
 const StyledCalendarPicker = styled.div`
@@ -61,13 +61,26 @@ const StepDuration = ({
 
     const minRentPeriod = useSelector((state: ApplicationState) => state.order.minRentPeriod);
     const boxGroupId = useSelector((state: ApplicationState) => state.order.boxGroupId);
-    const { startDate, endDate, calculatedPrice, loadingPrice } = useSelector((state: ApplicationState) => state.order);
+    const { startDate, endDate, loadingPrice, orderAddons, orderAddonsId } = useSelector((state: ApplicationState) => state.order);
     const [loading, setLoading] = useState<boolean>(false);
 
     useEffect(() => {
         setLoading(true);
         dispatch(calculatePrice(boxGroupId, startDate, endDate));
+        calculateAllAddons();
     }, [startDate, endDate]);
+
+    useEffect(() => {
+        calculateAllAddons();
+    }, [orderAddonsId])
+
+    const calculateAllAddons = () => {
+        Object.keys(orderAddons).forEach(addonId => {
+            const addon = orderAddons[addonId];
+            if (addon.selectedVariant) dispatch(calculateAddonPrice(addonId, startDate, endDate, addon.selectedVariant));
+        })
+
+    }
 
     const setMinDate = (addAmount = 0, end?: boolean) =>
         match.params.rentId
@@ -111,6 +124,16 @@ const StepDuration = ({
 
     const { register, control } = useForm({ defaultValues });
     const methods = useForm();
+
+    const allRequiredAddonsSelected = useMemo(() => {
+        const addonIds = Object.keys(orderAddons);
+
+        for (let addonId of addonIds) {
+            if (orderAddons[addonId].required && !orderAddons[addonId].selectedVariant) return false;
+        }
+
+        return true;
+    }, [orderAddons])
 
     if (!user) return null;
 
@@ -158,10 +181,10 @@ const StepDuration = ({
 
                 <Addons />
 
-                <Price countedPrice={calculatedPrice.value} isGross={calculatedPrice.isGross} />
+                <Price />
                 <ButtonsContainer max>
                     <Button outline text='application.back' to={`/${UserService.getSlugByRole(user.role)}/order/step/stock/${match.params.rentId || ''}`} disabled={!!match.params.rentId} />
-                    <Button to={`/${UserService.getSlugByRole(user.role)}/order/step/summary/${match.params.rentId || ''}`} primary text='application.next' />
+                    <Button to={`/${UserService.getSlugByRole(user.role)}/order/step/summary/${match.params.rentId || ''}`} primary text='application.next' disabled={!allRequiredAddonsSelected} />
                 </ButtonsContainer>
             </form>
         </FormContext>

@@ -1,12 +1,15 @@
 import { addDays } from 'date-fns';
 import {
+  AddonRes,
   BoxGroupAvailability,
+  CalculatedAddonPriceRes,
   CalculatedPriceRes,
   PaymentStatus,
   PaymentType,
 } from 'smartbox-types';
 import { FormType } from '../types/order-form';
 import { __ } from "../helpers/i18n";
+import uuid from 'uuid';
 
 export type PaymentMethodDetail = {
   id: string;
@@ -15,6 +18,12 @@ export type PaymentMethodDetail = {
   banks: string;
   main_bank_id: string;
 };
+
+export type OrderAddon = {
+  required: boolean;
+  selectedVariant: string | null;
+  price: { value: number, isGross: boolean } | null;
+}
 
 export type OrderState = {
   // refactored
@@ -26,6 +35,15 @@ export type OrderState = {
   calculatedPrice: { value: number, isGross: boolean },
   loadingPrice: boolean;
   discountCode: string;
+  // for displaying
+  addons: AddonRes[];
+  // for manipulation like selecting, veryfing if selected etc
+  orderAddons: {
+    [addonId: string]: OrderAddon
+  };
+  // to control price refreshing - to know when something in the addons changed
+  orderAddonsId: string;
+  loadingAddons: boolean;
   // @TODO FIX
   calculatedPriceDetails: any[];
   //
@@ -39,6 +57,7 @@ export type OrderState = {
   blikPaymentCompletedSuccessfully: boolean;
   selectedPayment: PaymentType;
   selectedPaymentMethodDetail: PaymentMethodDetail;
+
 };
 
 interface SetOrderStock {
@@ -71,6 +90,11 @@ interface SetCalculatedPrice {
   payload: CalculatedPriceRes;
 }
 
+interface SetCalculatedAddonPrice {
+  type: 'CALCULATE_VARIANT_PRICE_SUCCESS';
+  payload: CalculatedAddonPriceRes;
+}
+
 interface LoadingPrice {
   type: 'LOADING_PRICE';
   payload: boolean;
@@ -92,6 +116,21 @@ interface SentRentBoxRequestSuccess {
 interface FetchBoxAvailability {
   type: 'FETCH_BOX_AVAILABILITY_SUCCESS';
   payload: BoxGroupAvailability[];
+}
+
+interface FetchAddons {
+  type: 'FETCH_ADDONS_SUCCESS';
+  payload: AddonRes[];
+}
+
+interface LoadingAddons {
+  type: 'LOADING_ADDONS';
+  payload: boolean;
+}
+
+interface SelectAddon {
+  type: 'SELECT_ADDON';
+  payload: { addonId: string, variantId: string | null }
 }
 
 interface FormReaded {
@@ -150,8 +189,11 @@ type Action =
   | SetRentStartDate
   | SetRentEndDate
   | SetCalculatedPrice
+  | SetCalculatedAddonPrice
   | LoadingPrice
   | SetDiscountCode
+  | LoadingAddons
+  | SelectAddon
   //
   | FormStepSuccess
   | FetchBoxAvailability
@@ -164,8 +206,10 @@ type Action =
   | SentExtendRentRequestSuccess
   | ClearOrderFormAgreementSuccess
   | ClearOrder
+  | FetchAddons
   | ResetDiscountCode
-  | BlikPaymentFinishSuccess;
+  | BlikPaymentFinishSuccess
+
 
 const initialState: OrderState = {
   // refactored
@@ -178,6 +222,10 @@ const initialState: OrderState = {
   calculatedPriceDetails: [],
   loadingPrice: false,
   discountCode: '',
+  addons: [],
+  orderAddons: {},
+  loadingAddons: false,
+  orderAddonsId: '',
   //
   formData: {
     durationInDays: 7,
@@ -261,10 +309,34 @@ export default (state: OrderState = initialState, action: Action): OrderState =>
       }
     }
 
+    case 'CALCULATE_VARIANT_PRICE_SUCCESS': {
+      const { addonId, variantId, price } = action.payload;
+
+      if (!state.orderAddons[addonId] || state.orderAddons[addonId].selectedVariant !== variantId) return state;
+
+      return {
+        ...state,
+        orderAddons: {
+          ...state.orderAddons,
+          [addonId]: {
+            ...state.orderAddons[addonId],
+            price
+          }
+        }
+      }
+    }
+
     case 'LOADING_PRICE': {
       return {
         ...state,
         loadingPrice: action.payload
+      }
+    }
+
+    case 'LOADING_ADDONS': {
+      return {
+        ...state,
+        loadingAddons: action.payload
       }
     }
 
@@ -330,6 +402,40 @@ export default (state: OrderState = initialState, action: Action): OrderState =>
         boxAvailability: action.payload,
       };
     }
+
+    case 'FETCH_ADDONS_SUCCESS': {
+      const orderAddons: { [addonId: string]: OrderAddon } = {};
+
+      action.payload.forEach(addon => {
+        orderAddons[addon.id] = {
+          required: addon.required,
+          selectedVariant: null,
+          price: null,
+        }
+      })
+      return {
+        ...state,
+        addons: action.payload,
+        orderAddons
+      };
+    }
+
+    case 'SELECT_ADDON': {
+      const { addonId, variantId } = action.payload;
+      if (!state.orderAddons[addonId]) return state;
+      return {
+        ...state,
+        orderAddonsId: uuid.v4(),
+        orderAddons: {
+          ...state.orderAddons,
+          [addonId]: {
+            ...state.orderAddons[addonId],
+            selectedVariant: variantId
+          }
+        }
+      }
+    }
+
     case 'FORM_AGREEMENT_READED_SUCCESS': {
       return {
         ...state,

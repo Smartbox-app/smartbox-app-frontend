@@ -9,6 +9,7 @@ import { ButtonsContainer, FormContainer, Section, SimpleHeader } from '../../..
 import { Button, Spinner } from '../../../../../../../components/Branded';
 import { __ } from '../../../../../../../helpers/i18n';
 import { successNotification } from '../../../../../../../actions/notifications';
+import uuid from 'uuid';
 
 const StyledSinglePricing = styled.div`
 display: flex;
@@ -39,16 +40,16 @@ const Pricing = () => {
     }
 
     const addVariant = () => {
-        setVariants(prevVariants => [...prevVariants, { name: '', pricing: [] }])
+        setVariants(prevVariants => [...prevVariants, { name: '', pricing: [], id: uuid.v4() }])
     }
 
-    const deleteVariant = (indexToDelete: number) => {
-        setVariants(prevVariants => prevVariants.filter((variant, index) => index !== indexToDelete))
+    const deleteVariant = (idToDelete: string) => {
+        setVariants(prevVariants => prevVariants.filter((variant) => variant.id !== idToDelete))
     }
 
-    const updateVariantName = (variantIndex: number, name: string) => {
-        setVariants(prevVariants => prevVariants.map((variant, index) => {
-            if (index === variantIndex) return ({
+    const updateVariantName = (variantId: string, name: string) => {
+        setVariants(prevVariants => prevVariants.map((variant) => {
+            if (variant.id === variantId) return ({
                 ...variant,
                 name
             })
@@ -56,12 +57,12 @@ const Pricing = () => {
         }))
     }
 
-    const addPricing = (variantIndex: number) => {
-        const updatedVariants = variants.map((variant, index) => {
-            if (index === variantIndex) {
+    const addPricing = (variantId: string) => {
+        const updatedVariants = variants.map((variant) => {
+            if (variant.id === variantId) {
                 return ({
                     ...variant,
-                    pricing: [...variant.pricing, { type: AddonPricingType.Year, quantity: 1, price: 0 }]
+                    pricing: [...variant.pricing, { type: AddonPricingType.Year, quantity: 1, price: 0, id: uuid.v4() }]
                 })
             }
             return ({
@@ -72,12 +73,12 @@ const Pricing = () => {
         setVariants(updatedVariants)
     }
 
-    const deletePricing = (variantIndex: number, indexToDelete: number) => {
-        const updatedVariants = variants.map((variant, index) => {
-            if (index === variantIndex) {
+    const deletePricing = (variantId: string, idToDelete: string) => {
+        const updatedVariants = variants.map((variant) => {
+            if (variant.id === variantId) {
                 return ({
                     ...variant,
-                    pricing: variant.pricing.filter((pricing, index) => index !== indexToDelete)
+                    pricing: variant.pricing.filter((pricing) => pricing.id !== idToDelete)
                 })
             }
             return ({
@@ -88,15 +89,15 @@ const Pricing = () => {
         setVariants(updatedVariants)
     }
 
-    const updatePrice = (variantIndex: number, indexToChange: number, e: ChangeEvent<HTMLInputElement>) => {
+    const updatePrice = (variantId: string, idToChange: string, e: ChangeEvent<HTMLInputElement>) => {
         const { value } = e.target;
 
-        const updatedVariants = variants.map((variant, index) => {
-            if (index === variantIndex) {
+        const updatedVariants = variants.map((variant) => {
+            if (variant.id === variantId) {
                 return ({
                     ...variant,
-                    pricing: variant.pricing.map((pricing, index) => {
-                        if (indexToChange === index) return {
+                    pricing: variant.pricing.map((pricing) => {
+                        if (pricing.id === idToChange) return {
                             ...pricing,
                             price: !value && value !== "0" ? null : Number(value)
                         }
@@ -112,15 +113,15 @@ const Pricing = () => {
         setVariants(updatedVariants)
     }
 
-    const updateQuantity = (variantIndex: number, indexToChange: number, e: ChangeEvent<HTMLInputElement>) => {
+    const updateQuantity = (variantId: string, idToChange: string, e: ChangeEvent<HTMLInputElement>) => {
         const { value } = e.target;
 
-        const updatedVariants = variants.map((variant, index) => {
-            if (index === variantIndex) {
+        const updatedVariants = variants.map((variant) => {
+            if (variant.id === variantId) {
                 return ({
                     ...variant,
-                    pricing: variant.pricing.map((pricing, index) => {
-                        if (indexToChange === index) return {
+                    pricing: variant.pricing.map((pricing) => {
+                        if (pricing.id === idToChange) return {
                             ...pricing,
                             quantity: !value && value !== "0" ? null : Number(value)
                         }
@@ -136,13 +137,13 @@ const Pricing = () => {
         setVariants(updatedVariants)
     }
 
-    const updateType = (variantIndex: number, indexToChange: number, type: AddonPricingType) => {
-        const updatedVariants = variants.map((variant, index) => {
-            if (index === variantIndex) {
+    const updateType = (variantId: string, idToChange: string, type: AddonPricingType) => {
+        const updatedVariants = variants.map((variant) => {
+            if (variant.id === variantId) {
                 return ({
                     ...variant,
-                    pricing: variant.pricing.map((pricing, index) => {
-                        if (indexToChange === index) return {
+                    pricing: variant.pricing.map((pricing) => {
+                        if (pricing.id === idToChange) return {
                             ...pricing,
                             type
                         }
@@ -197,67 +198,68 @@ const Pricing = () => {
             ]} />
             <h4>{__('application.addonVariants')}</h4>
             {(!variants || variants.length === 0) && <Alert type='notice' text='application.noAddonVariantsSet' />}
-            {variants.map((variant, variantIndex) => (<Section highlight key={variantIndex}>
-                <StyledVariantData>
-                    <Input type='text' input={{
-                        label: 'application.addonName',
-                        name: `addon_name_${variantIndex}`,
-                        value: variant.name,
-                        onChange: (value: ChangeEvent<HTMLInputElement>) => updateVariantName(variantIndex, value.target.value)
-                    }} />
-                    {variants.length > 1 && <Button danger text='application.delete' click={() => deleteVariant(variantIndex)} />}
-                </StyledVariantData>
-                <h5>{__('application.addonVariantPricing')} - {variant.name}</h5>
+            {variants.map((variant) => (
+                <Section highlight key={variant.id}>
+                    <StyledVariantData>
+                        <Input type='text' input={{
+                            label: 'application.addonName',
+                            name: `addon_name_${variant.id}`,
+                            value: variant.name,
+                            onChange: (value: ChangeEvent<HTMLInputElement>) => updateVariantName(variant.id, value.target.value)
+                        }} />
+                        {variants.length > 1 && <Button danger text='application.delete' click={() => deleteVariant(variant.id)} />}
+                    </StyledVariantData>
+                    <h5>{__('application.addonVariantPricing')} - {variant.name}</h5>
 
-                {(!variant.pricing || variant.pricing.length === 0) && <Alert type='notice' text='application.noAddonVariantPricingSet' />}
-                {variant.pricing && <ul>
-                    {variant.pricing.map((singlePricing, index: number) => <li key={index}>
-                        <StyledSinglePricing>
-                            <InputSelect label='application.periodType'
-                                name={`type_${variantIndex}_${index}`}
-                                placeholder='application.select'
-                                value={singlePricing.type}
-                                options={[
-                                    {
-                                        value: AddonPricingType.Day,
-                                        label: __('application.day'),
-                                    },
-                                    {
-                                        value: AddonPricingType.Week,
-                                        label: __('application.week'),
-                                    },
-                                    {
-                                        value: AddonPricingType.Month,
-                                        label: __('application.month'),
-                                    },
-                                    {
-                                        value: AddonPricingType.Year,
-                                        label: __('application.year'),
-                                    },
-                                ]}
-                                onChange={(value: AddonPricingType) => updateType(variantIndex, index, value)}
-                            />
-                            <Input type='number' input={{
-                                label: 'application.quantity',
-                                name: `quantity_${variantIndex}_${index}`,
-                                value: singlePricing.quantity,
-                                onChange: (value: ChangeEvent<HTMLInputElement>) => updateQuantity(variantIndex, index, value)
-                            }} />
-                            <Input type='number' input={{
-                                label: 'application.netPrice',
-                                name: `price_${variantIndex}_${index}`,
-                                value: singlePricing.price,
-                                onChange: (value: ChangeEvent<HTMLInputElement>) => updatePrice(variantIndex, index, value)
-                            }} />
-                            {variant.pricing.length > 1 && <Button danger text='application.delete' click={() => deletePricing(variantIndex, index)} />}
-                        </StyledSinglePricing>
-                    </li>)}
-                </ul>}
-                <ButtonsContainer>
-                    <Button text='application.add' click={() => addPricing(variantIndex)} />
-                </ButtonsContainer>
+                    {(!variant.pricing || variant.pricing.length === 0) && <Alert type='notice' text='application.noAddonVariantPricingSet' />}
+                    {variant.pricing && <ul>
+                        {variant.pricing.map((singlePricing) => <li key={singlePricing.id}>
+                            <StyledSinglePricing>
+                                <InputSelect label='application.periodType'
+                                    name={`type_${variant.id}_${singlePricing.id}`}
+                                    placeholder='application.select'
+                                    value={singlePricing.type}
+                                    options={[
+                                        {
+                                            value: AddonPricingType.Day,
+                                            label: __('application.day'),
+                                        },
+                                        {
+                                            value: AddonPricingType.Week,
+                                            label: __('application.week'),
+                                        },
+                                        {
+                                            value: AddonPricingType.Month,
+                                            label: __('application.month'),
+                                        },
+                                        {
+                                            value: AddonPricingType.Year,
+                                            label: __('application.year'),
+                                        },
+                                    ]}
+                                    onChange={(value: AddonPricingType) => updateType(variant.id, singlePricing.id, value)}
+                                />
+                                <Input type='number' input={{
+                                    label: 'application.quantity',
+                                    name: `quantity_${variant.id}_${singlePricing.id}`,
+                                    value: singlePricing.quantity,
+                                    onChange: (value: ChangeEvent<HTMLInputElement>) => updateQuantity(variant.id, singlePricing.id, value)
+                                }} />
+                                <Input type='number' input={{
+                                    label: 'application.netPrice',
+                                    name: `price_${variant.id}_${singlePricing.id}`,
+                                    value: singlePricing.price,
+                                    onChange: (value: ChangeEvent<HTMLInputElement>) => updatePrice(variant.id, singlePricing.id, value)
+                                }} />
+                                {variant.pricing.length > 1 && <Button danger text='application.delete' click={() => deletePricing(variant.id, singlePricing.id)} />}
+                            </StyledSinglePricing>
+                        </li>)}
+                    </ul>}
+                    <ButtonsContainer>
+                        <Button text='application.add' click={() => addPricing(variant.id)} />
+                    </ButtonsContainer>
 
-            </Section>
+                </Section>
 
             ))}
             <ButtonsContainer>

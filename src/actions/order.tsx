@@ -185,3 +185,32 @@ export const calculatePrice = (boxGroupId: string, start: Date, end: Date, code?
     'LOADING_PRICE',
   );
 };
+
+export const calculateAddonPrice = (addonId: string, start: Date, end: Date, variantId: string) => async (
+  dispatch: any,
+) => {
+  await ApiService.get(
+    dispatch,
+    'CALCULATE_VARIANT_PRICE_SUCCESS',
+    'CALCULATE_VARIANT_PRICE_FAILED',
+    null,
+    null,
+    `addon/price/${addonId}/${start.toISOString()}/${end.toISOString()}/${variantId}`,
+    'LOADING_VARIANT_PRICE',
+  );
+};
+
+export const fetchAddons = (stockId: string) => async (dispatch: any) => {
+  await ApiService.get(
+    dispatch,
+    'FETCH_ADDONS_SUCCESS',
+    'FETCH_ADDONS_FAILED',
+    null,
+    null,
+    `addon/all/${stockId}`,
+    'LOADING_ADDONS'
+  );
+};
+
+
+export const selectAddon = (addonId: string, variantId: string | null) => ({ type: 'SELECT_ADDON', payload: { addonId, variantId } })

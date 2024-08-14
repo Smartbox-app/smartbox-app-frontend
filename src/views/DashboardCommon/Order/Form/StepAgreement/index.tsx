@@ -4,7 +4,7 @@ import { RouteComponentProps, withRouter } from 'react-router-dom';
 
 import { bindActionCreators } from 'redux';
 import { connect, useSelector } from 'react-redux';
-import { RentBoxReq, UserRole, UserRes, ExtendRentalReq } from 'smartbox-types';
+import { RentBoxReq, UserRole, UserRes, ExtendRentalReq, OrderAddons } from 'smartbox-types';
 import { PaymentType } from 'smartbox-types';
 import { Alert } from '../../../../../components/Common';
 import { Button } from '../../../../../components/Branded';
@@ -22,6 +22,7 @@ import { ApplicationState } from '../../../../../reducers';
 import './StepAgreement.scss';
 import ApiService from '../../../../../services/api-service';
 import { getCorrectPriceWithTax, getCorrectTaxPercentAmount } from '../../../../../utils/tax';
+import { OrderAddon } from 'src/reducers/order-reducer';
 
 interface RouteProps {
     step: string;
@@ -51,23 +52,42 @@ const StepSummary = ({
     const order = useSelector((state: ApplicationState) => state.order);
     const tenant = useSelector((state: ApplicationState) => state.tenant);
     useEffect(() => {
-        if(!user) return;
+        if (!user) return;
         if (!order.boxGroupId) {
             history.push(`/${UserService.getSlugByRole(user.role)}/order/step/stock`);
         }
     }, []);
 
     const getCorrectPrice = (price: number, isGross: boolean, tax: string) => {
-        if(isGross) return price;
+        if (isGross) return price;
         const taxValue = getCorrectTaxPercentAmount(tax);
 
-        return getCorrectPriceWithTax(price, taxValue); 
+        return getCorrectPriceWithTax(price, taxValue);
+    }
+
+    const getAddonsWithCorrectPrice = (orderAddons: { [addonId: string]: OrderAddon }, tax: string): OrderAddons => {
+        const parsedAddons: OrderAddons = {};
+        const taxValue = getCorrectTaxPercentAmount(tax);
+
+        Object.keys(orderAddons).forEach(addonId => {
+            const addon = orderAddons[addonId];
+
+            if (addon.price?.value && addon.selectedVariant) {
+                parsedAddons[addonId] = {
+                    price: addon.price.isGross ? addon.price.value : getCorrectPriceWithTax(addon.price.value, taxValue),
+                    selectedVariant: addon.selectedVariant
+
+                }
+            }
+        })
+
+        return parsedAddons;
     }
 
     const { handleSubmit } = useForm();
 
     const onSubmit = (data: any) => {
-        if(!user) return;
+        if (!user) return;
         const commonCollection = {
             finishAt: order.endDate,
             cost: getCorrectPrice(order.calculatedPrice.value, order.calculatedPrice.isGross, tenant!.tax),
@@ -85,6 +105,7 @@ const StepSummary = ({
             companyCity: formData.companyCity || '',
             companyPostCode: formData.companyPostCode || '',
             nip: formData.nip || '',
+            orderAddons: getAddonsWithCorrectPrice(order.orderAddons, tenant!.tax)
         };
 
         const dataCollectionExtendRent: ExtendRentalReq = {
@@ -111,10 +132,10 @@ const StepSummary = ({
     };
 
     const onBack = () => {
-        if(!user) return;
+        if (!user) return;
         history.push(`/${UserService.getSlugByRole(user.role)}/order/step/summary/${match.params.rentId || ''}`);
     };
-    if(!tenant) return null;
+    if (!tenant) return null;
     const desktop = window.matchMedia('(min-width: 920px)').matches;
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -127,7 +148,7 @@ const StepSummary = ({
                     type="application/pdf"
                 />
             )}
-            <Button primary blank to={`${ApiService.url}tenant/agreement/${tenant.id}`} text='Kliknij aby otworzyć regulamin'/>
+            <Button primary blank to={`${ApiService.url}tenant/agreement/${tenant.id}`} text='Kliknij aby otworzyć regulamin' />
             <span className="separator" />
             <ScrollPosition />
             <Alert type="notice" text="application.orderAgreementAcceptation" />
