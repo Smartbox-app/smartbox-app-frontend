@@ -34,6 +34,5 @@ export const PaymentForm = () => {
         <ButtonsContainer className='payment-form-button'>
             <Button big type="submit" primary text="application.pay" />
         </ButtonsContainer>
-        <LockInfo />
     </form>
 }

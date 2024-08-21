@@ -46,7 +46,6 @@ const BankForm = ({ func, paymentId, sentExecutePaymentWithTpayRequest, bankGrou
           <div className="bank-input-wrapper">
             <div dangerouslySetInnerHTML={{ __html: func || '' }} />
           </div>
-          <LockInfo />
           <ButtonsContainer max>
             <Button outline text="application.back" click={() => onBack()} />
           </ButtonsContainer>

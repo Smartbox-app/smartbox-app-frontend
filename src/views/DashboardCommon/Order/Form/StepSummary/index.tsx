@@ -19,12 +19,11 @@ import { __ } from '../../../../../helpers/i18n';
 import CompanyDetailsForm from './CompanyDetailsForm';
 
 import { DiscountsList } from './DiscountsList';
-import PaymentMethods from './PaymentMethods';
 import SummaryTable from './SummaryTable';
 import TenantDetailsForm from './TenantDetailsForm';
 
 import './StepSummary.scss';
-import { calculatePrice } from '../../../../../actions/order';
+import { calculatePrice, calculatePriceForRent } from '../../../../../actions/order';
 
 interface Props {
     formData: FormType;
@@ -40,9 +39,7 @@ const StepSummary = ({
     formData,
     fetchMyData,
     updateFormData,
-    selectedPaymentMethod,
     selectedPayment,
-    successNotification,
 }: Props) => {
     const dispatch = useDispatch();
     const [invoiceNeeded, setInvoiceNeeded] = useState(false);
@@ -53,7 +50,7 @@ const StepSummary = ({
 
     useEffect(() => {
         fetchMyData();
-        if (!stockId || !boxGroupId) {
+        if (!rentId && (!stockId || !boxGroupId)) {
             history.push(`/${UserService.getSlugByRole(user.role)}/order/step/stock`);
         }
         if (formData.nip) {
@@ -68,11 +65,19 @@ const StepSummary = ({
             }
         }
 
-        dispatch(calculatePrice(boxGroupId, startDate, endDate));
+        if (rentId) {
+            dispatch(calculatePriceForRent(rentId, startDate, endDate));
+        } else {
+            dispatch(calculatePrice(boxGroupId, startDate, endDate));
+        }
     }, []);
 
     useEffect(() => {
-        dispatch(calculatePrice(boxGroupId, startDate, endDate, discountCode));
+        if (rentId) {
+            dispatch(calculatePriceForRent(rentId, startDate, endDate, discountCode));
+        } else {
+            dispatch(calculatePrice(boxGroupId, startDate, endDate, discountCode));
+        }
     }, [discountCode])
 
 

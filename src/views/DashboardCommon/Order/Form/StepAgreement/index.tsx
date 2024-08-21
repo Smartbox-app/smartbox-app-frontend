@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { useParams, withRouter } from 'react-router-dom';
 
 import { bindActionCreators } from 'redux';
 import { connect, useSelector } from 'react-redux';
@@ -24,12 +24,7 @@ import ApiService from '../../../../../services/api-service';
 import { getCorrectPriceWithTax, getCorrectTaxPercentAmount } from '../../../../../utils/tax';
 import { OrderAddon } from 'src/reducers/order-reducer';
 
-interface RouteProps {
-    step: string;
-    rentId: string;
-}
-
-interface Props extends RouteComponentProps<RouteProps> {
+interface Props {
     formData: FormType;
     user: UserRes | null;
     isAgreementAccepted: boolean;
@@ -45,15 +40,15 @@ const StepSummary = ({
     user,
     isResignationMarked,
     sentRentBoxRequest,
-    match,
     paymentType,
     sentExtendRentRequest,
 }: Props): any => {
     const order = useSelector((state: ApplicationState) => state.order);
     const tenant = useSelector((state: ApplicationState) => state.tenant);
+    const { rentId, step } = useParams<{ step: string, rentId?: string }>();
     useEffect(() => {
         if (!user) return;
-        if (!order.boxGroupId) {
+        if (!order.boxGroupId && !rentId) {
             history.push(`/${UserService.getSlugByRole(user.role)}/order/step/stock`);
         }
     }, []);
@@ -122,9 +117,9 @@ const StepSummary = ({
             type: paymentType,
         };
 
-        if (match.params.rentId) {
+        if (rentId) {
             // rent extension
-            sentExtendRentRequest(match.params.rentId, dataCollectionExtendRent, user.role);
+            sentExtendRentRequest(rentId, dataCollectionExtendRent, user.role);
         } else {
             // new Rent blik/creditcart
             sentRentBoxRequest(dataCollectionRent, 'payment', user.role);
@@ -133,7 +128,7 @@ const StepSummary = ({
 
     const onBack = () => {
         if (!user) return;
-        history.push(`/${UserService.getSlugByRole(user.role)}/order/step/summary/${match.params.rentId || ''}`);
+        history.push(`/${UserService.getSlugByRole(user.role)}/order/step/summary/${rentId || ''}`);
     };
     if (!tenant) return null;
     const desktop = window.matchMedia('(min-width: 920px)').matches;
@@ -165,7 +160,6 @@ const mapStateToProps = (state: ApplicationState) => ({
     user: state.user.details,
     isResignationMarked: state.order.isResignationMarked,
     stockId: state.order.formData.stock,
-    rentId: state.rent.singleRent.id,
     paymentType: state.order.selectedPayment,
 });
 
@@ -177,4 +171,4 @@ const mapDispatchToProps = (dispatch: any) =>
         dispatch,
     );
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(StepSummary));
+export default connect(mapStateToProps, mapDispatchToProps)(StepSummary);

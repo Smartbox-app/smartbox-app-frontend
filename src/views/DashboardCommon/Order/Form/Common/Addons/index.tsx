@@ -25,10 +25,13 @@ const StyledAddonHeader = styled('h4')({
     fontSize: '1.1rem'
 })
 
+interface Props {
+    stockId: string;
+}
 
 
-export const Addons = () => {
-    const { stockId, addons, loadingAddons, orderAddons } = useSelector((state: ApplicationState) => state.order);
+export const Addons = ({ stockId }: Props) => {
+    const { addons, loadingAddons } = useSelector((state: ApplicationState) => state.order);
     const dispatch = useDispatch();
 
     const getAddons = () => {
@@ -40,6 +43,7 @@ export const Addons = () => {
     }, [])
 
     if (loadingAddons) return <Spinner />
+    if (!addons || addons.length === 0) return null;
 
     return <Section highlight>
         {addons.map(addon => <Section>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect, useSelector } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { MyRentList, RentStatus } from 'smartbox-types';
+import { MyRentDetails, RentStatus } from 'smartbox-types';
 import { FormType } from '../../../../types/order-form';
 import { modal, order, singleRent, notifications } from '../../../../actions';
 import { history } from '../../../../App';
@@ -12,9 +12,9 @@ import UserService from '../../../../services/user-service';
 import EndingModal from './EndingModal';
 
 interface Props {
-    rentId: string;
+    isMapActive: boolean;
     showUserStockMap: boolean;
-    rent: MyRentList;
+    rent: MyRentDetails;
     showModal: (content: React.ReactNode) => void;
     endMyRent: (rentId: string) => void;
     updateFormData: (data: Partial<FormType>) => void;
@@ -26,12 +26,12 @@ interface Props {
 
 const Action = ({
     showModal,
-    rentId,
     updateFormData,
     rent,
     clearOrder,
     showUserStockMap,
     toggleShowUserStockMap,
+    isMapActive
 }: Props) => {
     const user = useSelector((state: ApplicationState) => state.user.details!);
 
@@ -43,25 +43,24 @@ const Action = ({
 
     return (
         <ButtonsContainer max>
-            <Button
+            {isMapActive ? <Button
                 text={!showUserStockMap ? 'application.showOnStockMap' : 'application.showDetail'}
                 success
                 click={() => toggleShowUserStockMap()}
-            />
+            /> : null}
             <Button
                 text='application.goToAgreement'
                 success
-                click={() => handleExtendingOrderData(rentId)}
+                click={() => handleExtendingOrderData(rent.id)}
                 disabled={rent.status !== RentStatus.rented}
             />
-            <Button text='application.end' danger click={() => showModal(<EndingModal />)} />
+            <Button text='application.end' danger click={() => showModal(<EndingModal rent={rent} />)} />
             <Button text='application.back' primary to={`/${UserService.getSlugByRole(user.role)}`} />
         </ButtonsContainer>
     );
 };
 
 const mapStateToProps = (state: ApplicationState) => ({
-    rent: state.rent.singleRent,
     showUserStockMap: state.rent.showUserStockMap,
 });
 

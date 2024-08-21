@@ -12,7 +12,6 @@ import FormHeader from '../../../components/Layout/FormHeader';
 import { ApplicationState } from '../../../reducers';
 import ScrollPosition from '../Order/Form/StepAgreement/ScrollPosition';
 import SummaryTable from '../Order/Form/StepSummary/SummaryTable';
-import { LockInfo } from '../Order/Form/StepPayment/LockInfo';
 import './PayDebtForm.scss';
 import ApiService from '../../../services/api-service';
 
@@ -89,7 +88,6 @@ const PayDebtForm = ({
           <div className="bank-input-wrapper">
             <div dangerouslySetInnerHTML={{ __html: func.payload || '' }} />
           </div>
-          <LockInfo />
           <ButtonsContainer max>
             <Button outline text="application.back" click={() => onBack()} />
           </ButtonsContainer>

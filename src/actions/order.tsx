@@ -155,8 +155,12 @@ export const sentExtendRentRequest = (rentId: string, data: ExtendRentalReq, rol
     dispatch,
     'SENT_EXTEND_RENT_SUCCESS',
     'SENT_EXTEND_RENT_FAILED',
-    (suc: any) => {
-      history.push(`/${UserService.getSlugByRole(role)}/order/step/payment/${rentId}`);
+    (result: { paymentId: string; status: PaymentStatus }) => {
+      if (result.status === PaymentStatus.succes) {
+        history.push(`/payment-success/${result.paymentId}`);
+      } else {
+        history.push(`/${UserService.getSlugByRole(role)}/order/step/payment/${result.paymentId}/${rentId}`);
+      }
     },
     null,
     `rent/extend-rent/${rentId}`,
@@ -169,8 +173,8 @@ export const sentExtendRentRequest = (rentId: string, data: ExtendRentalReq, rol
 export const setOrderStock = (stockId: string) => ({ type: 'SET_ORDER_STOCK', payload: stockId });
 export const setBoxGroup = (boxGroupId: string) => ({ type: 'SET_ORDER_BOX_GROUP', payload: boxGroupId });
 export const setMinRentPeriod = (days: number) => ({ type: 'SET_MIN_RENT_PERIOD', payload: days });
-export const setRentStartDate = (days: number) => ({ type: 'SET_RENT_START_DATE', payload: days });
-export const setRentEndDate = (days: number) => ({ type: 'SET_RENT_END_DATE', payload: days });
+export const setRentStartDate = (date: Date) => { console.log('TRYING TO SET START', date); return ({ type: 'SET_RENT_START_DATE', payload: date }) };
+export const setRentEndDate = (date: Date) => { console.log('TRYING TO SET END', date); return ({ type: 'SET_RENT_END_DATE', payload: date }); }
 
 export const calculatePrice = (boxGroupId: string, start: Date, end: Date, code?: string) => async (
   dispatch: any,
@@ -182,6 +186,20 @@ export const calculatePrice = (boxGroupId: string, start: Date, end: Date, code?
     null,
     null,
     `box-group-new/price/${boxGroupId}/${start.toISOString()}/${end.toISOString()}/${code || ''}`,
+    'LOADING_PRICE',
+  );
+};
+
+export const calculatePriceForRent = (rentId: string, start: Date, end: Date, code?: string) => async (
+  dispatch: any,
+) => {
+  await ApiService.get(
+    dispatch,
+    'CALCULATE_RENT_PRICE_SUCCESS',
+    'CALCULATE_RENT_PRICE_FAILED',
+    null,
+    null,
+    `box-group-new/price-for-rent/${rentId}/${start.toISOString()}/${end.toISOString()}/${code || ''}`,
     'LOADING_PRICE',
   );
 };

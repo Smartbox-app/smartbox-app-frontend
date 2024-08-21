@@ -1,14 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { MyRentList, RentStatus } from 'smartbox-types';
+import { MyRentDetails, MyRentList, RentStatus } from 'smartbox-types';
 import { modal, notifications, order, singleRent } from '../../../../../actions';
 import { history } from '../../../../../App';
 import { ConfirmModal } from '../../../../../components/Common';
 import { ApplicationState } from '../../../../../reducers';
 
 interface Props {
-  rent: MyRentList;
+  rent: MyRentDetails;
   endMyRent: (rentId: string) => void;
   successNotification: (text: string) => void;
   getMyRentList: () => void;
@@ -42,7 +42,6 @@ const EndingModal = ({ endMyRent, successNotification, getMyRentList, rent }: Pr
 };
 
 const mapStateToProps = (state: ApplicationState) => ({
-  rent: state.rent.singleRent,
   user: state.user.details,
 });
 

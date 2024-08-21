@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { withRouter } from 'react-router-dom';
+import { useParams, withRouter } from 'react-router-dom';
 
 import { bindActionCreators } from 'redux';
 import { connect, useSelector } from 'react-redux';
@@ -37,8 +37,9 @@ const formToRender = (selectedPayment) => {
 
 const StepPayment = ({ selectedPayment, user, resetPaymentForm }: Props) => {
     const order = useSelector((state: ApplicationState) => state.order);
+    const { rentId } = useParams<{ rentId?: string }>();
     useEffect(() => {
-        if (!order.boxGroupId) {
+        if (!order.boxGroupId && !rentId) {
             if (!user) return;
             history.push(`/${UserService.getSlugByRole(user.role)}/order/step/stock`);
         }

@@ -17,6 +17,7 @@ import MissingPaymentAlert from './MissingPaymentAlert';
 import ApiService from '../../../services/api-service';
 import { OpenBox } from './OpenBox';
 import styled from 'styled-components';
+import { Description } from './RentDescription';
 
 interface RouteProps {
   orderId: string;
@@ -52,10 +53,12 @@ const SingleRentDetail = ({ showUserStockMap, match }: Props) => {
     <Section full>
       <SectionHeader title="application.rentDetail" />
       <MissingPaymentAlert />
-      <Action rentId={singleRent.id} />
+      <Action rent={singleRent} isMapActive={singleRent.isMap} />
       {!showUserStockMap ? (
         <>
           <Details singleRent={singleRent} />
+          <Description description={singleRent.description} />
+
           <Section highlight>
 
             <SectionHeader title='application.access' />

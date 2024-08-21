@@ -1,10 +1,10 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useForm, Controller, FormContext } from 'react-hook-form';
-import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect, useDispatch, useSelector } from 'react-redux';
 
-import { addDays, endOfDay, startOfDay, startOfToday } from 'date-fns';
+import { addDays, startOfToday } from 'date-fns';
 import { MyRentList, UserRes } from 'smartbox-types';
 import { DateInput } from '../../../../../components/Common';
 import { Button, Spinner } from '../../../../../components/Branded';
@@ -14,13 +14,13 @@ import { FormType } from '../../../../../types/order-form';
 import { ApplicationState } from '../../../../../reducers';
 import UserService from '../../../../../services/user-service';
 
-import Price from './Price';
+import Price from '../Common/Price';
 
 import './StepDuration.scss';
 
 import styled from 'styled-components';
 import { calculateAddonPrice, calculatePrice, setRentEndDate, setRentStartDate } from '../../../../../actions/order';
-import { Addons } from './Addons';
+import { Addons } from '../Common/Addons';
 
 const StyledCalendarPicker = styled.div`
 margin: 0 -10px;
@@ -36,12 +36,8 @@ border-color: ${props => props.theme.colors.primary};
 }
 `
 
-interface RouteProps {
-    step: string;
-    rentId: string;
-}
 
-interface Props extends RouteComponentProps<RouteProps> {
+interface Props {
     history: any;
     formData: FormType;
     stockId: string;
@@ -54,19 +50,22 @@ interface Props extends RouteComponentProps<RouteProps> {
 const StepDuration = ({
     clearPaymentDetails,
     user,
-    match,
-    rent,
 }: Props) => {
     const dispatch = useDispatch();
-
+    const { step } = useParams<{ step: string, rentId?: string }>();
     const minRentPeriod = useSelector((state: ApplicationState) => state.order.minRentPeriod);
+    // box groupId is used directly only when new rent is created
     const boxGroupId = useSelector((state: ApplicationState) => state.order.boxGroupId);
-    const { startDate, endDate, loadingPrice, orderAddons, orderAddonsId } = useSelector((state: ApplicationState) => state.order);
+    const { stockId, startDate, endDate, loadingPrice, orderAddons, orderAddonsId } = useSelector((state: ApplicationState) => state.order);
     const [loading, setLoading] = useState<boolean>(false);
+
+
 
     useEffect(() => {
         setLoading(true);
+
         dispatch(calculatePrice(boxGroupId, startDate, endDate));
+
         calculateAllAddons();
     }, [startDate, endDate]);
 
@@ -82,17 +81,13 @@ const StepDuration = ({
 
     }
 
-    const setMinDate = (addAmount = 0, end?: boolean) =>
-        match.params.rentId
-            ? addDays(startOfDay(new Date(rent.finishAt)), addAmount)
-            : addDays(end ? startDate : startOfToday(), addAmount);
+    const setMinDate = (addAmount = 0, end?: boolean) => addDays(end ? startDate : startOfToday(), addAmount);
 
-    const setMaxDateToExtend = () =>
-        match.params.rentId ? addDays(endOfDay(new Date(rent.finishAt)), 0) : addDays(new Date(), minRentPeriod);
+    const setMaxDateToExtend = () => addDays(new Date(), minRentPeriod);
 
     const defaultValues = {
-        dateStart: match.params.rentId ? addDays(new Date(rent.finishAt), 0) : addDays(startDate, 0),
-        dateEnd: match.params.rentId ? addDays(new Date(rent.finishAt), minRentPeriod) : addDays(endDate, 0),
+        dateStart: addDays(startDate, 0),
+        dateEnd: addDays(endDate, 0),
     };
 
 
@@ -179,12 +174,12 @@ const StepDuration = ({
                     />
                 </StyledCalendarPicker>
 
-                <Addons />
+                <Addons stockId={stockId} />
 
                 <Price />
                 <ButtonsContainer max>
-                    <Button outline text='application.back' to={`/${UserService.getSlugByRole(user.role)}/order/step/stock/${match.params.rentId || ''}`} disabled={!!match.params.rentId} />
-                    <Button to={`/${UserService.getSlugByRole(user.role)}/order/step/summary/${match.params.rentId || ''}`} primary text='application.next' disabled={!allRequiredAddonsSelected} />
+                    <Button outline text='application.back' to={`/${UserService.getSlugByRole(user.role)}/order/step/stock`} />
+                    <Button to={`/${UserService.getSlugByRole(user.role)}/order/step/summary`} primary text='application.next' disabled={!allRequiredAddonsSelected} />
                 </ButtonsContainer>
             </form>
         </FormContext>
@@ -205,5 +200,4 @@ const mapDispatchToProps = (dispatch: any) =>
         dispatch,
     );
 
-const StepDurationWithRouter = withRouter(StepDuration);
-export default connect(mapStateToProps, mapDispatchToProps)(StepDurationWithRouter);
+export default connect(mapStateToProps, mapDispatchToProps)(StepDuration);

@@ -288,6 +288,7 @@ export default (state: OrderState = initialState, action: Action): OrderState =>
 
 
     case 'SET_RENT_START_DATE': {
+      console.log('SETTING START DATE', action.payload);
       return {
         ...state,
         startDate: action.payload
@@ -295,6 +296,7 @@ export default (state: OrderState = initialState, action: Action): OrderState =>
     };
 
     case 'SET_RENT_END_DATE': {
+      console.log('SETTING END DATE', action.payload);
       return {
         ...state,
         endDate: action.payload

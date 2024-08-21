@@ -9,6 +9,7 @@ import UserService from '../../../../../services/user-service';
 import { ApplicationState } from '../../../../../reducers';
 import { BasicData } from '../../../StockGroups/Stocks/Manage/BasicData';
 import { Boxes } from './Boxes';
+import { Rents } from './Rents';
 import { Map } from './Map';
 import { Groups } from './Groups';
 import { Discounts } from './Discounts';
@@ -38,6 +39,10 @@ const Manage = () => {
             {
                 to: `/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/data`,
                 text: 'application.stockBasicData',
+            },
+            {
+                to: `/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/rents`,
+                text: 'application.stockRents',
             },
             {
                 to: `/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/gates`,
@@ -96,6 +101,7 @@ const Manage = () => {
                 <Route path={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/:stockId/gates`} component={Gates} />
                 <Route path={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/:stockId/settings`} component={BasicData} />
                 <Route path={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/:stockId/boxes`} component={Boxes} />
+                <Route path={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/:stockId/rents`} component={Rents} />
                 <Route path={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/:stockId/groups`} component={Groups} />
                 <Route path={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/:stockId/discounts`} component={Discounts} />
                 <Route path={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/:stockId/addons`} component={Addons} />
