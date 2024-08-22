@@ -22,6 +22,8 @@ export type PaymentMethodDetail = {
 export type OrderAddon = {
   required: boolean;
   selectedVariant: string | null;
+  accepted: boolean;
+  acceptance?: string;
   price: { value: number, isGross: boolean } | null;
 }
 
@@ -133,6 +135,11 @@ interface SelectAddon {
   payload: { addonId: string, variantId: string | null }
 }
 
+interface SetAddonAcceptance {
+  type: 'SET_ADDON_ACCEPTANCE';
+  payload: { addonId: string, checked: boolean }
+}
+
 interface FormReaded {
   type: 'FORM_AGREEMENT_READED_SUCCESS';
 }
@@ -194,6 +201,7 @@ type Action =
   | SetDiscountCode
   | LoadingAddons
   | SelectAddon
+  | SetAddonAcceptance
   //
   | FormStepSuccess
   | FetchBoxAvailability
@@ -411,6 +419,8 @@ export default (state: OrderState = initialState, action: Action): OrderState =>
       action.payload.forEach(addon => {
         orderAddons[addon.id] = {
           required: addon.required,
+          acceptance: addon.acceptance,
+          accepted: false,
           selectedVariant: null,
           price: null,
         }
@@ -433,6 +443,22 @@ export default (state: OrderState = initialState, action: Action): OrderState =>
           [addonId]: {
             ...state.orderAddons[addonId],
             selectedVariant: variantId
+          }
+        }
+      }
+    }
+    case 'SET_ADDON_ACCEPTANCE': {
+      const { addonId, checked } = action.payload;
+      console.log('SETTING ACCEPTANCE', addonId, checked);
+      if (!state.orderAddons[addonId]) return state;
+      return {
+        ...state,
+        orderAddonsId: uuid.v4(),
+        orderAddons: {
+          ...state.orderAddons,
+          [addonId]: {
+            ...state.orderAddons[addonId],
+            accepted: checked
           }
         }
       }

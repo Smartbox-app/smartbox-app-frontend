@@ -305,6 +305,10 @@
             "66": {
                 "text": "Nie wybrano wymaganego dodatku!",
                 "__type_alias_do_not_touch": "ApiErrorCode.RequiredAddonNotSelected"
+            },
+            "67": {
+                "text": "Musisz wyrazić zgodę dla wybranego dodatku!",
+                "__type_alias_do_not_touch": "ApiErrorCode.AcceptanceNotSelected"
             }
         }
     }

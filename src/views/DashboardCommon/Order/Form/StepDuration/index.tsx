@@ -125,6 +125,7 @@ const StepDuration = ({
 
         for (let addonId of addonIds) {
             if (orderAddons[addonId].required && !orderAddons[addonId].selectedVariant) return false;
+            if (orderAddons[addonId].selectedVariant && orderAddons[addonId].acceptance && !orderAddons[addonId].accepted) return false;
         }
 
         return true;

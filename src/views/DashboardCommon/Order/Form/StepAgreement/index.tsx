@@ -69,6 +69,8 @@ const StepSummary = ({
 
             if (addon.price?.value && addon.selectedVariant) {
                 parsedAddons[addonId] = {
+                    accepted: addon.accepted,
+                    acceptance: addon.acceptance,
                     price: addon.price.isGross ? addon.price.value : getCorrectPriceWithTax(addon.price.value, taxValue),
                     selectedVariant: addon.selectedVariant
 

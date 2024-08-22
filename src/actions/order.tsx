@@ -232,3 +232,4 @@ export const fetchAddons = (stockId: string) => async (dispatch: any) => {
 
 
 export const selectAddon = (addonId: string, variantId: string | null) => ({ type: 'SELECT_ADDON', payload: { addonId, variantId } })
+export const setAddonAcceptance = (addonId: string, checked: boolean) => ({ type: 'SET_ADDON_ACCEPTANCE', payload: { addonId, checked } })

@@ -40,7 +40,8 @@ export const RentHistory = ({ description }: Props) => {
                         <StyledAddonsHeader>{__('application.selectedAddons')}</StyledAddonsHeader>
                         <ul>
                             {line.addons.map(addon => <li key={addon.id}>
-                                <strong>{addon.name}</strong> - {addon.selectedVariantName} - {formatPrice(Number(addon.price))}
+                                <div><strong>{addon.name}</strong> - {addon.selectedVariantName} - {formatPrice(Number(addon.price))}</div>
+                                {addon.acceptance ? <p>{addon.acceptance} - <strong>{addon.accepted ? 'Tak' : 'Nie'}</strong></p> : null}
                             </li>)}
                         </ul>
                     </div>
