@@ -4,7 +4,7 @@ import { stocksList } from 'smartbox-tables';
 import { showModal } from '../../../../../actions/modal';
 import { successNotification } from '../../../../../actions/notifications';
 import ApiService from '../../../../../services/api-service';
-import { StockAdminList } from '../../../../../../../smartbox-back/types/stock';
+import { StockAdminList } from 'smartbox-types';
 import { ApiTable, ConfirmModal } from '../../../../../components/Common';
 import { Button } from '../../../../../components/Branded';
 import { Section, PageHeader, ButtonsContainer } from '../../../../../components/Layout';

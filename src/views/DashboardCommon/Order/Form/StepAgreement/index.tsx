@@ -1,6 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { useParams, withRouter } from 'react-router-dom';
+import DocViewer, { DocViewerRenderers } from "@cyntler/react-doc-viewer";
+import "@cyntler/react-doc-viewer/dist/index.css";
 
 import { bindActionCreators } from 'redux';
 import { connect, useSelector } from 'react-redux';
@@ -22,7 +24,7 @@ import { ApplicationState } from '../../../../../reducers';
 import './StepAgreement.scss';
 import ApiService from '../../../../../services/api-service';
 import { getCorrectPriceWithTax, getCorrectTaxPercentAmount } from '../../../../../utils/tax';
-import { OrderAddon } from 'src/reducers/order-reducer';
+import { OrderAddon } from '../../../../../reducers/order-reducer';
 
 interface Props {
     formData: FormType;
@@ -45,6 +47,9 @@ const StepSummary = ({
 }: Props): any => {
     const order = useSelector((state: ApplicationState) => state.order);
     const tenant = useSelector((state: ApplicationState) => state.tenant);
+
+    const frameRef = useRef<HTMLIFrameElement>(null);
+
     const { rentId, step } = useParams<{ step: string, rentId?: string }>();
     useEffect(() => {
         if (!user) return;
@@ -128,22 +133,57 @@ const StepSummary = ({
         }
     };
 
+    const getValuesForAgreement = () => {
+        return {
+            finishAt: order.endDate,
+            cost: getCorrectPrice(order.calculatedPrice.value, order.calculatedPrice.isGross, tenant!.tax),
+            discountCode: formData.discountCode,
+            firstName: formData.firstName,
+            lastName: formData.lastName,
+            street: formData.street,
+            city: formData.city,
+            postCode: formData.postCode,
+            isCompany: formData.isCompany || false,
+            phone: formData.phone,
+            mailToSendInvoice: formData.mailToSendInvoice,
+            companyName: formData.companyName || '',
+            companyStreet: formData.companyStreet || '',
+            companyCity: formData.companyCity || '',
+            companyPostCode: formData.companyPostCode || '',
+            nip: formData.nip || '',
+            orderAddons: getAddonsWithCorrectPrice(order.orderAddons, tenant!.tax)
+        };
+    }
+
     const onBack = () => {
         if (!user) return;
         history.push(`/${UserService.getSlugByRole(user.role)}/order/step/summary/${rentId || ''}`);
     };
+
+    useEffect(() => {
+        if(!frameRef.current) return;
+
+        if(frameRef.current.title === '') frameRef.current.contentWindow?.location.reload();
+    }, [frameRef])
+
     if (!tenant) return null;
-    const desktop = window.matchMedia('(min-width: 920px)').matches;
+    // const desktop = window.matchMedia('(min-width: 300px)').matches;
+    const desktop = true;
+    const { firstName, lastName } = getValuesForAgreement();
+    const url = encodeURIComponent(`${ApiService.url}tenant/agreement/${tenant.id}?firstName=${firstName}&lastName=${lastName}`);
+    console.log('URL', url);
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
             <FormHeader title="application.orderAgreement" />
             {/* <AgreementWrapper /> */}
             {desktop && (
-                <object
-                    className="rules-embed"
-                    data={`${ApiService.url}tenant/agreement/${tenant.id}#toolbar=0&navpanes=0&scrollbar=0`}
-                    type="application/pdf"
-                />
+                <iframe ref={frameRef} src={`https://docs.google.com/gview?embedded=true&url=${url}`} height="300" style={{ height: "45vh" }}></iframe>
+                // <DocViewer language={undefined} documents={[{ uri: `${ApiService.url}tenant/agreement/${tenant.id}`, fileType: 'docx' }]} pluginRenderers={DocViewerRenderers} />
+                // <object
+                //     className="rules-embed"
+                //     data={`${ApiService.url}tenant/agreement/${tenant.id}#toolbar=0&navpanes=0&scrollbar=0`}
+                //     type="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                // />
             )}
             <Button primary blank to={`${ApiService.url}tenant/agreement/${tenant.id}`} text='Kliknij aby otworzyć regulamin' />
             <span className="separator" />

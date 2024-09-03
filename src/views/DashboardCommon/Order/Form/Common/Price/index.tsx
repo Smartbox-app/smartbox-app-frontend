@@ -7,9 +7,10 @@ import { useSelector } from 'react-redux';
 import { ApplicationState } from '../../../../../../reducers';
 
 import './Price.scss';
+import { colorOrDark } from '../../../../../../utils/color';
 
 const StyledPrice = styled.strong`
-  color: ${props => props.theme.colors.primary};
+  color: ${props => colorOrDark(props.theme.colors.primary)};
   font-size: 1.2rem;
 `
 

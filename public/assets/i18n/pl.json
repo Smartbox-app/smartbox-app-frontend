@@ -369,6 +369,7 @@
             "colorSecondary": "Pomocniczy kolor",
             "background": "Tło",
             "logo": "Logo",
+            "icon": "Ikona (512 x 512px)",
             "password": "Hasło",
             "repeatPassword": "Powtórz hasło",
             "tenantAdded": "Dodano franczyzobiorcę",
@@ -528,6 +529,7 @@
             "rental_ends_today_sms": "Wynajem kończy się dzisiaj",
             "account_activated_sms": "Konto aktywowane",
             "account_activated_email": "Konto aktywowane",
+            "invite_user_email": "Zaproszenie użytkownika",
 
             "name": "Imię użytkownika",
             "company": "Nazwa firmy",

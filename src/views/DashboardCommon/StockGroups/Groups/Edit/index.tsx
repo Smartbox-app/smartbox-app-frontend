@@ -12,7 +12,7 @@ import { __ } from '../../../../../helpers/i18n';
 import { mapFields } from '../../../../../utils/fields-mapper';
 import { hideModal } from '../../../../../actions/modal';
 import { refreshApiTableData } from '../../../../../actions/api-table';
-import { StockGroupReq } from '../../../../../../../smartbox-back/types';
+import { StockGroupReq } from 'smartbox-types';
 
 interface Props {
     id: string;
@@ -43,7 +43,7 @@ const Edit = ({ id }: Props) => {
                 submitButton={submitButton}
                 onRenderFullField={mapFields}
                 onSavedSuccessfully={() => {
-                    dispatch(successNotification('application.stockGroupUpdatedCorrectly'));
+                    dispatch(successNotification('notification.stockGroupUpdatedCorrectly'));
                     dispatch(hideModal());
                     dispatch(refreshApiTableData());
                 }}

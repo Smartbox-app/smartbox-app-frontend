@@ -9,6 +9,7 @@ import { BoxGroupUserRes } from 'smartbox-types';
 import ApiService from '../../../../../../services/api-service';
 import { PriceInfo } from '../PriceInfo';
 import { setBoxGroup, setMinRentPeriod } from '../../../../../../actions/order';
+import { colorOrDark, getColorForBackground } from '../../../../../../utils/color';
 
 export type SingleOptionType = {
   name: string;
@@ -29,7 +30,7 @@ const StyledSingleOptionWrapper = styled.div<{ available: boolean }>`
 position: relative;
 input[type='radio']:checked + .single-option {
   .radio-img {
-    border: 2px solid ${props => props.theme.colors.primary}
+    border: 2px solid ${props => props.theme.colors.secondary}
   }
 }
 
@@ -43,7 +44,7 @@ cursor: not-allowed;
 `
 
 const StyledImageDescription = styled.p`
-    color: ${props => props.theme.colors.primary};
+    color: ${props => colorOrDark(props.theme.colors.primary)};
     font-weight: 700;
     padding: 10px;
 }
@@ -51,20 +52,20 @@ const StyledImageDescription = styled.p`
 
 const StyledSizeContainer = styled.div`
 background-color: ${props => props.theme.colors.secondary};
-color: #fff;
+color: ${props => getColorForBackground(props.theme.colors.secondary)};
 text-align: center;
 padding: 10px;
 `
 
 const StyledAreaVolumeContainer = styled.div`
-background-color: rtransparent;
-color: ${props => props.theme.colors.primary};
+background-color: transparent;
+color: ${props => colorOrDark(props.theme.colors.primary)};
 text-align: center;
 padding: 10px;
 `
 
 const StyledImageValue = styled.span`
-color: ${props => props.theme.colors.primary};
+color: ${props => colorOrDark(props.theme.colors.primary)};
 z-index: 1;
 `
 

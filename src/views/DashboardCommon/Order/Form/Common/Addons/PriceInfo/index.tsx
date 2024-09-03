@@ -1,9 +1,8 @@
 import React from 'react';
-import { AddonPricingType, SingleAddonPricing, SingleAddonVariant } from 'smartbox-types';
+import { AddonPricingType, SingleAddonVariant } from 'smartbox-types';
 import styled from 'styled-components';
 import { __ } from '../../../../../../../helpers/i18n';
 import { formatPrice } from '../../../../../../../utils/format-price';
-import { PricingType } from '../../../../../../../../../smartbox-back/types/box-group/pricing';
 
 interface Props {
     isGross: boolean;

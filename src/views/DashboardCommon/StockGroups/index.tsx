@@ -9,6 +9,7 @@ import { List } from './Stocks/List';
 import { Manage } from './Stocks/Manage';
 import { Section } from '../../../components/Layout';
 import { GroupsList } from './Groups/List';
+import { Add as AddGroup } from './Groups/Add';
 import { ManageGroup } from './Groups/Manage';
 
 const StockGroups = () => {
@@ -33,6 +34,7 @@ const StockGroups = () => {
             <Route path={`/${UserService.getSlugByRole(user.role)}/locations/stocks/add`} component={Add} />
             <Route path={`/${UserService.getSlugByRole(user.role)}/locations/stocks/list`} component={List} />
             <Route path={`/${UserService.getSlugByRole(user.role)}/locations/groups/list`} component={GroupsList} />
+            <Route path={`/${UserService.getSlugByRole(user.role)}/locations/groups/add`} component={AddGroup} />
             <Route path={`/${UserService.getSlugByRole(user.role)}/locations/groups/:stockGroupId`} component={ManageGroup} />
             <Route path={`/${UserService.getSlugByRole(user.role)}/locations/stocks/:stockId`} component={Manage} />
         </Switch>

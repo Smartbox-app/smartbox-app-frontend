@@ -1,7 +1,6 @@
 {
   "paths": [
-    "./src/",
-    "../smartbox-back/"
+    "./src/"
   ],
   "output": "src/data/errorsTranslations.json",
   "langs": ["pl"],

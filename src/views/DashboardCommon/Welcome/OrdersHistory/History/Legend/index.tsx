@@ -3,9 +3,10 @@ import React from 'react';
 import './Legend.scss';
 import {__} from "../../../../../../helpers/i18n";
 import styled from 'styled-components';
+import { colorOrDark } from '../../../../../../utils/color';
 
 const StyledActive = styled.p`
-  color: ${({theme}) => theme.colors.primary};
+  background-color: ${({theme}) => colorOrDark(theme.colors.primary)};
 `
 
 const Legend = () => (

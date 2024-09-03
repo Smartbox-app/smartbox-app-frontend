@@ -8,7 +8,7 @@ export function dateOnly(n: Date | string, slice?: number): any {
   return format(new Date(n), 'dd.MM.yyyy');
 }
 
-export const fullDate = (d: Date | string): Date | string => {
+export const fullDate = (d: Date | string): string => {
   if (d === null) return '---';
   return format(new Date(d), 'dd.MM.yyyy HH:mm');
 };

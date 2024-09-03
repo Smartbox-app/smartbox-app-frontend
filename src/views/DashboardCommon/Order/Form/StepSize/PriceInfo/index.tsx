@@ -3,7 +3,7 @@ import { BoxGroupUserRes } from 'smartbox-types';
 import styled from 'styled-components';
 import { __ } from '../../../../../../helpers/i18n';
 import { formatPrice } from '../../../../../../utils/format-price';
-import { PricingType } from '../../../../../../../../smartbox-back/types/box-group/pricing';
+import { PricingType } from 'smartbox-types';
 
 interface Props {
     box: BoxGroupUserRes;

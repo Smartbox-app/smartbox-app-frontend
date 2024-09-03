@@ -3,9 +3,11 @@ import './Cookies.scss';
 import { __ } from '../../../helpers/i18n';
 import styled from 'styled-components';
 import { darken } from 'polished';
+import { getColorForBackground } from '../../../utils/color';
 
 const StyledCookieWrapper = styled.div`
   background-color: ${props => props.theme.colors.primary};
+  color: ${props => getColorForBackground(props.theme.colors.primary)};
   border-top: 3px solid ${props => darken(0.05, props.theme.colors.primary)};
 `
 

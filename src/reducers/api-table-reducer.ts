@@ -1,5 +1,5 @@
 import { TableResponse } from 'smartbox-tables';
-import uuid from 'uuid';
+import { v4 } from 'uuid';
 
 interface ApiTable {
   uuid: string;
@@ -9,7 +9,7 @@ export type ApiTableState = TableResponse<any> | ApiTable;
 const initialState: ApiTableState = {
   countTotal: 0,
   items: [],
-  uuid: uuid.v4(),
+  uuid: v4(),
 };
 
 interface FetchApiTableDataSuccess {
@@ -30,7 +30,7 @@ export default (state: ApiTableState = initialState, action: Action) => {
     case 'REFRESH_API_TABLE':
       return {
         ...state,
-        uuid: uuid.v4(),
+        uuid: v4(),
       };
     default:
       return state;

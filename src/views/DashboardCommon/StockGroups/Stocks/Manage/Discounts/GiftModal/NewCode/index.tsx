@@ -5,13 +5,14 @@ import { __ } from '../../../../../../../../helpers/i18n';
 
 import './NewCode.scss';
 import styled from 'styled-components';
+import { colorOrDark } from '../../../../../../../../utils/color';
 
 interface Props {
   newCodeProps: GiftRes;
 }
 
 const StyledCodeDetail = styled.strong`
-color: ${props => props.theme.colors.primary}`
+color: ${props => colorOrDark(props.theme.colors.primary)}`
 
 const getType = (type: GiftType) => {
   switch(type) {

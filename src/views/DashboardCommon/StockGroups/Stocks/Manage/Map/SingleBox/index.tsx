@@ -6,6 +6,7 @@ import { Rnd } from 'react-rnd';
 import { useDispatch } from 'react-redux';
 import BoxDetail from '../../../../../../../views/DashboardCommon/BoxMapManagement/BoxDetail';
 import { showModal } from '../../../../../../../actions/modal';
+import { colorOrDark } from '../../../../../../../utils/color';
 
 interface Props {
     box: BoxMapRes | BoxMapUserRes;
@@ -18,7 +19,7 @@ interface Props {
 
 const commonStyles = css`
 display: flex;
-color: ${props => props.theme.colors.primary};
+color: ${props => colorOrDark(props.theme.colors.primary)};
 font-weight: 500;
 font-size: 0.8rem;
 cursor: pointer;

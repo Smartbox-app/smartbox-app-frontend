@@ -1,6 +1,7 @@
 import React from 'react';
 import { FormContainer, FormHeader } from '../../../../../components/Layout';
 import { ManageTenantLogo } from '../../../../../views/DashboardCommon/ClientManagement/Logo';
+import { ManageTenantIcon } from '../../../../../views/DashboardCommon/ClientManagement/Icon';
 import { ManageTenantBackground } from '../../../../../views/DashboardCommon/ClientManagement/Background';
 import { ManageTenantSlides } from '../../../../../views/DashboardCommon/ClientManagement/Slides';
 import { ManageTenantFonts } from '../../../../DashboardCommon/ClientManagement/Fonts';
@@ -22,6 +23,7 @@ const TenantEdit = ({ userId }: Props) => {
         <FormContainer>
             <FormHeader title="application.editTenantData" />
             <ManageTenantLogo userId={userId} />
+            <ManageTenantIcon userId={userId} />
             <ManageTenantBackground userId={userId} />
             <ManageTenantFonts userId={userId} />
             <ManageTenantSlides userId={userId} />

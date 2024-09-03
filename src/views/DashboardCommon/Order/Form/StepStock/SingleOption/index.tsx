@@ -8,6 +8,7 @@ import { Spinner } from '../../../../../../components/Branded';
 import styled from 'styled-components';
 import { setOrderStock } from '../../../../../../actions/order';
 import { transparentize } from 'polished';
+import { getColorForBackground } from '../../../../../../utils/color';
 
 interface Props {
     loading: boolean;
@@ -19,10 +20,13 @@ interface Props {
 }
 
 const StyledSingleOptionWrapper = styled.div`
-input[type='radio']:checked+.single-option {
-    border: 1px solid ${props => props.theme.colors.primary};
-    background-color: ${props => transparentize(0.9, props.theme.colors.primary)};
-}
+input[type='radio']:checked+.single-stock-option {
+    border: 1px solid ${props => props.theme.colors.secondary};
+    background-color: ${props => props.theme.colors.secondary};
+    color: ${props => getColorForBackground(props.theme.colors.secondary)};
+    h3, h4 {
+        color: ${props => getColorForBackground(props.theme.colors.secondary)};
+    }
 `
 
 const SingleOption = ({ name, address, value, disable, loading, secondary }: Props) => {
@@ -45,7 +49,7 @@ const SingleOption = ({ name, address, value, disable, loading, secondary }: Pro
                 onChange={selectOption}
                 disabled={disable}
             />
-            <label htmlFor={value} className={`single-option ${disable ? 'single-option-disable' : ''}`}>
+            <label htmlFor={value} className={`single-stock-option ${disable ? 'single-stock-option-disable' : ''}`}>
                 {secondary ? <h4>{name}</h4> : <h3>{name}</h3>}
                 <span>{address}</span>
             </label>

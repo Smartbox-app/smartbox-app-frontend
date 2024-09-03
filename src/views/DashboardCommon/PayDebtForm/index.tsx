@@ -102,7 +102,7 @@ const PayDebtForm = ({
     <FormContainer>
       <form onSubmit={handleSubmit(submit)}>
         <FormHeader title="application.penaltyPayment" />
-        <SummaryTable dateStart={singleRent.finishAt} dateEnd={new Date()} countedPrice={calc(singleRent)} />
+        {/* <SummaryTable dateStart={singleRent.finishAt} dateEnd={new Date()} countedPrice={calc(singleRent)} /> */}
         {desktop && (
           <object
             className="rules-embed"

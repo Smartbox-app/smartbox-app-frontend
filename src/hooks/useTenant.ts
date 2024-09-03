@@ -64,7 +64,9 @@ const useTenant = (): UseTenant => {
             agreement: '',
             rules: '',
             storeId: '',
-            sharedSecret: ''
+            sharedSecret: '',
+            allowAddonsToRent: false,
+            icon: ''
         })
     }
 

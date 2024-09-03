@@ -1,6 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import './Spinner.scss';
+import { colorOrDark } from '../../../utils/color';
 
 interface Props {
     overlay?: boolean;
@@ -15,8 +16,8 @@ const StyledSpinnerContainer = styled.div``
 
 
 const StyledSpinner = styled.div`
-border: 3px solid  ${props => props.theme.colors.primary} ;
-border-color: ${props => props.theme.colors.primary} transparent transparent transparent;
+border: 3px solid $${props => colorOrDark(props.theme.colors.primary)};
+border-color: ${props => colorOrDark(props.theme.colors.primary)} transparent transparent transparent;
 
 `
 

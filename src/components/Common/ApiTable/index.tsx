@@ -56,7 +56,7 @@ const searchComponent = (
         searchElement = (
             <select
                 className="input"
-                placeholder={__('application.selectSearchedValue')}
+                // placeholder={__('application.selectSearchedValue')}
                 onChange={(e) => handleSearchQueryChange(e.target.value)}
             >
                 <option value={''}>{__('application.select')}</option>

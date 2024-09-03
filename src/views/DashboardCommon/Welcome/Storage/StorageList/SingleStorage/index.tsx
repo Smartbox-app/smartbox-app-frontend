@@ -10,6 +10,7 @@ import { __ } from '../../../../../../helpers/i18n';
 import './SingleStorage.scss';
 import { useSelector } from 'react-redux';
 import { ApplicationState } from '../../../../../../reducers';
+import { getColorForBackground } from '../../../../../../utils/color';
 
 
 interface Props {
@@ -19,7 +20,7 @@ interface Props {
 const StyledStorage = styled.div`
 background-color: ${({ theme }) => theme.colors.primary};
 border: 2px solid${({ theme }) => lighten(0.1, theme.colors.primary)};
-
+color: ${({ theme }) => getColorForBackground(theme.colors.primary)};
 &:hover {
     box-shadow: 0 0 2px 1px ${({ theme }) => lighten(0.1, theme.colors.primary)
     };

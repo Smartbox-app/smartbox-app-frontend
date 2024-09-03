@@ -9,7 +9,7 @@ import {
 } from 'smartbox-types';
 import { FormType } from '../types/order-form';
 import { __ } from "../helpers/i18n";
-import uuid from 'uuid';
+import { v4 } from 'uuid';
 
 export type PaymentMethodDetail = {
   id: string;
@@ -437,7 +437,7 @@ export default (state: OrderState = initialState, action: Action): OrderState =>
       if (!state.orderAddons[addonId]) return state;
       return {
         ...state,
-        orderAddonsId: uuid.v4(),
+        orderAddonsId: v4(),
         orderAddons: {
           ...state.orderAddons,
           [addonId]: {
@@ -453,7 +453,7 @@ export default (state: OrderState = initialState, action: Action): OrderState =>
       if (!state.orderAddons[addonId]) return state;
       return {
         ...state,
-        orderAddonsId: uuid.v4(),
+        orderAddonsId: v4(),
         orderAddons: {
           ...state.orderAddons,
           [addonId]: {

@@ -4,6 +4,7 @@ import { __ } from '../../../../../../helpers/i18n';
 import { dateOnly } from '../../../../../../utils/format-date';
 import './Single.scss';
 import styled from 'styled-components';
+import { colorOrDark } from '../../../../../../utils/color';
 
 export interface SingleHistory {
   createdAt: Date;
@@ -20,7 +21,7 @@ interface Props {
 
 const StyledLine = styled.li`
   &.active-stock {
-    color: ${({ theme }) => theme.colors.primary}
+    color: ${({ theme }) => colorOrDark(theme.colors.primary)}
   }
 `
 

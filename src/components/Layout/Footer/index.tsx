@@ -5,9 +5,19 @@ import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 import { ApplicationState } from '../../../reducers';
 import ApiService from '../../../services/api-service';
+import { getColorForBackground } from '../../../utils/color';
 
 const StyledFooter = styled.footer`
 background: ${props => props.theme.colors.primary};
+color: ${props => getColorForBackground(props.theme.colors.primary)};
+
+p {
+color: ${props => getColorForBackground(props.theme.colors.primary)};
+}
+
+a:link, a:visited, a:hover, a:active {
+color: ${props => getColorForBackground(props.theme.colors.primary)};
+}
 `
 
 const Footer = () => {

@@ -4,6 +4,7 @@ import { __ } from '../../../helpers/i18n';
 import './Row.scss';
 import styled from 'styled-components';
 import { darken } from 'polished';
+import { colorOrDark } from '../../../utils/color';
 
 interface Props {
     label: string;
@@ -15,7 +16,7 @@ const StyledRow = styled.div`
 `
 
 const StyledRowLabel = styled.p`
-    color: ${props => props.theme.colors.primary};
+    color: ${props => colorOrDark(props.theme.colors.primary)};
 `
 
 const Row = ({ label, content }: Props) => (

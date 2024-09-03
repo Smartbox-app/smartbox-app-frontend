@@ -23,13 +23,11 @@ footer {
     margin: 0;
     padding: $main-spacing $table-item-spacing;
     font-size: 0.75rem;
-    color: $color-text-button;
   }
 
   .footerLink {
     padding: $main-spacing $table-item-spacing;
     font-size: 0.75rem;
-    color: $color-text-button;
   }
 }
 
@@ -43,7 +41,6 @@ footer {
     }
 
     a.footerLink {
-      color: $color-text-light;
       padding: math.div($main-spacing, 2) $table-item-spacing;
       border-right: solid 2px rgba($color-background, 0.5);
     }

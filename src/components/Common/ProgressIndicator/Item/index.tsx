@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import './Item.scss';
 import { __ } from "../../../../helpers/i18n";
 import styled, { css } from 'styled-components';
+import { getColorForBackground } from '../../../../utils/color';
 
 interface Props {
   value: string;
@@ -17,12 +18,14 @@ color: #eee;
 ${props => props.current && css`
 color: #fff;
 background: ${props => props.theme.colors.primary};
+color: ${props => getColorForBackground(props.theme.colors.primary)};
 border: 2px solid${props => props.theme.colors.primary};
 `}
 
 ${props => props.done && css`
 color: #fff;
 background: ${props => props.theme.colors.success};
+color: ${props => getColorForBackground(props.theme.colors.success)};
 border: 2px solid${props => props.theme.colors.success};
 `}
 `

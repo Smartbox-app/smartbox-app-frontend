@@ -13,7 +13,7 @@ import { ReactSelectOverride } from '../../../components/Common/ReactSelectOverr
 import { ApplicationState } from '../../../reducers';
 import UserService from '../../../services/user-service';
 import { mapFields } from '../../../utils/fields-mapper';
-import { InviteWorkerReq } from '../../../../../smartbox-back/types/user';
+import { InviteWorkerReq } from 'smartbox-types';
 
 interface Props {
     successNotification: (text: string) => void;

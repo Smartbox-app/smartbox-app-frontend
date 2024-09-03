@@ -5,6 +5,7 @@ import { InputHelp } from '../InputHelp';
 import { InputErrors } from '../InputErrors';
 import './Input.scss';
 import styled, { css } from 'styled-components';
+import { getColorForBackground } from '../../../utils/color';
 
 interface Props {
     type: string;
@@ -75,6 +76,7 @@ border: 1px solid ${props => props.theme.colors.primary};
 
 ${props => props.checked && css`
     background-color: ${props => props.theme.colors.primary}
+    color: ${props => getColorForBackground(props.theme.colors.primary)};
 `}
 `
 

@@ -8,7 +8,7 @@ import FileInput from '../FileInput';
 import ApiService from '../../../services/api-service';
 import { SelectOption } from '../../../types/select';
 import { useSelector } from 'react-redux';
-import { ApplicationState } from 'src/reducers';
+import { ApplicationState } from '../../../reducers';
 
 interface Props {
     fieldHtmlId: string;

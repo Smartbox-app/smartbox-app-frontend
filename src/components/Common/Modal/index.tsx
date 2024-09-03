@@ -9,6 +9,7 @@ import { ApplicationState } from '../../../reducers';
 
 import './Modal.scss';
 import ModalContent from './ModalContent';
+import { colorOrDark } from '../../../utils/color';
 
 
 interface Props {
@@ -17,10 +18,10 @@ interface Props {
 }
 
 const StyledModalExit = styled.span`
-    color: ${props => props.theme.colors.primary};
+    color: ${props => colorOrDark(props.theme.colors.primary)};
 
     &:hover {
-        color: ${props => lighten(0.2, props.theme.colors.primary)};
+        color: ${props => lighten(0.2, colorOrDark(props.theme.colors.primary))};
       }
 `
 

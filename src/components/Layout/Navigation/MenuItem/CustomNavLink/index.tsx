@@ -4,6 +4,7 @@ import { ReactSVG } from 'react-svg';
 import { __ } from "../../../../../helpers/i18n";
 import styled, { css } from 'styled-components';
 import { lighten } from 'polished';
+import { colorOrDark } from '../../../../../utils/color';
 
 interface Props {
     text: string;
@@ -19,23 +20,23 @@ interface Props {
 const linkStyles = css`
 &:hover {
     border-color: ${props => props.theme.colors.primary};
-    color: ${props => lighten(0.1, props.theme.colors.primary)};
+    color: ${props => lighten(0.1, colorOrDark(props.theme.colors.primary))};
 }
 
 &.active {
     border-color: ${props => props.theme.colors.primary};
   
     .main-menu-item_text {
-      color: ${props => props.theme.colors.primary};
+      color: ${props => colorOrDark(props.theme.colors.primary)};
     }
   }
 
   &.active .main-menu-item_logo {
-    fill: ${props => props.theme.colors.primary};
+    fill: ${props => colorOrDark(props.theme.colors.primary)};
   }
 
   &:hover .main-menu-item_logo {
-    fill: ${props => lighten(0.1, props.theme.colors.primary)};
+    fill: ${props => lighten(0.1, colorOrDark(props.theme.colors.primary))};
   }
 `
 

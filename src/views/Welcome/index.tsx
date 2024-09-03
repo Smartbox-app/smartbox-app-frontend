@@ -5,11 +5,13 @@ import { Slide } from '../../types/slide';
 import { useTenant } from '../../hooks/useTenant';
 import './Welcome.scss';
 import styled from 'styled-components';
+import { getColorForBackground } from '../../utils/color';
 
 const StyledWelcomeContainer = styled.div`
 .swiper-pagination-bullet-active {
     opacity: 1;
     background: ${props => props.theme.colors.secondary};
+    color: ${props => getColorForBackground(props.theme.colors.primary)};
   }
 `
 

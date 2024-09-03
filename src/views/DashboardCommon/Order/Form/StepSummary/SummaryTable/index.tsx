@@ -10,10 +10,11 @@ import { AddonRes } from 'smartbox-types';
 import { OrderAddon } from '../../../../../../reducers/order-reducer';
 import { SelectedVariant } from './SelectedVariant';
 import { Section } from '../../../../../../components/Layout';
+import { colorOrDark } from '../../../../../../utils/color';
 
 
 const StyledCell = styled.div`
-color: ${props => props.theme.colors.primary};
+color: ${props => colorOrDark(props.theme.colors.primary)};
 `
 
 const StyledRow = styled.div`

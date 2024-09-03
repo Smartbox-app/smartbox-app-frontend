@@ -5,6 +5,7 @@ import { lighten } from 'polished';
 import { __ } from "../../../helpers/i18n";
 import { useTenant } from '../../../hooks/useTenant';
 import './Button.scss';
+import { colorOrDark, getColorForBackground } from '../../../utils/color';
 
 
 interface ButtonProps {
@@ -38,6 +39,7 @@ enum ButtonType {
 const buttonStyles = css`
         &.button-primary {
             background: ${props => props.theme.colors.primary};
+            color: ${props => getColorForBackground(props.theme.colors.primary)};
             &:hover {
               background: ${props => lighten(0.1, props.theme.colors.primary)};
             }
@@ -45,6 +47,7 @@ const buttonStyles = css`
 
         &.button-secondary {
             background: ${props => props.theme.colors.secondary};
+            color: ${props => getColorForBackground(props.theme.colors.secondary)};
             &:hover {
               background: ${props => lighten(0.1, props.theme.colors.secondary)};
             }
@@ -52,7 +55,7 @@ const buttonStyles = css`
 
         &.button-outline {
             border: 2px solid ${props => props.theme.colors.primary};
-            color: ${props => props.theme.colors.primary};
+            color: ${props => colorOrDark(props.theme.colors.primary)};
 
             &:hover {
                 box-shadow: inset 0 -1px 1px -1px ${props => props.theme.colors.primary};

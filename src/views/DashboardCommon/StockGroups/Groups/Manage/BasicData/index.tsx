@@ -39,7 +39,7 @@ const BasicData = () => {
                 submitButton={submitButton}
                 onRenderFullField={mapFields}
                 onSavedSuccessfully={() => {
-                    dispatch(successNotification('application.stockGroupUpdatedCorrectly'));
+                    dispatch(successNotification('notification.stockGroupUpdatedCorrectly'));
                 }}
                 onTranslateString={formOnTranslateString}
                 thirdPartyComponents={{ ReactSelect: ReactSelectOverride, ReactCreatableSelect }}

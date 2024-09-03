@@ -32,9 +32,6 @@ const ManageTenantAgreement = ({ userId }: Props) => {
         </ButtonsContainer>
     );
 
-
-
-
     const customSendFetcher = (formId: string, values) => {
         return ApiService.sendForm(
             sendUrl,

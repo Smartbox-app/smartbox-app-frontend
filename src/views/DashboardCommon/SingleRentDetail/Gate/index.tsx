@@ -12,8 +12,7 @@ import { isUser } from '../../../../utils/role-check';
 import './Gate.scss';
 import { OpenGateByForceModal } from '../../../../components/Common/OpenGateByForceModal';
 import styled from 'styled-components';
-import { SimpleHeader } from 'src/components/Layout';
-import ApiService from '../../../../services/api-service';
+import { colorOrDark } from '../../../../utils/color';
 
 interface Props {
     gate: RentGate;
@@ -21,10 +20,10 @@ interface Props {
 
 const StyledGateImageContainer = styled.div`
 .gate-rect-1 {
-    fill: ${({ theme }) => theme.colors.primary};
+    fill: ${({ theme }) => colorOrDark(theme.colors.primary)};
 }
 .gate-rect-2 {
-    fill: ${({ theme }) => theme.colors.primary};
+    fill: ${({ theme }) => colorOrDark(theme.colors.primary)};
 }
 `
 

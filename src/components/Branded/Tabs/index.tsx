@@ -5,6 +5,7 @@ import { __ } from "../../../helpers/i18n";
 import './Tabs.scss';
 import styled from 'styled-components';
 import { grayscale, lighten } from 'polished';
+import { getColorForBackground } from '../../../utils/color';
 
 interface Tab {
     to: string;
@@ -20,6 +21,7 @@ const StyledTab = styled(NavLink)`
 
     &.active {
         background: ${props => props.theme.colors.primary};
+        color: ${props => getColorForBackground(props.theme.colors.primary)};
         border-bottom: 2px solid ${props => props.theme.colors.primary};
     }
     

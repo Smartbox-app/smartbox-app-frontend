@@ -54,7 +54,7 @@ export class I18n {
     if (!this._isLoaded()) return;
     if (this.polyglot.currentLocale === newLang) return;
     SessionService.setCurrentLanguage(newLang);
-    window.location.reload(true);
+    window.location.reload();
     // Ja tu miałem po prostu zapisanie nowego języka i odświeżenie strony
     // Dobrze to działa, bo inaczej część tekstów byłaby stara, a nowe podmienione itp
   }

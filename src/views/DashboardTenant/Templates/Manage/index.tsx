@@ -13,6 +13,7 @@ import { TemplateType } from 'smartbox-types';
 import { __ } from '../../../../helpers/i18n';
 
 const allowedTags = {
+    [TemplateType.INVITE_USER_EMAIL]: ["company"],
     [TemplateType.ACCOUNT_ACTIVATED_EMAIL]: ["name"],
     [TemplateType.USER_BLOCKED_EMAIL]: ["name", "phone", "email"],
     [TemplateType.USER_UNBLOCKED_EMAIL]: ["name", "company"],

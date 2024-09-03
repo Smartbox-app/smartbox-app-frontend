@@ -34,6 +34,7 @@ const List = () => {
     return (
         <>
             <SimpleHeader title='application.stockRents' />
+            <p>Podsumowanie wynajmów jest wysyłane codziennie na adres e-mail konta franczyzobiorcy.</p>
             <ApiTable scheme={scheme} apiEndpointSubUrl={`rent/list/${stockId}`} />
         </>
     );

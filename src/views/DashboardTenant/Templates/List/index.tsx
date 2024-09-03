@@ -6,6 +6,7 @@ import ApiService from '../../../../services/api-service';
 import { Spinner } from '../../../../components/Branded';
 
 const emailTemplates = [
+    TemplateType.INVITE_USER_EMAIL,
     TemplateType.ACCOUNT_ACTIVATED_EMAIL,
     TemplateType.USER_BLOCKED_EMAIL,
     TemplateType.USER_UNBLOCKED_EMAIL,

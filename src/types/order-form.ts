@@ -1,4 +1,3 @@
-import { StockList } from "../../../smartbox-back/types/stock";
 
 export interface FormType {
   durationInDays: number;

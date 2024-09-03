@@ -1,4 +1,3 @@
-import React from 'react';
 import { UpdateActivated, UpdateActivatedReload, UpdateAvailable } from 'react-workbox';
 
 import './UpdateInfoBar.scss';
@@ -9,7 +8,7 @@ const onUpdateClick = async () => {
   if (registration && registration.waiting) {
     registration.waiting.postMessage('skipWaiting');
   }
-  setTimeout(() => window.location.reload(true), 1000);
+  setTimeout(() => window.location.reload(), 1000);
 };
 
 const UpdateInfoBar = () => (

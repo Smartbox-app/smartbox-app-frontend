@@ -5,7 +5,7 @@ import { Logo, Button } from '../../../components/Branded';
 import styled from 'styled-components';
 import { useTenant } from '../../../hooks/useTenant';
 import ApiService from '../../../services/api-service';
-import { TenantForUsers } from '../../../../../smartbox-back/types/tenant';
+import { TenantForUsers } from 'smartbox-types';
 import './SingleSlide.scss';
 
 interface Props {

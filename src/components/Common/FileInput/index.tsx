@@ -222,6 +222,8 @@ class FileInput extends React.Component<Props, State> {
 
         delete inputCopy.value;
 
+        console.log('INPUT', input);
+
         const imgPreview = (
             <div className="img-preview-wrapper">
                 {loadedType === 'image' && <img className="img-preview" src={this.state.currentImg} />}
@@ -229,7 +231,7 @@ class FileInput extends React.Component<Props, State> {
                 {!cantRender && input.value && loadedType !== 'image' && loadedFiles.length === 0 && (
                     <img className="img-preview" src={this.props.input.value} />
                 )}
-                {cantRender && input.value && <p>{input.value}</p>}
+                {cantRender &&  typeof input.value !== 'object' && input.value && <p>{input.value}</p>}
                 {/* {((cantRender && !multiple) ||
                     (multiple &&
                         cantRender &&

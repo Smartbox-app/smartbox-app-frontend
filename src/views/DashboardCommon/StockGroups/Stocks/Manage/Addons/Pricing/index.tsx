@@ -9,7 +9,7 @@ import { ButtonsContainer, FormContainer, Section, SimpleHeader } from '../../..
 import { Button, Spinner } from '../../../../../../../components/Branded';
 import { __ } from '../../../../../../../helpers/i18n';
 import { successNotification } from '../../../../../../../actions/notifications';
-import uuid from 'uuid';
+import { v4 } from 'uuid';
 
 const StyledSinglePricing = styled.div`
 display: flex;
@@ -40,7 +40,7 @@ const Pricing = () => {
     }
 
     const addVariant = () => {
-        setVariants(prevVariants => [...prevVariants, { name: '', pricing: [], id: uuid.v4() }])
+        setVariants(prevVariants => [...prevVariants, { name: '', pricing: [], id: v4() }])
     }
 
     const deleteVariant = (idToDelete: string) => {
@@ -62,7 +62,7 @@ const Pricing = () => {
             if (variant.id === variantId) {
                 return ({
                     ...variant,
-                    pricing: [...variant.pricing, { type: AddonPricingType.Year, quantity: 1, price: 0, id: uuid.v4() }]
+                    pricing: [...variant.pricing, { type: AddonPricingType.Year, quantity: 1, price: 0, id: v4() }]
                 })
             }
             return ({

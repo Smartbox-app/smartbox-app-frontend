@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect, useSelector } from 'react-redux';
 import { Switch, Route, Redirect } from 'react-router';
-import { GateManagement } from '../../../views/DashboardCommon/GateManagement';
 import { Tabs } from '../../../components/Branded';
 import { Section } from '../../../components/Layout';
 import { ApplicationState } from '../../../reducers';
@@ -17,10 +16,6 @@ const Management = () => {
                     to: `/${UserService.getSlugByRole(user.role)}/management/map`,
                     text: 'application.boxes',
                 },
-                {
-                    to: `/${UserService.getSlugByRole(user.role)}/management/gate`,
-                    text: 'application.gate',
-                },
             ]}
         />
 
@@ -31,7 +26,6 @@ const Management = () => {
                 render={() => <Redirect to={`/${UserService.getSlugByRole(user.role)}/management/map`} />}
             />
             <Route path={`/${UserService.getSlugByRole(user.role)}/management/map`} component={MapManagement} />
-            <Route path={`/${UserService.getSlugByRole(user.role)}/management/gate`} component={GateManagement} />
         </Switch>
     </Section>
 }

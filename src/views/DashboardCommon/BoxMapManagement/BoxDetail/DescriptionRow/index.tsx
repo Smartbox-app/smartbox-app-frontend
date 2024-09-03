@@ -1,6 +1,7 @@
 import React from 'react';
 import { __ } from '../../../../../helpers/i18n';
 import styled from 'styled-components';
+import { colorOrDark } from '../../../../../utils/color';
 
 interface Props {
   children: React.ReactNode;
@@ -9,7 +10,7 @@ interface Props {
 }
 
 const StyledIcon = styled.span`
-  color: ${props => props.theme.colors.primary}
+  color: ${props => colorOrDark(props.theme.colors.primary)}
 `
 
 const DescriptionRow = ({ children, text, icon }: Props) => {

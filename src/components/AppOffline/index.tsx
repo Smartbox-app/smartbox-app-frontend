@@ -3,9 +3,11 @@ import { __ } from "../../helpers/i18n";
 
 import './AppOffline.scss';
 import styled from 'styled-components';
+import { getColorForBackground } from '../../utils/color';
 
 const StyledAppStatus = styled.div`
 background: ${props => props.theme.colors.primary};
+color: ${props => getColorForBackground(props.theme.colors.primary)};
 `
 
 const AppOffline = () => (

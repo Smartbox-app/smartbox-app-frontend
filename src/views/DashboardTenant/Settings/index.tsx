@@ -1,6 +1,7 @@
 import React from 'react';
-import { FormContainer, FormHeader, PageHeader, Section } from '../../../components/Layout';
+import { FormContainer, PageHeader, Section } from '../../../components/Layout';
 import { ManageTenantLogo } from '../../../views/DashboardCommon/ClientManagement/Logo';
+import { ManageTenantIcon } from '../../../views/DashboardCommon/ClientManagement/Icon';
 import { ManageTenantBackground } from '../../../views/DashboardCommon/ClientManagement/Background';
 import { ManageTenantData } from '../../../views/DashboardCommon/ClientManagement/TenantData';
 import { ManageTenantSlides } from '../../../views/DashboardCommon/ClientManagement/Slides';
@@ -15,6 +16,7 @@ const Settings = () => {
             <PageHeader title="application.editYourTenantData" />
             <FormContainer highlight>
                 <ManageTenantLogo />
+                <ManageTenantIcon />
                 <ManageTenantBackground />
                 <ManageTenantFonts />
                 <ManageTenantSlides />

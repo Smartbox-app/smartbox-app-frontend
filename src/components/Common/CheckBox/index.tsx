@@ -6,6 +6,7 @@ import { InputErrors } from '../InputErrors';
 import './CheckBox.scss';
 import { InputHelp } from '../InputHelp';
 import styled from 'styled-components';
+import { getColorForBackground } from '../../../utils/color';
 
 interface Props {
     name: string;
@@ -26,6 +27,7 @@ const StyledCheckbox = styled.div`
     [type='checkbox']:checked + label:after,
     [type='checkbox']:not(:checked) + label:after {
         background: ${props => props.theme.colors.primary};
+        color: ${props => getColorForBackground(props.theme.colors.primary)};
 }
 `
 

@@ -9,6 +9,6 @@ module.exports = {
                 exclude: wb.exclude || [],
             }),
         ),
-        aliasDangerous(configPaths('./tsconfig.paths.json'))
+        aliasDangerous({...configPaths('./tsconfig.paths.json')})
     ),
 };

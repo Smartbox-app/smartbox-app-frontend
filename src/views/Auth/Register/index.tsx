@@ -15,7 +15,7 @@ import { __ } from '../../../helpers/i18n';
 import ButtonSection from './ButtonSection';
 
 import './Register.scss';
-import { ApplicationState } from 'src/reducers';
+import { ApplicationState } from '../../../reducers';
 
 interface Props {
     successNotification: (text: string) => void;

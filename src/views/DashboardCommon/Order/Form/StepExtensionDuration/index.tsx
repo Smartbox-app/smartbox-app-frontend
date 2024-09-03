@@ -22,6 +22,7 @@ import styled from 'styled-components';
 import { calculateAddonPrice, calculatePriceForRent, setRentEndDate, setRentStartDate } from '../../../../../actions/order';
 import { Addons } from '../Common/Addons';
 import ApiService from '../../../../../services/api-service';
+import { getColorForBackground } from '../../../../../utils/color';
 
 const StyledCalendarPicker = styled.div`
 margin: 0 -10px;
@@ -33,6 +34,7 @@ border-color: ${props => props.theme.colors.primary};
     &.selected {
         border-color: ${props => props.theme.colors.primary};
         background-color: ${props => props.theme.colors.primary};
+        color: ${props => getColorForBackground(props.theme.colors.primary)};
     }
 }
 `

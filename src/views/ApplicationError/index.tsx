@@ -6,9 +6,10 @@ import { __ } from '../../helpers/i18n';
 
 import './ApplicationError.scss';
 import styled from 'styled-components';
+import { colorOrDark } from '../../utils/color';
 
 const StyledApplicationError = styled.h1`
-color: ${props => props.theme.colors.primary};
+color: ${props => colorOrDark(props.theme.colors.primary)};
 `
 
 const ApplicationError = () => (

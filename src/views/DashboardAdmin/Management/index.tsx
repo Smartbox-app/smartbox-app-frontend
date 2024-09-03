@@ -14,7 +14,6 @@ import InvitesSent from '../../DashboardCommon/InvitesSent';
 import SMS from '../../DashboardCommon/SMS';
 import Settings from './Settings';
 import { MapManagement } from './Map';
-import { GateManagement } from '../../../views/DashboardCommon/GateManagement';
 import ClientsManagement from './ClientsManagement';
 
 const Management = () => {
@@ -63,7 +62,6 @@ const Management = () => {
             <Route path={`/${UserService.getSlugByRole(user.role)}/management/clients`} component={ClientsManagement} />
             <Route path={`/${UserService.getSlugByRole(user.role)}/management/map`} component={MapManagement} />
             <Route path={`/${UserService.getSlugByRole(user.role)}/management/invitations`} component={InvitesSent} />
-            <Route path={`/${UserService.getSlugByRole(user.role)}/management/gate`} component={GateManagement} />
             <Route path={`/${UserService.getSlugByRole(user.role)}/management/sms`} component={SMS} />
             <Route path={`/${UserService.getSlugByRole(user.role)}/management/settings`} component={Settings} />
         </Switch>

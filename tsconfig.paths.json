@@ -3,10 +3,10 @@
     "baseUrl": ".",
     "paths": {
       "smartbox-tables": [
-        "../smartbox-back/tables"
+        "./src/smartbox-tables"
       ],
       "smartbox-types": [
-        "../smartbox-back/types"
+        "./src/smartbox-types"
       ]
     }
   }

@@ -26,7 +26,7 @@
         align-items: center;
     }
 
-    .single-option {
+    .single-stock-option {
         cursor: pointer;
         position: relative;
         height: 100%;
@@ -47,7 +47,7 @@
     }
 }
 
-.single-option-disable {
+.single-stock-option-disable {
     cursor: not-allowed !important;
 }
 
@@ -58,7 +58,7 @@
 }
 
 @include gt-sm {
-    .single-option-disable {
+    .single-stock-option-disable {
         &::before {
             width: 100%;
             height: $single-option-height-big;

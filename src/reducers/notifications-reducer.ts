@@ -1,4 +1,4 @@
-import uuidv4 from 'uuid/v4';
+import { v4 } from 'uuid';
 import { ApiErrorCode } from 'smartbox-types';
 import { SingleNotification } from '../types/notifications';
 import { translateApiErrorCode } from '../utils/trans-form';
@@ -34,13 +34,13 @@ const getError = (error: ApiErrorCode) => translateApiErrorCode(error, 'pl');
 const getErrorNotification = (text: string) => ({
   type: 'error-notification',
   text,
-  id: uuidv4(),
+  id: v4(),
 });
 
 const getSuccessNotification = (text: string) => ({
   type: 'success',
   text,
-  id: uuidv4(),
+  id: v4(),
 });
 
 export default (state = initialState, action: Action) => {
