@@ -66,7 +66,8 @@ const useTenant = (): UseTenant => {
             storeId: '',
             sharedSecret: '',
             allowAddonsToRent: false,
-            icon: ''
+            icon: '',
+            useProd: false,
         })
     }
 

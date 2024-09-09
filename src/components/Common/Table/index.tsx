@@ -7,7 +7,10 @@ import { formatPrice } from '../../../utils/format-price';
 
 import './Table.scss';
 import { fullDate } from '../../../utils/format-date';
-import {__} from "../../../helpers/i18n";
+import { __ } from "../../../helpers/i18n";
+import styled from 'styled-components';
+import { getColorForBackground } from '../../../utils/color';
+import { lighten, setLightness } from 'polished';
 
 interface Props {
   scheme: TableSchema;
@@ -20,6 +23,23 @@ interface Props {
   };
   onSortChange?: (sortBy: string, sortDirBack: boolean) => void;
 }
+
+const StyledRow = styled('tr')(({ theme }) => {
+  const secondaryLight = setLightness(0.95, theme.colors.secondary);
+
+  return {
+    height: 56,
+    '&:nth-child(odd)': {
+      backgroundColor: secondaryLight,
+      color: getColorForBackground(secondaryLight),
+
+      a: {
+        color: getColorForBackground(secondaryLight)
+      }
+    }
+  }
+})
+
 
 const formatValue = (value: any, field: TableSchemaField, allValues: any) => {
   if (typeof field.customValue === 'function') {
@@ -45,7 +65,7 @@ const formatValue = (value: any, field: TableSchemaField, allValues: any) => {
       return value === null ? (
         '-'
       ) : (
-        <a href={`mailto:${value}`} rel="noopener noreferrer" target="_blank">
+        <a href={`mailto: ${value}`} rel="noopener noreferrer" target="_blank">
           {value}
         </a>
       );
@@ -54,7 +74,7 @@ const formatValue = (value: any, field: TableSchemaField, allValues: any) => {
       return value === null ? (
         '-'
       ) : (
-        <a href={`tel:${value}`} rel="noopener noreferrer" target="_blank">
+        <a href={`tel: ${value} `} rel="noopener noreferrer" target="_blank">
           {value}
         </a>
       );
@@ -66,13 +86,13 @@ const formatValue = (value: any, field: TableSchemaField, allValues: any) => {
       return value === null || value === undefined ? __('application.notEstablished') : fullDate(value);
     }
     case FieldType.Boolean: {
-      return value === null ? __('application.default') : value ? __('application.yes'): __('application.no');
+      return value === null ? __('application.default') : value ? __('application.yes') : __('application.no');
     }
     case FieldType.Price: {
       return value === (null || undefined) ? '-' : formatPrice(value);
     }
     case FieldType.Percent: {
-      return value === (null || undefined) ? '-' : `${value}%`;
+      return value === (null || undefined) ? '-' : `${value} % `;
     }
     case FieldType.Text:
     default: {
@@ -95,7 +115,7 @@ function genSortItems(
   const arrow1 = (
     <a
       onClick={() => handleSortChange(false)}
-      className={`sort sort-up ${sort.sortBy === header.field && sort.sortDirBack !== true ? 'active' : ''}`}
+      className={`sort sort - up ${sort.sortBy === header.field && sort.sortDirBack !== true ? 'active' : ''} `}
     >
       <span className="fa fa-chevron-up" />
     </a>
@@ -103,7 +123,7 @@ function genSortItems(
   const arrow2 = (
     <a
       onClick={() => handleSortChange(true)}
-      className={`sort sort-down ${sort.sortBy === header.field && sort.sortDirBack === true ? 'active' : ''}`}
+      className={`sort sort - down ${sort.sortBy === header.field && sort.sortDirBack === true ? 'active' : ''} `}
     >
       <span className="fa fa-chevron-down" />
     </a>
@@ -137,32 +157,32 @@ class Table extends React.Component<Props> {
 
     if (desktop) {
       const headers = this.props.scheme.fields.map((header: TableSchemaField) => (
-        <th className={`${header.mobile ? 'mobile' : ''}`} key={header.field}>
+        <th className={`${header.mobile ? 'mobile' : ''} `} key={header.field}>
           {header.name}{' '}
           {this.props.sort && this.props.onSortChange && genSortItems(header, this.props.sort, this.props.onSortChange)}
         </th>
       ));
       const rows = this.props.data.items.map((row: any, rowIndex: number) => (
-        <tr key={rowIndex}>
+        <StyledRow key={rowIndex}>
           {this.props.scheme.fields.map((header: TableSchemaField, index: number) => (
-            <td className={`${header.mobile ? 'mobile' : ''}`} key={`${header.field}_${rowIndex}`}>
+            <td className={`${header.mobile ? 'mobile' : ''} `} key={`${header.field}_${rowIndex} `}>
               {header.buttons
                 ? header.buttons.map((button: TableButton, index: number) => (
-                    <Button
-                      key={index}
-                      primary={button.type === 'primary'}
-                      danger={button.type === 'danger'}
-                      success={button.type === 'success'}
-                      secondary={button.type === 'secondary'}
-                      to={button.to ? typeof button.to === 'string' ? `${button.to}${row.id}` : button.to(row) : ''}
-                      click={button.click ? () => button.click(row) : null}
-                      text={button.name}
-                    />
-                  ))
+                  <Button
+                    key={index}
+                    primary={button.type === 'primary'}
+                    danger={button.type === 'danger'}
+                    success={button.type === 'success'}
+                    secondary={button.type === 'secondary'}
+                    to={button.to ? typeof button.to === 'string' ? `${button.to}${row.id} ` : button.to(row) : ''}
+                    click={button.click ? () => button.click(row) : null}
+                    text={button.name}
+                  />
+                ))
                 : formatValue(row[header.field], header, row)}
             </td>
           ))}
-        </tr>
+        </StyledRow>
       ));
 
       content = (
@@ -179,12 +199,12 @@ class Table extends React.Component<Props> {
           <p>{__('application.clickToShowHideDetails')}</p>
           {this.props.data.items.map((row: any, rowIndex: number) => (
             <div
-              className={`list-element ${this.state.toggled === rowIndex ? 'toggled' : ''}`}
+              className={`list - element ${this.state.toggled === rowIndex ? 'toggled' : ''} `}
               onClick={() => this.toggleRow(rowIndex)}
               key={rowIndex}
             >
               {this.props.scheme.fields.map((header: TableSchemaField, index: number) => (
-                <div className={`list-row ${header.mobile ? 'mobile' : ''}`}>
+                <div className={`list - row ${header.mobile ? 'mobile' : ''} `}>
                   {header.buttons ? (
                     <div className="list-buttons">
                       {header.buttons.map((button: any, index: number) => (
@@ -194,7 +214,7 @@ class Table extends React.Component<Props> {
                           danger={button.type === 'danger'}
                           success={button.type === 'success'}
                           secondary={button.type === 'secondary'}
-                          to={button.to ? typeof button.to === 'string' ? `${button.to}${row.id}` : button.to(row) : ''}
+                          to={button.to ? typeof button.to === 'string' ? `${button.to}${row.id} ` : button.to(row) : ''}
                           click={button.click ? () => button.click(row) : null}
                           text={button.name}
                         />

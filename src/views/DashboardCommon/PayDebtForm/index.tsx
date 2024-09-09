@@ -110,7 +110,7 @@ const PayDebtForm = ({
             type="application/pdf"
           />
         )}
-        <Button primary blank to={`${ApiService.url}tenant/agreement/${tenant.id}`} text='Kliknij aby otworzyć regulamin' />
+        <Button primary blank to={`${ApiService.url}tenant/agreement/${tenant.id}`} text='Kliknij aby otworzyć' />
 
         <span className="separator" />
         <ScrollPosition />

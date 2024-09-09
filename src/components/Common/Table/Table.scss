@@ -34,16 +34,6 @@
     width: 50%;
   }
 
-  tbody {
-    tr {
-      // border-bottom: 1px solid darken($color-primary, 15%);
-
-      &:nth-child(odd) {
-        background-color: rgba(0, 0, 0, 0.02);
-      }
-    }
-  }
-
   img {
     max-width: 100px;
     max-height: 100px;

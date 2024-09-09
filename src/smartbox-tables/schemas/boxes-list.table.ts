@@ -9,8 +9,9 @@ export const boxesList: TableSchema = {
       mobile: true,
       searchable: true,
       sortable: true,
-      defaultSort: false,
+      defaultSort: true,
       type: FieldType.Text,
+      sortType: 'number'
     },
     {
       name: 'Powierzchnia',
@@ -18,7 +19,7 @@ export const boxesList: TableSchema = {
       mobile: true,
       searchable: true,
       sortable: true,
-      defaultSort: true,
+      defaultSort: false,
       type: FieldType.Text,
     },
     {

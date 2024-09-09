@@ -39,6 +39,7 @@ export interface TableSchemaField {
     searchableValues?: TableFieldSearchableValues;
     defaultSearch?: string|number;
     alias?: string;
+    sortType?: string;
 }
 
 export interface TableSchema {

@@ -26,8 +26,9 @@ export interface TenantEntity {
     storeId: string;
     sharedSecret: string;
     allowAddonsToRent: boolean;
+    useProd: boolean;
 }
 
 export type UpdateTenantReq = Pick<TenantEntity, 'colorPrimary' | 'colorSecondary' | 'name' | 'identifier' | 'contactEmail' | 'contactPhone' | 'additionalMailInfo' | 'tax'>;
-export type UpdateTenantByAdminReq = Pick<TenantEntity, 'colorPrimary' | 'colorSecondary' | 'name' | 'identifier' | 'contactEmail' | 'contactPhone' | 'allowedBoxesCount' | 'allowedStocksCount' | 'additionalMailInfo' | 'tax' | 'invoiceServiceApiKey' | 'invoiceServiceDomain' | 'smsName' | 'storeId' | 'sharedSecret' | 'allowAddonsToRent'>;
+export type UpdateTenantByAdminReq = Pick<TenantEntity, 'colorPrimary' | 'colorSecondary' | 'name' | 'identifier' | 'contactEmail' | 'contactPhone' | 'allowedBoxesCount' | 'allowedStocksCount' | 'additionalMailInfo' | 'tax' | 'invoiceServiceApiKey' | 'invoiceServiceDomain' | 'useProd' | 'smsName' | 'storeId' | 'sharedSecret' | 'allowAddonsToRent'>;
 export type TenantForUsers = Omit<TenantEntity, 'allowedBoxesCount' | 'allowedStocksCount'>;

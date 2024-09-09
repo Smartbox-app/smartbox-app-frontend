@@ -185,7 +185,7 @@ const StepSummary = ({
                 //     type="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
                 // />
             )}
-            <Button primary blank to={`${ApiService.url}tenant/agreement/${tenant.id}`} text='Kliknij aby otworzyć regulamin' />
+            <Button primary blank to={`${ApiService.url}tenant/agreement/${tenant.id}`} text='Kliknij aby otworzyć' />
             <span className="separator" />
             <ScrollPosition />
             <Alert type="notice" text="application.orderAgreementAcceptation" />
