@@ -2,13 +2,14 @@ import { RentDescription, RentStatus } from './rent-entity';
 import { BaseResponse } from '../base/baseRes';
 import { Prop } from '../store/prop.decorator';
 import { PaymentType } from '../payment';
+import { AcceptanceStatuses, SingleAcceptance } from '../addon';
 
 export interface OrderAddons {
   [addonId: string]: {
-    price: number;
-    selectedVariant: string;
-    acceptance?: string;
-    accepted: boolean;
+    price: number | null;
+    selectedVariant: string | null;
+    acceptances: SingleAcceptance[];
+    acceptancesStatus: AcceptanceStatuses;
   }
 };
 

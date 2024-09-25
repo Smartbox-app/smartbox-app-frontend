@@ -6,14 +6,15 @@ import { RentHistory } from "../../RentHistory";
 
 interface Props {
     description: RentDescription[];
+    rentId: string;
 }
 
 
-export const Description = ({ description }: Props) => {
+export const Description = ({ description, rentId }: Props) => {
     return (
         <Section highlight>
             <SectionHeader title="application.rentHistory" />
-            <RentHistory description={description} />
+            <RentHistory description={description} rentId={rentId} />
         </Section>
     )
 }

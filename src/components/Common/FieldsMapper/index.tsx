@@ -9,6 +9,7 @@ import ApiService from '../../../services/api-service';
 import { SelectOption } from '../../../types/select';
 import { useSelector } from 'react-redux';
 import { ApplicationState } from '../../../reducers';
+import { AcceptancesField } from '../AcceptancesField';
 
 interface Props {
     fieldHtmlId: string;
@@ -22,7 +23,6 @@ interface Props {
 }
 
 const parseInputNumber = (value: unknown) => {
-    console.log('parsing', value);
     return typeof value === 'undefined' || (!value && value !== 0) ? value : Number(value);
 }
 
@@ -58,8 +58,11 @@ const FieldsMapper = ({ field, fieldHtmlId, currentValue, errors, big, onFocus, 
     }, [])
 
     const type = getProperType(field);
+    
 
     switch (type) {
+        // Handline Addon acceptances
+        case 'acceptances': return <AcceptancesField value={currentValue} onChange={onChange} />
         case 'phone': return <InputPhone big={big} errors={translateErrors(errors)} label={field.title} name={fieldHtmlId} value={currentValue} onChange={onChange} />;
         case 'text': return <Input
             big={big}

@@ -24,7 +24,7 @@ import {
     RouteTenant,
 } from './components/Common';
 import { Spinner } from './components/Branded';
-import { EmailConfirm, Login, Register, RestorePass, UserActivation, EmailSend, GoogleAuth, TenantActivation } from './views/Auth';
+import { EmailConfirm, Login, Register, RestorePass, UserActivation, EmailSend, GoogleAuth, TenantActivation, ResendActivationLink } from './views/Auth';
 import { Invoice, PaymentFailed } from './views/DashboardCommon';
 import { NotificationContainer } from './components/Notifications';
 import AppOffline from './components/AppOffline';
@@ -104,6 +104,7 @@ const App = () => {
                                             <Route exact path="/restore-pass/" component={RestorePass} />
                                             <Route path="/restore-pass/:userId/:updateToken" component={RestorePass} />
                                             <Route path="/google-success/:googleToken" component={GoogleAuth} />
+                                            <Route path='/resend-activation-link' component={ResendActivationLink} />
                                             <Route path="/user-activation/:invitationId/:updateToken" component={UserActivation} />
                                             <Route path="/tenant-activation/:userId/:updateToken" component={TenantActivation} />
                                             <Route path="/join-from-invitation/:invitationId/:updateToken" component={UserActivation} />

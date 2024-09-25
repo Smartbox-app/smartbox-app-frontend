@@ -1,11 +1,14 @@
 import { addDays } from 'date-fns';
 import {
+  AcceptanceStatuses,
   AddonRes,
+  AddonUserFileRequirementType,
   BoxGroupAvailability,
   CalculatedAddonPriceRes,
   CalculatedPriceRes,
   PaymentStatus,
   PaymentType,
+  SingleAcceptance,
 } from 'smartbox-types';
 import { FormType } from '../types/order-form';
 import { __ } from "../helpers/i18n";
@@ -19,12 +22,17 @@ export type PaymentMethodDetail = {
   main_bank_id: string;
 };
 
+
+
 export type OrderAddon = {
   required: boolean;
   selectedVariant: string | null;
-  accepted: boolean;
-  acceptance?: string;
+  acceptancesStatus: AcceptanceStatuses;
+  acceptances: SingleAcceptance[];
+  userFileAllowed: boolean;
+  userFileRequirement: AddonUserFileRequirementType | null;
   price: { value: number, isGross: boolean } | null;
+  file: File | null;
 }
 
 export type OrderState = {
@@ -97,6 +105,13 @@ interface SetCalculatedAddonPrice {
   payload: CalculatedAddonPriceRes;
 }
 
+interface ClearAddonPrice {
+  type: 'CLEAR_ADDON_PRICE';
+  payload: {
+    addonId: string;
+  };
+}
+
 interface LoadingPrice {
   type: 'LOADING_PRICE';
   payload: boolean;
@@ -137,7 +152,12 @@ interface SelectAddon {
 
 interface SetAddonAcceptance {
   type: 'SET_ADDON_ACCEPTANCE';
-  payload: { addonId: string, checked: boolean }
+  payload: { addonId: string, acceptanceId: string, checked: boolean }
+}
+
+interface SetAddonFile{
+  type: 'SET_ADDON_FILE';
+  payload: { addonId: string, file: File | null }
 }
 
 interface FormReaded {
@@ -202,6 +222,8 @@ type Action =
   | LoadingAddons
   | SelectAddon
   | SetAddonAcceptance
+  | SetAddonFile
+  | ClearAddonPrice
   //
   | FormStepSuccess
   | FetchBoxAvailability
@@ -296,7 +318,6 @@ export default (state: OrderState = initialState, action: Action): OrderState =>
 
 
     case 'SET_RENT_START_DATE': {
-      console.log('SETTING START DATE', action.payload);
       return {
         ...state,
         startDate: action.payload
@@ -304,7 +325,6 @@ export default (state: OrderState = initialState, action: Action): OrderState =>
     };
 
     case 'SET_RENT_END_DATE': {
-      console.log('SETTING END DATE', action.payload);
       return {
         ...state,
         endDate: action.payload
@@ -331,6 +351,23 @@ export default (state: OrderState = initialState, action: Action): OrderState =>
           [addonId]: {
             ...state.orderAddons[addonId],
             price
+          }
+        }
+      }
+    }
+
+    case 'CLEAR_ADDON_PRICE': {
+      const { addonId } = action.payload;
+
+      if (!state.orderAddons[addonId]) return state;
+
+      return {
+        ...state,
+        orderAddons: {
+          ...state.orderAddons,
+          [addonId]: {
+            ...state.orderAddons[addonId],
+            price: null
           }
         }
       }
@@ -417,12 +454,23 @@ export default (state: OrderState = initialState, action: Action): OrderState =>
       const orderAddons: { [addonId: string]: OrderAddon } = {};
 
       action.payload.forEach(addon => {
+        const acceptanceStatuses: AcceptanceStatuses = {};
+
+        addon.acceptances.forEach(acceptance => {
+          acceptanceStatuses[acceptance.id] = {
+            accepted: false
+          }
+        })
+
         orderAddons[addon.id] = {
           required: addon.required,
-          acceptance: addon.acceptance,
-          accepted: false,
+          acceptances: addon.acceptances,
+          acceptancesStatus: acceptanceStatuses,
+          userFileAllowed: addon.userFileAllowed,
+          userFileRequirement: addon.userFileRequirement,
           selectedVariant: null,
           price: null,
+          file: null,
         }
       })
       return {
@@ -447,9 +495,9 @@ export default (state: OrderState = initialState, action: Action): OrderState =>
         }
       }
     }
-    case 'SET_ADDON_ACCEPTANCE': {
-      const { addonId, checked } = action.payload;
-      console.log('SETTING ACCEPTANCE', addonId, checked);
+
+    case 'SET_ADDON_FILE': {
+      const { addonId, file } = action.payload;
       if (!state.orderAddons[addonId]) return state;
       return {
         ...state,
@@ -458,7 +506,28 @@ export default (state: OrderState = initialState, action: Action): OrderState =>
           ...state.orderAddons,
           [addonId]: {
             ...state.orderAddons[addonId],
-            accepted: checked
+            file: file
+          }
+        }
+      }
+    }
+
+    case 'SET_ADDON_ACCEPTANCE': {
+      const { addonId, acceptanceId, checked } = action.payload;
+      if (!state.orderAddons[addonId]) return state;
+      return {
+        ...state,
+        orderAddonsId: v4(),
+        orderAddons: {
+          ...state.orderAddons,
+          [addonId]: {
+            ...state.orderAddons[addonId],
+            acceptancesStatus: {
+              ...state.orderAddons[addonId].acceptancesStatus,
+              [acceptanceId]: {
+                accepted: checked
+              },
+            }
           }
         }
       }
@@ -479,7 +548,6 @@ export default (state: OrderState = initialState, action: Action): OrderState =>
 
 
     case 'PICK_PAYMENT_TYPE_SUCCESS':
-      console.log('PICKING PAYMENT TYPE', action.payload);
       return {
         ...state,
         // @TODO fix

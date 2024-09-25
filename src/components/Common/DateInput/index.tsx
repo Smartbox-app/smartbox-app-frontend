@@ -47,8 +47,6 @@ padding: 10px;
 `
 
 const DateInput = ({ name, value, onChange, label, errors, minDate, maxDate, big, register, inline = true }: Props) => {
-  // const { errors } = useForm();
-  console.log('DATE INPUT VALUE', value);
   return (
     <StyledContainer className={`data-picker-wrapper ${big ? 'big' : 'compact'}`}>
       <InputLabel label={label} name={name} />

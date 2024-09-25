@@ -13,7 +13,7 @@ import { ApplicationState } from '../../../reducers';
 import Action from './Action';
 import Details from './Details';
 import Gate from './Gate';
-import MissingPaymentAlert from './MissingPaymentAlert';
+import { MissingPaymentAlert } from './MissingPaymentAlert';
 import ApiService from '../../../services/api-service';
 import { OpenBox } from './OpenBox';
 import styled from 'styled-components';
@@ -52,12 +52,12 @@ const SingleRentDetail = ({ showUserStockMap, match }: Props) => {
   return (
     <Section full>
       <SectionHeader title="application.rentDetail" />
-      <MissingPaymentAlert />
+      <MissingPaymentAlert rent={singleRent} />
       <Action rent={singleRent} isMapActive={singleRent.isMap} />
       {!showUserStockMap ? (
         <>
           <Details singleRent={singleRent} />
-          <Description description={singleRent.description} />
+          <Description description={singleRent.description} rentId={singleRent.id} />
 
           <Section highlight>
 

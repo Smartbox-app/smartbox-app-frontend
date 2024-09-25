@@ -32,7 +32,6 @@ const ManageTenantSlides = ({ userId }: Props) => {
     const customSendFetcher = (formId: string, values) => {
         const fd = new FormData();
         for (const key in values) {
-            console.log(values);
             if (key === 'slides' && values.slides) {
                 for (const file of values.slides) {
                     fd.append('slides', file);

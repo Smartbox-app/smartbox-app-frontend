@@ -42,13 +42,11 @@ export const SingleVariant = ({ variant, addonId, isGross }: Props) => {
     const dispatch = useDispatch();
 
     const isSelected = useMemo(() => {
-        console.log('ORDER ADDONS', orderAddons);
         if (!orderAddons[addonId]) return false;
         return orderAddons[addonId].selectedVariant === variant.id
     }, [orderAddons, addonId])
 
     const selectVariant = () => {
-        console.log('TRYING TO SELECT', addonId, variant.id);
         dispatch(selectAddon(addonId, isSelected ? null : variant.id));
     }
 

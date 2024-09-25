@@ -64,8 +64,6 @@ class FileInput extends React.Component<Props, State> {
     async componentDidMount() {
         const { input, multiple, hasImage } = this.props;
 
-        console.log('VALUE', input.value);
-
         if (input.value) {
             this.fileReader.onload = (e: any) => {
                 this.setState({
@@ -112,7 +110,6 @@ class FileInput extends React.Component<Props, State> {
 
     private hasImage = () => {
         const { hasImage, input } = this.props;
-        console.log(this.props.label, this.props.hasImage, this.props.input.value)
         if (!hasImage && Array.isArray(input.value) && input.value.length === 0) return false;
         return this.props.hasImage || this.props.input.value;
     }
@@ -221,8 +218,6 @@ class FileInput extends React.Component<Props, State> {
         const inputCopy = { ...this.props.input };
 
         delete inputCopy.value;
-
-        console.log('INPUT', input);
 
         const imgPreview = (
             <div className="img-preview-wrapper">

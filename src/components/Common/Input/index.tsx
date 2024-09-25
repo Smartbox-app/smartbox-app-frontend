@@ -75,7 +75,7 @@ border-radius: 50%;
 border: 1px solid ${props => props.theme.colors.primary};
 
 ${props => props.checked && css`
-    background-color: ${props => props.theme.colors.primary}
+    background-color: ${props => props.theme.colors.primary};
     color: ${props => getColorForBackground(props.theme.colors.primary)};
 `}
 `

@@ -19,7 +19,6 @@ export const translateErrors = (data: TranslatableObject[]) => {
       messageCompiled: format(formOnTranslateString(data[0].messageWithPlaceholders), data[0].params),
       params: data[0].params,
     };
-    console.log('translated', returnData);
     return [returnData];
   } else {
     return data;

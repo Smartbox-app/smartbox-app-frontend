@@ -1,26 +1,30 @@
 import React, { useEffect } from 'react';
 
-import { withRouter, RouteComponentProps } from 'react-router';
+import { withRouter, RouteComponentProps, useParams } from 'react-router';
 import { FormContainer, Section, SectionHeader } from '../../../components/Layout';
 import { ProgressIndicator } from '../../../components/Common';
 
 import Form from './Form/Index';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getStockDiscountsList } from '../../../actions/stock';
+import { ApplicationState } from 'src/reducers';
+import { RentStatus } from 'smartbox-types';
+import { getSingleRent } from '../../../actions/single-rent';
 
-interface RouteProps {
-  step: string;
-  rentId: string;
-}
-
-type Props = RouteComponentProps<RouteProps>;
-
-const Order = ({ match }: Props) => {
+export const Order = () => {
   const dispatch = useDispatch();
+  const { singleRent } = useSelector((state: ApplicationState) => state.rent);
+  const { step, paymentId, rentId } = useParams<{ step: string; paymentId: string, rentId?: string }>();
 
   useEffect(() => {
     dispatch(getStockDiscountsList());
   }, []);
+
+  useEffect(() => {
+    if (!rentId) return;
+
+    dispatch(getSingleRent(rentId));
+}, [rentId])
 
   const getStepByName = (stepName: string) => {
     switch (stepName) {
@@ -41,11 +45,17 @@ const Order = ({ match }: Props) => {
     }
   };
 
+  const getTitle = () => {
+    if(singleRent && singleRent.status === RentStatus.noPaidExtension) return 'application.debtPayOff';
+    if(rentId) return 'application.extendsOrder';
+    return 'application.newOrder'
+  }
+
   return (
     <Section>
-      <SectionHeader title={match.params.rentId ? 'application.extendsOrder' : 'application.newOrder'} />
+      <SectionHeader title={getTitle()} />
       <ProgressIndicator
-        current={getStepByName(match.params.step)}
+        current={getStepByName(step)}
         stepList={[
           {
             value: 1,
@@ -79,5 +89,3 @@ const Order = ({ match }: Props) => {
     </Section>
   );
 };
-
-export default withRouter(Order);

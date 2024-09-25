@@ -1,6 +1,6 @@
 import { IBase } from '../base/base.interface';
 import { IUser } from '../user';
-import { IPayment } from '..';
+import { AcceptanceStatuses, IPayment, SingleAcceptance } from '..';
 
 export interface RentDescription {
   startAt: string;
@@ -14,6 +14,9 @@ export interface RentDescription {
     selectedVariantId: string;
     acceptance?: string;
     accepted: boolean;
+    acceptances?: SingleAcceptance[];
+    acceptancesStatus?: AcceptanceStatuses;
+    file?: string;
     price: string;
   }[]
 }

@@ -25,6 +25,7 @@ import './StepAgreement.scss';
 import ApiService from '../../../../../services/api-service';
 import { getCorrectPriceWithTax, getCorrectTaxPercentAmount } from '../../../../../utils/tax';
 import { OrderAddon } from '../../../../../reducers/order-reducer';
+import { dateOnly } from '../../../../../utils/format-date';
 
 interface Props {
     formData: FormType;
@@ -33,8 +34,8 @@ interface Props {
     isResignationMarked: boolean;
     stockId: string;
     paymentType: PaymentType;
-    sentExtendRentRequest: (rentId: string, data: ExtendRentalReq, role: UserRole) => void;
-    sentRentBoxRequest: (data: RentBoxReq, nextStep: string, role: UserRole) => void;
+    sentExtendRentRequest: (rentId: string, data: FormData, role: UserRole) => void;
+    sentRentBoxRequest: (data: FormData, nextStep: string, role: UserRole) => void;
 }
 
 const StepSummary = ({
@@ -72,15 +73,15 @@ const StepSummary = ({
         Object.keys(orderAddons).forEach(addonId => {
             const addon = orderAddons[addonId];
 
-            if (addon.price?.value && addon.selectedVariant) {
+            // if (addon.price?.value && addon.selectedVariant) {
                 parsedAddons[addonId] = {
-                    accepted: addon.accepted,
-                    acceptance: addon.acceptance,
-                    price: addon.price.isGross ? addon.price.value : getCorrectPriceWithTax(addon.price.value, taxValue),
+                    acceptancesStatus: addon.acceptancesStatus,
+                    acceptances: addon.acceptances,
+                    price: addon.price ? addon.price.isGross ? addon.price.value : getCorrectPriceWithTax(addon.price.value, taxValue) : null,
                     selectedVariant: addon.selectedVariant
 
                 }
-            }
+            // }
         })
 
         return parsedAddons;
@@ -88,12 +89,34 @@ const StepSummary = ({
 
     const { handleSubmit } = useForm();
 
+    const getFormDataFromCollection = (collection: RentBoxReq | ExtendRentalReq): FormData => {
+        const rentFormData = new FormData();
+
+        for (let key in collection) {
+            const value = collection[key]
+            if (key === 'startAt') rentFormData.append(key, value.toISOString())
+            else if (key === 'finishAt') rentFormData.append(key, value.toISOString())
+            else if (key === 'orderAddons') rentFormData.append(key, JSON.stringify(value))
+            else rentFormData.append(key, value)
+        }
+
+        for (let addonId of Object.keys(order.orderAddons)) {
+            const orderAddon = order.orderAddons[addonId];
+
+            if (orderAddon && orderAddon.file) {
+                rentFormData.append('addonFiles', orderAddon.file, `${addonId}--${orderAddon.file.name}`);
+            }
+        }
+
+        return rentFormData;
+    }
+
     const onSubmit = (data: any) => {
         if (!user) return;
         const commonCollection = {
             finishAt: order.endDate,
             cost: getCorrectPrice(order.calculatedPrice.value, order.calculatedPrice.isGross, tenant!.tax),
-            discountCode: formData.discountCode,
+            discountCode: order.discountCode,
             firstName: formData.firstName,
             lastName: formData.lastName,
             street: formData.street,
@@ -124,20 +147,26 @@ const StepSummary = ({
             type: paymentType,
         };
 
+
+
         if (rentId) {
             // rent extension
-            sentExtendRentRequest(rentId, dataCollectionExtendRent, user.role);
+            const rentFormData = getFormDataFromCollection(dataCollectionExtendRent);
+
+            sentExtendRentRequest(rentId, rentFormData, user.role);
         } else {
             // new Rent blik/creditcart
-            sentRentBoxRequest(dataCollectionRent, 'payment', user.role);
+
+            const rentFormData = getFormDataFromCollection(dataCollectionRent);
+            sentRentBoxRequest(rentFormData, 'payment', user.role);
         }
     };
 
     const getValuesForAgreement = () => {
         return {
-            finishAt: order.endDate,
+            finishAt: dateOnly(order.endDate),
             cost: getCorrectPrice(order.calculatedPrice.value, order.calculatedPrice.isGross, tenant!.tax),
-            discountCode: formData.discountCode,
+            discountCode: order.discountCode,
             firstName: formData.firstName,
             lastName: formData.lastName,
             street: formData.street,
@@ -151,7 +180,10 @@ const StepSummary = ({
             companyCity: formData.companyCity || '',
             companyPostCode: formData.companyPostCode || '',
             nip: formData.nip || '',
-            orderAddons: getAddonsWithCorrectPrice(order.orderAddons, tenant!.tax)
+            orderAddons: getAddonsWithCorrectPrice(order.orderAddons, tenant!.tax),
+            date: dateOnly(new Date()),
+            startAt: dateOnly(order.startDate),
+            email: user?.email || '',
         };
     }
 
@@ -161,23 +193,24 @@ const StepSummary = ({
     };
 
     useEffect(() => {
-        if(!frameRef.current) return;
+        if (!frameRef.current) return;
 
-        if(frameRef.current.title === '') frameRef.current.contentWindow?.location.reload();
+        if (frameRef.current.title === '') frameRef.current.contentWindow?.location.reload();
     }, [frameRef])
 
     if (!tenant) return null;
     // const desktop = window.matchMedia('(min-width: 300px)').matches;
     const desktop = true;
-    const { firstName, lastName } = getValuesForAgreement();
-    const url = encodeURIComponent(`${ApiService.url}tenant/agreement/${tenant.id}?firstName=${firstName}&lastName=${lastName}`);
-    console.log('URL', url);
+    const { firstName, lastName, email, phone, startAt, date, finishAt, cost } = getValuesForAgreement();
+    const url = `${ApiService.url}tenant/agreement/${tenant.id}?firstName=${firstName}&lastName=${lastName}&email=${email}&phone=${phone}&date=${date}&cost=${cost}&startAt=${startAt}&finishAt=${finishAt}&number=0`;
+    const encodedUrl = encodeURIComponent(url);
+
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
             <FormHeader title="application.orderAgreement" />
             {/* <AgreementWrapper /> */}
             {desktop && (
-                <iframe ref={frameRef} src={`https://docs.google.com/gview?embedded=true&url=${url}`} height="300" style={{ height: "45vh" }}></iframe>
+                <iframe ref={frameRef} src={`https://docs.google.com/gview?embedded=true&url=${encodedUrl}`} height="300" style={{ height: "45vh" }}></iframe>
                 // <DocViewer language={undefined} documents={[{ uri: `${ApiService.url}tenant/agreement/${tenant.id}`, fileType: 'docx' }]} pluginRenderers={DocViewerRenderers} />
                 // <object
                 //     className="rules-embed"
@@ -185,7 +218,7 @@ const StepSummary = ({
                 //     type="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
                 // />
             )}
-            <Button primary blank to={`${ApiService.url}tenant/agreement/${tenant.id}`} text='Kliknij aby otworzyć' />
+            <Button primary blank to={url} text='Kliknij aby otworzyć' />
             <span className="separator" />
             <ScrollPosition />
             <Alert type="notice" text="application.orderAgreementAcceptation" />

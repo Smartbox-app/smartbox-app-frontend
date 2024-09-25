@@ -41,7 +41,7 @@ export const fetchBoxAvailability = (stockId: string) => async (dispatch: any) =
   );
 };
 
-export const sentRentBoxRequest = (data: RentBoxReq, nextStep: string, role: UserRole) => async (dispatch: any) => {
+export const sentRentBoxRequest = (data: FormData, nextStep: string, role: UserRole) => async (dispatch: any) => {
   await ApiService.post(
     dispatch,
     'SENT_RENT_BOX_REQUEST_SUCCESS',
@@ -147,7 +147,7 @@ export const clearPaymentDetails = () => ({
   type: 'CLEAR_PAYMENT_METHOD_SUCCESS',
 });
 
-export const sentExtendRentRequest = (rentId: string, data: ExtendRentalReq, role: UserRole) => async (
+export const sentExtendRentRequest = (rentId: string, data: FormData, role: UserRole) => async (
   dispatch: any,
 ) => {
   await ApiService.post(
@@ -172,8 +172,8 @@ export const sentExtendRentRequest = (rentId: string, data: ExtendRentalReq, rol
 export const setOrderStock = (stockId: string) => ({ type: 'SET_ORDER_STOCK', payload: stockId });
 export const setBoxGroup = (boxGroupId: string) => ({ type: 'SET_ORDER_BOX_GROUP', payload: boxGroupId });
 export const setMinRentPeriod = (days: number) => ({ type: 'SET_MIN_RENT_PERIOD', payload: days });
-export const setRentStartDate = (date: Date) => { console.log('TRYING TO SET START', date); return ({ type: 'SET_RENT_START_DATE', payload: date }) };
-export const setRentEndDate = (date: Date) => { console.log('TRYING TO SET END', date); return ({ type: 'SET_RENT_END_DATE', payload: date }); }
+export const setRentStartDate = (date: Date) => ({ type: 'SET_RENT_START_DATE', payload: date });
+export const setRentEndDate = (date: Date) => ({ type: 'SET_RENT_END_DATE', payload: date });
 
 export const calculatePrice = (boxGroupId: string, start: Date, end: Date, code?: string) => async (
   dispatch: any,
@@ -203,6 +203,8 @@ export const calculatePriceForRent = (rentId: string, start: Date, end: Date, co
   );
 };
 
+export const clearAddonPrice = (addonId: string) => ({ type: 'CLEAR_ADDON_PRICE', payload: { addonId } });
+
 export const calculateAddonPrice = (addonId: string, start: Date, end: Date, variantId: string) => async (
   dispatch: any,
 ) => {
@@ -231,4 +233,5 @@ export const fetchAddons = (stockId: string) => async (dispatch: any) => {
 
 
 export const selectAddon = (addonId: string, variantId: string | null) => ({ type: 'SELECT_ADDON', payload: { addonId, variantId } })
-export const setAddonAcceptance = (addonId: string, checked: boolean) => ({ type: 'SET_ADDON_ACCEPTANCE', payload: { addonId, checked } })
+export const setAddonAcceptance = (addonId: string, acceptanceId: string, checked: boolean) => ({ type: 'SET_ADDON_ACCEPTANCE', payload: { addonId, acceptanceId, checked } })
+export const setAddonFile = (addonId: string, file: File | null) => ({ type: 'SET_ADDON_FILE', payload: { addonId, file } })

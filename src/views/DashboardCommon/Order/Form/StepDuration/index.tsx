@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import { connect, useDispatch, useSelector } from 'react-redux';
 
 import { addDays, startOfToday } from 'date-fns';
-import { MyRentList, UserRes } from 'smartbox-types';
+import { AddonUserFileRequirementType, MyRentList, UserRes } from 'smartbox-types';
 import { DateInput } from '../../../../../components/Common';
 import { Button, Spinner } from '../../../../../components/Branded';
 import { order } from '../../../../../actions';
@@ -19,7 +19,7 @@ import Price from '../Common/Price';
 import './StepDuration.scss';
 
 import styled from 'styled-components';
-import { calculateAddonPrice, calculatePrice, setRentEndDate, setRentStartDate } from '../../../../../actions/order';
+import { calculateAddonPrice, calculatePrice, clearAddonPrice, setRentEndDate, setRentStartDate } from '../../../../../actions/order';
 import { Addons } from '../Common/Addons';
 import { getColorForBackground } from '../../../../../utils/color';
 
@@ -79,6 +79,7 @@ const StepDuration = ({
         Object.keys(orderAddons).forEach(addonId => {
             const addon = orderAddons[addonId];
             if (addon.selectedVariant) dispatch(calculateAddonPrice(addonId, startDate, endDate, addon.selectedVariant));
+            else dispatch(clearAddonPrice(addonId))
         })
 
     }
@@ -126,9 +127,19 @@ const StepDuration = ({
         const addonIds = Object.keys(orderAddons);
 
         for (let addonId of addonIds) {
-            if (orderAddons[addonId].required && !orderAddons[addonId].selectedVariant) return false;
-            if (orderAddons[addonId].selectedVariant && orderAddons[addonId].acceptance && !orderAddons[addonId].accepted) return false;
+            const orderAddon = orderAddons[addonId];
+            if (orderAddon.required && !orderAddon.selectedVariant) return false;
+
+            for (let acceptance of orderAddon.acceptances) {
+                if (orderAddon.selectedVariant && acceptance && acceptance.required && !orderAddon.acceptancesStatus[acceptance.id].accepted) return false;
+            }
+
+            if(orderAddon.userFileAllowed) {
+                if(orderAddon.userFileRequirement === AddonUserFileRequirementType.Required && !orderAddon.file) return false;
+                if(orderAddon.userFileRequirement === AddonUserFileRequirementType.RequiredWhenNoVariant && !orderAddon.selectedVariant && !orderAddon.file) return false;
+            }
         }
+        
 
         return true;
     }, [orderAddons])

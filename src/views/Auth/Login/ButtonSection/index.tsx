@@ -24,6 +24,11 @@ const ButtonsSection = () => {
                 {__('application.clickHere')}
             </Link>
         </p>
+        <p className="lost-activation-link">
+             <Link className="light" to="/resend-activation-link">
+                {__('application.noActivationEmail')}
+            </Link>
+        </p>
     </div>
 }
 

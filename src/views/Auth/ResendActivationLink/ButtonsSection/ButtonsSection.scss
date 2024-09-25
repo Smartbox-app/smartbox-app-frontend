@@ -1,0 +1,28 @@
+@import '../../../../config/variables.scss';
+@import '../../../../config/mixins.scss';
+
+.resend-activation-buttons-section {
+  width: $login-button-size;
+  margin: 0 auto;
+  padding: 0;
+
+  .button {
+    width: 100%;
+    font-size: 1.1rem;
+    min-height: $login-button-height;
+    border-radius: $login-button-height /2 ;
+  }
+}
+
+@include gt-sm {
+  .resend-activation-buttons-section {
+    width: $login-button-size * 1.1;
+
+  }
+}
+
+@include gt-md {
+  .resend-activation-buttons-section {
+    width: $login-button-size * 1.2;
+  }
+}

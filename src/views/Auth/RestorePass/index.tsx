@@ -18,6 +18,7 @@ import { history } from '../../../App';
 import ButtonsSection from './ButtonSection';
 
 import './RestorePass.scss';
+import { mapFieldsBig } from '../../../utils/fields-mapper';
 
 interface RouteProps {
     userId: string;
@@ -59,32 +60,7 @@ const RestorePass = ({ successNotification, match }: Props) => {
                         ApiService.sendForm(sendUrl, setValues(values), METHOD)
                     }
                     submitButton={<ButtonsSection mainButtonText={buttonText} />}
-                    onRenderFullField={(field, errors, fieldHtmlId, currentValue, onChange, onFocus, onBlur) => {
-                        switch (field.type) {
-                            case 'text':
-                                return (
-                                    <Input
-                                        className="login-input"
-                                        type={field.options.type}
-                                        input={{
-                                            label: formOnTranslateString(field.title),
-                                            name: fieldHtmlId,
-                                            id: fieldHtmlId,
-                                            placeholder: field.placeholder,
-                                            errors: translateErrors(errors),
-                                            value: currentValue,
-                                            onChange: (e: any) => onChange(e.target.value),
-                                            onFocus,
-                                            onBlur,
-                                        }}
-                                    />
-                                );
-                            case 'variablePlaceholder':
-                                return null;
-                            default:
-                                return null;
-                        }
-                    }}
+                    onRenderFullField={mapFieldsBig}
                     onSavedSuccessfully={() => {
                         successNotification(notificationText);
                         history.push('/');

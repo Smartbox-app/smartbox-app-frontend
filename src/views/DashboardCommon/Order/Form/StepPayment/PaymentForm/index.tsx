@@ -18,7 +18,6 @@ export const PaymentForm = () => {
 
     const getPaymentHash = async () => {
         await ApiService.callFetch('GET', `rent/generate-payment-hash/${paymentId}`, (response: any) => {
-            console.log('RESPONSE', response);
             const { hash, ...rest } = response;
             setHash(hash);
             setPayload(rest);
@@ -31,7 +30,7 @@ export const PaymentForm = () => {
 
     if (!hash || !payload) return null;
 
-    return <form method="post" action={`https://${tenant?.useProd === false ? 'test. ' : 'www.'}ipg-online.com/connect/gateway/processing`}>
+    return <form method="post" action={`https://${tenant?.useProd === false ? 'test.' : 'www.'}ipg-online.com/connect/gateway/processing`}>
         <input type="hidden" name="hashExtended" value={hash} />
         {Object.keys(payload).map(key => <input type="hidden" key={key} value={payload[key]} name={key} />)}
         <ButtonsContainer className='payment-form-button'>

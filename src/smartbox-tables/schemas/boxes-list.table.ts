@@ -10,6 +10,7 @@ export const boxesList: TableSchema = {
       searchable: true,
       sortable: true,
       defaultSort: true,
+      oppositeSortDir: true,
       type: FieldType.Text,
       sortType: 'number'
     },

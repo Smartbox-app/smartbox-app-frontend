@@ -28,6 +28,10 @@
   text-align: center;
 }
 
+.lost-activation-link {
+  text-align: center;
+}
+
 @include gt-sm {
   .login-buttons-section {
     width: $login-button-size * 1.1;

@@ -14,6 +14,7 @@ import UserService from '../../../../../../../services/user-service';
 import { ApplicationState } from '../../../../../../../reducers';
 import { mapFields } from '../../../../../../../utils/fields-mapper';
 import { useParams } from 'react-router';
+import { AddonReq } from 'smartbox-types';
 
 
 const Add = () => {
@@ -42,12 +43,27 @@ const Add = () => {
                     formId="addAddon"
                     schemaCacheEnabled={false}
                     schemaMayBeDynamic={true}
-                    useFormDataInsteadOfPlainObject
                     loadingInfo={<Spinner transparent />}
                     schemaFetcher={() => ApiService.loadForm(fetchUrl)}
-                    sendFetcher={(formId: string, values: FormData) => {
-                        values.set('stockId', stockId);
-                        return ApiService.sendForm(sendUrl, values)}
+                    sendFetcher={(formId: string, values: AddonReq & { file?: File }) => {
+                        const formData = new FormData();
+                        formData.append('stockId', stockId);
+                        if(values.acceptances) formData.append('acceptances', JSON.stringify(values.acceptances));
+                        formData.append('name', values.name);
+                        formData.append('description', values.description);
+                        formData.append('required', values.required.toString());
+                        formData.append('fileText', values.fileText || '');
+                        formData.append('userFileAllowed', values.userFileAllowed.toString());
+                        formData.append('userFileRequirement', values.userFileRequirement || '');
+                        formData.append('userFileText', values.userFileText || '');
+       
+                        if (values.file) {
+                            if (typeof values.file === 'string') formData.append('file', values.file);
+                            else formData.append('file', values.file, values.file.name);
+                        }
+
+                        return ApiService.sendForm(sendUrl, formData)
+                    }
                     }
                     submitButton={submitButton}
                     onRenderFullField={mapFields}

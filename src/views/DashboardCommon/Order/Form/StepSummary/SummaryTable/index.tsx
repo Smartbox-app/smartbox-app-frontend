@@ -21,23 +21,28 @@ const StyledRow = styled.div`
     border-bottom: 1px solid ${props => darken(0.1, props.theme.colors.primary)};
 `
 
-const StyledAddonsList = styled.ul`
+const StyledDetailsList = styled.ul`
     list-style-type: none
 `
 
 const StyledAddonsHeader = styled.h3`
     color: #333;`
 
-const StyledAddonRow = styled.li`
-    border-bottom: 1px solid ${props => darken(0.1, props.theme.colors.primary)};
-    border-left: 3px solid ${props => darken(0.1, props.theme.colors.primary)};
-    padding: 10px;
-    marcin-bottom: 10px;
+const StyledDetailsRow = styled.li<{ flex?: boolean }>(({ theme, flex }) => `
+    border-bottom: 1px solid ${darken(0.1, theme.colors.primary)};
+    // border-left: 3px solid ${darken(0.1, theme.colors.primary)};
+    padding: 10px 0;
+    margin-bottom: 10px;
+    ${flex && `
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      `}
     
 h4 {
     color: #333;
     }
-`
+`)
 
 interface Props {
   dateStart: Date;
@@ -73,21 +78,26 @@ const SummaryTable = ({ dateStart, dateEnd, countedPrice, addons, orderAddons }:
         </StyledCell>
       </StyledRow>
       <StyledRow className="row">
-        <StyledCell className="cell">{countedPrice.isGross ? __('application.paymentForRent') : __('application.netPaymentForRent')}</StyledCell>
+        <StyledCell className="cell">{countedPrice.isGross ? __('application.grossPayment') : __('application.netPayment')}</StyledCell>
         <StyledCell className="cell fat">
           <span>{formatPrice(fullPrice)}</span>
         </StyledCell>
       </StyledRow>
 
     </div>
-    {(addons && orderAddons) ? <div>
-      <StyledAddonsHeader>{__('application.selectedAddons')}</StyledAddonsHeader>
-      <StyledAddonsList>
-        {addons.map(addon => <StyledAddonRow key={addon.id}>
+    <StyledAddonsHeader>{__('application.priceDetails')}</StyledAddonsHeader>
+    <StyledDetailsList>
+      <StyledDetailsRow flex>
+        <h4>{countedPrice.isGross ? __('application.paymentForRent') : __('application.netPaymentForRent')}</h4>
+        <span>{formatPrice(countedPrice.value)}</span>
+      </StyledDetailsRow>
+      {(addons && orderAddons) ? <div>
+        {addons.map(addon => <StyledDetailsRow key={addon.id}>
           <h4>{addon.name}</h4>
           <SelectedVariant addonId={addon.id} addons={addons} orderAddons={orderAddons} />
-        </StyledAddonRow>)}
-      </StyledAddonsList> </div> : null}
+        </StyledDetailsRow>)}
+      </div> : null}
+    </StyledDetailsList>
   </Section>
 }
 

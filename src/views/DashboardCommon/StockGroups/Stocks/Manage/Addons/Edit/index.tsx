@@ -12,6 +12,7 @@ import { __ } from '../../../../../../../helpers/i18n';
 import { mapFields } from '../../../../../../../utils/fields-mapper';
 import { hideModal } from '../../../../../../../actions/modal';
 import { refreshApiTableData } from '../../../../../../../actions/api-table';
+import { AddonReq } from 'smartbox-types';
 
 interface Props {
     id: string;
@@ -37,12 +38,29 @@ const Edit = ({ id, stockId }: Props) => {
                 formId="updateAddon"
                 schemaCacheEnabled={false}
                 schemaMayBeDynamic={true}
-                useFormDataInsteadOfPlainObject
+                // useFormDataInsteadOfPlainObject
                 loadingInfo={<Spinner transparent />}
                 schemaFetcher={() => ApiService.loadForm(fetchUrl)}
-                sendFetcher={(formId: string, values: FormData) => {
-                    values.set('stockId', stockId);
-                    return ApiService.sendForm(sendUrl, values, 'PATCH')}
+                sendFetcher={(formId: string, values: AddonReq & { file?: File }) => {
+
+                    const formData = new FormData();
+                    formData.append('stockId', stockId);
+                    formData.append('acceptances', JSON.stringify(values.acceptances));
+                    formData.append('name', values.name);
+                    formData.append('description', values.description);
+                    formData.append('required', values.required.toString());
+                    formData.append('fileText', values.fileText || '');
+                    formData.append('userFileAllowed', values.userFileAllowed.toString());
+                    formData.append('userFileRequirement', values.userFileRequirement || '');
+                    formData.append('userFileText', values.userFileText || '');
+
+                    if (values.file) {
+                        if (typeof values.file === 'string') formData.append('file', values.file);
+                        else formData.append('file', values.file, values.file.name);
+                    }
+
+                    return ApiService.sendForm(sendUrl, formData, 'PATCH')
+                }
                 }
                 submitButton={submitButton}
                 onRenderFullField={mapFields}

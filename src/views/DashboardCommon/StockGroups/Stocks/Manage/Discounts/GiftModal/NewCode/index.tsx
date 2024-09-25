@@ -32,7 +32,7 @@ const NewCode = ({ newCodeProps }: Props) => (
       {__('application.giftType')}: <StyledCodeDetail>{__(getType(newCodeProps.type))}</StyledCodeDetail>
     </p>
     <p>
-      {__('application.giftCodDiscount')}: <StyledCodeDetail>{newCodeProps.discount}</StyledCodeDetail>
+      {newCodeProps.type === GiftType.ReducePeriodToPrice ? __('application.reductionTo') : __('application.giftCodDiscount')}: <StyledCodeDetail>{newCodeProps.discount}</StyledCodeDetail>
     </p>
     <p>
       {__('application.minRentPeriod')}: <StyledCodeDetail>{newCodeProps.minRentPeriod}</StyledCodeDetail>

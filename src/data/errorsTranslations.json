@@ -309,6 +309,14 @@
             "67": {
                 "text": "Musisz wyrazić zgodę dla wybranego dodatku!",
                 "__type_alias_do_not_touch": "ApiErrorCode.AcceptanceNotSelected"
+            },
+            "68": {
+                "text": "Przesłany plik jest za duży!",
+                "__type_alias_do_not_touch": "ApiErrorCode.FileIsTooBig"
+            },
+            "69": {
+                "text": "Brak wymaganego pliku!",
+                "__type_alias_do_not_touch": "ApiErrorCode.AddonFileIsMissing"
             }
         }
     }

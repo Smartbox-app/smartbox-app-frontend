@@ -6,11 +6,12 @@ import { RentHistory } from '../../../../../../RentHistory';
 
 interface Props {
     description: RentDescription[];
+    rentId: string;
 }
 
-export const RentHistoryModal = ({ description }: Props) => {
+export const RentHistoryModal = ({ description, rentId }: Props) => {
     return (
-        <RentHistory description={description} />
+        <RentHistory description={description} rentId={rentId} />
     );
 };
 

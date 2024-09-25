@@ -19,7 +19,7 @@ import Price from '../Common/Price';
 import './StepDuration.scss';
 
 import styled from 'styled-components';
-import { calculateAddonPrice, calculatePriceForRent, setRentEndDate, setRentStartDate } from '../../../../../actions/order';
+import { calculateAddonPrice, calculatePriceForRent, clearAddonPrice, setRentEndDate, setRentStartDate } from '../../../../../actions/order';
 import { Addons } from '../Common/Addons';
 import ApiService from '../../../../../services/api-service';
 import { getColorForBackground } from '../../../../../utils/color';
@@ -80,14 +80,12 @@ const StepExtensionDuration = ({
 
     useEffect(() => {
         if (!rent) return;
-        console.log('TRY1', addDays(startOfDay(new Date(rent.finishAt)), 1));
         dispatch(setRentStartDate(addDays(startOfDay(new Date(rent.finishAt)), 1)));
         dispatch(setRentEndDate(addDays(startOfDay(new Date(rent.finishAt)), 1 + minRentPeriod)));
     }, [rent])
 
     useEffect(() => {
         if (!rentId) return;
-        console.log('DATES', startDate, endDate);
         setLoading(true);
         dispatch(calculatePriceForRent(rentId, startDate, endDate));
         calculateAllAddons();
@@ -101,6 +99,7 @@ const StepExtensionDuration = ({
         Object.keys(orderAddons).forEach(addonId => {
             const addon = orderAddons[addonId];
             if (addon.selectedVariant) dispatch(calculateAddonPrice(addonId, startDate, endDate, addon.selectedVariant));
+            else dispatch(clearAddonPrice(addonId))
         })
 
     }
@@ -146,8 +145,12 @@ const StepExtensionDuration = ({
         const addonIds = Object.keys(orderAddons);
 
         for (let addonId of addonIds) {
-            if (orderAddons[addonId].required && !orderAddons[addonId].selectedVariant) return false;
-            if (orderAddons[addonId].selectedVariant && orderAddons[addonId].acceptance && !orderAddons[addonId].accepted) return false;
+            const orderAddon = orderAddons[addonId];
+            if (orderAddon.required && !orderAddon.selectedVariant) return false;
+
+            for (let acceptance of orderAddon.acceptances) {
+                if (orderAddon.selectedVariant && acceptance && acceptance.required && !orderAddon.acceptancesStatus[acceptance.id].accepted) return false;
+            }
         }
 
         return true;
@@ -168,7 +171,7 @@ const StepExtensionDuration = ({
                     minDate={setMinDate(minRentPeriod, true)}
                     value={endDate}
                     onChange={([selected]) => {
-                        console.log('ON CHANGE', selected);
+    
                         dispatch(setRentEndDate(selected))
                         // updateFormData({
                         //     durationInDays: differenceInCalendarDays(selected[0], formData.dateStart),
