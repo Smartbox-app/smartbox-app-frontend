@@ -169,8 +169,8 @@ export const sentExtendRentRequest = (rentId: string, data: FormData, role: User
 };
 
 // refactored
-export const setOrderStock = (stockId: string) => ({ type: 'SET_ORDER_STOCK', payload: stockId });
-export const setBoxGroup = (boxGroupId: string) => ({ type: 'SET_ORDER_BOX_GROUP', payload: boxGroupId });
+export const setOrderStock = (stockId: string, stockName: string, stockAddress: string) => ({ type: 'SET_ORDER_STOCK', payload: { stockId, stockAddress, stockName } });
+export const setBoxGroup = (boxGroupId: string, boxGroupName: string) => ({ type: 'SET_ORDER_BOX_GROUP', payload: { boxGroupId, boxGroupName } });
 export const setMinRentPeriod = (days: number) => ({ type: 'SET_MIN_RENT_PERIOD', payload: days });
 export const setRentStartDate = (date: Date) => ({ type: 'SET_RENT_START_DATE', payload: date });
 export const setRentEndDate = (date: Date) => ({ type: 'SET_RENT_END_DATE', payload: date });
@@ -232,6 +232,6 @@ export const fetchAddons = (stockId: string) => async (dispatch: any) => {
 };
 
 
-export const selectAddon = (addonId: string, variantId: string | null) => ({ type: 'SELECT_ADDON', payload: { addonId, variantId } })
+export const selectAddon = (addonId: string, variantId: string | null, variantName: string | null) => ({ type: 'SELECT_ADDON', payload: { addonId, variantId, variantName } })
 export const setAddonAcceptance = (addonId: string, acceptanceId: string, checked: boolean) => ({ type: 'SET_ADDON_ACCEPTANCE', payload: { addonId, acceptanceId, checked } })
 export const setAddonFile = (addonId: string, file: File | null) => ({ type: 'SET_ADDON_FILE', payload: { addonId, file } })

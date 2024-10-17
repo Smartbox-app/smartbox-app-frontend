@@ -8,28 +8,6 @@ interface GlobalStyleProps {
 }
 
 const GlobalStyle = createGlobalStyle<GlobalStyleProps>`
-@font-face {
-    font-family: 'smartbox';
-    src: url(${ApiService.url}tenant/fonts/light?tenantId=${props => props.tenantId});
-    font-weight: 300;
-    font-style: normal;
-    font-display: auto;
-}
-@font-face {
-    font-family: 'smartbox';
-    src: url(${ApiService.url}tenant/fonts/normal?tenantId=${props => props.tenantId});
-    font-weight: 400;
-    font-style: normal;
-    font-display: auto;
-}
-@font-face {
-    font-family: 'smartbox';
-    src: url(${ApiService.url}tenant/fonts/bold?tenantId=${props => props.tenantId});
-    font-weight: 700;
-    font-style: normal;
-    font-display: auto;
-}
-
 h3 {
     color: ${props => colorOrDark(props.theme.colors.primary)}
 }

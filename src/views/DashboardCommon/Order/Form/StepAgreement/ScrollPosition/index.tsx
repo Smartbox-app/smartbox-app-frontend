@@ -4,10 +4,12 @@ import { bindActionCreators } from 'redux';
 import { ApplicationState } from '../../../../../../reducers';
 import { order } from '../../../../../../actions';
 import { CheckBox } from '../../../../../../components/Common';
+import { TenantState } from 'src/reducers/tenant-reducer';
 
 interface Props {
   isResignationMarked: boolean;
   isAgreementAccepted: boolean;
+  tenant: TenantState;
   formAgreementReaded: () => void;
   formResignationMarked: () => void;
 }
@@ -29,7 +31,7 @@ class ScrollPosition extends Component<Props> {
   // }
 
   render() {
-    const { isResignationMarked, formResignationMarked, isAgreementAccepted } = this.props;
+    const { isResignationMarked, formResignationMarked, isAgreementAccepted, tenant } = this.props;
     return (
       <>
         <CheckBox
@@ -38,7 +40,7 @@ class ScrollPosition extends Component<Props> {
           // hide={!isAgreementAccepted}
           // disabled={!isAgreementAccepted}
           handleChange={() => formResignationMarked()}
-          label="application.14daysResign"
+          label={`Zgadzam się na rozpoczęcie świadczenia usług ${tenant?.name} przed upływem terminu do odstąpienia od umowy.`}
         />
       </>
     );
@@ -48,6 +50,7 @@ class ScrollPosition extends Component<Props> {
 const mapStateToProps = (state: ApplicationState) => ({
   isResignationMarked: state.order.isResignationMarked,
   isAgreementAccepted: state.order.isAgreementAccepted,
+  tenant: state.tenant
 });
 
 const mapDispatchToProps = (dispatch: any) => bindActionCreators({ ...order }, dispatch);

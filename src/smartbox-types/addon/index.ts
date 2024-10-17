@@ -52,15 +52,16 @@ export interface SingleAcceptance {
 
 export type AcceptanceStatuses = {
     [key: string]: {
-      accepted: boolean;
+        accepted: boolean;
     }
-  }
+}
 
 export interface AddonEntity {
     id: string;
     description: string;
     required: boolean;
     name: string;
+    slug: string;
     stockId: string;
     tenantId: string;
     file?: string;
@@ -72,19 +73,20 @@ export interface AddonEntity {
     userFileAllowed: boolean;
     userFileText: string;
     userFileRequirement: AddonUserFileRequirementType;
+    tax: string;
 }
 
 export type AddonFormDataReq = Pick<
     AddonEntity,
-    'name' | 'description' | 'stockId' | 'fileText' | 'userFileText' | 'userFileRequirement'
+    'name' | 'slug' | 'description' | 'stockId' | 'fileText' | 'userFileText' | 'userFileRequirement' | 'tax'
 > & {
     acceptances: string;
     required: string;
     userFileAllowed: string;
 }
-export type AddonReq = Pick<AddonEntity, 'name' | 'description' | 'required' | 'stockId' | 'acceptances' | 'userFileRequirement' | 'fileText' | 'userFileAllowed' | 'userFileText'>
+export type AddonReq = Pick<AddonEntity, 'name' | 'slug' | 'description' | 'required' | 'stockId' | 'acceptances' | 'userFileRequirement' | 'fileText' | 'userFileAllowed' | 'userFileText' | 'tax'>
 export type AddonListRes = Pick<AddonEntity, 'id' | 'name' | 'pricing' | 'stockId'>
-export type AddonRes = Pick<AddonEntity, 'id' | 'description' | 'acceptances' | 'file' | 'required' | 'fileText' | 'name' | 'stockId' | 'pricing' | 'userFileAllowed' | 'userFileText' | 'userFileRequirement'> & {
+export type AddonRes = Pick<AddonEntity, 'id' | 'description' | 'acceptances' | 'file' | 'required' | 'fileText' | 'name' | 'slug' | 'stockId' | 'pricing' | 'userFileAllowed' | 'userFileText' | 'userFileRequirement' | 'tax'> & {
     isGross: boolean
 }
 export type AddonClientAdminRes = Omit<AddonRes, 'isGross'> & {

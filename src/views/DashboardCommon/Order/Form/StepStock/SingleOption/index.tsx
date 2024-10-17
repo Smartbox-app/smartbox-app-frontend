@@ -34,7 +34,7 @@ const SingleOption = ({ name, address, value, disable, loading, secondary }: Pro
     const stockId = useSelector((state: ApplicationState) => state.order.stockId);
 
     const selectOption = (e: ChangeEvent<HTMLInputElement>) => {
-        dispatch(setOrderStock(value));
+        dispatch(setOrderStock(value, name, address));
     }
 
     if (loading) return <Spinner />;

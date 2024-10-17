@@ -3,13 +3,18 @@ import { BaseResponse } from '../base/baseRes';
 import { Prop } from '../store/prop.decorator';
 import { PaymentType } from '../payment';
 import { AcceptanceStatuses, SingleAcceptance } from '../addon';
+import { AccessControl } from '../stock-group';
 
 export interface OrderAddons {
   [addonId: string]: {
+    name: string;
+    slug: string;
     price: number | null;
     selectedVariant: string | null;
+    selectedVariantName: string | null;
     acceptances: SingleAcceptance[];
     acceptancesStatus: AcceptanceStatuses;
+    tax: string;
   }
 };
 
@@ -151,6 +156,7 @@ export type MyRentDetails = {
   controlled: boolean;
   isMap: boolean;
   description: RentDescription[];
+  accessControl: AccessControl;
 }
 
 interface Change {

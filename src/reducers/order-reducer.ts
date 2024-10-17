@@ -25,20 +25,27 @@ export type PaymentMethodDetail = {
 
 
 export type OrderAddon = {
+  name: string;
+  slug: string;
   required: boolean;
   selectedVariant: string | null;
+  selectedVariantName: string | null;
   acceptancesStatus: AcceptanceStatuses;
   acceptances: SingleAcceptance[];
   userFileAllowed: boolean;
   userFileRequirement: AddonUserFileRequirementType | null;
   price: { value: number, isGross: boolean } | null;
   file: File | null;
+  tax: string;
 }
 
 export type OrderState = {
   // refactored
   stockId: string;
+  stockName: string;
+  stockAddress: string;
   boxGroupId: string;
+  boxGroupName: string;
   minRentPeriod: number;
   startDate: Date;
   endDate: Date;
@@ -72,12 +79,19 @@ export type OrderState = {
 
 interface SetOrderStock {
   type: 'SET_ORDER_STOCK';
-  payload: string;
+  payload: {
+    stockId: string;
+    stockName: string;
+    stockAddress: string;
+  };
 }
 
 interface SetOrderBoxGroup {
   type: 'SET_ORDER_BOX_GROUP';
-  payload: string;
+  payload: {
+    boxGroupId: string;
+    boxGroupName: string;
+  };
 }
 
 interface SetMinRentPeriod {
@@ -147,7 +161,7 @@ interface LoadingAddons {
 
 interface SelectAddon {
   type: 'SELECT_ADDON';
-  payload: { addonId: string, variantId: string | null }
+  payload: { addonId: string, variantId: string | null, variantName: string | null }
 }
 
 interface SetAddonAcceptance {
@@ -244,7 +258,10 @@ type Action =
 const initialState: OrderState = {
   // refactored
   stockId: '',
+  stockName: '',
+  stockAddress: '',
   boxGroupId: '',
+  boxGroupName: '',
   minRentPeriod: 7,
   startDate: new Date(),
   endDate: addDays(new Date(), 7),
@@ -298,14 +315,17 @@ export default (state: OrderState = initialState, action: Action): OrderState =>
     case 'SET_ORDER_STOCK': {
       return {
         ...state,
-        stockId: action.payload,
+        stockId: action.payload.stockId,
+        stockName: action.payload.stockName,
+        stockAddress: action.payload.stockAddress,
       }
     };
 
     case 'SET_ORDER_BOX_GROUP': {
       return {
         ...state,
-        boxGroupId: action.payload,
+        boxGroupId: action.payload.boxGroupId,
+        boxGroupName: action.payload.boxGroupName,
       }
     };
 
@@ -463,25 +483,29 @@ export default (state: OrderState = initialState, action: Action): OrderState =>
         })
 
         orderAddons[addon.id] = {
+          name: addon.name,
+          slug: addon.slug,
+          tax: addon.tax,
           required: addon.required,
           acceptances: addon.acceptances,
           acceptancesStatus: acceptanceStatuses,
           userFileAllowed: addon.userFileAllowed,
           userFileRequirement: addon.userFileRequirement,
           selectedVariant: null,
+          selectedVariantName: null,
           price: null,
           file: null,
         }
       })
       return {
         ...state,
-        addons: action.payload,
+        addons: action.payload.sort((a, b) => a.required && !b.required ? -1 : 1),
         orderAddons
       };
     }
 
     case 'SELECT_ADDON': {
-      const { addonId, variantId } = action.payload;
+      const { addonId, variantId, variantName } = action.payload;
       if (!state.orderAddons[addonId]) return state;
       return {
         ...state,
@@ -490,7 +514,8 @@ export default (state: OrderState = initialState, action: Action): OrderState =>
           ...state.orderAddons,
           [addonId]: {
             ...state.orderAddons[addonId],
-            selectedVariant: variantId
+            selectedVariant: variantId,
+            selectedVariantName: variantName,
           }
         }
       }

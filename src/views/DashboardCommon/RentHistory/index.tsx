@@ -41,6 +41,10 @@ const StyledSingleAddon = styled('li')(({ theme }) => ({
     alignItems: 'flex-start'
 }))
 
+const StyledRentAgreementButton = styled('div')({
+    display: 'flex'
+})
+
 
 export const RentHistory = ({ description, rentId }: Props) => {
     return (
@@ -49,12 +53,16 @@ export const RentHistory = ({ description, rentId }: Props) => {
             {description.map((line, index) => <StyledSinglePeriod key={index}>
                 <StyledPeriodHeader>{dateOnly(line.startAt)} - {dateOnly(line.finishAt)}</StyledPeriodHeader>
                 <p>{__('application.price')} - {formatPrice(Number(line.cost))}</p>
+                {line.agreement ? <StyledRentAgreementButton><Button small primary blank text='application.seeRentAgreement' to={`${ApiService.url}rent/agreement/${rentId}/${index}`} /></StyledRentAgreementButton> : null}
+
                 {(line.addons && line.addons.length > 0) ? (
                     <div>
                         <StyledAddonsHeader>{__('application.selectedAddons')}</StyledAddonsHeader>
                         <ul>
                             {line.addons.map(addon => <StyledSingleAddon key={addon.id}>
                                 <div><strong>{addon.name}</strong> - {addon.selectedVariantName} - {formatPrice(Number(addon.price))}</div>
+
+                              
                                 {addon.acceptance ? <p>{addon.acceptance} - <strong>{addon.accepted ? 'Tak' : 'Nie'}</strong></p> : null}
                                 {(!!addon.acceptances && !!addon.acceptancesStatus) ?
                                     addon.acceptances.map(acceptance => <p key={acceptance.id}>

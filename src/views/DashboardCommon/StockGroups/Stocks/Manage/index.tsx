@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import { IStock } from 'smartbox-types';
+import { IStock, TenantEntity, UserRole } from 'smartbox-types';
 
 import { PageHeader, ButtonsContainer, Section } from '../../../../../components/Layout';
 import { Button, Tabs } from '../../../../../components/Branded';
@@ -22,16 +22,25 @@ const Manage = () => {
     const { stockId } = useParams<{ stockId: string }>();
     const user = useSelector((state: ApplicationState) => state.user.details);
     const tenant = useSelector((state: ApplicationState) => state.tenant);
+    const [tenantForAdmin, setTenantForAdmin] = useState<TenantEntity>();
     const [isMapActive, setMapActive] = useState<boolean>(false);
  
     const getStockData = async () => {
         await ApiService.callFetch('GET', `stock/${stockId}`, (stock: IStock) => {
             setMapActive(stock.isMapActive)
+            if(user?.role === UserRole.admin) getTenantForAdmin(stock.tenantId);
+        })
+    }
+ 
+    const getTenantForAdmin = async (tenantId: string) => {
+        await ApiService.callFetch('GET', `tenant/admin/${tenantId}`, (tenant: TenantEntity) => {
+            setTenantForAdmin(tenant)
         })
     }
 
     useEffect(() => {
         getStockData();
+
     }, []);
 
     const tabs = useMemo(() => {
@@ -74,7 +83,7 @@ const Manage = () => {
             })
         }
 
-        if(tenant?.allowAddonsToRent) {
+        if(tenantForAdmin?.allowAddonsToRent || tenant?.allowAddonsToRent) {
             elements.push({
                 to: `/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/addons`,
                 text: 'application.stockAddons',
@@ -82,7 +91,7 @@ const Manage = () => {
         }
 
         return elements;
-    }, [isMapActive])
+    }, [isMapActive, tenantForAdmin])
 
     return (
         <Section>
@@ -107,7 +116,7 @@ const Manage = () => {
                 <Route path={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/:stockId/addons`} component={Addons} />
                 {isMapActive && <Route path={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/:stockId/map`} component={Map} />}
                 {isMapActive && <Route path={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/:stockId/handling`} component={Handling} />}
-                {tenant?.allowAddonsToRent && <Route path={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/:stockId/addons`} component={Addons} />}
+                {(tenantForAdmin?.allowAddonsToRent || tenant?.allowAddonsToRent) && <Route path={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/:stockId/addons`} component={Addons} />}
             </Switch>
 
         </Section>

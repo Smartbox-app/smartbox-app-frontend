@@ -47,6 +47,8 @@ const Edit = ({ id, stockId }: Props) => {
                     formData.append('stockId', stockId);
                     formData.append('acceptances', JSON.stringify(values.acceptances));
                     formData.append('name', values.name);
+                    formData.append('slug', values.slug);
+                    formData.append('tax', values.tax);
                     formData.append('description', values.description);
                     formData.append('required', values.required.toString());
                     formData.append('fileText', values.fileText || '');

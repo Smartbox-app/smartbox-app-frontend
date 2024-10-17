@@ -5,7 +5,6 @@ import reduxThunk from 'redux-thunk';
 import ReactSelect from 'react-select';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { Route, Router, Switch, Redirect } from 'react-router-dom';
-import { WorkBoxProvider } from 'react-workbox';
 import { createBrowserHistory } from 'history';
 import flatpickr from 'flatpickr';
 import { Polish } from 'flatpickr/dist/l10n/pl';
@@ -14,7 +13,7 @@ import { Page404, Welcome } from './views';
 import {
     OnlineContent,
     OfflineContent,
-    UpdateInfoBar,
+    // UpdateInfoBar,
     RouteAdmin,
     RouteUser,
     RouteWorker,
@@ -83,14 +82,14 @@ const App = () => {
     if (loading) return null;
 
     return (
-        <WorkBoxProvider>
+
             <Provider store={store}>
                 <Router history={history}>
                     <CustomThemeProvider>
                         <AppWrapper>
                             <AppGlobalStyles />
                             <OnlineContent>
-                                <UpdateInfoBar />
+                                {/* <UpdateInfoBar /> */}
                                 <NotificationContainer />
 
                                 <ErrorBoundary>
@@ -139,7 +138,6 @@ const App = () => {
                     </CustomThemeProvider>
                 </Router>
             </Provider>
-        </WorkBoxProvider>
     );
 };
 

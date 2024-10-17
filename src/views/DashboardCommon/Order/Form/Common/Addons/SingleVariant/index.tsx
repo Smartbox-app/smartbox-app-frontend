@@ -5,16 +5,19 @@ import { PriceInfo } from '../PriceInfo';
 import { useDispatch, useSelector } from 'react-redux';
 import { ApplicationState } from '../../../../../../../reducers';
 import { selectAddon } from '../../../../../../../actions/order';
+import { getColorForBackground } from '../../../../../../../utils/color';
 
 const StyledAddonVariant = styled('li')<{ isSelected: boolean }>(({ isSelected, theme }) => ({
     padding: 10,
     border: `1px solid ${isSelected ? theme.colors.primary : '#333'}`,
+    background: isSelected ? theme.colors.primary : 'transparent',
+    color: getColorForBackground(isSelected ? theme.colors.primary : '#ffffff'),
     marginBottom: 10,
     borderRadius: 5,
     cursor: 'pointer',
 
     '&:hover': {
-        background: '#eee',
+        background: isSelected ? theme.colors.primary : '#eee',
     },
 
     '@media (min-width: 480px)': {
@@ -28,7 +31,6 @@ const StyledVariantName = styled('h5')({
     margin: '5px 0',
     fontWeight: 700,
     fontSize: '1rem',
-    color: '#000'
 })
 
 interface Props {
@@ -47,7 +49,7 @@ export const SingleVariant = ({ variant, addonId, isGross }: Props) => {
     }, [orderAddons, addonId])
 
     const selectVariant = () => {
-        dispatch(selectAddon(addonId, isSelected ? null : variant.id));
+        dispatch(selectAddon(addonId, isSelected ? null : variant.id, isSelected ? null : variant.name));
     }
 
     return (

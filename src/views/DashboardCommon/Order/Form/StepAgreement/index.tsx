@@ -68,23 +68,37 @@ const StepSummary = ({
 
     const getAddonsWithCorrectPrice = (orderAddons: { [addonId: string]: OrderAddon }, tax: string): OrderAddons => {
         const parsedAddons: OrderAddons = {};
+        console.log('TAX', tax);
         const taxValue = getCorrectTaxPercentAmount(tax);
 
         Object.keys(orderAddons).forEach(addonId => {
             const addon = orderAddons[addonId];
 
             // if (addon.price?.value && addon.selectedVariant) {
-                parsedAddons[addonId] = {
-                    acceptancesStatus: addon.acceptancesStatus,
-                    acceptances: addon.acceptances,
-                    price: addon.price ? addon.price.isGross ? addon.price.value : getCorrectPriceWithTax(addon.price.value, taxValue) : null,
-                    selectedVariant: addon.selectedVariant
-
-                }
+            parsedAddons[addonId] = {
+                name: addon.name,
+                slug: addon.slug,
+                tax: addon.tax,
+                acceptancesStatus: addon.acceptancesStatus,
+                acceptances: addon.acceptances,
+                price: addon.price ? addon.price.isGross ? addon.price.value : getCorrectPriceWithTax(addon.price.value, taxValue) : null,
+                selectedVariant: addon.selectedVariant,
+                selectedVariantName: addon.selectedVariantName,
+            }
             // }
         })
 
         return parsedAddons;
+    }
+
+    const getSimplifiedAddons = (addons: OrderAddons) => {
+        const simplified: { slug: string, variant: string | null, price: number | null }[] = [];
+        Object.keys(addons).forEach(addonId => {
+            const addon = addons[addonId];
+            simplified.push({ slug: addon.slug, variant: addon.selectedVariantName, price: addon.price });
+        })
+
+        return simplified;
     }
 
     const { handleSubmit } = useForm();
@@ -163,27 +177,31 @@ const StepSummary = ({
     };
 
     const getValuesForAgreement = () => {
+        console.log('TENANT', tenant, tenant?.tax);
         return {
             finishAt: dateOnly(order.endDate),
-            cost: getCorrectPrice(order.calculatedPrice.value, order.calculatedPrice.isGross, tenant!.tax),
-            discountCode: order.discountCode,
+            cost: getCorrectPrice(order.calculatedPrice.value, order.calculatedPrice.isGross, tenant!.tax).toString(),
+            // discountCode: order.discountCode,
             firstName: formData.firstName,
             lastName: formData.lastName,
             street: formData.street,
             city: formData.city,
             postCode: formData.postCode,
-            isCompany: formData.isCompany || false,
+            isCompany: formData.isCompany ? 'true' : 'false',
             phone: formData.phone,
             mailToSendInvoice: formData.mailToSendInvoice,
-            companyName: formData.companyName || '',
-            companyStreet: formData.companyStreet || '',
-            companyCity: formData.companyCity || '',
-            companyPostCode: formData.companyPostCode || '',
-            nip: formData.nip || '',
-            orderAddons: getAddonsWithCorrectPrice(order.orderAddons, tenant!.tax),
+            companyName: formData.companyName || undefined,
+            companyStreet: formData.companyStreet || undefined,
+            companyCity: formData.companyCity || undefined,
+            companyPostCode: formData.companyPostCode || undefined,
+            nip: formData.nip || undefined,
+            simplifiedAddons: getSimplifiedAddons(getAddonsWithCorrectPrice(order.orderAddons, tenant!.tax)),
             date: dateOnly(new Date()),
             startAt: dateOnly(order.startDate),
-            email: user?.email || '',
+            email: user?.email || undefined,
+            size: order.boxGroupName,
+            stockName: order.stockName,
+            stockAddress: order.stockAddress
         };
     }
 
@@ -201,9 +219,22 @@ const StepSummary = ({
     if (!tenant) return null;
     // const desktop = window.matchMedia('(min-width: 300px)').matches;
     const desktop = true;
-    const { firstName, lastName, email, phone, startAt, date, finishAt, cost } = getValuesForAgreement();
-    const url = `${ApiService.url}tenant/agreement/${tenant.id}?firstName=${firstName}&lastName=${lastName}&email=${email}&phone=${phone}&date=${date}&cost=${cost}&startAt=${startAt}&finishAt=${finishAt}&number=0`;
+    const { simplifiedAddons, ...values } = getValuesForAgreement();
+
+    const params = new URLSearchParams()
+    Object.keys(values).forEach(key => {
+        if (values[key]) params.append(key, values[key])
+    })
+
+    params.append('addons', JSON.stringify(simplifiedAddons));
+    // simplifiedAddons.forEach(addon => {
+    //     params.append('addon', addon)
+    // })
+
+    const url = `${ApiService.url}tenant/agreement/${tenant.id}?${params}`;
     const encodedUrl = encodeURIComponent(url);
+
+    console.log('URL', url);
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>

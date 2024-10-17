@@ -50,6 +50,8 @@ const Add = () => {
                         formData.append('stockId', stockId);
                         if(values.acceptances) formData.append('acceptances', JSON.stringify(values.acceptances));
                         formData.append('name', values.name);
+                        formData.append('slug', values.slug);
+                        formData.append('tax', values.tax);
                         formData.append('description', values.description);
                         formData.append('required', values.required.toString());
                         formData.append('fileText', values.fileText || '');

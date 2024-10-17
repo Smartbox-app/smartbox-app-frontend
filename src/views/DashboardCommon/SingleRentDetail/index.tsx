@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { MyRentDetails, MyRentList } from 'smartbox-types';
+import { AccessControl, MyRentDetails, MyRentList } from 'smartbox-types';
 import { Spinner } from '../../../components/Branded';
 import { UserStockMap } from '../../../components/Common/UserStockMap';
 import { Section, SectionHeader } from '../../../components/Layout';
@@ -64,7 +64,7 @@ const SingleRentDetail = ({ showUserStockMap, match }: Props) => {
             <SectionHeader title='application.access' />
             {singleRent.gates && singleRent.gates.length > 0 && <StyledGatesHeader>Bramy</StyledGatesHeader>}
             {singleRent.gates.map(gate => <Gate key={gate.id} gate={gate} />)}
-            {singleRent.controlled && <OpenBox id={singleRent.boxId} />}
+            {singleRent.accessControl === AccessControl.ksm && <OpenBox id={singleRent.boxId} />}
           </Section>
         </>
       ) : (

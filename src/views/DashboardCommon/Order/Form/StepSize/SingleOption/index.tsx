@@ -75,7 +75,7 @@ const SingleOption = ({ singleOptionData, disable }: Props) => {
   const boxGroupId = useSelector((state: ApplicationState) => state.order.boxGroupId);
 
   const selectOption = (e: ChangeEvent<HTMLInputElement>) => {
-    dispatch(setBoxGroup(singleOptionData.id));
+    dispatch(setBoxGroup(singleOptionData.id, singleOptionData.name));
     dispatch(setMinRentPeriod(singleOptionData.minRentPeriod));
   }
 

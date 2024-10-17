@@ -1,12 +1,14 @@
 import { IBase } from '../base/base.interface';
 import { IUser } from '../user';
-import { AcceptanceStatuses, IPayment, SingleAcceptance } from '..';
+import { AcceptanceStatuses, IPayment, RentDetailsUser, SingleAcceptance } from '..';
 
 export interface RentDescription {
   startAt: string;
   finishAt: string;
   cost: string;
   price: string;
+  agreement?: string;
+  data?: RentDetailsUser;
   addons: {
     id: string;
     name: string;
