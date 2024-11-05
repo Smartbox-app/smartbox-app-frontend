@@ -317,6 +317,14 @@
             "69": {
                 "text": "Brak wymaganego pliku!",
                 "__type_alias_do_not_touch": "ApiErrorCode.AddonFileIsMissing"
+            },
+            "70": {
+                "text": "Brak daty urodzenia!",
+                "__type_alias_do_not_touch": "ApiErrorCode.BirthDateMissing"
+            },
+            "71": {
+                "text": "Osiągnięto maksymalną ilość aktywnych skrytek!",
+                "__type_alias_do_not_touch": "ApiErrorCode.ActiveBoxesLimitReached"
             }
         }
     }

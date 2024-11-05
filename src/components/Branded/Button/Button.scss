@@ -20,7 +20,7 @@
   font-weight: 300;
   width: 100%;
   font-family: $font-primary;
-  border-radius: 3px;
+  border-radius: 4px;
 
   transition: $transition-time background-color, $transition-time border-color;
   box-shadow: $box-shadow-small rgba($color-text, 0.25);
@@ -73,12 +73,14 @@
   &.button-small {
     padding: math.div($main-spacing, 2) $main-spacing;
     font-size: 0.9rem;
+    border-radius: 3px;
   }
 
   &.button-big {
     font-size: 1.2rem;
     padding: $main-spacing * 1.5;
     font-weight: 500;
+    border-radius: 6px;
 
     @include gt-md {
       font-size: 1.5rem;

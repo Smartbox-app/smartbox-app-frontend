@@ -6,6 +6,12 @@
   flex-direction: row;
   align-items: center;
   margin-top: $main-spacing /4;
+  flex-wrap: wrap;
+
+  .single-legend-entry {
+    display: flex;
+    align-items: center;
+  }
 
   .legend-color {
     display:block;

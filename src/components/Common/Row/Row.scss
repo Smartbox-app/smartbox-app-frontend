@@ -2,7 +2,7 @@
 @import '../../../config/mixins.scss';
 
 .row {
-  padding: $main-spacing;
+  padding: $main-spacing 0;
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
@@ -21,8 +21,8 @@
   }
 
   .row-label {
-    font-weight: 600;
-    width: 35%;
+    font-weight: 300;
+    width: 100%;
 
     @include gt-sm {
       width: 25%;
@@ -31,6 +31,6 @@
 
   .row-content {
     font-size: 1.1rem;
-    font-weight: 500;
+    font-weight: 700;
   }
 }

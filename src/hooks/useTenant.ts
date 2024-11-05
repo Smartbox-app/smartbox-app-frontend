@@ -68,6 +68,7 @@ const useTenant = (): UseTenant => {
             allowAddonsToRent: false,
             icon: '',
             useProd: false,
+            birthDateNecessary: false
         })
     }
 

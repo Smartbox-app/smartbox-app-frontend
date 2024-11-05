@@ -40,6 +40,7 @@
         border: 1px solid $color-disabled;
         padding: $main-spacing;
         text-align: center;
+        box-shadow: 0 15px 20px -15px #4d4d4d66;
 
         @include gt-sm {
             min-height: 100px;

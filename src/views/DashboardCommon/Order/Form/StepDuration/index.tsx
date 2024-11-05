@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect, useDispatch, useSelector } from 'react-redux';
 
-import { addDays, startOfToday } from 'date-fns';
+import { addDays, differenceInDays, endOfDay, startOfDay, startOfToday } from 'date-fns';
 import { AddonUserFileRequirementType, MyRentList, UserRes } from 'smartbox-types';
 import { DateInput } from '../../../../../components/Common';
 import { Button, Spinner } from '../../../../../components/Branded';
@@ -58,15 +58,22 @@ const StepDuration = ({
     const minRentPeriod = useSelector((state: ApplicationState) => state.order.minRentPeriod);
     // box groupId is used directly only when new rent is created
     const boxGroupId = useSelector((state: ApplicationState) => state.order.boxGroupId);
-    const { stockId, startDate, endDate, loadingPrice, orderAddons, orderAddonsId } = useSelector((state: ApplicationState) => state.order);
+    const { stockId, startDate, endDate, loadingPrice, orderAddons, orderAddonsId, calculatedPrice } = useSelector((state: ApplicationState) => state.order);
     const [loading, setLoading] = useState<boolean>(false);
 
 
 
     useEffect(() => {
+        if (!endDate) {
+            dispatch(setRentEndDate(addDays(startDate, minRentPeriod)));
+            return;
+        };
         setLoading(true);
 
-        dispatch(calculatePrice(boxGroupId, startDate, endDate));
+        const startOfStart = startOfDay(startDate);
+        const endOfEnd = endOfDay(endDate);
+
+        dispatch(calculatePrice(boxGroupId, startOfStart, endOfEnd));
 
         calculateAllAddons();
     }, [startDate, endDate]);
@@ -76,6 +83,7 @@ const StepDuration = ({
     }, [orderAddonsId])
 
     const calculateAllAddons = () => {
+        if (!endDate) return;
         Object.keys(orderAddons).forEach(addonId => {
             const addon = orderAddons[addonId];
             if (addon.selectedVariant) dispatch(calculateAddonPrice(addonId, startDate, endDate, addon.selectedVariant));
@@ -90,7 +98,7 @@ const StepDuration = ({
 
     const defaultValues = {
         dateStart: addDays(startDate, 0),
-        dateEnd: addDays(endDate, 0),
+        dateEnd: addDays(startDate, minRentPeriod),
     };
 
 
@@ -134,12 +142,12 @@ const StepDuration = ({
                 if (orderAddon.selectedVariant && acceptance && acceptance.required && !orderAddon.acceptancesStatus[acceptance.id].accepted) return false;
             }
 
-            if(orderAddon.userFileAllowed) {
-                if(orderAddon.userFileRequirement === AddonUserFileRequirementType.Required && !orderAddon.file) return false;
-                if(orderAddon.userFileRequirement === AddonUserFileRequirementType.RequiredWhenNoVariant && !orderAddon.selectedVariant && !orderAddon.file) return false;
+            if (orderAddon.userFileAllowed) {
+                if (orderAddon.userFileRequirement === AddonUserFileRequirementType.Required && !orderAddon.file) return false;
+                if (orderAddon.userFileRequirement === AddonUserFileRequirementType.RequiredWhenNoVariant && !orderAddon.selectedVariant && !orderAddon.file) return false;
             }
         }
-        
+
 
         return true;
     }, [orderAddons])
@@ -193,7 +201,7 @@ const StepDuration = ({
                 <Price />
                 <ButtonsContainer max>
                     <Button outline text='application.back' to={`/${UserService.getSlugByRole(user.role)}/order/step/stock`} />
-                    <Button to={`/${UserService.getSlugByRole(user.role)}/order/step/summary`} primary text='application.next' disabled={!allRequiredAddonsSelected} />
+                    <Button to={`/${UserService.getSlugByRole(user.role)}/order/step/summary`} primary text='application.next' disabled={!allRequiredAddonsSelected || !endDate || !calculatedPrice.value} />
                 </ButtonsContainer>
             </form>
         </FormContext>

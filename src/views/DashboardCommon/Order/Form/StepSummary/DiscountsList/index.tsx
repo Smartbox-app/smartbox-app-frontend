@@ -21,6 +21,8 @@ const DiscountsList = ({ stockId }: Props) => {
   const { calculatedPriceDetails, startDate, endDate, discountCode } = useSelector((state: ApplicationState) => state.order);
   const dispatch = useDispatch();
 
+  if (!endDate) return null;
+
   return (
     <div>
       <FormHeader title="application.usedPrice" />

@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { ApplicationState } from "../../../../../../reducers";
 import styled from "styled-components";
 import { Alert, CheckBox } from "../../../../../../components/Common";
-import { fetchAddons, setAddonAcceptance, setAddonFile } from "../../../../../../actions/order";
+import { fetchAddons, selectAddon, setAddonAcceptance, setAddonFile } from "../../../../../../actions/order";
 import { SingleVariant } from "./SingleVariant";
 import ApiService from "../../../../../../services/api-service";
 import FileInput from "../../../../../../components/Common/FileInput";
@@ -65,15 +65,28 @@ export const Addons = ({ stockId }: Props) => {
         dispatch(setAddonFile(addonId, file));
     }
 
+    const selectVariant = (addonId: string, variantId: string, variantName: string) => {
+        dispatch(selectAddon(addonId, variantId, variantName));
+    }
+
     useEffect(() => {
         getAddons();
     }, [])
 
     const displayFileInput = ({ userFileAllowed, userFileText, userFileRequirement }: AddonRes, { selectedVariant }: OrderAddon) => {
-        if(!userFileAllowed || !userFileText) return false;
-        if(userFileRequirement === AddonUserFileRequirementType.RequiredWhenNoVariant && selectedVariant) return false;
+        if (!userFileAllowed || !userFileText) return false;
+        if (userFileRequirement === AddonUserFileRequirementType.RequiredWhenNoVariant && selectedVariant) return false;
         return true;
     }
+
+    useEffect(() => {
+        addons.forEach(addon => {
+            const defaultVariant = addon.pricing.find(variant => variant.default);
+            if(defaultVariant) {
+                selectVariant(addon.id, defaultVariant.id, defaultVariant.name);
+            }
+        })
+    }, [addons])
 
     if (loadingAddons) return <Spinner />
     if (!addons || addons.length === 0) return null;
@@ -91,9 +104,7 @@ export const Addons = ({ stockId }: Props) => {
                 </ButtonsContainer>
             </StyledFileDescription> : null}
             {addon.required ? <Alert type='notice' text="application.addonIsRequired" /> : null}
-            {addon.acceptances ? addon.acceptances.map(acceptance => <div key={acceptance.id}>
-                <CheckBox label={acceptance.text} name={`acceptance_${acceptance.id}`} checked={orderAddons[addon.id].acceptancesStatus[acceptance.id].accepted} handleChange={(checked: boolean) => handleAddonAcceptance(addon.id, acceptance.id, checked)} />
-            </div>) : null}
+
             <ul>
                 {addon.pricing.map((variant) => <SingleVariant key={variant.id} variant={variant} addonId={addon.id} isGross={addon.isGross} />
                 )}
@@ -104,13 +115,16 @@ export const Addons = ({ stockId }: Props) => {
                     value: orderAddons[addon.id].file,
                     onChange: (file: File | null) => handleAddonFile(addon.id, file)
                 }}
-                accept='.jpg,.jpeg,.png,.pdf,.docx'
-                multiple={false}
-                meta={{
-                    error: null
-                }}
+                    accept='.jpg,.jpeg,.png,.pdf,.docx'
+                    multiple={false}
+                    meta={{
+                        error: null
+                    }}
                 />
             </StyledUserFileContainer> : null}
+            {(orderAddons[addon.id].selectedVariant && addon.acceptances) ? addon.acceptances.map(acceptance => <div key={acceptance.id}>
+                <CheckBox label={acceptance.text} name={`acceptance_${acceptance.id}`} checked={orderAddons[addon.id].acceptancesStatus[acceptance.id].accepted} handleChange={(checked: boolean) => handleAddonAcceptance(addon.id, acceptance.id, checked)} />
+            </div>) : null}
         </StyledSingleAddon>)}
     </Section>
 }

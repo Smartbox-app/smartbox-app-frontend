@@ -24,6 +24,8 @@ import TenantDetailsForm from './TenantDetailsForm';
 
 import './StepSummary.scss';
 import { calculatePrice, calculatePriceForRent } from '../../../../../actions/order';
+import { format } from 'date-fns';
+import { useTenant } from '../../../../../hooks/useTenant';
 
 interface Props {
     formData: FormType;
@@ -48,6 +50,7 @@ const StepSummary = ({
     const { step, rentId } = useParams<{ step: string, rentId: string }>();
     const isFirstRent = user && !user.rentCount;
 
+    const { tenant } = useTenant();
     useEffect(() => {
         fetchMyData();
         if (!rentId && (!stockId || !boxGroupId)) {
@@ -65,6 +68,8 @@ const StepSummary = ({
             }
         }
 
+        if (!endDate) return;
+
         if (rentId) {
             dispatch(calculatePriceForRent(rentId, startDate, endDate));
         } else {
@@ -73,6 +78,8 @@ const StepSummary = ({
     }, []);
 
     useEffect(() => {
+        if (!endDate) return;
+
         if (rentId) {
             dispatch(calculatePriceForRent(rentId, startDate, endDate, discountCode));
         } else {
@@ -80,12 +87,12 @@ const StepSummary = ({
         }
     }, [discountCode])
 
-
     const defaultValues = {
         paymentType: `${selectedPayment || PaymentType.card}`,
         firstName: user?.firstName || '',
         lastName: user?.lastName || '',
         street: user?.street || '',
+        birthDate: user?.birthDate ? format(new Date(user?.birthDate), 'yyyy-MM-dd') : null,
         city: user?.city || '',
         postCode: user?.postCode || '',
         mailToSendInvoice: user?.email || '',
@@ -98,7 +105,7 @@ const StepSummary = ({
         companyName: user?.companyData.companyName || '',
     };
 
-    const { handleSubmit, register, watch, control, errors } = useForm({ defaultValues });
+    const { handleSubmit, register, watch, control, errors, setValue, getValues } = useForm({ defaultValues });
 
     const tenantData = (): boolean => {
         if (
@@ -110,6 +117,7 @@ const StepSummary = ({
             watch().mailToSendInvoice !== '' &&
             watch().phone !== ''
         ) {
+            if(tenant?.birthDateNecessary && !formData.birthDate) return true;
             if (!errors.mailToSendInvoice && !errors.postCode) {
                 return false;
             }
@@ -181,7 +189,7 @@ const StepSummary = ({
             {loadingPrice && <Spinner overlay halfTransparent />}
             <DiscountsList stockId={stockId} />
             <FormHeader title="application.orderSummary" />
-            <SummaryTable dateStart={startDate} dateEnd={endDate} countedPrice={calculatedPrice} addons={addons} orderAddons={orderAddons} />
+            {endDate && <SummaryTable dateStart={startDate} dateEnd={endDate} countedPrice={calculatedPrice} addons={addons} orderAddons={orderAddons} />}
             {/* {calculatedPrice > 0 && <PaymentMethods register={register} />} */}
 
             <TenantDetailsForm register={register} control={control} errors={errors} disabled={!isFirstRent} />

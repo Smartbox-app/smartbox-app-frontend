@@ -12,16 +12,18 @@
     justify-content: center;
     flex-direction: column;
     position: relative;
-
+    border-radius: 8px;
     width: 100%;
-    height: $box-size;
+    min-height: $box-size;
     cursor: pointer;
-    margin: math.div($main-spacing, 2) 0;
+    padding: $main-spacing * 1.5;
 
     background-image: url(/assets/icons/storage-background.svg);
     background-repeat: no-repeat;
     background-size: contain;
-    background-position: right; 
+    background-position: right;
+
+    box-shadow: 0 15px 20px -15px #4d4d4d66;
 
 
     &.warning {
@@ -39,17 +41,18 @@
 
     .details {
       position: relative;
-      font-size: 0.8rem;
+      font-weight: 500;
       display: flex;
-      width: 90%;
+      width: 100%;
       justify-content: space-between;
     }
 
     .main-info {
       font-size: 1.2rem;
       display: flex;
-      width: 90%;
+      width: 100%;
       justify-content: center;
+      margin: $main-spacing 0;
 
       strong {
         text-align: center;
@@ -57,27 +60,13 @@
     }
 
     .sec-info {
-      font-size: 0.7rem;
-      width: 90%;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
 
       i {
-        position: absolute;
-        top: 0px;
-        right: -5px;
         font-size: 1rem;
-      }
-    }
-
-    .size {
-      &::after {
-        position: absolute;
-        content: '2';
-        display: block;
-        width: 10px;
-        height: 10px;
-        top: 0;
-        right: -10px;
-        font-size: 0.7rem;
       }
     }
 
@@ -92,15 +81,6 @@
 @include gt-xs {
   .single-wrapper {
     width: 50%;
-
-    .storage {
-      .sec-info {
-        i {
-          top: 0px;
-          right: 0px;
-        }
-      }
-    }
   }
 }
 
@@ -109,9 +89,8 @@
     width: 33.33%;
 
     .storage {
-      height: $big-box-size;
+      min-height: $big-box-size;
       justify-content: space-between;
-      padding: $main-spacing;
     }
   }
 }
@@ -119,7 +98,7 @@
 @include gt-md {
   .single-wrapper {
     .storage {
-      height: $big-box-size;
+      min-height: $big-box-size;
       align-items: center;
 
       .main-info {
@@ -130,11 +109,6 @@
       .sec-info,
       .details {
         font-size: 0.9rem;
-
-        i {
-          font-size: 1.4rem;
-          right: -20px;
-        }
       }
     }
   }

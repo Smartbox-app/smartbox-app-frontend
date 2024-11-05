@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import ApiService from '../../../../../../../services/api-service';
 import { AddonClientAdminRes, AddonPriceResolveType, AddonPricingType, SingleAddonPricing, SingleAddonVariant } from 'smartbox-types';
 import styled from 'styled-components';
-import { Alert, Input, InputSelect } from '../../../../../../../components/Common';
+import { Alert, CheckBox, Input, InputSelect } from '../../../../../../../components/Common';
 import { ButtonsContainer, FormContainer, Section, SimpleHeader } from '../../../../../../../components/Layout';
 import { Button, Spinner } from '../../../../../../../components/Branded';
 import { __ } from '../../../../../../../helpers/i18n';
@@ -15,6 +15,11 @@ const StyledSinglePricing = styled.div`
 display: flex;
 gap: 5px;
 align-items: center;`
+
+const StyledVariantContainer = styled.div`
+display: flex;
+gap: 5px;
+flex-direction: column;`
 
 const StyledVariantData = styled.div`
 display: flex;
@@ -40,7 +45,7 @@ const Pricing = () => {
     }
 
     const addVariant = () => {
-        setVariants(prevVariants => [...prevVariants, { name: '', pricing: [], id: v4() }])
+        setVariants(prevVariants => [...prevVariants, { name: '', default: false, pricing: [], id: v4() }])
     }
 
     const deleteVariant = (idToDelete: string) => {
@@ -53,6 +58,23 @@ const Pricing = () => {
                 ...variant,
                 name
             })
+            return variant;
+        }))
+    }
+
+    const setVariantAsDefault = (variantId: string, selected: boolean) => {
+        setVariants(prevVariants => prevVariants.map((variant) => {
+
+            if (variant.id === variantId) return ({
+                ...variant,
+                default: selected
+            })
+            if (selected) {
+                return {
+                    ...variant,
+                    default: false,
+                }
+            }
             return variant;
         }))
     }
@@ -200,15 +222,20 @@ const Pricing = () => {
             {(!variants || variants.length === 0) && <Alert type='notice' text='application.noAddonVariantsSet' />}
             {variants.map((variant) => (
                 <Section highlight key={variant.id}>
-                    <StyledVariantData>
-                        <Input type='text' input={{
-                            label: 'application.addonName',
-                            name: `addon_name_${variant.id}`,
-                            value: variant.name,
-                            onChange: (value: ChangeEvent<HTMLInputElement>) => updateVariantName(variant.id, value.target.value)
-                        }} />
-                        {variants.length > 1 && <Button danger text='application.delete' click={() => deleteVariant(variant.id)} />}
-                    </StyledVariantData>
+                    <StyledVariantContainer>
+                        <StyledVariantData>
+                            <Input type='text' input={{
+                                label: 'application.addonName',
+                                name: `addon_name_${variant.id}`,
+                                value: variant.name,
+                                onChange: (value: ChangeEvent<HTMLInputElement>) => updateVariantName(variant.id, value.target.value)
+                            }} />
+
+                            {variants.length > 1 && <Button danger text='application.delete' click={() => deleteVariant(variant.id)} />}
+                        </StyledVariantData>
+                        <CheckBox label='application.addonVariantSelectByDefault' name={`addon_default_${variant.id}`} checked={variant.default} handleChange={(checked: boolean) => setVariantAsDefault(variant.id, checked)} />
+                    </StyledVariantContainer>
+
                     <h5>{__('application.addonVariantPricing')} - {variant.name}</h5>
 
                     {(!variant.pricing || variant.pricing.length === 0) && <Alert type='notice' text='application.noAddonVariantPricingSet' />}

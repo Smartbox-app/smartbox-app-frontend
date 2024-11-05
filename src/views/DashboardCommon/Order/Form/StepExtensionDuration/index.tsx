@@ -85,7 +85,7 @@ const StepExtensionDuration = ({
     }, [rent])
 
     useEffect(() => {
-        if (!rentId) return;
+        if (!rentId || !endDate) return;
         setLoading(true);
         dispatch(calculatePriceForRent(rentId, startDate, endDate));
         calculateAllAddons();
@@ -96,6 +96,7 @@ const StepExtensionDuration = ({
     }, [orderAddonsId])
 
     const calculateAllAddons = () => {
+        if(!endDate) return;
         Object.keys(orderAddons).forEach(addonId => {
             const addon = orderAddons[addonId];
             if (addon.selectedVariant) dispatch(calculateAddonPrice(addonId, startDate, endDate, addon.selectedVariant));
@@ -169,7 +170,7 @@ const StepExtensionDuration = ({
                     // register={register({ required: true })}
                     label='application.selectEndRentDate'
                     minDate={setMinDate(minRentPeriod, true)}
-                    value={endDate}
+                    value={endDate || undefined}
                     onChange={([selected]) => {
     
                         dispatch(setRentEndDate(selected))

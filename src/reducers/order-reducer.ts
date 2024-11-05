@@ -1,9 +1,7 @@
-import { addDays } from 'date-fns';
 import {
   AcceptanceStatuses,
   AddonRes,
   AddonUserFileRequirementType,
-  BoxGroupAvailability,
   CalculatedAddonPriceRes,
   CalculatedPriceRes,
   PaymentStatus,
@@ -48,7 +46,7 @@ export type OrderState = {
   boxGroupName: string;
   minRentPeriod: number;
   startDate: Date;
-  endDate: Date;
+  endDate: Date | null;
   calculatedPrice: { value: number, isGross: boolean },
   loadingPrice: boolean;
   discountCode: string;
@@ -66,7 +64,6 @@ export type OrderState = {
   //
   formData: FormType;
   paymentId: string;
-  boxAvailability: BoxGroupAvailability[];
   discountList: any[];
   paymentSuccess: boolean;
   isAgreementAccepted: boolean;
@@ -136,17 +133,17 @@ interface FormStepSuccess {
   payload: Partial<FormType>;
 }
 
+interface SetBirthDate {
+  type: 'SET_BIRTHDATE';
+  payload: Date;
+}
+
 interface SentRentBoxRequestSuccess {
   type: 'SENT_RENT_BOX_REQUEST_SUCCESS';
   payload: {
     paymentId: string;
     status: PaymentStatus;
   };
-}
-
-interface FetchBoxAvailability {
-  type: 'FETCH_BOX_AVAILABILITY_SUCCESS';
-  payload: BoxGroupAvailability[];
 }
 
 interface FetchAddons {
@@ -169,7 +166,7 @@ interface SetAddonAcceptance {
   payload: { addonId: string, acceptanceId: string, checked: boolean }
 }
 
-interface SetAddonFile{
+interface SetAddonFile {
   type: 'SET_ADDON_FILE';
   payload: { addonId: string, file: File | null }
 }
@@ -238,9 +235,9 @@ type Action =
   | SetAddonAcceptance
   | SetAddonFile
   | ClearAddonPrice
+  | SetBirthDate
   //
   | FormStepSuccess
-  | FetchBoxAvailability
   | SentRentBoxRequestSuccess
   | FormReaded
   | FormResignation
@@ -264,7 +261,7 @@ const initialState: OrderState = {
   boxGroupName: '',
   minRentPeriod: 7,
   startDate: new Date(),
-  endDate: addDays(new Date(), 7),
+  endDate: null,
   calculatedPrice: { value: 0, isGross: false },
   calculatedPriceDetails: [],
   loadingPrice: false,
@@ -287,6 +284,7 @@ const initialState: OrderState = {
     },
     firstName: '',
     lastName: '',
+    birthDate: undefined,
     street: '',
     city: '',
     postCode: '',
@@ -295,7 +293,6 @@ const initialState: OrderState = {
   },
   paymentId: '',
   paymentSuccess: false,
-  boxAvailability: [],
   discountList: [{ text: __('application.disposableDiscount5'), value: 5 }],
   isAgreementAccepted: false,
   isResignationMarked: false,
@@ -407,26 +404,17 @@ export default (state: OrderState = initialState, action: Action): OrderState =>
       }
     }
 
+    case 'SET_BIRTHDATE': {
+      const newFormData: FormType = { ...state.formData, birthDate: action.payload };
+
+      return {
+        ...state,
+        formData: newFormData,
+      };
+    }
+
     case 'FORM_STEP_SUCCESS': {
       const newFormData: FormType = { ...state.formData, ...action.payload };
-      // const { calculate } = usePricing();
-
-
-      if (newFormData.durationInDays !== 0) {
-        // const price = calculate(data);
-        // const price =
-        // return {
-        //   ...state,
-        //   formData: newFormData,
-        //   countedPrice: price,
-        //   discountList: [
-        //     {
-        //       text: price.name,
-        //       value: 0,
-        //     },
-        //   ],
-        // };
-      }
 
       return {
         ...state,
@@ -460,13 +448,6 @@ export default (state: OrderState = initialState, action: Action): OrderState =>
       return {
         ...state,
         paymentId: action.payload,
-      };
-    }
-
-    case 'FETCH_BOX_AVAILABILITY_SUCCESS': {
-      return {
-        ...state,
-        boxAvailability: action.payload,
       };
     }
 
@@ -626,6 +607,7 @@ export default (state: OrderState = initialState, action: Action): OrderState =>
           street: '',
           city: '',
           postCode: '',
+          birthDate: undefined,
           phone: '',
           mailToSendInvoice: '',
           stock: ''

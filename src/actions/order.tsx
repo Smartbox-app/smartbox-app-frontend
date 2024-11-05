@@ -28,19 +28,6 @@ export const formResignationMarked = () => ({ type: 'FORM_RESIGNATION_MARKED_SUC
 export const clearOrderAgreement = () => ({ type: 'CLEAR_ORDER_FORM_AGREEMENT_SUCCESS' });
 export const clearOrder = () => ({ type: 'CLEAR_ORDER' });
 
-export const fetchBoxAvailability = (stockId: string) => async (dispatch: any) => {
-  await ApiService.get(
-    dispatch,
-    'FETCH_BOX_AVAILABILITY_SUCCESS',
-    'FETCH_BOX_AVAILABILITY_FAILED',
-    null,
-    () => {
-      history.push('/');
-    },
-    `rent/box-group/availability/${stockId}`,
-  );
-};
-
 export const sentRentBoxRequest = (data: FormData, nextStep: string, role: UserRole) => async (dispatch: any) => {
   await ApiService.post(
     dispatch,
@@ -235,3 +222,5 @@ export const fetchAddons = (stockId: string) => async (dispatch: any) => {
 export const selectAddon = (addonId: string, variantId: string | null, variantName: string | null) => ({ type: 'SELECT_ADDON', payload: { addonId, variantId, variantName } })
 export const setAddonAcceptance = (addonId: string, acceptanceId: string, checked: boolean) => ({ type: 'SET_ADDON_ACCEPTANCE', payload: { addonId, acceptanceId, checked } })
 export const setAddonFile = (addonId: string, file: File | null) => ({ type: 'SET_ADDON_FILE', payload: { addonId, file } })
+
+export const setBirthDate = (date: Date) => ({ type: 'SET_BIRTHDATE', payload: date })

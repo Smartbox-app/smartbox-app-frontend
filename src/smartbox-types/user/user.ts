@@ -10,6 +10,7 @@ export class UserRes extends BaseResponse {
   @Prop() city: string;
   @Prop() street: string;
   @Prop() postCode: string;
+  @Prop() birthDate?: Date;
   @Prop() phone: string;
   @Prop() firstName: string;
   @Prop() lastName: string;

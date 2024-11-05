@@ -47,7 +47,7 @@
 }
 
 .history-line {
-  display: flex;
+  display: block;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
@@ -55,11 +55,20 @@
   width: 100%;
   padding: 7.5px 0;
   border-bottom: 1px solid $color-inactive;
+
+  @include gt-sm {
+    display: flex;
+  }
 }
 
 .header {
   font-weight: 600;
   color: $color-disabled;
+  display: none;
+
+  @include gt-sm {
+    display: flex;
+  }
 }
 
 .last {

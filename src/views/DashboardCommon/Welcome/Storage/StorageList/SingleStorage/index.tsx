@@ -18,9 +18,10 @@ interface Props {
 }
 
 const StyledStorage = styled.div`
-background-color: ${({ theme }) => theme.colors.primary};
-border: 2px solid${({ theme }) => lighten(0.1, theme.colors.primary)};
+background-color: ${({ theme }) => lighten(0.01, theme.colors.primary)};
+border: 2px solid ${({ theme }) => lighten(0.01, theme.colors.primary)};
 color: ${({ theme }) => getColorForBackground(theme.colors.primary)};
+box-shadow: 0 5px 10px -5px #4d4d4d66;
 &:hover {
     box-shadow: 0 0 2px 1px ${({ theme }) => lighten(0.1, theme.colors.primary)
     };
@@ -37,19 +38,19 @@ const SingleStorage = ({ single }: Props) => {
         >
             <StyledStorage className={`storage ${isWarning ? 'warning' : ''}`}>
                 {isWarning && <div className="storage-warning-overlay" />}
-                <p className="sec-info">
+                <div className="sec-info">
                     {single.stockName}
                     <i className={`fa ${isWarning ? 'fa-exclamation-circle' : 'fa-info-circle'}`} aria-hidden="true" />
-                </p>
-                <p className="main-info">
+                </div>
+                <div className="main-info">
                     <strong>
                         {__('application.miniStorage')} {__('application.shortenNumber')}: {single.number}
                     </strong>
-                </p>
-                <p className="details">
+                </div>
+                <div className="details">
                     <span className="date">{dateOnly(single.finishAt)}</span>
-                    <span className="size">{single.size} m</span>
-                </p>
+                    <span className="size">{single.size} m²</span>
+                </div>
             </StyledStorage>
         </div>
     );

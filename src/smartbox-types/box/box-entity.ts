@@ -13,6 +13,7 @@ export interface BoxEntity {
   width?: number;
   height?: number;
   ksmIdentifier?: string;
+  active: boolean;
 }
 
 export type BoxListRes = Pick<BoxEntity, 'id' | 'identifier' | 'stockId'> & { controlled: boolean, area: number, status: RentStatus, rentId: string, pricing: SinglePricing[] };
@@ -21,6 +22,7 @@ export type BoxMapUserRes = Pick<BoxEntity, 'id' | 'identifier' | 'stockId' | 'x
 
 export type BoxReq = Pick<BoxEntity, 'identifier' | 'additionalInfo' | 'stockId' | 'boxGroupId' | 'ksmIdentifier'>;
 export type BoxPositionReq = Pick<BoxEntity, 'x' | 'y' | 'stockId'>;
+export type BoxActiveReq = Pick<BoxEntity, 'active'>;
 export type BoxSizeReq = Pick<BoxEntity, 'width' | 'height' | 'stockId'>;
 
 export type BoxesBatchReq = {

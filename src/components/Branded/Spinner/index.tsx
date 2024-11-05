@@ -16,7 +16,7 @@ const StyledSpinnerContainer = styled.div``
 
 
 const StyledSpinner = styled.div`
-border: 3px solid $${props => colorOrDark(props.theme.colors.primary)};
+border: 3px solid ${props => colorOrDark(props.theme.colors.primary)};
 border-color: ${props => colorOrDark(props.theme.colors.primary)} transparent transparent transparent;
 
 `

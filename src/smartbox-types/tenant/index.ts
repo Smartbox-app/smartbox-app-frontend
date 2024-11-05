@@ -27,6 +27,7 @@ export interface TenantEntity {
     sharedSecret: string;
     allowAddonsToRent: boolean;
     useProd: boolean;
+    birthDateNecessary: boolean;
 }
 
 export type UpdateTenantReq = Pick<TenantEntity, 'colorPrimary' | 'colorSecondary' | 'name' | 'identifier' | 'contactEmail' | 'contactPhone' | 'additionalMailInfo' | 'tax'>;

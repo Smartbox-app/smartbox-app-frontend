@@ -8,6 +8,7 @@ import { InputLabel } from '../InputLabel';
 
 const StyledContainer = styled.div`
     .input {
+    border: none;
         border-bottom: 2px solid ${props => props.theme.colors.primary};
     }
 `
@@ -39,6 +40,7 @@ const CustomInput = ({ register, errors, id, type, placeholder, disabled }: Prop
           ref={register}
           placeholder={placeholder || __(`application.${id}`)}
           disabled={disabled}
+          onChange={e => console.log('change', e.target.value)}
         />
       </div>
       <ErrorMessage errors={errors} name={id} />

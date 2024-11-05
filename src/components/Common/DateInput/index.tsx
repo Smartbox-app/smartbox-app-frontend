@@ -26,10 +26,12 @@ interface Props {
   inline?: boolean;
   big?: boolean;
   errors?: TranslatableObject[];
+  noPadding?: boolean;
+  required?: boolean;
 }
 
-const StyledContainer = styled.div`
-padding: 10px;
+const StyledContainer = styled.div <{ noPadding?: boolean }>`
+padding: ${props => props.noPadding ? 0 : '10px'};
 &.big {
   .flatpickr-input {
         border: 2px solid ${props => props.theme.colors.primary};
@@ -46,9 +48,9 @@ padding: 10px;
   }
 `
 
-const DateInput = ({ name, value, onChange, label, errors, minDate, maxDate, big, register, inline = true }: Props) => {
+const DateInput = ({ name, value, noPadding, onChange, label, errors, minDate, maxDate, big, register, required = true, inline = true }: Props) => {
   return (
-    <StyledContainer className={`data-picker-wrapper ${big ? 'big' : 'compact'}`}>
+    <StyledContainer noPadding={noPadding} className={`data-picker-wrapper ${big ? 'big' : 'compact'}`}>
       <InputLabel label={label} name={name} />
       <Flatpickr
         name={name}
@@ -56,6 +58,7 @@ const DateInput = ({ name, value, onChange, label, errors, minDate, maxDate, big
         onChange={(data: any) => {
           onChange(data);
         }}
+        required={required}
         value={value}
         options={{
           allowInput: false,

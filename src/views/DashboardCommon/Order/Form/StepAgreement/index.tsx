@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useParams, withRouter } from 'react-router-dom';
 import DocViewer, { DocViewerRenderers } from "@cyntler/react-doc-viewer";
@@ -9,7 +9,7 @@ import { connect, useSelector } from 'react-redux';
 import { RentBoxReq, UserRole, UserRes, ExtendRentalReq, OrderAddons } from 'smartbox-types';
 import { PaymentType } from 'smartbox-types';
 import { Alert } from '../../../../../components/Common';
-import { Button } from '../../../../../components/Branded';
+import { Button, Spinner } from '../../../../../components/Branded';
 import { order } from '../../../../../actions';
 import { ButtonsContainer } from '../../../../../components/Layout';
 import { history } from '../../../../../App';
@@ -26,6 +26,20 @@ import ApiService from '../../../../../services/api-service';
 import { getCorrectPriceWithTax, getCorrectTaxPercentAmount } from '../../../../../utils/tax';
 import { OrderAddon } from '../../../../../reducers/order-reducer';
 import { dateOnly } from '../../../../../utils/format-date';
+import styled from 'styled-components';
+
+const AgreementWrapper = styled('div')({
+    position: 'relative'
+})
+
+const SpinnerWrapper = styled('div')({
+    position: 'absolute',
+    left: 0,
+    top: 0,
+    width: '100%',
+    height: '100%',
+    zIndex: -1
+})
 
 interface Props {
     formData: FormType;
@@ -48,6 +62,7 @@ const StepSummary = ({
 }: Props): any => {
     const order = useSelector((state: ApplicationState) => state.order);
     const tenant = useSelector((state: ApplicationState) => state.tenant);
+    const [agreementLoaded, setAgreementLoaded] = useState<boolean>(false);
 
     const frameRef = useRef<HTMLIFrameElement>(null);
 
@@ -68,7 +83,6 @@ const StepSummary = ({
 
     const getAddonsWithCorrectPrice = (orderAddons: { [addonId: string]: OrderAddon }, tax: string): OrderAddons => {
         const parsedAddons: OrderAddons = {};
-        console.log('TAX', tax);
         const taxValue = getCorrectTaxPercentAmount(tax);
 
         Object.keys(orderAddons).forEach(addonId => {
@@ -126,7 +140,7 @@ const StepSummary = ({
     }
 
     const onSubmit = (data: any) => {
-        if (!user) return;
+        if (!user || !order.endDate) return;
         const commonCollection = {
             finishAt: order.endDate,
             cost: getCorrectPrice(order.calculatedPrice.value, order.calculatedPrice.isGross, tenant!.tax),
@@ -146,6 +160,10 @@ const StepSummary = ({
             nip: formData.nip || '',
             orderAddons: getAddonsWithCorrectPrice(order.orderAddons, tenant!.tax)
         };
+
+        if (formData.birthDate) {
+            commonCollection['birthDate'] = formData.birthDate;
+        }
 
         const dataCollectionExtendRent: ExtendRentalReq = {
             ...commonCollection,
@@ -177,9 +195,8 @@ const StepSummary = ({
     };
 
     const getValuesForAgreement = () => {
-        console.log('TENANT', tenant, tenant?.tax);
         return {
-            finishAt: dateOnly(order.endDate),
+            finishAt: order.endDate ? dateOnly(order.endDate) : null,
             cost: getCorrectPrice(order.calculatedPrice.value, order.calculatedPrice.isGross, tenant!.tax).toString(),
             // discountCode: order.discountCode,
             firstName: formData.firstName,
@@ -189,6 +206,7 @@ const StepSummary = ({
             postCode: formData.postCode,
             isCompany: formData.isCompany ? 'true' : 'false',
             phone: formData.phone,
+            birthDate: formData.birthDate ? dateOnly(formData.birthDate) : '',
             mailToSendInvoice: formData.mailToSendInvoice,
             companyName: formData.companyName || undefined,
             companyStreet: formData.companyStreet || undefined,
@@ -210,10 +228,37 @@ const StepSummary = ({
         history.push(`/${UserService.getSlugByRole(user.role)}/order/step/summary/${rentId || ''}`);
     };
 
+    const checkFrame = () => {
+        console.log('CHECKING FRAME', frameRef.current?.contentWindow, frameRef.current?.contentDocument)
+        if (!frameRef.current) return false;
+
+        const iframeDoc = frameRef.current.contentDocument || frameRef.current.contentWindow?.document;
+
+        if (!iframeDoc?.body.children.length) {
+            console.log('TRYING TO RELOAD');
+            frameRef.current.src += '';
+            frameRef.current.contentWindow?.location.reload();
+
+            setTimeout(() => {
+                checkFrame();
+            }, 2000)
+            return false;
+        }
+        else {
+            setAgreementLoaded(true);
+        }
+
+        return true;
+    }
+
     useEffect(() => {
+        console.log('EFFETCT CALLED');
         if (!frameRef.current) return;
 
-        if (frameRef.current.title === '') frameRef.current.contentWindow?.location.reload();
+        if (!frameRef.current.contentDocument?.body.children.length) {
+            checkFrame();
+        }
+
     }, [frameRef])
 
     if (!tenant) return null;
@@ -227,27 +272,28 @@ const StepSummary = ({
     })
 
     params.append('addons', JSON.stringify(simplifiedAddons));
-    // simplifiedAddons.forEach(addon => {
-    //     params.append('addon', addon)
-    // })
+
+    console.log('PARAMS', params);
 
     const url = `${ApiService.url}tenant/agreement/${tenant.id}?${params}`;
     const encodedUrl = encodeURIComponent(url);
 
-    console.log('URL', url);
+    console.log('URL', url, encodedUrl);
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
             <FormHeader title="application.orderAgreement" />
-            {/* <AgreementWrapper /> */}
             {desktop && (
-                <iframe ref={frameRef} src={`https://docs.google.com/gview?embedded=true&url=${encodedUrl}`} height="300" style={{ height: "45vh" }}></iframe>
-                // <DocViewer language={undefined} documents={[{ uri: `${ApiService.url}tenant/agreement/${tenant.id}`, fileType: 'docx' }]} pluginRenderers={DocViewerRenderers} />
-                // <object
-                //     className="rules-embed"
-                //     data={`${ApiService.url}tenant/agreement/${tenant.id}#toolbar=0&navpanes=0&scrollbar=0`}
-                //     type="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-                // />
+                <AgreementWrapper>
+                    {!agreementLoaded ? <SpinnerWrapper><Spinner overlay halfTransparent /></SpinnerWrapper> : null}
+                    <iframe ref={frameRef} src={`https://docs.google.com/gview?embedded=true&url=${encodedUrl}`} height="300" style={{ height: "45vh", width: '100%' }}></iframe>
+                    {/* <DocViewer language={undefined} documents={[{ uri: `${ApiService.url}tenant/agreement/${tenant.id}`, fileType: 'docx' }]} pluginRenderers={DocViewerRenderers} />
+                 <object
+                     className="rules-embed"
+                     data={`${ApiService.url}tenant/agreement/${tenant.id}#toolbar=0&navpanes=0&scrollbar=0`}
+                     type="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                 /> */}
+                </AgreementWrapper>
             )}
             <Button primary blank to={url} text='Kliknij aby otworzyć' />
             <span className="separator" />

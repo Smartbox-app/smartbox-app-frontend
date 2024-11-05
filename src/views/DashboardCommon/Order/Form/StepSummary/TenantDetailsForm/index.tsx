@@ -2,6 +2,13 @@ import React from 'react';
 import CustomInput from '../../../../../../components/Common/CustomInput';
 import FormHeader from '../../../../../../components/Layout/FormHeader';
 import { formOnTranslateString } from '../../../../../../utils/trans-form';
+import { DateInput } from '../../../../../../components/Common';
+import { addYears } from 'date-fns';
+import styled from 'styled-components';
+import { useTenant } from '../../../../../../hooks/useTenant';
+import { useDispatch, useSelector } from 'react-redux';
+import { ApplicationState } from '../../../../../../reducers';
+import { setBirthDate } from '../../../../../../actions/order';
 
 interface Props {
   register: any;
@@ -10,7 +17,15 @@ interface Props {
   disabled?: boolean;
 }
 
+const DateInputContainer = styled('div')({
+  marginBottom: 20
+})
+
 const TenantDetailsForm = ({ register, errors, control, disabled }: Props) => {
+  const { tenant } = useTenant();
+  const dispatch = useDispatch();
+  const { formData } = useSelector((state: ApplicationState) => state.order);
+
   return (
     <div className="form-field">
       <FormHeader title='application.rentierData' />
@@ -26,6 +41,19 @@ const TenantDetailsForm = ({ register, errors, control, disabled }: Props) => {
         disabled
         id="lastName"
       />
+      {tenant?.birthDateNecessary ? <DateInputContainer>
+        <DateInput
+          noPadding
+          inline={false}
+          label='application.birthDate'
+          value={formData.birthDate}
+          maxDate={addYears(new Date(), -18)}
+          onChange={([selected]) => {
+            dispatch(setBirthDate(selected));
+          }}
+          name='birthDate'
+        />
+      </DateInputContainer> : null}
       <CustomInput
         register={register({ required: formOnTranslateString('Field required.') })}
         errors={errors}

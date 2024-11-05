@@ -8,6 +8,7 @@ export enum AddonPricingType {
 export interface SingleAddonVariant {
     id: string;
     name: string;
+    default: boolean;
     pricing: SingleAddonPricing[];
 }
 

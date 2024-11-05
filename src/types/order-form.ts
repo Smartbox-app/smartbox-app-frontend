@@ -16,6 +16,7 @@ export interface FormType {
   city: string;
   postCode: string;
   phone: string;
+  birthDate?: Date;
   mailToSendInvoice: string;
   isCompany?: boolean;
   companyName?: string;

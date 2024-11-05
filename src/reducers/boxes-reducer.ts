@@ -1,4 +1,4 @@
-import { BoxListItem, RentDetailsRes, RentStatus, BoxGroupAvailability } from 'smartbox-types';
+import { BoxListItem, RentDetailsRes, RentStatus } from 'smartbox-types';
 
 export type Boxes = {
   boxesGroup: BoxListItem[] | null;
@@ -32,16 +32,11 @@ interface FetchSingleBoxDetails {
   payload: RentDetailsRes;
 }
 
-interface BoxGroup {
-  type: 'FETCH_BOX_AVAILABILITY_SUCCESS';
-  payload: BoxGroupAvailability[];
-}
-
 interface CleanUp {
   type: 'CLEAN_SINGLE_BOX_DETAILS_SUCCESS';
 }
 
-type Action = FetchBoxStatuses | FetchSingleBoxDetails | BoxGroup | CleanUp;
+type Action = FetchBoxStatuses | FetchSingleBoxDetails | CleanUp;
 
 export default (state: Boxes = initialState, action: Action): any => {
   switch (action.type) {
