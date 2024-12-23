@@ -1,19 +1,10 @@
 import {
-  RentBoxReq,
   UserRole,
-  ExecutePaymentReq,
-  ExecuteBlikPaymentReq,
-  UrlRes,
-  ApiErrorCode,
-  ExtendRentalReq,
   PaymentStatus,
 } from 'smartbox-types';
 import ApiService from '../services/api-service';
 import { history } from '../App';
 import UserService from '../services/user-service';
-import BlikWaitingModal from '../views/DashboardCommon/Order/Form/StepPayment/BlikForm/BlikWaitingModal';
-import { modal, notifications, singleRent, user, paymentStatus } from './index';
-import { saveFrom } from './payment-status';
 import { FormType } from '../types/order-form';
 
 export const updateFormData = (data: Partial<FormType>) => ({ type: 'FORM_STEP_SUCCESS', payload: data });
@@ -25,7 +16,6 @@ export const formAgreementReaded = () => ({ type: 'FORM_AGREEMENT_READED_SUCCESS
 
 export const formResignationMarked = () => ({ type: 'FORM_RESIGNATION_MARKED_SUCCESS' });
 
-export const clearOrderAgreement = () => ({ type: 'CLEAR_ORDER_FORM_AGREEMENT_SUCCESS' });
 export const clearOrder = () => ({ type: 'CLEAR_ORDER' });
 
 export const sentRentBoxRequest = (data: FormData, nextStep: string, role: UserRole) => async (dispatch: any) => {
@@ -44,89 +34,6 @@ export const sentRentBoxRequest = (data: FormData, nextStep: string, role: UserR
     'rent/new',
     'LOADING',
     data,
-  );
-};
-
-export const sentExecutePaymentRequest = (data: ExecutePaymentReq, develop = false) => async (dispatch: any) => {
-  await ApiService.post(
-    dispatch,
-    'SENT_EXECUTE_PAYMENT_REQUEST_SUCCESS',
-    'SENT_EXECUTE_PAYMENT_REQUEST_FAILED',
-    null,
-    null,
-    develop ? 'rent/execute-payment/true' : 'rent/execute-payment',
-    'LOADING',
-    data,
-  );
-};
-
-export const sentExecutePaymentWithBlikRequest = (data: ExecuteBlikPaymentReq) => async (dispatch: any) => {
-  await ApiService.post(
-    dispatch,
-    'SENT_EXECUTE_PAYMENT_WITH_BLIK_REQUEST_SUCCESS',
-    'SENT_EXECUTE_PAYMENT_WITH_BLIK_REQUEST_FAILED',
-    () => {
-      dispatch(modal.showModal(<BlikWaitingModal />, false));
-    },
-    () => {
-      dispatch(notifications.errorNotification(ApiErrorCode.InvalidBlik));
-      dispatch(modal.hideModal());
-    },
-    'rent/execute-payment-with-blik',
-    'LOADING',
-    data,
-  );
-};
-
-export const pickPaymentType = (paymentId: string) => ({ type: 'PICK_PAYMENT_TYPE_SUCCESS', payload: paymentId });
-export const blikPaymentFinishSuccess = () => ({ type: 'BLIK_PAYMENT_FINISH_SUCCESS' });
-
-export const checkPaymentStatus = (paymentId: string) => async (dispatch: any) => {
-  await ApiService.get(
-    dispatch,
-    'CHECK_PAYMENT_STATUS_SUCCESS',
-    'CHECK_PAYMENT_STATUS_FAILED',
-    (data: boolean) => {
-      if (data) {
-        dispatch({ type: 'REFRESH_API_TABLE' });
-        dispatch(blikPaymentFinishSuccess());
-      }
-    },
-    null,
-    `payment/is-paid/${paymentId}`,
-  );
-};
-
-export const checkIfStockIsRented = (paymentId: string) => async (dispatch: any) => {
-  await ApiService.get(
-    dispatch,
-    'CHECK_STOCK_STATUS_SUCCESS',
-    'CHECK_STOCK_STATUS_FAILED',
-    (data: boolean) => {
-      if (data) {
-        dispatch(singleRent.getMyRentList());
-        dispatch(singleRent.fetchMyRentHistory());
-        dispatch(user.fetchMyData());
-        dispatch(paymentStatus.paymentStatusChanged(data));
-      }
-    },
-    null,
-    `payment/is-paid/${paymentId}`,
-  );
-};
-
-export const sentExecutePaymentWithTpayRequest = (paymentId: string, group = '0') => async (dispatch: any) => {
-  await ApiService.get(
-    dispatch,
-    'SENT_EXECUTE_PAYMENT_WITH_TPAY_REQUEST_SUCCESS',
-    'SENT_EXECUTE_PAYMENT_WITH_TPAY_REQUEST_FAILED',
-    (res: UrlRes | any) => {
-      // const win = window.open(res.html);
-      // win?.focus();
-      dispatch(saveFrom(res.html));
-    },
-    null,
-    `rent/execut-payment-with-tpay/${paymentId}/114`,
   );
 };
 

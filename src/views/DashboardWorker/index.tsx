@@ -11,11 +11,11 @@ import ManagementWorker from './ManagementWorker';
 
 const DashboardWorker = () => {
   const menuItems: MenuItemType[] = [
-    {
-      icon: 'settings.svg',
-      text: 'application.management',
-      address: '/worker/management',
-    },
+    // {
+    //   icon: 'settings.svg',
+    //   text: 'application.management',
+    //   address: '/worker/management',
+    // },
     {
       icon: 'account.svg',
       text: 'application.account',
@@ -31,7 +31,7 @@ const DashboardWorker = () => {
         <Switch>
           <Section full>
             <Route exact path="/worker" render={() => <Redirect to="/worker/management" />} />
-            <Route path="/worker/management/" component={ManagementWorker} />
+            {/* <Route path="/worker/management/" component={ManagementWorker} /> */}
             <Route path="/worker/profile" component={Profile} />
             <Route path="/worker/invoice/" component={Invoice} />
           </Section>

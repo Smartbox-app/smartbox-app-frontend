@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useParams, withRouter } from 'react-router-dom';
 import DocViewer, { DocViewerRenderers } from "@cyntler/react-doc-viewer";
@@ -27,6 +27,11 @@ import { getCorrectPriceWithTax, getCorrectTaxPercentAmount } from '../../../../
 import { OrderAddon } from '../../../../../reducers/order-reducer';
 import { dateOnly } from '../../../../../utils/format-date';
 import styled from 'styled-components';
+import { Document, Page } from 'react-pdf';
+
+import { pdfjs } from 'react-pdf';
+
+pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 
 const AgreementWrapper = styled('div')({
     position: 'relative'
@@ -63,6 +68,7 @@ const StepSummary = ({
     const order = useSelector((state: ApplicationState) => state.order);
     const tenant = useSelector((state: ApplicationState) => state.tenant);
     const [agreementLoaded, setAgreementLoaded] = useState<boolean>(false);
+    const [totalPages, setTotalPages] = useState<number>();
 
     const frameRef = useRef<HTMLIFrameElement>(null);
 
@@ -241,7 +247,7 @@ const StepSummary = ({
 
             setTimeout(() => {
                 checkFrame();
-            }, 2000)
+            }, 3000)
             return false;
         }
         else {
@@ -260,6 +266,15 @@ const StepSummary = ({
         }
 
     }, [frameRef])
+
+
+    const agreementType = useMemo(() => {
+        if (!tenant) return null;
+        const { agreement } = tenant;
+
+        if (agreement.includes('.docx')) return 'docx';
+        return 'pdf';
+    }, [tenant])
 
     if (!tenant) return null;
     // const desktop = window.matchMedia('(min-width: 300px)').matches;
@@ -280,21 +295,28 @@ const StepSummary = ({
 
     console.log('URL', url, encodedUrl);
 
+
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
             <FormHeader title="application.orderAgreement" />
-            {desktop && (
-                <AgreementWrapper>
-                    {!agreementLoaded ? <SpinnerWrapper><Spinner overlay halfTransparent /></SpinnerWrapper> : null}
-                    <iframe ref={frameRef} src={`https://docs.google.com/gview?embedded=true&url=${encodedUrl}`} height="300" style={{ height: "45vh", width: '100%' }}></iframe>
-                    {/* <DocViewer language={undefined} documents={[{ uri: `${ApiService.url}tenant/agreement/${tenant.id}`, fileType: 'docx' }]} pluginRenderers={DocViewerRenderers} />
-                 <object
-                     className="rules-embed"
-                     data={`${ApiService.url}tenant/agreement/${tenant.id}#toolbar=0&navpanes=0&scrollbar=0`}
-                     type="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-                 /> */}
-                </AgreementWrapper>
-            )}
+
+            <AgreementWrapper>
+                {!agreementLoaded ? <SpinnerWrapper><Spinner overlay halfTransparent /></SpinnerWrapper> : null}
+                {agreementType === 'docx' ? <iframe ref={frameRef} src={`https://docs.google.com/gview?embedded=true&url=${encodedUrl}`} height="300" style={{ height: "45vh", width: '100%' }}></iframe> : null}
+                {/* <DocViewer language={undefined} documents={[{ uri: `${ApiService.url}tenant/agreement/${tenant.id}`, fileType: 'docx' }]} pluginRenderers={DocViewerRenderers} />*/}
+                {agreementType === 'pdf' ?
+                    <object
+                        className="rules-embed"
+                        data={`${ApiService.url}tenant/agreement/${tenant.id}#toolbar=0&navpanes=0&scrollbar=0`}
+                        type="application/pdf"
+                    />
+                    // <Document file={`${ApiService.url}tenant/agreement/${tenant.id}`} onLoadSuccess={({ numPages }) => setTotalPages(numPages)}>
+                    //     {totalPages ? Array(totalPages).fill(1).map((_, index) => index + 1).map(val => <Page pageNumber={val} key={val} />) : null}
+                    // </Document>
+                    : null}
+
+            </AgreementWrapper>
+
             <Button primary blank to={url} text='Kliknij aby otworzyć' />
             <span className="separator" />
             <ScrollPosition />
@@ -312,7 +334,6 @@ const mapStateToProps = (state: ApplicationState) => ({
     user: state.user.details,
     isResignationMarked: state.order.isResignationMarked,
     stockId: state.order.formData.stock,
-    paymentType: state.order.selectedPayment,
 });
 
 const mapDispatchToProps = (dispatch: any) =>

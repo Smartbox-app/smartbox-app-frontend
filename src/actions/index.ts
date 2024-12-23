@@ -12,11 +12,9 @@ import * as stock from './stock';
 import * as stockGroup from './stock-group';
 import * as gate from './gate';
 import * as invitations from './invitations';
-import * as paymentStatus from './payment-status';
 import * as tenant from './tenant';
 
 export {
-  paymentStatus,
   appStatus,
   apiTable,
   auth,

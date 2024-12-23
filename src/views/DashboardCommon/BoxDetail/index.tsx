@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { bindActionCreators } from 'redux';
 import { BoxListRes, BoxMapRes, RentDetailsRes, RentStatus, UserRes } from 'smartbox-types';
 import { connect, useDispatch } from 'react-redux';
-import { boxes } from '../../../../actions';
-import { PageHeader } from '../../../../components/Layout';
-import { ApplicationState } from '../../../../reducers';
-import { dateOnly } from '../../../../utils/format-date';
-import { __ } from '../../../../helpers/i18n';
-import { isAdminOrTenant } from '../../../../utils/role-check';
+import { boxes } from '../../../actions';
+import { PageHeader } from '../../../components/Layout';
+import { ApplicationState } from '../../../reducers';
+import { dateOnly } from '../../../utils/format-date';
+import { __ } from '../../../helpers/i18n';
+import { isAdminOrTenant } from '../../../utils/role-check';
 
 import DescriptionRow from './DescriptionRow';
 import Edit from './Edit';

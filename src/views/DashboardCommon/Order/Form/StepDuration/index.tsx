@@ -65,7 +65,7 @@ const StepDuration = ({
 
     useEffect(() => {
         if (!endDate) {
-            dispatch(setRentEndDate(addDays(startDate, minRentPeriod)));
+            dispatch(setRentEndDate(addDays(startDate, minRentPeriod - 1)));
             return;
         };
         setLoading(true);
@@ -94,11 +94,11 @@ const StepDuration = ({
 
     const setMinDate = (addAmount = 0, end?: boolean) => addDays(end ? startDate : startOfToday(), addAmount);
 
-    const setMaxDateToExtend = () => addDays(new Date(), minRentPeriod);
+    const setMaxDateToExtend = () => addDays(new Date(), minRentPeriod - 1);
 
     const defaultValues = {
         dateStart: addDays(startDate, 0),
-        dateEnd: addDays(startDate, minRentPeriod),
+        dateEnd: addDays(startDate, minRentPeriod - 1),
     };
 
 
@@ -183,7 +183,7 @@ const StepDuration = ({
                         as={DateInput}
                         register={register({ required: true })}
                         label='application.selectEndRentDate'
-                        minDate={setMinDate(minRentPeriod, true)}
+                        minDate={setMinDate(minRentPeriod - 1, true)}
                         onChange={([selected]) => {
                             dispatch(setRentEndDate(selected[0]))
                             // updateFormData({

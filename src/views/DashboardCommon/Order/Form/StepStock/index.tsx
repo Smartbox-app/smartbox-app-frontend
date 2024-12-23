@@ -16,10 +16,11 @@ const StepStock = () => {
     const list = useSelector((state: ApplicationState) => state.stock.list);
     const groupsList = useSelector((state: ApplicationState) => state.stockGroup.list);
     const user = useSelector((state: ApplicationState) => state.user.details!);
+
     useEffect(() => {
         if (!user) return;
 
-        dispatch(order.clearOrderAgreement());
+        dispatch(order.clearOrder());
     }, []);
 
 

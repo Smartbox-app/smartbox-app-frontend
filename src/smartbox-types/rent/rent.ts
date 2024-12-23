@@ -147,6 +147,7 @@ export type MyRentDetails = {
   finishAt: Date;
   size: number;
   stockName: string;
+  stockAddress: string;
   stockId: string;
   boxId: string;
   boxNumber: string;

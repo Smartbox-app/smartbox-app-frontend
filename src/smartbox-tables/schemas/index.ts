@@ -1,4 +1,5 @@
 export * from './users-list.table';
+export * from './users-list-for-admin.table';
 export * from './invitation-list.table';
 export * from './discount.table';
 export * from './story.table';

@@ -82,7 +82,7 @@ export const Addons = ({ stockId }: Props) => {
     useEffect(() => {
         addons.forEach(addon => {
             const defaultVariant = addon.pricing.find(variant => variant.default);
-            if(defaultVariant) {
+            if (defaultVariant) {
                 selectVariant(addon.id, defaultVariant.id, defaultVariant.name);
             }
         })
@@ -122,6 +122,9 @@ export const Addons = ({ stockId }: Props) => {
                     }}
                 />
             </StyledUserFileContainer> : null}
+            {addon.additionalDescription ? <StyledAddonDescription>
+                {addon.additionalDescription}
+            </StyledAddonDescription> : null}
             {(orderAddons[addon.id].selectedVariant && addon.acceptances) ? addon.acceptances.map(acceptance => <div key={acceptance.id}>
                 <CheckBox label={acceptance.text} name={`acceptance_${acceptance.id}`} checked={orderAddons[addon.id].acceptancesStatus[acceptance.id].accepted} handleChange={(checked: boolean) => handleAddonAcceptance(addon.id, acceptance.id, checked)} />
             </div>) : null}

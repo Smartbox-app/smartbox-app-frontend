@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
-import { ReactSVG } from 'react-svg';
 import { bindActionCreators } from 'redux';
-import { AccessControl, Coordinate, RentGate } from 'smartbox-types';
+import { Coordinate, RentGate } from 'smartbox-types';
 import { Button, Spinner } from '../../../../components/Branded';
 import { __ } from '../../../../helpers/i18n';
 import { ApplicationState } from '../../../../reducers';
@@ -12,20 +11,10 @@ import { isUser } from '../../../../utils/role-check';
 import './Gate.scss';
 import { OpenGateByForceModal } from '../../../../components/Common/OpenGateByForceModal';
 import styled from 'styled-components';
-import { colorOrDark } from '../../../../utils/color';
 
 interface Props {
     gate: RentGate;
 }
-
-const StyledGateImageContainer = styled.div`
-.gate-rect-1 {
-    fill: ${({ theme }) => colorOrDark(theme.colors.primary)};
-}
-.gate-rect-2 {
-    fill: ${({ theme }) => colorOrDark(theme.colors.primary)};
-}
-`
 
 const StyledGateContainer = styled.div`
 border-left: 4px solid  ${({ theme }) => theme.colors.primary};
@@ -49,7 +38,6 @@ align-items: center;
 const Gate = ({ gate }: Props) => {
     const dispatch = useDispatch();
     const user = useSelector((state: ApplicationState) => state.user.details!);
-    const startAnimation = useSelector((state: ApplicationState) => state.gate.startAnimation);
     const [loading, setLoading] = useState<boolean>(false);
 
     const openGateByLocation = (position: any) => {
@@ -75,15 +63,7 @@ const Gate = ({ gate }: Props) => {
         }
     };
 
-    useEffect(() => {
-        dispatch(gateActions.gateOpenStartAnimation(false));
-    }, [gate.id])
-
     const getButtonText = () => {
-        if (startAnimation) {
-            return 'application.openingGate';
-        }
-
         return isUser(user.role) ? 'application.openGate' : 'application.openGateStuff';
     };
 
@@ -100,37 +80,32 @@ const Gate = ({ gate }: Props) => {
         }
     }
 
-    const gateOpenningAnimation = (
+    const gateButton = (
         <StyledGateContainer>
             {loading && <Spinner overlay halfTransparent />}
             <StyledGateTitle>{gate.name}</StyledGateTitle>
             {gate.description && <StyledGateDescription><span className='fa fa-info-circle gate-info-icon' /> {gate.description}</StyledGateDescription>}
-            {/* <StyledGateImageContainer>
-                <ReactSVG src={`${startAnimation ? '/assets/images/Group46.svg' : '/assets/images/Group39.svg'}`} />
-            </StyledGateImageContainer> */}
             {gate.controlled && <div className="slide-to-open">
                 <Button
                     text={getButtonText()}
                     type='button'
                     primary
                     click={handleClick}
-                    disabled={(isUser(user.role) ? startAnimation : false)}
                 />
             </div>}
         </StyledGateContainer>
     );
     if (!isUser(user.role)) {
-        return <div className="open-gate-wrapper">{gateOpenningAnimation}</div>;
+        return <div className="open-gate-wrapper">{gateButton}</div>;
     }
     return (
         <div className="open-gate-wrapper">
-            <div className="animation-wrapper">{gateOpenningAnimation}</div>
+            <div className="animation-wrapper">{gateButton}</div>
         </div>
     );
 };
 
 const mapStateToProps = (state: ApplicationState) => ({
-    startAnimation: state.gate.startAnimation,
     user: state.user.details,
 });
 

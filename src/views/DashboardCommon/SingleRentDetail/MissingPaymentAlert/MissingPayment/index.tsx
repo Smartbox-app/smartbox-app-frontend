@@ -54,17 +54,6 @@ const MissingPayment = ({ rent }: Props) => {
         <p className="single-line">
           {__('application.rentFinished')} <strong>{dateOnly(rent.finishAt)}</strong>
         </p>
-        {/* <p className="single-line">
-          {__('application.debtPeriods')} <strong>{countPayPeriods(singleRent.finishAt)}</strong>
-        </p> */}
-      </div>
-      <div className="date-wrapper">
-        <p className="single-line">
-          {__('application.paymentTerm')} <strong>{dateOnly(addDays(new Date(rent.finishAt), 13))}</strong>
-        </p>
-        {/* <p className="single-line">
-          {__('application.debtAmount')} <strong>{formatPrice(calc(singleRent))}</strong>
-        </p> */}
       </div>
       <ButtonsContainer>
         <Button

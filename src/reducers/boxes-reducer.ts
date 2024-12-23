@@ -1,12 +1,10 @@
 import { BoxListItem, RentDetailsRes, RentStatus } from 'smartbox-types';
 
 export type Boxes = {
-  boxesGroup: BoxListItem[] | null;
   singleBoxDetail: RentDetailsRes;
 };
 
 const initialState: Boxes = {
-  boxesGroup: null,
   singleBoxDetail: {
     number: '',
     startAt: new Date(),
@@ -22,11 +20,6 @@ const initialState: Boxes = {
   },
 };
 
-interface FetchBoxStatuses {
-  type: 'FETCH_BOX_STATUSES_SUCCESS';
-  payload: BoxListItem[];
-}
-
 interface FetchSingleBoxDetails {
   type: 'FETCH_SINGLE_BOX_DETAILS_SUCCESS';
   payload: RentDetailsRes;
@@ -36,16 +29,10 @@ interface CleanUp {
   type: 'CLEAN_SINGLE_BOX_DETAILS_SUCCESS';
 }
 
-type Action = FetchBoxStatuses | FetchSingleBoxDetails | CleanUp;
+type Action =  FetchSingleBoxDetails | CleanUp;
 
 export default (state: Boxes = initialState, action: Action): any => {
   switch (action.type) {
-    case 'FETCH_BOX_STATUSES_SUCCESS': {
-      return {
-        ...state,
-        boxesGroup: action.payload,
-      };
-    }
 
     case 'FETCH_SINGLE_BOX_DETAILS_SUCCESS': {
       return {

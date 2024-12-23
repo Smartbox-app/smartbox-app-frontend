@@ -4,7 +4,7 @@ import ApiService from '../../../../../../../services/api-service';
 import styled, { css } from 'styled-components';
 import { Rnd } from 'react-rnd';
 import { useDispatch } from 'react-redux';
-import BoxDetail from '../../../../../../../views/DashboardCommon/BoxMapManagement/BoxDetail';
+import BoxDetail from '../../../../../BoxDetail';
 import { showModal } from '../../../../../../../actions/modal';
 import { colorOrDark } from '../../../../../../../utils/color';
 

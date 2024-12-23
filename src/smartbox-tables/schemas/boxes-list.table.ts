@@ -40,16 +40,6 @@ export const boxesList: TableSchema = {
       sortable: true,
       defaultSort: false,
       type: FieldType.Text,
-    },
-    {
-      name: 'Aktywny',
-      field: 'active',
-      mobile: true,
-      searchable: true,
-      sortable: true,
-      defaultSort: false,
-      type: FieldType.Boolean,
-    },
-  
+    }  
   ],
 };

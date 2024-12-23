@@ -325,6 +325,18 @@
             "71": {
                 "text": "Osiągnięto maksymalną ilość aktywnych skrytek!",
                 "__type_alias_do_not_touch": "ApiErrorCode.ActiveBoxesLimitReached"
+            },
+            "72": {
+                "text": "Nie można dezaktywować skrytki która nie jest wolna!",
+                "__type_alias_do_not_touch": "ApiErrorCode.CanNotSetNotEmptyBoxAsInactive"
+            },
+            "73": {
+                "text": "Brak wolnych skrytek!",
+                "__type_alias_do_not_touch": "ApiErrorCode.NoMoreAvailableBoxes"
+            },
+            "74": {
+                "text": "Nie można usunąć uzytkownika który posiada aktywny najem!",
+                "__type_alias_do_not_touch": "ApiErrorCode.CanNotDeleteUserWithRent"
             }
         }
     }

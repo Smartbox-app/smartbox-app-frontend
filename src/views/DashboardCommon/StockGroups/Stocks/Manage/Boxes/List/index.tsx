@@ -16,7 +16,7 @@ import { refreshApiTableData } from '../../../../../../../actions/api-table';
 import { useParams } from 'react-router';
 import { Edit } from '../Edit';
 import { ApplicationState } from '../../../../../../../reducers';
-import BoxDetail from '../../../../../../../views/DashboardCommon/BoxMapManagement/BoxDetail';
+import BoxDetail from '../../../../../BoxDetail';
 import { BoxStatus } from './BoxStatus';
 
 const List = () => {

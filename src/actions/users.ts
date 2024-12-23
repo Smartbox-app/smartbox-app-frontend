@@ -3,6 +3,22 @@ import ApiService from '../services/api-service';
 import { refreshApiTableData } from './api-table';
 import { successNotification } from './notifications';
 
+export const enableUser = (userId: string) => async (dispatch: any) => {
+  await ApiService.patch(
+    dispatch,
+    'ENABLE_USER_SUCCESS',
+    'ENABLE_USER_FAILED',
+    () => {
+      dispatch(successNotification('notification.userUnblocked'));
+      dispatch(refreshApiTableData());
+    },
+    null,
+    `user/status/${userId}/${UserStatus.active}`,
+    'LOADING',
+    {},
+  );
+};
+
 export const blockUser = (userId: string) => async (dispatch: any) => {
   await ApiService.patch(
     dispatch,
@@ -19,19 +35,33 @@ export const blockUser = (userId: string) => async (dispatch: any) => {
   );
 };
 
-export const enableUser = (userId: string) => async (dispatch: any) => {
-  await ApiService.patch(
+export const deleteUser = (userId: string) => async (dispatch: any) => {
+  await ApiService.delete(
     dispatch,
-    'ENABLE_USER_SUCCESS',
-    'ENABLE_USER_FAILED',
+    'DELETE_USER_SUCCESS',
+    'DELETE_USER_FAILED',
     () => {
-      dispatch(successNotification('notification.userUnblocked'));
+      dispatch(successNotification('notification.userDeleted'));
       dispatch(refreshApiTableData());
     },
     null,
-    `user/status/${userId}/${UserStatus.active}`,
+    `user/${userId}`,
     'LOADING',
-    {},
+  );
+};
+
+export const deleteUserByForce = (userId: string) => async (dispatch: any) => {
+  await ApiService.delete(
+    dispatch,
+    'DELETE_USER_BY_FORCE_SUCCESS',
+    'DELETE_USER_BY_FORCE_FAILED',
+    () => {
+      dispatch(successNotification('notification.userDeleted'));
+      dispatch(refreshApiTableData());
+    },
+    null,
+    `user/force/${userId}`,
+    'LOADING',
   );
 };
 

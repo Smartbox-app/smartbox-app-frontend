@@ -45,6 +45,7 @@ export interface QueryBuilderBox {
   rentId: string | null;
   pricing: SinglePricing[];
   ksmIdentifier: string;
+  active: boolean;
 }
 
 export interface QueryBuilderMapBox extends QueryBuilderBox {

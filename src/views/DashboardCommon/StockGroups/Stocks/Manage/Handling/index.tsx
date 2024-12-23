@@ -6,7 +6,7 @@ import { Section, SimpleHeader } from '../../../../../../components/Layout';
 import { Spinner } from '../../../../../../components/Branded';
 import { MapView } from '../../../../MapView';
 import { useDispatch } from 'react-redux';
-import BoxDetail from '../../../../../../views/DashboardCommon/BoxMapManagement/BoxDetail';
+import BoxDetail from '../../../../BoxDetail';
 import { showModal } from '../../../../../../actions/modal';
 
 const Handling = () => {

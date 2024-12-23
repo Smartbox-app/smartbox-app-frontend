@@ -69,7 +69,7 @@ export const logout = () => async (dispatch: any) => {
       dispatch(notifications.successNotification('notification.logOutSuccess'));
       dispatch({ type: 'REFRESH_API_TABLE' });
       dispatch({ type: 'REFRESH_API_GRID' });
-      dispatch(order.clearOrderAgreement());
+      dispatch(order.clearOrder());
     },
     null,
     'auth/logout',

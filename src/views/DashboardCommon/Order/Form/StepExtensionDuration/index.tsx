@@ -19,7 +19,7 @@ import Price from '../Common/Price';
 import './StepDuration.scss';
 
 import styled from 'styled-components';
-import { calculateAddonPrice, calculatePriceForRent, clearAddonPrice, setRentEndDate, setRentStartDate } from '../../../../../actions/order';
+import { calculateAddonPrice, calculatePriceForRent, clearAddonPrice, setOrderStock, setRentEndDate, setRentStartDate } from '../../../../../actions/order';
 import { Addons } from '../Common/Addons';
 import ApiService from '../../../../../services/api-service';
 import { getColorForBackground } from '../../../../../utils/color';
@@ -81,7 +81,8 @@ const StepExtensionDuration = ({
     useEffect(() => {
         if (!rent) return;
         dispatch(setRentStartDate(addDays(startOfDay(new Date(rent.finishAt)), 1)));
-        dispatch(setRentEndDate(addDays(startOfDay(new Date(rent.finishAt)), 1 + minRentPeriod)));
+        dispatch(setRentEndDate(addDays(startOfDay(new Date(rent.finishAt)), minRentPeriod)));
+        dispatch(setOrderStock(rent.stockId, rent.stockName, rent.stockAddress))
     }, [rent])
 
     useEffect(() => {
@@ -96,7 +97,7 @@ const StepExtensionDuration = ({
     }, [orderAddonsId])
 
     const calculateAllAddons = () => {
-        if(!endDate) return;
+        if (!endDate) return;
         Object.keys(orderAddons).forEach(addonId => {
             const addon = orderAddons[addonId];
             if (addon.selectedVariant) dispatch(calculateAddonPrice(addonId, startDate, endDate, addon.selectedVariant));
@@ -113,7 +114,7 @@ const StepExtensionDuration = ({
 
     const setMaxDateToExtend = () => {
         if (!rent) return;
-        return addDays(endOfDay(new Date(rent.finishAt)), minRentPeriod);
+        return addDays(endOfDay(new Date(rent.finishAt)), minRentPeriod - 1);
     }
 
     useEffect(() => {
@@ -172,7 +173,7 @@ const StepExtensionDuration = ({
                     minDate={setMinDate(minRentPeriod, true)}
                     value={endDate || undefined}
                     onChange={([selected]) => {
-    
+
                         dispatch(setRentEndDate(selected))
                         // updateFormData({
                         //     durationInDays: differenceInCalendarDays(selected[0], formData.dateStart),

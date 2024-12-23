@@ -5,8 +5,6 @@ import { successNotification } from './notifications';
 import { modal } from '.';
 import { OpenGateByForceModal } from '../components/Common/OpenGateByForceModal';
 
-export const gateOpenStartAnimation = (open: boolean = true) => ({ type: 'GATE_OPEN_START_ANIMATION', payload: open });
-
 export const askGateToOpen = (gateId: string, geo: Coordinate) => async (dispatch: any) => {
     await ApiService.patch(
         dispatch,
@@ -14,7 +12,6 @@ export const askGateToOpen = (gateId: string, geo: Coordinate) => async (dispatc
         'ASK_GATE_TO_OPEN_FAILED',
         () => {
             dispatch(successNotification("notification.gateOpening"));
-            dispatch(gateOpenStartAnimation());
         },
         (result) => {
             if (result.error_code === ApiErrorCode.UAreTooFarAway) {
@@ -38,7 +35,6 @@ export const askGateToOpenByForce = (gateId: string, geo: Coordinate) => async (
         'ASK_GATE_TO_OPEN_FAILED',
         () => {
             dispatch(successNotification("notification.gateOpening"));
-            dispatch(gateOpenStartAnimation());
         },
         null,
         `stock/open-gate-by-force/${gateId}/${geo.lat}/${geo.lon}`,
@@ -53,7 +49,6 @@ export const askGateToOpenByStaff = (gateId: string) => async (dispatch: any) =>
         'ASK_GATE_TO_OPEN_FAILED',
         () => {
             dispatch(successNotification("notification.gateRemoteOpening"));
-            dispatch(gateOpenStartAnimation());
         },
         () => {
             dispatch(successNotification("notification.gateRemoteOpeningError"));

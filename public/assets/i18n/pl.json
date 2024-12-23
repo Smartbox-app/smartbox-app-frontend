@@ -42,6 +42,7 @@
             "default": "Domyślnie",
             "end": "Zakończ",
             "delete": "Usuń",
+            "deleteByForce": "Wymuś usunięcie",
             "manage": "Zarządzaj",
             "move": "Przenieś",
             "contact": "Kontakt",
@@ -53,6 +54,7 @@
             "search": "Wyszukiwanie",
             "chooseFieldToSearch": "Wybierz pole, które chcesz przeszukać",
             "block": "Blokuj",
+            "activate": "Aktywuj",
             "actions": "Akcje",
             "userAssigment": "Przypisanie",
             "changeUserAssigment": "Zmień przypisanie",
@@ -70,6 +72,8 @@
             "lackOfThisSizeStorage": "Brak magazynu tej wielkości",
             "workers": "Pracownicy",
             "users": "Użytkownicy",
+            "deleteUserText": "Czy na pewno chcesz usunąć użytkownika? Użytkownik posiadający aktywne wynajmy nie może zostać usunięty.",
+            "deleteUserByForceText": "Czy na pewno chcesz usunąć użytkownika? Jeżeli użytkownik posiada jakieś aktywne wynajmy - zostaną automatycznie zakończone i użytkownik zostanie usunięty.",
             "tenants": "Franczyzobiorcy",
             "boxes": "Mini magazyny",
             "gate": "Brama",
@@ -420,6 +424,7 @@
             "addonName": "Nazwa",
             "addonSlug": "Identyfikator",
             "addonDescription": "Opis",
+            "addonAdditionalDescription": "Dodatkowy opis",
             "addonRequired": "Dodatek wymagany przy wynajmie",
             "addonFile": "Dodatkowy plik",
             "addonFileText": "Opis pliku",
@@ -527,7 +532,8 @@
             "gateUpdatedCorrectly": "Zaktualizowano bramę",
             "accountHasBeenActivated": "Konto zostało aktywowane",
             "stockGroupAddedCorrectly": "Dodano nowy plac",
-            "stockGroupUpdatedCorrectly": "Zaktualizowano plac"
+            "stockGroupUpdatedCorrectly": "Zaktualizowano plac",
+            "userDeleted": "Użytkownik usunięty"
         },
         "templates": {
             "user_blocked_email": "Użytkownik zablokowany",

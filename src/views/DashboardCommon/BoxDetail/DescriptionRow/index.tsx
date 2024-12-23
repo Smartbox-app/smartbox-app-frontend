@@ -1,7 +1,7 @@
 import React from 'react';
-import { __ } from '../../../../../helpers/i18n';
+import { __ } from '../../../../helpers/i18n';
 import styled from 'styled-components';
-import { colorOrDark } from '../../../../../utils/color';
+import { colorOrDark } from '../../../../utils/color';
 
 interface Props {
   children: React.ReactNode;

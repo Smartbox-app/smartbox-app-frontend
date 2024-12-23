@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { FieldType, TableSchema, TableSchemaField, usersList } from 'smartbox-tables';
-import { IUser, UserListRes, UserRes, UserStatus, UserType } from 'smartbox-types';
-import { ApiTable } from '../../../../components/Common';
+import { FieldType, TableSchema, TableSchemaField, usersList, usersListForAdmin } from 'smartbox-tables';
+import { IUser, UserListRes, UserRes, UserRole, UserStatus, UserType } from 'smartbox-types';
+import { ApiTable, ConfirmModal } from '../../../../components/Common';
 import { Button } from '../../../../components/Branded';
 import { ButtonsContainer, PageHeader, Section } from '../../../../components/Layout';
 import { __ } from '../../../../helpers/i18n';
@@ -19,6 +19,8 @@ interface Props {
     showModal: (content: React.ReactNode) => void;
     enableUser: (userId: string) => void;
     blockUser: (userId: string) => void;
+    deleteUser: (userId: string) => void;
+    deleteUserByForce: (userId: string) => void;
 }
 
 class List extends React.Component<Props> {
@@ -26,7 +28,7 @@ class List extends React.Component<Props> {
 
     constructor(props: Props) {
         super(props);
-        this.scheme = new InteractiveTableSchema(usersList)
+        this.scheme = new InteractiveTableSchema(this.props.user.role === UserRole.admin ? usersListForAdmin : usersList)
             .modifyFieldStatic('status', {
                 name: __('application.state'),
                 field: 'status',
@@ -40,23 +42,56 @@ class List extends React.Component<Props> {
                 name: __('application.actions'),
                 field: 'actions',
                 mobile: true,
-                buttons: [
-                    {
-                        name: 'application.userDetails',
-                        type: 'primary',
-                        click: (data: UserListRes) => this.props.showModal(<UserDetail userId={data.id} userData={data} />),
-                    },
-                    {
-                        name: 'application.edit',
-                        type: 'secondary',
-                        click: (data: UserListRes) => this.props.showModal(<UserEdit userId={data.id} />),
-                    },
-                ],
+                type: FieldType.Custom,
+                customRender: (value, field, userData: UserListRes) => {
+                    return <>
+                        <Button primary text='application.userDetails' click={(data: UserListRes) => this.props.showModal(<UserDetail userId={data.id} userData={userData} />)} />
+                        <Button secondary text='application.edit' click={(data: UserListRes) => this.props.showModal(<UserEdit userId={userData.id} />)} />
+                        <Button danger text='application.delete' click={(data: UserListRes) => this.confirmUserDelete(userData.id)} />
+                        {this.props.user.role === UserRole.admin ? <Button danger text='application.deleteByForce' click={(data: UserListRes) => this.confirmUserDeleteByForce(userData.id)} /> : null}
+                    </>
+                }
+                // buttons: [
+                //     {
+                //         name: 'application.userDetails',
+                //         type: 'primary',
+                //         click: (data: UserListRes) => this.props.showModal(<UserDetail userId={data.id} userData={data} />),
+                //     },
+                //     {
+                //         name: 'application.edit',
+                //         type: 'secondary',
+                //         click: (data: UserListRes) => this.props.showModal(<UserEdit userId={data.id} />),
+                //     },
+                // ],
             });
     }
 
+    private confirmUserDelete = (userId: string) => {
+        this.props.showModal(<ConfirmModal
+            approveButtonText='application.delete'
+            mainText='application.deleteUserText'
+            approveAction={() => this.props.deleteUser(userId)}
+        />)
+    }
+
+    private confirmUserDeleteByForce = (userId: string) => {
+        this.props.showModal(<ConfirmModal
+            approveButtonText='application.delete'
+            mainText='application.deleteUserText'
+            approveAction={() => this.props.deleteUserByForce(userId)}
+        />)
+    }
+
     private getLockButton = (value: boolean, field: TableSchemaField, userData: IUser) => {
-        if (userData.status === UserStatus.blocked) {
+        if ([UserStatus.blocked, UserStatus.preActive].includes(userData.status)) {
+            return <Button text='application.active' success click={() => this.props.enableUser(userData.id)} />;
+        } else {
+            return <Button text='application.block' danger click={() => this.props.blockUser(userData.id)} />;
+        }
+    };
+
+    private getDeleteButton = (value: boolean, field: TableSchemaField, userData: IUser) => {
+        if ([UserStatus.blocked, UserStatus.preActive].includes(userData.status)) {
             return <Button text='application.active' success click={() => this.props.enableUser(userData.id)} />;
         } else {
             return <Button text='application.block' danger click={() => this.props.blockUser(userData.id)} />;

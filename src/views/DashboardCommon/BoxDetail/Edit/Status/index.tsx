@@ -4,18 +4,18 @@ import { connect, useDispatch } from 'react-redux';
 import ReactCreatableSelect from 'react-select/creatable';
 import { bindActionCreators } from 'redux';
 import { ChangeStatusReq, StockList } from 'smartbox-types';
-import { boxes, modal, notifications, stock } from '../../../../../../actions';
-import { FormContainer, ButtonsContainer } from '../../../../../../components/Layout';
-import { Alert } from '../../../../../../components/Common';
-import { Button, Spinner } from '../../../../../../components/Branded';
-import { ApplicationState } from '../../../../../../reducers';
-import ApiService from '../../../../../../services/api-service';
-import { formOnTranslateString } from '../../../../../../utils/trans-form';
+import { boxes, modal, notifications, stock } from '../../../../../actions';
+import { FormContainer, ButtonsContainer } from '../../../../../components/Layout';
+import { Alert } from '../../../../../components/Common';
+import { Button, Spinner } from '../../../../../components/Branded';
+import { ApplicationState } from '../../../../../reducers';
+import ApiService from '../../../../../services/api-service';
+import { formOnTranslateString } from '../../../../../utils/trans-form';
 
 import './Status.scss';
-import { ReactSelectOverride } from '../../../../../../components/Common/ReactSelectOverride';
-import { refreshApiTableData } from '../../../../../../actions/api-table';
-import { mapFields } from '../../../../../../utils/fields-mapper';
+import { ReactSelectOverride } from '../../../../../components/Common/ReactSelectOverride';
+import { refreshApiTableData } from '../../../../../actions/api-table';
+import { mapFields } from '../../../../../utils/fields-mapper';
 
 interface Props {
   selectedBoxId: string;

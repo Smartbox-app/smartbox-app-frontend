@@ -5,7 +5,6 @@ import {
   CalculatedAddonPriceRes,
   CalculatedPriceRes,
   PaymentStatus,
-  PaymentType,
   SingleAcceptance,
 } from 'smartbox-types';
 import { FormType } from '../types/order-form';
@@ -68,10 +67,6 @@ export type OrderState = {
   paymentSuccess: boolean;
   isAgreementAccepted: boolean;
   isResignationMarked: boolean;
-  blikPaymentCompletedSuccessfully: boolean;
-  selectedPayment: PaymentType;
-  selectedPaymentMethodDetail: PaymentMethodDetail;
-
 };
 
 interface SetOrderStock {
@@ -179,18 +174,9 @@ interface FormResignation {
   type: 'FORM_RESIGNATION_MARKED_SUCCESS';
 }
 
-interface PickPaymentMethod {
-  type: 'PICK_PAYMENT_TYPE_SUCCESS';
-  payload: PaymentMethodDetail;
-}
-
 interface CheckPaymentStatus {
   type: 'CHECK_PAYMENT_STATUS_SUCCESS';
   payload: boolean;
-}
-
-interface BlikPaymentFinishSuccess {
-  type: 'BLIK_PAYMENT_FINISH_SUCCESS';
 }
 
 interface ClearPaymentMethodSuccess {
@@ -215,9 +201,6 @@ interface ClearOrder {
   type: 'CLEAR_ORDER';
 }
 
-interface ClearOrderFormAgreementSuccess {
-  type: 'CLEAR_ORDER_FORM_AGREEMENT_SUCCESS';
-}
 
 type Action =
   // refactored
@@ -241,15 +224,12 @@ type Action =
   | SentRentBoxRequestSuccess
   | FormReaded
   | FormResignation
-  | PickPaymentMethod
   | CheckPaymentStatus
   | ClearPaymentMethodSuccess
   | SentExtendRentRequestSuccess
-  | ClearOrderFormAgreementSuccess
   | ClearOrder
   | FetchAddons
   | ResetDiscountCode
-  | BlikPaymentFinishSuccess
 
 
 const initialState: OrderState = {
@@ -296,15 +276,6 @@ const initialState: OrderState = {
   discountList: [{ text: __('application.disposableDiscount5'), value: 5 }],
   isAgreementAccepted: false,
   isResignationMarked: false,
-  selectedPayment: PaymentType.card,
-  selectedPaymentMethodDetail: {
-    id: '',
-    name: '',
-    img: '',
-    banks: '',
-    main_bank_id: '',
-  },
-  blikPaymentCompletedSuccessfully: false,
 };
 
 export default (state: OrderState = initialState, action: Action): OrderState => {
@@ -552,67 +523,15 @@ export default (state: OrderState = initialState, action: Action): OrderState =>
       };
     }
 
-
-    case 'PICK_PAYMENT_TYPE_SUCCESS':
-      return {
-        ...state,
-        // @TODO fix
-        selectedPayment: action.payload as any,
-      };
-
     case 'CLEAR_PAYMENT_METHOD_SUCCESS':
       return {
         ...state,
-        selectedPayment: PaymentType.card,
         isResignationMarked: false,
-        selectedPaymentMethodDetail: {
-          id: '',
-          name: '',
-          img: '',
-          banks: '',
-          main_bank_id: '',
-        },
-      };
-
-    case 'BLIK_PAYMENT_FINISH_SUCCESS':
-      return {
-        ...state,
-        blikPaymentCompletedSuccessfully: true,
       };
 
     case 'CLEAR_ORDER': {
       return initialState;
     }
-
-    case 'CLEAR_ORDER_FORM_AGREEMENT_SUCCESS':
-      return {
-        ...state,
-        isAgreementAccepted: true,
-        isResignationMarked: false,
-        paymentId: '',
-        paymentSuccess: false,
-        selectedPayment: PaymentType.card,
-        formData: {
-          durationInDays: 7,
-          discount: 0,
-          size: state.formData.size,
-          isFirstRent: true,
-          discountCode: '',
-          card: {
-            discount: 0,
-            durationInWeeks: 0,
-          },
-          firstName: '',
-          lastName: '',
-          street: '',
-          city: '',
-          postCode: '',
-          birthDate: undefined,
-          phone: '',
-          mailToSendInvoice: '',
-          stock: ''
-        },
-      };
 
     default:
       return state;

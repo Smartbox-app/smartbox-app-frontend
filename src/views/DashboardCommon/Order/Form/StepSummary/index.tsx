@@ -29,8 +29,6 @@ import { useTenant } from '../../../../../hooks/useTenant';
 
 interface Props {
     formData: FormType;
-    selectedPaymentMethod: any;
-    selectedPayment: PaymentType;
     updateFormData: (data: Partial<FormType>) => void;
     fetchMyData: () => void;
     showModal: (content: React.ReactNode) => void;
@@ -41,11 +39,12 @@ const StepSummary = ({
     formData,
     fetchMyData,
     updateFormData,
-    selectedPayment,
 }: Props) => {
     const dispatch = useDispatch();
     const [invoiceNeeded, setInvoiceNeeded] = useState(false);
     const { calculatedPrice, addons, orderAddons, loadingPrice, discountCode, stockId, boxGroupId, startDate, endDate } = useSelector((state: ApplicationState) => state.order);
+    console.log('STOCKI0', stockId);
+
     const user = useSelector((state: ApplicationState) => state.user.details!);
     const { step, rentId } = useParams<{ step: string, rentId: string }>();
     const isFirstRent = user && !user.rentCount;
@@ -88,7 +87,7 @@ const StepSummary = ({
     }, [discountCode])
 
     const defaultValues = {
-        paymentType: `${selectedPayment || PaymentType.card}`,
+        paymentType: PaymentType.card,
         firstName: user?.firstName || '',
         lastName: user?.lastName || '',
         street: user?.street || '',
@@ -117,7 +116,7 @@ const StepSummary = ({
             watch().mailToSendInvoice !== '' &&
             watch().phone !== ''
         ) {
-            if(tenant?.birthDateNecessary && !formData.birthDate) return true;
+            if (tenant?.birthDateNecessary && !formData.birthDate) return true;
             if (!errors.mailToSendInvoice && !errors.postCode) {
                 return false;
             }
@@ -148,49 +147,12 @@ const StepSummary = ({
         history.push(`/${UserService.getSlugByRole(user.role)}/order/step/agreement/${rentId || ''}`);
     };
 
-    const paymentChangeOnly = (e: any): boolean => {
-        switch (e.target.id) {
-            case 'paymentTypeBlik': {
-                return true;
-            }
-            case 'paymentTypeCard': {
-                return true;
-            }
-            case 'paymentTypeBank': {
-                return true;
-            }
-            default:
-                return false;
-        }
-    };
-
-    const handleChange = (e: any) => {
-        // if (isFirstRent) {
-        //     if (paymentChangeOnly(e)) {
-        //         if (Number(watch().paymentType) !== PaymentType.card) {
-        //             if (countedPrice?.name === 'firstRentFreePricing') {
-        //                 successNotification('notification.firstWeekForOneOnlyCard');
-        //                 updateFormData({
-        //                     isFirstRent: false,
-        //                 });
-        //             }
-        //         } else {
-        //             updateFormData({
-        //                 isFirstRent: true,
-        //             });
-        //             successNotification('notification.firstWeekForOneActive');
-        //         }
-        //     }
-        // }
-    };
-
     return (
-        <form onSubmit={handleSubmit(onSubmit)} className="form-step-two" onChange={handleChange}>
+        <form onSubmit={handleSubmit(onSubmit)} className="form-step-two">
             {loadingPrice && <Spinner overlay halfTransparent />}
             <DiscountsList stockId={stockId} />
             <FormHeader title="application.orderSummary" />
             {endDate && <SummaryTable dateStart={startDate} dateEnd={endDate} countedPrice={calculatedPrice} addons={addons} orderAddons={orderAddons} />}
-            {/* {calculatedPrice > 0 && <PaymentMethods register={register} />} */}
 
             <TenantDetailsForm register={register} control={control} errors={errors} disabled={!isFirstRent} />
             {isFirstRent && (
@@ -223,8 +185,6 @@ const StepSummary = ({
 
 const mapStateToProps = (state: ApplicationState) => ({
     formData: state.order.formData,
-    selectedPaymentMethod: state.order.selectedPaymentMethodDetail,
-    selectedPayment: state.order.selectedPayment,
 });
 
 const mapDispatchToProps = (dispatch: any) =>

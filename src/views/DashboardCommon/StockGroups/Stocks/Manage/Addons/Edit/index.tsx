@@ -50,6 +50,7 @@ const Edit = ({ id, stockId }: Props) => {
                     formData.append('slug', values.slug);
                     formData.append('tax', values.tax);
                     formData.append('description', values.description);
+                    formData.append('additionalDescription', values.additionalDescription);
                     formData.append('required', values.required.toString());
                     formData.append('fileText', values.fileText || '');
                     formData.append('userFileAllowed', values.userFileAllowed.toString());
