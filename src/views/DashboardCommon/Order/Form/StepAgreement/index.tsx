@@ -6,7 +6,7 @@ import "@cyntler/react-doc-viewer/dist/index.css";
 
 import { bindActionCreators } from 'redux';
 import { connect, useSelector } from 'react-redux';
-import { RentBoxReq, UserRole, UserRes, ExtendRentalReq, OrderAddons } from 'smartbox-types';
+import { RentBoxReq, UserRole, UserRes, ExtendRentalReq, OrderAddons, RentPaymentType } from 'smartbox-types';
 import { PaymentType } from 'smartbox-types';
 import { Alert } from '../../../../../components/Common';
 import { Button, Spinner } from '../../../../../components/Branded';
@@ -164,6 +164,7 @@ const StepSummary = ({
             companyCity: formData.companyCity || '',
             companyPostCode: formData.companyPostCode || '',
             nip: formData.nip || '',
+            rentPaymentType: order.rentPaymentType || RentPaymentType.InAdvance,
             orderAddons: getAddonsWithCorrectPrice(order.orderAddons, tenant!.tax)
         };
 
@@ -173,8 +174,6 @@ const StepSummary = ({
 
         const dataCollectionExtendRent: ExtendRentalReq = {
             ...commonCollection,
-            isPaySavedCard: false,
-            type: paymentType,
         };
 
         const dataCollectionRent: RentBoxReq = {
@@ -182,7 +181,6 @@ const StepSummary = ({
             startAt: order.startDate,
             stockId: order.stockId,
             boxGroupId: order.boxGroupId,
-            type: paymentType,
         };
 
 

@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import { connect, useDispatch, useSelector } from 'react-redux';
 
 import { addDays, differenceInDays, endOfDay, startOfDay, startOfToday } from 'date-fns';
-import { AddonUserFileRequirementType, MyRentList, UserRes } from 'smartbox-types';
+import { AddonUserFileRequirementType, IStock, MyRentList, RentPaymentType, StockPaymentType, UserRes } from 'smartbox-types';
 import { DateInput } from '../../../../../components/Common';
 import { Button, Spinner } from '../../../../../components/Branded';
 import { order } from '../../../../../actions';
@@ -19,9 +19,11 @@ import Price from '../Common/Price';
 import './StepDuration.scss';
 
 import styled from 'styled-components';
-import { calculateAddonPrice, calculatePrice, clearAddonPrice, setRentEndDate, setRentStartDate } from '../../../../../actions/order';
+import { calculateAddonPrice, calculatePrice, clearAddonPrice, setRentEndDate, setRentPaymentType, setRentStartDate } from '../../../../../actions/order';
 import { Addons } from '../Common/Addons';
 import { getColorForBackground } from '../../../../../utils/color';
+import { PaymentType } from '../Common/PaymentType';
+import ApiService from '../../../../../services/api-service';
 
 const StyledCalendarPicker = styled.div`
 margin: 0 -10px;
@@ -58,9 +60,15 @@ const StepDuration = ({
     const minRentPeriod = useSelector((state: ApplicationState) => state.order.minRentPeriod);
     // box groupId is used directly only when new rent is created
     const boxGroupId = useSelector((state: ApplicationState) => state.order.boxGroupId);
-    const { stockId, startDate, endDate, loadingPrice, orderAddons, orderAddonsId, calculatedPrice } = useSelector((state: ApplicationState) => state.order);
+    const { stockId, startDate, endDate, loadingPrice, orderAddons, orderAddonsId, calculatedPrice, rentPaymentType } = useSelector((state: ApplicationState) => state.order);
+    const [stock, setStock] = useState<IStock>();
     const [loading, setLoading] = useState<boolean>(false);
 
+    const getStock = async () => {
+        await ApiService.callFetch('GET', `stock/${stockId}`, (res: IStock) => {
+            setStock(res);
+        })
+    }
 
 
     useEffect(() => {
@@ -69,6 +77,7 @@ const StepDuration = ({
             return;
         };
         setLoading(true);
+        getStock();
 
         const startOfStart = startOfDay(startDate);
         const endOfEnd = endOfDay(endDate);
@@ -81,6 +90,25 @@ const StepDuration = ({
     useEffect(() => {
         calculateAllAddons();
     }, [orderAddonsId])
+
+    useEffect(() => {
+        if (!stock || rentPaymentType) return;
+
+        switch (stock.clientPaymentTypeConfig) {
+            case StockPaymentType.InAdvance: {
+                dispatch(setRentPaymentType(RentPaymentType.InAdvance));
+                break;
+            }
+            case StockPaymentType.Installments: {
+                dispatch(setRentPaymentType(RentPaymentType.Installments));
+                break;
+            }
+            default: {
+                dispatch(setRentPaymentType(RentPaymentType.InAdvance))
+                break;
+            }
+        }
+    }, [stock])
 
     const calculateAllAddons = () => {
         if (!endDate) return;
@@ -105,27 +133,6 @@ const StepDuration = ({
     useEffect(() => {
         if (!user) return;
         clearPaymentDetails();
-        // const discount = stocks.find(stock => stock.id === formData.stock)?.discount;
-
-        // @TODO: handle
-        // if (match.params.rentId) {
-        //     updateFormData({
-        //         durationInDays: formData.durationInDays,
-        //         dateStart: setMinDate(),
-        //         dateEnd: setMinDate(formData.durationInDays),
-        //         size: rent.size.toString(),
-        //         isFirstRent: firstRentChecker(user),
-        //         discount: discount,
-        //     });
-        // } else {
-        //     updateFormData({
-        //         durationInDays: formData.durationInDays,
-        //         dateStart: setMinDate(),
-        //         dateEnd: setMinDate(formData.durationInDays),
-        //         isFirstRent: firstRentChecker(user),
-        //         discount: discount,
-        //     });
-        // }
     }, []);
 
     const { register, control } = useForm({ defaultValues });
@@ -198,10 +205,11 @@ const StepDuration = ({
 
                 <Addons stockId={stockId} />
 
+                {stock ? <PaymentType stock={stock} /> : null}
                 <Price />
                 <ButtonsContainer max>
                     <Button outline text='application.back' to={`/${UserService.getSlugByRole(user.role)}/order/step/stock`} />
-                    <Button to={`/${UserService.getSlugByRole(user.role)}/order/step/summary`} primary text='application.next' disabled={!allRequiredAddonsSelected || !endDate || !calculatedPrice.value} />
+                    <Button to={`/${UserService.getSlugByRole(user.role)}/order/step/summary`} primary text='application.next' disabled={!allRequiredAddonsSelected || !stock || !endDate || !calculatedPrice.value} />
                 </ButtonsContainer>
             </form>
         </FormContext>

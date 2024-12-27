@@ -486,7 +486,11 @@
             "colorOutOfService": "Kolor dla magazynu wyłączonego z użytku",
             "storeId": "StoreID - Identyfikator sklepu dla systemu płatności",
             "sharedSecret": "SharedSecret - Unikalny klucz dla systemu płatności",
-            "templateImage": "Grafika w wiadomości"
+            "templateImage": "Grafika w wiadomości",
+            "paymentType": "Sposób płatności",
+            "choosePaymentType": "Wybierz sposób płatności",
+            "paymentInAdvance": "Zapłata za cały okres z góry",
+            "paymentInstallments": "Płatność podzielona na miesięczne okresy"
         },
         "settings": {
             "tax": "Stawka VAT",

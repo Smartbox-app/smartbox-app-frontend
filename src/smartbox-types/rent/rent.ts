@@ -1,7 +1,7 @@
-import { RentDescription, RentStatus } from './rent-entity';
+import { RentDescription, RentPaymentType, RentStatus } from './rent-entity';
 import { BaseResponse } from '../base/baseRes';
 import { Prop } from '../store/prop.decorator';
-import { PaymentType } from '../payment';
+import { CompanyData, PaymentType } from '../payment';
 import { AcceptanceStatuses, SingleAcceptance } from '../addon';
 import { AccessControl } from '../stock-group';
 
@@ -42,7 +42,7 @@ export interface RentBoxReq {
   companyCity: string;
   companyPostCode: string;
   nip: string;
-  type: PaymentType
+  rentPaymentType: RentPaymentType;
 }
 
 
@@ -62,10 +62,9 @@ export interface ExtendRentalReq {
   nip?: string;
   finishAt: Date;
   cost: number;
-  isPaySavedCard: Boolean;
   orderAddons: OrderAddons;
   discountCode: string;
-  type: PaymentType
+  rentPaymentType: RentPaymentType;
 }
 
 export class BoxListItem extends BaseResponse {
@@ -175,13 +174,21 @@ export interface StockChange extends Change {
   workerName: string;
 }
 
-export class UrlRes extends BaseResponse {
-  @Prop()
-  url: string;
-}
-
-
-export class HtmlRes extends BaseResponse {
-  @Prop()
-  html: string;
+export type RentUserData = CompanyData & {
+  id: string;
+  street: string;
+  city: string;
+  postCode: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  address: string;
+  birthDate: Date | string;
+  stockName: string;
+  stockAddress: string;
+  size: string;
+  mailToSendInvoice: string;
+  isCompany: boolean;
+  date: Date;
 }

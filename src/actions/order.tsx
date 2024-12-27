@@ -1,6 +1,7 @@
 import {
   UserRole,
   PaymentStatus,
+  RentPaymentType,
 } from 'smartbox-types';
 import ApiService from '../services/api-service';
 import { history } from '../App';
@@ -68,6 +69,8 @@ export const setBoxGroup = (boxGroupId: string, boxGroupName: string) => ({ type
 export const setMinRentPeriod = (days: number) => ({ type: 'SET_MIN_RENT_PERIOD', payload: days });
 export const setRentStartDate = (date: Date) => ({ type: 'SET_RENT_START_DATE', payload: date });
 export const setRentEndDate = (date: Date) => ({ type: 'SET_RENT_END_DATE', payload: date });
+
+export const setRentPaymentType = (paymentType: RentPaymentType) => ({ type: 'SET_RENT_PAYMENT_TYPE', payload: paymentType });
 
 export const calculatePrice = (boxGroupId: string, start: Date, end: Date, code?: string) => async (
   dispatch: any,

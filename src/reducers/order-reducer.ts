@@ -5,6 +5,7 @@ import {
   CalculatedAddonPriceRes,
   CalculatedPriceRes,
   PaymentStatus,
+  RentPaymentType,
   SingleAcceptance,
 } from 'smartbox-types';
 import { FormType } from '../types/order-form';
@@ -58,6 +59,7 @@ export type OrderState = {
   // to control price refreshing - to know when something in the addons changed
   orderAddonsId: string;
   loadingAddons: boolean;
+  rentPaymentType: RentPaymentType | null;
   // @TODO FIX
   calculatedPriceDetails: any[];
   //
@@ -99,6 +101,11 @@ interface SetRentStartDate {
 interface SetRentEndDate {
   type: 'SET_RENT_END_DATE';
   payload: Date;
+}
+
+interface SetRentPaymentType {
+  type: 'SET_RENT_PAYMENT_TYPE';
+  payload: RentPaymentType;
 }
 
 interface SetCalculatedPrice {
@@ -219,6 +226,7 @@ type Action =
   | SetAddonFile
   | ClearAddonPrice
   | SetBirthDate
+  | SetRentPaymentType
   //
   | FormStepSuccess
   | SentRentBoxRequestSuccess
@@ -250,6 +258,7 @@ const initialState: OrderState = {
   orderAddons: {},
   loadingAddons: false,
   orderAddonsId: '',
+  rentPaymentType: null,
   //
   formData: {
     durationInDays: 7,
@@ -381,6 +390,13 @@ export default (state: OrderState = initialState, action: Action): OrderState =>
       return {
         ...state,
         formData: newFormData,
+      };
+    }
+
+    case 'SET_RENT_PAYMENT_TYPE': {
+      return {
+        ...state,
+        rentPaymentType: action.payload
       };
     }
 

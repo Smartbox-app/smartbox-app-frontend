@@ -1,6 +1,11 @@
 import { IBase } from '../base/base.interface';
 import { IUser } from '../user';
-import { AcceptanceStatuses, IPayment, RentDetailsUser, SingleAcceptance } from '..';
+import { AcceptanceStatuses, IPayment, RentDetailsUser, RentUserData, SingleAcceptance } from '..';
+
+export enum RentPaymentType {
+  InAdvance = 'in-advance',
+  Installments = 'installments',
+}
 
 export interface RentDescription {
   startAt: string;
@@ -34,6 +39,9 @@ export interface IRent extends IBase {
   decisionFinishAt: Date;
   createdAt: Date;
   description: RentDescription[];
+  data: RentUserData;
+  agreementFile: string;
+  paymentType: RentPaymentType;
 }
 
 export interface IExtension extends IBase {
