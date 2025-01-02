@@ -27,6 +27,8 @@ Przypominamy, że w przypadku braku chęci przedłużenia najmu Użytkownik jest
 Dzisiaj upływa termin wynajmu Twojej skrytki {{number}}. Aby dokonać opłaty lub zakończyć wynajem zaloguj się do aplikacji, kliknij na swój magazyn i dokonaj wybranej czynności. Brak dokonania czynności zablokuje Ci dostęp do skrytki zgodnie z obowiązującym regulaminem {{company}}.
 Przypominamy, że w przypadku braku chęci przedłużenia najmu Użytkownik jest zobowiązany dokonać zwrotu schowka najpóźniej z chwilą upływu czasu najmu (tj. godz. 23.59 ostatniego dnia najmu), jest również zobowiązany zabrać wszystkie swoje ruchomości ze skrytki po zakończeniu najmu. W przypadku, gdy Użytkownik nie zabierze swoich ruchomości ze Schowka po zakończeniu Najmu, Operator wezwie Użytkownika do zabrania rzeczy, wyznaczając mu dodatkowy termin, który nie może wynosić mniej niż 1 (słownie: jeden) dni. Jeżeli Użytkownik nie zabierze swoich ruchomości w dodatkowym terminie, Operator jest uprawniony do opróżnienia Schowka we własnym zakresie oraz przekazania ruchomości na adres wskazany przez Użytkownika, na koszt i ryzyko Użytkownika lub utylizacji / usunięcia zawartości Schowka na koszt i ryzyko Użytkownika (wybór pomiędzy przekazaniem a utylizacją należy do Operatora).
       `,
+    [TemplateType.PERIOD_PAYMENT_EMAIL]: `Cześć {{name}}!
+      Wystawiliśmy fakturę na kolejny okres Twojego wynajmu skrytki {{number}} w {{company}}, masz czas na zapłatę do {{paymentUntil}}. Zaloguj się do panelu i opłać dalszy wynajem.`,
     [TemplateType.USER_BLOCKED_SMS]: `Twoje konto użytkownika zostało zablokowane. Prosimy o kontakt z biurem obsługi klienta pod adresem {{email}} lub tel: {{phone}}`,
     [TemplateType.USER_UNBLOCKED_SMS]: `Twoje konto w {{company}} znow jest aktywne.`,
     [TemplateType.NEW_RENTAL_SMS]: `Czesc {{name}}! Udalo sie! Do dnia {{rentUntil}} wynajales domek dla Twoich rzeczy. Pamietaj o zabraniu ze soba klodki :)`,
@@ -36,4 +38,5 @@ Przypominamy, że w przypadku braku chęci przedłużenia najmu Użytkownik jest
     [TemplateType.AUTO_PAYMENT_FAILED_SMS]: `Nie udalo nam sie pobrac srodkow na kontynuacje wynajmu mini magazynu w {{company}}. Oplac swoja skrytke w ciagu 1 dnia lub zakoncz wynajem.`,
     [TemplateType.EXTEND_RENTAL_SMS]: `Czesc {{firstName}}! W dniu jutrzejszym konczy sie wynajem Twojej skrytki {{company}}. Zaloguj sie do aplikacji aby przedluzyc lub zakonczyc wynajem.`,
     [TemplateType.RENTAL_ENDS_TODAY_SMS]: `Dzis uplywa termin wynajmu Twojej skrytki {{company}}. Oplac swoj mini magazyn zeby uniknac blokady w systemie lub zakoncz wynajem.`,
+    [TemplateType.PERIOD_PAYMENT_SMS]: `Czesc {{name}}! Wystawilismy fakture na kolejny okres Twojego wynajmu w {{company}}, czas na zaplate do {{paymentUntil}}.`,
 }

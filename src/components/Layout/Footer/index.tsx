@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import { ApplicationState } from '../../../reducers';
 import ApiService from '../../../services/api-service';
 import { getColorForBackground } from '../../../utils/color';
+import { AppVersion } from '../../../components/AppVersion';
 
 const StyledFooter = styled.footer`
 background: ${props => props.theme.colors.primary};
@@ -43,6 +44,7 @@ const Footer = () => {
 
         {/* <p>&copy; SmartBox Sp. J.</p> */}
         <p>&copy; {tenant?.name}</p>
+        <AppVersion />
     </StyledFooter >
 }
 

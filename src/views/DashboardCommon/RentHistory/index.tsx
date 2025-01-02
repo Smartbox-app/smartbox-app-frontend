@@ -1,16 +1,18 @@
-import React from "react";
-import { RentDescription } from "smartbox-types"
+import { PeriodEntity, RentDescription, RentPaymentType } from "smartbox-types"
 import { dateOnly } from "../../../utils/format-date";
 import { formatPrice } from "../../../utils/format-price";
 import { __ } from "../../../helpers/i18n";
 import styled from "styled-components";
 import { Button } from "../../../components/Branded";
 import ApiService from "../../../services/api-service";
-import { ButtonsContainer } from "../../../components/Layout";
+import { useMemo } from "react";
+import { isAfter, isBefore } from "date-fns";
 
 interface Props {
     description: RentDescription[];
     rentId: string;
+    paymentType: RentPaymentType;
+    periods: PeriodEntity[];
 }
 
 const StyledPeriodHeader = styled('h4')({
@@ -19,7 +21,7 @@ const StyledPeriodHeader = styled('h4')({
     fontSize: '1rem',
     marginBottom: '10px'
 })
-const StyledAddonsHeader = styled('h4')({
+const StyledSubHeader = styled('h4')({
     color: '#333',
     fontWeight: 700,
     margin: '10px 0',
@@ -30,6 +32,13 @@ const StyledSinglePeriod = styled('li')(({ theme }) => ({
     marginBottom: '10px',
     paddingBottom: '10px',
     borderBottom: `1px solid ${theme.colors.primary}`
+}))
+
+const StyledSinglePaymentPeriod = styled('li')(({ theme }) => ({
+    marginBottom: '10px',
+    paddingLeft: 10,
+    fontSize: "0.9rem",
+    borderLeft: `5px solid ${theme.colors.primary}`
 }))
 
 const StyledSingleAddon = styled('li')(({ theme }) => ({
@@ -45,24 +54,40 @@ const StyledRentAgreementButton = styled('div')({
     display: 'flex'
 })
 
+const getPaymentTypeLabel = (type: RentPaymentType) => {
+    switch (type) {
+        case RentPaymentType.InAdvance: return 'application.paymentInAdvance';
+        case RentPaymentType.Installments: return 'application.paymentInstallments';
+    }
+}
 
-export const RentHistory = ({ description, rentId }: Props) => {
+export const RentHistory = ({ description, rentId, paymentType, periods }: Props) => {
+
+    const sortedPeriods = useMemo(() => {
+        const periodsCopy = [...periods];
+        periodsCopy.sort((a, b) => isAfter(new Date(b.startAt), new Date(a.startAt)) ? -1 : 1);
+        return periodsCopy;
+    }, [periods])
+
+    console.log('SORTED', sortedPeriods);
+
     return (
 
         <ul>
             {description.map((line, index) => <StyledSinglePeriod key={index}>
                 <StyledPeriodHeader>{dateOnly(line.startAt)} - {dateOnly(line.finishAt)}</StyledPeriodHeader>
                 <p>{__('application.price')} - {formatPrice(Number(line.cost))}</p>
+                <p>{__('application.paymentType')} - {__(getPaymentTypeLabel(paymentType))}</p>
                 {line.agreement ? <StyledRentAgreementButton><Button small primary blank text='application.seeRentAgreement' to={`${ApiService.url}rent/agreement/${rentId}/${index}`} /></StyledRentAgreementButton> : null}
 
                 {(line.addons && line.addons.length > 0) ? (
                     <div>
-                        <StyledAddonsHeader>{__('application.selectedAddons')}</StyledAddonsHeader>
+                        <StyledSubHeader>{__('application.selectedAddons')}</StyledSubHeader>
                         <ul>
                             {line.addons.map(addon => <StyledSingleAddon key={addon.id}>
                                 <div><strong>{addon.name}</strong> - {addon.selectedVariantName} - {formatPrice(Number(addon.price))}</div>
 
-                              
+
                                 {addon.acceptance ? <p>{addon.acceptance} - <strong>{addon.accepted ? 'Tak' : 'Nie'}</strong></p> : null}
                                 {(!!addon.acceptances && !!addon.acceptancesStatus) ?
                                     addon.acceptances.map(acceptance => <p key={acceptance.id}>
@@ -74,6 +99,17 @@ export const RentHistory = ({ description, rentId }: Props) => {
                         </ul>
                     </div>
                 ) : null}
+                {paymentType === RentPaymentType.Installments ?
+                    <>
+                        <StyledSubHeader>{__('application.periods')}</StyledSubHeader>
+                        <ul>
+                            {sortedPeriods.map(period => (
+                                <StyledSinglePaymentPeriod key={period.id}>
+                                    {dateOnly(period.startAt)} - {dateOnly(period.finishAt)} - <strong>{formatPrice(period.value)}</strong> - {period.paid ? __('application.periodPaid') : __('application.periodUnpaid')}
+                                </StyledSinglePaymentPeriod>))}
+                        </ul>
+                    </>
+                    : null}
             </StyledSinglePeriod>)}
         </ul>
     )

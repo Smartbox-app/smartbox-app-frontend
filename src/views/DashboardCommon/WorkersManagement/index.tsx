@@ -1,6 +1,6 @@
 import React from 'react';
 import { Switch, Route, Redirect } from 'react-router';
-import Add from '../AddUser';
+import Add from '../InviteUser';
 import List from './List';
 import History from './History';
 import { useSelector } from 'react-redux';

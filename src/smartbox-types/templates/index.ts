@@ -19,6 +19,8 @@ export enum TemplateType {
     RENTAL_ENDS_TODAY_SMS = 'rental_ends_today_sms',
     ACCOUNT_ACTIVATED_EMAIL = 'account_activated_email',
     INVITE_USER_EMAIL = 'invite_user_email',
+    PERIOD_PAYMENT_EMAIL = 'period_payment_email',
+    PERIOD_PAYMENT_SMS = 'period_payment_sms'
 }
 
 export type TemplateEntity = {

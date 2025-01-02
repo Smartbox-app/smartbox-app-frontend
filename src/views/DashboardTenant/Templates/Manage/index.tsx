@@ -33,6 +33,8 @@ const allowedTags = {
     [TemplateType.AUTO_PAYMENT_FAILED_SMS]: ["name", "company",],
     [TemplateType.EXTEND_RENTAL_SMS]: ["name", "rentUntil", "number", "company"],
     [TemplateType.RENTAL_ENDS_TODAY_SMS]: ["name", "number", "company"],
+    [TemplateType.PERIOD_PAYMENT_EMAIL]: ['name', 'number', 'company', 'cost', 'paymentUntil'],
+    [TemplateType.PERIOD_PAYMENT_SMS]: ['name', 'number', 'company', 'cost', 'paymentUntil'],
 }
 
 export const Manage = () => {

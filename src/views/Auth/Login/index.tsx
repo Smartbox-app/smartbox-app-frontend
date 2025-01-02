@@ -18,6 +18,8 @@ import { mapFieldsBig } from '../../../utils/fields-mapper';
 import ButtonsSection from './ButtonSection';
 
 import './Login.scss';
+import { AppVersion } from '../../../components/AppVersion';
+
 
 interface Props {
   user: UserRes | null;
@@ -62,31 +64,36 @@ class Login extends React.Component<Props> {
 
   render() {
     const { user, saveUser, successNotification, loading } = this.props;
+    const version = localStorage.getItem('v');
     if (user) return this.getRedirect();
     if (loading) return <Spinner />;
     return (
-      <PageContent bg>
-        <div className="login-logo-wrapper">
-          <Logo />
-        </div>
-        <FormContainer className="login-form">
-          <ItfApiForm
-            formId="loginForm"
-            schemaMayBeDynamic={false}
-            schemaCacheEnabled={false}
-            loadingInfo={<Spinner transparent />}
-            schemaFetcher={() => ApiService.loadForm('auth/form/login')}
-            sendFetcher={(formId: string, values: AuthLoginRequest) => ApiService.sendForm('auth/login', values)}
-            submitButton={<ButtonsSection />}
-            onRenderFullField={mapFieldsBig}
-            onSavedSuccessfully={(data: AuthLoginResult) => {
-              successNotification('notification.logInSuccess');
-              store.dispatch(saveUser(data));
-            }}
-            onTranslateString={formOnTranslateString}
-          />
-        </FormContainer>
-      </PageContent>
+      <>
+        <PageContent bg>
+          <div className="login-logo-wrapper">
+            <Logo />
+          </div>
+          <FormContainer className="login-form">
+            <ItfApiForm
+              formId="loginForm"
+              schemaMayBeDynamic={false}
+              schemaCacheEnabled={false}
+              loadingInfo={<Spinner transparent />}
+              schemaFetcher={() => ApiService.loadForm('auth/form/login')}
+              sendFetcher={(formId: string, values: AuthLoginRequest) => ApiService.sendForm('auth/login', values)}
+              submitButton={<ButtonsSection />}
+              onRenderFullField={mapFieldsBig}
+              onSavedSuccessfully={(data: AuthLoginResult) => {
+                successNotification('notification.logInSuccess');
+                store.dispatch(saveUser(data));
+              }}
+              onTranslateString={formOnTranslateString}
+            />
+          </FormContainer>
+          <AppVersion />
+        </PageContent>
+
+      </>
     );
   }
 }

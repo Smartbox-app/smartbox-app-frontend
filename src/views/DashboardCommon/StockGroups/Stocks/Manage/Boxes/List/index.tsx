@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { FieldType, boxesList } from 'smartbox-tables';
-import { AccessControl, BoxListRes, IStock } from 'smartbox-types';
+import { AccessControl, BoxListRes, IStock, RentStatus } from 'smartbox-types';
 import { Alert, ApiTable } from '../../../../../../../components/Common';
 import { Button, Spinner } from '../../../../../../../components/Branded';
 import { ButtonsContainer, SimpleHeader } from '../../../../../../../components/Layout';
@@ -18,6 +18,7 @@ import { Edit } from '../Edit';
 import { ApplicationState } from '../../../../../../../reducers';
 import BoxDetail from '../../../../../BoxDetail';
 import { BoxStatus } from './BoxStatus';
+import { AssignRentToUser } from '../../../../../AssignRentToUser';
 
 const List = () => {
     const user = useSelector((state: ApplicationState) => state.user.details!);
@@ -95,6 +96,7 @@ const List = () => {
             customRender: (value, field, boxData: BoxListRes) => (
                 <>
                     {(stock?.accessControl === AccessControl.ksm && boxData.controlled) ? <Button text='application.openBox' click={() => confirmBoxOpen(boxData.id)} /> : undefined}
+                    {(!boxData.status || boxData.status === RentStatus.free) ? <Button secondary text='application.assignRent' click={() => dispatch(showModal(<AssignRentToUser box={boxData} />))} /> : null}
                     <Button primary text='application.manage' click={() => dispatch(showModal(<BoxDetail box={boxData} stockId={stockId} />))} />
                     <Button secondary text='application.edit' click={() => dispatch(showModal(<Edit id={boxData.id} stockId={boxData.stockId} />))} />
                     <Button danger text='application.delete' click={() => confirmBoxDelete(boxData.id)} />

@@ -90,4 +90,5 @@ export interface AdminRentListDetails {
   createdAt: Date;
   startAt: Date;
   finishAt: Date;
+  paymentType: RentPaymentType;
 }

@@ -57,7 +57,7 @@ const SingleRentDetail = ({ showUserStockMap, match }: Props) => {
       {!showUserStockMap ? (
         <>
           <Details singleRent={singleRent} />
-          <Description description={singleRent.description} rentId={singleRent.id} />
+          <Description description={singleRent.description} rent={singleRent} />
 
           <Section highlight>
 

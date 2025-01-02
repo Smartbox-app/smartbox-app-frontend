@@ -17,6 +17,7 @@ const emailTemplates = [
     TemplateType.AUTO_PAYMENT_FAILED_EMAIL,
     TemplateType.EXTEND_RENTAL_EMAIL,
     TemplateType.RENTAL_ENDS_TODAY_EMAIL,
+    TemplateType.PERIOD_PAYMENT_EMAIL
 ]
 
 const smsTemplates = [
@@ -29,6 +30,7 @@ const smsTemplates = [
     TemplateType.AUTO_PAYMENT_FAILED_SMS,
     TemplateType.EXTEND_RENTAL_SMS,
     TemplateType.RENTAL_ENDS_TODAY_SMS,
+    TemplateType.PERIOD_PAYMENT_SMS
 ]
 
 export const List = () => {

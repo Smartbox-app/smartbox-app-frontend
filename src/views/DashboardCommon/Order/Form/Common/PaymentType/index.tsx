@@ -1,11 +1,12 @@
 import styled from "styled-components";
 import { Section } from "../../../../../../components/Layout";
 import { __ } from "../../../../../../helpers/i18n";
-import { IStock, RentPaymentType, StockPaymentType } from "smartbox-types";
+import { IStock, MyRentDetails, RentPaymentType, RentStatus, StockPaymentType } from "smartbox-types";
 import { SinglePaymentType } from "./SinglePaymentType";
 
 type Props = {
     stock: IStock;
+    rent?: MyRentDetails;
 }
 
 const StyledHeader = styled('h4')({
@@ -14,8 +15,9 @@ const StyledHeader = styled('h4')({
     fontSize: '1.1rem'
 })
 
-export const PaymentType = ({ stock }: Props) => {
-    const getPaymentTypeText = (type: StockPaymentType) => {
+export const PaymentType = ({ stock, rent }: Props) => {
+    const getPaymentTypeText = (type: StockPaymentType, rent?: MyRentDetails) => {
+        if (rent && rent.status !== RentStatus.rented) return 'application.paymentInAdvance';
         switch (type) {
             case StockPaymentType.Both: return 'application.choosePaymentType';
             case StockPaymentType.InAdvance: return 'application.paymentInAdvance';
@@ -29,7 +31,7 @@ export const PaymentType = ({ stock }: Props) => {
                 {__('application.paymentType')}
             </StyledHeader>
             <p>{__(getPaymentTypeText(stock.clientPaymentTypeConfig))}</p>
-            {stock.clientPaymentTypeConfig === StockPaymentType.Both ? <ul>
+            {(!rent || (rent && rent.status === RentStatus.rented)) && stock.clientPaymentTypeConfig === StockPaymentType.Both ? <ul>
                 <SinglePaymentType type={RentPaymentType.InAdvance} label='application.paymentInAdvance' />
                 <SinglePaymentType type={RentPaymentType.Installments} label='application.paymentInstallments' />
             </ul> : null}

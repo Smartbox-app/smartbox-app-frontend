@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { connect, useSelector } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { MyRentDetails, RentStatus } from 'smartbox-types';
@@ -10,6 +10,7 @@ import { ButtonsContainer } from '../../../../components/Layout';
 import { ApplicationState } from '../../../../reducers';
 import UserService from '../../../../services/user-service';
 import EndingModal from './EndingModal';
+import { __ } from '../../../../helpers/i18n';
 
 interface Props {
     isMapActive: boolean;
@@ -41,22 +42,37 @@ const Action = ({
         history.push(`/${UserService.getSlugByRole(user.role)}/order/step/duration/${rentId}`);
     };
 
+    const canExtendRent = useMemo(() => {
+        if (rent.status !== RentStatus.rented) return false;
+        if (rent.periods.some(period => !period.paid)) return false;
+        return true;
+    }, [rent])
+
+    const canEndRent = useMemo(() => {
+        if (rent.periods.some(period => !period.paid)) return false;
+        return true;
+    }, [rent])
+
     return (
-        <ButtonsContainer max>
-            {isMapActive ? <Button
-                text={!showUserStockMap ? 'application.showOnStockMap' : 'application.showDetail'}
-                success
-                click={() => toggleShowUserStockMap()}
-            /> : null}
-            <Button
-                text='application.goToAgreement'
-                success
-                click={() => handleExtendingOrderData(rent.id)}
-                disabled={rent.status !== RentStatus.rented}
-            />
-            <Button text='application.end' danger click={() => showModal(<EndingModal rent={rent} />)} />
-            <Button text='application.back' primary to={`/${UserService.getSlugByRole(user.role)}`} />
-        </ButtonsContainer>
+        <>
+            <ButtonsContainer max>
+                {isMapActive ? <Button
+                    text={!showUserStockMap ? 'application.showOnStockMap' : 'application.showDetail'}
+                    success
+                    click={() => toggleShowUserStockMap()}
+                /> : null}
+                <Button
+                    text='application.goToAgreement'
+                    success
+                    click={() => handleExtendingOrderData(rent.id)}
+                    disabled={!canExtendRent}
+                />
+                <Button disabled={!canEndRent} text='application.end' danger click={() => showModal(<EndingModal rent={rent} />)} />
+                <Button text='application.back' primary to={`/${UserService.getSlugByRole(user.role)}`} />
+            </ButtonsContainer>
+            {!canExtendRent ? <p><span className='fa fa-info-circle' /> {__('application.cantExtendDescription')}</p> : null}
+            {!canEndRent ? <p><span className='fa fa-info-circle' /> {__('application.cantEndDescription')}</p> : null}
+        </>
     );
 };
 

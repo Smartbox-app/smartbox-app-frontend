@@ -26,7 +26,7 @@ const List = () => {
             mobile: true,
             customRender: (value, field, rentData: AdminRentListDetails) => (
                 <>
-                    { rentData.description && Array.isArray(rentData.description) && rentData.description.length > 0 ? <Button primary text='application.rentHistory' click={() => dispatch(showModal(<RentHistoryModal rentId={rentData.id} description={rentData.description} />))} /> : undefined }
+                    { rentData.description && Array.isArray(rentData.description) && rentData.description.length > 0 ? <Button primary text='application.rentHistory' click={() => dispatch(showModal(<RentHistoryModal rent={rentData} description={rentData.description} />))} /> : undefined }
                 </>
             )
         });

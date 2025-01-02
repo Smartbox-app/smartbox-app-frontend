@@ -45,10 +45,10 @@ class List extends React.Component<Props> {
                 type: FieldType.Custom,
                 customRender: (value, field, userData: UserListRes) => {
                     return <>
-                        <Button primary text='application.userDetails' click={(data: UserListRes) => this.props.showModal(<UserDetail userId={data.id} userData={userData} />)} />
-                        <Button secondary text='application.edit' click={(data: UserListRes) => this.props.showModal(<UserEdit userId={userData.id} />)} />
-                        <Button danger text='application.delete' click={(data: UserListRes) => this.confirmUserDelete(userData.id)} />
-                        {this.props.user.role === UserRole.admin ? <Button danger text='application.deleteByForce' click={(data: UserListRes) => this.confirmUserDeleteByForce(userData.id)} /> : null}
+                        <Button primary text='application.userDetails' click={() => this.props.showModal(<UserDetail userId={userData.id} userData={userData} />)} />
+                        <Button secondary text='application.edit' click={() => this.props.showModal(<UserEdit userId={userData.id} />)} />
+                        <Button danger text='application.delete' click={() => this.confirmUserDelete(userData.id)} />
+                        {this.props.user.role === UserRole.admin ? <Button danger text='application.deleteByForce' click={() => this.confirmUserDeleteByForce(userData.id)} /> : null}
                     </>
                 }
                 // buttons: [
@@ -104,7 +104,8 @@ class List extends React.Component<Props> {
             <Section full>
                 <PageHeader title='application.usersList' />
                 <ButtonsContainer>
-                    <Button text='application.inviteUser' primary to={`/${UserService.getSlugByRole(user.role)}/management/users/add`} />
+                    <Button text='application.addUser' primary to={`/${UserService.getSlugByRole(user.role)}/management/users/add`} />
+                    <Button text='application.inviteUser' primary to={`/${UserService.getSlugByRole(user.role)}/management/users/invite`} />
                     <Button text='application.historyWorker' secondary to={`/${UserService.getSlugByRole(user.role)}/management/workers/history`} />
                 </ButtonsContainer>
                 <ApiTable scheme={this.scheme} apiEndpointSubUrl={`user/list/${UserType.user}`} />

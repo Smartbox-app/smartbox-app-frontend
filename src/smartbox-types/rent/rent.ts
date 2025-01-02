@@ -4,6 +4,7 @@ import { Prop } from '../store/prop.decorator';
 import { CompanyData, PaymentType } from '../payment';
 import { AcceptanceStatuses, SingleAcceptance } from '../addon';
 import { AccessControl } from '../stock-group';
+import { PeriodEntity } from '../period';
 
 export interface OrderAddons {
   [addonId: string]: {
@@ -96,12 +97,17 @@ export type RentGate = {
 
 export class RentDetailsRes {
   gates?: RentGate[];
+  id: string;
   number: string;
   status: RentStatus;
   startAt: Date;
   finishAt: Date;
   owner: RentDetailsUser;
+  periods: PeriodEntity[];
+  description: RentDescription[];
+  paymentType: RentPaymentType;
 }
+
 
 export class RentDetailsUser {
   email: string;
@@ -157,6 +163,8 @@ export type MyRentDetails = {
   isMap: boolean;
   description: RentDescription[];
   accessControl: AccessControl;
+  paymentType: RentPaymentType;
+  periods: PeriodEntity[];
 }
 
 interface Change {
@@ -191,4 +199,12 @@ export type RentUserData = CompanyData & {
   mailToSendInvoice: string;
   isCompany: boolean;
   date: Date;
+}
+
+export type AssignRentReq = {
+  userId: string;
+  boxId: string;
+  stockId: string;
+  startAt: Date;
+  endAt: Date;
 }

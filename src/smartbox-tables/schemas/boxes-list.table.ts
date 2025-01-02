@@ -12,7 +12,6 @@ export const boxesList: TableSchema = {
       defaultSort: true,
       oppositeSortDir: true,
       type: FieldType.Text,
-      sortType: 'number'
     },
     {
       name: 'Powierzchnia',

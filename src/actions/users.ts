@@ -73,6 +73,7 @@ export const fetchSingleUser = (userId: string) => async (dispatch: any) => {
     null,
     null,
     `user/details/${userId}`,
+    'LOADING_SINGLE_USER'
   );
 };
 

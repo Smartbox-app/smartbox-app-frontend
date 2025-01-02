@@ -337,6 +337,10 @@
             "74": {
                 "text": "Nie można usunąć uzytkownika który posiada aktywny najem!",
                 "__type_alias_do_not_touch": "ApiErrorCode.CanNotDeleteUserWithRent"
+            },
+            "75": {
+                "text": "Nie można przedłużyć nieopłaconego najmu!",
+                "__type_alias_do_not_touch": "ApiErrorCode.CanNotExtendUnpaidRent"
             }
         }
     }

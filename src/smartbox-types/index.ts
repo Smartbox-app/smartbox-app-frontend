@@ -15,3 +15,4 @@ export * from './box-group';
 export * from './stock-group';
 export * from './templates';
 export * from './addon';
+export * from './period';

@@ -40,7 +40,7 @@ const AddTenant = () => {
                     submitButton={submitButton}
                     onSavedSuccessfully={() => {
                         dispatch(successNotification(__('application.tenantAdded')));
-                        history.push('/admin/management/workers/list');
+                        history.push('/admin/management/clients/list');
                     }}
                     onRenderFullField={mapFields}
                     onTranslateString={formOnTranslateString}

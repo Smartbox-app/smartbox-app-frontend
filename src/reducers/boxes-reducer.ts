@@ -1,4 +1,4 @@
-import { BoxListItem, RentDetailsRes, RentStatus } from 'smartbox-types';
+import { RentDetailsRes, RentPaymentType, RentStatus } from 'smartbox-types';
 
 export type Boxes = {
   singleBoxDetail: RentDetailsRes;
@@ -6,10 +6,14 @@ export type Boxes = {
 
 const initialState: Boxes = {
   singleBoxDetail: {
+    id: '',
     number: '',
     startAt: new Date(),
     finishAt: new Date(),
     status: RentStatus.free,
+    paymentType: RentPaymentType.InAdvance,
+    description: [],
+    periods: [],
     owner: {
       email: '',
       firstName: '',

@@ -32,8 +32,8 @@ const EndingModal = ({ endMyRent, successNotification, getMyRentList, rent }: Pr
       approveButtonText='application.end'
       approveAction={async () => {
         successNotification('notification.rentFinishManually');
-        await endMyRent(rent.id);
-        await getMyRentList();
+        endMyRent(rent.id);
+        getMyRentList();
         history.push('/user/main');
       }}
       cancelButtonText='application.back'
