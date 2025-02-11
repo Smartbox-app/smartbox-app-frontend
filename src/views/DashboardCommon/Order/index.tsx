@@ -21,9 +21,10 @@ export const Order = () => {
   }, []);
 
   useEffect(() => {
-    if (!rentId) return;
+    if (!rentId || paymentId) return;
 
     dispatch(getSingleRent(rentId));
+
 }, [rentId])
 
   const getStepByName = (stepName: string) => {

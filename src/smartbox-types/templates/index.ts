@@ -17,6 +17,8 @@ export enum TemplateType {
     EXTEND_RENTAL_SMS = 'extend_rental_sms',
     RENTAL_ENDS_TODAY_EMAIL = 'rental_ends_today_email',
     RENTAL_ENDS_TODAY_SMS = 'rental_ends_today_sms',
+    RENTAL_ENDS_IN_3_DAYS_EMAIL = 'rental_ends_in_3_days_email',
+    RENTAL_ENDS_IN_3_DAYS_SMS = 'rental_ends_in_3_days_sms',
     ACCOUNT_ACTIVATED_EMAIL = 'account_activated_email',
     INVITE_USER_EMAIL = 'invite_user_email',
     PERIOD_PAYMENT_EMAIL = 'period_payment_email',

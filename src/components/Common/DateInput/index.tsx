@@ -1,16 +1,16 @@
-import React from 'react';
-import Flatpickr from 'react-flatpickr';
-import { useForm } from 'react-hook-form';
-import flatpickr from 'flatpickr'; // Check out other cool Themes: https://flatpickr.js.org/themes/
-import { Polish } from 'flatpickr/dist/l10n/pl';
+import React from "react";
+import Flatpickr from "react-flatpickr";
+import { useForm } from "react-hook-form";
+import flatpickr from "flatpickr"; // Check out other cool Themes: https://flatpickr.js.org/themes/
+import { Polish } from "flatpickr/dist/l10n/pl";
 
-import 'flatpickr/dist/themes/airbnb.css';
-import './DateInput.scss';
+import "./DateInput.scss";
 import { __ } from "../../../helpers/i18n";
-import styled from 'styled-components';
-import { InputLabel } from '../InputLabel';
-import { TranslatableObject } from '../../../utils/errors-trans';
-import { InputErrors } from '../InputErrors';
+import styled from "styled-components";
+import { InputLabel } from "../InputLabel";
+import { TranslatableObject } from "../../../utils/errors-trans";
+import { InputErrors } from "../InputErrors";
+import { isAfter, isBefore } from "date-fns";
 
 flatpickr.localize(Polish);
 flatpickr.defaultConfig.time_24hr = true;
@@ -28,31 +28,64 @@ interface Props {
   errors?: TranslatableObject[];
   noPadding?: boolean;
   required?: boolean;
+  highlightStart?: Date | null;
+  highlightEnd?: Date | null;
 }
 
-const StyledContainer = styled.div <{ noPadding?: boolean }>`
-padding: ${props => props.noPadding ? 0 : '10px'};
-&.big {
-  .flatpickr-input {
-        border: 2px solid ${props => props.theme.colors.primary};
+const StyledContainer = styled.div<{ noPadding?: boolean }>`
+  padding: ${(props) => (props.noPadding ? 0 : "10px")};
+  &.big {
+    .flatpickr-input {
+      border: 2px solid ${(props) => props.theme.colors.primary};
     }
-}
-&.compact {
-  .flatpickr-input {
-        border-bottom: 2px solid ${props => props.theme.colors.primary};
-    }
-}
-
-.flatpickr-calendar {
-  margin: 10px auto;
   }
-`
+  &.compact {
+    .flatpickr-input {
+      border-bottom: 2px solid ${(props) => props.theme.colors.primary};
+    }
+  }
 
-const DateInput = ({ name, value, noPadding, onChange, label, errors, minDate, maxDate, big, register, required = true, inline = true }: Props) => {
+  .flatpickr-calendar {
+    margin: 10px auto;
+  }
+
+  span.flatpickr-day {
+    border: none;
+  }
+`;
+
+const DateInput = ({
+  name,
+  value,
+  noPadding,
+  onChange,
+  label,
+  errors,
+  minDate,
+  maxDate,
+  big,
+  register,
+  highlightEnd,
+  highlightStart,
+  required = true,
+  inline = true,
+}: Props) => {
   return (
-    <StyledContainer noPadding={noPadding} className={`data-picker-wrapper ${big ? 'big' : 'compact'}`}>
+    <StyledContainer
+      noPadding={noPadding}
+      className={`data-picker-wrapper ${big ? "big" : "compact"}`}
+    >
       <InputLabel label={label} name={name} />
       <Flatpickr
+        onDayCreate={(dates, curentDateString, self, data) => {
+          if (!highlightEnd || !highlightStart) return;
+          const date = data.dateObj;
+          if (isAfter(date, highlightStart) && isBefore(date, highlightEnd)) {
+            data.classList.add("highlighted");
+          } else {
+            data.classList.remove("highlighted");
+          }
+        }}
         name={name}
         ref={register && register({ name })}
         onChange={(data: any) => {
@@ -64,7 +97,7 @@ const DateInput = ({ name, value, noPadding, onChange, label, errors, minDate, m
           allowInput: false,
           inline,
           enableTime: false,
-          locale: 'pl',
+          locale: "pl",
           minDate,
           maxDate,
         }}

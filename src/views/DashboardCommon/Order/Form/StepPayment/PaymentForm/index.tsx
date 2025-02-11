@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router"
 import { __ } from "../../../../../../helpers/i18n";
 import ApiService from "../../../../../../services/api-service";
-import { Button } from "../../../../../../components/Branded";
+import { Button, Spinner } from "../../../../../../components/Branded";
 import { LockInfo } from "../LockInfo";
 import { ButtonsContainer } from "../../../../../../components/Layout";
 import './PaymentForm.scss';
@@ -28,7 +28,7 @@ export const PaymentForm = () => {
         getPaymentHash();
     }, [])
 
-    if (!hash || !payload) return null;
+    if (!hash || !payload) return <Spinner />;
 
     return <form method="post" action={`https://${tenant?.useProd === false ? 'test.' : 'www.'}ipg-online.com/connect/gateway/processing`}>
         <input type="hidden" name="hashExtended" value={hash} />

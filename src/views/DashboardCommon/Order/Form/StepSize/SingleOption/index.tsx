@@ -104,12 +104,12 @@ const SingleOption = ({ singleOptionData, disable }: Props) => {
           <StyledImageDescription className="img-description">
             {singleOptionData.name}
           </StyledImageDescription>
-          {singleOptionData.height && singleOptionData.width && singleOptionData.depth && <StyledSizeContainer>
+          {(singleOptionData.height && singleOptionData.width && singleOptionData.depth) ?<StyledSizeContainer>
             sz. <strong>{singleOptionData.width}m</strong> x gł. <strong>{singleOptionData.depth}m</strong> x  wys. <strong>{singleOptionData.height}m</strong>
-          </StyledSizeContainer>}
+          </StyledSizeContainer> : null}
           {(singleOptionData.volume || singleOptionData.area) && <StyledAreaVolumeContainer>
-            {singleOptionData.area && <p>Powierzchnia: <strong>{singleOptionData.area}m²</strong></p>}
-            {singleOptionData.volume && <p>Objętość: <strong>{singleOptionData.volume}m³</strong></p>}
+            {singleOptionData.area ? <p>Powierzchnia: <strong>{singleOptionData.area}m²</strong></p> : null}
+            {singleOptionData.volume ? <p>Objętość: <strong>{singleOptionData.volume}m³</strong></p> : null}
           </StyledAreaVolumeContainer>}
           <PriceInfo box={singleOptionData} />
         </div>

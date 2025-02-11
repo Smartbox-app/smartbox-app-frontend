@@ -1,23 +1,29 @@
-import React, { useEffect, useState } from 'react';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { AccessControl, MyRentDetails, MyRentList } from 'smartbox-types';
-import { Spinner } from '../../../components/Branded';
-import { UserStockMap } from '../../../components/Common/UserStockMap';
-import { Section, SectionHeader } from '../../../components/Layout';
+import React, { useEffect, useMemo, useState } from "react";
+import { withRouter, RouteComponentProps } from "react-router-dom";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import {
+  AccessControl,
+  MyRentDetails,
+  MyRentList,
+  RentStatus,
+} from "smartbox-types";
+import { Spinner } from "../../../components/Branded";
+import { UserStockMap } from "../../../components/Common/UserStockMap";
+import { Section, SectionHeader } from "../../../components/Layout";
 
-import { singleRent } from '../../../actions';
-import { ApplicationState } from '../../../reducers';
+import { singleRent } from "../../../actions";
+import { ApplicationState } from "../../../reducers";
 
-import Action from './Action';
-import Details from './Details';
-import Gate from './Gate';
-import { MissingPaymentAlert } from './MissingPaymentAlert';
-import ApiService from '../../../services/api-service';
-import { OpenBox } from './OpenBox';
-import styled from 'styled-components';
-import { Description } from './RentDescription';
+import Action from "./Action";
+import Details from "./Details";
+import Gate from "./Gate";
+import { MissingPaymentAlert } from "./MissingPaymentAlert";
+import ApiService from "../../../services/api-service";
+import { OpenBox } from "./OpenBox";
+import styled from "styled-components";
+import { Description } from "./RentDescription";
+import { isAfter, isBefore } from "date-fns";
 
 interface RouteProps {
   orderId: string;
@@ -27,8 +33,9 @@ interface Props extends RouteComponentProps<RouteProps> {
 }
 
 const StyledGatesHeader = styled.div`
-font-weight: 700;
-margin: 20px 0 10px 0;`
+  font-weight: 700;
+  margin: 20px 0 10px 0;
+`;
 
 const SingleRentDetail = ({ showUserStockMap, match }: Props) => {
   const [singleRent, setSingleRent] = useState<MyRentDetails>();
@@ -36,11 +43,28 @@ const SingleRentDetail = ({ showUserStockMap, match }: Props) => {
 
   const getSingleRent = async () => {
     setLoading(true);
-    await ApiService.callFetch('GET', `rent/my-details/${match.params.orderId}`, (data: MyRentDetails) => {
-      setSingleRent(data);
-    });
+    await ApiService.callFetch(
+      "GET",
+      `rent/my-details/${match.params.orderId}`,
+      (data: MyRentDetails) => {
+        setSingleRent(data);
+      }
+    );
     setLoading(false);
-  }
+  };
+
+  const displayAccess = useMemo(() => {
+    if (!singleRent) return false;
+
+    if (singleRent.status !== RentStatus.rented) return false;
+
+    const currentDate = new Date();
+
+    if (isAfter(new Date(singleRent.startAt), currentDate)) return false;
+    if (isAfter(currentDate, new Date(singleRent.finishAt))) return false;
+
+    return true;
+  }, [singleRent]);
 
   useEffect(() => {
     getSingleRent();
@@ -59,16 +83,30 @@ const SingleRentDetail = ({ showUserStockMap, match }: Props) => {
           <Details singleRent={singleRent} />
           <Description description={singleRent.description} rent={singleRent} />
 
-          <Section highlight>
-
-            <SectionHeader title='application.access' />
-            {singleRent.gates && singleRent.gates.length > 0 && <StyledGatesHeader>Bramy</StyledGatesHeader>}
-            {singleRent.gates.map(gate => <Gate key={gate.id} gate={gate} />)}
-            {singleRent.accessControl === AccessControl.ksm && <OpenBox id={singleRent.boxId} />}
-          </Section>
+          {displayAccess ? (
+            <>
+              <Section highlight>
+                <SectionHeader title="application.access" />
+                {singleRent.gates && singleRent.gates.length > 0 && (
+                  <StyledGatesHeader>Bramy</StyledGatesHeader>
+                )}
+                {singleRent.gates.map((gate) => (
+                  <Gate key={gate.id} gate={gate} />
+                ))}
+                {singleRent.accessControl === AccessControl.ksm && (
+                  <OpenBox id={singleRent.boxId} />
+                )}
+              </Section>
+            </>
+          ) : null}
         </>
       ) : (
-        <UserStockMap boxId={singleRent.boxId} boxNumber={singleRent.boxNumber} boxAdditionalInfo={singleRent.boxAdditionalInfo} stockId={singleRent.stockId} />
+        <UserStockMap
+          boxId={singleRent.boxId}
+          boxNumber={singleRent.boxNumber}
+          boxAdditionalInfo={singleRent.boxAdditionalInfo}
+          stockId={singleRent.stockId}
+        />
       )}
     </Section>
   );
@@ -85,7 +123,9 @@ const mapDispatchToProps = (dispatch: any) =>
     {
       ...singleRent,
     },
-    dispatch,
+    dispatch
   );
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SingleRentDetail));
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(SingleRentDetail)
+);

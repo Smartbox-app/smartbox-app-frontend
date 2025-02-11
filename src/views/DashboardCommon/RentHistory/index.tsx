@@ -69,8 +69,6 @@ export const RentHistory = ({ description, rentId, paymentType, periods }: Props
         return periodsCopy;
     }, [periods])
 
-    console.log('SORTED', sortedPeriods);
-
     return (
 
         <ul>

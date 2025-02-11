@@ -16,6 +16,7 @@ const emailTemplates = [
     TemplateType.BOX_CHANGED_EMAIL,
     TemplateType.AUTO_PAYMENT_FAILED_EMAIL,
     TemplateType.EXTEND_RENTAL_EMAIL,
+    TemplateType.RENTAL_ENDS_IN_3_DAYS_EMAIL,
     TemplateType.RENTAL_ENDS_TODAY_EMAIL,
     TemplateType.PERIOD_PAYMENT_EMAIL
 ]
@@ -29,6 +30,7 @@ const smsTemplates = [
     TemplateType.BOX_CHANGED_SMS,
     TemplateType.AUTO_PAYMENT_FAILED_SMS,
     TemplateType.EXTEND_RENTAL_SMS,
+    TemplateType.RENTAL_ENDS_IN_3_DAYS_SMS,
     TemplateType.RENTAL_ENDS_TODAY_SMS,
     TemplateType.PERIOD_PAYMENT_SMS
 ]

@@ -23,7 +23,7 @@ import SummaryTable from './SummaryTable';
 import TenantDetailsForm from './TenantDetailsForm';
 
 import './StepSummary.scss';
-import { calculatePrice, calculatePriceForRent } from '../../../../../actions/order';
+import { calculatePrice, calculatePriceForRent, setBirthDate } from '../../../../../actions/order';
 import { format } from 'date-fns';
 import { useTenant } from '../../../../../hooks/useTenant';
 
@@ -43,7 +43,6 @@ const StepSummary = ({
     const dispatch = useDispatch();
     const [invoiceNeeded, setInvoiceNeeded] = useState(false);
     const { calculatedPrice, addons, orderAddons, loadingPrice, discountCode, stockId, boxGroupId, startDate, endDate } = useSelector((state: ApplicationState) => state.order);
-    console.log('STOCKI0', stockId);
 
     const user = useSelector((state: ApplicationState) => state.user.details!);
     const { step, rentId } = useParams<{ step: string, rentId: string }>();
@@ -75,6 +74,12 @@ const StepSummary = ({
             dispatch(calculatePrice(boxGroupId, startDate, endDate));
         }
     }, []);
+
+    useEffect(() => {
+        if(!user || !user.birthDate) return;
+
+        dispatch(setBirthDate(new Date(user.birthDate)));
+    }, [user])
 
     useEffect(() => {
         if (!endDate) return;

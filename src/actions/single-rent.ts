@@ -12,7 +12,20 @@ export const fetchMyRentHistory = () => async (dispatch: any) => {
   );
 };
 
+export const getMinRentPeriodExtendingForRent = (rentId: string) => async (dispatch: any) => {
+  await ApiService.get(
+    dispatch,
+    'FETCH_RENT_MIN_PERIOD_SUCCESS',
+    'FETCH_RENT_MIN_PERIOD_FAILED',
+    null,
+    null,
+    `rent/min-period/${rentId}`,
+    'LOADING_RENT_PERIOD',
+  );
+};
+
 export const getSingleRent = (rentId: string) => ({ type: 'GET_SINGLE_RENT', payload: rentId });
+
 export const toggleShowUserStockMap = () => ({ type: 'TOGGLE_SHOW_USER_STOCK_MAP' });
 
 export const endMyRent = (rentId: string) => async (dispatch: any) => {
