@@ -4,7 +4,7 @@ import { fetchMyData } from '../../actions/users';
 import { ApplicationState } from '../../reducers';
 import { getTenantById } from '../../actions/tenant';
 import ApiService from '../../services/api-service';
-import { AppSettingsEntity } from 'smartbox-types';
+import { logout } from '../../actions/auth';
 
 interface Props {
     children: React.ReactNode;
@@ -45,9 +45,16 @@ const AppWrapper = ({ children }: Props) => {
     }, [])
 
     useEffect(() => {
-        if (user && user.tenantId)
-            dispatch(getTenantById(user.tenantId));
-    }, [user])
+        if(user && user.tenantId && tenant) {
+            if(user.tenantId !== tenant.id) {
+                console.log(user, tenant);
+                dispatch(logout());
+            };
+        }
+        // if (tenant) {
+        //     dispatch(getTenantById(tenant.id));
+        // }
+    }, [user, tenant])
 
     if (user && user.tenantId && (!tenant || !tenant.id)) return null;
 

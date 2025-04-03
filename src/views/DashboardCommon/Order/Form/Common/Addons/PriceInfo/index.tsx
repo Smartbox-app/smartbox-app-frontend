@@ -17,10 +17,6 @@ color: #fff;
 font-size: 0.9rem;
 padding: 10px;
 
-.price-value {
-    margin-left: 5px;
-}
-
 .price-type {
     margin-left: 5px;
 }
@@ -58,7 +54,7 @@ const PriceInfo = ({ variant, isGross }: Props) => {
     if (!firstPricing.price || !firstPricing.quantity) return null;
 
     return <StyledPriceInfo>
-        {__('application.rentFrom')}<strong className='price-value'>{formatPrice(firstPricing.price || 0)}</strong><span className='price-type'>{isGross ? __('application.gross') : __('application.net')}</span>/<span>{firstPricing.quantity} {formatQuantity(firstPricing.type, firstPricing.quantity || 0)}</span>
+        <strong className='price-value'>{formatPrice(firstPricing.price || 0)}</strong><span className='price-type'>{isGross ? __('application.gross') : __('application.net')}</span>/<span>{firstPricing.quantity} {formatQuantity(firstPricing.type, firstPricing.quantity || 0)}</span>
     </StyledPriceInfo>
 }
 

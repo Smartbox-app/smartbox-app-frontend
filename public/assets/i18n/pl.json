@@ -295,6 +295,10 @@
             "paymentProcess": "Płatność jest przetwarzana.",
             "paymentSuccess": "Płatność zakończyła się pozytywnie.",
             "paymentFinished": "Płatność zakończyła się",
+            "paymentPending": "Twoja płatność jest w trakcie przetwarzania.",
+            "paymentSuccesful": "Twoja płatność zakończyła się powodzeniem.",
+            "paymentFailed": "Twoja płatność zakończyła się niepowodzeniem.",
+            "paymentError": "Wystąpił błąd podczas przetwarzania Twojej płatności.",
             "withFailure": "niepowodzeniem",
             "thanks": "Dziękujemy za korzystanie z naszych usług.",
             "invoiceWasSent": "Dokument potwierdzający zakup został wysłany na wskazany e-mail.",
@@ -502,7 +506,8 @@
             "paymentType": "Sposób płatności",
             "choosePaymentType": "Wybierz sposób płatności",
             "paymentInAdvance": "Zapłata za cały okres z góry",
-            "paymentInstallments": "Płatność podzielona na miesięczne okresy"
+            "paymentInstallments": "Płatność podzielona na miesięczne okresy",
+            "useGridForMap": "Przyciągaj do siatki"
         },
         "settings": {
             "tax": "Stawka VAT",

@@ -1,10 +1,10 @@
-import { RentDescription, RentPaymentType, RentStatus } from './rent-entity';
-import { BaseResponse } from '../base/baseRes';
-import { Prop } from '../store/prop.decorator';
-import { CompanyData, PaymentType } from '../payment';
-import { AcceptanceStatuses, SingleAcceptance } from '../addon';
-import { AccessControl } from '../stock-group';
-import { PeriodEntity } from '../period';
+import { RentDescription, RentPaymentType, RentStatus } from "./rent-entity";
+import { BaseResponse } from "../base/baseRes";
+import { Prop } from "../store/prop.decorator";
+import { CompanyData, PaymentStatus, PaymentType } from "../payment";
+import { AcceptanceStatuses, SingleAcceptance } from "../addon";
+import { AccessControl } from "../stock-group";
+import { PeriodEntity } from "../period";
 
 export interface OrderAddons {
   [addonId: string]: {
@@ -16,8 +16,8 @@ export interface OrderAddons {
     acceptances: SingleAcceptance[];
     acceptancesStatus: AcceptanceStatuses;
     tax: string;
-  }
-};
+  };
+}
 
 export interface RentBoxReq {
   stockId: string;
@@ -45,7 +45,6 @@ export interface RentBoxReq {
   nip: string;
   rentPaymentType: RentPaymentType;
 }
-
 
 export interface ExtendRentalReq {
   firstName: string;
@@ -93,7 +92,7 @@ export type RentGate = {
   name: string;
   description: string;
   controlled: boolean;
-}
+};
 
 export class RentDetailsRes {
   gates?: RentGate[];
@@ -107,7 +106,6 @@ export class RentDetailsRes {
   description: RentDescription[];
   paymentType: RentPaymentType;
 }
-
 
 export class RentDetailsUser {
   email: string;
@@ -165,7 +163,7 @@ export type MyRentDetails = {
   accessControl: AccessControl;
   paymentType: RentPaymentType;
   periods: PeriodEntity[];
-}
+};
 
 interface Change {
   newStatus: string;
@@ -175,7 +173,7 @@ interface Change {
 }
 
 export interface WorkerChange extends Change {
-  stockName: string
+  stockName: string;
 }
 
 export interface StockChange extends Change {
@@ -199,7 +197,7 @@ export type RentUserData = CompanyData & {
   mailToSendInvoice: string;
   isCompany: boolean;
   date: Date;
-}
+};
 
 export type AssignRentReq = {
   userId: string;
@@ -207,4 +205,27 @@ export type AssignRentReq = {
   stockId: string;
   startAt: Date;
   endAt: Date;
-}
+};
+
+export type GeneratePaymentDataResponse = {
+  hash: string;
+  chargetotal: string;
+  currency: number;
+  oid: string;
+  responseFailURL: string;
+  responseSuccessURL: string;
+  txndatetime: string;
+  txntype: string;
+  checkoutoption: string;
+  hash_algorithm: string;
+  timezone: string;
+  storename: string;
+  transactionNotificationURL: string;
+};
+
+export type PayForRentResponse = {
+  paymentId: string;
+  paymentStatus: PaymentStatus;
+  paymentData?: GeneratePaymentDataResponse;
+  url?: string;
+};

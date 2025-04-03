@@ -341,6 +341,10 @@
             "75": {
                 "text": "Nie można przedłużyć nieopłaconego najmu!",
                 "__type_alias_do_not_touch": "ApiErrorCode.CanNotExtendUnpaidRent"
+            },
+            "76": {
+                "text": "Nie można zwolnić skrytki z płatnością w trakcie!",
+                "__type_alias_do_not_touch": "ApiErrorCode.CantFreeBoxWithPendingPayment"
             }
         }
     }

@@ -1,11 +1,7 @@
 import {
-  UserRole,
-  PaymentStatus,
   RentPaymentType,
 } from 'smartbox-types';
 import ApiService from '../services/api-service';
-import { history } from '../App';
-import UserService from '../services/user-service';
 import { FormType } from '../types/order-form';
 
 export const updateFormData = (data: Partial<FormType>) => ({ type: 'FORM_STEP_SUCCESS', payload: data });
@@ -19,49 +15,9 @@ export const formResignationMarked = () => ({ type: 'FORM_RESIGNATION_MARKED_SUC
 
 export const clearOrder = () => ({ type: 'CLEAR_ORDER' });
 
-export const sentRentBoxRequest = (data: FormData, nextStep: string, role: UserRole) => async (dispatch: any) => {
-  await ApiService.post(
-    dispatch,
-    'SENT_RENT_BOX_REQUEST_SUCCESS',
-    'SENT_RENT_BOX_REQUEST_FAILED',
-    (result: { paymentId: string; status: PaymentStatus }) => {
-      if (result.status === PaymentStatus.succes) {
-        history.push(`/payment-success/${result.paymentId}`);
-      } else {
-        history.push(`/${UserService.getSlugByRole(role)}/order/step/${nextStep}/${result.paymentId}`);
-      }
-    },
-    null,
-    'rent/new',
-    'LOADING',
-    data,
-  );
-};
-
 export const clearPaymentDetails = () => ({
   type: 'CLEAR_PAYMENT_METHOD_SUCCESS',
 });
-
-export const sentExtendRentRequest = (rentId: string, data: FormData, role: UserRole) => async (
-  dispatch: any,
-) => {
-  await ApiService.post(
-    dispatch,
-    'SENT_EXTEND_RENT_SUCCESS',
-    'SENT_EXTEND_RENT_FAILED',
-    (result: { paymentId: string; status: PaymentStatus }) => {
-      if (result.status === PaymentStatus.succes) {
-        history.push(`/payment-success/${result.paymentId}`);
-      } else {
-        history.push(`/${UserService.getSlugByRole(role)}/order/step/payment/${result.paymentId}/${rentId}`);
-      }
-    },
-    null,
-    `rent/extend-rent/${rentId}`,
-    'LOADING',
-    data,
-  );
-};
 
 // refactored
 export const setOrderStock = (stockId: string, stockName: string, stockAddress: string) => ({ type: 'SET_ORDER_STOCK', payload: { stockId, stockAddress, stockName } });

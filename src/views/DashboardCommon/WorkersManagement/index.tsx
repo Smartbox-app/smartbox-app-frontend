@@ -11,10 +11,10 @@ const Workers = () => {
   const user = useSelector((state: ApplicationState) => state.user.details!);
 
   return <Switch>
-    <Route exact path={`/${UserService.getSlugByRole(user.role)}/management/workers`} render={() => <Redirect to="/admin/management/workers/list" />} />
+    <Route exact path={`/${UserService.getSlugByRole(user.role)}/management/workers`} render={() => <Redirect to={`/${UserService.getSlugByRole(user.role)}/management/workers/list`} />} />
     <Route path={`/${UserService.getSlugByRole(user.role)}/management/workers/add`} component={Add} />
     <Route path={`/${UserService.getSlugByRole(user.role)}/management/workers/list`} component={List} />
-    <Route path={`/${UserService.getSlugByRole(user.role)}/management/workers/history`} component={History} />
+    {/* <Route path={`/${UserService.getSlugByRole(user.role)}/management/workers/history`} component={History} /> */}
   </Switch>
 }
 

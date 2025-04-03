@@ -22,7 +22,7 @@ export const RentHistoryModal = ({ description, rent }: Props) => {
 
     useEffect(() => {
         getRentDetails();
-    })
+    }, [])
 
     if (!fullRent) return <Spinner />
 

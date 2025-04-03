@@ -55,8 +55,7 @@ const StyledCalendarPicker = styled.div`
 
     &.highlighted {
       background-color: #ccc;
-      color: ${(props) =>
-        getColorForBackground('#ccc')};
+      color: ${(props) => getColorForBackground("#ccc")};
     }
 
     &.selected {
@@ -192,7 +191,7 @@ const StepDuration = ({ clearPaymentDetails, user }: Props) => {
     if (!endDate) return;
 
     reset({
-      dateEnd: endDate
+      dateEnd: endDate,
     });
   }, [endDate]);
 
@@ -200,7 +199,7 @@ const StepDuration = ({ clearPaymentDetails, user }: Props) => {
     if (!startDate) return;
 
     reset({
-      dateStart: startDate
+      dateStart: startDate,
     });
   }, [startDate]);
 
@@ -209,9 +208,19 @@ const StepDuration = ({ clearPaymentDetails, user }: Props) => {
   const allRequiredAddonsSelected = useMemo(() => {
     const addonIds = Object.keys(orderAddons);
 
+    console.log("ADDONS", orderAddons);
     for (let addonId of addonIds) {
       const orderAddon = orderAddons[addonId];
-      if (orderAddon.required && !orderAddon.selectedVariant) return false;
+      if (orderAddon.required && !orderAddon.selectedVariant) {
+        if (!orderAddon.userFileAllowed) return false;
+        if (
+          !orderAddon.file &&
+          orderAddon.userFileAllowed &&
+          orderAddon.userFileRequirement !==
+            AddonUserFileRequirementType.Optional
+        )
+          return false;
+      }
 
       for (let acceptance of orderAddon.acceptances) {
         if (
@@ -219,8 +228,10 @@ const StepDuration = ({ clearPaymentDetails, user }: Props) => {
           acceptance &&
           acceptance.required &&
           !orderAddon.acceptancesStatus[acceptance.id].accepted
-        )
+        ) {
+          console.log("1");
           return false;
+        }
       }
 
       if (orderAddon.userFileAllowed) {
@@ -228,15 +239,19 @@ const StepDuration = ({ clearPaymentDetails, user }: Props) => {
           orderAddon.userFileRequirement ===
             AddonUserFileRequirementType.Required &&
           !orderAddon.file
-        )
+        ) {
+          console.log("2");
           return false;
-        if (
-          orderAddon.userFileRequirement ===
-            AddonUserFileRequirementType.RequiredWhenNoVariant &&
-          !orderAddon.selectedVariant &&
-          !orderAddon.file
-        )
-          return false;
+        }
+        // if (
+        //   orderAddon.userFileRequirement ===
+        //     AddonUserFileRequirementType.RequiredWhenNoVariant &&
+        //   orderAddon.selectedVariant &&
+        //   !orderAddon.file
+        // ) {
+        //   console.log("3");
+        //   return false;
+        // }
       }
     }
 

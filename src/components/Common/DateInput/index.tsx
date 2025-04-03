@@ -80,7 +80,7 @@ const DateInput = ({
         onDayCreate={(dates, curentDateString, self, data) => {
           if (!highlightEnd || !highlightStart) return;
           const date = data.dateObj;
-          if (isAfter(date, highlightStart) && isBefore(date, highlightEnd)) {
+          if (!isBefore(date, highlightStart) && isBefore(date, highlightEnd)) {
             data.classList.add("highlighted");
           } else {
             data.classList.remove("highlighted");

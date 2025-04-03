@@ -1,21 +1,24 @@
-import React from 'react';
-import { ItfApiForm } from 'itf_formbuilder_react';
-import { connect, useDispatch } from 'react-redux';
-import ReactCreatableSelect from 'react-select/creatable';
-import { bindActionCreators } from 'redux';
-import { ChangeStatusReq, StockList } from 'smartbox-types';
-import { boxes, modal, notifications, stock } from '../../../../../actions';
-import { FormContainer, ButtonsContainer } from '../../../../../components/Layout';
-import { Alert } from '../../../../../components/Common';
-import { Button, Spinner } from '../../../../../components/Branded';
-import { ApplicationState } from '../../../../../reducers';
-import ApiService from '../../../../../services/api-service';
-import { formOnTranslateString } from '../../../../../utils/trans-form';
+import React from "react";
+import { ItfApiForm } from "itf_formbuilder_react";
+import { connect, useDispatch } from "react-redux";
+import ReactCreatableSelect from "react-select/creatable";
+import { bindActionCreators } from "redux";
+import { ChangeStatusReq, StockList } from "smartbox-types";
+import { boxes, modal, notifications, stock } from "../../../../../actions";
+import {
+  FormContainer,
+  ButtonsContainer,
+} from "../../../../../components/Layout";
+import { Alert } from "../../../../../components/Common";
+import { Button, Spinner } from "../../../../../components/Branded";
+import { ApplicationState } from "../../../../../reducers";
+import ApiService from "../../../../../services/api-service";
+import { formOnTranslateString } from "../../../../../utils/trans-form";
 
-import './Status.scss';
-import { ReactSelectOverride } from '../../../../../components/Common/ReactSelectOverride';
-import { refreshApiTableData } from '../../../../../actions/api-table';
-import { mapFields } from '../../../../../utils/fields-mapper';
+import "./Status.scss";
+import { ReactSelectOverride } from "../../../../../components/Common/ReactSelectOverride";
+import { refreshApiTableData } from "../../../../../actions/api-table";
+import { mapFields } from "../../../../../utils/fields-mapper";
 
 interface Props {
   selectedBoxId: string;
@@ -27,7 +30,15 @@ interface Props {
   callback?: () => void;
 }
 
-const Status = ({ selectedBoxId, hideModal, successNotification, stockId, rentId, showModal, callback }: Props) => {
+const Status = ({
+  selectedBoxId,
+  hideModal,
+  successNotification,
+  stockId,
+  rentId,
+  showModal,
+  callback,
+}: Props) => {
   const dispatch = useDispatch();
 
   const submitButton = (
@@ -38,8 +49,8 @@ const Status = ({ selectedBoxId, hideModal, successNotification, stockId, rentId
 
   if (!stock) return null;
 
-  const fetchUrl = 'rent/form/change-status';
-  const sendUrl = `rent/status/${stockId}/${rentId}`;
+  const fetchUrl = `rent/form/change-status/${rentId || ""}`;
+  const sendUrl = `rent/status/${stockId}/${rentId || ""}`;
 
   const customSendFetcher = (formId: string, values: ChangeStatusReq) => {
     showModal(
@@ -48,7 +59,10 @@ const Status = ({ selectedBoxId, hideModal, successNotification, stockId, rentId
           <Alert type="error" text="application.notChooseStatus" />
         ) : (
           <div className="modal-alert-wrapper">
-            <Alert type="warning" text="application.userWillNotGetMailWithInformation" />
+            <Alert
+              type="warning"
+              text="application.userWillNotGetMailWithInformation"
+            />
             <Alert type="primary" text="application.actionCanNotBeUnDone" />
           </div>
         )}
@@ -68,15 +82,15 @@ const Status = ({ selectedBoxId, hideModal, successNotification, stockId, rentId
                   ...values,
                   boxId: selectedBoxId,
                 } as ChangeStatusReq,
-                'PATCH',
+                "PATCH"
               );
-              await successNotification('notification.userStatusChanged');
+              await successNotification("notification.userStatusChanged");
               dispatch(refreshApiTableData());
-              if(callback) callback();
+              if (callback) callback();
             }}
           />
         </ButtonsContainer>
-      </>,
+      </>
     );
   };
 
@@ -92,17 +106,28 @@ const Status = ({ selectedBoxId, hideModal, successNotification, stockId, rentId
         loadingInfo={<Spinner transparent />}
         onTranslateString={formOnTranslateString}
         onRenderFullField={mapFields}
-        thirdPartyComponents={{ ReactSelect: ReactSelectOverride, ReactCreatableSelect }}
+        thirdPartyComponents={{
+          ReactSelect: ReactSelectOverride,
+          ReactCreatableSelect,
+        }}
       />
+      <p>
+        Skrytku posiadające nieopłacone przedłużenie nie mogą być bezpośrednio
+        zwolnione ani wyłączone z użytku - najpierw należy zweryfikować kwestię
+        wynajmu.
+      </p>
     </FormContainer>
   );
 };
 
 const mapStateToProps = (state: ApplicationState) => ({
-  stocks: state.stock.list
+  stocks: state.stock.list,
 });
 
 const mapDispatchToProps = (dispatch: any) =>
-  bindActionCreators({ ...stock, ...modal, ...notifications, ...boxes }, dispatch);
+  bindActionCreators(
+    { ...stock, ...modal, ...notifications, ...boxes },
+    dispatch
+  );
 
 export default connect(mapStateToProps, mapDispatchToProps)(Status);

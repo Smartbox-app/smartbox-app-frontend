@@ -42,18 +42,18 @@ class List extends React.Component<Props> {
         sortable: true,
         customRender: (value, field, userData) => this.getAssignButton(value, field, userData),
       })
-      .addFieldAtTheEnd({
-        name: __('application.actions'),
-        field: 'actions',
-        mobile: true,
-        buttons: [
-          {
-            name: 'application.changeUserRole',
-            type: 'primary',
-            click: (data: any) => this.props.showModal(<EditRoleForm userId={data.id} />),
-          },
-        ],
-      });
+      // .addFieldAtTheEnd({
+      //   name: __('application.actions'),
+      //   field: 'actions',
+      //   mobile: true,
+      //   buttons: [
+      //     {
+      //       name: 'application.changeUserRole',
+      //       type: 'primary',
+      //       click: (data: any) => this.props.showModal(<EditRoleForm userId={data.id} />),
+      //     },
+      //   ],
+      // });
   }
 
   private getAssignButton = (value: any, field: TableSchemaField, userData: IUser) => {
@@ -94,7 +94,6 @@ class List extends React.Component<Props> {
         <PageHeader title='application.workersList' />
         <ButtonsContainer>
           <Button text='application.inviteUser' primary to="/admin/management/workers/add" />
-          <Button text='application.historyWorker' primary to="/admin/management/workers/history" />
         </ButtonsContainer>
         <ApiTable scheme={this.scheme} apiEndpointSubUrl={`user/list/${UserType.staff}`} />
       </Section>

@@ -138,14 +138,6 @@ interface SetBirthDate {
   payload: Date;
 }
 
-interface SentRentBoxRequestSuccess {
-  type: "SENT_RENT_BOX_REQUEST_SUCCESS";
-  payload: {
-    paymentId: string;
-    status: PaymentStatus;
-  };
-}
-
 interface FetchAddons {
   type: "FETCH_ADDONS_SUCCESS";
   payload: AddonRes[];
@@ -192,11 +184,6 @@ interface ClearPaymentMethodSuccess {
   type: "CLEAR_PAYMENT_METHOD_SUCCESS";
 }
 
-interface SentExtendRentRequestSuccess {
-  type: "SENT_EXTEND_RENT_SUCCESS";
-  payload: string;
-}
-
 interface ResetDiscountCode {
   type: "RESET_DISCOUNT_CODE";
 }
@@ -235,12 +222,10 @@ type Action =
   | SetRentPaymentType
   //
   | FormStepSuccess
-  | SentRentBoxRequestSuccess
   | FormReaded
   | FormResignation
   | CheckPaymentStatus
   | ClearPaymentMethodSuccess
-  | SentExtendRentRequestSuccess
   | ClearOrder
   | FetchAddons
   | ResetDiscountCode
@@ -443,19 +428,6 @@ export default (
       return {
         ...state,
         discountCode: action.payload,
-      };
-    }
-
-    case "SENT_RENT_BOX_REQUEST_SUCCESS": {
-      return {
-        ...state,
-        paymentId: action.payload.paymentId,
-      };
-    }
-    case "SENT_EXTEND_RENT_SUCCESS": {
-      return {
-        ...state,
-        paymentId: action.payload,
       };
     }
 

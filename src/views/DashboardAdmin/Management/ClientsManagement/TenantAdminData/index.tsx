@@ -11,6 +11,7 @@ import { successNotification } from '../../../../../actions/notifications';
 import { __ } from '../../../../../helpers/i18n';
 import { mapFields } from '../../../../../utils/fields-mapper';
 import { getTenantById } from '../../../../../actions/tenant';
+import { useTenant } from '../../../../../hooks/useTenant';
 
 interface Props {
     userId?: string;
@@ -18,6 +19,7 @@ interface Props {
 
 const ManageTenantAdminData = ({ userId }: Props) => {
     const dispatch = useDispatch();
+    const {tenant} = useTenant();
     const user = useSelector((state: ApplicationState) => state.user.details);
     const submitButton = (
         <ButtonsContainer>
@@ -51,7 +53,7 @@ const ManageTenantAdminData = ({ userId }: Props) => {
                 onRenderFullField={mapFields}
                 onSavedSuccessfully={() => {
                     dispatch(successNotification(__('application.tenantUpdated')));
-                    if (!userId && user.tenantId) dispatch(getTenantById(user.tenantId));
+                    if (!userId && tenant) dispatch(getTenantById(tenant.id));
                 }}
                 onTranslateString={formOnTranslateString}
             />

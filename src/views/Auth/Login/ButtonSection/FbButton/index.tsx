@@ -1,44 +1,22 @@
-import React from 'react';
-import FacebookLogin, { ReactFacebookFailureResponse, ReactFacebookLoginInfo } from 'react-facebook-login';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import { auth } from '../../../../../actions';
-import { __ } from '../../../../../helpers/i18n';
+import ApiService from "../../../../../services/api-service";
+import { __ } from "../../../../../helpers/i18n";
+import { useTenant } from "../../../../../hooks/useTenant";
+import "./FbButton.scss";
 
-import './FbButton.scss';
+export const FbButton = () => {
+  const { tenant } = useTenant();
 
-interface Props {
-  loginWithFacebook: (data: ReactFacebookLoginInfo) => void;
-}
+  if (!tenant || !["testowa", "aplikacja"].includes(tenant.identifier))
+    return null;
 
-const FbButton = ({ loginWithFacebook }: Props) => {
-  const responseFacebook = (data: ReactFacebookLoginInfo | ReactFacebookFailureResponse) => {
-    if ((data as ReactFacebookLoginInfo).accessToken) {
-      loginWithFacebook(data as ReactFacebookLoginInfo);
-    }
+  const goToFbLogin = () => {
+    window.open(`${ApiService.url}auth/facebook?tenantId=${tenant.identifier}`);
   };
 
   return (
-    <FacebookLogin
-      appId="5213727608682643"
-      fields="name,email"
-      language="pl"
-      cssClass="facebook-button-custom"
-      callback={responseFacebook}
-      icon="fa-facebook"
-      textButton={`${__('application.continueWith')} Facebook`}
-      isMobile={false}
-      redirectUri={`${process.env.REACT_APP_URL || 'http://localhost:3000/'}login`}
-    />
+    <button onClick={goToFbLogin} className="facebook-button-custom">
+      <span className="fa fa-facebook" />
+      {`${__("application.continueWith")} Facebook`}
+    </button>
   );
 };
-
-const mapDispatchToProps = (dispatch: any) =>
-  bindActionCreators(
-    {
-      ...auth,
-    },
-    dispatch,
-  );
-
-export default connect(null, mapDispatchToProps)(FbButton);

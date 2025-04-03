@@ -35,7 +35,7 @@ export interface TableSchemaField {
     searchable?: boolean;
     defaultSort?: boolean;
     oppositeSortDir?: boolean;
-    buttons?: TableButton[];
+    buttons?: (TableButton | null)[];
     searchableValues?: TableFieldSearchableValues;
     defaultSearch?: string|number;
     alias?: string;
