@@ -10,17 +10,16 @@ $icon-size: $main-spacing * 4;
   align-items: center;
   width: 100%;
   z-index: 10;
-  font-weight: 600;
-  font-size: 1.1rem;
+  font-weight: 500;
+  font-size: 12px;
 
   .item-icon {
-    width: $icon-size;
-    height: $icon-size;
-    border-radius: $icon-size / 2;
+    width: 24px;
+    height: 24px;
+    border-radius: 12px;
     display: flex;
     justify-content: center;
     align-items: center;
-    box-shadow: 0 5px 10px -5px lighten(rgba(#000, 0.4), 30%);
   }
 
   .item-current {
@@ -44,7 +43,7 @@ $icon-size: $main-spacing * 4;
   }
 
   .item-description {
-    margin-top: $main-spacing;
+    margin-top: 4px;
     font-size: 0.7rem;
     font-weight: 400;
   }

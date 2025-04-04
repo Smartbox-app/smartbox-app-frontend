@@ -1,30 +1,31 @@
-import React, { useEffect, useState, useMemo } from "react";
-import { useSelector } from "react-redux";
-import { IStock, TenantEntity, UserRole } from "smartbox-types";
+import React, { useEffect, useState, useMemo } from 'react';
+import { useSelector } from 'react-redux';
+import { IStock, TenantEntity, UserRole } from 'smartbox-types';
 
 import {
   PageHeader,
   ButtonsContainer,
   Section,
-} from "../../../../../components/Layout";
-import { Button, Tabs } from "../../../../../components/Branded";
-import { Redirect, Route, Switch, useParams } from "react-router";
-import UserService from "../../../../../services/user-service";
-import { ApplicationState } from "../../../../../reducers";
-import { BasicData } from "../../../StockGroups/Stocks/Manage/BasicData";
-import { Boxes } from "./Boxes";
-import { Rents } from "./Rents";
-import { Map } from "./Map";
-import { Groups } from "./Groups";
-import { Discounts } from "./Discounts";
-import ApiService from "../../../../../services/api-service";
-import { Handling } from "./Handling";
-import { Gates } from "./Gates";
-import { Addons } from "./Addons";
+} from '../../../../../components/Layout';
+import { Button, Tabs } from '../../../../../components/Branded';
+import { Redirect, Route, Switch, useParams } from 'react-router';
+import UserService from '../../../../../services/user-service';
+import { ApplicationState } from '../../../../../reducers';
+import { BasicData } from '../../../StockGroups/Stocks/Manage/BasicData';
+import { Boxes } from './Boxes';
+import { Rents } from './Rents';
+import { Map } from './Map';
+import { Groups } from './Groups';
+import { Discounts } from './Discounts';
+import ApiService from '../../../../../services/api-service';
+import { Handling } from './Handling';
+import { Gates } from './Gates';
+import { Addons } from './Addons';
+import { useGetMyDetailsQuery } from 'src/queries';
 
 const Manage = () => {
   const { stockId } = useParams<{ stockId: string }>();
-  const user = useSelector((state: ApplicationState) => state.user.details);
+  const { data: user } = useGetMyDetailsQuery();
   const tenant = useSelector((state: ApplicationState) => state.tenant);
   const [tenantForAdmin, setTenantForAdmin] = useState<TenantEntity>();
   const [isMapActive, setMapActive] = useState<boolean>(false);
@@ -32,7 +33,7 @@ const Manage = () => {
   const hasFullAccess = [UserRole.admin, UserRole.client].includes(user!.role);
 
   const getStockData = async () => {
-    await ApiService.callFetch("GET", `stock/${stockId}`, (stock: IStock) => {
+    await ApiService.callFetch('GET', `stock/${stockId}`, (stock: IStock) => {
       setMapActive(stock.isMapActive);
       if (user?.role === UserRole.admin) getTenantForAdmin(stock.tenantId);
     });
@@ -40,11 +41,11 @@ const Manage = () => {
 
   const getTenantForAdmin = async (tenantId: string) => {
     await ApiService.callFetch(
-      "GET",
+      'GET',
       `tenant/admin/${tenantId}`,
       (tenant: TenantEntity) => {
         setTenantForAdmin(tenant);
-      }
+      },
     );
   };
 
@@ -57,41 +58,41 @@ const Manage = () => {
       ? [
           {
             to: `/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/data`,
-            text: "application.stockBasicData",
+            text: 'application.stockBasicData',
           },
           {
             to: `/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/rents`,
-            text: "application.stockRents",
+            text: 'application.stockRents',
           },
           {
             to: `/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/gates`,
-            text: "application.gates",
+            text: 'application.gates',
           },
           {
             to: `/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/groups`,
-            text: "application.boxesGroups",
+            text: 'application.boxesGroups',
           },
           {
             to: `/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/discounts`,
-            text: "application.stockSale",
+            text: 'application.stockSale',
           },
           {
             to: `/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/boxes`,
-            text: "application.stockBoxes",
+            text: 'application.stockBoxes',
           },
         ]
       : [
           {
             to: `/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/rents`,
-            text: "application.stockRents",
+            text: 'application.stockRents',
           },
           {
             to: `/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/gates`,
-            text: "application.gates",
+            text: 'application.gates',
           },
           {
             to: `/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/boxes`,
-            text: "application.stockBoxes",
+            text: 'application.stockBoxes',
           },
         ];
 
@@ -99,19 +100,22 @@ const Manage = () => {
       if (hasFullAccess) {
         elements.push({
           to: `/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/map`,
-          text: "application.map",
+          text: 'application.map',
         });
       }
       elements.push({
         to: `/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/handling`,
-        text: "application.stockHandling",
+        text: 'application.stockHandling',
       });
     }
 
-    if (hasFullAccess && (tenantForAdmin?.allowAddonsToRent || tenant?.allowAddonsToRent)) {
+    if (
+      hasFullAccess &&
+      (tenantForAdmin?.allowAddonsToRent || tenant?.allowAddonsToRent)
+    ) {
       elements.push({
         to: `/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/addons`,
-        text: "application.stockAddons",
+        text: 'application.stockAddons',
       });
     }
 

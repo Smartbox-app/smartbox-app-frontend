@@ -1,8 +1,8 @@
+import { ReactNode } from "react";
+
 export interface MenuItemType {
-  icon: string | null;
+  icon: ReactNode;
   text: string;
-  badge?: boolean;
-  address?: string;
+  to?: string;
   onClick?: () => void;
-  customClass?: string;
 }

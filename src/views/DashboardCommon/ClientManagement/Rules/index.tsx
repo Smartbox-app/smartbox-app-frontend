@@ -10,6 +10,7 @@ import { ApplicationState } from '../../../../reducers';
 import { successNotification } from '../../../../actions/notifications';
 import { __ } from '../../../../helpers/i18n';
 import { mapFields } from '../../../../utils/fields-mapper';
+import { useGetMyDetailsQuery } from 'src/queries';
 
 interface Props {
     userId?: string;
@@ -17,7 +18,7 @@ interface Props {
 
 const ManageTenantRules = ({ userId }: Props) => {
     const dispatch = useDispatch();
-    const user = useSelector((state: ApplicationState) => state.user.details);
+      const { data: user } = useGetMyDetailsQuery();
 
     if (!user) return null;
 

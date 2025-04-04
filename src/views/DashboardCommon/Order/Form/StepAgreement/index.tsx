@@ -7,7 +7,6 @@ import { bindActionCreators } from "redux";
 import { connect, useSelector } from "react-redux";
 import {
   RentBoxReq,
-  UserRes,
   ExtendRentalReq,
   OrderAddons,
   RentPaymentType,
@@ -38,6 +37,7 @@ import { OrderAddon } from "../../../../../reducers/order-reducer";
 import { dateOnly } from "../../../../../utils/format-date";
 import styled from "styled-components";
 import { pdfjs } from "react-pdf";
+import { useGetMyDetailsQuery } from "src/queries";
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 
@@ -56,7 +56,6 @@ const SpinnerWrapper = styled("div")({
 
 interface Props {
   formData: FormType;
-  user: UserRes | null;
   isAgreementAccepted: boolean;
   isResignationMarked: boolean;
   stockId: string;
@@ -65,9 +64,9 @@ interface Props {
 
 const StepSummary = ({
   formData,
-  user,
   isResignationMarked,
 }: Props): any => {
+    const { data: user } = useGetMyDetailsQuery();
   const order = useSelector((state: ApplicationState) => state.order);
   const tenant = useSelector((state: ApplicationState) => state.tenant);
   const [loading, setLoading] = useState(false);
@@ -209,7 +208,7 @@ const StepSummary = ({
   ): FormData => {
     const rentFormData = new FormData();
 
-    for (let key in collection) {
+    for (const key in collection) {
       const value = collection[key];
       if (key === "startAt") rentFormData.append(key, value.toISOString());
       else if (key === "finishAt")
@@ -219,7 +218,7 @@ const StepSummary = ({
       else rentFormData.append(key, value);
     }
 
-    for (let addonId of Object.keys(order.orderAddons)) {
+    for (const addonId of Object.keys(order.orderAddons)) {
       const orderAddon = order.orderAddons[addonId];
 
       if (orderAddon && orderAddon.file) {
@@ -444,7 +443,6 @@ const StepSummary = ({
 
 const mapStateToProps = (state: ApplicationState) => ({
   formData: state.order.formData,
-  user: state.user.details,
   isResignationMarked: state.order.isResignationMarked,
   stockId: state.order.formData.stock,
 });

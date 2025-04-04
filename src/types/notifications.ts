@@ -1,5 +1,5 @@
 export interface SingleNotification {
-  type: string;
+  type: 'success' | 'error';
   text: string;
   id?: string;
 }

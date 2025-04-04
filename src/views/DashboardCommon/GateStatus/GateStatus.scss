@@ -16,22 +16,6 @@
     margin-top: $main-spacing;
   }
 
-  @include gt-sm {
-    width: 90vw;
-  }
-
-  @include gt-md {
-    width: 80vw;
-  }
-
-  @include gt-lg {
-    width: 80vw;
-  }
-
-  @include gt-xl {
-    width: 65vw;
-  }
-
   .single-status {
     margin-bottom: math.div($main-spacing, 2);
     color: $color-text-alter;

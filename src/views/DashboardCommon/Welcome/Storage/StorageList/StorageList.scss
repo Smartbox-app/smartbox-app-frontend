@@ -2,7 +2,16 @@
 @import '../../../../../config/mixins.scss';
 
 .storage-info-wrapper {
-  display: flex;
+  display: grid;
   flex-direction: row;
   flex-wrap: wrap;
+  width: 100%;
+  gap: 16px;
+  grid-template-columns: 1fr;
+  @include gt-sm {
+    grid-template-columns: 1fr 1fr;
+  }
+  @include gt-md {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
 }

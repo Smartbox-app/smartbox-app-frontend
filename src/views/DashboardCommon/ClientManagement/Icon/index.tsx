@@ -11,6 +11,7 @@ import { successNotification } from '../../../../actions/notifications';
 import { __ } from '../../../../helpers/i18n';
 import { mapFields } from '../../../../utils/fields-mapper';
 import { useTenant } from '../../../../hooks/useTenant';
+import { useGetMyDetailsQuery } from 'src/queries';
 
 interface Props {
     userId?: string;
@@ -18,7 +19,7 @@ interface Props {
 
 const ManageTenantIcon = ({ userId }: Props) => {
     const dispatch = useDispatch();
-    const user = useSelector((state: ApplicationState) => state.user.details);
+  const { data: user } = useGetMyDetailsQuery();
     const { tenant } = useTenant();
     if (!user) return null;
 

@@ -6,6 +6,7 @@ import { UserRole } from 'smartbox-types';
 import { stock, stockGroup } from '../../../actions';
 import { rememberRedirect } from '../../../utils/remeber-redirect';
 import { ApplicationState } from '../../../reducers';
+import { useGetMyDetailsQuery } from 'src/queries';
 
 interface Props {
     getStockList: () => void;
@@ -16,7 +17,7 @@ interface Props {
 }
 
 const RouteWorker = ({ exact, path, component, getStockList, getStockGroupsList }: Props) => {
-    const user = useSelector((state: ApplicationState) => state.user.details);
+  const { data: user } = useGetMyDetailsQuery();
     useEffect(() => {
         getStockList();
         getStockGroupsList();

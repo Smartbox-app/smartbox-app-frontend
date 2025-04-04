@@ -4,18 +4,23 @@ import { Logo } from '../../Branded';
 import './MobileLogoContainer.scss';
 
 interface Props {
-    small?: boolean;
-    onlyBottomMargin?: boolean;
-    className?: string;
+  small?: boolean;
+  onlyBottomMargin?: boolean;
+  className?: string;
 }
 
-const MobileLogoContainer = ({ small, onlyBottomMargin, className }: Props): any => (
-    <div
-        className={`mobile-logo-container ${className || ''} ${small ? 'small' : ''} ${onlyBottomMargin ? 'only-bottom-margin' : ''
-            }`}
-    >
-        <Logo />
-    </div>
+const MobileLogoContainer = ({
+  small,
+  onlyBottomMargin,
+  className,
+}: Props): any => (
+  <div
+    className={`mobile-logo-container ${className || ''} ${small ? 'small' : ''} ${
+      onlyBottomMargin ? 'only-bottom-margin' : ''
+    }`}
+  >
+    <Logo width="medium" />
+  </div>
 );
 
 export default MobileLogoContainer;

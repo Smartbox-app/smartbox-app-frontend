@@ -1,29 +1,28 @@
-import React, { useState, useEffect } from "react";
-import { bindActionCreators } from "redux";
+import React, { useEffect } from 'react';
+import { bindActionCreators } from 'redux';
 import {
   BoxListRes,
   BoxMapRes,
   RentDetailsRes,
   RentStatus,
   UserRes,
-} from "smartbox-types";
-import { connect, useDispatch } from "react-redux";
-import { boxes } from "../../../actions";
-import { PageHeader } from "../../../components/Layout";
-import { ApplicationState } from "../../../reducers";
-import { dateOnly } from "../../../utils/format-date";
-import { __ } from "../../../helpers/i18n";
-import { isAdminOrTenant } from "../../../utils/role-check";
+} from 'smartbox-types';
+import { connect, useDispatch } from 'react-redux';
+import { boxes } from '../../../actions';
+import { PageHeader } from '../../../components/Layout';
+import { ApplicationState } from '../../../reducers';
+import { dateOnly } from '../../../utils/format-date';
+import { __ } from '../../../helpers/i18n';
 
-import DescriptionRow from "./DescriptionRow";
-import Edit from "./Edit";
+import DescriptionRow from './DescriptionRow';
+import { Edit } from './Edit';
 
-import "./BoxDetail.scss";
+import './BoxDetail.scss';
+import { useGetMyDetailsQuery } from '../../../queries';
 
 interface Props {
   singleBoxDetail: RentDetailsRes;
   box: BoxListRes | BoxMapRes;
-  user: UserRes | null;
   stockId: string;
   boxDataCleanUp: () => void;
   callback?: () => void;
@@ -33,12 +32,11 @@ const BoxDetail = ({
   boxDataCleanUp,
   box: { rentId, id, identifier, status },
   singleBoxDetail,
-  user,
   stockId,
   callback,
 }: Props) => {
-  const [optionDisplayState, optionDisplayToggle] = useState(false);
   const dispatch = useDispatch();
+  const { data: user } = useGetMyDetailsQuery();
 
   useEffect(() => {
     if (rentId) dispatch(boxes.fetchSingleBoxDetails(rentId));
@@ -50,7 +48,7 @@ const BoxDetail = ({
 
   if (!user) return null;
 
-  const isThisBoxFree = (data: string): boolean => data === "";
+  const isThisBoxFree = (data: string): boolean => data === '';
 
   return (
     <div className="detail-wrapper">
@@ -65,7 +63,7 @@ const BoxDetail = ({
           <DescriptionRow icon="fa-user" text="application.rentedBy">
             {singleBoxDetail.owner
               ? `${singleBoxDetail.owner.firstName} ${singleBoxDetail.owner.lastName}`
-              : "---"}
+              : '---'}
           </DescriptionRow>
 
           <DescriptionRow icon="fa-calendar" text="application.startDate">
@@ -82,22 +80,22 @@ const BoxDetail = ({
                 {singleBoxDetail.owner.phone}
               </a>
             ) : (
-              "---"
+              '---'
             )}
           </DescriptionRow>
 
           <DescriptionRow icon="fa-envelope" text="application.mail">
             {isThisBoxFree(rentId) ? (
-              "---"
+              '---'
             ) : (
               <a
-                href={`mailto:${singleBoxDetail.owner?.email ? singleBoxDetail.owner?.email : "error"}`}
+                href={`mailto:${singleBoxDetail.owner?.email ? singleBoxDetail.owner?.email : 'error'}`}
                 rel="noopener noreferrer"
                 target="_blank"
               >
                 {singleBoxDetail.owner
                   ? singleBoxDetail.owner.email
-                  : __("application.lack")}
+                  : __('application.lack')}
               </a>
             )}
           </DescriptionRow>
@@ -122,7 +120,6 @@ const BoxDetail = ({
 
 const mapStateToProps = (state: ApplicationState) => ({
   singleBoxDetail: state.boxes.singleBoxDetail,
-  user: state.user.details,
 });
 
 const mapDispatchToProps = (dispatch: any) =>

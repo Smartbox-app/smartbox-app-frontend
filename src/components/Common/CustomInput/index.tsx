@@ -1,5 +1,5 @@
 import React from 'react';
-import { ErrorMessage } from 'react-hook-form';
+import { ErrorMessage } from '@hookform/error-message';
 import { __ } from '../../../helpers/i18n';
 
 import './CustomInput.scss';

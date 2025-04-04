@@ -1,56 +1,55 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { auth } from '../../../actions';
-
 import { MenuItemType } from '../../../types/menu-item';
 
-import MenuItem from './MenuItem';
 import { LogoContainer } from '../../Branded';
 
 import './Navigation.scss';
+import { useLogoutMutation } from 'src/mutations';
+import styled from 'styled-components';
+import { SidebarButton } from '../../ui/SidebarButton';
+import { Logout } from '../../../icons';
 
 interface Props {
-    menuItems: MenuItemType[];
-    logout: () => void;
+  menuItems: MenuItemType[];
 }
 
-const Navigation = ({ logout, menuItems }: Props) => {
-    const basicItems: MenuItemType[] = [
-        {
-            icon: 'logout.svg',
-            text: 'application.logout',
-            onClick: logout,
-            customClass: 'logout-button',
-        },
-    ];
+const StyledHeader = styled('header')(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  gap: theme.spacing * 2,
+}));
 
-    const menu = [...menuItems, ...basicItems].map((item: MenuItemType, index: number) => (
-        <MenuItem
-            key={item.text}
-            address={item.address}
-            icon={item.icon}
-            text={item.text}
-            badge={item.badge}
-            onClick={item.onClick}
-            customClass={item.customClass}
-        />
-    ));
+const StyledNavigation = styled('nav')(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  gap: theme.spacing * 2,
+}));
 
-    return (
-        <div className="page-header-wrapper">
-            <LogoContainer />
-            <div className="navigation-wrapper">{menu}</div>
-        </div>
-    );
+export const Navigation = ({ menuItems }: Props) => {
+  const { mutate: logout } = useLogoutMutation();
+  const basicItems: MenuItemType[] = [
+    {
+      icon: <Logout />,
+      text: 'application.logout',
+      onClick: () => logout(),
+    },
+  ];
+
+  const menu = [...menuItems, ...basicItems].map((item: MenuItemType) => (
+    <SidebarButton
+      key={item.text}
+      to={item.to}
+      icon={item.icon}
+      text={item.text}
+      onClick={item.onClick}
+    />
+  ));
+
+  return (
+    <StyledHeader>
+      <LogoContainer />
+      <StyledNavigation>{menu}</StyledNavigation>
+    </StyledHeader>
+  );
 };
-
-const mapDispatchToProps = (dispatch: any) =>
-    bindActionCreators(
-        {
-            ...auth,
-        },
-        dispatch,
-    );
-
-export default connect(null, mapDispatchToProps)(Navigation);

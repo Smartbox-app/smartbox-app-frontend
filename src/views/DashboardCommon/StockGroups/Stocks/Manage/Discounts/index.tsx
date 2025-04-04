@@ -2,12 +2,11 @@ import React from 'react';
 import { Switch, Route, Redirect, useParams, } from 'react-router';
 import { List } from './List';
 import UserService from '../../../../../../services/user-service';
-import { useSelector } from 'react-redux';
-import { ApplicationState } from '../../../../../../reducers';
+import { useGetMyDetailsQuery } from 'src/queries';
 
 const Discounts = () => {
     const { stockId } = useParams<{ stockId: string }>();
-    const user = useSelector((state: ApplicationState) => state.user.details);
+      const { data: user } = useGetMyDetailsQuery();
 
     if (!user) return null;
 

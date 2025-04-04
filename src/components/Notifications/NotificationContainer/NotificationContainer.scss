@@ -7,12 +7,12 @@
   right: 0;
   z-index: 999;
   width: 100%;
-  @include safe-top(0px);
+  @include safe-bottom(0px);
 }
 
 @include gt-sm {
   .notification-container {
-    top: 0;
+    bottom: 0;
     width: 350px;
   }
 }

@@ -1,57 +1,56 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { FieldType, boxesList } from "smartbox-tables";
+import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { FieldType, boxesList } from 'smartbox-tables';
 import {
   AccessControl,
   BoxListRes,
   IStock,
   RentStatus,
   UserRole,
-} from "smartbox-types";
-import { Alert, ApiTable } from "../../../../../../../components/Common";
-import { Button, Spinner } from "../../../../../../../components/Branded";
+} from 'smartbox-types';
+import { Alert, ApiTable } from '../../../../../../../components/Common';
+import { Button, Spinner } from '../../../../../../../components/Branded';
 import {
   ButtonsContainer,
   SimpleHeader,
-} from "../../../../../../../components/Layout";
-import { __ } from "../../../../../../../helpers/i18n";
-import { InteractiveTableSchema } from "../../../../../../../utils/table-schema-utils";
-import UserService from "../../../../../../../services/user-service";
-import { showModal } from "../../../../../../../actions/modal";
-import { ConfirmModal } from "../../../../../../../components/Common";
-import ApiService from "../../../../../../../services/api-service";
+} from '../../../../../../../components/Layout';
+import { __ } from '../../../../../../../helpers/i18n';
+import { InteractiveTableSchema } from '../../../../../../../utils/table-schema-utils';
+import UserService from '../../../../../../../services/user-service';
+import { showModal } from '../../../../../../../actions/modal';
+import { ConfirmModal } from '../../../../../../../components/Common';
+import ApiService from '../../../../../../../services/api-service';
 import {
-  errorNotification,
   errorNotificationText,
   successNotification,
-} from "../../../../../../../actions/notifications";
-import { refreshApiTableData } from "../../../../../../../actions/api-table";
-import { useParams } from "react-router";
-import { Edit } from "../Edit";
-import { ApplicationState } from "../../../../../../../reducers";
-import BoxDetail from "../../../../../BoxDetail";
-import { BoxStatus } from "./BoxStatus";
-import { AssignRentToUser } from "../../../../../AssignRentToUser";
+} from '../../../../../../../actions/notifications';
+import { refreshApiTableData } from '../../../../../../../actions/api-table';
+import { useParams } from 'react-router';
+import { Edit } from '../Edit';
+import BoxDetail from '../../../../../BoxDetail';
+import { BoxStatus } from './BoxStatus';
+import { AssignRentToUser } from '../../../../../AssignRentToUser';
+import { useGetMyDetailsQuery } from 'src/queries';
 
 const List = () => {
-  const user = useSelector((state: ApplicationState) => state.user.details!);
+  const { data: user } = useGetMyDetailsQuery();
   const dispatch = useDispatch();
   const [stock, setStock] = useState<IStock>();
   const [isLoading, setIsLoading] = useState(false);
   const { stockId } = useParams<{ stockId: string }>();
 
-  const hasFullAccess = [UserRole.admin, UserRole.client].includes(user.role);
+  const hasFullAccess = [UserRole.admin, UserRole.client].includes(user!.role);
 
   const getStock = async () => {
-    await ApiService.callFetch("GET", `stock/${stockId}`, (res: IStock) => {
+    await ApiService.callFetch('GET', `stock/${stockId}`, (res: IStock) => {
       setStock(res);
     });
   };
 
   const deleteBox = async (boxId: string) => {
     setIsLoading(true);
-    await ApiService.callFetch("DELETE", `box/${boxId}`, () => {
-      dispatch(successNotification("application.boxDeleted"));
+    await ApiService.callFetch('DELETE', `box/${boxId}`, () => {
+      dispatch(successNotification('application.boxDeleted'));
       dispatch(refreshApiTableData());
     });
     setIsLoading(false);
@@ -60,15 +59,15 @@ const List = () => {
   const openBox = async (boxId: string) => {
     setIsLoading(true);
     await ApiService.callFetch(
-      "GET",
+      'GET',
       `box/open/${boxId}`,
       (isSuccess: boolean) => {
         if (isSuccess) {
-          dispatch(successNotification("application.boxOpenedSuccessfully"));
+          dispatch(successNotification('application.boxOpenedSuccessfully'));
         } else {
-          dispatch(errorNotificationText("application.cannotOpenBox"));
+          dispatch(errorNotificationText('application.cannotOpenBox'));
         }
-      }
+      },
     );
     setIsLoading(false);
   };
@@ -80,8 +79,8 @@ const List = () => {
           approveButtonText="application.delete"
           mainText="application.deleteBoxText"
           approveAction={() => deleteBox(boxId)}
-        />
-      )
+        />,
+      ),
     );
   };
 
@@ -92,8 +91,8 @@ const List = () => {
           approveButtonText="application.openBox"
           mainText="application.openBoxConfirmation"
           approveAction={() => openBox(boxId)}
-        />
-      )
+        />,
+      ),
     );
   };
 
@@ -102,9 +101,9 @@ const List = () => {
   }, [stockId]);
 
   const scheme = new InteractiveTableSchema(boxesList)
-    .modifyFieldStatic("pricing", {
-      name: __("application.pricingIsSet"),
-      field: "pricing",
+    .modifyFieldStatic('pricing', {
+      name: __('application.pricingIsSet'),
+      field: 'pricing',
       mobile: true,
       defaultSort: true,
       type: FieldType.Custom,
@@ -115,9 +114,9 @@ const List = () => {
           <Alert simple type="error" text="application.no" />
         ),
     })
-    .modifyFieldStatic("status", {
-      name: __("application.state"),
-      field: "status",
+    .modifyFieldStatic('status', {
+      name: __('application.state'),
+      field: 'status',
       mobile: true,
       defaultSort: true,
       type: FieldType.Custom,
@@ -126,8 +125,8 @@ const List = () => {
       ),
     })
     .addFieldAtTheEnd({
-      name: __("application.actions"),
-      field: "actions",
+      name: __('application.actions'),
+      field: 'actions',
       type: FieldType.Custom,
       mobile: true,
       customRender: (value, field, boxData: BoxListRes) => (
@@ -163,8 +162,8 @@ const List = () => {
                 click={() =>
                   dispatch(
                     showModal(
-                      <Edit id={boxData.id} stockId={boxData.stockId} />
-                    )
+                      <Edit id={boxData.id} stockId={boxData.stockId} />,
+                    ),
                   )
                 }
               />
@@ -188,12 +187,12 @@ const List = () => {
           <Button
             text="application.addBox"
             primary
-            to={`/${UserService.getSlugByRole(user.role)}/locations/stocks/${stockId}/boxes/add`}
+            to={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/boxes/add`}
           />
           <Button
             text="application.addBoxes"
             secondary
-            to={`/${UserService.getSlugByRole(user.role)}/locations/stocks/${stockId}/boxes/add-multiple`}
+            to={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/boxes/add-multiple`}
           />
         </ButtonsContainer>
       )}

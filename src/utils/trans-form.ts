@@ -1,5 +1,5 @@
 // import * as errorTranslations from '../data/errorsTranslations.json';
-// eslint-disable-next-line @typescript-eslint/no-var-requires
+ 
 import { ApiErrorCode } from 'smartbox-types';
 
 const errors = require('../data/errorsTranslations.json');

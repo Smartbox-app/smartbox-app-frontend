@@ -42,8 +42,8 @@ const Position = ({ rentId, stockId, successNotification, hideModal, showModal, 
     showModal(
       <>
         <div className="modal-alert-wrapper">
-          <Alert type="primary" text="application.userWillGetMailWithInformation" />
-          <Alert type="primary" text="application.actionCanNotBeUnDone" />
+          <Alert type="notice" text="application.userWillGetMailWithInformation" />
+          <Alert type="notice" text="application.actionCanNotBeUnDone" />
         </div>
         <ButtonsContainer max>
           <Button text="application.cancel" danger click={() => hideModal()} />

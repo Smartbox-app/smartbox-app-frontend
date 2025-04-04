@@ -6,27 +6,23 @@ import MobileLogoContainer from '../../components/Layout/MobileLogoContainer';
 import { Welcome, Order, Profile, Contact } from '../DashboardCommon';
 import { MenuItemType } from '../../types/menu-item';
 
-import DashboardContainer from '../../components/Layout/DashboardContainer';
-import Navigation from '../../components/Layout/Navigation';
+import { DashboardContainer } from '../../components/Layout/DashboardContainer';
+import { Navigation } from '../../components/Layout/Navigation';
 import SingleRentDetail from '../DashboardCommon/SingleRentDetail';
+import { Home, Settings } from '../../icons';
 
 const DashboardUser = () => {
   const menuItems: MenuItemType[] = [
     {
-      icon: 'dashboard.svg',
+      icon: <Home />,
       text: 'application.home',
-      address: '/user/main',
+      to: '/user/main',
     },
     {
-      icon: 'account.svg',
+      icon: <Settings />,
       text: 'application.account',
-      address: '/user/profile',
+      to: '/user/profile',
     },
-    // {
-    //   icon: 'email.svg',
-    //   text: 'application.contact',
-    //   address: '/user/contact',
-    // },
   ];
 
   return (
@@ -35,12 +31,20 @@ const DashboardUser = () => {
       <Navigation menuItems={menuItems} />
       <Main>
         <Switch>
-          <Route exact path="/user" render={() => <Redirect to="/user/main" />} />
+          <Route
+            exact
+            path="/user"
+            render={() => <Redirect to="/user/main" />}
+          />
           <Route path="/user/main" component={Welcome} />
           <Route path="/user/profile" component={Profile} />
           <Route path="/user/contact" component={Contact} />
           <Route path="/user/order/step/:step/:rentId?" component={Order} />
-          <Route exact path="/user/single-rent/:orderId" component={SingleRentDetail} />
+          <Route
+            exact
+            path="/user/single-rent/:orderId"
+            component={SingleRentDetail}
+          />
         </Switch>
       </Main>
     </DashboardContainer>

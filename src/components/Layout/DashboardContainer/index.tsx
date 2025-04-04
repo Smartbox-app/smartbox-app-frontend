@@ -1,27 +1,27 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { ApplicationState } from '../../../reducers';
 import { Footer } from '../index';
 import './DashboardContainer.scss';
+import { Container } from '../../ui';
+import styled from 'styled-components';
 
 interface Props {
   children: React.ReactNode;
 }
 
-const DashboardContainer = ({ children }: Props) => {
+const StyledDashboardContainer = styled('div')(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: theme.spacing * 4,
+  width: '100%',
+}));
+
+export const DashboardContainer = ({ children }: Props) => {
   return (
-    <div className="dashboard-container">
-      {children}
-      <Footer />
-    </div>
+    <Container>
+      <StyledDashboardContainer>
+        {children}
+        <Footer />
+      </StyledDashboardContainer>
+    </Container>
   );
 };
-
-const mapStateToProps = (state: ApplicationState) => ({
-  user: state.user.details,
-});
-
-const mapDispatchToProps = (dispatch: any) => bindActionCreators({}, dispatch);
-
-export default connect(mapStateToProps, mapDispatchToProps)(DashboardContainer);

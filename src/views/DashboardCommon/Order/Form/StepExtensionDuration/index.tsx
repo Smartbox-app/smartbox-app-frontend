@@ -39,6 +39,7 @@ import { getColorForBackground } from "../../../../../utils/color";
 import { PaymentType } from "../Common/PaymentType";
 import { getMinRentPeriodExtendingForRent } from "../../../../../actions/single-rent";
 import { darken, lighten } from "polished";
+import { useGetMyDetailsQuery } from "src/queries";
 
 const StyledCalendarPicker = styled.div`
   margin: 0 -10px;
@@ -65,13 +66,12 @@ interface Props {
   history: any;
   formData: FormType;
   stockId: string;
-  user: UserRes | null;
   rent: MyRentList;
-  updateFormData: (data: Partial<FormType>) => void;
   clearPaymentDetails: () => void;
 }
 
-const StepExtensionDuration = ({ clearPaymentDetails, user }: Props) => {
+const StepExtensionDuration = ({ clearPaymentDetails }: Props) => {
+  const { data: user } = useGetMyDetailsQuery();
   const dispatch = useDispatch();
   const { rentId, step } = useParams<{ step: string; rentId?: string }>();
   const [rent, setRent] = useState<MyRentDetails>();
@@ -180,7 +180,7 @@ const StepExtensionDuration = ({ clearPaymentDetails, user }: Props) => {
   const allRequiredAddonsSelected = useMemo(() => {
     const addonIds = Object.keys(orderAddons);
     console.log("ADDONS", orderAddons);
-    for (let addonId of addonIds) {
+    for (const addonId of addonIds) {
       const orderAddon = orderAddons[addonId];
       if (orderAddon.required && !orderAddon.selectedVariant) {
         if (!orderAddon.userFileAllowed) return false;
@@ -193,7 +193,7 @@ const StepExtensionDuration = ({ clearPaymentDetails, user }: Props) => {
           return false;
       }
 
-      for (let acceptance of orderAddon.acceptances) {
+      for (const acceptance of orderAddon.acceptances) {
         if (
           orderAddon.selectedVariant &&
           acceptance &&
@@ -268,7 +268,6 @@ const StepExtensionDuration = ({ clearPaymentDetails, user }: Props) => {
 
 const mapStateToProps = (state: ApplicationState) => ({
   formData: state.order.formData,
-  user: state.user.details,
   rent: state.rent.singleRent,
 });
 

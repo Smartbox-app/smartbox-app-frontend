@@ -27,7 +27,6 @@
 @include gt-lg {
   .page-header-wrapper {
     justify-content: space-between;
-    width: 80vw;
     margin: 0 auto $main-spacing;
 
     .navigation-wrapper {
@@ -46,21 +45,18 @@
 @include gt-sm {
   .page-header-wrapper {
     margin: 0 auto;
-    width: 90vw;
   }
 }
 
 @include gt-md {
   .page-header-wrapper {
     margin: 0 auto;
-    width: 80vw;
   }
 }
 
 @include gt-lg {
   .page-header-wrapper {
     display: flex;
-    width: 80vw;
     flex-direction: row;
   }
 }
@@ -68,7 +64,6 @@
 @include gt-xl {
   .page-header-wrapper {
     display: flex;
-    width: 65vw;
     flex-direction: row;
   }
 }

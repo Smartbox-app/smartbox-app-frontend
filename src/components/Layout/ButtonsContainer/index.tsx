@@ -1,6 +1,7 @@
 import React from 'react';
 
 import './ButtonsContainer.scss';
+import styled from 'styled-components';
 
 interface Props {
   children: React.ReactNode;
@@ -10,14 +11,18 @@ interface Props {
   spaceBetween?: boolean;
 }
 
+const StyledButtonsContainer = styled('div')(({theme}) => ({
+  gap: theme.spacing * 4
+}))
+
 const ButtonsContainer = ({ max, children, column, spaceBetween, className }: Props) => (
-  <div
+  <StyledButtonsContainer
     className={`buttons-container ${max ? 'max' : ''} ${column ? 'column' : ''} ${
       spaceBetween ? 'space-between' : ''
     } ${className || ''}`}
   >
     {children}
-  </div>
+  </StyledButtonsContainer>
 );
 
 export default ButtonsContainer;

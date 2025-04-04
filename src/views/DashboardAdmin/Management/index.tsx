@@ -1,9 +1,7 @@
 import React from 'react';
-import { connect, useSelector } from 'react-redux';
 import { Switch, Route, Redirect } from 'react-router';
 import { Tabs } from '../../../components/Branded';
 import { Section } from '../../../components/Layout';
-import { ApplicationState } from '../../../reducers';
 import UserService from '../../../services/user-service';
 
 import WorkersManagement from '../../DashboardCommon/WorkersManagement';
@@ -14,9 +12,10 @@ import SMS from '../../DashboardCommon/SMS';
 import Settings from './Settings';
 
 import ClientsManagement from './ClientsManagement';
+import { useGetMyDetailsQuery } from '../../../queries';
 
 const Management = () => {
-    const user = useSelector((state: ApplicationState) => state.user.details);
+    const { data: user } = useGetMyDetailsQuery();
 
     if (!user) return null;
 

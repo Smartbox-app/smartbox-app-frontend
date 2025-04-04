@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { DiscountList } from 'smartbox-types';
 import { stock } from '../../../../actions';
-import { Section, SectionHeader } from '../../../../components/Layout';
 import { ApplicationState } from '../../../../reducers';
 import Discounts from './Discounts';
 import { __ } from '../../../../helpers/i18n';
+import { Header, Section } from '../../../../components/ui';
 
 interface Props {
   discountsList: DiscountList[];
@@ -28,8 +28,8 @@ const Sale = ({ discountsList, getStockDiscountsList }: Props) => {
   };
 
   return (
-    <Section full highlight>
-      <SectionHeader title='application.discounts' />
+    <Section>
+      <Header variant='h2'>{__('application.discounts')}</Header>
       <Discounts discounts={createText(discountsList)} />
     </Section>
   );

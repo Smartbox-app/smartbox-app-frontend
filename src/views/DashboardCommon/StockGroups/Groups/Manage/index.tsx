@@ -1,22 +1,21 @@
-import React, { useMemo } from "react";
-import { useSelector } from "react-redux";
+import React, { useMemo } from 'react';
 
 import {
   PageHeader,
   ButtonsContainer,
   Section,
-} from "../../../../../components/Layout";
-import { Button, Tabs } from "../../../../../components/Branded";
-import { Redirect, Route, Switch, useParams } from "react-router";
-import UserService from "../../../../../services/user-service";
-import { ApplicationState } from "../../../../../reducers";
-import { BasicData } from "./BasicData";
-import { Gates } from "./Gates";
-import { UserRole } from "smartbox-types";
+} from '../../../../../components/Layout';
+import { Button, Tabs } from '../../../../../components/Branded';
+import { Redirect, Route, Switch, useParams } from 'react-router';
+import UserService from '../../../../../services/user-service';
+import { BasicData } from './BasicData';
+import { Gates } from './Gates';
+import { UserRole } from 'smartbox-types';
+import { useGetMyDetailsQuery } from 'src/queries';
 
 const ManageGroup = () => {
   const { stockGroupId } = useParams<{ stockGroupId: string }>();
-  const user = useSelector((state: ApplicationState) => state.user.details);
+  const { data: user } = useGetMyDetailsQuery();
 
   const hasFullAccess = [UserRole.admin, UserRole.client].includes(user!.role);
 
@@ -24,7 +23,7 @@ const ManageGroup = () => {
     const basicElements = [
       {
         to: `/${UserService.getSlugByRole(user!.role)}/locations/groups/${stockGroupId}/gates`,
-        text: "application.gates",
+        text: 'application.gates',
       },
     ];
 
@@ -33,7 +32,7 @@ const ManageGroup = () => {
     return [
       {
         to: `/${UserService.getSlugByRole(user!.role)}/locations/groups/${stockGroupId}/data`,
-        text: "application.stockGroupBasicData",
+        text: 'application.stockGroupBasicData',
       },
       ...basicElements,
     ];

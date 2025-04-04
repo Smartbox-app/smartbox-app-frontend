@@ -3,19 +3,29 @@
 
 .progress-indicator-wrapper {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   flex-wrap: nowrap;
   margin-bottom: $main-spacing * 1;
   width: 100%;
   margin-top: $main-spacing;
   margin-left: -5px;
 
+
   .single-stamp {
     display: flex;
-    flex: 0 0 16.6666%;
+    flex: 0 0 15%;
     flex-direction: row;
     flex-wrap: wrap;
     position: relative;
+    justify-content: center;
+    padding: 8px;
+    @include gt-sm {
+      padding: 0;
+    }
+  }
+
+  @include gt-sm {
+    flex-direction: row;
     justify-content: center;
   }
 }

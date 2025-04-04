@@ -1,17 +1,16 @@
-import React from "react";
-import { Switch, Route, Redirect, useParams } from "react-router";
-import { Add } from "./Add";
-import { AddBatch } from "./AddBatch";
-import { List } from "./List";
-import UserService from "../../../../../../services/user-service";
-import { useSelector } from "react-redux";
-import { ApplicationState } from "../../../../../../reducers";
-import { Map } from "../Map";
-import { UserRole } from "smartbox-types";
+import React from 'react';
+import { Switch, Route, Redirect, useParams } from 'react-router';
+import { Add } from './Add';
+import { AddBatch } from './AddBatch';
+import { List } from './List';
+import UserService from '../../../../../../services/user-service';
+import { Map } from '../Map';
+import { UserRole } from 'smartbox-types';
+import { useGetMyDetailsQuery } from 'src/queries';
 
 const Boxes = () => {
   const { stockId } = useParams<{ stockId: string }>();
-  const user = useSelector((state: ApplicationState) => state.user.details);
+  const { data: user } = useGetMyDetailsQuery();
 
   if (!user) return null;
 

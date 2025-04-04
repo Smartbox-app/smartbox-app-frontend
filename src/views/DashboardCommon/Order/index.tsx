@@ -1,20 +1,26 @@
 import React, { useEffect } from 'react';
 
 import { withRouter, RouteComponentProps, useParams } from 'react-router';
-import { FormContainer, Section, SectionHeader } from '../../../components/Layout';
+import { FormContainer } from '../../../components/Layout';
 import { ProgressIndicator } from '../../../components/Common';
 
-import Form from './Form/Index';
+import { Form } from './Form/Index';
 import { useDispatch, useSelector } from 'react-redux';
 import { getStockDiscountsList } from '../../../actions/stock';
 import { ApplicationState } from 'src/reducers';
 import { RentStatus } from 'smartbox-types';
 import { getSingleRent } from '../../../actions/single-rent';
+import { PageHeader, Section } from '../../../components/ui';
+import { __ } from '../../../helpers/i18n';
 
 export const Order = () => {
   const dispatch = useDispatch();
   const { singleRent } = useSelector((state: ApplicationState) => state.rent);
-  const { step, paymentId, rentId } = useParams<{ step: string; paymentId: string, rentId?: string }>();
+  const { step, paymentId, rentId } = useParams<{
+    step: string;
+    paymentId: string;
+    rentId?: string;
+  }>();
 
   useEffect(() => {
     dispatch(getStockDiscountsList());
@@ -24,8 +30,7 @@ export const Order = () => {
     if (!rentId || paymentId) return;
 
     dispatch(getSingleRent(rentId));
-
-}, [rentId])
+  }, [rentId]);
 
   const getStepByName = (stepName: string) => {
     switch (stepName) {
@@ -47,46 +52,49 @@ export const Order = () => {
   };
 
   const getTitle = () => {
-    if(singleRent && singleRent.status === RentStatus.noPaidExtension) return 'application.debtPayOff';
-    if(rentId) return 'application.extendsOrder';
-    return 'application.newOrder'
-  }
+    console.log('BRUH', singleRent);
+    if (singleRent && singleRent.status === RentStatus.noPaidExtension)
+      return 'application.debtPayOff';
+    if (rentId) return 'application.extendsOrder';
+    return 'application.newOrder';
+  };
 
   return (
-    <Section>
-      <SectionHeader title={getTitle()} />
-      <ProgressIndicator
-        current={getStepByName(step)}
-        stepList={[
-          {
-            value: 1,
-            desc: 'application.orderStepStock',
-          },
-          {
-            value: 2,
-            desc: 'application.orderStepSize',
-          },
-          {
-            value: 3,
-            desc: 'application.orderStepDate',
-          },
-          {
-            value: 4,
-            desc: 'application.orderStepSummary',
-          },
-          {
-            value: 5,
-            desc: 'application.orderStepAgreement',
-          },
-          {
-            value: 6,
-            desc: 'application.orderStepPayment',
-          },
-        ]}
-      />
-      <FormContainer>
-        <Form />
-      </FormContainer>
-    </Section>
+    <>
+      <PageHeader>{__(getTitle())}</PageHeader>
+      <Section>
+        <ProgressIndicator
+          current={getStepByName(step)}
+          stepList={[
+            {
+              value: 1,
+              desc: 'application.orderStepStock',
+            },
+            {
+              value: 2,
+              desc: 'application.orderStepSize',
+            },
+            {
+              value: 3,
+              desc: 'application.orderStepDate',
+            },
+            {
+              value: 4,
+              desc: 'application.orderStepSummary',
+            },
+            {
+              value: 5,
+              desc: 'application.orderStepAgreement',
+            },
+            {
+              value: 6,
+              desc: 'application.orderStepPayment',
+            },
+          ]}
+        />
+      </Section>
+
+      <Form />
+    </>
   );
 };

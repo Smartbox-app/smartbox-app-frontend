@@ -1,9 +1,8 @@
 import React, { useEffect } from 'react';
-import { connect, useSelector } from 'react-redux';
+import { connect } from 'react-redux';
 
 import { bindActionCreators } from 'redux';
 import { MyRentList } from 'smartbox-types';
-import { PageHeader, Section, SectionHeader } from '../../../components/Layout';
 import { ApplicationState } from '../../../reducers';
 import { __ } from '../../../helpers/i18n';
 
@@ -11,9 +10,24 @@ import { singleRent } from '../../../actions';
 import Storage from './Storage';
 import Sale from './Sale';
 import OrdersHistory from './OrdersHistory';
-import {Offers} from './Offers';
+import { NewRentButton } from './NewRentButton/NewRentButton';
 
-import './Welcome.scss';
+import { useGetMyDetailsQuery } from 'src/queries';
+import styled from 'styled-components';
+import { Header } from '../../../components/ui';
+
+const WelcomeHeader = styled('div')(({theme}) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  width: '100%',
+  gap: theme.spacing * 2,
+  '@media(min-width: 500px)': {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+}));
 
 interface Props {
   rentsList: MyRentList[];
@@ -23,24 +37,31 @@ interface Props {
   fetchMyRentHistory: () => void;
 }
 
-const Welcome = ({ getMyRentList, rentsList, fetchMyRentHistory, rentsHistoryList, loading }: Props) => {
-    const user = useSelector((state: ApplicationState) => state.user.details!);
+const Welcome = ({
+  getMyRentList,
+  rentsList,
+  fetchMyRentHistory,
+  rentsHistoryList,
+  loading,
+}: Props) => {
+  const { data: user } = useGetMyDetailsQuery();
   useEffect(() => {
     getMyRentList();
     fetchMyRentHistory();
   }, []);
 
   return (
-    <div className="welcome-wrapper">
-      <Section full>
-        <PageHeader title={`${__('application.hi')} ${user.firstName}`} />
-      </Section>
+    <>
+      <WelcomeHeader>
+        <Header variant="main">
+          {__('application.hi')} {user!.firstName}
+        </Header>
+        <NewRentButton />
+      </WelcomeHeader>
       <Sale />
-      <Offers />
       <Storage myRentList={rentsList} loading={loading} />
       <OrdersHistory rentsHistoryList={rentsHistoryList} />
-    
-    </div>
+    </>
   );
 };
 

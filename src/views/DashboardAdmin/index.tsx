@@ -10,23 +10,24 @@ import Management from './Management';
 import Profile from '../DashboardCommon/Profile';
 import SingleRentDetail from '../DashboardCommon/SingleRentDetail';
 import { StockGroups } from '../DashboardCommon/StockGroups';
+import { Manage, Settings, Stocks } from '../../icons';
 
 const DashboardAdmin = () => {
   const menuItems: MenuItemType[] = [
     {
-      icon: 'settings.svg',
+      icon: <Manage />,
       text: 'application.management',
-      address: '/admin/management',
+      to: '/admin/management',
     },
     {
-      icon: 'dashboard.svg',
+      icon: <Stocks />,
       text: 'application.stocks',
-      address: '/admin/locations',
+      to: '/admin/locations',
     },
     {
-      icon: 'account.svg',
+      icon: <Settings />,
       text: 'application.account',
-      address: '/admin/profile',
+      to: '/admin/profile',
     },
   ];
 
@@ -36,11 +37,19 @@ const DashboardAdmin = () => {
       <Navigation menuItems={menuItems} />
       <Main>
         <Switch>
-          <Route exact path="/admin" render={() => <Redirect to="/admin/management" />} />
+          <Route
+            exact
+            path="/admin"
+            render={() => <Redirect to="/admin/management" />}
+          />
           <Route path="/admin/management/" component={Management} />
           <Route path="/admin/profile" component={Profile} />
           <Route path={`/admin/locations`} component={StockGroups} />
-          <Route exact path="/admin/single-rent/:orderId" component={SingleRentDetail} />
+          <Route
+            exact
+            path="/admin/single-rent/:orderId"
+            component={SingleRentDetail}
+          />
         </Switch>
       </Main>
     </DashboardContainer>

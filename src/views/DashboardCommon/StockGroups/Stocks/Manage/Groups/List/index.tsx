@@ -1,10 +1,13 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { FieldType, boxGroupsList } from 'smartbox-tables';
 import { BoxGroupListRes } from 'smartbox-types';
 import { Alert, ApiTable } from '../../../../../../../components/Common';
 import { Button } from '../../../../../../../components/Branded';
-import { ButtonsContainer, SimpleHeader } from '../../../../../../../components/Layout';
+import {
+  ButtonsContainer,
+  SimpleHeader,
+} from '../../../../../../../components/Layout';
 import { __ } from '../../../../../../../helpers/i18n';
 import { InteractiveTableSchema } from '../../../../../../../utils/table-schema-utils';
 import UserService from '../../../../../../../services/user-service';
@@ -15,70 +18,88 @@ import { successNotification } from '../../../../../../../actions/notifications'
 import { refreshApiTableData } from '../../../../../../../actions/api-table';
 import { useParams } from 'react-router';
 import { Edit } from '../Edit';
-import { ApplicationState } from '../../../../../../../reducers';
+import { useGetMyDetailsQuery } from 'src/queries';
 
 const List = () => {
-    const user = useSelector((state: ApplicationState) => state.user.details!);
-    const dispatch = useDispatch();
-    const { stockId } = useParams<{ stockId: string }>();
+  const { data: user } = useGetMyDetailsQuery();
+  const dispatch = useDispatch();
+  const { stockId } = useParams<{ stockId: string }>();
 
-    const deleteGroup = async (boxGroupId: string) => {
-        await ApiService.callFetch('DELETE', `box-group-new/${boxGroupId}`, () => {
-            dispatch(successNotification('application.boxGroupDeleted'));
-            dispatch(refreshApiTableData());
-        })
-    }
+  const deleteGroup = async (boxGroupId: string) => {
+    await ApiService.callFetch('DELETE', `box-group-new/${boxGroupId}`, () => {
+      dispatch(successNotification('application.boxGroupDeleted'));
+      dispatch(refreshApiTableData());
+    });
+  };
 
-    const confirmBoxGroupDelete = (groupId: string) => {
-        dispatch(showModal(<ConfirmModal
-            approveButtonText='application.delete'
-            mainText='application.deleteGroupText'
-            approveAction={() => deleteGroup(groupId)}
-        />))
-    }
-
-    const scheme = new InteractiveTableSchema(boxGroupsList)
-        .modifyFieldStatic('pricing', {
-            name: __('application.pricingIsSet'),
-            field: 'pricing',
-            mobile: true,
-            defaultSort: true,
-            type: FieldType.Custom,
-            customRender: (value, field, boxData) => (boxData.pricing && boxData.pricing.length > 0) ? <Alert simple type='success' text='application.yes' /> : <Alert simple type='error' text='application.no' />
-        })
-        .addFieldAtTheEnd({
-            name: __('application.actions'),
-            field: 'actions',
-            mobile: true,
-            buttons: [
-                {
-                    name: 'application.pricing',
-                    type: 'primary',
-                    to: (data: BoxGroupListRes) => `/${UserService.getSlugByRole(user.role)}/locations/stocks/${stockId}/groups/${data.id}/pricing`
-                    // click: (data: BoxGroupListRes) => dispatch(showModal(<Edit id={data.id} stockId={data.stockId} />)),
-                },
-                {
-                    name: 'application.edit',
-                    type: 'secondary',
-                    click: (data: BoxGroupListRes) => dispatch(showModal(<Edit id={data.id} stockId={data.stockId} />)),
-                },
-                {
-                    name: 'application.delete',
-                    type: 'danger',
-                    click: (data: BoxGroupListRes) => confirmBoxGroupDelete(data.id),
-                }
-            ],
-        });
-
-    return (
-        <>
-            <SimpleHeader title='application.boxGroupsList' />
-            <ButtonsContainer>
-                <Button text='application.addBoxGroup' primary to={`/${UserService.getSlugByRole(user.role)}/locations/stocks/${stockId}/groups/add`} />
-            </ButtonsContainer>
-            <ApiTable scheme={scheme} apiEndpointSubUrl={`box-group-new/list/${stockId}`} />
-        </>
+  const confirmBoxGroupDelete = (groupId: string) => {
+    dispatch(
+      showModal(
+        <ConfirmModal
+          approveButtonText="application.delete"
+          mainText="application.deleteGroupText"
+          approveAction={() => deleteGroup(groupId)}
+        />,
+      ),
     );
-}
+  };
 
-export { List }
+  const scheme = new InteractiveTableSchema(boxGroupsList)
+    .modifyFieldStatic('pricing', {
+      name: __('application.pricingIsSet'),
+      field: 'pricing',
+      mobile: true,
+      defaultSort: true,
+      type: FieldType.Custom,
+      customRender: (value, field, boxData) =>
+        boxData.pricing && boxData.pricing.length > 0 ? (
+          <Alert simple type="success" text="application.yes" />
+        ) : (
+          <Alert simple type="error" text="application.no" />
+        ),
+    })
+    .addFieldAtTheEnd({
+      name: __('application.actions'),
+      field: 'actions',
+      mobile: true,
+      buttons: [
+        {
+          name: 'application.pricing',
+          type: 'primary',
+          to: (data: BoxGroupListRes) =>
+            `/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/groups/${data.id}/pricing`,
+          // click: (data: BoxGroupListRes) => dispatch(showModal(<Edit id={data.id} stockId={data.stockId} />)),
+        },
+        {
+          name: 'application.edit',
+          type: 'secondary',
+          click: (data: BoxGroupListRes) =>
+            dispatch(showModal(<Edit id={data.id} stockId={data.stockId} />)),
+        },
+        {
+          name: 'application.delete',
+          type: 'danger',
+          click: (data: BoxGroupListRes) => confirmBoxGroupDelete(data.id),
+        },
+      ],
+    });
+
+  return (
+    <>
+      <SimpleHeader title="application.boxGroupsList" />
+      <ButtonsContainer>
+        <Button
+          text="application.addBoxGroup"
+          primary
+          to={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/groups/add`}
+        />
+      </ButtonsContainer>
+      <ApiTable
+        scheme={scheme}
+        apiEndpointSubUrl={`box-group-new/list/${stockId}`}
+      />
+    </>
+  );
+};
+
+export { List };

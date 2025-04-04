@@ -12,7 +12,6 @@ import { modal, user } from '../../../../actions';
 import { isWorker } from '../../../../utils/role-check';
 
 import EditAssign from './EditAssign';
-import EditRoleForm from './EditRoleForm';
 
 interface Props {
   showModal: (content: React.ReactNode) => void;

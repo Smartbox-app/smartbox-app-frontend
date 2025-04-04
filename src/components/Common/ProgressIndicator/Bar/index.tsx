@@ -1,21 +1,24 @@
 import React, { Component } from 'react';
 
 import './Bar.scss';
+import styled from 'styled-components';
 
 interface Props {
   current: number;
   done: number;
 }
 
-class Bar extends Component<Props> {
-  render() {
-    const { current, done } = this.props;
-    return (
-      <div className="bar-wrapper">
-        <div className={`bar ${done <= current ? 'bar-current' : ''} ${done < current ? 'bar-done' : ''}`} />
-      </div>
-    );
-  }
-}
+const StyledBar = styled('div')<{ done: boolean }>(({ done, theme }) => ({
+  background: done ? theme.colors.primary : theme.colors.border.primary,
+}));
 
-export default Bar;
+export const Bar = ({ current, done }: Props) => {
+  return (
+    <div className="bar-wrapper">
+      <StyledBar
+        done={done < current}
+        className={`bar ${done <= current ? 'bar-current' : ''}`}
+      />
+    </div>
+  );
+};

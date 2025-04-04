@@ -17,16 +17,16 @@ import { InteractiveTableSchema } from "../../../../../../../utils/table-schema-
 import { refreshApiTableData } from "../../../../../../../actions/api-table";
 import { useParams } from "react-router";
 import UserService from "../../../../../../../services/user-service";
-import { ApplicationState } from "../../../../../../../reducers";
 import { gate } from "../../../../../../../actions";
+import { useGetMyDetailsQuery } from "src/queries";
 
 const List = () => {
-  const user = useSelector((state: ApplicationState) => state.user.details!);
+    const { data: user } = useGetMyDetailsQuery();
   const dispatch = useDispatch();
   const scheme = new InteractiveTableSchema(gateList);
   const { stockGroupId } = useParams<{ stockGroupId: string }>();
 
-  const hasFullAccess = [UserRole.admin, UserRole.client].includes(user.role);
+  const hasFullAccess = [UserRole.admin, UserRole.client].includes(user!.role);
 
   scheme.addFieldAtTheEnd({
     name: __("application.actions"),
@@ -43,7 +43,7 @@ const List = () => {
             name: "application.edit",
             type: "primary",
             to: (data: GateAdminList) =>
-              `/${UserService.getSlugByRole(user.role)}/locations/groups/${stockGroupId}/gates/${data.id}/edit`,
+              `/${UserService.getSlugByRole(user!.role)}/locations/groups/${stockGroupId}/gates/${data.id}/edit`,
           }
         : null,
       hasFullAccess
@@ -87,7 +87,7 @@ const List = () => {
           <Button
             text="application.addGate"
             primary
-            to={`/${UserService.getSlugByRole(user.role)}/locations/groups/${stockGroupId}/gates/add`}
+            to={`/${UserService.getSlugByRole(user!.role)}/locations/groups/${stockGroupId}/gates/add`}
           />
         </ButtonsContainer>
       ) : null}

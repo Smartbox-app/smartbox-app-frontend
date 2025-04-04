@@ -44,11 +44,11 @@ const FieldsMapper = ({ field, fieldHtmlId, currentValue, errors, big, onFocus, 
         if (field.options?.type === 'checkboxRules' && tenant) return <small>
             {__('application.readTheProvisions')}{' '}
 
-            <a target="_blank" href={`${ApiService.url}tenant/rules/${tenant.id}`}>
+            <a target="_blank" href={`${ApiService.url}tenant/rules/${tenant.id}`} rel="noreferrer">
                 <u>{__('application.statutes')}</u>
             </a>{' '}
             i{' '}
-            <a target="_blank" href={`${ApiService.url}tenant/privacy/${tenant.id}`}>
+            <a target="_blank" href={`${ApiService.url}tenant/privacy/${tenant.id}`} rel="noreferrer">
                 <u>{__('application.privacyPolices')}</u>
             </a>{' '}
             {__('application.acceptContent')}

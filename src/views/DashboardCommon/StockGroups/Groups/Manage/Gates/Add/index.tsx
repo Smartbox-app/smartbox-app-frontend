@@ -1,8 +1,8 @@
 import React from 'react';
 import { ItfApiForm } from 'itf_formbuilder_react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import ReactCreatableSelect from 'react-select/creatable';
-import { PageHeader, ButtonsContainer, FormContainer, Section, SimpleHeader } from '../../../../../../../components/Layout';
+import { ButtonsContainer, FormContainer, Section, SimpleHeader } from '../../../../../../../components/Layout';
 import { Button, Spinner } from '../../../../../../../components/Branded';
 import ApiService from '../../../../../../../services/api-service';
 import { formOnTranslateString } from '../../../../../../../utils/trans-form';
@@ -12,15 +12,15 @@ import { successNotification } from '../../../../../../../actions/notifications'
 import { __ } from '../../../../../../../helpers/i18n';
 import { mapFields } from '../../../../../../../utils/fields-mapper';
 import { useParams } from 'react-router';
-import { ApplicationState } from '../../../../../../../reducers';
 import UserService from '../../../../../../../services/user-service';
+import { useGetMyDetailsQuery } from 'src/queries';
 
 
 const Add = () => {
     const dispatch = useDispatch();
     const { stockGroupId } = useParams<{ stockGroupId: string }>();
 
-    const user = useSelector((state: ApplicationState) => state.user.details!);
+      const { data: user } = useGetMyDetailsQuery();
 
 
     const submitButton = (
@@ -36,7 +36,7 @@ const Add = () => {
         <Section>
             <SimpleHeader title="application.addGate" />
             <ButtonsContainer>
-            <Button to={`/${UserService.getSlugByRole(user.role)}/locations/groups/${stockGroupId}/gates`} text="application.back" primary />
+            <Button to={`/${UserService.getSlugByRole(user!.role)}/locations/groups/${stockGroupId}/gates`} text="application.back" primary />
             </ButtonsContainer>
             <FormContainer highlight>
                 <ItfApiForm
@@ -49,7 +49,7 @@ const Add = () => {
                     submitButton={submitButton}
                     onSavedSuccessfully={() => {
                         dispatch(successNotification('notification.gateAddedCorrectly'));
-                        history.push(`/${UserService.getSlugByRole(user.role)}/locations/groups/${stockGroupId}/gates`);
+                        history.push(`/${UserService.getSlugByRole(user!.role)}/locations/groups/${stockGroupId}/gates`);
                     }}
                     onRenderFullField={mapFields}
                     onTranslateString={formOnTranslateString}

@@ -10,7 +10,6 @@ import { __ } from "../../../../../helpers/i18n";
 import { InteractiveTableSchema } from "../../../../../utils/table-schema-utils";
 import { refreshApiTableData } from "../../../../../actions/api-table";
 import UserService from "../../../../../services/user-service";
-import { ApplicationState } from "../../../../../reducers";
 import { history } from "../../../../../App";
 import {
   ButtonsContainer,
@@ -18,13 +17,14 @@ import {
   Section,
 } from "../../../../../components/Layout";
 import { Button } from "../../../../../components/Branded";
+import { useGetMyDetailsQuery } from "src/queries";
 
 const GroupsList = () => {
   const dispatch = useDispatch();
   const scheme = new InteractiveTableSchema(stockGroupsList);
-  const user = useSelector((state: ApplicationState) => state.user.details!);
+    const { data: user } = useGetMyDetailsQuery();
 
-  const hasFullAccess = [UserRole.admin, UserRole.client].includes(user.role);
+  const hasFullAccess = [UserRole.admin, UserRole.client].includes(user!.role);
 
   scheme.addFieldAtTheEnd({
     name: __("application.actions"),
@@ -41,7 +41,7 @@ const GroupsList = () => {
         type: "primary",
         click: (data: StockGroupData) =>
           history.push(
-            `/${UserService.getSlugByRole(user.role)}/locations/groups/${data.id}`
+            `/${UserService.getSlugByRole(user!.role)}/locations/groups/${data.id}`
           ),
       },
     ],
@@ -73,7 +73,7 @@ const GroupsList = () => {
         <Button
           text="application.addStockGroup"
           primary
-          to={`/${UserService.getSlugByRole(user.role)}/locations/groups/add`}
+          to={`/${UserService.getSlugByRole(user!.role)}/locations/groups/add`}
         />
       </ButtonsContainer>}
       <ApiTable scheme={scheme} apiEndpointSubUrl={`stock-group/admin-list`} />

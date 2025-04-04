@@ -5,8 +5,6 @@ import { ManageTenantIcon } from '../../../../../views/DashboardCommon/ClientMan
 import { ManageTenantBackground } from '../../../../../views/DashboardCommon/ClientManagement/Background';
 import { ManageTenantSlides } from '../../../../../views/DashboardCommon/ClientManagement/Slides';
 import { ManageTenantFonts } from '../../../../DashboardCommon/ClientManagement/Fonts';
-import { useSelector } from 'react-redux';
-import { ApplicationState } from '../../../../../reducers';
 import { ManageTenantAdminData } from '../TenantAdminData';
 import { ManageTenantRules } from '../../../../../views/DashboardCommon/ClientManagement/Rules';
 import { ManageTenantPrivacy } from '../../../../../views/DashboardCommon/ClientManagement/Privacy';
@@ -17,8 +15,6 @@ interface Props {
 }
 
 const TenantEdit = ({ userId }: Props) => {
-    const user = useSelector((state: ApplicationState) => state.user.details!);
-
     return (
         <FormContainer>
             <FormHeader title="application.editTenantData" />

@@ -63,7 +63,7 @@ const Status = ({
               type="warning"
               text="application.userWillNotGetMailWithInformation"
             />
-            <Alert type="primary" text="application.actionCanNotBeUnDone" />
+            <Alert type="notice" text="application.actionCanNotBeUnDone" />
           </div>
         )}
 

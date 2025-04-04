@@ -1,11 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { MyRentDetails, MyRentList, RentStatus } from 'smartbox-types';
-import { modal, notifications, order, singleRent } from '../../../../../actions';
+import { MyRentDetails, RentStatus } from 'smartbox-types';
+import {
+  modal,
+  notifications,
+  order,
+  singleRent,
+} from '../../../../../actions';
 import { history } from '../../../../../App';
 import { ConfirmModal } from '../../../../../components/Common';
-import { ApplicationState } from '../../../../../reducers';
 
 interface Props {
   rent: MyRentDetails;
@@ -14,36 +18,37 @@ interface Props {
   getMyRentList: () => void;
 }
 
-const EndingModal = ({ endMyRent, successNotification, getMyRentList, rent }: Props) => {
+const EndingModal = ({
+  endMyRent,
+  successNotification,
+  getMyRentList,
+  rent,
+}: Props) => {
   if (rent.status !== RentStatus.rented) {
     return (
       <ConfirmModal
-        mainText='application.youCanNotEndRentNow'
-        approveButtonText='application.understood'
+        mainText="application.youCanNotEndRentNow"
+        approveButtonText="application.understood"
         approveAction={() => {}}
-        cancelButtonText='application.back'
+        cancelButtonText="application.back"
       />
     );
   }
 
   return (
     <ConfirmModal
-      mainText='application.endRental'
-      approveButtonText='application.end'
+      mainText="application.endRental"
+      approveButtonText="application.end"
       approveAction={async () => {
         successNotification('notification.rentFinishManually');
         endMyRent(rent.id);
         getMyRentList();
         history.push('/user/main');
       }}
-      cancelButtonText='application.back'
+      cancelButtonText="application.back"
     />
   );
 };
-
-const mapStateToProps = (state: ApplicationState) => ({
-  user: state.user.details,
-});
 
 const mapDispatchToProps = (dispatch: any) =>
   bindActionCreators(
@@ -56,4 +61,4 @@ const mapDispatchToProps = (dispatch: any) =>
     dispatch,
   );
 
-export default connect(mapStateToProps, mapDispatchToProps)(EndingModal);
+export default connect(null, mapDispatchToProps)(EndingModal);

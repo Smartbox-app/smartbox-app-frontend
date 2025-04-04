@@ -6,20 +6,24 @@ import ApiService from '../../../services/api-service';
 import { Spinner, Button, PageContent } from '../../../components/Branded';
 import { Logo } from '../../../components/Branded';
 import { formOnTranslateString } from '../../../utils/trans-form';
-import { FormContainer, ButtonsContainer, PageHeader } from '../../../components/Layout';
+import { FormContainer, ButtonsContainer } from '../../../components/Layout';
 import { history } from '../../../App';
 import { __ } from '../../../helpers/i18n';
 import { mapFieldsBig } from '../../../utils/fields-mapper';
 import { useParams } from 'react-router';
 import { useDispatch } from 'react-redux';
 import { successNotification } from '../../../actions/notifications';
+import { PageHeader } from '../../../components/ui';
 
 const TenantActivation = () => {
   const loadUrl = 'user/form/add-invited-tenant';
   const sendUrl = 'user/add-invited-tenant';
 
   const dispatch = useDispatch();
-  const {userId, updateToken} = useParams<{userId: string, updateToken: string}>();
+  const { userId, updateToken } = useParams<{
+    userId: string;
+    updateToken: string;
+  }>();
 
   const customSendFetcher = (formId: string, values: AddInvitedTenantReq) =>
     ApiService.sendForm(
@@ -39,7 +43,7 @@ const TenantActivation = () => {
 
   const subButton = (
     <ButtonsContainer max>
-      <Button text='application.send' type="submit" big primary rounded />
+      <Button text="application.send" type="submit" big primary rounded />
     </ButtonsContainer>
   );
 
@@ -49,7 +53,7 @@ const TenantActivation = () => {
         <Logo />
       </div>
       <FormContainer className="login-form">
-        <PageHeader title='application.welcomeOnPlatform' />
+        <PageHeader>{__('application.welcomeOnPlatform')}</PageHeader>
         <p>{__('application.setPasswordToActivateAccount')}</p>
         <ItfApiForm
           formId="UserActivationForm"
@@ -68,4 +72,4 @@ const TenantActivation = () => {
   );
 };
 
-export { TenantActivation }
+export { TenantActivation };

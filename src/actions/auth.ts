@@ -51,22 +51,6 @@ export const login = (userData: AuthLoginRequest) => async (dispatch: any) => {
   );
 };
 
-export const logout = () => async (dispatch: any) => {
-  await ApiService.get(
-    dispatch,
-    "LOGOUT",
-    "LOGOUT",
-    () => {
-      dispatch(notifications.successNotification("notification.logOutSuccess"));
-      dispatch({ type: "REFRESH_API_TABLE" });
-      dispatch({ type: "REFRESH_API_GRID" });
-      dispatch(order.clearOrder());
-    },
-    null,
-    "auth/logout"
-  );
-};
-
 export const clearUserSession = () => ({ type: "CLEAR_USER_SESSION" });
 
 export const getUserLoginGoogleData = () => async (dispatch: any) => {

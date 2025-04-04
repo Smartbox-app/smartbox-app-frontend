@@ -1,20 +1,20 @@
-import React from "react";
-import { ItfApiForm } from "itf_formbuilder_react";
-import { IStock } from "smartbox-types";
-import { useDispatch, useSelector } from "react-redux";
-import { Button, Spinner } from "../../../../../../../components/Branded";
+import React from 'react';
+import { ItfApiForm } from 'itf_formbuilder_react';
+import { IStock } from 'smartbox-types';
+import { useDispatch } from 'react-redux';
+import { Button, Spinner } from '../../../../../../../components/Branded';
 import {
   ButtonsContainer,
   FormContainer,
-} from "../../../../../../../components/Layout";
-import ApiService from "../../../../../../../services/api-service";
-import { formOnTranslateString } from "../../../../../../../utils/trans-form";
-import { ApplicationState } from "../../../../../../../reducers";
-import { successNotification } from "../../../../../../../actions/notifications";
-import { __ } from "../../../../../../../helpers/i18n";
-import { mapFields } from "../../../../../../../utils/fields-mapper";
-import { useParams } from "react-router";
-import styled from "styled-components";
+} from '../../../../../../../components/Layout';
+import ApiService from '../../../../../../../services/api-service';
+import { formOnTranslateString } from '../../../../../../../utils/trans-form';
+import { successNotification } from '../../../../../../../actions/notifications';
+import { __ } from '../../../../../../../helpers/i18n';
+import { mapFields } from '../../../../../../../utils/fields-mapper';
+import { useParams } from 'react-router';
+import styled from 'styled-components';
+import { useGetMyDetailsQuery } from 'src/queries';
 
 interface Props {
   stock: IStock;
@@ -29,15 +29,15 @@ const Container = styled.div`
 const MapSettingsForm = ({ userId, stock, refreshStock }: Props) => {
   const dispatch = useDispatch();
   const { stockId } = useParams<{ stockId: string }>();
-  const user = useSelector((state: ApplicationState) => state.user.details!);
+  const { data: user } = useGetMyDetailsQuery();
 
   const fetchUrl = `stock/form/map/${stockId}`;
   const sendUrl = `stock/${stockId}/map`;
 
   const deleteMapBackground = async () => {
-    await ApiService.callFetch("DELETE", sendUrl, () => {
-      dispatch(successNotification(__("application.mapSettingsUpdated")));
-      if (!userId && user.tenantId) window.location.reload();
+    await ApiService.callFetch('DELETE', sendUrl, () => {
+      dispatch(successNotification(__('application.mapSettingsUpdated')));
+      if (!userId && user!.tenantId) window.location.reload();
     });
   };
 
@@ -56,7 +56,7 @@ const MapSettingsForm = ({ userId, stock, refreshStock }: Props) => {
   );
 
   const customSendFetcher = (formId: string, values) => {
-    return ApiService.sendForm(sendUrl, values, "PATCH");
+    return ApiService.sendForm(sendUrl, values, 'PATCH');
   };
 
   return (
@@ -73,7 +73,7 @@ const MapSettingsForm = ({ userId, stock, refreshStock }: Props) => {
           submitButton={submitButton}
           onRenderFullField={mapFields}
           onSavedSuccessfully={() => {
-            dispatch(successNotification(__("application.mapSettingsUpdated")));
+            dispatch(successNotification(__('application.mapSettingsUpdated')));
             refreshStock();
           }}
           onTranslateString={formOnTranslateString}

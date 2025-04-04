@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Button } from "../../../../components/Branded";
-import { FbButton } from "./FbButton";
+import { FbButton } from "../components/FbButton";
 // import GoogleButton from "./GoogleButton";
 import { __ } from "../../../../helpers/i18n";
 
@@ -27,17 +27,7 @@ const ButtonsSection = () => {
           rounded
         />
       )}
-      <p className="lost-pass">
-        {__("application.forgotPass")}{" "}
-        <Link className="light" to="/restore-pass">
-          {__("application.clickHere")}
-        </Link>
-      </p>
-      <p className="lost-activation-link">
-        <Link className="light" to="/resend-activation-link">
-          {__("application.noActivationEmail")}
-        </Link>
-      </p>
+     
     </div>
   );
 };

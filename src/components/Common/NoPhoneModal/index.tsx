@@ -6,7 +6,7 @@ import Alert from '../Alert';
 
 const NoPhoneModal = () => <div>
     <SectionHeader title="application.phoneNumberIsRequired" />
-    <Alert type="primary" text="application.fillPhoneNumber" />
+    <Alert type="notice" text="application.fillPhoneNumber" />
     <UpdateMe />
 </div>
 

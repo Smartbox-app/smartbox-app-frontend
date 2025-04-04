@@ -1,9 +1,7 @@
-import React from 'react';
 import { MyRentList } from 'smartbox-types';
 import { Alert } from '../../../../../components/Common';
 
 import SingleStorage from './SingleStorage';
-import ButtonForNew from './ButtonForNew';
 
 import './StorageList.scss';
 
@@ -12,15 +10,14 @@ interface Props {
 }
 
 const StorageInfo = ({ list }: Props) => {
+  if (list.length === 0)
+    return <Alert type="notice" text="application.noActiveRent" />;
+
   const dataToDisplay = list.map((single: MyRentList, key: number) => (
     <SingleStorage key={`storage-info-${key}`} single={single} />
   ));
 
-  return (
-    <div className="storage-info-wrapper">
-      {list.length !== 0 ? dataToDisplay : <Alert type="notice" text='application.noActiveRent' />}
-    </div>
-  );
+  return <div className="storage-info-wrapper">{dataToDisplay}</div>;
 };
 
 export default StorageInfo;

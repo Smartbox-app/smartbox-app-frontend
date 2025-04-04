@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { FieldType, addonList } from 'smartbox-tables';
 import { AddonListRes } from 'smartbox-types';
 import { Alert, ApiTable } from '../../../../../../../components/Common';
@@ -15,10 +15,10 @@ import { successNotification } from '../../../../../../../actions/notifications'
 import { refreshApiTableData } from '../../../../../../../actions/api-table';
 import { useParams } from 'react-router';
 import { Edit } from '../Edit';
-import { ApplicationState } from '../../../../../../../reducers';
+import { useGetMyDetailsQuery } from 'src/queries';
 
 const List = () => {
-    const user = useSelector((state: ApplicationState) => state.user.details!);
+      const { data: user } = useGetMyDetailsQuery();
     const dispatch = useDispatch();
     const { stockId } = useParams<{ stockId: string }>();
 
@@ -54,7 +54,7 @@ const List = () => {
                 {
                     name: 'application.pricing',
                     type: 'primary',
-                    to: (data: AddonListRes) => `/${UserService.getSlugByRole(user.role)}/locations/stocks/${stockId}/addons/${data.id}/pricing`
+                    to: (data: AddonListRes) => `/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/addons/${data.id}/pricing`
                     // click: (data: AddonListRes) => dispatch(showModal(<Edit id={data.id} stockId={data.stockId} />)),
                 },
                 {
@@ -74,7 +74,7 @@ const List = () => {
         <>
             <SimpleHeader title='application.addonsList' />
             <ButtonsContainer>
-                <Button text='application.addAddon' primary to={`/${UserService.getSlugByRole(user.role)}/locations/stocks/${stockId}/addons/add`} />
+                <Button text='application.addAddon' primary to={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/addons/add`} />
             </ButtonsContainer>
             <ApiTable scheme={scheme} apiEndpointSubUrl={`addon/list/${stockId}`} />
         </>

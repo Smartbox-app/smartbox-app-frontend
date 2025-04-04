@@ -4,27 +4,33 @@ import ApiService from './services/api-service';
 import { colorOrDark } from './utils/color';
 
 interface GlobalStyleProps {
-    tenantId: string;
+  tenantId: string;
 }
 
 const GlobalStyle = createGlobalStyle<GlobalStyleProps>`
+html {
+    font-size: 16px;
+}
+    p {
+    line-height: 1.5;
+    }
 h3 {
-    color: ${props => colorOrDark(props.theme.colors.primary)}
+    color: ${(props) => colorOrDark(props.theme.colors.primary)}
 }
 
 h4 {
-    color: ${props => colorOrDark(props.theme.colors.primary)}
+    color: ${(props) => colorOrDark(props.theme.colors.primary)}
 }
 
 a {
     &:link {
-        color: ${props => colorOrDark(props.theme.colors.primary)}
+        color: ${(props) => colorOrDark(props.theme.colors.primary)}
     }
 
     &:hover {
-        color: ${props => lighten(0.1, colorOrDark(props.theme.colors.primary))}
+        color: ${(props) => lighten(0.1, colorOrDark(props.theme.colors.primary))}
     }
 }
-`
+`;
 
-export default GlobalStyle
+export default GlobalStyle;

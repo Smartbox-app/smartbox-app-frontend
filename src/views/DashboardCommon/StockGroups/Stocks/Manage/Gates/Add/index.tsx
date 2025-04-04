@@ -14,13 +14,14 @@ import { mapFields } from '../../../../../../../utils/fields-mapper';
 import { useParams } from 'react-router';
 import { ApplicationState } from '../../../../../../../reducers';
 import UserService from '../../../../../../../services/user-service';
+import { useGetMyDetailsQuery } from 'src/queries';
 
 
 const Add = () => {
     const dispatch = useDispatch();
     const { stockId } = useParams<{ stockId: string }>();
 
-    const user = useSelector((state: ApplicationState) => state.user.details!);
+      const { data: user } = useGetMyDetailsQuery();
 
 
     const submitButton = (
@@ -36,7 +37,7 @@ const Add = () => {
         <Section>
             <SimpleHeader title="application.addGate" />
             <ButtonsContainer>
-            <Button to={`/${UserService.getSlugByRole(user.role)}/locations/stocks/${stockId}/groups`} text="application.back" primary />
+            <Button to={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/groups`} text="application.back" primary />
             </ButtonsContainer>
             <FormContainer highlight>
                 <ItfApiForm
@@ -49,7 +50,7 @@ const Add = () => {
                     submitButton={submitButton}
                     onSavedSuccessfully={() => {
                         dispatch(successNotification('notification.gateAddedCorrectly'));
-                        history.push(`/${UserService.getSlugByRole(user.role)}/locations/stocks/${stockId}/gates`);
+                        history.push(`/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/gates`);
                     }}
                     onRenderFullField={mapFields}
                     onTranslateString={formOnTranslateString}

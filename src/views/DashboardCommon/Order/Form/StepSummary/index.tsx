@@ -23,184 +23,227 @@ import SummaryTable from './SummaryTable';
 import TenantDetailsForm from './TenantDetailsForm';
 
 import './StepSummary.scss';
-import { calculatePrice, calculatePriceForRent, setBirthDate } from '../../../../../actions/order';
+import {
+  calculatePrice,
+  calculatePriceForRent,
+  setBirthDate,
+} from '../../../../../actions/order';
 import { format } from 'date-fns';
 import { useTenant } from '../../../../../hooks/useTenant';
+import { useGetMyDetailsQuery } from 'src/queries';
 
 interface Props {
-    formData: FormType;
-    updateFormData: (data: Partial<FormType>) => void;
-    fetchMyData: () => void;
-    showModal: (content: React.ReactNode) => void;
-    successNotification: (text: string) => void;
+  formData: FormType;
+  updateFormData: (data: Partial<FormType>) => void;
+  showModal: (content: React.ReactNode) => void;
+  successNotification: (text: string) => void;
 }
 
-const StepSummary = ({
-    formData,
-    fetchMyData,
-    updateFormData,
-}: Props) => {
-    const dispatch = useDispatch();
-    const [invoiceNeeded, setInvoiceNeeded] = useState(false);
-    const { calculatedPrice, addons, orderAddons, loadingPrice, discountCode, stockId, boxGroupId, startDate, endDate } = useSelector((state: ApplicationState) => state.order);
+const StepSummary = ({ formData, updateFormData }: Props) => {
+  const dispatch = useDispatch();
+  const [invoiceNeeded, setInvoiceNeeded] = useState(false);
+  const {
+    calculatedPrice,
+    addons,
+    orderAddons,
+    loadingPrice,
+    discountCode,
+    stockId,
+    boxGroupId,
+    startDate,
+    endDate,
+  } = useSelector((state: ApplicationState) => state.order);
 
-    const user = useSelector((state: ApplicationState) => state.user.details!);
-    const { step, rentId } = useParams<{ step: string, rentId: string }>();
-    const isFirstRent = user && !user.rentCount;
+  const { data: user } = useGetMyDetailsQuery();
+  const { step, rentId } = useParams<{ step: string; rentId: string }>();
+  const isFirstRent = user && !user.rentCount;
 
-    const { tenant } = useTenant();
-    useEffect(() => {
-        fetchMyData();
-        if (!rentId && (!stockId || !boxGroupId)) {
-            history.push(`/${UserService.getSlugByRole(user.role)}/order/step/stock`);
-        }
-        if (formData.nip) {
-            setInvoiceNeeded(true);
-        }
+  const { tenant } = useTenant();
+  useEffect(() => {
+    if (!user) return;
+    if (!rentId && (!stockId || !boxGroupId)) {
+      history.push(`/${UserService.getSlugByRole(user.role)}/order/step/stock`);
+    }
+    if (formData.nip) {
+      setInvoiceNeeded(true);
+    }
 
-        if (!isFirstRent) {
-            if (user.companyData && user.companyData.nip) {
-                setInvoiceNeeded(true);
-            } else {
-                setInvoiceNeeded(false);
-            }
-        }
+    if (!isFirstRent) {
+      if (user.companyData && user.companyData.nip) {
+        setInvoiceNeeded(true);
+      } else {
+        setInvoiceNeeded(false);
+      }
+    }
 
-        if (!endDate) return;
+    if (!endDate) return;
 
-        if (rentId) {
-            dispatch(calculatePriceForRent(rentId, startDate, endDate));
-        } else {
-            dispatch(calculatePrice(boxGroupId, startDate, endDate));
-        }
-    }, []);
+    if (rentId) {
+      dispatch(calculatePriceForRent(rentId, startDate, endDate));
+    } else {
+      dispatch(calculatePrice(boxGroupId, startDate, endDate));
+    }
+  }, [user]);
 
-    useEffect(() => {
-        if(!user || !user.birthDate) return;
+  useEffect(() => {
+    if (!user || !user.birthDate) return;
 
-        dispatch(setBirthDate(new Date(user.birthDate)));
-    }, [user])
+    dispatch(setBirthDate(new Date(user.birthDate)));
+  }, [user]);
 
-    useEffect(() => {
-        if (!endDate) return;
+  useEffect(() => {
+    if (!endDate) return;
 
-        if (rentId) {
-            dispatch(calculatePriceForRent(rentId, startDate, endDate, discountCode));
-        } else {
-            dispatch(calculatePrice(boxGroupId, startDate, endDate, discountCode));
-        }
-    }, [discountCode])
+    if (rentId) {
+      dispatch(calculatePriceForRent(rentId, startDate, endDate, discountCode));
+    } else {
+      dispatch(calculatePrice(boxGroupId, startDate, endDate, discountCode));
+    }
+  }, [discountCode]);
 
-    const defaultValues = {
-        paymentType: PaymentType.card,
-        firstName: user?.firstName || '',
-        lastName: user?.lastName || '',
-        street: user?.street || '',
-        birthDate: user?.birthDate ? format(new Date(user?.birthDate), 'yyyy-MM-dd') : null,
-        city: user?.city || '',
-        postCode: user?.postCode || '',
-        mailToSendInvoice: user?.email || '',
-        phone: user?.phone || '',
+  const defaultValues = {
+    paymentType: PaymentType.card,
+    firstName: user?.firstName || '',
+    lastName: user?.lastName || '',
+    street: user?.street || '',
+    birthDate: user?.birthDate
+      ? format(new Date(user?.birthDate), 'yyyy-MM-dd')
+      : null,
+    city: user?.city || '',
+    postCode: user?.postCode || '',
+    mailToSendInvoice: user?.email || '',
+    phone: user?.phone || '',
 
-        nip: user?.companyData.nip || '',
-        companyPostCode: user?.companyData.companyPostCode || '',
-        companyCity: user?.companyData.companyCity || '',
-        companyStreet: user?.companyData.companyStreet || '',
-        companyName: user?.companyData.companyName || '',
-    };
+    nip: user?.companyData.nip || '',
+    companyPostCode: user?.companyData.companyPostCode || '',
+    companyCity: user?.companyData.companyCity || '',
+    companyStreet: user?.companyData.companyStreet || '',
+    companyName: user?.companyData.companyName || '',
+  };
 
-    const { handleSubmit, register, watch, control, errors, setValue, getValues } = useForm({ defaultValues });
+  const {
+    handleSubmit,
+    register,
+    watch,
+    control,
+    formState: { errors },
+  } = useForm({ defaultValues });
 
-    const tenantData = (): boolean => {
-        if (
-            watch().firstName !== '' &&
-            watch().lastName !== '' &&
-            watch().street !== '' &&
-            watch().city !== '' &&
-            watch().postCode !== '' &&
-            watch().mailToSendInvoice !== '' &&
-            watch().phone !== ''
-        ) {
-            if (tenant?.birthDateNecessary && !formData.birthDate) return true;
-            if (!errors.mailToSendInvoice && !errors.postCode) {
-                return false;
-            }
-        }
+  const tenantData = (): boolean => {
+    if (
+      watch().firstName !== '' &&
+      watch().lastName !== '' &&
+      watch().street !== '' &&
+      watch().city !== '' &&
+      watch().postCode !== '' &&
+      watch().mailToSendInvoice !== '' &&
+      watch().phone !== ''
+    ) {
+      if (tenant?.birthDateNecessary && !formData.birthDate) return true;
+      if (!errors.mailToSendInvoice && !errors.postCode) {
+        return false;
+      }
+    }
+    return true;
+  };
+
+  const companyData = (): boolean => {
+    if (invoiceNeeded) {
+      if (
+        watch().companyName !== '' &&
+        watch().companyStreet !== '' &&
+        watch().companyCity !== '' &&
+        watch().companyPostCode !== '' &&
+        watch().nip !== ''
+      ) {
+        return false;
+      } else {
         return true;
-    };
+      }
+    } else {
+      return false;
+    }
+  };
 
-    const companyData = (): boolean => {
-        if (invoiceNeeded) {
-            if (
-                watch().companyName !== '' &&
-                watch().companyStreet !== '' &&
-                watch().companyCity !== '' &&
-                watch().companyPostCode !== '' &&
-                watch().nip !== ''
-            ) {
-                return false;
-            } else {
-                return true;
-            }
-        } else {
-            return false;
-        }
-    };
-
-    const onSubmit = (data: any) => {
-        updateFormData({ ...data, isCompany: invoiceNeeded });
-        history.push(`/${UserService.getSlugByRole(user.role)}/order/step/agreement/${rentId || ''}`);
-    };
-
-    return (
-        <form onSubmit={handleSubmit(onSubmit)} className="form-step-two">
-            {loadingPrice && <Spinner overlay halfTransparent />}
-            <DiscountsList stockId={stockId} />
-            <FormHeader title="application.orderSummary" />
-            {endDate && <SummaryTable dateStart={startDate} dateEnd={endDate} countedPrice={calculatedPrice} addons={addons} orderAddons={orderAddons} />}
-
-            <TenantDetailsForm register={register} control={control} errors={errors} disabled={!isFirstRent} />
-            {isFirstRent && (
-                <>
-                    <p>{__('application.infoToOptionalInvoice')}</p>
-                    <CheckBox
-                        name="iNeedInvoice"
-                        checked={invoiceNeeded}
-                        handleChange={() => setInvoiceNeeded(!invoiceNeeded)}
-                        label="application.wantOptionalInvoice"
-                    />
-                </>
-            )}
-            {invoiceNeeded && (
-                <CompanyDetailsForm register={register} errors={errors} control={control} disabled={!isFirstRent} />
-            )}
-
-            <ButtonsContainer max>
-                <Button outline text="application.back" to={`/${UserService.getSlugByRole(user.role)}/order/step/duration/${rentId || ''}`} />
-                <Button
-                    type="submit"
-                    primary
-                    text="application.goToOrder"
-                    disabled={tenantData() || companyData()}
-                />
-            </ButtonsContainer>
-        </form>
+  const onSubmit = (data: any) => {
+    if (!user) return;
+    updateFormData({ ...data, isCompany: invoiceNeeded });
+    history.push(
+      `/${UserService.getSlugByRole(user.role)}/order/step/agreement/${rentId || ''}`,
     );
+  };
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)} className="form-step-two">
+      {loadingPrice && <Spinner overlay halfTransparent />}
+      <DiscountsList stockId={stockId} />
+      <FormHeader title="application.orderSummary" />
+      {endDate && (
+        <SummaryTable
+          dateStart={startDate}
+          dateEnd={endDate}
+          countedPrice={calculatedPrice}
+          addons={addons}
+          orderAddons={orderAddons}
+        />
+      )}
+
+      <TenantDetailsForm
+        register={register}
+        control={control}
+        errors={errors}
+        disabled={!isFirstRent}
+      />
+      {isFirstRent && (
+        <>
+          <p>{__('application.infoToOptionalInvoice')}</p>
+          <CheckBox
+            name="iNeedInvoice"
+            checked={invoiceNeeded}
+            handleChange={() => setInvoiceNeeded(!invoiceNeeded)}
+            label="application.wantOptionalInvoice"
+          />
+        </>
+      )}
+      {invoiceNeeded && (
+        <CompanyDetailsForm
+          register={register}
+          errors={errors}
+          control={control}
+          disabled={!isFirstRent}
+        />
+      )}
+
+      <ButtonsContainer max>
+        <Button
+          outline
+          text="application.back"
+          to={`/${UserService.getSlugByRole(user!.role)}/order/step/duration/${rentId || ''}`}
+        />
+        <Button
+          type="submit"
+          primary
+          text="application.goToOrder"
+          disabled={tenantData() || companyData()}
+        />
+      </ButtonsContainer>
+    </form>
+  );
 };
 
 const mapStateToProps = (state: ApplicationState) => ({
-    formData: state.order.formData,
+  formData: state.order.formData,
 });
 
 const mapDispatchToProps = (dispatch: any) =>
-    bindActionCreators(
-        {
-            ...order,
-            ...modal,
-            ...notifications,
-            ...user,
-        },
-        dispatch,
-    );
+  bindActionCreators(
+    {
+      ...order,
+      ...modal,
+      ...notifications,
+      ...user,
+    },
+    dispatch,
+  );
 
 export default connect(mapStateToProps, mapDispatchToProps)(StepSummary);

@@ -1,21 +1,22 @@
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { Switch, Route, Redirect } from "react-router";
-import { Tabs } from "../../../components/Branded";
-import { Section } from "../../../components/Layout";
-import { ApplicationState } from "../../../reducers";
-import UserService from "../../../services/user-service";
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { Switch, Route, Redirect } from 'react-router';
+import { Tabs } from '../../../components/Branded';
+import { Section } from '../../../components/Layout';
+import { ApplicationState } from '../../../reducers';
+import UserService from '../../../services/user-service';
 
-import UsersManagement from "../../DashboardCommon/UsersManagement";
-import { Settings } from "../Settings";
-import InvitesSent from "../../DashboardCommon/InvitesSent";
-import ApiService from "../../../services/api-service";
-import SMS from "../../DashboardCommon/SMS";
-import { TemplatesManagement } from "../Templates";
-import WorkersManagement from "../../DashboardCommon/WorkersManagement";
+import UsersManagement from '../../DashboardCommon/UsersManagement';
+import { Settings } from '../Settings';
+import InvitesSent from '../../DashboardCommon/InvitesSent';
+import ApiService from '../../../services/api-service';
+import SMS from '../../DashboardCommon/SMS';
+import { TemplatesManagement } from '../Templates';
+import WorkersManagement from '../../DashboardCommon/WorkersManagement';
+import { useGetMyDetailsQuery } from 'src/queries';
 
 const Management = () => {
-  const user = useSelector((state: ApplicationState) => state.user.details!);
+  const { data: user } = useGetMyDetailsQuery();
   const tenant = useSelector((state: ApplicationState) => state.tenant);
 
   const [smsStatus, setSmsStatus] = useState<boolean>();
@@ -23,9 +24,9 @@ const Management = () => {
   const getStatus = async () => {
     if (!tenant) return;
     ApiService.callFetch(
-      "GET",
+      'GET',
       `tenant/sms-service-status/${tenant.id}`,
-      (response: boolean) => setSmsStatus(response)
+      (response: boolean) => setSmsStatus(response),
     );
   };
 
@@ -33,34 +34,36 @@ const Management = () => {
     getStatus();
   }, []);
 
+  if (!user) return null;
+
   const getTabs = () => {
     const tabs = [
       {
         to: `/${UserService.getSlugByRole(user.role)}/management/users/list`,
-        text: "application.users",
+        text: 'application.users',
       },
       {
         to: `/${UserService.getSlugByRole(user.role)}/management/workers`,
-        text: "application.workers",
+        text: 'application.workers',
       },
       {
         to: `/${UserService.getSlugByRole(user.role)}/management/invitations`,
-        text: "application.invitations",
+        text: 'application.invitations',
       },
       {
         to: `/${UserService.getSlugByRole(user.role)}/management/settings`,
-        text: "application.settings",
+        text: 'application.settings',
       },
       {
         to: `/${UserService.getSlugByRole(user.role)}/management/templates`,
-        text: "application.templates",
+        text: 'application.templates',
       },
     ];
 
     if (smsStatus) {
       tabs.push({
         to: `/${UserService.getSlugByRole(user.role)}/management/sms`,
-        text: "application.sendSms",
+        text: 'application.sendSms',
       });
     }
 

@@ -24,7 +24,7 @@ const hexToHSL = (hex: string) => {
   r /= 255;
   g /= 255;
   b /= 255;
-  let max = Math.max(r, g, b),
+  const max = Math.max(r, g, b),
     min = Math.min(r, g, b);
   let h,
     s,

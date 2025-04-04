@@ -11,10 +11,11 @@ import ApiService from '../../../../../services/api-service';
 
 import './StepSize.scss';
 import { Alert } from '../../../../../components/Common';
+import { useGetMyDetailsQuery } from 'src/queries';
 
 const StepSize = () => {
     const { stockId, boxGroupId } = useSelector((state: ApplicationState) => state.order);
-    const user = useSelector((state: ApplicationState) => state.user.details!);
+      const { data: user } = useGetMyDetailsQuery();
 
     const [boxGroups, setBoxGroups] = useState<BoxGroupUserRes[]>([]);
 

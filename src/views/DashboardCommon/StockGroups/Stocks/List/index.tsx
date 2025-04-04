@@ -18,13 +18,14 @@ import { refreshApiTableData } from "../../../../../actions/api-table";
 import { history } from "../../../../../App";
 import UserService from "../../../../../services/user-service";
 import { ApplicationState } from "../../../../../reducers";
+import { useGetMyDetailsQuery } from "src/queries";
 
 const List = () => {
   const dispatch = useDispatch();
   const scheme = new InteractiveTableSchema(stocksList);
-  const user = useSelector((state: ApplicationState) => state.user.details!);
+    const { data: user } = useGetMyDetailsQuery();
 
-  const hasFullAccess = [UserRole.admin, UserRole.client].includes(user.role);
+  const hasFullAccess = [UserRole.admin, UserRole.client].includes(user!.role);
 
   scheme.addFieldAtTheEnd({
     name: __("application.actions"),
@@ -43,7 +44,7 @@ const List = () => {
         type: "primary",
         click: (data: StockAdminList) =>
           history.push(
-            `/${UserService.getSlugByRole(user.role)}/locations/stocks/${data.id}`
+            `/${UserService.getSlugByRole(user!.role)}/locations/stocks/${data.id}`
           ),
       },
     ],
@@ -76,7 +77,7 @@ const List = () => {
           <Button
             text="application.addStock"
             primary
-            to={`/${UserService.getSlugByRole(user.role)}/locations/stocks/add`}
+            to={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/add`}
           />
         </ButtonsContainer>
       )}

@@ -1,13 +1,12 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { UserRole } from 'smartbox-types';
 import { Section, SectionHeader } from '../../../components/Layout';
-import { ApplicationState } from '../../../reducers';
 import { Row } from '../../../components/Common';
+import { useGetMyDetailsQuery } from '../../../queries';
 
 
 const UserData = () => {
-    const user = useSelector((state: ApplicationState) => state.user.details);
+  const { data: user } = useGetMyDetailsQuery();
     if (!user) return null;
     const { role } = user;
     return (

@@ -1,15 +1,15 @@
 import React from 'react';
 import { ItfApiForm } from 'itf_formbuilder_react';
 import { UserRole } from 'smartbox-types';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Button, Spinner } from '../../../../components/Branded';
 import { ButtonsContainer, Section } from '../../../../components/Layout';
 import ApiService from '../../../../services/api-service';
 import { formOnTranslateString } from '../../../../utils/trans-form';
-import { ApplicationState } from '../../../../reducers';
 import { successNotification } from '../../../../actions/notifications';
 import { __ } from '../../../../helpers/i18n';
 import { mapFields } from '../../../../utils/fields-mapper';
+import { useGetMyDetailsQuery } from 'src/queries';
 
 interface Props {
     userId?: string;
@@ -17,7 +17,7 @@ interface Props {
 
 const ManageTenantBackground = ({ userId }: Props) => {
     const dispatch = useDispatch();
-    const user = useSelector((state: ApplicationState) => state.user.details);
+  const { data: user } = useGetMyDetailsQuery();
 
     if (!user) return null;
 

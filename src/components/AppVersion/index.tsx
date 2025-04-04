@@ -1,16 +1,24 @@
-import { useMemo } from "react"
+import { useMemo } from "react";
 import styled from "styled-components";
 
-const StyledVersion = styled('div')({
-    fontSize: 'inherit',
-    textAlign: 'center',
-    color: 'inherit'
-})
+type AppVersionVariants = "default" | "secondary";
 
-export const AppVersion = () => {
-    const version = useMemo(() => {
-        return localStorage.getItem('v');
-    }, [])
+const StyledVersion = styled("div")<{ variant: AppVersionVariants }>(
+  ({ theme, variant }) => ({
+    fontSize: "inherit",
+    textAlign: "center",
+    color: variant === "secondary" ? theme.colors.text.disable : "inherit",
+  })
+);
 
-    return <StyledVersion>{version}</StyledVersion>
-}
+export type AppVersionProps = {
+  variant?: AppVersionVariants;
+};
+
+export const AppVersion = ({ variant = 'default' }: AppVersionProps) => {
+  const version = useMemo(() => {
+    return localStorage.getItem("v");
+  }, []);
+
+  return <StyledVersion variant={variant}>{version}</StyledVersion>;
+};

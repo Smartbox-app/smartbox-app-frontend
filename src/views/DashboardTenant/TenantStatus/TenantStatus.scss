@@ -5,25 +5,9 @@
 .tenant-status-container {
     display: flex;
     margin: 0 auto;
+    width: 100%;
 
     @include gt-sm {
         margin-top: $main-spacing;
     }
-
-    @include gt-sm {
-        width: 90vw;
-    }
-
-    @include gt-md {
-        width: 80vw;
-    }
-
-    @include gt-lg {
-        width: 80vw;
-    }
-
-    @include gt-xl {
-        width: 65vw;
-    }
-
 }

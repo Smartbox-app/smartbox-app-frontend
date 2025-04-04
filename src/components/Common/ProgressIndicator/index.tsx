@@ -1,6 +1,5 @@
-import React from 'react';
-import Item from './Item';
-import Bar from './Bar';
+import { Item } from './Item';
+import { Bar } from './Bar';
 
 import './ProgressIndicator.scss';
 
@@ -23,7 +22,9 @@ const ProgressIndicator = ({ stepList, current }: Props) => {
         current={singleStep.value === current}
         done={singleStep.value < current}
       />
-      {key !== stepList.length - 1 && <Bar done={singleStep.value} current={current} />}
+      {key !== stepList.length - 1 && (
+        <Bar done={singleStep.value} current={current} />
+      )}
     </div>
   ));
   return <div className="progress-indicator-wrapper">{dataToDisplay}</div>;

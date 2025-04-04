@@ -14,13 +14,14 @@ import { useParams } from 'react-router';
 import { mapFields } from '../../../../../../../utils/fields-mapper';
 import { ApplicationState } from '../../../../../../../reducers';
 import UserService from '../../../../../../../services/user-service';
+import { useGetMyDetailsQuery } from 'src/queries';
 
 
 const Edit = () => {
     const dispatch = useDispatch();
     const { gateId, stockId } = useParams<{ gateId: string, stockId: string }>();
 
-    const user = useSelector((state: ApplicationState) => state.user.details!);
+      const { data: user } = useGetMyDetailsQuery();
 
 
     const submitButton = (
@@ -36,7 +37,7 @@ const Edit = () => {
         <Section>
             <SimpleHeader title="application.editGate" />
             <ButtonsContainer>
-                <Button to={`/${UserService.getSlugByRole(user.role)}/locations/stocks/${stockId}/gates`} text="application.back" primary />
+                <Button to={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/gates`} text="application.back" primary />
             </ButtonsContainer>
             <FormContainer highlight>
                 <ItfApiForm
@@ -49,7 +50,7 @@ const Edit = () => {
                     submitButton={submitButton}
                     onSavedSuccessfully={() => {
                         dispatch(successNotification('notification.gateUpdatedCorrectly'));
-                        history.push(`/${UserService.getSlugByRole(user.role)}/locations/stocks/${stockId}/gates`);
+                        history.push(`/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/gates`);
 
                     }}
                     onRenderFullField={mapFields}

@@ -1,51 +1,69 @@
 import React from 'react';
-import './Footer.scss';
+
 import { __ } from '../../../helpers/i18n';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 import { ApplicationState } from '../../../reducers';
 import ApiService from '../../../services/api-service';
-import { getColorForBackground } from '../../../utils/color';
 import { AppVersion } from '../../../components/AppVersion';
+import { Link, Section, Typography } from '../../ui';
+import { Logo } from '../../Branded';
 
-const StyledFooter = styled.footer`
-background: ${props => props.theme.colors.primary};
-color: ${props => getColorForBackground(props.theme.colors.primary)};
+const StyledFooter = styled('footer')(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  fontSize: 14,
+  gap: theme.spacing * 4,
+  '@media(min-width: 500px)': {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+}));
 
-p {
-color: ${props => getColorForBackground(props.theme.colors.primary)};
-}
-
-a:link, a:visited, a:hover, a:active {
-color: ${props => getColorForBackground(props.theme.colors.primary)};
-}
-`
+const Data = styled('div')(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  gap: theme.spacing * 2,
+  flexWrap: 'wrap',
+}));
 
 const Footer = () => {
-    const tenant = useSelector((state: ApplicationState) => state.tenant);
-    return <StyledFooter>
-        {/* <a
-            className="footerLink"
-            target="_blank"
-            rel="noreferrer noopener"
-            href="https://smartbox-storage.pl/jak-to-dziala/"
-        >
-            {__('application.how_it_works')}
-        </a>*/}
-        {tenant?.rules && <a className="footerLink" target="_blank" href={`${ApiService.url}tenant/rules/${tenant.id}`}>
-            {__('application.statute')}
-        </a>
-        }
-        {
-            tenant?.privacy && <a className="footerLink" target="_blank" href={`${ApiService.url}tenant/privacy/${tenant.id}`}>
-                {__('application.privacyPolicy')}
-            </a>
-        }
+  const tenant = useSelector((state: ApplicationState) => state.tenant);
+  return (
+    <Section>
+      <StyledFooter>
+        <Logo width="small" />
+        <Data>
+          {tenant?.rules && (
+            <Link
+              target="_blank"
+              href={`${ApiService.url}tenant/rules/${tenant.id}`}
+              rel="noreferrer"
+            >
+              {__('application.statute')}
+            </Link>
+          )}
+          {tenant?.privacy && (
+            <Link
+              target="_blank"
+              href={`${ApiService.url}tenant/privacy/${tenant.id}`}
+              rel="noreferrer"
+            >
+              {__('application.privacyPolicy')}
+            </Link>
+          )}
 
-        {/* <p>&copy; SmartBox Sp. J.</p> */}
-        <p>&copy; {tenant?.name}</p>
-        <AppVersion />
-    </StyledFooter >
-}
+          {/* <p>&copy; SmartBox Sp. J.</p> */}
+          <Typography>&copy; {tenant?.name}</Typography>
+          <AppVersion />
+        </Data>
+        <span />
+      </StyledFooter>
+    </Section>
+  );
+};
 
 export default Footer;

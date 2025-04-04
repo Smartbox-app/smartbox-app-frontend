@@ -1,12 +1,12 @@
-import Main from './Main';
+import { Main } from './Main';
 import ButtonsContainer from './ButtonsContainer';
-import DashboardContainer from './DashboardContainer';
+import { DashboardContainer } from './DashboardContainer';
 import Footer from './Footer';
 import PageHeader from './PageHeader';
 import FormContainer from './FormContainer';
 import Section from './Section';
 import SectionHeader from './SectionHeader';
-import Navigation from './Navigation';
+import { Navigation } from './Navigation';
 import FieldsColumn from './FieldsColumn';
 import FieldsGrid from './FieldsGrid';
 import FormHeader from './FormHeader';

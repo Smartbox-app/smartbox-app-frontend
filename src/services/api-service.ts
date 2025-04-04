@@ -88,7 +88,7 @@ export default class ApiService {
         }
     };
 
-    static callFetch = async (method: string, url: string, successCb?: any, failedCb?: any, requestData?: any) => {
+    static callFetch = async <R>(method: string, url: string, successCb?: any, failedCb?: any, requestData?: any) => {
         const headers = {
             'Content-Type': 'application/json',
         };
@@ -108,7 +108,7 @@ export default class ApiService {
             switch (data.result) {
                 case ApiResult.ok:
                     if (successCb) successCb(data.payload);
-                    return data.payload;
+                    return data.payload as R;
                 case ApiResult.error:
                     if (failedCb) failedCb(data);
                     store.dispatch(notifications.errorNotification(data.error_code));

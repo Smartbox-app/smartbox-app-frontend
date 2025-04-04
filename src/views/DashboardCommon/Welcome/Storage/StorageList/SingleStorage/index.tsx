@@ -1,59 +1,74 @@
-import React from 'react';
+import { useState } from 'react';
 import { MyRentList, RentStatus } from 'smartbox-types';
 import styled from 'styled-components';
-import { lighten } from 'polished';
-import { history } from '../../../../../../App';
+
 import UserService from '../../../../../../services/user-service';
-import { dateOnly } from '../../../../../../utils/format-date';
+
 import { __ } from '../../../../../../helpers/i18n';
 
-import './SingleStorage.scss';
-import { useSelector } from 'react-redux';
-import { ApplicationState } from '../../../../../../reducers';
-import { getColorForBackground } from '../../../../../../utils/color';
-
+import { useGetMyDetailsQuery } from 'src/queries';
+import { Link } from 'react-router-dom';
+import { StorageHeader } from './components/StorageHeader';
+import { StorageMainInfo } from './components/StorageMainInfo';
+import { StorageDetails } from './components/StorageDetails';
+import { StorageBackground } from './components/StorageBackground';
 
 interface Props {
-    single: MyRentList;
+  single: MyRentList;
 }
 
-const StyledStorage = styled.div`
-background-color: ${({ theme }) => lighten(0.01, theme.colors.primary)};
-border: 2px solid ${({ theme }) => lighten(0.01, theme.colors.primary)};
-color: ${({ theme }) => getColorForBackground(theme.colors.primary)};
-box-shadow: 0 5px 10px -5px #4d4d4d66;
-&:hover {
-    box-shadow: 0 0 2px 1px ${({ theme }) => lighten(0.1, theme.colors.primary)
-    };
-}`
+const StyledStorage = styled(Link)(({ theme }) => ({
+  borderRadius: theme.radius.innerSurface,
+  background: theme.colors.background.primary,
+  boxShadow: theme.shadows.primary,
+  padding: `${theme.spacing * 4}px ${theme.spacing * 4}px`,
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  overflow: 'hidden',
+  gap: theme.spacing * 3,
+  position: 'relative',
+  zIndex: 1,
+  flex: 1,
+  minHeight: 150,
+}));
 
 const SingleStorage = ({ single }: Props) => {
-    const user = useSelector((state: ApplicationState) => state.user.details!);
+  const [isHovered, setHovered] = useState(false);
+  const { data: user } = useGetMyDetailsQuery();
 
-    const isWarning = [RentStatus.noPaidExtension, RentStatus.noPaidExtensionWithWarning].includes(single.status);
-    return (
-        <div
-            className="single-wrapper"
-            onClick={() => history.push(`/${UserService.getSlugByRole(user.role)}/single-rent/${single.id}`)}
-        >
-            <StyledStorage className={`storage ${isWarning ? 'warning' : ''}`}>
-                {isWarning && <div className="storage-warning-overlay" />}
-                <div className="sec-info">
-                    {single.stockName}
-                    <i className={`fa ${isWarning ? 'fa-exclamation-circle' : 'fa-info-circle'}`} aria-hidden="true" />
-                </div>
-                <div className="main-info">
-                    <strong>
-                        {__('application.miniStorage')} {__('application.shortenNumber')}: {single.number}
-                    </strong>
-                </div>
-                <div className="details">
-                    <span className="date">{dateOnly(single.finishAt)}</span>
-                    <span className="size">{single.size} m²</span>
-                </div>
-            </StyledStorage>
-        </div>
-    );
+  const handleHover = () => {
+    setHovered(true);
+  };
+
+  const handleBlur = () => {
+    setHovered(false);
+  };
+
+  const isWarning = [
+    RentStatus.noPaidExtension,
+    RentStatus.noPaidExtensionWithWarning,
+  ].includes(single.status);
+  return (
+    <StyledStorage
+      onMouseEnter={handleHover}
+      onMouseLeave={handleBlur}
+      to={`/${UserService.getSlugByRole(user!.role)}/single-rent/${single.id}`}
+    >
+      <StorageBackground isWarning={isWarning} isHovered={isHovered} />
+      <StorageHeader
+        isWarning={isWarning}
+        isHovered={isHovered}
+        stockName={single.stockName}
+      />
+      <StorageMainInfo identifier={single.number} isWarning={isWarning} />
+      {/* {isWarning && <div className="storage-warning-overlay" />} */}
+
+      <StorageDetails size={single.size} date={single.finishAt} />
+    </StyledStorage>
+    // </div>
+  );
 };
 
 export default SingleStorage;

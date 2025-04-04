@@ -14,10 +14,11 @@ import { __ } from '../../../../../helpers/i18n';
 import UserService from '../../../../../services/user-service';
 import { ApplicationState } from '../../../../../reducers';
 import { mapFields } from '../../../../../utils/fields-mapper';
+import { useGetMyDetailsQuery } from 'src/queries';
 
 const Add = () => {
     const dispatch = useDispatch();
-    const user = useSelector((state: ApplicationState) => state.user.details!);
+      const { data: user } = useGetMyDetailsQuery();
 
     const submitButton = (
         <ButtonsContainer>
@@ -32,7 +33,7 @@ const Add = () => {
         <Section>
             <PageHeader title="application.addStockGroup" />
             <ButtonsContainer>
-                <Button to={`/${UserService.getSlugByRole(user.role)}/locations/groups`} text="application.back" primary />
+                <Button to={`/${UserService.getSlugByRole(user!.role)}/locations/groups`} text="application.back" primary />
             </ButtonsContainer>
             <p>{__('application.addStockGroupDescription')}</p>
             <FormContainer highlight>
@@ -47,7 +48,7 @@ const Add = () => {
                     onRenderFullField={mapFields}
                     onSavedSuccessfully={() => {
                         dispatch(successNotification('notification.stockGroupAddedCorrectly'));
-                        history.push(`/${UserService.getSlugByRole(user.role)}/locations/groups`);
+                        history.push(`/${UserService.getSlugByRole(user!.role)}/locations/groups`);
                     }}
                     onTranslateString={formOnTranslateString}
                     thirdPartyComponents={{ ReactSelect: ReactSelectOverride, ReactCreatableSelect }}

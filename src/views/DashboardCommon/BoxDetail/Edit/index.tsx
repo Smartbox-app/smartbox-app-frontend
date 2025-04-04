@@ -7,10 +7,10 @@ import Position from "./Position";
 import Status from "./Status";
 import "./Edit.scss";
 import { Alert } from "../../../../components/Common";
+import { useGetMyDetailsQuery } from "../../../../queries";
 
 interface Props {
   selectedBoxId: string;
-  user: UserRes | null;
   rentId: string;
   singleBoxDetailStatus: RentStatus;
   display: boolean;
@@ -18,19 +18,19 @@ interface Props {
   callback?: () => void;
 }
 
-const Edit = ({
+export const Edit = ({
   selectedBoxId,
-  user,
   rentId,
   singleBoxDetailStatus,
   display,
   stockId,
   callback,
 }: Props) => {
+  const { data: user } = useGetMyDetailsQuery();
   if (!user) return null;
   return (
     <div className={`edit-wrapper ${display && "show-me"}`}>
-      <Alert text="application.changesIrreversible" type="primary" />
+      <Alert text="application.changesIrreversible" type="notice" />
       <Status
         callback={callback}
         selectedBoxId={selectedBoxId}
@@ -45,9 +45,3 @@ const Edit = ({
     </div>
   );
 };
-
-const mapStateToProps = (state: ApplicationState) => ({
-  user: state.user.details,
-});
-
-export default connect(mapStateToProps)(Edit);

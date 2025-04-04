@@ -3,12 +3,11 @@ import { Switch, Route, Redirect } from 'react-router';
 import Invite from '../InviteUser';
 import List from './List';
 import UserService from '../../../services/user-service';
-import { useSelector } from 'react-redux';
-import { ApplicationState } from '../../../reducers';
 import { AddUser } from '../AddUser';
+import { useGetMyDetailsQuery } from 'src/queries';
 
 const UsersManagement = () => {
-  const user = useSelector((state: ApplicationState) => state.user.details);
+    const { data: user } = useGetMyDetailsQuery();
 
   if(!user) return null;
 

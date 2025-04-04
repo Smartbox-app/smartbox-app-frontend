@@ -1,17 +1,16 @@
-import React from "react";
-import { Switch, Route, Redirect, useParams } from "react-router";
-import { Add } from "./Add";
-import { Edit } from "./Edit";
-import { List } from "./List";
-import UserService from "../../../../../../services/user-service";
-import { useSelector } from "react-redux";
-import { ApplicationState } from "../../../../../../reducers";
-import GateStatus from "../../../../../../views/DashboardCommon/GateStatus";
-import { UserRole } from "smartbox-types";
+import React from 'react';
+import { Switch, Route, Redirect, useParams } from 'react-router';
+import { Add } from './Add';
+import { Edit } from './Edit';
+import { List } from './List';
+import UserService from '../../../../../../services/user-service';
+import GateStatus from '../../../../../../views/DashboardCommon/GateStatus';
+import { UserRole } from 'smartbox-types';
+import { useGetMyDetailsQuery } from 'src/queries';
 
 const Gates = () => {
   const { stockId } = useParams<{ stockId: string }>();
-  const user = useSelector((state: ApplicationState) => state.user.details);
+  const { data: user } = useGetMyDetailsQuery();
 
   if (!user) return null;
 

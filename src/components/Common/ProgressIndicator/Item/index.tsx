@@ -1,47 +1,83 @@
 import React, { Component } from 'react';
 
-import './Item.scss';
-import { __ } from "../../../../helpers/i18n";
+import { __ } from '../../../../helpers/i18n';
 import styled, { css } from 'styled-components';
 import { getColorForBackground } from '../../../../utils/color';
 
 interface Props {
   value: string;
   order: number;
-  current?: boolean;
-  done?: boolean;
+  current: boolean;
+  done: boolean;
 }
 
-const StyledCurrentItem = styled.div<{ current?: boolean; done?: boolean }>`
-background: #fff;
-color: #eee;
-${props => props.current && css`
-color: #fff;
-background: ${props => props.theme.colors.primary};
-color: ${props => getColorForBackground(props.theme.colors.primary)};
-border: 2px solid${props => props.theme.colors.primary};
-`}
+const ItemWrapper = styled('div')(({ theme }) => ({
+  display: 'flex',
+  gap: theme.spacing,
+  flexDirection: 'column',
+  alignItems: 'center',
+}));
 
-${props => props.done && css`
-color: #fff;
-background: ${props => props.theme.colors.success};
-color: ${props => getColorForBackground(props.theme.colors.success)};
-border: 2px solid${props => props.theme.colors.success};
-`}
-`
+const StyledItem = styled('div')<{ current: boolean; done: boolean }>(
+  ({ done, current, theme }) => ({
+    borderRadius: '50%',
+    width: theme.spacing * 6,
+    height: theme.spacing * 6,
+    display: 'flex',
+    fontSize: 12,
+    alignItems: 'center',
+    justifyContent: 'center',
+    background:
+      done || current ? theme.colors.primary : theme.colors.background.primary,
+    border:
+      done || current
+        ? `1px solid ${theme.colors.primary}`
+        : `1px solid ${theme.colors.icon.grey.tertiary}`,
+    color:
+      done || current
+        ? getColorForBackground(theme.colors.primary)
+        : theme.colors.icon.grey.tertiary,
+  }),
+);
 
-class Item extends Component<Props> {
-  render() {
-    const { value, order, done, current } = this.props;
-    return (
-      <div className="item-wrapper">
-        <StyledCurrentItem done={done} current={current} className={`item-icon`}>
-          {done ? <span className="fa fa-check" /> : order}
-        </StyledCurrentItem>
-        <div className="item-description">{__(value)}</div>
-      </div>
-    );
-  }
-}
+// const StyledItem = styled.div<{ current?: boolean; done?: boolean }>`
+// background: #fff;
+// color: #eee;
+// border: 1
+// ${props => props.current && css`
+// color: #fff;
+// background: ${props => props.theme.colors.primary};
+// color: ${props => getColorForBackground(props.theme.colors.primary)};
+// border: 2px solid${props => props.theme.colors.primary};
+// `}
 
-export default Item;
+// ${props => props.done && css`
+// color: #fff;
+// background: ${props => props.theme.colors.primary};
+// color: ${props => getColorForBackground(props.theme.colors.primary)};
+// border: 2px solid${props => props.theme.colors.primary};
+// `}
+// `
+
+const ItemDescription = styled('div')<{ done: boolean; current: boolean }>(
+  ({ theme, done, current }) => ({
+    fontWeight: 500,
+    color:
+      done || current
+        ? theme.colors.text.primary
+        : theme.colors.icon.grey.primary,
+  }),
+);
+
+export const Item = ({ value, order, done, current }: Props) => {
+  return (
+    <ItemWrapper>
+      <StyledItem done={done} current={current} className={`item-icon`}>
+        {done ? <span className="fa fa-check" /> : order}
+      </StyledItem>
+      <ItemDescription done={done} current={current}>
+        {__(value)}
+      </ItemDescription>
+    </ItemWrapper>
+  );
+};

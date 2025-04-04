@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { MyRentList } from 'smartbox-types';
 import { Pagination } from '../../../../components/Common';
-import { Section, SectionHeader } from '../../../../components/Layout';
 import History from './History';
+import { Header, Section } from '../../../../components/ui';
+import { __ } from '../../../../helpers/i18n';
 
 interface Props {
   rentsHistoryList: MyRentList[];
@@ -15,9 +16,11 @@ const OrdersHistory = ({ rentsHistoryList }: Props) => {
   const startFrom = (): number => (page - 1) * listLength;
 
   return (
-    <Section highlight>
-      <SectionHeader title='application.history' />
-      <History data={rentsHistoryList.slice(startFrom(), startFrom() + listLength)} />
+    <Section>
+      <Header variant="h2">{__('application.history')}</Header>
+      <History
+        data={rentsHistoryList.slice(startFrom(), startFrom() + listLength)}
+      />
       {rentsHistoryList.length > listLength && (
         <Pagination
           initialPage={1}
