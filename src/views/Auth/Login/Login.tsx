@@ -23,13 +23,17 @@ export const Login = () => {
 
   const { mutate: login, isPending } = useLoginMutation();
 
-  const { handleSubmit, register } = useForm<LoginDto>({
+  const {
+    handleSubmit,
+    register,
+    formState: { errors, isValid },
+  } = useForm<LoginDto>({
     mode: 'onSubmit',
     resolver: ClassValidatorResolver(new LoginDto()),
   });
 
   const onSubmit = (data: LoginDto) => {
-    console.log('data', data);
+    if(!isValid) return;
     login(data);
   };
 
@@ -45,12 +49,14 @@ export const Login = () => {
               <Input
                 label="auth.email"
                 placeholder="auth.email_placeholder"
+                error={errors['email']?.message}
                 {...register('email')}
               />
               <Input
                 label="auth.password"
                 type="password"
                 placeholder="auth.password_placeholder"
+                error={errors['pwd']?.message}
                 {...register('pwd')}
               />
             </Section>
@@ -64,13 +70,14 @@ export const Login = () => {
               />
               <FbButton />
               {/* <GoogleButton /> */}
-              {tenant.rules && tenant.privacy && (
+              {/* {tenant.rules && tenant.privacy && ( */}
                 <Button
+                variant='secondary'
                   text="application.register"
                   size="large"
                   to={tenant.slides.length > 0 ? '/welcome' : 'register'}
                 />
-              )}
+              {/* )} */}
             </Section>
           </Form>
           <Section align="center">

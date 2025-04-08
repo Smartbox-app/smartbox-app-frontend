@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { ReactNode, useState } from 'react';
 import styled from 'styled-components';
+import { CardBackground } from './components/CardBackground';
 
 const StyledCard = styled('div')(({ theme }) => ({
   borderRadius: theme.radius.innerSurface,
@@ -16,18 +17,38 @@ const StyledCard = styled('div')(({ theme }) => ({
   zIndex: 1,
   flex: 1,
   minHeight: 150,
+  cursor: 'pointer',
+  transition: '.3s all',
+  height: '100%',
 }));
 
-export const Card = () => {
-  const [isHovered, setHovered] = useState(false);
+export type CardProps = {
+  warning?: boolean;
+  disabled?: boolean;
+  hovered?: boolean;
+  active?: boolean;
+  image?: ReactNode;
+  children?: ReactNode;
+};
 
-  const handleHover = () => {
-    setHovered(true);
-  };
-
-  const handleBlur = () => {
-    setHovered(false);
-  };
-
-  return <StyledCard></StyledCard>;
+export const Card = ({
+  warning,
+  disabled,
+  hovered,
+  image,
+  active,
+  children,
+}: CardProps) => {
+  return (
+    <StyledCard>
+      <CardBackground
+        image={image}
+        disabled={disabled}
+        hovered={hovered}
+        warning={warning}
+        active={active}
+      />
+      {children}
+    </StyledCard>
+  );
 };

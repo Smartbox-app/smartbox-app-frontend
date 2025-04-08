@@ -1,48 +1,42 @@
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import { formatPrice } from '../../../../../../utils/format-price';
 import { dateOnly } from '../../../../../../utils/format-date';
 
 import './SummaryTable.scss';
-import { __ } from "../../../../../../helpers/i18n";
+import { __ } from '../../../../../../helpers/i18n';
 import styled from 'styled-components';
 import { darken } from 'polished';
 import { AddonRes } from 'smartbox-types';
 import { OrderAddon } from '../../../../../../reducers/order-reducer';
 import { SelectedVariant } from './SelectedVariant';
-import { Section } from '../../../../../../components/Layout';
 import { colorOrDark } from '../../../../../../utils/color';
-
+import { Header, Section } from 'src/components/ui';
 
 const StyledCell = styled.div`
-color: ${props => colorOrDark(props.theme.colors.primary)};
-`
+  color: ${(props) => colorOrDark(props.theme.colors.primary)};
+`;
 
 const StyledRow = styled.div`
-    border-bottom: 1px solid ${props => darken(0.1, props.theme.colors.primary)};
-`
+  border-bottom: 1px solid #fbfbfb;
+`;
 
 const StyledDetailsList = styled.ul`
-    list-style-type: none
-`
+  list-style-type: none;
+`;
 
-const StyledAddonsHeader = styled.h3`
-    color: #333;`
-
-const StyledDetailsRow = styled.li<{ flex?: boolean }>(({ theme, flex }) => `
-    border-bottom: 1px solid ${darken(0.1, theme.colors.primary)};
-    // border-left: 3px solid ${darken(0.1, theme.colors.primary)};
-    padding: 10px 0;
-    margin-bottom: 10px;
-    ${flex && `
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      `}
-    
-h4 {
-    color: #333;
+const StyledDetailsRow = styled.li(
+  ({ theme }) => `
+    border-bottom: 1px solid #fbfbfb;
+    padding: 16px;
+    font-size: 14px;
+    display: flex;
+    gap: 4px;
+    &:nth-child(even) {
+      background:${theme.colors.background.tertiary}
     }
-`)
+  
+`,
+);
 
 interface Props {
   dateStart: Date;
@@ -52,53 +46,83 @@ interface Props {
     isGross: boolean;
   };
   addons?: AddonRes[];
-  orderAddons?: { [addonId: string]: OrderAddon }
+  orderAddons?: { [addonId: string]: OrderAddon };
 }
 
-const SummaryTable = ({ dateStart, dateEnd, countedPrice, addons, orderAddons }: Props) => {
+const SummaryTable = ({
+  dateStart,
+  dateEnd,
+  countedPrice,
+  addons,
+  orderAddons,
+}: Props) => {
   const fullPrice = useMemo(() => {
     if (!orderAddons) return countedPrice.value;
 
-    const addonsPrice = Object.values(orderAddons).reduce((acc, curr) => acc + (curr.price ? curr.price.value : 0), 0);
+    const addonsPrice = Object.values(orderAddons).reduce(
+      (acc, curr) => acc + (curr.price ? curr.price.value : 0),
+      0,
+    );
     return addonsPrice + countedPrice.value;
-  }, [countedPrice, orderAddons])
+  }, [countedPrice, orderAddons]);
 
-  return <Section highlight>
-    <div className="order-summary-wrapper">
-      <StyledRow className="row">
-        <StyledCell className="cell">{__('application.startTerm')}</StyledCell>
-        <StyledCell className="cell fat">
-          <span>{dateOnly(dateStart)}</span>
-        </StyledCell>
-      </StyledRow>
-      <StyledRow className="row">
-        <StyledCell className="cell">{__('application.finishTerm')}</StyledCell>
-        <StyledCell className="cell fat">
-          <span>{dateOnly(dateEnd)}</span>
-        </StyledCell>
-      </StyledRow>
-      <StyledRow className="row">
-        <StyledCell className="cell">{countedPrice.isGross ? __('application.grossPayment') : __('application.netPayment')}</StyledCell>
-        <StyledCell className="cell fat">
-          <span>{formatPrice(fullPrice)}</span>
-        </StyledCell>
-      </StyledRow>
-
-    </div>
-    <StyledAddonsHeader>{__('application.priceDetails')}</StyledAddonsHeader>
-    <StyledDetailsList>
-      <StyledDetailsRow flex>
-        <h4>{countedPrice.isGross ? __('application.paymentForRent') : __('application.netPaymentForRent')}</h4>
-        <span>{formatPrice(countedPrice.value)}</span>
-      </StyledDetailsRow>
-      {(addons && orderAddons) ? <div>
-        {addons.map(addon => <StyledDetailsRow key={addon.id}>
-          <h4>{addon.name}</h4>
-          <SelectedVariant addonId={addon.id} addons={addons} orderAddons={orderAddons} />
-        </StyledDetailsRow>)}
-      </div> : null}
-    </StyledDetailsList>
-  </Section>
-}
+  return (
+    <>
+      <div className="order-summary-wrapper">
+        <StyledRow className="row">
+          <StyledCell className="cell">
+            <Header variant="h2">{__('application.startTerm')}</Header>
+          </StyledCell>
+          <StyledCell className="cell fat">
+            <span>{dateOnly(dateStart)}</span>
+          </StyledCell>
+        </StyledRow>
+        <StyledRow className="row">
+          <StyledCell className="cell">
+            <Header variant="h2">{__('application.finishTerm')}</Header>
+          </StyledCell>
+          <StyledCell className="cell fat">
+            <span>{dateOnly(dateEnd)}</span>
+          </StyledCell>
+        </StyledRow>
+        <StyledRow className="row">
+          <StyledCell className="cell">
+            <Header variant="h2">
+              {countedPrice.isGross
+                ? __('application.grossPayment')
+                : __('application.netPayment')}
+            </Header>
+          </StyledCell>
+          <StyledCell className="cell fat">
+            <span>{formatPrice(fullPrice)}</span>
+          </StyledCell>
+        </StyledRow>
+      </div>
+      <Header variant="h2">{__('application.priceDetails')}</Header>
+      <StyledDetailsList>
+        <StyledDetailsRow>
+          {countedPrice.isGross
+            ? __('application.paymentForRent')
+            : __('application.netPaymentForRent')}
+          <span>-</span>
+          <strong>{formatPrice(countedPrice.value)}</strong>
+        </StyledDetailsRow>
+        {addons && orderAddons
+          ? addons.map((addon) => (
+              <StyledDetailsRow key={addon.id}>
+                <span>{addon.name}</span>
+                <span>-</span>
+                <SelectedVariant
+                  addonId={addon.id}
+                  addons={addons}
+                  orderAddons={orderAddons}
+                />
+              </StyledDetailsRow>
+            ))
+          : null}
+      </StyledDetailsList>
+    </>
+  );
+};
 
 export default SummaryTable;

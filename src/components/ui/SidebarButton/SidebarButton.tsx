@@ -8,17 +8,24 @@ const sidebarButtonStyles = css(({ theme }) => ({
   background: theme.colors.background.primary,
   border: `1px solid ${theme.colors.background.primary}`,
   display: 'flex',
+  flexDirection: 'column',
   alignItems: 'center',
   justifyContent: 'center',
   gap: theme.spacing * 2,
   color: theme.colors.text.primary,
   borderRadius: theme.radius.outerSurface,
   cursor: 'pointer',
-  boxShadow: theme.shadows.primary,
+
   fontSize: 14,
   svg: {
     fill: theme.colors.icon.grey.primary,
-    transition: '.3s all'
+    transition: '.3s all',
+  },
+  '&:link, &:visited': {
+    svg: {
+      fill: theme.colors.icon.grey.primary,
+    },
+    color: theme.colors.text.primary,
   },
   '&:hover': {
     border: `1px solid ${theme.colors.primary}`,
@@ -26,7 +33,35 @@ const sidebarButtonStyles = css(({ theme }) => ({
       fill: theme.colors.icon.primary,
     },
   },
-  transition: '.3s all'
+  '&.active': {
+    background: theme.colors.primary,
+    color: theme.colors.background.white,
+    svg: {
+      fill: theme.colors.background.white,
+    },
+  },
+  transition: '.3s all',
+  flex: 1,
+
+  '@media(min-width: 500px)': {
+    flex: '0 1 auto',
+    flexDirection: 'row',
+    boxShadow: theme.shadows.primary,
+    '&:hover': {
+      border: `1px solid ${theme.colors.primary}`,
+      svg: {
+        fill: theme.colors.icon.primary,
+      },
+    },
+    '&.active': {
+      background: theme.colors.background.primary,
+      border: `1px solid ${theme.colors.background.primary}`,
+      color: theme.colors.primary,
+      svg: {
+        fill: theme.colors.icon.primary,
+      },
+    },
+  },
 }));
 
 const StyledSidebarButton = styled('button')(() => sidebarButtonStyles);

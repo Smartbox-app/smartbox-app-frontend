@@ -22,7 +22,6 @@ import ErrorBoundary from './ErrorBoundary';
 import Cookies from './Cookies';
 import { FieldsMapper } from './FieldsMapper';
 import { InputPhone } from './InputPhone';
-import { InputLabel } from './InputLabel';
 import { InputHelp } from './InputHelp';
 import { InputError } from './InputError';
 import { InputErrors } from './InputErrors';
@@ -55,7 +54,6 @@ export {
     Cookies,
     FieldsMapper,
     InputPhone,
-    InputLabel,
     InputHelp,
     InputError,
     InputErrors,

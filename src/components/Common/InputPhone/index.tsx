@@ -1,10 +1,11 @@
 import React from 'react';
 import PhoneInput from 'react-phone-number-input';
-import { InputLabel } from '../InputLabel';
 import { InputErrors } from '../InputErrors';
 import { TranslatableObject } from '../../../utils/errors-trans';
 import './InputPhone.scss';
 import styled from 'styled-components';
+import { InputLabel } from 'src/components/ui/InputLabel';
+import { __ } from 'src/helpers/i18n';
 
 interface Props {
     value: any;
@@ -30,7 +31,7 @@ const StyledContainer = styled.div`
 
 const InputPhone = ({ value, label, name, big, errors, onChange }: Props) => {
     return <StyledContainer className={`input-phone-container ${big ? 'big' : 'compact'} ${errors && errors.length > 0 ? 'is-invalid' : ''}`}>
-        <InputLabel label={label} name={name} />
+        <InputLabel labelFor={name}>{__(label)}</InputLabel>
         <PhoneInput
             withCountryCallingCode
             country='PL'

@@ -5,7 +5,7 @@ import { __ } from '../../../helpers/i18n';
 import { darken } from 'polished';
 import { ReactNode } from 'react';
 
-type ButtonTypes = 'primary' | 'secondary' | 'tertiary';
+type ButtonTypes = 'primary' | 'secondary' | 'tertiary' | 'error';
 type ButtonSizes = 'large' | 'medium' | 'small' | 'extrasmall';
 
 export type ButtonProps = {
@@ -17,7 +17,9 @@ export type ButtonProps = {
   fullWidth?: boolean;
   disabled?: boolean;
   text?: string;
-  icon?: ReactNode;
+  iconLeft?: ReactNode;
+  iconRight?: ReactNode;
+  className?: string;
   onClick?: () => void;
 };
 
@@ -42,10 +44,23 @@ const fontSizeBySize = {
   extrasmall: 12,
 };
 
+const heightBySize = {
+  large: 12,
+  medium: 10,
+  small: 8,
+  extrasmall: 6,
+};
+
 const getColorByVariant = (variant: ButtonTypes, theme: DefaultTheme) => {
   if (variant === 'primary') return theme.colors.primary;
   if (variant === 'secondary') return theme.colors.background.primary;
+  if (variant === 'error') return theme.colors.surface.error.primary;
   return 'transparent';
+};
+
+const getTextColorByVariant = (variant: ButtonTypes, theme: DefaultTheme) => {
+  if (variant === 'error') return theme.colors.background.primary;
+  return getColorForBackground(getColorByVariant(variant, theme))
 };
 
 const getBorderByVariant = (variant: ButtonTypes, theme: DefaultTheme) => {
@@ -81,13 +96,14 @@ const buttonStyles = css<ButtonStyleProps>(
     padding: theme.spacing * paddingMultiplierBySize[size],
     borderRadius: theme.spacing * radiusMultiplierBySize[size],
     background: getColorByVariant(variant, theme),
-    color: getColorForBackground(getColorByVariant(variant, theme)),
+    color: getTextColorByVariant(variant, theme),
     svg: {
-      fill: getColorForBackground(getColorByVariant(variant, theme)),
+      fill: getTextColorByVariant(variant, theme),
     },
     border: getBorderByVariant(variant, theme),
     textDecoration: getTextDecorationByVariant(variant),
     width: fullWidth ? '100%' : 'auto',
+    height: theme.spacing * heightBySize[size],
     minWidth: getMinWidthBySize(size),
     boxShadow: theme.shadows.primary,
     justifyContent: 'center',
@@ -109,6 +125,9 @@ const buttonStyles = css<ButtonStyleProps>(
       background: theme.colors.surface.primary.disable,
       color: theme.colors.text.disable,
       border: 'none',
+      svg: {
+        fill: theme.colors.text.disable,
+      }
     },
   }),
 );
@@ -130,12 +149,15 @@ export const Button = ({
   fullWidth,
   disabled,
   onClick,
-  icon,
+  iconLeft,
+  iconRight,
   text,
+  className,
 }: ButtonProps) => {
-  if (disabled || onClick)
+  if (disabled)
     return (
       <StyledButton
+        className={className}
         type={type}
         onClick={onClick}
         variant={variant}
@@ -143,38 +165,58 @@ export const Button = ({
         size={size}
         disabled={disabled}
       >
-        {icon}
+        {iconLeft || <span />}
         {text ? __(text) : null}
+        {iconRight || <span />}
       </StyledButton>
     );
   if (href) {
     return (
       <StyledA
+        className={className}
+        target="_blank"
         href={href}
         variant={variant}
         fullWidth={fullWidth}
         size={size}
         disabled={disabled}
       >
-        {icon}
+        {iconLeft || <span />}
         {text ? __(text) : null}
+        {iconRight || <span />}
       </StyledA>
     );
   }
   if (to) {
     return (
       <StyledLink
+        className={className}
         to={to}
         variant={variant}
         fullWidth={fullWidth}
         size={size}
         disabled={disabled}
       >
-        {icon}
+        {iconLeft || <span />}
         {text ? __(text) : null}
+        {iconRight || <span />}
       </StyledLink>
     );
   }
 
-  return null;
+  return (
+    <StyledButton
+      className={className}
+      type={type}
+      onClick={onClick}
+      variant={variant}
+      fullWidth={fullWidth}
+      size={size}
+      disabled={disabled}
+    >
+      {iconLeft || <span />}
+      {text ? __(text) : null}
+      {iconRight || <span />}
+    </StyledButton>
+  );
 };

@@ -1,4 +1,5 @@
 import { MyRentList, RentStatus } from 'smartbox-types';
+import { singleRent } from 'src/actions';
 
 export type RentsStatus = {
   singleRent: MyRentList;
@@ -24,6 +25,10 @@ interface GetMySingleRent {
   payload: MyRentList[];
 }
 
+interface ClearOrder {
+  type: 'CLEAR_ORDER';
+}
+
 interface FetchMyRentHistory {
   type: 'FETCH_MY_RENT_HISTORY_SUCCESS';
   payload: MyRentList[];
@@ -38,7 +43,14 @@ interface LoadingRentHistory {
   payload: boolean;
 }
 
-type Action = BoxGroup | GetSingleRent | GetMySingleRent | FetchMyRentHistory | ShowMapToggle | LoadingRentHistory;
+type Action =
+  | BoxGroup
+  | GetSingleRent
+  | GetMySingleRent
+  | FetchMyRentHistory
+  | ShowMapToggle
+  | LoadingRentHistory
+  | ClearOrder
 
 const initialState: RentsStatus = {
   singleRent: {
@@ -85,7 +97,9 @@ export default (state: RentsStatus = initialState, action: Action): any => {
     case 'FETCH_MY_RENT_STORY_SUCCESS': {
       return {
         ...state,
-        rentsList: action.payload.filter((rent: MyRentList) => rent.status !== RentStatus.failure),
+        rentsList: action.payload.filter(
+          (rent: MyRentList) => rent.status !== RentStatus.failure,
+        ),
       };
     }
     case 'GET_MY_RENT_LIST_SUCCESS': {
@@ -96,7 +110,9 @@ export default (state: RentsStatus = initialState, action: Action): any => {
     }
 
     case 'GET_SINGLE_RENT': {
-      const foundRent = state.rentsList.find((rent: MyRentList) => rent.id === action.payload);
+      const foundRent = state.rentsList.find(
+        (rent: MyRentList) => rent.id === action.payload,
+      );
       if (foundRent) {
         return {
           ...state,
@@ -107,6 +123,12 @@ export default (state: RentsStatus = initialState, action: Action): any => {
           ...state,
         };
       }
+    }
+    case 'CLEAR_ORDER': {
+      return {
+        ...state,
+        singleRent: null,
+      };
     }
     case 'TOGGLE_SHOW_USER_STOCK_MAP': {
       return {

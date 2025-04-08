@@ -5,7 +5,6 @@
 html {
   font-size: 14px;
   font-family: $font-primary;
-  height: 100%;
 }
 
 @include gt-sm {
@@ -15,7 +14,7 @@ html {
 }
 
 #root {
-  height: 100%;
+  min-height: 100vh;
   overflow: auto;
 }
 

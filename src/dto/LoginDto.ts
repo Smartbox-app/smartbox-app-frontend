@@ -1,26 +1,23 @@
-import {
-  IsEmail,
-  IsNotEmpty,
-  MinLength,
-} from "class-validator";
+import { IsEmail, IsNotEmpty, MinLength } from 'class-validator';
+import { errors } from 'src/validation/errors';
 
 export class LoginDto {
-  @IsNotEmpty({
-    message: "To pole jest wymagane",
-  })
   @IsEmail(
     {},
     {
-      message: "Niepoprawny format adresu e-mail",
-    }
+      message: errors.incorrect_email,
+    },
   )
+  @IsNotEmpty({
+    message: errors.field_required,
+  })
   email: string;
 
   @IsNotEmpty({
-    message: "To pole jest wymagane",
+    message: errors.field_required,
   })
   @MinLength(8, {
-    message: "Wymagane min. 8 znaków",
+    message: errors.min_chars(8),
   })
   pwd: string;
 }

@@ -1,27 +1,21 @@
 @import '../../../../../config/variables.scss';
 @import '../../../../../config/mixins.scss';
 
-.step-stock-wrapper {
-  form {
-    width: 100%;
-  }
-
   .stocks-wrapper {
-    display: flex;
+    display: grid;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: stretch;
-    margin-left: -$main-spacing/2;
+    width: 100%;
+    gap: 16px;
+    grid-template-columns: 1fr;
+    @include gt-sm {
+      grid-template-columns: 1fr 1fr;
+    }
+    @include gt-md {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
   }
-}
 
-@include gt-sm {
-  .stocks-wrapper {
-    flex-direction: row;
-    margin-bottom: $main-spacing * 2;
-  }
-}
 
 .stock-group {
   flex: 0 0 100%;
@@ -29,7 +23,16 @@
 
 
 .group-stocks-wrapper {
-  display: flex;
+  display: grid;
+  flex-direction: row;
   flex-wrap: wrap;
-  margin-left: -$main-spacing/2;
+  width: 100%;
+  gap: 16px;
+  grid-template-columns: 1fr;
+  @include gt-sm {
+    grid-template-columns: 1fr 1fr;
+  }
+  @include gt-md {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
 }

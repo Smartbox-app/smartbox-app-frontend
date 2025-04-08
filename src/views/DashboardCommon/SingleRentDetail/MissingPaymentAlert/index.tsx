@@ -1,22 +1,31 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { MyRentDetails, MyRentList, RentStatus } from 'smartbox-types';
-import { ApplicationState } from '../../../../reducers';
+import { MyRentDetails, RentStatus } from 'smartbox-types';
 import MissingPayment from './MissingPayment';
-import StockBlocked from './StockBlocked';
 
-import './MissingPaymentAlert.scss';
+// import './MissingPaymentAlert.scss';
+import { Alert } from 'src/components/Common';
+import { Section } from 'src/components/ui';
 
 interface Props {
   rent: MyRentDetails;
 }
 
 export const MissingPaymentAlert = ({ rent }: Props) => {
-  if (rent.status === RentStatus.noPaidExtension) {
-    return <MissingPayment rent={rent} />;
-  } else if (rent.status === RentStatus.noPaidExtensionWithWarning) {
-    return <StockBlocked />;
-  } else {
+  if (
+    ![
+      RentStatus.noPaidExtension,
+      RentStatus.noPaidExtensionWithWarning,
+    ].includes(rent.status)
+  )
     return null;
-  }
+
+  return (
+    <Section>
+      {rent.status === RentStatus.noPaidExtension ? (
+        <MissingPayment rent={rent} />
+      ) : null}
+      {rent.status === RentStatus.noPaidExtensionWithWarning ? (
+        <Alert type="error" text="application.boxWasBlockedDueNoPayment" />
+      ) : null}
+    </Section>
+  );
 };

@@ -16,7 +16,7 @@ export const NewRentButton = () => {
     <Button
       text="application.newStock"
       size="large"
-      icon={<Add />}
+      iconLeft={<Add />}
       onClick={() => {
         if (!user.phone || user.phone.length < 7) {
           dispatch(showModal(<NoPhoneModal />));

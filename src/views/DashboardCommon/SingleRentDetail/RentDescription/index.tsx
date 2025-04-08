@@ -1,20 +1,23 @@
-import React from "react";
-import { MyRentDetails, RentDescription } from "smartbox-types"
-import { Section, SectionHeader } from "../../../../components/Layout";
-import { __ } from "../../../../helpers/i18n";
-import { RentHistory } from "../../RentHistory";
+import { MyRentDetails, RentDescription } from 'smartbox-types';
+import { __ } from '../../../../helpers/i18n';
+import { RentHistory } from '../../RentHistory';
+import { Header, Section } from 'src/components/ui';
 
 interface Props {
-    description: RentDescription[];
-    rent: MyRentDetails;
+  description: RentDescription[];
+  rent: MyRentDetails;
 }
-
 
 export const Description = ({ description, rent }: Props) => {
-    return (
-        <Section highlight>
-            <SectionHeader title="application.rentHistory" />
-            <RentHistory description={description} rentId={rent.id} paymentType={rent.paymentType} periods={rent.periods} />
-        </Section>
-    )
-}
+  return (
+    <Section>
+      <Header variant="h2">{__('application.rentHistory')}</Header>
+      <RentHistory
+        description={description}
+        rentId={rent.id}
+        paymentType={rent.paymentType}
+        periods={rent.periods}
+      />
+    </Section>
+  );
+};

@@ -4,35 +4,43 @@
 .order-summary-wrapper {
   display: flex;
   flex: 0 0 100%;
-  flex-direction: row;
+  flex-direction: column;
 
   .row {
     display: flex;
     flex-direction: column;
-    flex: 0 0 33.333%;
-    max-width: 33.3333%;
-    margin: $main-spacing;
+
     margin-left: 0;
     margin-right: 0;
 
-    .cell {
-      display: flex;
-      width: 100%;
-      justify-content: center;
-      padding: $main-spacing 0;
-      text-align: center;
-    }
+
 
     .fat {
       display: flex;
       font-weight: 600;
-      font-size: 1.1rem;
+      font-size: 25px;
 
       @include gt-sm {
-        font-size: 1.3rem;
+        font-size: 40px;
       }
     }
   }
+  @include gt-sm {
+    flex-direction: row;
+
+    .row {
+      margin: $main-spacing;
+      flex: 0 0 33.333%;
+      max-width: 33.3333%;
+
+      .cell {
+        display: flex;
+        width: 100%;
+        padding: $main-spacing 0;
+      }
+    }
+  }
+
 }
 
 @include gt-sm {
@@ -41,7 +49,7 @@
 
       .fat {
         font-weight: 600;
-        font-size: 1.8rem;
+        font-size: 40pxrem;
       }
     }
   }

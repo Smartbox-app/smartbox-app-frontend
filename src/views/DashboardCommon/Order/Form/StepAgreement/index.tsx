@@ -1,10 +1,10 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
-import { useForm } from "react-hook-form";
-import { useParams } from "react-router-dom";
-import "@cyntler/react-doc-viewer/dist/index.css";
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { useParams } from 'react-router-dom';
+import '@cyntler/react-doc-viewer/dist/index.css';
 
-import { bindActionCreators } from "redux";
-import { connect, useSelector } from "react-redux";
+import { bindActionCreators } from 'redux';
+import { connect, useSelector } from 'react-redux';
 import {
   RentBoxReq,
   ExtendRentalReq,
@@ -12,45 +12,46 @@ import {
   RentPaymentType,
   PayForRentResponse,
   PaymentStatus,
-} from "smartbox-types";
-import { PaymentType } from "smartbox-types";
-import { Alert } from "../../../../../components/Common";
-import { Button, Spinner } from "../../../../../components/Branded";
-import { order } from "../../../../../actions";
-import { ButtonsContainer } from "../../../../../components/Layout";
-import { history } from "../../../../../App";
-import { FormType } from "../../../../../types/order-form";
+} from 'smartbox-types';
+import { PaymentType } from 'smartbox-types';
+import { Alert } from '../../../../../components/Common';
+import { Spinner } from '../../../../../components/Branded';
+import { order } from '../../../../../actions';
+import { ButtonsContainer } from '../../../../../components/Layout';
+import { history } from '../../../../../App';
+import { FormType } from '../../../../../types/order-form';
 
-import FormHeader from "../../../../../components/Layout/FormHeader";
-import UserService from "../../../../../services/user-service";
+import UserService from '../../../../../services/user-service';
 
-import ScrollPosition from "./ScrollPosition";
-import { ApplicationState } from "../../../../../reducers";
+import ScrollPosition from './ScrollPosition';
+import { ApplicationState } from '../../../../../reducers';
 
-import "./StepAgreement.scss";
-import ApiService from "../../../../../services/api-service";
+import './StepAgreement.scss';
+import ApiService from '../../../../../services/api-service';
 import {
   getCorrectPriceWithTax,
   getCorrectTaxPercentAmount,
-} from "../../../../../utils/tax";
-import { OrderAddon } from "../../../../../reducers/order-reducer";
-import { dateOnly } from "../../../../../utils/format-date";
-import styled from "styled-components";
-import { pdfjs } from "react-pdf";
-import { useGetMyDetailsQuery } from "src/queries";
+} from '../../../../../utils/tax';
+import { OrderAddon } from '../../../../../reducers/order-reducer';
+import { dateOnly } from '../../../../../utils/format-date';
+import styled from 'styled-components';
+import { pdfjs } from 'react-pdf';
+import { useGetMyDetailsQuery } from 'src/queries';
+import { Button, Section, Stack } from 'src/components/ui';
+import { ArrowLeft, ArrowRight, SearchZoomIn } from 'src/icons';
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 
-const AgreementWrapper = styled("div")({
-  position: "relative",
+const AgreementWrapper = styled('div')({
+  position: 'relative',
 });
 
-const SpinnerWrapper = styled("div")({
-  position: "absolute",
+const SpinnerWrapper = styled('div')({
+  position: 'absolute',
   left: 0,
   top: 0,
-  width: "100%",
-  height: "100%",
+  width: '100%',
+  height: '100%',
   zIndex: -1,
 });
 
@@ -62,11 +63,8 @@ interface Props {
   paymentType: PaymentType;
 }
 
-const StepSummary = ({
-  formData,
-  isResignationMarked,
-}: Props): any => {
-    const { data: user } = useGetMyDetailsQuery();
+const StepAgreement = ({ formData, isResignationMarked }: Props): any => {
+  const { data: user } = useGetMyDetailsQuery();
   const order = useSelector((state: ApplicationState) => state.order);
   const tenant = useSelector((state: ApplicationState) => state.tenant);
   const [loading, setLoading] = useState(false);
@@ -88,19 +86,19 @@ const StepSummary = ({
     if (!url || !paymentData) return;
 
     const { hash, ...restData } = paymentData;
-    const form = document.createElement("form");
-    form.method = "post";
+    const form = document.createElement('form');
+    form.method = 'post';
     form.action = url;
 
-    const hashInput = document.createElement("input");
+    const hashInput = document.createElement('input');
     hashInput.value = hash;
-    hashInput.name = "hashExtended";
-    hashInput.type = "hidden";
+    hashInput.name = 'hashExtended';
+    hashInput.type = 'hidden';
     form.appendChild(hashInput);
 
     Object.keys(restData).forEach((key) => {
-      const input = document.createElement("input");
-      input.type = "hidden";
+      const input = document.createElement('input');
+      input.type = 'hidden';
       input.value = restData[key];
       input.name = key;
       form.appendChild(input);
@@ -114,8 +112,8 @@ const StepSummary = ({
   const startNewRent = async (data: FormData) => {
     setLoading(true);
     await ApiService.callFetch(
-      "POST",
-      "rent/new",
+      'POST',
+      'rent/new',
       (response: PayForRentResponse) => {
         if (response.paymentStatus === PaymentStatus.succes) {
           history.push(`/payment-success/${response.paymentId}`);
@@ -124,14 +122,15 @@ const StepSummary = ({
         }
       },
       null,
-      data
+      data,
     );
+    setLoading(false);
   };
 
   const extendRent = async (data: FormData, rentId: string) => {
     setLoading(true);
     await ApiService.callFetch(
-      "POST",
+      'POST',
       `rent/extend-rent/${rentId}`,
       (response: PayForRentResponse) => {
         if (response.paymentStatus === PaymentStatus.succes) {
@@ -141,8 +140,9 @@ const StepSummary = ({
         }
       },
       null,
-      data
+      data,
     );
+    setLoading(false);
   };
 
   const getCorrectPrice = (price: number, isGross: boolean, tax: string) => {
@@ -154,7 +154,7 @@ const StepSummary = ({
 
   const getAddonsWithCorrectPrice = (
     orderAddons: { [addonId: string]: OrderAddon },
-    tax: string
+    tax: string,
   ): OrderAddons => {
     const parsedAddons: OrderAddons = {};
     const taxValue = getCorrectTaxPercentAmount(tax);
@@ -204,16 +204,16 @@ const StepSummary = ({
   const { handleSubmit } = useForm();
 
   const getFormDataFromCollection = (
-    collection: RentBoxReq | ExtendRentalReq
+    collection: RentBoxReq | ExtendRentalReq,
   ): FormData => {
     const rentFormData = new FormData();
 
     for (const key in collection) {
       const value = collection[key];
-      if (key === "startAt") rentFormData.append(key, value.toISOString());
-      else if (key === "finishAt")
+      if (key === 'startAt') rentFormData.append(key, value.toISOString());
+      else if (key === 'finishAt')
         rentFormData.append(key, value.toISOString());
-      else if (key === "orderAddons")
+      else if (key === 'orderAddons')
         rentFormData.append(key, JSON.stringify(value));
       else rentFormData.append(key, value);
     }
@@ -223,9 +223,9 @@ const StepSummary = ({
 
       if (orderAddon && orderAddon.file) {
         rentFormData.append(
-          "addonFiles",
+          'addonFiles',
           orderAddon.file,
-          `${addonId}--${orderAddon.file.name}`
+          `${addonId}--${orderAddon.file.name}`,
         );
       }
     }
@@ -240,7 +240,7 @@ const StepSummary = ({
       cost: getCorrectPrice(
         order.calculatedPrice.value,
         order.calculatedPrice.isGross,
-        tenant!.tax
+        tenant!.tax,
       ),
       discountCode: order.discountCode,
       firstName: formData.firstName,
@@ -251,17 +251,17 @@ const StepSummary = ({
       isCompany: formData.isCompany || false,
       phone: formData.phone,
       mailToSendInvoice: formData.mailToSendInvoice,
-      companyName: formData.companyName || "",
-      companyStreet: formData.companyStreet || "",
-      companyCity: formData.companyCity || "",
-      companyPostCode: formData.companyPostCode || "",
-      nip: formData.nip || "",
+      companyName: formData.companyName || '',
+      companyStreet: formData.companyStreet || '',
+      companyCity: formData.companyCity || '',
+      companyPostCode: formData.companyPostCode || '',
+      nip: formData.nip || '',
       rentPaymentType: order.rentPaymentType || RentPaymentType.InAdvance,
       orderAddons: getAddonsWithCorrectPrice(order.orderAddons, tenant!.tax),
     };
 
     if (formData.birthDate) {
-      commonCollection["birthDate"] = formData.birthDate;
+      commonCollection['birthDate'] = formData.birthDate;
     }
 
     const dataCollectionExtendRent: ExtendRentalReq = {
@@ -292,7 +292,7 @@ const StepSummary = ({
       cost: getCorrectPrice(
         order.calculatedPrice.value,
         order.calculatedPrice.isGross,
-        tenant!.tax
+        tenant!.tax,
       ).toString(),
       // discountCode: order.discountCode,
       firstName: formData.firstName,
@@ -300,9 +300,9 @@ const StepSummary = ({
       street: formData.street,
       city: formData.city,
       postCode: formData.postCode,
-      isCompany: formData.isCompany ? "true" : "false",
+      isCompany: formData.isCompany ? 'true' : 'false',
       phone: formData.phone,
-      birthDate: formData.birthDate ? dateOnly(formData.birthDate) : "",
+      birthDate: formData.birthDate ? dateOnly(formData.birthDate) : '',
       mailToSendInvoice: formData.mailToSendInvoice,
       companyName: formData.companyName || undefined,
       companyStreet: formData.companyStreet || undefined,
@@ -310,7 +310,7 @@ const StepSummary = ({
       companyPostCode: formData.companyPostCode || undefined,
       nip: formData.nip || undefined,
       simplifiedAddons: getSimplifiedAddons(
-        getAddonsWithCorrectPrice(order.orderAddons, tenant!.tax)
+        getAddonsWithCorrectPrice(order.orderAddons, tenant!.tax),
       ),
       date: dateOnly(new Date()),
       startAt: dateOnly(order.startDate),
@@ -324,15 +324,15 @@ const StepSummary = ({
   const onBack = () => {
     if (!user) return;
     history.push(
-      `/${UserService.getSlugByRole(user.role)}/order/step/summary/${rentId || ""}`
+      `/${UserService.getSlugByRole(user.role)}/order/step/summary/${rentId || ''}`,
     );
   };
 
   const checkFrame = () => {
     console.log(
-      "CHECKING FRAME",
+      'CHECKING FRAME',
       frameRef.current?.contentWindow,
-      frameRef.current?.contentDocument
+      frameRef.current?.contentDocument,
     );
     if (!frameRef.current) return false;
 
@@ -341,8 +341,8 @@ const StepSummary = ({
       frameRef.current.contentWindow?.document;
 
     if (!iframeDoc?.body.children.length) {
-      console.log("TRYING TO RELOAD");
-      frameRef.current.src += "";
+      console.log('TRYING TO RELOAD');
+      frameRef.current.src += '';
       frameRef.current.contentWindow?.location.reload();
 
       setTimeout(() => {
@@ -357,7 +357,7 @@ const StepSummary = ({
   };
 
   useEffect(() => {
-    console.log("EFFETCT CALLED");
+    console.log('EFFETCT CALLED');
     if (!frameRef.current) return;
 
     if (!frameRef.current.contentDocument?.body.children.length) {
@@ -369,8 +369,8 @@ const StepSummary = ({
     if (!tenant) return null;
     const { agreement } = tenant;
 
-    if (agreement.includes(".docx")) return "docx";
-    return "pdf";
+    if (agreement.includes('.docx')) return 'docx';
+    return 'pdf';
   }, [tenant]);
 
   if (!tenant) return null;
@@ -383,60 +383,78 @@ const StepSummary = ({
     if (values[key]) params.append(key, values[key]);
   });
 
-  params.append("addons", JSON.stringify(simplifiedAddons));
+  params.append('addons', JSON.stringify(simplifiedAddons));
 
-  console.log("PARAMS", params);
+  console.log('PARAMS', params);
 
   const url = `${ApiService.url}tenant/agreement/${tenant.id}?${params}`;
   const encodedUrl = encodeURIComponent(url);
 
-  console.log("URL", url, encodedUrl);
+  console.log('URL', url, encodedUrl);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       {loading ? <Spinner overlay halfTransparent /> : null}
-      <FormHeader title="application.orderAgreement" />
-
-      <AgreementWrapper>
-        {!agreementLoaded ? (
-          <SpinnerWrapper>
-            <Spinner overlay halfTransparent />
-          </SpinnerWrapper>
-        ) : null}
-        {agreementType === "docx" ? (
-          <iframe
-            ref={frameRef}
-            src={`https://docs.google.com/gview?embedded=true&url=${encodedUrl}`}
-            height="300"
-            style={{ height: "45vh", width: "100%" }}
-          ></iframe>
-        ) : null}
-        {/* <DocViewer language={undefined} documents={[{ uri: `${ApiService.url}tenant/agreement/${tenant.id}`, fileType: 'docx' }]} pluginRenderers={DocViewerRenderers} />*/}
-        {agreementType === "pdf" ? (
-          <object
-            className="rules-embed"
-            data={`${ApiService.url}tenant/agreement/${tenant.id}#toolbar=0&navpanes=0&scrollbar=0`}
-            type="application/pdf"
-          />
-        ) : // <Document file={`${ApiService.url}tenant/agreement/${tenant.id}`} onLoadSuccess={({ numPages }) => setTotalPages(numPages)}>
-        //     {totalPages ? Array(totalPages).fill(1).map((_, index) => index + 1).map(val => <Page pageNumber={val} key={val} />) : null}
-        // </Document>
-        null}
-      </AgreementWrapper>
-
-      <Button primary blank to={url} text="Kliknij aby otworzyć" />
-      <span className="separator" />
-      <ScrollPosition />
-      <Alert type="notice" text="application.orderAgreementAcceptation" />
-      <ButtonsContainer max>
-        <Button outline text="application.back" click={() => onBack()} />
-        <Button
-          type="submit"
-          primary
-          text="application.goToPayment"
-          disabled={!isResignationMarked || loading}
-        />
-      </ButtonsContainer>
+      <Stack>
+        <Section>
+          <AgreementWrapper>
+            {!agreementLoaded ? (
+              <SpinnerWrapper>
+                <Spinner overlay halfTransparent />
+              </SpinnerWrapper>
+            ) : null}
+            {agreementType === 'docx' ? (
+              <iframe
+                ref={frameRef}
+                src={`https://docs.google.com/gview?embedded=true&url=${encodedUrl}`}
+                height="300"
+                style={{ height: '45vh', width: '100%' }}
+              ></iframe>
+            ) : null}
+            {/* <DocViewer language={undefined} documents={[{ uri: `${ApiService.url}tenant/agreement/${tenant.id}`, fileType: 'docx' }]} pluginRenderers={DocViewerRenderers} />*/}
+            {agreementType === 'pdf' ? (
+              <object
+                className="rules-embed"
+                data={`${ApiService.url}tenant/agreement/${tenant.id}#toolbar=0&navpanes=0&scrollbar=0`}
+                type="application/pdf"
+              />
+            ) : // <Document file={`${ApiService.url}tenant/agreement/${tenant.id}`} onLoadSuccess={({ numPages }) => setTotalPages(numPages)}>
+            //     {totalPages ? Array(totalPages).fill(1).map((_, index) => index + 1).map(val => <Page pageNumber={val} key={val} />) : null}
+            // </Document>
+            null}
+          </AgreementWrapper>
+          <ButtonsContainer center>
+            <Button
+              href={url}
+              size="large"
+              text="application.click_to_open"
+              iconLeft={<SearchZoomIn />}
+            />
+          </ButtonsContainer>
+        </Section>
+        <Section>
+          <Alert type="notice" text="application.orderAgreementAcceptation" />
+          <ScrollPosition />
+        </Section>
+        <Section>
+          <ButtonsContainer spaceBetween>
+            <Button
+              size="large"
+              variant="secondary"
+              text="application.back"
+              onClick={() => onBack()}
+              iconLeft={<ArrowLeft />}
+            />
+            <Button
+              iconRight={<ArrowRight />}
+              type="submit"
+              size="large"
+              text="application.goToPayment"
+              disabled={!isResignationMarked || loading}
+            />
+          </ButtonsContainer>
+        </Section>
+      </Stack>
     </form>
   );
 };
@@ -452,7 +470,7 @@ const mapDispatchToProps = (dispatch: any) =>
     {
       ...order,
     },
-    dispatch
+    dispatch,
   );
 
-export default connect(mapStateToProps, mapDispatchToProps)(StepSummary);
+export default connect(mapStateToProps, mapDispatchToProps)(StepAgreement);

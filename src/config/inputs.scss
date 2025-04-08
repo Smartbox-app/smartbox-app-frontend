@@ -157,11 +157,6 @@ textarea {
   resize: vertical;
 }
 
-.checkbox {
-  margin-bottom: $main-spacing;
-  display: block;
-}
-
 [type='checkbox']:checked,
 [type='checkbox']:not(:checked) {
   position: absolute;
@@ -185,51 +180,27 @@ textarea {
   top: 50%;
   transform: translateY(-50%);
   background: #fff;
-  width: $main-spacing * 2;
-  height: $main-spacing * 2;
-
+  width: 20px;
+  height:20px;
+border-radius: 4px;
   @extend %input-base-bordering;
   border-bottom-width: 1px;
 }
 
-[type='checkbox']:checked + label:before {
-  border-color: $color-primary;
-}
-
 [type='checkbox']:checked + label:after,
 [type='checkbox']:not(:checked) + label:after {
-  content: '';
-  width: ($main-spacing * 1.4);
-  height: ($main-spacing * 1.4);
-  background: $color-primary;
+  content: '✓';
+  width: 24px;
+  height:24px;
+display: flex;
+align-items: center;
+justify-content: center;
   position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  left: 4px;
-  transition: background-color 0.2s ease, opacity 0.2s ease;
-}
-[type='checkbox']:not(:checked) + label:after {
-  opacity: 0;
-  -webkit-transform: translateY(-50%) scale(0);
-  transform: scale(0);
+  top: 0px;
+  left: 0px;
 }
 
-[type='checkbox']:checked + label:after {
-  opacity: 1;
-  transform: translateY(-50%) scale(1);
-  background: $color-primary;
-}
 
-[type='checkbox']:checked:disabled + label:after {
-  opacity: 1;
-  transform: translateY(-50%) scale(1);
-  background: $color-disabled;
-}
-
-[type='checkbox']:hover + label:after {
-  opacity: 1;
-  background: lighten($color-primary, 10%);
-}
 
 .form-container {
   [class*='IndicatorsContainer'] {

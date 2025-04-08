@@ -5,13 +5,14 @@ import { FieldType, TableSchema, TableSchemaField, usersList } from 'smartbox-ta
 import { IUser, UserStatus, UserType } from 'smartbox-types';
 import { ApiTable } from '../../../../components/Common';
 import { Button } from '../../../../components/Branded';
-import { ButtonsContainer, PageHeader, Section } from '../../../../components/Layout';
+import { ButtonsContainer } from '../../../../components/Layout';
 import { __ } from '../../../../helpers/i18n';
 import { InteractiveTableSchema } from '../../../../utils/table-schema-utils';
 import { modal, user } from '../../../../actions';
 import { isWorker } from '../../../../utils/role-check';
 
 import EditAssign from './EditAssign';
+import { PageHeader, Section } from 'src/components/ui';
 
 interface Props {
   showModal: (content: React.ReactNode) => void;
@@ -89,8 +90,8 @@ class List extends React.Component<Props> {
 
   render() {
     return (
-      <Section full>
-        <PageHeader title='application.workersList' />
+      <Section>
+        <PageHeader>{__('application.workersList')}</PageHeader>
         <ButtonsContainer>
           <Button text='application.inviteUser' primary to="/admin/management/workers/add" />
         </ButtonsContainer>

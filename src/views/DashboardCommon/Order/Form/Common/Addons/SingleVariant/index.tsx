@@ -8,33 +8,31 @@ import { PriceInfo } from "../PriceInfo";
 import { useDispatch, useSelector } from "react-redux";
 import { ApplicationState } from "../../../../../../../reducers";
 import { selectAddon, setAddonFile } from "../../../../../../../actions/order";
-import { getColorForBackground } from "../../../../../../../utils/color";
+import { Indicator } from "./components/Indicator";
 
 const StyledAddonVariant = styled("li")<{ isSelected: boolean }>(
   ({ isSelected, theme }) => ({
-    padding: 10,
-    border: `1px solid ${isSelected ? theme.colors.primary : "#333"}`,
-    background: isSelected ? theme.colors.primary : "transparent",
-    color: getColorForBackground(isSelected ? theme.colors.primary : "#ffffff"),
+    padding: theme.spacing * 4,
+    color: theme.colors.text.primary,
+    fontWeight: isSelected ? 500 : 400,
     marginBottom: 10,
     borderRadius: 5,
     cursor: "pointer",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: 'center',
+    gap: theme.spacing * 2,
 
-    "&:hover": {
-      background: isSelected ? theme.colors.primary : "#eee",
-    },
-
-    "@media (min-width: 480px)": {
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "space-between",
+    "@media (min-width: 500px)": {
+      flexDirection: 'row',
+      gap: theme.spacing * 4,
+      justifyContent: 'flex-start',
     },
   })
 );
 
 const StyledVariantName = styled("h5")({
   margin: "5px 0",
-  fontWeight: 700,
   fontSize: "1rem",
 });
 
@@ -76,6 +74,7 @@ export const SingleVariant = ({ variant, addonId, isGross }: Props) => {
       role="button"
       onClick={selectVariant}
     >
+      <Indicator selected={isSelected} />
       <StyledVariantName>{variant.name}</StyledVariantName>
       <PriceInfo variant={variant} isGross={isGross} />
     </StyledAddonVariant>

@@ -3,12 +3,12 @@ import clsx from 'clsx';
 import React, { useRef } from 'react';
 import { ReactSelect } from '../../../App';
 import { __ } from '../../../helpers/i18n';
-import { InputLabel } from '../InputLabel';
 import { TranslatableObject } from '../../../utils/errors-trans';
 import { InputErrors } from '../InputErrors';
 import './InputSelect.scss';
 import styled from 'styled-components';
 import { InputHelp } from '../InputHelp';
+import { InputLabel } from 'src/components/ui/InputLabel';
 
 
 interface Props {
@@ -100,7 +100,7 @@ const InputSelect = ({
     };
 
     return <StyledContainer className={`input-select-container ${big ? 'big' : 'compact'} ${errors && errors.length > 0 ? 'is-invalid' : ''}`}>
-        <InputLabel label={label} name={name} />
+        <InputLabel labelFor={name}>{__(label)}</InputLabel>
         <ReactSelect
             menuPortalTarget={
                 document.body

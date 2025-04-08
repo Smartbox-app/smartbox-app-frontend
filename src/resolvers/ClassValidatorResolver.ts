@@ -1,5 +1,5 @@
-import { Resolver, FieldValues } from "react-hook-form";
-import { validate } from "class-validator";
+import { Resolver, FieldValues } from 'react-hook-form';
+import { validate } from 'class-validator';
 
 export const ClassValidatorResolver =
   <
@@ -8,13 +8,13 @@ export const ClassValidatorResolver =
       [key in keyof T]: unknown;
     },
   >(
-    dto: DTO
+    dto: DTO,
   ) =>
   async (data: T) => {
     (Object.keys(dto) as unknown as (keyof DTO)[]).forEach((key) => {
       dto[key] = data[key as keyof DTO];
     });
-
+    console.log('DUPA');
     const errors = await validate(dto);
 
     if (errors.length === 0) {
@@ -32,22 +32,22 @@ export const ClassValidatorResolver =
             return [
               error.property,
               {
-                type: "validation",
-                message: "Validation error",
+                type: 'validation',
+                message: 'Validation error',
               },
             ];
           }
 
           const errorsKeys = Object.keys(error.constraints);
-
+          console.log('error', error);
           return [
             error.property,
             {
-              type: "validation",
+              type: 'validation',
               message: error?.constraints?.[errorsKeys[errorsKeys.length - 1]],
             },
           ];
-        })
+        }),
       ),
     };
 
@@ -58,5 +58,5 @@ export type ClassValidatorResolverDef = <
   T extends FieldValues,
   DTO extends object,
 >(
-  dto: DTO
+  dto: DTO,
 ) => Resolver<T>;

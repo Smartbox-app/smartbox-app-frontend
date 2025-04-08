@@ -1,7 +1,4 @@
-import React from 'react';
-import CustomInput from '../../../../../../components/Common/CustomInput';
 import FormHeader from '../../../../../../components/Layout/FormHeader';
-import { formOnTranslateString } from '../../../../../../utils/trans-form';
 import { DateInput } from '../../../../../../components/Common';
 import { addYears } from 'date-fns';
 import styled from 'styled-components';
@@ -9,106 +6,101 @@ import { useTenant } from '../../../../../../hooks/useTenant';
 import { useDispatch, useSelector } from 'react-redux';
 import { ApplicationState } from '../../../../../../reducers';
 import { setBirthDate } from '../../../../../../actions/order';
+import { Controller, useFormContext } from 'react-hook-form';
+import { RentDataDto } from './dto/RentDataDto';
+import { Header, Input } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
 
 interface Props {
-  register: any;
-  errors: any;
-  control: any;
   disabled?: boolean;
 }
 
 const DateInputContainer = styled('div')({
-  marginBottom: 20
-})
+  marginBottom: 20,
+});
 
-const TenantDetailsForm = ({ register, errors, control, disabled }: Props) => {
+const TenantDetailsForm = ({ disabled }: Props) => {
   const { tenant } = useTenant();
   const dispatch = useDispatch();
   const { formData } = useSelector((state: ApplicationState) => state.order);
+  const {
+    register,
+    control,
+    formState: { errors },
+  } = useFormContext<RentDataDto>();
 
   return (
-    <div className="form-field">
-      <FormHeader title='application.rentierData' />
-      <CustomInput
-        register={register({ required: formOnTranslateString('Field required.') })}
-        errors={errors}
+    <>
+      <Header variant="h2">{__('rent.rentier_data')}</Header>
+      <Input
+        label="rent.first_name"
+        placeholder="rent.first_name_placeholder"
+        {...register('firstName')}
+        error={errors.firstName?.message}
         disabled
-        id="firstName"
       />
-      <CustomInput
-        register={register({ required: formOnTranslateString('Field required.') })}
-        errors={errors}
+      <Input
+        label="rent.last_name"
+        placeholder="rent.last_name_placeholder"
+        {...register('lastName')}
+        error={errors.lastName?.message}
         disabled
-        id="lastName"
       />
-      {tenant?.birthDateNecessary ? <DateInputContainer>
-        <DateInput
-          noPadding
-          inline={false}
-          label='application.birthDate'
-          value={formData.birthDate}
-          maxDate={addYears(new Date(), -18)}
-          onChange={([selected]) => {
-            dispatch(setBirthDate(selected));
-          }}
-          name='birthDate'
+      {tenant?.birthDateNecessary ? (
+        <Controller
+          name="birthDate"
+          control={control}
+          render={({ field }) => (
+            <DateInput
+              {...field}
+              inline={false}
+              name="birthDate"
+              error={errors.birthDate?.message}
+              label="rent.birth_date"
+              onChange={([selected]) => {
+                field.onChange(selected);
+              }}
+            />
+          )}
         />
-      </DateInputContainer> : null}
-      <CustomInput
-        register={register({ required: formOnTranslateString('Field required.') })}
-        errors={errors}
-        id="street"
+      ) : null}
+      <Input
+        label="rent.street"
+        {...register('street')}
+        error={errors.street?.message}
         disabled={disabled}
-        placeholder="ul. Główna 12/3"
+        placeholder="rent.street_placeholder"
       />
-      <CustomInput
-        register={register({ required: formOnTranslateString('Field required.') })}
-        errors={errors}
-        id="city"
+      <Input
+        {...register('city')}
+        error={errors.city?.message}
+        label="rent.city"
         disabled={disabled}
-        placeholder="Warszawa"
+        placeholder="rent.city_placeholder"
       />
-      <CustomInput
-        register={register({
-          required: formOnTranslateString('Field required.'),
-          pattern: {
-            value: /^([0-9]{2})(-[0-9]{3})?$/i,
-            message: formOnTranslateString('Invalid Zip code.'),
-          },
-        })}
-        errors={errors}
-        id="postCode"
+      <Input
+        {...register('postCode')}
+        error={errors.postCode?.message}
+        label="rent.post_code"
         disabled={disabled}
-        placeholder="00-001"
+        placeholder="rent.post_code_placeholder"
       />
 
-      <CustomInput
-        register={register({
-          required: formOnTranslateString('Field required.'),
-          pattern: {
-            value: /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
-            message: formOnTranslateString('Invalid email.'),
-          },
-        })}
-        errors={errors}
-        type="email"
-        id="mailToSendInvoice"
+      <Input
+        {...register('mailToSendInvoice')}
+        error={errors.mailToSendInvoice?.message}
         disabled
-        placeholder="example@gmail.com"
+        label="rent.email"
+        placeholder="rent.email_placeholder"
       />
-      <CustomInput
-        register={register({
-          required: formOnTranslateString('Field required.'),
-          pattern: {
-            value: /^(([0-9]|-|\(|\)|\+| ){9,14})/i,
-            message: formOnTranslateString('Invalid phone number'),
-          },
-        })}
-        errors={errors}
+      <Input
+        label="application.phone"
+        {...register('phone')}
+        error={errors.phone?.message}
         disabled
-        id="phone"
+        placeholder="rent.phone_placeholder"
       />
-    </div>
+    </>
   );
 };
 

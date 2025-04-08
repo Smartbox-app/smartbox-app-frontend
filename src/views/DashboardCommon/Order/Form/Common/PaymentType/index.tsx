@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import { Section } from "../../../../../../components/Layout";
 import { __ } from "../../../../../../helpers/i18n";
 import { IStock, MyRentDetails, RentPaymentType, RentStatus, StockPaymentType } from "smartbox-types";
 import { SinglePaymentType } from "./SinglePaymentType";
+import { Header, Section } from "src/components/ui";
 
 type Props = {
     stock: IStock;
@@ -26,10 +26,10 @@ export const PaymentType = ({ stock, rent }: Props) => {
     }
 
     return (
-        <Section highlight>
-            <StyledHeader>
+        <Section>
+            <Header variant='h2'>
                 {__('application.paymentType')}
-            </StyledHeader>
+            </Header>
             <p>{__(getPaymentTypeText(stock.clientPaymentTypeConfig))}</p>
             {(!rent || (rent && rent.status === RentStatus.rented)) && stock.clientPaymentTypeConfig === StockPaymentType.Both ? <ul>
                 <SinglePaymentType type={RentPaymentType.InAdvance} label='application.paymentInAdvance' />

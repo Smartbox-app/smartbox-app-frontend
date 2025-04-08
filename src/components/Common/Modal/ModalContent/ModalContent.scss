@@ -5,13 +5,12 @@
 .modal-content {
   position: relative;
   z-index: 1;
-  padding: $main-spacing;
-  padding-top: $main-spacing;
+  padding: 24px;
   transition: $transition-time;
   overflow: auto;
   height: 100%;
   box-shadow: 0 0 $main-spacing * 1.5 $main-spacing / -2 rgba(0, 0, 0, 0.5);
-  background-color: $color-background;
+  background-color: #fff;
   height: 100%;
   width: 100%;
   // padding-top: $main-spacing * 3;

@@ -13,6 +13,7 @@ const StyledDashboardContainer = styled('div')(({ theme }) => ({
   flexDirection: 'column',
   gap: theme.spacing * 4,
   width: '100%',
+  minHeight: '100vh',
 }));
 
 export const DashboardContainer = ({ children }: Props) => {

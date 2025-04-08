@@ -2,7 +2,6 @@ import { connect, useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { MyRentDetails } from 'smartbox-types';
 import { singleRent } from '../../../../../actions';
-import { Button } from '../../../../../components/Branded';
 import { ButtonsContainer } from '../../../../../components/Layout';
 import { ApplicationState } from '../../../../../reducers';
 import UserService from '../../../../../services/user-service';
@@ -11,10 +10,38 @@ import { __ } from '../../../../../helpers/i18n';
 import { clearOrder, updateFormData } from '../../../../../actions/order';
 import { history } from '../../../../../App';
 import { useGetMyDetailsQuery } from 'src/queries';
+import styled from 'styled-components';
+import { Button, Typography } from 'src/components/ui';
+import { Wallet } from 'src/icons';
 
 interface Props {
   rent: MyRentDetails;
 }
+
+const StyledMissingPayment = styled('div')(({ theme }) => ({
+  borderRadius: theme.radius.innerSurface,
+  border: 'none',
+  padding: theme.spacing * 4,
+  background: theme.colors.surface.error.secondary,
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  flexDirection: 'column',
+  gap: theme.spacing * 4,
+  '@media(min-width: 500px)': {
+    flexDirection: 'row',
+  },
+}));
+
+const Info = styled('div')(({ theme }) => ({
+  display: 'flex',
+  gap: theme.spacing *2
+}))
+
+const StyledIcon = styled('span')(({ theme }) => ({
+  paddingTop: theme.spacing / 4,
+  color: theme.colors.surface.error.primary,
+}));
 
 // @TODO HANDLE
 const MissingPayment = ({ rent }: Props) => {
@@ -33,23 +60,33 @@ const MissingPayment = ({ rent }: Props) => {
   };
 
   return (
-    <div className="missing-payment-alert-wrapper">
-      <p className="main-info">{__('application.debtOnRent')}</p>
-      <div className="date-wrapper">
-        <p className="single-line">
-          {__('application.rentFinished')}{' '}
-          <strong>{dateOnly(rent.finishAt)}</strong>
-        </p>
-      </div>
+    <StyledMissingPayment>
+      <Info>
+        <StyledIcon
+          className="fa fa-exclamation-circle notification-marker"
+          aria-hidden="true"
+        />
+        <div>
+          <Typography>
+            <strong>{__('application.debtOnRent')}</strong>
+          </Typography>
+          <Typography>
+            {__('application.rentFinished')}{' '}
+            <strong>{dateOnly(rent.finishAt)}</strong>
+          </Typography>
+        </div>
+      </Info>
       <ButtonsContainer>
         <Button
           text="application.payOffDebt"
           type="button"
-          danger
-          click={() => handleDebtPayOff(rent.id)}
+          size="large"
+          iconLeft={<Wallet />}
+          variant="error"
+          onClick={() => handleDebtPayOff(rent.id)}
         />
       </ButtonsContainer>
-    </div>
+    </StyledMissingPayment>
   );
 };
 

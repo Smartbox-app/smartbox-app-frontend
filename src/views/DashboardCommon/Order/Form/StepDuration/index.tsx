@@ -20,7 +20,7 @@ import {
   UserRes,
 } from 'smartbox-types';
 import { DateInput } from '../../../../../components/Common';
-import { Button, Spinner } from '../../../../../components/Branded';
+import { Spinner } from '../../../../../components/Branded';
 import { order } from '../../../../../actions';
 import { ButtonsContainer } from '../../../../../components/Layout';
 import { FormType } from '../../../../../types/order-form';
@@ -41,30 +41,16 @@ import {
   setRentStartDate,
 } from '../../../../../actions/order';
 import { Addons } from '../Common/Addons';
-import { getColorForBackground } from '../../../../../utils/color';
 import { PaymentType } from '../Common/PaymentType';
 import ApiService from '../../../../../services/api-service';
-import { darken, lighten } from 'polished';
 import { useGetMyDetailsQuery } from 'src/queries';
+import { Button, Section, Stack } from 'src/components/ui';
+import { ArrowLeft, ArrowRight } from 'src/icons';
+import { RentDurationDto } from 'src/dto/RentDurationDto';
+import { ClassValidatorResolver } from 'src/resolvers/ClassValidatorResolver';
 
 const StyledCalendarPicker = styled.div`
   margin: 0 -10px;
-  .flatpickr-day {
-    &.today {
-      border-color: ${(props) => props.theme.colors.primary};
-    }
-
-    &.highlighted {
-      background-color: #ccc;
-      color: ${(props) => getColorForBackground('#ccc')};
-    }
-
-    &.selected {
-      background-color: ${(props) => props.theme.colors.primary};
-      color: ${(props) => getColorForBackground(props.theme.colors.primary)};
-      border-color: ${(props) => darken(0.05, props.theme.colors.primary)};
-    }
-  }
 `;
 
 interface Props {
@@ -168,8 +154,8 @@ const StepDuration = ({ clearPaymentDetails }: Props) => {
   const setMaxDateToExtend = () => addDays(new Date(), 6);
 
   const defaultValues = {
-    dateStart: addDays(startDate, 0),
-    dateEnd: addDays(startDate, 1),
+    startDate: addDays(startDate, 0),
+    endDate: addDays(startDate, 1),
   };
 
   useEffect(() => {
@@ -177,14 +163,18 @@ const StepDuration = ({ clearPaymentDetails }: Props) => {
     clearPaymentDetails();
   }, []);
 
-  const { register, reset, control } = useForm({ defaultValues });
+  const {  reset, control } = useForm<RentDurationDto>({
+    defaultValues,
+    mode: 'onSubmit',
+    resolver: ClassValidatorResolver(new RentDurationDto()),
+  });
 
   useEffect(() => {
     if (!minRentPeriod) return;
 
     reset({
-      dateStart: addDays(startDate, 0),
-      dateEnd: addDays(startDate, minRentPeriod - 1),
+      startDate: addDays(startDate, 0),
+      endDate: addDays(startDate, minRentPeriod - 1),
     });
   }, [minRentPeriod]);
 
@@ -192,7 +182,7 @@ const StepDuration = ({ clearPaymentDetails }: Props) => {
     if (!endDate) return;
 
     reset({
-      dateEnd: endDate,
+      endDate,
     });
   }, [endDate]);
 
@@ -200,16 +190,13 @@ const StepDuration = ({ clearPaymentDetails }: Props) => {
     if (!startDate) return;
 
     reset({
-      dateStart: startDate,
+      startDate,
     });
   }, [startDate]);
-
-  const methods = useForm();
 
   const allRequiredAddonsSelected = useMemo(() => {
     const addonIds = Object.keys(orderAddons);
 
-    console.log('ADDONS', orderAddons);
     for (const addonId of addonIds) {
       const orderAddon = orderAddons[addonId];
       if (orderAddon.required && !orderAddon.selectedVariant) {
@@ -230,7 +217,6 @@ const StepDuration = ({ clearPaymentDetails }: Props) => {
           acceptance.required &&
           !orderAddon.acceptancesStatus[acceptance.id].accepted
         ) {
-          console.log('1');
           return false;
         }
       }
@@ -241,18 +227,8 @@ const StepDuration = ({ clearPaymentDetails }: Props) => {
             AddonUserFileRequirementType.Required &&
           !orderAddon.file
         ) {
-          console.log('2');
           return false;
         }
-        // if (
-        //   orderAddon.userFileRequirement ===
-        //     AddonUserFileRequirementType.RequiredWhenNoVariant &&
-        //   orderAddon.selectedVariant &&
-        //   !orderAddon.file
-        // ) {
-        //   console.log("3");
-        //   return false;
-        // }
       }
     }
 
@@ -262,73 +238,77 @@ const StepDuration = ({ clearPaymentDetails }: Props) => {
   if (!user || !minRentPeriod) return null;
 
   return (
-    <FormProvider {...methods}>
-      <form className="form-step-two">
-        {loadingPrice && <Spinner halfTransparent overlay />}
-        <StyledCalendarPicker className="calendars-picker-wrapper">
-          <Controller
-            name="dateStart"
-            control={control}
-            render={({ field }) => (
-              <DateInput
-                // {...field}
-                name="dateStart"
-                highlightStart={startDate}
-                highlightEnd={endDate}
-                label="application.selectStartRentDate"
-                minDate={setMinDate()}
-                maxDate={setMaxDateToExtend()}
-                onChange={([selected]) => {
-                  console.log('SELECT', selected);
-                  dispatch(setRentStartDate(selected));
-                }}
-              />
-            )}
-            // register={register({ required: true })}
-          />
-          <Controller
-            name="dateEnd"
-            control={control}
-            render={({ field }) => (
-              <DateInput
-                // {...field}
-                name="dateEnd"
-                highlightStart={startDate}
-                highlightEnd={endDate}
-                label="application.selectEndRentDate"
-                minDate={setMinDate(minRentPeriod - 1, true)}
-                onChange={([selected]) => {
-                  dispatch(setRentEndDate(selected));
-                }}
-              />
-            )}
-          />
-        </StyledCalendarPicker>
-
-        <Addons stockId={stockId} />
+    <form className="form-step-two">
+      <Stack>
+        <Section>
+          {loadingPrice && <Spinner halfTransparent overlay />}
+          <StyledCalendarPicker className="calendars-picker-wrapper">
+            <Controller
+              name="startDate"
+              control={control}
+              render={({ field }) => (
+                <DateInput
+                  {...field}
+                  name="startDate"
+                  highlightStart={startDate}
+                  highlightEnd={endDate}
+                  label="application.selectStartRentDate"
+                  minDate={setMinDate()}
+                  maxDate={setMaxDateToExtend()}
+                  onChange={([selected]) => {
+                    dispatch(setRentStartDate(selected));
+                  }}
+                />
+              )}
+            />
+            <Controller
+              name="endDate"
+              control={control}
+              render={({ field }) => (
+                <DateInput
+                  {...field}
+                  name="endDate"
+                  highlightStart={startDate}
+                  highlightEnd={endDate}
+                  label="application.selectEndRentDate"
+                  minDate={setMinDate(minRentPeriod - 1, true)}
+                  onChange={([selected]) => {
+                    dispatch(setRentEndDate(selected));
+                  }}
+                />
+              )}
+            />
+          </StyledCalendarPicker>
+        </Section>
 
         {stock ? <PaymentType stock={stock} /> : null}
+        <Addons stockId={stockId} />
         <Price />
-        <ButtonsContainer max>
-          <Button
-            outline
-            text="application.back"
-            to={`/${UserService.getSlugByRole(user.role)}/order/step/stock`}
-          />
-          <Button
-            to={`/${UserService.getSlugByRole(user.role)}/order/step/summary`}
-            primary
-            text="application.next"
-            disabled={
-              !allRequiredAddonsSelected ||
-              !stock ||
-              !endDate ||
-              !calculatedPrice.value
-            }
-          />
-        </ButtonsContainer>
-      </form>
-    </FormProvider>
+        <Section>
+          <ButtonsContainer spaceBetween>
+            <Button
+              variant="secondary"
+              size="large"
+              text="application.back"
+              iconLeft={<ArrowLeft />}
+              to={`/${UserService.getSlugByRole(user.role)}/order/step/stock`}
+            />
+            <Button
+              to={`/${UserService.getSlugByRole(user.role)}/order/step/summary`}
+              size="large"
+              text="application.next"
+              iconRight={<ArrowRight />}
+              disabled={
+                !allRequiredAddonsSelected ||
+                !stock ||
+                !endDate ||
+                !calculatedPrice.value
+              }
+            />
+          </ButtonsContainer>
+        </Section>
+      </Stack>
+    </form>
   );
 };
 

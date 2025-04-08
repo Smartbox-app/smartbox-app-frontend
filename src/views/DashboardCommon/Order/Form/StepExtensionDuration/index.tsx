@@ -1,9 +1,9 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { useParams } from "react-router-dom";
-import { bindActionCreators } from "redux";
-import { connect, useDispatch, useSelector } from "react-redux";
+import React, { useEffect, useMemo, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { bindActionCreators } from 'redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 
-import { addDays, isBefore, startOfDay } from "date-fns";
+import { addDays, isBefore, startOfDay } from 'date-fns';
 import {
   AddonUserFileRequirementType,
   IStock,
@@ -11,20 +11,20 @@ import {
   MyRentList,
   RentStatus,
   UserRes,
-} from "smartbox-types";
-import { DateInput } from "../../../../../components/Common";
-import { Button, Spinner } from "../../../../../components/Branded";
-import { order } from "../../../../../actions";
-import { ButtonsContainer } from "../../../../../components/Layout";
-import { FormType } from "../../../../../types/order-form";
-import { ApplicationState } from "../../../../../reducers";
-import UserService from "../../../../../services/user-service";
+} from 'smartbox-types';
+import { DateInput } from '../../../../../components/Common';
+import { Spinner } from '../../../../../components/Branded';
+import { order } from '../../../../../actions';
+import { ButtonsContainer } from '../../../../../components/Layout';
+import { FormType } from '../../../../../types/order-form';
+import { ApplicationState } from '../../../../../reducers';
+import UserService from '../../../../../services/user-service';
 
-import Price from "../Common/Price";
+import Price from '../Common/Price';
 
-import "./StepDuration.scss";
+import './StepDuration.scss';
 
-import styled from "styled-components";
+import styled from 'styled-components';
 import {
   calculateAddonPrice,
   calculatePriceForRent,
@@ -32,34 +32,19 @@ import {
   setOrderStock,
   setRentEndDate,
   setRentStartDate,
-} from "../../../../../actions/order";
-import { Addons } from "../Common/Addons";
-import ApiService from "../../../../../services/api-service";
-import { getColorForBackground } from "../../../../../utils/color";
-import { PaymentType } from "../Common/PaymentType";
-import { getMinRentPeriodExtendingForRent } from "../../../../../actions/single-rent";
-import { darken, lighten } from "polished";
-import { useGetMyDetailsQuery } from "src/queries";
+} from '../../../../../actions/order';
+import { Addons } from '../Common/Addons';
+import ApiService from '../../../../../services/api-service';
+import { getColorForBackground } from '../../../../../utils/color';
+import { PaymentType } from '../Common/PaymentType';
+import { getMinRentPeriodExtendingForRent } from '../../../../../actions/single-rent';
+import { darken, lighten } from 'polished';
+import { useGetMyDetailsQuery } from 'src/queries';
+import { Button, Section, Stack } from 'src/components/ui';
+import { ArrowRight } from 'src/icons';
 
 const StyledCalendarPicker = styled.div`
   margin: 0 -10px;
-  .flatpickr-day {
-    &.today {
-      border-color: ${(props) => props.theme.colors.primary};
-    }
-
-    &.highlighted {
-      background-color: ${(props) => lighten(0.1, props.theme.colors.primary)};
-      color: ${(props) =>
-        getColorForBackground(lighten(0.1, props.theme.colors.primary))};
-    }
-
-    &.selected {
-      background-color: ${(props) => props.theme.colors.secondary};
-      color: ${(props) => getColorForBackground(props.theme.colors.secondary)};
-      border-color: ${(props) => darken(0.05, props.theme.colors.secondary)};
-    }
-  }
 `;
 
 interface Props {
@@ -76,7 +61,7 @@ const StepExtensionDuration = ({ clearPaymentDetails }: Props) => {
   const { rentId, step } = useParams<{ step: string; rentId?: string }>();
   const [rent, setRent] = useState<MyRentDetails>();
   const minRentPeriod = useSelector(
-    (state: ApplicationState) => state.order.minRentPeriod
+    (state: ApplicationState) => state.order.minRentPeriod,
   );
   // box groupId is used directly only when new rent is created
   const { startDate, endDate, loadingPrice, orderAddons, orderAddonsId } =
@@ -87,11 +72,11 @@ const StepExtensionDuration = ({ clearPaymentDetails }: Props) => {
   const getStock = async () => {
     if (!rent) return;
     await ApiService.callFetch(
-      "GET",
+      'GET',
       `stock/${rent.stockId}`,
       (res: IStock) => {
         setStock(res);
-      }
+      },
     );
   };
 
@@ -99,11 +84,11 @@ const StepExtensionDuration = ({ clearPaymentDetails }: Props) => {
   const getSingleRent = async () => {
     setLoading(true);
     await ApiService.callFetch(
-      "GET",
+      'GET',
       `rent/my-details/${rentId}`,
       (data: MyRentDetails) => {
         setRent(data);
-      }
+      },
     );
     setLoading(false);
   };
@@ -125,15 +110,17 @@ const StepExtensionDuration = ({ clearPaymentDetails }: Props) => {
 
   useEffect(() => {
     if (!rent || !minRentPeriod) return;
+
+    const newEnd = addDays(startOfDay(new Date(rent.finishAt)), minRentPeriod);
+    const newEndOrToday = isBefore(newEnd, new Date()) ? startOfDay(addDays(new Date(), 1)) : newEnd;
     dispatch(
-      setRentEndDate(
-        addDays(startOfDay(new Date(rent.finishAt)), minRentPeriod)
-      )
+      setRentEndDate(newEndOrToday),
     );
   }, [minRentPeriod, rent]);
 
   useEffect(() => {
     if (!rentId || !endDate) return;
+    console.log('GOT END DATE', endDate);
     setLoading(true);
     dispatch(calculatePriceForRent(rentId, startDate, endDate));
     calculateAllAddons();
@@ -153,8 +140,8 @@ const StepExtensionDuration = ({ clearPaymentDetails }: Props) => {
             addonId,
             startDate,
             endDate,
-            addon.selectedVariant
-          )
+            addon.selectedVariant,
+          ),
         );
       else dispatch(clearAddonPrice(addonId));
     });
@@ -179,7 +166,7 @@ const StepExtensionDuration = ({ clearPaymentDetails }: Props) => {
 
   const allRequiredAddonsSelected = useMemo(() => {
     const addonIds = Object.keys(orderAddons);
-    console.log("ADDONS", orderAddons);
+    console.log('ADDONS', orderAddons);
     for (const addonId of addonIds) {
       const orderAddon = orderAddons[addonId];
       if (orderAddon.required && !orderAddon.selectedVariant) {
@@ -200,7 +187,7 @@ const StepExtensionDuration = ({ clearPaymentDetails }: Props) => {
           acceptance.required &&
           !orderAddon.acceptancesStatus[acceptance.id].accepted
         ) {
-          console.log("1");
+          console.log('1');
           return false;
         }
       }
@@ -211,18 +198,9 @@ const StepExtensionDuration = ({ clearPaymentDetails }: Props) => {
             AddonUserFileRequirementType.Required &&
           !orderAddon.file
         ) {
-          console.log("2");
+          console.log('2');
           return false;
         }
-        // if (
-        //   orderAddon.userFileRequirement ===
-        //     AddonUserFileRequirementType.RequiredWhenNoVariant &&
-        //   orderAddon.selectedVariant &&
-        //   !orderAddon.file
-        // ) {
-        //   console.log("3");
-        //   return false;
-        // }
       }
     }
 
@@ -235,33 +213,40 @@ const StepExtensionDuration = ({ clearPaymentDetails }: Props) => {
 
   return (
     <form className="form-step-two">
-      {loadingPrice && <Spinner halfTransparent overlay />}
-      <StyledCalendarPicker className="calendars-picker-wrapper">
-        <DateInput
-          name="endDate"
-          label="application.selectEndRentDate"
-          minDate={setMinDate(minRentPeriod, true)}
-          highlightStart={startDate}
-          highlightEnd={endDate}
-          value={endDate || undefined}
-          onChange={([selected]) => {
-            dispatch(setRentEndDate(selected));
-          }}
-        />
-      </StyledCalendarPicker>
+      <Stack>
+        {loadingPrice && <Spinner halfTransparent overlay />}
+        <Section>
+          <StyledCalendarPicker className="calendars-picker-wrapper">
+            <DateInput
+              name="endDate"
+              label="application.selectEndRentDate"
+              minDate={setMinDate(minRentPeriod, true)}
+              highlightStart={startDate}
+              highlightEnd={endDate}
+              value={endDate || undefined}
+              onChange={([selected]) => {
+                dispatch(setRentEndDate(selected));
+              }}
+            />
+          </StyledCalendarPicker>
+        </Section>
+        <Addons stockId={rent.stockId} />
 
-      <Addons stockId={rent.stockId} />
-
-      {stock ? <PaymentType stock={stock} rent={rent} /> : null}
-      <Price />
-      <ButtonsContainer max>
-        <Button
-          to={`/${UserService.getSlugByRole(user.role)}/order/step/summary/${rentId}`}
-          primary
-          text="application.next"
-          disabled={!allRequiredAddonsSelected}
-        />
-      </ButtonsContainer>
+        {stock ? <PaymentType stock={stock} rent={rent} /> : null}
+        <Price />
+        <Section>
+          <ButtonsContainer spaceBetween>
+            <span />
+            <Button
+              size="large"
+              to={`/${UserService.getSlugByRole(user.role)}/order/step/summary/${rentId}`}
+              text="application.next"
+              iconRight={<ArrowRight />}
+              disabled={!allRequiredAddonsSelected}
+            />
+          </ButtonsContainer>
+        </Section>
+      </Stack>
     </form>
   );
 };
@@ -276,10 +261,10 @@ const mapDispatchToProps = (dispatch: any) =>
     {
       ...order,
     },
-    dispatch
+    dispatch,
   );
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(StepExtensionDuration);

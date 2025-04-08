@@ -17,8 +17,6 @@ const AppWrapper = ({ children }: Props) => {
   useEffect(() => {
     const currentVersion = localStorage.getItem('v') || null;
 
-    if (!currentVersion) window.location.reload();
-
     if (!version) return;
 
     if (currentVersion !== version) {

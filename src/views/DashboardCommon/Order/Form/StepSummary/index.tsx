@@ -1,28 +1,26 @@
 import React, { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
 
 import { bindActionCreators } from 'redux';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { PaymentType } from 'smartbox-types';
-import { CheckBox } from '../../../../../components/Common';
-import { Button, Spinner } from '../../../../../components/Branded';
+import { Spinner } from '../../../../../components/Branded';
 import { order, modal, notifications, user } from '../../../../../actions';
 import { ButtonsContainer } from '../../../../../components/Layout';
+import { CheckBox as ControlledCheckbox } from '../../../../../components/Common';
 import { history } from '../../../../../App';
 import { FormType } from '../../../../../types/order-form';
 
-import FormHeader from '../../../../../components/Layout/FormHeader';
 import UserService from '../../../../../services/user-service';
 import { ApplicationState } from '../../../../../reducers';
 import { __ } from '../../../../../helpers/i18n';
-import CompanyDetailsForm from './CompanyDetailsForm';
+import { CompanyDetailsForm } from './CompanyDetailsForm';
 
 import { DiscountsList } from './DiscountsList';
 import SummaryTable from './SummaryTable';
 import TenantDetailsForm from './TenantDetailsForm';
 
-import './StepSummary.scss';
 import {
   calculatePrice,
   calculatePriceForRent,
@@ -31,6 +29,18 @@ import {
 import { format } from 'date-fns';
 import { useTenant } from '../../../../../hooks/useTenant';
 import { useGetMyDetailsQuery } from 'src/queries';
+import { RentDataDto } from './TenantDetailsForm/dto/RentDataDto';
+import {
+  CheckBox,
+  Button,
+  Section,
+  Header,
+  Stack,
+  Form,
+} from 'src/components/ui';
+import { ClassValidatorResolver } from 'src/resolvers/ClassValidatorResolver';
+import { DiscountForm } from './DiscountForm';
+import { ArrowLeft, ArrowRight } from 'src/icons';
 
 interface Props {
   formData: FormType;
@@ -40,8 +50,8 @@ interface Props {
 }
 
 const StepSummary = ({ formData, updateFormData }: Props) => {
+  const { tenant } = useTenant();
   const dispatch = useDispatch();
-  const [invoiceNeeded, setInvoiceNeeded] = useState(false);
   const {
     calculatedPrice,
     addons,
@@ -55,24 +65,61 @@ const StepSummary = ({ formData, updateFormData }: Props) => {
   } = useSelector((state: ApplicationState) => state.order);
 
   const { data: user } = useGetMyDetailsQuery();
-  const { step, rentId } = useParams<{ step: string; rentId: string }>();
+  const { rentId } = useParams<{ step: string; rentId: string }>();
   const isFirstRent = user && !user.rentCount;
+  const [discount, setDiscount] = useState<boolean>(false);
 
-  const { tenant } = useTenant();
+  const defaultValues = {
+    paymentType: PaymentType.card,
+    firstName: user?.firstName || '',
+    lastName: user?.lastName || '',
+    street: user?.street || '',
+    birthDate: user?.birthDate
+      ? new Date(user?.birthDate)
+      : undefined,
+    city: user?.city || '',
+    postCode: user?.postCode || '',
+    mailToSendInvoice: user?.email || '',
+    phone: user?.phone || '',
+
+    nip: user?.companyData.nip || '',
+    companyPostCode: user?.companyData.companyPostCode || '',
+    companyCity: user?.companyData.companyCity || '',
+    companyStreet: user?.companyData.companyStreet || '',
+    companyName: user?.companyData.companyName || '',
+  };
+
+  const methods = useForm<RentDataDto>({
+    defaultValues,
+    mode: 'onSubmit',
+    resolver: ClassValidatorResolver(
+      new RentDataDto(!!tenant?.birthDateNecessary),
+    ),
+  });
+  const {
+    handleSubmit,
+    register,
+    setValue,
+    watch,
+    formState: { errors, isValid },
+  } = methods;
+
+  const invoiceNeeded = watch('invoiceNeeded');
+
   useEffect(() => {
     if (!user) return;
     if (!rentId && (!stockId || !boxGroupId)) {
       history.push(`/${UserService.getSlugByRole(user.role)}/order/step/stock`);
     }
     if (formData.nip) {
-      setInvoiceNeeded(true);
+      setValue('invoiceNeeded', true);
     }
 
     if (!isFirstRent) {
       if (user.companyData && user.companyData.nip) {
-        setInvoiceNeeded(true);
+        setValue('invoiceNeeded', true);
       } else {
-        setInvoiceNeeded(false);
+        setValue('invoiceNeeded', false);
       }
     }
 
@@ -101,71 +148,8 @@ const StepSummary = ({ formData, updateFormData }: Props) => {
     }
   }, [discountCode]);
 
-  const defaultValues = {
-    paymentType: PaymentType.card,
-    firstName: user?.firstName || '',
-    lastName: user?.lastName || '',
-    street: user?.street || '',
-    birthDate: user?.birthDate
-      ? format(new Date(user?.birthDate), 'yyyy-MM-dd')
-      : null,
-    city: user?.city || '',
-    postCode: user?.postCode || '',
-    mailToSendInvoice: user?.email || '',
-    phone: user?.phone || '',
-
-    nip: user?.companyData.nip || '',
-    companyPostCode: user?.companyData.companyPostCode || '',
-    companyCity: user?.companyData.companyCity || '',
-    companyStreet: user?.companyData.companyStreet || '',
-    companyName: user?.companyData.companyName || '',
-  };
-
-  const {
-    handleSubmit,
-    register,
-    watch,
-    control,
-    formState: { errors },
-  } = useForm({ defaultValues });
-
-  const tenantData = (): boolean => {
-    if (
-      watch().firstName !== '' &&
-      watch().lastName !== '' &&
-      watch().street !== '' &&
-      watch().city !== '' &&
-      watch().postCode !== '' &&
-      watch().mailToSendInvoice !== '' &&
-      watch().phone !== ''
-    ) {
-      if (tenant?.birthDateNecessary && !formData.birthDate) return true;
-      if (!errors.mailToSendInvoice && !errors.postCode) {
-        return false;
-      }
-    }
-    return true;
-  };
-
-  const companyData = (): boolean => {
-    if (invoiceNeeded) {
-      if (
-        watch().companyName !== '' &&
-        watch().companyStreet !== '' &&
-        watch().companyCity !== '' &&
-        watch().companyPostCode !== '' &&
-        watch().nip !== ''
-      ) {
-        return false;
-      } else {
-        return true;
-      }
-    } else {
-      return false;
-    }
-  };
-
-  const onSubmit = (data: any) => {
+  const onSubmit = (data: RentDataDto) => {
+    if (!isValid) return;
     if (!user) return;
     updateFormData({ ...data, isCompany: invoiceNeeded });
     history.push(
@@ -174,60 +158,80 @@ const StepSummary = ({ formData, updateFormData }: Props) => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="form-step-two">
+    <Stack>
       {loadingPrice && <Spinner overlay halfTransparent />}
-      <DiscountsList stockId={stockId} />
-      <FormHeader title="application.orderSummary" />
-      {endDate && (
-        <SummaryTable
-          dateStart={startDate}
-          dateEnd={endDate}
-          countedPrice={calculatedPrice}
-          addons={addons}
-          orderAddons={orderAddons}
-        />
-      )}
 
-      <TenantDetailsForm
-        register={register}
-        control={control}
-        errors={errors}
-        disabled={!isFirstRent}
-      />
-      {isFirstRent && (
-        <>
-          <p>{__('application.infoToOptionalInvoice')}</p>
-          <CheckBox
-            name="iNeedInvoice"
-            checked={invoiceNeeded}
-            handleChange={() => setInvoiceNeeded(!invoiceNeeded)}
-            label="application.wantOptionalInvoice"
-          />
-        </>
-      )}
-      {invoiceNeeded && (
-        <CompanyDetailsForm
-          register={register}
-          errors={errors}
-          control={control}
-          disabled={!isFirstRent}
-        />
-      )}
+      <Section>
+        {endDate && (
+          <>
+            <SummaryTable
+              dateStart={startDate}
+              dateEnd={endDate}
+              countedPrice={calculatedPrice}
+              addons={addons}
+              orderAddons={orderAddons}
+            />
+            <Header variant="h2">{__('rent.discount')}</Header>
+            <ControlledCheckbox
+              checked={!!discount}
+              name="discount"
+              handleChange={(checked) => setDiscount(checked)}
+              label="rent.i_have_a_discount"
+            />
+          </>
+        )}
+      </Section>
 
-      <ButtonsContainer max>
-        <Button
-          outline
-          text="application.back"
-          to={`/${UserService.getSlugByRole(user!.role)}/order/step/duration/${rentId || ''}`}
+      {discount && endDate ? (
+        <DiscountForm
+          stockId={stockId}
+          rentStart={startDate}
+          rentEnd={endDate}
         />
-        <Button
-          type="submit"
-          primary
-          text="application.goToOrder"
-          disabled={tenantData() || companyData()}
-        />
-      </ButtonsContainer>
-    </form>
+      ) : null}
+
+      <DiscountsList />
+
+      <Form onSubmit={handleSubmit(onSubmit)}>
+        <FormProvider {...methods}>
+          <Stack>
+            <Section>
+              <TenantDetailsForm disabled={!isFirstRent} />
+
+              <Header variant="h2">
+                {__('application.infoToOptionalInvoice')}
+              </Header>
+
+              <CheckBox
+                {...register('invoiceNeeded')}
+                label="application.wantOptionalInvoice"
+                error={errors.invoiceNeeded?.message}
+              />
+            </Section>
+            {invoiceNeeded && <CompanyDetailsForm disabled={!isFirstRent} />}
+
+            <Section>
+              <ButtonsContainer spaceBetween>
+                <Button
+                  size="large"
+                  variant="secondary"
+                  text="application.back"
+                  iconLeft={<ArrowLeft />}
+                  to={`/${UserService.getSlugByRole(user!.role)}/order/step/duration/${rentId || ''}`}
+                />
+                <Button
+                  type="submit"
+                  iconRight={<ArrowRight />}
+                  size="large"
+                  variant="primary"
+                  text="application.goToOrder"
+                />
+              </ButtonsContainer>
+            </Section>
+          </Stack>
+        </FormProvider>
+      </Form>
+    </Stack>
   );
 };
 

@@ -14,6 +14,7 @@ import { useGetMyDetailsQuery } from 'src/queries';
 import { Button, Header, Section } from '../../../../../components/ui';
 import { __ } from '../../../../../helpers/i18n';
 import { Stack } from 'src/components/ui/Stack';
+import { ArrowRight } from 'src/icons';
 
 const StepStock = () => {
   const dispatch = useDispatch();
@@ -23,7 +24,7 @@ const StepStock = () => {
     (state: ApplicationState) => state.stockGroup.list,
   );
   const { data: user } = useGetMyDetailsQuery();
-  console.log('STOCKID', stockId);
+
   useEffect(() => {
     if (!user) return;
 
@@ -37,23 +38,22 @@ const StepStock = () => {
         <Section>
           <Header variant="h2">{__('application.orderFormPickStock')}</Header>
 
+          {groupsList.map((group) => (
+            <InsideSection key={group.id} highlight>
+              <Header variant="h3">{group.name}</Header>
+              <div className="group-stocks-wrapper">
+                {group.stocks.map((el) => (
+                  <SingleOption
+                    key={el.id}
+                    value={el.id}
+                    name={el.name}
+                    address={el.address}
+                  />
+                ))}
+              </div>
+            </InsideSection>
+          ))}
           <div className="stocks-wrapper">
-            {groupsList.map((group) => (
-              <InsideSection key={group.id} highlight>
-                <Header variant="h3">{group.name}</Header>
-                <div className="group-stocks-wrapper">
-                  {group.stocks.map((el) => (
-                    <SingleOption
-                      secondary
-                      key={el.id}
-                      value={el.id}
-                      name={el.name}
-                      address={el.address}
-                    />
-                  ))}
-                </div>
-              </InsideSection>
-            ))}
             {list.map((el) => (
               <SingleOption
                 key={el.id}
@@ -65,13 +65,15 @@ const StepStock = () => {
           </div>
         </Section>
         <Section>
-          <ButtonsContainer>
+          <ButtonsContainer spaceBetween>
+            <span />
             <Button
               to={`/${UserService.getSlugByRole(user!.role)}/order/step/size`}
               type="submit"
               size="large"
               text="application.next"
               disabled={!stockId}
+              iconRight={<ArrowRight />}
             />
           </ButtonsContainer>
         </Section>

@@ -1,66 +1,57 @@
-import React from 'react';
-import CustomInput from '../../../../../../components/Common/CustomInput';
 import FormHeader from '../../../../../../components/Layout/FormHeader';
-import { formOnTranslateString } from '../../../../../../utils/trans-form';
-import { validateNip } from '../../../../../../utils/validate-nip';
+import { useFormContext } from 'react-hook-form';
+import { RentDataDto } from '../TenantDetailsForm/dto/RentDataDto';
+import { Header, Input, Section } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
 
 interface Props {
-  register: any;
-  errors: any;
-  control: any;
   disabled?: boolean;
 }
 
-const CompanyDetailsForm = ({ register, errors, control, disabled }: Props) => {
+export const CompanyDetailsForm = ({ disabled }: Props) => {
+  const {
+    register,
+    formState: { errors },
+  } = useFormContext<RentDataDto>();
+
   return (
-    <div className="form-field">
-      <FormHeader title='application.companyData' />
-      <CustomInput
-        register={register({ required: formOnTranslateString('Field required.') })}
-        errors={errors}
-        id="companyName"
+    <Section>
+      <Header variant='h2'>{__('rent.company_data')}</Header>
+      <Input
+        label="rent.company_name"
+        placeholder="rent.company_name_placeholder"
+        error={errors.companyName?.message}
+        {...register('companyName')}
         disabled={disabled}
-        placeholder={formOnTranslateString('')}
       />
-      <CustomInput
-        register={register({ required: formOnTranslateString('Field required.') })}
-        errors={errors}
-        id="companyStreet"
+      <Input
+        label="rent.company_street"
+        placeholder="rent.street_placeholder"
+        error={errors.companyStreet?.message}
+        {...register('companyStreet')}
         disabled={disabled}
-        placeholder="ul. Główna 12/3"
       />
-      <CustomInput
-        register={register({ required: formOnTranslateString('Field required.') })}
-        errors={errors}
-        id="companyCity"
+      <Input
+        label="rent.city"
+        placeholder="rent.city_placeholder"
+        error={errors.companyCity?.message}
+        {...register('companyCity')}
         disabled={disabled}
-        placeholder="Warszawa"
       />
-      <CustomInput
-        register={register({
-          required: formOnTranslateString('Field required.'),
-          pattern: {
-            value: /^([0-9]{2})(-[0-9]{3})?$/i,
-            message: formOnTranslateString('Invalid Zip code.'),
-          },
-        })}
-        errors={errors}
-        id="companyPostCode"
+      <Input
+        label="rent.post_code"
+        placeholder="rent.post_code_placeholder"
+        error={errors.companyPostCode?.message}
+        {...register('companyPostCode')}
         disabled={disabled}
-        placeholder="00-001"
       />
-      <CustomInput
-        register={register({
-          required: formOnTranslateString('Field required.'),
-          validate: (data: any) => validateNip(data) || formOnTranslateString('Invalid NIP.'),
-        })}
-        errors={errors}
-        id="nip"
+      <Input
+        label="rent.nip"
+        placeholder="rent.nip_placeholder"
+        error={errors.nip?.message}
+        {...register('nip')}
         disabled={disabled}
-        placeholder="NIP"
       />
-    </div>
+    </Section>
   );
 };
-
-export default CompanyDetailsForm;

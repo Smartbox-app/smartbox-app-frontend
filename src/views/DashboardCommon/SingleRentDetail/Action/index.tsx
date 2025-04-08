@@ -5,13 +5,15 @@ import { MyRentDetails, RentStatus } from 'smartbox-types';
 import { FormType } from '../../../../types/order-form';
 import { modal, order, singleRent, notifications } from '../../../../actions';
 import { history } from '../../../../App';
-import { Button } from '../../../../components/Branded';
 import { ButtonsContainer } from '../../../../components/Layout';
 import { ApplicationState } from '../../../../reducers';
 import UserService from '../../../../services/user-service';
 import EndingModal from './EndingModal';
 import { __ } from '../../../../helpers/i18n';
 import { useGetMyDetailsQuery } from 'src/queries';
+import { Alert } from 'src/components/Common';
+import { Button, Tabs } from 'src/components/ui';
+import { Calendar, CloseCircle, InfoCircle, Map } from 'src/icons';
 
 interface Props {
   isMapActive: boolean;
@@ -58,47 +60,44 @@ const Action = ({
 
   return (
     <>
-      <ButtonsContainer max>
-        {isMapActive ? (
+      <ButtonsContainer spaceBetween>
+        <Tabs
+          tabs={[
+            {
+              text: 'application.showDetail',
+              onClick: toggleShowUserStockMap,
+              icon: <InfoCircle />,
+              active: !showUserStockMap,
+            },
+            {
+              text: 'application.showOnStockMap',
+              onClick: toggleShowUserStockMap,
+              icon: <Map />,
+              active: showUserStockMap,
+            },
+          ]}
+        />
+        <ButtonsContainer>
           <Button
-            text={
-              !showUserStockMap
-                ? 'application.showOnStockMap'
-                : 'application.showDetail'
-            }
-            success
-            click={() => toggleShowUserStockMap()}
+            iconLeft={<Calendar />}
+            text="application.goToAgreement"
+            onClick={() => handleExtendingOrderData(rent.id)}
+            disabled={!canExtendRent}
           />
-        ) : null}
-        <Button
-          text="application.goToAgreement"
-          success
-          click={() => handleExtendingOrderData(rent.id)}
-          disabled={!canExtendRent}
-        />
-        <Button
-          disabled={!canEndRent}
-          text="application.end"
-          danger
-          click={() => showModal(<EndingModal rent={rent} />)}
-        />
-        <Button
-          text="application.back"
-          primary
-          to={`/${UserService.getSlugByRole(user!.role)}`}
-        />
+          <Button
+            disabled={!canEndRent}
+            iconLeft={<CloseCircle />}
+            text="application.end"
+            variant="error"
+            onClick={() => showModal(<EndingModal rent={rent} />)}
+          />
+        </ButtonsContainer>
       </ButtonsContainer>
       {!canExtendRent ? (
-        <p>
-          <span className="fa fa-info-circle" />{' '}
-          {__('application.cantExtendDescription')}
-        </p>
+        <Alert type="notice" text="application.cantExtendDescription" />
       ) : null}
       {!canEndRent ? (
-        <p>
-          <span className="fa fa-info-circle" />{' '}
-          {__('application.cantEndDescription')}
-        </p>
+        <Alert type="notice" text="application.cantEndDescription" />
       ) : null}
     </>
   );

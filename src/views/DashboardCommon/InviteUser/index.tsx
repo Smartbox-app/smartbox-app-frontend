@@ -1,24 +1,20 @@
-import React from "react";
-import { ItfApiForm } from "itf_formbuilder_react";
-import { bindActionCreators } from "redux";
-import { connect, useSelector } from "react-redux";
-import ReactCreatableSelect from "react-select/creatable";
-import {
-  PageHeader,
-  ButtonsContainer,
-  FormContainer,
-} from "../../../components/Layout";
-import { Button, Spinner } from "../../../components/Branded";
-import ApiService from "../../../services/api-service";
-import { formOnTranslateString } from "../../../utils/trans-form";
-import { notifications } from "../../../actions";
-import { history } from "../../../App";
-import { ReactSelectOverride } from "../../../components/Common/ReactSelectOverride";
-import { ApplicationState } from "../../../reducers";
-import UserService from "../../../services/user-service";
-import { mapFields } from "../../../utils/fields-mapper";
-import { InviteWorkerReq } from "smartbox-types";
-import { useGetMyDetailsQuery } from "src/queries";
+import { ItfApiForm } from 'itf_formbuilder_react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import ReactCreatableSelect from 'react-select/creatable';
+import { ButtonsContainer, FormContainer } from '../../../components/Layout';
+import { Button, Spinner } from '../../../components/Branded';
+import ApiService from '../../../services/api-service';
+import { formOnTranslateString } from '../../../utils/trans-form';
+import { notifications } from '../../../actions';
+import { history } from '../../../App';
+import { ReactSelectOverride } from '../../../components/Common/ReactSelectOverride';
+import UserService from '../../../services/user-service';
+import { mapFields } from '../../../utils/fields-mapper';
+import { InviteWorkerReq } from 'smartbox-types';
+import { useGetMyDetailsQuery } from 'src/queries';
+import { PageHeader } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
 
 interface Props {
   successNotification: (text: string) => void;
@@ -32,14 +28,14 @@ const InviteUser = ({ successNotification }: Props) => {
     </ButtonsContainer>
   );
 
-  const fetchUrl = "user/form/invite-worker";
-  const sendUrl = "user/invite-user";
+  const fetchUrl = 'user/form/invite-worker';
+  const sendUrl = 'user/invite-user';
 
   if (!user) return null;
 
   return (
     <>
-      <PageHeader title="application.preInvitation" />
+      <PageHeader>{__('application.preInvitation')}</PageHeader>
       <ButtonsContainer>
         <Button
           to={`/${UserService.getSlugByRole(user.role)}/management/invitations`}
@@ -59,9 +55,9 @@ const InviteUser = ({ successNotification }: Props) => {
           }
           submitButton={submitButton}
           onSavedSuccessfully={() => {
-            successNotification("notification.invitationSendProperly");
+            successNotification('notification.invitationSendProperly');
             history.push(
-              `/${UserService.getSlugByRole(user.role)}/management/users/list`
+              `/${UserService.getSlugByRole(user.role)}/management/users/list`,
             );
           }}
           onRenderFullField={mapFields}

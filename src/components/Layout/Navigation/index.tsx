@@ -12,11 +12,25 @@ interface Props {
   menuItems: MenuItemType[];
 }
 
-const StyledHeader = styled('header')(({ theme }) => ({
+const StyledNavigationContainer = styled('div')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
-  gap: theme.spacing * 2,
+  background: theme.colors.background.primary,
+  position: 'fixed',
+  bottom: 0,
+  left: 0,
+  width: '100%',
+  boxShadow: '0 5px 10px 0 rgba(1, 18, 34, 0.62)',
+  padding: theme.spacing,
+  zIndex: 100,
+  '@media(min-width: 500px)': {
+    position: 'relative',
+    gap: theme.spacing * 2,
+    background: 'transparent',
+
+    boxShadow: 'none',
+  },
 }));
 
 const StyledNavigation = styled('nav')(({ theme }) => ({
@@ -24,6 +38,10 @@ const StyledNavigation = styled('nav')(({ theme }) => ({
   alignItems: 'center',
   justifyContent: 'space-between',
   gap: theme.spacing * 2,
+  width: '100%',
+  '@media(min-width: 500px)': {
+    justifyContent: 'flex-end',
+  },
 }));
 
 export const Navigation = ({ menuItems }: Props) => {
@@ -47,9 +65,9 @@ export const Navigation = ({ menuItems }: Props) => {
   ));
 
   return (
-    <StyledHeader>
+    <StyledNavigationContainer>
       <LogoContainer />
       <StyledNavigation>{menu}</StyledNavigation>
-    </StyledHeader>
+    </StyledNavigationContainer>
   );
 };

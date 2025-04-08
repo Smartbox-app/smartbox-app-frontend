@@ -9,11 +9,12 @@ import { ReactSelectOverride } from "../../../../../components/Common/ReactSelec
 import {
   ButtonsContainer,
   FormContainer,
-  PageHeader,
 } from "../../../../../components/Layout";
 import ApiService from "../../../../../services/api-service";
 import { formOnTranslateString } from "../../../../../utils/trans-form";
 import { mapFields } from "../../../../../utils/fields-mapper";
+import { Header } from "src/components/ui";
+import { __ } from "src/helpers/i18n";
 
 interface Props {
   userId: string;
@@ -33,7 +34,7 @@ const EditAssign = ({ userId, successNotification, hideModal }: Props) => {
 
   return (
     <>
-      <PageHeader title="application.workerAssignChange" />
+      <Header variant='h1'>{__("application.workerAssignChange")}</Header>
 
       <FormContainer>
         <ItfApiForm

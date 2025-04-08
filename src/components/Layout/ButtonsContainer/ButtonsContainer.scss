@@ -3,8 +3,10 @@
 @import '../../../config/mixins.scss';
 
 .buttons-container {
+  display: flex;
+  flex-direction: column;
   @include gt-sm {
-    display: flex;
+   flex-direction: row;
     justify-content: flex-end;
     flex-wrap: wrap;
     align-items: center;
@@ -16,6 +18,11 @@
       flex: 1;
     }
   }
+
+  &.center {
+    justify-content: center;
+  }
+
   &.column {
     flex-direction: column;
   }

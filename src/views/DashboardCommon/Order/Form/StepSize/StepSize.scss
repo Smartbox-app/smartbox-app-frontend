@@ -1,23 +1,19 @@
 @import '../../../../../config/variables.scss';
 @import '../../../../../config/mixins.scss';
 
-.step-size-wrapper {
-  form {
-    width: 100%;
-  }
+
 
   .options-wrapper {
-    display: flex;
+    display: grid;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
+    width: 100%;
+    gap: 16px;
+    grid-template-columns: 1fr;
+    @include gt-sm {
+      grid-template-columns: 1fr 1fr;
+    }
+    @include gt-md {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
   }
-}
-
-@include gt-sm {
-  .options-wrapper {
-    flex-direction: row;
-    margin-bottom: $main-spacing * 2;
-  }
-}

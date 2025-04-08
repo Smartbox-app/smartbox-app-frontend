@@ -41,7 +41,7 @@ import { i18n } from "./helpers/i18n";
 import { appStatus } from "./actions/app-status";
 
 import "flatpickr/dist/flatpickr.min.css";
-import "flatpickr/dist/themes/airbnb.css";
+// import "flatpickr/dist/themes/airbnb.css";
 import BannerAndroid from "./components/Common/BannerAndroid";
 import BannerIos from "./components/Common/BanneriOS";
 import { CustomThemeProvider } from "./providers";
@@ -96,7 +96,7 @@ const App = () => {
     checkI18nLoaded();
   }, []);
 
-  if (loading) return null;
+  if (loading || !i18n.loaded) return null;
 
   return (
     <QueryClientProvider client={queryClient}>

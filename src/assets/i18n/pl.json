@@ -3,6 +3,7 @@
     "langNames": "pl",
     "phrases": {
         "application": {
+            "click_to_open": "Kliknij aby otworzyć",
             "net": "netto",
             "gross": "brutto",
             "hi": "Cześć",

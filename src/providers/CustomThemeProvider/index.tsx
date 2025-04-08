@@ -14,7 +14,7 @@ const CustomThemeProvider = ({ children }: Props) => {
     () => ({
       spacing: 4,
       shadows: {
-        primary: '0 16px 32px 0 #B2B2B2aa',
+        primary: '0 16px 32px 0 rgba(178, 178, 178, 0.28)',
       },
       radius: {
         outerSurface: 24,

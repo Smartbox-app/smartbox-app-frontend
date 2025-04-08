@@ -1,47 +1,42 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { Button, Spinner } from "../../../../../../components/Branded";
-import { ButtonsContainer, Section } from "../../../../../../components/Layout";
-import { useDispatch, useSelector } from "react-redux";
-import { ApplicationState } from "../../../../../../reducers";
-import styled from "styled-components";
-import { Alert, CheckBox } from "../../../../../../components/Common";
+import { useEffect } from 'react';
+import { Spinner } from '../../../../../../components/Branded';
+import { ButtonsContainer } from '../../../../../../components/Layout';
+import { useDispatch, useSelector } from 'react-redux';
+import { ApplicationState } from '../../../../../../reducers';
+import styled from 'styled-components';
+import { Alert, CheckBox } from '../../../../../../components/Common';
 import {
   fetchAddons,
   selectAddon,
   setAddonAcceptance,
   setAddonFile,
-} from "../../../../../../actions/order";
-import { SingleVariant } from "./SingleVariant";
-import ApiService from "../../../../../../services/api-service";
-import FileInput from "../../../../../../components/Common/FileInput";
-import { AddonRes, AddonUserFileRequirementType } from "smartbox-types";
-import { OrderAddon } from "src/reducers/order-reducer";
+} from '../../../../../../actions/order';
+import { SingleVariant } from './SingleVariant';
+import ApiService from '../../../../../../services/api-service';
+import FileInput from '../../../../../../components/Common/FileInput';
+import { AddonRes, AddonUserFileRequirementType } from 'smartbox-types';
+import { OrderAddon } from 'src/reducers/order-reducer';
+import { Button, Header, Section, Typography } from 'src/components/ui';
 
-const StyledAddonDescription = styled("p")({
-  margin: "10px 0",
-});
-
-const StyledFileDescription = styled("div")(({ theme }) => ({
-  margin: "10px 0",
-  border: `1px solid ${theme.colors.primary}`,
-  borderRadius: 4,
-  padding: 10,
+const StyledFileDescription = styled('div')(({ theme }) => ({
+  background: theme.colors.background.secondary,
+  borderRadius: theme.radius.innerSurface,
+  padding: theme.spacing * 4,
 }));
 
-const StyledUserFileContainer = styled("div")(({ theme }) => ({
-  margin: "10px 0",
-  border: `1px solid ${theme.colors.primary}`,
-  borderRadius: 4,
-  padding: 10,
+const StyledUserFileContainer = styled('div')(({ theme }) => ({
+  background: theme.colors.background.secondary,
+  borderRadius: theme.radius.innerSurface,
+  padding: theme.spacing * 4,
 }));
 
-const StyledAddonHeader = styled("h4")({
-  margin: "10px 0",
+const StyledAddonHeader = styled('h4')({
+  margin: '10px 0',
   fontWeight: 700,
-  fontSize: "1.1rem",
+  fontSize: '1.1rem',
 });
 
-const StyledSingleAddon = styled("div")(({ theme }) => ({
+const StyledSingleAddon = styled('div')(({ theme }) => ({
   marginBottom: 24,
   paddingBottom: 24,
   borderBottom: `1px solid ${theme.colors.secondary}`,
@@ -53,7 +48,7 @@ interface Props {
 
 export const Addons = ({ stockId }: Props) => {
   const { addons, loadingAddons, orderAddons } = useSelector(
-    (state: ApplicationState) => state.order
+    (state: ApplicationState) => state.order,
   );
   const dispatch = useDispatch();
 
@@ -64,7 +59,7 @@ export const Addons = ({ stockId }: Props) => {
   const handleAddonAcceptance = (
     addonId: string,
     acceptanceId: string,
-    checked: boolean
+    checked: boolean,
   ) => {
     dispatch(setAddonAcceptance(addonId, acceptanceId, checked));
   };
@@ -76,7 +71,7 @@ export const Addons = ({ stockId }: Props) => {
   const selectVariant = (
     addonId: string,
     variantId: string,
-    variantName: string
+    variantName: string,
   ) => {
     dispatch(selectAddon(addonId, variantId, variantName));
   };
@@ -87,7 +82,7 @@ export const Addons = ({ stockId }: Props) => {
 
   const displayFileInput = (
     { userFileAllowed, userFileText, userFileRequirement }: AddonRes,
-    { selectedVariant }: OrderAddon
+    { selectedVariant }: OrderAddon,
   ) => {
     if (!userFileAllowed || !userFileText) return false;
     if (
@@ -112,20 +107,19 @@ export const Addons = ({ stockId }: Props) => {
   if (!addons || addons.length === 0) return null;
 
   return (
-    <Section highlight>
+    <>
       {addons.map((addon) => (
-        <StyledSingleAddon key={addon.id}>
-          <StyledAddonHeader>{addon.name}</StyledAddonHeader>
-          <StyledAddonDescription>{addon.description}</StyledAddonDescription>
+        <Section key={addon.id}>
+          <Header variant="h2">{addon.name}</Header>
+          <Typography>{addon.description}</Typography>
           {addon.file && addon.fileText ? (
             <StyledFileDescription>
               <p>{addon.fileText}</p>
               <ButtonsContainer>
                 <Button
-                  primary
                   text="application.seeFile"
-                  blank
-                  to={`${ApiService.url}addon/file/${addon.id}/${addon.file}`}
+                  size="large"
+                  href={`${ApiService.url}addon/file/${addon.id}/${addon.file}`}
                 />
               </ButtonsContainer>
             </StyledFileDescription>
@@ -162,9 +156,9 @@ export const Addons = ({ stockId }: Props) => {
             </StyledUserFileContainer>
           ) : null}
           {addon.additionalDescription ? (
-            <StyledAddonDescription>
+            <Typography>
               {addon.additionalDescription}
-            </StyledAddonDescription>
+            </Typography>
           ) : null}
           {orderAddons[addon.id].selectedVariant && addon.acceptances
             ? addon.acceptances.map((acceptance) => (
@@ -183,8 +177,8 @@ export const Addons = ({ stockId }: Props) => {
                 </div>
               ))
             : null}
-        </StyledSingleAddon>
+        </Section>
       ))}
-    </Section>
+    </>
   );
 };

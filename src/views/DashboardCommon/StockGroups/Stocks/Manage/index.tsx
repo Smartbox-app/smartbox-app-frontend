@@ -1,12 +1,8 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { IStock, TenantEntity, UserRole } from 'smartbox-types';
 
-import {
-  PageHeader,
-  ButtonsContainer,
-  Section,
-} from '../../../../../components/Layout';
+import { ButtonsContainer } from '../../../../../components/Layout';
 import { Button, Tabs } from '../../../../../components/Branded';
 import { Redirect, Route, Switch, useParams } from 'react-router';
 import UserService from '../../../../../services/user-service';
@@ -22,6 +18,8 @@ import { Handling } from './Handling';
 import { Gates } from './Gates';
 import { Addons } from './Addons';
 import { useGetMyDetailsQuery } from 'src/queries';
+import { PageHeader, Section } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
 
 const Manage = () => {
   const { stockId } = useParams<{ stockId: string }>();
@@ -123,95 +121,101 @@ const Manage = () => {
   }, [isMapActive, tenantForAdmin]);
 
   return (
-    <Section>
-      <PageHeader title="application.stockManage" />
-      <ButtonsContainer>
-        <Button to="/admin/locations/stocks" text="application.back" primary />
-      </ButtonsContainer>
+    <>
+      <PageHeader>{__('application.stockManage')}</PageHeader>
+      <Section>
+        <ButtonsContainer>
+          <Button
+            to="/admin/locations/stocks"
+            text="application.back"
+            primary
+          />
+        </ButtonsContainer>
 
-      <Tabs tabs={tabs} />
+        <Tabs tabs={tabs} />
 
-      <Switch>
-        <Route
-          exact
-          path={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/:stockId`}
-          render={() =>
-            hasFullAccess ? (
-              <Redirect
-                to={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/data`}
-              />
-            ) : (
-              <Redirect
-                to={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/rents`}
-              />
-            )
-          }
-        />
-        {hasFullAccess && (
+        <Switch>
           <Route
             exact
-            path={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/:stockId/data`}
-            component={BasicData}
+            path={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/:stockId`}
+            render={() =>
+              hasFullAccess ? (
+                <Redirect
+                  to={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/data`}
+                />
+              ) : (
+                <Redirect
+                  to={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/rents`}
+                />
+              )
+            }
           />
-        )}
-        <Route
-          path={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/:stockId/gates`}
-          component={Gates}
-        />
-        {hasFullAccess && (
+          {hasFullAccess && (
+            <Route
+              exact
+              path={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/:stockId/data`}
+              component={BasicData}
+            />
+          )}
           <Route
-            path={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/:stockId/settings`}
-            component={BasicData}
+            path={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/:stockId/gates`}
+            component={Gates}
           />
-        )}
+          {hasFullAccess && (
+            <Route
+              path={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/:stockId/settings`}
+              component={BasicData}
+            />
+          )}
 
-        <Route
-          path={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/:stockId/boxes`}
-          component={Boxes}
-        />
-        <Route
-          path={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/:stockId/rents`}
-          component={Rents}
-        />
-        {hasFullAccess && (
           <Route
-            path={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/:stockId/groups`}
-            component={Groups}
+            path={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/:stockId/boxes`}
+            component={Boxes}
           />
-        )}
-        {hasFullAccess && (
           <Route
-            path={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/:stockId/discounts`}
-            component={Discounts}
+            path={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/:stockId/rents`}
+            component={Rents}
           />
-        )}
-        {hasFullAccess && (
-          <Route
-            path={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/:stockId/addons`}
-            component={Addons}
-          />
-        )}
-        {isMapActive && hasFullAccess && (
-          <Route
-            path={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/:stockId/map`}
-            component={Map}
-          />
-        )}
-        {isMapActive && (
-          <Route
-            path={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/:stockId/handling`}
-            component={Handling}
-          />
-        )}
-        {(tenantForAdmin?.allowAddonsToRent || tenant?.allowAddonsToRent) &&
-          hasFullAccess && (
+          {hasFullAccess && (
+            <Route
+              path={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/:stockId/groups`}
+              component={Groups}
+            />
+          )}
+          {hasFullAccess && (
+            <Route
+              path={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/:stockId/discounts`}
+              component={Discounts}
+            />
+          )}
+          {hasFullAccess && (
             <Route
               path={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/:stockId/addons`}
               component={Addons}
             />
           )}
-      </Switch>
-    </Section>
+          {isMapActive && hasFullAccess && (
+            <Route
+              path={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/:stockId/map`}
+              component={Map}
+            />
+          )}
+          {isMapActive && (
+            <Route
+              path={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/:stockId/handling`}
+              component={Handling}
+            />
+          )}
+          {(tenantForAdmin?.allowAddonsToRent || tenant?.allowAddonsToRent) &&
+            hasFullAccess && (
+              <Route
+                path={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/:stockId/addons`}
+                component={Addons}
+              />
+            )}
+        </Switch>
+      </Section>
+    </>
   );
 };
 

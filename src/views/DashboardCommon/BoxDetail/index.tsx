@@ -19,6 +19,7 @@ import { Edit } from './Edit';
 
 import './BoxDetail.scss';
 import { useGetMyDetailsQuery } from '../../../queries';
+import { Header } from 'src/components/ui';
 
 interface Props {
   singleBoxDetail: RentDetailsRes;
@@ -52,7 +53,7 @@ const BoxDetail = ({
 
   return (
     <div className="detail-wrapper">
-      <PageHeader title="application.singleStoreDetail" />
+      <Header variant="h2">{__('application.singleStoreDetail')}</Header>
 
       <DescriptionRow icon="fa-lock" text="application.storeNumber">
         {identifier}

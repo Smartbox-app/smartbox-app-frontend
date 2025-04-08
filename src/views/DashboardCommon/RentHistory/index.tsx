@@ -31,7 +31,7 @@ const StyledSubHeader = styled('h4')({
 const StyledSinglePeriod = styled('li')(({ theme }) => ({
     marginBottom: '10px',
     paddingBottom: '10px',
-    borderBottom: `1px solid ${theme.colors.primary}`
+    borderBottom: `1px solid #fbfbfb`
 }))
 
 const StyledSinglePaymentPeriod = styled('li')(({ theme }) => ({

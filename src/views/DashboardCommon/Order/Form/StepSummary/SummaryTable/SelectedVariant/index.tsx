@@ -34,6 +34,6 @@ export const SelectedVariant = ({ addons, orderAddons, addonId }: Props) => {
     </StyledSelectedVariant>
 
     return <StyledSelectedVariant>
-        {selectedVariant ? <><strong>{selectedVariant.name} </strong> {formatPrice(orderAddons[addonId].price?.value || 0)}</> : <strong>{__('application.variantNotSelected')}</strong>}
+        {selectedVariant ? <><strong>{selectedVariant.name}</strong><span>-</span>{formatPrice(orderAddons[addonId].price?.value || 0)}</> : <strong>{__('application.variantNotSelected')}</strong>}
     </StyledSelectedVariant>
 }
