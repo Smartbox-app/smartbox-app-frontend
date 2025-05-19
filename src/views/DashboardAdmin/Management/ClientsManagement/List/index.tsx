@@ -7,16 +7,10 @@ import {
   TableSchemaField,
   tenantsList,
 } from 'smartbox-tables';
-import {
-  IUser,
-  UserClientListRes,
-  UserStatus,
-} from 'smartbox-types';
+import { IUser, UserClientListRes, UserStatus } from 'smartbox-types';
 import { ApiTable } from '../../../../../components/Common';
 import { Button } from '../../../../../components/Branded';
-import {
-  ButtonsContainer,
-} from '../../../../../components/Layout';
+import { ButtonsContainer } from '../../../../../components/Layout';
 import { __ } from '../../../../../helpers/i18n';
 import { InteractiveTableSchema } from '../../../../../utils/table-schema-utils';
 import { modal, user } from '../../../../../actions';
@@ -87,7 +81,7 @@ class List extends React.Component<Props> {
     field: TableSchemaField,
     userData: IUser,
   ) => {
-    if (userData.status === UserStatus.blocked) {
+    if ([UserStatus.blocked, UserStatus.preActive].includes(userData.status)) {
       return (
         <Button
           text="application.active"
@@ -115,7 +109,7 @@ class List extends React.Component<Props> {
             text="application.addTenant"
             primary
             to="/admin/management/clients/add"
-          />{' '}
+          />
         </ButtonsContainer>
         <ApiTable scheme={this.scheme} apiEndpointSubUrl={`user/tenants`} />
       </Section>

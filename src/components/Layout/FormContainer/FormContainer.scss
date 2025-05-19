@@ -7,6 +7,7 @@
   flex-direction: column;
   width: 100%;
   position: relative;
+  gap: 8px;
   // padding: 0 $main-spacing;
 
   [class*='placeholder'] {
@@ -16,6 +17,7 @@
   form {
     flex: 1;
     display: flex;
+    gap: 8px;
     flex-direction: column;
   }
 
@@ -24,12 +26,5 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-  }
-}
-
-@include gt-sm {
-  .form-container {
-    margin: $main-spacing * 2 auto;
-    max-width: $max-form-width * 1.4;
   }
 }

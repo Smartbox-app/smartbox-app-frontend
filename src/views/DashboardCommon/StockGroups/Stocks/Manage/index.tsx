@@ -2,8 +2,6 @@ import { useEffect, useState, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { IStock, TenantEntity, UserRole } from 'smartbox-types';
 
-import { ButtonsContainer } from '../../../../../components/Layout';
-import { Button, Tabs } from '../../../../../components/Branded';
 import { Redirect, Route, Switch, useParams } from 'react-router';
 import UserService from '../../../../../services/user-service';
 import { ApplicationState } from '../../../../../reducers';
@@ -18,8 +16,19 @@ import { Handling } from './Handling';
 import { Gates } from './Gates';
 import { Addons } from './Addons';
 import { useGetMyDetailsQuery } from 'src/queries';
-import { PageHeader, Section } from 'src/components/ui';
+import { PageHeader, Section, Tabs } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
+import {
+  InfoCircle,
+  List as ListIcon,
+  Stop,
+  Boxes as BoxesIcon,
+  Groups as GroupsIcon,
+  Percentage,
+  HomeWifi,
+  Add,
+  Map as MapIcon,
+} from 'src/icons';
 
 const Manage = () => {
   const { stockId } = useParams<{ stockId: string }>();
@@ -57,40 +66,49 @@ const Manage = () => {
           {
             to: `/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/data`,
             text: 'application.stockBasicData',
+            icon: <InfoCircle />,
           },
           {
             to: `/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/rents`,
             text: 'application.stockRents',
+            icon: <ListIcon />,
           },
           {
             to: `/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/gates`,
             text: 'application.gates',
+            icon: <Stop />,
           },
           {
             to: `/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/groups`,
             text: 'application.boxesGroups',
+            icon: <GroupsIcon />,
           },
           {
             to: `/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/discounts`,
             text: 'application.stockSale',
+            icon: <Percentage />,
           },
           {
             to: `/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/boxes`,
             text: 'application.stockBoxes',
+            icon: <BoxesIcon />,
           },
         ]
       : [
           {
             to: `/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/rents`,
             text: 'application.stockRents',
+            icon: <ListIcon />,
           },
           {
             to: `/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/gates`,
             text: 'application.gates',
+            icon: <Stop />,
           },
           {
             to: `/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/boxes`,
             text: 'application.stockBoxes',
+            icon: <BoxesIcon />,
           },
         ];
 
@@ -99,11 +117,13 @@ const Manage = () => {
         elements.push({
           to: `/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/map`,
           text: 'application.map',
+          icon: <MapIcon />,
         });
       }
       elements.push({
         to: `/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/handling`,
         text: 'application.stockHandling',
+        icon: <HomeWifi />,
       });
     }
 
@@ -114,6 +134,7 @@ const Manage = () => {
       elements.push({
         to: `/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/addons`,
         text: 'application.stockAddons',
+        icon: <Add />,
       });
     }
 
@@ -124,16 +145,9 @@ const Manage = () => {
     <>
       <PageHeader>{__('application.stockManage')}</PageHeader>
       <Section>
-        <ButtonsContainer>
-          <Button
-            to="/admin/locations/stocks"
-            text="application.back"
-            primary
-          />
-        </ButtonsContainer>
-
         <Tabs tabs={tabs} />
-
+      </Section>
+      <>
         <Switch>
           <Route
             exact
@@ -214,7 +228,7 @@ const Manage = () => {
               />
             )}
         </Switch>
-      </Section>
+      </>
     </>
   );
 };

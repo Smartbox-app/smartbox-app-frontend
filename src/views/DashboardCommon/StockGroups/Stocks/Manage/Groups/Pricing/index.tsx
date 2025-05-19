@@ -9,6 +9,7 @@ import { ButtonsContainer, FormContainer, SimpleHeader } from '../../../../../..
 import { Button, Spinner } from '../../../../../../../components/Branded';
 import { __ } from '../../../../../../../helpers/i18n';
 import { successNotification } from '../../../../../../../actions/notifications';
+import { Header, Section } from 'src/components/ui';
 
 const StyledSinglePricing = styled.div`
 display: flex;
@@ -84,8 +85,8 @@ const Pricing = () => {
         getCurrentGroup();
     }, [])
 
-    return <>
-        <SimpleHeader title={`${__('application.pricing')} ${group?.name}`} />
+    return <Section>
+        <Header variant='h2'>{`${__('application.pricing')} ${group?.name}`}</Header>
         <FormContainer highlight>
             {loading && <Spinner overlay halfTransparent />}
             {(!pricing || pricing.length === 0) && <Alert type='notice' text='application.noPricingSet' />}
@@ -132,6 +133,14 @@ const Pricing = () => {
                                     label: __('application.month'),
                                 },
                                 {
+                                    value: PricingType.Quarter,
+                                    label: __('application.quarter'),
+                                },
+                                {
+                                    value: PricingType.HalfYear,
+                                    label: __('application.half_year'),
+                                },
+                                {
                                     value: PricingType.Year,
                                     label: __('application.year'),
                                 },
@@ -162,7 +171,7 @@ const Pricing = () => {
                 <Button text='application.save' primary click={savePricing} />
             </ButtonsContainer>
         </FormContainer >
-    </>
+    </Section>
 }
 
 export { Pricing }

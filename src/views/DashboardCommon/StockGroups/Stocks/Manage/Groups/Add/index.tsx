@@ -2,7 +2,11 @@ import React from 'react';
 import { ItfApiForm } from 'itf_formbuilder_react';
 import { useDispatch } from 'react-redux';
 import ReactCreatableSelect from 'react-select/creatable';
-import { ButtonsContainer, FormContainer, SimpleHeader } from '../../../../../../../components/Layout';
+import {
+  ButtonsContainer,
+  FormContainer,
+  SimpleHeader,
+} from '../../../../../../../components/Layout';
 import { Button, Spinner } from '../../../../../../../components/Branded';
 import ApiService from '../../../../../../../services/api-service';
 import { formOnTranslateString } from '../../../../../../../utils/trans-form';
@@ -14,53 +18,68 @@ import UserService from '../../../../../../../services/user-service';
 import { mapFields } from '../../../../../../../utils/fields-mapper';
 import { useParams } from 'react-router';
 import { useGetMyDetailsQuery } from 'src/queries';
-
+import { HeaderWithActions, Section } from 'src/components/ui';
 
 const Add = () => {
-    const dispatch = useDispatch();
-    const { stockId } = useParams<{ stockId: string }>();
+  const dispatch = useDispatch();
+  const { stockId } = useParams<{ stockId: string }>();
 
-      const { data: user } = useGetMyDetailsQuery();
+  const { data: user } = useGetMyDetailsQuery();
 
-    const submitButton = (
-        <ButtonsContainer>
-            <Button text="application.save" type="submit" primary />
-        </ButtonsContainer>
-    );
+  const submitButton = (
+    <ButtonsContainer>
+      <Button text="application.save" type="submit" primary />
+    </ButtonsContainer>
+  );
 
-    const fetchUrl = 'box-group-new/form';
-    const sendUrl = 'box-group-new';
+  const fetchUrl = 'box-group-new/form';
+  const sendUrl = 'box-group-new';
 
-    return (
-        <>
-            <SimpleHeader title="application.addBoxGroup" />
-            <ButtonsContainer>
-                <Button to={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/groups`} text="application.back" primary />
-            </ButtonsContainer>
-            <FormContainer highlight>
-                <ItfApiForm
-                    formId="addBoxGroup"
-                    schemaCacheEnabled={false}
-                    schemaMayBeDynamic={true}
-                    useFormDataInsteadOfPlainObject
-                    loadingInfo={<Spinner transparent />}
-                    schemaFetcher={() => ApiService.loadForm(fetchUrl)}
-                    sendFetcher={(formId: string, values: FormData) => {
-                        values.set('stockId', stockId);
-                        return ApiService.sendForm(sendUrl, values)}
-                    }
-                    submitButton={submitButton}
-                    onRenderFullField={mapFields}
-                    onSavedSuccessfully={() => {
-                        dispatch(successNotification('application.boxGroupAdded'));
-                        history.push(`/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/groups`);
-                    }}
-                    onTranslateString={formOnTranslateString}
-                    thirdPartyComponents={{ ReactSelect: ReactSelectOverride, ReactCreatableSelect }}
-                />
-            </FormContainer>
-        </>
-    );
+  return (
+    <Section>
+      <HeaderWithActions
+        actions={
+          <ButtonsContainer>
+            <Button
+              to={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/groups`}
+              text="application.back"
+              primary
+            />
+          </ButtonsContainer>
+        }
+      >
+        {__('application.addBoxGroup')}
+      </HeaderWithActions>
+
+      <FormContainer highlight>
+        <ItfApiForm
+          formId="addBoxGroup"
+          schemaCacheEnabled={false}
+          schemaMayBeDynamic={true}
+          useFormDataInsteadOfPlainObject
+          loadingInfo={<Spinner transparent />}
+          schemaFetcher={() => ApiService.loadForm(fetchUrl)}
+          sendFetcher={(formId: string, values: FormData) => {
+            values.set('stockId', stockId);
+            return ApiService.sendForm(sendUrl, values);
+          }}
+          submitButton={submitButton}
+          onRenderFullField={mapFields}
+          onSavedSuccessfully={() => {
+            dispatch(successNotification('application.boxGroupAdded'));
+            history.push(
+              `/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/groups`,
+            );
+          }}
+          onTranslateString={formOnTranslateString}
+          thirdPartyComponents={{
+            ReactSelect: ReactSelectOverride,
+            ReactCreatableSelect,
+          }}
+        />
+      </FormContainer>
+    </Section>
+  );
 };
 
-export { Add }
+export { Add };

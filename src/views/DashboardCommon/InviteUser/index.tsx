@@ -13,7 +13,7 @@ import UserService from '../../../services/user-service';
 import { mapFields } from '../../../utils/fields-mapper';
 import { InviteWorkerReq } from 'smartbox-types';
 import { useGetMyDetailsQuery } from 'src/queries';
-import { PageHeader } from 'src/components/ui';
+import { Header, PageHeader, Section } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
 
 interface Props {
@@ -34,15 +34,8 @@ const InviteUser = ({ successNotification }: Props) => {
   if (!user) return null;
 
   return (
-    <>
-      <PageHeader>{__('application.preInvitation')}</PageHeader>
-      <ButtonsContainer>
-        <Button
-          to={`/${UserService.getSlugByRole(user.role)}/management/invitations`}
-          text="application.back"
-          primary
-        />
-      </ButtonsContainer>
+    <Section>
+      <Header variant='h2'>{__('application.preInvitation')}</Header>
 
       <FormContainer highlight>
         <ItfApiForm
@@ -68,7 +61,7 @@ const InviteUser = ({ successNotification }: Props) => {
           }}
         />
       </FormContainer>
-    </>
+    </Section>
   );
 };
 

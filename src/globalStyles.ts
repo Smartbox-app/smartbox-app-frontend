@@ -9,7 +9,11 @@ interface GlobalStyleProps {
 
 const GlobalStyle = createGlobalStyle<GlobalStyleProps>`
 html {
-    font-size: 16px;
+    font-size: 14px;
+
+    @media(min-width: 768px) {
+        font-size: 16px;
+    }
 }
     p {
     line-height: 1.5;

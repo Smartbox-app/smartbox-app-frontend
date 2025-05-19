@@ -27,14 +27,30 @@ const StyledDetailsList = styled.ul`
 const StyledDetailsRow = styled.li(
   ({ theme }) => `
     border-bottom: 1px solid #fbfbfb;
-    padding: 16px;
+       padding: 8px 0;
     font-size: 14px;
     display: flex;
+    flex-direction: column;
     gap: 4px;
+
+    .row-dash {
+    display: none;
+    
+    }
+    
     &:nth-child(even) {
       background:${theme.colors.background.tertiary}
     }
   
+      @media(min-width: 768px) {
+          padding: 16px;
+     padding: 16px;
+     flex-direction: row;
+
+     .row-dash {
+     display: block;
+     }
+    }
 `,
 );
 
@@ -104,14 +120,14 @@ const SummaryTable = ({
           {countedPrice.isGross
             ? __('application.paymentForRent')
             : __('application.netPaymentForRent')}
-          <span>-</span>
+              <span className='row-dash'>-</span>
           <strong>{formatPrice(countedPrice.value)}</strong>
         </StyledDetailsRow>
         {addons && orderAddons
           ? addons.map((addon) => (
               <StyledDetailsRow key={addon.id}>
                 <span>{addon.name}</span>
-                <span>-</span>
+                <span className='row-dash'>-</span>
                 <SelectedVariant
                   addonId={addon.id}
                   addons={addons}

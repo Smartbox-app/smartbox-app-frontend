@@ -43,7 +43,7 @@ const DashboardTenant = () => {
           />
           <Route path="/client/management/" component={Management} />
           <Route path="/client/profile" component={Profile} />
-          <Route path={`/client/locations`} component={StockGroups} />
+          <Route path="/client/locations" component={StockGroups} />
         </Switch>
       </Main>
     </DashboardContainer>

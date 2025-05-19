@@ -23,7 +23,7 @@ const StyledPriceInfo = styled('div')<{ disabled?: boolean; active?: boolean }>(
       : theme.colors.text.primary,
     padding: `${theme.spacing * 2}px ${theme.spacing * 2}px`,
     opacity: disabled ? 0.5 : 1,
-    border: `2px solid ${active ? theme.colors.primary : theme.colors.border.secondary}`
+    border: `2px solid ${active ? theme.colors.primary : theme.colors.border.secondary}`,
   }),
 );
 
@@ -43,6 +43,16 @@ const formatQuantity = (type: PricingType, quantity: number) => {
       if (quantity >= 5) return 'miesięcy';
       if (quantity > 1) return 'miesiące';
       return 'miesiąc';
+    }
+
+    case PricingType.Quarter: {
+      if (quantity >= 5) return 'kwartałów';
+      if (quantity > 1) return 'kwartały';
+      return 'kwartał';
+    }
+
+    case PricingType.HalfYear: {
+      return 'pół roku';
     }
 
     case PricingType.Year: {

@@ -14,7 +14,7 @@ export const ClassValidatorResolver =
     (Object.keys(dto) as unknown as (keyof DTO)[]).forEach((key) => {
       dto[key] = data[key as keyof DTO];
     });
-    console.log('DUPA');
+
     const errors = await validate(dto);
 
     if (errors.length === 0) {

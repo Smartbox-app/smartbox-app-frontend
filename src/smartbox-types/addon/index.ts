@@ -2,6 +2,8 @@ export enum AddonPricingType {
     Day = 'day',
     Week = 'week',
     Month = 'month',
+    Quarter = 'quarter',
+    HalfYear = 'half_year',
     Year = 'year'
 }
 

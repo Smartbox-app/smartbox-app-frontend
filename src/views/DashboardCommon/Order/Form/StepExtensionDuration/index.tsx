@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect, useDispatch, useSelector } from 'react-redux';
 
-import { addDays, isBefore, startOfDay } from 'date-fns';
+import { addDays, endOfDay, isBefore, startOfDay } from 'date-fns';
 import {
   AddonUserFileRequirementType,
   IStock,
@@ -114,13 +114,12 @@ const StepExtensionDuration = ({ clearPaymentDetails }: Props) => {
     const newEnd = addDays(startOfDay(new Date(rent.finishAt)), minRentPeriod);
     const newEndOrToday = isBefore(newEnd, new Date()) ? startOfDay(addDays(new Date(), 1)) : newEnd;
     dispatch(
-      setRentEndDate(newEndOrToday),
+      setRentEndDate(endOfDay(newEndOrToday)),
     );
   }, [minRentPeriod, rent]);
 
   useEffect(() => {
     if (!rentId || !endDate) return;
-    console.log('GOT END DATE', endDate);
     setLoading(true);
     dispatch(calculatePriceForRent(rentId, startDate, endDate));
     calculateAllAddons();
@@ -166,7 +165,7 @@ const StepExtensionDuration = ({ clearPaymentDetails }: Props) => {
 
   const allRequiredAddonsSelected = useMemo(() => {
     const addonIds = Object.keys(orderAddons);
-    console.log('ADDONS', orderAddons);
+
     for (const addonId of addonIds) {
       const orderAddon = orderAddons[addonId];
       if (orderAddon.required && !orderAddon.selectedVariant) {
@@ -187,7 +186,6 @@ const StepExtensionDuration = ({ clearPaymentDetails }: Props) => {
           acceptance.required &&
           !orderAddon.acceptancesStatus[acceptance.id].accepted
         ) {
-          console.log('1');
           return false;
         }
       }
@@ -198,7 +196,6 @@ const StepExtensionDuration = ({ clearPaymentDetails }: Props) => {
             AddonUserFileRequirementType.Required &&
           !orderAddon.file
         ) {
-          console.log('2');
           return false;
         }
       }
@@ -225,7 +222,7 @@ const StepExtensionDuration = ({ clearPaymentDetails }: Props) => {
               highlightEnd={endDate}
               value={endDate || undefined}
               onChange={([selected]) => {
-                dispatch(setRentEndDate(selected));
+                dispatch(setRentEndDate(endOfDay(selected)));
               }}
             />
           </StyledCalendarPicker>

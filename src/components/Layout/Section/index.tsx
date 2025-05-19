@@ -1,6 +1,5 @@
 import React from 'react';
-
-import './Section.scss';
+import { Section as UISection } from 'src/components/ui';
 
 interface Props {
   children: React.ReactNode;
@@ -10,13 +9,7 @@ interface Props {
 }
 
 const Section = ({ children, full, half, highlight }: Props) => (
-  <section
-    className={`section-wrapper ${full ? 'section-full-width' : ''} ${half ? 'section-half-width' : ''} ${
-      highlight ? 'section-highlight' : ''
-    }`}
-  >
-    {children}
-  </section>
+  <UISection>{children}</UISection>
 );
 
 export default Section;

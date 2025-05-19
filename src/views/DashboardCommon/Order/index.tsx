@@ -52,7 +52,6 @@ export const Order = () => {
   };
 
   const getTitle = () => {
-    console.log('BRUH', singleRent);
     if (singleRent && singleRent.status === RentStatus.noPaidExtension)
       return 'application.debtPayOff';
     if (rentId) return 'application.extendsOrder';

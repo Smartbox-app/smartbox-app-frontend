@@ -7,29 +7,29 @@ export type HeaderProps = {
 };
 
 const StyledMain = styled('h1')(({ theme }) => ({
-  fontSize: 36,
+  fontSize: '2.25rem',
   lineHeight: 1.5,
   fontWeight: 200,
   color: theme.colors.text.disable,
 }));
 
 const StyledH1 = styled('h2')(({ theme }) => ({
-  fontSize: 22,
-  lineHeight: '32px',
+  fontSize: '1.375rem',
+  lineHeight: '2rem',
   fontWeight: 700,
   color: theme.colors.text.primary,
 }));
 
 const StyledH2 = styled('h2')(({ theme }) => ({
-  fontSize: 18,
-  lineHeight: '25px',
+  fontSize: '1.125rem',
+  lineHeight: '1.5625rem',
   fontWeight: 700,
   color: theme.colors.text.secondary,
 }));
 
 const StyledH3 = styled('h3')(({ theme }) => ({
-  fontSize: 16,
-  lineHeight: '22px',
+  fontSize: '1rem',
+  lineHeight: '1.375rem',
   fontWeight: 700,
   color: theme.colors.text.secondary,
 }));

@@ -8,7 +8,7 @@ import { Navigation } from '../../components/Layout/Navigation';
 import Profile from '../DashboardCommon/Profile';
 import ManagementWorker from './ManagementWorker';
 import { StockGroups } from '../DashboardCommon/StockGroups';
-import { Settings } from '../../icons';
+import { Settings, Stocks } from '../../icons';
 
 const DashboardWorker = () => {
   const menuItems: MenuItemType[] = [
@@ -18,12 +18,12 @@ const DashboardWorker = () => {
       to: '/worker/management',
     },
     {
-      icon: 'dashboard.svg',
+      icon: <Stocks />,
       text: 'application.stocks',
       to: '/worker/locations',
     },
     {
-      icon:<Settings />,
+      icon: <Settings />,
       text: 'application.account',
       to: '/worker/profile',
     },
@@ -35,16 +35,14 @@ const DashboardWorker = () => {
       <Navigation menuItems={menuItems} />
       <Main>
         <Switch>
-          <Section full>
-            <Route
-              exact
-              path="/worker"
-              render={() => <Redirect to="/worker/management" />}
-            />
-            <Route path="/worker/management/" component={ManagementWorker} />
-            <Route path="/worker/profile" component={Profile} />
-            <Route path="/worker/locations" component={StockGroups} />
-          </Section>
+          <Route
+            exact
+            path="/worker"
+            render={() => <Redirect to="/worker/management" />}
+          />
+          <Route path="/worker/management/" component={ManagementWorker} />
+          <Route path="/worker/profile" component={Profile} />
+          <Route path="/worker/locations" component={StockGroups} />
         </Switch>
       </Main>
     </DashboardContainer>

@@ -341,7 +341,7 @@ const StepAgreement = ({ formData, isResignationMarked }: Props): any => {
       frameRef.current.contentWindow?.document;
 
     if (!iframeDoc?.body.children.length) {
-      console.log('TRYING TO RELOAD');
+  
       frameRef.current.src += '';
       frameRef.current.contentWindow?.location.reload();
 
@@ -357,7 +357,7 @@ const StepAgreement = ({ formData, isResignationMarked }: Props): any => {
   };
 
   useEffect(() => {
-    console.log('EFFETCT CALLED');
+
     if (!frameRef.current) return;
 
     if (!frameRef.current.contentDocument?.body.children.length) {
@@ -385,12 +385,11 @@ const StepAgreement = ({ formData, isResignationMarked }: Props): any => {
 
   params.append('addons', JSON.stringify(simplifiedAddons));
 
-  console.log('PARAMS', params);
 
   const url = `${ApiService.url}tenant/agreement/${tenant.id}?${params}`;
   const encodedUrl = encodeURIComponent(url);
 
-  console.log('URL', url, encodedUrl);
+
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>

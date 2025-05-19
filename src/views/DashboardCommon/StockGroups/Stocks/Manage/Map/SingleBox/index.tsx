@@ -211,7 +211,7 @@ const SingleBox = ({
   };
 
   const rotate = (deg: number) => {
-    console.log('REF');
+
     const newRotation = getNewRotation(rotation, deg);
     setRotation(newRotation);
     updateRotation(newRotation);

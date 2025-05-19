@@ -15,3 +15,4 @@ export * from './Checkbox';
 export * from './Row';
 export * from './InputLabel';
 export * from './Tabs';
+export * from './HeaderWithActions';

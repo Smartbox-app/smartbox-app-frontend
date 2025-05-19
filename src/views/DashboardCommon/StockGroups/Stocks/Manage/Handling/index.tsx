@@ -8,6 +8,8 @@ import { MapView } from '../../../../MapView';
 import { useDispatch } from 'react-redux';
 import BoxDetail from '../../../../BoxDetail';
 import { showModal } from '../../../../../../actions/modal';
+import { Header } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
 
 const Handling = () => {
     const { stockId } = useParams<{ stockId: string }>();
@@ -41,8 +43,8 @@ const Handling = () => {
 
     if (loading || !stock) return <Spinner />
 
-    return <Section full>
-        <SimpleHeader title='application.stockHandling' />
+    return <Section>
+        <Header variant='h2'>{__('application.stockHandling')}</Header>
         <MapView stock={stock} boxes={boxes} admin onBoxClick={handleBoxDetails} />
     </Section>
 }

@@ -28,7 +28,7 @@ const StyledMissingPayment = styled('div')(({ theme }) => ({
   justifyContent: 'space-between',
   flexDirection: 'column',
   gap: theme.spacing * 4,
-  '@media(min-width: 500px)': {
+  '@media(min-width: 768px)': {
     flexDirection: 'row',
   },
 }));

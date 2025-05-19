@@ -15,6 +15,8 @@ import { useParams } from 'react-router';
 import { mapFields } from '../../../../../../../utils/fields-mapper';
 import { successNotification } from '../../../../../../../actions/notifications';
 import styled from 'styled-components';
+import { Header } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
 
 const StyledWrapper = styled.div`
 border-bottom: 1px solid ${props => props.theme.colors.primary};
@@ -56,9 +58,9 @@ const StockDiscount = () => {
         );
 
     return (
-        <StyledWrapper>
+        <>
             <FormContainer highlight>
-                <FormHeader title="application.stockDiscount" />
+                <Header variant='h2'>{__("application.stockDiscount")}</Header>
                 <FieldsColumn>
                     <ItfApiForm
                         formId="addStockDiscountForm"
@@ -77,7 +79,7 @@ const StockDiscount = () => {
                     />
                 </FieldsColumn>
             </FormContainer>
-        </StyledWrapper>
+        </>
     );
 };
 

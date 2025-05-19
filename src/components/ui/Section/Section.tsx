@@ -40,7 +40,7 @@ const StyledSection = styled('section')<{
   alignItems: align === 'center' ? 'center' : undefined,
   width: getWidth(width),
   margin: '0 auto',
-  '@media(min-width: 500px)': {
+  '@media(min-width: 768px)': {
     padding: theme.spacing * 8,
   }
 }));

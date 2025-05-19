@@ -18,6 +18,7 @@ import { __ } from '../../../../../helpers/i18n';
 import UserService from '../../../../../services/user-service';
 import { mapFields } from '../../../../../utils/fields-mapper';
 import { useGetMyDetailsQuery } from 'src/queries';
+import { Header } from 'src/components/ui';
 
 const Add = () => {
   const dispatch = useDispatch();
@@ -33,42 +34,37 @@ const Add = () => {
   const sendUrl = 'stock';
 
   return (
-    <Section>
+    <>
       <PageHeader title="application.addStock" />
-      <ButtonsContainer>
-        <Button
-          to={`/${UserService.getSlugByRole(user!.role)}/locations/stocks`}
-          text="application.back"
-          primary
-        />
-      </ButtonsContainer>
-      <p>{__('application.addStockDescription')}</p>
-      <FormContainer highlight>
-        <ItfApiForm
-          formId="addStock"
-          schemaCacheEnabled={false}
-          schemaMayBeDynamic={true}
-          loadingInfo={<Spinner transparent />}
-          schemaFetcher={() => ApiService.loadForm(fetchUrl)}
-          sendFetcher={(formId: string, values: any) =>
-            ApiService.sendForm(sendUrl, values)
-          }
-          submitButton={submitButton}
-          onRenderFullField={mapFields}
-          onSavedSuccessfully={() => {
-            dispatch(successNotification('notification.stockAddedCorrectly'));
-            history.push(
-              `/${UserService.getSlugByRole(user!.role)}/locations/stocks`,
-            );
-          }}
-          onTranslateString={formOnTranslateString}
-          thirdPartyComponents={{
-            ReactSelect: ReactSelectOverride,
-            ReactCreatableSelect,
-          }}
-        />
-      </FormContainer>
-    </Section>
+      <Section>
+        <Header variant="h2">{__('application.addStockDescription')}</Header>
+        <FormContainer highlight>
+          <ItfApiForm
+            formId="addStock"
+            schemaCacheEnabled={false}
+            schemaMayBeDynamic={true}
+            loadingInfo={<Spinner transparent />}
+            schemaFetcher={() => ApiService.loadForm(fetchUrl)}
+            sendFetcher={(formId: string, values: any) =>
+              ApiService.sendForm(sendUrl, values)
+            }
+            submitButton={submitButton}
+            onRenderFullField={mapFields}
+            onSavedSuccessfully={() => {
+              dispatch(successNotification('notification.stockAddedCorrectly'));
+              history.push(
+                `/${UserService.getSlugByRole(user!.role)}/locations/stocks`,
+              );
+            }}
+            onTranslateString={formOnTranslateString}
+            thirdPartyComponents={{
+              ReactSelect: ReactSelectOverride,
+              ReactCreatableSelect,
+            }}
+          />
+        </FormContainer>
+      </Section>
+    </>
   );
 };
 

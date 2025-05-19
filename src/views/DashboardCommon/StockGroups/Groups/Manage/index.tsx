@@ -1,17 +1,14 @@
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 
-import {
-  PageHeader,
-  ButtonsContainer,
-  Section,
-} from '../../../../../components/Layout';
-import { Button, Tabs } from '../../../../../components/Branded';
 import { Redirect, Route, Switch, useParams } from 'react-router';
 import UserService from '../../../../../services/user-service';
 import { BasicData } from './BasicData';
 import { Gates } from './Gates';
 import { UserRole } from 'smartbox-types';
 import { useGetMyDetailsQuery } from 'src/queries';
+import { PageHeader, Section, Tabs } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
+import { InfoCircle, Stop } from 'src/icons';
 
 const ManageGroup = () => {
   const { stockGroupId } = useParams<{ stockGroupId: string }>();
@@ -24,6 +21,7 @@ const ManageGroup = () => {
       {
         to: `/${UserService.getSlugByRole(user!.role)}/locations/groups/${stockGroupId}/gates`,
         text: 'application.gates',
+        icon: <Stop />,
       },
     ];
 
@@ -33,49 +31,49 @@ const ManageGroup = () => {
       {
         to: `/${UserService.getSlugByRole(user!.role)}/locations/groups/${stockGroupId}/data`,
         text: 'application.stockGroupBasicData',
+        icon: <InfoCircle />,
       },
       ...basicElements,
     ];
   }, []);
 
   return (
-    <Section>
-      <PageHeader title="application.stockManage" />
-      <ButtonsContainer>
-        <Button to="/admin/locations/groups" text="application.back" primary />
-      </ButtonsContainer>
-
-      <Tabs tabs={tabs} />
-
-      <Switch>
-        <Route
-          exact
-          path={`/${UserService.getSlugByRole(user!.role)}/locations/groups/:stockGroupId`}
-          render={() =>
-            hasFullAccess ? (
-              <Redirect
-                to={`/${UserService.getSlugByRole(user!.role)}/locations/groups/${stockGroupId}/data`}
-              />
-            ) : (
-              <Redirect
-                to={`/${UserService.getSlugByRole(user!.role)}/locations/groups/${stockGroupId}/gates`}
-              />
-            )
-          }
-        />
-        {hasFullAccess && (
+    <>
+      <PageHeader>{__('application.stockManage')}</PageHeader>
+      <Section>
+        <Tabs tabs={tabs} />
+      </Section>
+      <>
+        <Switch>
           <Route
             exact
-            path={`/${UserService.getSlugByRole(user!.role)}/locations/groups/:stockGroupId/data`}
-            component={BasicData}
+            path={`/${UserService.getSlugByRole(user!.role)}/locations/groups/:stockGroupId`}
+            render={() =>
+              hasFullAccess ? (
+                <Redirect
+                  to={`/${UserService.getSlugByRole(user!.role)}/locations/groups/${stockGroupId}/data`}
+                />
+              ) : (
+                <Redirect
+                  to={`/${UserService.getSlugByRole(user!.role)}/locations/groups/${stockGroupId}/gates`}
+                />
+              )
+            }
           />
-        )}
-        <Route
-          path={`/${UserService.getSlugByRole(user!.role)}/locations/groups/:stockGroupId/gates`}
-          component={Gates}
-        />
-      </Switch>
-    </Section>
+          {hasFullAccess && (
+            <Route
+              exact
+              path={`/${UserService.getSlugByRole(user!.role)}/locations/groups/:stockGroupId/data`}
+              component={BasicData}
+            />
+          )}
+          <Route
+            path={`/${UserService.getSlugByRole(user!.role)}/locations/groups/:stockGroupId/gates`}
+            component={Gates}
+          />
+        </Switch>
+      </>
+    </>
   );
 };
 

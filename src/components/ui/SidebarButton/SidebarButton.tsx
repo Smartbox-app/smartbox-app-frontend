@@ -43,7 +43,7 @@ const sidebarButtonStyles = css(({ theme }) => ({
   transition: '.3s all',
   flex: 1,
 
-  '@media(min-width: 500px)': {
+  '@media(min-width: 768px)': {
     flex: '0 1 auto',
     flexDirection: 'row',
     boxShadow: theme.shadows.primary,

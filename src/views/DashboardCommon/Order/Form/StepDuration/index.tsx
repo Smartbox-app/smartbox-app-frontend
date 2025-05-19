@@ -92,9 +92,10 @@ const StepDuration = ({ clearPaymentDetails }: Props) => {
   };
 
   useEffect(() => {
+    console.log(startDate, endDate, minRentPeriod);
     if (!minRentPeriod) return;
     if (!endDate) {
-      dispatch(setRentEndDate(addDays(startDate, minRentPeriod - 1)));
+      dispatch(setRentEndDate(endOfDay(addDays(startDate, minRentPeriod - 1))));
       return;
     }
     setLoading(true);
@@ -256,7 +257,7 @@ const StepDuration = ({ clearPaymentDetails }: Props) => {
                   minDate={setMinDate()}
                   maxDate={setMaxDateToExtend()}
                   onChange={([selected]) => {
-                    dispatch(setRentStartDate(selected));
+                    dispatch(setRentStartDate(startOfDay(selected)));
                   }}
                 />
               )}
@@ -273,7 +274,7 @@ const StepDuration = ({ clearPaymentDetails }: Props) => {
                   label="application.selectEndRentDate"
                   minDate={setMinDate(minRentPeriod - 1, true)}
                   onChange={([selected]) => {
-                    dispatch(setRentEndDate(selected));
+                    dispatch(setRentEndDate(endOfDay(selected)));
                   }}
                 />
               )}

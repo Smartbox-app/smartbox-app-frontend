@@ -23,7 +23,7 @@ const WelcomeHeader = styled('div')(({theme}) => ({
   justifyContent: 'space-between',
   width: '100%',
   gap: theme.spacing * 2,
-  '@media(min-width: 500px)': {
+  '@media(min-width: 768px)': {
     flexDirection: 'row',
     justifyContent: 'space-between',
   },

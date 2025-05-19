@@ -6,6 +6,8 @@ import { Section, SimpleHeader } from '../../../../../../components/Layout';
 import { Spinner } from '../../../../../../components/Branded';
 import { MapSettingsForm } from './MapSettingsForm';
 import { MapView } from '../../../../MapView';
+import { Header } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
 
 const Map = () => {
     const { stockId } = useParams<{ stockId: string }>();
@@ -33,8 +35,8 @@ const Map = () => {
 
     if (loading || !stock) return <Spinner />
 
-    return <Section full>
-        <SimpleHeader title='application.map' />
+    return <Section>
+        <Header variant='h2'>{__('application.map')}</Header>
         <MapSettingsForm stock={stock} refreshStock={getStock} />
         <MapView stock={stock} boxes={boxes} />
 

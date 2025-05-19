@@ -13,8 +13,4 @@
   background-color: #fff;
   height: 100%;
   width: 100%;
-  // padding-top: $main-spacing * 3;
-  @include gt-sm {
-    min-width: 500px;
-  }
 }

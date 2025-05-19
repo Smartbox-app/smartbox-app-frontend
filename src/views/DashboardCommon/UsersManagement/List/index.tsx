@@ -29,6 +29,7 @@ import UserDetail from './UserDetail';
 import UserEdit from './UserEdit';
 import UserService from '../../../../services/user-service';
 import { useGetMyDetailsQuery } from 'src/queries';
+import { Header, HeaderWithActions } from 'src/components/ui';
 
 interface Props {
   showModal: (content: React.ReactNode) => void;
@@ -113,7 +114,7 @@ const List = ({
       type: FieldType.Custom,
       customRender: (value, field, userData: UserListRes) => {
         return (
-          <>
+          <ButtonsContainer noWrap>
             <Button
               primary
               text="application.userDetails"
@@ -144,29 +145,35 @@ const List = ({
                 click={() => confirmUserDeleteByForce(userData.id)}
               />
             ) : null}
-          </>
+          </ButtonsContainer>
         );
       },
     });
 
   return (
-    <Section full>
-      <PageHeader title="application.usersList" />
-      <ButtonsContainer>
-        {hasFullAccess && (
-          <Button
-            text="application.addUser"
-            primary
-            to={`/${UserService.getSlugByRole(user!.role)}/management/users/add`}
-          />
-        )}
-        <Button
-          text="application.inviteUser"
-          primary
-          to={`/${UserService.getSlugByRole(user!.role)}/management/users/invite`}
-        />
-        {/* <Button text='application.historyWorker' secondary to={`/${UserService.getSlugByRole(user.role)}/management/workers/history`} /> */}
-      </ButtonsContainer>
+    <Section>
+      <HeaderWithActions
+        actions={
+          <ButtonsContainer>
+            {hasFullAccess && (
+              <Button
+                text="application.addUser"
+                primary
+                to={`/${UserService.getSlugByRole(user!.role)}/management/users/add`}
+              />
+            )}
+            <Button
+              text="application.inviteUser"
+              primary
+              to={`/${UserService.getSlugByRole(user!.role)}/management/users/invite`}
+            />
+            {/* <Button text='application.historyWorker' secondary to={`/${UserService.getSlugByRole(user.role)}/management/workers/history`} /> */}
+          </ButtonsContainer>
+        }
+      >
+        {__('application.usersList')}
+      </HeaderWithActions>
+
       <ApiTable
         scheme={scheme}
         apiEndpointSubUrl={`user/list/${UserType.user}`}

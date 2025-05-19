@@ -17,6 +17,7 @@ import { __ } from '../../../helpers/i18n';
 import { useTenant } from '../../../hooks/useTenant';
 import { FbButton } from './components/FbButton';
 import { AppVersion } from '../../../components/AppVersion';
+import { GoogleButton } from './components/GoogleButton';
 
 export const Login = () => {
   const { tenant } = useTenant();
@@ -34,7 +35,10 @@ export const Login = () => {
 
   const onSubmit = (data: LoginDto) => {
     if(!isValid) return;
-    login(data);
+    login({
+      ...data,
+      email: data.email.trim()
+    });
   };
 
   if (!tenant) return null;
@@ -69,6 +73,7 @@ export const Login = () => {
                 disabled={isPending}
               />
               <FbButton />
+              <GoogleButton />
               {/* <GoogleButton /> */}
               {/* {tenant.rules && tenant.privacy && ( */}
                 <Button

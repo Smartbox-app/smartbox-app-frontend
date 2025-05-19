@@ -21,7 +21,7 @@ const DiscountRow = styled('div')(({ theme }) => ({
   gap: theme.spacing * 2,
 
   flexDirection: 'column',
-  '@media(min-width: 500px)': {
+  '@media(min-width: 768px)': {
     flexDirection: 'row',
     alignItems: 'flex-end',
   }

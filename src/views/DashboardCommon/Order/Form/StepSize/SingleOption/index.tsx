@@ -88,8 +88,15 @@ const StyledImageValue = styled.span`
 const StyledSingleOption = styled('div')({
   flex: 1,
   cursor: 'pointer',
+  whiteSpace: 'nowrap',
   "input[type='radio']": {
     display: 'none',
+  },
+  '@media(min-width: 768px)': {
+    flex: '0 1 calc(50% - 8px)',
+  },
+  '@media(min-width: 800px)': {
+    flex: '0 1 calc(33% - 8px)',
   },
 });
 

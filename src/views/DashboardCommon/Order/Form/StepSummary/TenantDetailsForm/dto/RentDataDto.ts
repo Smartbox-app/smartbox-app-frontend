@@ -56,7 +56,7 @@ export class RentDataDto {
   @IsNotEmpty({
     message: errors.field_required,
   })
-  @IsPhoneNumber('PL', { message: errors.incorrect_phone })
+  @IsPhoneNumber(undefined, { message: errors.incorrect_phone })
   phone: string;
 
   invoiceNeeded: boolean;

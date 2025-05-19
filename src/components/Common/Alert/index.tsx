@@ -34,7 +34,7 @@ const StyledAlert = styled('div')<{ type: AlertTypes }>(({ theme, type }) => ({
   background: getBackgroundByType(type, theme),
   color: theme.colors.text.primary,
   padding: theme.spacing * 4,
-  fontSize: 16,
+  fontSize: '1rem',
   width: '100%'
 }));
 

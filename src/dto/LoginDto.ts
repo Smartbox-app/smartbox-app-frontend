@@ -1,9 +1,9 @@
 import { IsEmail, IsNotEmpty, MinLength } from 'class-validator';
 import { errors } from 'src/validation/errors';
+import { IsCustomEmail } from 'src/validators/IsCustomEmail';
 
 export class LoginDto {
-  @IsEmail(
-    {},
+  @IsCustomEmail(
     {
       message: errors.incorrect_email,
     },

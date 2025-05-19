@@ -11,6 +11,7 @@ const StyledIndicatorOuter = styled('div')<{ selected: boolean }>(
     border: `2px solid ${selected ? theme.colors.primary : theme.colors.border.primary}`,
     padding: theme.spacing / 2,
     borderRadius: '50%',
+    flex: '0 0 auto',
   }),
 );
 

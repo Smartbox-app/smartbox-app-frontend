@@ -31,6 +31,7 @@ import BoxDetail from '../../../../../BoxDetail';
 import { BoxStatus } from './BoxStatus';
 import { AssignRentToUser } from '../../../../../AssignRentToUser';
 import { useGetMyDetailsQuery } from 'src/queries';
+import { HeaderWithActions, Section } from 'src/components/ui';
 
 const List = () => {
   const { data: user } = useGetMyDetailsQuery();
@@ -130,7 +131,7 @@ const List = () => {
       type: FieldType.Custom,
       mobile: true,
       customRender: (value, field, boxData: BoxListRes) => (
-        <>
+        <ButtonsContainer noWrap>
           {stock?.accessControl === AccessControl.ksm && boxData.controlled ? (
             <Button
               text="application.openBox"
@@ -174,30 +175,36 @@ const List = () => {
               />
             </>
           )}
-        </>
+        </ButtonsContainer>
       ),
     });
 
   return (
-    <>
+    <Section>
       {isLoading && <Spinner overlay halfTransparent />}
-      <SimpleHeader title="application.boxesList" />
-      {hasFullAccess && (
-        <ButtonsContainer>
-          <Button
-            text="application.addBox"
-            primary
-            to={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/boxes/add`}
-          />
-          <Button
-            text="application.addBoxes"
-            secondary
-            to={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/boxes/add-multiple`}
-          />
-        </ButtonsContainer>
-      )}
+      <HeaderWithActions
+        actions={
+          hasFullAccess && (
+            <ButtonsContainer>
+              <Button
+                text="application.addBox"
+                primary
+                to={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/boxes/add`}
+              />
+              <Button
+                text="application.addBoxes"
+                secondary
+                to={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/boxes/add-multiple`}
+              />
+            </ButtonsContainer>
+          )
+        }
+      >
+        {__('application.boxesList')}
+      </HeaderWithActions>
+
       <ApiTable scheme={scheme} apiEndpointSubUrl={`box/list/${stockId}`} />
-    </>
+    </Section>
   );
 };
 

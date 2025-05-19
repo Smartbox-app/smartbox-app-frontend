@@ -2,7 +2,12 @@ import React from 'react';
 import { ItfApiForm } from 'itf_formbuilder_react';
 import { useDispatch } from 'react-redux';
 import ReactCreatableSelect from 'react-select/creatable';
-import { ButtonsContainer, FormContainer, Section, SimpleHeader } from '../../../../../../../components/Layout';
+import {
+  ButtonsContainer,
+  FormContainer,
+  Section,
+  SimpleHeader,
+} from '../../../../../../../components/Layout';
 import { Button, Spinner } from '../../../../../../../components/Branded';
 import ApiService from '../../../../../../../services/api-service';
 import { formOnTranslateString } from '../../../../../../../utils/trans-form';
@@ -14,50 +19,66 @@ import { mapFields } from '../../../../../../../utils/fields-mapper';
 import { useParams } from 'react-router';
 import UserService from '../../../../../../../services/user-service';
 import { useGetMyDetailsQuery } from 'src/queries';
-
+import { HeaderWithActions } from 'src/components/ui';
 
 const Add = () => {
-    const dispatch = useDispatch();
-    const { stockGroupId } = useParams<{ stockGroupId: string }>();
+  const dispatch = useDispatch();
+  const { stockGroupId } = useParams<{ stockGroupId: string }>();
 
-      const { data: user } = useGetMyDetailsQuery();
+  const { data: user } = useGetMyDetailsQuery();
 
+  const submitButton = (
+    <ButtonsContainer>
+      <Button text="application.save" type="submit" primary />
+    </ButtonsContainer>
+  );
 
-    const submitButton = (
-        <ButtonsContainer>
-            <Button text="application.save" type="submit" primary />
-        </ButtonsContainer>
-    );
+  const fetchUrl = `gate/form/add-group/${stockGroupId}`;
+  const sendUrl = `gate/admin/group/${stockGroupId}`;
 
-    const fetchUrl = `gate/form/add-group/${stockGroupId}`;
-    const sendUrl = `gate/admin/group/${stockGroupId}`;
+  return (
+    <Section>
+      <HeaderWithActions
+        actions={
+          <ButtonsContainer>
+            <Button
+              to={`/${UserService.getSlugByRole(user!.role)}/locations/groups/${stockGroupId}/gates`}
+              text="application.back"
+              primary
+            />
+          </ButtonsContainer>
+        }
+      >
+        {__('application.addGate')}
+      </HeaderWithActions>
 
-    return (
-        <Section>
-            <SimpleHeader title="application.addGate" />
-            <ButtonsContainer>
-            <Button to={`/${UserService.getSlugByRole(user!.role)}/locations/groups/${stockGroupId}/gates`} text="application.back" primary />
-            </ButtonsContainer>
-            <FormContainer highlight>
-                <ItfApiForm
-                    formId="addGate"
-                    schemaCacheEnabled={false}
-                    schemaMayBeDynamic={true}
-                    loadingInfo={<Spinner transparent />}
-                    schemaFetcher={() => ApiService.loadForm(fetchUrl)}
-                    sendFetcher={(formId: string, values: any) => ApiService.sendForm(sendUrl, values)}
-                    submitButton={submitButton}
-                    onSavedSuccessfully={() => {
-                        dispatch(successNotification('notification.gateAddedCorrectly'));
-                        history.push(`/${UserService.getSlugByRole(user!.role)}/locations/groups/${stockGroupId}/gates`);
-                    }}
-                    onRenderFullField={mapFields}
-                    onTranslateString={formOnTranslateString}
-                    thirdPartyComponents={{ ReactSelect: ReactSelectOverride, ReactCreatableSelect }}
-                />
-            </FormContainer>
-        </Section>
-    );
+      <FormContainer highlight>
+        <ItfApiForm
+          formId="addGate"
+          schemaCacheEnabled={false}
+          schemaMayBeDynamic={true}
+          loadingInfo={<Spinner transparent />}
+          schemaFetcher={() => ApiService.loadForm(fetchUrl)}
+          sendFetcher={(formId: string, values: any) =>
+            ApiService.sendForm(sendUrl, values)
+          }
+          submitButton={submitButton}
+          onSavedSuccessfully={() => {
+            dispatch(successNotification('notification.gateAddedCorrectly'));
+            history.push(
+              `/${UserService.getSlugByRole(user!.role)}/locations/groups/${stockGroupId}/gates`,
+            );
+          }}
+          onRenderFullField={mapFields}
+          onTranslateString={formOnTranslateString}
+          thirdPartyComponents={{
+            ReactSelect: ReactSelectOverride,
+            ReactCreatableSelect,
+          }}
+        />
+      </FormContainer>
+    </Section>
+  );
 };
 
-export { Add }
+export { Add };

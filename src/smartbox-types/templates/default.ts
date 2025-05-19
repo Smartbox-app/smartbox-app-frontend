@@ -12,6 +12,8 @@ Twoje konto zostało pomyślnie założone, teraz możesz wynająć odpowiedni d
 Przedłużyłeś wynajęcie skrytki numer {{number}} do {{rentUntil}} za {{cost}} zł.`,
   [TemplateType.NEW_RENTAL_MAIL]: `Cześć {{name}}!
 Udało się! Wynająłeś domek dla Twoich rzeczy. Masz box o numerze {{number}} od {{rentFrom}} do {{rentUntil}} za {{cost}} zł.`,
+  [TemplateType.RENTAL_EXTENDED_ADMIN_NOTIFICATION_MAIL]: `Użytkownik {{email}} przedłużył wynajęcie skrytki numer {{number}} na placu {{stock}} do {{rentUntil}} za {{cost}} zł.`,
+  [TemplateType.NEW_RENTAL_ADMIN_NOTIFICATION_MAIL]: `Użytkownik {{email}} wynajął skrytkę numer {{number}} na placu {{stock}} od {{rentFrom}} do {{rentUntil}} za {{cost}} zł.`,
   [TemplateType.NO_PAYMENT_EMAIL]: `Cześć {{name}}!
 Nie odnotowaliśmy płatności za kontynuację wynajmu mini magazynu w {{company}}. Aby dokonać opłaty lub zakończyć wynajem zaloguj się do aplikacji, kliknij na swój magazyn i dokonaj wybranej czynności.
 Brak płatności może spowodować zablokowanie dostępu do skrytki.`,

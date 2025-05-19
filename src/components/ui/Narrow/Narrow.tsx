@@ -15,7 +15,7 @@ const StyledWrapper = styled('div')(({ theme }) => ({
   flex: 1,
   height: '100%',
   margin: '0 auto',
-  '@media(min-width: 500px)': {
+  '@media(min-width: 768px)': {
     width: '50%',
   },
 }));

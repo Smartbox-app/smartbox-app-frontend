@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 export type RowProps = {
   children: ReactNode;
+  
 };
 
 const StyledRow = styled("div")(({ theme }) => ({

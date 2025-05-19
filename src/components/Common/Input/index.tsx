@@ -103,8 +103,8 @@ const Input = (props: Props) => {
     return (
       <StyledContainer className={containerClass}>
         <div className="input-wrapper">
-          <InputLabel>
-            {__(props.input.label)} labelFor={props.input.name}
+          <InputLabel labelFor={props.input.name}>
+            {__(props.input.label)}
           </InputLabel>
           <select
             value={props.input.value || '0'}
@@ -127,8 +127,8 @@ const Input = (props: Props) => {
     return (
       <StyledContainer className={containerClass}>
         <div className="input-wrapper">
-          <InputLabel>
-            {__(props.input.label)} labelFor={props.input.name}
+          <InputLabel labelFor={props.input.name}>
+            {__(props.input.label)}
           </InputLabel>
           <textarea
             className={`input input-${props.type} ${errorClass(props.input.errors)}`}
@@ -146,8 +146,8 @@ const Input = (props: Props) => {
   } else if (props.type === 'radio') {
     return (
       <StyledContainer className={containerClass}>
-        <InputLabel>
-          {__(props.input.label)} labelFor={props.input.name}
+        <InputLabel labelFor={props.input.name}>
+          {__(props.input.label)}
         </InputLabel>
         {props.options?.map((option) => (
           <StyledRadioOptionContainer key={option.value}>
@@ -170,8 +170,8 @@ const Input = (props: Props) => {
   } else {
     return (
       <StyledContainer className={containerClass}>
-        <InputLabel>
-          {__(props.input.label)} labelFor={props.input.name}
+        <InputLabel labelFor={props.input.name}>
+          {__(props.input.label)}
         </InputLabel>
         <div className="input-wrapper">
           <input

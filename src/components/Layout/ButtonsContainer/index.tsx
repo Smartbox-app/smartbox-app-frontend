@@ -10,15 +10,27 @@ interface Props {
   className?: string;
   column?: boolean;
   spaceBetween?: boolean;
+  noWrap?: boolean;
 }
 
-const StyledButtonsContainer = styled('div')(({theme}) => ({
-  gap: theme.spacing * 4
-}))
+const StyledButtonsContainer = styled('div')(({ theme }) => ({
+  gap: theme.spacing * 2,
+  '@media(min-width: 768px)': {
+    gap: theme.spacing * 4,
+  },
+}));
 
-const ButtonsContainer = ({ max, children, column, spaceBetween, center, className }: Props) => (
+const ButtonsContainer = ({
+  max,
+  children,
+  noWrap,
+  column,
+  spaceBetween,
+  center,
+  className,
+}: Props) => (
   <StyledButtonsContainer
-    className={`buttons-container ${max ? 'max' : ''} ${center ? 'center' : ''} ${column ? 'column' : ''} ${
+    className={`buttons-container ${max ? 'max' : ''} ${noWrap ? 'no-wrap' : ''} ${center ? 'center' : ''} ${column ? 'column' : ''} ${
       spaceBetween ? 'space-between' : ''
     } ${className || ''}`}
   >

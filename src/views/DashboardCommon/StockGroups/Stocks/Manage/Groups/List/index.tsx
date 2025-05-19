@@ -19,6 +19,7 @@ import { refreshApiTableData } from '../../../../../../../actions/api-table';
 import { useParams } from 'react-router';
 import { Edit } from '../Edit';
 import { useGetMyDetailsQuery } from 'src/queries';
+import { HeaderWithActions, Section } from 'src/components/ui';
 
 const List = () => {
   const { data: user } = useGetMyDetailsQuery();
@@ -85,20 +86,26 @@ const List = () => {
     });
 
   return (
-    <>
-      <SimpleHeader title="application.boxGroupsList" />
-      <ButtonsContainer>
-        <Button
-          text="application.addBoxGroup"
-          primary
-          to={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/groups/add`}
-        />
-      </ButtonsContainer>
+    <Section>
+      <HeaderWithActions
+        actions={
+          <ButtonsContainer>
+            <Button
+              text="application.addBoxGroup"
+              primary
+              to={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/groups/add`}
+            />
+          </ButtonsContainer>
+        }
+      >
+        {__('application.boxGroupsList')}
+      </HeaderWithActions>
+
       <ApiTable
         scheme={scheme}
         apiEndpointSubUrl={`box-group-new/list/${stockId}`}
       />
-    </>
+    </Section>
   );
 };
 

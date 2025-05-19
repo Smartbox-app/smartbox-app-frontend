@@ -2,6 +2,7 @@ import React from 'react';
 
 import './FormHeader.scss';
 import {__} from "../../../helpers/i18n";
+import { Header } from 'src/components/ui';
 
 interface Props {
   title: string;
@@ -9,11 +10,7 @@ interface Props {
 }
 
 const FormHeader = ({ title, noMargin }: Props) => (
-  <div className="form-header-container">
-    <div className="form-header">
-      <h2 className={`${noMargin ? 'no-margin' : ''}`}>{__(title)}</h2>
-    </div>
-  </div>
+  <Header variant='h2'>{__(title)}</Header>
 );
 
 export default FormHeader;

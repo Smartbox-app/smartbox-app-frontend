@@ -5,23 +5,29 @@ import { useTenant } from '../../../hooks/useTenant';
 import ApiService from '../../../services/api-service';
 import './PageContent.scss';
 import { Container } from '../../ui';
+import { useLocation } from 'react-router';
 
 interface Props {
   children: React.ReactNode;
   bg?: boolean;
+  noPadding?: boolean;
+  conditionalBg?: boolean;
 }
 
-const StyledPageContent = styled.div<{ background: string }>`
-  background-image: url(${(props) => props.background});
-  background-size: cover;
-  background-position: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
+const StyledPageContent = styled('div')<{ background: string | null }>(
+  ({ background }) => ({
+    backgroundImage: background ? `url(${background})` : undefined,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  }),
+);
 
-const PageContent = ({ children, bg }: Props) => {
+const PageContent = ({ children, bg, noPadding, conditionalBg }: Props) => {
   const { tenant } = useTenant();
+  const location = useLocation();
 
   const getTenantBackgroundPath = useCallback(
     (tenant: TenantForUsers) => {
@@ -31,12 +37,16 @@ const PageContent = ({ children, bg }: Props) => {
     [tenant],
   );
 
-  if (!tenant) return null;
+  const showConditionalBg = conditionalBg
+    ? location.pathname.includes('order')
+    : false;
+
+    if (!tenant) return null;
 
   return (
     <StyledPageContent
-      background={getTenantBackgroundPath(tenant)}
-      className={`page-content ${bg ? 'bg' : ''}`}
+      background={bg || showConditionalBg ? getTenantBackgroundPath(tenant) : null}
+      className={`page-content ${bg || showConditionalBg ? 'bg' : ''} ${noPadding ? 'no-padding' : ''}`}
     >
       <Container>{children}</Container>
     </StyledPageContent>

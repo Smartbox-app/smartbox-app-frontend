@@ -12,6 +12,10 @@
     align-items: center;
   }
 
+  &.no-wrap {
+    flex-wrap: nowrap;
+  }
+
   &.max {
     justify-content: stretch;
     .button {

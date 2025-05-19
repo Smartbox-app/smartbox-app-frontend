@@ -1,8 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Switch, Route, Redirect } from 'react-router';
-import { Tabs } from '../../../components/Branded';
-import { Section } from '../../../components/Layout';
 import { ApplicationState } from '../../../reducers';
 import UserService from '../../../services/user-service';
 
@@ -14,6 +12,16 @@ import SMS from '../../DashboardCommon/SMS';
 import { TemplatesManagement } from '../Templates';
 import WorkersManagement from '../../DashboardCommon/WorkersManagement';
 import { useGetMyDetailsQuery } from 'src/queries';
+import { SingleTab } from 'src/types/tab';
+import {
+  Adjustments,
+  Invitations,
+  Message,
+  Templates,
+  Users,
+  Workers,
+} from 'src/icons';
+import { Section, Tabs } from 'src/components/ui';
 
 const Management = () => {
   const { data: user } = useGetMyDetailsQuery();
@@ -37,26 +45,31 @@ const Management = () => {
   if (!user) return null;
 
   const getTabs = () => {
-    const tabs = [
+    const tabs: SingleTab[] = [
       {
         to: `/${UserService.getSlugByRole(user.role)}/management/users/list`,
         text: 'application.users',
+        icon: <Users />,
       },
       {
         to: `/${UserService.getSlugByRole(user.role)}/management/workers`,
         text: 'application.workers',
+        icon: <Workers />,
       },
       {
         to: `/${UserService.getSlugByRole(user.role)}/management/invitations`,
         text: 'application.invitations',
+        icon: <Invitations />,
       },
       {
         to: `/${UserService.getSlugByRole(user.role)}/management/settings`,
         text: 'application.settings',
+        icon: <Adjustments />,
       },
       {
         to: `/${UserService.getSlugByRole(user.role)}/management/templates`,
         text: 'application.templates',
+        icon: <Templates />,
       },
     ];
 
@@ -64,14 +77,17 @@ const Management = () => {
       tabs.push({
         to: `/${UserService.getSlugByRole(user.role)}/management/sms`,
         text: 'application.sendSms',
+        icon: <Message />,
       });
     }
 
     return tabs;
   };
   return (
-    <Section full>
-      <Tabs tabs={getTabs()} />
+    <>
+      <Section>
+        <Tabs tabs={getTabs()} />
+      </Section>
 
       <Switch>
         <Route
@@ -108,7 +124,7 @@ const Management = () => {
           component={SMS}
         />
       </Switch>
-    </Section>
+    </>
   );
 };
 

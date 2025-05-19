@@ -9,7 +9,7 @@ const StyledButton = styled(Button)({
   backgroundColor: '#4267b2',
   '&:hover': {
     backgroundColor: lighten(0.2, '#4267b2'),
-  }
+  },
 });
 
 export const FbButton = () => {
@@ -24,6 +24,7 @@ export const FbButton = () => {
 
   return (
     <StyledButton
+      type="button"
       size="large"
       iconLeft={<span className="fa fa-facebook" />}
       onClick={goToFbLogin}

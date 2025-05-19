@@ -81,12 +81,15 @@ const SingleRentDetail = ({ showUserStockMap, match }: Props) => {
           <>
             <Details singleRent={singleRent} />
           </>
-        ) : null}
+        ) : (
+          <UserStockMap
+            boxId={singleRent.boxId}
+            boxNumber={singleRent.boxNumber}
+            boxAdditionalInfo={singleRent.boxAdditionalInfo}
+            stockId={singleRent.stockId}
+          />
+        )}
       </Section>
-
-      {!showUserStockMap ? (
-          <Description description={singleRent.description} rent={singleRent} />
-      ) : null}
 
       {displayAccess ? (
         <Section>
@@ -102,14 +105,8 @@ const SingleRentDetail = ({ showUserStockMap, match }: Props) => {
           )}
         </Section>
       ) : null}
-
-      {showUserStockMap ? (
-        <UserStockMap
-          boxId={singleRent.boxId}
-          boxNumber={singleRent.boxNumber}
-          boxAdditionalInfo={singleRent.boxAdditionalInfo}
-          stockId={singleRent.stockId}
-        />
+      {!showUserStockMap ? (
+        <Description description={singleRent.description} rent={singleRent} />
       ) : null}
     </>
   );

@@ -1,35 +1,41 @@
-import React from "react";
-import { Redirect, Route, Switch } from "react-router";
-import UserService from "../../../services/user-service";
-import { Tabs } from "../../../components/Branded";
-import { Add } from "./Stocks/Add";
-import { List } from "./Stocks/List";
-import { Manage } from "./Stocks/Manage";
-import { Section } from "../../../components/Layout";
-import { GroupsList } from "./Groups/List";
-import { Add as AddGroup } from "./Groups/Add";
-import { ManageGroup } from "./Groups/Manage";
-import { UserRole } from "smartbox-types";
-import { useGetMyDetailsQuery } from "src/queries";
+import React from 'react';
+import { Redirect, Route, Switch } from 'react-router';
+import UserService from '../../../services/user-service';
+
+import { Add } from './Stocks/Add';
+import { List } from './Stocks/List';
+import { Manage } from './Stocks/Manage';
+
+import { GroupsList } from './Groups/List';
+import { Add as AddGroup } from './Groups/Add';
+import { ManageGroup } from './Groups/Manage';
+import { UserRole } from 'smartbox-types';
+import { useGetMyDetailsQuery } from 'src/queries';
+import { Section, Tabs } from 'src/components/ui';
+import { Stocks, Stocks2 } from 'src/icons';
 
 const StockGroups = () => {
-    const { data: user } = useGetMyDetailsQuery();
+  const { data: user } = useGetMyDetailsQuery();
   const hasFullAccess = [UserRole.admin, UserRole.client].includes(user!.role);
 
   return (
-    <Section full>
-      <Tabs
-        tabs={[
-          {
-            to: `/${UserService.getSlugByRole(user!.role)}/locations/stocks`,
-            text: "application.stocks",
-          },
-          {
-            to: `/${UserService.getSlugByRole(user!.role)}/locations/groups`,
-            text: "application.stockGroups",
-          },
-        ]}
-      />
+    <>
+      <Section>
+        <Tabs
+          tabs={[
+            {
+              to: `/${UserService.getSlugByRole(user!.role)}/locations/stocks`,
+              text: 'application.stocks',
+              icon: <Stocks2 />,
+            },
+            {
+              to: `/${UserService.getSlugByRole(user!.role)}/locations/groups`,
+              text: 'application.stockGroups',
+              icon: <Stocks />,
+            },
+          ]}
+        />
+      </Section>
       <Switch>
         <Route
           exact
@@ -87,7 +93,7 @@ const StockGroups = () => {
           component={Manage}
         />
       </Switch>
-    </Section>
+    </>
   );
 };
 

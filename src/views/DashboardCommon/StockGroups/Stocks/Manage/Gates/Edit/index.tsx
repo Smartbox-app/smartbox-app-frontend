@@ -16,7 +16,7 @@ import { useParams } from 'react-router';
 import { mapFields } from '../../../../../../../utils/fields-mapper';
 import UserService from '../../../../../../../services/user-service';
 import { useGetMyDetailsQuery } from 'src/queries';
-import { PageHeader, Section } from 'src/components/ui';
+import { HeaderWithActions, PageHeader, Section } from 'src/components/ui';
 
 const Edit = () => {
   const dispatch = useDispatch();
@@ -34,45 +34,47 @@ const Edit = () => {
   const sendUrl = `gate/admin/${gateId}`;
 
   return (
-    <>
-      <PageHeader>{__('application.editGate')}</PageHeader>
-      <Section>
-        <ButtonsContainer>
-          <Button
-            to={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/gates`}
-            text="application.back"
-            primary
-          />
-        </ButtonsContainer>
-        <FormContainer highlight>
-          <ItfApiForm
-            formId="editGate"
-            schemaCacheEnabled={false}
-            schemaMayBeDynamic={true}
-            loadingInfo={<Spinner transparent />}
-            schemaFetcher={() => ApiService.loadForm(fetchUrl)}
-            sendFetcher={(formId: string, values: any) =>
-              ApiService.sendForm(sendUrl, values, 'PATCH')
-            }
-            submitButton={submitButton}
-            onSavedSuccessfully={() => {
-              dispatch(
-                successNotification('notification.gateUpdatedCorrectly'),
-              );
-              history.push(
-                `/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/gates`,
-              );
-            }}
-            onRenderFullField={mapFields}
-            onTranslateString={formOnTranslateString}
-            thirdPartyComponents={{
-              ReactSelect: ReactSelectOverride,
-              ReactCreatableSelect,
-            }}
-          />
-        </FormContainer>
-      </Section>
-    </>
+    <Section>
+      <HeaderWithActions
+        actions={
+          <ButtonsContainer>
+            <Button
+              to={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/gates`}
+              text="application.back"
+              primary
+            />
+          </ButtonsContainer>
+        }
+      >
+        {__('application.editGate')}
+      </HeaderWithActions>
+
+      <FormContainer highlight>
+        <ItfApiForm
+          formId="editGate"
+          schemaCacheEnabled={false}
+          schemaMayBeDynamic={true}
+          loadingInfo={<Spinner transparent />}
+          schemaFetcher={() => ApiService.loadForm(fetchUrl)}
+          sendFetcher={(formId: string, values: any) =>
+            ApiService.sendForm(sendUrl, values, 'PATCH')
+          }
+          submitButton={submitButton}
+          onSavedSuccessfully={() => {
+            dispatch(successNotification('notification.gateUpdatedCorrectly'));
+            history.push(
+              `/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/gates`,
+            );
+          }}
+          onRenderFullField={mapFields}
+          onTranslateString={formOnTranslateString}
+          thirdPartyComponents={{
+            ReactSelect: ReactSelectOverride,
+            ReactCreatableSelect,
+          }}
+        />
+      </FormContainer>
+    </Section>
   );
 };
 

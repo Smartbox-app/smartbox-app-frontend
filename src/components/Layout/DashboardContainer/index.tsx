@@ -3,6 +3,7 @@ import { Footer } from '../index';
 import './DashboardContainer.scss';
 import { Container } from '../../ui';
 import styled from 'styled-components';
+import { PageContent } from 'src/components/Branded';
 
 interface Props {
   children: React.ReactNode;
@@ -13,16 +14,19 @@ const StyledDashboardContainer = styled('div')(({ theme }) => ({
   flexDirection: 'column',
   gap: theme.spacing * 4,
   width: '100%',
-  minHeight: '100vh',
+  paddingBottom: theme.spacing * 24,
+  '@media(min-width: 768px)': {
+    paddingBottom: 0,
+  }
 }));
 
 export const DashboardContainer = ({ children }: Props) => {
   return (
-    <Container>
-      <StyledDashboardContainer>
-        {children}
-        <Footer />
-      </StyledDashboardContainer>
-    </Container>
+    <PageContent noPadding conditionalBg>
+        <StyledDashboardContainer>
+          {children}
+          <Footer />
+        </StyledDashboardContainer>
+    </PageContent>
   );
 };

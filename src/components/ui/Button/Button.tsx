@@ -1,11 +1,16 @@
 import { Link } from 'react-router-dom';
 import { getColorForBackground } from '../../../utils/color';
-import styled, { css, DefaultTheme } from 'styled-components';
+import styled, { css, DefaultTheme, keyframes } from 'styled-components';
 import { __ } from '../../../helpers/i18n';
 import { darken } from 'polished';
-import { ReactNode } from 'react';
+import React, {
+  MouseEventHandler,
+  ReactNode,
+  useEffect,
+  useState,
+} from 'react';
 
-type ButtonTypes = 'primary' | 'secondary' | 'tertiary' | 'error';
+type ButtonTypes = 'primary' | 'secondary' | 'tertiary' | 'error' | 'success';
 type ButtonSizes = 'large' | 'medium' | 'small' | 'extrasmall';
 
 export type ButtonProps = {
@@ -20,7 +25,7 @@ export type ButtonProps = {
   iconLeft?: ReactNode;
   iconRight?: ReactNode;
   className?: string;
-  onClick?: () => void;
+  onClick?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 };
 
 const paddingMultiplierBySize = {
@@ -51,16 +56,30 @@ const heightBySize = {
   extrasmall: 6,
 };
 
+const clickAnimation = keyframes`
+0% {
+transform: scale(1);
+}
+50% {
+transform: scale(0.5);
+}
+100% {
+transform: scale(1);
+}
+
+`;
+
 const getColorByVariant = (variant: ButtonTypes, theme: DefaultTheme) => {
   if (variant === 'primary') return theme.colors.primary;
   if (variant === 'secondary') return theme.colors.background.primary;
   if (variant === 'error') return theme.colors.surface.error.primary;
+  if (variant === 'success') return theme.colors.surface.success.primary;
   return 'transparent';
 };
 
 const getTextColorByVariant = (variant: ButtonTypes, theme: DefaultTheme) => {
   if (variant === 'error') return theme.colors.background.primary;
-  return getColorForBackground(getColorByVariant(variant, theme))
+  return getColorForBackground(getColorByVariant(variant, theme));
 };
 
 const getBorderByVariant = (variant: ButtonTypes, theme: DefaultTheme) => {
@@ -84,10 +103,11 @@ type ButtonStyleProps = {
   size: ButtonSizes;
   disabled?: boolean;
   fullWidth?: boolean;
+  clicked?: boolean;
 };
 
 const buttonStyles = css<ButtonStyleProps>(
-  ({ theme, variant, size, fullWidth, disabled }) => ({
+  ({ theme, variant, size, fullWidth, disabled, clicked }) => ({
     display: 'flex',
     alignItems: 'center',
     gap: theme.spacing * 2,
@@ -108,7 +128,8 @@ const buttonStyles = css<ButtonStyleProps>(
     boxShadow: theme.shadows.primary,
     justifyContent: 'center',
     cursor: disabled ? 'not-allowed' : 'pointer',
-    transition: '.3s all',
+    transition: '.3s all, .15s transform',
+    transform: clicked ? 'scale(0.6)' : 'scale(1)',
     '&:link': {
       color: getColorForBackground(getColorByVariant(variant, theme)),
     },
@@ -127,7 +148,7 @@ const buttonStyles = css<ButtonStyleProps>(
       border: 'none',
       svg: {
         fill: theme.colors.text.disable,
-      }
+      },
     },
   }),
 );
@@ -154,12 +175,37 @@ export const Button = ({
   text,
   className,
 }: ButtonProps) => {
+  const [clicked, setClicked] = useState(false);
+
+  const handleButtonClick = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+  ) => {
+    setClicked(true);
+
+    setTimeout(() => {
+      if (onClick) onClick(e);
+    }, 150);
+  };
+
+  const handleLinkClick = (
+    e: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
+  ) => {
+    setClicked(true);
+  };
+
+  useEffect(() => {
+    if (!clicked) return;
+
+    setTimeout(() => {
+      setClicked(false);
+    }, 100);
+  }, [clicked]);
+
   if (disabled)
     return (
       <StyledButton
         className={className}
         type={type}
-        onClick={onClick}
         variant={variant}
         fullWidth={fullWidth}
         size={size}
@@ -178,8 +224,10 @@ export const Button = ({
         href={href}
         variant={variant}
         fullWidth={fullWidth}
+        onClick={handleLinkClick}
         size={size}
         disabled={disabled}
+        clicked={clicked}
       >
         {iconLeft || <span />}
         {text ? __(text) : null}
@@ -192,10 +240,12 @@ export const Button = ({
       <StyledLink
         className={className}
         to={to}
+        onClick={handleLinkClick}
         variant={variant}
         fullWidth={fullWidth}
         size={size}
         disabled={disabled}
+        clicked={clicked}
       >
         {iconLeft || <span />}
         {text ? __(text) : null}
@@ -208,9 +258,10 @@ export const Button = ({
     <StyledButton
       className={className}
       type={type}
-      onClick={onClick}
       variant={variant}
       fullWidth={fullWidth}
+      onClick={handleButtonClick}
+      clicked={clicked}
       size={size}
       disabled={disabled}
     >

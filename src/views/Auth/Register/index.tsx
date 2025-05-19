@@ -34,8 +34,9 @@ const RegisterForm = styled('div')(({ theme }) => ({
   width: '100%',
   display: 'flex',
   gap: theme.spacing * 4,
+  flexWrap: 'wrap',
 
-  '@media(min-width: 500px)': {
+  '@media(min-width: 768px)': {
     display: 'grid',
     gridTemplateColumns: '1fr 1fr',
   },
@@ -67,11 +68,14 @@ const Register = () => {
 
   const onSubmit = (data: RegisterDto) => {
     if (!isValid) return;
-    registerUser(data);
+    registerUser({
+      ...data,
+      email: data.email.trim(),
+      phone: data.phone.trim()
+    });
   };
 
   useEffect(() => {
-    console.log('test1', data, isSuccess);
     if (!data || !isSuccess) return;
     dispatch(modal.showModal(<AccountRegisteredModal />));
     dispatch(
@@ -104,6 +108,7 @@ const Register = () => {
                   label="auth.phone"
                   placeholder="auth.phone_placeholder"
                   error={errors['phone']?.message}
+                  help='Podaj numer telefonu wraz z numerem kierunkowym (np. +48)'
                   {...register('phone')}
                 />
                 <Input

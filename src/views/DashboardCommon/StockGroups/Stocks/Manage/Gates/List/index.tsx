@@ -19,6 +19,7 @@ import { useParams } from 'react-router';
 import UserService from '../../../../../../../services/user-service';
 import { gate } from '../../../../../../../actions';
 import { useGetMyDetailsQuery } from 'src/queries';
+import { HeaderWithActions } from 'src/components/ui';
 
 const List = () => {
   const { data: user } = useGetMyDetailsQuery();
@@ -80,17 +81,23 @@ const List = () => {
   };
 
   return (
-    <Section full>
-      <SimpleHeader title="application.gatesList" />
-      {hasFullAccess && (
-        <ButtonsContainer>
-          <Button
-            text="application.addGate"
-            primary
-            to={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/gates/add`}
-          />
-        </ButtonsContainer>
-      )}
+    <Section>
+      <HeaderWithActions
+        actions={
+          hasFullAccess && (
+            <ButtonsContainer>
+              <Button
+                text="application.addGate"
+                primary
+                to={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/gates/add`}
+              />
+            </ButtonsContainer>
+          )
+        }
+      >
+        {__('application.gatesList')}
+      </HeaderWithActions>
+
       <ApiTable
         scheme={scheme}
         apiEndpointSubUrl={`gate/list/stock/${stockId}`}

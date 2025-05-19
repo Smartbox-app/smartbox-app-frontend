@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 export type StackProps = {
   children: ReactNode;
+  className?: string;
 };
 
 const StyledStack = styled("div")(({ theme }) => ({
@@ -13,6 +14,6 @@ const StyledStack = styled("div")(({ theme }) => ({
   flex: 1,
 }));
 
-export const Stack = ({ children }: StackProps) => {
-  return <StyledStack>{children}</StyledStack>;
+export const Stack = ({ children, className }: StackProps) => {
+  return <StyledStack className={className}>{children}</StyledStack>;
 };

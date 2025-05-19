@@ -9,10 +9,10 @@ import {
   ValidateIf,
 } from 'class-validator';
 import { errors } from 'src/validation/errors';
+import { IsCustomEmail } from 'src/validators/IsCustomEmail';
 
 export class RegisterDto {
-  @IsEmail(
-    {},
+  @IsCustomEmail(
     {
       message: errors.incorrect_email,
     },
@@ -35,7 +35,7 @@ export class RegisterDto {
   @IsNotEmpty({
     message: errors.field_required,
   })
-  @IsPhoneNumber('PL', { message: errors.incorrect_phone })
+  @IsPhoneNumber(undefined, { message: errors.incorrect_phone })
   phone: string;
 
   @IsNotEmpty({

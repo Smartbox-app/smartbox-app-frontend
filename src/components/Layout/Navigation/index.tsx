@@ -24,7 +24,7 @@ const StyledNavigationContainer = styled('div')(({ theme }) => ({
   boxShadow: '0 5px 10px 0 rgba(1, 18, 34, 0.62)',
   padding: theme.spacing,
   zIndex: 100,
-  '@media(min-width: 500px)': {
+  '@media(min-width: 768px)': {
     position: 'relative',
     gap: theme.spacing * 2,
     background: 'transparent',
@@ -39,7 +39,7 @@ const StyledNavigation = styled('nav')(({ theme }) => ({
   justifyContent: 'space-between',
   gap: theme.spacing * 2,
   width: '100%',
-  '@media(min-width: 500px)': {
+  '@media(min-width: 768px)': {
     justifyContent: 'flex-end',
   },
 }));

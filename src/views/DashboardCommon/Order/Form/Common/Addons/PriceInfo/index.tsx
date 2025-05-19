@@ -39,6 +39,16 @@ const formatQuantity = (type: AddonPricingType, quantity: number) => {
       return 'miesiąc';
     }
 
+    case AddonPricingType.Quarter: {
+      if (quantity >= 5) return 'kwartałów';
+      if (quantity > 1) return 'kwartały';
+      return 'kwartał';
+    }
+
+    case AddonPricingType.HalfYear: {
+      return 'pół roku';
+    }
+
     case AddonPricingType.Year: {
       if (quantity >= 5) return 'lat';
       if (quantity > 1) return 'lata';

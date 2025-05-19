@@ -345,6 +345,14 @@
             "76": {
                 "text": "Nie można zwolnić skrytki z płatnością w trakcie!",
                 "__type_alias_do_not_touch": "ApiErrorCode.CantFreeBoxWithPendingPayment"
+            },
+            "77": {
+                "text": "Okres większy niż jedna połowa roku jest niedozwolony!",
+                "__type_alias_do_not_touch": "ApiErrorCode.PeriodMax1HalfYear"
+            },
+            "78": {
+                "text": "Okres większy niż dwa kwartały jest niedozwolony!",
+                "__type_alias_do_not_touch": "ApiErrorCode.PeriodMax2Quarters"
             }
         }
     }

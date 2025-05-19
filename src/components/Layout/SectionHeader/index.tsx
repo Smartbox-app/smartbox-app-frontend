@@ -1,5 +1,4 @@
-import React from 'react';
-import './SectionHeader.scss';
+import { Header as UIHeader } from 'src/components/ui';
 import { __ } from '../../../helpers/i18n';
 
 interface Props {
@@ -8,11 +7,7 @@ interface Props {
 }
 
 const SectionHeader = ({ title, noMargin }: Props) => (
-  <div className={`section-header-container ${noMargin ? 'no-margin' : ''}`}>
-    <div className="section-header">
-      <h3 className={`${noMargin ? 'no-margin' : ''}`}>{__(title)}</h3>
-    </div>
-  </div>
+  <UIHeader variant="h2">{__(title)}</UIHeader>
 );
 
 export default SectionHeader;

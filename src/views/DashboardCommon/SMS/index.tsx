@@ -30,7 +30,7 @@ const SMS = ({ successNotification }: Props) => {
   const customSendFetcher = (formId: string, values: DiscountReq) => ApiService.sendForm(sendUrl, values, 'POST');
 
   return (
-    <Section full>
+ <>
       <PageHeader title="application.sendSms" />
       <FormContainer highlight>
         <FieldsColumn>
@@ -51,7 +51,7 @@ const SMS = ({ successNotification }: Props) => {
           />
         </FieldsColumn>
       </FormContainer>
-    </Section>
+    </>
   );
 };
 

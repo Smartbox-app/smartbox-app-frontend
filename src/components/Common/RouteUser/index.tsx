@@ -23,7 +23,6 @@ const RouteUser = ({
   getStockGroupsList,
 }: Props) => {
   const { data: user } = useGetMyDetailsQuery();
-console.log('HERE', user);
   useEffect(() => {
     getStockList();
     getStockGroupsList();

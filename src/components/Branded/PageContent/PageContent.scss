@@ -17,18 +17,24 @@
     background-size: cover;
     background-position: center;
   }
+
+  @include gt-xs {
+
+      padding: $main-spacing * 2 $main-spacing * 2;
+      @include safe-padding-bottom($main-spacing * 2);
+      @include safe-padding-top($main-spacing * 2);
+    
+  }
+  
+  @include gt-sm {
+
+      padding: $main-spacing $main-spacing * 3;
+    
+  }
+
+  &.no-padding {
+    padding: 0;
+  }
+  
 }
 
-@include gt-xs {
-  .page-content {
-    padding: $main-spacing * 2 $main-spacing * 2;
-    @include safe-padding-bottom($main-spacing * 2);
-    @include safe-padding-top($main-spacing * 2);
-  }
-}
-
-@include gt-sm {
-  .page-content {
-    padding: $main-spacing $main-spacing * 3;
-  }
-}

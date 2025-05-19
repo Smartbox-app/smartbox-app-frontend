@@ -169,7 +169,7 @@ textarea {
   line-height: 25px;
   font-size: 14px;
   display: inline-block;
-  padding-left: 2rem;
+  padding-left: 2.5rem;
 }
 
 [type='checkbox']:checked + label:before,
@@ -189,15 +189,20 @@ border-radius: 4px;
 
 [type='checkbox']:checked + label:after,
 [type='checkbox']:not(:checked) + label:after {
-  content: '✓';
+  content: '';
   width: 24px;
   height:24px;
 display: flex;
 align-items: center;
 justify-content: center;
   position: absolute;
-  top: 0px;
+  top: 50%;
+  transform: translateY(-50%);
   left: 0px;
+}
+
+[type='checkbox']:checked + label:after {
+  content: '✓';
 }
 
 

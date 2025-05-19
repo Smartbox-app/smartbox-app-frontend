@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { PageHeader } from 'src/components/ui';
+import { Header, PageHeader, Section } from 'src/components/ui';
 import { SingleTemplate } from './SingleTemplate';
 import { TemplateEntity, TemplateType } from 'smartbox-types';
 import ApiService from '../../../../services/api-service';
@@ -20,6 +20,8 @@ const emailTemplates = [
   TemplateType.RENTAL_ENDS_IN_3_DAYS_EMAIL,
   TemplateType.RENTAL_ENDS_TODAY_EMAIL,
   TemplateType.PERIOD_PAYMENT_EMAIL,
+  TemplateType.NEW_RENTAL_ADMIN_NOTIFICATION_MAIL,
+  TemplateType.RENTAL_EXTENDED_ADMIN_NOTIFICATION_MAIL
 ];
 
 const smsTemplates = [
@@ -64,14 +66,15 @@ export const List = () => {
   }, []);
 
   return (
-    <>
-      <PageHeader>{__('application.templatesList')}</PageHeader>
+    <Section>
+      <Header variant="h2">{__('application.templatesList')}</Header>
       {isLoading && <Spinner overlay />}
       {!isLoading && (
         <>
           <ul>
-            {emailTemplates.map((template) => (
+            {emailTemplates.map((template, index) => (
               <SingleTemplate
+                index={index}
                 key={template}
                 type="email"
                 template={template}
@@ -80,8 +83,9 @@ export const List = () => {
             ))}
           </ul>
           <ul>
-            {smsTemplates.map((template) => (
+            {smsTemplates.map((template, index) => (
               <SingleTemplate
+                index={index}
                 key={template}
                 type="sms"
                 template={template}
@@ -91,6 +95,6 @@ export const List = () => {
           </ul>
         </>
       )}
-    </>
+    </Section>
   );
 };
