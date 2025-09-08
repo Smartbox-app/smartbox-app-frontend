@@ -19,9 +19,12 @@ import {
 import { Button } from '../../../../../components/Branded';
 import { useGetMyDetailsQuery } from 'src/queries';
 import { HeaderWithActions } from 'src/components/ui';
+import { useTenantNaming } from 'src/hooks/useTenantNaming';
 
 const GroupsList = () => {
   const dispatch = useDispatch();
+  const {getText} = useTenantNaming();
+
   const scheme = new InteractiveTableSchema(stockGroupsList);
   const { data: user } = useGetMyDetailsQuery();
 
@@ -54,7 +57,7 @@ const GroupsList = () => {
     dispatch(
       showModal(
         <ConfirmModal
-          mainText="application.confirmStockGroupDelete"
+          mainText={getText('confirm_group_delete')}
           approveButtonText="application.yes"
           approveAction={() => deleteStockGroup(data)}
         />,
@@ -64,7 +67,7 @@ const GroupsList = () => {
 
   const deleteStockGroup = async (data: StockGroupData) => {
     await ApiService.callFetch('DELETE', `stock-group/${data.id}`, () => {
-      dispatch(successNotification('application.stockGroupDeleted'));
+      dispatch(successNotification(getText('group_deleted')));
       dispatch(refreshApiTableData());
     });
   };
@@ -76,7 +79,7 @@ const GroupsList = () => {
           hasFullAccess && (
             <ButtonsContainer>
               <Button
-                text="application.addStockGroup"
+                text={getText('add_group')}
                 primary
                 to={`/${UserService.getSlugByRole(user!.role)}/locations/groups/add`}
               />
@@ -84,7 +87,7 @@ const GroupsList = () => {
           )
         }
       >
-        {__('application.stockGroupsList')}
+        {getText('group_list')}
       </HeaderWithActions>
 
       <ApiTable scheme={scheme} apiEndpointSubUrl={`stock-group/admin-list`} />

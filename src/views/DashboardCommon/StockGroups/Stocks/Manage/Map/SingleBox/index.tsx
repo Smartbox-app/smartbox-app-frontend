@@ -1,9 +1,11 @@
-import { BoxMapRes, BoxMapUserRes, IStock, RentStatus } from "smartbox-types";
-import ApiService from "../../../../../../../services/api-service";
-import styled, { css } from "styled-components";
-import { Rnd } from "react-rnd";
-import { colorOrDark } from "../../../../../../../utils/color";
-import { useRef, useState } from "react";
+import { BoxMapRes, BoxMapUserRes, IStock, RentStatus } from 'smartbox-types';
+import ApiService from '../../../../../../../services/api-service';
+import styled, { css } from 'styled-components';
+import { Rnd } from 'react-rnd';
+import Moveable from 'react-moveable';
+import { colorOrDark } from '../../../../../../../utils/color';
+import { CSSProperties, useEffect, useRef, useState } from 'react';
+import { flushSync } from 'react-dom';
 
 interface Props {
   box: BoxMapRes | BoxMapUserRes;
@@ -23,11 +25,11 @@ const commonStyles = css`
   cursor: pointer;
 `;
 
-const StyledDraggableBox = styled<typeof Rnd>(Rnd)`
+const StyledDraggableBox = styled<typeof Moveable>(Moveable)`
   ${commonStyles}
 `;
 
-const StyledDraggableContent = styled("div")`
+const StyledDraggableContent = styled('div')`
   background: #fff;
   border: 1px solid ${(props) => props.theme.colors.primary};
   width: 100%;
@@ -35,6 +37,7 @@ const StyledDraggableContent = styled("div")`
   display: flex;
   align-items: center;
   justify-content: center;
+  pointer-events: none;
 `;
 
 const StyledBox = styled.div<{
@@ -81,6 +84,11 @@ ${(props) =>
     props.status === RentStatus.noPaidExtension &&
     css`
       background-color: ${props.stock.colorNoPaidExtension};
+    `};
+  ${(props) =>
+    props.status === RentStatus.noPaidPeriod &&
+    css`
+      background-color: ${props.stock.colorNoPaidPeriod};
     `};
   ${(props) =>
     props.status === RentStatus.noPaidExtensionWithWarning &&
@@ -135,11 +143,19 @@ const SingleBox = ({
   useGrid,
   onBoxClick,
 }: Props) => {
-  const ref = useRef();
+  const ref = useRef<Moveable>(null);
+  const boxRef = useRef<HTMLDivElement>(null);
   const [rotation, setRotation] = useState<number>(box.rotation || 0);
-  const normalizePosition = (position: number) => {
+  const [target, setTarget] = useState<HTMLDivElement | null>(null);
+  const normalizePosition = (position: number, rotation: number) => {
+    if (rotation !== 0) return position;
+
     const rest = position % 5;
     return rest > 2 ? position + (5 - rest) : position - rest;
+  };
+
+  const style: CSSProperties = {
+    position: 'absolute',
   };
 
   const normalizeWidth = (box: BoxMapRes | BoxMapUserRes) => {
@@ -158,43 +174,70 @@ const SingleBox = ({
 
   const updatePosition = async (x: number, y: number) => {
     await ApiService.callFetch(
-      "PATCH",
+      'PATCH',
       `box/position/${box.id}`,
       () => {},
       null,
-      { x, y }
+      { x, y },
     );
   };
 
   const updateRotation = async (rotation: number) => {
     await ApiService.callFetch(
-      "PATCH",
+      'PATCH',
       `box/rotation/${box.id}`,
       () => {},
       null,
-      { rotation }
+      { rotation },
     );
   };
 
   const updateSize = async (width: number, height: number) => {
-    await ApiService.callFetch("PATCH", `box/size/${box.id}`, () => {}, null, {
+    await ApiService.callFetch('PATCH', `box/size/${box.id}`, () => {}, null, {
       width,
       height,
     });
   };
 
-  const handleDrop = (e, ui) => {
-    updatePosition(ui.x, ui.y);
+  const handleDrop = (target: HTMLElement | SVGElement, transform: string) => {
+    target.style.transform = transform;
   };
 
-  const handleResize = (_, __, ref: HTMLElement) => {
-    updateSize(parseInt(ref.style.width), parseInt(ref.style.height));
+  const handleMoveUpdate = () => {
+    const rect = ref.current?.getRect();
+
+    if (!rect) return;
+    const { beforeOrigin, offsetHeight, offsetWidth } = rect;
+    updatePosition(
+      Math.round(beforeOrigin[0] - offsetWidth / 2),
+      Math.round(beforeOrigin[1] - offsetHeight / 2),
+    );
+  };
+
+  const handleResize = (
+    target: HTMLElement | SVGElement,
+    transform: string,
+    width: number,
+    height: number,
+  ) => {
+    target.style.width = `${width}px`;
+    target.style.height = `${height}px`;
+    target.style.transform = transform;
+  };
+
+  const handleResizeUpdate = (width: number, height: number) => {
+    updateSize(Math.round(width), Math.round(height));
   };
 
   const handleBoxClick = () => {
     if (!onBoxClick) return;
     if (!admin) return;
     onBoxClick(box as BoxMapRes);
+  };
+
+  const onMouseDown = (e) => {
+    const nativeEvent = e.nativeEvent;
+    setTarget(nativeEvent.target);
   };
 
   const getBoxStatus = (box: BoxMapUserRes | BoxMapRes) => {
@@ -210,12 +253,46 @@ const SingleBox = ({
     return newRotation;
   };
 
-  const rotate = (deg: number) => {
-
+  const rotate = (
+    target: HTMLElement | SVGElement,
+    transform: string,
+    deg: number,
+  ) => {
+    target.style.transform = transform;
     const newRotation = getNewRotation(rotation, deg);
     setRotation(newRotation);
-    updateRotation(newRotation);
   };
+
+  const handleRotationUpdate = () => {
+    updateRotation(rotation);
+  };
+
+  useEffect(() => {
+    if (!box || !boxRef || !boxRef.current) return;
+
+    boxRef.current.style.width = `${normalizeWidth(box)}px`;
+    boxRef.current.style.height = `${normalizeHeight(box)}px`;
+    boxRef.current.style.left = `${box.x || 0}px`;
+    boxRef.current.style.top = `${box.y || 0}px`;
+    boxRef.current.style.transform = `rotate(${box.rotation || 0}deg)`;
+  }, [ref, box]);
+
+  const handleClickOutside = (e: Event) => {
+    const target = e.target as HTMLElement;
+
+    console.log('EVENT', e);
+    if (target.className.includes(`box-${box.id}`)) return;
+
+    setTarget(null);
+  };
+
+  useEffect(() => {
+    document.addEventListener('click', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, []);
 
   if (admin || user)
     return (
@@ -224,9 +301,9 @@ const SingleBox = ({
         user={user}
         stock={stock}
         style={{
-          position: "absolute",
-          left: normalizePosition(box.x || 0),
-          top: normalizePosition(box.y || 0),
+          position: 'absolute',
+          left: normalizePosition(box.x || 0, box.rotation || 0),
+          top: normalizePosition(box.y || 0, box.rotation || 0),
           width: normalizeWidth(box),
           height: normalizeHeight(box),
           transform: `rotate(${box.rotation || 0}deg)`,
@@ -238,32 +315,51 @@ const SingleBox = ({
     );
 
   return (
-    <StyledDraggableBox
-      ref={ref}
-      disabledDragging={true}
-      resizeGrid={useGrid ? [5, 5] : undefined}
-      dragGrid={useGrid ? [5, 5] : undefined}
-      onDragStop={handleDrop}
-      onResizeStop={handleResize}
-      default={{
-        x: normalizePosition(box.x || 0),
-        y: normalizePosition(box.y || 0),
-        width: normalizeWidth(box),
-        height: normalizeHeight(box),
-      }}
-      bounds="parent"
-      onClick={(handleBoxClick)}
-    >
-      <StyledDraggableContent style={{ transform: `rotate(${rotation}deg)` }}>
-        <StyledRotateButton onClick={() => rotate(-5)}>
-          <span className="fa fa-rotate-left" />
-        </StyledRotateButton>
-        {box.identifier}
-        <StyledRotateButton onClick={() => rotate(5)}>
-          <span className="fa fa-rotate-right" />
-        </StyledRotateButton>
-      </StyledDraggableContent>
-    </StyledDraggableBox>
+    <div>
+      <div
+        className={`box-${box.id}`}
+        style={style}
+        onMouseDown={onMouseDown}
+        ref={boxRef}
+      >
+        <StyledDraggableContent className={`box-${box.id}-content`}>
+          {box.identifier}
+        </StyledDraggableContent>
+      </div>
+      <Moveable
+        ref={ref}
+        target={target}
+        origin={true}
+        // snappable={true}
+        edge={false}
+        draggable={true}
+        throttleDrag={useGrid ? 5 : 0}
+        resizable={true}
+        throttleResize={useGrid ? 5 : 0}
+        rotatable={true}
+        throttleRotate={useGrid ? 5 : 0}
+        onResize={({ target, transform, width, height }) =>
+          handleResize(target, transform, width, height)
+        }
+        onResizeEnd={({ target }) =>
+          handleResizeUpdate(target.clientWidth, target.clientHeight)
+        }
+        onDrag={({ target, transform }) => handleDrop(target, transform)}
+        onDragEnd={({ clientX, clientY }) => handleMoveUpdate()}
+        onRotate={({ target, transform, delta }) =>
+          rotate(target, transform, delta)
+        }
+        onRotateEnd={() => handleRotationUpdate()}
+        // default={{
+        //   x: normalizePosition(box.x || 0),
+        //   y: normalizePosition(box.y || 0),
+        //   width: normalizeWidth(box),
+        //   height: normalizeHeight(box),
+        // }}
+        // bounds="parent"
+        // onClick={handleBoxClick}
+      />
+    </div>
   );
 };
 

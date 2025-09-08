@@ -7,14 +7,17 @@ import { history } from '../../../../App';
 import { useGetMyDetailsQuery } from 'src/queries';
 import { Button } from '../../../../components/ui';
 import { Add } from '../../../../icons';
+import { useTenantNaming } from 'src/hooks/useTenantNaming';
 
 export const NewRentButton = () => {
   const dispatch = useDispatch();
   const { data: user } = useGetMyDetailsQuery();
+  const { getText } = useTenantNaming();
+
   if (!user) return null;
   return (
     <Button
-      text="application.newStock"
+      text={getText('new_box')}
       size="large"
       iconLeft={<Add />}
       onClick={() => {

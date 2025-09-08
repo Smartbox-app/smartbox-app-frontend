@@ -4,7 +4,6 @@ import { Add } from './Add';
 import { Edit } from './Edit';
 import { List } from './List';
 import UserService from '../../../../../../services/user-service';
-import GateStatus from '../../../../../../views/DashboardCommon/GateStatus';
 import { UserRole } from 'smartbox-types';
 import { useGetMyDetailsQuery } from 'src/queries';
 
@@ -18,7 +17,6 @@ const Gates = () => {
 
   return (
     <>
-      <GateStatus stockId={stockId} />
       <Switch>
         <Route
           exact

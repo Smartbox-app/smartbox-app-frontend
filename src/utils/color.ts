@@ -1,10 +1,10 @@
 const componentToHex = (c: number) => {
   const hex = c.toString(16);
-  return hex.length == 1 ? "0" + hex : hex;
+  return hex.length == 1 ? '0' + hex : hex;
 };
 
 const rgbToHex = (r: number, g: number, b: number) => {
-  return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
+  return '#' + componentToHex(r) + componentToHex(g) + componentToHex(b);
 };
 
 const hexToHSL = (hex: string) => {
@@ -53,26 +53,38 @@ const hexToHSL = (hex: string) => {
 
 export const getColorForBackground = (bg: string) => {
   let parsedColor = bg;
-  if (bg.includes("rgb")) {
-    const values = bg.split("(")[1].split(")")[0];
-    const [r, g, b] = values.split(",").map((part) => parseInt(part));
+  if (bg.includes('rgb')) {
+    const values = bg.split('(')[1].split(')')[0];
+    const [r, g, b] = values.split(',').map((part) => parseInt(part));
     parsedColor = rgbToHex(r, g, b);
   }
 
   const [h, s, l] = hexToHSL(parsedColor);
 
-  if (l > 0.5) return "#000";
-  return "#fff";
+  const threshold = getThreshold(h, s);
+
+  if (l > threshold) return "#000";
+  return '#fff';
+};
+
+const getThreshold = (h: number, s: number) => {
+  if (h > 0.13 && h < 0.17 && s > 0.9) return 0.4;
+  return 0.5;
 };
 
 export const colorOrDark = (color: string) => {
   let parsedColor = color;
-  if (color.includes("rgb")) {
-    const values = color.split("(")[1].split(")")[0];
-    const [r, g, b] = values.split(",").map((part) => parseInt(part));
+  if (color.includes('rgb')) {
+    const values = color.split('(')[1].split(')')[0];
+    const [r, g, b] = values.split(',').map((part) => parseInt(part));
     parsedColor = rgbToHex(r, g, b);
   }
   const [h, s, l] = hexToHSL(parsedColor);
-  if (l < 0.5) return parsedColor;
-  return "#000";
+
+  const threshold = getThreshold(h, s);
+
+  // if (l < threshold) return parsedColor;
+  // return '#000';
+  if (l < threshold) return parsedColor;
+  return '#000';
 };

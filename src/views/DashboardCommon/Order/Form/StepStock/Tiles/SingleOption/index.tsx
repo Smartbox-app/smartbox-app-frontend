@@ -3,10 +3,10 @@ import { ReactSVG } from 'react-svg';
 
 import './SingleOption.scss';
 import { connect, useDispatch, useSelector } from 'react-redux';
-import { ApplicationState } from '../../../../../../reducers';
-import { Spinner } from '../../../../../../components/Branded';
+import { ApplicationState } from '../../../../../../../reducers';
+import { Spinner } from '../../../../../../../components/Branded';
 import styled from 'styled-components';
-import { setOrderStock } from '../../../../../../actions/order';
+import { setOrderStock } from '../../../../../../../actions/order';
 import { Badge, Card, Typography } from 'src/components/ui';
 
 interface Props {

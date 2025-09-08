@@ -7,6 +7,7 @@ import { ApplicationState } from '../../../../reducers';
 import Discounts from './Discounts';
 import { __ } from '../../../../helpers/i18n';
 import { Header, Section } from '../../../../components/ui';
+import { useTenantNaming } from 'src/hooks/useTenantNaming';
 
 interface Props {
   discountsList: DiscountList[];
@@ -14,6 +15,7 @@ interface Props {
 }
 
 const Sale = ({ discountsList, getStockDiscountsList }: Props) => {
+  const {getText} = useTenantNaming();
   useEffect(() => {
     getStockDiscountsList();
   }, []);
@@ -22,7 +24,7 @@ const Sale = ({ discountsList, getStockDiscountsList }: Props) => {
     const result: string[] = [];
 
     list.forEach((el: any) => {
-      if (el.discount) result.push(`${__('application.discount')} ${el.discount}% ${__('application.onStock')} ${el.name}`);
+      if (el.discount) result.push(`${__('application.discount')} ${el.discount}% ${getText('on')} ${el.name}`);
     });
     return result;
   };

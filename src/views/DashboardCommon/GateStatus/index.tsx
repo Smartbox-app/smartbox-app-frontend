@@ -5,7 +5,8 @@ import { fullDate } from '../../../utils/format-date';
 import ApiService from '../../../services/api-service';
 
 import './GateStatus.scss';
-import { __ } from "../../../helpers/i18n";
+import { __ } from '../../../helpers/i18n';
+import { useTenantNaming } from 'src/hooks/useTenantNaming';
 
 interface Props {
   stockId?: string;
@@ -14,17 +15,26 @@ interface Props {
 
 const GateStatus = ({ stockId, stockGroupId }: Props) => {
   const [status, setStatus] = useState<GatesStatusForAdminRes>();
+  const { getText } = useTenantNaming();
 
   const getStatus = async () => {
     if (stockId) {
-      await ApiService.callFetch('GET', `gate/status/stock/${stockId}`, (newStatus: GatesStatusForAdminRes) => {
-        setStatus(newStatus);
-      });
+      await ApiService.callFetch(
+        'GET',
+        `gate/status/stock/${stockId}`,
+        (newStatus: GatesStatusForAdminRes) => {
+          setStatus(newStatus);
+        },
+      );
     }
     if (stockGroupId) {
-      await ApiService.callFetch('GET', `gate/status/group/${stockGroupId}`, (newStatus: GatesStatusForAdminRes) => {
-        setStatus(newStatus);
-      });
+      await ApiService.callFetch(
+        'GET',
+        `gate/status/group/${stockGroupId}`,
+        (newStatus: GatesStatusForAdminRes) => {
+          setStatus(newStatus);
+        },
+      );
     }
   };
 
@@ -90,11 +100,17 @@ const GateStatus = ({ stockId, stockGroupId }: Props) => {
           </div>
           <div className="status-body">
             <div className="status-id">
-              {__('application.gate')}<strong className="status-place-value">{s.id}</strong>{__('application.onStock')}
+              {__('application.gate')}
+              <strong className="status-place-value">{s.id}</strong>
+              {getText('on')}
               <strong className="status-place-value">{s.stockName}</strong>
             </div>
-            <p className="status-last-connection-label">{__('application.lastConnection')}</p>
-            <div className="status-connection-date">{fullDate(s.lastConnection)}</div>
+            <p className="status-last-connection-label">
+              {__('application.lastConnection')}
+            </p>
+            <div className="status-connection-date">
+              {fullDate(s.lastConnection)}
+            </div>
             <div>{s.isOpen}</div>
 
             <div>{getStatusText(s.status)} </div>

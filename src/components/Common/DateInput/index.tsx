@@ -14,6 +14,7 @@ import { InputLabel } from 'src/components/ui/InputLabel';
 import { ErrorText } from 'src/components/ui/ErrorText';
 import { darken } from 'polished';
 import { getColorForBackground } from 'src/utils/color';
+import { formatInTimeZone } from 'date-fns-tz';
 
 flatpickr.localize(Polish);
 flatpickr.defaultConfig.time_24hr = true;
@@ -84,7 +85,6 @@ const StyledContainer = styled('div')(({ theme }) => ({
       color: getColorForBackground(theme.colors.primary),
       borderColor: darken(0.05, theme.colors.primary),
     },
-   
   },
   '.flatpickr-current-month': {
     padding: `0 ${theme.spacing * 2}px`,
@@ -95,17 +95,18 @@ const StyledContainer = styled('div')(({ theme }) => ({
     justifyContent: 'space-between',
     fontWeight: 700,
     '.numInputWrapper': {
-      display: 'flex'
-    }
+      display: 'flex',
+    },
   },
   '.flatpickr-next-month, .flatpickr-prev-month': {
     padding: theme.spacing * 2,
     display: 'flex',
     alignItems: 'center',
     height: 42,
-  }
-
+  },
 }));
+
+const timeZone = 'Europe/Warsaw';
 
 const DateInput = ({
   name,
@@ -122,6 +123,7 @@ const DateInput = ({
   required = true,
   inline = true,
 }: Props) => {
+
   return (
     <StyledContainer>
       <InputLabel labelFor={name}>{__(label)}</InputLabel>
@@ -137,7 +139,7 @@ const DateInput = ({
         }}
         name={name}
         ref={register && register({ name })}
-        onChange={(data: any) => {
+        onChange={(data: Date[]) => {
           onChange(data);
         }}
         required={required}
@@ -147,6 +149,7 @@ const DateInput = ({
           inline,
           enableTime: false,
           locale: 'pl',
+
           minDate,
           maxDate,
         }}

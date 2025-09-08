@@ -9,6 +9,7 @@ import { useGetMyDetailsQuery } from 'src/queries';
 import { PageHeader, Section, Tabs } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
 import { InfoCircle, Stop } from 'src/icons';
+import GateStatus from 'src/views/DashboardCommon/GateStatus';
 
 const ManageGroup = () => {
   const { stockGroupId } = useParams<{ stockGroupId: string }>();
@@ -40,6 +41,7 @@ const ManageGroup = () => {
   return (
     <>
       <PageHeader>{__('application.stockManage')}</PageHeader>
+      <GateStatus stockGroupId={stockGroupId} />
       <Section>
         <Tabs tabs={tabs} />
       </Section>

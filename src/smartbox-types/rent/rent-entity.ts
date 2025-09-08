@@ -1,31 +1,35 @@
 import { IBase } from '../base/base.interface';
 import { IUser } from '../user';
-import { AcceptanceStatuses, IPayment, RentDetailsUser, RentUserData, SingleAcceptance } from '..';
+import { CalculatedPriceRes, IPayment, RentUserData } from '..';
 
 export enum RentPaymentType {
   InAdvance = 'in-advance',
   Installments = 'installments',
 }
 
-export interface RentDescription {
-  startAt: string;
-  finishAt: string;
-  cost: string;
+export type RentDescriptionAddon = {
+  id: string;
+  name: string;
+  slug: string;
+  selectedVariantName: string;
+  selectedVariantId: string;
+  acceptance?: string;
+  accepted: boolean;
   price: string;
+}
+
+export interface RentDescription {
+  startAt: Date;
+  finishAt: Date;
+  cost: number;
+  price: CalculatedPriceRes;
+  paymentType?: RentPaymentType;
   agreement?: string;
-  data?: RentDetailsUser;
-  addons: {
-    id: string;
-    name: string;
-    selectedVariantName: string;
-    selectedVariantId: string;
-    acceptance?: string;
-    accepted: boolean;
-    acceptances?: SingleAcceptance[];
-    acceptancesStatus?: AcceptanceStatuses;
-    file?: string;
-    price: string;
-  }[]
+  data?: RentUserData;
+  addons: RentDescriptionAddon[];
+  stockDiscount?: {
+    value: number
+  }
 }
 
 export interface IRent extends IBase {
@@ -42,13 +46,17 @@ export interface IRent extends IBase {
   data: RentUserData;
   agreementFile: string;
   paymentType: RentPaymentType;
+  previousRentId?: string;
 }
 
 export interface IExtension extends IBase {
+  createdAt: Date;
   to: Date;
   payment: IPayment;
   expirationAt: Date;
   description: RentDescription;
+  paymentType: RentPaymentType;
+  cost: number;
 }
 
 export enum RentStatus {
@@ -62,6 +70,7 @@ export enum RentStatus {
   finished = 'zakończone',
   failure = 'zakończone bez wynajęcia',
   free = 'wolny',
+  noPaidPeriod = 'nieopłacony okres'
 }
 
 export interface AdminRentListDetailsQuery {
@@ -76,6 +85,7 @@ export interface AdminRentListDetailsQuery {
   createdAt: Date;
   startAt: Date;
   finishAt: Date;
+  paymentType: RentPaymentType;
 }
 
 export interface AdminRentListDetails {

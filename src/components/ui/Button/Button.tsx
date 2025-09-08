@@ -56,18 +56,6 @@ const heightBySize = {
   extrasmall: 6,
 };
 
-const clickAnimation = keyframes`
-0% {
-transform: scale(1);
-}
-50% {
-transform: scale(0.5);
-}
-100% {
-transform: scale(1);
-}
-
-`;
 
 const getColorByVariant = (variant: ButtonTypes, theme: DefaultTheme) => {
   if (variant === 'primary') return theme.colors.primary;

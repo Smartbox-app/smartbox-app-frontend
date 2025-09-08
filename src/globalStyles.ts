@@ -7,7 +7,38 @@ interface GlobalStyleProps {
   tenantId: string;
 }
 
-const GlobalStyle = createGlobalStyle<GlobalStyleProps>`
+interface GlobalFontProps {
+  tenantId: string;
+}
+
+export const GlobalFont = createGlobalStyle<GlobalFontProps>`
+  @font-face {
+    font-family: 'smartbox';
+    src: url(${ApiService.url}tenant/fonts/light/?tenantId=${(props) => props.tenantId});
+    font-weight: 300;
+    font-style: normal;
+    font-display: auto;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'smartbox';
+    src: url(${ApiService.url}tenant/fonts/normal/?tenantId=${(props) => props.tenantId});
+    font-weight: 400;
+    font-style: normal;
+    font-display: auto;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'smartbox';
+    src: url(${ApiService.url}tenant/fonts/bold/?tenantId=${(props) => props.tenantId});
+    font-weight: 700;
+    font-style: normal;
+    font-display: auto;
+    font-display: swap;
+  }
+`;
+
+export const GlobalStyle = createGlobalStyle<GlobalStyleProps>`
 html {
     font-size: 14px;
 
@@ -37,4 +68,3 @@ a {
 }
 `;
 
-export default GlobalStyle;

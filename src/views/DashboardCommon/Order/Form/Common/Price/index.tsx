@@ -9,15 +9,15 @@ import { ApplicationState } from '../../../../../../reducers';
 import './Price.scss';
 import { colorOrDark } from '../../../../../../utils/color';
 import { Header, Section } from 'src/components/ui';
+import { differenceInDays } from 'date-fns';
 
 const StyledPrice = styled.strong`
   font-size: 40px;
 `;
 
 const Price = () => {
-  const { calculatedPrice, orderAddons } = useSelector(
-    (state: ApplicationState) => state.order,
-  );
+  const { calculatedPrice, orderAddons, startDate, endDate, rentPaymentType } =
+    useSelector((state: ApplicationState) => state.order);
 
   const fullPrice = useMemo(() => {
     const addonsPrice = Object.values(orderAddons).reduce(
@@ -27,6 +27,18 @@ const Price = () => {
     return addonsPrice + calculatedPrice.value;
   }, [calculatedPrice, orderAddons]);
 
+  const toPayNow = useMemo(() => {
+    if (!endDate || !startDate) return null;
+
+    if(!rentPaymentType || rentPaymentType === 'in-advance') return fullPrice;
+
+    const durationDays = differenceInDays(endDate, startDate) + 1;
+    const numberOfPeriods = Math.ceil(durationDays / 30);
+    const baseCost = Math.ceil((fullPrice / numberOfPeriods) * 100) / 100;
+
+    return baseCost;
+  }, [startDate, endDate, fullPrice, rentPaymentType]);
+
   return (
     <Section>
       <Header variant="h2">
@@ -34,7 +46,8 @@ const Price = () => {
           ? __('application.priceForSelectedPeriod')
           : __('application.netPriceForSelectedPeriod')}
       </Header>
-      <StyledPrice>{formatPrice(fullPrice)}</StyledPrice>
+      {toPayNow ? <StyledPrice>{formatPrice(toPayNow)}</StyledPrice> : null}
+      {rentPaymentType === 'installments' ? <p>Zaprezentowana kwota to wartość pierwszego okresu wynajmu.</p> : null}
     </Section>
   );
 };

@@ -21,7 +21,7 @@
     color: $color-text-alter;
     display: flex;
     flex: 1;
-    font-size: 0.9rem;
+    font-size: 0.7rem;
 
     @include gt-sm {
       flex: 0 1 33.3333%;
@@ -50,7 +50,7 @@
 
   .status-icon,
   .status-body {
-    padding: $main-spacing;
+    padding: $main-spacing /2;
     display: flex;
     flex-direction: column;
     justify-content: center;

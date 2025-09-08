@@ -30,7 +30,7 @@ export const PaymentType = ({ stock, rent }: Props) => {
             <Header variant='h2'>
                 {__('application.paymentType')}
             </Header>
-            <p>{__(getPaymentTypeText(stock.clientPaymentTypeConfig))}</p>
+            <p>{__(getPaymentTypeText(stock.clientPaymentTypeConfig, rent))}</p>
             {(!rent || (rent && rent.status === RentStatus.rented)) && stock.clientPaymentTypeConfig === StockPaymentType.Both ? <ul>
                 <SinglePaymentType type={RentPaymentType.InAdvance} label='application.paymentInAdvance' />
                 <SinglePaymentType type={RentPaymentType.Installments} label='application.paymentInstallments' />

@@ -11,8 +11,11 @@ import Profile from '../DashboardCommon/Profile';
 import SingleRentDetail from '../DashboardCommon/SingleRentDetail';
 import { StockGroups } from '../DashboardCommon/StockGroups';
 import { Manage, Settings, Stocks } from '../../icons';
+import { useTenantNaming } from 'src/hooks/useTenantNaming';
 
 const DashboardAdmin = () => {
+  const {getText} = useTenantNaming();
+  
   const menuItems: MenuItemType[] = [
     {
       icon: <Manage />,
@@ -21,7 +24,7 @@ const DashboardAdmin = () => {
     },
     {
       icon: <Stocks />,
-      text: 'application.stocks',
+      text: getText('many'),
       to: '/admin/locations',
     },
     {

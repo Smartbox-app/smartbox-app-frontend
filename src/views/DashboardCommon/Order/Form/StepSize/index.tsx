@@ -18,13 +18,14 @@ import { Header, Section } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
 import { Stack, Button } from 'src/components/ui';
 import { ArrowLeft, ArrowRight } from 'src/icons';
+import { useTenantNaming } from 'src/hooks/useTenantNaming';
 
 const StepSize = () => {
   const { stockId, boxGroupId } = useSelector(
     (state: ApplicationState) => state.order,
   );
   const { data: user } = useGetMyDetailsQuery();
-
+  const {getText} = useTenantNaming();
   const [boxGroups, setBoxGroups] = useState<BoxGroupUserRes[]>([]);
 
   useEffect(() => {
@@ -49,10 +50,10 @@ const StepSize = () => {
     <form>
       <Stack>
         <Section>
-          <Header variant="h2">{__('application.orderFormPickSize')}</Header>{' '}
+          <Header variant="h2">{getText('please_pick_box_size')}</Header>{' '}
           <div className="options-wrapper">{options}</div>
           {boxGroups.length === 0 && (
-            <Alert type="notice" text="application.noBoxesInThisStock" />
+            <Alert type="notice" text={getText('no_boxes')} />
           )}
         </Section>
 

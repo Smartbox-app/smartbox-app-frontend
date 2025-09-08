@@ -1,0 +1,30 @@
+.map-marker {
+    background: #fff;
+    border-radius: 4px;
+    padding: 4px;
+
+    font-weight: 500;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    span {
+    font-size: 12px;
+    line-height: normal;
+    }
+    img {
+        max-width: 50px;
+        max-height: 50px;
+        display: block;
+        margin-bottom: 5px;
+    }
+}
+
+.map-marker-popup {
+    display: flex;
+    flex-direction: column;
+    padding: 8px;
+    border-radius: 8px;
+    text-align: center;
+    max-width: 200px;
+}

@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router";
-import { TenantForUsers } from "smartbox-types";
+import { NamingType, TenantForUsers } from "smartbox-types";
 import { setTenant as setTenantAction } from '../actions/tenant'
 import ApiService from "../services/api-service";
 import { ApplicationState } from "src/reducers";
+import { LocationSelectType } from "src/smartbox-types/location";
 
 interface UseTenant {
     tenant: TenantForUsers | null;
@@ -68,7 +69,9 @@ const useTenant = (): UseTenant => {
             allowAddonsToRent: false,
             icon: '',
             useProd: false,
-            birthDateNecessary: false
+            birthDateNecessary: false,
+            locationSelectType: LocationSelectType.Tiles,
+            namingType: NamingType.Stock
         })
     }
 

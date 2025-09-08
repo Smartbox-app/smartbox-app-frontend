@@ -4,7 +4,7 @@ import { stocksList } from 'smartbox-tables';
 import { showModal } from '../../../../../actions/modal';
 import { successNotification } from '../../../../../actions/notifications';
 import ApiService from '../../../../../services/api-service';
-import { StockAdminList, UserRole } from 'smartbox-types';
+import { NamingType, StockAdminList, UserRole } from 'smartbox-types';
 import { ApiTable, ConfirmModal } from '../../../../../components/Common';
 import { Button } from '../../../../../components/Branded';
 import {
@@ -20,12 +20,18 @@ import UserService from '../../../../../services/user-service';
 import { ApplicationState } from '../../../../../reducers';
 import { useGetMyDetailsQuery } from 'src/queries';
 import { HeaderWithActions } from 'src/components/ui';
+import { DeleteStockModal } from 'src/components/Common/DeleteStockModal';
+import { useTenantNaming } from 'src/hooks/useTenantNaming';
+import { useTenant } from 'src/hooks/useTenant';
 
 const List = () => {
   const dispatch = useDispatch();
+  const { getText } = useTenantNaming();
+  const { tenant } = useTenant();
   const scheme = new InteractiveTableSchema(stocksList);
   const { data: user } = useGetMyDetailsQuery();
 
+  const hasAdminAccess = [UserRole.admin].includes(user!.role);
   const hasFullAccess = [UserRole.admin, UserRole.client].includes(user!.role);
 
   scheme.addFieldAtTheEnd({
@@ -33,7 +39,7 @@ const List = () => {
     field: 'actions',
     mobile: true,
     buttons: [
-      hasFullAccess
+      hasAdminAccess
         ? {
             name: 'application.delete',
             type: 'danger',
@@ -54,18 +60,18 @@ const List = () => {
   const confirmStockDelete = (data: StockAdminList) => {
     dispatch(
       showModal(
-        <ConfirmModal
-          mainText="application.confirmStockDelete"
+        <DeleteStockModal
+          mainText={`Zamierzasz usunąć ${tenant?.namingType === NamingType.Stock ? 'plac' : 'lokalizację'} ${data.name} (${data.address}), czy na pewno chcesz to zrobić? Tej operacji nie da się cofnąć. Potwierdź chęć wykonania tej operacji poprzez wpisanie nazwy ${tenant?.namingType === NamingType.Stock ? 'placu' : 'lokalizacji'} do poniższego pola.`}
           approveButtonText="application.yes"
-          approveAction={() => deleteStock(data)}
+          approveAction={(stockName) => deleteStock(data, stockName)}
         />,
       ),
     );
   };
 
-  const deleteStock = async (data: StockAdminList) => {
-    await ApiService.callFetch('DELETE', `stock/${data.id}`, () => {
-      dispatch(successNotification('application.stockDeleted'));
+  const deleteStock = async (data: StockAdminList, stockName) => {
+    await ApiService.callFetch('DELETE', `stock/${data.id}/${stockName}`, () => {
+      dispatch(successNotification(getText('deleted')));
       dispatch(refreshApiTableData());
     });
   };
@@ -77,7 +83,7 @@ const List = () => {
           hasFullAccess ? (
             <ButtonsContainer>
               <Button
-                text="application.addStock"
+                text={getText('add')}
                 primary
                 to={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/add`}
               />
@@ -85,7 +91,7 @@ const List = () => {
           ) : null
         }
       >
-        {__('application.stocksList')}
+        {getText('list')}
       </HeaderWithActions>
 
       <ApiTable scheme={scheme} apiEndpointSubUrl={`stock/admin-list`} />

@@ -16,3 +16,4 @@ export * from './stock-group';
 export * from './templates';
 export * from './addon';
 export * from './period';
+export * from './debt';

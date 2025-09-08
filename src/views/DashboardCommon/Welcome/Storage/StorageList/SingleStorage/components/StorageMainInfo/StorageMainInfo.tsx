@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { __ } from '../../../../../../../../helpers/i18n';
+import { useTenantNaming } from 'src/hooks/useTenantNaming';
 
 export type StorageMainInfoProps = {
   identifier: string;
@@ -16,9 +17,10 @@ const StyledInfo = styled('h3')<{ isWarning: boolean }>(
 );
 
 export const StorageMainInfo = ({ identifier, isWarning }: StorageMainInfoProps) => {
+  const {getText} = useTenantNaming();
   return (
     <StyledInfo isWarning={isWarning}>
-      {__('application.miniStorage')} {identifier}
+      {getText('box')} {identifier}
     </StyledInfo>
   );
 };

@@ -5,7 +5,7 @@ import {
   Section as InsideSection,
   ButtonsContainer,
 } from '../../../../../components/Layout';
-import SingleOption from './SingleOption';
+import SingleOption from './Tiles/SingleOption';
 import { ApplicationState } from '../../../../../reducers';
 
 import UserService from '../../../../../services/user-service';
@@ -15,15 +15,19 @@ import { Button, Header, Section } from '../../../../../components/ui';
 import { __ } from '../../../../../helpers/i18n';
 import { Stack } from 'src/components/ui/Stack';
 import { ArrowRight } from 'src/icons';
+import { useTenant } from 'src/hooks/useTenant';
+import { Spinner } from 'src/components/Branded';
+import { LocationSelectType } from 'src/smartbox-types/location';
+import { Tiles } from './Tiles';
+import { Map } from './Map';
+import { useTenantNaming } from 'src/hooks/useTenantNaming';
 
 const StepStock = () => {
   const dispatch = useDispatch();
   const stockId = useSelector((state: ApplicationState) => state.order.stockId);
-  const list = useSelector((state: ApplicationState) => state.stock.list);
-  const groupsList = useSelector(
-    (state: ApplicationState) => state.stockGroup.list,
-  );
   const { data: user } = useGetMyDetailsQuery();
+  const { tenant } = useTenant();
+  const { getText } = useTenantNaming();
 
   useEffect(() => {
     if (!user) return;
@@ -31,38 +35,24 @@ const StepStock = () => {
     dispatch(order.clearOrder());
   }, []);
 
+  const getLocationSelect = () => {
+    if (!tenant) return <Spinner />;
+    switch (tenant.locationSelectType) {
+      case LocationSelectType.Tiles:
+        return <Tiles />;
+      case LocationSelectType.Map:
+        return <Map />;
+    }
+  };
+
   if (!user) return null;
   return (
     <form>
       <Stack>
         <Section>
-          <Header variant="h2">{__('application.orderFormPickStock')}</Header>
+          <Header variant="h2">{getText('please_pick')}</Header>
 
-          {groupsList.map((group) => (
-            <InsideSection key={group.id} highlight>
-              <Header variant="h3">{group.name}</Header>
-              <div className="group-stocks-wrapper">
-                {group.stocks.map((el) => (
-                  <SingleOption
-                    key={el.id}
-                    value={el.id}
-                    name={el.name}
-                    address={el.address}
-                  />
-                ))}
-              </div>
-            </InsideSection>
-          ))}
-          <div className="stocks-wrapper">
-            {list.map((el) => (
-              <SingleOption
-                key={el.id}
-                value={el.id}
-                name={el.name}
-                address={el.address}
-              />
-            ))}
-          </div>
+          {getLocationSelect()}
         </Section>
         <Section>
           <ButtonsContainer spaceBetween>

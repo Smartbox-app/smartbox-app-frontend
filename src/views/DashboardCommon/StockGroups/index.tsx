@@ -13,9 +13,11 @@ import { UserRole } from 'smartbox-types';
 import { useGetMyDetailsQuery } from 'src/queries';
 import { Section, Tabs } from 'src/components/ui';
 import { Stocks, Stocks2 } from 'src/icons';
+import { useTenantNaming } from 'src/hooks/useTenantNaming';
 
 const StockGroups = () => {
   const { data: user } = useGetMyDetailsQuery();
+  const { getText } = useTenantNaming();
   const hasFullAccess = [UserRole.admin, UserRole.client].includes(user!.role);
 
   return (
@@ -25,12 +27,12 @@ const StockGroups = () => {
           tabs={[
             {
               to: `/${UserService.getSlugByRole(user!.role)}/locations/stocks`,
-              text: 'application.stocks',
+              text: getText('many'),
               icon: <Stocks2 />,
             },
             {
               to: `/${UserService.getSlugByRole(user!.role)}/locations/groups`,
-              text: 'application.stockGroups',
+              text: getText('groups'),
               icon: <Stocks />,
             },
           ]}

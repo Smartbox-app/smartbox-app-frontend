@@ -17,7 +17,34 @@ const StyledButton = styled(Button)({
 export const GoogleButton = () => {
   const { tenant } = useTenant();
 
-  if (!tenant || !['testowa', 'aplikacja'].includes(tenant.identifier)) return null;
+  if (
+    !tenant ||
+    ![
+      'testowa',
+      'sbox',
+      'aplikacja',
+      'citybox24',
+      'superbox',
+      'moibox',
+      'rentbox',
+      'tyskiemagazyny',
+      'kielceboxy',
+      'jumbostorage',
+      'twojemagazyny24',
+      'hdboxpl',
+      'tubox',
+      'mojschowek',
+      'boxymagazynowe',
+      'easybox',
+      'mojmagazyn',
+      'megabox',
+      'krakbox',
+      'przechowajto',
+      'szuflandia',
+      'wlasnybox',
+    ].includes(tenant.identifier)
+  )
+    return null;
 
   const goToGoogleLogin = () => {
     window.open(`${ApiService.url}auth/google?tenantId=${tenant.identifier}`);

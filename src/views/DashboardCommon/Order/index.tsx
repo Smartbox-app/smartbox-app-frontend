@@ -12,9 +12,11 @@ import { RentStatus } from 'smartbox-types';
 import { getSingleRent } from '../../../actions/single-rent';
 import { PageHeader, Section } from '../../../components/ui';
 import { __ } from '../../../helpers/i18n';
+import { useTenantNaming } from 'src/hooks/useTenantNaming';
 
 export const Order = () => {
   const dispatch = useDispatch();
+  const { getText } = useTenantNaming();
   const { singleRent } = useSelector((state: ApplicationState) => state.rent);
   const { step, paymentId, rentId } = useParams<{
     step: string;
@@ -67,7 +69,7 @@ export const Order = () => {
           stepList={[
             {
               value: 1,
-              desc: 'application.orderStepStock',
+              desc: getText('name')
             },
             {
               value: 2,

@@ -28,6 +28,7 @@ export interface IStock extends IBase {
   colorReserved: string;
   colorRented: string;
   colorNoPaidExtension: string;
+  colorNoPaidPeriod: string;
   colorNoPaidExtensionWithWarning: string;
   colorToCheck: string;
   colorToExplain: string;
@@ -45,6 +46,8 @@ export interface IStock extends IBase {
   clientPaymentTypeConfig: StockPaymentType;
   // days to pay the rent invoice
   daysForPayment: number;
+  lat?: string;
+  lon?: string;
 }
 
 export interface IDiscount extends IBase {

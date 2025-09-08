@@ -17,7 +17,6 @@ const Gates = () => {
 
   return (
     <>
-      <GateStatus stockGroupId={stockGroupId} />
       <Switch>
         <Route
           exact

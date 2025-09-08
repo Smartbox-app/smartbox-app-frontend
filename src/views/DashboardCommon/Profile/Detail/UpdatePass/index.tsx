@@ -1,6 +1,6 @@
 import React from 'react';
 import { ItfApiForm } from 'itf_formbuilder_react';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import ReactCreatableSelect from 'react-select/creatable';
 import { bindActionCreators } from 'redux';
 import { AddGiftReq } from 'smartbox-types';
@@ -10,13 +10,12 @@ import { Button, Spinner } from '../../../../../components/Branded';
 import ApiService from '../../../../../services/api-service';
 import { formOnTranslateString } from '../../../../../utils/trans-form';
 import { ReactSelectOverride } from '../../../../../components/Common/ReactSelectOverride';
+import { hideModal } from 'src/actions/modal';
+import { successNotification } from 'src/actions/notifications';
 
-interface Props {
-  successNotification: (text: string) => void;
-  hideModal: () => void;
-}
 
-const UpdatePass = ({ successNotification, hideModal }: Props) => {
+const UpdatePass = () => {
+  const dispatch = useDispatch();
   const submitButton = (
     <ButtonsContainer>
       <Button text="application.change" type="submit" primary />
@@ -48,8 +47,8 @@ const UpdatePass = ({ successNotification, hideModal }: Props) => {
           sendFetcher={customSendFetcher}
           submitButton={submitButton}
           onSavedSuccessfully={() => {
-            successNotification('notification.passChangedSuccess');
-            hideModal();
+            dispatch(successNotification('notification.passChangedSuccess'));
+            dispatch(hideModal());
           }}
           onTranslateString={formOnTranslateString}
           thirdPartyComponents={{ ReactSelect: ReactSelectOverride, ReactCreatableSelect }}

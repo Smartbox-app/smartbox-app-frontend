@@ -4,18 +4,47 @@ import { useTenant } from '../../../../../hooks/useTenant';
 import { Button } from 'src/components/ui';
 import styled from 'styled-components';
 import { lighten } from 'polished';
+import { getColorForBackground } from 'src/utils/color';
 
 const StyledButton = styled(Button)({
   backgroundColor: '#4267b2',
+  color: getColorForBackground('#4267b2'),
   '&:hover': {
     backgroundColor: lighten(0.2, '#4267b2'),
+    color: getColorForBackground('#4267b2'),
   },
 });
 
 export const FbButton = () => {
   const { tenant } = useTenant();
 
-  if (!tenant || !['testowa', 'aplikacja'].includes(tenant.identifier))
+  if (
+    !tenant ||
+    ![
+      'testowa',
+      'sbox',
+      'aplikacja',
+      'citybox24',
+      'superbox',
+      'moibox',
+      'rentbox',
+      'tyskiemagazyny',
+      'kielceboxy',
+      'jumbostorage',
+      'twojemagazyny24',
+      'hdboxpl',
+      'tubox',
+      'mojschowek',
+      'boxymagazynowe',
+      'easybox',
+      'mojmagazyn',
+      'megabox',
+      'krakbox',
+      'przechowajto',
+      'szuflandia',
+      'wlasnybox',
+    ].includes(tenant.identifier)
+  )
     return null;
 
   const goToFbLogin = () => {

@@ -9,8 +9,10 @@ import Profile from '../DashboardCommon/Profile';
 import ManagementWorker from './ManagementWorker';
 import { StockGroups } from '../DashboardCommon/StockGroups';
 import { Settings, Stocks } from '../../icons';
+import { useTenantNaming } from 'src/hooks/useTenantNaming';
 
 const DashboardWorker = () => {
+  const { getText } = useTenantNaming();
   const menuItems: MenuItemType[] = [
     {
       icon: <Settings />,
@@ -19,7 +21,7 @@ const DashboardWorker = () => {
     },
     {
       icon: <Stocks />,
-      text: 'application.stocks',
+      text: getText('many'),
       to: '/worker/locations',
     },
     {

@@ -6,4 +6,5 @@ export type PeriodEntity = {
     createdAt: Date;
     value: number;
     paid: boolean;
+    invoiceId: string;
 }

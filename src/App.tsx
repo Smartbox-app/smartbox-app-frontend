@@ -1,15 +1,15 @@
-import React, { useState, useEffect, Suspense } from "react";
-import { applyMiddleware, createStore } from "redux";
-import { Provider } from "react-redux";
-import reduxThunk from "redux-thunk";
-import ReactSelect from "react-select";
-import { composeWithDevTools } from "redux-devtools-extension";
-import { Route, Router, Switch, Redirect } from "react-router-dom";
-import { createBrowserHistory } from "history";
-import flatpickr from "flatpickr";
-import { Polish } from "flatpickr/dist/l10n/pl";
-import reducers from "./reducers";
-import { Page404, Welcome } from "./views";
+import React, { useState, useEffect, Suspense } from 'react';
+import { applyMiddleware, createStore } from 'redux';
+import { Provider } from 'react-redux';
+import reduxThunk from 'redux-thunk';
+import ReactSelect from 'react-select';
+import { composeWithDevTools } from 'redux-devtools-extension';
+import { Route, Router, Switch, Redirect } from 'react-router-dom';
+import { createBrowserHistory } from 'history';
+import flatpickr from 'flatpickr';
+import { Polish } from 'flatpickr/dist/l10n/pl';
+import reducers from './reducers';
+import { Page404, Welcome } from './views';
 import {
   OnlineContent,
   OfflineContent,
@@ -21,8 +21,8 @@ import {
   ErrorBoundary,
   Cookies,
   RouteTenant,
-} from "./components/Common";
-import { Spinner } from "./components/Branded";
+} from './components/Common';
+import { Spinner } from './components/Branded';
 import {
   EmailConfirm,
   Login,
@@ -33,48 +33,53 @@ import {
   GoogleAuth,
   TenantActivation,
   ResendActivationLink,
-} from "./views/Auth";
-import { PaymentResult } from "./views/DashboardCommon";
-import { NotificationContainer } from "./components/Notifications";
-import AppOffline from "./components/AppOffline";
-import { i18n } from "./helpers/i18n";
-import { appStatus } from "./actions/app-status";
+} from './views/Auth';
+import { PaymentResult } from './views/DashboardCommon';
+import { NotificationContainer } from './components/Notifications';
+import AppOffline from './components/AppOffline';
+import { i18n } from './helpers/i18n';
+import { appStatus } from './actions/app-status';
 
-import "flatpickr/dist/flatpickr.min.css";
+import 'flatpickr/dist/flatpickr.min.css';
 // import "flatpickr/dist/themes/airbnb.css";
-import BannerAndroid from "./components/Common/BannerAndroid";
-import BannerIos from "./components/Common/BanneriOS";
-import { CustomThemeProvider } from "./providers";
-import { AppWrapper } from "./components/AppWrapper";
-import GlobalStyle from "./globalStyles";
-import { useTenant } from "./hooks/useTenant";
-import { PaymentStatus } from "smartbox-types";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { RouteGuest } from "./components/Common/RouteGuest";
+import BannerAndroid from './components/Common/BannerAndroid';
+import BannerIos from './components/Common/BanneriOS';
+import { CustomThemeProvider } from './providers';
+import { AppWrapper } from './components/AppWrapper';
+import { GlobalStyle, GlobalFont } from './globalStyles';
+import { useTenant } from './hooks/useTenant';
+import { PaymentStatus } from 'smartbox-types';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { RouteGuest } from './components/Common/RouteGuest';
 
-const DashboardAdmin = React.lazy(() => import("./views/DashboardAdmin"));
-const DashboardUser = React.lazy(() => import("./views/DashboardUser"));
-const DashboardTenant = React.lazy(() => import("./views/DashboardTenant"));
-const DashboardWorker = React.lazy(() => import("./views/DashboardWorker"));
+const DashboardAdmin = React.lazy(() => import('./views/DashboardAdmin'));
+const DashboardUser = React.lazy(() => import('./views/DashboardUser'));
+const DashboardTenant = React.lazy(() => import('./views/DashboardTenant'));
+const DashboardWorker = React.lazy(() => import('./views/DashboardWorker'));
 
 flatpickr.localize(Polish);
 flatpickr.defaultConfig.time_24hr = true;
 
 const createStoreWithMiddleware = composeWithDevTools(
-  applyMiddleware(reduxThunk)
+  applyMiddleware(reduxThunk),
 )(createStore);
 
 export const store = createStoreWithMiddleware(reducers);
 
 const queryClient = new QueryClient();
 
-export const history = createBrowserHistory({ basename: "/" });
+export const history = createBrowserHistory({ basename: '/' });
 
 const AppGlobalStyles = () => {
   const { tenant } = useTenant();
 
   if (tenant && tenant.id) {
-    return <GlobalStyle tenantId={tenant.id} />;
+    return (
+      <>
+        <GlobalFont tenantId={tenant.id} />
+        <GlobalStyle tenantId={tenant.id} />
+      </>
+    );
   }
 
   return <></>;
@@ -218,12 +223,12 @@ const listenToWindowEvent =
     window.addEventListener(name, handleEvent);
   };
 
-store.dispatch(listenToWindowEvent("offline", appStatus));
+store.dispatch(listenToWindowEvent('offline', appStatus));
 
-store.dispatch(listenToWindowEvent("online", appStatus));
+store.dispatch(listenToWindowEvent('online', appStatus));
 
 store.dispatch(
-  appStatus({ type: window.navigator.onLine ? "online" : "offline" })
+  appStatus({ type: window.navigator.onLine ? 'online' : 'offline' }),
 );
 
 export { ReactSelect };

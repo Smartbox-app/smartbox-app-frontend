@@ -38,6 +38,7 @@ const SingleStorage = ({ single }: Props) => {
   const isWarning = [
     RentStatus.noPaidExtension,
     RentStatus.noPaidExtensionWithWarning,
+    RentStatus.noPaidPeriod
   ].includes(single.status);
   return (
     <StyledStorage

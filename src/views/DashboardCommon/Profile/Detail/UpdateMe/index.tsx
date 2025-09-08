@@ -1,27 +1,23 @@
-import React from "react";
-import { connect, useDispatch } from "react-redux";
-import { ItfApiForm } from "itf_formbuilder_react";
-import ReactCreatableSelect from "react-select/creatable";
-import { bindActionCreators } from "redux";
-import { AddGiftReq } from "smartbox-types";
+import React from 'react';
+import { useDispatch } from 'react-redux';
+import { ItfApiForm } from 'itf_formbuilder_react';
+import ReactCreatableSelect from 'react-select/creatable';
+import { AddGiftReq } from 'smartbox-types';
 import {
   FormContainer,
   ButtonsContainer,
   FieldsColumn,
-} from "../../../../../components/Layout";
-import { Button, Spinner } from "../../../../../components/Branded";
-import ApiService from "../../../../../services/api-service";
-import { formOnTranslateString } from "../../../../../utils/trans-form";
-import { modal, notifications, user } from "../../../../../actions";
-import { ReactSelectOverride } from "../../../../../components/Common/ReactSelectOverride";
-import { mapFields } from "../../../../../utils/fields-mapper";
-import { useQueryClient } from "@tanstack/react-query";
+} from '../../../../../components/Layout';
+import { Button, Spinner } from '../../../../../components/Branded';
+import ApiService from '../../../../../services/api-service';
+import { formOnTranslateString } from '../../../../../utils/trans-form';
+import { modal } from '../../../../../actions';
+import { ReactSelectOverride } from '../../../../../components/Common/ReactSelectOverride';
+import { mapFields } from '../../../../../utils/fields-mapper';
+import { useQueryClient } from '@tanstack/react-query';
+import { successNotification } from 'src/actions/notifications';
 
-interface Props {
-  successNotification: (text: string) => void;
-}
-
-const UpdateMe = ({ successNotification }: Props) => {
+export const UpdateMe = () => {
   const queryClient = useQueryClient();
   const dispatch = useDispatch();
 
@@ -39,8 +35,8 @@ const UpdateMe = ({ successNotification }: Props) => {
     </ButtonsContainer>
   );
 
-  const fetchUrl = "user/form/update-me";
-  const sendUrl = "user/me";
+  const fetchUrl = 'user/form/update-me';
+  const sendUrl = 'user/me';
 
   const customSendFetcher = (formId: string, values: AddGiftReq) =>
     ApiService.sendForm(
@@ -48,7 +44,7 @@ const UpdateMe = ({ successNotification }: Props) => {
       {
         ...values,
       },
-      "PATCH"
+      'PATCH',
     );
 
   return (
@@ -63,9 +59,9 @@ const UpdateMe = ({ successNotification }: Props) => {
           sendFetcher={customSendFetcher}
           submitButton={submitButton}
           onSavedSuccessfully={async () => {
-            successNotification("notification.dataChangedSuccess");
+            dispatch(successNotification('notification.dataChangedSuccess'));
             dispatch(modal.hideModal());
-            queryClient.invalidateQueries({ queryKey: ["my-details"] });
+            queryClient.invalidateQueries({ queryKey: ['my-details'] });
           }}
           onTranslateString={formOnTranslateString}
           onRenderFullField={mapFields}
@@ -78,8 +74,3 @@ const UpdateMe = ({ successNotification }: Props) => {
     </FormContainer>
   );
 };
-
-const mapDispatchToProps = (dispatch: any) =>
-  bindActionCreators({ ...modal, ...notifications, ...user }, dispatch);
-
-export default connect(null, mapDispatchToProps)(UpdateMe);

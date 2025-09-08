@@ -90,6 +90,34 @@ const allowedTags = {
     'cost',
     'paymentUntil',
   ],
+  [TemplateType.RENTAL_PERIOD_PAID_SMS]: [
+    'name',
+    'number',
+    'company',
+    'cost',
+    'periodFrom',
+    'periodTo',
+  ],
+  [TemplateType.RENTAL_PERIOD_PAID_ADMIN_NOTIFICATION_MAIL]: [
+    'name',
+    'number',
+    'company',
+    'cost',
+    'rentFrom',
+    'rentUntil',
+    'periodFrom',
+    'periodTo',
+  ],
+  [TemplateType.RENTAL_PERIOD_PAID_MAIL]: [
+    'name',
+    'number',
+    'company',
+    'cost',
+    'rentFrom',
+    'rentUntil',
+    'periodFrom',
+    'periodTo',
+  ],
 };
 
 export const Manage = () => {

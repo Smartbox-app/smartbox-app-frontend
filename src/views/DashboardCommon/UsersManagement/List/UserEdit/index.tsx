@@ -43,7 +43,7 @@ const UserEdit = ({ userId, successNotification, hideModal, refreshApiTableData 
       <FormHeader title="application.editUserData" />
       <FieldsColumn>
         <ItfApiForm
-          formId="editStockDiscountForm"
+          formId="editUserForm"
           schemaMayBeDynamic={false}
           schemaCacheEnabled={false}
           loadingInfo={<Spinner transparent />}

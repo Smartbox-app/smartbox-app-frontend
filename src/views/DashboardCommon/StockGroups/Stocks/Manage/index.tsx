@@ -29,11 +29,14 @@ import {
   Add,
   Map as MapIcon,
 } from 'src/icons';
+import GateStatus from 'src/views/DashboardCommon/GateStatus';
+import { useTenantNaming } from 'src/hooks/useTenantNaming';
 
 const Manage = () => {
   const { stockId } = useParams<{ stockId: string }>();
   const { data: user } = useGetMyDetailsQuery();
   const tenant = useSelector((state: ApplicationState) => state.tenant);
+  const {getText} = useTenantNaming();
   const [tenantForAdmin, setTenantForAdmin] = useState<TenantEntity>();
   const [isMapActive, setMapActive] = useState<boolean>(false);
 
@@ -80,7 +83,7 @@ const Manage = () => {
           },
           {
             to: `/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/groups`,
-            text: 'application.boxesGroups',
+            text: getText('boxes_groups'),
             icon: <GroupsIcon />,
           },
           {
@@ -90,7 +93,7 @@ const Manage = () => {
           },
           {
             to: `/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/boxes`,
-            text: 'application.stockBoxes',
+            text: getText('boxes'),
             icon: <BoxesIcon />,
           },
         ]
@@ -122,15 +125,12 @@ const Manage = () => {
       }
       elements.push({
         to: `/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/handling`,
-        text: 'application.stockHandling',
+        text: getText('handling'),
         icon: <HomeWifi />,
       });
     }
 
-    if (
-      hasFullAccess &&
-      (tenantForAdmin?.allowAddonsToRent || tenant?.allowAddonsToRent)
-    ) {
+    if (hasFullAccess && tenantForAdmin?.allowAddonsToRent) {
       elements.push({
         to: `/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/addons`,
         text: 'application.stockAddons',
@@ -143,7 +143,8 @@ const Manage = () => {
 
   return (
     <>
-      <PageHeader>{__('application.stockManage')}</PageHeader>
+      <PageHeader>{getText('manage')}</PageHeader>
+      <GateStatus stockId={stockId} />
       <Section>
         <Tabs tabs={tabs} />
       </Section>

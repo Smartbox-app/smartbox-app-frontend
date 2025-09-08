@@ -58,6 +58,13 @@ const MapView = ({
     setUseGrid((prev) => !prev);
   };
 
+  const filteredBoxes = boxes.filter((box, index, all) => {
+    const lastIndex = boxes.findLastIndex(subBox => box.id === subBox.id);
+
+    if(lastIndex === index) return true;
+    return false;
+  })
+
   return (
     <div>
       {!admin && !user ? (
@@ -78,7 +85,7 @@ const MapView = ({
           {!admin && (
             <MapGrid height={stock.mapHeight} width={stock.mapWidth} />
           )}
-          {boxes.map((box) => (
+          {filteredBoxes.map((box) => (
             <SingleBox
               box={box}
               highlightId={highlightId}

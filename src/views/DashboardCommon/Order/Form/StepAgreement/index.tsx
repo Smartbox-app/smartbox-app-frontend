@@ -39,6 +39,8 @@ import { pdfjs } from 'react-pdf';
 import { useGetMyDetailsQuery } from 'src/queries';
 import { Button, Section, Stack } from 'src/components/ui';
 import { ArrowLeft, ArrowRight, SearchZoomIn } from 'src/icons';
+import { prepareAndSentPaymentForm } from 'src/utils/payment-form';
+import { format } from 'date-fns';
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 
@@ -80,34 +82,6 @@ const StepAgreement = ({ formData, isResignationMarked }: Props): any => {
       history.push(`/${UserService.getSlugByRole(user.role)}/order/step/stock`);
     }
   }, []);
-
-  const prepareAndSentPaymentForm = (data: PayForRentResponse) => {
-    const { url, paymentData } = data;
-    if (!url || !paymentData) return;
-
-    const { hash, ...restData } = paymentData;
-    const form = document.createElement('form');
-    form.method = 'post';
-    form.action = url;
-
-    const hashInput = document.createElement('input');
-    hashInput.value = hash;
-    hashInput.name = 'hashExtended';
-    hashInput.type = 'hidden';
-    form.appendChild(hashInput);
-
-    Object.keys(restData).forEach((key) => {
-      const input = document.createElement('input');
-      input.type = 'hidden';
-      input.value = restData[key];
-      input.name = key;
-      form.appendChild(input);
-    });
-
-    document.body.appendChild(form);
-    form.submit();
-    form.remove();
-  };
 
   const startNewRent = async (data: FormData) => {
     setLoading(true);
@@ -203,6 +177,10 @@ const StepAgreement = ({ formData, isResignationMarked }: Props): any => {
 
   const { handleSubmit } = useForm();
 
+
+  const formatOnlyDate = (date: Date) => format(date, "yyyy-MM-dd")
+  
+
   const getFormDataFromCollection = (
     collection: RentBoxReq | ExtendRentalReq,
   ): FormData => {
@@ -210,9 +188,9 @@ const StepAgreement = ({ formData, isResignationMarked }: Props): any => {
 
     for (const key in collection) {
       const value = collection[key];
-      if (key === 'startAt') rentFormData.append(key, value.toISOString());
+      if (key === 'startAt') rentFormData.append(key, formatOnlyDate(value));
       else if (key === 'finishAt')
-        rentFormData.append(key, value.toISOString());
+        rentFormData.append(key, formatOnlyDate(value));
       else if (key === 'orderAddons')
         rentFormData.append(key, JSON.stringify(value));
       else rentFormData.append(key, value);
@@ -341,7 +319,6 @@ const StepAgreement = ({ formData, isResignationMarked }: Props): any => {
       frameRef.current.contentWindow?.document;
 
     if (!iframeDoc?.body.children.length) {
-  
       frameRef.current.src += '';
       frameRef.current.contentWindow?.location.reload();
 
@@ -357,7 +334,6 @@ const StepAgreement = ({ formData, isResignationMarked }: Props): any => {
   };
 
   useEffect(() => {
-
     if (!frameRef.current) return;
 
     if (!frameRef.current.contentDocument?.body.children.length) {
@@ -385,11 +361,8 @@ const StepAgreement = ({ formData, isResignationMarked }: Props): any => {
 
   params.append('addons', JSON.stringify(simplifiedAddons));
 
-
   const url = `${ApiService.url}tenant/agreement/${tenant.id}?${params}`;
   const encodedUrl = encodeURIComponent(url);
-
-
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>

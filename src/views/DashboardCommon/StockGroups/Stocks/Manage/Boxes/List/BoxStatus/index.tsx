@@ -25,6 +25,8 @@ ${props => props.status === RentStatus.toCheck && css`
 background-color: ${props.stock?.colorToCheck}`};
 ${props => props.status === RentStatus.noPaidExtension && css`
 background-color: ${props.stock?.colorNoPaidExtension}`};
+${props => props.status === RentStatus.noPaidPeriod && css`
+background-color: ${props.stock?.colorNoPaidPeriod}`};
 ${props => props.status === RentStatus.noPaidExtensionWithWarning && css`
 background-color: ${props.stock?.colorNoPaidExtensionWithWarning}`};
 ${props => props.status === RentStatus.outOfService && css`

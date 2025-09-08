@@ -78,6 +78,10 @@ interface SetOrderStock {
   };
 }
 
+interface ClearOrderStock {
+  type: "CLEAR_ORDER_STOCK";
+}
+
 interface SetOrderBoxGroup {
   type: "SET_ORDER_BOX_GROUP";
   payload: {
@@ -205,6 +209,7 @@ interface FetchRentMinPeriod {
 type Action =
   // refactored
   | SetOrderStock
+  | ClearOrderStock
   | SetOrderBoxGroup
   | SetMinRentPeriod
   | SetRentStartDate
@@ -289,6 +294,15 @@ export default (
         stockId: action.payload.stockId,
         stockName: action.payload.stockName,
         stockAddress: action.payload.stockAddress,
+      };
+    }
+
+    case "CLEAR_ORDER_STOCK": {
+      return {
+        ...state,
+        stockId: '',
+        stockName: '',
+        stockAddress:'',
       };
     }
 

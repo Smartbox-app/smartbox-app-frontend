@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { formatPrice } from '../../../../../../utils/format-price';
-import { dateOnly } from '../../../../../../utils/format-date';
+import { dateOnly, dateOnlyLocalTime } from '../../../../../../utils/format-date';
 
 import './SummaryTable.scss';
 import { __ } from '../../../../../../helpers/i18n';
@@ -90,7 +90,7 @@ const SummaryTable = ({
             <Header variant="h2">{__('application.startTerm')}</Header>
           </StyledCell>
           <StyledCell className="cell fat">
-            <span>{dateOnly(dateStart)}</span>
+            <span>{dateOnlyLocalTime(dateStart)}</span>
           </StyledCell>
         </StyledRow>
         <StyledRow className="row">
@@ -98,7 +98,7 @@ const SummaryTable = ({
             <Header variant="h2">{__('application.finishTerm')}</Header>
           </StyledCell>
           <StyledCell className="cell fat">
-            <span>{dateOnly(dateEnd)}</span>
+            <span>{dateOnlyLocalTime(dateEnd)}</span>
           </StyledCell>
         </StyledRow>
         <StyledRow className="row">

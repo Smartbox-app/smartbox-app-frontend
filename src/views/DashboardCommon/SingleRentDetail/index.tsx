@@ -20,6 +20,8 @@ import { Description } from './RentDescription';
 import { isAfter, isBefore } from 'date-fns';
 import { Header, PageHeader, Section } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
+import { PeriodUnpaidAlert } from './PeriodUnpaidAlert';
+import { useTenantNaming } from 'src/hooks/useTenantNaming';
 
 interface RouteProps {
   orderId: string;
@@ -36,6 +38,7 @@ const StyledGatesHeader = styled.div`
 const SingleRentDetail = ({ showUserStockMap, match }: Props) => {
   const [singleRent, setSingleRent] = useState<MyRentDetails>();
   const [loading, setLoading] = useState(false);
+  const {getText} = useTenantNaming();
 
   const getSingleRent = async () => {
     setLoading(true);
@@ -72,9 +75,10 @@ const SingleRentDetail = ({ showUserStockMap, match }: Props) => {
   return (
     <>
       <PageHeader>
-        {__('application.miniStorage')}: {singleRent.boxNumber}
+        {getText('box')}: {singleRent.boxNumber}
       </PageHeader>
       <MissingPaymentAlert rent={singleRent} />
+      <PeriodUnpaidAlert rent={singleRent} />
       <Section>
         <Action rent={singleRent} isMapActive={singleRent.isMap} />
         {!showUserStockMap ? (

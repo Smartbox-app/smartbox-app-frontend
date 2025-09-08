@@ -6,12 +6,14 @@ import { __ } from '../../../../../helpers/i18n';
 import Legend from './Legend';
 
 import './History.scss';
+import { useTenantNaming } from 'src/hooks/useTenantNaming';
 
 interface Props {
   data: MyRentList[];
 }
 
 const History = ({ data }: Props) => {
+  const { getText } = useTenantNaming();
   if (data.length === 0)
     return <Alert type="notice" text="application.lackOfHistory" />;
 
@@ -27,7 +29,7 @@ const History = ({ data }: Props) => {
           {__('application.orderStepSize')}
         </span>
         <span className="header-cell stock last">
-          {__('application.stock')}
+          {getText('name')}
         </span>
       </div>
       <ul className="history-list">{dataToDisplay}</ul>

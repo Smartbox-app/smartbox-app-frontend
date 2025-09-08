@@ -6,10 +6,13 @@ import { connect, useDispatch, useSelector } from 'react-redux';
 import { addDays, endOfDay, isBefore, startOfDay } from 'date-fns';
 import {
   AddonUserFileRequirementType,
+  DebtResolveType,
   IStock,
   MyRentDetails,
   MyRentList,
+  RentPaymentType,
   RentStatus,
+  StockPaymentType,
   UserRes,
 } from 'smartbox-types';
 import { DateInput } from '../../../../../components/Common';
@@ -31,6 +34,7 @@ import {
   clearAddonPrice,
   setOrderStock,
   setRentEndDate,
+  setRentPaymentType,
   setRentStartDate,
 } from '../../../../../actions/order';
 import { Addons } from '../Common/Addons';
@@ -42,6 +46,9 @@ import { darken, lighten } from 'polished';
 import { useGetMyDetailsQuery } from 'src/queries';
 import { Button, Section, Stack } from 'src/components/ui';
 import { ArrowRight } from 'src/icons';
+import { dateOnly } from 'src/utils/format-date';
+import { useTenant } from 'src/hooks/useTenant';
+import { toZonedTime } from 'date-fns-tz';
 
 const StyledCalendarPicker = styled.div`
   margin: 0 -10px;
@@ -59,13 +66,20 @@ const StepExtensionDuration = ({ clearPaymentDetails }: Props) => {
   const { data: user } = useGetMyDetailsQuery();
   const dispatch = useDispatch();
   const { rentId, step } = useParams<{ step: string; rentId?: string }>();
+  const { tenant } = useTenant();
   const [rent, setRent] = useState<MyRentDetails>();
   const minRentPeriod = useSelector(
     (state: ApplicationState) => state.order.minRentPeriod,
   );
   // box groupId is used directly only when new rent is created
-  const { startDate, endDate, loadingPrice, orderAddons, orderAddonsId } =
-    useSelector((state: ApplicationState) => state.order);
+  const {
+    startDate,
+    endDate,
+    loadingPrice,
+    rentPaymentType,
+    orderAddons,
+    orderAddonsId,
+  } = useSelector((state: ApplicationState) => state.order);
   const [stock, setStock] = useState<IStock>();
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -103,20 +117,33 @@ const StepExtensionDuration = ({ clearPaymentDetails }: Props) => {
   useEffect(() => {
     if (!rent) return;
     getStock();
-    dispatch(setRentStartDate(addDays(startOfDay(new Date(rent.finishAt)), 1)));
+    dispatch(setRentStartDate(addDays(new Date(rent.finishAt), 1)));
 
     dispatch(setOrderStock(rent.stockId, rent.stockName, rent.stockAddress));
   }, [rent]);
 
   useEffect(() => {
-    if (!rent || !minRentPeriod) return;
+    if (!rent || !minRentPeriod || !tenant) return;
+
+    // if user is paying debt and debt is resolved to today only
+    if (
+      [
+        RentStatus.noPaidExtension,
+        RentStatus.noPaidExtensionWithWarning,
+      ].includes(rent.status)
+    ) {
+      if (tenant.debtResolveType === DebtResolveType.DebtOnly) {
+        dispatch(setRentEndDate(endOfDay(new Date())));
+        return;
+      }
+    }
 
     const newEnd = addDays(startOfDay(new Date(rent.finishAt)), minRentPeriod);
-    const newEndOrToday = isBefore(newEnd, new Date()) ? startOfDay(addDays(new Date(), 1)) : newEnd;
-    dispatch(
-      setRentEndDate(endOfDay(newEndOrToday)),
-    );
-  }, [minRentPeriod, rent]);
+    const newEndOrToday = isBefore(newEnd, new Date())
+      ? startOfDay(addDays(new Date(), 1))
+      : newEnd;
+    dispatch(setRentEndDate(endOfDay(newEndOrToday)));
+  }, [minRentPeriod, rent, tenant]);
 
   useEffect(() => {
     if (!rentId || !endDate) return;
@@ -128,6 +155,35 @@ const StepExtensionDuration = ({ clearPaymentDetails }: Props) => {
   useEffect(() => {
     calculateAllAddons();
   }, [orderAddonsId]);
+
+  useEffect(() => {
+    if (!stock || rentPaymentType || !rent) return;
+
+    if (
+      [
+        RentStatus.noPaidExtension,
+        RentStatus.noPaidExtensionWithWarning,
+      ].includes(rent.status)
+    ) {
+      dispatch(setRentPaymentType(RentPaymentType.InAdvance));
+      return;
+    }
+
+    switch (stock.clientPaymentTypeConfig) {
+      case StockPaymentType.InAdvance: {
+        dispatch(setRentPaymentType(RentPaymentType.InAdvance));
+        break;
+      }
+      case StockPaymentType.Installments: {
+        dispatch(setRentPaymentType(RentPaymentType.Installments));
+        break;
+      }
+      default: {
+        dispatch(setRentPaymentType(RentPaymentType.InAdvance));
+        break;
+      }
+    }
+  }, [stock, rentPaymentType, rent]);
 
   const calculateAllAddons = () => {
     if (!endDate) return;
@@ -150,8 +206,14 @@ const StepExtensionDuration = ({ clearPaymentDetails }: Props) => {
     if (!rent) return;
 
     // IF rent has status noPaidExtension
-    if (rent.status === RentStatus.noPaidExtension)
-      return startOfDay(new Date());
+    if (
+      [
+        RentStatus.noPaidExtension,
+        RentStatus.noPaidExtensionWithWarning,
+      ].includes(rent.status) &&
+      tenant?.debtResolveType === DebtResolveType.DebtOnly
+    )
+      return endOfDay(new Date());
 
     const minDate = addDays(startOfDay(new Date(rent.finishAt)), addAmount);
     if (isBefore(minDate, new Date())) return startOfDay(new Date());
@@ -204,6 +266,14 @@ const StepExtensionDuration = ({ clearPaymentDetails }: Props) => {
     return true;
   }, [orderAddons]);
 
+  const formatSelection = (selected: Date) => {
+    console.log('SELECTED', selected);
+    return selected;
+    const timeZone = 'Europe/Warsaw';
+    const zonedDate = toZonedTime(selected, timeZone);
+    return zonedDate;
+  };
+
   if (!user) return null;
 
   if (!rent || !minRentPeriod) return <Spinner overlay />;
@@ -212,21 +282,43 @@ const StepExtensionDuration = ({ clearPaymentDetails }: Props) => {
     <form className="form-step-two">
       <Stack>
         {loadingPrice && <Spinner halfTransparent overlay />}
-        <Section>
-          <StyledCalendarPicker className="calendars-picker-wrapper">
-            <DateInput
-              name="endDate"
-              label="application.selectEndRentDate"
-              minDate={setMinDate(minRentPeriod, true)}
-              highlightStart={startDate}
-              highlightEnd={endDate}
-              value={endDate || undefined}
-              onChange={([selected]) => {
-                dispatch(setRentEndDate(endOfDay(selected)));
-              }}
-            />
-          </StyledCalendarPicker>
-        </Section>
+        {!(
+          [
+            RentStatus.noPaidExtension,
+            RentStatus.noPaidExtensionWithWarning,
+          ].includes(rent.status) &&
+          tenant?.debtResolveType === DebtResolveType.DebtOnly
+        ) ? (
+          <Section>
+            <StyledCalendarPicker className="calendars-picker-wrapper">
+              <DateInput
+                name="endDate"
+                label="application.selectEndRentDate"
+                minDate={setMinDate(minRentPeriod, true)}
+                highlightStart={startDate}
+                highlightEnd={endDate}
+                value={endDate || undefined}
+                onChange={([selected]) => {
+                  dispatch(setRentEndDate(selected));
+                }}
+              />
+            </StyledCalendarPicker>
+          </Section>
+        ) : null}
+        {rent &&
+        [
+          RentStatus.noPaidExtension,
+          RentStatus.noPaidExtensionWithWarning,
+        ].includes(rent.status) ? (
+          <Section>
+            <p>
+              Opłacasz zaległość dla Twojego wynajmu{' '}
+              <strong>{dateOnly(addDays(new Date(rent.finishAt), 1))}</strong> -{' '}
+              {endDate ? <strong>{dateOnly(endDate)}</strong> : null}
+            </p>
+          </Section>
+        ) : null}
+
         <Addons stockId={rent.stockId} />
 
         {stock ? <PaymentType stock={stock} rent={rent} /> : null}

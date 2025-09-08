@@ -22,6 +22,9 @@ export class StockList extends BaseResponse {
   name: string;
   @Prop()
   address: string;
+
+  lat?: string;
+  lon?: string;
 }
 
 export class StockDiscountList extends BaseResponse {
@@ -112,6 +115,7 @@ export interface StockManageReq {
   colorReserved: string;
   colorRented: string;
   colorNoPaidExtension: string;
+  colorNoPaidPeriod: string;
   colorNoPaidExtensionWithWarning: string;
   colorToCheck: string;
   colorToExplain: string;
