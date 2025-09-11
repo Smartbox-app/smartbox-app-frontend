@@ -42,6 +42,7 @@ export const GoogleButton = () => {
       'przechowajto',
       'szuflandia',
       'wlasnybox',
+      'nidobox',
     ].includes(tenant.identifier)
   )
     return null;
