@@ -38,7 +38,7 @@ const StyledGatesHeader = styled.div`
 const SingleRentDetail = ({ showUserStockMap, match }: Props) => {
   const [singleRent, setSingleRent] = useState<MyRentDetails>();
   const [loading, setLoading] = useState(false);
-  const {getText} = useTenantNaming();
+  const { getText } = useTenantNaming();
 
   const getSingleRent = async () => {
     setLoading(true);
@@ -104,9 +104,7 @@ const SingleRentDetail = ({ showUserStockMap, match }: Props) => {
           {singleRent.gates.map((gate) => (
             <Gate key={gate.id} gate={gate} />
           ))}
-          {singleRent.accessControl === AccessControl.ksm && (
-            <OpenBox id={singleRent.boxId} />
-          )}
+          {singleRent.controlled && <OpenBox id={singleRent.boxId} />}
         </Section>
       ) : null}
       {!showUserStockMap ? (
