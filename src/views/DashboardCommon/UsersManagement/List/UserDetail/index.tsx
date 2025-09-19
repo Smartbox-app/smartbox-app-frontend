@@ -1,14 +1,20 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { UserListRes, UserRes } from 'smartbox-types';
+import { UserListRes, UserRes, UserRole } from 'smartbox-types';
 import { user } from '../../../../../actions';
-import { SimpleHeader } from '../../../../../components/Layout';
+import {
+  Section,
+  SectionHeader,
+  SimpleHeader,
+} from '../../../../../components/Layout';
 
 import './UserDetail.scss';
 import { ApplicationState } from '../../../../../reducers';
 import DataGroup from './DataGroup';
-import UserRentList from './UserRentList';
+import UserRentList from 'src/views/DashboardCommon/UserRentList';
+import { Row } from 'src/components/Common';
+import { Spinner } from 'src/components/Branded';
 
 interface Props {
   userId: string;
@@ -17,42 +23,69 @@ interface Props {
   singleUser: UserRes | any;
 }
 
-const UserDetail = ({ userId, userData, fetchSingleUser, singleUser }: Props) => {
+const UserDetail = ({
+  userId,
+  userData,
+  fetchSingleUser,
+  singleUser,
+}: Props) => {
   useEffect(() => {
     fetchSingleUser(userId);
   }, []);
 
+  if (!userData) return <Spinner />;
   return (
-    <div className="user-detail-wrapper">
-      <SimpleHeader title='application.customerDetails' />
-      <div className="single-address-content">
-        <div className="addresses-wrapper">
-          <DataGroup
-            icon="fa-home"
-            title='application.customerData'
-            rowData={[
-              `${singleUser?.firstName} ${singleUser?.lastName}`,
-              singleUser?.phone,
-              singleUser?.street,
-              singleUser?.city,
-              singleUser?.postCode,
-            ]}
+    <>
+      <Section highlight>
+        <SectionHeader title="application.userData" />
+        <Row label="application.firstName" content={userData.firstName} />
+        <Row label="application.lastName" content={userData.lastName} />
+        <Row label="application.userRole" content={userData.role} />
+      </Section>
+      <Section highlight>
+        <SectionHeader title="application.contactData" />
+        <Row label="application.mail" content={userData.email} />
+        <Row label="application.phone" content={userData.phone} />
+        {userData.role === UserRole.user && (
+          <>
+            <Row label="application.city" content={userData.city} />
+            <Row label="application.street" content={userData.street} />
+            <Row label="application.postCode" content={userData.postCode} />
+          </>
+        )}
+      </Section>
+      {userData.companyData && userData.role === UserRole.user && (
+        <Section highlight>
+          <SectionHeader title="application.contactCompanyData" />
+          <Row
+            label="application.companyName"
+            content={userData.companyData.companyName}
           />
-          <DataGroup
-            icon="fa-file-o"
-            title='application.customerCompanyData'
-            rowData={[
-              singleUser?.companyData?.companyName,
-              singleUser?.companyData?.companyStreet,
-              singleUser?.companyData?.companyCity,
-              singleUser?.companyData?.companyPostCode,
-              singleUser?.companyData?.nip,
-            ]}
+          <Row label="application.nip" content={userData.companyData.nip} />
+          <Row
+            label="application.city"
+            content={userData.companyData.companyCity}
           />
-          <UserRentList rentList={singleUser?.activeRents || []} />
-        </div>
-      </div>
-    </div>
+          <Row
+            label="application.street"
+            content={userData.companyData.companyStreet}
+          />
+          <Row
+            label="application.postCode"
+            content={userData.companyData.companyPostCode}
+          />
+          {/* USER CANT CHANGE HIS COMPANY DATA */}
+          {/* <ButtonsContainer>
+          <Button
+            text="application.edit"
+            primary
+            click={() => dispatch(showModal(<UpdateCompany />))}
+          />
+        </ButtonsContainer> */}
+        </Section>
+      )}
+      <UserRentList rentList={singleUser?.activeRents || []} />
+    </>
   );
 };
 

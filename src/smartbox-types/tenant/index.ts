@@ -1,5 +1,5 @@
-import { LocationSelectType } from "../location";
-import { DebtResolveType } from "../debt";
+import { LocationSelectType } from '../location';
+import { DebtResolveType } from '../debt';
 
 export interface TenantEntity {
   id: string;
@@ -41,6 +41,7 @@ export interface TenantEntity {
   debtResolveType: DebtResolveType;
   locationSelectType: LocationSelectType;
   namingType: NamingType;
+  agreementDisclaimer: string;
 }
 
 export type UpdateTenantReq = Pick<
@@ -53,6 +54,7 @@ export type UpdateTenantReq = Pick<
   | 'contactPhone'
   | 'additionalMailInfo'
   | 'tax'
+  | 'agreementDisclaimer'
 >;
 export type UpdateTenantByAdminReq = Pick<
   TenantEntity,
@@ -84,7 +86,9 @@ export type UpdateTenantByAdminReq = Pick<
   | 'debtResolveType'
   | 'locationSelectType'
   | 'namingType'
+  | 'agreementDisclaimer'
 >;
+
 export type TenantForUsers = Omit<
   TenantEntity,
   | 'allowedBoxesCount'
@@ -101,9 +105,10 @@ export type TenantForUsers = Omit<
   | 'paymentSystemSecretKey'
   | 'paymentSystemApiKey'
   | 'allowAddonsToRent'
->;
+> & { smsAvailable: boolean };
+
 
 export enum NamingType {
-    Stock = 'stock',
-    Location = 'location'
+  Stock = 'stock',
+  Location = 'location',
 }

@@ -25,7 +25,8 @@ const emailTemplates = [
   TemplateType.RENTAL_PERIOD_PAID_ADMIN_NOTIFICATION_MAIL,
   TemplateType.RENTAL_PERIOD_PAID_ADMIN_NOTIFICATION_MAIL,
   TemplateType.NO_PERIOD_PAYMENT_EMAIL,
-  TemplateType.PERIOD_PAYMENT_ENDS_EMAIL
+  TemplateType.PERIOD_PAYMENT_ENDS_EMAIL,
+  TemplateType.BOX_GROUP_FREE_EMAIL
 ];
 
 const smsTemplates = [
@@ -42,7 +43,8 @@ const smsTemplates = [
   TemplateType.PERIOD_PAYMENT_SMS,
   TemplateType.RENTAL_PERIOD_PAID_SMS,
   TemplateType.NO_PERIOD_PAYMENT_SMS,
-  TemplateType.PERIOD_PAYMENT_ENDS_SMS
+  TemplateType.PERIOD_PAYMENT_ENDS_SMS,
+  TemplateType.BOX_GROUP_FREE_SMS
 ];
 
 export const List = () => {

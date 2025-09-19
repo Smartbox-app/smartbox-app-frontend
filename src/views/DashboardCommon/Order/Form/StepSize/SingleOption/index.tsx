@@ -4,9 +4,8 @@ import './SingleOption.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { ApplicationState } from '../../../../../../reducers';
 import { Spinner } from '../../../../../../components/Branded';
-import styled, { css, DefaultTheme } from 'styled-components';
+import styled, { DefaultTheme } from 'styled-components';
 import { BoxGroupUserRes } from 'smartbox-types';
-import ApiService from '../../../../../../services/api-service';
 import { PriceInfo } from '../PriceInfo';
 import { setBoxGroup, setMinRentPeriod } from '../../../../../../actions/order';
 import {
@@ -14,6 +13,9 @@ import {
   getColorForBackground,
 } from '../../../../../../utils/color';
 import { Card } from 'src/components/ui';
+import { OptionImage } from './components/OptionImage';
+import { OptionData } from './components/OptionData';
+import { OptionNotification } from './components/OptionNotification';
 
 export type SingleOptionType = {
   name: string;
@@ -30,25 +32,6 @@ interface Props {
   disable?: boolean;
 }
 
-const StyledSingleOptionWrapper = styled.div<{ available: boolean }>`
-  position: relative;
-  input[type='radio']:checked + .single-option {
-    .radio-img {
-      border: 2px solid ${(props) => props.theme.colors.secondary};
-    }
-  }
-
-  ${(props) =>
-    !props.available &&
-    css`
-      cursor: not-allowed;
-
-      .radio-img {
-        opacity: 0.2;
-      }
-    `}
-`;
-
 const Content = styled('div')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
@@ -57,33 +40,8 @@ const Content = styled('div')(({ theme }) => ({
   flexDirection: 'column',
   gap: theme.spacing * 2,
   flex: 1,
-  width: '100%'
+  width: '100%',
 }));
-
-const StyledSizeContainer = styled('div')<{ disabled?: boolean }>(
-  ({ theme, disabled }) => ({
-    backgroundColor: theme.colors.background.secondary,
-    width: '100%',
-    borderRadius: theme.radius.innerSurface,
-    textAlign: 'center',
-    opacity: disabled ? 0.5 : 1,
-    padding: `${theme.spacing * 2}px ${theme.spacing * 4}px`,
-  }),
-);
-
-const StyledAreaVolumeContainer = styled.div<{ disabled?: boolean }>`
-  background-color: transparent;
-  color: ${(props) =>
-    props.disabled
-      ? props.theme.colors.disabled
-      : colorOrDark(props.theme.colors.primary)};
-  text-align: center;
-`;
-
-const StyledImageValue = styled.span`
-  color: ${(props) => colorOrDark(props.theme.colors.primary)};
-  z-index: 1;
-`;
 
 const StyledSingleOption = styled('div')({
   flex: 1,
@@ -147,7 +105,7 @@ const SingleOption = ({ singleOptionData, disable }: Props) => {
   );
 
   const selectOption = (e: ChangeEvent<HTMLInputElement>) => {
-    dispatch(setBoxGroup(singleOptionData.id, singleOptionData.name));
+    dispatch(setBoxGroup(singleOptionData.id, singleOptionData.name, singleOptionData.area ? singleOptionData.area.toString() : ''));
     dispatch(setMinRentPeriod(singleOptionData.minRentPeriod));
   };
 
@@ -176,66 +134,19 @@ const SingleOption = ({ singleOptionData, disable }: Props) => {
               onChange={selectOption}
               disabled={!singleOptionData.available}
             />
-            {singleOptionData.image ? (
-              <div className="svg-wrapper">
-                <img
-                  src={`${ApiService.url}box-group-new/image/${singleOptionData.id}`}
-                  alt={singleOptionData.name}
-                />
-              </div>
-            ) : (
-              <span />
-            )}
-
-            {(singleOptionData.volume || singleOptionData.area) && (
-              <StyledAreaVolumeContainer
-                disabled={!singleOptionData.available || disable}
-              >
-                {singleOptionData.area ? (
-                  <p>
-                    Powierzchnia: <strong>{singleOptionData.area}m²</strong>
-                  </p>
-                ) : null}
-                {singleOptionData.volume ? (
-                  <p>
-                    Objętość: <strong>{singleOptionData.volume}m³</strong>
-                  </p>
-                ) : null}
-              </StyledAreaVolumeContainer>
-            )}
-            {singleOptionData.height &&
-            singleOptionData.width &&
-            singleOptionData.depth ? (
-              <StyledSizeContainer
-                disabled={!singleOptionData.available || disable}
-              >
-                sz. <strong>{singleOptionData.width}m</strong> x gł.{' '}
-                <strong>{singleOptionData.depth}m</strong> x wys.{' '}
-                <strong>{singleOptionData.height}m</strong>
-              </StyledSizeContainer>
-            ) : null}
+            <OptionImage option={singleOptionData} />
+            <OptionData option={singleOptionData} disable={disable} />
 
             <PriceInfo
               box={singleOptionData}
               disabled={!singleOptionData.available || disable}
               active={singleOptionData.id === boxGroupId}
             />
+            <OptionNotification option={singleOptionData} />
           </Content>
         </Card>
       </label>
     </StyledSingleOption>
-  );
-  return (
-    <StyledSingleOptionWrapper
-      available={singleOptionData.available}
-      className="single-option-wrapper"
-    >
-      <StyledImageValue
-        className={`img-value ${disable ? 'img-value-disabled' : ''}`}
-      >
-        {!singleOptionData.available ? 'BRAK' : ''}
-      </StyledImageValue>
-    </StyledSingleOptionWrapper>
   );
 };
 

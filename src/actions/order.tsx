@@ -38,9 +38,9 @@ export const setOrderStock = (
   payload: { stockId, stockAddress, stockName },
 });
 export const clearSelectedStock = () => ({ type: 'CLEAR_ORDER_STOCK' });
-export const setBoxGroup = (boxGroupId: string, boxGroupName: string) => ({
+export const setBoxGroup = (boxGroupId: string, boxGroupName: string, boxGroupArea: string) => ({
   type: 'SET_ORDER_BOX_GROUP',
-  payload: { boxGroupId, boxGroupName },
+  payload: { boxGroupId, boxGroupName, boxGroupArea },
 });
 export const setMinRentPeriod = (days: number) => ({
   type: 'SET_MIN_RENT_PERIOD',

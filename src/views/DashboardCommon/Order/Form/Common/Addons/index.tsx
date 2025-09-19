@@ -30,18 +30,6 @@ const StyledUserFileContainer = styled('div')(({ theme }) => ({
   padding: theme.spacing * 4,
 }));
 
-const StyledAddonHeader = styled('h4')({
-  margin: '10px 0',
-  fontWeight: 700,
-  fontSize: '1.1rem',
-});
-
-const StyledSingleAddon = styled('div')(({ theme }) => ({
-  marginBottom: 24,
-  paddingBottom: 24,
-  borderBottom: `1px solid ${theme.colors.secondary}`,
-}));
-
 interface Props {
   stockId: string;
 }

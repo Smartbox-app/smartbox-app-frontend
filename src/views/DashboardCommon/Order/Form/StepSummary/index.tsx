@@ -8,7 +8,10 @@ import { PaymentType } from 'smartbox-types';
 import { Spinner } from '../../../../../components/Branded';
 import { order, modal, notifications, user } from '../../../../../actions';
 import { ButtonsContainer } from '../../../../../components/Layout';
-import { CheckBox as ControlledCheckbox } from '../../../../../components/Common';
+import {
+  Alert,
+  CheckBox as ControlledCheckbox,
+} from '../../../../../components/Common';
 import { history } from '../../../../../App';
 import { FormType } from '../../../../../types/order-form';
 
@@ -37,10 +40,12 @@ import {
   Header,
   Stack,
   Form,
+  Typography,
 } from 'src/components/ui';
 import { ClassValidatorResolver } from 'src/resolvers/ClassValidatorResolver';
 import { DiscountForm } from './DiscountForm';
 import { ArrowLeft, ArrowRight } from 'src/icons';
+import { textToSimpleMD } from 'src/utils/text-to-simple-md';
 
 interface Props {
   formData: FormType;
@@ -74,9 +79,7 @@ const StepSummary = ({ formData, updateFormData }: Props) => {
     firstName: user?.firstName || '',
     lastName: user?.lastName || '',
     street: user?.street || '',
-    birthDate: user?.birthDate
-      ? new Date(user?.birthDate)
-      : undefined,
+    birthDate: user?.birthDate ? new Date(user?.birthDate) : undefined,
     city: user?.city || '',
     postCode: user?.postCode || '',
     mailToSendInvoice: user?.email || '',
@@ -196,6 +199,11 @@ const StepSummary = ({ formData, updateFormData }: Props) => {
         <FormProvider {...methods}>
           <Stack>
             <Section>
+              {tenant?.agreementDisclaimer ? (
+                <Alert type="notice">
+                  {textToSimpleMD(tenant.agreementDisclaimer)}
+                </Alert>
+              ) : null}
               <TenantDetailsForm disabled={!isFirstRent} />
 
               <Header variant="h2">

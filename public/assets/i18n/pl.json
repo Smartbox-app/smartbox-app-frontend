@@ -232,6 +232,7 @@
       "rentedBy": "Wynajęte przez",
       "phone": "Telefon",
       "email": "Email",
+      "sms": "SMS",
       "userRole": "Stanowisko",
       "continueWith": "Zaloguj się z",
       "yourStoreNumber": "Twój mini magazyn ma numer:",
@@ -280,7 +281,6 @@
       "clickToShowHideDetails": "Naciśnij na rekord aby pokazać/ukryć szczegóły.",
       "404Text": "Coś poszło nie tak, żądana strona nie istnieje.",
       "ApplicationError": "Wystąpił błąd w aplikacji.",
-      "14daysResign": "Zgadzam się na rozpoczęcie świadczenia usług SmartBox przed upływem terminu do odstąpienia od umowy.",
       "discounts": "Promocje",
       "noDiscountsToShow": "Brak promocji do wyświetlenia",
       "workersList": "Lista pracowników",
@@ -618,7 +618,11 @@
       "choosePaymentType": "Wybierz sposób płatności",
       "paymentInAdvance": "Zapłata za cały okres z góry",
       "paymentInstallments": "Płatność podzielona na miesięczne okresy",
-      "useGridForMap": "Przyciągaj do siatki"
+      "useGridForMap": "Przyciągaj do siatki",
+      "notify_when_available": "Powiadom mnie o dostępności",
+      "notification_type": "W jaki sposób chcesz otrzymać powiadomienie o dostępności?",
+      "notification_for": "Powiadomienie o dostępności dla rozmiaru: ",
+      "at_least_one_option_required": "Musisz wybrać przynajmniej jedną opcję"
     },
     "settings": {
       "tax": "Stawka VAT",
@@ -665,7 +669,8 @@
       "accountHasBeenActivated": "Konto zostało aktywowane",
       "stockGroupAddedCorrectly": "Dodano nowy plac",
       "stockGroupUpdatedCorrectly": "Zaktualizowano plac",
-      "userDeleted": "Użytkownik usunięty"
+      "userDeleted": "Użytkownik usunięty",
+      "youWillBeNotified": "Poprawnie zapisano do powiadomienia o dostępności"
     },
     "templates": {
       "user_blocked_email": "Użytkownik zablokowany",
@@ -700,6 +705,10 @@
       "no_period_payment_sms": "Brak płatności za okres wynajmu",
       "rental_period_paid_sms": "Opłacono okres wynajmu",
       "rental_period_paid_admin_notification_email": "Wiadomość do administracji o opłaceniu okres wynajmu",
+      "box_group_free_email": "Skrytka w danym rozmiarze ponownie dostępna",
+      "box_group_free_sms": "Skrytka w danym rozmiarze ponownie dostępna",
+      "period_payment_ends": "Zbliża się koniec terminu płatności za okres wynajmu",
+      "period_payment_ends_sms": "Zbliża się koniec terminu płatności za okres wynajmu",
 
       "name": "Imię użytkownika",
       "company": "Nazwa firmy",
@@ -713,7 +722,8 @@
       "newNumber": "Nowy numer skrytki",
       "paymentUntil": "Płatność do",
       "periodFrom": "Początek okresu",
-      "periodTo": "Koniec okresu"
+      "periodTo": "Koniec okresu",
+      "size": "Rozmiar skrytki"
     }
   }
 }

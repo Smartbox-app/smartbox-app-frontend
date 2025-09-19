@@ -34,10 +34,14 @@ Przypominamy, że w przypadku braku chęci przedłużenia najmu Użytkownik jest
   [TemplateType.RENTAL_ENDS_IN_3_DAYS_EMAIL]: `Cześć {{name}}!
 W dniu {{rentUntil}} kończy się wynajem Twojej skrytki nr {{number}}, nie żegnajmy się jeszcze, to świetna współpraca. Opłać ją aby Twoje rzeczy w {{company}} czuły się bezpiecznie.
 Przypominamy, że w przypadku braku chęci przedłużenia najmu Użytkownik jest zobowiązany dokonać zwrotu schowka najpóźniej z chwilą upływu czasu najmu (tj. godz. 23.59 ostatniego dnia najmu), jest również zobowiązany zabrać wszystkie swoje ruchomości ze skrytki po zakończeniu najmu. W przypadku, gdy Użytkownik nie zabierze swoich ruchomości ze Schowka po zakończeniu Najmu, Operator wezwie Użytkownika do zabrania rzeczy, wyznaczając mu dodatkowy termin, który nie może wynosić mniej niż 1 (słownie: jeden) dni. Jeżeli Użytkownik nie zabierze swoich ruchomości w dodatkowym terminie, Operator jest uprawniony do opróżnienia Schowka we własnym zakresie oraz przekazania ruchomości na adres wskazany przez Użytkownika, na koszt i ryzyko Użytkownika lub utylizacji / usunięcia zawartości Schowka na koszt i ryzyko Użytkownika (wybór pomiędzy przekazaniem a utylizacją należy do Operatora).`,
+  [TemplateType.PERIOD_PAYMENT_ENDS_EMAIL]: `Cześć {{name}}!
+Zbliża się termin płatności {{paymentUntil}} za okres wynajmu Twojej skrytki nr {{number}}.`,
   [TemplateType.RENTAL_ENDS_TODAY_EMAIL]: `Cześć {{name}}!
 Dzisiaj upływa termin wynajmu Twojej skrytki {{number}}. Aby dokonać opłaty lub zakończyć wynajem zaloguj się do aplikacji, kliknij na swój magazyn i dokonaj wybranej czynności. Brak dokonania czynności zablokuje Ci dostęp do skrytki zgodnie z obowiązującym regulaminem {{company}}.
 Przypominamy, że w przypadku braku chęci przedłużenia najmu Użytkownik jest zobowiązany dokonać zwrotu schowka najpóźniej z chwilą upływu czasu najmu (tj. godz. 23.59 ostatniego dnia najmu), jest również zobowiązany zabrać wszystkie swoje ruchomości ze skrytki po zakończeniu najmu. W przypadku, gdy Użytkownik nie zabierze swoich ruchomości ze Schowka po zakończeniu Najmu, Operator wezwie Użytkownika do zabrania rzeczy, wyznaczając mu dodatkowy termin, który nie może wynosić mniej niż 1 (słownie: jeden) dni. Jeżeli Użytkownik nie zabierze swoich ruchomości w dodatkowym terminie, Operator jest uprawniony do opróżnienia Schowka we własnym zakresie oraz przekazania ruchomości na adres wskazany przez Użytkownika, na koszt i ryzyko Użytkownika lub utylizacji / usunięcia zawartości Schowka na koszt i ryzyko Użytkownika (wybór pomiędzy przekazaniem a utylizacją należy do Operatora).
       `,
+  [TemplateType.BOX_GROUP_FREE_EMAIL]: `Cześć {{name}}!
+Rozmiar skrytki {{size}}, którym się interesujesz, jest ponownie dostępny.`,
   [TemplateType.PERIOD_PAYMENT_EMAIL]: `Cześć {{name}}!
 Wystawiliśmy fakturę na kolejny okres Twojego wynajmu skrytki {{number}}, masz czas na zapłatę do {{paymentUntil}}. Zaloguj się do panelu i opłać dalszy wynajem.`,
   [TemplateType.USER_BLOCKED_SMS]: `Twoje konto użytkownika zostało zablokowane. Prosimy o kontakt z biurem obsługi klienta pod adresem {{email}} lub tel: {{phone}}`,
@@ -51,6 +55,8 @@ Wystawiliśmy fakturę na kolejny okres Twojego wynajmu skrytki {{number}}, masz
   [TemplateType.EXTEND_RENTAL_SMS]: `Czesc {{name}}! W dniu jutrzejszym konczy sie wynajem Twojej skrytki {{company}}. Zaloguj sie do aplikacji aby przedluzyc lub zakonczyc wynajem.`,
   [TemplateType.RENTAL_ENDS_TODAY_SMS]: `Dzis uplywa termin wynajmu Twojej skrytki {{company}}. Oplac swoj mini magazyn zeby uniknac blokady w systemie lub zakoncz wynajem.`,
   [TemplateType.RENTAL_ENDS_IN_3_DAYS_SMS]: `W dniu {{rentUntil}} konczy sie wynajem Twojej skrytki {{company}}.`,
+  [TemplateType.PERIOD_PAYMENT_ENDS_SMS]: `W dniu {{paymentUntil}} uplywa termin platnosci okresu wynajmu skrytki {{number}}.`,
   [TemplateType.PERIOD_PAYMENT_SMS]: `Czesc {{name}}! Wystawilismy fakture na kolejny okres Twojego wynajmu, czas na zaplate do {{paymentUntil}}.`,
   [TemplateType.RENTAL_PERIOD_PAID_SMS]: `Czesc {{name}}! Okres płatności za wynajem został opłacony.`,
+  [TemplateType.BOX_GROUP_FREE_SMS]: `Czesc {{name}}! Rozmiar skrytki {{size}}, ktorym sie interesujesz, jest ponownie dostepny.`,
 };

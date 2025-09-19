@@ -7,9 +7,10 @@ type AlertTypes = 'error' | 'notice' | 'warning' | 'success';
 
 interface AlertProps {
   type: 'error' | 'notice' | 'warning' | 'success';
-  text: string;
+  text?: string;
   simple?: boolean;
   notification?: boolean;
+  children?: React.ReactNode;
 }
 
 const getBackgroundByType = (type: AlertTypes, theme: DefaultTheme) => {
@@ -35,7 +36,7 @@ const StyledAlert = styled('div')<{ type: AlertTypes }>(({ theme, type }) => ({
   color: theme.colors.text.primary,
   padding: theme.spacing * 4,
   fontSize: '1rem',
-  width: '100%'
+  width: '100%',
 }));
 
 const StyledIcon = styled('span')<{ type: AlertTypes }>(({ theme, type }) => ({
@@ -44,7 +45,6 @@ const StyledIcon = styled('span')<{ type: AlertTypes }>(({ theme, type }) => ({
 
 const getIcon = (type: AlertTypes) => {
   if (type === 'success') {
-     
     return (
       <StyledIcon
         type={type}
@@ -62,10 +62,11 @@ const getIcon = (type: AlertTypes) => {
   );
 };
 
-const Alert = ({ type, text }: AlertProps) => (
+const Alert = ({ type, text, children }: AlertProps) => (
   <StyledAlert type={type}>
     {getIcon(type)}
-    {__(text)}
+    {text ? __(text) : null}
+    <div>{children}</div>
   </StyledAlert>
 );
 

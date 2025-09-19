@@ -294,6 +294,7 @@ const StepAgreement = ({ formData, isResignationMarked }: Props): any => {
       startAt: dateOnly(order.startDate),
       email: user?.email || undefined,
       size: order.boxGroupName,
+      area: order.boxGroupArea,
       stockName: order.stockName,
       stockAddress: order.stockAddress,
     };
@@ -413,6 +414,7 @@ const StepAgreement = ({ formData, isResignationMarked }: Props): any => {
             <Button
               size="large"
               variant="secondary"
+              type='button'
               text="application.back"
               onClick={() => onBack()}
               iconLeft={<ArrowLeft />}

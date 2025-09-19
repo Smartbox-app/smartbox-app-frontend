@@ -42,6 +42,7 @@ export type OrderState = {
   stockAddress: string;
   boxGroupId: string;
   boxGroupName: string;
+  boxGroupArea: string;
   minRentPeriod: number | null;
   startDate: Date;
   endDate: Date | null;
@@ -87,6 +88,7 @@ interface SetOrderBoxGroup {
   payload: {
     boxGroupId: string;
     boxGroupName: string;
+    boxGroupArea: string;
   };
 }
 
@@ -243,6 +245,7 @@ const initialState: OrderState = {
   stockAddress: "",
   boxGroupId: "",
   boxGroupName: "",
+  boxGroupArea: "",
   minRentPeriod: null,
   startDate: new Date(),
   endDate: null,
@@ -311,6 +314,7 @@ export default (
         ...state,
         boxGroupId: action.payload.boxGroupId,
         boxGroupName: action.payload.boxGroupName,
+        boxGroupArea: action.payload.boxGroupArea
       };
     }
 

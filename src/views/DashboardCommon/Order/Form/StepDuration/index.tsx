@@ -253,10 +253,10 @@ const StepDuration = ({ clearPaymentDetails }: Props) => {
 
     const zonedDate = toZonedTime(selected, timeZone);
     console.log('FORMATTED', zonedDate);
-    console.log('START SELECTED', startOfDay(selected))
-    console.log('START FORMATTED', startOfDay(zonedDate))
-    console.log('END SELECTED', endOfDay(selected))
-    console.log('END FORMATTED', endOfDay(zonedDate))
+    console.log('START SELECTED', startOfDay(selected));
+    console.log('START FORMATTED', startOfDay(zonedDate));
+    console.log('END SELECTED', endOfDay(selected));
+    console.log('END FORMATTED', endOfDay(zonedDate));
     return selected;
     return zonedDate;
   };
@@ -291,9 +291,7 @@ const StepDuration = ({ clearPaymentDetails }: Props) => {
                   minDate={setMinDate()}
                   maxDate={setMaxDateToExtend()}
                   onChange={([selected]) => {
-                    dispatch(
-                      setRentStartDate(selected),
-                    );
+                    dispatch(setRentStartDate(selected));
                   }}
                 />
               )}
@@ -311,9 +309,7 @@ const StepDuration = ({ clearPaymentDetails }: Props) => {
                   label="application.selectEndRentDate"
                   minDate={setMinDate(minRentPeriod - 1, true)}
                   onChange={([selected]) => {
-                    dispatch(
-                      setRentEndDate(selected),
-                    );
+                    dispatch(setRentEndDate(selected));
                   }}
                 />
               )}
@@ -330,6 +326,7 @@ const StepDuration = ({ clearPaymentDetails }: Props) => {
               variant="secondary"
               size="large"
               text="application.back"
+              type="button"
               iconLeft={<ArrowLeft />}
               to={`/${UserService.getSlugByRole(user.role)}/order/step/stock`}
             />

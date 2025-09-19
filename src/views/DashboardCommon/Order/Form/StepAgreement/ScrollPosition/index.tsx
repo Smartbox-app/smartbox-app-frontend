@@ -40,7 +40,7 @@ class ScrollPosition extends Component<Props> {
           // hide={!isAgreementAccepted}
           // disabled={!isAgreementAccepted}
           handleChange={() => formResignationMarked()}
-          label={`Zgadzam się na rozpoczęcie świadczenia usług ${tenant?.name} przed upływem terminu do odstąpienia od umowy.`}
+          label={`Akceptuję warunki Umowy i zgadzam się na rozpoczęcie świadczenia usług ${tenant?.name} przed upływem terminu do odstąpienia od Umowy`}
         />
       </>
     );

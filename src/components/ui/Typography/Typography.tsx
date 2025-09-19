@@ -9,6 +9,7 @@ const StyledTypography = styled("p")(({ theme }) => ({
   fontSize: 14,
   lineHeight: "20px",
   color: theme.colors.text.primary,
+  whiteSpace: 'pre-wrap'
 }));
 
 export const Typography = ({ children }: TypographyProps) => {

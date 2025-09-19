@@ -353,6 +353,10 @@
             "78": {
                 "text": "Okres większy niż dwa kwartały jest niedozwolony!",
                 "__type_alias_do_not_touch": "ApiErrorCode.PeriodMax2Quarters"
+            },
+            "79": {
+                "text": "Jesteś już zapisany do tego powiadomienia.",
+                "__type_alias_do_not_touch": "ApiErrorCode.YouAreAlreadySubscribed"
             }
         }
     }

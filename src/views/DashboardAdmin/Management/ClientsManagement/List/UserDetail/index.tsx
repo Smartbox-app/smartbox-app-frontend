@@ -8,7 +8,7 @@ import { SimpleHeader } from '../../../../../../components/Layout';
 import './UserDetail.scss';
 import { ApplicationState } from '../../../../../../reducers';
 import DataGroup from './DataGroup';
-import UserRentList from './UserRentList';
+import UserRentList from '../../../../../DashboardCommon/UserRentList';
 
 interface Props {
   userId: string;

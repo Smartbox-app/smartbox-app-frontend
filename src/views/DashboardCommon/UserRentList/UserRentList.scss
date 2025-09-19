@@ -1,6 +1,6 @@
 @use "sass:math";
-@import '../../../../../../../config/variables';
-@import '../../../../../../../config/mixins';
+@import '../../../config/mixins.scss';
+@import '../../../config/variables.scss';
 
 .list-wrapper {
   margin: $main-spacing;
@@ -35,32 +35,6 @@
     p {
       min-width: 100px;
       text-align: center;
-    }
-
-    .box-rent {
-      background: #00a45a;
-      padding: math.div($main-spacing, 2) $main-spacing;
-      margin-right: $main-spacing;
-      border-radius: 5px;
-      border: 2px solid darken(#00a45a, 10%);
-      min-width: 50px;
-      text-align: center;
-    }
-    .rented {
-      background: $color-danger;
-      border: 2px solid darken($color-danger, 10%);
-    }
-    .to-check {
-      background: $color-primary;
-      border: 2px solid darken($color-primary, 10%);
-    }
-    .no-paid-extension {
-      background: $color-tertiary;
-      border: 2px solid darken($color-tertiary, 10%);
-    }
-    .no-paid-extension {
-      background: darken($color-tertiary, 5%);
-      border: 2px solid darken($color-tertiary, 20%);
     }
 
     .dates-rent {

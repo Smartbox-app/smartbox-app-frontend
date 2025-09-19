@@ -118,6 +118,12 @@ const allowedTags = {
     'periodFrom',
     'periodTo',
   ],
+  [TemplateType.BOX_GROUP_FREE_EMAIL]: [
+    'name', 'size'
+  ],
+  [TemplateType.BOX_GROUP_FREE_SMS]: [
+    'name', 'size'
+  ]
 };
 
 export const Manage = () => {
