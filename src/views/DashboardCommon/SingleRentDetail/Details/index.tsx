@@ -1,5 +1,5 @@
 import { MyRentDetails } from 'smartbox-types';
-import { dateOnly } from '../../../../utils/format-date';
+import { dateOnly, dateOnlyLocalTime, formatForPLTimeZone } from '../../../../utils/format-date';
 import { __ } from '../../../../helpers/i18n';
 import { Row } from '../../../../components/Common';
 
@@ -16,11 +16,11 @@ const Details = ({ singleRent }: Props) => {
     <div>
       <Row
         label="application.startDate"
-        content={`${dateOnly(singleRent ? singleRent.startAt : new Date())}`}
+        content={singleRent ? dateOnly(singleRent.startAt) : dateOnlyLocalTime(new Date())}
       />
       <Row
         label="application.endDate"
-        content={`${dateOnly(singleRent ? singleRent.finishAt : new Date())}`}
+        content={singleRent ?  dateOnly(singleRent.finishAt) : dateOnlyLocalTime(new Date())}
       />
       <Row
         label={getText('name_of')}

@@ -36,12 +36,15 @@ export interface TenantEntity {
   allowAddonsToRent: boolean;
   useProd: boolean;
   birthDateNecessary: boolean;
+  clientSourceField: boolean;
   newRentNotification: boolean;
   rentExtendedNotification: boolean;
   debtResolveType: DebtResolveType;
   locationSelectType: LocationSelectType;
   namingType: NamingType;
   agreementDisclaimer: string;
+  paymentDisclaimer: string;
+  homeMessage: string;
 }
 
 export type UpdateTenantReq = Pick<
@@ -83,6 +86,7 @@ export type UpdateTenantByAdminReq = Pick<
   | 'newRentNotification'
   | 'rentExtendedNotification'
   | 'birthDateNecessary'
+  | 'clientSourceField'
   | 'debtResolveType'
   | 'locationSelectType'
   | 'namingType'
@@ -97,16 +101,15 @@ export type TenantForUsers = Omit<
   | 'smsApiPassword'
   | 'sharedSecret'
   | 'smsName'
-  | 'rules'
-  | 'privacy'
   | 'invoiceServiceApiKey'
   | 'invoiceServiceDomain'
   | 'storeId'
   | 'paymentSystemSecretKey'
   | 'paymentSystemApiKey'
-  | 'allowAddonsToRent'
-> & { smsAvailable: boolean };
-
+> & {
+  smsAvailable: boolean;
+  links: { id: string; name: string; fileName: string }[];
+};
 
 export enum NamingType {
   Stock = 'stock',

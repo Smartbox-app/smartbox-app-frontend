@@ -29,7 +29,6 @@ import {
   calculatePriceForRent,
   setBirthDate,
 } from '../../../../../actions/order';
-import { format } from 'date-fns';
 import { useTenant } from '../../../../../hooks/useTenant';
 import { useGetMyDetailsQuery } from 'src/queries';
 import { RentDataDto } from './TenantDetailsForm/dto/RentDataDto';
@@ -40,12 +39,12 @@ import {
   Header,
   Stack,
   Form,
-  Typography,
 } from 'src/components/ui';
 import { ClassValidatorResolver } from 'src/resolvers/ClassValidatorResolver';
 import { DiscountForm } from './DiscountForm';
 import { ArrowLeft, ArrowRight } from 'src/icons';
 import { textToSimpleMD } from 'src/utils/text-to-simple-md';
+import { ClientSourceForm } from './ClientSourceForm';
 
 interface Props {
   formData: FormType;
@@ -56,6 +55,7 @@ interface Props {
 
 const StepSummary = ({ formData, updateFormData }: Props) => {
   const { tenant } = useTenant();
+
   const dispatch = useDispatch();
   const {
     calculatedPrice,
@@ -217,7 +217,8 @@ const StepSummary = ({ formData, updateFormData }: Props) => {
               />
             </Section>
             {invoiceNeeded && <CompanyDetailsForm disabled={!isFirstRent} />}
-
+            {/* only new rents should see the input */}
+            {!rentId && tenant?.clientSourceField ? <ClientSourceForm /> : null}
             <Section>
               <ButtonsContainer spaceBetween>
                 <Button

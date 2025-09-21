@@ -1,11 +1,5 @@
-import FormHeader from '../../../../../../components/Layout/FormHeader';
 import { DateInput } from '../../../../../../components/Common';
-import { addYears } from 'date-fns';
-import styled from 'styled-components';
 import { useTenant } from '../../../../../../hooks/useTenant';
-import { useDispatch, useSelector } from 'react-redux';
-import { ApplicationState } from '../../../../../../reducers';
-import { setBirthDate } from '../../../../../../actions/order';
 import { Controller, useFormContext } from 'react-hook-form';
 import { RentDataDto } from './dto/RentDataDto';
 import { Header, Input } from 'src/components/ui';
@@ -15,14 +9,9 @@ interface Props {
   disabled?: boolean;
 }
 
-const DateInputContainer = styled('div')({
-  marginBottom: 20,
-});
-
 const TenantDetailsForm = ({ disabled }: Props) => {
   const { tenant } = useTenant();
-  const dispatch = useDispatch();
-  const { formData } = useSelector((state: ApplicationState) => state.order);
+
   const {
     register,
     control,

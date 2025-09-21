@@ -41,6 +41,7 @@ import { Button, Section, Stack } from 'src/components/ui';
 import { ArrowLeft, ArrowRight, SearchZoomIn } from 'src/icons';
 import { prepareAndSentPaymentForm } from 'src/utils/payment-form';
 import { format } from 'date-fns';
+import { textToSimpleMD } from 'src/utils/text-to-simple-md';
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 
@@ -177,9 +178,7 @@ const StepAgreement = ({ formData, isResignationMarked }: Props): any => {
 
   const { handleSubmit } = useForm();
 
-
-  const formatOnlyDate = (date: Date) => format(date, "yyyy-MM-dd")
-  
+  const formatOnlyDate = (date: Date) => format(date, 'yyyy-MM-dd');
 
   const getFormDataFromCollection = (
     collection: RentBoxReq | ExtendRentalReq,
@@ -240,6 +239,10 @@ const StepAgreement = ({ formData, isResignationMarked }: Props): any => {
 
     if (formData.birthDate) {
       commonCollection['birthDate'] = formData.birthDate;
+    }
+
+    if (formData.clientSource) {
+      commonCollection['clientSource'] = formData.clientSource;
     }
 
     const dataCollectionExtendRent: ExtendRentalReq = {
@@ -410,11 +413,16 @@ const StepAgreement = ({ formData, isResignationMarked }: Props): any => {
           <ScrollPosition />
         </Section>
         <Section>
+          {tenant?.paymentDisclaimer ? (
+            <Alert type="notice">
+              {textToSimpleMD(tenant.agreementDisclaimer)}
+            </Alert>
+          ) : null}
           <ButtonsContainer spaceBetween>
             <Button
               size="large"
               variant="secondary"
-              type='button'
+              type="button"
               text="application.back"
               onClick={() => onBack()}
               iconLeft={<ArrowLeft />}

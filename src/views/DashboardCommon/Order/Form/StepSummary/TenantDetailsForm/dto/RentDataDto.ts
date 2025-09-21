@@ -1,6 +1,7 @@
 import {
   IsEmail,
   IsNotEmpty,
+  IsOptional,
   IsPhoneNumber,
   IsPostalCode,
   MinLength,
@@ -91,4 +92,7 @@ export class RentDataDto {
     message: errors.field_required,
   })
   nip: string;
+
+  @IsOptional()
+  clientSource: string
 }

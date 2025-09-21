@@ -112,9 +112,14 @@ export const RentHistory = ({
                 {line.addons.map((addon) => (
                   <StyledSingleAddon key={addon.id}>
                     <div>
-                      <strong>{addon.name}</strong> -{' '}
-                      {addon.selectedVariantName} -{' '}
-                      {formatPrice(Number(addon.price))}
+                      <strong>{addon.name}</strong>
+                      {(typeof addon.price === 'number' && addon.selectedVariantName) ? (
+                        <>
+                          {' '}
+                          - {addon.selectedVariantName} -{' '}
+                          {formatPrice(Number(addon.price))}
+                        </>
+                      ) : null}
                     </div>
 
                     {addon.acceptance ? (

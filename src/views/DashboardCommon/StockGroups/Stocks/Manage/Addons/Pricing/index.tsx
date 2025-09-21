@@ -323,7 +323,7 @@ const Pricing = () => {
             <h5>
               {__('application.addonVariantPricing')} - {variant.name}
             </h5>
-
+            
             {(!variant.pricing || variant.pricing.length === 0) && (
               <Alert
                 type="notice"

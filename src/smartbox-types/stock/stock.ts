@@ -9,7 +9,7 @@ export interface DiscountReq {
 }
 
 export interface DiscountList {
-  discountId: string;
+  discount?: string;
   stockId: string;
   name: string;
   value: number;

@@ -4,6 +4,7 @@ import UserService from '../../../services/user-service';
 
 import WorkersManagement from '../../DashboardCommon/WorkersManagement';
 import UsersManagement from '../../DashboardCommon/UsersManagement';
+import { AttachmentManagement } from '../../DashboardCommon/AttachmentManagement';
 
 import InvitesSent from '../../DashboardCommon/InvitesSent';
 import SMS from '../../DashboardCommon/SMS';
@@ -14,6 +15,7 @@ import { useGetMyDetailsQuery } from '../../../queries';
 import { Tabs } from 'src/components/ui';
 import {
   Adjustments,
+  Boxes,
   Invitations,
   Message,
   Stocks,
@@ -61,6 +63,11 @@ const Management = () => {
               text: 'application.settings',
               icon: <Adjustments />,
             },
+            {
+              to: `/${UserService.getSlugByRole(user.role)}/management/attachments`,
+              text: 'application.attachments',
+              icon: <Boxes />,
+            },
           ]}
         />
       </Section>
@@ -97,6 +104,10 @@ const Management = () => {
         <Route
           path={`/${UserService.getSlugByRole(user.role)}/management/settings`}
           component={Settings}
+        />
+        <Route
+          path={`/${UserService.getSlugByRole(user.role)}/management/attachments`}
+          component={AttachmentManagement}
         />
       </Switch>
     </>

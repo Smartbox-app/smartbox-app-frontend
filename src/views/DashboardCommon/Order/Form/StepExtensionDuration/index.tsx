@@ -3,7 +3,14 @@ import { useParams } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect, useDispatch, useSelector } from 'react-redux';
 
-import { addDays, endOfDay, isBefore, startOfDay } from 'date-fns';
+import {
+  addDays,
+  endOfDay,
+  format,
+  isBefore,
+  parseISO,
+  startOfDay,
+} from 'date-fns';
 import {
   AddonUserFileRequirementType,
   DebtResolveType,
@@ -46,9 +53,8 @@ import { darken, lighten } from 'polished';
 import { useGetMyDetailsQuery } from 'src/queries';
 import { Button, Section, Stack } from 'src/components/ui';
 import { ArrowRight } from 'src/icons';
-import { dateOnly } from 'src/utils/format-date';
+import { dateOnly, dateOnlyLocalTime, dateOnlyNormalized, formatForPLTimeZone } from 'src/utils/format-date';
 import { useTenant } from 'src/hooks/useTenant';
-import { toZonedTime } from 'date-fns-tz';
 
 const StyledCalendarPicker = styled.div`
   margin: 0 -10px;
@@ -117,8 +123,12 @@ const StepExtensionDuration = ({ clearPaymentDetails }: Props) => {
   useEffect(() => {
     if (!rent) return;
     getStock();
-    dispatch(setRentStartDate(addDays(new Date(rent.finishAt), 1)));
 
+    const normalizedStart = dateOnlyNormalized(rent.finishAt);
+
+    const parsedStart = new Date(`${normalizedStart} 00:00:00`);
+    const added = addDays(parsedStart, 1);
+    dispatch(setRentStartDate(added));
     dispatch(setOrderStock(rent.stockId, rent.stockName, rent.stockAddress));
   }, [rent]);
 
@@ -265,14 +275,6 @@ const StepExtensionDuration = ({ clearPaymentDetails }: Props) => {
 
     return true;
   }, [orderAddons]);
-
-  const formatSelection = (selected: Date) => {
-    console.log('SELECTED', selected);
-    return selected;
-    const timeZone = 'Europe/Warsaw';
-    const zonedDate = toZonedTime(selected, timeZone);
-    return zonedDate;
-  };
 
   if (!user) return null;
 

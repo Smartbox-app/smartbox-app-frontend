@@ -1,7 +1,8 @@
-import { MyRentDetails, RentDescription } from 'smartbox-types';
+import { MyRentDetails, RentDescription, RentUserData } from 'smartbox-types';
 import { __ } from '../../../../helpers/i18n';
 import { RentHistory } from '../../RentHistory';
-import { Header, Section } from 'src/components/ui';
+import { Header, Section, Typography } from 'src/components/ui';
+import { useTenantNaming } from 'src/hooks/useTenantNaming';
 
 interface Props {
   description: RentDescription[];
@@ -9,9 +10,20 @@ interface Props {
 }
 
 export const Description = ({ description, rent }: Props) => {
+  const { getText } = useTenantNaming();
+  const firstRent = description[0];
+  const clientSource = firstRent.data?.clientSource;
   return (
     <Section>
       <Header variant="h2">{__('application.rentHistory')}</Header>
+      {clientSource ? (
+        <div>
+          <strong>{__(getText('client_source'))}</strong>
+          <Typography>{clientSource}</Typography>{' '}
+        </div>
+      ) : (
+        ''
+      )}
       <RentHistory
         description={description}
         rentId={rent.id}

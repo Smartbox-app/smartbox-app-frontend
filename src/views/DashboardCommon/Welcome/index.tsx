@@ -15,6 +15,7 @@ import { NewRentButton } from './NewRentButton/NewRentButton';
 import { useGetMyDetailsQuery } from 'src/queries';
 import styled from 'styled-components';
 import { Header } from '../../../components/ui';
+import { Message } from './Message';
 
 const WelcomeHeader = styled('div')(({theme}) => ({
   display: 'flex',
@@ -59,6 +60,7 @@ const Welcome = ({
         <NewRentButton />
       </WelcomeHeader>
       <Sale />
+      <Message />
       <Storage myRentList={rentsList} loading={loading} />
       <OrdersHistory rentsHistoryList={rentsHistoryList} />
     </>

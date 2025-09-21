@@ -51,6 +51,8 @@
     },
     "naming": {
       "location": {
+        "client_source": "Skąd dowiedziałeś się o tym self storage?",
+        "client_source_placeholder": "Od znajomego",
         "name": "Lokalizacja",
         "many": "Lokalizacje",
         "groups": "Grupy lokalizacji",
@@ -83,6 +85,8 @@
         "boxes": "Skrytki"
       },
       "stock": {
+        "client_source": "Skąd dowiedziałeś się o tym self storage?",
+        "client_source_placeholder": "Od znajomego",
         "name": "Plac",
         "many": "Place",
         "groups": "Grupy placów",
@@ -548,6 +552,7 @@
       "seeFile": "Zobacz plik",
       "variantNotSelected": "Brak wyboru",
       "addonName": "Nazwa",
+      "addonWithoutPrice": "Dodatek bez cennika",
       "addonSlug": "Identyfikator",
       "addonDescription": "Opis",
       "addonAdditionalDescription": "Dodatkowy opis",
@@ -622,7 +627,15 @@
       "notify_when_available": "Powiadom mnie o dostępności",
       "notification_type": "W jaki sposób chcesz otrzymać powiadomienie o dostępności?",
       "notification_for": "Powiadomienie o dostępności dla rozmiaru: ",
-      "at_least_one_option_required": "Musisz wybrać przynajmniej jedną opcję"
+      "at_least_one_option_required": "Musisz wybrać przynajmniej jedną opcję",
+      "attachments": "Załączniki",
+      "addAttachment": "Dodaj załącznik",
+      "editAttachment": "Edytuj załącznik",
+      "attachmentAdded": "Poprawnie dodano załącznik",
+      "attachmentUpdated": "Zaktualizowano załącznik",
+      "attachmentDeleted": "Usunięto załącznik",
+      "confirmAttachmentDelete": "Czy na pewno chcesz usunąć ten załącznik?",
+      "attachmentList": "Lista załączników"
     },
     "settings": {
       "tax": "Stawka VAT",

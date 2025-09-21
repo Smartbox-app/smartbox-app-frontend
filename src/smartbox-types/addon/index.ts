@@ -78,6 +78,7 @@ export interface AddonEntity {
     userFileText: string;
     userFileRequirement: AddonUserFileRequirementType;
     tax: string;
+    noPricing: boolean;
 }
 
 export type AddonFormDataReq = Pick<
@@ -86,11 +87,12 @@ export type AddonFormDataReq = Pick<
 > & {
     acceptances: string;
     required: string;
+    noPricing: string;
     userFileAllowed: string;
 }
-export type AddonReq = Pick<AddonEntity, 'name' | 'slug' | 'description' | 'additionalDescription' | 'required' | 'stockId' | 'acceptances' | 'userFileRequirement' | 'fileText' | 'userFileAllowed' | 'userFileText' | 'tax'>
+export type AddonReq = Pick<AddonEntity, 'name' | 'slug' | 'description' | 'additionalDescription' | 'required' | 'stockId' | 'acceptances' | 'userFileRequirement' | 'fileText' | 'userFileAllowed' | 'userFileText' | 'tax' | 'noPricing'>
 export type AddonListRes = Pick<AddonEntity, 'id' | 'name' | 'pricing' | 'stockId'>
-export type AddonRes = Pick<AddonEntity, 'id' | 'description' | 'additionalDescription' | 'acceptances' | 'file' | 'required' | 'fileText' | 'name' | 'slug' | 'stockId' | 'pricing' | 'userFileAllowed' | 'userFileText' | 'userFileRequirement' | 'tax'> & {
+export type AddonRes = Pick<AddonEntity, 'id' | 'description' | 'additionalDescription' | 'acceptances' | 'file' | 'required' | 'fileText' | 'name' | 'slug' | 'stockId' | 'pricing' | 'userFileAllowed' | 'userFileText' | 'userFileRequirement' | 'tax' | 'noPricing'> & {
     isGross: boolean
 }
 export type AddonClientAdminRes = Omit<AddonRes, 'isGross'> & {

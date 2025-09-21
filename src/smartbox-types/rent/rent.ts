@@ -191,6 +191,7 @@ export type RentUserData = CompanyData & {
   phone: string;
   address: string;
   birthDate: Date | string;
+  clientSource?: string;
   stockName: string;
   stockAddress: string;
   size: string;

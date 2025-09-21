@@ -29,6 +29,7 @@ export type OrderAddon = {
   acceptancesStatus: AcceptanceStatuses;
   acceptances: SingleAcceptance[];
   userFileAllowed: boolean;
+  noPricing: boolean;
   userFileRequirement: AddonUserFileRequirementType | null;
   price: { value: number; isGross: boolean } | null;
   file: File | null;
@@ -469,6 +470,7 @@ export default (
           acceptances: addon.acceptances,
           acceptancesStatus: acceptanceStatuses,
           userFileAllowed: addon.userFileAllowed,
+          noPricing: addon.noPricing,
           userFileRequirement: addon.userFileRequirement,
           selectedVariant: null,
           selectedVariantName: null,

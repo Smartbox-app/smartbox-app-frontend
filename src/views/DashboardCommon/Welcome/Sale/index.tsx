@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { DiscountList } from 'smartbox-types';
@@ -20,19 +20,20 @@ const Sale = ({ discountsList, getStockDiscountsList }: Props) => {
     getStockDiscountsList();
   }, []);
 
-  const createText = (list: DiscountList[]) => {
-    const result: string[] = [];
+  const discounts = useMemo(() => {
+    return discountsList
+    .filter(d => !!d.discount)
+    .map(d => `${__('application.discount')} ${d.discount}% ${getText('on')} ${d.name}`)
+  }, [discountsList])
+ 
+  console.log(discountsList);
 
-    list.forEach((el: any) => {
-      if (el.discount) result.push(`${__('application.discount')} ${el.discount}% ${getText('on')} ${el.name}`);
-    });
-    return result;
-  };
+  if(discounts.length === 0) return null;
 
   return (
     <Section>
       <Header variant='h2'>{__('application.discounts')}</Header>
-      <Discounts discounts={createText(discountsList)} />
+      <Discounts discounts={discounts} />
     </Section>
   );
 };

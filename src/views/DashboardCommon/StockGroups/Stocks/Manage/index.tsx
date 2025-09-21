@@ -139,7 +139,7 @@ const Manage = () => {
     }
 
     return elements;
-  }, [isMapActive, tenantForAdmin]);
+  }, [isMapActive, tenantForAdmin, hasFullAccess]);
 
   return (
     <>

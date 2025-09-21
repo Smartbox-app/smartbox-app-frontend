@@ -1,6 +1,9 @@
 import { useMemo } from 'react';
 import { formatPrice } from '../../../../../../utils/format-price';
-import { dateOnly, dateOnlyLocalTime } from '../../../../../../utils/format-date';
+import {
+  dateOnly,
+  dateOnlyLocalTime,
+} from '../../../../../../utils/format-date';
 
 import './SummaryTable.scss';
 import { __ } from '../../../../../../helpers/i18n';
@@ -82,6 +85,7 @@ const SummaryTable = ({
     return addonsPrice + countedPrice.value;
   }, [countedPrice, orderAddons]);
 
+  console.log('DATESTART', dateStart, dateOnlyLocalTime(dateStart));
   return (
     <>
       <div className="order-summary-wrapper">
@@ -120,14 +124,14 @@ const SummaryTable = ({
           {countedPrice.isGross
             ? __('application.paymentForRent')
             : __('application.netPaymentForRent')}
-              <span className='row-dash'>-</span>
+          <span className="row-dash">-</span>
           <strong>{formatPrice(countedPrice.value)}</strong>
         </StyledDetailsRow>
         {addons && orderAddons
           ? addons.map((addon) => (
               <StyledDetailsRow key={addon.id}>
                 <span>{addon.name}</span>
-                <span className='row-dash'>-</span>
+                <span className="row-dash">-</span>
                 <SelectedVariant
                   addonId={addon.id}
                   addons={addons}

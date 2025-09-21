@@ -49,7 +49,6 @@ import { Button, Section, Stack } from 'src/components/ui';
 import { ArrowLeft, ArrowRight } from 'src/icons';
 import { RentDurationDto } from 'src/dto/RentDurationDto';
 import { ClassValidatorResolver } from 'src/resolvers/ClassValidatorResolver';
-import { toZonedTime } from 'date-fns-tz';
 
 const StyledCalendarPicker = styled.div`
   margin: 0 -10px;
@@ -246,20 +245,7 @@ const StepDuration = ({ clearPaymentDetails }: Props) => {
     return true;
   }, [orderAddons]);
 
-  const formatSelection = (selected: Date) => {
-    console.log('SELECTED', selected);
 
-    const timeZone = 'Europe/Warsaw';
-
-    const zonedDate = toZonedTime(selected, timeZone);
-    console.log('FORMATTED', zonedDate);
-    console.log('START SELECTED', startOfDay(selected));
-    console.log('START FORMATTED', startOfDay(zonedDate));
-    console.log('END SELECTED', endOfDay(selected));
-    console.log('END FORMATTED', endOfDay(zonedDate));
-    return selected;
-    return zonedDate;
-  };
 
   const correctPeriodSelected = useMemo(() => {
     if (!endDate || !startDate || !minRentPeriod) return false;

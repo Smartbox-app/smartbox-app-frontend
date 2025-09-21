@@ -56,6 +56,17 @@ const Footer = () => {
             </Link>
           )}
 
+          {tenant?.links.map((link) => (
+            <Link
+              key={link.id}
+              target="_blank"
+              href={`${ApiService.url}attachment/file/${link.id}/${link.fileName}`}
+              rel="noreferrer"
+            >
+              {link.name}
+            </Link>
+          ))}
+
           {/* <p>&copy; SmartBox Sp. J.</p> */}
           <Typography>&copy; {tenant?.name}</Typography>
           <AppVersion />

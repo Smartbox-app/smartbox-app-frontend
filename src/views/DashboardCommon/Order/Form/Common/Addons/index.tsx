@@ -148,7 +148,7 @@ export const Addons = ({ stockId }: Props) => {
               {addon.additionalDescription}
             </Typography>
           ) : null}
-          {orderAddons[addon.id].selectedVariant && addon.acceptances
+          {(orderAddons[addon.id].selectedVariant || addon.noPricing) && addon.acceptances
             ? addon.acceptances.map((acceptance) => (
                 <div key={acceptance.id}>
                   <CheckBox

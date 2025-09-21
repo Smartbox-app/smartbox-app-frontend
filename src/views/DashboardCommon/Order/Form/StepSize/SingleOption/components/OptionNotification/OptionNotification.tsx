@@ -19,12 +19,7 @@ export const OptionNotification = ({ option }: OptionNotificationProps) => {
     dispatch(modal.showModal(<NotifyWhenAvailableModal option={option} />));
   };
 
-  if (
-    option.available ||
-    !tenant ||
-    !['aplikacja', 'testowa', 'superbox', 'kielceboxy', 'citybox24', 'rentbox', 'jumbostorage'].includes(tenant?.identifier)
-  )
-    return null;
+  if (option.available || !tenant) return null;
 
   return (
     <Button

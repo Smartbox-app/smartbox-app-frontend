@@ -83,6 +83,10 @@ const Add = () => {
               values.userFileAllowed.toString(),
             );
             formData.append(
+              'noPricing',
+              values.noPricing.toString(),
+            );
+            formData.append(
               'userFileRequirement',
               values.userFileRequirement || '',
             );

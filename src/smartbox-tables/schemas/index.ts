@@ -12,3 +12,5 @@ export * from './tenants-list.table';
 export * from './stock-groups-list.table';
 export * from './addons-list.table';
 export * from './rents-list.table';
+export * from './attachment-list.table';
+export * from './attachment-list-for-admin.table';

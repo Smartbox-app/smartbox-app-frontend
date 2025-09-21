@@ -15,6 +15,7 @@ import { useGetMyDetailsQuery } from 'src/queries';
 import { SingleTab } from 'src/types/tab';
 import {
   Adjustments,
+  Boxes,
   Invitations,
   Message,
   Templates,
@@ -22,6 +23,7 @@ import {
   Workers,
 } from 'src/icons';
 import { Section, Tabs } from 'src/components/ui';
+import { AttachmentManagement } from 'src/views/DashboardCommon/AttachmentManagement';
 
 const Management = () => {
   const { data: user } = useGetMyDetailsQuery();
@@ -70,6 +72,11 @@ const Management = () => {
         to: `/${UserService.getSlugByRole(user.role)}/management/templates`,
         text: 'application.templates',
         icon: <Templates />,
+      },
+      {
+        to: `/${UserService.getSlugByRole(user.role)}/management/attachments`,
+        text: 'application.attachments',
+        icon: <Boxes />,
       },
     ];
 
@@ -122,6 +129,10 @@ const Management = () => {
         <Route
           path={`/${UserService.getSlugByRole(user.role)}/management/sms`}
           component={SMS}
+        />
+        <Route
+          path={`/${UserService.getSlugByRole(user.role)}/management/attachments`}
+          component={AttachmentManagement}
         />
       </Switch>
     </>
