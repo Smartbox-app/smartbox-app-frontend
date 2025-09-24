@@ -37,6 +37,7 @@ const StyledAlert = styled('div')<{ type: AlertTypes }>(({ theme, type }) => ({
   padding: theme.spacing * 4,
   fontSize: '1rem',
   width: '100%',
+  whiteSpace: 'pre-wrap'
 }));
 
 const StyledIcon = styled('span')<{ type: AlertTypes }>(({ theme, type }) => ({

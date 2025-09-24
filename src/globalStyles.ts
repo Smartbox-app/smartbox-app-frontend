@@ -2,9 +2,10 @@ import { lighten } from 'polished';
 import { createGlobalStyle } from 'styled-components';
 import ApiService from './services/api-service';
 import { colorOrDark } from './utils/color';
+import { TenantForUsers } from 'smartbox-types';
 
 interface GlobalStyleProps {
-  tenantId: string;
+  tenant?: TenantForUsers | null;
 }
 
 interface GlobalFontProps {
@@ -17,8 +18,7 @@ export const GlobalFont = createGlobalStyle<GlobalFontProps>`
     src: url(${ApiService.url}tenant/fonts/light/?tenantId=${(props) => props.tenantId});
     font-weight: 300;
     font-style: normal;
-    font-display: auto;
-    font-display: swap;
+    font-display: fallback;
   }
   @font-face {
     font-family: 'smartbox';
@@ -26,7 +26,7 @@ export const GlobalFont = createGlobalStyle<GlobalFontProps>`
     font-weight: 400;
     font-style: normal;
     font-display: auto;
-    font-display: swap;
+    font-display: fallback;
   }
   @font-face {
     font-family: 'smartbox';
@@ -34,17 +34,21 @@ export const GlobalFont = createGlobalStyle<GlobalFontProps>`
     font-weight: 700;
     font-style: normal;
     font-display: auto;
-    font-display: swap;
+    font-display: fallback;
   }
 `;
 
 export const GlobalStyle = createGlobalStyle<GlobalStyleProps>`
 html {
     font-size: 14px;
-
+  font-family: ${({ tenant }) => (tenant?.fontNormal ? 'smartbox, Inter, Tahoma, sans-serif' : 'Inter, Tahoma, sans-serif')};
     @media(min-width: 768px) {
         font-size: 16px;
     }
+}
+
+* {
+  font-family: ${({ tenant }) => (tenant?.fontNormal ? 'smartbox, Inter, Tahoma, sans-serif' : 'Inter, Tahoma, sans-serif')};
 }
     p {
     line-height: 1.5;
@@ -67,4 +71,3 @@ a {
     }
 }
 `;
-

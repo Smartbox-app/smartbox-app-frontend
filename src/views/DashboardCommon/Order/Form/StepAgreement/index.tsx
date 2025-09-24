@@ -415,7 +415,7 @@ const StepAgreement = ({ formData, isResignationMarked }: Props): any => {
         <Section>
           {tenant?.paymentDisclaimer ? (
             <Alert type="notice">
-              {textToSimpleMD(tenant.agreementDisclaimer)}
+              {textToSimpleMD(tenant.paymentDisclaimer)}
             </Alert>
           ) : null}
           <ButtonsContainer spaceBetween>

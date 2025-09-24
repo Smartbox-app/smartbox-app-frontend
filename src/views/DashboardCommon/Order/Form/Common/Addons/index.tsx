@@ -99,7 +99,9 @@ export const Addons = ({ stockId }: Props) => {
       {addons.map((addon) => (
         <Section key={addon.id}>
           <Header variant="h2">{addon.name}</Header>
-          <Typography>{addon.description}</Typography>
+          {addon.description ? (
+            <Typography>{addon.description}</Typography>
+          ) : null}
           {addon.file && addon.fileText ? (
             <StyledFileDescription>
               <p>{addon.fileText}</p>
@@ -116,16 +118,18 @@ export const Addons = ({ stockId }: Props) => {
             <Alert type="notice" text="application.addonIsRequired" />
           ) : null}
 
-          <ul>
-            {addon.pricing.map((variant) => (
-              <SingleVariant
-                key={variant.id}
-                variant={variant}
-                addonId={addon.id}
-                isGross={addon.isGross}
-              />
-            ))}
-          </ul>
+          {!addon.noPricing ? (
+            <ul>
+              {addon.pricing.map((variant) => (
+                <SingleVariant
+                  key={variant.id}
+                  variant={variant}
+                  addonId={addon.id}
+                  isGross={addon.isGross}
+                />
+              ))}
+            </ul>
+          ) : null}
           {displayFileInput(addon, orderAddons[addon.id]) ? (
             <StyledUserFileContainer>
               <p>{addon.userFileText}</p>
@@ -144,11 +148,10 @@ export const Addons = ({ stockId }: Props) => {
             </StyledUserFileContainer>
           ) : null}
           {addon.additionalDescription ? (
-            <Typography>
-              {addon.additionalDescription}
-            </Typography>
+            <Typography>{addon.additionalDescription}</Typography>
           ) : null}
-          {(orderAddons[addon.id].selectedVariant || addon.noPricing) && addon.acceptances
+          {(orderAddons[addon.id].selectedVariant || addon.noPricing) &&
+          addon.acceptances
             ? addon.acceptances.map((acceptance) => (
                 <div key={acceptance.id}>
                   <CheckBox

@@ -128,17 +128,19 @@ const SummaryTable = ({
           <strong>{formatPrice(countedPrice.value)}</strong>
         </StyledDetailsRow>
         {addons && orderAddons
-          ? addons.map((addon) => (
-              <StyledDetailsRow key={addon.id}>
-                <span>{addon.name}</span>
-                <span className="row-dash">-</span>
-                <SelectedVariant
-                  addonId={addon.id}
-                  addons={addons}
-                  orderAddons={orderAddons}
-                />
-              </StyledDetailsRow>
-            ))
+          ? addons
+              .filter((addon) => !addon.noPricing)
+              .map((addon) => (
+                <StyledDetailsRow key={addon.id}>
+                  <span>{addon.name}</span>
+                  <span className="row-dash">-</span>
+                  <SelectedVariant
+                    addonId={addon.id}
+                    addons={addons}
+                    orderAddons={orderAddons}
+                  />
+                </StyledDetailsRow>
+              ))
           : null}
       </StyledDetailsList>
     </>

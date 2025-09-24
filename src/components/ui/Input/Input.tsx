@@ -18,7 +18,7 @@ const StyledHelp = styled(Typography)({
   fontSize: 12,
   lineHeight: '16px',
   fontWeight: 400,
-})
+});
 
 const StyledInput = styled('input')<{ error: boolean; disabled: boolean }>(
   ({ theme, disabled, error }) => ({
@@ -51,7 +51,16 @@ export type InputProps = {
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
   (
-    { label, placeholder, error, help, disabled, type = 'text', name, ...register },
+    {
+      label,
+      placeholder,
+      error,
+      help,
+      disabled,
+      type = 'text',
+      name,
+      ...register
+    },
     ref,
   ) => {
     return (

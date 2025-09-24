@@ -34,55 +34,43 @@ const UserDetail = ({
   }, []);
 
   if (!userData) return <Spinner />;
+  console.log('USER DATA', singleUser);
   return (
     <>
-      <Section highlight>
-        <SectionHeader title="application.userData" />
-        <Row label="application.firstName" content={userData.firstName} />
-        <Row label="application.lastName" content={userData.lastName} />
-        <Row label="application.userRole" content={userData.role} />
-      </Section>
-      <Section highlight>
-        <SectionHeader title="application.contactData" />
-        <Row label="application.mail" content={userData.email} />
-        <Row label="application.phone" content={userData.phone} />
-        {userData.role === UserRole.user && (
-          <>
-            <Row label="application.city" content={userData.city} />
-            <Row label="application.street" content={userData.street} />
-            <Row label="application.postCode" content={userData.postCode} />
-          </>
-        )}
-      </Section>
-      {userData.companyData && userData.role === UserRole.user && (
-        <Section highlight>
+      <SectionHeader title="application.userData" />
+      <Row label="application.firstName" content={singleUser.firstName} />
+      <Row label="application.lastName" content={singleUser.lastName} />
+      <Row label="application.userRole" content={singleUser.role} />
+
+      <SectionHeader title="application.contactData" />
+      <Row label="application.mail" content={singleUser.email} />
+      <Row label="application.phone" content={singleUser.phone} />
+
+      <Row label="application.city" content={singleUser.city} />
+      <Row label="application.street" content={singleUser.street} />
+      <Row label="application.postCode" content={singleUser.postCode} />
+
+      {singleUser.companyData && singleUser.role === UserRole.user && (
+        <>
           <SectionHeader title="application.contactCompanyData" />
           <Row
             label="application.companyName"
-            content={userData.companyData.companyName}
+            content={singleUser.companyData.companyName}
           />
-          <Row label="application.nip" content={userData.companyData.nip} />
+          <Row label="application.nip" content={singleUser.companyData.nip} />
           <Row
             label="application.city"
-            content={userData.companyData.companyCity}
+            content={singleUser.companyData.companyCity}
           />
           <Row
             label="application.street"
-            content={userData.companyData.companyStreet}
+            content={singleUser.companyData.companyStreet}
           />
           <Row
             label="application.postCode"
-            content={userData.companyData.companyPostCode}
+            content={singleUser.companyData.companyPostCode}
           />
-          {/* USER CANT CHANGE HIS COMPANY DATA */}
-          {/* <ButtonsContainer>
-          <Button
-            text="application.edit"
-            primary
-            click={() => dispatch(showModal(<UpdateCompany />))}
-          />
-        </ButtonsContainer> */}
-        </Section>
+        </>
       )}
       <UserRentList rentList={singleUser?.activeRents || []} />
     </>

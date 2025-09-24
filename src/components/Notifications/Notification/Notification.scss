@@ -3,7 +3,7 @@
 @import '../../../config/mixins';
 
 .notification {
-  font-family: $font-primary;
+  
   animation-name: show;
   animation-duration: $transition-time;
   cursor: pointer;

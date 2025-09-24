@@ -7,6 +7,8 @@ import './UserRentList.scss';
 import { __ } from '../../../helpers/i18n';
 import styled, { css } from 'styled-components';
 import { getColorForBackground } from 'src/utils/color';
+import { SectionHeader } from 'src/components/Layout';
+import { Section } from 'src/components/ui';
 
 interface Props {
   rentList: ActiveRentsForUserDetails[];
@@ -33,7 +35,8 @@ const StyledStatus = styled.div<{ status?: RentStatus }>`
   font-size: 0.8rem;
   padding: 5px;
   color: #fff;
-
+flex: 0 1 100px;
+text-align: center;
   ${({ status }) => css`
     background-color: ${getColor(status)};
     color: ${getColorForBackground(getColor(status))};
@@ -44,7 +47,6 @@ const UserRentList = ({ rentList }: Props) => {
   if (rentList.length === 0) {
     return <Alert type="notice" text="application.lackOfRent" />;
   }
-
 
   const data =
     rentList.length > 0 &&
@@ -61,13 +63,13 @@ const UserRentList = ({ rentList }: Props) => {
     });
 
   return (
-    <div className="list-wrapper">
-      <h4>{__('application.currentRents')}</h4>
+    <>
+      <SectionHeader title="application.currentRents" />
 
       <div className="content">
         <div className="rent-list">{data}</div>
       </div>
-    </div>
+    </>
   );
 };
 

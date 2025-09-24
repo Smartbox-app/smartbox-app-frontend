@@ -73,16 +73,12 @@ export const history = createBrowserHistory({ basename: '/' });
 const AppGlobalStyles = () => {
   const { tenant } = useTenant();
 
-  if (tenant && tenant.id) {
-    return (
-      <>
-        <GlobalFont tenantId={tenant.id} />
-        <GlobalStyle tenantId={tenant.id} />
-      </>
-    );
-  }
-
-  return <></>;
+  return (
+    <>
+      {tenant ? <GlobalFont tenantId={tenant.id} /> : null}
+      <GlobalStyle tenant={tenant} />
+    </>
+  );
 };
 
 const App = () => {

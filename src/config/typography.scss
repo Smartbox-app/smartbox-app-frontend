@@ -4,7 +4,7 @@
 
 html {
   font-size: 14px;
-  font-family: $font-primary;
+  
 }
 
 @include gt-sm {
@@ -19,21 +19,21 @@ html {
 }
 
 * {
-  font-family: $font-primary;
+  
 }
 
 body {
   position: relative;
   font-weight: 300;
   color: $color-text;
-  font-family: $font-primary;
+  
   line-height: normal;
   background-color: $color-background;
   height: 100%;
 }
 
 h2 {
-  font-family: $font-primary;
+  
   font-size: 1.1rem;
   font-weight: 500;
 
@@ -43,7 +43,7 @@ h2 {
 }
 
 h3 {
-  font-family: $font-primary;
+  
   font-size: 1.05rem;
   font-weight: 500;
   margin-bottom: $main-spacing * 1;
@@ -54,14 +54,14 @@ h3 {
 }
 
 h4 {
-  font-family: $font-primary;
+  
   font-size: 1.1rem;
   margin-bottom: math.div($main-spacing, 2);
   font-weight: 400;
 }
 
 h5 {
-  font-family: $font-primary;
+  
   font-size: 1.1rem;
   margin-bottom: math.div($main-spacing, 2);
 }

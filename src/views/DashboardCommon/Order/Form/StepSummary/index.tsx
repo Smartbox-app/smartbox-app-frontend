@@ -85,6 +85,7 @@ const StepSummary = ({ formData, updateFormData }: Props) => {
     mailToSendInvoice: user?.email || '',
     phone: user?.phone || '',
 
+    clientSource: '',
     nip: user?.companyData.nip || '',
     companyPostCode: user?.companyData.companyPostCode || '',
     companyCity: user?.companyData.companyCity || '',

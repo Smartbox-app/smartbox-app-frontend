@@ -2,11 +2,6 @@
 @import '../../../config/mixins.scss';
 @import '../../../config/variables.scss';
 
-.list-wrapper {
-  margin: $main-spacing;
-  padding: $main-spacing;
-  border: 1px solid #aaa;
-  border-radius: $main-spacing;
 
   .content {
     display: flex;
@@ -17,6 +12,7 @@
     display: flex;
     flex-direction: column;
     flex: 0 1 100%;
+    margin: 10px 0;
   }
 
   .single-rent {
@@ -34,7 +30,6 @@
     }
     p {
       min-width: 100px;
-      text-align: center;
     }
 
     .dates-rent {
@@ -55,4 +50,3 @@
       margin: $main-spacing $main-spacing * 3;
     }
   }
-}

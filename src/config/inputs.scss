@@ -243,14 +243,14 @@ justify-content: center;
     [class*='placeholder'] {
       color: $color-text-alter;
       font-size: 13.333px;
-      font-family: $font-primary;
+      
     }
   }
 
   [class*='menu'] {
     border-radius: 0;
     padding: 0;
-    font-family: $font-primary;
+    
     font-size: 13.333px;
   }
 }
@@ -260,7 +260,7 @@ justify-content: center;
   input {
     border: 1px solid $color-danger;
     border-bottom: 2px solid $color-danger;
-    font-family: $font-primary;
+    
   }
 }
 

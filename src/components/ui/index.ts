@@ -16,3 +16,4 @@ export * from './Row';
 export * from './InputLabel';
 export * from './Tabs';
 export * from './HeaderWithActions';
+export * from './Select';
