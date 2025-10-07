@@ -50,6 +50,7 @@ export const ClientSourceForm = () => {
             value: 'Inne',
           },
         ]}
+        required={true}
         error={errors.clientSource?.message}
       />
     </Section>
