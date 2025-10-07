@@ -14,3 +14,4 @@ export * from './addons-list.table';
 export * from './rents-list.table';
 export * from './attachment-list.table';
 export * from './attachment-list-for-admin.table';
+export * from './locks-list.table';

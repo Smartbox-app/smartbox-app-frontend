@@ -27,7 +27,7 @@ interface Props {
   sort?: {
     sortBy: string;
     sortDirBack: boolean;
-  };
+  } | null;
   onSortChange?: (sortBy: string, sortDirBack: boolean) => void;
 }
 
@@ -111,7 +111,7 @@ const formatValue = (value: any, field: TableSchemaField, allValues: any) => {
 
 function genSortItems(
   header: TableSchemaField,
-  sort: { sortBy: string; sortDirBack: boolean },
+  sort: { sortBy: string; sortDirBack: boolean } | null,
   onSortChange: (sortBy: string, sortDirBack: boolean) => void,
 ) {
   if (header.sortable !== true) return null;
@@ -120,22 +120,22 @@ function genSortItems(
     onSortChange(header.field, dirBack);
   };
 
-  const arrow1 = (
+  const arrow1 = sort ? (
     <a
       onClick={() => handleSortChange(false)}
       className={`sort sort - up ${sort.sortBy === header.field && sort.sortDirBack !== true ? 'active' : ''} `}
     >
       <span className="fa fa-chevron-up" />
     </a>
-  );
-  const arrow2 = (
+  ) : null;
+  const arrow2 = sort ? (
     <a
       onClick={() => handleSortChange(true)}
       className={`sort sort - down ${sort.sortBy === header.field && sort.sortDirBack === true ? 'active' : ''} `}
     >
       <span className="fa fa-chevron-down" />
     </a>
-  );
+  ) : null;
 
   return (
     <>

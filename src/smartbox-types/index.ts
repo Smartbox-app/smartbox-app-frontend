@@ -19,3 +19,4 @@ export * from './period';
 export * from './debt';
 export * from './notification';
 export * from './attachment';
+export * from './ttlock';

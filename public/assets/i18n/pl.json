@@ -317,6 +317,7 @@
       "access": "Szczegóły dostępu",
       "openBoxConfirmation": "Czy na pewno chcesz otworzyć skrytkę?",
       "openBox": "Otwórz skrytkę",
+      "unlock": "Odblokuj",
       "boxOpenedSuccessfully": "Poprawnie otwarto skrytkę",
       "cannotOpenBox": "Nie udało się otworzyć skrytki",
       "openGate": "Otwórz bramę",
@@ -635,7 +636,9 @@
       "attachmentUpdated": "Zaktualizowano załącznik",
       "attachmentDeleted": "Usunięto załącznik",
       "confirmAttachmentDelete": "Czy na pewno chcesz usunąć ten załącznik?",
-      "attachmentList": "Lista załączników"
+      "attachmentList": "Lista załączników",
+      "locks": "Zamki",
+      "lockOpened": "Zamek otwarty"
     },
     "settings": {
       "tax": "Stawka VAT",

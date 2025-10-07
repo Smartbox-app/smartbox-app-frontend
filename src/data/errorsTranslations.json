@@ -357,6 +357,10 @@
             "79": {
                 "text": "Jesteś już zapisany do tego powiadomienia.",
                 "__type_alias_do_not_touch": "ApiErrorCode.YouAreAlreadySubscribed"
+            },
+            "81": {
+                "text": "Nie udało się odblokować zamka.",
+                "__type_alias_do_not_touch": "ApiErrorCode.UnableToUnlock"
             }
         }
     }
