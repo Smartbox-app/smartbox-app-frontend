@@ -1,367 +1,371 @@
 {
-    "pl": {
-        "Both new passwords have to be identical.": "Oba hasła muszą być identyczne.",
-        "Cannot decode this type of data when using FormData.": "Cannot decode this type of data when using FormData.",
-        "Company city": "Dane kontaktowe: Miasto",
-        "Company name": "Nazwa firmy",
-        "Company post code": "Dane kontaktowe: Kod pocztowy",
-        "Compnay street": "Dane kontaktowe: Ulica",
-        "Data początku nie może być wcześniejsza od końcowej": "Data początku nie może być wcześniejsza od końcowej",
-        "Date too high. Max. {0}.": "Date too high. Max. {0}.",
-        "Date too low. Min. {0}.": "Data minęła. Min. {0}.",
-        "Discount value": "Wartość zniżki",
-        "Expiration Date": "Data wygaśnięcia",
-        "Field required.": "To pole jest wymagane.",
-        "Invalid NIP.": "Nieprawidłowy NIP.",
-        "Invalid Zip code.": "Błędny kod pocztowy.",
-        "Invalid absolute URL.": "Invalid absolute URL.",
-        "Invalid bank account number": "Błędny numer konta bankowego",
-        "Invalid color hash.": "Invalid color hash.",
-        "Invalid e-mail address.": "Nieprawidłowy adres email.",
-        "Invalid email.": "Nieprawidłowy adres email.",
-        "Invalid option: {0}.": "Nieprawidłowa opcja: {0}.",
-        "Invalid phone number": "Błędny numer telefonu",
-        "Invalid post code": "Niepoprawny kod pocztowy",
-        "Invalid identifier": "Niepoprawny identyfikator",
-        "Invalid type of value: {0} expected.": "Niewłaściwy typ: {0} oczekiwany.",
-        "New password": "Nowe hasło",
-        "Password": "Hasło",
-        "Phone": "Telefon",
-        "Repeat new password": "Powtórz nowe hasło",
-        "Select...": "Wybierz...",
-        "Stock": "Plac",
-        "Stocks": "Plac",
-        "Value": "Wartość",
-        "Value too high. Max. {0}.": "Wartość za duża. Max. {0}.",
-        "Value too long (max. {0})": "Wartość za długa (max. {0})",
-        "Value too low. Min. {0}.": "Wartość za mała. Min. {0}.",
-        "Value too short (min. {0})": "Wartość za krótka (min. {0})",
-        "Value%": "Wartość [%]",
-        "_API_ERROR_CODES_": {
-            "0": {
-                "text": "Wystąpił błąd!",
-                "__type_alias_do_not_touch": "ApiErrorCode.OtherError"
-            },
-            "1": {
-                "text": "Brak obiektu o wskazanym numerze!",
-                "__type_alias_do_not_touch": "ApiErrorCode.NoSuchObjectWithThisId"
-            },
-            "2": {
-                "text": "Obiekt nie jest unikalny!",
-                "__type_alias_do_not_touch": "ApiErrorCode.ObjectNotUniuque"
-            },
-            "3": {
-                "text": "Niepoprawne dane logowania!",
-                "__type_alias_do_not_touch": "ApiErrorCode.InvalidLoginData"
-            },
-            "4": {
-                "text": "Podano błędne dane!",
-                "__type_alias_do_not_touch": "ApiErrorCode.InvalidData"
-            },
-            "5": {
-                "text": "Błąd walidacji formularza!",
-                "__type_alias_do_not_touch": "ApiErrorCode.FormValidationError"
-            },
-            "6": {
-                "text": "Istnieje już użytkownik o takich danych!",
-                "__type_alias_do_not_touch": "ApiErrorCode.UserExist"
-            },
-            "7": {
-                "text": "Nieprawidłowa cena!",
-                "__type_alias_do_not_touch": "ApiErrorCode.InvalidPrice"
-            },
-            "8": {
-                "text": "Brak wolnego mini magazynu o tym rozmiarze!",
-                "__type_alias_do_not_touch": "ApiErrorCode.NoFreeBoxInThisSize"
-            },
-            "9": {
-                "text": "Błąd przy płatności!",
-                "__type_alias_do_not_touch": "ApiErrorCode.PaymentError"
-            },
-            "10": {
-                "text": "Nie można wykonać akcji przed dokonaniem płatności!",
-                "__type_alias_do_not_touch": "ApiErrorCode.PayFirst"
-            },
-            "11": {
-                "text": "Nie można wykonać zmiany przy obecnym statusie!",
-                "__type_alias_do_not_touch": "ApiErrorCode.CantChangeThisBoxOnThisStatus"
-            },
-            "12": {
-                "text": "Jest za późno na dokonanie tej zmiany!",
-                "__type_alias_do_not_touch": "ApiErrorCode.TooLateForCahnge"
-            },
-            "13": {
-                "text": "Brak wolnych mini magazynów!",
-                "__type_alias_do_not_touch": "ApiErrorCode.NotFreeBox"
-            },
-            "14": {
-                "text": "Błędny kod rabatowy!",
-                "__type_alias_do_not_touch": "ApiErrorCode.InvalidDiscountCode"
-            },
-            "15": {
-                "text": "Karta uzyskała już jednorazową zniżkę!",
-                "__type_alias_do_not_touch": "ApiErrorCode.CardHasBeenUsedWithDiscount"
-            },
-            "16": {
-                "text": "Błędny numer mini magazynu!",
-                "__type_alias_do_not_touch": "ApiErrorCode.InvalidBoxNumber"
-            },
-            "17": {
-                "text": "Błąd podczas tworzenia faktury!",
-                "__type_alias_do_not_touch": "ApiErrorCode.CreatingInvoiceFailure"
-            },
-            "18": {
-                "text": "Błąd podczas wysyłania faktury!",
-                "__type_alias_do_not_touch": "ApiErrorCode.SendingEmailWithInvoiceFailure"
-            },
-            "19": {
-                "text": "ybrano błędny język!",
-                "__type_alias_do_not_touch": "ApiErrorCode.InvalidLang"
-            },
-            "20": {
-                "text": "Wybranie placu dla pracownika jest wymagane!",
-                "__type_alias_do_not_touch": "ApiErrorCode.StckIdIsRequiredForWorkerRole"
-            },
-            "21": {
-                "text": "Nie odnaleziono mini magazynu o wskazanym numerze!",
-                "__type_alias_do_not_touch": "ApiErrorCode.NoFoundBoxNumberOnStock"
-            },
-            "22": {
-                "text": "Akcja niedozwolona!",
-                "__type_alias_do_not_touch": "ApiErrorCode.ActionForebiden"
-            },
-            "23": {
-                "text": "Błędne współrzędne geograficzne!",
-                "__type_alias_do_not_touch": "ApiErrorCode.InvalidCoordinate"
-            },
-            "24": {
-                "text": "Jesteś za daleko!",
-                "__type_alias_do_not_touch": "ApiErrorCode.UAreTooFarAway"
-            },
-            "25": {
-                "text": "Wybrany plac posiada już zniżkę!",
-                "__type_alias_do_not_touch": "ApiErrorCode.StockHasActiveDiscont"
-            },
-            "26": {
-                "text": "Błędny numer BLIK!",
-                "__type_alias_do_not_touch": "ApiErrorCode.InvalidBlik"
-            },
-            "27": {
-                "text": "Błędny numer grupy bankowej!",
-                "__type_alias_do_not_touch": "ApiErrorCode.InvalidGroup"
-            },
-            "28": {
-                "text": "Mini magazyn o wybranym numerze jest zarezerwowana!",
-                "__type_alias_do_not_touch": "ApiErrorCode.BoxNumberIsReserved"
-            },
-            "29": {
-                "text": "Numer telefonu wymagany do zamówienia. Proszę uzupełnić profil!",
-                "__type_alias_do_not_touch": "ApiErrorCode.PhoneIsRequiredForRent"
-            },
-            "30": {
-                "text": "Błędne stanowisko!",
-                "__type_alias_do_not_touch": "ApiErrorCode.InvalidUserType"
-            },
-            "31": {
-                "text": "Dane firmy są wymagane!",
-                "__type_alias_do_not_touch": "ApiErrorCode.CompanyDataIsRequired"
-            },
-            "32": {
-                "text": "Mini magazyn został już zarezerwowany!",
-                "__type_alias_do_not_touch": "ApiErrorCode.BoxIsReserved"
-            },
-            "33": {
-                "text": "Użytkownik został zablokowany!",
-                "__type_alias_do_not_touch": "ApiErrorCode.UserIsBlocked"
-            },
-            "34": {
-                "text": "Wynajem zablokowany. Posiadasz nieopłacony wynajem!",
-                "__type_alias_do_not_touch": "ApiErrorCode.YouHaveNoPaidBoxes"
-            },
-            "35": {
-                "text": "Nieposiadasz uprawnień do otwarcia bramy!",
-                "__type_alias_do_not_touch": "ApiErrorCode.NoAccessToTheGate"
-            },
-            "36": {
-                "text": "Aktywacja użytkownika wymagana!",
-                "__type_alias_do_not_touch": "ApiErrorCode.FirstActiveUser"
-            },
-            "37": {
-                "text": "Płatność nie jest oznaczona jako blik!",
-                "__type_alias_do_not_touch": "ApiErrorCode.PaymentIsntBlikType"
-            },
-            "38": {
-                "text": "Płatność nie jest oznaczona jako przelew!",
-                "__type_alias_do_not_touch": "ApiErrorCode.PaymentIsntTransferType"
-            },
-            "39": {
-                "text": "Płatność nie jest oznaczona jako karta!",
-                "__type_alias_do_not_touch": "ApiErrorCode.PaymentIsntCardType"
-            },
-            "40": {
-                "text": "Niepoprawna stawka podatku!",
-                "__type_alias_do_not_touch": "ApiErrorCode.InvalidTaxValue"
-            },
-            "41": {
-                "text": "Błąd połączenia z bramą!",
-                "__type_alias_do_not_touch": "ApiErrorCode.ErrorConnectingToGate"
-            },
-            "42": {
-                "text": "Niepoprawny format pliku!",
-                "__type_alias_do_not_touch": "ApiErrorCode.ForbiddenFileFormat"
-            },
-            "43": {
-                "text": "Podany numer telefonu jest zajęty!",
-                "__type_alias_do_not_touch": "ApiErrorCode.PhoneNumberIsAlreadyInUse"
-            },
-            "44": {
-                "text": "Podany identyfikator jest zajęty!",
-                "__type_alias_do_not_touch": "ApiErrorCode.IdentifierAlreadyInUse"
-            },
-            "45": {
-                "text": "Nie znaleziono takiego wynajmującego!",
-                "__type_alias_do_not_touch": "ApiErrorCode.TenantDoesNotExist"
-            },
-            "46": {
-                "text": "Nie możesz usunąć skrytki która nie jest pusta!",
-                "__type_alias_do_not_touch": "ApiErrorCode.CanNotDeleteNotEmptyBox"
-            },
-            "47": {
-                "text": "Wymagane jest określenie przynajmniej jednego okresu!",
-                "__type_alias_do_not_touch": "ApiErrorCode.NeedAtLeastOnePricingPeriod"
-            },
-            "48": {
-                "text": "Okresy oraz ceny muszą być ustawione w kolejności rosnącej!",
-                "__type_alias_do_not_touch": "ApiErrorCode.PricesAndPeriodsNeedsToBeInAscendingOrder"
-            },
-            "49": {
-                "text": "Okres większy niż 28 dni nie jest dopuszczalny!",
-                "__type_alias_do_not_touch": "ApiErrorCode.PeriodMax28Days"
-            },
-            "50": {
-                "text": "Okres większy niż 4 tygodnie nie jest dopuszczalny!",
-                "__type_alias_do_not_touch": "ApiErrorCode.PeriodMax4Weeks"
-            },
-            "51": {
-                "text": "Okres większy niż 12 miesięcy nie jest dopuszczalny!",
-                "__type_alias_do_not_touch": "ApiErrorCode.PeriodMax12Months"
-            },
-            "52": {
-                "text": "Minimalna ilość okresów to 1!",
-                "__type_alias_do_not_touch": "ApiErrorCode.PeriodAtLeast1"
-            },
-            "53": {
-                "text": "Musisz podać cenę za 1 dzień wynajmu!",
-                "__type_alias_do_not_touch": "ApiErrorCode.YouNeedToSetPriceForOneDay"
-            },
-            "54": {
-                "text": "Wybrany okres czasowy jest zbyt krótki!",
-                "__type_alias_do_not_touch": "ApiErrorCode.RentPeriodTooShort"
-            },
-            "55": {
-                "text": "Plac nie posiada zniżki!",
-                "__type_alias_do_not_touch": "ApiErrorCode.NoDiscountSet"
-            },
-            "56": {
-                "text": "Kod zniżkowy jest nieprawidłowy!",
-                "__type_alias_do_not_touch": "ApiErrorCode.GiftCodeInvalid"
-            },
-            "57": {
-                "text": "Nie można usunąć kodu zniżkowego który został wykorzystany!",
-                "__type_alias_do_not_touch": "ApiErrorCode.CantRemoveUsedGift"
-            },
-            "58": {
-                "text": "Platforma jest nieaktywna!",
-                "__type_alias_do_not_touch": "ApiErrorCode.TenantNotActive"
-            },
-            "59": {
-                "text": "Nie możesz usunąć grupy posiadającej kontenery z innym statusem niż wolny!",
-                "__type_alias_do_not_touch": "ApiErrorCode.CanNotRemoveGroupWithRents"
-            },
-            "60": {
-                "text": "Brak możliwości wystawienia faktury!",
-                "__type_alias_do_not_touch": "ApiErrorCode.NoInvoiceServiceData"
-            },
-            "61": {
-                "text": "Osiągnięto limit kontenerów!",
-                "__type_alias_do_not_touch": "ApiErrorCode.BoxesLimitReached"
-            },
-            "62": {
-                "text": "Brak możliwości dodania takiej ilości kontenerów - zmniejsz ilość aby zmieścić się w limicie.",
-                "__type_alias_do_not_touch": "ApiErrorCode.TryingToAddTooManyBoxes"
-            },
-            "63": {
-                "text": "Osiągnięto limit placów!",
-                "__type_alias_do_not_touch": "ApiErrorCode.StocksLimitReached"
-            },
-            "64": {
-                "text": "Zamek jest uśpiony, naciśnij przycisk na zamku aby go wybudzić.",
-                "__type_alias_do_not_touch": "ApiErrorCode.LockIsInSleepMode"
-            },
-            "65": {
-                "text": "Wymagane jest określenie przynajmniej jednego wariantu dodatku!",
-                "__type_alias_do_not_touch": "ApiErrorCode.NeedAtLeastOneAddonVariant"
-            },
-            "66": {
-                "text": "Nie wybrano wymaganego dodatku!",
-                "__type_alias_do_not_touch": "ApiErrorCode.RequiredAddonNotSelected"
-            },
-            "67": {
-                "text": "Musisz wyrazić zgodę dla wybranego dodatku!",
-                "__type_alias_do_not_touch": "ApiErrorCode.AcceptanceNotSelected"
-            },
-            "68": {
-                "text": "Przesłany plik jest za duży!",
-                "__type_alias_do_not_touch": "ApiErrorCode.FileIsTooBig"
-            },
-            "69": {
-                "text": "Brak wymaganego pliku!",
-                "__type_alias_do_not_touch": "ApiErrorCode.AddonFileIsMissing"
-            },
-            "70": {
-                "text": "Brak daty urodzenia!",
-                "__type_alias_do_not_touch": "ApiErrorCode.BirthDateMissing"
-            },
-            "71": {
-                "text": "Osiągnięto maksymalną ilość aktywnych skrytek!",
-                "__type_alias_do_not_touch": "ApiErrorCode.ActiveBoxesLimitReached"
-            },
-            "72": {
-                "text": "Nie można dezaktywować skrytki która nie jest wolna!",
-                "__type_alias_do_not_touch": "ApiErrorCode.CanNotSetNotEmptyBoxAsInactive"
-            },
-            "73": {
-                "text": "Brak wolnych skrytek!",
-                "__type_alias_do_not_touch": "ApiErrorCode.NoMoreAvailableBoxes"
-            },
-            "74": {
-                "text": "Nie można usunąć uzytkownika który posiada aktywny najem!",
-                "__type_alias_do_not_touch": "ApiErrorCode.CanNotDeleteUserWithRent"
-            },
-            "75": {
-                "text": "Nie można przedłużyć nieopłaconego najmu!",
-                "__type_alias_do_not_touch": "ApiErrorCode.CanNotExtendUnpaidRent"
-            },
-            "76": {
-                "text": "Nie można zwolnić skrytki z płatnością w trakcie!",
-                "__type_alias_do_not_touch": "ApiErrorCode.CantFreeBoxWithPendingPayment"
-            },
-            "77": {
-                "text": "Okres większy niż jedna połowa roku jest niedozwolony!",
-                "__type_alias_do_not_touch": "ApiErrorCode.PeriodMax1HalfYear"
-            },
-            "78": {
-                "text": "Okres większy niż dwa kwartały jest niedozwolony!",
-                "__type_alias_do_not_touch": "ApiErrorCode.PeriodMax2Quarters"
-            },
-            "79": {
-                "text": "Jesteś już zapisany do tego powiadomienia.",
-                "__type_alias_do_not_touch": "ApiErrorCode.YouAreAlreadySubscribed"
-            },
-            "81": {
-                "text": "Nie udało się odblokować zamka.",
-                "__type_alias_do_not_touch": "ApiErrorCode.UnableToUnlock"
-            }
-        }
+  "pl": {
+    "Both new passwords have to be identical.": "Oba hasła muszą być identyczne.",
+    "Cannot decode this type of data when using FormData.": "Cannot decode this type of data when using FormData.",
+    "Company city": "Dane kontaktowe: Miasto",
+    "Company name": "Nazwa firmy",
+    "Company post code": "Dane kontaktowe: Kod pocztowy",
+    "Compnay street": "Dane kontaktowe: Ulica",
+    "Data początku nie może być wcześniejsza od końcowej": "Data początku nie może być wcześniejsza od końcowej",
+    "Date too high. Max. {0}.": "Date too high. Max. {0}.",
+    "Date too low. Min. {0}.": "Data minęła. Min. {0}.",
+    "Discount value": "Wartość zniżki",
+    "Expiration Date": "Data wygaśnięcia",
+    "Field required.": "To pole jest wymagane.",
+    "Invalid NIP.": "Nieprawidłowy NIP.",
+    "Invalid Zip code.": "Błędny kod pocztowy.",
+    "Invalid absolute URL.": "Invalid absolute URL.",
+    "Invalid bank account number": "Błędny numer konta bankowego",
+    "Invalid color hash.": "Invalid color hash.",
+    "Invalid e-mail address.": "Nieprawidłowy adres email.",
+    "Invalid email.": "Nieprawidłowy adres email.",
+    "Invalid option: {0}.": "Nieprawidłowa opcja: {0}.",
+    "Invalid phone number": "Błędny numer telefonu",
+    "Invalid post code": "Niepoprawny kod pocztowy",
+    "Invalid identifier": "Niepoprawny identyfikator",
+    "Invalid type of value: {0} expected.": "Niewłaściwy typ: {0} oczekiwany.",
+    "New password": "Nowe hasło",
+    "Password": "Hasło",
+    "Phone": "Telefon",
+    "Repeat new password": "Powtórz nowe hasło",
+    "Select...": "Wybierz...",
+    "Stock": "Plac",
+    "Stocks": "Plac",
+    "Value": "Wartość",
+    "Value too high. Max. {0}.": "Wartość za duża. Max. {0}.",
+    "Value too long (max. {0})": "Wartość za długa (max. {0})",
+    "Value too low. Min. {0}.": "Wartość za mała. Min. {0}.",
+    "Value too short (min. {0})": "Wartość za krótka (min. {0})",
+    "Value%": "Wartość [%]",
+    "_API_ERROR_CODES_": {
+      "0": {
+        "text": "Wystąpił błąd!",
+        "__type_alias_do_not_touch": "ApiErrorCode.OtherError"
+      },
+      "1": {
+        "text": "Brak obiektu o wskazanym numerze!",
+        "__type_alias_do_not_touch": "ApiErrorCode.NoSuchObjectWithThisId"
+      },
+      "2": {
+        "text": "Obiekt nie jest unikalny!",
+        "__type_alias_do_not_touch": "ApiErrorCode.ObjectNotUniuque"
+      },
+      "3": {
+        "text": "Niepoprawne dane logowania!",
+        "__type_alias_do_not_touch": "ApiErrorCode.InvalidLoginData"
+      },
+      "4": {
+        "text": "Podano błędne dane!",
+        "__type_alias_do_not_touch": "ApiErrorCode.InvalidData"
+      },
+      "5": {
+        "text": "Błąd walidacji formularza!",
+        "__type_alias_do_not_touch": "ApiErrorCode.FormValidationError"
+      },
+      "6": {
+        "text": "Istnieje już użytkownik o takich danych!",
+        "__type_alias_do_not_touch": "ApiErrorCode.UserExist"
+      },
+      "7": {
+        "text": "Nieprawidłowa cena!",
+        "__type_alias_do_not_touch": "ApiErrorCode.InvalidPrice"
+      },
+      "8": {
+        "text": "Brak wolnego mini magazynu o tym rozmiarze!",
+        "__type_alias_do_not_touch": "ApiErrorCode.NoFreeBoxInThisSize"
+      },
+      "9": {
+        "text": "Błąd przy płatności!",
+        "__type_alias_do_not_touch": "ApiErrorCode.PaymentError"
+      },
+      "10": {
+        "text": "Nie można wykonać akcji przed dokonaniem płatności!",
+        "__type_alias_do_not_touch": "ApiErrorCode.PayFirst"
+      },
+      "11": {
+        "text": "Nie można wykonać zmiany przy obecnym statusie!",
+        "__type_alias_do_not_touch": "ApiErrorCode.CantChangeThisBoxOnThisStatus"
+      },
+      "12": {
+        "text": "Jest za późno na dokonanie tej zmiany!",
+        "__type_alias_do_not_touch": "ApiErrorCode.TooLateForCahnge"
+      },
+      "13": {
+        "text": "Brak wolnych mini magazynów!",
+        "__type_alias_do_not_touch": "ApiErrorCode.NotFreeBox"
+      },
+      "14": {
+        "text": "Błędny kod rabatowy!",
+        "__type_alias_do_not_touch": "ApiErrorCode.InvalidDiscountCode"
+      },
+      "15": {
+        "text": "Karta uzyskała już jednorazową zniżkę!",
+        "__type_alias_do_not_touch": "ApiErrorCode.CardHasBeenUsedWithDiscount"
+      },
+      "16": {
+        "text": "Błędny numer mini magazynu!",
+        "__type_alias_do_not_touch": "ApiErrorCode.InvalidBoxNumber"
+      },
+      "17": {
+        "text": "Błąd podczas tworzenia faktury!",
+        "__type_alias_do_not_touch": "ApiErrorCode.CreatingInvoiceFailure"
+      },
+      "18": {
+        "text": "Błąd podczas wysyłania faktury!",
+        "__type_alias_do_not_touch": "ApiErrorCode.SendingEmailWithInvoiceFailure"
+      },
+      "19": {
+        "text": "ybrano błędny język!",
+        "__type_alias_do_not_touch": "ApiErrorCode.InvalidLang"
+      },
+      "20": {
+        "text": "Wybranie placu dla pracownika jest wymagane!",
+        "__type_alias_do_not_touch": "ApiErrorCode.StckIdIsRequiredForWorkerRole"
+      },
+      "21": {
+        "text": "Nie odnaleziono mini magazynu o wskazanym numerze!",
+        "__type_alias_do_not_touch": "ApiErrorCode.NoFoundBoxNumberOnStock"
+      },
+      "22": {
+        "text": "Akcja niedozwolona!",
+        "__type_alias_do_not_touch": "ApiErrorCode.ActionForebiden"
+      },
+      "23": {
+        "text": "Błędne współrzędne geograficzne!",
+        "__type_alias_do_not_touch": "ApiErrorCode.InvalidCoordinate"
+      },
+      "24": {
+        "text": "Jesteś za daleko!",
+        "__type_alias_do_not_touch": "ApiErrorCode.UAreTooFarAway"
+      },
+      "25": {
+        "text": "Wybrany plac posiada już zniżkę!",
+        "__type_alias_do_not_touch": "ApiErrorCode.StockHasActiveDiscont"
+      },
+      "26": {
+        "text": "Błędny numer BLIK!",
+        "__type_alias_do_not_touch": "ApiErrorCode.InvalidBlik"
+      },
+      "27": {
+        "text": "Błędny numer grupy bankowej!",
+        "__type_alias_do_not_touch": "ApiErrorCode.InvalidGroup"
+      },
+      "28": {
+        "text": "Mini magazyn o wybranym numerze jest zarezerwowana!",
+        "__type_alias_do_not_touch": "ApiErrorCode.BoxNumberIsReserved"
+      },
+      "29": {
+        "text": "Numer telefonu wymagany do zamówienia. Proszę uzupełnić profil!",
+        "__type_alias_do_not_touch": "ApiErrorCode.PhoneIsRequiredForRent"
+      },
+      "30": {
+        "text": "Błędne stanowisko!",
+        "__type_alias_do_not_touch": "ApiErrorCode.InvalidUserType"
+      },
+      "31": {
+        "text": "Dane firmy są wymagane!",
+        "__type_alias_do_not_touch": "ApiErrorCode.CompanyDataIsRequired"
+      },
+      "32": {
+        "text": "Mini magazyn został już zarezerwowany!",
+        "__type_alias_do_not_touch": "ApiErrorCode.BoxIsReserved"
+      },
+      "33": {
+        "text": "Użytkownik został zablokowany!",
+        "__type_alias_do_not_touch": "ApiErrorCode.UserIsBlocked"
+      },
+      "34": {
+        "text": "Wynajem zablokowany. Posiadasz nieopłacony wynajem!",
+        "__type_alias_do_not_touch": "ApiErrorCode.YouHaveNoPaidBoxes"
+      },
+      "35": {
+        "text": "Nieposiadasz uprawnień do otwarcia bramy!",
+        "__type_alias_do_not_touch": "ApiErrorCode.NoAccessToTheGate"
+      },
+      "36": {
+        "text": "Aktywacja użytkownika wymagana!",
+        "__type_alias_do_not_touch": "ApiErrorCode.FirstActiveUser"
+      },
+      "37": {
+        "text": "Płatność nie jest oznaczona jako blik!",
+        "__type_alias_do_not_touch": "ApiErrorCode.PaymentIsntBlikType"
+      },
+      "38": {
+        "text": "Płatność nie jest oznaczona jako przelew!",
+        "__type_alias_do_not_touch": "ApiErrorCode.PaymentIsntTransferType"
+      },
+      "39": {
+        "text": "Płatność nie jest oznaczona jako karta!",
+        "__type_alias_do_not_touch": "ApiErrorCode.PaymentIsntCardType"
+      },
+      "40": {
+        "text": "Niepoprawna stawka podatku!",
+        "__type_alias_do_not_touch": "ApiErrorCode.InvalidTaxValue"
+      },
+      "41": {
+        "text": "Błąd połączenia z bramą!",
+        "__type_alias_do_not_touch": "ApiErrorCode.ErrorConnectingToGate"
+      },
+      "42": {
+        "text": "Niepoprawny format pliku!",
+        "__type_alias_do_not_touch": "ApiErrorCode.ForbiddenFileFormat"
+      },
+      "43": {
+        "text": "Podany numer telefonu jest zajęty!",
+        "__type_alias_do_not_touch": "ApiErrorCode.PhoneNumberIsAlreadyInUse"
+      },
+      "44": {
+        "text": "Podany identyfikator jest zajęty!",
+        "__type_alias_do_not_touch": "ApiErrorCode.IdentifierAlreadyInUse"
+      },
+      "45": {
+        "text": "Nie znaleziono takiego wynajmującego!",
+        "__type_alias_do_not_touch": "ApiErrorCode.TenantDoesNotExist"
+      },
+      "46": {
+        "text": "Nie możesz usunąć skrytki która nie jest pusta!",
+        "__type_alias_do_not_touch": "ApiErrorCode.CanNotDeleteNotEmptyBox"
+      },
+      "47": {
+        "text": "Wymagane jest określenie przynajmniej jednego okresu!",
+        "__type_alias_do_not_touch": "ApiErrorCode.NeedAtLeastOnePricingPeriod"
+      },
+      "48": {
+        "text": "Okresy oraz ceny muszą być ustawione w kolejności rosnącej!",
+        "__type_alias_do_not_touch": "ApiErrorCode.PricesAndPeriodsNeedsToBeInAscendingOrder"
+      },
+      "49": {
+        "text": "Okres większy niż 28 dni nie jest dopuszczalny!",
+        "__type_alias_do_not_touch": "ApiErrorCode.PeriodMax28Days"
+      },
+      "50": {
+        "text": "Okres większy niż 4 tygodnie nie jest dopuszczalny!",
+        "__type_alias_do_not_touch": "ApiErrorCode.PeriodMax4Weeks"
+      },
+      "51": {
+        "text": "Okres większy niż 12 miesięcy nie jest dopuszczalny!",
+        "__type_alias_do_not_touch": "ApiErrorCode.PeriodMax12Months"
+      },
+      "52": {
+        "text": "Minimalna ilość okresów to 1!",
+        "__type_alias_do_not_touch": "ApiErrorCode.PeriodAtLeast1"
+      },
+      "53": {
+        "text": "Musisz podać cenę za 1 dzień wynajmu!",
+        "__type_alias_do_not_touch": "ApiErrorCode.YouNeedToSetPriceForOneDay"
+      },
+      "54": {
+        "text": "Wybrany okres czasowy jest zbyt krótki!",
+        "__type_alias_do_not_touch": "ApiErrorCode.RentPeriodTooShort"
+      },
+      "55": {
+        "text": "Plac nie posiada zniżki!",
+        "__type_alias_do_not_touch": "ApiErrorCode.NoDiscountSet"
+      },
+      "56": {
+        "text": "Kod zniżkowy jest nieprawidłowy!",
+        "__type_alias_do_not_touch": "ApiErrorCode.GiftCodeInvalid"
+      },
+      "57": {
+        "text": "Nie można usunąć kodu zniżkowego który został wykorzystany!",
+        "__type_alias_do_not_touch": "ApiErrorCode.CantRemoveUsedGift"
+      },
+      "58": {
+        "text": "Platforma jest nieaktywna!",
+        "__type_alias_do_not_touch": "ApiErrorCode.TenantNotActive"
+      },
+      "59": {
+        "text": "Nie możesz usunąć grupy posiadającej kontenery z innym statusem niż wolny!",
+        "__type_alias_do_not_touch": "ApiErrorCode.CanNotRemoveGroupWithRents"
+      },
+      "60": {
+        "text": "Brak możliwości wystawienia faktury!",
+        "__type_alias_do_not_touch": "ApiErrorCode.NoInvoiceServiceData"
+      },
+      "61": {
+        "text": "Osiągnięto limit kontenerów!",
+        "__type_alias_do_not_touch": "ApiErrorCode.BoxesLimitReached"
+      },
+      "62": {
+        "text": "Brak możliwości dodania takiej ilości kontenerów - zmniejsz ilość aby zmieścić się w limicie.",
+        "__type_alias_do_not_touch": "ApiErrorCode.TryingToAddTooManyBoxes"
+      },
+      "63": {
+        "text": "Osiągnięto limit placów!",
+        "__type_alias_do_not_touch": "ApiErrorCode.StocksLimitReached"
+      },
+      "64": {
+        "text": "Zamek jest uśpiony, naciśnij przycisk na zamku aby go wybudzić.",
+        "__type_alias_do_not_touch": "ApiErrorCode.LockIsInSleepMode"
+      },
+      "65": {
+        "text": "Wymagane jest określenie przynajmniej jednego wariantu dodatku!",
+        "__type_alias_do_not_touch": "ApiErrorCode.NeedAtLeastOneAddonVariant"
+      },
+      "66": {
+        "text": "Nie wybrano wymaganego dodatku!",
+        "__type_alias_do_not_touch": "ApiErrorCode.RequiredAddonNotSelected"
+      },
+      "67": {
+        "text": "Musisz wyrazić zgodę dla wybranego dodatku!",
+        "__type_alias_do_not_touch": "ApiErrorCode.AcceptanceNotSelected"
+      },
+      "68": {
+        "text": "Przesłany plik jest za duży!",
+        "__type_alias_do_not_touch": "ApiErrorCode.FileIsTooBig"
+      },
+      "69": {
+        "text": "Brak wymaganego pliku!",
+        "__type_alias_do_not_touch": "ApiErrorCode.AddonFileIsMissing"
+      },
+      "70": {
+        "text": "Brak daty urodzenia!",
+        "__type_alias_do_not_touch": "ApiErrorCode.BirthDateMissing"
+      },
+      "71": {
+        "text": "Osiągnięto maksymalną ilość aktywnych skrytek!",
+        "__type_alias_do_not_touch": "ApiErrorCode.ActiveBoxesLimitReached"
+      },
+      "72": {
+        "text": "Nie można dezaktywować skrytki która nie jest wolna!",
+        "__type_alias_do_not_touch": "ApiErrorCode.CanNotSetNotEmptyBoxAsInactive"
+      },
+      "73": {
+        "text": "Brak wolnych skrytek!",
+        "__type_alias_do_not_touch": "ApiErrorCode.NoMoreAvailableBoxes"
+      },
+      "74": {
+        "text": "Nie można usunąć uzytkownika który posiada aktywny najem!",
+        "__type_alias_do_not_touch": "ApiErrorCode.CanNotDeleteUserWithRent"
+      },
+      "75": {
+        "text": "Nie można przedłużyć nieopłaconego najmu!",
+        "__type_alias_do_not_touch": "ApiErrorCode.CanNotExtendUnpaidRent"
+      },
+      "76": {
+        "text": "Nie można zwolnić skrytki z płatnością w trakcie!",
+        "__type_alias_do_not_touch": "ApiErrorCode.CantFreeBoxWithPendingPayment"
+      },
+      "77": {
+        "text": "Okres większy niż jedna połowa roku jest niedozwolony!",
+        "__type_alias_do_not_touch": "ApiErrorCode.PeriodMax1HalfYear"
+      },
+      "78": {
+        "text": "Okres większy niż dwa kwartały jest niedozwolony!",
+        "__type_alias_do_not_touch": "ApiErrorCode.PeriodMax2Quarters"
+      },
+      "79": {
+        "text": "Jesteś już zapisany do tego powiadomienia.",
+        "__type_alias_do_not_touch": "ApiErrorCode.YouAreAlreadySubscribed"
+      },
+      "81": {
+        "text": "Nie udało się odblokować zamka.",
+        "__type_alias_do_not_touch": "ApiErrorCode.UnableToUnlock"
+      },
+      "82": {
+        "text": "Brak podanego źrodła klienta!",
+        "__type_alias_do_not_touch": "ApiErrorCode.ClientSourceMissing"
+      }
     }
+  }
 }
