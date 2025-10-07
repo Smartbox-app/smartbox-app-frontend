@@ -53,8 +53,6 @@ const Price = () => {
 
     const baseRentCost =
       Math.floor((calculatedPrice.value / numberOfPeriods) * 100) / 100;
-
-      console.log('rrrrr', baseRentCost, allAddonsBaseSum);
     return baseRentCost + allAddonsBaseSum;
   }, [startDate, endDate, calculatedPrice, rentPaymentType, orderAddons]);
 

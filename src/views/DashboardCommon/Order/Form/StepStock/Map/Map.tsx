@@ -39,7 +39,7 @@ export const Map = () => {
   useEffect(() => {
     if (!mapContainerRef.current) return;
     mapboxgl.accessToken =
-      'pk.eyJ1IjoibWFyY2luZ3J5Z2llcmVrIiwiYSI6ImNtZXN1NXlmNzA1eHkybHNjdGdvamI2Mm8ifQ.Hz-d0vduFaHw0piD0XBTOQ';
+      'pk.eyJ1Ijoic21hcnRib3hzdG9yYWdlIiwiYSI6ImNtZ2dkYW01NjA5ankybHM5djFqbjZtNWUifQ.2bn6LvbIw9BeDtAVtsPvrQ';
 
     const map = new mapboxgl.Map({
       container: mapContainerRef.current,

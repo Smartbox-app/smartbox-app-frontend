@@ -127,16 +127,14 @@ const StepAgreement = ({ formData, isResignationMarked }: Props): any => {
     return getCorrectPriceWithTax(price, taxValue);
   };
 
-  const getAddonsWithCorrectPrice = (
-    orderAddons: { [addonId: string]: OrderAddon },
-    tax: string,
-  ): OrderAddons => {
+  const getAddonsWithCorrectPrice = (orderAddons: {
+    [addonId: string]: OrderAddon;
+  }): OrderAddons => {
     const parsedAddons: OrderAddons = {};
-    const taxValue = getCorrectTaxPercentAmount(tax);
 
     Object.keys(orderAddons).forEach((addonId) => {
       const addon = orderAddons[addonId];
-
+      const taxValue = getCorrectTaxPercentAmount(addon.tax);
       // if (addon.price?.value && addon.selectedVariant) {
       parsedAddons[addonId] = {
         name: addon.name,
@@ -234,7 +232,7 @@ const StepAgreement = ({ formData, isResignationMarked }: Props): any => {
       companyPostCode: formData.companyPostCode || '',
       nip: formData.nip || '',
       rentPaymentType: order.rentPaymentType || RentPaymentType.InAdvance,
-      orderAddons: getAddonsWithCorrectPrice(order.orderAddons, tenant!.tax),
+      orderAddons: getAddonsWithCorrectPrice(order.orderAddons),
     };
 
     if (formData.birthDate) {
@@ -291,7 +289,7 @@ const StepAgreement = ({ formData, isResignationMarked }: Props): any => {
       companyPostCode: formData.companyPostCode || undefined,
       nip: formData.nip || undefined,
       simplifiedAddons: getSimplifiedAddons(
-        getAddonsWithCorrectPrice(order.orderAddons, tenant!.tax),
+        getAddonsWithCorrectPrice(order.orderAddons),
       ),
       date: dateOnly(new Date()),
       startAt: dateOnly(order.startDate),

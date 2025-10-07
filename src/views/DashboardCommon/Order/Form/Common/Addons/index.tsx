@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { Spinner } from '../../../../../../components/Branded';
 import { ButtonsContainer } from '../../../../../../components/Layout';
 import { useDispatch, useSelector } from 'react-redux';
@@ -91,12 +91,19 @@ export const Addons = ({ stockId }: Props) => {
     });
   }, [addons]);
 
+  const getSortingCriteria = (a: AddonRes, b: AddonRes) => {
+    if (a.order && b.order) return a.order - b.order;
+    return 0;
+  };
+
+  const sortedAddons = [...addons].sort((a, b) => getSortingCriteria(a, b));
+
   if (loadingAddons) return <Spinner />;
   if (!addons || addons.length === 0) return null;
 
   return (
     <>
-      {addons.map((addon) => (
+      {sortedAddons.map((addon) => (
         <Section key={addon.id}>
           <Header variant="h2">{addon.name}</Header>
           {addon.description ? (

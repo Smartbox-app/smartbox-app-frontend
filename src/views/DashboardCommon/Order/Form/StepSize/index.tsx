@@ -25,7 +25,7 @@ const StepSize = () => {
     (state: ApplicationState) => state.order,
   );
   const { data: user } = useGetMyDetailsQuery();
-  const {getText} = useTenantNaming();
+  const { getText } = useTenantNaming();
   const [boxGroups, setBoxGroups] = useState<BoxGroupUserRes[]>([]);
 
   useEffect(() => {
@@ -38,10 +38,14 @@ const StepSize = () => {
     );
   }, []);
 
+  const getSortingCriteria = (a: BoxGroupUserRes, b: BoxGroupUserRes) => {
+    if (a.order && b.order) return a.order - b.order;
+    if (a.area && b.area) return a.area - b.area;
+    return a.name > b.name ? 1 : -1;
+  };
+
   const options = [...boxGroups]
-    .sort((a, b) =>
-      a.area && b.area ? a.area - b.area : a.name > b.name ? 1 : -1,
-    )
+    .sort((a, b) => getSortingCriteria(a, b))
     .map((data: BoxGroupUserRes) => (
       <SingleOption key={data.id} singleOptionData={data} />
     ));

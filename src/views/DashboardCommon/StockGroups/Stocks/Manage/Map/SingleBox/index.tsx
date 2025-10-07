@@ -17,11 +17,17 @@ interface Props {
   onBoxClick?: (box: BoxMapRes) => void;
 }
 
+const getFontSize = (width: number) => {
+  if (width > 80) return 13;
+  if (width > 60) return 12;
+  if (width > 50) return 11;
+  return 10;
+};
+
 const commonStyles = css`
   display: flex;
   color: ${(props) => colorOrDark(props.theme.colors.primary)};
   font-weight: 500;
-  font-size: 0.8rem;
   cursor: pointer;
 `;
 
@@ -29,7 +35,9 @@ const StyledDraggableBox = styled<typeof Moveable>(Moveable)`
   ${commonStyles}
 `;
 
-const StyledDraggableContent = styled('div')`
+const StyledDraggableContent = styled.div<{
+  width?: number;
+}>`
   background: #fff;
   border: 1px solid ${(props) => props.theme.colors.primary};
   width: 100%;
@@ -38,15 +46,20 @@ const StyledDraggableContent = styled('div')`
   align-items: center;
   justify-content: center;
   pointer-events: none;
+  font-size: ${(props) => getFontSize(props.width || 0)}px;
+  text-align: center';
 `;
 
 const StyledBox = styled.div<{
   status: RentStatus | null;
   stock: IStock;
   user?: boolean;
+  width?: number;
 }>`
   background: #fff;
   border: 1px solid ${(props) => props.theme.colors.primary};
+  font-size: ${(props) => getFontSize(props.width || 0)}px;
+  text-align: center;
   ${commonStyles}
   ${(props) =>
     props.status &&
@@ -125,13 +138,6 @@ const StyledContent = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-`;
-
-const StyledRotateButton = styled.button`
-  background: none;
-  border: none;
-  padding: 4px;
-  cursor: pointer;
 `;
 
 const SingleBox = ({
@@ -300,6 +306,7 @@ const SingleBox = ({
         status={getBoxStatus(box)}
         user={user}
         stock={stock}
+        width={normalizeWidth(box)}
         style={{
           position: 'absolute',
           left: normalizePosition(box.x || 0, box.rotation || 0),
@@ -322,7 +329,7 @@ const SingleBox = ({
         onMouseDown={onMouseDown}
         ref={boxRef}
       >
-        <StyledDraggableContent className={`box-${box.id}-content`}>
+        <StyledDraggableContent  width={normalizeWidth(box)} className={`box-${box.id}-content`}>
           {box.identifier}
         </StyledDraggableContent>
       </div>

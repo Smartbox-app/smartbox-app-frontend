@@ -68,6 +68,8 @@ const Add = () => {
                 'acceptances',
                 JSON.stringify(values.acceptances),
               );
+            formData.append('order', values.order.toString());
+            formData.append('active', values.active.toString());
             formData.append('name', values.name);
             formData.append('slug', values.slug);
             formData.append('tax', values.tax);

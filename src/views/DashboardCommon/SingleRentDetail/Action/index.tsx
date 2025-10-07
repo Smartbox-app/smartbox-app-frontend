@@ -14,6 +14,7 @@ import { useGetMyDetailsQuery } from 'src/queries';
 import { Alert } from 'src/components/Common';
 import { Button, Tabs } from 'src/components/ui';
 import { Calendar, CloseCircle, InfoCircle, Map } from 'src/icons';
+import { GateButton } from './GateButton';
 
 interface Props {
   isMapActive: boolean;
@@ -91,6 +92,8 @@ const Action = ({
             variant="error"
             onClick={() => showModal(<EndingModal rent={rent} />)}
           />
+        { rent.gates.filter(gate => !!gate.controlled).map(gate => <GateButton gate={gate} key={gate.id} />)}
+          
         </ButtonsContainer>
       </ButtonsContainer>
       {!canExtendRent ? (

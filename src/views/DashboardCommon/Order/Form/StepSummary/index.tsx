@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 
 import { bindActionCreators } from 'redux';
 import { connect, useDispatch, useSelector } from 'react-redux';
-import { PaymentType } from 'smartbox-types';
+import { MyRentDetails, PaymentType } from 'smartbox-types';
 import { Spinner } from '../../../../../components/Branded';
 import { order, modal, notifications, user } from '../../../../../actions';
 import { ButtonsContainer } from '../../../../../components/Layout';
@@ -45,6 +45,7 @@ import { DiscountForm } from './DiscountForm';
 import { ArrowLeft, ArrowRight } from 'src/icons';
 import { textToSimpleMD } from 'src/utils/text-to-simple-md';
 import { ClientSourceForm } from './ClientSourceForm';
+import ApiService from 'src/services/api-service';
 
 interface Props {
   formData: FormType;
@@ -73,6 +74,8 @@ const StepSummary = ({ formData, updateFormData }: Props) => {
   const { rentId } = useParams<{ step: string; rentId: string }>();
   const isFirstRent = user && !user.rentCount;
   const [discount, setDiscount] = useState<boolean>(false);
+  const [rent, setRent] = useState<MyRentDetails>();
+  const [loading, setLoading] = useState<boolean>(false);
 
   const defaultValues = {
     paymentType: PaymentType.card,
@@ -110,21 +113,37 @@ const StepSummary = ({ formData, updateFormData }: Props) => {
 
   const invoiceNeeded = watch('invoiceNeeded');
 
+  // get rent details if it is extended
+  // @TODO - move to react query
+  const getSingleRent = async () => {
+    setLoading(true);
+    await ApiService.callFetch(
+      'GET',
+      `rent/my-details/${rentId}`,
+      (data: MyRentDetails) => {
+        setRent(data);
+      },
+    );
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    if (!rentId) return;
+
+    getSingleRent();
+  }, [rentId]);
+
+  useEffect(() => {
+    const lastDescription = rent?.description[rent.description.length - 1];
+    if (lastDescription?.data?.isCompany) {
+      setValue('invoiceNeeded', true);
+    }
+  }, [rent]);
+
   useEffect(() => {
     if (!user) return;
     if (!rentId && (!stockId || !boxGroupId)) {
       history.push(`/${UserService.getSlugByRole(user.role)}/order/step/stock`);
-    }
-    if (formData.nip) {
-      setValue('invoiceNeeded', true);
-    }
-
-    if (!isFirstRent) {
-      if (user.companyData && user.companyData.nip) {
-        setValue('invoiceNeeded', true);
-      } else {
-        setValue('invoiceNeeded', false);
-      }
     }
 
     if (!endDate) return;

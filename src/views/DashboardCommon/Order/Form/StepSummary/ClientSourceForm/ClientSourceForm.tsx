@@ -50,15 +50,8 @@ export const ClientSourceForm = () => {
             value: 'Inne',
           },
         ]}
-              error={errors.clientSource?.message} /> 
-
-
-      {/* <Input
-        label={getText('client_source')}
-        placeholder={getText('client_source_placeholder')}
-        {...register('clientSource')}
         error={errors.clientSource?.message}
-      /> */}
+      />
     </Section>
   );
 };

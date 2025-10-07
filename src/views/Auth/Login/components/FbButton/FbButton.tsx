@@ -43,7 +43,8 @@ export const FbButton = () => {
       'przechowajto',
       'szuflandia',
       'wlasnybox',
-      'nidobox'
+      'nidobox',
+      'biastorage'
     ].includes(tenant.identifier)
   )
     return null;

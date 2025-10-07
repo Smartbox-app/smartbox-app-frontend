@@ -36,7 +36,7 @@ const List = () => {
     buttons: [
       {
         name: 'application.openGate',
-        type: 'secondary',
+        type: 'success',
         click: (data: GateAdminList) => openGate(data),
       },
       hasFullAccess
