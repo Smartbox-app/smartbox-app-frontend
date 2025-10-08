@@ -638,6 +638,8 @@
       "confirmAttachmentDelete": "Czy na pewno chcesz usunąć ten załącznik?",
       "attachmentList": "Lista załączników",
       "locks": "Zamki",
+      "lockGroups": "Grupy zamków",
+      "seeLocksFromGroup": "Zobacz zamki z grupy",
       "lockOpened": "Zamek otwarty"
     },
     "settings": {

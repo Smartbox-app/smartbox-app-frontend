@@ -15,3 +15,4 @@ export * from './rents-list.table';
 export * from './attachment-list.table';
 export * from './attachment-list-for-admin.table';
 export * from './locks-list.table';
+export * from './lock-groups-list.table';

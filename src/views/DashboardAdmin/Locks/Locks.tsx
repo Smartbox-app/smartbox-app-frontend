@@ -1,4 +1,5 @@
 import { useDispatch } from 'react-redux';
+import { useParams } from 'react-router';
 import { TTLockDeviceList } from 'smartbox-types';
 import { successNotification } from 'src/actions/notifications';
 import { ApiTable } from 'src/components/Common';
@@ -10,6 +11,7 @@ import { InteractiveTableSchema } from 'src/utils/table-schema-utils';
 
 export const Locks = () => {
   const dispatch = useDispatch();
+  const { groupId } = useParams<{ groupId?: string }>();
 
   const scheme = new InteractiveTableSchema(locksList);
 
@@ -35,7 +37,7 @@ export const Locks = () => {
   return (
     <Section>
       <Header variant="h2">{__('application.locks')}</Header>
-      <ApiTable scheme={scheme} apiEndpointSubUrl={`driver/ttlock`} />
+      <ApiTable scheme={scheme} apiEndpointSubUrl={`driver/locks/ttlock/${groupId}`} />
     </Section>
   );
 };

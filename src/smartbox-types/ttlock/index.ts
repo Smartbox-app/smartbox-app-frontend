@@ -27,7 +27,10 @@ export interface TTLockDevice {
   date: number;
 }
 
-export type TTLockDeviceList = Pick<TTLockDevice, 'lockId' | 'lockName' | 'lockAlias' | 'electricQuantity'>
+export type TTLockDeviceList = Pick<
+  TTLockDevice,
+  'lockId' | 'lockName' | 'lockAlias' | 'electricQuantity'
+>;
 
 export interface TTLockUnlockResponse {
   errcode?: number;
@@ -43,4 +46,18 @@ export interface TTLockKeyboardPwdResponse {
   endDate: number;
   errcode?: number;
   errmsg?: string;
+}
+
+export interface TTLockGroup {
+  groupId: number;
+  name: string;
+  lockNum: number;
+  date: number; // timestamp of group creation or last update
+}
+
+export interface TTLockGroupListResponse {
+  list: TTLockGroup[];
+  pageNo: number;
+  pages: number;
+  total: number;
 }

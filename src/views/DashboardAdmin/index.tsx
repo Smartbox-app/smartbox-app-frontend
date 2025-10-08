@@ -10,9 +10,10 @@ import Management from './Management';
 import Profile from '../DashboardCommon/Profile';
 import SingleRentDetail from '../DashboardCommon/SingleRentDetail';
 import { StockGroups } from '../DashboardCommon/StockGroups';
-import { HomeWifi, Manage, Settings, Stocks } from '../../icons';
+import { Groups, HomeWifi, Manage, Settings, Stocks } from '../../icons';
 import { useTenantNaming } from 'src/hooks/useTenantNaming';
 import { Locks } from './Locks';
+import { LockGroups } from './LockGroups';
 
 const DashboardAdmin = () => {
   const {getText} = useTenantNaming();
@@ -29,9 +30,14 @@ const DashboardAdmin = () => {
       to: '/admin/locations',
     },
     {
+      icon: <Groups />,
+      text: 'application.lockGroups',
+      to: '/admin/drivers/groups'
+    },
+    {
       icon: <HomeWifi />,
       text: 'application.locks',
-      to: '/admin/drivers'
+      to: '/admin/drivers/locks'
     },
     {
       icon: <Settings />,
@@ -53,7 +59,8 @@ const DashboardAdmin = () => {
           />
           <Route path="/admin/management/" component={Management} />
           <Route path="/admin/profile" component={Profile} />
-          <Route path="/admin/drivers" component={Locks} />
+          <Route path="/admin/drivers/locks/:groupId?" component={Locks} />
+          <Route path="/admin/drivers/groups" component={LockGroups} />
           <Route path={`/admin/locations`} component={StockGroups} />
           <Route
             exact
