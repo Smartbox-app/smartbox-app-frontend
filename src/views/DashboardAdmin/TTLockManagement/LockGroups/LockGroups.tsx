@@ -18,7 +18,7 @@ export const LockGroups = () => {
         name: 'application.seeLocksFromGroup',
         type: 'success',
         click: (data: TTLockGroup) =>
-          history.push(`/admin/drivers/locks/${data.groupId}`),
+          history.push(`/admin/drivers/locks/group/${data.groupId}`),
       },
     ],
   });
@@ -26,7 +26,7 @@ export const LockGroups = () => {
   return (
     <Section>
       <Header variant="h2">{__('application.lockGroups')}</Header>
-      <ApiTable scheme={scheme} apiEndpointSubUrl={`driver/groups/ttlock/`} />
+      <ApiTable scheme={scheme} apiEndpointSubUrl={`driver/groups/`} />
     </Section>
   );
 };

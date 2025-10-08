@@ -318,6 +318,7 @@
       "openBoxConfirmation": "Czy na pewno chcesz otworzyć skrytkę?",
       "openBox": "Otwórz skrytkę",
       "unlock": "Odblokuj",
+      "lock": "Zablokuj",
       "boxOpenedSuccessfully": "Poprawnie otwarto skrytkę",
       "cannotOpenBox": "Nie udało się otworzyć skrytki",
       "openGate": "Otwórz bramę",
@@ -637,10 +638,17 @@
       "attachmentDeleted": "Usunięto załącznik",
       "confirmAttachmentDelete": "Czy na pewno chcesz usunąć ten załącznik?",
       "attachmentList": "Lista załączników",
+      "ttlock": "TTLock",
       "locks": "Zamki",
-      "lockGroups": "Grupy zamków",
+      "lockGroups": "Grupy",
+      "gateways": "Bramki",
       "seeLocksFromGroup": "Zobacz zamki z grupy",
-      "lockOpened": "Zamek otwarty"
+      "seeLocksFromGateway": "Zobacz zamki z bramki",
+      "lockOpened": "Zamek otwarty",
+      "isOnline": "Online",
+      "batteryStatus": "Stan baterii",
+      "lockDetails": "Szczegóły",
+      "lockPasscodes": "Kody dostępu"
     },
     "settings": {
       "tax": "Stawka VAT",

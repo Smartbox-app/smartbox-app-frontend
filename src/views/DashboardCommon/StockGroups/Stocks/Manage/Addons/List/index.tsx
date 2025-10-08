@@ -55,14 +55,14 @@ const List = () => {
       customRender: (value, field, addonData) => {
         if (addonData.noPricing === true) {
           return (
-            <Alert simple type="success" text="application.addonWithoutPrice" />
+            <Alert compact type="success" text="application.addonWithoutPrice" />
           );
         }
 
         if (addonData.pricing && addonData.pricing.length > 0) {
-          return <Alert simple type="success" text="application.yes" />;
+          return <Alert compact type="success" text="application.yes" />;
         } else {
-          return <Alert simple type="error" text="application.no" />;
+          return <Alert compact type="error" text="application.no" />;
         }
       },
     })

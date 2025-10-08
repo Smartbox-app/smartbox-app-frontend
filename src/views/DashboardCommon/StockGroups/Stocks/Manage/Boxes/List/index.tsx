@@ -110,9 +110,9 @@ const List = () => {
       type: FieldType.Custom,
       customRender: (value, field, boxData) =>
         boxData.pricing && boxData.pricing.length > 0 ? (
-          <Alert simple type="success" text="application.yes" />
+          <Alert compact type="success" text="application.yes" />
         ) : (
-          <Alert simple type="error" text="application.no" />
+          <Alert compact type="error" text="application.no" />
         ),
     })
     .modifyFieldStatic('status', {

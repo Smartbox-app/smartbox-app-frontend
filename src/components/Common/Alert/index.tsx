@@ -8,7 +8,7 @@ type AlertTypes = 'error' | 'notice' | 'warning' | 'success';
 interface AlertProps {
   type: 'error' | 'notice' | 'warning' | 'success';
   text?: string;
-  simple?: boolean;
+  compact?: boolean;
   notification?: boolean;
   children?: React.ReactNode;
 }
@@ -27,15 +27,15 @@ const getColorByType = (type: AlertTypes, theme: DefaultTheme) => {
   if (type === 'success') return theme.colors.surface.success.primary;
 };
 
-const StyledAlert = styled('div')<{ type: AlertTypes }>(({ theme, type }) => ({
+const StyledAlert = styled('div')<{ type: AlertTypes, compact?: boolean }>(({ theme, compact, type }) => ({
   borderRadius: theme.radius.innerSurface,
   display: 'flex',
   alignItems: 'center',
   gap: theme.spacing * 2,
   background: getBackgroundByType(type, theme),
   color: theme.colors.text.primary,
-  padding: theme.spacing * 4,
-  fontSize: '1rem',
+  padding: compact ? theme.spacing * 2 : theme.spacing * 4,
+  fontSize: compact ? 13 : '1rem',
   width: '100%',
   whiteSpace: 'pre-wrap'
 }));
@@ -63,8 +63,8 @@ const getIcon = (type: AlertTypes) => {
   );
 };
 
-const Alert = ({ type, text, children }: AlertProps) => (
-  <StyledAlert type={type}>
+const Alert = ({ type, text, children, compact }: AlertProps) => (
+  <StyledAlert type={type} compact={compact}>
     {getIcon(type)}
     {text ? __(text) : null}
     <div>{children}</div>
