@@ -42,6 +42,7 @@ const TenantDetailsForm = ({ disabled }: Props) => {
           render={({ field }) => (
             <DateInput
               {...field}
+              required
               inline={false}
               name="birthDate"
               error={errors.birthDate?.message}
@@ -56,6 +57,7 @@ const TenantDetailsForm = ({ disabled }: Props) => {
       <Input
         label="rent.street"
         {...register('street')}
+        required
         error={errors.street?.message}
         disabled={disabled}
         placeholder="rent.street_placeholder"
@@ -63,6 +65,7 @@ const TenantDetailsForm = ({ disabled }: Props) => {
       <Input
         {...register('city')}
         error={errors.city?.message}
+        required
         label="rent.city"
         disabled={disabled}
         placeholder="rent.city_placeholder"
@@ -70,6 +73,7 @@ const TenantDetailsForm = ({ disabled }: Props) => {
       <Input
         {...register('postCode')}
         error={errors.postCode?.message}
+        required
         label="rent.post_code"
         disabled={disabled}
         placeholder="rent.post_code_placeholder"
@@ -79,12 +83,14 @@ const TenantDetailsForm = ({ disabled }: Props) => {
         {...register('mailToSendInvoice')}
         error={errors.mailToSendInvoice?.message}
         disabled
+        required
         label="rent.email"
         placeholder="rent.email_placeholder"
       />
       <Input
         label="application.phone"
         {...register('phone')}
+        required
         error={errors.phone?.message}
         disabled
         placeholder="rent.phone_placeholder"

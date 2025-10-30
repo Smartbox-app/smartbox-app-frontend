@@ -30,7 +30,13 @@ const allowedTags = {
     'rentUntil',
     'cost',
   ],
-  [TemplateType.RENTAL_EXTENDED_ADMIN_NOTIFICATION_MAIL]: ['email', 'number', 'stock', 'rentUntil', 'cost'],
+  [TemplateType.RENTAL_EXTENDED_ADMIN_NOTIFICATION_MAIL]: [
+    'email',
+    'number',
+    'stock',
+    'rentUntil',
+    'cost',
+  ],
   [TemplateType.NEW_RENTAL_ADMIN_NOTIFICATION_MAIL]: [
     'email',
     'stock',
@@ -118,12 +124,30 @@ const allowedTags = {
     'periodFrom',
     'periodTo',
   ],
-  [TemplateType.BOX_GROUP_FREE_EMAIL]: [
-    'name', 'size'
+  [TemplateType.BOX_GROUP_FREE_EMAIL]: ['name', 'size'],
+  [TemplateType.BOX_GROUP_FREE_SMS]: ['name', 'size'],
+  [TemplateType.PERIOD_PAYMENT_ENDS_EMAIL]: [
+    'name',
+    'company',
+    'number',
+    'paymentUntil',
   ],
-  [TemplateType.BOX_GROUP_FREE_SMS]: [
-    'name', 'size'
-  ]
+  [TemplateType.PERIOD_PAYMENT_ENDS_SMS]: [
+    'name',
+    'company',
+    'number',
+    'paymentUntil',
+  ],
+  [TemplateType.NO_PERIOD_PAYMENT_EMAIL]: [
+    'name',
+    'company',
+    'number',
+  ],
+  [TemplateType.NO_PERIOD_PAYMENT_SMS]: [
+    'name',
+    'company',
+    'number',
+  ],
 };
 
 export const Manage = () => {

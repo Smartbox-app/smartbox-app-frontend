@@ -44,6 +44,7 @@ export const GoogleButton = () => {
       'wlasnybox',
       'nidobox',
       'biastorage',
+      'twojbox',
     ].includes(tenant.identifier)
   )
     return null;

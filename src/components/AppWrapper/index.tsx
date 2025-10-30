@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ApplicationState } from '../../reducers';
 import { useGetVersionQuery, useGetMyDetailsQuery } from '../../queries';
 import { useLogoutMutation } from 'src/mutations/useLogoutMutation';
+import { useLocation } from 'react-router';
+import { scrollTop } from 'src/utils/scroll-top';
 
 interface Props {
   children: React.ReactNode;
@@ -12,6 +14,7 @@ const AppWrapper = ({ children }: Props) => {
   const { data: user, isLoading } = useGetMyDetailsQuery();
   const { mutate: logout } = useLogoutMutation();
   const { data: version } = useGetVersionQuery();
+  const location = useLocation();
   const tenant = useSelector((state: ApplicationState) => state.tenant);
 
   useEffect(() => {
@@ -32,6 +35,11 @@ const AppWrapper = ({ children }: Props) => {
       }
     }
   }, [user, tenant]);
+
+  useEffect(() => {
+    scrollTop();
+  }, [location.pathname]);
+
   if (isLoading || (user && user.tenantId && (!tenant || !tenant.id)))
     return null;
 

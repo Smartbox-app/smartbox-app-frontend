@@ -11,6 +11,9 @@ interface Props {
 
 export const Description = ({ description, rent }: Props) => {
   const { getText } = useTenantNaming();
+
+  if(description.length === 0) return null;
+
   const firstRent = description[0];
   const clientSource = firstRent.data?.clientSource;
   return (

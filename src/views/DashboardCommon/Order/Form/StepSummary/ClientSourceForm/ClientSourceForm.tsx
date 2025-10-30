@@ -46,6 +46,14 @@ export const ClientSourceForm = () => {
             value: 'Ogłoszenie internetowe (OLX, inne)',
           },
           {
+            label: 'Polecenie od znajomego',
+            value: 'Polecenie od znajomego',
+          },
+          {
+            label: 'Radio',
+            value: 'Radio',
+          },
+          {
             label: 'Inne',
             value: 'Inne',
           },

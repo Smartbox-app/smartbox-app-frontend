@@ -37,12 +37,12 @@ const NewCode = ({ newCodeProps }: Props) => (
     <p>
       {__('application.minRentPeriod')}: <StyledCodeDetail>{newCodeProps.minRentPeriod}</StyledCodeDetail>
     </p>
-    <p>
+    {newCodeProps.duration ? <p>
       {__('application.forTime')}:{' '}
       <StyledCodeDetail>
         {newCodeProps.duration} {__('application.days')}
       </StyledCodeDetail>
-    </p>
+    </p> : null }
   </div>
 );
 

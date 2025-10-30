@@ -326,7 +326,7 @@ const StepAgreement = ({ formData, isResignationMarked }: Props): any => {
 
       setTimeout(() => {
         checkFrame();
-      }, 3000);
+      }, 6000);
       return false;
     } else {
       setAgreementLoaded(true);
