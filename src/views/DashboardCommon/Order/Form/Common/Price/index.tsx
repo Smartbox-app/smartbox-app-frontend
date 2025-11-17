@@ -34,7 +34,7 @@ const Price = () => {
     if (!rentPaymentType || rentPaymentType === 'in-advance') return fullPrice;
 
     const durationDays = differenceInDays(endDate, startDate) + 1;
-    const numberOfPeriods = Math.floor(durationDays / 30);
+    const numberOfPeriods = Math.ceil(durationDays / 30);
 
     const baseAddonsCosts = {};
 

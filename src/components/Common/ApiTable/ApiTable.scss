@@ -10,6 +10,10 @@
 
     .search-field {
         margin-bottom: $main-spacing;
+
+        select {
+            height: 45px;
+        }
     }
 }
 
@@ -20,7 +24,7 @@
         }
 
         .search-field {
-            flex: 0 1 300px;
+            flex: 0 1 350px;
             margin-bottom: 0;
             padding-right: $main-spacing;
         }

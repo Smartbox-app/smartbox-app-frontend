@@ -5,6 +5,7 @@ import { useGetVersionQuery, useGetMyDetailsQuery } from '../../queries';
 import { useLogoutMutation } from 'src/mutations/useLogoutMutation';
 import { useLocation } from 'react-router';
 import { scrollTop } from 'src/utils/scroll-top';
+import TagManager from 'react-gtm-module';
 
 interface Props {
   children: React.ReactNode;
@@ -35,6 +36,16 @@ const AppWrapper = ({ children }: Props) => {
       }
     }
   }, [user, tenant]);
+
+  useEffect(() => {
+    if (!tenant || tenant.identifier !== 'rentbox') return;
+
+    const tagManagerArgs = {
+      gtmId: 'GTM-PR56955H',
+    };
+    
+    TagManager.initialize(tagManagerArgs);
+  }, [tenant]);
 
   useEffect(() => {
     scrollTop();
