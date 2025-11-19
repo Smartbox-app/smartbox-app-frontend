@@ -42,7 +42,7 @@ export interface AddonPricingReq {
 export interface CalculatedAddonPriceRes {
   addonId: string;
   variantId: string;
-  price: { value: number; isGross: boolean };
+  price: { value: number; isGross: boolean }[];
   details: string[];
   error?: string;
 }

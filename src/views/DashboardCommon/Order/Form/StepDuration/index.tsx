@@ -112,10 +112,10 @@ const StepDuration = ({ clearPaymentDetails }: Props) => {
       return;
     }
 
-    dispatch(calculatePrice(boxGroupId, startOfStart, endOfEnd));
+    dispatch(calculatePrice(boxGroupId, startOfStart, endOfEnd, rentPaymentType || RentPaymentType.InAdvance));
 
     calculateAllAddons();
-  }, [startDate, endDate, minRentPeriod]);
+  }, [startDate, endDate, minRentPeriod, rentPaymentType]);
 
   useEffect(() => {
     calculateAllAddons();
@@ -150,6 +150,7 @@ const StepDuration = ({ clearPaymentDetails }: Props) => {
             addonId,
             startDate,
             endDate,
+            rentPaymentType || RentPaymentType.InAdvance,
             addon.selectedVariant,
           ),
         );
@@ -326,7 +327,8 @@ const StepDuration = ({ clearPaymentDetails }: Props) => {
                 !allRequiredAddonsSelected ||
                 !stock ||
                 !endDate ||
-                !calculatedPrice.value
+                !calculatedPrice ||
+                calculatedPrice.length === 0
               }
             />
           </ButtonsContainer>

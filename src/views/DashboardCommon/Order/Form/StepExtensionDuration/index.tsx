@@ -158,9 +158,9 @@ const StepExtensionDuration = ({ clearPaymentDetails }: Props) => {
   useEffect(() => {
     if (!rentId || !endDate) return;
     setLoading(true);
-    dispatch(calculatePriceForRent(rentId, startDate, endDate));
+    dispatch(calculatePriceForRent(rentId, startDate, endDate, rentPaymentType || RentPaymentType.InAdvance));
     calculateAllAddons();
-  }, [startDate, endDate, rentId]);
+  }, [startDate, endDate, rentId, rentPaymentType]);
 
   useEffect(() => {
     calculateAllAddons();
@@ -205,6 +205,7 @@ const StepExtensionDuration = ({ clearPaymentDetails }: Props) => {
             addonId,
             startDate,
             endDate,
+            rentPaymentType || RentPaymentType.InAdvance,
             addon.selectedVariant,
           ),
         );

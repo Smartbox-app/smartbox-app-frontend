@@ -31,7 +31,7 @@ export type OrderAddon = {
   userFileAllowed: boolean;
   noPricing: boolean;
   userFileRequirement: AddonUserFileRequirementType | null;
-  price: { value: number; isGross: boolean } | null;
+  price: { value: number; isGross: boolean }[] | null;
   file: File | null;
   tax: string;
 };
@@ -47,7 +47,7 @@ export type OrderState = {
   minRentPeriod: number | null;
   startDate: Date;
   endDate: Date | null;
-  calculatedPrice: { value: number; isGross: boolean };
+  calculatedPrice: { value: number; isGross: boolean }[];
   loadingPrice: boolean;
   discountCode: string;
   // for displaying
@@ -250,7 +250,7 @@ const initialState: OrderState = {
   minRentPeriod: null,
   startDate: new Date(),
   endDate: null,
-  calculatedPrice: { value: 0, isGross: false },
+  calculatedPrice: [{ value: 0, isGross: false }],
   calculatedPriceDetails: [],
   loadingPrice: false,
   discountCode: "",

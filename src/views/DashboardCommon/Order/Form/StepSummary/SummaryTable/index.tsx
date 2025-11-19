@@ -63,7 +63,7 @@ interface Props {
   countedPrice: {
     value: number;
     isGross: boolean;
-  };
+  }[];
   addons?: AddonRes[];
   orderAddons?: { [addonId: string]: OrderAddon };
 }
@@ -75,15 +75,29 @@ const SummaryTable = ({
   addons,
   orderAddons,
 }: Props) => {
-  const fullPrice = useMemo(() => {
-    if (!orderAddons) return countedPrice.value;
+  const addonsPricesPerPeriod = useMemo(() => {
+    if (!orderAddons) return [];
+    const everyAddonPricePerPeriod: number[] = [];
+    for (const addon of Object.values(orderAddons)) {
+      const pricePerPeriod = (addon.price || []).map((price) => price.value);
 
-    const addonsPrice = Object.values(orderAddons).reduce(
-      (acc, curr) => acc + (curr.price ? curr.price.value : 0),
-      0,
-    );
-    return addonsPrice + countedPrice.value;
-  }, [countedPrice, orderAddons]);
+      for (let i = 0; i < pricePerPeriod.length; i++) {
+        everyAddonPricePerPeriod[i] =
+          (everyAddonPricePerPeriod[i] || 0) + pricePerPeriod[i];
+      }
+    }
+
+    return everyAddonPricePerPeriod;
+  }, [orderAddons]);
+
+  const rentPricesPerPeriod = useMemo(() => {
+    return countedPrice.map((price) => price.value);
+  }, [countedPrice]);
+
+  const fullPrice = useMemo(() => {
+    
+    return (addonsPricesPerPeriod[0] || 0) + rentPricesPerPeriod[0];
+  }, [rentPricesPerPeriod, addonsPricesPerPeriod]);
 
   console.log('DATESTART', dateStart, dateOnlyLocalTime(dateStart));
   return (
@@ -108,7 +122,7 @@ const SummaryTable = ({
         <StyledRow className="row">
           <StyledCell className="cell">
             <Header variant="h2">
-              {countedPrice.isGross
+              {countedPrice[0].isGross
                 ? __('application.grossPayment')
                 : __('application.netPayment')}
             </Header>
@@ -121,11 +135,11 @@ const SummaryTable = ({
       <Header variant="h2">{__('application.priceDetails')}</Header>
       <StyledDetailsList>
         <StyledDetailsRow>
-          {countedPrice.isGross
+          {countedPrice[0].isGross
             ? __('application.paymentForRent')
             : __('application.netPaymentForRent')}
           <span className="row-dash">-</span>
-          <strong>{formatPrice(countedPrice.value)}</strong>
+          <strong>{formatPrice(rentPricesPerPeriod[0])}</strong>
         </StyledDetailsRow>
         {addons && orderAddons
           ? addons

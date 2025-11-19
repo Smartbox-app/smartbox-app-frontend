@@ -27,7 +27,7 @@ export interface PricingReq {
 }
 
 export interface CalculatedPriceRes {
-  price: { value: number; isGross: boolean };
+  price: { value: number; isGross: boolean }[];
   details: string[];
   error?: string;
 }

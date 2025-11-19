@@ -30,6 +30,7 @@ import './StepAgreement.scss';
 import ApiService from '../../../../../services/api-service';
 import {
   getCorrectPriceWithTax,
+  getCorrectPriceWithTaxForArray,
   getCorrectTaxPercentAmount,
 } from '../../../../../utils/tax';
 import { OrderAddon } from '../../../../../reducers/order-reducer';
@@ -120,11 +121,13 @@ const StepAgreement = ({ formData, isResignationMarked }: Props): any => {
     setLoading(false);
   };
 
-  const getCorrectPrice = (price: number, isGross: boolean, tax: string) => {
-    if (isGross) return price;
+  const getCorrectPrice = (price: { value: number}[], isGross: boolean, tax: string) => {
+    if (isGross) return price.reduce((acc, curr) => acc + curr.value, 0);
     const taxValue = getCorrectTaxPercentAmount(tax);
 
-    return getCorrectPriceWithTax(price, taxValue);
+    const priceWithTax = price.map(p => getCorrectPriceWithTax(p.value, taxValue))
+
+    return priceWithTax.reduce((acc, curr) => acc + curr, 0);
   };
 
   const getAddonsWithCorrectPrice = (orderAddons: {
@@ -136,6 +139,9 @@ const StepAgreement = ({ formData, isResignationMarked }: Props): any => {
       const addon = orderAddons[addonId];
       const taxValue = getCorrectTaxPercentAmount(addon.tax);
       // if (addon.price?.value && addon.selectedVariant) {
+
+      const totalAddonPrice = (addon.price || []).reduce((acc, curr) => acc + curr.value, 0);
+
       parsedAddons[addonId] = {
         name: addon.name,
         slug: addon.slug,
@@ -143,9 +149,9 @@ const StepAgreement = ({ formData, isResignationMarked }: Props): any => {
         acceptancesStatus: addon.acceptancesStatus,
         acceptances: addon.acceptances,
         price: addon.price
-          ? addon.price.isGross
-            ? addon.price.value
-            : getCorrectPriceWithTax(addon.price.value, taxValue)
+          ? addon.price[0].isGross
+            ? totalAddonPrice
+            : getCorrectPriceWithTaxForArray(addon.price, taxValue)
           : null,
         selectedVariant: addon.selectedVariant,
         selectedVariantName: addon.selectedVariantName,
@@ -210,11 +216,14 @@ const StepAgreement = ({ formData, isResignationMarked }: Props): any => {
 
   const onSubmit = (data: any) => {
     if (!user || !order.endDate) return;
+
+    const totalRentPrice = order.calculatedPrice.reduce((acc, curr) => acc + curr.value, 0);
+
     const commonCollection = {
       finishAt: order.endDate,
       cost: getCorrectPrice(
-        order.calculatedPrice.value,
-        order.calculatedPrice.isGross,
+        order.calculatedPrice,
+        order.calculatedPrice[0].isGross,
         tenant!.tax,
       ),
       discountCode: order.discountCode,
@@ -269,8 +278,8 @@ const StepAgreement = ({ formData, isResignationMarked }: Props): any => {
     return {
       finishAt: order.endDate ? dateOnly(order.endDate) : null,
       cost: getCorrectPrice(
-        order.calculatedPrice.value,
-        order.calculatedPrice.isGross,
+        order.calculatedPrice,
+        order.calculatedPrice[0].isGross,
         tenant!.tax,
       ).toString(),
       // discountCode: order.discountCode,

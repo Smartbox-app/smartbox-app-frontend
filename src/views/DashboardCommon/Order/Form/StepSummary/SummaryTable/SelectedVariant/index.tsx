@@ -51,7 +51,7 @@ export const SelectedVariant = ({ addons, orderAddons, addonId }: Props) => {
         <>
           <strong>{selectedVariant.name}</strong>
           <span>{` - `}</span>
-          <strong>{formatPrice(orderAddons[addonId].price?.value || 0)}</strong>
+          <strong>{formatPrice((orderAddons[addonId].price || [])[0].value || 0)}</strong>
         </>
       ) : (
         <strong>{__('application.variantNotSelected')}</strong>

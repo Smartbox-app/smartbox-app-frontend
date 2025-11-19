@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 
 import { bindActionCreators } from 'redux';
 import { connect, useDispatch, useSelector } from 'react-redux';
-import { MyRentDetails, PaymentType } from 'smartbox-types';
+import { MyRentDetails, PaymentType, RentPaymentType } from 'smartbox-types';
 import { Spinner } from '../../../../../components/Branded';
 import { order, modal, notifications, user } from '../../../../../actions';
 import { ButtonsContainer } from '../../../../../components/Layout';
@@ -68,6 +68,7 @@ const StepSummary = ({ formData, updateFormData }: Props) => {
     boxGroupId,
     startDate,
     endDate,
+    rentPaymentType
   } = useSelector((state: ApplicationState) => state.order);
 
   const { data: user } = useGetMyDetailsQuery();
@@ -149,9 +150,9 @@ const StepSummary = ({ formData, updateFormData }: Props) => {
     if (!endDate) return;
 
     if (rentId) {
-      dispatch(calculatePriceForRent(rentId, startDate, endDate));
+      dispatch(calculatePriceForRent(rentId, startDate, endDate, rentPaymentType || RentPaymentType.InAdvance));
     } else {
-      dispatch(calculatePrice(boxGroupId, startDate, endDate));
+      dispatch(calculatePrice(boxGroupId, startDate, endDate, rentPaymentType || RentPaymentType.InAdvance));
     }
   }, [user]);
 
@@ -165,9 +166,9 @@ const StepSummary = ({ formData, updateFormData }: Props) => {
     if (!endDate) return;
 
     if (rentId) {
-      dispatch(calculatePriceForRent(rentId, startDate, endDate, discountCode));
+      dispatch(calculatePriceForRent(rentId, startDate, endDate, rentPaymentType || RentPaymentType.InAdvance, discountCode));
     } else {
-      dispatch(calculatePrice(boxGroupId, startDate, endDate, discountCode));
+      dispatch(calculatePrice(boxGroupId, startDate, endDate, rentPaymentType || RentPaymentType.InAdvance, discountCode));
     }
   }, [discountCode]);
 
