@@ -395,6 +395,7 @@
       "giftReducePeriodToPrice": "Obniż wartość ustalonego okresu najmu okres do podanej ceny",
       "giftCodeGenerated": "Wygenerowano kod",
       "minRentPeriod": "Minimalny okres wynajmu",
+      "maxRentPeriod": "Maksymalny okres wynajmu",
       "giftType": "Rodzaj zniżki",
       "reductionTo": "Redukcja ceny do",
       "days": "Dni",

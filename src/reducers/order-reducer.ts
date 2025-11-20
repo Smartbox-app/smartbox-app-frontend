@@ -4,7 +4,6 @@ import {
   AddonUserFileRequirementType,
   CalculatedAddonPriceRes,
   CalculatedPriceRes,
-  PaymentStatus,
   RentPaymentType,
   SingleAcceptance,
 } from "smartbox-types";
@@ -45,6 +44,7 @@ export type OrderState = {
   boxGroupName: string;
   boxGroupArea: string;
   minRentPeriod: number | null;
+  maxRentPeriod: number | null;
   startDate: Date;
   endDate: Date | null;
   calculatedPrice: { value: number; isGross: boolean };
@@ -60,6 +60,8 @@ export type OrderState = {
   orderAddonsId: string;
   loadingAddons: boolean;
   rentPaymentType: RentPaymentType | null;
+
+  minRentDaysForInstallments: number | null;
   // @TODO FIX
   calculatedPriceDetails: any[];
   //
@@ -98,6 +100,11 @@ interface SetMinRentPeriod {
   payload: number;
 }
 
+interface SetMaxRentPeriod {
+  type: "SET_MAX_RENT_PERIOD";
+  payload: number;
+}
+
 interface SetRentStartDate {
   type: "SET_RENT_START_DATE";
   payload: Date;
@@ -111,6 +118,11 @@ interface SetRentEndDate {
 interface SetRentPaymentType {
   type: "SET_RENT_PAYMENT_TYPE";
   payload: RentPaymentType;
+}
+
+interface SetMinDaysForInstallments {
+  type: "SET_MIN_DAYS_FOR_INSTALLMENTS";
+  payload: number;
 }
 
 interface SetCalculatedPrice {
@@ -204,9 +216,12 @@ interface ClearOrder {
   type: "CLEAR_ORDER";
 }
 
-interface FetchRentMinPeriod {
-  type: "FETCH_RENT_MIN_PERIOD_SUCCESS";
-  payload: number;
+interface FetchRentPeriodConfig {
+  type: "FETCH_RENT_PERIOD_CONFIG_SUCCESS";
+  payload: {
+    min: number;
+    max: number;
+  };
 }
 
 type Action =
@@ -215,6 +230,7 @@ type Action =
   | ClearOrderStock
   | SetOrderBoxGroup
   | SetMinRentPeriod
+  | SetMaxRentPeriod
   | SetRentStartDate
   | SetRentEndDate
   | SetCalculatedPrice
@@ -228,6 +244,7 @@ type Action =
   | ClearAddonPrice
   | SetBirthDate
   | SetRentPaymentType
+  | SetMinDaysForInstallments
   //
   | FormStepSuccess
   | FormReaded
@@ -237,7 +254,7 @@ type Action =
   | ClearOrder
   | FetchAddons
   | ResetDiscountCode
-  | FetchRentMinPeriod;
+  | FetchRentPeriodConfig;
 
 const initialState: OrderState = {
   // refactored
@@ -248,6 +265,7 @@ const initialState: OrderState = {
   boxGroupName: "",
   boxGroupArea: "",
   minRentPeriod: null,
+  maxRentPeriod: null,
   startDate: new Date(),
   endDate: null,
   calculatedPrice: { value: 0, isGross: false },
@@ -259,6 +277,7 @@ const initialState: OrderState = {
   loadingAddons: false,
   orderAddonsId: "",
   rentPaymentType: null,
+  minRentDaysForInstallments: null,
   //
   formData: {
     durationInDays: 7,
@@ -325,10 +344,23 @@ export default (
         minRentPeriod: action.payload,
       };
     }
-    case "FETCH_RENT_MIN_PERIOD_SUCCESS": {
+    case "SET_MIN_RENT_PERIOD": {
       return {
         ...state,
         minRentPeriod: action.payload,
+      };
+    }
+    case "SET_MAX_RENT_PERIOD": {
+      return {
+        ...state,
+        maxRentPeriod: action.payload || 0,
+      };
+    }
+    case "FETCH_RENT_PERIOD_CONFIG_SUCCESS": {
+      return {
+        ...state,
+        minRentPeriod: action.payload.min,
+        maxRentPeriod: action.payload.max || 0
       };
     }
 
@@ -422,6 +454,13 @@ export default (
       return {
         ...state,
         rentPaymentType: action.payload,
+      };
+    }
+
+    case "SET_MIN_DAYS_FOR_INSTALLMENTS": {
+      return {
+        ...state,
+        minRentDaysForInstallments: action.payload,
       };
     }
 

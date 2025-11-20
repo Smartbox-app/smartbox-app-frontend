@@ -81,6 +81,7 @@ export interface AddonEntity {
   noPricing: boolean;
   order: number;
   active: boolean;
+  newRentOnly: boolean;
 }
 
 export type AddonFormDataReq = Pick<
@@ -101,6 +102,7 @@ export type AddonFormDataReq = Pick<
   noPricing: string;
   order: string;
   active: string;
+  newRentOnly: string;
 };
 
 export type AddonReq = Pick<
@@ -120,10 +122,18 @@ export type AddonReq = Pick<
   | 'tax'
   | 'order'
   | 'active'
+  | 'newRentOnly'
 >;
 export type AddonListRes = Pick<
   AddonEntity,
-  'id' | 'name' | 'pricing' | 'stockId' | 'noPricing' | 'order' | 'active'
+  | 'id'
+  | 'name'
+  | 'pricing'
+  | 'stockId'
+  | 'noPricing'
+  | 'order'
+  | 'active'
+  | 'newRentOnly'
 >;
 export type AddonRes = Pick<
   AddonEntity,
@@ -145,6 +155,7 @@ export type AddonRes = Pick<
   | 'tax'
   | 'order'
   | 'active'
+  | 'newRentOnly'
 > & {
   isGross: boolean;
 };

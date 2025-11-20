@@ -365,6 +365,18 @@
       "82": {
         "text": "Brak podanego źrodła klienta!",
         "__type_alias_do_not_touch": "ApiErrorCode.ClientSourceMissing"
+      },
+      "83": {
+        "text": "Wybrany okres wynajmu jest za długi!",
+        "__type_alias_do_not_touch": "ApiErrorCode.RentPeriodTooLong"
+      },
+      "84": {
+        "text": "Maksymalny czas wynajmu nie może być krótszy niż minimalny!",
+        "__type_alias_do_not_touch": "ApiErrorCode.MaxPeriodCantBeLowerThanMin"
+      },
+      "85": {
+        "text": "Zbyt krótki czas najmu dla płatności ratalnej!",
+        "__type_alias_do_not_touch": "ApiErrorCode.RentPeriodTooShortForInstallments"
       }
     }
   }

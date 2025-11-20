@@ -46,6 +46,10 @@ export const setMinRentPeriod = (days: number) => ({
   type: 'SET_MIN_RENT_PERIOD',
   payload: days,
 });
+export const setMaxRentPeriod = (days: number) => ({
+  type: 'SET_MAX_RENT_PERIOD',
+  payload: days,
+});
 export const setRentStartDate = (date: Date) => ({
   type: 'SET_RENT_START_DATE',
   payload: date,
@@ -58,6 +62,11 @@ export const setRentEndDate = (date: Date) => ({
 export const setRentPaymentType = (paymentType: RentPaymentType) => ({
   type: 'SET_RENT_PAYMENT_TYPE',
   payload: paymentType,
+});
+
+export const setMinDaysForInstallments = (days: number | null) => ({
+  type: 'SET_MIN_DAYS_FOR_INSTALLMENTS',
+  payload: days,
 });
 
 const formatOnlyDate = (date: Date) => format(date, "yyyy-MM-dd")

@@ -59,6 +59,15 @@ const List = () => {
           <Alert compact type="error" text="application.no" />
         ),
     })
+    .modifyFieldStatic('maxRentPeriod', {
+      name: __('application.maxRentPeriod'),
+      field: 'maxRentPeriod',
+      mobile: true,
+      defaultSort: true,
+      type: FieldType.Custom,
+      customRender: (value, field, boxData: BoxGroupListRes) =>
+        !boxData.maxRentPeriod ? '-' : boxData.maxRentPeriod,
+    })
     .addFieldAtTheEnd({
       name: __('application.actions'),
       field: 'actions',
