@@ -172,6 +172,7 @@ const StepDuration = ({ clearPaymentDetails }: Props) => {
             startDate,
             endDate,
             addon.selectedVariant,
+            boxGroupId,
           ),
         );
       else dispatch(clearAddonPrice(addonId));
@@ -273,7 +274,14 @@ const StepDuration = ({ clearPaymentDetails }: Props) => {
     if (!endDate || !startDate || !minRentPeriod || maxRentPeriod === null)
       return false;
     const difference = differenceInCalendarDays(endDate, startDate);
-
+    console.log(
+      'CORRECT SELECTED',
+      startDate,
+      endDate,
+      difference,
+      minRentPeriod,
+      maxRentPeriod,
+    );
     if (
       rentPaymentType === RentPaymentType.Installments &&
       minRentDaysForInstallments &&
@@ -332,7 +340,11 @@ const StepDuration = ({ clearPaymentDetails }: Props) => {
                   highlightEnd={endDate}
                   label="application.selectEndRentDate"
                   minDate={setMinDate(minRentPeriod - 1, true)}
-                  maxDate={setMaxDateForEnd(maxRentPeriod - 1)}
+                  maxDate={
+                    maxRentPeriod
+                      ? setMaxDateForEnd(maxRentPeriod - 1)
+                      : undefined
+                  }
                   onChange={([selected]) => {
                     dispatch(setRentEndDate(selected));
                   }}

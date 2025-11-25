@@ -208,6 +208,7 @@ const StepSummary = ({ formData, updateFormData }: Props) => {
       {discount && endDate ? (
         <DiscountForm
           stockId={stockId}
+          boxGroupId={boxGroupId}
           rentStart={startDate}
           rentEnd={endDate}
         />

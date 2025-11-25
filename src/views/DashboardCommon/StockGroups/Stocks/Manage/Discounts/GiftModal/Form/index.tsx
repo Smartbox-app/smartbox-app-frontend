@@ -25,7 +25,7 @@ const Form = ({ stockId }: Props) => {
         </ButtonsContainer>
     );
 
-    const fetchUrl = 'gift/form/add-gift';
+    const fetchUrl = `gift/form/add-gift/${stockId}`;
     const sendUrl = 'gift/new';
 
     const customSendFetcher = (formId: string, values: AddGiftReq) =>

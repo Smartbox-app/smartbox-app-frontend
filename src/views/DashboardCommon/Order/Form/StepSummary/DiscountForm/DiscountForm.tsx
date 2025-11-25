@@ -12,6 +12,7 @@ import styled from 'styled-components';
 
 interface Props {
   stockId: string;
+  boxGroupId: string;
   rentStart: Date;
   rentEnd: Date;
 }
@@ -27,7 +28,7 @@ const DiscountRow = styled('div')(({ theme }) => ({
   }
 }));
 
-export const DiscountForm = ({ stockId, rentEnd, rentStart }: Props) => {
+export const DiscountForm = ({ stockId, boxGroupId, rentEnd, rentStart }: Props) => {
   const {
     handleSubmit,
     reset,
@@ -39,7 +40,7 @@ export const DiscountForm = ({ stockId, rentEnd, rentStart }: Props) => {
   });
   const dispatch = useDispatch();
 
-  const { mutate, isPending, data } = useDiscountCodeMutation(stockId);
+  const { mutate, isPending, data } = useDiscountCodeMutation(stockId, boxGroupId);
 
   const onSubmit = (data: DiscountCodeDto) => {
     if (!isValid) return;

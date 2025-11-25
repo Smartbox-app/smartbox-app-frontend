@@ -10,6 +10,7 @@ const StyledLabel = styled('label')(({ theme }) => ({
   color: theme.colors.text.secondary,
   fontWeight: 400,
   lineHeight: '20px',
+  marginBottom: 10,
 }));
 
 export const InputLabel = ({ children, labelFor }: InputLabelProps) => {

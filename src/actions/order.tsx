@@ -105,7 +105,7 @@ export const clearAddonPrice = (addonId: string) => ({
 });
 
 export const calculateAddonPrice =
-  (addonId: string, start: Date, end: Date, variantId: string) =>
+  (addonId: string, start: Date, end: Date, variantId: string, boxGroupId: string) =>
   async (dispatch: any) => {
     await ApiService.get(
       dispatch,
@@ -113,19 +113,19 @@ export const calculateAddonPrice =
       'CALCULATE_VARIANT_PRICE_FAILED',
       null,
       null,
-      `addon/price/${addonId}/${formatOnlyDate(start)}/${formatOnlyDate(end)}/${variantId}`,
+      `addon/price/${addonId}/${formatOnlyDate(start)}/${formatOnlyDate(end)}/${variantId}/${boxGroupId}`,
       'LOADING_VARIANT_PRICE',
     );
   };
 
-export const fetchAddons = (stockId: string) => async (dispatch: any) => {
+export const fetchAddons = (stockId: string, boxGroupId: string) => async (dispatch: any) => {
   await ApiService.get(
     dispatch,
     'FETCH_ADDONS_SUCCESS',
     'FETCH_ADDONS_FAILED',
     null,
     null,
-    `addon/all/${stockId}`,
+    `addon/all/${stockId}/${boxGroupId}`,
     'LOADING_ADDONS',
   );
 };

@@ -335,7 +335,7 @@
         "__type_alias_do_not_touch": "ApiErrorCode.NoMoreAvailableBoxes"
       },
       "74": {
-        "text": "Nie można usunąć uzytkownika który posiada aktywny najem!",
+        "text": "Nie można usunąć użytkownika który posiada aktywny najem!",
         "__type_alias_do_not_touch": "ApiErrorCode.CanNotDeleteUserWithRent"
       },
       "75": {
@@ -377,6 +377,14 @@
       "85": {
         "text": "Zbyt krótki czas najmu dla płatności ratalnej!",
         "__type_alias_do_not_touch": "ApiErrorCode.RentPeriodTooShortForInstallments"
+      },
+      "86": {
+        "text": "Musisz ustawić poprawną stałą cenę dla wariantu dodatku!",
+        "__type_alias_do_not_touch": "ApiErrorCode.YouNeedToSetCorrectFixedPriceForVariant"
+      },
+      "87": {
+        "text": "Wystąpił problem podczas obliczania ceny wynajmu, odśwież stronę i spróbuj ponownie.",
+        "__type_alias_do_not_touch": "ApiErrorCode.AddonNotAvailableForThisGroup"
       }
     }
   }

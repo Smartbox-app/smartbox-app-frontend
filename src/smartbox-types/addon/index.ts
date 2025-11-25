@@ -1,4 +1,9 @@
-export enum AddonPricingType {
+export enum AddonVariantPriceType {
+  Dynamic = 'dynamic',
+  Fixed = 'fixed',
+}
+
+export enum AddonDynamicPricingType {
   Day = 'day',
   Week = 'week',
   Month = 'month',
@@ -12,11 +17,13 @@ export interface SingleAddonVariant {
   name: string;
   default: boolean;
   pricing: SingleAddonPricing[];
+  priceType: AddonVariantPriceType;
+  price: number | null;
 }
 
 export interface SingleAddonPricing {
   id: string;
-  type: AddonPricingType;
+  type: AddonDynamicPricingType;
   // how many days/months etc
   price: number | null;
   quantity: number | null;
@@ -28,6 +35,11 @@ export enum AddonPriceResolveType {
   RestByDay = 'rest-by-day',
 }
 
+export enum AddonFixedPriceInstallmentsResolveType {
+  Proportional = 'proportional',
+  FirstPeriod = 'first-period',
+}
+
 export enum AddonUserFileRequirementType {
   Required = 'required',
   Optional = 'optional',
@@ -37,6 +49,7 @@ export enum AddonUserFileRequirementType {
 export interface AddonPricingReq {
   variants: SingleAddonVariant[];
   priceResolveType: AddonPriceResolveType;
+  fixedPriceInstallmentsResolveType: AddonFixedPriceInstallmentsResolveType;
 }
 
 export interface CalculatedAddonPriceRes {
@@ -74,6 +87,7 @@ export interface AddonEntity {
   acceptances: SingleAcceptance[];
   pricing: SingleAddonVariant[];
   priceResolveType: AddonPriceResolveType;
+  fixedPriceInstallmentsResolveType: AddonFixedPriceInstallmentsResolveType;
   userFileAllowed: boolean;
   userFileText: string;
   userFileRequirement: AddonUserFileRequirementType;
@@ -82,6 +96,7 @@ export interface AddonEntity {
   order: number;
   active: boolean;
   newRentOnly: boolean;
+  boxGroupId: string | null;
 }
 
 export type AddonFormDataReq = Pick<
@@ -95,6 +110,7 @@ export type AddonFormDataReq = Pick<
   | 'userFileText'
   | 'userFileRequirement'
   | 'tax'
+  | 'boxGroupId'
 > & {
   acceptances: string;
   required: string;
@@ -123,6 +139,7 @@ export type AddonReq = Pick<
   | 'order'
   | 'active'
   | 'newRentOnly'
+  | 'boxGroupId'
 >;
 export type AddonListRes = Pick<
   AddonEntity,

@@ -35,13 +35,13 @@ interface Props {
 }
 
 export const Addons = ({ stockId }: Props) => {
-  const { addons, loadingAddons, orderAddons } = useSelector(
+  const { addons, loadingAddons, orderAddons, boxGroupId } = useSelector(
     (state: ApplicationState) => state.order,
   );
   const dispatch = useDispatch();
 
   const getAddons = () => {
-    dispatch(fetchAddons(stockId));
+    dispatch(fetchAddons(stockId, boxGroupId));
   };
 
   const handleAddonAcceptance = (

@@ -91,6 +91,7 @@ const StepExtensionDuration = ({ clearPaymentDetails }: Props) => {
     orderAddons,
     orderAddonsId,
     minRentDaysForInstallments,
+    boxGroupId
   } = useSelector((state: ApplicationState) => state.order);
   const [stock, setStock] = useState<IStock>();
   const [loading, setLoading] = useState<boolean>(false);
@@ -233,6 +234,7 @@ const StepExtensionDuration = ({ clearPaymentDetails }: Props) => {
             startDate,
             endDate,
             addon.selectedVariant,
+            boxGroupId
           ),
         );
       else dispatch(clearAddonPrice(addonId));
@@ -320,10 +322,24 @@ const StepExtensionDuration = ({ clearPaymentDetails }: Props) => {
   }, [orderAddons]);
 
   const correctPeriodSelected = useMemo(() => {
-    if (!endDate || !startDate || !minRentPeriod || maxRentPeriod === null)
+    if (
+      !rent ||
+      !endDate ||
+      !startDate ||
+      !minRentPeriod ||
+      maxRentPeriod === null
+    )
       return false;
     const difference = differenceInCalendarDays(endDate, startDate);
 
+    if (
+      [
+        RentStatus.noPaidExtension,
+        RentStatus.noPaidExtensionWithWarning,
+      ].includes(rent.status)
+    )
+      return true;
+      
     if (
       rentPaymentType === RentPaymentType.Installments &&
       minRentDaysForInstallments &&
@@ -335,6 +351,7 @@ const StepExtensionDuration = ({ clearPaymentDetails }: Props) => {
     if (difference <= maxRentPeriod) return true;
     return false;
   }, [
+    rent,
     startDate,
     endDate,
     minRentPeriod,
@@ -362,7 +379,11 @@ const StepExtensionDuration = ({ clearPaymentDetails }: Props) => {
                 name="endDate"
                 label="application.selectEndRentDate"
                 minDate={setMinDate(minRentPeriod, true)}
-                maxDate={setMaxDateForEnd(maxRentPeriod - 1)}
+                maxDate={
+                  maxRentPeriod
+                    ? setMaxDateForEnd(maxRentPeriod - 1)
+                    : undefined
+                }
                 highlightStart={startDate}
                 highlightEnd={endDate}
                 value={endDate || undefined}

@@ -21,6 +21,15 @@ export const giftsListTable: TableSchema = {
             type: FieldType.Text,
         },
         {
+            name: 'Grupa',
+            field: 'group',
+            mobile: true,
+            searchable: false,
+            sortable: false,
+            defaultSort: false,
+            type: FieldType.Text,
+        },
+        {
             name: 'Typ',
             field: 'type',
             mobile: true,

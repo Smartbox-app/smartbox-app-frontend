@@ -151,10 +151,10 @@ const Input = (props: Props) => {
         </InputLabel>
         {props.options?.map((option) => (
           <StyledRadioOptionContainer key={option.value}>
-            <label htmlFor={option.value}>
+            <label htmlFor={`${props.input.name}-${option.value}`}>
               <input
                 name={props.input.name}
-                id={option.value.toString()}
+                id={`${props.input.name}-${option.value}`}
                 onChange={props.input.onChange}
                 type="radio"
                 value={option.value}
@@ -165,6 +165,7 @@ const Input = (props: Props) => {
             </label>
           </StyledRadioOptionContainer>
         ))}
+        {props.help && <InputHelp text={props.help} />}
       </StyledContainer>
     );
   } else {
