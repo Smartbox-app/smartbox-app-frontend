@@ -7,7 +7,7 @@ import { Spinner } from '../../../../../../components/Branded';
 import styled, { DefaultTheme } from 'styled-components';
 import { BoxGroupUserRes } from 'smartbox-types';
 import { PriceInfo } from '../PriceInfo';
-import { setBoxGroup, setMinRentPeriod } from '../../../../../../actions/order';
+import { setBoxGroup, setMaxRentPeriod, setMinRentPeriod } from '../../../../../../actions/order';
 import {
   colorOrDark,
   getColorForBackground,
@@ -107,6 +107,7 @@ const SingleOption = ({ singleOptionData, disable }: Props) => {
   const selectOption = (e: ChangeEvent<HTMLInputElement>) => {
     dispatch(setBoxGroup(singleOptionData.id, singleOptionData.name, singleOptionData.area ? singleOptionData.area.toString() : ''));
     dispatch(setMinRentPeriod(singleOptionData.minRentPeriod));
+    dispatch(setMaxRentPeriod(singleOptionData.maxRentPeriod));
   };
 
   if (loading) return <Spinner />;

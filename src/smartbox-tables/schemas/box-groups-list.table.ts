@@ -40,5 +40,14 @@ export const boxGroupsList: TableSchema = {
       defaultSort: false,
       type: FieldType.Text,
     },
+    {
+      name: 'Maksymalny okres wynajmu',
+      field: 'maxRentPeriod',
+      mobile: true,
+      searchable: true,
+      sortable: true,
+      defaultSort: false,
+      type: FieldType.Text,
+    },
   ],
 };

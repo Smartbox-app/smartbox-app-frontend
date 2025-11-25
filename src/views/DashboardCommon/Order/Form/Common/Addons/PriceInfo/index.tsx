@@ -1,5 +1,9 @@
 import React from 'react';
-import { AddonPricingType, SingleAddonVariant } from 'smartbox-types';
+import {
+  AddonDynamicPricingType,
+  AddonVariantPriceType,
+  SingleAddonVariant,
+} from 'smartbox-types';
 import styled from 'styled-components';
 import { __ } from '../../../../../../../helpers/i18n';
 import { formatPrice } from '../../../../../../../utils/format-price';
@@ -21,35 +25,35 @@ const StyledPriceInfo = styled('div')(({ theme }) => ({
   },
 }));
 
-const formatQuantity = (type: AddonPricingType, quantity: number) => {
+const formatQuantity = (type: AddonDynamicPricingType, quantity: number) => {
   switch (type) {
-    case AddonPricingType.Day: {
+    case AddonDynamicPricingType.Day: {
       if (quantity > 1) return 'dni';
       return 'dzień';
     }
-    case AddonPricingType.Week: {
+    case AddonDynamicPricingType.Week: {
       if (quantity >= 5) return 'tygodni';
       if (quantity > 1) return 'tygodnie';
       return 'tydzień';
     }
 
-    case AddonPricingType.Month: {
+    case AddonDynamicPricingType.Month: {
       if (quantity >= 5) return 'miesięcy';
       if (quantity > 1) return 'miesiące';
       return 'miesiąc';
     }
 
-    case AddonPricingType.Quarter: {
+    case AddonDynamicPricingType.Quarter: {
       if (quantity >= 5) return 'kwartałów';
       if (quantity > 1) return 'kwartały';
       return 'kwartał';
     }
 
-    case AddonPricingType.HalfYear: {
+    case AddonDynamicPricingType.HalfYear: {
       return 'pół roku';
     }
 
-    case AddonPricingType.Year: {
+    case AddonDynamicPricingType.Year: {
       if (quantity >= 5) return 'lat';
       if (quantity > 1) return 'lata';
       return 'rok';
@@ -58,7 +62,20 @@ const formatQuantity = (type: AddonPricingType, quantity: number) => {
 };
 
 const PriceInfo = ({ variant, isGross }: Props) => {
-  const firstPricing = variant.pricing[0];
+  const { priceType, price, pricing } = variant;
+
+  if (priceType === AddonVariantPriceType.Fixed) {
+    return (
+      <StyledPriceInfo>
+        <strong className="price-value">{formatPrice(price || 0)}</strong>
+        <span className="price-type">
+          {isGross ? __('application.gross') : __('application.net')}
+        </span>
+      </StyledPriceInfo>
+    );
+  }
+
+  const firstPricing = pricing[0];
 
   if (!firstPricing.price || !firstPricing.quantity) return null;
 

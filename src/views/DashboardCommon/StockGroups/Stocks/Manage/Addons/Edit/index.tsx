@@ -32,7 +32,7 @@ const Edit = ({ id, stockId }: Props) => {
     </ButtonsContainer>
   );
 
-  const fetchUrl = `addon/form/${id}`;
+  const fetchUrl = `addon/form/${stockId}/${id}`;
   const sendUrl = `addon/${id}`;
 
   return (
@@ -62,6 +62,8 @@ const Edit = ({ id, stockId }: Props) => {
           formData.append('required', values.required.toString());
           formData.append('fileText', values.fileText || '');
           formData.append('noPricing', values.noPricing.toString());
+          formData.append('boxGroupId', values.boxGroupId || '');
+          formData.append('newRentOnly', values.newRentOnly.toString());
           formData.append('userFileAllowed', values.userFileAllowed.toString());
           formData.append(
             'userFileRequirement',

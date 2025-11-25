@@ -12,15 +12,15 @@ export const fetchMyRentHistory = () => async (dispatch: any) => {
   );
 };
 
-export const getMinRentPeriodExtendingForRent = (rentId: string) => async (dispatch: any) => {
+export const getPeriodConfigForExtendingRent = (rentId: string) => async (dispatch: any) => {
   await ApiService.get(
     dispatch,
-    'FETCH_RENT_MIN_PERIOD_SUCCESS',
-    'FETCH_RENT_MIN_PERIOD_FAILED',
+    'FETCH_RENT_PERIOD_CONFIG_SUCCESS',
+    'FETCH_RENT_PERIOD_CONFIG_FAILED',
     null,
     null,
-    `rent/min-period/${rentId}`,
-    'LOADING_RENT_PERIOD',
+    `rent/period-config/${rentId}`,
+    'LOADING_PERIOD_CONFIG',
   );
 };
 

@@ -1,6 +1,5 @@
 import { AccessControl } from '../stock-group';
 import { IBase } from '../base/base.interface';
-import { IBoxGroup } from '../box/box-entity';
 
 export enum StockPaymentType {
   InAdvance = 'in-advance',
@@ -8,10 +7,9 @@ export enum StockPaymentType {
   Both = 'both',
 }
 
-export interface IStock extends IBase {
+export interface IStock extends IBase{
   name: string;
   address: string;
-  boxGroups: IBoxGroup[];
   gate: IGate;
   discount: IDiscount;
   map: string;
@@ -42,12 +40,15 @@ export interface IStock extends IBase {
   ksmPassword: string;
   ksmLocation: string;
   allowedBoxesCount: number;
+  activeBoxesCount: number;
   // config whether user wants to pay all in advance or in installments (or if we want to give the user choice)
   clientPaymentTypeConfig: StockPaymentType;
   // days to pay the rent invoice
   daysForPayment: number;
+  minRentDaysForInstallments: number | null;
   lat?: string;
   lon?: string;
+  invoiceServiceDepartmentID?: string;
 }
 
 export interface IDiscount extends IBase {
@@ -69,7 +70,7 @@ export interface Coordinate {
 }
 
 export interface IReading {
-  date: Date;
-  moduleId: string;
-  moduleVoltage: number;
+    date: Date;
+    moduleId: string;
+    moduleVoltage: number;
 }

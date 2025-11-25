@@ -34,7 +34,7 @@ const Add = () => {
     </ButtonsContainer>
   );
 
-  const fetchUrl = 'addon/form';
+  const fetchUrl = `addon/form/${stockId}`;
   const sendUrl = 'addon';
 
   return (
@@ -84,10 +84,9 @@ const Add = () => {
               'userFileAllowed',
               values.userFileAllowed.toString(),
             );
-            formData.append(
-              'noPricing',
-              values.noPricing.toString(),
-            );
+            formData.append('noPricing', values.noPricing.toString());
+            formData.append('boxGroupId', values.boxGroupId || '');
+            formData.append('newRentOnly', values.newRentOnly.toString());
             formData.append(
               'userFileRequirement',
               values.userFileRequirement || '',

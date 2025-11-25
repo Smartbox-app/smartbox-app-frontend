@@ -37,6 +37,7 @@ import {
   calculateAddonPrice,
   calculatePrice,
   clearAddonPrice,
+  setMinDaysForInstallments,
   setRentEndDate,
   setRentPaymentType,
   setRentStartDate,
@@ -49,9 +50,11 @@ import { Button, Section, Stack } from 'src/components/ui';
 import { ArrowLeft, ArrowRight } from 'src/icons';
 import { RentDurationDto } from 'src/dto/RentDurationDto';
 import { ClassValidatorResolver } from 'src/resolvers/ClassValidatorResolver';
+import { RentDuration } from '../Common/RentDuration';
 
 const StyledCalendarPicker = styled.div`
-  margin: 0 -10px;
+  justify-content: center;
+  gap: 20px;
 `;
 
 interface Props {
@@ -69,6 +72,9 @@ const StepDuration = ({ clearPaymentDetails }: Props) => {
   const minRentPeriod = useSelector(
     (state: ApplicationState) => state.order.minRentPeriod,
   );
+  const maxRentPeriod = useSelector(
+    (state: ApplicationState) => state.order.maxRentPeriod,
+  );
   // box groupId is used directly only when new rent is created
   const boxGroupId = useSelector(
     (state: ApplicationState) => state.order.boxGroupId,
@@ -82,6 +88,7 @@ const StepDuration = ({ clearPaymentDetails }: Props) => {
     orderAddonsId,
     calculatedPrice,
     rentPaymentType,
+    minRentDaysForInstallments,
   } = useSelector((state: ApplicationState) => state.order);
   const [stock, setStock] = useState<IStock>();
   const [loading, setLoading] = useState<boolean>(false);
@@ -96,6 +103,7 @@ const StepDuration = ({ clearPaymentDetails }: Props) => {
     console.log(startDate, endDate, minRentPeriod);
     if (!minRentPeriod) return;
     if (!endDate) {
+      console.log('SETTING END DATE 3');
       dispatch(setRentEndDate(endOfDay(addDays(startDate, minRentPeriod - 1))));
       return;
     }
@@ -108,14 +116,25 @@ const StepDuration = ({ clearPaymentDetails }: Props) => {
     const difference = differenceInDays(endOfEnd, startOfStart);
     console.log(difference, minRentPeriod);
     if (difference < minRentPeriod - 1) {
+      console.log('SETTING END DATE 1');
       dispatch(setRentEndDate(endOfDay(addDays(startDate, minRentPeriod - 1))));
       return;
     }
 
-    dispatch(calculatePrice(boxGroupId, startOfStart, endOfEnd, rentPaymentType || RentPaymentType.InAdvance));
+    console.log('DIFFERENCE', difference, maxRentPeriod);
+    if (maxRentPeriod && difference > maxRentPeriod - 1) {
+      console.log(
+        'SETTING END DATE 2',
+        endOfDay(addDays(startDate, maxRentPeriod - 1)),
+      );
+      dispatch(setRentEndDate(endOfDay(addDays(startDate, maxRentPeriod - 1))));
+      return;
+    }
+
+    dispatch(calculatePrice(boxGroupId, startOfStart, endOfEnd,rentPaymentType || RentPaymentType.InAdvance));
 
     calculateAllAddons();
-  }, [startDate, endDate, minRentPeriod, rentPaymentType]);
+  }, [startDate, endDate, minRentPeriod, maxRentPeriod, rentPaymentType]);
 
   useEffect(() => {
     calculateAllAddons();
@@ -123,6 +142,8 @@ const StepDuration = ({ clearPaymentDetails }: Props) => {
 
   useEffect(() => {
     if (!stock || rentPaymentType) return;
+
+    dispatch(setMinDaysForInstallments(stock.minRentDaysForInstallments));
 
     switch (stock.clientPaymentTypeConfig) {
       case StockPaymentType.InAdvance: {
@@ -152,6 +173,7 @@ const StepDuration = ({ clearPaymentDetails }: Props) => {
             endDate,
             rentPaymentType || RentPaymentType.InAdvance,
             addon.selectedVariant,
+            boxGroupId,
           ),
         );
       else dispatch(clearAddonPrice(addonId));
@@ -161,8 +183,11 @@ const StepDuration = ({ clearPaymentDetails }: Props) => {
   const setMinDate = (addAmount = 0, end?: boolean) =>
     addDays(end ? startDate : startOfToday(), addAmount);
 
+  const setMaxDateForEnd = (addAmount = 0) =>
+    endOfDay(addDays(startDate, addAmount));
+
   // people should be able to start rent two weeks before
-  const setMaxDateToExtend = () => addDays(new Date(), 13);
+  const setMaxDateForStart = () => addDays(new Date(), 13);
 
   const defaultValues = {
     startDate: addDays(startDate, 0),
@@ -246,17 +271,38 @@ const StepDuration = ({ clearPaymentDetails }: Props) => {
     return true;
   }, [orderAddons]);
 
-
-
   const correctPeriodSelected = useMemo(() => {
-    if (!endDate || !startDate || !minRentPeriod) return false;
+    if (!endDate || !startDate || !minRentPeriod || maxRentPeriod === null)
+      return false;
     const difference = differenceInCalendarDays(endDate, startDate);
+    console.log(
+      'CORRECT SELECTED',
+      startDate,
+      endDate,
+      difference,
+      minRentPeriod,
+      maxRentPeriod,
+    );
+    if (
+      rentPaymentType === RentPaymentType.Installments &&
+      minRentDaysForInstallments &&
+      difference < minRentDaysForInstallments - 1
+    )
+      return false;
 
     if (difference >= minRentPeriod - 1) return true;
+    if (difference <= maxRentPeriod) return true;
     return false;
-  }, [startDate, endDate, minRentPeriod]);
+  }, [
+    startDate,
+    endDate,
+    minRentPeriod,
+    maxRentPeriod,
+    rentPaymentType,
+    minRentDaysForInstallments,
+  ]);
 
-  if (!user || !minRentPeriod) return null;
+  if (!user || !minRentPeriod || maxRentPeriod === null) return null;
 
   return (
     <form className="form-step-two">
@@ -276,7 +322,7 @@ const StepDuration = ({ clearPaymentDetails }: Props) => {
                   highlightEnd={endDate}
                   label="application.selectStartRentDate"
                   minDate={setMinDate()}
-                  maxDate={setMaxDateToExtend()}
+                  maxDate={setMaxDateForStart()}
                   onChange={([selected]) => {
                     dispatch(setRentStartDate(selected));
                   }}
@@ -295,6 +341,11 @@ const StepDuration = ({ clearPaymentDetails }: Props) => {
                   highlightEnd={endDate}
                   label="application.selectEndRentDate"
                   minDate={setMinDate(minRentPeriod - 1, true)}
+                  maxDate={
+                    maxRentPeriod
+                      ? setMaxDateForEnd(maxRentPeriod - 1)
+                      : undefined
+                  }
                   onChange={([selected]) => {
                     dispatch(setRentEndDate(selected));
                   }}
@@ -302,6 +353,7 @@ const StepDuration = ({ clearPaymentDetails }: Props) => {
               )}
             />
           </StyledCalendarPicker>
+          <RentDuration />
         </Section>
 
         {stock ? <PaymentType stock={stock} /> : null}

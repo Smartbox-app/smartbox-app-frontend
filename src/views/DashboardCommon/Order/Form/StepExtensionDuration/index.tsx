@@ -5,6 +5,8 @@ import { connect, useDispatch, useSelector } from 'react-redux';
 
 import {
   addDays,
+  differenceInCalendarDays,
+  differenceInDays,
   endOfDay,
   format,
   isBefore,
@@ -39,6 +41,7 @@ import {
   calculateAddonPrice,
   calculatePriceForRent,
   clearAddonPrice,
+  setMinDaysForInstallments,
   setOrderStock,
   setRentEndDate,
   setRentPaymentType,
@@ -46,15 +49,14 @@ import {
 } from '../../../../../actions/order';
 import { Addons } from '../Common/Addons';
 import ApiService from '../../../../../services/api-service';
-import { getColorForBackground } from '../../../../../utils/color';
 import { PaymentType } from '../Common/PaymentType';
-import { getMinRentPeriodExtendingForRent } from '../../../../../actions/single-rent';
-import { darken, lighten } from 'polished';
+import { getPeriodConfigForExtendingRent } from '../../../../../actions/single-rent';
 import { useGetMyDetailsQuery } from 'src/queries';
 import { Button, Section, Stack } from 'src/components/ui';
 import { ArrowRight } from 'src/icons';
-import { dateOnly, dateOnlyLocalTime, dateOnlyNormalized, formatForPLTimeZone } from 'src/utils/format-date';
+import { dateOnly, dateOnlyNormalized } from 'src/utils/format-date';
 import { useTenant } from 'src/hooks/useTenant';
+import { RentDuration } from '../Common/RentDuration';
 
 const StyledCalendarPicker = styled.div`
   margin: 0 -10px;
@@ -77,6 +79,9 @@ const StepExtensionDuration = ({ clearPaymentDetails }: Props) => {
   const minRentPeriod = useSelector(
     (state: ApplicationState) => state.order.minRentPeriod,
   );
+  const maxRentPeriod = useSelector(
+    (state: ApplicationState) => state.order.maxRentPeriod,
+  );
   // box groupId is used directly only when new rent is created
   const {
     startDate,
@@ -85,6 +90,8 @@ const StepExtensionDuration = ({ clearPaymentDetails }: Props) => {
     rentPaymentType,
     orderAddons,
     orderAddonsId,
+    minRentDaysForInstallments,
+    boxGroupId
   } = useSelector((state: ApplicationState) => state.order);
   const [stock, setStock] = useState<IStock>();
   const [loading, setLoading] = useState<boolean>(false);
@@ -116,7 +123,7 @@ const StepExtensionDuration = ({ clearPaymentDetails }: Props) => {
   useEffect(() => {
     if (!rentId) return;
 
-    dispatch(getMinRentPeriodExtendingForRent(rentId));
+    dispatch(getPeriodConfigForExtendingRent(rentId));
     getSingleRent();
   }, [rentId]);
 
@@ -135,15 +142,34 @@ const StepExtensionDuration = ({ clearPaymentDetails }: Props) => {
   useEffect(() => {
     if (!rent || !minRentPeriod || !tenant) return;
 
-    // if user is paying debt and debt is resolved to today only
     if (
       [
         RentStatus.noPaidExtension,
         RentStatus.noPaidExtensionWithWarning,
       ].includes(rent.status)
     ) {
+      // if user is paying debt and debt is resolved to today only
       if (tenant.debtResolveType === DebtResolveType.DebtOnly) {
         dispatch(setRentEndDate(endOfDay(new Date())));
+        return;
+      }
+      // if user is paying debt and debt is resolved to min periods
+      if (tenant.debtResolveType === DebtResolveType.MinPeriod) {
+        const difference = differenceInDays(
+          endOfDay(new Date()),
+          new Date(rent.finishAt),
+        );
+        const minPeriodsAmount = Math.ceil(difference / minRentPeriod);
+        dispatch(
+          setRentEndDate(
+            endOfDay(
+              addDays(
+                new Date(rent.finishAt),
+                minPeriodsAmount * minRentPeriod,
+              ),
+            ),
+          ),
+        );
         return;
       }
     }
@@ -168,6 +194,8 @@ const StepExtensionDuration = ({ clearPaymentDetails }: Props) => {
 
   useEffect(() => {
     if (!stock || rentPaymentType || !rent) return;
+
+    dispatch(setMinDaysForInstallments(stock.minRentDaysForInstallments));
 
     if (
       [
@@ -207,6 +235,7 @@ const StepExtensionDuration = ({ clearPaymentDetails }: Props) => {
             endDate,
             rentPaymentType || RentPaymentType.InAdvance,
             addon.selectedVariant,
+            boxGroupId
           ),
         );
       else dispatch(clearAddonPrice(addonId));
@@ -229,6 +258,22 @@ const StepExtensionDuration = ({ clearPaymentDetails }: Props) => {
     const minDate = addDays(startOfDay(new Date(rent.finishAt)), addAmount);
     if (isBefore(minDate, new Date())) return startOfDay(new Date());
     return minDate;
+  };
+
+  const setMaxDateForEnd = (addAmount = 0) => {
+    if (!rent) return;
+    console.log('TENANT', tenant);
+    // IF rent has status noPaidExtension
+    if (
+      [
+        RentStatus.noPaidExtension,
+        RentStatus.noPaidExtensionWithWarning,
+      ].includes(rent.status) &&
+      tenant?.debtResolveType === DebtResolveType.DebtOnly
+    )
+      return endOfDay(addDays(new Date(), addAmount));
+
+    return endOfDay(addDays(startDate, addAmount));
   };
 
   useEffect(() => {
@@ -277,27 +322,69 @@ const StepExtensionDuration = ({ clearPaymentDetails }: Props) => {
     return true;
   }, [orderAddons]);
 
+  const correctPeriodSelected = useMemo(() => {
+    if (
+      !rent ||
+      !endDate ||
+      !startDate ||
+      !minRentPeriod ||
+      maxRentPeriod === null
+    )
+      return false;
+    const difference = differenceInCalendarDays(endDate, startDate);
+
+    if (
+      [
+        RentStatus.noPaidExtension,
+        RentStatus.noPaidExtensionWithWarning,
+      ].includes(rent.status)
+    )
+      return true;
+      
+    if (
+      rentPaymentType === RentPaymentType.Installments &&
+      minRentDaysForInstallments &&
+      difference < minRentDaysForInstallments - 1
+    )
+      return false;
+
+    if (difference >= minRentPeriod - 1) return true;
+    if (difference <= maxRentPeriod) return true;
+    return false;
+  }, [
+    rent,
+    startDate,
+    endDate,
+    minRentPeriod,
+    maxRentPeriod,
+    rentPaymentType,
+    minRentDaysForInstallments,
+  ]);
+
   if (!user) return null;
 
-  if (!rent || !minRentPeriod) return <Spinner overlay />;
-
+  if (!rent || !minRentPeriod || maxRentPeriod === null)
+    return <Spinner overlay />;
+  console.log('tenant', tenant);
   return (
     <form className="form-step-two">
       <Stack>
         {loadingPrice && <Spinner halfTransparent overlay />}
-        {!(
-          [
-            RentStatus.noPaidExtension,
-            RentStatus.noPaidExtensionWithWarning,
-          ].includes(rent.status) &&
-          tenant?.debtResolveType === DebtResolveType.DebtOnly
-        ) ? (
+        {![
+          RentStatus.noPaidExtension,
+          RentStatus.noPaidExtensionWithWarning,
+        ].includes(rent.status) ? (
           <Section>
             <StyledCalendarPicker className="calendars-picker-wrapper">
               <DateInput
                 name="endDate"
                 label="application.selectEndRentDate"
                 minDate={setMinDate(minRentPeriod, true)}
+                maxDate={
+                  maxRentPeriod
+                    ? setMaxDateForEnd(maxRentPeriod - 1)
+                    : undefined
+                }
                 highlightStart={startDate}
                 highlightEnd={endDate}
                 value={endDate || undefined}
@@ -306,6 +393,7 @@ const StepExtensionDuration = ({ clearPaymentDetails }: Props) => {
                 }}
               />
             </StyledCalendarPicker>
+            <RentDuration />
           </Section>
         ) : null}
         {rent &&
@@ -334,7 +422,7 @@ const StepExtensionDuration = ({ clearPaymentDetails }: Props) => {
               to={`/${UserService.getSlugByRole(user.role)}/order/step/summary/${rentId}`}
               text="application.next"
               iconRight={<ArrowRight />}
-              disabled={!allRequiredAddonsSelected}
+              disabled={!correctPeriodSelected || !allRequiredAddonsSelected}
             />
           </ButtonsContainer>
         </Section>

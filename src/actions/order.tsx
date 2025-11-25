@@ -38,12 +38,20 @@ export const setOrderStock = (
   payload: { stockId, stockAddress, stockName },
 });
 export const clearSelectedStock = () => ({ type: 'CLEAR_ORDER_STOCK' });
-export const setBoxGroup = (boxGroupId: string, boxGroupName: string, boxGroupArea: string) => ({
+export const setBoxGroup = (
+  boxGroupId: string,
+  boxGroupName: string,
+  boxGroupArea: string,
+) => ({
   type: 'SET_ORDER_BOX_GROUP',
   payload: { boxGroupId, boxGroupName, boxGroupArea },
 });
 export const setMinRentPeriod = (days: number) => ({
   type: 'SET_MIN_RENT_PERIOD',
+  payload: days,
+});
+export const setMaxRentPeriod = (days: number) => ({
+  type: 'SET_MAX_RENT_PERIOD',
   payload: days,
 });
 export const setRentStartDate = (date: Date) => ({
@@ -60,10 +68,21 @@ export const setRentPaymentType = (paymentType: RentPaymentType) => ({
   payload: paymentType,
 });
 
-const formatOnlyDate = (date: Date) => format(date, "yyyy-MM-dd")
+export const setMinDaysForInstallments = (days: number | null) => ({
+  type: 'SET_MIN_DAYS_FOR_INSTALLMENTS',
+  payload: days,
+});
+
+const formatOnlyDate = (date: Date) => format(date, 'yyyy-MM-dd');
 
 export const calculatePrice =
-  (boxGroupId: string, start: Date, end: Date, type: RentPaymentType, code?: string) =>
+  (
+    boxGroupId: string,
+    start: Date,
+    end: Date,
+    type: RentPaymentType,
+    code?: string,
+  ) =>
   async (dispatch: any) => {
     await ApiService.get(
       dispatch,
@@ -77,7 +96,13 @@ export const calculatePrice =
   };
 
 export const calculatePriceForRent =
-  (rentId: string, start: Date, end: Date, type: RentPaymentType, code?: string) =>
+  (
+    rentId: string,
+    start: Date,
+    end: Date,
+    type: RentPaymentType,
+    code?: string,
+  ) =>
   async (dispatch: any) => {
     await ApiService.get(
       dispatch,
@@ -96,7 +121,14 @@ export const clearAddonPrice = (addonId: string) => ({
 });
 
 export const calculateAddonPrice =
-  (addonId: string, start: Date, end: Date, type: RentPaymentType, variantId: string) =>
+  (
+    addonId: string,
+    start: Date,
+    end: Date,
+    type: RentPaymentType,
+    variantId: string,
+    boxGroupId: string,
+  ) =>
   async (dispatch: any) => {
     await ApiService.get(
       dispatch,
@@ -104,22 +136,23 @@ export const calculateAddonPrice =
       'CALCULATE_VARIANT_PRICE_FAILED',
       null,
       null,
-      `addon/price/${addonId}/${formatOnlyDate(start)}/${formatOnlyDate(end)}/${type}/${variantId}`,
+      `addon/price/${addonId}/${formatOnlyDate(start)}/${formatOnlyDate(end)}/${type}/${variantId}/${boxGroupId}`,
       'LOADING_VARIANT_PRICE',
     );
   };
 
-export const fetchAddons = (stockId: string) => async (dispatch: any) => {
-  await ApiService.get(
-    dispatch,
-    'FETCH_ADDONS_SUCCESS',
-    'FETCH_ADDONS_FAILED',
-    null,
-    null,
-    `addon/all/${stockId}`,
-    'LOADING_ADDONS',
-  );
-};
+export const fetchAddons =
+  (stockId: string, boxGroupId: string) => async (dispatch: any) => {
+    await ApiService.get(
+      dispatch,
+      'FETCH_ADDONS_SUCCESS',
+      'FETCH_ADDONS_FAILED',
+      null,
+      null,
+      `addon/all/${stockId}/${boxGroupId}`,
+      'LOADING_ADDONS',
+    );
+  };
 
 export const selectAddon = (
   addonId: string,
