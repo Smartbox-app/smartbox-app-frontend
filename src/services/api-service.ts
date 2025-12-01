@@ -106,6 +106,7 @@ export default class ApiService {
     successCb?: any,
     failedCb?: any,
     requestData?: any,
+    throwError?: boolean
   ) => {
     const headers = {
       'Content-Type': 'application/json',
@@ -143,6 +144,7 @@ export default class ApiService {
       }
     } catch (error) {
       store.dispatch(notifications.errorNotification(ApiErrorCode.OtherError));
+      if(throwError) throw error;
     }
   };
 

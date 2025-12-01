@@ -62,9 +62,6 @@ export const NotifyWhenAvailableModal = ({
   const onClose = () => {
     dispatch(modal.hideModal());
   };
-
-  console.log('ERRORS', errors);
-
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
       {isPending ? <Spinner overlay halfTransparent /> : null}

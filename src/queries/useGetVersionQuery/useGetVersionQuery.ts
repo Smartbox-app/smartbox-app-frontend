@@ -5,14 +5,24 @@ export const useGetVersionQuery = () => {
   return useQuery({
     queryKey: ['version'],
     queryFn: async () => {
-      const response = await ApiService.callFetch<string>(
-        'get',
-        'settings/version',
-      );
+      try {
+        const response = await ApiService.callFetch<string>(
+          'get',
+          'settings/version',
+          undefined,
+          undefined,
+          undefined,
+          true,
+        );
 
-      if (response) return response;
-      return null;
+        if (response) return response;
+        throw new Error('No version available');
+      } catch (e) {
+        console.log('CAUGHE E');
+        throw e;
+      }
     },
+    retry: false,
     refetchInterval: 3000,
   });
 };

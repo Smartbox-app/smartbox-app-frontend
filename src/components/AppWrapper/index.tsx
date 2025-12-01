@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ApplicationState } from '../../reducers';
 import { useGetVersionQuery, useGetMyDetailsQuery } from '../../queries';
@@ -6,6 +6,8 @@ import { useLogoutMutation } from 'src/mutations/useLogoutMutation';
 import { useLocation } from 'react-router';
 import { scrollTop } from 'src/utils/scroll-top';
 import TagManager from 'react-gtm-module';
+import { MaintenanceScreen } from '../MaintenanceScreen';
+import { Spinner } from '../Branded';
 
 interface Props {
   children: React.ReactNode;
@@ -14,9 +16,11 @@ interface Props {
 const AppWrapper = ({ children }: Props) => {
   const { data: user, isLoading } = useGetMyDetailsQuery();
   const { mutate: logout } = useLogoutMutation();
-  const { data: version } = useGetVersionQuery();
+  const { data: version, error } = useGetVersionQuery();
   const location = useLocation();
   const tenant = useSelector((state: ApplicationState) => state.tenant);
+  const [isMaintenanceScreen, setIsMaintenanceScreen] =
+    useState<boolean>(false);
 
   useEffect(() => {
     const currentVersion = localStorage.getItem('v') || null;
@@ -43,7 +47,7 @@ const AppWrapper = ({ children }: Props) => {
     const tagManagerArgs = {
       gtmId: 'GTM-PR56955H',
     };
-    
+
     TagManager.initialize(tagManagerArgs);
   }, [tenant]);
 
@@ -51,6 +55,14 @@ const AppWrapper = ({ children }: Props) => {
     scrollTop();
   }, [location.pathname]);
 
+  useEffect(() => {
+    if (error) setIsMaintenanceScreen(true);
+    if (version) setIsMaintenanceScreen(false);
+  }, [version, error]);
+
+  if(!version && isLoading) return <Spinner />
+
+  if (isMaintenanceScreen) return <MaintenanceScreen />;
   if (isLoading || (user && user.tenantId && (!tenant || !tenant.id)))
     return null;
 

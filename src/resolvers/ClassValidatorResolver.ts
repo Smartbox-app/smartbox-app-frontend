@@ -39,7 +39,7 @@ export const ClassValidatorResolver =
           }
 
           const errorsKeys = Object.keys(error.constraints);
-          console.log('error', error);
+
           return [
             error.property,
             {
