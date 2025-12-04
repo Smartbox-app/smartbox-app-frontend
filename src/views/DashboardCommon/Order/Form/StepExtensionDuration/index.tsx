@@ -91,7 +91,6 @@ const StepExtensionDuration = ({ clearPaymentDetails }: Props) => {
     orderAddons,
     orderAddonsId,
     minRentDaysForInstallments,
-    boxGroupId
   } = useSelector((state: ApplicationState) => state.order);
   const [stock, setStock] = useState<IStock>();
   const [loading, setLoading] = useState<boolean>(false);
@@ -114,6 +113,7 @@ const StepExtensionDuration = ({ clearPaymentDetails }: Props) => {
       'GET',
       `rent/my-details/${rentId}`,
       (data: MyRentDetails) => {
+        console.log('RENT DATA', data);
         setRent(data);
       },
     );
@@ -224,7 +224,7 @@ const StepExtensionDuration = ({ clearPaymentDetails }: Props) => {
   }, [stock, rentPaymentType, rent]);
 
   const calculateAllAddons = () => {
-    if (!endDate) return;
+    if (!endDate || !rent) return;
     Object.keys(orderAddons).forEach((addonId) => {
       const addon = orderAddons[addonId];
       if (addon.selectedVariant)
@@ -235,7 +235,7 @@ const StepExtensionDuration = ({ clearPaymentDetails }: Props) => {
             endDate,
             rentPaymentType || RentPaymentType.InAdvance,
             addon.selectedVariant,
-            boxGroupId
+            rent.boxGroupId
           ),
         );
       else dispatch(clearAddonPrice(addonId));
@@ -410,7 +410,7 @@ const StepExtensionDuration = ({ clearPaymentDetails }: Props) => {
           </Section>
         ) : null}
 
-        <Addons stockId={rent.stockId} />
+        <Addons stockId={rent.stockId} boxGroupId={rent.boxGroupId} />
 
         {stock ? <PaymentType stock={stock} rent={rent} /> : null}
         <Price />

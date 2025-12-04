@@ -51,6 +51,7 @@ import { useTenant } from './hooks/useTenant';
 import { PaymentStatus } from 'smartbox-types';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { RouteGuest } from './components/Common/RouteGuest';
+import { MaintenanceScreen } from './components/MaintenanceScreen';
 
 const DashboardAdmin = React.lazy(() => import('./views/DashboardAdmin'));
 const DashboardUser = React.lazy(() => import('./views/DashboardUser'));

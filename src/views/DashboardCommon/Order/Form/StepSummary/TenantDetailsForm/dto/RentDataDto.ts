@@ -9,6 +9,7 @@ import {
 } from 'class-validator';
 import { __ } from 'src/helpers/i18n';
 import { errors } from 'src/validation/errors';
+import { IsNip } from 'src/validators/IsCorrectNip';
 
 export class RentDataDto {
   withBirthDate: boolean = false;
@@ -90,6 +91,9 @@ export class RentDataDto {
   @ValidateIf((d) => !!d.invoiceNeeded)
   @IsNotEmpty({
     message: errors.field_required,
+  })
+  @IsNip({
+    message: errors.incorrect_nip,
   })
   nip: string;
 

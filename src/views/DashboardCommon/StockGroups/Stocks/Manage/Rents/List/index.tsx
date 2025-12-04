@@ -4,17 +4,33 @@ import { FieldType, rentsList } from 'smartbox-tables';
 import { AdminRentListDetails } from 'smartbox-types';
 import { ApiTable } from '../../../../../../../components/Common';
 import { Button } from '../../../../../../../components/Branded';
-import { SimpleHeader } from '../../../../../../../components/Layout';
+import {
+  ButtonsContainer,
+  SimpleHeader,
+} from '../../../../../../../components/Layout';
 import { __ } from '../../../../../../../helpers/i18n';
 import { InteractiveTableSchema } from '../../../../../../../utils/table-schema-utils';
 import { showModal } from '../../../../../../../actions/modal';
 import { useParams } from 'react-router';
 import { RentHistoryModal } from './RentHistoryModal';
-import { Header, Section } from 'src/components/ui';
+import {
+  Button as UIButton,
+  Header,
+  Section,
+  HeaderWithActions,
+} from 'src/components/ui';
+import { handleFileOpen } from 'src/utils/handle-file-open';
+import { useTenant } from 'src/hooks/useTenant';
 
 const List = () => {
   const dispatch = useDispatch();
   const { stockId } = useParams<{ stockId: string }>();
+  const { tenant } = useTenant();
+
+  const handleReportDownload = () => {
+    if (!tenant) return;
+    handleFileOpen(`rent/report?tenantId=${tenant.id}`);
+  };
 
   const scheme = new InteractiveTableSchema(rentsList)
     .removeFields('description', 'id', 'userId')
@@ -49,11 +65,25 @@ const List = () => {
 
   return (
     <Section>
-      <Header variant="h2">{__('application.stockRents')}</Header>
+      <HeaderWithActions
+        actions={
+          <ButtonsContainer>
+            <UIButton
+              variant="primary"
+              text={__('application.downloadReport')}
+              onClick={handleReportDownload}
+            />
+          </ButtonsContainer>
+        }
+      >
+        {__('application.stockRents')}
+      </HeaderWithActions>
       <p>
         Podsumowanie wynajmów jest wysyłane codziennie na adres e-mail konta
-        franczyzobiorcy.
+        franczyzobiorcy. Możesz również wygenerować raport ręcznie przy pomocy
+        przycisku "Pobierz raport".
       </p>
+
       <ApiTable scheme={scheme} apiEndpointSubUrl={`rent/list/${stockId}`} />
     </Section>
   );

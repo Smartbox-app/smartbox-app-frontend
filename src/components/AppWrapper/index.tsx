@@ -56,11 +56,11 @@ const AppWrapper = ({ children }: Props) => {
   }, [location.pathname]);
 
   useEffect(() => {
-    if (error) setIsMaintenanceScreen(true);
+    if (error || !tenant) setIsMaintenanceScreen(true);
     if (version) setIsMaintenanceScreen(false);
-  }, [version, error]);
+  }, [version, error, tenant]);
 
-  if(!version && isLoading) return <Spinner />
+  if (!version && isLoading) return <Spinner />;
 
   if (isMaintenanceScreen) return <MaintenanceScreen />;
   if (isLoading || (user && user.tenantId && (!tenant || !tenant.id)))

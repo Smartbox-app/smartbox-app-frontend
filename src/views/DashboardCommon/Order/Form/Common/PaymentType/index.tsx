@@ -41,7 +41,7 @@ export const PaymentType = ({ stock, rent }: Props) => {
       <Header variant="h2">{__('application.paymentType')}</Header>
       <p>{__(getPaymentTypeText(stock.clientPaymentTypeConfig, rent))}</p>
 
-      {rent && rent.status === RentStatus.rented && [StockPaymentType.Both, StockPaymentType.Installments].includes(
+      {(!rent || (rent && rent.status === RentStatus.rented ))&& [StockPaymentType.Both, StockPaymentType.Installments].includes(
         stock.clientPaymentTypeConfig,
       ) ? (
         <InstallmentsPaymentMinDaysInfo />

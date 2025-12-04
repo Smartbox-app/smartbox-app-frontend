@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import {
+  AddonRes,
   AddonUserFileRequirementType,
   SingleAddonVariant,
 } from 'smartbox-types';
@@ -44,12 +45,13 @@ const StyledVariantName = styled('h5')({
 });
 
 interface Props {
+  addon: AddonRes;
   addonId: string;
   isGross: boolean;
   variant: SingleAddonVariant;
 }
 
-export const SingleVariant = ({ variant, addonId, isGross }: Props) => {
+export const SingleVariant = ({ variant, addonId, addon, isGross }: Props) => {
   const { orderAddons } = useSelector((state: ApplicationState) => state.order);
   const dispatch = useDispatch();
 
@@ -75,6 +77,21 @@ export const SingleVariant = ({ variant, addonId, isGross }: Props) => {
     );
   };
 
+  const variantWithCorrectedPrice = useMemo(() => {
+    const parsedTax = parseInt(addon.tax);
+
+    if(isNaN(parsedTax)) return variant;
+
+    if(isGross && variant.price) {
+      return {
+        ...variant,
+        price: variant.price * (1 + Number(addon.tax) / 100)
+      }
+    }
+
+    return variant
+  }, [variant])
+
   return (
     <StyledAddonVariant
       isSelected={isSelected}
@@ -85,7 +102,7 @@ export const SingleVariant = ({ variant, addonId, isGross }: Props) => {
         <Indicator selected={isSelected} />
         <StyledVariantName>{variant.name}</StyledVariantName>
       </VariantSelect>
-      <PriceInfo variant={variant} isGross={isGross} />
+      <PriceInfo variant={variantWithCorrectedPrice} isGross={isGross} />
     </StyledAddonVariant>
   );
 };

@@ -357,7 +357,7 @@ const StepDuration = ({ clearPaymentDetails }: Props) => {
         </Section>
 
         {stock ? <PaymentType stock={stock} /> : null}
-        <Addons stockId={stockId} />
+        <Addons stockId={stockId} boxGroupId={boxGroupId} />
         <Price />
         <Section>
           <ButtonsContainer spaceBetween>

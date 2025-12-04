@@ -1,6 +1,8 @@
 import { ApiErrorCode, ApiResult } from 'smartbox-types';
+import { Capacitor, CapacitorHttp } from '@capacitor/core';
 import { notifications } from '../actions';
 import { store, history } from '../App';
+import { UserState } from 'src/reducers/user-reducer';
 
 export default class ApiService {
   static url =
@@ -291,5 +293,44 @@ export default class ApiService {
       url,
       loadingAction,
     );
+  };
+
+  static sendForFile = async (
+    method: string,
+    url: string,
+    data?: any,
+    excludeApiURL = false,
+  ): Promise<{ filename: string; data: string }> => {
+    const headers: any = {
+      'Content-Type': 'application/json',
+      Accept: 'application/json, text/plain, */*',
+    };
+
+    if (Capacitor.isNativePlatform()) {
+      // @TODO handle
+      // const { token } = store.getState().user as UserState;
+      // headers.Authorization = `Bearer ${token}`;
+    }
+
+    const capacitorMethod = data ? CapacitorHttp.post : CapacitorHttp.get;
+
+    try {
+      const response = await capacitorMethod({
+        headers,
+        url: excludeApiURL ? url : `${ApiService.url}${url}`,
+        responseType: 'blob',
+        data: data ? data : undefined,
+        webFetchExtra: {
+          credentials: 'include',
+        },
+      });
+      const received = response.data;
+      console.log('HEADERS', response, response.headers);
+      const filename = response.headers['Filename'] || response.headers['filename'];
+
+      return { filename, data: received };
+    } catch (e) {
+      throw e;
+    }
   };
 }

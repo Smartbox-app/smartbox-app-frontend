@@ -154,6 +154,7 @@ export type MyRentDetails = {
   stockId: string;
   boxId: string;
   boxNumber: string;
+  boxGroupId: string;
   boxAdditionalInfo: string;
   number: string;
   gates: RentGate[];

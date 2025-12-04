@@ -90,7 +90,7 @@ const StepSummary = ({ formData, updateFormData }: Props) => {
     phone: user?.phone || '',
 
     clientSource: '',
-    nip: user?.companyData.nip || '',
+    nip: user?.companyData?.nip?.trim() || '',
     companyPostCode: user?.companyData.companyPostCode || '',
     companyCity: user?.companyData.companyCity || '',
     companyStreet: user?.companyData.companyStreet || '',
@@ -209,7 +209,7 @@ const StepSummary = ({ formData, updateFormData }: Props) => {
       {discount && endDate ? (
         <DiscountForm
           stockId={stockId}
-          boxGroupId={boxGroupId}
+          boxGroupId={rent?.boxGroupId || boxGroupId}
           rentStart={startDate}
           rentEnd={endDate}
         />

@@ -32,10 +32,11 @@ const StyledUserFileContainer = styled('div')(({ theme }) => ({
 
 interface Props {
   stockId: string;
+  boxGroupId: string;
 }
 
-export const Addons = ({ stockId }: Props) => {
-  const { addons, loadingAddons, orderAddons, boxGroupId } = useSelector(
+export const Addons = ({ stockId, boxGroupId }: Props) => {
+  const { addons, loadingAddons, orderAddons } = useSelector(
     (state: ApplicationState) => state.order,
   );
   const dispatch = useDispatch();
@@ -131,6 +132,7 @@ export const Addons = ({ stockId }: Props) => {
                 <SingleVariant
                   key={variant.id}
                   variant={variant}
+                  addon={addon}
                   addonId={addon.id}
                   isGross={addon.isGross}
                 />

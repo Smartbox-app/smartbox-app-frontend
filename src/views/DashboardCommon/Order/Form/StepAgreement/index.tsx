@@ -239,7 +239,7 @@ const StepAgreement = ({ formData, isResignationMarked }: Props): any => {
       companyStreet: formData.companyStreet || '',
       companyCity: formData.companyCity || '',
       companyPostCode: formData.companyPostCode || '',
-      nip: formData.nip || '',
+      nip: formData.nip?.trim() || '',
       rentPaymentType: order.rentPaymentType || RentPaymentType.InAdvance,
       orderAddons: getAddonsWithCorrectPrice(order.orderAddons),
     };
@@ -296,7 +296,7 @@ const StepAgreement = ({ formData, isResignationMarked }: Props): any => {
       companyStreet: formData.companyStreet || undefined,
       companyCity: formData.companyCity || undefined,
       companyPostCode: formData.companyPostCode || undefined,
-      nip: formData.nip || undefined,
+      nip: formData.nip?.trim() || undefined,
       simplifiedAddons: getSimplifiedAddons(
         getAddonsWithCorrectPrice(order.orderAddons),
       ),

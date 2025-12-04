@@ -5,5 +5,6 @@ export const errors = {
     incorrect_postcode: 'Niepoprawny kod pocztowy',
     passwords_must_match: 'Hasła muszą się zgadzać',
     check_required: 'Musisz zaznaczyć to pole',
+    incorrect_nip: 'Niepoprawny numer NIP',
     min_chars: (chars: number) => `Wymagane min. ${chars} znaków`
 }
