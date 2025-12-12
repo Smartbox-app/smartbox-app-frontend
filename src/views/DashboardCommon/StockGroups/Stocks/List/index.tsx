@@ -19,10 +19,11 @@ import { history } from '../../../../../App';
 import UserService from '../../../../../services/user-service';
 import { ApplicationState } from '../../../../../reducers';
 import { useGetMyDetailsQuery } from 'src/queries';
-import { HeaderWithActions } from 'src/components/ui';
+import { HeaderWithActions, Button as UIButton } from 'src/components/ui';
 import { DeleteStockModal } from 'src/components/Common/DeleteStockModal';
 import { useTenantNaming } from 'src/hooks/useTenantNaming';
 import { useTenant } from 'src/hooks/useTenant';
+import { handleFileOpen } from 'src/utils/handle-file-open';
 
 const List = () => {
   const dispatch = useDispatch();
@@ -33,6 +34,11 @@ const List = () => {
 
   const hasAdminAccess = [UserRole.admin].includes(user!.role);
   const hasFullAccess = [UserRole.admin, UserRole.client].includes(user!.role);
+
+  const handleReportDownload = () => {
+    if (!tenant) return;
+    handleFileOpen(`rent/report?tenantId=${tenant.id}`);
+  };
 
   scheme.addFieldAtTheEnd({
     name: __('application.actions'),
@@ -70,10 +76,14 @@ const List = () => {
   };
 
   const deleteStock = async (data: StockAdminList, stockName) => {
-    await ApiService.callFetch('DELETE', `stock/${data.id}/${stockName}`, () => {
-      dispatch(successNotification(getText('deleted')));
-      dispatch(refreshApiTableData());
-    });
+    await ApiService.callFetch(
+      'DELETE',
+      `stock/${data.id}/${stockName}`,
+      () => {
+        dispatch(successNotification(getText('deleted')));
+        dispatch(refreshApiTableData());
+      },
+    );
   };
 
   return (
@@ -86,6 +96,11 @@ const List = () => {
                 text={getText('add')}
                 primary
                 to={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/add`}
+              />
+              <UIButton
+                variant="secondary"
+                text={__('application.downloadReport')}
+                onClick={handleReportDownload}
               />
             </ButtonsContainer>
           ) : null

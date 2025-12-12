@@ -12,6 +12,7 @@ import {
   RentPaymentType,
   PayForRentResponse,
   PaymentStatus,
+  PaymentDocument,
 } from 'smartbox-types';
 import { PaymentType } from 'smartbox-types';
 import { Alert } from '../../../../../components/Common';
@@ -241,6 +242,7 @@ const StepAgreement = ({ formData, isResignationMarked }: Props): any => {
       companyPostCode: formData.companyPostCode || '',
       nip: formData.nip?.trim() || '',
       rentPaymentType: order.rentPaymentType || RentPaymentType.InAdvance,
+      paymentDocument: order.paymentDocumentType || PaymentDocument.Invoice,
       orderAddons: getAddonsWithCorrectPrice(order.orderAddons),
     };
 

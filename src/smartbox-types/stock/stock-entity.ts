@@ -7,7 +7,13 @@ export enum StockPaymentType {
   Both = 'both',
 }
 
-export interface IStock extends IBase{
+export enum StockPaymentDocument {
+  Invoice = 'invoice',
+  Receipt = 'receipt',
+  Both = 'both',
+}
+
+export interface IStock extends IBase {
   name: string;
   address: string;
   gate: IGate;
@@ -43,6 +49,7 @@ export interface IStock extends IBase{
   activeBoxesCount: number;
   // config whether user wants to pay all in advance or in installments (or if we want to give the user choice)
   clientPaymentTypeConfig: StockPaymentType;
+  paymentDocumentConfig: StockPaymentDocument;
   // days to pay the rent invoice
   daysForPayment: number;
   minRentDaysForInstallments: number | null;
@@ -70,7 +77,7 @@ export interface Coordinate {
 }
 
 export interface IReading {
-    date: Date;
-    moduleId: string;
-    moduleVoltage: number;
+  date: Date;
+  moduleId: string;
+  moduleVoltage: number;
 }

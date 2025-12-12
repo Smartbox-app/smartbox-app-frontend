@@ -28,15 +28,17 @@ import {
   HomeWifi,
   Add,
   Map as MapIcon,
+  Adjustments,
 } from 'src/icons';
 import GateStatus from 'src/views/DashboardCommon/GateStatus';
 import { useTenantNaming } from 'src/hooks/useTenantNaming';
+import { Statistics } from './Statistics';
 
 const Manage = () => {
   const { stockId } = useParams<{ stockId: string }>();
   const { data: user } = useGetMyDetailsQuery();
   const tenant = useSelector((state: ApplicationState) => state.tenant);
-  const {getText} = useTenantNaming();
+  const { getText } = useTenantNaming();
   const [tenantForAdmin, setTenantForAdmin] = useState<TenantEntity>();
   const [isMapActive, setMapActive] = useState<boolean>(false);
 
@@ -138,6 +140,12 @@ const Manage = () => {
       });
     }
 
+    elements.push({
+      to: `/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/statistics`,
+      text: getText('stats'),
+      icon: <Adjustments />,
+    });
+
     return elements;
   }, [isMapActive, tenantForAdmin, hasFullAccess]);
 
@@ -228,6 +236,10 @@ const Manage = () => {
                 component={Addons}
               />
             )}
+          <Route
+            path={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/:stockId/statistics`}
+            component={Statistics}
+          />
         </Switch>
       </>
     </>

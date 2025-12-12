@@ -84,8 +84,8 @@ npm manifest:
       "lint:fix": "eslint './src/**/*.{ts,tsx}'",
       "trans-form-errors": "node node_modules/itf_formbuilder_translation_tool",
       "prepare-translations": "node ./node_modules/ITF_FormBuilder_translation_tool/dist/index.js",
-      "build-prod": "REACT_APP_API_URL=https://api.smartbox.dev2.itdotfocus.com react-app-rewired build",
-      "build-staging": "REACT_APP_API_URL=https://api.smartbox-staging.dev2.itdotfocus.com react-app-rewired build"
+      "build-prod": "VITE_APP_API_URL=https://api.smartbox.dev2.itdotfocus.com react-app-rewired build",
+      "build-staging": "VITE_APP_API_URL=https://api.smartbox-staging.dev2.itdotfocus.com react-app-rewired build"
     },
     "eslintConfig": {
       "extends": "react-app"

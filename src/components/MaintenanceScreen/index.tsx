@@ -19,6 +19,6 @@ const StyledContainer = styled('div')({
 export const MaintenanceScreen = () => {
     return <StyledContainer>
         <Settings />
-        <p>Trwa przerwa techniczna, działanie systemu zostanie wznowione za kilka minut.</p>
+        <p>Maksymalnie do 2:00 trwa przerwa techniczna, działanie systemu zostanie wznowione za kilka minut.</p>
     </StyledContainer>
 }

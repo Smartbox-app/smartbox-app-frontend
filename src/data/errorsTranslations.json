@@ -383,7 +383,7 @@
         "__type_alias_do_not_touch": "ApiErrorCode.MaxPeriodCantBeLowerThanMin"
       },
       "86": {
-        "text": "Zbyt krótki czas najmu dla płatności ratalnej!",
+        "text": "Zbyt krótki czas najmu dla płatności okresowej!",
         "__type_alias_do_not_touch": "ApiErrorCode.RentPeriodTooShortForInstallments"
       },
       "87": {
@@ -397,6 +397,22 @@
       "89": {
         "text": "Podany numer NIP jest niepoprawny!",
         "__type_alias_do_not_touch": "ApiErrorCode.InvalidNIP"
+      },
+      "90": {
+        "text": "Zamek nie jest podłączony do bramki!",
+        "__type_alias_do_not_touch": "ApiErrorCode.LockNotConnectedToTheGateway"
+      },
+      "91": {
+        "text": "Zamek nie obsługuje tego ustawienia!",
+        "__type_alias_do_not_touch": "ApiErrorCode.LockFunctionNotSupported"
+      },
+      "92": {
+        "text": "Wystąpił błąd podczas komunikacji z zamkiem (nieprawidłowy parametr)!",
+        "__type_alias_do_not_touch": "ApiErrorCode.LockInvalidParameter"
+      },
+      "93": {
+        "text": "Niepoprawny kod!",
+        "__type_alias_do_not_touch": "ApiErrorCode.IncorrectPasscode"
       }
     }
   }

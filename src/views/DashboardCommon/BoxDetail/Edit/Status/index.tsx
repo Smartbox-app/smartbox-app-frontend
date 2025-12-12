@@ -3,7 +3,7 @@ import { ItfApiForm } from "itf_formbuilder_react";
 import { connect, useDispatch } from "react-redux";
 import ReactCreatableSelect from "react-select/creatable";
 import { bindActionCreators } from "redux";
-import { ChangeStatusReq, StockList } from "smartbox-types";
+import { ChangeStatusReq } from "smartbox-types";
 import { boxes, modal, notifications, stock } from "../../../../../actions";
 import {
   FormContainer,
@@ -11,7 +11,6 @@ import {
 } from "../../../../../components/Layout";
 import { Alert } from "../../../../../components/Common";
 import { Button, Spinner } from "../../../../../components/Branded";
-import { ApplicationState } from "../../../../../reducers";
 import ApiService from "../../../../../services/api-service";
 import { formOnTranslateString } from "../../../../../utils/trans-form";
 
@@ -120,9 +119,6 @@ const Status = ({
   );
 };
 
-const mapStateToProps = (state: ApplicationState) => ({
-  stocks: state.stock.list,
-});
 
 const mapDispatchToProps = (dispatch: any) =>
   bindActionCreators(
@@ -130,4 +126,4 @@ const mapDispatchToProps = (dispatch: any) =>
     dispatch
   );
 
-export default connect(mapStateToProps, mapDispatchToProps)(Status);
+export default connect(null, mapDispatchToProps)(Status);

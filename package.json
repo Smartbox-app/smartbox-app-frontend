@@ -25,6 +25,7 @@
         "@types/styled-components": "^5.1.28",
         "@types/swiper": "5.4.2",
         "@types/uuid": "^3.4.6",
+        "@vitejs/plugin-react": "^5.1.2",
         "body-scroll-lock": "^2.6.4",
         "class-transformer": "^0.5.1",
         "class-validator": "^0.14.1",
@@ -76,19 +77,15 @@
         "supercluster": "^8.0.1",
         "swiper": "5.4.5",
         "tanstack-query": "^1.0.0",
-        "typescript": "^4.0.0"
+        "typescript": "^4.0.0",
+        "vite": "^7.2.7",
+        "vite-plugin-pwa": "^1.2.0",
+        "vite-tsconfig-paths": "^5.1.4"
     },
     "scripts": {
-        "start": "react-app-rewired start",
-        "eject": "react-scripts eject",
+        "start": "vite",
         "lint": "eslint './src/**/*.{ts,tsx}' --fix",
-        "trans-form-errors": "node node_modules/itf_formbuilder_translation_tool",
-        "prepare-translations": "node ./node_modules/ITF_FormBuilder_translation_tool/dist/index.js",
-        "build-prod": "REACT_APP_URL=https://app.smartbox.dev2.itdotfocus.com REACT_APP_API_URL=https://api.smartbox.dev2.itdotfocus.com react-app-rewired build",
-        "build-new-prod": "REACT_APP_URL=https://smartbox-app.pl REACT_APP_API_URL=https://api.smartbox-app.pl react-app-rewired build",
-        "build-staging": "REACT_APP_URL=https://app.smartbox-staging.dev2.itdotfocus.com REACT_APP_API_URL=https://api.smartbox-staging.dev2.itdotfocus.com react-app-rewired build",
-        "build-windows-prod": "set REACT_APP_URL=https://app.smartbox.dev2.itdotfocus.com && set REACT_APP_API_URL=https://api.smartbox.dev2.itdotfocus.com && react-app-rewired build",
-        "build-windows-staging": "set REACT_APP_URL=https://app.smartbox-staging.dev2.itdotfocus.com && set REACT_APP_API_URL=https://api.smartbox-staging.dev2.itdotfocus.com && react-app-rewired build"
+        "build-new-prod": "VITE_APP_URL=https://smartbox-app.pl VITE_APP_API_URL=https://api.smartbox-app.pl vite build"
     },
     "browserslist": {
         "production": [

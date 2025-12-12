@@ -138,16 +138,10 @@ const allowedTags = {
     'number',
     'paymentUntil',
   ],
-  [TemplateType.NO_PERIOD_PAYMENT_EMAIL]: [
-    'name',
-    'company',
-    'number',
-  ],
-  [TemplateType.NO_PERIOD_PAYMENT_SMS]: [
-    'name',
-    'company',
-    'number',
-  ],
+  [TemplateType.NO_PERIOD_PAYMENT_EMAIL]: ['name', 'company', 'number'],
+  [TemplateType.NO_PERIOD_PAYMENT_SMS]: ['name', 'company', 'number'],
+  [TemplateType.ACCESS_CODE_EMAIL]: ['name', 'company', 'number', 'passcode'],
+  [TemplateType.ACCESS_CODE_SMS]: ['name', 'company', 'number', 'passcode'],
 };
 
 export const Manage = () => {

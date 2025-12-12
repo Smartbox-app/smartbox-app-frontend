@@ -8,7 +8,13 @@ import ApiService from 'src/services/api-service';
 import { useTenant } from 'src/hooks/useTenant';
 import './Map.scss';
 import { ActiveLocation } from './components/ActiveLocation';
-import { setOrderStock } from 'src/actions/order';
+import { setOrderFullStock, setOrderStock } from 'src/actions/order';
+import {
+  StockGroupData,
+  StockGroupWithStocks,
+  StockList,
+} from 'smartbox-types';
+import { Skeleton } from 'src/components/ui';
 
 const ExternalContainer = styled('div')(({ theme }) => ({
   width: '100%',
@@ -27,14 +33,38 @@ export const Map = () => {
   const mapRef = useRef<unknown>(null);
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const stockId = useSelector((state: ApplicationState) => state.order.stockId);
-  const list = useSelector((state: ApplicationState) => state.stock.list);
-  const groupsList = useSelector(
-    (state: ApplicationState) => state.stockGroup.list,
-  );
+
+  const [stocksLoading, setStocksLoading] = useState<boolean>(true);
+  const [groupsLoading, setGroupsLoading] = useState<boolean>(true);
+  const [stocks, setStocks] = useState<StockList[] | null>(null);
+  const [groups, setGroups] = useState<StockGroupWithStocks[] | null>(null);
+
+  const getStocks = async () => {
+    await ApiService.callFetch('GET', `stock/list`, (data: StockList[]) => {
+      setStocks(data);
+    });
+    setStocksLoading(false);
+  };
+
+  const getGroups = async () => {
+    await ApiService.callFetch(
+      'GET',
+      `stock-group/list`,
+      (data: StockGroupWithStocks[]) => {
+        setGroups(data);
+      },
+    );
+    setGroupsLoading(false);
+  };
 
   const dispatch = useDispatch();
 
   const { tenant } = useTenant();
+
+  useEffect(() => {
+    getGroups();
+    getStocks();
+  }, []);
 
   useEffect(() => {
     if (!mapContainerRef.current) return;
@@ -43,13 +73,6 @@ export const Map = () => {
 
     const map = new mapboxgl.Map({
       container: mapContainerRef.current,
-      // style: 'mapbox://styles/mapbox/light-v11',
-      // config: {
-      //   basemap: {
-      //     theme: 'monochrome',
-      //   },
-      // },
-
       center: [19.1451, 51.9194], // Poland
       zoom: 5,
     });
@@ -65,7 +88,7 @@ export const Map = () => {
     return () => {
       (mapRef.current as mapboxgl.Map).remove();
     };
-  }, [mapContainerRef]);
+  }, [mapContainerRef, stocks, groups]);
 
   const logoUrl = useMemo(() => {
     if (!tenant) return null;
@@ -74,10 +97,10 @@ export const Map = () => {
   }, [tenant]);
 
   const activeStock = useMemo(() => {
-    if (!stockId) return null;
+    if (!stockId || !stocks || !groups) return null;
     const allStocks = [
-      ...list,
-      ...groupsList.map((group) => group.stocks).flat(),
+      ...stocks,
+      ...groups.map((group) => group.stocks).flat(),
     ];
     const fullStock = allStocks.find((stock) => stock.id === stockId);
 
@@ -87,15 +110,16 @@ export const Map = () => {
       name: fullStock.name,
       address: fullStock.address,
     };
-  }, [stockId]);
+  }, [stockId, groups, stocks]);
 
   const addLocations = () => {
-    console.log('LIST', list, groupsList);
     const map = mapRef.current as mapboxgl.Map;
 
+    if (!stocks || !groups) return;
+
     const allStocks = [
-      ...list,
-      ...groupsList.map((group) => group.stocks).flat(),
+      ...stocks,
+      ...groups.map((group) => group.stocks).flat(),
     ];
 
     for (let stock of allStocks) {
@@ -109,11 +133,14 @@ export const Map = () => {
         .addTo(map)
         .getElement()
         .addEventListener('click', () => {
-          console.log('CLICK', stock);
           dispatch(setOrderStock(stock.id, stock.name, stock.address));
         });
     }
   };
+
+  if (groupsLoading || stocksLoading)
+    return <Skeleton height={500} radius={12} />;
+
   return (
     <ExternalContainer>
       {activeStock ? (

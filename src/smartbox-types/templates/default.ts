@@ -10,8 +10,7 @@ Twoje konto zostało pomyślnie założone, teraz możesz wynająć odpowiedni d
   [TemplateType.USER_UNBLOCKED_EMAIL]: `Zostałeś odblokowany, możesz kontynuować korzystanie z mini magazynów w {{company}}, zapraszamy.`,
   [TemplateType.RENTAL_EXTENDED_MAIL]: `Cześć {{name}}!
 Przedłużyłeś wynajęcie skrytki numer {{number}} do {{rentUntil}} za {{cost}} zł.`,
-  [TemplateType.RENTAL_PERIOD_PAID_MAIL]: `Cześć {{name}}!
-Opłaciłeś ok {{periodFrom}} - {{periodTo}} res wynajęcia skrytki numer {{number}} za {{cost}} zł.`,
+  [TemplateType.RENTAL_PERIOD_PAID_MAIL]: `Cześć {{name}}! Opłaciłeś okres {{periodFrom}} - {{periodTo}} wynajęcia skrytki numer {{number}} za {{cost}} zł.`,
   [TemplateType.NEW_RENTAL_MAIL]: `Cześć {{name}}!
 Udało się! Wynająłeś domek dla Twoich rzeczy. Masz box o numerze {{number}} od {{rentFrom}} do {{rentUntil}} za {{cost}} zł.`,
   [TemplateType.RENTAL_EXTENDED_ADMIN_NOTIFICATION_MAIL]: `Użytkownik {{email}} przedłużył wynajęcie skrytki numer {{number}} na placu {{stock}} do {{rentUntil}} za {{cost}} zł.`,
@@ -59,4 +58,6 @@ Wystawiliśmy fakturę na kolejny okres Twojego wynajmu skrytki {{number}}, masz
   [TemplateType.PERIOD_PAYMENT_SMS]: `Czesc {{name}}! Wystawilismy fakture na kolejny okres Twojego wynajmu, czas na zaplate do {{paymentUntil}}.`,
   [TemplateType.RENTAL_PERIOD_PAID_SMS]: `Czesc {{name}}! Okres płatności za wynajem został opłacony.`,
   [TemplateType.BOX_GROUP_FREE_SMS]: `Czesc {{name}}! Rozmiar skrytki {{size}}, ktorym sie interesujesz, jest ponownie dostepny.`,
+  [TemplateType.ACCESS_CODE_EMAIL]: `Cześć {{name}}! Oto Twój kod dostępu do skrytki nr {{number}} w {{company}}: {{passcode}}`,
+  [TemplateType.ACCESS_CODE_SMS]: `Twój kod dostepu do skrytki {{number}} w {{company}} to {{passcode}}`,
 };

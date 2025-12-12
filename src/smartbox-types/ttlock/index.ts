@@ -116,3 +116,26 @@ export interface TTLockGatewayListResponse {
   pages: number;
   total: number;
 }
+
+export interface TTLockPasscode {
+  keyboardPwdId: string;
+  lockId: string;
+  keyboardPwd: string;
+  keyboardPwdName: string;
+  startDate: number;
+  endDate: number;
+}
+
+export interface TTLockPasscodeListResponse {
+  list: TTLockPasscode[];
+  pageNo: number;
+  pages: number;
+  total: number;
+}
+
+export interface TTLockPasscodeReq {
+  passcode: string;
+  name: string;
+  startDate?: Date;
+  endDate?: Date;
+}

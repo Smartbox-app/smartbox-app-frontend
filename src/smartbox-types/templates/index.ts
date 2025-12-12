@@ -34,6 +34,8 @@ export enum TemplateType {
   RENTAL_PERIOD_PAID_SMS = 'rental_period_paid_sms',
   BOX_GROUP_FREE_EMAIL = 'box_group_free_email',
   BOX_GROUP_FREE_SMS = 'box_group_free_sms',
+  ACCESS_CODE_EMAIL = 'access_code_email',
+  ACCESS_CODE_SMS = 'access_code_sms',
 }
 
 export type TemplateEntity = {

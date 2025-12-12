@@ -25,12 +25,6 @@ import { useTenant } from 'src/hooks/useTenant';
 const List = () => {
   const dispatch = useDispatch();
   const { stockId } = useParams<{ stockId: string }>();
-  const { tenant } = useTenant();
-
-  const handleReportDownload = () => {
-    if (!tenant) return;
-    handleFileOpen(`rent/report?tenantId=${tenant.id}`);
-  };
 
   const scheme = new InteractiveTableSchema(rentsList)
     .removeFields('description', 'id', 'userId')
@@ -65,23 +59,11 @@ const List = () => {
 
   return (
     <Section>
-      <HeaderWithActions
-        actions={
-          <ButtonsContainer>
-            <UIButton
-              variant="primary"
-              text={__('application.downloadReport')}
-              onClick={handleReportDownload}
-            />
-          </ButtonsContainer>
-        }
-      >
-        {__('application.stockRents')}
-      </HeaderWithActions>
+      <Header variant="h2">{__('application.stockRents')}</Header>
       <p>
         Podsumowanie wynajmów jest wysyłane codziennie na adres e-mail konta
         franczyzobiorcy. Możesz również wygenerować raport ręcznie przy pomocy
-        przycisku "Pobierz raport".
+        przycisku "Pobierz raport" z poziomu listy placów.
       </p>
 
       <ApiTable scheme={scheme} apiEndpointSubUrl={`rent/list/${stockId}`} />

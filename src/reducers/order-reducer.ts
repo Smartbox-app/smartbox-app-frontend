@@ -4,12 +4,14 @@ import {
   AddonUserFileRequirementType,
   CalculatedAddonPriceRes,
   CalculatedPriceRes,
+  IStock,
+  PaymentDocument,
   RentPaymentType,
   SingleAcceptance,
-} from "smartbox-types";
-import { FormType } from "../types/order-form";
-import { __ } from "../helpers/i18n";
-import { v4 } from "uuid";
+} from 'smartbox-types';
+import { FormType } from '../types/order-form';
+import { __ } from '../helpers/i18n';
+import { v4 } from 'uuid';
 
 export type PaymentMethodDetail = {
   id: string;
@@ -37,6 +39,7 @@ export type OrderAddon = {
 
 export type OrderState = {
   // refactored
+  stock: IStock | null;
   stockId: string;
   stockName: string;
   stockAddress: string;
@@ -60,6 +63,7 @@ export type OrderState = {
   orderAddonsId: string;
   loadingAddons: boolean;
   rentPaymentType: RentPaymentType | null;
+  paymentDocumentType: PaymentDocument | null;
 
   minRentDaysForInstallments: number | null;
   // @TODO FIX
@@ -74,7 +78,7 @@ export type OrderState = {
 };
 
 interface SetOrderStock {
-  type: "SET_ORDER_STOCK";
+  type: 'SET_ORDER_STOCK';
   payload: {
     stockId: string;
     stockName: string;
@@ -82,12 +86,19 @@ interface SetOrderStock {
   };
 }
 
+interface SetOrderFullStock {
+  type: 'SET_ORDER_FULL_STOCK';
+  payload: {
+    stock: IStock;
+  };
+}
+
 interface ClearOrderStock {
-  type: "CLEAR_ORDER_STOCK";
+  type: 'CLEAR_ORDER_STOCK';
 }
 
 interface SetOrderBoxGroup {
-  type: "SET_ORDER_BOX_GROUP";
+  type: 'SET_ORDER_BOX_GROUP';
   payload: {
     boxGroupId: string;
     boxGroupName: string;
@@ -96,79 +107,84 @@ interface SetOrderBoxGroup {
 }
 
 interface SetMinRentPeriod {
-  type: "SET_MIN_RENT_PERIOD";
+  type: 'SET_MIN_RENT_PERIOD';
   payload: number;
 }
 
 interface SetMaxRentPeriod {
-  type: "SET_MAX_RENT_PERIOD";
+  type: 'SET_MAX_RENT_PERIOD';
   payload: number;
 }
 
 interface SetRentStartDate {
-  type: "SET_RENT_START_DATE";
+  type: 'SET_RENT_START_DATE';
   payload: Date;
 }
 
 interface SetRentEndDate {
-  type: "SET_RENT_END_DATE";
+  type: 'SET_RENT_END_DATE';
   payload: Date;
 }
 
 interface SetRentPaymentType {
-  type: "SET_RENT_PAYMENT_TYPE";
+  type: 'SET_RENT_PAYMENT_TYPE';
   payload: RentPaymentType;
 }
 
+interface SetRentPaymentDocumentType {
+  type: 'SET_RENT_PAYMENT_DOCUMENT_TYPE';
+  payload: PaymentDocument;
+}
+
 interface SetMinDaysForInstallments {
-  type: "SET_MIN_DAYS_FOR_INSTALLMENTS";
+  type: 'SET_MIN_DAYS_FOR_INSTALLMENTS';
   payload: number;
 }
 
 interface SetCalculatedPrice {
-  type: "CALCULATE_RENT_PRICE_SUCCESS";
+  type: 'CALCULATE_RENT_PRICE_SUCCESS';
   payload: CalculatedPriceRes;
 }
 
 interface SetCalculatedAddonPrice {
-  type: "CALCULATE_VARIANT_PRICE_SUCCESS";
+  type: 'CALCULATE_VARIANT_PRICE_SUCCESS';
   payload: CalculatedAddonPriceRes;
 }
 
 interface ClearAddonPrice {
-  type: "CLEAR_ADDON_PRICE";
+  type: 'CLEAR_ADDON_PRICE';
   payload: {
     addonId: string;
   };
 }
 
 interface LoadingPrice {
-  type: "LOADING_PRICE";
+  type: 'LOADING_PRICE';
   payload: boolean;
 }
 
 interface FormStepSuccess {
-  type: "FORM_STEP_SUCCESS";
+  type: 'FORM_STEP_SUCCESS';
   payload: Partial<FormType>;
 }
 
 interface SetBirthDate {
-  type: "SET_BIRTHDATE";
+  type: 'SET_BIRTHDATE';
   payload: Date;
 }
 
 interface FetchAddons {
-  type: "FETCH_ADDONS_SUCCESS";
+  type: 'FETCH_ADDONS_SUCCESS';
   payload: AddonRes[];
 }
 
 interface LoadingAddons {
-  type: "LOADING_ADDONS";
+  type: 'LOADING_ADDONS';
   payload: boolean;
 }
 
 interface SelectAddon {
-  type: "SELECT_ADDON";
+  type: 'SELECT_ADDON';
   payload: {
     addonId: string;
     variantId: string | null;
@@ -177,47 +193,47 @@ interface SelectAddon {
 }
 
 interface SetAddonAcceptance {
-  type: "SET_ADDON_ACCEPTANCE";
+  type: 'SET_ADDON_ACCEPTANCE';
   payload: { addonId: string; acceptanceId: string; checked: boolean };
 }
 
 interface SetAddonFile {
-  type: "SET_ADDON_FILE";
+  type: 'SET_ADDON_FILE';
   payload: { addonId: string; file: File | null };
 }
 
 interface FormReaded {
-  type: "FORM_AGREEMENT_READED_SUCCESS";
+  type: 'FORM_AGREEMENT_READED_SUCCESS';
 }
 
 interface FormResignation {
-  type: "FORM_RESIGNATION_MARKED_SUCCESS";
+  type: 'FORM_RESIGNATION_MARKED_SUCCESS';
 }
 
 interface CheckPaymentStatus {
-  type: "CHECK_PAYMENT_STATUS_SUCCESS";
+  type: 'CHECK_PAYMENT_STATUS_SUCCESS';
   payload: boolean;
 }
 
 interface ClearPaymentMethodSuccess {
-  type: "CLEAR_PAYMENT_METHOD_SUCCESS";
+  type: 'CLEAR_PAYMENT_METHOD_SUCCESS';
 }
 
 interface ResetDiscountCode {
-  type: "RESET_DISCOUNT_CODE";
+  type: 'RESET_DISCOUNT_CODE';
 }
 
 interface SetDiscountCode {
-  type: "SET_DISCOUNT_CODE";
+  type: 'SET_DISCOUNT_CODE';
   payload: string;
 }
 
 interface ClearOrder {
-  type: "CLEAR_ORDER";
+  type: 'CLEAR_ORDER';
 }
 
 interface FetchRentPeriodConfig {
-  type: "FETCH_RENT_PERIOD_CONFIG_SUCCESS";
+  type: 'FETCH_RENT_PERIOD_CONFIG_SUCCESS';
   payload: {
     min: number;
     max: number;
@@ -227,6 +243,7 @@ interface FetchRentPeriodConfig {
 type Action =
   // refactored
   | SetOrderStock
+  | SetOrderFullStock
   | ClearOrderStock
   | SetOrderBoxGroup
   | SetMinRentPeriod
@@ -244,6 +261,7 @@ type Action =
   | ClearAddonPrice
   | SetBirthDate
   | SetRentPaymentType
+  | SetRentPaymentDocumentType
   | SetMinDaysForInstallments
   //
   | FormStepSuccess
@@ -258,12 +276,13 @@ type Action =
 
 const initialState: OrderState = {
   // refactored
-  stockId: "",
-  stockName: "",
-  stockAddress: "",
-  boxGroupId: "",
-  boxGroupName: "",
-  boxGroupArea: "",
+  stock: null,
+  stockId: '',
+  stockName: '',
+  stockAddress: '',
+  boxGroupId: '',
+  boxGroupName: '',
+  boxGroupArea: '',
   minRentPeriod: null,
   maxRentPeriod: null,
   startDate: new Date(),
@@ -271,47 +290,48 @@ const initialState: OrderState = {
   calculatedPrice: [{ value: 0, isGross: false }],
   calculatedPriceDetails: [],
   loadingPrice: false,
-  discountCode: "",
+  discountCode: '',
   addons: [],
   orderAddons: {},
   loadingAddons: false,
-  orderAddonsId: "",
+  orderAddonsId: '',
   rentPaymentType: null,
+  paymentDocumentType: null,
   minRentDaysForInstallments: null,
   //
   formData: {
     durationInDays: 7,
     discount: 0,
-    stock: "",
+    stock: '',
     size: null,
     isFirstRent: true,
-    discountCode: "",
+    discountCode: '',
     card: {
       discount: 0,
       durationInWeeks: 0,
     },
-    firstName: "",
-    lastName: "",
+    firstName: '',
+    lastName: '',
     birthDate: undefined,
-    street: "",
-    city: "",
-    postCode: "",
-    phone: "",
-    mailToSendInvoice: "",
+    street: '',
+    city: '',
+    postCode: '',
+    phone: '',
+    mailToSendInvoice: '',
   },
-  paymentId: "",
+  paymentId: '',
   paymentSuccess: false,
-  discountList: [{ text: __("application.disposableDiscount5"), value: 5 }],
+  discountList: [{ text: __('application.disposableDiscount5'), value: 5 }],
   isAgreementAccepted: false,
   isResignationMarked: false,
 };
 
 export default (
   state: OrderState = initialState,
-  action: Action
+  action: Action,
 ): OrderState => {
   switch (action.type) {
-    case "SET_ORDER_STOCK": {
+    case 'SET_ORDER_STOCK': {
       return {
         ...state,
         stockId: action.payload.stockId,
@@ -320,65 +340,72 @@ export default (
       };
     }
 
-    case "CLEAR_ORDER_STOCK": {
+    case 'SET_ORDER_FULL_STOCK': {
+      return {
+        ...state,
+        stock: action.payload.stock,
+      };
+    }
+
+    case 'CLEAR_ORDER_STOCK': {
       return {
         ...state,
         stockId: '',
         stockName: '',
-        stockAddress:'',
+        stockAddress: '',
       };
     }
 
-    case "SET_ORDER_BOX_GROUP": {
+    case 'SET_ORDER_BOX_GROUP': {
       return {
         ...state,
         boxGroupId: action.payload.boxGroupId,
         boxGroupName: action.payload.boxGroupName,
-        boxGroupArea: action.payload.boxGroupArea
+        boxGroupArea: action.payload.boxGroupArea,
       };
     }
 
-    case "SET_MIN_RENT_PERIOD": {
+    case 'SET_MIN_RENT_PERIOD': {
       return {
         ...state,
         minRentPeriod: action.payload,
       };
     }
-    case "SET_MIN_RENT_PERIOD": {
+    case 'SET_MIN_RENT_PERIOD': {
       return {
         ...state,
         minRentPeriod: action.payload,
       };
     }
-    case "SET_MAX_RENT_PERIOD": {
+    case 'SET_MAX_RENT_PERIOD': {
       return {
         ...state,
         maxRentPeriod: action.payload || 0,
       };
     }
-    case "FETCH_RENT_PERIOD_CONFIG_SUCCESS": {
+    case 'FETCH_RENT_PERIOD_CONFIG_SUCCESS': {
       return {
         ...state,
         minRentPeriod: action.payload.min,
-        maxRentPeriod: action.payload.max || 0
+        maxRentPeriod: action.payload.max || 0,
       };
     }
 
-    case "SET_RENT_START_DATE": {
+    case 'SET_RENT_START_DATE': {
       return {
         ...state,
         startDate: action.payload,
       };
     }
 
-    case "SET_RENT_END_DATE": {
+    case 'SET_RENT_END_DATE': {
       return {
         ...state,
         endDate: action.payload,
       };
     }
 
-    case "CALCULATE_RENT_PRICE_SUCCESS": {
+    case 'CALCULATE_RENT_PRICE_SUCCESS': {
       return {
         ...state,
         calculatedPrice: action.payload.price,
@@ -386,7 +413,7 @@ export default (
       };
     }
 
-    case "CALCULATE_VARIANT_PRICE_SUCCESS": {
+    case 'CALCULATE_VARIANT_PRICE_SUCCESS': {
       const { addonId, variantId, price } = action.payload;
 
       if (
@@ -407,7 +434,7 @@ export default (
       };
     }
 
-    case "CLEAR_ADDON_PRICE": {
+    case 'CLEAR_ADDON_PRICE': {
       const { addonId } = action.payload;
 
       if (!state.orderAddons[addonId]) return state;
@@ -424,21 +451,21 @@ export default (
       };
     }
 
-    case "LOADING_PRICE": {
+    case 'LOADING_PRICE': {
       return {
         ...state,
         loadingPrice: action.payload,
       };
     }
 
-    case "LOADING_ADDONS": {
+    case 'LOADING_ADDONS': {
       return {
         ...state,
         loadingAddons: action.payload,
       };
     }
 
-    case "SET_BIRTHDATE": {
+    case 'SET_BIRTHDATE': {
       const newFormData: FormType = {
         ...state.formData,
         birthDate: action.payload,
@@ -450,21 +477,28 @@ export default (
       };
     }
 
-    case "SET_RENT_PAYMENT_TYPE": {
+    case 'SET_RENT_PAYMENT_TYPE': {
       return {
         ...state,
         rentPaymentType: action.payload,
       };
     }
 
-    case "SET_MIN_DAYS_FOR_INSTALLMENTS": {
+    case 'SET_RENT_PAYMENT_DOCUMENT_TYPE': {
+      return {
+        ...state,
+        paymentDocumentType: action.payload,
+      };
+    }
+
+    case 'SET_MIN_DAYS_FOR_INSTALLMENTS': {
       return {
         ...state,
         minRentDaysForInstallments: action.payload,
       };
     }
 
-    case "FORM_STEP_SUCCESS": {
+    case 'FORM_STEP_SUCCESS': {
       const newFormData: FormType = { ...state.formData, ...action.payload };
 
       return {
@@ -473,23 +507,23 @@ export default (
       };
     }
 
-    case "RESET_DISCOUNT_CODE": {
-      const newFormData: FormType = { ...state.formData, discountCode: "" };
+    case 'RESET_DISCOUNT_CODE': {
+      const newFormData: FormType = { ...state.formData, discountCode: '' };
       return {
         ...state,
         formData: newFormData,
-        discountCode: "",
+        discountCode: '',
       };
     }
 
-    case "SET_DISCOUNT_CODE": {
+    case 'SET_DISCOUNT_CODE': {
       return {
         ...state,
         discountCode: action.payload,
       };
     }
 
-    case "FETCH_ADDONS_SUCCESS": {
+    case 'FETCH_ADDONS_SUCCESS': {
       const orderAddons: { [addonId: string]: OrderAddon } = {};
 
       action.payload.forEach((addon) => {
@@ -520,13 +554,13 @@ export default (
       return {
         ...state,
         addons: action.payload.sort((a, b) =>
-          a.required && !b.required ? -1 : 1
+          a.required && !b.required ? -1 : 1,
         ),
         orderAddons,
       };
     }
 
-    case "SELECT_ADDON": {
+    case 'SELECT_ADDON': {
       const { addonId, variantId, variantName } = action.payload;
       if (!state.orderAddons[addonId]) return state;
       return {
@@ -543,7 +577,7 @@ export default (
       };
     }
 
-    case "SET_ADDON_FILE": {
+    case 'SET_ADDON_FILE': {
       const { addonId, file } = action.payload;
       if (!state.orderAddons[addonId]) return state;
       return {
@@ -559,7 +593,7 @@ export default (
       };
     }
 
-    case "SET_ADDON_ACCEPTANCE": {
+    case 'SET_ADDON_ACCEPTANCE': {
       const { addonId, acceptanceId, checked } = action.payload;
       if (!state.orderAddons[addonId]) return state;
       return {
@@ -580,26 +614,26 @@ export default (
       };
     }
 
-    case "FORM_AGREEMENT_READED_SUCCESS": {
+    case 'FORM_AGREEMENT_READED_SUCCESS': {
       return {
         ...state,
         isAgreementAccepted: true,
       };
     }
-    case "FORM_RESIGNATION_MARKED_SUCCESS": {
+    case 'FORM_RESIGNATION_MARKED_SUCCESS': {
       return {
         ...state,
         isResignationMarked: !state.isResignationMarked,
       };
     }
 
-    case "CLEAR_PAYMENT_METHOD_SUCCESS":
+    case 'CLEAR_PAYMENT_METHOD_SUCCESS':
       return {
         ...state,
         isResignationMarked: false,
       };
 
-    case "CLEAR_ORDER": {
+    case 'CLEAR_ORDER': {
       return initialState;
     }
 

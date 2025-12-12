@@ -11,7 +11,7 @@ export const InstallmentsPaymentMinDaysInfo = () => {
 
   return (
     <Alert type="notice">
-      Dla płatności ratalnej wymagane minimum <strong>{minRentDaysForInstallments}</strong> dni najmu.
+      Dla płatności okresowej wymagane minimum <strong>{minRentDaysForInstallments}</strong> dni najmu.
     </Alert>
   );
 };

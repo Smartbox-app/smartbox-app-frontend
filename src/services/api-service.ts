@@ -6,8 +6,8 @@ import { UserState } from 'src/reducers/user-reducer';
 
 export default class ApiService {
   static url =
-    typeof process.env.REACT_APP_API_URL === 'string'
-      ? `${process.env.REACT_APP_API_URL.trim()}/`
+    typeof import.meta.env.VITE_APP_API_URL === 'string'
+      ? `${import.meta.env.VITE_APP_API_URL.trim()}/`
       : 'http://localhost:3001/';
 
   static wrapUrlWithTenant = (url: string) => {

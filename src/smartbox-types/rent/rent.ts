@@ -1,10 +1,15 @@
-import { RentDescription, RentPaymentType, RentStatus } from "./rent-entity";
-import { BaseResponse } from "../base/baseRes";
-import { Prop } from "../store/prop.decorator";
-import { CompanyData, PaymentStatus, PaymentType } from "../payment";
-import { AcceptanceStatuses, SingleAcceptance } from "../addon";
-import { AccessControl } from "../stock-group";
-import { PeriodEntity } from "../period";
+import { RentDescription, RentPaymentType, RentStatus } from './rent-entity';
+import { BaseResponse } from '../base/baseRes';
+import { Prop } from '../store/prop.decorator';
+import {
+  CompanyData,
+  PaymentDocument,
+  PaymentStatus,
+  PaymentType,
+} from '../payment';
+import { AcceptanceStatuses, SingleAcceptance } from '../addon';
+import { AccessControl } from '../stock-group';
+import { PeriodEntity } from '../period';
 
 export interface OrderAddons {
   [addonId: string]: {
@@ -44,6 +49,7 @@ export interface RentBoxReq {
   companyPostCode: string;
   nip: string;
   rentPaymentType: RentPaymentType;
+  paymentDocument: PaymentDocument;
 }
 
 export interface ExtendRentalReq {
@@ -65,6 +71,7 @@ export interface ExtendRentalReq {
   orderAddons: OrderAddons;
   discountCode: string;
   rentPaymentType: RentPaymentType;
+  paymentDocument: PaymentDocument;
 }
 
 export class BoxListItem extends BaseResponse {
@@ -164,6 +171,7 @@ export type MyRentDetails = {
   accessControl: AccessControl;
   paymentType: RentPaymentType;
   periods: PeriodEntity[];
+  passcode: string | null;
 };
 
 interface Change {

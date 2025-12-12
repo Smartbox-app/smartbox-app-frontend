@@ -57,7 +57,6 @@ export type GatesStatusForAdminRes = {
   stockName: string;
 }[];
 
-
 export interface GateAdminList {
   id: string;
   ident: string;
@@ -82,7 +81,7 @@ export interface StockReq {
   name: string;
   address: string;
   stockGroupId?: string;
-  tenantId?: string,
+  tenantId?: string;
   accessControl: AccessControl;
   ksmLogin: string;
   ksmPassword: string;
@@ -129,3 +128,37 @@ export interface StockManageReq {
   ksmLocation: string;
   allowedBoxesCount?: number | null;
 }
+
+export type StatsByStatus = {
+  free: number;
+  reserved: number;
+  rented: number;
+  toCheck: number;
+  toExplain: number;
+  noPaidExtension: number;
+  noPaidPeriod: number;
+  outOfService: number;
+};
+
+export type StatsByGroup = {
+  name: string;
+  area: number;
+  totalCount: number;
+  byStatus: StatsByStatus;
+};
+
+export type GroupStats = {
+  [groupId: string]: StatsByGroup;
+};
+
+export type StockStatistics = {
+  totalCount: number;
+  byStatus: StatsByStatus;
+  byGroup: GroupStats;
+  incomeByMonth: {
+    [month: string]: {
+      amount: number;
+      order: number;
+    };
+  };
+};

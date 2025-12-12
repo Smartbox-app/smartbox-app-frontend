@@ -98,6 +98,12 @@ const SingleRentDetail = ({ showUserStockMap, match }: Props) => {
       {displayAccess ? (
         <Section>
           <Header variant="h2">{__('application.access')}</Header>
+          {singleRent.passcode ? (
+            <div>
+              <Header variant="h3">{__('application.passcode')}</Header>
+              <strong>{singleRent.passcode}</strong>
+            </div>
+          ) : null}
           {singleRent.gates && singleRent.gates.length > 0 && (
             <StyledGatesHeader>Bramy</StyledGatesHeader>
           )}

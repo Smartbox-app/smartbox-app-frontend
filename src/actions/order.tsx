@@ -1,4 +1,4 @@
-import { RentPaymentType } from 'smartbox-types';
+import { IStock, PaymentDocument, RentPaymentType } from 'smartbox-types';
 import ApiService from '../services/api-service';
 import { FormType } from '../types/order-form';
 import { format } from 'date-fns';
@@ -37,6 +37,11 @@ export const setOrderStock = (
   type: 'SET_ORDER_STOCK',
   payload: { stockId, stockAddress, stockName },
 });
+export const setOrderFullStock = (stock: IStock) => ({
+  type: 'SET_ORDER_FULL_STOCK',
+  payload: { stock },
+});
+
 export const clearSelectedStock = () => ({ type: 'CLEAR_ORDER_STOCK' });
 export const setBoxGroup = (
   boxGroupId: string,
@@ -65,6 +70,13 @@ export const setRentEndDate = (date: Date) => ({
 
 export const setRentPaymentType = (paymentType: RentPaymentType) => ({
   type: 'SET_RENT_PAYMENT_TYPE',
+  payload: paymentType,
+});
+
+export const setRentPaymentDocumentType = (
+  paymentType: PaymentDocument,
+) => ({
+  type: 'SET_RENT_PAYMENT_DOCUMENT_TYPE',
   payload: paymentType,
 });
 

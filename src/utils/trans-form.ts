@@ -2,7 +2,7 @@
  
 import { ApiErrorCode } from 'smartbox-types';
 
-const errors = require('../data/errorsTranslations.json');
+import errors from '../data/errorsTranslations.json';
 // JK: dont know why, but works. Sholud be import..
 
 export function formOnTranslateString(s: string, params?: any[]): string {

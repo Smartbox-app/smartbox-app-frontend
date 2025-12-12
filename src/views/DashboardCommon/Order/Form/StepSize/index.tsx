@@ -14,7 +14,7 @@ import ApiService from '../../../../../services/api-service';
 import './StepSize.scss';
 import { Alert } from '../../../../../components/Common';
 import { useGetMyDetailsQuery } from 'src/queries';
-import { Header, Section } from 'src/components/ui';
+import { Header, Section, Skeleton } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
 import { Stack, Button } from 'src/components/ui';
 import { ArrowLeft, ArrowRight } from 'src/icons';
@@ -26,14 +26,17 @@ const StepSize = () => {
   );
   const { data: user } = useGetMyDetailsQuery();
   const { getText } = useTenantNaming();
+  const [loading, setLoading] = useState<boolean>(true);
   const [boxGroups, setBoxGroups] = useState<BoxGroupUserRes[]>([]);
 
   useEffect(() => {
+    setLoading(true);
     ApiService.callFetch(
       'GET',
       `box-group-new/all/${stockId}`,
       (boxes: BoxGroupUserRes[]) => {
         setBoxGroups(boxes);
+        setLoading(false);
       },
     );
   }, []);
@@ -55,7 +58,17 @@ const StepSize = () => {
       <Stack>
         <Section>
           <Header variant="h2">{getText('please_pick_box_size')}</Header>{' '}
-          <div className="options-wrapper">{options}</div>
+          <div className="options-wrapper">
+            {loading ? (
+              <>
+                <Skeleton radius={16} height={450} />
+                <Skeleton radius={16} height={450} />
+                <Skeleton radius={16} height={450} />
+              </>
+            ) : (
+              options
+            )}
+          </div>
           {boxGroups.length === 0 && (
             <Alert type="notice" text={getText('no_boxes')} />
           )}

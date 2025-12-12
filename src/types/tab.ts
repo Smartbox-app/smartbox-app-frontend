@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 
 export type SingleTab = {
-    icon: ReactNode;
+    icon?: ReactNode;
     onClick?: () => void;
     to?: string;
     active?: boolean;

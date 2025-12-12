@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 export type HeaderProps = {
   children: ReactNode;
-  variant: 'main' | 'h1' | 'h2' | 'h3';
+  variant: 'main' | 'h1' | 'h2' | 'h3' | 'h4';
 };
 
 const StyledMain = styled('h1')(({ theme }) => ({
@@ -34,6 +34,13 @@ const StyledH3 = styled('h3')(({ theme }) => ({
   color: theme.colors.text.secondary,
 }));
 
+const StyledH4 = styled('h4')(({ theme }) => ({
+  fontSize: '1rem',
+  lineHeight: '1.1rem',
+  fontWeight: 700,
+  color: theme.colors.text.secondary,
+}));
+
 export const Header = ({ variant, children }: HeaderProps) => {
   switch (variant) {
     case 'main':
@@ -44,6 +51,8 @@ export const Header = ({ variant, children }: HeaderProps) => {
       return <StyledH2>{children}</StyledH2>;
     case 'h3':
       return <StyledH3>{children}</StyledH3>;
+    case 'h4':
+      return <StyledH4>{children}</StyledH4>;
   }
   return null;
 };

@@ -42,6 +42,7 @@ import {
   calculatePriceForRent,
   clearAddonPrice,
   setMinDaysForInstallments,
+  setOrderFullStock,
   setOrderStock,
   setRentEndDate,
   setRentPaymentType,
@@ -84,6 +85,7 @@ const StepExtensionDuration = ({ clearPaymentDetails }: Props) => {
   );
   // box groupId is used directly only when new rent is created
   const {
+    stock,
     startDate,
     endDate,
     loadingPrice,
@@ -92,7 +94,6 @@ const StepExtensionDuration = ({ clearPaymentDetails }: Props) => {
     orderAddonsId,
     minRentDaysForInstallments,
   } = useSelector((state: ApplicationState) => state.order);
-  const [stock, setStock] = useState<IStock>();
   const [loading, setLoading] = useState<boolean>(false);
 
   const getStock = async () => {
@@ -101,7 +102,7 @@ const StepExtensionDuration = ({ clearPaymentDetails }: Props) => {
       'GET',
       `stock/${rent.stockId}`,
       (res: IStock) => {
-        setStock(res);
+        dispatch(setOrderFullStock(res));
       },
     );
   };
@@ -139,6 +140,31 @@ const StepExtensionDuration = ({ clearPaymentDetails }: Props) => {
     dispatch(setOrderStock(rent.stockId, rent.stockName, rent.stockAddress));
   }, [rent]);
 
+  const setRentEndDateAccordingToType = (
+    startDate: Date,
+    rentPaymentType: RentPaymentType | null,
+    minRentPeriod: number,
+    minRentDaysForInstallments: number | null,
+  ) => {
+    switch (rentPaymentType) {
+      case RentPaymentType.Installments: {
+        if (!minRentDaysForInstallments) return;
+        dispatch(
+          setRentEndDate(
+            endOfDay(addDays(startDate, minRentDaysForInstallments - 1)),
+          ),
+        );
+        break;
+      }
+      default: {
+        dispatch(
+          setRentEndDate(endOfDay(addDays(startDate, minRentPeriod - 1))),
+        );
+        break;
+      }
+    }
+  };
+
   useEffect(() => {
     if (!rent || !minRentPeriod || !tenant) return;
 
@@ -174,17 +200,47 @@ const StepExtensionDuration = ({ clearPaymentDetails }: Props) => {
       }
     }
 
-    const newEnd = addDays(startOfDay(new Date(rent.finishAt)), minRentPeriod);
-    const newEndOrToday = isBefore(newEnd, new Date())
-      ? startOfDay(addDays(new Date(), 1))
-      : newEnd;
-    dispatch(setRentEndDate(endOfDay(newEndOrToday)));
-  }, [minRentPeriod, rent, tenant]);
+    if (
+      rentPaymentType === RentPaymentType.Installments &&
+      minRentDaysForInstallments
+    ) {
+      const newEnd = addDays(
+        startOfDay(new Date(rent.finishAt)),
+        minRentDaysForInstallments,
+      );
+      const newEndOrToday = isBefore(newEnd, new Date())
+        ? startOfDay(addDays(new Date(), 1))
+        : newEnd;
+      dispatch(setRentEndDate(endOfDay(newEndOrToday)));
+    } else {
+      const newEnd = addDays(
+        startOfDay(new Date(rent.finishAt)),
+        minRentPeriod,
+      );
+      const newEndOrToday = isBefore(newEnd, new Date())
+        ? startOfDay(addDays(new Date(), 1))
+        : newEnd;
+      dispatch(setRentEndDate(endOfDay(newEndOrToday)));
+    }
+  }, [
+    minRentPeriod,
+    minRentDaysForInstallments,
+    rent,
+    tenant,
+    rentPaymentType,
+  ]);
 
   useEffect(() => {
     if (!rentId || !endDate) return;
     setLoading(true);
-    dispatch(calculatePriceForRent(rentId, startDate, endDate, rentPaymentType || RentPaymentType.InAdvance));
+    dispatch(
+      calculatePriceForRent(
+        rentId,
+        startDate,
+        endDate,
+        rentPaymentType || RentPaymentType.InAdvance,
+      ),
+    );
     calculateAllAddons();
   }, [startDate, endDate, rentId, rentPaymentType]);
 
@@ -235,7 +291,7 @@ const StepExtensionDuration = ({ clearPaymentDetails }: Props) => {
             endDate,
             rentPaymentType || RentPaymentType.InAdvance,
             addon.selectedVariant,
-            rent.boxGroupId
+            rent.boxGroupId,
           ),
         );
       else dispatch(clearAddonPrice(addonId));
@@ -340,7 +396,7 @@ const StepExtensionDuration = ({ clearPaymentDetails }: Props) => {
       ].includes(rent.status)
     )
       return true;
-      
+
     if (
       rentPaymentType === RentPaymentType.Installments &&
       minRentDaysForInstallments &&

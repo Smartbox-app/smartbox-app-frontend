@@ -4,7 +4,13 @@ import { useParams } from 'react-router-dom';
 
 import { bindActionCreators } from 'redux';
 import { connect, useDispatch, useSelector } from 'react-redux';
-import { MyRentDetails, PaymentType, RentPaymentType } from 'smartbox-types';
+import {
+  MyRentDetails,
+  PaymentType,
+  PaymentDocument,
+  RentPaymentType,
+  StockPaymentDocument,
+} from 'smartbox-types';
 import { Spinner } from '../../../../../components/Branded';
 import { order, modal, notifications, user } from '../../../../../actions';
 import { ButtonsContainer } from '../../../../../components/Layout';
@@ -28,6 +34,7 @@ import {
   calculatePrice,
   calculatePriceForRent,
   setBirthDate,
+  setRentPaymentDocumentType,
 } from '../../../../../actions/order';
 import { useTenant } from '../../../../../hooks/useTenant';
 import { useGetMyDetailsQuery } from 'src/queries';
@@ -46,6 +53,7 @@ import { ArrowLeft, ArrowRight } from 'src/icons';
 import { textToSimpleMD } from 'src/utils/text-to-simple-md';
 import { ClientSourceForm } from './ClientSourceForm';
 import ApiService from 'src/services/api-service';
+import { PaymentDocumentType } from '../Common/PaymentDocumentType';
 
 interface Props {
   formData: FormType;
@@ -59,6 +67,7 @@ const StepSummary = ({ formData, updateFormData }: Props) => {
 
   const dispatch = useDispatch();
   const {
+    stock,
     calculatedPrice,
     addons,
     orderAddons,
@@ -68,7 +77,7 @@ const StepSummary = ({ formData, updateFormData }: Props) => {
     boxGroupId,
     startDate,
     endDate,
-    rentPaymentType
+    rentPaymentType,
   } = useSelector((state: ApplicationState) => state.order);
 
   const { data: user } = useGetMyDetailsQuery();
@@ -143,16 +152,30 @@ const StepSummary = ({ formData, updateFormData }: Props) => {
 
   useEffect(() => {
     if (!user) return;
-    if (!rentId && (!stockId || !boxGroupId)) {
+    if (!stock || (!rentId && (!stockId || !boxGroupId))) {
       history.push(`/${UserService.getSlugByRole(user.role)}/order/step/stock`);
     }
 
     if (!endDate) return;
 
     if (rentId) {
-      dispatch(calculatePriceForRent(rentId, startDate, endDate, rentPaymentType || RentPaymentType.InAdvance));
+      dispatch(
+        calculatePriceForRent(
+          rentId,
+          startDate,
+          endDate,
+          rentPaymentType || RentPaymentType.InAdvance,
+        ),
+      );
     } else {
-      dispatch(calculatePrice(boxGroupId, startDate, endDate, rentPaymentType || RentPaymentType.InAdvance));
+      dispatch(
+        calculatePrice(
+          boxGroupId,
+          startDate,
+          endDate,
+          rentPaymentType || RentPaymentType.InAdvance,
+        ),
+      );
     }
   }, [user]);
 
@@ -166,11 +189,51 @@ const StepSummary = ({ formData, updateFormData }: Props) => {
     if (!endDate) return;
 
     if (rentId) {
-      dispatch(calculatePriceForRent(rentId, startDate, endDate, rentPaymentType || RentPaymentType.InAdvance, discountCode));
+      dispatch(
+        calculatePriceForRent(
+          rentId,
+          startDate,
+          endDate,
+          rentPaymentType || RentPaymentType.InAdvance,
+          discountCode,
+        ),
+      );
     } else {
-      dispatch(calculatePrice(boxGroupId, startDate, endDate, rentPaymentType || RentPaymentType.InAdvance, discountCode));
+      dispatch(
+        calculatePrice(
+          boxGroupId,
+          startDate,
+          endDate,
+          rentPaymentType || RentPaymentType.InAdvance,
+          discountCode,
+        ),
+      );
     }
   }, [discountCode]);
+
+  useEffect(() => {
+    if (!stock) return;
+
+    if (rentPaymentType === RentPaymentType.Installments) {
+      dispatch(setRentPaymentDocumentType(PaymentDocument.Invoice));
+      return;
+    }
+
+    switch (stock.paymentDocumentConfig) {
+      case StockPaymentDocument.Invoice: {
+        dispatch(setRentPaymentDocumentType(PaymentDocument.Invoice));
+        break;
+      }
+      case StockPaymentDocument.Receipt: {
+        dispatch(setRentPaymentDocumentType(PaymentDocument.Receipt));
+        break;
+      }
+      default: {
+        dispatch(setRentPaymentDocumentType(PaymentDocument.Invoice));
+        break;
+      }
+    }
+  }, [stock, rentPaymentType]);
 
   const onSubmit = (data: RentDataDto) => {
     if (!isValid) return;
@@ -227,7 +290,10 @@ const StepSummary = ({ formData, updateFormData }: Props) => {
                 </Alert>
               ) : null}
               <TenantDetailsForm disabled={!isFirstRent} />
+            </Section>
 
+            {stock && <PaymentDocumentType stock={stock} />}
+            <Section>
               <Header variant="h2">
                 {__('application.infoToOptionalInvoice')}
               </Header>

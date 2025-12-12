@@ -50,12 +50,6 @@ const StyledSingleOption = styled('div')({
   "input[type='radio']": {
     display: 'none',
   },
-  '@media(min-width: 768px)': {
-    flex: '0 1 calc(50% - 8px)',
-  },
-  '@media(min-width: 800px)': {
-    flex: '0 1 calc(33% - 8px)',
-  },
 });
 
 const getColor = (active: boolean, disabled: boolean, theme: DefaultTheme) => {

@@ -1,16 +1,12 @@
-import React, { ChangeEvent, ChangeEventHandler, useState } from 'react';
-import { ReactSVG } from 'react-svg';
-
+import React, { ChangeEvent, useState } from 'react';
 import './SingleOption.scss';
-import { connect, useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { ApplicationState } from '../../../../../../../reducers';
-import { Spinner } from '../../../../../../../components/Branded';
 import styled from 'styled-components';
 import { setOrderStock } from '../../../../../../../actions/order';
 import { Badge, Card, Typography } from 'src/components/ui';
 
 interface Props {
-  loading: boolean;
   name: string;
   value: string;
   address: string;
@@ -42,7 +38,7 @@ const Content = styled('div')(({ theme }) => ({
   flex: 1,
 }));
 
-const SingleOption = ({ name, address, value, disable, loading }: Props) => {
+export const SingleOption = ({ name, address, value, disable }: Props) => {
   const [isHovered, setHovered] = useState(false);
 
   const handleHover = () => {
@@ -59,7 +55,6 @@ const SingleOption = ({ name, address, value, disable, loading }: Props) => {
     dispatch(setOrderStock(value, name, address));
   };
 
-  if (loading) return <Spinner />;
   return (
     <StyledSingleOption onMouseEnter={handleHover} onMouseLeave={handleBlur}>
       <label
@@ -89,9 +84,3 @@ const SingleOption = ({ name, address, value, disable, loading }: Props) => {
     </StyledSingleOption>
   );
 };
-
-const mapStateToProps = (state: ApplicationState) => ({
-  loading: state.spinner.loading,
-});
-
-export default connect(mapStateToProps)(SingleOption);

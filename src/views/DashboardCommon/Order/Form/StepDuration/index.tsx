@@ -38,6 +38,7 @@ import {
   calculatePrice,
   clearAddonPrice,
   setMinDaysForInstallments,
+  setOrderFullStock,
   setRentEndDate,
   setRentPaymentType,
   setRentStartDate,
@@ -80,6 +81,7 @@ const StepDuration = ({ clearPaymentDetails }: Props) => {
     (state: ApplicationState) => state.order.boxGroupId,
   );
   const {
+    stock,
     stockId,
     startDate,
     endDate,
@@ -90,21 +92,49 @@ const StepDuration = ({ clearPaymentDetails }: Props) => {
     rentPaymentType,
     minRentDaysForInstallments,
   } = useSelector((state: ApplicationState) => state.order);
-  const [stock, setStock] = useState<IStock>();
   const [loading, setLoading] = useState<boolean>(false);
 
   const getStock = async () => {
     await ApiService.callFetch('GET', `stock/${stockId}`, (res: IStock) => {
-      setStock(res);
+      dispatch(setOrderFullStock(res));
     });
+  };
+
+  const setRentEndDateAccordingToType = (
+    startDate: Date,
+    rentPaymentType: RentPaymentType | null,
+    minRentPeriod: number,
+    minRentDaysForInstallments: number | null,
+  ) => {
+    switch (rentPaymentType) {
+      case RentPaymentType.Installments: {
+        if (!minRentDaysForInstallments) return;
+        dispatch(
+          setRentEndDate(
+            endOfDay(addDays(startDate, minRentDaysForInstallments - 1)),
+          ),
+        );
+        break;
+      }
+      default: {
+        dispatch(
+          setRentEndDate(endOfDay(addDays(startDate, minRentPeriod - 1))),
+        );
+        break;
+      }
+    }
   };
 
   useEffect(() => {
     console.log(startDate, endDate, minRentPeriod);
     if (!minRentPeriod) return;
     if (!endDate) {
-      console.log('SETTING END DATE 3');
-      dispatch(setRentEndDate(endOfDay(addDays(startDate, minRentPeriod - 1))));
+      setRentEndDateAccordingToType(
+        startDate,
+        rentPaymentType,
+        minRentPeriod,
+        minRentDaysForInstallments,
+      );
       return;
     }
     setLoading(true);
@@ -114,27 +144,51 @@ const StepDuration = ({ clearPaymentDetails }: Props) => {
     const endOfEnd = endOfDay(endDate);
 
     const difference = differenceInDays(endOfEnd, startOfStart);
-    console.log(difference, minRentPeriod);
-    if (difference < minRentPeriod - 1) {
-      console.log('SETTING END DATE 1');
-      dispatch(setRentEndDate(endOfDay(addDays(startDate, minRentPeriod - 1))));
-      return;
+
+    if (
+      rentPaymentType === RentPaymentType.Installments &&
+      !!minRentDaysForInstallments
+    ) {
+      if (difference < minRentDaysForInstallments - 1) {
+        dispatch(
+          setRentEndDate(
+            endOfDay(addDays(startDate, minRentDaysForInstallments - 1)),
+          ),
+        );
+        return;
+      }
+    } else {
+      if (difference < minRentPeriod - 1) {
+        dispatch(
+          setRentEndDate(endOfDay(addDays(startDate, minRentPeriod - 1))),
+        );
+        return;
+      }
     }
 
-    console.log('DIFFERENCE', difference, maxRentPeriod);
     if (maxRentPeriod && difference > maxRentPeriod - 1) {
-      console.log(
-        'SETTING END DATE 2',
-        endOfDay(addDays(startDate, maxRentPeriod - 1)),
-      );
       dispatch(setRentEndDate(endOfDay(addDays(startDate, maxRentPeriod - 1))));
       return;
     }
 
-    dispatch(calculatePrice(boxGroupId, startOfStart, endOfEnd,rentPaymentType || RentPaymentType.InAdvance));
+    dispatch(
+      calculatePrice(
+        boxGroupId,
+        startOfStart,
+        endOfEnd,
+        rentPaymentType || RentPaymentType.InAdvance,
+      ),
+    );
 
     calculateAllAddons();
-  }, [startDate, endDate, minRentPeriod, maxRentPeriod, rentPaymentType]);
+  }, [
+    startDate,
+    endDate,
+    minRentPeriod,
+    maxRentPeriod,
+    rentPaymentType,
+    minRentDaysForInstallments,
+  ]);
 
   useEffect(() => {
     calculateAllAddons();

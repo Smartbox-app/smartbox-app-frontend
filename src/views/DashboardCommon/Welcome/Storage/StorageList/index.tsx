@@ -4,12 +4,23 @@ import { Alert } from '../../../../../components/Common';
 import SingleStorage from './SingleStorage';
 
 import './StorageList.scss';
+import { Skeleton } from 'src/components/ui';
 
 interface Props {
   list: MyRentList[];
+  loading: boolean;
 }
 
-const StorageInfo = ({ list }: Props) => {
+const StorageInfo = ({ list, loading }: Props) => {
+  if (loading)
+    return (
+      <div className="storage-info-wrapper">
+        <Skeleton height={150} radius={16} />
+        <Skeleton height={150} radius={16} />
+        <Skeleton height={150} radius={16} />
+      </div>
+    );
+
   if (list.length === 0)
     return <Alert type="notice" text="application.noActiveRent" />;
 

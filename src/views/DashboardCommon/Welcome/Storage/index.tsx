@@ -2,7 +2,7 @@ import React from 'react';
 import { MyRentList } from 'smartbox-types';
 import StorageList from './StorageList';
 import { Spinner } from '../../../../components/Branded';
-import { Header, Section } from '../../../../components/ui';
+import { Header, Section, Skeleton } from '../../../../components/ui';
 import { __ } from '../../../../helpers/i18n';
 import { useTenantNaming } from 'src/hooks/useTenantNaming';
 
@@ -16,7 +16,7 @@ const Storage = ({ myRentList, loading }: Props) => {
   return (
     <Section>
       <Header variant="h2">{getText('manage_boxes')}</Header>
-      {loading ? <Spinner /> : <StorageList list={myRentList} />}
+      <StorageList loading={loading} list={myRentList} />
     </Section>
   );
 };

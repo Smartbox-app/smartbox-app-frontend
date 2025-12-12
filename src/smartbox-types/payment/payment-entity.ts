@@ -14,19 +14,18 @@ export enum PaymentMethod {
   AutoFirst = 0,
   AutoNext = 1
 }
-export enum PaymentProcessorType {
-  Tpay = 0,
-  Payu = 1
+
+export enum PaymentDocument {
+  Invoice = 'invoice',
+  Receipt = 'receipt'
 }
+
 export enum PaymentType {
   card = 0,
   blik = 1,
   transfer = 2
 }
-export interface PayuResponse {
-  req: any;
-  res: any;
-}
+
 export interface IPayment extends IBase {
   value: number;
   date: Date;
