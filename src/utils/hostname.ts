@@ -1,7 +1,7 @@
 import { Capacitor } from '@capacitor/core';
 
-export const getHostName = (): string => {
-  // return 'eurotermprodays.iplatform-dev.pl'
+const readValue = (): string => {
+  // return 'testowa'
   if (import.meta.env.DEV) {
     return import.meta.env.VITE_APP_HOSTNAME || '';
   } else {
@@ -9,4 +9,12 @@ export const getHostName = (): string => {
       ? import.meta.env.VITE_APP_HOSTNAME
       : window.location.hostname;
   }
+};
+
+export const getHostName = (): string => {
+  return 'test';
+  const hostname = readValue();
+  const split = hostname.split('.');
+  const clientId = split[0];
+  return clientId;
 };

@@ -3,6 +3,7 @@ import { Capacitor, CapacitorHttp } from '@capacitor/core';
 import { notifications } from '../actions';
 import { store, history } from '../App';
 import { UserState } from 'src/reducers/user-reducer';
+import { Preferences } from '@capacitor/preferences';
 
 export default class ApiService {
   static url =
@@ -32,9 +33,16 @@ export default class ApiService {
   ) => {
     dispatch({ type: loadingAction, payload: true });
 
-    const headers = {
+    const headers: {
+      [key: string]: string;
+    } = {
       'Content-Type': 'application/json',
     };
+
+    if (Capacitor.isNativePlatform()) {
+      const token = await Preferences.get({ key: 'smst_token ' });
+      headers.Authorization = `Bearer ${token}`;
+    }
 
     const wrappedUrl = ApiService.wrapUrlWithTenant(url);
 
@@ -108,11 +116,18 @@ export default class ApiService {
     successCb?: any,
     failedCb?: any,
     requestData?: any,
-    throwError?: boolean
+    throwError?: boolean,
   ) => {
-    const headers = {
+    const headers: {
+      [key: string]: string;
+    } = {
       'Content-Type': 'application/json',
     };
+
+    if (Capacitor.isNativePlatform()) {
+      const token = await Preferences.get({ key: 'smst_token ' });
+      headers.Authorization = `Bearer ${token}`;
+    }
 
     const wrappedUrl = ApiService.wrapUrlWithTenant(url);
 
@@ -146,14 +161,21 @@ export default class ApiService {
       }
     } catch (error) {
       store.dispatch(notifications.errorNotification(ApiErrorCode.OtherError));
-      if(throwError) throw error;
+      if (throwError) throw error;
     }
   };
 
   static simpleFetch = async (method: string, url: string) => {
-    const headers: any = {
+    const headers: {
+      [key: string]: string;
+    } = {
       'Content-Type': 'application/json',
     };
+
+    if (Capacitor.isNativePlatform()) {
+      const token = await Preferences.get({ key: 'smst_token ' });
+      headers.Authorization = `Bearer ${token}`;
+    }
 
     const wrappedUrl = ApiService.wrapUrlWithTenant(url);
 
@@ -301,15 +323,16 @@ export default class ApiService {
     data?: any,
     excludeApiURL = false,
   ): Promise<{ filename: string; data: string }> => {
-    const headers: any = {
+    const headers: {
+      [key: string]: string;
+    } = {
       'Content-Type': 'application/json',
       Accept: 'application/json, text/plain, */*',
     };
 
     if (Capacitor.isNativePlatform()) {
-      // @TODO handle
-      // const { token } = store.getState().user as UserState;
-      // headers.Authorization = `Bearer ${token}`;
+      const token = await Preferences.get({ key: 'smst_token ' });
+      headers.Authorization = `Bearer ${token}`;
     }
 
     const capacitorMethod = data ? CapacitorHttp.post : CapacitorHttp.get;
@@ -326,7 +349,8 @@ export default class ApiService {
       });
       const received = response.data;
       console.log('HEADERS', response, response.headers);
-      const filename = response.headers['Filename'] || response.headers['filename'];
+      const filename =
+        response.headers['Filename'] || response.headers['filename'];
 
       return { filename, data: received };
     } catch (e) {

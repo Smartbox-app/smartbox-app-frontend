@@ -4,6 +4,8 @@ import { useTenant } from '../../../../../hooks/useTenant';
 import { Button } from 'src/components/ui';
 import styled from 'styled-components';
 import { darken } from 'polished';
+import { Capacitor } from '@capacitor/core';
+import { Browser } from '@capacitor/browser';
 
 const StyledButton = styled(Button)({
   backgroundColor: '#fff',
@@ -45,12 +47,19 @@ export const GoogleButton = () => {
       'nidobox',
       'biastorage',
       'twojbox',
+      'test'
     ].includes(tenant.identifier)
   )
     return null;
 
   const goToGoogleLogin = () => {
-    window.open(`${ApiService.url}auth/google?tenantId=${tenant.identifier}`);
+    if (Capacitor.isNativePlatform()) {
+      Browser.open({
+        url: `${ApiService.url}auth/google?tenantId=${tenant.identifier}&source=mobile`,
+      });
+    } else {
+      window.open(`${ApiService.url}auth/google?tenantId=${tenant.identifier}`);
+    }
   };
 
   return (

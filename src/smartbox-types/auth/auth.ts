@@ -10,4 +10,5 @@ export interface AuthLoginResult {
   firstName: string,
   lastName: string,
   role: UserRole,
+  accessToken: string
 }

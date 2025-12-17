@@ -119,6 +119,9 @@
         "boxes_list": "Lista skrytek",
         "boxes_groups": "Grupy",
         "boxes": "Kontenery"
+      },
+      "stock_group": {
+        "list": "Lista grup placów"
       }
     },
     "application": {

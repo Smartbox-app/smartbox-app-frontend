@@ -31,6 +31,7 @@ const StyledNavigationContainer = styled('div')(({ theme }) => ({
 
     boxShadow: 'none',
   },
+  paddingBottom: 'env(safe-area-inset-bottom)'
 }));
 
 const StyledNavigation = styled('nav')(({ theme }) => ({

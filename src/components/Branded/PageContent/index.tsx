@@ -10,7 +10,6 @@ import { useLocation } from 'react-router';
 interface Props {
   children: React.ReactNode;
   bg?: boolean;
-  noPadding?: boolean;
   conditionalBg?: boolean;
 }
 
@@ -22,10 +21,14 @@ const StyledPageContent = styled('div')<{ background: string | null }>(
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+    paddingTtop: 'env(safe-area-inset-top)',
+    paddingBottom: 'env(safe-area-inset-bottom)',
+    paddingLeft: 'env(safe-area-inset-left)',
+    paddingRight: 'env(safe-area-inset-right)',
   }),
 );
 
-const PageContent = ({ children, bg, noPadding, conditionalBg }: Props) => {
+const PageContent = ({ children, bg, conditionalBg }: Props) => {
   const { tenant } = useTenant();
   const location = useLocation();
 
@@ -41,12 +44,14 @@ const PageContent = ({ children, bg, noPadding, conditionalBg }: Props) => {
     ? location.pathname.includes('order')
     : false;
 
-    if (!tenant) return null;
+  if (!tenant) return null;
 
   return (
     <StyledPageContent
-      background={bg || showConditionalBg ? getTenantBackgroundPath(tenant) : null}
-      className={`page-content ${bg || showConditionalBg ? 'bg' : ''} ${noPadding ? 'no-padding' : ''}`}
+      background={
+        bg || showConditionalBg ? getTenantBackgroundPath(tenant) : null
+      }
+      className={`page-content ${bg || showConditionalBg ? 'bg' : ''}`}
     >
       <Container>{children}</Container>
     </StyledPageContent>

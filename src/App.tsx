@@ -52,6 +52,9 @@ import { PaymentStatus } from 'smartbox-types';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { RouteGuest } from './components/Common/RouteGuest';
 import { MaintenanceScreen } from './components/MaintenanceScreen';
+import { App as CapacitorApp } from '@capacitor/app';
+import { Capacitor } from '@capacitor/core';
+import { getHostName } from './utils/hostname';
 
 const DashboardAdmin = React.lazy(() => import('./views/DashboardAdmin'));
 const DashboardUser = React.lazy(() => import('./views/DashboardUser'));
@@ -96,6 +99,14 @@ const App = () => {
     const lang = store.getState().lang.current;
     i18n.load(lang);
     checkI18nLoaded();
+
+    if (Capacitor.isNativePlatform())
+      CapacitorApp.addListener('appUrlOpen', ({ url }) => {
+        if (url.startsWith(`smartbox-${getHostName()}://`)) {
+          const parsed = new URL(url);
+          console.log('GOT APP URL', parsed, url);
+        }
+      });
   }, []);
 
   if (loading || !i18n.loaded) return null;

@@ -22,7 +22,7 @@ const StyledDashboardContainer = styled('div')(({ theme }) => ({
 
 export const DashboardContainer = ({ children }: Props) => {
   return (
-    <PageContent noPadding conditionalBg>
+    <PageContent conditionalBg>
         <StyledDashboardContainer>
           {children}
           <Footer />

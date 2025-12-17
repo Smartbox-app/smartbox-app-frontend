@@ -44,6 +44,7 @@ import { ArrowLeft, ArrowRight, SearchZoomIn } from 'src/icons';
 import { prepareAndSentPaymentForm } from 'src/utils/payment-form';
 import { format } from 'date-fns';
 import { textToSimpleMD } from 'src/utils/text-to-simple-md';
+import { Capacitor } from '@capacitor/core';
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 
@@ -90,7 +91,7 @@ const StepAgreement = ({ formData, isResignationMarked }: Props): any => {
     setLoading(true);
     await ApiService.callFetch(
       'POST',
-      'rent/new',
+      `rent/new?source=${Capacitor.isNativePlatform() ? 'mobile' : 'web'}`,
       (response: PayForRentResponse) => {
         if (response.paymentStatus === PaymentStatus.succes) {
           history.push(`/payment-success/${response.paymentId}`);
@@ -108,7 +109,7 @@ const StepAgreement = ({ formData, isResignationMarked }: Props): any => {
     setLoading(true);
     await ApiService.callFetch(
       'POST',
-      `rent/extend-rent/${rentId}`,
+      `rent/extend-rent/${rentId}?source=${Capacitor.isNativePlatform() ? 'mobile' : 'web'}`,
       (response: PayForRentResponse) => {
         if (response.paymentStatus === PaymentStatus.succes) {
           history.push(`/payment-success/${response.paymentId}`);

@@ -1,9 +1,36 @@
-import type { CapacitorConfig } from '@capacitor/cli';
+import { CapacitorConfig } from '@capacitor/cli';
 
-const config: CapacitorConfig = {
-  appId: 'com.smartbox.app',
-  appName: 'smartbox-app',
-  webDir: 'build'
+let config: CapacitorConfig = {
+  appId: process.env.NODE_APP_ID,
+  appName: process.env.NODE_APP_NAME,
+  ios: {
+    contentInset: 'never',
+  },
+  server: {
+    androidScheme: 'http',
+    cleartext: true,
+    allowNavigation: ['*'],
+  },
+  android: {
+    useLegacyBridge: true,
+  },
+  webDir: 'dist',
+  plugins: {
+    SplashScreen: {
+      launchShowDuration: 5000,
+      androidScaleType: 'CENTER_CROP',
+      splashFullScreen: true,
+      splashImmersive: false,
+      launchAutoHide: false,
+    },
+    CapacitorHttp: {
+      enabled: true,
+    },
+    PushNotifications: {
+      presentationOptions: ['badge', 'sound', 'alert'],
+    },
+  },
+  cordova: {},
 };
 
 export default config;

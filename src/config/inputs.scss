@@ -97,6 +97,11 @@
   @extend %input-base;
 }
 
+.flatpickr-mobile {
+  flex: 1;
+  width: auto
+}
+
 select,
 .input-autocomplete {
   -webkit-appearance: none;

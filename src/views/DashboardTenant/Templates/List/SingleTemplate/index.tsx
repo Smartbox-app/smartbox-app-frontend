@@ -3,6 +3,7 @@ import { TemplateType } from 'smartbox-types';
 import { Button } from '../../../../../components/Branded';
 import { __ } from '../../../../../helpers/i18n';
 import styled from 'styled-components';
+import { ButtonsContainer } from '../../../../../components/Layout';
 
 interface Props {
   type: 'email' | 'sms';
@@ -21,10 +22,22 @@ const StyledSingleTemplate = styled('li')<{ isSet: boolean; even: boolean }>(
       : theme.colors.background.primary,
     borderLeft: isSet ? `3px solid ${theme.colors.primary}` : 'none',
     justifyContent: 'space-between',
-    alignItems: 'center',
+
     padding: 10,
+    gap: 5,
+    flexDirection: 'column',
+    '@media(min-width: 768px)': {
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
   }),
 );
+
+const MainData = styled('div')({
+  display: 'flex',
+  alignItems: 'center',
+  flexWrap: 'wrap',
+});
 
 const StyledTemplateType = styled('span')`
   font-size: 0.8rem;
@@ -39,31 +52,39 @@ const StyledTemplateType = styled('span')`
 const StyledTemplateInfo = styled('span')`
   font-size: 0.8rem;
   font-weight: 300;
- flex: 0 0 20%;
+  flex: 0 0 20%;
 `;
 
 const StyledTitle = styled('h3')`
   color: #333;
   margin: 10px 0;
   font-size: 0.9rem;
-  flex: 1;
+  flex: 0 0 100%;
+   @media(min-width: 768px)': {
+      flexDirection: 'row';
+      flex: 1;
+    }
 `;
 
 export const SingleTemplate = ({ type, template, isSet, index }: Props) => {
   return (
     <StyledSingleTemplate isSet={isSet} even={index % 2 === 0}>
-      <StyledTemplateType>{type}</StyledTemplateType>
-      <StyledTemplateInfo>
-        {isSet
-          ? __('application.templateSet')
-          : __('application.defaultTemplateUsed')}
-      </StyledTemplateInfo>
-      <StyledTitle>{__(`templates.${template}`)}</StyledTitle>
-      <Button
-        primary
-        to={`/client/management/templates/manage/${type}/${template}`}
-        text="application.manageTemplate"
-      />
+      <MainData>
+        <StyledTemplateType>{type}</StyledTemplateType>
+        <StyledTemplateInfo>
+          {isSet
+            ? __('application.templateSet')
+            : __('application.defaultTemplateUsed')}
+        </StyledTemplateInfo>
+        <StyledTitle>{__(`templates.${template}`)}</StyledTitle>
+      </MainData>
+      <ButtonsContainer>
+        <Button
+          primary
+          to={`/client/management/templates/manage/${type}/${template}`}
+          text="application.manageTemplate"
+        />
+      </ButtonsContainer>
     </StyledSingleTemplate>
   );
 };

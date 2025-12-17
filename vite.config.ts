@@ -1,8 +1,9 @@
-import { defineConfig } from 'vite';
+import { defineConfig, PluginOption } from 'vite';
 import react from '@vitejs/plugin-react';
 import viteTsconfigPaths from 'vite-tsconfig-paths';
 // import { viteCommonjs, esbuildCommonjs } from '@originjs/vite-plugin-commonjs';
 import { VitePWA } from 'vite-plugin-pwa';
+import { visualizer } from 'rollup-plugin-visualizer';
 
 export default defineConfig({
   // depending on your application, base can also be "/"
@@ -12,7 +13,7 @@ export default defineConfig({
       registerType: 'autoUpdate',
       manifest: false,
       injectManifest: {
-        injectionPoint: undefined
+        injectionPoint: undefined,
       },
       workbox: {
         skipWaiting: true,
@@ -21,6 +22,7 @@ export default defineConfig({
     // viteCommonjs(),
     react(),
     viteTsconfigPaths(),
+    visualizer({ open: true }) as PluginOption,
   ],
   resolve: {
     alias: [

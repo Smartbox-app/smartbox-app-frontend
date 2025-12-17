@@ -5,6 +5,8 @@ import { Button } from 'src/components/ui';
 import styled from 'styled-components';
 import { lighten } from 'polished';
 import { getColorForBackground } from 'src/utils/color';
+import { Capacitor } from '@capacitor/core';
+import { Browser } from '@capacitor/browser';
 
 const StyledButton = styled(Button)({
   backgroundColor: '#4267b2',
@@ -45,13 +47,22 @@ export const FbButton = () => {
       'wlasnybox',
       'nidobox',
       'biastorage',
-      'twojbox'
+      'twojbox',
+      'test'
     ].includes(tenant.identifier)
   )
     return null;
 
   const goToFbLogin = () => {
-    window.open(`${ApiService.url}auth/facebook?tenantId=${tenant.identifier}`);
+    if (Capacitor.isNativePlatform()) {
+      Browser.open({
+        url: `${ApiService.url}auth/facebook?tenantId=${tenant.identifier}&source=mobile`,
+      });
+    } else {
+      window.open(
+        `${ApiService.url}auth/facebook?tenantId=${tenant.identifier}`,
+      );
+    }
   };
 
   return (

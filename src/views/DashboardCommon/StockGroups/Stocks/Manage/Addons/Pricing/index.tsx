@@ -55,8 +55,12 @@ const Pricing = () => {
   const [variants, setVariants] = useState<SingleAddonVariant[]>([]);
   const [priceResolveType, setAddonPriceResolveType] =
     useState<AddonPriceResolveType>(AddonPriceResolveType.Proportional);
-  const [fixedPriceInstallmentsResolveType, setAddonFixedPriceInstalmentsResolveType] =
-    useState<AddonFixedPriceInstallmentsResolveType>(AddonFixedPriceInstallmentsResolveType.FirstPeriod);
+  const [
+    fixedPriceInstallmentsResolveType,
+    setAddonFixedPriceInstalmentsResolveType,
+  ] = useState<AddonFixedPriceInstallmentsResolveType>(
+    AddonFixedPriceInstallmentsResolveType.FirstPeriod,
+  );
   const [loading, setLoading] = useState<boolean>(true);
 
   const getCurrentAddon = async () => {
@@ -343,7 +347,9 @@ const Pricing = () => {
             label: 'application.fixedPriceInstallmentsResolveType',
             value: fixedPriceInstallmentsResolveType,
             onChange: (e: ChangeEvent<HTMLInputElement>) =>
-              setAddonFixedPriceInstalmentsResolveType(e.target.value as AddonFixedPriceInstallmentsResolveType),
+              setAddonFixedPriceInstalmentsResolveType(
+                e.target.value as AddonFixedPriceInstallmentsResolveType,
+              ),
           }}
           options={[
             {
@@ -386,9 +392,9 @@ const Pricing = () => {
               <Input
                 type="radio"
                 input={{
-                  name: 'priceType',
+                  name: `addon_price_type_${variant.id}`,
                   label: 'application.addonVariantPriceType',
-                  value: variant.priceType,
+                  value: variant.priceType || AddonVariantPriceType.Dynamic,
                   onChange: (e: ChangeEvent<HTMLInputElement>) =>
                     setVariantPriceType(
                       variant.id,

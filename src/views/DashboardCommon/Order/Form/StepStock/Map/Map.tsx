@@ -1,6 +1,5 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import styled from 'styled-components';
-import mapboxgl from 'mapbox-gl';
 import { ApplicationState } from 'src/reducers';
 import { useDispatch, useSelector } from 'react-redux';
 import 'mapbox-gl/dist/mapbox-gl.css';
@@ -15,6 +14,13 @@ import {
   StockList,
 } from 'smartbox-types';
 import { Skeleton } from 'src/components/ui';
+import type mapboxglType from 'mapbox-gl' // import type only
+
+let mapboxgl: typeof mapboxglType;
+async function loadMapbox() {
+  mapboxgl = (await import('mapbox-gl')).default
+  // initialize your map here
+}
 
 const ExternalContainer = styled('div')(({ theme }) => ({
   width: '100%',
@@ -62,6 +68,7 @@ export const Map = () => {
   const { tenant } = useTenant();
 
   useEffect(() => {
+    loadMapbox();
     getGroups();
     getStocks();
   }, []);
