@@ -21,7 +21,11 @@ interface RefreshApiTable {
   type: 'REFRESH_API_TABLE';
 }
 
-type Action = FetchApiTableDataSuccess | RefreshApiTable;
+interface ClearApiTable {
+  type: 'CLEAR_API_TABLE';
+}
+
+type Action = FetchApiTableDataSuccess | RefreshApiTable | ClearApiTable;
 
 export default (state: ApiTableState = initialState, action: Action) => {
   switch (action.type) {
@@ -32,6 +36,8 @@ export default (state: ApiTableState = initialState, action: Action) => {
         ...state,
         uuid: v4(),
       };
+    case 'CLEAR_API_TABLE':
+      return initialState;
     default:
       return state;
   }

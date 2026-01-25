@@ -1,5 +1,5 @@
 import React from 'react';
-import { RentStatus, ActiveRentsForUserDetails, IStock } from 'smartbox-types';
+import { RentStatus, ActiveRentsForUserDetails } from 'smartbox-types';
 import { Alert } from '../../../components/Common';
 import { dateOnly } from '../../../utils/format-date';
 
@@ -8,7 +8,6 @@ import { __ } from '../../../helpers/i18n';
 import styled, { css } from 'styled-components';
 import { getColorForBackground } from 'src/utils/color';
 import { SectionHeader } from 'src/components/Layout';
-import { Section } from 'src/components/ui';
 
 interface Props {
   rentList: ActiveRentsForUserDetails[];

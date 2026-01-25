@@ -10,6 +10,7 @@ import { PageHeader, Section, Tabs } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
 import { InfoCircle, Stop } from 'src/icons';
 import GateStatus from 'src/views/DashboardCommon/GateStatus';
+import AlarmStatus from '../../../AlarmStatus';
 
 const ManageGroup = () => {
   const { stockGroupId } = useParams<{ stockGroupId: string }>();

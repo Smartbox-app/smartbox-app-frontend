@@ -92,17 +92,20 @@ async function copyInfoPlist(folderName) {
 
 async function copyAndroidManifest(folderName) {
   const appId = folderToAppIdentifier[folderName] || folderName;
+  const hostName = folderToHostName[mode]?.[folderName] || folderName;
   const template = await readFile(
     './app-config/android/AndroidManifest.xml',
     'utf8',
   );
-  const content = template.replace('{ANDROID_APP_ID}', appId);
+  const content = template
+    .replace('{ANDROID_APP_ID}', appId)
+    .replace('{ANDROID_APP_DEEP_LINK_SCHEMA}', `smartbox-${hostName}`);
   await writeFile('./android/app/src/main/AndroidManifest.xml', content);
 }
 
 async function addConfigFiles(folderName) {
   await copyFiles('./app-config/ios', './ios/App/App', ['AppDelegate.swift']);
-  // await copyFiles('./app-config/ios', './ios/App', ['Podfile']);
+  await copyFiles('./app-config/ios', './ios/App', ['Podfile']);
 
   // await copyFiles(`./app-config/ios/${folderName}`, './ios/App/App', [
   //   'GoogleService-Info.plist',
@@ -133,7 +136,7 @@ function initIos(folderName) {
   const appName = folderToAppName[folderName] || folderName;
   const appId = folderToAppIdentifier[folderName] || folderName;
 
-  run(`NODE_APP_NAME="${appName}" NODE_APP_ID="${appId}" npx cap add ios`);
+  run(`NODE_APP_NAME="${appName}" NODE_APP_ID="${appId}" npx cap add ios `);
 }
 
 // -----------------------------------------------------------------------------
@@ -192,7 +195,7 @@ async function main() {
   const fullAddress = `${hostName}${hostSuffix}`;
 
   run(
-    `VITE_APP_HOSTNAME="${fullAddress}" VITE_APP_API_URL=${mode === 'prod' ? 'https://api.smartbox-app.pl' : 'http://localhost:3001'} npx vite build`,
+    `VITE_APP_HOSTNAME="${fullAddress}" VITE_APP_API_URL=${mode === 'prod' ? 'https://api.smartbox-app.pl' : 'http://10.0.2.2:3001'} npx vite build`,
   );
 
   // --------------------------------------------------

@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import { getColorForBackground } from '../../../utils/color';
 import { UseFormRegisterReturn } from 'react-hook-form';
 import { ErrorText } from '../ErrorText';
+import { AsterixRequired } from 'src/components/Common';
 
 export type CheckboxProps = {
   name: string;
@@ -15,9 +16,9 @@ export type CheckboxProps = {
 } & UseFormRegisterReturn;
 
 const StyledCheckbox = styled.div`
-display: flex;
-flex-direction: column;
-gap: ${({theme}) => `${theme.spacing * 2}px`};
+  display: flex;
+  flex-direction: column;
+  gap: ${({ theme }) => `${theme.spacing * 2}px`};
   [type='checkbox'] + label:before {
     border-radius: 4px;
   }
@@ -56,7 +57,10 @@ export const CheckBox = forwardRef<HTMLInputElement, CheckboxProps>(
           disabled={disabled}
         />
         <label htmlFor={name}>
-          {typeof label === 'string' ? __(label) : label}
+          <div>
+            {typeof label === 'string' ? __(label) : label}
+            {register.required ? <>{' '}<AsterixRequired /></> : null}
+          </div>
         </label>
       </div>
       {error ? <ErrorText error={error} /> : null}

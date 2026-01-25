@@ -8,6 +8,7 @@ import {
   PaymentDocument,
   RentPaymentType,
   SingleAcceptance,
+  StockRes,
 } from 'smartbox-types';
 import { FormType } from '../types/order-form';
 import { __ } from '../helpers/i18n';
@@ -39,7 +40,7 @@ export type OrderAddon = {
 
 export type OrderState = {
   // refactored
-  stock: IStock | null;
+  stock: StockRes | null;
   stockId: string;
   stockName: string;
   stockAddress: string;
@@ -89,7 +90,7 @@ interface SetOrderStock {
 interface SetOrderFullStock {
   type: 'SET_ORDER_FULL_STOCK';
   payload: {
-    stock: IStock;
+    stock: StockRes;
   };
 }
 

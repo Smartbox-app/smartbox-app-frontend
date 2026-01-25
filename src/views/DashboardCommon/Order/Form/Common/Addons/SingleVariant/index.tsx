@@ -13,10 +13,10 @@ import { Indicator } from './components/Indicator';
 
 const StyledAddonVariant = styled('li')<{ isSelected: boolean }>(
   ({ isSelected, theme }) => ({
-    padding: theme.spacing * 4,
+    padding: `${theme.spacing * 3}px 0`,
     color: theme.colors.text.primary,
     fontWeight: isSelected ? 500 : 400,
-    marginBottom: 10,
+    // marginBottom: 10,
     borderRadius: 5,
     cursor: 'pointer',
     display: 'flex',
@@ -65,7 +65,6 @@ export const SingleVariant = ({ variant, addonId, addon, isGross }: Props) => {
       orderAddons[addonId].userFileRequirement ===
       AddonUserFileRequirementType.RequiredWhenNoVariant
     ) {
-      console.log('reseting file', addonId);
       dispatch(setAddonFile(addonId, null));
     }
     dispatch(

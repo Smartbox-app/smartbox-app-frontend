@@ -836,6 +836,13 @@
     "@babel/helper-string-parser" "^7.27.1"
     "@babel/helper-validator-identifier" "^7.28.5"
 
+"@capacitor-community/facebook-login@^7.0.1":
+  version "7.0.1"
+  resolved "https://registry.yarnpkg.com/@capacitor-community/facebook-login/-/facebook-login-7.0.1.tgz#f9df759f051eb5f856ff483820776e9d454b91f5"
+  integrity sha512-G3ltZZu7Ym22lfl7mgsfSksS+OcQWKWWB8QMnZy+P0TVojleEnsfRV3JkeJgrqByF17vOy5dw/EE7fGTeRfeLQ==
+  dependencies:
+    "@capacitor/core" "^7.0.0"
+
 "@capacitor-community/file-opener@^7.0.1":
   version "7.0.1"
   resolved "https://registry.yarnpkg.com/@capacitor-community/file-opener/-/file-opener-7.0.1.tgz#c73a9dea25de853c2bb48768866b279610e8fe78"
@@ -927,10 +934,22 @@
   dependencies:
     tslib "^2.1.0"
 
+"@capacitor/device@^7.0.0":
+  version "7.0.3"
+  resolved "https://registry.yarnpkg.com/@capacitor/device/-/device-7.0.3.tgz#bc40ad4ee54d6e6a1bc7bf3c1ad39282743305bc"
+  integrity sha512-lZs2qkv54fOAsZ/i+hJ0RGNch06vfmkQ5qsAt2QjBtNRKwOkZv9B5QjDcl+M6Jydwf3+qkG4Ow3H/pk8hgiaTg==
+
 "@capacitor/filesystem@^7.0.0":
   version "7.1.5"
   resolved "https://registry.yarnpkg.com/@capacitor/filesystem/-/filesystem-7.1.5.tgz#44e8f8c3b96e4f929a7b35068a9dfe8296e2aee3"
   integrity sha512-ZzJxpEh6SwKhF1cqSVmIAkEyNG3ozf3Lwg8rUNltX6CGdd94UJV45asqmFoP6X6aT5eVu7FPjPU5SHxi6XOFgA==
+  dependencies:
+    "@capacitor/synapse" "^1.0.3"
+
+"@capacitor/geolocation@^7.0.0":
+  version "7.1.7"
+  resolved "https://registry.yarnpkg.com/@capacitor/geolocation/-/geolocation-7.1.7.tgz#21cb8773385919da5d6d92badc50b5b56ee5be8d"
+  integrity sha512-7HZNcWEmb5eG8Fqok1VtcNPrepPDi2aA5K8H+zy5sp9JRWbR7/fr+v6foT+BoaapnIjw0ddzf70BEllRLjZbLQ==
   dependencies:
     "@capacitor/synapse" "^1.0.3"
 
@@ -2338,11 +2357,6 @@
   resolved "https://registry.yarnpkg.com/@types/pbf/-/pbf-3.0.5.tgz#a9495a58d8c75be4ffe9a0bd749a307715c07404"
   integrity sha512-j3pOPiEcWZ34R6a6mN07mUkM4o4Lwf6hPNt8eilOeZhTFbxFXmKhvXl9Y28jotFPaI1bpPDJsbCprUoNke6OrA==
 
-"@types/prop-types@*":
-  version "15.7.15"
-  resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.7.15.tgz#e6e5a86d602beaca71ce5163fadf5f95d70931c7"
-  integrity sha512-F6bEyamV9jKGAFBEmlQnesRPGOQqS2+Uwi0Em15xenOxHaf2hv6L8YCVn3rPdPJOiJfPiCnLIRyvwVaqMY3MIw==
-
 "@types/react-calendar@^3.0.0":
   version "3.9.0"
   resolved "https://registry.yarnpkg.com/@types/react-calendar/-/react-calendar-3.9.0.tgz#b345707c9b593331a48963514f3e30ce0b3ca195"
@@ -2433,14 +2447,6 @@
   resolved "https://registry.yarnpkg.com/@types/react/-/react-19.2.7.tgz#84e62c0f23e8e4e5ac2cadcea1ffeacccae7f62f"
   integrity sha512-MWtvHrGZLFttgeEj28VXHxpmwYbor/ATPYbBfSFZEIRK0ecCFLl2Qo55z52Hss+UV9CRN7trSeq1zbgx7YDWWg==
   dependencies:
-    csstype "^3.2.2"
-
-"@types/react@^18.3.5":
-  version "18.3.27"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-18.3.27.tgz#74a3b590ea183983dc65a474dc17553ae1415c34"
-  integrity sha512-cisd7gxkzjBKU2GgdYrTdtQx1SORymWyaAFhaxQPK9bYO9ot3Y5OikQRvY0VYQtvwjeQnizCINJAenh/V7MK2w==
-  dependencies:
-    "@types/prop-types" "*"
     csstype "^3.2.2"
 
 "@types/redux-thunk@^2.1.0":

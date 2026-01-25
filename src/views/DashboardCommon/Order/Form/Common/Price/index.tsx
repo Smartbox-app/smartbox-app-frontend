@@ -37,7 +37,7 @@ const Price = () => {
 
   const toPayNow = useMemo(() => {
     if (!endDate || !startDate) return null;
-console.log('PRICES', rentPricesPerPeriod, addonsPricesPerPeriod);
+
    return rentPricesPerPeriod[0] + (addonsPricesPerPeriod[0] || 0);
 
   }, [addonsPricesPerPeriod, rentPricesPerPeriod]);

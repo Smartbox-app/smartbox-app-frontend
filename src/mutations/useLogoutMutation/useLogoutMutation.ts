@@ -2,6 +2,8 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import ApiService from '../../services/api-service';
 import { useDispatch } from 'react-redux';
 import { notifications, order } from 'src/actions';
+import { Capacitor } from '@capacitor/core';
+import { Preferences } from '@capacitor/preferences';
 
 export const useLogoutMutation = () => {
   const queryClient = useQueryClient();
@@ -20,6 +22,10 @@ export const useLogoutMutation = () => {
       dispatch({ type: 'REFRESH_API_TABLE' });
       dispatch({ type: 'REFRESH_API_GRID' });
       dispatch(order.clearOrder());
+
+      if(Capacitor.isNativePlatform()) {
+        Preferences.clear();
+      }
 
       return response;
     },

@@ -12,11 +12,7 @@ import { errors } from 'src/validation/errors';
 import { IsNip } from 'src/validators/IsCorrectNip';
 
 export class RentDataDto {
-  withBirthDate: boolean = false;
-
-  constructor(withBirthDate: boolean) {
-    this.withBirthDate = withBirthDate;
-  }
+  withBirthDate: boolean;
 
   @IsNotEmpty({
     message: errors.field_required,
@@ -43,7 +39,9 @@ export class RentDataDto {
   })
   postCode: string;
 
-  @ValidateIf((d) => !!d.withBirthDate)
+  @ValidateIf((d) => {
+    return !!d.withBirthDate;
+  })
   @IsNotEmpty({
     message: errors.field_required,
   })
@@ -98,5 +96,5 @@ export class RentDataDto {
   nip: string;
 
   @IsOptional()
-  clientSource: string
+  clientSource: string;
 }

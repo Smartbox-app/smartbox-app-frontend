@@ -14,11 +14,10 @@ import {
 } from 'date-fns';
 import {
   AddonUserFileRequirementType,
-  IStock,
   MyRentList,
   RentPaymentType,
   StockPaymentType,
-  UserRes,
+  StockRes,
 } from 'smartbox-types';
 import { DateInput } from '../../../../../components/Common';
 import { Spinner } from '../../../../../components/Branded';
@@ -95,7 +94,7 @@ const StepDuration = ({ clearPaymentDetails }: Props) => {
   const [loading, setLoading] = useState<boolean>(false);
 
   const getStock = async () => {
-    await ApiService.callFetch('GET', `stock/${stockId}`, (res: IStock) => {
+    await ApiService.callFetch('GET', `stock/${stockId}`, (res: StockRes) => {
       dispatch(setOrderFullStock(res));
     });
   };
@@ -126,7 +125,6 @@ const StepDuration = ({ clearPaymentDetails }: Props) => {
   };
 
   useEffect(() => {
-    console.log(startDate, endDate, minRentPeriod);
     if (!minRentPeriod) return;
     if (!endDate) {
       setRentEndDateAccordingToType(
@@ -329,14 +327,7 @@ const StepDuration = ({ clearPaymentDetails }: Props) => {
     if (!endDate || !startDate || !minRentPeriod || maxRentPeriod === null)
       return false;
     const difference = differenceInCalendarDays(endDate, startDate);
-    console.log(
-      'CORRECT SELECTED',
-      startDate,
-      endDate,
-      difference,
-      minRentPeriod,
-      maxRentPeriod,
-    );
+
     if (
       rentPaymentType === RentPaymentType.Installments &&
       minRentDaysForInstallments &&

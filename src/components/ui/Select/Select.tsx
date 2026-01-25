@@ -67,7 +67,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
   ) => {
     return (
       <StyledContainer>
-        <InputLabel labelFor={name}>{__(label)}</InputLabel>
+        <InputLabel labelFor={name} required={register.required}>{__(label)}</InputLabel>
         <StyledSelect
           {...register}
           disabled={!!disabled}

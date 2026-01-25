@@ -2,10 +2,10 @@
 @import "../../config/mixins";
 
 .application-error {
-  width: 100vw;
-  height: 100vh;
+
   display: flex;
   flex-direction: column;
+  gap: 24px;
   align-items: center;
   justify-content: center;
   text-align: center;

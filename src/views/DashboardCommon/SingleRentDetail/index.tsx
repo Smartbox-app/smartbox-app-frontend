@@ -22,6 +22,7 @@ import { Header, PageHeader, Section } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
 import { PeriodUnpaidAlert } from './PeriodUnpaidAlert';
 import { useTenantNaming } from 'src/hooks/useTenantNaming';
+import { PendingPaymentAlert } from './PendingPaymentAlert';
 
 interface RouteProps {
   orderId: string;
@@ -77,6 +78,7 @@ const SingleRentDetail = ({ showUserStockMap, match }: Props) => {
       <PageHeader>
         {getText('box')}: {singleRent.boxNumber}
       </PageHeader>
+      <PendingPaymentAlert rent={singleRent} />
       <MissingPaymentAlert rent={singleRent} />
       <PeriodUnpaidAlert rent={singleRent} />
       <Section>

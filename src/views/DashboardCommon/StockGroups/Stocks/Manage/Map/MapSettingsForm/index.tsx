@@ -1,6 +1,6 @@
 import React from 'react';
 import { ItfApiForm } from 'itf_formbuilder_react';
-import { IStock } from 'smartbox-types';
+import { StockRes } from 'smartbox-types';
 import { useDispatch } from 'react-redux';
 import { Button, Spinner } from '../../../../../../../components/Branded';
 import {
@@ -17,7 +17,7 @@ import styled from 'styled-components';
 import { useGetMyDetailsQuery } from 'src/queries';
 
 interface Props {
-  stock: IStock;
+  stock: StockRes;
   refreshStock: () => void;
   userId?: string;
 }

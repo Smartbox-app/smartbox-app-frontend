@@ -30,6 +30,7 @@ const errorClass = (errors: any[] | undefined) =>
   errors && errors.length ? 'is-invalid' : '';
 
 const StyledContainer = styled.div`
+gap: 8px;
   &.big {
     .input {
       border: 2px solid ${(props) => props.theme.colors.primary};
@@ -46,7 +47,7 @@ const StyledRadioOptionContainer = styled.div`
   display: flex;
   position: relative;
   cursor: pointer;
-  margin-bottom: 10px;
+  margin-bottom: 4px;
 
   label {
     cursor: pointer;
@@ -102,10 +103,10 @@ const Input = (props: Props) => {
       : null;
     return (
       <StyledContainer className={containerClass}>
+        <InputLabel labelFor={props.input.name} required={props.required}>
+          {__(props.input.label)}
+        </InputLabel>
         <div className="input-wrapper">
-          <InputLabel labelFor={props.input.name}>
-            {__(props.input.label)}
-          </InputLabel>
           <select
             value={props.input.value || '0'}
             className={`input input-${props.type} ${props.max ? 'input-max' : ''} ${

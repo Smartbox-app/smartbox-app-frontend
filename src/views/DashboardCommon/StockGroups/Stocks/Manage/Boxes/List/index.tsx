@@ -4,8 +4,8 @@ import { FieldType, boxesList } from 'smartbox-tables';
 import {
   AccessControl,
   BoxListRes,
-  IStock,
   RentStatus,
+  StockRes,
   UserRole,
 } from 'smartbox-types';
 import { Alert, ApiTable } from '../../../../../../../components/Common';
@@ -36,14 +36,14 @@ import { HeaderWithActions, Section } from 'src/components/ui';
 const List = () => {
   const { data: user } = useGetMyDetailsQuery();
   const dispatch = useDispatch();
-  const [stock, setStock] = useState<IStock>();
+  const [stock, setStock] = useState<StockRes>();
   const [isLoading, setIsLoading] = useState(false);
   const { stockId } = useParams<{ stockId: string }>();
 
   const hasFullAccess = [UserRole.admin, UserRole.client].includes(user!.role);
 
   const getStock = async () => {
-    await ApiService.callFetch('GET', `stock/${stockId}`, (res: IStock) => {
+    await ApiService.callFetch('GET', `stock/${stockId}`, (res: StockRes) => {
       setStock(res);
     });
   };

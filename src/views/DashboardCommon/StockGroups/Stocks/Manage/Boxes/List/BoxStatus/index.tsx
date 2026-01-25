@@ -1,13 +1,13 @@
 import React from 'react';
-import { BoxListRes, IStock, RentStatus } from "smartbox-types";
+import { BoxListRes, RentStatus, StockRes } from "smartbox-types";
 import styled, { css } from "styled-components";
 
 interface Props {
     box: BoxListRes;
-    stock?: IStock;
+    stock?: StockRes;
 }
 
-const StyledStatus = styled.div<{ status?: RentStatus, stock?: IStock }>`
+const StyledStatus = styled.div<{ status?: RentStatus, stock?: StockRes }>`
 border-radius: 2px;
 font-weight: 700;
 font-size: 0.8rem;

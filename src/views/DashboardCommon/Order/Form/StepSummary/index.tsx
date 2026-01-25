@@ -97,7 +97,7 @@ const StepSummary = ({ formData, updateFormData }: Props) => {
     postCode: user?.postCode || '',
     mailToSendInvoice: user?.email || '',
     phone: user?.phone || '',
-
+    withBirthDate: !!tenant?.birthDateNecessary,
     clientSource: '',
     nip: user?.companyData?.nip?.trim() || '',
     companyPostCode: user?.companyData.companyPostCode || '',
@@ -110,7 +110,7 @@ const StepSummary = ({ formData, updateFormData }: Props) => {
     defaultValues,
     mode: 'onSubmit',
     resolver: ClassValidatorResolver(
-      new RentDataDto(!!tenant?.birthDateNecessary),
+      new RentDataDto(),
     ),
   });
   const {
@@ -238,7 +238,8 @@ const StepSummary = ({ formData, updateFormData }: Props) => {
   const onSubmit = (data: RentDataDto) => {
     if (!isValid) return;
     if (!user) return;
-    updateFormData({ ...data, isCompany: invoiceNeeded });
+    const { withBirthDate, ...rest } = data;
+    updateFormData({ ...rest, isCompany: invoiceNeeded });
     history.push(
       `/${UserService.getSlugByRole(user.role)}/order/step/agreement/${rentId || ''}`,
     );

@@ -48,13 +48,14 @@ import { CustomThemeProvider } from './providers';
 import { AppWrapper } from './components/AppWrapper';
 import { GlobalStyle, GlobalFont } from './globalStyles';
 import { useTenant } from './hooks/useTenant';
-import { PaymentStatus } from 'smartbox-types';
+import { PaymentStatus, TenantForUsers } from 'smartbox-types';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { RouteGuest } from './components/Common/RouteGuest';
 import { MaintenanceScreen } from './components/MaintenanceScreen';
 import { App as CapacitorApp } from '@capacitor/app';
 import { Capacitor } from '@capacitor/core';
 import { getHostName } from './utils/hostname';
+import { AppGlobalStyles } from './AppGlobalStyles';
 
 const DashboardAdmin = React.lazy(() => import('./views/DashboardAdmin'));
 const DashboardUser = React.lazy(() => import('./views/DashboardUser'));
@@ -74,17 +75,6 @@ const queryClient = new QueryClient();
 
 export const history = createBrowserHistory({ basename: '/' });
 
-const AppGlobalStyles = () => {
-  const { tenant } = useTenant();
-
-  return (
-    <>
-      {tenant ? <GlobalFont tenantId={tenant.id} /> : null}
-      <GlobalStyle tenant={tenant} />
-    </>
-  );
-};
-
 const App = () => {
   const [loading, setLoading] = useState(true);
   const checkI18nLoaded = () => {
@@ -101,11 +91,8 @@ const App = () => {
     checkI18nLoaded();
 
     if (Capacitor.isNativePlatform())
-      CapacitorApp.addListener('appUrlOpen', ({ url }) => {
-        if (url.startsWith(`smartbox-${getHostName()}://`)) {
-          const parsed = new URL(url);
-          console.log('GOT APP URL', parsed, url);
-        }
+      CapacitorApp.addListener('appUrlOpen', ({ url}) => {
+        console.log('OPENED WITH URL', url);
       });
   }, []);
 
@@ -174,6 +161,11 @@ const App = () => {
                       />
 
                       <Route
+                        path="/payment/:id"
+                        render={() => <PaymentResult />}
+                      />
+
+                      <Route
                         path="/payment-success/"
                         render={() => (
                           <PaymentResult status={PaymentStatus.accepted} />
@@ -207,10 +199,14 @@ const App = () => {
                   </Suspense>
                 </ErrorBoundary>
 
-                <BannerAndroid />
-                <BannerIos />
+                {!Capacitor.isNativePlatform() ? (
+                  <>
+                    <BannerAndroid />
+                    <BannerIos />
+                    <Cookies />
+                  </>
+                ) : null}
                 <Modal />
-                <Cookies />
               </OnlineContent>
               <OfflineContent>
                 <AppOffline />

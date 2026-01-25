@@ -22,7 +22,7 @@ export default defineConfig({
     // viteCommonjs(),
     react(),
     viteTsconfigPaths(),
-    visualizer({ open: true }) as PluginOption,
+    visualizer({ open: false }) as PluginOption,
   ],
   resolve: {
     alias: [

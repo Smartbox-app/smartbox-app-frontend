@@ -18,3 +18,5 @@ export * from './locks-list.table';
 export * from './lock-groups-list.table';
 export * from './gateway-list.table';
 export * from './lock-passcodes.list'
+export * from './alarms-list.table';
+export * from './mobile-config.table';

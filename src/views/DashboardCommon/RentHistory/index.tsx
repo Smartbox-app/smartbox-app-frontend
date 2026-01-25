@@ -7,12 +7,14 @@ import { Button } from '../../../components/Branded';
 import ApiService from '../../../services/api-service';
 import { useMemo } from 'react';
 import { isAfter, isBefore } from 'date-fns';
+import { Alert } from 'src/components/Common';
 
 interface Props {
   description: RentDescription[];
   rentId: string;
   paymentType: RentPaymentType;
   periods: PeriodEntity[];
+  decisionFinishAt?: Date;
 }
 
 const StyledPeriodHeader = styled('h4')({
@@ -68,6 +70,7 @@ export const RentHistory = ({
   rentId,
   paymentType,
   periods,
+  decisionFinishAt,
 }: Props) => {
   const sortedPeriods = useMemo(() => {
     const periodsCopy = [...periods];
@@ -78,122 +81,125 @@ export const RentHistory = ({
   }, [periods]);
 
   return (
-    <ul>
-      {description.map((line, index) => (
-        <StyledSinglePeriod key={index}>
-          <StyledPeriodHeader>
-            {dateOnly(line.startAt)} - {dateOnly(line.finishAt)}
-          </StyledPeriodHeader>
-          <p>
-            {__('application.price')} - {formatPrice(Number(line.cost))}
-          </p>
-          <p>
-            {__('application.paymentType')} -{' '}
-            {__(getPaymentTypeLabel(line.paymentType || paymentType))}
-          </p>
-          {line.agreement ? (
-            <StyledRentAgreementButton>
-              <Button
-                small
-                primary
-                blank
-                text="application.seeRentAgreement"
-                to={`${ApiService.url}rent/agreement/${rentId}/${index}`}
-              />
-            </StyledRentAgreementButton>
-          ) : null}
+    <>
+      {decisionFinishAt ? (
+        <Alert type="notice">
+          Wynajem zakończony przed czasem:{' '}
+          <strong>{dateOnly(decisionFinishAt)}</strong>
+        </Alert>
+      ) : null}
+      <ul>
+        {description.map((line, index) => (
+          <StyledSinglePeriod key={index}>
+            <StyledPeriodHeader>
+              {dateOnly(line.startAt)} - {dateOnly(line.finishAt)}
+            </StyledPeriodHeader>
+            <p>
+              {__('application.price')} - {formatPrice(Number(line.cost))}
+            </p>
+            <p>
+              {__('application.paymentType')} -{' '}
+              {__(getPaymentTypeLabel(line.paymentType || paymentType))}
+            </p>
+            {line.agreement ? (
+              <StyledRentAgreementButton>
+                <Button
+                  small
+                  primary
+                  blank
+                  text="application.seeRentAgreement"
+                  to={`${ApiService.url}rent/agreement/${rentId}/${index}`}
+                />
+              </StyledRentAgreementButton>
+            ) : null}
 
-          {line.addons && line.addons.length > 0 ? (
-            <div>
-              <StyledSubHeader>
-                {__('application.selectedAddons')}
-              </StyledSubHeader>
-              <ul>
-                {line.addons.map((addon) => (
-                  <StyledSingleAddon key={addon.id}>
-                    <div>
-                      <strong>{addon.name}</strong>
-                      {(typeof addon.price === 'number' && addon.selectedVariantName) ? (
-                        <>
-                          {' '}
-                          - {addon.selectedVariantName} -{' '}
-                          {formatPrice(Number(addon.price))}
-                        </>
+            {line.addons && line.addons.length > 0 ? (
+              <div>
+                <StyledSubHeader>
+                  {__('application.selectedAddons')}
+                </StyledSubHeader>
+                <ul>
+                  {line.addons.map((addon) => (
+                    <StyledSingleAddon key={addon.id}>
+                      <div>
+                        <strong>{addon.name}</strong>
+                        {typeof addon.price === 'number' &&
+                        addon.selectedVariantName ? (
+                          <>
+                            {' '}
+                            - {addon.selectedVariantName} -{' '}
+                            {formatPrice(Number(addon.price))}
+                          </>
+                        ) : null}
+                      </div>
+
+                      {addon.acceptance ? (
+                        <p>
+                          {addon.acceptance} -{' '}
+                          <strong>{addon.accepted ? 'Tak' : 'Nie'}</strong>
+                        </p>
                       ) : null}
-                    </div>
-
-                    {addon.acceptance ? (
-                      <p>
-                        {addon.acceptance} -{' '}
-                        <strong>{addon.accepted ? 'Tak' : 'Nie'}</strong>
-                      </p>
-                    ) : null}
-                    {!!addon.acceptances && !!addon.acceptancesStatus
-                      ? addon.acceptances.map((acceptance) => (
-                          <p key={acceptance.id}>
-                            {acceptance.text} -{' '}
-                            <strong>
-                              {addon.acceptancesStatus![acceptance.id].accepted
-                                ? 'Tak'
-                                : 'Nie'}
-                            </strong>
-                          </p>
-                        ))
-                      : null}
-                    {addon.file ? (
-                      <Button
-                        small
-                        blank
-                        primary
-                        to={`${ApiService.url}rent/file/${rentId}/${addon.file}`}
-                        text="application.seeAttachedFile"
-                      />
-                    ) : null}
-                  </StyledSingleAddon>
-                ))}
-              </ul>
-            </div>
-          ) : null}
-          {line.paymentType === RentPaymentType.Installments ? (
-            <>
-              <StyledSubHeader>{__('application.periods')}</StyledSubHeader>
-              <ul>
-                {sortedPeriods
-                  .filter(
-                    (period) =>
-                      !isBefore(
-                        new Date(period.startAt),
-                        new Date(line.startAt),
-                      ) &&
-                      !isAfter(
-                        new Date(period.finishAt),
-                        new Date(line.finishAt),
-                      ),
-                  )
-                  .map((period) => {
-                    console.log(
-                      'PERIOD',
-                      period,
-                      !isBefore(
-                        new Date(period.startAt),
-                        new Date(line.startAt),
-                      ),
-                    );
-                    return (
-                      <StyledSinglePaymentPeriod key={period.id}>
-                        {dateOnly(period.startAt)} - {dateOnly(period.finishAt)}{' '}
-                        - <strong>{formatPrice(period.value)}</strong> -{' '}
-                        {period.paid
-                          ? __('application.periodPaid')
-                          : __('application.periodUnpaid')}
-                      </StyledSinglePaymentPeriod>
-                    );
-                  })}
-              </ul>
-            </>
-          ) : null}
-        </StyledSinglePeriod>
-      ))}
-    </ul>
+                      {!!addon.acceptances && !!addon.acceptancesStatus
+                        ? addon.acceptances.map((acceptance) => (
+                            <p key={acceptance.id}>
+                              {acceptance.text} -{' '}
+                              <strong>
+                                {addon.acceptancesStatus![acceptance.id]
+                                  .accepted
+                                  ? 'Tak'
+                                  : 'Nie'}
+                              </strong>
+                            </p>
+                          ))
+                        : null}
+                      {addon.file ? (
+                        <Button
+                          small
+                          blank
+                          primary
+                          to={`${ApiService.url}rent/file/${rentId}/${addon.file}`}
+                          text="application.seeAttachedFile"
+                        />
+                      ) : null}
+                    </StyledSingleAddon>
+                  ))}
+                </ul>
+              </div>
+            ) : null}
+            {line.paymentType === RentPaymentType.Installments ? (
+              <>
+                <StyledSubHeader>{__('application.periods')}</StyledSubHeader>
+                <ul>
+                  {sortedPeriods
+                    .filter(
+                      (period) =>
+                        !isBefore(
+                          new Date(period.startAt),
+                          new Date(line.startAt),
+                        ) &&
+                        !isAfter(
+                          new Date(period.finishAt),
+                          new Date(line.finishAt),
+                        ),
+                    )
+                    .map((period) => {
+                      return (
+                        <StyledSinglePaymentPeriod key={period.id}>
+                          {dateOnly(period.startAt)} -{' '}
+                          {dateOnly(period.finishAt)} -{' '}
+                          <strong>{formatPrice(period.value)}</strong> -{' '}
+                          {period.paid
+                            ? __('application.periodPaid')
+                            : __('application.periodUnpaid')}
+                        </StyledSinglePaymentPeriod>
+                      );
+                    })}
+                </ul>
+              </>
+            ) : null}
+          </StyledSinglePeriod>
+        ))}
+      </ul>
+    </>
   );
 };

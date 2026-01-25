@@ -22,6 +22,7 @@ import {
   Users,
   Workers,
 } from 'src/icons';
+import MobileAppsConfig from './MobileAppsConfig/MobileAppsConfig';
 
 const Management = () => {
   const { data: user } = useGetMyDetailsQuery();
@@ -61,6 +62,11 @@ const Management = () => {
             {
               to: `/${UserService.getSlugByRole(user.role)}/management/settings`,
               text: 'application.settings',
+              icon: <Adjustments />,
+            },
+            {
+              to: `/${UserService.getSlugByRole(user.role)}/management/mobile-config`,
+              text: 'application.mobileAppsConfig',
               icon: <Adjustments />,
             },
             {
@@ -104,6 +110,14 @@ const Management = () => {
         <Route
           path={`/${UserService.getSlugByRole(user.role)}/management/settings`}
           component={Settings}
+        />
+        <Route
+          path={`/${UserService.getSlugByRole(user.role)}/management/settings`}
+          component={Settings}
+        />
+        <Route
+          path={`/${UserService.getSlugByRole(user.role)}/management/mobile-config`}
+          component={MobileAppsConfig}
         />
         <Route
           path={`/${UserService.getSlugByRole(user.role)}/management/attachments`}

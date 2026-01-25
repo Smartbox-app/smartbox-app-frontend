@@ -34,7 +34,7 @@ const UserDetail = ({
   }, []);
 
   if (!userData) return <Spinner />;
-  console.log('USER DATA', singleUser);
+
   return (
     <>
       <SectionHeader title="application.userData" />

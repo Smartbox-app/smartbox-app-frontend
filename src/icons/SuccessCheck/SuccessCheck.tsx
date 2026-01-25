@@ -10,9 +10,9 @@ export const SuccessCheck = () => (
     <path
       d="M66 39L44 61L34 51"
       stroke="#22C55E"
-      stroke-width="4"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeWidth="4"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
   </svg>
 );

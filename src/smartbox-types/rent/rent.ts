@@ -107,6 +107,7 @@ export class RentDetailsRes {
   number: string;
   status: RentStatus;
   startAt: Date;
+  decisionFinishAt: Date;
   finishAt: Date;
   owner: RentDetailsUser;
   periods: PeriodEntity[];
@@ -170,6 +171,7 @@ export type MyRentDetails = {
   description: RentDescription[];
   accessControl: AccessControl;
   paymentType: RentPaymentType;
+  pendingPayments: boolean;
   periods: PeriodEntity[];
   passcode: string | null;
 };

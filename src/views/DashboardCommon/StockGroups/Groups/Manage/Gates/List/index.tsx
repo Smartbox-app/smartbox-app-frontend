@@ -97,7 +97,8 @@ const List = () => {
       >
         {__('application.gatesList')}
       </HeaderWithActions>
-
+      <Typography>{__('application.gatesListDescription')}</Typography>
+      <Typography>{__('application.gatesListAlarmDescription')}</Typography>
       <ApiTable
         scheme={scheme}
         apiEndpointSubUrl={`gate/list/group/${stockGroupId}`}

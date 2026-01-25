@@ -2,14 +2,21 @@ import { ApiErrorCode, ApiResult } from 'smartbox-types';
 import { Capacitor, CapacitorHttp } from '@capacitor/core';
 import { notifications } from '../actions';
 import { store, history } from '../App';
-import { UserState } from 'src/reducers/user-reducer';
 import { Preferences } from '@capacitor/preferences';
 
+const getUrl = async () => {
+
+  return typeof import.meta.env.VITE_APP_API_URL === 'string'
+    ? `${import.meta.env.VITE_APP_API_URL.trim()}/`
+    : 'http://localhost:3001/';
+};
+
 export default class ApiService {
-  static url =
-    typeof import.meta.env.VITE_APP_API_URL === 'string'
-      ? `${import.meta.env.VITE_APP_API_URL.trim()}/`
-      : 'http://localhost:3001/';
+  static url = '';
+
+  static setUrl = async () => {
+    this.url = await getUrl();
+  };
 
   static wrapUrlWithTenant = (url: string) => {
     const tenantIdentifier = store.getState().tenant?.identifier;
@@ -40,8 +47,8 @@ export default class ApiService {
     };
 
     if (Capacitor.isNativePlatform()) {
-      const token = await Preferences.get({ key: 'smst_token ' });
-      headers.Authorization = `Bearer ${token}`;
+      const token = await Preferences.get({ key: 'smst_token' });
+      headers.Authorization = `Bearer ${token.value}`;
     }
 
     const wrappedUrl = ApiService.wrapUrlWithTenant(url);
@@ -125,12 +132,11 @@ export default class ApiService {
     };
 
     if (Capacitor.isNativePlatform()) {
-      const token = await Preferences.get({ key: 'smst_token ' });
-      headers.Authorization = `Bearer ${token}`;
+      const token = await Preferences.get({ key: 'smst_token' });
+      headers.Authorization = `Bearer ${token.value}`;
     }
 
     const wrappedUrl = ApiService.wrapUrlWithTenant(url);
-
     try {
       const response = await fetch(`${ApiService.url}${wrappedUrl}`, {
         method,
@@ -173,8 +179,8 @@ export default class ApiService {
     };
 
     if (Capacitor.isNativePlatform()) {
-      const token = await Preferences.get({ key: 'smst_token ' });
-      headers.Authorization = `Bearer ${token}`;
+      const token = await Preferences.get({ key: 'smst_token' });
+      headers.Authorization = `Bearer ${token.value}`;
     }
 
     const wrappedUrl = ApiService.wrapUrlWithTenant(url);
@@ -331,8 +337,8 @@ export default class ApiService {
     };
 
     if (Capacitor.isNativePlatform()) {
-      const token = await Preferences.get({ key: 'smst_token ' });
-      headers.Authorization = `Bearer ${token}`;
+      const token = await Preferences.get({ key: 'smst_token' });
+      headers.Authorization = `Bearer ${token.value}`;
     }
 
     const capacitorMethod = data ? CapacitorHttp.post : CapacitorHttp.get;
@@ -348,7 +354,6 @@ export default class ApiService {
         },
       });
       const received = response.data;
-      console.log('HEADERS', response, response.headers);
       const filename =
         response.headers['Filename'] || response.headers['filename'];
 

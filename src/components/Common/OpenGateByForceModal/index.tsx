@@ -16,7 +16,7 @@ interface Props {
 
 const OpenGateByForceModal = ({ gateId, latlon, tooFarAway, notSupported, cantRead }: Props) => {
     const dispatch = useDispatch();
-    return <div className="open-gate-by-force-modal-wrapper">
+    return <>
         {tooFarAway && <p>{__('application.openGateByForceConfirmationTooFarAway')}</p>}
         {notSupported && <p>{__('application.openGateByForceConfirmationNotSupported')}</p>}
         {cantRead && <p>{__('application.openGateByForceConfirmationCantRead')}</p>}
@@ -31,7 +31,7 @@ const OpenGateByForceModal = ({ gateId, latlon, tooFarAway, notSupported, cantRe
                 text={'application.openGate'}
             />
         </ButtonsContainer>
-    </div>
+    </>
 }
 
 

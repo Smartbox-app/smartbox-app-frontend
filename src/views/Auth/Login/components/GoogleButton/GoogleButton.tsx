@@ -47,6 +47,8 @@ export const GoogleButton = () => {
       'nidobox',
       'biastorage',
       'twojbox',
+      'osiedle',
+      's3box',
       'test'
     ].includes(tenant.identifier)
   )

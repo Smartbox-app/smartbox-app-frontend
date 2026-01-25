@@ -8,12 +8,18 @@ PODS:
   - CapacitorCommunityFileOpener (7.0.1):
     - Capacitor
   - CapacitorCordova (7.4.4)
+  - CapacitorDevice (7.0.3):
+    - Capacitor
   - CapacitorFilesystem (7.1.5):
     - Capacitor
     - IONFilesystemLib (~> 1.0.1)
+  - CapacitorGeolocation (7.1.7):
+    - Capacitor
+    - IONGeolocationLib (= 1.0.1)
   - CapacitorPreferences (7.0.3):
     - Capacitor
   - IONFilesystemLib (1.0.1)
+  - IONGeolocationLib (1.0.1)
 
 DEPENDENCIES:
   - "Capacitor (from `../../node_modules/@capacitor/ios`)"
@@ -21,12 +27,15 @@ DEPENDENCIES:
   - "CapacitorBrowser (from `../../node_modules/@capacitor/browser`)"
   - "CapacitorCommunityFileOpener (from `../../node_modules/@capacitor-community/file-opener`)"
   - "CapacitorCordova (from `../../node_modules/@capacitor/ios`)"
+  - "CapacitorDevice (from `../../node_modules/@capacitor/device`)"
   - "CapacitorFilesystem (from `../../node_modules/@capacitor/filesystem`)"
+  - "CapacitorGeolocation (from `../../node_modules/@capacitor/geolocation`)"
   - "CapacitorPreferences (from `../../node_modules/@capacitor/preferences`)"
 
 SPEC REPOS:
   trunk:
     - IONFilesystemLib
+    - IONGeolocationLib
 
 EXTERNAL SOURCES:
   Capacitor:
@@ -39,8 +48,12 @@ EXTERNAL SOURCES:
     :path: "../../node_modules/@capacitor-community/file-opener"
   CapacitorCordova:
     :path: "../../node_modules/@capacitor/ios"
+  CapacitorDevice:
+    :path: "../../node_modules/@capacitor/device"
   CapacitorFilesystem:
     :path: "../../node_modules/@capacitor/filesystem"
+  CapacitorGeolocation:
+    :path: "../../node_modules/@capacitor/geolocation"
   CapacitorPreferences:
     :path: "../../node_modules/@capacitor/preferences"
 
@@ -50,10 +63,13 @@ SPEC CHECKSUMS:
   CapacitorBrowser: 66aa8ff09cdca2a327ce464b113b470e6f667753
   CapacitorCommunityFileOpener: 9611c9d1595de7b50571717d443bb718a304b5eb
   CapacitorCordova: bf648a636f3c153f652d312ae145fb508b6ffced
+  CapacitorDevice: acceaa3502f9a5edd446c96a451eb200d1ac6c03
   CapacitorFilesystem: 2caf7ad6e26d68defef0631b0f09adb09a353f27
+  CapacitorGeolocation: bcd9412a99fd542b585561238b210bd2b162b8f6
   CapacitorPreferences: 688a15748e6fb91d52c7563e5f2df3be503dd694
   IONFilesystemLib: 89258b8e3e85465da93127d25d7ce37f977e8a6f
+  IONGeolocationLib: 20f9d0248a0b5264511fb57a37e25dd2badf797a
 
-PODFILE CHECKSUM: 942c3227ae2f4d6a57bf863372d6d040a44e95c4
+PODFILE CHECKSUM: 8aa084fc5438d11bbebbcfc8048cd7aa8d31283a
 
 COCOAPODS: 1.16.2

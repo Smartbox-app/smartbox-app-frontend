@@ -25,6 +25,7 @@ const TenantDetailsForm = ({ disabled }: Props) => {
         label="rent.first_name"
         placeholder="rent.first_name_placeholder"
         {...register('firstName')}
+        required
         error={errors.firstName?.message}
         disabled
       />
@@ -32,6 +33,7 @@ const TenantDetailsForm = ({ disabled }: Props) => {
         label="rent.last_name"
         placeholder="rent.last_name_placeholder"
         {...register('lastName')}
+        required
         error={errors.lastName?.message}
         disabled
       />

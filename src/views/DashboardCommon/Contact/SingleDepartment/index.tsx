@@ -1,6 +1,7 @@
 import React from 'react';
 
 import './SingleDepartment.scss';
+import { Link } from '../../../../components/ui';
 
 interface Props {
   name: string;
@@ -30,14 +31,14 @@ const SingleDepartment = ({ name, phone, mail, organisationRole, closeHour, open
       </p>
       <p className="department-row clickable">
         <span className="fa fa-envelope-o" />
-        <a href={`mailto:${mail}`} rel="noopener noreferrer" target="_blank">
+        <Link href={`mailto:${mail}`} rel="noopener noreferrer" target="_blank">
           {mail}
-        </a>
+        </Link>
       </p>
       {phone && (
         <p className="department-row clickable">
           <span className="fa fa-mobile" />
-          <a href={`tel:${phone}`}>{phone}</a>
+          <Link href={`tel:${phone}`}>{phone}</Link>
         </p>
       )}
     </div>

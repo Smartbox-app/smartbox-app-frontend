@@ -36,7 +36,7 @@ const StyledSection = styled('section')<{
   padding: `${theme.spacing * 6}px ${theme.spacing * 4}px`,
   boxShadow: getShadowByVariant(variant, theme),
   borderRadius: theme.radius.outerSurface,
-  gap: theme.spacing * 4,
+  gap: theme.spacing * 6,
   alignItems: align === 'center' ? 'center' : undefined,
   width: getWidth(width),
   margin: '0 auto',

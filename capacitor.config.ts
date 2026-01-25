@@ -5,6 +5,7 @@ let config: CapacitorConfig = {
   appName: process.env.NODE_APP_NAME,
   ios: {
     contentInset: 'never',
+    
   },
   server: {
     androidScheme: 'http',
@@ -15,6 +16,7 @@ let config: CapacitorConfig = {
     useLegacyBridge: true,
   },
   webDir: 'dist',
+  
   plugins: {
     SplashScreen: {
       launchShowDuration: 5000,

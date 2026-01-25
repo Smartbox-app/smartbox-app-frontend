@@ -9,6 +9,8 @@ import React, {
   useEffect,
   useState,
 } from 'react';
+import { Browser } from '@capacitor/browser';
+import { Capacitor } from '@capacitor/core';
 
 type ButtonTypes = 'primary' | 'secondary' | 'tertiary' | 'error' | 'success';
 type ButtonSizes = 'large' | 'medium' | 'small' | 'extrasmall';
@@ -55,7 +57,6 @@ const heightBySize = {
   small: 8,
   extrasmall: 6,
 };
-
 
 const getColorByVariant = (variant: ButtonTypes, theme: DefaultTheme) => {
   if (variant === 'primary') return theme.colors.primary;
@@ -181,6 +182,10 @@ export const Button = ({
     setClicked(true);
   };
 
+  const handleCapacitorNavigation = (aHref: string) => {
+    Browser.open({ url: aHref });
+  };
+
   useEffect(() => {
     if (!clicked) return;
 
@@ -205,6 +210,24 @@ export const Button = ({
       </StyledButton>
     );
   if (href) {
+    if (Capacitor.isNativePlatform()) {
+      return (
+        <StyledButton
+          className={className}
+          type={type}
+          variant={variant}
+          fullWidth={fullWidth}
+          onClick={() => handleCapacitorNavigation(href)}
+          clicked={clicked}
+          size={size}
+          disabled={disabled}
+        >
+          {iconLeft || <span />}
+          {text ? __(text) : null}
+          {iconRight || <span />}
+        </StyledButton>
+      );
+    }
     return (
       <StyledA
         className={className}

@@ -3,13 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@capacitor-community/facebook-login": "^7.0.1",
     "@capacitor-community/file-opener": "^7.0.1",
     "@capacitor/android": "^7.0.0",
     "@capacitor/app": "7",
     "@capacitor/assets": "^3.0.5",
     "@capacitor/browser": "^7.0.0",
     "@capacitor/core": "^7.0.0",
+    "@capacitor/device": "^7.0.0",
     "@capacitor/filesystem": "^7.0.0",
+    "@capacitor/geolocation": "^7.0.0",
     "@capacitor/ios": "^7.0.0",
     "@capacitor/preferences": "^7.0.0",
     "@cyntler/react-doc-viewer": "^1.17.0",
@@ -91,7 +94,7 @@
     "vite-tsconfig-paths": "^6.0.1"
   },
   "scripts": {
-    "start": "vite",
+    "start": "VITE_IS_LOCAL=true && vite",
     "lint": "eslint './src/**/*.{ts,tsx}' --fix",
     "build-mobile": "node ./build-mobile-app.mjs --mode=prod",
     "build-new-prod": "VITE_APP_URL=https://smartbox-app.pl VITE_APP_API_URL=https://api.smartbox-app.pl vite build"
@@ -113,7 +116,6 @@
     "@capacitor/cli": "^7.0.0",
     "@eslint/js": "^9.23.0",
     "@stylistic/eslint-plugin": "^4.2.0",
-    "@types/react": "^18.3.5",
     "@types/react-select": "^3.0.13",
     "@typescript-eslint/eslint-plugin": "^8.29.0",
     "@typescript-eslint/parser": "^8.29.0",

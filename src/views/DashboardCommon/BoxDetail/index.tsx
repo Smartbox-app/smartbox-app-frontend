@@ -19,7 +19,7 @@ import { Edit } from './Edit';
 
 import './BoxDetail.scss';
 import { useGetMyDetailsQuery } from '../../../queries';
-import { Header } from 'src/components/ui';
+import { Header, Link } from 'src/components/ui';
 
 interface Props {
   singleBoxDetail: RentDetailsRes;
@@ -77,9 +77,9 @@ const BoxDetail = ({
 
           <DescriptionRow icon="fa-mobile" text="application.phone">
             {singleBoxDetail?.owner?.phone ? (
-              <a href={`tel:${singleBoxDetail.owner.phone}`}>
+              <Link href={`tel:${singleBoxDetail.owner.phone}`}>
                 {singleBoxDetail.owner.phone}
-              </a>
+              </Link>
             ) : (
               '---'
             )}

@@ -2,6 +2,9 @@ import { Capacitor } from '@capacitor/core';
 
 const readValue = (): string => {
   // return 'testowa'
+  if (import.meta.env.VITE_IS_LOCAL === 'true') {
+    return import.meta.env.VITE_APP_HOSTNAME;
+  }
   if (import.meta.env.DEV) {
     return import.meta.env.VITE_APP_HOSTNAME || '';
   } else {
@@ -11,10 +14,10 @@ const readValue = (): string => {
   }
 };
 
-export const getHostName = (): string => {
-  return 'test';
+export const getHostName = (): string | null => {
   const hostname = readValue();
   const split = hostname.split('.');
+  if (split.length === 2) return null;
   const clientId = split[0];
   return clientId;
 };

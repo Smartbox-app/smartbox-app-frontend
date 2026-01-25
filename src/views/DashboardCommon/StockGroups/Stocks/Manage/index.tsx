@@ -1,6 +1,6 @@
 import { useEffect, useState, useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import { IStock, TenantEntity, UserRole } from 'smartbox-types';
+import { AccessControl, StockRes, TenantEntity, UserRole } from 'smartbox-types';
 
 import { Redirect, Route, Switch, useParams } from 'react-router';
 import UserService from '../../../../../services/user-service';
@@ -29,10 +29,12 @@ import {
   Add,
   Map as MapIcon,
   Adjustments,
+  Error,
 } from 'src/icons';
 import GateStatus from 'src/views/DashboardCommon/GateStatus';
 import { useTenantNaming } from 'src/hooks/useTenantNaming';
 import { Statistics } from './Statistics';
+import { Alarms } from './Alarms';
 
 const Manage = () => {
   const { stockId } = useParams<{ stockId: string }>();
@@ -41,12 +43,14 @@ const Manage = () => {
   const { getText } = useTenantNaming();
   const [tenantForAdmin, setTenantForAdmin] = useState<TenantEntity>();
   const [isMapActive, setMapActive] = useState<boolean>(false);
+  const [isAlarmsActive, setAlarmsActive] = useState<boolean>(false);
 
   const hasFullAccess = [UserRole.admin, UserRole.client].includes(user!.role);
 
   const getStockData = async () => {
-    await ApiService.callFetch('GET', `stock/${stockId}`, (stock: IStock) => {
+    await ApiService.callFetch('GET', `stock/${stockId}`, (stock: StockRes) => {
       setMapActive(stock.isMapActive);
+      setAlarmsActive(stock.accessControl === AccessControl.ksm);
       if (user?.role === UserRole.admin) getTenantForAdmin(stock.tenantId);
     });
   };
@@ -66,6 +70,20 @@ const Manage = () => {
   }, []);
 
   const tabs = useMemo(() => {
+    const gatesAndAlarms = [
+      {
+        to: `/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/gates`,
+        text: 'application.gates',
+        icon: <Stop />,
+      },
+    ];
+    if (isAlarmsActive) {
+      gatesAndAlarms.push({
+        to: `/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/alarms`,
+        text: 'application.alarms',
+        icon: <Error />,
+      });
+    }
     const elements = hasFullAccess
       ? [
           {
@@ -78,11 +96,7 @@ const Manage = () => {
             text: 'application.stockRents',
             icon: <ListIcon />,
           },
-          {
-            to: `/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/gates`,
-            text: 'application.gates',
-            icon: <Stop />,
-          },
+          ...gatesAndAlarms,
           {
             to: `/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/groups`,
             text: getText('boxes_groups'),
@@ -105,11 +119,7 @@ const Manage = () => {
             text: 'application.stockRents',
             icon: <ListIcon />,
           },
-          {
-            to: `/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/gates`,
-            text: 'application.gates',
-            icon: <Stop />,
-          },
+          ...gatesAndAlarms,
           {
             to: `/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/boxes`,
             text: 'application.stockBoxes',
@@ -147,7 +157,7 @@ const Manage = () => {
     });
 
     return elements;
-  }, [isMapActive, tenantForAdmin, hasFullAccess]);
+  }, [isMapActive, tenantForAdmin, hasFullAccess, isAlarmsActive]);
 
   return (
     <>
@@ -183,6 +193,10 @@ const Manage = () => {
           <Route
             path={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/:stockId/gates`}
             component={Gates}
+          />
+          <Route
+            path={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/:stockId/alarms`}
+            component={Alarms}
           />
           {hasFullAccess && (
             <Route

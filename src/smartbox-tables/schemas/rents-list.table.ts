@@ -52,6 +52,16 @@ export const rentsList: TableSchema = {
             alias: 'r'
         },
         {
+            name: 'Wcześniejsze zakończenie',
+            field: 'decisionFinishAt',
+            mobile: true,
+            searchable: true,
+            sortable: true,
+            defaultSort: false,
+            type: FieldType.Date,
+            alias: 'r'
+        },
+        {
             name: 'Numer',
             field: 'number',
             mobile: true,

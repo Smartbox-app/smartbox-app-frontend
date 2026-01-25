@@ -74,7 +74,7 @@ export const Map = () => {
   }, []);
 
   useEffect(() => {
-    if (!mapContainerRef.current) return;
+    if (!mapContainerRef.current || !mapboxgl) return;
     mapboxgl.accessToken =
       'pk.eyJ1Ijoic21hcnRib3hzdG9yYWdlIiwiYSI6ImNtZ2dkYW01NjA5ankybHM5djFqbjZtNWUifQ.2bn6LvbIw9BeDtAVtsPvrQ';
 
@@ -129,7 +129,7 @@ export const Map = () => {
       ...groups.map((group) => group.stocks).flat(),
     ];
 
-    for (let stock of allStocks) {
+    for (const stock of allStocks) {
       if (!stock.lat || !stock.lon) continue;
 
       const el = document.createElement('div');

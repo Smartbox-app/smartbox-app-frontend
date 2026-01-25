@@ -19,7 +19,7 @@ import { useParams } from 'react-router';
 import UserService from '../../../../../../../services/user-service';
 import { gate } from '../../../../../../../actions';
 import { useGetMyDetailsQuery } from 'src/queries';
-import { HeaderWithActions } from 'src/components/ui';
+import { HeaderWithActions, Typography } from 'src/components/ui';
 
 const List = () => {
   const { data: user } = useGetMyDetailsQuery();
@@ -97,7 +97,8 @@ const List = () => {
       >
         {__('application.gatesList')}
       </HeaderWithActions>
-
+      <Typography>{__('application.gatesListDescription')}</Typography>
+      <Typography>{__('application.gatesListAlarmDescription')}</Typography>
       <ApiTable
         scheme={scheme}
         apiEndpointSubUrl={`gate/list/stock/${stockId}`}

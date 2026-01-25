@@ -5,7 +5,6 @@ import { ButtonsContainer } from '../../Layout';
 import { Button } from '../../Branded';
 import { modal } from '../../../actions';
 
-import './ConfirmModal.scss';
 import {__} from "../../../helpers/i18n";
 
 interface Props {
@@ -23,7 +22,7 @@ const ConfirmModal = ({
   approveAction,
   hideModal,
 }: Props) => (
-  <div className="confirm-modal-wrapper">
+  <>
     <p>{__(mainText)}</p>
     <ButtonsContainer>
       <Button click={() => hideModal()} text={cancelButtonText} success />
@@ -36,7 +35,7 @@ const ConfirmModal = ({
         text={approveButtonText}
       />
     </ButtonsContainer>
-  </div>
+  </>
 );
 
 const mapDispatchToProps = (dispatch: any) => bindActionCreators({ ...modal }, dispatch);

@@ -71,7 +71,7 @@ const Register = () => {
     registerUser({
       ...data,
       email: data.email.trim(),
-      phone: data.phone.trim()
+      phone: data.phone.trim(),
     });
   };
 
@@ -102,25 +102,29 @@ const Register = () => {
                   label="auth.email"
                   placeholder="auth.email_placeholder"
                   error={errors['email']?.message}
+                  required
                   {...register('email')}
                 />
                 <Input
                   label="auth.phone"
                   placeholder="auth.phone_placeholder"
                   error={errors['phone']?.message}
-                  help='Podaj numer telefonu wraz z numerem kierunkowym (np. +48)'
+                  required
+                  help="Podaj numer telefonu wraz z numerem kierunkowym (np. +48)"
                   {...register('phone')}
                 />
                 <Input
                   label="auth.first_name"
                   placeholder="auth.first_name_placeholder"
                   error={errors['firstName']?.message}
+                  required
                   {...register('firstName')}
                 />
                 <Input
                   label="auth.last_name"
                   placeholder="auth.last_name_placeholder"
                   error={errors['lastName']?.message}
+                  required
                   {...register('lastName')}
                 />
                 <Input
@@ -128,6 +132,7 @@ const Register = () => {
                   type="password"
                   placeholder="auth.password_placeholder"
                   error={errors['pwd']?.message}
+                  required
                   {...register('pwd')}
                 />
                 <Input
@@ -135,6 +140,7 @@ const Register = () => {
                   type="password"
                   placeholder="auth.password_placeholder"
                   error={errors['pwd2']?.message}
+                  required
                   {...register('pwd2')}
                 />
               </RegisterForm>
@@ -142,6 +148,7 @@ const Register = () => {
             <Section>
               <CheckBox
                 {...register('rules')}
+                required
                 label={
                   <Typography>
                     {__('application.readTheProvisions')}{' '}

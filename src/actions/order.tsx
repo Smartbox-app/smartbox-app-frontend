@@ -1,4 +1,4 @@
-import { IStock, PaymentDocument, RentPaymentType } from 'smartbox-types';
+import { PaymentDocument, RentPaymentType, StockRes } from 'smartbox-types';
 import ApiService from '../services/api-service';
 import { FormType } from '../types/order-form';
 import { format } from 'date-fns';
@@ -37,7 +37,7 @@ export const setOrderStock = (
   type: 'SET_ORDER_STOCK',
   payload: { stockId, stockAddress, stockName },
 });
-export const setOrderFullStock = (stock: IStock) => ({
+export const setOrderFullStock = (stock: StockRes) => ({
   type: 'SET_ORDER_FULL_STOCK',
   payload: { stock },
 });

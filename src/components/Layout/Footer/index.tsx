@@ -15,6 +15,7 @@ const StyledFooter = styled('footer')(({ theme }) => ({
   flexDirection: 'column',
   justifyContent: 'center',
   fontSize: 14,
+  lineHeight: '20px',
   gap: theme.spacing * 4,
   '@media(min-width: 768px)': {
     flexDirection: 'row',

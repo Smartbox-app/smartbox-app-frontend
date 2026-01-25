@@ -4,7 +4,7 @@ import { ButtonsContainer } from '../../../../../../components/Layout';
 import { useDispatch, useSelector } from 'react-redux';
 import { ApplicationState } from '../../../../../../reducers';
 import styled from 'styled-components';
-import { Alert, CheckBox } from '../../../../../../components/Common';
+import { Alert, AsterixRequired, CheckBox } from '../../../../../../components/Common';
 import {
   fetchAddons,
   selectAddon,
@@ -106,7 +106,7 @@ export const Addons = ({ stockId, boxGroupId }: Props) => {
     <>
       {sortedAddons.map((addon) => (
         <Section key={addon.id}>
-          <Header variant="h2">{addon.name}</Header>
+          <Header variant="h2">{addon.name} {addon.required ? <AsterixRequired /> : null}</Header>
           {addon.description ? (
             <Typography>{addon.description}</Typography>
           ) : null}
@@ -142,6 +142,7 @@ export const Addons = ({ stockId, boxGroupId }: Props) => {
           {displayFileInput(addon, orderAddons[addon.id]) ? (
             <StyledUserFileContainer>
               <p>{addon.userFileText}</p>
+              <p>Maksymalny dopuszczalny rozmiar pliku: <strong>5MB</strong></p>
               <FileInput
                 input={{
                   value: orderAddons[addon.id].file,
@@ -164,7 +165,7 @@ export const Addons = ({ stockId, boxGroupId }: Props) => {
             ? addon.acceptances.map((acceptance) => (
                 <div key={acceptance.id}>
                   <CheckBox
-                    label={acceptance.text}
+                    label={<>{acceptance.text} {acceptance.required ? <AsterixRequired /> : null}</>}
                     name={`acceptance_${acceptance.id}`}
                     checked={
                       orderAddons[addon.id].acceptancesStatus[acceptance.id]

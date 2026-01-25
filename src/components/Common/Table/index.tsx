@@ -18,6 +18,7 @@ import styled from 'styled-components';
 import { getColorForBackground } from '../../../utils/color';
 import { lighten, setLightness } from 'polished';
 import { ButtonsContainer } from 'src/components/Layout';
+import { Link } from '../../ui';
 
 interface Props {
   scheme: TableSchema;
@@ -57,9 +58,9 @@ const formatValue = (value: any, field: TableSchemaField, allValues: any) => {
       return value === null ? (
         '-'
       ) : (
-        <a href={value} rel="noopener noreferrer" target="_blank">
+        <Link href={value} rel="noopener noreferrer" target="_blank">
           {value}
-        </a>
+        </Link>
       );
     }
 
@@ -67,18 +68,18 @@ const formatValue = (value: any, field: TableSchemaField, allValues: any) => {
       return value === null ? (
         '-'
       ) : (
-        <a href={`mailto: ${value}`} rel="noopener noreferrer" target="_blank">
+        <Link href={`mailto: ${value}`} rel="noopener noreferrer" target="_blank">
           {value}
-        </a>
+        </Link>
       );
     }
     case FieldType.Tel: {
       return value === null ? (
         '-'
       ) : (
-        <a href={`tel: ${value} `} rel="noopener noreferrer" target="_blank">
+        <Link href={`tel: ${value} `} rel="noopener noreferrer" target="_blank">
           {value}
-        </a>
+        </Link>
       );
     }
     case FieldType.Img: {
@@ -159,7 +160,7 @@ class Table extends React.Component<Props> {
   render() {
     const desktop = window.matchMedia('(min-width: 920px)').matches;
     let content: any = null;
-    if (!this.props.data || this.props.data.items.length === 0) {
+    if (!this.props.data || !this.props.data.items || this.props.data.items.length === 0) {
       return <Alert type="notice" text="application.lackOfDataToShow" />;
     }
 

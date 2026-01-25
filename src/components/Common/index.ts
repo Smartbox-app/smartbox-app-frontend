@@ -29,7 +29,7 @@ import { InputSelect } from './InputSelect';
 import { SmsStatus } from './SmsStatus';
 import { InvoiceStatus } from './InvoiceStatus';
 import { NotifyWhenAvailableModal } from './NotifyWhenAvailableModal';
-
+import { AsterixRequired } from './AsterixRequired';
 export {
   Alert,
   ApiTable,
@@ -62,4 +62,5 @@ export {
   SmsStatus,
   InvoiceStatus,
   NotifyWhenAvailableModal,
+  AsterixRequired,
 };

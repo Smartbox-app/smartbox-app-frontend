@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import ApiService from '../../../../../../services/api-service';
-import { BoxMapRes, IStock } from 'smartbox-types';
-import { Section, SimpleHeader } from '../../../../../../components/Layout';
+import { BoxMapRes, StockRes } from 'smartbox-types';
+import { Section } from '../../../../../../components/Layout';
 import { Spinner } from '../../../../../../components/Branded';
 import { MapSettingsForm } from './MapSettingsForm';
 import { MapView } from '../../../../MapView';
@@ -11,7 +11,7 @@ import { __ } from 'src/helpers/i18n';
 
 const Map = () => {
     const { stockId } = useParams<{ stockId: string }>();
-    const [stock, setStock] = useState<IStock>();
+    const [stock, setStock] = useState<StockRes>();
     const [boxes, setBoxes] = useState<BoxMapRes[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
 
@@ -23,7 +23,7 @@ const Map = () => {
     }
 
     const getStock = async () => {
-        await ApiService.callFetch('GET', `stock/${stockId}`, (res: IStock) => {
+        await ApiService.callFetch('GET', `stock/${stockId}`, (res: StockRes) => {
             setStock(res);
         })
     }

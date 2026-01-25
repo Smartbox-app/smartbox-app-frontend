@@ -1,25 +1,22 @@
-import { useState } from 'react';
-import { connect, useDispatch } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Coordinate, RentGate } from 'smartbox-types';
 import { Button, Spinner } from '../../../../components/Branded';
-import { __ } from '../../../../helpers/i18n';
 import { gate as gateActions, modal } from '../../../../actions';
 import { isUser } from '../../../../utils/role-check';
-
-import './Gate.scss';
 import { OpenGateByForceModal } from '../../../../components/Common/OpenGateByForceModal';
 import styled from 'styled-components';
 import { useGetMyDetailsQuery } from 'src/queries';
+import { Geolocation, PermissionStatus } from '@capacitor/geolocation';
+import { Capacitor } from '@capacitor/core';
 
 interface Props {
   gate: RentGate;
 }
 
 const StyledGateContainer = styled.div`
-border-left: 4px solid  ${({ theme }) => theme.colors.primary};
-padding-left: 16px;
-}
+  border-left: 4px solid ${({ theme }) => theme.colors.primary};
+  padding-left: 16px;
 `;
 
 const StyledGateTitle = styled.h4`
@@ -39,16 +36,7 @@ const StyledGateDescription = styled.p`
 const Gate = ({ gate }: Props) => {
   const dispatch = useDispatch();
   const { data: user } = useGetMyDetailsQuery();
-  const [loading, setLoading] = useState<boolean>(false);
-
-  const openGateByLocation = (position: any) => {
-    const location: Coordinate = {
-      lon: position.coords.longitude,
-      lat: position.coords.latitude,
-    };
-    dispatch(gateActions.askGateToOpen(gate.id, location));
-    setLoading(false);
-  };
+  const [loading, setLoading] = useState(false);
 
   const handleError = () => {
     dispatch(
@@ -63,27 +51,77 @@ const Gate = ({ gate }: Props) => {
     setLoading(false);
   };
 
-  const tryToOpenGateByLocation = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(openGateByLocation, handleError);
-    } else {
-      dispatch(
-        modal.showModal(
-          <OpenGateByForceModal
-            notSupported
-            gateId={gate.id}
-            latlon={{ lat: '0', lon: '0' }}
-          />,
-        ),
-      );
-      setLoading(false);
+  const ensurePermission = async (): Promise<boolean> => {
+    if (!Capacitor.isNativePlatform()) return true;
+
+    const status: PermissionStatus = await Geolocation.checkPermissions();
+    if (status.location === 'granted') return true;
+
+    const request = await Geolocation.requestPermissions();
+    return request.location === 'granted';
+  };
+
+  const getCurrentLocation = async (): Promise<Coordinate> => {
+    try {
+      if (Capacitor.isNativePlatform()) {
+        const hasPermission = await ensurePermission();
+        if (!hasPermission) throw new Error('permission_denied');
+
+        const position = await Geolocation.getCurrentPosition();
+        return {
+          lat: position.coords.latitude.toString(),
+          lon: position.coords.longitude.toString(),
+        };
+      } else if (navigator.geolocation) {
+        return new Promise<Coordinate>((resolve, reject) => {
+          navigator.geolocation.getCurrentPosition(
+            (pos) =>
+              resolve({
+                lat: pos.coords.latitude.toString(),
+                lon: pos.coords.longitude.toString(),
+              }),
+            reject,
+          );
+        });
+      } else {
+        throw new Error('not_supported');
+      }
+    } catch (error) {
+      throw error;
     }
   };
 
-  const getButtonText = () => {
-    return isUser(user!.role)
-      ? 'application.openGate'
-      : 'application.openGateStuff';
+  const tryToOpenGateByLocation = async () => {
+    try {
+      const location = await getCurrentLocation();
+      dispatch(gateActions.askGateToOpen(gate.id, location));
+    } catch (error: any) {
+      if (error.message === 'not_supported') {
+        dispatch(
+          modal.showModal(
+            <OpenGateByForceModal
+              notSupported
+              gateId={gate.id}
+              latlon={{ lat: '0', lon: '0' }}
+            />,
+          ),
+        );
+      } else if (error.message === 'permission_denied') {
+        dispatch(
+          modal.showModal(
+            <OpenGateByForceModal
+              cantRead
+              gateId={gate.id}
+              latlon={{ lat: '0', lon: '0' }}
+            />,
+          ),
+        );
+      } else {
+        handleError();
+      }
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleClick = () => {
@@ -98,44 +136,33 @@ const Gate = ({ gate }: Props) => {
     }
   };
 
+  const getButtonText = () => {
+    return isUser(user!.role)
+      ? 'application.openGate'
+      : 'application.openGateStuff';
+  };
+
   const gateButton = (
     <StyledGateContainer>
       {loading && <Spinner overlay halfTransparent />}
       <StyledGateTitle>{gate.name}</StyledGateTitle>
       {gate.description && (
         <StyledGateDescription>
-          <span className="fa fa-info-circle gate-info-icon" />{' '}
-          {gate.description}
+          <span className="fa fa-info-circle gate-info-icon" /> {gate.description}
         </StyledGateDescription>
       )}
       {gate.controlled && (
         <div className="slide-to-open">
-          <Button
-            text={getButtonText()}
-            type="button"
-            primary
-            click={handleClick}
-          />
+          <Button text={getButtonText()} type="button" primary click={handleClick} />
         </div>
       )}
     </StyledGateContainer>
   );
+
   if (!isUser(user!.role)) {
     return <div className="open-gate-wrapper">{gateButton}</div>;
   }
-  return (
-    <div className="open-gate-wrapper">
-      <div className="animation-wrapper">{gateButton}</div>
-    </div>
-  );
+  return <div className="open-gate-wrapper"><div className="animation-wrapper">{gateButton}</div></div>;
 };
 
-const mapDispatchToProps = (dispatch: any) =>
-  bindActionCreators(
-    {
-      ...gateActions,
-    },
-    dispatch,
-  );
-
-export default connect(null, mapDispatchToProps)(Gate);
+export default Gate;

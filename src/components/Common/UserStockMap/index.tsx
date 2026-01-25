@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import ApiService from '../../../services/api-service';
-import { BoxMapRes, BoxMapUserRes, IStock } from 'smartbox-types';
+import { BoxMapRes, BoxMapUserRes, StockRes } from 'smartbox-types';
 import { Spinner } from '../../../components/Branded';
 import { MapView } from '../../../views/DashboardCommon/MapView';
 import { __ } from '../../../helpers/i18n';
@@ -18,7 +18,7 @@ const UserStockMap = ({
   boxNumber,
   boxAdditionalInfo,
 }: Props) => {
-  const [stock, setStock] = useState<IStock>();
+  const [stock, setStock] = useState<StockRes>();
   const [boxes, setBoxes] = useState<BoxMapUserRes[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -34,7 +34,7 @@ const UserStockMap = ({
   };
 
   const getStock = async () => {
-    await ApiService.callFetch('GET', `stock/${stockId}`, (res: IStock) => {
+    await ApiService.callFetch('GET', `stock/${stockId}`, (res: StockRes) => {
       setStock(res);
     });
   };

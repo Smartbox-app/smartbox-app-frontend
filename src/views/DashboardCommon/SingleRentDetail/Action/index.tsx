@@ -49,6 +49,7 @@ const Action = ({
   };
 
   const canExtendRent = useMemo(() => {
+    if(rent.pendingPayments) return false;
     if (rent.status !== RentStatus.rented) return false;
     if (rent.periods.some((period) => !period.paid)) return false;
     return true;

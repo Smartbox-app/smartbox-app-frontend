@@ -35,7 +35,7 @@ export class DownloadService {
       url,
       payload,
     );
-    console.log('RESULRTTTT', dataBase64, filename);
+
     const normalizedName = (filename || 'download').replace(/[&\/\\#,+()$~%'":*?<>{} ]/g, '_');
     if (Capacitor.isNativePlatform()) {
       try {
@@ -46,7 +46,6 @@ export class DownloadService {
           data: dataBase64,
         });
 
-        console.log('Result File Written', writeFileResult.uri);
         const getUriResult = await Filesystem.getUri({
           directory: Directory.Documents,
           path: `${normalizedName}`,

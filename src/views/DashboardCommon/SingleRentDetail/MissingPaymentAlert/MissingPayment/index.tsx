@@ -82,6 +82,7 @@ const MissingPayment = ({ rent }: Props) => {
           type="button"
           size="large"
           iconLeft={<Wallet />}
+          disabled={rent.pendingPayments}
           variant="error"
           onClick={() => handleDebtPayOff(rent.id)}
         />

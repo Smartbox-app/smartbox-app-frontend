@@ -99,7 +99,6 @@ const SummaryTable = ({
     return (addonsPricesPerPeriod[0] || 0) + rentPricesPerPeriod[0];
   }, [rentPricesPerPeriod, addonsPricesPerPeriod]);
 
-  console.log('DATESTART', dateStart, dateOnlyLocalTime(dateStart));
   return (
     <>
       <div className="order-summary-wrapper">

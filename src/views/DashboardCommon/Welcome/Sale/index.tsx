@@ -15,24 +15,25 @@ interface Props {
 }
 
 const Sale = ({ discountsList, getStockDiscountsList }: Props) => {
-  const {getText} = useTenantNaming();
+  const { getText } = useTenantNaming();
   useEffect(() => {
     getStockDiscountsList();
   }, []);
 
   const discounts = useMemo(() => {
     return discountsList
-    .filter(d => !!d.discount)
-    .map(d => `${__('application.discount')} ${d.discount}% ${getText('on')} ${d.name}`)
-  }, [discountsList])
- 
-  console.log(discountsList);
+      .filter((d) => !!d.discount)
+      .map(
+        (d) =>
+          `${__('application.discount')} ${d.discount}% ${getText('on')} ${d.name}`,
+      );
+  }, [discountsList]);
 
-  if(discounts.length === 0) return null;
+  if (discounts.length === 0) return null;
 
   return (
     <Section>
-      <Header variant='h2'>{__('application.discounts')}</Header>
+      <Header variant="h2">{__('application.discounts')}</Header>
       <Discounts discounts={discounts} />
     </Section>
   );

@@ -1,4 +1,4 @@
-import { AccessControl } from '../stock-group';
+import { AccessControl } from '../../types/stock-group';
 import { IBase } from '../base/base.interface';
 
 export enum StockPaymentType {
@@ -57,6 +57,43 @@ export interface IStock extends IBase {
   lon?: string;
   invoiceServiceDepartmentID?: string;
 }
+
+export type StockRes = Pick<
+  IStock,
+  | 'id'
+  | 'accessControl'
+  | 'address'
+  | 'clientPaymentTypeConfig'
+  | 'colorFailure'
+  | 'colorFinished'
+  | 'colorFree'
+  | 'colorNoPaidExtension'
+  | 'colorNoPaidExtensionWithWarning'
+  | 'colorNoPaidPeriod'
+  | 'colorOutOfService'
+  | 'colorRented'
+  | 'colorReserved'
+  | 'colorToCheck'
+  | 'colorToExplain'
+  | 'id'
+  | 'isMapActive'
+  | 'lat'
+  | 'lon'
+  | 'mapWidth'
+  | 'mapHeight'
+  | 'mapHeightMeters'
+  | 'mapWidthMeters'
+  | 'minRentDaysForInstallments'
+  | 'name'
+  | 'paymentDocumentConfig'
+  | 'mapBackground'
+  | 'tenantId'
+>;
+
+export type StockListRes = Pick<
+  IStock,
+  'id' | 'accessControl' | 'address' | 'name' | 'lat' | 'lon'
+>;
 
 export interface IDiscount extends IBase {
   value: number;

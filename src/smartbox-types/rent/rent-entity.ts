@@ -16,7 +16,7 @@ export type RentDescriptionAddon = {
   acceptance?: string;
   accepted: boolean;
   price: string;
-}
+};
 
 export interface RentDescription {
   startAt: Date;
@@ -28,8 +28,8 @@ export interface RentDescription {
   data?: RentUserData;
   addons: RentDescriptionAddon[];
   stockDiscount?: {
-    value: number
-  }
+    value: number;
+  };
 }
 
 export interface IRent extends IBase {
@@ -38,7 +38,7 @@ export interface IRent extends IBase {
   startAt: Date;
   finishAt: Date;
   owner: IUser;
-  payments: IPayment[]
+  payments: IPayment[];
   isCompany: boolean;
   decisionFinishAt: Date;
   createdAt: Date;
@@ -70,7 +70,7 @@ export enum RentStatus {
   finished = 'zakończone',
   failure = 'zakończone bez wynajęcia',
   free = 'wolny',
-  noPaidPeriod = 'nieopłacony okres'
+  noPaidPeriod = 'nieopłacony okres',
 }
 
 export interface AdminRentListDetailsQuery {
@@ -95,10 +95,12 @@ export interface AdminRentListDetails {
   status: RentStatus;
   name: string;
   lastName: string;
+  firstName: string;
   email: string;
   number: string;
   createdAt: Date;
   startAt: Date;
   finishAt: Date;
   paymentType: RentPaymentType;
+  decisionFinishAt: Date | null;
 }

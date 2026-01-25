@@ -18,7 +18,7 @@ import { PaymentType } from 'smartbox-types';
 import { Alert } from '../../../../../components/Common';
 import { Spinner } from '../../../../../components/Branded';
 import { order } from '../../../../../actions';
-import { ButtonsContainer } from '../../../../../components/Layout';
+import { ButtonsContainer, SectionHeader } from '../../../../../components/Layout';
 import { history } from '../../../../../App';
 import { FormType } from '../../../../../types/order-form';
 
@@ -321,11 +321,7 @@ const StepAgreement = ({ formData, isResignationMarked }: Props): any => {
   };
 
   const checkFrame = () => {
-    console.log(
-      'CHECKING FRAME',
-      frameRef.current?.contentWindow,
-      frameRef.current?.contentDocument,
-    );
+
     if (!frameRef.current) return false;
 
     const iframeDoc =
@@ -383,6 +379,7 @@ const StepAgreement = ({ formData, isResignationMarked }: Props): any => {
       {loading ? <Spinner overlay halfTransparent /> : null}
       <Stack>
         <Section>
+          <SectionHeader title='application.orderAgreement' />
           <AgreementWrapper>
             {!agreementLoaded ? (
               <SpinnerWrapper>
@@ -398,7 +395,7 @@ const StepAgreement = ({ formData, isResignationMarked }: Props): any => {
               ></iframe>
             ) : null}
             {/* <DocViewer language={undefined} documents={[{ uri: `${ApiService.url}tenant/agreement/${tenant.id}`, fileType: 'docx' }]} pluginRenderers={DocViewerRenderers} />*/}
-            {agreementType === 'pdf' ? (
+            {!Capacitor.isNativePlatform() && agreementType === 'pdf' ? (
               <object
                 className="rules-embed"
                 data={`${ApiService.url}tenant/agreement/${tenant.id}#toolbar=0&navpanes=0&scrollbar=0`}

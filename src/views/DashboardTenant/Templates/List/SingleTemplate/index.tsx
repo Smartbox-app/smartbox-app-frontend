@@ -37,6 +37,7 @@ const MainData = styled('div')({
   display: 'flex',
   alignItems: 'center',
   flexWrap: 'wrap',
+  flex: 1,
 });
 
 const StyledTemplateType = styled('span')`
@@ -60,10 +61,10 @@ const StyledTitle = styled('h3')`
   margin: 10px 0;
   font-size: 0.9rem;
   flex: 0 0 100%;
-   @media(min-width: 768px)': {
-      flexDirection: 'row';
-      flex: 1;
-    }
+  @media(min-width: 768px) {
+    flex-direction: row;
+    flex: 0 1 auto;
+  }
 `;
 
 export const SingleTemplate = ({ type, template, isSet, index }: Props) => {

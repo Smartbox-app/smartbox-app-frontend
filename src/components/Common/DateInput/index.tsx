@@ -126,7 +126,7 @@ const DateInput = ({
 
   return (
     <StyledContainer>
-      <InputLabel labelFor={name}>{__(label)}</InputLabel>
+      <InputLabel labelFor={name} required={required}>{__(label)}</InputLabel>
       <Flatpickr
         onDayCreate={(dates, curentDateString, self, data) => {
           if (!highlightEnd || !highlightStart) return;

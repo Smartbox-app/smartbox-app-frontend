@@ -426,7 +426,8 @@ const Pricing = () => {
               {__('application.addonVariantPricing')} - {variant.name}
             </h5>
 
-            {variant.priceType === AddonVariantPriceType.Dynamic &&
+            {(!variant.priceType ||
+              variant.priceType === AddonVariantPriceType.Dynamic) &&
               (!variant.pricing || variant.pricing.length === 0) && (
                 <Alert
                   type="notice"
@@ -435,7 +436,8 @@ const Pricing = () => {
               )}
             {variant.pricing && (
               <ul>
-                {variant.priceType === AddonVariantPriceType.Dynamic ? (
+                {(!variant.priceType ||
+                  variant.priceType === AddonVariantPriceType.Dynamic) && (
                   <>
                     {variant.pricing.map((singlePricing) => (
                       <li key={singlePricing.id}>
@@ -520,7 +522,8 @@ const Pricing = () => {
                       </li>
                     ))}
                   </>
-                ) : (
+                )}
+                {variant.priceType === AddonVariantPriceType.Fixed && (
                   <Input
                     type="number"
                     input={{

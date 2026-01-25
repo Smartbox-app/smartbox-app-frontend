@@ -16,12 +16,12 @@ import {
 import {
   AddonUserFileRequirementType,
   DebtResolveType,
-  IStock,
   MyRentDetails,
   MyRentList,
   RentPaymentType,
   RentStatus,
   StockPaymentType,
+  StockRes,
   UserRes,
 } from 'smartbox-types';
 import { DateInput } from '../../../../../components/Common';
@@ -101,7 +101,7 @@ const StepExtensionDuration = ({ clearPaymentDetails }: Props) => {
     await ApiService.callFetch(
       'GET',
       `stock/${rent.stockId}`,
-      (res: IStock) => {
+      (res: StockRes) => {
         dispatch(setOrderFullStock(res));
       },
     );
@@ -114,7 +114,6 @@ const StepExtensionDuration = ({ clearPaymentDetails }: Props) => {
       'GET',
       `rent/my-details/${rentId}`,
       (data: MyRentDetails) => {
-        console.log('RENT DATA', data);
         setRent(data);
       },
     );
@@ -200,10 +199,16 @@ const StepExtensionDuration = ({ clearPaymentDetails }: Props) => {
       }
     }
 
+    const difference = endDate
+      ? differenceInCalendarDays(endDate, startDate)
+      : null;
+
     if (
       rentPaymentType === RentPaymentType.Installments &&
       minRentDaysForInstallments
     ) {
+      if (difference && difference >= minRentDaysForInstallments) return;
+
       const newEnd = addDays(
         startOfDay(new Date(rent.finishAt)),
         minRentDaysForInstallments,
@@ -213,6 +218,8 @@ const StepExtensionDuration = ({ clearPaymentDetails }: Props) => {
         : newEnd;
       dispatch(setRentEndDate(endOfDay(newEndOrToday)));
     } else {
+      if (difference && difference >= minRentPeriod) return;
+ 
       const newEnd = addDays(
         startOfDay(new Date(rent.finishAt)),
         minRentPeriod,
@@ -318,7 +325,7 @@ const StepExtensionDuration = ({ clearPaymentDetails }: Props) => {
 
   const setMaxDateForEnd = (addAmount = 0) => {
     if (!rent) return;
-    console.log('TENANT', tenant);
+
     // IF rent has status noPaidExtension
     if (
       [
@@ -421,7 +428,7 @@ const StepExtensionDuration = ({ clearPaymentDetails }: Props) => {
 
   if (!rent || !minRentPeriod || maxRentPeriod === null)
     return <Spinner overlay />;
-  console.log('tenant', tenant);
+
   return (
     <form className="form-step-two">
       <Stack>

@@ -1,6 +1,7 @@
 import { BaseResponse } from '../base/baseRes';
 import { Prop } from '../store/prop.decorator';
 import { GateHealthCheckStatus } from './gate-health-check-status';
+import { AlarmHealthCheckStatus } from './alarm-health-check-status';
 import { AccessControl } from '../stock-group';
 
 export interface DiscountReq {
@@ -9,7 +10,7 @@ export interface DiscountReq {
 }
 
 export interface DiscountList {
-  discount?: string;
+  discountId: string;
   stockId: string;
   name: string;
   value: number;
@@ -23,7 +24,9 @@ export class StockList extends BaseResponse {
   @Prop()
   address: string;
 
+  @Prop()
   lat?: string;
+  @Prop()
   lon?: string;
 }
 
@@ -49,13 +52,27 @@ export class GateStatus extends BaseResponse {
   openReq: boolean;
 }
 
-export type GatesStatusForAdminRes = {
+export type SingleGateRes = {
   id: string;
   status: GateHealthCheckStatus;
   lastConnection: Date;
-  isOpen: boolean;
+  isOpen?: boolean;
   stockName: string;
-}[];
+  accessControl?: AccessControl;
+};
+
+export type GatesStatusForAdminRes = SingleGateRes[];
+
+export type SingleAlarmRes = {
+  id: string;
+  name: string;
+  status: AlarmHealthCheckStatus;
+  lastConnection: Date;
+  stockName: string;
+  alarmState: 'armed' | 'disarmed' | 'unknown';
+};
+
+export type AlarmsStatusForAdminRes = SingleAlarmRes[];
 
 export interface GateAdminList {
   id: string;
@@ -74,6 +91,7 @@ export interface GateAdminReq {
   moduleId: string;
   secondaryModuleId: string;
   ksmIdentifier: string;
+  ksmAlarmIdentifier: string;
   description: string;
 }
 
@@ -159,6 +177,6 @@ export type StockStatistics = {
     [month: string]: {
       amount: number;
       order: number;
-    };
-  };
+    }
+  }
 };

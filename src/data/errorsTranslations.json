@@ -413,6 +413,14 @@
       "93": {
         "text": "Niepoprawny kod!",
         "__type_alias_do_not_touch": "ApiErrorCode.IncorrectPasscode"
+      },
+      "94": {
+        "text": "Niepoprawny dokument sprzedaży!",
+        "__type_alias_do_not_touch": "ApiErrorCode.SelectedIncorrectPaymentDocument"
+      },
+      "95": {
+        "text": "Taki kod już istnieje!",
+        "__type_alias_do_not_touch": "ApiErrorCode.GiftCodeExists"
       }
     }
   }

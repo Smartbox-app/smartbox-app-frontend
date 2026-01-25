@@ -17,6 +17,11 @@ import { ApplicationState } from '../../../reducers';
 
 import './ApiTable.scss';
 import { __ } from '../../../helpers/i18n';
+import styled from 'styled-components';
+
+const StyledContainer = styled('div')({
+  position: 'relative'
+})
 
 interface SelectOption {
   value: string;
@@ -25,6 +30,7 @@ interface SelectOption {
 
 interface Props {
   fetchApiTableData: (url: string, method?: string) => void;
+  clearApiTableData: () => void;
   loading: boolean;
   data: any;
   scheme: TableSchema;
@@ -55,6 +61,11 @@ const searchComponent = (
   const fields = allFields.find(
     (field) => field.field === search.searchBy,
   ) as TableSchemaField;
+
+  const searchableFields = allFields.filter((f) => f.searchable);
+
+  if (searchableFields.length === 0) return null;
+
   const searchableValues = fields ? fields.searchableValues : null;
 
   if (search.searchBy === '') {
@@ -136,13 +147,11 @@ const searchComponent = (
             onChange={(e) => handleSearchByChange(e.target.value)}
           >
             <option value="">{__('application.chooseFieldToSearch')}</option>
-            {allFields
-              .filter((field) => field.searchable === true)
-              .map((field) => (
-                <option value={field.field} key={field.field}>
-                  {field.name}
-                </option>
-              ))}
+            {searchableFields.map((field) => (
+              <option value={field.field} key={field.field}>
+                {field.name}
+              </option>
+            ))}
           </select>
         </div>
         <div className="search-query">{searchElement}</div>
@@ -194,7 +203,7 @@ class ApiTable<T> extends Component<Props> {
   }
 
   private async fetch() {
-    await this.props.fetchApiTableData(
+    this.props.fetchApiTableData(
       this.buildUrl(),
       this.props.apiEndpointMethod,
     );
@@ -225,12 +234,19 @@ class ApiTable<T> extends Component<Props> {
   }
 
   componentDidMount() {
+    this.props.clearApiTableData();
     this.fetch();
   }
 
   componentDidUpdate(prevProps: Props) {
-    if (this.props.data.uuid) {
-      if (this.props.data.uuid !== prevProps.data.uuid) {
+    const {data, apiEndpointSubUrl} = this.props;
+
+    if(apiEndpointSubUrl !== prevProps.apiEndpointSubUrl) {
+      this.props.clearApiTableData();
+    }
+
+    if (data.uuid) {
+      if (data.uuid !== prevProps.data.uuid) {
         this.fetch();
       }
     }
@@ -282,10 +298,12 @@ class ApiTable<T> extends Component<Props> {
 
     let table;
 
-    if (loading) {
-      table = <Spinner transparent />;
-    } else {
-      table = (
+    // if (loading) {
+    //   table = <Spinner transparent />;
+    // } else {
+    table = (
+      <>
+        {loading ? <Spinner halfTransparent overlay /> : null}
         <Table
           data={data}
           scheme={scheme}
@@ -294,11 +312,12 @@ class ApiTable<T> extends Component<Props> {
           onPageChange={this.handlePageChange}
           onSortChange={this.handleSortChange}
         />
-      );
-    }
+      </>
+    );
+    // }
 
     return (
-      <>
+      <StyledContainer>
         {data &&
           (data.countTotal > 0 || searchQuery) &&
           searchComponent(
@@ -312,7 +331,7 @@ class ApiTable<T> extends Component<Props> {
             this.props.selectSearchByOption,
           )}
         {table}
-      </>
+      </StyledContainer>
     );
   }
 }

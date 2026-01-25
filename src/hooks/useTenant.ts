@@ -16,8 +16,6 @@ const useTenant = (): UseTenant => {
   const dispatch = useDispatch();
   const tenantData = useSelector((state: ApplicationState) => state.tenant);
   const [tenant, setTenant] = useState<TenantForUsers | null>(tenantData);
-  const location = useLocation();
-  const queryParameters = new URLSearchParams(location.search);
 
   useEffect(() => {
     if (!tenantData) fetchTenantData();
@@ -29,7 +27,6 @@ const useTenant = (): UseTenant => {
 
   const fetchTenantData = async () => {
     const clientId = getHostName();
-
     if (!clientId) {
       setDefaults();
       return;

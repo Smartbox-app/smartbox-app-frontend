@@ -1,19 +1,19 @@
 import { __ } from '../../../../../../helpers/i18n';
 import {
-  IStock,
   PaymentDocument,
   RentPaymentType,
   StockPaymentDocument,
+  StockRes,
 } from 'smartbox-types';
 import { Header, Section } from 'src/components/ui';
 import { useDispatch, useSelector } from 'react-redux';
 import { ApplicationState } from 'src/reducers';
 import { setRentPaymentDocumentType } from 'src/actions/order';
 import { ChangeEvent, useMemo } from 'react';
-import { Input } from 'src/components/Common';
+import { AsterixRequired, Input } from 'src/components/Common';
 
 type Props = {
-  stock: IStock;
+  stock: StockRes;
 };
 
 export const PaymentDocumentType = ({ stock }: Props) => {
@@ -40,13 +40,14 @@ export const PaymentDocumentType = ({ stock }: Props) => {
 
   return (
     <Section>
-      <Header variant="h2">{__('application.paymentDocument')}</Header>
+      <Header variant="h2">{__('application.paymentDocument')} <AsterixRequired /></Header>
       {paymentTypeText ? <p>{__(paymentTypeText)}</p> : null}
 
       {rentPaymentType !== RentPaymentType.Installments &&
       stock.paymentDocumentConfig === StockPaymentDocument.Both ? (
         <Input
           type="radio"
+          required
           input={{
             name: 'priceResolveType',
             label: 'application.selectPaymentDocument',
@@ -58,12 +59,12 @@ export const PaymentDocumentType = ({ stock }: Props) => {
           }}
           options={[
             {
-              label: 'application.documentInvoice',
-              value: PaymentDocument.Invoice,
-            },
-            {
               label: 'application.documentReceipt',
               value: PaymentDocument.Receipt,
+            },
+            {
+              label: 'application.documentInvoice',
+              value: PaymentDocument.Invoice,
             },
           ]}
         />

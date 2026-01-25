@@ -44,10 +44,7 @@
     transition: transform $transition-time/2 ease-in-out;
     max-height: 80%;
     border-radius: 24px;
-    p {
-      max-width: 768px;
-      font-size: 0.9rem;
-    }
+
   }
 
   &.full-screen {

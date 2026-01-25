@@ -1,15 +1,13 @@
-import { BoxMapRes, BoxMapUserRes, IStock, RentStatus } from 'smartbox-types';
+import { BoxMapRes, BoxMapUserRes, RentStatus, StockRes } from 'smartbox-types';
 import ApiService from '../../../../../../../services/api-service';
 import styled, { css } from 'styled-components';
-import { Rnd } from 'react-rnd';
 import Moveable from 'react-moveable';
 import { colorOrDark } from '../../../../../../../utils/color';
 import { CSSProperties, useEffect, useRef, useState } from 'react';
-import { flushSync } from 'react-dom';
 
 interface Props {
   box: BoxMapRes | BoxMapUserRes;
-  stock: IStock;
+  stock: StockRes;
   highlightId?: string;
   admin?: boolean;
   user?: boolean;
@@ -52,7 +50,7 @@ const StyledDraggableContent = styled.div<{
 
 const StyledBox = styled.div<{
   status: RentStatus | null;
-  stock: IStock;
+  stock: StockRes;
   user?: boolean;
   width?: number;
 }>`
@@ -286,7 +284,6 @@ const SingleBox = ({
   const handleClickOutside = (e: Event) => {
     const target = e.target as HTMLElement;
 
-    console.log('EVENT', e);
     if (target.className.includes(`box-${box.id}`)) return;
 
     setTarget(null);

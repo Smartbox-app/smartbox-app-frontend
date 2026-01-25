@@ -1,0 +1,86 @@
+import React from 'react';
+import { useDispatch } from 'react-redux';
+import { mobileConfigTableSchema } from 'smartbox-tables';
+import { showModal } from '../../../../../actions/modal';
+import { successNotification } from '../../../../../actions/notifications';
+import ApiService from '../../../../../services/api-service';
+import { MobileConfigListDetails } from 'smartbox-types';
+import { ApiTable, ConfirmModal } from '../../../../../components/Common';
+import { Button } from '../../../../../components/Branded';
+import { Section, ButtonsContainer } from '../../../../../components/Layout';
+import { __ } from '../../../../../helpers/i18n';
+import { InteractiveTableSchema } from '../../../../../utils/table-schema-utils';
+import { refreshApiTableData } from '../../../../../actions/api-table';
+import UserService from '../../../../../services/user-service';
+import { useGetMyDetailsQuery } from 'src/queries';
+import { HeaderWithActions } from 'src/components/ui';
+import { DeleteStockModal } from 'src/components/Common/DeleteStockModal';
+import { useTenantNaming } from 'src/hooks/useTenantNaming';
+import { Edit } from '../Edit';
+
+const List = () => {
+  const dispatch = useDispatch();
+  const { getText } = useTenantNaming();
+
+  const scheme = new InteractiveTableSchema(mobileConfigTableSchema);
+  const { data: user } = useGetMyDetailsQuery();
+
+  scheme.addFieldAtTheEnd({
+    name: __('application.actions'),
+    field: 'actions',
+    mobile: true,
+    buttons: [
+      {
+        name: 'application.delete',
+        type: 'danger',
+        click: (data: MobileConfigListDetails) => confirmConfigDelete(data),
+      },
+      {
+        name: 'application.edit',
+        type: 'primary',
+        click: (data: MobileConfigListDetails) => dispatch(showModal(<Edit configId={data.id} />)),
+      },
+    ],
+  });
+
+  const confirmConfigDelete = (data: MobileConfigListDetails) => {
+    dispatch(
+      showModal(
+        <ConfirmModal
+          mainText="mobileConfig.deleteConfirmation"
+          approveButtonText="application.yes"
+          approveAction={() => deleteConfig(data)}
+        />,
+      ),
+    );
+  };
+
+  const deleteConfig = async (data: MobileConfigListDetails) => {
+    await ApiService.callFetch('DELETE', `mobile-config/${data.id}`, () => {
+      dispatch(successNotification('mobileConfig.deleted'));
+      dispatch(refreshApiTableData());
+    });
+  };
+
+  return (
+    <Section>
+      <HeaderWithActions
+        actions={
+          <ButtonsContainer>
+            <Button
+              text={'mobileConfig.add'}
+              primary
+              to={`/${UserService.getSlugByRole(user!.role)}/management/mobile-config/add`}
+            />
+          </ButtonsContainer>
+        }
+      >
+        {__('mobileConfig.list')}
+      </HeaderWithActions>
+
+      <ApiTable scheme={scheme} apiEndpointSubUrl={`mobile-config`} />
+    </Section>
+  );
+};
+
+export { List };

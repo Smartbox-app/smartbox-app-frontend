@@ -48,7 +48,9 @@ export const FbButton = () => {
       'nidobox',
       'biastorage',
       'twojbox',
-      'test'
+      'osiedle',
+      's3box',
+      'test',
     ].includes(tenant.identifier)
   )
     return null;

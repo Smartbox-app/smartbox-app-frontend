@@ -1,18 +1,19 @@
 import styled from 'styled-components';
 import { __ } from '../../../../../../helpers/i18n';
 import {
-  IStock,
   MyRentDetails,
   RentPaymentType,
   RentStatus,
   StockPaymentType,
+  StockRes,
 } from 'smartbox-types';
 import { SinglePaymentType } from './SinglePaymentType';
 import { Header, Section } from 'src/components/ui';
 import { InstallmentsPaymentMinDaysInfo } from '../InstallmentsPaymentMinDaysInfo';
+import { AsterixRequired } from 'src/components/Common';
 
 type Props = {
-  stock: IStock;
+  stock: StockRes;
   rent?: MyRentDetails;
 };
 
@@ -38,7 +39,7 @@ export const PaymentType = ({ stock, rent }: Props) => {
 
   return (
     <Section>
-      <Header variant="h2">{__('application.paymentType')}</Header>
+      <Header variant="h2">{__('application.paymentType')} <AsterixRequired /></Header>
       <p>{__(getPaymentTypeText(stock.clientPaymentTypeConfig, rent))}</p>
 
       {(!rent || (rent && rent.status === RentStatus.rented ))&& [StockPaymentType.Both, StockPaymentType.Installments].includes(

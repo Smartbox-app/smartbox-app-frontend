@@ -28,38 +28,6 @@ export const loginWithGoogle = () => async (dispatch: any) => {
   );
 };
 
-export const login = (userData: AuthLoginRequest) => async (dispatch: any) => {
-  await ApiService.post(
-    dispatch,
-    'LOGIN_SUCCESS',
-    'LOGIN_FAILED',
-    async (response: AuthLoginResult) => {
-      dispatch(notifications.successNotification('notification.logInSuccess'));
-      dispatch({ type: 'REFRESH_API_TABLE' });
-      dispatch({ type: 'REFRESH_API_GRID' });
-      dispatch(hideModal());
-
-      if (Capacitor.isNativePlatform()) {
-        await Preferences.set({
-          key: 'smst_token',
-          value: response.accessToken,
-        });
-      }
-
-      const redirect = getRememberedRedirect();
-
-      if (redirect && redirect.role === response.role) {
-        history.push(redirect.to);
-        clearRememberedRedirect();
-      }
-    },
-    null,
-    'auth/login',
-    'LOGIN_LOADING',
-    userData,
-  );
-};
-
 export const clearUserSession = () => ({ type: 'CLEAR_USER_SESSION' });
 
 export const getUserLoginGoogleData = () => async (dispatch: any) => {

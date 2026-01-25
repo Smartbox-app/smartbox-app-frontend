@@ -3,12 +3,12 @@ import ApiService from "../../../services/api-service";
 import styled, { css } from "styled-components";
 import { SingleBox } from "../StockGroups/Stocks/Manage/Map/SingleBox";
 import { MapGrid } from "../StockGroups/Stocks/Manage/Map/MapGrid";
-import { BoxMapRes, BoxMapUserRes, IStock } from "smartbox-types";
+import { BoxMapRes, BoxMapUserRes, StockRes } from "smartbox-types";
 import { CheckBox } from "../../../components/Common";
 
 interface Props {
   boxes: (BoxMapRes | BoxMapUserRes)[];
-  stock: IStock;
+  stock: StockRes;
   onBoxClick?: (box: BoxMapRes) => void;
   highlightId?: string;
   admin?: boolean;
@@ -82,7 +82,7 @@ const MapView = ({
           background={stock.mapBackground}
           stockId={stock.id}
         >
-          {!admin && (
+          {!admin && !user && (
             <MapGrid height={stock.mapHeight} width={stock.mapWidth} />
           )}
           {filteredBoxes.map((box) => (

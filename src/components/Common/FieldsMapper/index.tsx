@@ -10,6 +10,7 @@ import { SelectOption } from '../../../types/select';
 import { useSelector } from 'react-redux';
 import { ApplicationState } from '../../../reducers';
 import { AcceptancesField } from '../AcceptancesField';
+import { Link } from '../../ui';
 
 interface Props {
     fieldHtmlId: string;
@@ -44,13 +45,13 @@ const FieldsMapper = ({ field, fieldHtmlId, currentValue, errors, big, onFocus, 
         if (field.options?.type === 'checkboxRules' && tenant) return <small>
             {__('application.readTheProvisions')}{' '}
 
-            <a target="_blank" href={`${ApiService.url}tenant/rules/${tenant.id}`} rel="noreferrer">
+            <Link target="_blank" href={`${ApiService.url}tenant/rules/${tenant.id}`} rel="noreferrer">
                 <u>{__('application.statutes')}</u>
-            </a>{' '}
+            </Link>{' '}
             i{' '}
-            <a target="_blank" href={`${ApiService.url}tenant/privacy/${tenant.id}`} rel="noreferrer">
+            <Link target="_blank" href={`${ApiService.url}tenant/privacy/${tenant.id}`} rel="noreferrer">
                 <u>{__('application.privacyPolices')}</u>
-            </a>{' '}
+            </Link>{' '}
             {__('application.acceptContent')}
         </small>
 
