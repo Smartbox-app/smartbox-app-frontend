@@ -39,6 +39,7 @@ export interface RentBoxReq {
   lastName: string;
   street: string;
   city: string;
+  country: string;
   postCode: string;
   isCompany: boolean;
   phone: string;
@@ -47,6 +48,7 @@ export interface RentBoxReq {
   companyStreet: string;
   companyCity: string;
   companyPostCode: string;
+  companyCountry: string;
   nip: string;
   rentPaymentType: RentPaymentType;
   paymentDocument: PaymentDocument;
@@ -57,6 +59,7 @@ export interface ExtendRentalReq {
   lastName: string;
   street: string;
   city: string;
+  country: string;
   postCode: string;
   isCompany: boolean;
   phone: string;

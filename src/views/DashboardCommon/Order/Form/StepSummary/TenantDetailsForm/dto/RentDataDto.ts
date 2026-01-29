@@ -9,6 +9,7 @@ import {
 } from 'class-validator';
 import { __ } from 'src/helpers/i18n';
 import { errors } from 'src/validation/errors';
+import { IsCountry } from 'src/validators/isCorrectCountry';
 import { IsNip } from 'src/validators/IsCorrectNip';
 
 export class RentDataDto {
@@ -38,6 +39,14 @@ export class RentDataDto {
     message: errors.field_required,
   })
   postCode: string;
+
+  @IsNotEmpty({
+    message: errors.field_required,
+  })
+  @IsCountry({
+    message: errors.incorrect_country,
+  })
+  country: string;
 
   @ValidateIf((d) => {
     return !!d.withBirthDate;
@@ -90,7 +99,16 @@ export class RentDataDto {
   @IsNotEmpty({
     message: errors.field_required,
   })
-  @IsNip({
+  @IsCountry({
+    message: errors.incorrect_country,
+  })
+  companyCountry: string;
+
+  @ValidateIf((d) => !!d.invoiceNeeded)
+  @IsNotEmpty({
+    message: errors.field_required,
+  })
+  @IsNip((d) => d.companyCountry, {
     message: errors.incorrect_nip,
   })
   nip: string;

@@ -6,5 +6,6 @@ export const errors = {
     passwords_must_match: 'Hasła muszą się zgadzać',
     check_required: 'Musisz zaznaczyć to pole',
     incorrect_nip: 'Niepoprawny numer NIP',
+    incorrect_country: 'Niepoprawny kod kraju',
     min_chars: (chars: number) => `Wymagane min. ${chars} znaków`
 }

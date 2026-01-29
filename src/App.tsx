@@ -57,6 +57,9 @@ import { Capacitor } from '@capacitor/core';
 import { getHostName } from './utils/hostname';
 import { AppGlobalStyles } from './AppGlobalStyles';
 
+import countries from 'i18n-iso-countries';
+import pl from 'i18n-iso-countries/langs/pl.json';
+
 const DashboardAdmin = React.lazy(() => import('./views/DashboardAdmin'));
 const DashboardUser = React.lazy(() => import('./views/DashboardUser'));
 const DashboardTenant = React.lazy(() => import('./views/DashboardTenant'));
@@ -64,6 +67,8 @@ const DashboardWorker = React.lazy(() => import('./views/DashboardWorker'));
 
 flatpickr.localize(Polish);
 flatpickr.defaultConfig.time_24hr = true;
+
+countries.registerLocale(pl);
 
 const createStoreWithMiddleware = composeWithDevTools(
   applyMiddleware(reduxThunk),
@@ -91,7 +96,7 @@ const App = () => {
     checkI18nLoaded();
 
     if (Capacitor.isNativePlatform())
-      CapacitorApp.addListener('appUrlOpen', ({ url}) => {
+      CapacitorApp.addListener('appUrlOpen', ({ url }) => {
         console.log('OPENED WITH URL', url);
       });
   }, []);

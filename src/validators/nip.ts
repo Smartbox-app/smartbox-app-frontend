@@ -1,20 +1,21 @@
-export const validateNip = (value: string): boolean => {
-  if (!value) return false;
+import { checkVAT, countries as vatCountries } from 'jsvat';
+export const validateNip = (value: string, countryCode: string): boolean => {
+  if (!value || !countryCode) return false;
 
-  // Trimming
-  const nip = value.trim();
+  const matchingCountry = vatCountries.find((c) =>
+    c.codes.includes(countryCode),
+  );
 
-  // NIP must be exactly 10 digits
-  if (!/^\d{10}$/.test(nip)) {
-    return false;
+  if (matchingCountry) {
+    return checkVAT(value, [matchingCountry]).isValid;
   }
 
-  // Official NIP checksum weights
-  const weights = [6, 5, 7, 2, 3, 4, 5, 6, 7];
+  switch (countryCode) {
+    case 'UA':
+      return value.length === 10;
+  }
 
-  const digits = nip.split('').map((d) => parseInt(d, 10));
-  const checksum =
-    weights.reduce((sum, weight, i) => sum + weight * digits[i], 0) % 11;
+  if (!value) return false;
 
-  return checksum === digits[9];
+  return true;
 };

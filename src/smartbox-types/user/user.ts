@@ -14,6 +14,7 @@ export class UserRes extends BaseResponse {
   @Prop() phone: string;
   @Prop() firstName: string;
   @Prop() lastName: string;
+  @Prop() country: string;
   @Prop() role: UserRole;
   @Prop() rentCount: number;
   @Prop() companyData: CompanyData;

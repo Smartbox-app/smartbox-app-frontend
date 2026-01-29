@@ -86,6 +86,7 @@ const StepSummary = ({ formData, updateFormData }: Props) => {
   const [discount, setDiscount] = useState<boolean>(false);
   const [rent, setRent] = useState<MyRentDetails>();
   const [loading, setLoading] = useState<boolean>(false);
+  console.log('USER', user);
 
   const defaultValues = {
     paymentType: PaymentType.card,
@@ -94,6 +95,7 @@ const StepSummary = ({ formData, updateFormData }: Props) => {
     street: user?.street || '',
     birthDate: user?.birthDate ? new Date(user?.birthDate) : undefined,
     city: user?.city || '',
+    country: user?.country || '',
     postCode: user?.postCode || '',
     mailToSendInvoice: user?.email || '',
     phone: user?.phone || '',
@@ -101,6 +103,7 @@ const StepSummary = ({ formData, updateFormData }: Props) => {
     clientSource: '',
     nip: user?.companyData?.nip?.trim() || '',
     companyPostCode: user?.companyData.companyPostCode || '',
+    companyCountry: user?.companyData.companyCountry || '',
     companyCity: user?.companyData.companyCity || '',
     companyStreet: user?.companyData.companyStreet || '',
     companyName: user?.companyData.companyName || '',
@@ -109,9 +112,7 @@ const StepSummary = ({ formData, updateFormData }: Props) => {
   const methods = useForm<RentDataDto>({
     defaultValues,
     mode: 'onSubmit',
-    resolver: ClassValidatorResolver(
-      new RentDataDto(),
-    ),
+    resolver: ClassValidatorResolver(new RentDataDto()),
   });
   const {
     handleSubmit,
@@ -229,7 +230,7 @@ const StepSummary = ({ formData, updateFormData }: Props) => {
         break;
       }
       default: {
-        dispatch(setRentPaymentDocumentType(PaymentDocument.Invoice));
+        dispatch(setRentPaymentDocumentType(PaymentDocument.Receipt));
         break;
       }
     }

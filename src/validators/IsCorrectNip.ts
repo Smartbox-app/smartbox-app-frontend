@@ -1,7 +1,9 @@
-import { registerDecorator, ValidationOptions } from "class-validator";
+import { registerDecorator, ValidationOptions, ValidationArguments } from "class-validator";
 import { validateNip } from "./nip";
 
-export function IsNip(validationOptions?: ValidationOptions) {
+type CountryCodeGetter<T = any> = string | ((obj: T) => string);
+
+export function IsNip(country: CountryCodeGetter, validationOptions?: ValidationOptions) {
   return function (object: any, propertyName: string) {
     registerDecorator({
       name: "isNip",
@@ -9,8 +11,16 @@ export function IsNip(validationOptions?: ValidationOptions) {
       propertyName,
       options: validationOptions,
       validator: {
-        validate(value: any) {
-          return validateNip(value);
+        validate(value: any, args: ValidationArguments) {
+          let countryCode: string;
+
+          if (typeof country === "function") {
+            countryCode = country(args.object);
+          } else {
+            countryCode = country;
+          }
+
+          return validateNip(value, countryCode);
         },
       },
     });

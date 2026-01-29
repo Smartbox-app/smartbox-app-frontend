@@ -1,13 +1,22 @@
+import countries from 'i18n-iso-countries';
 import { DateInput } from '../../../../../../components/Common';
 import { useTenant } from '../../../../../../hooks/useTenant';
 import { Controller, useFormContext } from 'react-hook-form';
 import { RentDataDto } from './dto/RentDataDto';
-import { Header, Input } from 'src/components/ui';
+import { Header, Input, Select } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
 
 interface Props {
   disabled?: boolean;
 }
+
+const prepareCountries = (): { label: string; value: string }[] => {
+  const names = countries.getNames('pl');
+  return Object.entries(names)
+  .sort((a, b) => b[1] < a[1] ? 1 : -1)
+  .map(([value, label]) => ({ value, label }));
+};
+
 
 const TenantDetailsForm = ({ disabled }: Props) => {
   const { tenant } = useTenant();
@@ -56,6 +65,14 @@ const TenantDetailsForm = ({ disabled }: Props) => {
           )}
         />
       ) : null}
+      <Select
+        label="rent.country"
+        placeholder="rent.country_placeholder"
+        {...register('country')}
+        options={prepareCountries()}
+        required={true}
+        error={errors.country?.message}
+      />
       <Input
         label="rent.street"
         {...register('street')}

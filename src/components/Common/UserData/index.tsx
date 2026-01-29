@@ -47,6 +47,7 @@ const UserData = () => {
         <Row label="application.phone" content={user.phone} />
         {role === UserRole.user && (
           <>
+            <Row label="application.country" content={user.country} />
             <Row label="application.city" content={user.city} />
             <Row label="application.street" content={user.street} />
             <Row label="application.postCode" content={user.postCode} />
@@ -69,6 +70,10 @@ const UserData = () => {
             content={user.companyData.companyName}
           />
           <Row label="application.nip" content={user.companyData.nip} />
+          <Row
+            label="application.country"
+            content={user.companyData.companyCountry}
+          />
           <Row
             label="application.city"
             content={user.companyData.companyCity}

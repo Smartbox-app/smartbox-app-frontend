@@ -1,12 +1,20 @@
-import FormHeader from '../../../../../../components/Layout/FormHeader';
+import countries from 'i18n-iso-countries';
 import { useFormContext } from 'react-hook-form';
 import { RentDataDto } from '../TenantDetailsForm/dto/RentDataDto';
-import { Header, Input, Section } from 'src/components/ui';
+import { Header, Input, Section, Select } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
 
 interface Props {
   disabled?: boolean;
 }
+
+const prepareCountries = (): { label: string; value: string }[] => {
+  const names = countries.getNames('pl');
+  return Object.entries(names)
+  .sort((a, b) => b[1] < a[1] ? 1 : -1)
+  .map(([value, label]) => ({ value, label }));
+};
+
 
 export const CompanyDetailsForm = ({ disabled }: Props) => {
   const {
@@ -17,6 +25,14 @@ export const CompanyDetailsForm = ({ disabled }: Props) => {
   return (
     <Section>
       <Header variant="h2">{__('rent.company_data')}</Header>
+      <Select
+        label="rent.company_country"
+        placeholder="rent.company_country_placeholder"
+        {...register('companyCountry')}
+        options={prepareCountries()}
+        required={true}
+        error={errors.companyCountry?.message}
+      />
       <Input
         label="rent.company_name"
         placeholder="rent.company_name_placeholder"
@@ -56,6 +72,7 @@ export const CompanyDetailsForm = ({ disabled }: Props) => {
         required
         {...register('nip')}
         disabled={disabled}
+        help={__('rent.nip_help')}
       />
     </Section>
   );

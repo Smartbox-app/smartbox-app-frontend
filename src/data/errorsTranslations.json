@@ -421,6 +421,10 @@
       "95": {
         "text": "Taki kod już istnieje!",
         "__type_alias_do_not_touch": "ApiErrorCode.GiftCodeExists"
+      },
+      "96": {
+        "text": "Podany kraj jest niepoprawny!",
+        "__type_alias_do_not_touch": "ApiErrorCode.InvalidCountry"
       }
     }
   }

@@ -3,5 +3,6 @@ export interface CompanyData {
   companyStreet: string;
   companyCity: string;
   companyPostCode: string;
+  companyCountry: string;
   nip: string;
 }
