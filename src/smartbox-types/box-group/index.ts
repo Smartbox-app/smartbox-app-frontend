@@ -1,4 +1,4 @@
-import { PriceResolveType, SinglePricing } from "./pricing";
+import { PriceResolveType, SinglePricing } from './pricing';
 export * from './pricing';
 
 export interface BoxGroupEntity {
@@ -33,7 +33,14 @@ export type BoxGroupReq = Pick<
 >;
 export type BoxGroupListRes = Pick<
   BoxGroupEntity,
-  'id' | 'name' | 'stockId' | 'area' | 'minRentPeriod' | 'maxRentPeriod' | 'pricing' | 'order'
+  | 'id'
+  | 'name'
+  | 'stockId'
+  | 'area'
+  | 'minRentPeriod'
+  | 'maxRentPeriod'
+  | 'pricing'
+  | 'order'
 >;
 export type BoxGroupUserRes = Pick<
   BoxGroupEntity,
@@ -50,7 +57,8 @@ export type BoxGroupUserRes = Pick<
   | 'minRentPeriod'
   | 'maxRentPeriod'
   | 'order'
-> & { available: boolean };
+> & { available: boolean; left: number | null };
+
 export type BoxGroupAdminClientRes = Pick<
   BoxGroupEntity,
   | 'id'

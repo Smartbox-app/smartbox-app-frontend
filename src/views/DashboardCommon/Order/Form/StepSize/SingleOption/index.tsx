@@ -16,6 +16,7 @@ import { Card } from 'src/components/ui';
 import { OptionImage } from './components/OptionImage';
 import { OptionData } from './components/OptionData';
 import { OptionNotification } from './components/OptionNotification';
+import { LeftCounter } from './components/LeftCounter';
 
 export type SingleOptionType = {
   name: string;
@@ -138,6 +139,7 @@ const SingleOption = ({ singleOptionData, disable }: Props) => {
               active={singleOptionData.id === boxGroupId}
             />
             <OptionNotification option={singleOptionData} />
+            <LeftCounter option={singleOptionData} />
           </Content>
         </Card>
       </label>

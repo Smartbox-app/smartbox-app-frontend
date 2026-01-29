@@ -668,6 +668,7 @@
       "paymentInstallments": "Płatność podzielona na miesięczne okresy",
       "useGridForMap": "Przyciągaj do siatki",
       "notify_when_available": "Powiadom mnie o dostępności",
+      "left": "Zostało",
       "notification_type": "W jaki sposób chcesz otrzymać powiadomienie o dostępności?",
       "notification_for": "Powiadomienie o dostępności dla rozmiaru: ",
       "at_least_one_option_required": "Musisz wybrać przynajmniej jedną opcję",
