@@ -1,8 +1,15 @@
 @import '../../../config/variables.scss';
 
 .input-select-container {
-margin-bottom: $main-spacing * 2;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 10px;
+
+    .input-wrapper {
+        margin-bottom: 2.5px;
+    }
 
     &.big {
         .input-select__control {

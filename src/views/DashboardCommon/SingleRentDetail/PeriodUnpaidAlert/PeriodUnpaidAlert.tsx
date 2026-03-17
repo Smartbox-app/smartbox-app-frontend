@@ -1,11 +1,16 @@
+import { Browser } from '@capacitor/browser';
+import { Capacitor } from '@capacitor/core';
 import { isBefore } from 'date-fns';
 import { useEffect, useMemo } from 'react';
 import { MyRentDetails } from 'smartbox-types';
+import { history } from 'src/App';
 import { SectionHeader } from 'src/components/Layout';
 import { Button, Section } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
+import { useTenant } from 'src/hooks/useTenant';
 import { Wallet } from 'src/icons';
 import { usePayForPeriodMutation } from 'src/mutations/usePayForPeriodMutation';
+import ApiService from 'src/services/api-service';
 import { dateOnly } from 'src/utils/format-date';
 import { formatPrice } from 'src/utils/format-price';
 import { prepareAndSentPaymentForm } from 'src/utils/payment-form';
@@ -48,6 +53,8 @@ const StyledIcon = styled('span')(({ theme }) => ({
 
 // @TODO HANDLE
 export const PeriodUnpaidAlert = ({ rent }: Props) => {
+  const { tenant } = useTenant();
+  const tenantId = tenant?.id;
   const {
     mutate: payForPeriod,
     isPending,
@@ -71,10 +78,17 @@ export const PeriodUnpaidAlert = ({ rent }: Props) => {
   };
 
   useEffect(() => {
-    if (!isSuccess || !data) return;
+    if (!isSuccess || !data || !tenantId) return;
 
-    prepareAndSentPaymentForm(data);
-  }, [isSuccess, data]);
+    if (Capacitor.isNativePlatform()) {
+      history.push('/');
+      Browser.open({
+        url: `${ApiService.url}rent/ipg-redirect/${tenantId}/${data.paymentId}`,
+      });
+    } else {
+      prepareAndSentPaymentForm(data);
+    }
+  }, [isSuccess, data, tenantId]);
 
   if (unpaidPeriods.length === 0) return null;
 

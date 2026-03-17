@@ -19,6 +19,7 @@ import { __ } from 'src/helpers/i18n';
 import { Stack, Button } from 'src/components/ui';
 import { ArrowLeft, ArrowRight } from 'src/icons';
 import { useTenantNaming } from 'src/hooks/useTenantNaming';
+import { Redirect } from 'react-router';
 
 const StepSize = () => {
   const { stockId, boxGroupId } = useSelector(
@@ -30,6 +31,7 @@ const StepSize = () => {
   const [boxGroups, setBoxGroups] = useState<BoxGroupUserRes[]>([]);
 
   useEffect(() => {
+    if (!stockId) return;
     setLoading(true);
     ApiService.callFetch(
       'GET',
@@ -52,6 +54,8 @@ const StepSize = () => {
     .map((data: BoxGroupUserRes) => (
       <SingleOption key={data.id} singleOptionData={data} />
     ));
+
+  if (!stockId) return <Redirect to="/user/order/step/stock" />;
 
   return (
     <form>

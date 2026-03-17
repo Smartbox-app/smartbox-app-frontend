@@ -5,7 +5,10 @@ import { Button } from 'src/components/ui';
 import styled from 'styled-components';
 import { darken } from 'polished';
 import { Capacitor } from '@capacitor/core';
-import { Browser } from '@capacitor/browser';
+import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
+import { useSocialLoginMutation } from 'src/mutations';
+import { Spinner } from 'src/components/Branded';
+import { SocialLogin } from '@capgo/capacitor-social-login';
 
 const StyledButton = styled(Button)({
   backgroundColor: '#fff',
@@ -18,6 +21,7 @@ const StyledButton = styled(Button)({
 
 export const GoogleButton = () => {
   const { tenant } = useTenant();
+  const { mutate: socialLogin, isPending } = useSocialLoginMutation();
 
   if (
     !tenant ||
@@ -49,28 +53,44 @@ export const GoogleButton = () => {
       'twojbox',
       'osiedle',
       's3box',
-      'test'
+      'test',
     ].includes(tenant.identifier)
   )
     return null;
 
-  const goToGoogleLogin = () => {
+  const goToGoogleLogin = async () => {
     if (Capacitor.isNativePlatform()) {
-      Browser.open({
-        url: `${ApiService.url}auth/google?tenantId=${tenant.identifier}&source=mobile`,
+      const res = await SocialLogin.login({
+        provider: 'google',
+        options: {
+          scopes: ['email'],
+        },
       });
+      if ('idToken' in res.result && res.result.idToken) {
+        socialLogin({
+          provider: 'google',
+          token: res.result.idToken,
+          tenant: tenant.identifier,
+        });
+      }
+      console.log('GOT GOOGLE LOGIN RESULT', JSON.stringify(res));
     } else {
       window.open(`${ApiService.url}auth/google?tenantId=${tenant.identifier}`);
     }
   };
 
   return (
-    <StyledButton
-      type="button"
-      size="large"
-      iconLeft={<span className="fa fa-google" />}
-      onClick={goToGoogleLogin}
-      text="application.sign_in_google"
-    />
+    <>
+      {isPending ? <Spinner halfTransparent overlay /> : null}
+      <StyledButton
+        type="button"
+        size="large"
+        disabled={isPending}
+        disabled={isPending}
+        iconLeft={<span className="fa fa-google" />}
+        onClick={goToGoogleLogin}
+        text="application.sign_in_google"
+      />
+    </>
   );
 };

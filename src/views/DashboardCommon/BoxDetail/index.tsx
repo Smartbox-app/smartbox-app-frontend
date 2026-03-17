@@ -31,7 +31,7 @@ interface Props {
 
 const BoxDetail = ({
   boxDataCleanUp,
-  box: { rentId, id, identifier, status },
+  box: { rentId, id, identifier, status, area },
   singleBoxDetail,
   stockId,
   callback,
@@ -57,6 +57,9 @@ const BoxDetail = ({
 
       <DescriptionRow icon="fa-lock" text="application.storeNumber">
         {identifier}
+      </DescriptionRow>
+      <DescriptionRow icon="fa-arrows-alt" text="application.storeSize">
+        {area}m²
       </DescriptionRow>
 
       {rentId && status !== RentStatus.free && (

@@ -3,5 +3,6 @@
     <string name="app_name">Smartbox Storage</string>
     <string name="title_activity_main">Smartbox Storage</string>
     <string name="package_name">com.smartbox.aplikacja.app</string>
-    <string name="custom_url_scheme">com.smartbox.aplikacja.app</string>
+    <string name="facebook_app_id">476161735450594</string>
+    <string name="facebook_client_token">22985a60ed3f7648ed6cd5a4827593b1</string>
 </resources>

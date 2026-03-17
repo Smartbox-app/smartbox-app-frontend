@@ -16,14 +16,19 @@ import { SingleTab } from 'src/types/tab';
 import {
   Adjustments,
   Boxes,
+  Calendar,
   Invitations,
+  List,
   Message,
   Templates,
   Users,
+  Wallet,
   Workers,
 } from 'src/icons';
 import { Section, Tabs } from 'src/components/ui';
 import { AttachmentManagement } from 'src/views/DashboardCommon/AttachmentManagement';
+import SystemNotificationManagement from 'src/views/DashboardCommon/SystemNotificationManagement';
+import { DocumentsManagement } from 'src/views/DashboardCommon/DocumentManagement';
 
 const Management = () => {
   const { data: user } = useGetMyDetailsQuery();
@@ -78,6 +83,16 @@ const Management = () => {
         text: 'application.attachments',
         icon: <Boxes />,
       },
+      {
+        to: `/${UserService.getSlugByRole(user.role)}/management/documents`,
+        text: 'application.documents',
+        icon: <List />,
+      },
+      {
+        to: `/${UserService.getSlugByRole(user.role)}/management/notifications`,
+        text: 'application.systemNotifications',
+        icon: <Calendar />,
+      },
     ];
 
     if (smsStatus) {
@@ -131,8 +146,16 @@ const Management = () => {
           component={SMS}
         />
         <Route
+          path={`/${UserService.getSlugByRole(user.role)}/management/notifications`}
+          component={SystemNotificationManagement}
+        />
+        <Route
           path={`/${UserService.getSlugByRole(user.role)}/management/attachments`}
           component={AttachmentManagement}
+        />
+        <Route
+          path={`/${UserService.getSlugByRole(user.role)}/management/documents`}
+          component={DocumentsManagement}
         />
       </Switch>
     </>

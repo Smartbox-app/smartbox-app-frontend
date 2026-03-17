@@ -14,6 +14,7 @@ import UpdatePass from 'src/views/DashboardCommon/Profile/Detail/UpdatePass';
 import { UpdateBasic } from 'src/views/DashboardCommon/Profile/Detail/UpdateBasic';
 import { UpdateContact } from 'src/views/DashboardCommon/Profile/Detail/UpdateContact';
 import { UpdateCompany } from 'src/views/DashboardCommon/Profile/Detail/UpdateCompany';
+import { DeleteAccountConfirmation } from 'src/views/DashboardCommon/Profile/Detail/DeleteAccountConfirmation/DeleteAccountConfirmation';
 
 const UserData = () => {
   const { data: user } = useGetMyDetailsQuery();
@@ -38,6 +39,11 @@ const UserData = () => {
             text="application.changPassword"
             primary
             click={() => dispatch(showModal(<UpdatePass />))}
+          />
+          <Button
+            text="application.deleteAccount"
+            danger
+            click={() => dispatch(showModal(<DeleteAccountConfirmation />))}
           />
         </ButtonsContainer>
       </Section>

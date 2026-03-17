@@ -21,9 +21,10 @@ export enum PaymentDocument {
 }
 
 export enum PaymentType {
-  card = 0,
-  blik = 1,
-  transfer = 2
+  Unset = 'unset',
+  NewRent = 'new-rent',
+  Extension = 'extension',
+  PeriodPayment = 'period-payment'
 }
 
 export interface IPayment extends IBase {

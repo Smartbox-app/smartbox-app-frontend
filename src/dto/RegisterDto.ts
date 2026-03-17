@@ -9,29 +9,40 @@ import {
   ValidateIf,
 } from 'class-validator';
 import { errors } from 'src/validation/errors';
+import { ValidCharacters } from 'src/validators/areValidCharacters';
 import { IsCustomEmail } from 'src/validators/IsCustomEmail';
 
 export class RegisterDto {
-  @IsCustomEmail(
-    {
-      message: errors.incorrect_email,
-    },
-  )
+  @ValidCharacters({
+    message: errors.incorrect_characters,
+  })
+  @IsCustomEmail({
+    message: errors.incorrect_email,
+  })
   @IsNotEmpty({
     message: errors.field_required,
   })
   email: string;
 
+  @ValidCharacters({
+    message: errors.incorrect_characters,
+  })
   @IsNotEmpty({
     message: errors.field_required,
   })
   firstName: string;
 
+  @ValidCharacters({
+    message: errors.incorrect_characters,
+  })
   @IsNotEmpty({
     message: errors.field_required,
   })
   lastName: string;
 
+  @ValidCharacters({
+    message: errors.incorrect_characters,
+  })
   @IsNotEmpty({
     message: errors.field_required,
   })

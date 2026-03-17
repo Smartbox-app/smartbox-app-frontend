@@ -92,6 +92,7 @@ export interface GateAdminReq {
   secondaryModuleId: string;
   ksmIdentifier: string;
   ksmAlarmIdentifier: string;
+  ttlockIdentifier: string;
   description: string;
 }
 
@@ -177,6 +178,6 @@ export type StockStatistics = {
     [month: string]: {
       amount: number;
       order: number;
-    }
-  }
+    };
+  };
 };

@@ -1,8 +1,0 @@
-{
-  "paths": [
-    "./src/"
-  ],
-  "output": "src/data/errorsTranslations.json",
-  "langs": ["pl"],
-  "includeApiErrorCodesFromTypes": true
-}

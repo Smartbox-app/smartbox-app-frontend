@@ -21,3 +21,4 @@ export * from './notification';
 export * from './attachment';
 export * from './ttlock';
 export * from './mobile-config';
+export * from './documents';

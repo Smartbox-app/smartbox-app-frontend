@@ -366,7 +366,7 @@ const Pricing = () => {
         {(!variants || variants.length === 0) && (
           <Alert type="notice" text="application.noAddonVariantsSet" />
         )}
-        {variants.map((variant) => (
+        {variants.filter(variant => !!variant).map((variant) => (
           <Section highlight key={variant.id}>
             <StyledVariantContainer>
               <StyledVariantData>

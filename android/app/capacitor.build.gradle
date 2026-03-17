@@ -9,7 +9,6 @@ android {
 
 apply from: "../capacitor-cordova-android-plugins/cordova.variables.gradle"
 dependencies {
-    implementation project(':capacitor-community-facebook-login')
     implementation project(':capacitor-community-file-opener')
     implementation project(':capacitor-app')
     implementation project(':capacitor-browser')
@@ -17,6 +16,8 @@ dependencies {
     implementation project(':capacitor-filesystem')
     implementation project(':capacitor-geolocation')
     implementation project(':capacitor-preferences')
+    implementation project(':capacitor-splash-screen')
+    implementation project(':capgo-capacitor-social-login')
 
 }
 

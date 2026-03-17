@@ -5,7 +5,6 @@ import { store, history } from '../App';
 import { Preferences } from '@capacitor/preferences';
 
 const getUrl = async () => {
-
   return typeof import.meta.env.VITE_APP_API_URL === 'string'
     ? `${import.meta.env.VITE_APP_API_URL.trim()}/`
     : 'http://localhost:3001/';
@@ -124,6 +123,7 @@ export default class ApiService {
     failedCb?: any,
     requestData?: any,
     throwError?: boolean,
+    muteNotification?: boolean,
   ) => {
     const headers: {
       [key: string]: string;
@@ -156,17 +156,23 @@ export default class ApiService {
           return data.payload as R;
         case ApiResult.error:
           if (failedCb) failedCb(data);
-          store.dispatch(notifications.errorNotification(data.error_code));
+          if (!muteNotification)
+            store.dispatch(notifications.errorNotification(data.error_code));
+          if (throwError) throw new Error(data.error_code);
           break;
         default:
           if (ApiService.is401(data)) {
             //
           } else {
-            store.dispatch(notifications.errorNotification(data.error_code));
+            if (!muteNotification)
+              store.dispatch(notifications.errorNotification(data.error_code));
           }
       }
     } catch (error) {
-      store.dispatch(notifications.errorNotification(ApiErrorCode.OtherError));
+      if (!muteNotification && !throwError)
+        store.dispatch(
+          notifications.errorNotification(ApiErrorCode.OtherError),
+        );
       if (throwError) throw error;
     }
   };

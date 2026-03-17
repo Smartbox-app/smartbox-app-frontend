@@ -18,11 +18,37 @@ import { useTenant } from '../../../hooks/useTenant';
 import { FbButton } from './components/FbButton';
 import { AppVersion } from '../../../components/AppVersion';
 import { GoogleButton } from './components/GoogleButton';
+import { Capacitor } from '@capacitor/core';
+import { Device } from '@capacitor/device';
+import { useEffect, useState } from 'react';
 
 export const Login = () => {
   const { tenant } = useTenant();
+  const [buttonsAvailable, setButtonsAvailable] = useState(false);
 
   const { mutate: login, isPending } = useLoginMutation();
+
+  const isIosNativeBuild = async () => {
+    if (!Capacitor.isNativePlatform()) return false;
+
+    const { platform } = await Device.getInfo();
+    return platform === 'ios';
+  };
+
+  const verifyThirdPartyLogInAvailability = async () => {
+    const isIos = await isIosNativeBuild();
+    if (isIos) {
+      setButtonsAvailable(false);
+
+      return;
+    }
+
+    setButtonsAvailable(true);
+  };
+
+  useEffect(() => {
+    verifyThirdPartyLogInAvailability();
+  }, []);
 
   const {
     handleSubmit,
@@ -34,10 +60,10 @@ export const Login = () => {
   });
 
   const onSubmit = (data: LoginDto) => {
-    if(!isValid) return;
+    if (!isValid) return;
     login({
       ...data,
-      email: data.email.trim()
+      email: data.email.trim(),
     });
   };
 
@@ -72,16 +98,20 @@ export const Login = () => {
                 type="submit"
                 disabled={isPending}
               />
-              <FbButton />
-              <GoogleButton />
+              {buttonsAvailable ? (
+                <>
+                  <FbButton />
+                  <GoogleButton />
+                </>
+              ) : null}
               {/* <GoogleButton /> */}
               {/* {tenant.rules && tenant.privacy && ( */}
-                <Button
-                variant='secondary'
-                  text="application.register"
-                  size="large"
-                  to={tenant.slides.length > 0 ? '/welcome' : 'register'}
-                />
+              <Button
+                variant="secondary"
+                text="application.register"
+                size="large"
+                to={tenant.slides.length > 0 ? '/welcome' : 'register'}
+              />
               {/* )} */}
             </Section>
           </Form>

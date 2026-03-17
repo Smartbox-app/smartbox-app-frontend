@@ -20,3 +20,5 @@ export * from './gateway-list.table';
 export * from './lock-passcodes.list'
 export * from './alarms-list.table';
 export * from './mobile-config.table';
+export * from './system-notification-list.table';
+export * from './document-list.table';

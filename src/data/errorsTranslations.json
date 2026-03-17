@@ -13,6 +13,7 @@
     "Expiration Date": "Data wygaśnięcia",
     "Field required.": "To pole jest wymagane.",
     "Invalid NIP.": "Nieprawidłowy NIP.",
+    "Incorrect character detected.": "Niedozwolony znak, dozwolone polskie znaki, cyfry oraz znaki specjalne.",
     "Invalid Zip code.": "Błędny kod pocztowy.",
     "Invalid absolute URL.": "Invalid absolute URL.",
     "Invalid bank account number": "Błędny numer konta bankowego",
@@ -425,6 +426,14 @@
       "96": {
         "text": "Podany kraj jest niepoprawny!",
         "__type_alias_do_not_touch": "ApiErrorCode.InvalidCountry"
+      },
+      "97": {
+        "text": "Brak możliwości usunięcia konta. Upewnij się, że nie posiadasz zaległości ani aktywnych wynajmów.",
+        "__type_alias_do_not_touch": "ApiErrorCode.UnableToDeleteAccount"
+      },
+      "98": {
+        "text": "Ten typ dokumentu już istnieje.",
+        "__type_alias_do_not_touch": "ApiErrorCode.DocumentTypeAlreadyExists"
       }
     }
   }

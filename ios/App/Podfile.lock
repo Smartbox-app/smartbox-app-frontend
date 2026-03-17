@@ -1,25 +1,69 @@
 PODS:
-  - Capacitor (7.4.4):
+  - AppAuth (2.0.0):
+    - AppAuth/Core (= 2.0.0)
+    - AppAuth/ExternalUserAgent (= 2.0.0)
+  - AppAuth/Core (2.0.0)
+  - AppAuth/ExternalUserAgent (2.0.0):
+    - AppAuth/Core
+  - AppCheckCore (11.2.0):
+    - GoogleUtilities/Environment (~> 8.0)
+    - GoogleUtilities/UserDefaults (~> 8.0)
+    - PromisesObjC (~> 2.4)
+  - Capacitor (8.1.0):
     - CapacitorCordova
-  - CapacitorApp (7.1.1):
+  - CapacitorApp (8.0.1):
     - Capacitor
-  - CapacitorBrowser (7.0.3):
+  - CapacitorBrowser (8.0.1):
     - Capacitor
-  - CapacitorCommunityFileOpener (7.0.1):
+  - CapacitorCommunityFileOpener (8.0.0):
     - Capacitor
-  - CapacitorCordova (7.4.4)
-  - CapacitorDevice (7.0.3):
+  - CapacitorCordova (8.1.0)
+  - CapacitorDevice (8.0.1):
     - Capacitor
-  - CapacitorFilesystem (7.1.5):
+  - CapacitorFilesystem (8.1.2):
     - Capacitor
-    - IONFilesystemLib (~> 1.0.1)
-  - CapacitorGeolocation (7.1.7):
+    - IONFilesystemLib (~> 1.1.1)
+  - CapacitorGeolocation (8.1.0):
     - Capacitor
-    - IONGeolocationLib (= 1.0.1)
-  - CapacitorPreferences (7.0.3):
+    - IONGeolocationLib (= 2.0.0)
+  - CapacitorPreferences (8.0.1):
     - Capacitor
-  - IONFilesystemLib (1.0.1)
-  - IONGeolocationLib (1.0.1)
+  - CapacitorSplashScreen (8.0.1):
+    - Capacitor
+  - CapgoCapacitorSocialLogin (8.3.6):
+    - Capacitor
+    - FBSDKCoreKit (~> 18.0)
+    - FBSDKLoginKit (~> 18.0)
+    - GoogleSignIn (~> 9.0.0)
+  - FBAEMKit (18.0.3):
+    - FBSDKCoreKit_Basics (= 18.0.3)
+  - FBSDKCoreKit (18.0.3):
+    - FBAEMKit (= 18.0.3)
+    - FBSDKCoreKit_Basics (= 18.0.3)
+  - FBSDKCoreKit_Basics (18.0.3)
+  - FBSDKLoginKit (18.0.3):
+    - FBSDKCoreKit (= 18.0.3)
+  - GoogleSignIn (9.0.0):
+    - AppAuth (~> 2.0)
+    - AppCheckCore (~> 11.0)
+    - GTMAppAuth (~> 5.0)
+    - GTMSessionFetcher/Core (~> 3.3)
+  - GoogleUtilities/Environment (8.1.0):
+    - GoogleUtilities/Privacy
+  - GoogleUtilities/Logger (8.1.0):
+    - GoogleUtilities/Environment
+    - GoogleUtilities/Privacy
+  - GoogleUtilities/Privacy (8.1.0)
+  - GoogleUtilities/UserDefaults (8.1.0):
+    - GoogleUtilities/Logger
+    - GoogleUtilities/Privacy
+  - GTMAppAuth (5.0.0):
+    - AppAuth/Core (~> 2.0)
+    - GTMSessionFetcher/Core (< 4.0, >= 3.3)
+  - GTMSessionFetcher/Core (3.5.0)
+  - IONFilesystemLib (1.1.1)
+  - IONGeolocationLib (2.0.0)
+  - PromisesObjC (2.4.0)
 
 DEPENDENCIES:
   - "Capacitor (from `../../node_modules/@capacitor/ios`)"
@@ -31,11 +75,24 @@ DEPENDENCIES:
   - "CapacitorFilesystem (from `../../node_modules/@capacitor/filesystem`)"
   - "CapacitorGeolocation (from `../../node_modules/@capacitor/geolocation`)"
   - "CapacitorPreferences (from `../../node_modules/@capacitor/preferences`)"
+  - "CapacitorSplashScreen (from `../../node_modules/@capacitor/splash-screen`)"
+  - "CapgoCapacitorSocialLogin (from `../../node_modules/@capgo/capacitor-social-login`)"
 
 SPEC REPOS:
   trunk:
+    - AppAuth
+    - AppCheckCore
+    - FBAEMKit
+    - FBSDKCoreKit
+    - FBSDKCoreKit_Basics
+    - FBSDKLoginKit
+    - GoogleSignIn
+    - GoogleUtilities
+    - GTMAppAuth
+    - GTMSessionFetcher
     - IONFilesystemLib
     - IONGeolocationLib
+    - PromisesObjC
 
 EXTERNAL SOURCES:
   Capacitor:
@@ -56,20 +113,37 @@ EXTERNAL SOURCES:
     :path: "../../node_modules/@capacitor/geolocation"
   CapacitorPreferences:
     :path: "../../node_modules/@capacitor/preferences"
+  CapacitorSplashScreen:
+    :path: "../../node_modules/@capacitor/splash-screen"
+  CapgoCapacitorSocialLogin:
+    :path: "../../node_modules/@capgo/capacitor-social-login"
 
 SPEC CHECKSUMS:
-  Capacitor: 09d9ff8e9618e8c4b3cab2bbee34a17215dd2fef
-  CapacitorApp: 3ddbd30ac18c321531c3da5e707b60873d89dd60
-  CapacitorBrowser: 66aa8ff09cdca2a327ce464b113b470e6f667753
-  CapacitorCommunityFileOpener: 9611c9d1595de7b50571717d443bb718a304b5eb
-  CapacitorCordova: bf648a636f3c153f652d312ae145fb508b6ffced
-  CapacitorDevice: acceaa3502f9a5edd446c96a451eb200d1ac6c03
-  CapacitorFilesystem: 2caf7ad6e26d68defef0631b0f09adb09a353f27
-  CapacitorGeolocation: bcd9412a99fd542b585561238b210bd2b162b8f6
-  CapacitorPreferences: 688a15748e6fb91d52c7563e5f2df3be503dd694
-  IONFilesystemLib: 89258b8e3e85465da93127d25d7ce37f977e8a6f
-  IONGeolocationLib: 20f9d0248a0b5264511fb57a37e25dd2badf797a
+  AppAuth: 1c1a8afa7e12f2ec3a294d9882dfa5ab7d3cb063
+  AppCheckCore: cc8fd0a3a230ddd401f326489c99990b013f0c4f
+  Capacitor: 830fc6ff88e99bb5ba48350f02c01ab01ba3b2b8
+  CapacitorApp: fcd990168c3249d2c5a7ae94920a031d05789e73
+  CapacitorBrowser: 6a7fed906d5f7cc58bc09d145bdb57c8243a235a
+  CapacitorCommunityFileOpener: 48f78a4e32c6d593df6c4ca3b7f2c1a23d893878
+  CapacitorCordova: e8b76fd95fc1e157775abc484c59cc0de464095d
+  CapacitorDevice: ebd210e29ae690225291b8616e6cfaf419d2e866
+  CapacitorFilesystem: 7d3e3df84be4f0d999a5d6baa23aeb30c2de6450
+  CapacitorGeolocation: a2009727714adfa58bf093300b15856aa59e4b7a
+  CapacitorPreferences: 0fa33b3affebf12d96358b491ed7c2b39bec3270
+  CapacitorSplashScreen: 1281f7df4d9b4a72bccab8d03e6b2bbd17dff122
+  CapgoCapacitorSocialLogin: 9d28549637f8cb3d92ce1c3ffd81723df553d741
+  FBAEMKit: 2a6b529993713c185b02bc36f8c91129bf78dfb0
+  FBSDKCoreKit: 65d7f7a7d6fcc3aa6eb6e093ec737a4184fc6049
+  FBSDKCoreKit_Basics: 7bc9d8fde8f70985fba2ed7c1d07e319f969a991
+  FBSDKLoginKit: 66d20fcb7afcafc0c420477662f96845cd1a5179
+  GoogleSignIn: c7f09cfbc85a1abf69187be091997c317cc33b77
+  GoogleUtilities: 00c88b9a86066ef77f0da2fab05f65d7768ed8e1
+  GTMAppAuth: 217a876b249c3c585a54fd6f73e6b58c4f5c4238
+  GTMSessionFetcher: 5aea5ba6bd522a239e236100971f10cb71b96ab6
+  IONFilesystemLib: dfa8706539ac9ab77ccfd6e5b3830ce9b5e57f6c
+  IONGeolocationLib: a5e40b54edc2ee9902036eda5aaa41ddf07bb68d
+  PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
 
-PODFILE CHECKSUM: 8aa084fc5438d11bbebbcfc8048cd7aa8d31283a
+PODFILE CHECKSUM: fdf5a40b0ffdb88407b4c66b66e8a3d15c51f640
 
 COCOAPODS: 1.16.2

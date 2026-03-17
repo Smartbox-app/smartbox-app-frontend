@@ -13,22 +13,52 @@ import { PeriodEntity } from '../period';
 
 export interface OrderAddons {
   [addonId: string]: {
-    name: string;
-    slug: string;
     price: number | null;
     selectedVariant: string | null;
     selectedVariantName: string | null;
     acceptances: SingleAcceptance[];
     acceptancesStatus: AcceptanceStatuses;
-    tax: string;
   };
+}
+
+export interface RentBoxFormDataReq {
+  stockId: string;
+  boxGroupId: string;
+  startAt: string;
+  finishAt: string;
+  // here always gross price!
+  cost: string;
+
+  // here always gross prices!
+  orderAddons: string;
+  discountCode: string;
+  firstName: string;
+  lastName: string;
+  street: string;
+  city: string;
+  country: string;
+  postCode: string;
+  isCompany: string;
+  phone: string;
+  mailToSendInvoice: string;
+  companyName: string;
+  companyStreet: string;
+  companyCity: string;
+  companyPostCode: string;
+  companyCountry: string;
+  nip: string;
+  type: string;
+  rentPaymentType: RentPaymentType;
+  paymentDocument: PaymentDocument;
+  birthDate?: string;
 }
 
 export interface RentBoxReq {
   stockId: string;
   boxGroupId: string;
-  startAt: Date;
-  finishAt: Date;
+  startAt: string;
+  finishAt: string;
+
   // here always gross price!
   cost: number;
 
@@ -38,6 +68,8 @@ export interface RentBoxReq {
   firstName: string;
   lastName: string;
   street: string;
+  birthDate?: Date;
+  clientSource?: string;
   city: string;
   country: string;
   postCode: string;
@@ -50,6 +82,33 @@ export interface RentBoxReq {
   companyPostCode: string;
   companyCountry: string;
   nip: string;
+
+  rentPaymentType: RentPaymentType;
+  paymentDocument: PaymentDocument;
+}
+
+export interface ExtendRentalFormDataReq {
+  firstName: string;
+  lastName: string;
+  street: string;
+  city: string;
+  postCode: string;
+  country: string;
+  isCompany: string;
+  phone: string;
+  mailToSendInvoice: string;
+  companyName?: string;
+  companyStreet?: string;
+  companyCity?: string;
+  companyPostCode?: string;
+  companyCountry?: string;
+  nip?: string;
+  finishAt: string;
+  cost: string;
+  orderAddons: string;
+  discountCode: string;
+  type: string;
+  birthDate?: string;
   rentPaymentType: RentPaymentType;
   paymentDocument: PaymentDocument;
 }
@@ -59,8 +118,8 @@ export interface ExtendRentalReq {
   lastName: string;
   street: string;
   city: string;
-  country: string;
   postCode: string;
+  country: string;
   isCompany: boolean;
   phone: string;
   mailToSendInvoice: string;
@@ -68,11 +127,13 @@ export interface ExtendRentalReq {
   companyStreet?: string;
   companyCity?: string;
   companyPostCode?: string;
+  companyCountry?: string;
   nip?: string;
-  finishAt: Date;
+  finishAt: string;
   cost: number;
   orderAddons: OrderAddons;
   discountCode: string;
+  birthDate?: Date;
   rentPaymentType: RentPaymentType;
   paymentDocument: PaymentDocument;
 }
@@ -108,10 +169,11 @@ export class RentDetailsRes {
   gates?: RentGate[];
   id: string;
   number: string;
+  size?: string;
   status: RentStatus;
   startAt: Date;
-  decisionFinishAt: Date;
   finishAt: Date;
+  decisionFinishAt: Date;
   owner: RentDetailsUser;
   periods: PeriodEntity[];
   description: RentDescription[];
@@ -164,18 +226,17 @@ export type MyRentDetails = {
   stockAddress: string;
   stockId: string;
   boxId: string;
-  boxNumber: string;
   boxGroupId: string;
+  boxNumber: string;
   boxAdditionalInfo: string;
   number: string;
   gates: RentGate[];
   controlled: boolean;
   isMap: boolean;
   description: RentDescription[];
-  accessControl: AccessControl;
-  paymentType: RentPaymentType;
-  pendingPayments: boolean;
   periods: PeriodEntity[];
+  pendingPayments: boolean;
+  paymentType: RentPaymentType;
   passcode: string | null;
 };
 
@@ -199,11 +260,11 @@ export type RentUserData = CompanyData & {
   street: string;
   city: string;
   postCode: string;
+  country: string;
   firstName: string;
   lastName: string;
   email: string;
   phone: string;
-  address: string;
   birthDate: Date | string;
   clientSource?: string;
   stockName: string;
@@ -212,14 +273,15 @@ export type RentUserData = CompanyData & {
   mailToSendInvoice: string;
   isCompany: boolean;
   date: Date;
+  area?: number;
 };
 
 export type AssignRentReq = {
   userId: string;
   boxId: string;
   stockId: string;
-  startAt: Date;
-  endAt: Date;
+  startAt: string;
+  finishAt: string;
 };
 
 export type GeneratePaymentDataResponse = {

@@ -5,8 +5,12 @@ import { Button } from 'src/components/ui';
 import styled from 'styled-components';
 import { lighten } from 'polished';
 import { getColorForBackground } from 'src/utils/color';
+// import { FacebookLogin } from '@capacitor-community/facebook-login';
 import { Capacitor } from '@capacitor/core';
 import { Browser } from '@capacitor/browser';
+import { useSocialLoginMutation } from 'src/mutations';
+import { Spinner } from 'src/components/Branded';
+import { SocialLogin } from '@capgo/capacitor-social-login';
 
 const StyledButton = styled(Button)({
   backgroundColor: '#4267b2',
@@ -19,6 +23,7 @@ const StyledButton = styled(Button)({
 
 export const FbButton = () => {
   const { tenant } = useTenant();
+  const { mutate: socialLogin, isPending } = useSocialLoginMutation();
 
   if (
     !tenant ||
@@ -55,11 +60,33 @@ export const FbButton = () => {
   )
     return null;
 
-  const goToFbLogin = () => {
+  const goToFbLogin = async () => {
     if (Capacitor.isNativePlatform()) {
-      Browser.open({
-        url: `${ApiService.url}auth/facebook?tenantId=${tenant.identifier}&source=mobile`,
+      // const result = await FacebookLogin.login({ permissions: ['email'] });
+      const res = await SocialLogin.login({
+        provider: 'facebook',
+        options: {
+          permissions: ['email', 'public_profile'],
+          limitedLogin: true,
+        },
       });
+
+
+      if (res.result.accessToken?.token) {
+        socialLogin({
+          provider: 'facebook',
+          token: res.result.accessToken?.token,
+          tenant: tenant.identifier,
+        });
+      } else if (res.result.idToken) {
+        socialLogin({
+          provider: 'facebook-jwt',
+          token: res.result.idToken,
+          tenant: tenant.identifier,
+        });
+      }
+
+      console.log('GOT FB LOGIN RESULT', JSON.stringify(res.result));
     } else {
       window.open(
         `${ApiService.url}auth/facebook?tenantId=${tenant.identifier}`,
@@ -68,12 +95,16 @@ export const FbButton = () => {
   };
 
   return (
-    <StyledButton
-      type="button"
-      size="large"
-      iconLeft={<span className="fa fa-facebook" />}
-      onClick={goToFbLogin}
-      text="application.sign_in_fb"
-    />
+    <>
+      {isPending ? <Spinner halfTransparent overlay /> : null}
+      <StyledButton
+        type="button"
+        size="large"
+        disabled={isPending}
+        iconLeft={<span className="fa fa-facebook" />}
+        onClick={goToFbLogin}
+        text="application.sign_in_fb"
+      />
+    </>
   );
 };

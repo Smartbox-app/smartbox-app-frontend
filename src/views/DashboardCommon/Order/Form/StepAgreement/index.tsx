@@ -18,7 +18,10 @@ import { PaymentType } from 'smartbox-types';
 import { Alert } from '../../../../../components/Common';
 import { Spinner } from '../../../../../components/Branded';
 import { order } from '../../../../../actions';
-import { ButtonsContainer, SectionHeader } from '../../../../../components/Layout';
+import {
+  ButtonsContainer,
+  SectionHeader,
+} from '../../../../../components/Layout';
 import { history } from '../../../../../App';
 import { FormType } from '../../../../../types/order-form';
 
@@ -45,6 +48,7 @@ import { prepareAndSentPaymentForm } from 'src/utils/payment-form';
 import { format } from 'date-fns';
 import { textToSimpleMD } from 'src/utils/text-to-simple-md';
 import { Capacitor } from '@capacitor/core';
+import { Browser } from '@capacitor/browser';
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 
@@ -87,25 +91,43 @@ const StepAgreement = ({ formData, isResignationMarked }: Props): any => {
     }
   }, []);
 
-  const startNewRent = async (data: FormData) => {
+  const startNewRent = async (data: FormData, tenantId: string) => {
     setLoading(true);
-    await ApiService.callFetch(
-      'POST',
-      `rent/new?source=${Capacitor.isNativePlatform() ? 'mobile' : 'web'}`,
-      (response: PayForRentResponse) => {
-        if (response.paymentStatus === PaymentStatus.succes) {
-          history.push(`/payment-success/${response.paymentId}`);
-        } else {
-          prepareAndSentPaymentForm(response);
-        }
-      },
-      null,
-      data,
-    );
+    console.log('STARTING NEW RENT');
+    try {
+      await ApiService.callFetch(
+        'POST',
+        `rent/new?source=${Capacitor.isNativePlatform() ? 'mobile' : 'web'}`,
+        (response: PayForRentResponse) => {
+          console.log('GOT RESPONSE', response);
+          if (response.paymentStatus === PaymentStatus.succes) {
+            history.push(`/payment-success/${response.paymentId}`);
+          } else {
+            console.log('TRYING TO PAY');
+            if (Capacitor.isNativePlatform()) {
+              history.push('/');
+              Browser.open({
+                url: `${ApiService.url}rent/ipg-redirect/${tenantId}/${response.paymentId}`,
+              });
+            } else {
+              prepareAndSentPaymentForm(response);
+            }
+          }
+        },
+        null,
+        data,
+      );
+    } catch (e) {
+      console.log('ERROR IN TRYING TO START NEW RENT', e);
+    }
     setLoading(false);
   };
 
-  const extendRent = async (data: FormData, rentId: string) => {
+  const extendRent = async (
+    data: FormData,
+    rentId: string,
+    tenantId: string,
+  ) => {
     setLoading(true);
     await ApiService.callFetch(
       'POST',
@@ -114,7 +136,14 @@ const StepAgreement = ({ formData, isResignationMarked }: Props): any => {
         if (response.paymentStatus === PaymentStatus.succes) {
           history.push(`/payment-success/${response.paymentId}`);
         } else {
-          prepareAndSentPaymentForm(response);
+          if (Capacitor.isNativePlatform()) {
+            history.push('/');
+            Browser.open({
+              url: `${ApiService.url}rent/ipg-redirect/${tenantId}/${response.paymentId}`,
+            });
+          } else {
+            prepareAndSentPaymentForm(response);
+          }
         }
       },
       null,
@@ -123,11 +152,17 @@ const StepAgreement = ({ formData, isResignationMarked }: Props): any => {
     setLoading(false);
   };
 
-  const getCorrectPrice = (price: { value: number}[], isGross: boolean, tax: string) => {
+  const getCorrectPrice = (
+    price: { value: number }[],
+    isGross: boolean,
+    tax: string,
+  ) => {
     if (isGross) return price.reduce((acc, curr) => acc + curr.value, 0);
     const taxValue = getCorrectTaxPercentAmount(tax);
 
-    const priceWithTax = price.map(p => getCorrectPriceWithTax(p.value, taxValue))
+    const priceWithTax = price.map((p) =>
+      getCorrectPriceWithTax(p.value, taxValue),
+    );
 
     return priceWithTax.reduce((acc, curr) => acc + curr, 0);
   };
@@ -142,7 +177,10 @@ const StepAgreement = ({ formData, isResignationMarked }: Props): any => {
       const taxValue = getCorrectTaxPercentAmount(addon.tax);
       // if (addon.price?.value && addon.selectedVariant) {
 
-      const totalAddonPrice = (addon.price || []).reduce((acc, curr) => acc + curr.value, 0);
+      const totalAddonPrice = (addon.price || []).reduce(
+        (acc, curr) => acc + curr.value,
+        0,
+      );
 
       parsedAddons[addonId] = {
         name: addon.name,
@@ -219,7 +257,10 @@ const StepAgreement = ({ formData, isResignationMarked }: Props): any => {
   const onSubmit = (data: any) => {
     if (!user || !order.endDate) return;
 
-    const totalRentPrice = order.calculatedPrice.reduce((acc, curr) => acc + curr.value, 0);
+    const totalRentPrice = order.calculatedPrice.reduce(
+      (acc, curr) => acc + curr.value,
+      0,
+    );
 
     const commonCollection = {
       finishAt: order.endDate,
@@ -268,14 +309,16 @@ const StepAgreement = ({ formData, isResignationMarked }: Props): any => {
       boxGroupId: order.boxGroupId,
     };
 
+    if (!tenant) return;
+
     if (rentId) {
       // rent extension
       const rentFormData = getFormDataFromCollection(dataCollectionExtendRent);
-      extendRent(rentFormData, rentId);
+      extendRent(rentFormData, rentId, tenant.id);
     } else {
       // new Rent
       const rentFormData = getFormDataFromCollection(dataCollectionRent);
-      startNewRent(rentFormData);
+      startNewRent(rentFormData, tenant?.id);
     }
   };
 
@@ -323,7 +366,6 @@ const StepAgreement = ({ formData, isResignationMarked }: Props): any => {
   };
 
   const checkFrame = () => {
-
     if (!frameRef.current) return false;
 
     const iframeDoc =
@@ -381,7 +423,7 @@ const StepAgreement = ({ formData, isResignationMarked }: Props): any => {
       {loading ? <Spinner overlay halfTransparent /> : null}
       <Stack>
         <Section>
-          <SectionHeader title='application.orderAgreement' />
+          <SectionHeader title="application.orderAgreement" />
           <AgreementWrapper>
             {!agreementLoaded ? (
               <SpinnerWrapper>
@@ -412,6 +454,7 @@ const StepAgreement = ({ formData, isResignationMarked }: Props): any => {
             <Button
               href={url}
               size="large"
+              type="button"
               text="application.click_to_open"
               iconLeft={<SearchZoomIn />}
             />

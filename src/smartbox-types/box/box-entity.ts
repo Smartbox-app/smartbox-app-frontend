@@ -1,6 +1,6 @@
-import { SinglePricing } from "../box-group";
-import { IBase } from "../base/base.interface";
-import { RentStatus } from "../rent";
+import { SinglePricing } from '../box-group';
+import { IBase } from '../base/base.interface';
+import { RentStatus } from '../rent';
 
 export interface BoxEntity {
   id: string;
@@ -17,7 +17,7 @@ export interface BoxEntity {
   active: boolean;
 }
 
-export type BoxListRes = Pick<BoxEntity, "id" | "identifier" | "stockId"> & {
+export type BoxListRes = Pick<BoxEntity, 'id' | 'identifier' | 'stockId'> & {
   controlled: boolean;
   area: number;
   status: RentStatus;
@@ -26,25 +26,26 @@ export type BoxListRes = Pick<BoxEntity, "id" | "identifier" | "stockId"> & {
 };
 export type BoxMapRes = Pick<
   BoxEntity,
-  "id" | "identifier" | "stockId" | "x" | "y" | "width" | "height" | "rotation"
+  'id' | 'identifier' | 'stockId' | 'x' | 'y' | 'width' | 'height' | 'rotation'
 > & {
   groupWidth: number;
   groupHeight: number;
+  area: number;
   status: RentStatus;
   rentId: string;
 };
 export type BoxMapUserRes = Pick<
   BoxEntity,
-  "id" | "identifier" | "stockId" | "x" | "y" | "width" | "height" | "rotation"
-> & { groupWidth: number; groupHeight: number };
+  'id' | 'identifier' | 'stockId' | 'x' | 'y' | 'width' | 'height' | 'rotation'
+> & { groupWidth: number; groupHeight: number; area: number };
 
 export type BoxReq = Pick<
   BoxEntity,
-  "identifier" | "additionalInfo" | "stockId" | "boxGroupId" | "ksmIdentifier"
+  'identifier' | 'additionalInfo' | 'stockId' | 'boxGroupId' | 'ksmIdentifier'
 >;
-export type BoxPositionReq = Pick<BoxEntity, "x" | "y" | "stockId">;
-export type BoxActiveReq = Pick<BoxEntity, "active">;
-export type BoxSizeReq = Pick<BoxEntity, "width" | "height" | "stockId">;
+export type BoxPositionReq = Pick<BoxEntity, 'x' | 'y' | 'stockId'>;
+export type BoxActiveReq = Pick<BoxEntity, 'active'>;
+export type BoxSizeReq = Pick<BoxEntity, 'width' | 'height' | 'stockId'>;
 
 export type BoxesBatchReq = {
   identifiers: string;

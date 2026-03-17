@@ -15,31 +15,8 @@ export const saveUser = (userData: AuthLoginResult) => ({
   payload: userData,
 });
 
-export const loginWithGoogle = () => async (dispatch: any) => {
-  await ApiService.post(
-    dispatch,
-    'LOGIN_SUCCESS',
-    'LOGIN_WITH_GOOGLE_FAILED',
-    null,
-    null,
-    'auth/login-google',
-    'LOADING',
-    {},
-  );
-};
 
 export const clearUserSession = () => ({ type: 'CLEAR_USER_SESSION' });
-
-export const getUserLoginGoogleData = () => async (dispatch: any) => {
-  await ApiService.get(
-    dispatch,
-    'LOGIN_SUCCESS',
-    'LOGIN_WITH_Google_FAILED',
-    null,
-    null,
-    'auth/login-google/redirect',
-  );
-};
 
 export const emailVerification =
   (userId: string, updateToken: string) => async (dispatch: any) => {

@@ -1,5 +1,5 @@
-import { AccessControl } from '../../types/stock-group';
 import { IBase } from '../base/base.interface';
+import { AccessControl } from '../stock-group';
 
 export enum StockPaymentType {
   InAdvance = 'in-advance',
@@ -42,6 +42,8 @@ export interface IStock extends IBase {
   colorFree: string;
   showGrossPricesToClient: boolean;
   accessControl: AccessControl;
+  gateAccessControl: AccessControl;
+  boxAccessControl: AccessControl;
   ksmLogin: string;
   ksmPassword: string;
   ksmLocation: string;
@@ -62,6 +64,8 @@ export type StockRes = Pick<
   IStock,
   | 'id'
   | 'accessControl'
+  | 'gateAccessControl'
+  | 'boxAccessControl'
   | 'address'
   | 'clientPaymentTypeConfig'
   | 'colorFailure'
@@ -92,7 +96,14 @@ export type StockRes = Pick<
 
 export type StockListRes = Pick<
   IStock,
-  'id' | 'accessControl' | 'address' | 'name' | 'lat' | 'lon'
+  | 'id'
+  | 'accessControl'
+  | 'boxAccessControl'
+  | 'gateAccessControl'
+  | 'address'
+  | 'name'
+  | 'lat'
+  | 'lon'
 >;
 
 export interface IDiscount extends IBase {
@@ -105,7 +116,8 @@ export interface IGate extends IBase {
   openReq: boolean;
   lastConnection: Date;
   tenantId: string;
-  ksmIdentifier: string;
+  ksmIdentifier?: string;
+  ttlockIdentifier?: string;
 }
 
 export interface Coordinate {

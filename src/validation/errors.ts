@@ -7,5 +7,6 @@ export const errors = {
     check_required: 'Musisz zaznaczyć to pole',
     incorrect_nip: 'Niepoprawny numer NIP',
     incorrect_country: 'Niepoprawny kod kraju',
+    incorrect_characters: 'Niedozwolony znak, dozwolone polskie znaki, cyfry oraz znaki specjalne.',
     min_chars: (chars: number) => `Wymagane min. ${chars} znaków`
 }

@@ -50,7 +50,7 @@ const Manage = () => {
   const getStockData = async () => {
     await ApiService.callFetch('GET', `stock/${stockId}`, (stock: StockRes) => {
       setMapActive(stock.isMapActive);
-      setAlarmsActive(stock.accessControl === AccessControl.ksm);
+      setAlarmsActive(stock.gateAccessControl === AccessControl.ksm);
       if (user?.role === UserRole.admin) getTenantForAdmin(stock.tenantId);
     });
   };

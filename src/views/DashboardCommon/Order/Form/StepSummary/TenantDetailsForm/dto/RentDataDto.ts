@@ -9,32 +9,48 @@ import {
 } from 'class-validator';
 import { __ } from 'src/helpers/i18n';
 import { errors } from 'src/validation/errors';
+import { ValidCharacters } from 'src/validators/areValidCharacters';
 import { IsCountry } from 'src/validators/isCorrectCountry';
 import { IsNip } from 'src/validators/IsCorrectNip';
 
 export class RentDataDto {
   withBirthDate: boolean;
 
+  @ValidCharacters({
+    message: errors.incorrect_characters,
+  })
   @IsNotEmpty({
     message: errors.field_required,
   })
   firstName: string;
 
+  @ValidCharacters({
+    message: errors.incorrect_characters,
+  })
   @IsNotEmpty({
     message: errors.field_required,
   })
   lastName: string;
 
+  @ValidCharacters({
+    message: errors.incorrect_characters,
+  })
   @IsNotEmpty({
     message: errors.field_required,
   })
   city: string;
 
+  @ValidCharacters({
+    message: errors.incorrect_characters,
+  })
   @IsNotEmpty({
     message: errors.field_required,
   })
   street: string;
 
+  @ValidCharacters({
+    message: errors.incorrect_characters,
+  })
   @IsNotEmpty({
     message: errors.field_required,
   })
@@ -71,18 +87,27 @@ export class RentDataDto {
   invoiceNeeded: boolean;
 
   @ValidateIf((d) => !!d.invoiceNeeded)
+  @ValidCharacters({
+    message: errors.incorrect_characters,
+  })
   @IsNotEmpty({
     message: errors.field_required,
   })
   companyName: string;
 
   @ValidateIf((d) => !!d.invoiceNeeded)
+  @ValidCharacters({
+    message: errors.incorrect_characters,
+  })
   @IsNotEmpty({
     message: errors.field_required,
   })
   companyStreet: string;
 
   @ValidateIf((d) => !!d.invoiceNeeded)
+  @ValidCharacters({
+    message: errors.incorrect_characters,
+  })
   @IsNotEmpty({
     message: errors.field_required,
   })

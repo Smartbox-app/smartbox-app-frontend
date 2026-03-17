@@ -16,8 +16,9 @@ import { useGetMyDetailsQuery } from 'src/queries';
 import styled from 'styled-components';
 import { Header } from '../../../components/ui';
 import { Message } from './Message';
+import { useAppForeground } from 'src/hooks/useAppForeground';
 
-const WelcomeHeader = styled('div')(({theme}) => ({
+const WelcomeHeader = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
@@ -50,6 +51,14 @@ const Welcome = ({
     getMyRentList();
     fetchMyRentHistory();
   }, []);
+
+  useAppForeground(
+    () => {
+      getMyRentList();
+      fetchMyRentHistory();
+    },
+    { throttleMs: 1000 },
+  );
 
   return (
     <>

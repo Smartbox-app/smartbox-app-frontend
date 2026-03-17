@@ -59,6 +59,8 @@ import { AppGlobalStyles } from './AppGlobalStyles';
 
 import countries from 'i18n-iso-countries';
 import pl from 'i18n-iso-countries/langs/pl.json';
+import { PrivacyPolicy } from './views/PrivacyPolicy';
+import { Browser } from '@capacitor/browser';
 
 const DashboardAdmin = React.lazy(() => import('./views/DashboardAdmin'));
 const DashboardUser = React.lazy(() => import('./views/DashboardUser'));
@@ -80,6 +82,15 @@ const queryClient = new QueryClient();
 
 export const history = createBrowserHistory({ basename: '/' });
 
+CapacitorApp.addListener('appUrlOpen', async ({ url }) => {
+  if (url.includes('payment')) {
+    const parts = url.split('payment/');
+
+    history.push(`/payment/${parts[1]}`);
+  }
+  await Browser.close();
+});
+
 const App = () => {
   const [loading, setLoading] = useState(true);
   const checkI18nLoaded = () => {
@@ -94,11 +105,6 @@ const App = () => {
     const lang = store.getState().lang.current;
     i18n.load(lang);
     checkI18nLoaded();
-
-    if (Capacitor.isNativePlatform())
-      CapacitorApp.addListener('appUrlOpen', ({ url }) => {
-        console.log('OPENED WITH URL', url);
-      });
   }, []);
 
   if (loading || !i18n.loaded) return null;
@@ -198,6 +204,11 @@ const App = () => {
                       <RouteUser path="/user" component={DashboardUser} />
                       <RouteTenant path="/client" component={DashboardTenant} />
 
+                      <Route
+                        exact
+                        path="/privacy-policy"
+                        component={PrivacyPolicy}
+                      />
                       <Route exact path="/404" component={Page404} />
                       <Route component={Page404} />
                     </Switch>

@@ -7,6 +7,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
+        <meta-data android:name="com.facebook.sdk.ClientToken" android:value="@string/facebook_client_token"/>
+
         <activity
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|smallestScreenSize|screenLayout|uiMode|navigation"
             android:name=".MainActivity"
@@ -30,7 +34,7 @@
                 <!-- <data android:scheme="myapp" /> -->
 
                 <!-- Example: https URL -->
-                <data android:scheme="https" android:host="aplikacja.smartbox-app.pl" android:pathPrefix="/"  />
+                <data android:scheme="https" android:host="{ANDROID_APP_DEEP_LINK_HOST}.smartbox-app.pl" android:pathPrefix="/"  />
             </intent-filter>
         </activity>
 
@@ -44,7 +48,7 @@
     </application>
 
     <!-- Permissions -->
-
+    <uses-permission android:name="com.google.android.gms.permission.AD_ID"/>
     <uses-permission android:name="android.permission.INTERNET" />
 
     <!-- Geolocation API -->

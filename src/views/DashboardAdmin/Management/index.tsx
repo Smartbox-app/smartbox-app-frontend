@@ -16,6 +16,7 @@ import { Tabs } from 'src/components/ui';
 import {
   Adjustments,
   Boxes,
+  Calendar,
   Invitations,
   Message,
   Stocks,
@@ -23,6 +24,7 @@ import {
   Workers,
 } from 'src/icons';
 import MobileAppsConfig from './MobileAppsConfig/MobileAppsConfig';
+import SystemNotificationManagement from 'src/views/DashboardCommon/SystemNotificationManagement';
 
 const Management = () => {
   const { data: user } = useGetMyDetailsQuery();
@@ -74,6 +76,11 @@ const Management = () => {
               text: 'application.attachments',
               icon: <Boxes />,
             },
+            {
+              to: `/${UserService.getSlugByRole(user.role)}/management/notifications`,
+              text: 'application.systemNotifications',
+              icon: <Calendar />,
+            },
           ]}
         />
       </Section>
@@ -118,6 +125,10 @@ const Management = () => {
         <Route
           path={`/${UserService.getSlugByRole(user.role)}/management/mobile-config`}
           component={MobileAppsConfig}
+        />
+        <Route
+          path={`/${UserService.getSlugByRole(user.role)}/management/notifications`}
+          component={SystemNotificationManagement}
         />
         <Route
           path={`/${UserService.getSlugByRole(user.role)}/management/attachments`}

@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { ApplicationState } from '../../reducers';
+import { useDispatch } from 'react-redux';
 import { useGetVersionQuery, useGetMyDetailsQuery } from '../../queries';
 import { useLogoutMutation } from 'src/mutations/useLogoutMutation';
 import { useLocation } from 'react-router';
 import { scrollTop } from 'src/utils/scroll-top';
 import TagManager from 'react-gtm-module';
-import { MaintenanceScreen } from '../MaintenanceScreen';
 import { Spinner } from '../Branded';
 import { Capacitor } from '@capacitor/core';
 import { Device } from '@capacitor/device';
@@ -15,6 +13,8 @@ import { showModal } from '../../actions/modal';
 import { AppOutdatedModal } from './components/AppOutdatedModal';
 import { AppMaintenanceModal } from './components/AppMaintenanceModal';
 import { useTenant } from '../../hooks/useTenant';
+import { SocialLogin } from '@capgo/capacitor-social-login';
+import { Preferences } from '@capacitor/preferences';
 
 interface Props {
   children: React.ReactNode;
@@ -37,7 +37,25 @@ const AppWrapper = ({ children }: Props) => {
 
     if (!currentVersion || !config.versions.includes(currentVersion)) {
       localStorage.setItem('v', config.versions[0]);
-      window.location.reload();
+
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker
+          .getRegistrations()
+          .then(function (registrations) {
+            //returns installed service workers
+            if (registrations.length) {
+              Promise.all(
+                registrations.map((registration) => registration.unregister()),
+              ).then(function () {
+                window.location.reload();
+              });
+            } else {
+              window.location.reload();
+            }
+          });
+      } else {
+        window.location.reload();
+      }
     }
   };
 
@@ -92,13 +110,55 @@ const AppWrapper = ({ children }: Props) => {
     handleConfig(config);
   }, [config]);
 
+  const verifyNativeToken = async () => {
+    const token = await Preferences.get({ key: 'smst_token' });
+    if (!token) {
+      logout();
+    }
+  };
+
   useEffect(() => {
     if (user && user.tenantId && tenant) {
       if (user.tenantId !== tenant.id) {
         logout();
       }
     }
+
+    if (Capacitor.isNativePlatform()) {
+      verifyNativeToken();
+    }
   }, [user, tenant]);
+
+  const initGoogleAuth = async () => {
+    console.log('TRYING TO INIT GOOGLE AUTH');
+
+    console.log(
+      'TRYING TO INIT FACEBOOK AUTH META',
+      JSON.stringify(import.meta.env),
+    );
+    try {
+      await SocialLogin.initialize({
+        google: {
+          webClientId: import.meta.env.VITE_GOOGLE_WEB_CLIENT_ID, // Required for Android and Web
+          iOSClientId: import.meta.env.VITE_GOOGLE_IOS_CLIENT_ID, // Required for iOS
+          iOSServerClientId: import.meta.env.VITE_GOOGLE_WEB_CLIENT_ID, // Required for iOS offline mode and server authorization (same as webClientId)
+          mode: 'online', // 'online' or 'offline'
+        },
+        facebook: {
+          appId: import.meta.env.VITE_META_CLIENT_ID,
+          clientToken: import.meta.env.VITE_META_CLIENT_TOKEN,
+        },
+      });
+    } catch (e) {
+      console.log('INIT ERROR', e);
+    }
+  };
+
+  useEffect(() => {
+    if (!Capacitor.isNativePlatform()) return;
+
+    initGoogleAuth();
+  }, []);
 
   useEffect(() => {
     if (!tenant || !['rentbox', 'kielceboxy'].includes(tenant.identifier))
