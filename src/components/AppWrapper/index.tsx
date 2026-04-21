@@ -140,7 +140,7 @@ const AppWrapper = ({ children }: Props) => {
       await SocialLogin.initialize({
         google: {
           webClientId: import.meta.env.VITE_GOOGLE_WEB_CLIENT_ID, // Required for Android and Web
-          iOSClientId: import.meta.env.VITE_GOOGLE_IOS_CLIENT_ID, // Required for iOS
+          iOSClientId: import.meta.env[`VITE_GOOGLE_IOS_${tenant?.identifier.toUpperCase()}_CLIENT_ID`], // Required for iOS
           iOSServerClientId: import.meta.env.VITE_GOOGLE_WEB_CLIENT_ID, // Required for iOS offline mode and server authorization (same as webClientId)
           mode: 'online', // 'online' or 'offline'
         },

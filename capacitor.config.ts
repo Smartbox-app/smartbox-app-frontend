@@ -23,7 +23,7 @@ let config: CapacitorConfig = {
       androidScaleType: 'CENTER_CROP',
       splashFullScreen: true,
       splashImmersive: false,
-      launchAutoHide: false,
+      launchAutoHide: true,
     },
     CapacitorHttp: {
       enabled: true,

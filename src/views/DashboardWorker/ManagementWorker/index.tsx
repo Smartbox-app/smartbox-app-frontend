@@ -2,7 +2,7 @@ import { Redirect, Route, Switch } from 'react-router';
 
 import UserService from '../../../services/user-service';
 import UsersManagement from '../../../views/DashboardCommon/UsersManagement';
-import InvitesSent from '../../../views/DashboardCommon/InvitesSent';
+import { InvitesSent } from '../../../views/DashboardCommon/InvitesSent';
 import { useGetMyDetailsQuery } from 'src/queries';
 import { Section, Tabs } from 'src/components/ui';
 import { SingleTab } from 'src/types/tab';

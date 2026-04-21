@@ -1,12 +1,6 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import {
-  FieldType,
-  TableSchema,
-  TableSchemaField,
-  usersList,
-} from 'smartbox-tables';
+import { useDispatch } from 'react-redux';
+import { FieldType, TableSchemaField, usersList } from 'smartbox-tables';
 import { IUser, UserStatus, UserType } from 'smartbox-types';
 import { ApiTable } from '../../../../components/Common';
 import { Button } from '../../../../components/Branded';
@@ -18,52 +12,37 @@ import { isWorker } from '../../../../utils/role-check';
 
 import EditAssign from './EditAssign';
 import { HeaderWithActions, PageHeader, Section } from 'src/components/ui';
+import UserService from 'src/services/user-service';
+import { showModal } from 'src/actions/modal';
+import { blockUser, enableUser } from 'src/actions/users';
+import { useGetMyDetailsQuery } from 'src/queries';
 
-interface Props {
-  showModal: (content: React.ReactNode) => void;
-  enableUser: (userId: string) => void;
-  blockUser: (userId: string) => void;
-}
+export const List = () => {
+  const { data: user } = useGetMyDetailsQuery();
 
-class List extends React.Component<Props> {
-  private scheme: TableSchema;
+  const dispatch = useDispatch();
 
-  constructor(props: Props) {
-    super(props);
-    this.scheme = new InteractiveTableSchema(usersList)
-      .modifyFieldStatic('status', {
-        name: __('application.state'),
-        field: 'status',
-        mobile: true,
-        defaultSort: true,
-        type: FieldType.Custom,
-        customRender: (value, field, userData) =>
-          this.getLockButton(value, field, userData),
-      })
-      .addFieldAfter('role', {
-        name: __('application.userAssigment'),
-        field: 'storageAssign',
-        mobile: true,
-        type: FieldType.Custom,
-        sortable: true,
-        customRender: (value, field, userData) =>
-          this.getAssignButton(value, field, userData),
-      });
-    // .addFieldAtTheEnd({
-    //   name: __('application.actions'),
-    //   field: 'actions',
-    //   mobile: true,
-    //   buttons: [
-    //     {
-    //       name: 'application.changeUserRole',
-    //       type: 'primary',
-    //       click: (data: any) => this.props.showModal(<EditRoleForm userId={data.id} />),
-    //     },
-    //   ],
-    // });
-  }
+  const scheme = new InteractiveTableSchema(usersList)
+    .modifyFieldStatic('status', {
+      name: __('application.state'),
+      field: 'status',
+      mobile: true,
+      defaultSort: true,
+      type: FieldType.Custom,
+      customRender: (value, field, userData) =>
+        getLockButton(value, field, userData),
+    })
+    .addFieldAfter('role', {
+      name: __('application.userAssigment'),
+      field: 'storageAssign',
+      mobile: true,
+      type: FieldType.Custom,
+      sortable: true,
+      customRender: (value, field, userData) =>
+        getAssignButton(value, field, userData),
+    });
 
-  private getAssignButton = (
+  const getAssignButton = (
     value: any,
     field: TableSchemaField,
     userData: IUser,
@@ -75,7 +54,7 @@ class List extends React.Component<Props> {
             text="application.change"
             primary
             click={() =>
-              this.props.showModal(<EditAssign userId={userData.id} />)
+              dispatch(showModal(<EditAssign userId={userData.id} />))
             }
           />
         </ButtonsContainer>
@@ -85,7 +64,7 @@ class List extends React.Component<Props> {
     }
   };
 
-  private getLockButton = (
+  const getLockButton = (
     value: boolean,
     field: TableSchemaField,
     userData: IUser,
@@ -96,7 +75,7 @@ class List extends React.Component<Props> {
           <Button
             text="application.active"
             success
-            click={() => this.props.enableUser(userData.id)}
+            click={() => dispatch(enableUser(userData.id))}
           />
         </ButtonsContainer>
       );
@@ -106,40 +85,33 @@ class List extends React.Component<Props> {
           <Button
             text="application.block"
             danger
-            click={() => this.props.blockUser(userData.id)}
+            click={() => dispatch(blockUser(userData.id))}
           />
         </ButtonsContainer>
       );
     }
   };
 
-  render() {
-    return (
-      <Section>
-        <HeaderWithActions
-          actions={
-            <ButtonsContainer>
-              <Button
-                text="application.inviteUser"
-                primary
-                to="/admin/management/workers/add"
-              />
-            </ButtonsContainer>
-          }
-        >
-          {__('application.workersList')}
-        </HeaderWithActions>
+  return (
+    <Section>
+      <HeaderWithActions
+        actions={
+          <ButtonsContainer>
+            <Button
+              text="application.inviteUser"
+              primary
+              to={`/${UserService.getSlugByRole(user!.role)}/management/users/invite`}
+            />
+          </ButtonsContainer>
+        }
+      >
+        {__('application.workersList')}
+      </HeaderWithActions>
 
-        <ApiTable
-          scheme={this.scheme}
-          apiEndpointSubUrl={`user/list/${UserType.staff}`}
-        />
-      </Section>
-    );
-  }
-}
-
-const mapDispatchToProps = (dispatch: any) =>
-  bindActionCreators({ ...modal, ...user }, dispatch);
-
-export default connect(null, mapDispatchToProps)(List);
+      <ApiTable
+        scheme={scheme}
+        apiEndpointSubUrl={`user/list/${UserType.staff}`}
+      />
+    </Section>
+  );
+};

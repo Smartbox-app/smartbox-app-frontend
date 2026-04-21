@@ -22,3 +22,7 @@ export * from './alarms-list.table';
 export * from './mobile-config.table';
 export * from './system-notification-list.table';
 export * from './document-list.table';
+export * from './document-list-client.table';
+export * from './document-list-admin.table';
+export * from './system-log.table';
+export * from './system-log-admin.table';

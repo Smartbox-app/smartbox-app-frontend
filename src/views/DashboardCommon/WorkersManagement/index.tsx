@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch, Route, Redirect } from 'react-router';
 import Add from '../InviteUser';
-import List from './List';
+import { List } from './List';
 import UserService from '../../../services/user-service';
 import { useGetMyDetailsQuery } from 'src/queries';
 

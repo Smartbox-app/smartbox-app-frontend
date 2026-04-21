@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>Smartbox Storage</string>
+	<string>Superbox</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -24,11 +24,11 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>com.smartbox.aplikacja.app</string>
+			<string>com.smartbox.superbox.app</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>smartbox-aplikacja</string>
-				<string>com.googleusercontent.apps.315516464384-g7cbrcua1bs804r0lgvhlgv94jqdfthu</string>
+				<string>smartbox-superbox</string>
+				<string>com.googleusercontent.apps.315516464384-2580vbf7dluev1vuri2hgfkh8oe86r47</string>
 				<string>fb476161735450594</string>
 			</array>
 		</dict>
@@ -38,9 +38,9 @@
 	<key>FacebookClientToken</key>
 	<string>40f2d97d76257f7bfc814e3c51725268</string>
 	<key>FacebookDisplayName</key>
-	<string>Smartbox Storage</string>
+	<string>Superbox</string>
 	<key>GIDClientID</key>
-	<string>315516464384-g7cbrcua1bs804r0lgvhlgv94jqdfthu.apps.googleusercontent.com</string>
+	<string>315516464384-2580vbf7dluev1vuri2hgfkh8oe86r47.apps.googleusercontent.com</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>fbapi</string>

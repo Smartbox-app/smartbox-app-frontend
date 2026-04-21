@@ -86,10 +86,8 @@ const StepSummary = ({ formData, updateFormData }: Props) => {
   const [discount, setDiscount] = useState<boolean>(false);
   const [rent, setRent] = useState<MyRentDetails>();
   const [loading, setLoading] = useState<boolean>(false);
-  console.log('USER', user);
 
   const defaultValues = {
-    paymentType: PaymentType.card,
     firstName: user?.firstName || '',
     lastName: user?.lastName || '',
     street: user?.street || '',

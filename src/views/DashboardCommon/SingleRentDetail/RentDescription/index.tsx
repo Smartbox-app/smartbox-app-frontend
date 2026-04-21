@@ -3,16 +3,23 @@ import { __ } from '../../../../helpers/i18n';
 import { RentHistory } from '../../RentHistory';
 import { Header, Section, Typography } from 'src/components/ui';
 import { useTenantNaming } from 'src/hooks/useTenantNaming';
+import styled from 'styled-components';
 
 interface Props {
   description: RentDescription[];
   rent: MyRentDetails;
 }
 
+const StyledClientSource = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+`;
+
 export const Description = ({ description, rent }: Props) => {
   const { getText } = useTenantNaming();
 
-  if(description.length === 0) return null;
+  if (description.length === 0) return null;
 
   const firstRent = description[0];
   const clientSource = firstRent.data?.clientSource;
@@ -20,10 +27,10 @@ export const Description = ({ description, rent }: Props) => {
     <Section>
       <Header variant="h2">{__('application.rentHistory')}</Header>
       {clientSource ? (
-        <div>
+        <StyledClientSource>
           <strong>{__(getText('client_source'))}</strong>
           <Typography>{clientSource}</Typography>{' '}
-        </div>
+        </StyledClientSource>
       ) : (
         ''
       )}

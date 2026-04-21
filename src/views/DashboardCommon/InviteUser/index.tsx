@@ -50,7 +50,7 @@ const InviteUser = ({ successNotification }: Props) => {
           onSavedSuccessfully={() => {
             successNotification('notification.invitationSendProperly');
             history.push(
-              `/${UserService.getSlugByRole(user.role)}/management/users/list`,
+              `/${UserService.getSlugByRole(user.role)}/management/invitations`,
             );
           }}
           onRenderFullField={mapFields}

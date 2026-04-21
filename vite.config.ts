@@ -23,7 +23,7 @@ export default defineConfig(async () => {
       // viteCommonjs(),
       react(),
       viteTsconfigPaths(),
-      visualizer({ open: false }) as PluginOption,
+      visualizer({ open: true }) as PluginOption,
     ],
     resolve: {
       alias: [
@@ -54,6 +54,11 @@ export default defineConfig(async () => {
               return 'static/css/[name]-[hash][extname]';
             }
             return 'assets/[name]-[hash][extname]';
+          },
+          manualChunks: {
+            pdfjs: ['pdfjs-dist'],
+            'react-id-swiper': ['react-id-swiper'],
+            'react-moveable': ['react-moveable']
           },
         },
       },

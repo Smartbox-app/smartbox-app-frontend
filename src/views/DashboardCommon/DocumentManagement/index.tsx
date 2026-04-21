@@ -28,12 +28,12 @@ const DocumentsManagement = () => {
         component={List}
       />
       <Route
-        path={`/${UserService.getSlugByRole(user.role)}/management/documents/:id`}
-        component={Edit}
-      />
-      <Route
         path={`/${UserService.getSlugByRole(user.role)}/management/documents/add`}
         component={Add}
+      />
+      <Route
+        path={`/${UserService.getSlugByRole(user.role)}/management/documents/:id`}
+        component={Edit}
       />
     </Switch>
   );

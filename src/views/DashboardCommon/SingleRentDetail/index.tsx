@@ -33,7 +33,17 @@ interface Props extends RouteComponentProps<RouteProps> {
 
 const StyledGatesHeader = styled.div`
   font-weight: 700;
-  margin: 20px 0 10px 0;
+  margin: 0;
+`;
+
+const StyledBoxContainer = styled.div`
+  border-left: 4px solid ${({ theme }) => theme.colors.primary};
+  padding-left: 16px;
+  padding-right: 16px;
+  text-align: center;
+  @media (min-width: 768px) {
+    text-align: left;
+  }
 `;
 
 const SingleRentDetail = ({ showUserStockMap, match }: Props) => {
@@ -112,7 +122,15 @@ const SingleRentDetail = ({ showUserStockMap, match }: Props) => {
           {singleRent.gates.map((gate) => (
             <Gate key={gate.id} gate={gate} />
           ))}
-          {singleRent.controlled && <OpenBox id={singleRent.boxId} />}
+          {singleRent.controlled && (
+            <>
+              <StyledGatesHeader>Skrytka</StyledGatesHeader>
+              <StyledBoxContainer>
+                <h4>{singleRent.number}</h4>
+                <OpenBox id={singleRent.boxId} />
+              </StyledBoxContainer>
+            </>
+          )}
         </Section>
       ) : null}
       {!showUserStockMap ? (

@@ -21,5 +21,14 @@ export const gateList: TableSchema = {
             defaultSort: false,
             type: FieldType.Text,
         },
+        {
+            name: 'Kod dostępu',
+            field: 'passcode',
+            mobile: true,
+            searchable: true,
+            sortable: true,
+            defaultSort: false,
+            type: FieldType.Text,
+        },
     ],
 };

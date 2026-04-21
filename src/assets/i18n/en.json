@@ -4,6 +4,8 @@
   "phrases": {
     "application": {
       "management": "asd",
+      "systemLogs": "System logs",
+      "downloadPaymentsReport": "Download payments report",
       "Hi, my friend": "asd",
       "welcome": "Hello world"
     }

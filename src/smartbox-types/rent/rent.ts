@@ -163,6 +163,7 @@ export type RentGate = {
   name: string;
   description: string;
   controlled: boolean;
+  passcode?: string;
 };
 
 export class RentDetailsRes {

@@ -7,14 +7,13 @@ import { __ } from 'src/helpers/i18n';
 import { useTenant } from 'src/hooks/useTenant';
 import { ClassValidatorResolver } from 'src/resolvers/ClassValidatorResolver';
 import { DocumentForm } from '../DocumentForm';
-import {
-  useUpdateDocumentMutation,
-} from 'src/mutations';
+import { useUpdateDocumentMutation } from 'src/mutations';
 import { useDispatch } from 'react-redux';
 import { Redirect, useParams } from 'react-router';
 import { successNotification } from 'src/actions/notifications';
 import { useGetDocumentByIdQuery, useGetMyDetailsQuery } from 'src/queries';
 import UserService from 'src/services/user-service';
+import { UserRole } from 'smartbox-types';
 
 export const Edit = () => {
   const { data: user } = useGetMyDetailsQuery();
@@ -33,19 +32,30 @@ export const Edit = () => {
         type: 'doc',
         content: [],
       },
-      tenantId: tenant?.id,
+      tenantId: user?.role === UserRole.client ? tenant?.id : undefined,
     },
   });
 
   const onSubmit = (data: DocumentDto) => {
-    save(data);
+    if (user?.role === UserRole.client) {
+      save({
+        type: data.type,
+        content: data.content,
+      });
+    } else {
+      save({
+        type: data.type,
+        content: data.content,
+        tenantId: data.tenantId,
+      });
+    }
   };
 
   useEffect(() => {
     if (!document) return;
 
     methods.reset({
-      tenantId: tenant?.id,
+      tenantId: user?.role === UserRole.client ? tenant?.id : document.tenantId,
       type: document.type,
       content: document.content,
     });

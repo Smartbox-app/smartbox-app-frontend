@@ -9,6 +9,7 @@ import styled from 'styled-components';
 import { useGetMyDetailsQuery } from 'src/queries';
 import { Geolocation, PermissionStatus } from '@capacitor/geolocation';
 import { Capacitor } from '@capacitor/core';
+import { ButtonsContainer } from 'src/components/Layout';
 
 interface Props {
   gate: RentGate;
@@ -17,17 +18,23 @@ interface Props {
 const StyledGateContainer = styled.div`
   border-left: 4px solid ${({ theme }) => theme.colors.primary};
   padding-left: 16px;
-`;
-
-const StyledGateTitle = styled.h4`
-  margin: 10px 0;
+  padding-right: 16px;
+  text-align: center;
+  @media (min-width: 768px) {
+    text-align: left;
+  }
 `;
 
 const StyledGateDescription = styled.p`
   margin: 10px 0;
   display: flex;
   align-items: center;
-
+  text-align: center;
+  justify-content: center;
+  @media (min-width: 768px) {
+    text-align: left;
+    justify-content: flex-start;
+  }
   .gate-info-icon {
     margin-right: 8px;
   }
@@ -145,15 +152,28 @@ const Gate = ({ gate }: Props) => {
   const gateButton = (
     <StyledGateContainer>
       {loading && <Spinner overlay halfTransparent />}
-      <StyledGateTitle>{gate.name}</StyledGateTitle>
+      <h4>{gate.name}</h4>
       {gate.description && (
         <StyledGateDescription>
-          <span className="fa fa-info-circle gate-info-icon" /> {gate.description}
+          <span className="fa fa-info-circle gate-info-icon" />{' '}
+          {gate.description}
         </StyledGateDescription>
       )}
       {gate.controlled && (
         <div className="slide-to-open">
-          <Button text={getButtonText()} type="button" primary click={handleClick} />
+          {gate.passcode ? (
+            <p>
+              Kod dostępu: <strong>{gate.passcode}</strong>
+            </p>
+          ) : null}
+          <ButtonsContainer left>
+            <Button
+              text={getButtonText()}
+              type="button"
+              success
+              click={handleClick}
+            />
+          </ButtonsContainer>
         </div>
       )}
     </StyledGateContainer>
@@ -162,7 +182,11 @@ const Gate = ({ gate }: Props) => {
   if (!isUser(user!.role)) {
     return <div className="open-gate-wrapper">{gateButton}</div>;
   }
-  return <div className="open-gate-wrapper"><div className="animation-wrapper">{gateButton}</div></div>;
+  return (
+    <div className="open-gate-wrapper">
+      <div className="animation-wrapper">{gateButton}</div>
+    </div>
+  );
 };
 
 export default Gate;

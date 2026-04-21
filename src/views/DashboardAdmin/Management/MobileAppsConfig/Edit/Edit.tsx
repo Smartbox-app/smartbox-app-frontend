@@ -38,8 +38,9 @@ const Edit = ({ configId }: ExportProps) => {
     <FormContainer highlight>
       <FormHeader title="mobileConfig.edit" />
       <ItfApiForm
-        formId="addMobileConfigForm"
-        schemaMayBeDynamic={false}
+        formId="editMobileConfigForm"
+        schemaCacheEnabled={false}
+        schemaMayBeDynamic={true}
         loadingInfo={<Spinner transparent />}
         schemaFetcher={() => ApiService.loadForm(fetchUrl)}
         sendFetcher={(formId: string, values: any) =>

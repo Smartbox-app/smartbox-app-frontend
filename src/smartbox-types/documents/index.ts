@@ -23,4 +23,4 @@ export type DocumentEntity = {
 
 export type DocumentListRes = Pick<DocumentEntity, 'id' | 'type'>
 
-export type DocumentRes = Pick<DocumentEntity, 'id' | 'type' | 'content' | 'updatedAt'>
+export type DocumentRes = Pick<DocumentEntity, 'id' | 'type' | 'content' | 'updatedAt' | 'tenantId'>

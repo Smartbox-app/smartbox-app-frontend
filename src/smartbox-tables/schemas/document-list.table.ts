@@ -11,6 +11,7 @@ export const documentList: TableSchema = {
       sortable: false,
       defaultSort: false,
       type: FieldType.Text,
+      alias: 'document',
     },
     {
       name: 'Data modyfikacji',
@@ -20,6 +21,7 @@ export const documentList: TableSchema = {
       sortable: true,
       defaultSort: true,
       type: FieldType.Date,
+      alias: 'document',
     },
     {
       name: 'Typ',
@@ -29,6 +31,17 @@ export const documentList: TableSchema = {
       sortable: false,
       defaultSort: false,
       type: FieldType.Text,
+      alias: 'document',
+    },
+    {
+      name: 'Klient',
+      field: 'identifier',
+      mobile: true,
+      searchable: true,
+      sortable: true,
+      defaultSort: false,
+      type: FieldType.Text,
+      alias: 'tenant',
     },
   ],
 };

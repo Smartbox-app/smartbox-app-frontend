@@ -27,6 +27,10 @@
     justify-content: center;
   }
 
+  &.left {
+    justify-content: flex-start;
+  }
+
   &.column {
     flex-direction: column;
   }

@@ -434,6 +434,10 @@
       "98": {
         "text": "Ten typ dokumentu już istnieje.",
         "__type_alias_do_not_touch": "ApiErrorCode.DocumentTypeAlreadyExists"
+      },
+      "99": {
+        "text": "Ten kod rabatowy jest dostępny tylko dla nowych klientów.",
+        "__type_alias_do_not_touch": "ApiErrorCode.GiftForNewClientsOnly"
       }
     }
   }

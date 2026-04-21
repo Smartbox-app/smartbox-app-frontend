@@ -1,4 +1,5 @@
 PODS:
+  - Alamofire (5.10.2)
   - AppAuth (2.0.0):
     - AppAuth/Core (= 2.0.0)
     - AppAuth/ExternalUserAgent (= 2.0.0)
@@ -9,15 +10,15 @@ PODS:
     - GoogleUtilities/Environment (~> 8.0)
     - GoogleUtilities/UserDefaults (~> 8.0)
     - PromisesObjC (~> 2.4)
-  - Capacitor (8.1.0):
+  - Capacitor (8.2.0):
     - CapacitorCordova
   - CapacitorApp (8.0.1):
     - Capacitor
-  - CapacitorBrowser (8.0.1):
+  - CapacitorBrowser (8.0.2):
     - Capacitor
   - CapacitorCommunityFileOpener (8.0.0):
     - Capacitor
-  - CapacitorCordova (8.1.0)
+  - CapacitorCordova (8.2.0)
   - CapacitorDevice (8.0.1):
     - Capacitor
   - CapacitorFilesystem (8.1.2):
@@ -30,7 +31,8 @@ PODS:
     - Capacitor
   - CapacitorSplashScreen (8.0.1):
     - Capacitor
-  - CapgoCapacitorSocialLogin (8.3.6):
+  - CapgoCapacitorSocialLogin (8.3.9):
+    - Alamofire (~> 5.10.2)
     - Capacitor
     - FBSDKCoreKit (~> 18.0)
     - FBSDKLoginKit (~> 18.0)
@@ -80,6 +82,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - Alamofire
     - AppAuth
     - AppCheckCore
     - FBAEMKit
@@ -119,19 +122,20 @@ EXTERNAL SOURCES:
     :path: "../../node_modules/@capgo/capacitor-social-login"
 
 SPEC CHECKSUMS:
+  Alamofire: 7193b3b92c74a07f85569e1a6c4f4237291e7496
   AppAuth: 1c1a8afa7e12f2ec3a294d9882dfa5ab7d3cb063
   AppCheckCore: cc8fd0a3a230ddd401f326489c99990b013f0c4f
-  Capacitor: 830fc6ff88e99bb5ba48350f02c01ab01ba3b2b8
+  Capacitor: c04568d0798e8c9a481d70e8d3df1f7fe1966549
   CapacitorApp: fcd990168c3249d2c5a7ae94920a031d05789e73
-  CapacitorBrowser: 6a7fed906d5f7cc58bc09d145bdb57c8243a235a
+  CapacitorBrowser: a9d79172878eea4b0cbfa7556bc9fa5338ca85fb
   CapacitorCommunityFileOpener: 48f78a4e32c6d593df6c4ca3b7f2c1a23d893878
-  CapacitorCordova: e8b76fd95fc1e157775abc484c59cc0de464095d
+  CapacitorCordova: a9ac88d84a1f5280f33b349fe50fce1902683ac0
   CapacitorDevice: ebd210e29ae690225291b8616e6cfaf419d2e866
   CapacitorFilesystem: 7d3e3df84be4f0d999a5d6baa23aeb30c2de6450
   CapacitorGeolocation: a2009727714adfa58bf093300b15856aa59e4b7a
   CapacitorPreferences: 0fa33b3affebf12d96358b491ed7c2b39bec3270
   CapacitorSplashScreen: 1281f7df4d9b4a72bccab8d03e6b2bbd17dff122
-  CapgoCapacitorSocialLogin: 9d28549637f8cb3d92ce1c3ffd81723df553d741
+  CapgoCapacitorSocialLogin: 5b7806010b81386368d511ff4117d65190a48d7b
   FBAEMKit: 2a6b529993713c185b02bc36f8c91129bf78dfb0
   FBSDKCoreKit: 65d7f7a7d6fcc3aa6eb6e093ec737a4184fc6049
   FBSDKCoreKit_Basics: 7bc9d8fde8f70985fba2ed7c1d07e319f969a991

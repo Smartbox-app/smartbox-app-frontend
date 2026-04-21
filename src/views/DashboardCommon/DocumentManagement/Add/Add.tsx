@@ -13,6 +13,7 @@ import { Redirect } from 'react-router';
 import { successNotification } from 'src/actions/notifications';
 import { useGetMyDetailsQuery } from 'src/queries';
 import UserService from 'src/services/user-service';
+import { UserRole } from 'smartbox-types';
 export const Add = () => {
   const { data: user } = useGetMyDetailsQuery();
   const { tenant } = useTenant();
@@ -28,12 +29,23 @@ export const Add = () => {
         type: 'doc',
         content: [],
       },
-      tenantId: tenant?.id,
+      tenantId: ""
     },
   });
 
   const onSubmit = (data: DocumentDto) => {
-    save(data);
+    if (user?.role === UserRole.client) {
+      save({
+        type: data.type,
+        content: data.content,
+      });
+    } else {
+      save({
+        type: data.type,
+        content: data.content,
+        tenantId: data.tenantId,
+      });
+    }
   };
 
   useEffect(() => {
@@ -42,7 +54,12 @@ export const Add = () => {
     dispatch(successNotification('application.documentAdded'));
   }, [isSuccess]);
 
-  if (isSuccess) return <Redirect to={`/${UserService.getSlugByRole(user?.role)}/management/documents`} />;
+  if (isSuccess)
+    return (
+      <Redirect
+        to={`/${UserService.getSlugByRole(user?.role)}/management/documents`}
+      />
+    );
 
   return (
     <>

@@ -5,7 +5,6 @@ import { Button } from 'src/components/ui';
 import styled from 'styled-components';
 import { darken } from 'polished';
 import { Capacitor } from '@capacitor/core';
-import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
 import { useSocialLoginMutation } from 'src/mutations';
 import { Spinner } from 'src/components/Branded';
 import { SocialLogin } from '@capgo/capacitor-social-login';

@@ -5,11 +5,13 @@ import { TiptapDocument, DocumentType } from '../smartbox-types';
 export const DOCUMENT_TYPES: DocumentType[] = ['privacy-policy'];
 
 export class DocumentDto {
+  [key: string]: unknown;
+
   @IsObject()
   content: TiptapDocument;
 
   @IsIn(DOCUMENT_TYPES)
   type: DocumentType;
 
-  tenantId: string;
+  tenantId?: string;
 }

@@ -188,6 +188,7 @@ const FieldsMapper = ({ field, fieldHtmlId, currentValue, errors, big, onFocus, 
         case 'dateTime': return (
             <DateInput
                 label={field.title}
+                required={field.required}
                 value={currentValue}
                 name={fieldHtmlId}
                 inline={false}

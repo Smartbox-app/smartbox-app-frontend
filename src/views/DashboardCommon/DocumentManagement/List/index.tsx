@@ -1,5 +1,5 @@
 import React from 'react';
-import { documentList } from 'smartbox-tables';
+import { documentListAdmin, documentListClient } from 'smartbox-tables';
 import { DocumentListRes } from 'smartbox-types';
 import { history } from 'src/App';
 import { Button } from 'src/components/Branded';
@@ -11,23 +11,29 @@ import { __ } from 'src/helpers/i18n';
 import { useGetMyDetailsQuery } from 'src/queries';
 import UserService from 'src/services/user-service';
 import { InteractiveTableSchema } from 'src/utils/table-schema-utils';
+import { UserRole } from 'smartbox-types';
 
 export const List = () => {
   const { data: user } = useGetMyDetailsQuery();
-  const scheme = new InteractiveTableSchema(documentList).addFieldAtTheEnd({
-        name: __('application.actions'),
-        field: 'actions',
-        mobile: true,
-        buttons: [
-          {
-            name: 'application.edit',
-            type: 'primary',
-            click: (data: DocumentListRes) =>
-              history.push(`/${UserService.getSlugByRole(user?.role)}/management/documents/${data.id}`)
-          },
-  
-        ],
-      });;
+  const baseSchema =
+    user?.role === UserRole.admin ? documentListAdmin : documentListClient;
+  const scheme = new InteractiveTableSchema(baseSchema);
+
+  scheme.addFieldAtTheEnd({
+    name: __('application.actions'),
+    field: 'actions',
+    mobile: true,
+    buttons: [
+      {
+        name: 'application.edit',
+        type: 'primary',
+        click: (data: DocumentListRes) =>
+          history.push(
+            `/${UserService.getSlugByRole(user?.role)}/management/documents/${data.id}`,
+          ),
+      },
+    ],
+  });
 
   return (
     <Section>

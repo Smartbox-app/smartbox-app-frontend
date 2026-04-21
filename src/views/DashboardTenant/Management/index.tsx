@@ -6,7 +6,7 @@ import UserService from '../../../services/user-service';
 
 import UsersManagement from '../../DashboardCommon/UsersManagement';
 import { Settings } from '../Settings';
-import InvitesSent from '../../DashboardCommon/InvitesSent';
+import { InvitesSent } from '../../DashboardCommon/InvitesSent';
 import ApiService from '../../../services/api-service';
 import SMS from '../../DashboardCommon/SMS';
 import { TemplatesManagement } from '../Templates';
@@ -29,6 +29,7 @@ import { Section, Tabs } from 'src/components/ui';
 import { AttachmentManagement } from 'src/views/DashboardCommon/AttachmentManagement';
 import SystemNotificationManagement from 'src/views/DashboardCommon/SystemNotificationManagement';
 import { DocumentsManagement } from 'src/views/DashboardCommon/DocumentManagement';
+import { SystemLogManagement } from 'src/views/DashboardCommon/SystemLogManagement';
 
 const Management = () => {
   const { data: user } = useGetMyDetailsQuery();
@@ -93,6 +94,11 @@ const Management = () => {
         text: 'application.systemNotifications',
         icon: <Calendar />,
       },
+      {
+        to: `/${UserService.getSlugByRole(user.role)}/management/system-logs`,
+        text: 'application.systemLogs',
+        icon: <List />,
+      },
     ];
 
     if (smsStatus) {
@@ -148,6 +154,10 @@ const Management = () => {
         <Route
           path={`/${UserService.getSlugByRole(user.role)}/management/notifications`}
           component={SystemNotificationManagement}
+        />
+        <Route
+          path={`/${UserService.getSlugByRole(user.role)}/management/system-logs`}
+          component={SystemLogManagement}
         />
         <Route
           path={`/${UserService.getSlugByRole(user.role)}/management/attachments`}

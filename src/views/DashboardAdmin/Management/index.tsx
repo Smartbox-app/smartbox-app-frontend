@@ -1,3 +1,4 @@
+import React from 'react';
 import { Switch, Route, Redirect } from 'react-router';
 import { Section } from '../../../components/Layout';
 import UserService from '../../../services/user-service';
@@ -6,7 +7,7 @@ import WorkersManagement from '../../DashboardCommon/WorkersManagement';
 import UsersManagement from '../../DashboardCommon/UsersManagement';
 import { AttachmentManagement } from '../../DashboardCommon/AttachmentManagement';
 
-import InvitesSent from '../../DashboardCommon/InvitesSent';
+import { InvitesSent } from '../../DashboardCommon/InvitesSent';
 import SMS from '../../DashboardCommon/SMS';
 import Settings from './Settings';
 
@@ -18,6 +19,7 @@ import {
   Boxes,
   Calendar,
   Invitations,
+  List,
   Message,
   Stocks,
   Users,
@@ -25,6 +27,8 @@ import {
 } from 'src/icons';
 import MobileAppsConfig from './MobileAppsConfig/MobileAppsConfig';
 import SystemNotificationManagement from 'src/views/DashboardCommon/SystemNotificationManagement';
+import { SystemLogManagement } from 'src/views/DashboardCommon/SystemLogManagement';
+import { DocumentsManagement } from 'src/views/DashboardCommon/DocumentManagement';
 
 const Management = () => {
   const { data: user } = useGetMyDetailsQuery();
@@ -77,9 +81,19 @@ const Management = () => {
               icon: <Boxes />,
             },
             {
+              to: `/${UserService.getSlugByRole(user.role)}/management/documents`,
+              text: 'application.documents',
+              icon: <List />,
+            },
+            {
               to: `/${UserService.getSlugByRole(user.role)}/management/notifications`,
               text: 'application.systemNotifications',
               icon: <Calendar />,
+            },
+            {
+              to: `/${UserService.getSlugByRole(user.role)}/management/system-logs`,
+              text: 'application.systemLogs',
+              icon: <List />,
             },
           ]}
         />
@@ -129,6 +143,14 @@ const Management = () => {
         <Route
           path={`/${UserService.getSlugByRole(user.role)}/management/notifications`}
           component={SystemNotificationManagement}
+        />
+        <Route
+          path={`/${UserService.getSlugByRole(user.role)}/management/system-logs`}
+          component={SystemLogManagement}
+        />
+        <Route
+          path={`/${UserService.getSlugByRole(user.role)}/management/documents`}
+          component={DocumentsManagement}
         />
         <Route
           path={`/${UserService.getSlugByRole(user.role)}/management/attachments`}

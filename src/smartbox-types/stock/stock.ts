@@ -77,6 +77,7 @@ export type AlarmsStatusForAdminRes = SingleAlarmRes[];
 export interface GateAdminList {
   id: string;
   ident: string;
+  passcode?: string;
 }
 
 export interface UpdateGateReq {

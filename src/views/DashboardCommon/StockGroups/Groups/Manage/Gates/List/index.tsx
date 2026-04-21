@@ -19,7 +19,7 @@ import { useParams } from 'react-router';
 import UserService from '../../../../../../../services/user-service';
 import { gate } from '../../../../../../../actions';
 import { useGetMyDetailsQuery } from 'src/queries';
-import { HeaderWithActions } from 'src/components/ui';
+import { HeaderWithActions, Typography } from 'src/components/ui';
 
 const List = () => {
   const { data: user } = useGetMyDetailsQuery();

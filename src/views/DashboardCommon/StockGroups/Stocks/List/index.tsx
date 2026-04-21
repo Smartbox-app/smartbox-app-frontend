@@ -40,6 +40,11 @@ const List = () => {
     handleFileOpen(`rent/report?tenantId=${tenant.id}`);
   };
 
+  const handlePaymentsReportDownload = () => {
+    if (!tenant) return;
+    handleFileOpen(`payment/report?tenantId=${tenant.id}`);
+  };
+
   scheme.addFieldAtTheEnd({
     name: __('application.actions'),
     field: 'actions',
@@ -75,7 +80,7 @@ const List = () => {
     );
   };
 
-  const deleteStock = async (data: StockAdminList, stockName) => {
+  const deleteStock = async (data: StockAdminList, stockName: string) => {
     await ApiService.callFetch(
       'DELETE',
       `stock/${data.id}/${stockName}`,
@@ -101,6 +106,11 @@ const List = () => {
                 variant="secondary"
                 text={__('application.downloadReport')}
                 onClick={handleReportDownload}
+              />
+              <UIButton
+                variant="secondary"
+                text={__('application.downloadPaymentsReport')}
+                onClick={handlePaymentsReportDownload}
               />
             </ButtonsContainer>
           ) : null
