@@ -32,7 +32,6 @@ export const Edit = () => {
         type: 'doc',
         content: [],
       },
-      tenantId: user?.role === UserRole.client ? tenant?.id : undefined,
     },
   });
 

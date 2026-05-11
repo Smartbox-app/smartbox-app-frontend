@@ -2,10 +2,10 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { ButtonsContainer } from '../../Layout';
-import { Button } from '../../Branded';
+import { Button, Spinner } from '../../Branded';
 import { modal } from '../../../actions';
 
-import {__} from "../../../helpers/i18n";
+import { __ } from '../../../helpers/i18n';
 
 interface Props {
   mainText: string;
@@ -13,6 +13,7 @@ interface Props {
   approveButtonText: string;
   hideModal: () => void;
   approveAction: () => void;
+  isLoading?: boolean;
 }
 
 const ConfirmModal = ({
@@ -21,8 +22,10 @@ const ConfirmModal = ({
   approveButtonText,
   approveAction,
   hideModal,
+  isLoading,
 }: Props) => (
   <>
+    {isLoading ? <Spinner halfTransparent overlay /> : null}
     <p>{__(mainText)}</p>
     <ButtonsContainer>
       <Button click={() => hideModal()} text={cancelButtonText} success />
@@ -38,6 +41,7 @@ const ConfirmModal = ({
   </>
 );
 
-const mapDispatchToProps = (dispatch: any) => bindActionCreators({ ...modal }, dispatch);
+const mapDispatchToProps = (dispatch: any) =>
+  bindActionCreators({ ...modal }, dispatch);
 
 export default connect(null, mapDispatchToProps)(ConfirmModal);

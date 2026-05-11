@@ -11,7 +11,7 @@ import { clearOrder, updateFormData } from '../../../../../actions/order';
 import { history } from '../../../../../App';
 import { useGetMyDetailsQuery } from 'src/queries';
 import styled from 'styled-components';
-import { Button, Typography } from 'src/components/ui';
+import { Button, Stack, Typography } from 'src/components/ui';
 import { Wallet } from 'src/icons';
 
 interface Props {
@@ -66,7 +66,7 @@ const MissingPayment = ({ rent }: Props) => {
           className="fa fa-exclamation-circle notification-marker"
           aria-hidden="true"
         />
-        <div>
+        <Stack>
           <Typography>
             <strong>{__('application.debtOnRent')}</strong>
           </Typography>
@@ -74,7 +74,7 @@ const MissingPayment = ({ rent }: Props) => {
             {__('application.rentFinished')}{' '}
             <strong>{dateOnly(rent.finishAt)}</strong>
           </Typography>
-        </div>
+        </Stack>
       </Info>
       <ButtonsContainer>
         <Button

@@ -38,8 +38,11 @@ const assetsFolder = './app-assets';
 const folderToAppName = {
   aplikacja: 'Smartbox Storage',
   wlasnybox: 'Własny Box Self Storage',
-  superbox: 'Superbox',
-  rentbox: 'Rentbox'
+  superbox: 'Superbox Self Storage',
+  rentbox: 'Rentbox Self Storage',
+  hdbox: 'HD-BOX Self-Storage',
+  nidobox: 'NidoBox Self-Storage',
+  krakbox: 'Krak-Box Self-Storage',
 };
 
 const folderToAppIdentifier = {
@@ -47,13 +50,19 @@ const folderToAppIdentifier = {
     aplikacja: 'com.smartbox.aplikacja.app',
     wlasnybox: 'com.smartbox.wlasnybox.app',
     superbox: 'com.smartbox.superbox.app',
-    rentbox: 'com.smartbox.rentbox.app'
+    rentbox: 'com.smartbox.rentbox.app',
+    hdbox: 'com.smartbox.hdbox.app',
+    nidobox: 'com.smartbox.nidobox.app',
+    krakbox: 'com.smartbox.krakbox.app',
   },
   android: {
     aplikacja: 'com.smartbox.aplikacja.app',
     wlasnybox: 'com.smartbox.wlasnybox.app',
     superbox: 'com.smartbox.superbox.app',
-    rentbox: 'com.smartbox.rentbox.app'
+    rentbox: 'com.smartbox.rentbox.app',
+    hdbox: 'com.smartbox.hdbox.app',
+    nidobox: 'com.smartbox.nidobox.app',
+    krakbox: 'com.smartbox.krakbox.app',
   },
 };
 
@@ -62,30 +71,15 @@ const folderToHostName = {
     aplikacja: 'aplikacja',
     wlasnybox: 'wlasnybox',
     superbox: 'superbox',
-    rentbox: 'rentbox'
+    rentbox: 'rentbox',
+    hdbox: 'hdboxpl',
+    nidobox: 'nidobox',
+    krakbox: 'krakbox',
   },
   local: { aplikacja: 'test' },
 };
 
 const authIds = {
-  web: {
-    aplikacja: {
-      google:
-        '315516464384-5ipo3i6jcmlhj9ef8ureo3hatrbeejek.apps.googleusercontent.com',
-    },
-    wlasnybox: {
-      google:
-        '315516464384-5ipo3i6jcmlhj9ef8ureo3hatrbeejek.apps.googleusercontent.com',
-    },
-    superbox: {
-      google:
-        '315516464384-5ipo3i6jcmlhj9ef8ureo3hatrbeejek.apps.googleusercontent.com',
-    },
-    rentbox: {
-      google:
-        '315516464384-5ipo3i6jcmlhj9ef8ureo3hatrbeejek.apps.googleusercontent.com',
-    },
-  },
   ios: {
     aplikacja: {
       google: {
@@ -115,25 +109,25 @@ const authIds = {
           'com.googleusercontent.apps.315516464384-fsj78e35t2lq6emp0ep6omf3n79s5cvq',
       },
     },
-  },
-  android: {
-    aplikacja: {
-      google:
-        'com.googleusercontent.apps.315516464384-jpeesk0v0amm7up9adf6p44hqao558tu',
-    },
-    wlasnybox: {
+    hdbox: {
       google: {
-        id: '315516464384-9nauq6csokb6ljioan0v1mcp1estvvok.apps.googleusercontent.com',
+        id: '315516464384-o59jqu0g60uolgotita1so2qlfufm3du.apps.googleusercontent.com',
+        reversed:
+          'com.googleusercontent.apps.315516464384-o59jqu0g60uolgotita1so2qlfufm3du',
       },
     },
-    superbox: {
+    nidobox: {
       google: {
-        id: '315516464384-n460c3gimfjknc7kvkjk3udg0in4cim6.apps.googleusercontent.com',
+        id: '315516464384-flomfqb4ihrf4n168gvl7jk7hn1jl6c1.apps.googleusercontent.com',
+        reversed:
+          'com.googleusercontent.apps.315516464384-flomfqb4ihrf4n168gvl7jk7hn1jl6c1',
       },
     },
-    rentbox: {
+    krakbox: {
       google: {
-        id: '315516464384-i374vrlc49ua37inm4777vnakt36r2fo.apps.googleusercontent.com',
+        id: '315516464384-hsj48037aavam5nejfh4tpk7bhmv3i75.apps.googleusercontent.com',
+        reversed:
+          'com.googleusercontent.apps.315516464384-hsj48037aavam5nejfh4tpk7bhmv3i75',
       },
     },
   },

@@ -4,7 +4,7 @@
 <dict>
 	<key>com.apple.developer.associated-domains</key>
 	<array>
-		<string>applinks:superbox.smartbox-app.pl</string>
+		<string>applinks:nidobox.smartbox-app.pl</string>
 	</array>
 </dict>
 </plist>

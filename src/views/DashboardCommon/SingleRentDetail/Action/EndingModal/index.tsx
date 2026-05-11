@@ -1,29 +1,26 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { MyRentDetails, RentStatus } from 'smartbox-types';
-import {
-  modal,
-  notifications,
-  order,
-  singleRent,
-} from '../../../../../actions';
+import { successNotification } from '../../../../../actions/notifications';
 import { history } from '../../../../../App';
 import { ConfirmModal } from '../../../../../components/Common';
+import { useEndMyRentMutation } from 'src/mutations';
 
 interface Props {
   rent: MyRentDetails;
-  endMyRent: (rentId: string) => void;
-  successNotification: (text: string) => void;
-  getMyRentList: () => void;
 }
 
-const EndingModal = ({
-  endMyRent,
-  successNotification,
-  getMyRentList,
-  rent,
-}: Props) => {
+const EndingModal = ({ rent }: Props) => {
+  const dispatch = useDispatch();
+  const { mutate: endRent, isSuccess, isPending } = useEndMyRentMutation();
+
+  useEffect(() => {
+    if (!isSuccess) return;
+
+    dispatch(successNotification('notification.rentFinishManually'));
+    history.push('/user/main');
+  }, [isSuccess]);
+
   if (rent.status !== RentStatus.rented) {
     return (
       <ConfirmModal
@@ -37,28 +34,15 @@ const EndingModal = ({
 
   return (
     <ConfirmModal
+      isLoading={isPending}
       mainText="application.endRental"
       approveButtonText="application.end"
       approveAction={async () => {
-        successNotification('notification.rentFinishManually');
-        endMyRent(rent.id);
-        getMyRentList();
-        history.push('/user/main');
+        endRent({ rentId: rent.id });
       }}
       cancelButtonText="application.back"
     />
   );
 };
 
-const mapDispatchToProps = (dispatch: any) =>
-  bindActionCreators(
-    {
-      ...modal,
-      ...singleRent,
-      ...order,
-      ...notifications,
-    },
-    dispatch,
-  );
-
-export default connect(null, mapDispatchToProps)(EndingModal);
+export default EndingModal;

@@ -7,7 +7,7 @@ import { ManageTenantFonts } from '../../DashboardCommon/ClientManagement/Fonts'
 import { ManageTenantRules } from '../../../views/DashboardCommon/ClientManagement/Rules';
 import { ManageTenantPrivacy } from '../../../views/DashboardCommon/ClientManagement/Privacy';
 import { ManageTenantAgreement } from '../../../views/DashboardCommon/ClientManagement/Agreement';
-import { __ } from 'src/helpers/i18n';
+import { ManageTenantSmtp } from '../../DashboardCommon/ClientManagement/TenantSmtp';
 
 const Settings = () => {
   return (
@@ -18,6 +18,7 @@ const Settings = () => {
       <ManageTenantFonts />
       <ManageTenantSlides />
       <ManageTenantData />
+      <ManageTenantSmtp />
       <ManageTenantRules />
       <ManageTenantPrivacy />
       <ManageTenantAgreement />

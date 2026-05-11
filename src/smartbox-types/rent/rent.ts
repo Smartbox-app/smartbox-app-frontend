@@ -179,6 +179,7 @@ export class RentDetailsRes {
   periods: PeriodEntity[];
   description: RentDescription[];
   paymentType: RentPaymentType;
+  isAuthorized: boolean;
 }
 
 export class RentDetailsUser {
@@ -216,6 +217,20 @@ export class MyRentList extends BaseResponse {
   number: string;
 }
 
+/** Add co-user to a rent: exactly one of email or phone (registered tenant user). */
+export type AddRentAuthorizedUserReq = {
+  email?: string;
+  phone?: string;
+};
+
+export type RentAuthorizedUserSummary = {
+  authorizationId: string;
+  userId: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+};
+
 export type MyRentDetails = {
   id: string;
   status: RentStatus;
@@ -239,6 +254,8 @@ export type MyRentDetails = {
   pendingPayments: boolean;
   paymentType: RentPaymentType;
   passcode: string | null;
+  /** True when the current user accesses this rent as an authorized co-user (not the contract owner). */
+  isAuthorized?: boolean;
 };
 
 interface Change {

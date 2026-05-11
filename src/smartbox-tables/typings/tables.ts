@@ -35,10 +35,11 @@ export interface TableSchemaField {
     searchable?: boolean;
     defaultSort?: boolean;
     oppositeSortDir?: boolean;
-    buttons?: (TableButton | null)[];
+    buttons?: TableButton[];
     searchableValues?: TableFieldSearchableValues;
     defaultSearch?: string|number;
     alias?: string;
+    entityFieldName?: string;
     sortType?: string;
 }
 

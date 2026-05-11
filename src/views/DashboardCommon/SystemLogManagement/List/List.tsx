@@ -1,5 +1,6 @@
 import React, { ReactNode } from 'react';
 import {
+  FieldType,
   systemLogAdminTableSchema,
   systemLogTableSchema,
   TableSchema,

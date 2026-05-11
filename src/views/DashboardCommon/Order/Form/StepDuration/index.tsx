@@ -14,7 +14,6 @@ import {
 } from 'date-fns';
 import {
   AddonUserFileRequirementType,
-  MyRentList,
   RentPaymentType,
   StockPaymentType,
   StockRes,
@@ -61,7 +60,6 @@ interface Props {
   history: any;
   formData: FormType;
   stockId: string;
-  rent: MyRentList;
   updateFormData: (data: Partial<FormType>) => void;
   clearPaymentDetails: () => void;
 }
@@ -91,8 +89,6 @@ const StepDuration = ({ clearPaymentDetails }: Props) => {
     rentPaymentType,
     minRentDaysForInstallments,
   } = useSelector((state: ApplicationState) => state.order);
-  const [loading, setLoading] = useState<boolean>(false);
-
   const getStock = async () => {
     await ApiService.callFetch('GET', `stock/${stockId}`, (res: StockRes) => {
       dispatch(setOrderFullStock(res));
@@ -135,7 +131,7 @@ const StepDuration = ({ clearPaymentDetails }: Props) => {
       );
       return;
     }
-    setLoading(true);
+
     getStock();
 
     const startOfStart = startOfDay(startDate);
@@ -437,7 +433,6 @@ const StepDuration = ({ clearPaymentDetails }: Props) => {
 
 const mapStateToProps = (state: ApplicationState) => ({
   formData: state.order.formData,
-  rent: state.rent.singleRent,
 });
 
 const mapDispatchToProps = (dispatch: any) =>

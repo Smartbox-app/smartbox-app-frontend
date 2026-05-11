@@ -438,6 +438,14 @@
       "99": {
         "text": "Ten kod rabatowy jest dostępny tylko dla nowych klientów.",
         "__type_alias_do_not_touch": "ApiErrorCode.GiftForNewClientsOnly"
+      },
+      "100": {
+        "text": "Niepoprawne dane do upoważnienia.",
+        "__type_alias_do_not_touch": "ApiErrorCode.IncorrectAuthorizationData"
+      },
+      "101": {
+        "text": "Brak zapisanej konfiguracji SMTP.",
+        "__type_alias_do_not_touch": "ApiErrorCode.MissingSmtpSettings"
       }
     }
   }

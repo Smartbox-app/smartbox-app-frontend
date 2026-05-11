@@ -1,6 +1,6 @@
 // import { format } from 'date-fns';
 import { isDate } from 'date-fns';
-import { format, formatInTimeZone, toZonedTime, } from 'date-fns-tz';
+import { format, formatInTimeZone, toZonedTime } from 'date-fns-tz';
 
 export function dateOnly(n: Date | string, slice?: number): any {
   if (n === null) return '---';
@@ -23,7 +23,11 @@ export function dateOnlyNormalized(n: Date | string, slice?: number): any {
 export const fullDate = (d: Date | string): string => {
   if (d === null) return '---';
 
-  return formatInTimeZone(d, 'Europe/Warsaw', 'dd.MM.yyyy HH:mm');
+  try {
+    return formatInTimeZone(d, 'Europe/Warsaw', 'dd.MM.yyyy HH:mm');
+  } catch {
+    return '---';
+  }
 };
 
 export function dateOnlyLocalTime(n: Date | string) {

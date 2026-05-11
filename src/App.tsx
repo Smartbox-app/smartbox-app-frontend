@@ -1,3 +1,5 @@
+import 'reflect-metadata';
+
 import React, { useState, useEffect, Suspense } from 'react';
 import { applyMiddleware, createStore } from 'redux';
 import { Provider } from 'react-redux';

@@ -45,6 +45,14 @@ export interface TenantEntity {
   agreementDisclaimer: string;
   paymentDisclaimer: string;
   homeMessage: string;
+  useCustomSmtp: boolean;
+  smtpHost: string | null;
+  smtpPort: number | null;
+  smtpUser: string | null;
+  smtpPassword: string | null;
+  smtpSecure: boolean;
+  smtpIgnoreTls: boolean;
+  smtpFromEmail: string | null;
 }
 
 export type UpdateTenantReq = Pick<
@@ -58,6 +66,8 @@ export type UpdateTenantReq = Pick<
   | 'additionalMailInfo'
   | 'tax'
   | 'agreementDisclaimer'
+  | 'paymentDisclaimer'
+  | 'homeMessage'
 >;
 export type UpdateTenantByAdminReq = Pick<
   TenantEntity,
@@ -91,6 +101,8 @@ export type UpdateTenantByAdminReq = Pick<
   | 'locationSelectType'
   | 'namingType'
   | 'agreementDisclaimer'
+  | 'paymentDisclaimer'
+  | 'homeMessage'
 >;
 
 export type TenantForUsers = Omit<
@@ -106,6 +118,14 @@ export type TenantForUsers = Omit<
   | 'storeId'
   | 'paymentSystemSecretKey'
   | 'paymentSystemApiKey'
+  | 'useCustomSmtp'
+  | 'smtpHost'
+  | 'smtpPort'
+  | 'smtpUser'
+  | 'smtpPassword'
+  | 'smtpSecure'
+  | 'smtpIgnoreTls'
+  | 'smtpFromEmail'
 > & {
   smsAvailable: boolean;
   links: { id: string; name: string; fileName: string }[];
@@ -115,3 +135,15 @@ export enum NamingType {
   Stock = 'stock',
   Location = 'location',
 }
+
+export type TenantSmtpConfig = Pick<
+  TenantEntity,
+  | 'useCustomSmtp'
+  | 'smtpHost'
+  | 'smtpPort'
+  | 'smtpUser'
+  | 'smtpPassword'
+  | 'smtpSecure'
+  | 'smtpIgnoreTls'
+  | 'smtpFromEmail'
+>;

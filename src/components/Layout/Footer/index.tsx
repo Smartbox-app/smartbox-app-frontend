@@ -23,6 +23,10 @@ const StyledFooter = styled('footer')(({ theme }) => ({
   },
 }));
 
+const StyledSpacer = styled('div')(({ theme }) => ({
+  width: 80
+}));
+
 const Data = styled('div')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
@@ -72,7 +76,7 @@ const Footer = () => {
           <Typography>&copy; {tenant?.name}</Typography>
           <AppVersion />
         </Data>
-        <span />
+        <StyledSpacer />
       </StyledFooter>
     </Section>
   );

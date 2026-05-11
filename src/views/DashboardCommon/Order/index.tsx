@@ -1,38 +1,31 @@
 import React, { useEffect } from 'react';
 
-import { withRouter, RouteComponentProps, useParams } from 'react-router';
-import { FormContainer } from '../../../components/Layout';
+import { useParams } from 'react-router';
 import { ProgressIndicator } from '../../../components/Common';
 
 import { Form } from './Form/Index';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { getStockDiscountsList } from '../../../actions/stock';
-import { ApplicationState } from 'src/reducers';
 import { RentStatus } from 'smartbox-types';
-import { getSingleRent } from '../../../actions/single-rent';
 import { PageHeader, Section } from '../../../components/ui';
 import { __ } from '../../../helpers/i18n';
 import { useTenantNaming } from 'src/hooks/useTenantNaming';
+import { useMyRentDetailsQuery } from 'src/queries';
 
 export const Order = () => {
   const dispatch = useDispatch();
   const { getText } = useTenantNaming();
-  const { singleRent } = useSelector((state: ApplicationState) => state.rent);
   const { step, paymentId, rentId } = useParams<{
     step: string;
     paymentId: string;
     rentId?: string;
   }>();
 
+  const { data: extendRent } = useMyRentDetailsQuery(rentId);
+
   useEffect(() => {
     dispatch(getStockDiscountsList());
   }, []);
-
-  useEffect(() => {
-    if (!rentId || paymentId) return;
-
-    dispatch(getSingleRent(rentId));
-  }, [rentId]);
 
   const getStepByName = (stepName: string) => {
     switch (stepName) {
@@ -54,7 +47,7 @@ export const Order = () => {
   };
 
   const getTitle = () => {
-    if (singleRent && singleRent.status === RentStatus.noPaidExtension)
+    if (extendRent && extendRent.status === RentStatus.noPaidExtension)
       return 'application.debtPayOff';
     if (rentId) return 'application.extendsOrder';
     return 'application.newOrder';

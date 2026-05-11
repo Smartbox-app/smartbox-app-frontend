@@ -1,28 +1,27 @@
-import { useEffect, useMemo, useState } from 'react';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
+import React, { useMemo } from 'react';
+import { withRouter, RouteComponentProps, useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { AccessControl, MyRentDetails, RentStatus } from 'smartbox-types';
+import { RentStatus } from 'smartbox-types';
 import { Spinner } from '../../../components/Branded';
 import { UserStockMap } from '../../../components/Common/UserStockMap';
 
-import { singleRent } from '../../../actions';
 import { ApplicationState } from '../../../reducers';
 
 import Action from './Action';
 import Details from './Details';
 import Gate from './Gate';
 import { MissingPaymentAlert } from './MissingPaymentAlert';
-import ApiService from '../../../services/api-service';
 import { OpenBox } from './OpenBox';
 import styled from 'styled-components';
 import { Description } from './RentDescription';
-import { isAfter, isBefore } from 'date-fns';
+import { isAfter } from 'date-fns';
 import { Header, PageHeader, Section } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
 import { PeriodUnpaidAlert } from './PeriodUnpaidAlert';
 import { useTenantNaming } from 'src/hooks/useTenantNaming';
 import { PendingPaymentAlert } from './PendingPaymentAlert';
+import { RentAuthorizations } from './RentAuthorizations';
+import { useMyRentDetailsQuery } from 'src/queries';
 
 interface RouteProps {
   orderId: string;
@@ -47,21 +46,14 @@ const StyledBoxContainer = styled.div`
 `;
 
 const SingleRentDetail = ({ showUserStockMap, match }: Props) => {
-  const [singleRent, setSingleRent] = useState<MyRentDetails>();
-  const [loading, setLoading] = useState(false);
   const { getText } = useTenantNaming();
+  const { orderId } = useParams<{ orderId: string }>();
 
-  const getSingleRent = async () => {
-    setLoading(true);
-    await ApiService.callFetch(
-      'GET',
-      `rent/my-details/${match.params.orderId}`,
-      (data: MyRentDetails) => {
-        setSingleRent(data);
-      },
-    );
-    setLoading(false);
-  };
+  const {
+    data: singleRent,
+    isPending: loading,
+    isError,
+  } = useMyRentDetailsQuery(orderId);
 
   const displayAccess = useMemo(() => {
     if (!singleRent) return false;
@@ -76,23 +68,26 @@ const SingleRentDetail = ({ showUserStockMap, match }: Props) => {
     return true;
   }, [singleRent]);
 
-  useEffect(() => {
-    getSingleRent();
-  }, []);
-
   if (loading) return <Spinner />;
-  if (!singleRent) return null;
+  if (isError || !singleRent) return null;
+
+  const isAuthorizedViewer = singleRent.isAuthorized === true;
 
   return (
     <>
       <PageHeader>
-        {getText('box')}: {singleRent.boxNumber}
+        {isAuthorizedViewer ? getText('authorized_box') : getText('box')}:{' '}
+        {singleRent.boxNumber}
       </PageHeader>
-      <PendingPaymentAlert rent={singleRent} />
-      <MissingPaymentAlert rent={singleRent} />
-      <PeriodUnpaidAlert rent={singleRent} />
+      {!isAuthorizedViewer ? (
+        <>
+          <PendingPaymentAlert rent={singleRent} />
+          <MissingPaymentAlert rent={singleRent} />
+          <PeriodUnpaidAlert rent={singleRent} />
+        </>
+      ) : null}
       <Section>
-        <Action rent={singleRent} isMapActive={singleRent.isMap} />
+        <Action rent={singleRent} isAuthorizedViewer={isAuthorizedViewer} />
         {!showUserStockMap ? (
           <>
             <Details singleRent={singleRent} />
@@ -133,27 +128,22 @@ const SingleRentDetail = ({ showUserStockMap, match }: Props) => {
           )}
         </Section>
       ) : null}
-      {!showUserStockMap ? (
-        <Description description={singleRent.description} rent={singleRent} />
+
+      {!isAuthorizedViewer ? (
+        <>
+          <Section>
+            <RentAuthorizations rent={singleRent} />
+          </Section>
+
+          <Description description={singleRent.description} rent={singleRent} />
+        </>
       ) : null}
     </>
   );
 };
 
 const mapStateToProps = (state: ApplicationState) => ({
-  singleRent: state.rent.singleRent,
-  loading: state.spinner.loading,
   showUserStockMap: state.rent.showUserStockMap,
 });
 
-const mapDispatchToProps = (dispatch: any) =>
-  bindActionCreators(
-    {
-      ...singleRent,
-    },
-    dispatch,
-  );
-
-export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(SingleRentDetail),
-);
+export default withRouter(connect(mapStateToProps)(SingleRentDetail));

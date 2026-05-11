@@ -30,11 +30,14 @@ import {
   Map as MapIcon,
   Adjustments,
   Error,
+  Wallet
 } from 'src/icons';
 import GateStatus from 'src/views/DashboardCommon/GateStatus';
 import { useTenantNaming } from 'src/hooks/useTenantNaming';
 import { Statistics } from './Statistics';
 import { Alarms } from './Alarms';
+import { Payments } from './Payments';
+
 
 const Manage = () => {
   const { stockId } = useParams<{ stockId: string }>();
@@ -96,6 +99,11 @@ const Manage = () => {
             text: 'application.stockRents',
             icon: <ListIcon />,
           },
+          {
+            to: `/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/payments`,
+            text: 'application.payments',
+            icon: <Wallet />,
+          },
           ...gatesAndAlarms,
           {
             to: `/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/groups`,
@@ -118,6 +126,11 @@ const Manage = () => {
             to: `/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/rents`,
             text: 'application.stockRents',
             icon: <ListIcon />,
+          },
+          {
+            to: `/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/payments`,
+            text: 'application.payments',
+            icon: <Wallet />,
           },
           ...gatesAndAlarms,
           {
@@ -212,6 +225,10 @@ const Manage = () => {
           <Route
             path={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/:stockId/rents`}
             component={Rents}
+          />
+          <Route
+            path={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/:stockId/payments`}
+            component={Payments}
           />
           {hasFullAccess && (
             <Route

@@ -1,15 +1,14 @@
 import React, { useMemo } from 'react';
-import { connect, useSelector } from 'react-redux';
+import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { MyRentDetails, RentStatus } from 'smartbox-types';
 import { FormType } from '../../../../types/order-form';
-import { modal, order, singleRent, notifications } from '../../../../actions';
+import { modal, order, singleRent } from '../../../../actions';
 import { history } from '../../../../App';
 import { ButtonsContainer } from '../../../../components/Layout';
 import { ApplicationState } from '../../../../reducers';
 import UserService from '../../../../services/user-service';
 import EndingModal from './EndingModal';
-import { __ } from '../../../../helpers/i18n';
 import { useGetMyDetailsQuery } from 'src/queries';
 import { Alert } from 'src/components/Common';
 import { Button, Tabs } from 'src/components/ui';
@@ -17,14 +16,11 @@ import { Calendar, CloseCircle, InfoCircle, Map } from 'src/icons';
 import { GateButton } from './GateButton';
 
 interface Props {
-  isMapActive: boolean;
   showUserStockMap: boolean;
   rent: MyRentDetails;
+  isAuthorizedViewer?: boolean;
   showModal: (content: React.ReactNode) => void;
-  endMyRent: (rentId: string) => void;
   updateFormData: (data: Partial<FormType>) => void;
-  successNotification: (text: string) => void;
-  getMyRentList: () => void;
   toggleShowUserStockMap: () => void;
   clearOrder: () => void;
 }
@@ -36,7 +32,7 @@ const Action = ({
   clearOrder,
   showUserStockMap,
   toggleShowUserStockMap,
-  isMapActive,
+  isAuthorizedViewer = false,
 }: Props) => {
   const { data: user } = useGetMyDetailsQuery();
 
@@ -51,12 +47,12 @@ const Action = ({
   const canExtendRent = useMemo(() => {
     if(rent.pendingPayments) return false;
     if (rent.status !== RentStatus.rented) return false;
-    if (rent.periods.some((period) => !period.paid)) return false;
+    if ((rent.periods || []).some((period) => !period.paid)) return false;
     return true;
   }, [rent]);
 
   const canEndRent = useMemo(() => {
-    if (rent.periods.some((period) => !period.paid)) return false;
+    if ((rent.periods || []).some((period) => !period.paid)) return false;
     return true;
   }, [rent]);
 
@@ -80,27 +76,31 @@ const Action = ({
           ]}
         />
         <ButtonsContainer>
-          <Button
-            iconLeft={<Calendar />}
-            text="application.goToAgreement"
-            onClick={() => handleExtendingOrderData(rent.id)}
-            disabled={!canExtendRent}
-          />
-          <Button
-            disabled={!canEndRent}
-            iconLeft={<CloseCircle />}
-            text="application.end"
-            variant="error"
-            onClick={() => showModal(<EndingModal rent={rent} />)}
-          />
+          {!isAuthorizedViewer ? (
+            <>
+              <Button
+                iconLeft={<Calendar />}
+                text="application.goToAgreement"
+                onClick={() => handleExtendingOrderData(rent.id)}
+                disabled={!canExtendRent}
+              />
+              <Button
+                disabled={!canEndRent}
+                iconLeft={<CloseCircle />}
+                text="application.end"
+                variant="error"
+                onClick={() => showModal(<EndingModal rent={rent} />)}
+              />
+            </>
+          ) : null}
         { rent.gates.filter(gate => !!gate.controlled).map(gate => <GateButton gate={gate} key={gate.id} />)}
           
         </ButtonsContainer>
       </ButtonsContainer>
-      {!canExtendRent ? (
+      {!isAuthorizedViewer && !canExtendRent ? (
         <Alert type="notice" text="application.cantExtendDescription" />
       ) : null}
-      {!canEndRent ? (
+      {!isAuthorizedViewer && !canEndRent ? (
         <Alert type="notice" text="application.cantEndDescription" />
       ) : null}
     </>
@@ -117,7 +117,6 @@ const mapDispatchToProps = (dispatch: any) =>
       ...modal,
       ...singleRent,
       ...order,
-      ...notifications,
     },
     dispatch,
   );

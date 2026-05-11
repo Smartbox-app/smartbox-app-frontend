@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import { bindActionCreators, type AnyAction, type Dispatch } from 'redux';
 import {
   FieldType,
   TableSchema,
@@ -14,11 +14,9 @@ import { ButtonsContainer } from '../../../../../components/Layout';
 import { __ } from '../../../../../helpers/i18n';
 import { InteractiveTableSchema } from '../../../../../utils/table-schema-utils';
 import { modal, user } from '../../../../../actions';
-import UserDetail from './UserDetail';
 import { TenantEdit } from '../Edit';
-import { StocksDetails } from './StocksDetails';
 import { TenantStatus } from '../Status';
-import { PageHeader, Section } from 'src/components/ui';
+import { HeaderWithActions, Section } from 'src/components/ui';
 
 interface Props {
   showModal: (content: React.ReactNode) => void;
@@ -103,21 +101,27 @@ class List extends React.Component<Props> {
   render() {
     return (
       <Section>
-        <PageHeader>{__('application.tenantsList')}</PageHeader>
-        <ButtonsContainer>
-          <Button
-            text="application.addTenant"
-            primary
-            to="/admin/management/clients/add"
-          />
-        </ButtonsContainer>
+        <HeaderWithActions
+          actions={
+            <ButtonsContainer>
+              <Button
+                text="application.addTenant"
+                primary
+                to="/admin/management/clients/add"
+              />
+            </ButtonsContainer>
+          }
+        >
+          {__('application.tenantsList')}
+        </HeaderWithActions>
+
         <ApiTable scheme={this.scheme} apiEndpointSubUrl={`user/tenants`} />
       </Section>
     );
   }
 }
 
-const mapDispatchToProps = (dispatch: any) =>
+const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) =>
   bindActionCreators({ ...modal, ...user }, dispatch);
 
 export default connect(null, mapDispatchToProps)(List);

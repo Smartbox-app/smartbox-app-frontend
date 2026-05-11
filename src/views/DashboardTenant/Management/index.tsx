@@ -1,3 +1,4 @@
+import React from 'react';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Switch, Route, Redirect } from 'react-router';
@@ -22,7 +23,6 @@ import {
   Message,
   Templates,
   Users,
-  Wallet,
   Workers,
 } from 'src/icons';
 import { Section, Tabs } from 'src/components/ui';

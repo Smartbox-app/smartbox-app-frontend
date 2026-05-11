@@ -1,21 +1,22 @@
 import React from 'react';
 import { MyRentList } from 'smartbox-types';
 import StorageList from './StorageList';
-import { Spinner } from '../../../../components/Branded';
-import { Header, Section, Skeleton } from '../../../../components/ui';
+import { Header, Section } from '../../../../components/ui';
 import { __ } from '../../../../helpers/i18n';
 import { useTenantNaming } from 'src/hooks/useTenantNaming';
 
 interface Props {
   myRentList: MyRentList[];
   loading: boolean;
+  title: string;
 }
 
-const Storage = ({ myRentList, loading }: Props) => {
+const Storage = ({ myRentList, loading, title }: Props) => {
   const { getText } = useTenantNaming();
+  const heading = getText(title);
   return (
     <Section>
-      <Header variant="h2">{getText('manage_boxes')}</Header>
+      <Header variant="h2">{heading}</Header>
       <StorageList loading={loading} list={myRentList} />
     </Section>
   );

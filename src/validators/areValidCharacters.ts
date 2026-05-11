@@ -13,7 +13,7 @@ const EMOJI_REGEX =
 export function ValidCharacters(
   validationOptions?: ValidationOptions
 ) {
-  return function (object: Object, propertyName: string) {
+  return function (object: object, propertyName: string) {
     registerDecorator({
       name: 'ValidCharacters',
       target: object.constructor,

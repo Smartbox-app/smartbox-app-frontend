@@ -5,7 +5,6 @@ import { useParams } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import {
-  MyRentDetails,
   PaymentType,
   PaymentDocument,
   RentPaymentType,
@@ -37,7 +36,7 @@ import {
   setRentPaymentDocumentType,
 } from '../../../../../actions/order';
 import { useTenant } from '../../../../../hooks/useTenant';
-import { useGetMyDetailsQuery } from 'src/queries';
+import { useGetMyDetailsQuery, useMyRentDetailsQuery } from 'src/queries';
 import { RentDataDto } from './TenantDetailsForm/dto/RentDataDto';
 import {
   CheckBox,
@@ -52,7 +51,6 @@ import { DiscountForm } from './DiscountForm';
 import { ArrowLeft, ArrowRight } from 'src/icons';
 import { textToSimpleMD } from 'src/utils/text-to-simple-md';
 import { ClientSourceForm } from './ClientSourceForm';
-import ApiService from 'src/services/api-service';
 import { PaymentDocumentType } from '../Common/PaymentDocumentType';
 
 interface Props {
@@ -84,8 +82,7 @@ const StepSummary = ({ formData, updateFormData }: Props) => {
   const { rentId } = useParams<{ step: string; rentId: string }>();
   const isFirstRent = user && !user.rentCount;
   const [discount, setDiscount] = useState<boolean>(false);
-  const [rent, setRent] = useState<MyRentDetails>();
-  const [loading, setLoading] = useState<boolean>(false);
+  const { data: rent } = useMyRentDetailsQuery(rentId);
 
   const defaultValues = {
     firstName: user?.firstName || '',
@@ -122,32 +119,14 @@ const StepSummary = ({ formData, updateFormData }: Props) => {
 
   const invoiceNeeded = watch('invoiceNeeded');
 
-  // get rent details if it is extended
-  // @TODO - move to react query
-  const getSingleRent = async () => {
-    setLoading(true);
-    await ApiService.callFetch(
-      'GET',
-      `rent/my-details/${rentId}`,
-      (data: MyRentDetails) => {
-        setRent(data);
-      },
-    );
-    setLoading(false);
-  };
-
   useEffect(() => {
-    if (!rentId) return;
-
-    getSingleRent();
-  }, [rentId]);
-
-  useEffect(() => {
-    const lastDescription = rent?.description[rent.description.length - 1];
+    const desc = rent?.description;
+    const lastDescription =
+      desc && desc.length > 0 ? desc[desc.length - 1] : undefined;
     if (lastDescription?.data?.isCompany) {
       setValue('invoiceNeeded', true);
     }
-  }, [rent]);
+  }, [rent, setValue]);
 
   useEffect(() => {
     if (!user) return;

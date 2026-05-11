@@ -48,6 +48,9 @@ export type InputProps = {
   type?: string;
   error?: string;
   help?: string;
+  value?: string;
+  defaultValue?: string;
+  autoComplete?: string;
 } & UseFormRegisterReturn;
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
@@ -60,6 +63,9 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       disabled,
       type = 'text',
       name,
+      value,
+      defaultValue,
+      autoComplete,
       ...register
     },
     ref,
@@ -75,6 +81,9 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           id={name}
           ref={ref}
           type={type}
+          value={value}
+          defaultValue={defaultValue}
+          autoComplete={autoComplete}
           placeholder={placeholder ? __(placeholder) : ''}
         />
         {error ? <ErrorText error={error} /> : null}

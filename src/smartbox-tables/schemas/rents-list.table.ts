@@ -1,7 +1,7 @@
 import { FieldType, TableSchema } from '../typings';
 
 export const rentsList: TableSchema = {
-    countPerPage: 20,
+    countPerPage: 10,
     fields: [
         {
             name: 'ID',

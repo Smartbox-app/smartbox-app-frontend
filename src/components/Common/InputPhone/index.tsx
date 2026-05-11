@@ -13,6 +13,7 @@ interface Props {
     name: string;
     onChange: (e: any) => void;
     big?: boolean;
+    disabled?: boolean;
     errors?: TranslatableObject[];
 }
 
@@ -29,7 +30,7 @@ const StyledContainer = styled.div`
 }
 `
 
-const InputPhone = ({ value, label, name, big, errors, onChange }: Props) => {
+const InputPhone = ({ value, label, name, big, errors, onChange, disabled }: Props) => {
     return <StyledContainer className={`input-phone-container ${big ? 'big' : 'compact'} ${errors && errors.length > 0 ? 'is-invalid' : ''}`}>
         <InputLabel labelFor={name}>{__(label)}</InputLabel>
         <PhoneInput
@@ -37,7 +38,9 @@ const InputPhone = ({ value, label, name, big, errors, onChange }: Props) => {
             country='PL'
             defaultCountry='PL'
             value={value}
-            onChange={onChange} />
+            onChange={onChange}
+            disabled={disabled}
+        />
         {errors && <InputErrors errors={errors} />}
     </StyledContainer>
 }

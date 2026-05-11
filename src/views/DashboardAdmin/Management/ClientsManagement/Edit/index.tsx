@@ -9,6 +9,7 @@ import { ManageTenantAdminData } from '../TenantAdminData';
 import { ManageTenantRules } from '../../../../../views/DashboardCommon/ClientManagement/Rules';
 import { ManageTenantPrivacy } from '../../../../../views/DashboardCommon/ClientManagement/Privacy';
 import { ManageTenantAgreement } from '../../../../../views/DashboardCommon/ClientManagement/Agreement';
+import { ManageTenantSmtp } from '../../../../../views/DashboardCommon/ClientManagement/TenantSmtp';
 
 interface Props {
     userId: string;
@@ -24,6 +25,7 @@ const TenantEdit = ({ userId }: Props) => {
             <ManageTenantFonts userId={userId} />
             <ManageTenantSlides userId={userId} />
             <ManageTenantAdminData userId={userId} />
+            <ManageTenantSmtp userId={userId} />
             <ManageTenantRules userId={userId} />
             <ManageTenantPrivacy userId={userId} />
             <ManageTenantAgreement userId={userId} />
