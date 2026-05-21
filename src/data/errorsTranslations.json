@@ -446,6 +446,10 @@
       "101": {
         "text": "Brak zapisanej konfiguracji SMTP.",
         "__type_alias_do_not_touch": "ApiErrorCode.MissingSmtpSettings"
+      },
+      "102": {
+        "text": "Nie można otworzyć bramy w tej chwili! Spróbuj ponownie za chwilę",
+        "__type_alias_do_not_touch": "ApiErrorCode.OpenGateTooSoon"
       }
     }
   }

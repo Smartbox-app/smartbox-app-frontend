@@ -111,7 +111,7 @@ export const RentAuthorizations = ({ rent }: Props) => {
                 small
                 text="application.rentAuthorizationsRevoke"
                 disabled={removeBusy}
-                click={() => openRevokeConfirmModal(row.userId)}
+                click={() => openRevokeConfirmModal(row.authorizationId)}
               />
             </StyledAuthorization>
           ))}

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
+import { AdminRentListDetails, UserRole } from 'smartbox-types';
 import { FieldType, rentsList } from 'smartbox-tables';
-import { AdminRentListDetails } from 'smartbox-types';
 import { ApiTable } from '../../../../../../../components/Common';
 import { Button } from '../../../../../../../components/Branded';
 import { __ } from '../../../../../../../helpers/i18n';
@@ -9,6 +9,7 @@ import { InteractiveTableSchema } from '../../../../../../../utils/table-schema-
 import { showModal } from '../../../../../../../actions/modal';
 import { useParams } from 'react-router';
 import { RentHistoryModal } from './RentHistoryModal';
+import { RentAuthorizationsForRentModal } from '../../RentAuthorizations/modals/RentAuthorizationsForRentModal';
 import { Button as UIButton, Header, Section } from 'src/components/ui';
 import { useGetMyDetailsQuery } from 'src/queries';
 import UserService from 'src/services/user-service';
@@ -24,6 +25,13 @@ const List = () => {
 
   const slug = UserService.getSlugByRole(user.role);
 
+  const openAuthorizationsModal = (rentData: AdminRentListDetails) => {
+    dispatch(
+      showModal(
+        <RentAuthorizationsForRentModal stockId={stockId} rent={rentData} />,
+      ),
+    );
+  };
   const scheme = new InteractiveTableSchema(rentsList)
     .removeFields('description', 'id', 'userId')
     .addFieldAtTheEnd({
@@ -39,6 +47,14 @@ const List = () => {
             text="application.rentPeriods"
             to={`/${slug}/locations/stocks/${stockId}/rents/${rentData.id}/periods`}
           />
+          {[UserRole.admin, UserRole.client].includes(user.role) ? (
+            <UIButton
+              variant="secondary"
+              type="button"
+              text="application.rentAuthorizationsRowButton"
+              onClick={() => openAuthorizationsModal(rentData)}
+            />
+          ) : null}
           {rentData.description &&
           Array.isArray(rentData.description) &&
           rentData.description.length > 0 ? (
@@ -67,7 +83,7 @@ const List = () => {
       <p>
         Podsumowanie wynajmów jest wysyłane codziennie na adres e-mail konta
         franczyzobiorcy. Możesz również wygenerować raport ręcznie przy pomocy
-        przycisku "Pobierz raport" z poziomu listy placów.
+        przycisku „Pobierz raport” z poziomu listy placów.
       </p>
 
       <ApiTable scheme={scheme} apiEndpointSubUrl={`rent/list/${stockId}`} />

@@ -1,4 +1,4 @@
-package com.smartbox.nidobox.app;
+package com.smartbox.moibox.app;
 import ee.forgr.capacitor.social.login.GoogleProvider;
 import ee.forgr.capacitor.social.login.SocialLoginPlugin;
 import ee.forgr.capacitor.social.login.ModifiedMainActivityForSocialLoginPlugin;

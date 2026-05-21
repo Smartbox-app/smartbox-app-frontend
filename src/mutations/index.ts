@@ -11,3 +11,5 @@ export * from './useRemoveRentAuthorizedUserMutation';
 export * from './useEndMyRentMutation';
 export * from './useUpdateTenantSmtpMutation';
 export * from './useTestTenantSmtpMutation';
+export * from './useStaffCreateRentAuthorizationMutation';
+export * from './useStaffRevokeRentAuthorizationMutation';

@@ -5,10 +5,8 @@ import {
   CompanyData,
   PaymentDocument,
   PaymentStatus,
-  PaymentType,
 } from '../payment';
 import { AcceptanceStatuses, SingleAcceptance } from '../addon';
-import { AccessControl } from '../stock-group';
 import { PeriodEntity } from '../period';
 
 export interface OrderAddons {
@@ -230,6 +228,20 @@ export type RentAuthorizedUserSummary = {
   firstName: string;
   lastName: string;
 };
+
+export type RentAuthorizationListItem = {
+  id: string;
+  rentId: string;
+  email: string;
+  phone: string;
+  boxNumber: string;
+  startAt: Date;
+  finishAt: Date | null;
+};
+
+export type CreateStaffRentAuthorizationReq = {
+  rentId: string;
+} & AddRentAuthorizedUserReq;
 
 export type MyRentDetails = {
   id: string;

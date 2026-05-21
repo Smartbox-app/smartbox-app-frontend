@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>NidoBox Self-Storage</string>
+	<string>Moibox - Self Storage</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -24,11 +24,11 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>com.smartbox.nidobox.app</string>
+			<string>com.smartbox.moibox.app</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>smartbox-nidobox</string>
-				<string>com.googleusercontent.apps.315516464384-flomfqb4ihrf4n168gvl7jk7hn1jl6c1</string>
+				<string>smartbox-moibox</string>
+				<string>com.googleusercontent.apps.315516464384-5buggcs7htvkj7lh9aghlpgh2bjbmnv5</string>
 				<string>fb476161735450594</string>
 			</array>
 		</dict>
@@ -38,9 +38,9 @@
 	<key>FacebookClientToken</key>
 	<string>40f2d97d76257f7bfc814e3c51725268</string>
 	<key>FacebookDisplayName</key>
-	<string>NidoBox Self-Storage</string>
+	<string>Moibox - Self Storage</string>
 	<key>GIDClientID</key>
-	<string>315516464384-flomfqb4ihrf4n168gvl7jk7hn1jl6c1.apps.googleusercontent.com</string>
+	<string>315516464384-5buggcs7htvkj7lh9aghlpgh2bjbmnv5.apps.googleusercontent.com</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>fbapi</string>

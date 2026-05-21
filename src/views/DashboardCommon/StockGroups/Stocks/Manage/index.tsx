@@ -17,7 +17,6 @@ import { Gates } from './Gates';
 import { Addons } from './Addons';
 import { useGetMyDetailsQuery } from 'src/queries';
 import { PageHeader, Section, Tabs } from 'src/components/ui';
-import { __ } from 'src/helpers/i18n';
 import {
   InfoCircle,
   List as ListIcon,
@@ -30,13 +29,15 @@ import {
   Map as MapIcon,
   Adjustments,
   Error,
-  Wallet
+  Wallet,
+  Users,
 } from 'src/icons';
 import GateStatus from 'src/views/DashboardCommon/GateStatus';
 import { useTenantNaming } from 'src/hooks/useTenantNaming';
 import { Statistics } from './Statistics';
 import { Alarms } from './Alarms';
 import { Payments } from './Payments';
+import { RentAuthorizationsList } from './RentAuthorizations';
 
 
 const Manage = () => {
@@ -100,6 +101,11 @@ const Manage = () => {
             icon: <ListIcon />,
           },
           {
+            to: `/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/authorizations`,
+            text: 'application.stockRentAuthorizationsTab',
+            icon: <Users />,
+          },
+          {
             to: `/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/payments`,
             text: 'application.payments',
             icon: <Wallet />,
@@ -126,6 +132,11 @@ const Manage = () => {
             to: `/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/rents`,
             text: 'application.stockRents',
             icon: <ListIcon />,
+          },
+          {
+            to: `/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/authorizations`,
+            text: 'application.stockRentAuthorizationsTab',
+            icon: <Users />,
           },
           {
             to: `/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/payments`,
@@ -170,7 +181,15 @@ const Manage = () => {
     });
 
     return elements;
-  }, [isMapActive, tenantForAdmin, hasFullAccess, isAlarmsActive]);
+  }, [
+    isMapActive,
+    tenantForAdmin,
+    hasFullAccess,
+    isAlarmsActive,
+    stockId,
+    user,
+    getText,
+  ]);
 
   return (
     <>
@@ -225,6 +244,10 @@ const Manage = () => {
           <Route
             path={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/:stockId/rents`}
             component={Rents}
+          />
+          <Route
+            path={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/:stockId/authorizations`}
+            component={RentAuthorizationsList}
           />
           <Route
             path={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/:stockId/payments`}

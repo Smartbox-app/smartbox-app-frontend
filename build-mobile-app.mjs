@@ -43,6 +43,7 @@ const folderToAppName = {
   hdbox: 'HD-BOX Self-Storage',
   nidobox: 'NidoBox Self-Storage',
   krakbox: 'Krak-Box Self-Storage',
+  moibox: 'Moibox - Self Storage'
 };
 
 const folderToAppIdentifier = {
@@ -54,6 +55,7 @@ const folderToAppIdentifier = {
     hdbox: 'com.smartbox.hdbox.app',
     nidobox: 'com.smartbox.nidobox.app',
     krakbox: 'com.smartbox.krakbox.app',
+    moibox: 'com.smartbox.moibox.app',
   },
   android: {
     aplikacja: 'com.smartbox.aplikacja.app',
@@ -63,6 +65,7 @@ const folderToAppIdentifier = {
     hdbox: 'com.smartbox.hdbox.app',
     nidobox: 'com.smartbox.nidobox.app',
     krakbox: 'com.smartbox.krakbox.app',
+    moibox: 'com.smartbox.moibox.app',
   },
 };
 
@@ -75,6 +78,7 @@ const folderToHostName = {
     hdbox: 'hdboxpl',
     nidobox: 'nidobox',
     krakbox: 'krakbox',
+    moibox: 'moibox',
   },
   local: { aplikacja: 'test' },
 };
@@ -128,6 +132,13 @@ const authIds = {
         id: '315516464384-hsj48037aavam5nejfh4tpk7bhmv3i75.apps.googleusercontent.com',
         reversed:
           'com.googleusercontent.apps.315516464384-hsj48037aavam5nejfh4tpk7bhmv3i75',
+      },
+    },
+    moibox: {
+      google: {
+        id: '315516464384-5buggcs7htvkj7lh9aghlpgh2bjbmnv5.apps.googleusercontent.com',
+        reversed:
+          'com.googleusercontent.apps.315516464384-5buggcs7htvkj7lh9aghlpgh2bjbmnv5',
       },
     },
   },

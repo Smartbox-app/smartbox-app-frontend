@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import apiTableReducer, { ApiTableState } from './api-table-reducer';
+import apiTableReducer, { ApiTableRootState } from './api-table-reducer';
 import appStatusReducer, { AppStatus } from './app-status-reducer';
 import modalReducer from './modal-reducer';
 import notificationsReducer, { NotificationState } from './notifications-reducer';
@@ -16,7 +16,7 @@ import { Modal } from '../types/modal';
 import stockGroupReducer, { StockGroupStatus } from './stock-group-reducer';
 
 export interface ApplicationState {
-  apiTable: ApiTableState;
+  apiTable: ApiTableRootState;
   boxes: Boxes;
   order: OrderState;
   user: UserState;

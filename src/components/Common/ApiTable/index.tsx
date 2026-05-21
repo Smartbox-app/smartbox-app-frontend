@@ -1,7 +1,6 @@
 /* eslint-disable */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import Flatpickr from 'react-flatpickr';
 import {
   FieldType,
@@ -12,33 +11,43 @@ import {
 import { Spinner } from '../../Branded';
 import Table from '../Table';
 import debounce from '../../../utils/debounce';
-import { apiTable } from '../../../actions';
+import {
+  clearApiTableData,
+  fetchApiTableData,
+} from '../../../actions/api-table';
 import { ApplicationState } from '../../../reducers';
+import { DEFAULT_API_TABLE_INSTANCE_ID } from '../../../constants/api-table-instances';
 
 import './ApiTable.scss';
 import { __ } from '../../../helpers/i18n';
 import styled from 'styled-components';
 
 const StyledContainer = styled('div')({
-  position: 'relative'
-})
+  position: 'relative',
+});
 
 interface SelectOption {
   value: string;
   content: string;
 }
 
-interface Props {
-  fetchApiTableData: (url: string, method?: string) => void;
-  clearApiTableData: () => void;
-  loading: boolean;
-  data: any;
+export interface ApiTableOwnProps {
   scheme: TableSchema;
   apiEndpointSubUrl: string;
-  apiEndpointMethod?: string; // Defaults to GET
+  apiEndpointMethod?: string;
+  /** Isolated Redux slice so multiple tables do not overwrite each other. */
+  instanceId?: string;
   selectSearchByField?: string;
   selectSearchByOption?: SelectOption[];
 }
+
+interface DispatchProps {
+  fetchApiTableData: (url: string, method?: string) => void;
+  clearApiTableData: () => void;
+}
+
+type Props = ApiTableOwnProps &
+  DispatchProps & { loading: boolean; data: any };
 
 const searchComponent = (
   allFields: TableSchemaField[],
@@ -74,7 +83,6 @@ const searchComponent = (
     searchElement = (
       <select
         className="input"
-        // placeholder={__('application.selectSearchedValue')}
         onChange={(e) => handleSearchQueryChange(e.target.value)}
       >
         <option value={''}>{__('application.select')}</option>
@@ -160,7 +168,9 @@ const searchComponent = (
   );
 };
 
-class ApiTable<T> extends Component<Props> {
+const emptyTableData = { countTotal: 0, items: [] };
+
+class ApiTable extends Component<Props> {
   private debouncedFetch: () => void;
 
   state = {
@@ -213,7 +223,7 @@ class ApiTable<T> extends Component<Props> {
     sortBy: string;
     sortDirBack: boolean;
   } | null {
-    const { searchBy, searchQuery, page, sortBy, sortDirBack } = this.state;
+    const { sortBy, sortDirBack } = this.state;
     const { scheme } = this.props;
 
     if (sortBy !== '') {
@@ -239,16 +249,22 @@ class ApiTable<T> extends Component<Props> {
   }
 
   componentDidUpdate(prevProps: Props) {
-    const {data, apiEndpointSubUrl} = this.props;
+    const {data, apiEndpointSubUrl, instanceId} = this.props;
 
-    if(apiEndpointSubUrl !== prevProps.apiEndpointSubUrl) {
+    if (
+      apiEndpointSubUrl !== prevProps.apiEndpointSubUrl ||
+      instanceId !== prevProps.instanceId
+    ) {
       this.props.clearApiTableData();
     }
 
-    if (data.uuid) {
-      if (data.uuid !== prevProps.data.uuid) {
-        this.fetch();
-      }
+
+    if (
+      data.uuid &&
+      prevProps.data.uuid &&
+      data.uuid !== prevProps.data.uuid
+    ) {
+      this.fetch();
     }
   }
 
@@ -296,12 +312,7 @@ class ApiTable<T> extends Component<Props> {
     const { page, searchQuery, searchBy } = this.state;
     const { loading, data, scheme } = this.props;
 
-    let table;
-
-    // if (loading) {
-    //   table = <Spinner transparent />;
-    // } else {
-    table = (
+    const table = (
       <>
         {loading ? <Spinner halfTransparent overlay /> : null}
         <Table
@@ -314,7 +325,6 @@ class ApiTable<T> extends Component<Props> {
         />
       </>
     );
-    // }
 
     return (
       <StyledContainer>
@@ -336,13 +346,29 @@ class ApiTable<T> extends Component<Props> {
   }
 }
 
-const mapStateToProps = (state: ApplicationState) => ({
-  data: state.apiTable,
-  loading: state.spinner.loading,
-});
+const mapStateToProps = (
+  state: ApplicationState,
+  ownProps: ApiTableOwnProps,
+) => {
+  const instanceId =
+    ownProps.instanceId ?? DEFAULT_API_TABLE_INSTANCE_ID;
+  return {
+    data: state.apiTable.instances[instanceId] ?? emptyTableData,
+    loading: state.spinner.loading,
+  };
+};
 
-function mapDispatchToProps(dispatch: any) {
-  return bindActionCreators({ ...apiTable }, dispatch);
+function mapDispatchToProps(
+  dispatch: any,
+  ownProps: ApiTableOwnProps,
+) {
+  const instanceId =
+    ownProps.instanceId ?? DEFAULT_API_TABLE_INSTANCE_ID;
+  return {
+    fetchApiTableData: (url: string, method?: string) =>
+      dispatch(fetchApiTableData(url, method, instanceId)),
+    clearApiTableData: () => dispatch(clearApiTableData(instanceId)),
+  };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ApiTable);

@@ -50,7 +50,11 @@ import { getPeriodConfigForExtendingRent } from '../../../../../actions/single-r
 import { useGetMyDetailsQuery, useMyRentDetailsQuery } from 'src/queries';
 import { Button, Section, Stack } from 'src/components/ui';
 import { ArrowRight } from 'src/icons';
-import { dateOnly, dateOnlyNormalized } from 'src/utils/format-date';
+import {
+  dateOnly,
+  dateOnlyNormalized,
+  formatForPLTimeZone,
+} from 'src/utils/format-date';
 import { useTenant } from 'src/hooks/useTenant';
 import { RentDuration } from '../Common/RentDuration';
 
@@ -130,23 +134,32 @@ const StepExtensionDuration = ({ clearPaymentDetails }: Props) => {
     ) {
       // if user is paying debt and debt is resolved to today only
       if (tenant.debtResolveType === DebtResolveType.DebtOnly) {
-        dispatch(setRentEndDate(endOfDay(new Date())));
+        const normalizedEnd = dateOnlyNormalized(new Date());
+
+        const parsedEnd = new Date(`${normalizedEnd} 23:59:59`);
+
+        dispatch(setRentEndDate(parsedEnd));
         return;
       }
       // if user is paying debt and debt is resolved to min periods
       if (tenant.debtResolveType === DebtResolveType.MinPeriod) {
-        const difference = differenceInDays(
-          endOfDay(new Date()),
-          new Date(rent.finishAt),
-        );
+        const normalizedEnd = dateOnlyNormalized(new Date());
+
+        const parsedEnd = new Date(`${normalizedEnd} 23:59:59`);
+
+
+        const difference = differenceInDays(parsedEnd, new Date(rent.finishAt));
         const minPeriodsAmount = Math.ceil(difference / minRentPeriod);
+
+        const normalizedRentFinishAt = dateOnlyNormalized(rent.finishAt);
+        const parsedRentFinishAt = new Date(
+          `${normalizedRentFinishAt} 00:00:00`,
+        );
+
         dispatch(
           setRentEndDate(
             endOfDay(
-              addDays(
-                new Date(rent.finishAt),
-                minPeriodsAmount * minRentPeriod,
-              ),
+              addDays(parsedRentFinishAt, minPeriodsAmount * minRentPeriod),
             ),
           ),
         );
@@ -174,7 +187,7 @@ const StepExtensionDuration = ({ clearPaymentDetails }: Props) => {
       dispatch(setRentEndDate(endOfDay(newEndOrToday)));
     } else {
       if (difference && difference >= minRentPeriod) return;
- 
+
       const newEnd = addDays(
         startOfDay(new Date(rent.finishAt)),
         minRentPeriod,
@@ -382,6 +395,12 @@ const StepExtensionDuration = ({ clearPaymentDetails }: Props) => {
 
   if (!rent || !minRentPeriod || maxRentPeriod === null)
     return <Spinner overlay />;
+
+  console.log(
+    'Date generated',
+    dateOnly(new Date()),
+    formatForPLTimeZone(new Date()),
+  );
 
   return (
     <form className="form-step-two">
