@@ -32,6 +32,11 @@ interface Props {
   onSortChange?: (sortBy: string, sortDirBack: boolean) => void;
 }
 
+const TableContainer = styled('div')(({ theme }) => ({
+  overflow: 'auto',
+  width: '100%',
+}));
+
 const StyledRow = styled('tr')(({ theme }) => {
   const secondaryLight = setLightness(0.95, theme.colors.secondary);
 
@@ -68,7 +73,11 @@ const formatValue = (value: any, field: TableSchemaField, allValues: any) => {
       return value === null ? (
         '-'
       ) : (
-        <Link href={`mailto: ${value}`} rel="noopener noreferrer" target="_blank">
+        <Link
+          href={`mailto: ${value}`}
+          rel="noopener noreferrer"
+          target="_blank"
+        >
           {value}
         </Link>
       );
@@ -160,7 +169,11 @@ class Table extends React.Component<Props> {
   render() {
     const desktop = window.matchMedia('(min-width: 920px)').matches;
     let content: any = null;
-    if (!this.props.data || !this.props.data.items || this.props.data.items.length === 0) {
+    if (
+      !this.props.data ||
+      !this.props.data.items ||
+      this.props.data.items.length === 0
+    ) {
       return <Alert type="notice" text="application.lackOfDataToShow" />;
     }
 
@@ -190,7 +203,7 @@ class Table extends React.Component<Props> {
                   <ButtonsContainer noWrap>
                     {(
                       header.buttons.filter(
-                        (button) => button !== null,
+                        (button) => !!button,
                       ) as TableButton[]
                     ).map((button: TableButton, index: number) => (
                       <Button
@@ -221,12 +234,14 @@ class Table extends React.Component<Props> {
       ));
 
       content = (
-        <table className="table">
-          <thead>
-            <tr>{headers}</tr>
-          </thead>
-          <tbody>{rows}</tbody>
-        </table>
+        <TableContainer>
+          <table className="table">
+            <thead>
+              <tr>{headers}</tr>
+            </thead>
+            <tbody>{rows}</tbody>
+          </table>
+        </TableContainer>
       );
     } else {
       content = (
@@ -241,7 +256,7 @@ class Table extends React.Component<Props> {
               {this.props.scheme.fields.map(
                 (header: TableSchemaField, index: number) => (
                   <div
-                    className={`list-row ${(header.type === FieldType.Custom || header.buttons) ? 'column' : ''} ${header.mobile ? 'mobile' : ''} `}
+                    className={`list-row ${header.type === FieldType.Custom || header.buttons ? 'column' : ''} ${header.mobile ? 'mobile' : ''} `}
                   >
                     {header.buttons ? (
                       <ButtonsContainer noWrap>

@@ -131,6 +131,8 @@ export default class ApiService {
       'Content-Type': 'application/json',
     };
 
+    console.log('CALLING FETCH', url);
+
     if (Capacitor.isNativePlatform()) {
       const token = await Preferences.get({ key: 'smst_token' });
       headers.Authorization = `Bearer ${token.value}`;

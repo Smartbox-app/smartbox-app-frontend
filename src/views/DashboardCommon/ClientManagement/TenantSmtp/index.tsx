@@ -2,7 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { Spinner } from 'src/components/Branded';
-import { ButtonsContainer, Section } from 'src/components/Layout';
+import {
+  ButtonsContainer,
+  FormContainer,
+  Section,
+} from 'src/components/Layout';
 import {
   Button,
   CheckBox,
@@ -129,98 +133,100 @@ export const ManageTenantSmtp = ({ userId }: Props) => {
     <Section highlight>
       <Stack>
         <Header variant="h2">{__('application.tenantSmtpSection')}</Header>
-        <Form onSubmit={handleSubmit(onSubmit)}>
+        <FormContainer>
+          <Form onSubmit={handleSubmit(onSubmit)}>
+            <Stack>
+              <CheckBox
+                label={__('application.tenantSmtpUseCustom')}
+                error={errors.useCustomSmtp?.message}
+                {...register('useCustomSmtp')}
+              />
+
+              {useCustomSmtp ? (
+                <>
+                  <Input
+                    label={__('application.tenantSmtpHost')}
+                    placeholder="smtp.example.com"
+                    error={errors.smtpHost?.message}
+                    {...register('smtpHost')}
+                  />
+                  <Input
+                    label={__('application.tenantSmtpPort')}
+                    type="number"
+                    error={errors.smtpPort?.message}
+                    {...register('smtpPort', { valueAsNumber: true })}
+                  />
+                  <Input
+                    label={__('application.tenantSmtpUser')}
+                    error={errors.smtpUser?.message}
+                    {...register('smtpUser')}
+                  />
+                  <Input
+                    label={__('application.tenantSmtpPassword')}
+                    type="password"
+                    help={__('application.tenantSmtpPasswordHint')}
+                    error={errors.smtpPassword?.message}
+                    {...register('smtpPassword')}
+                  />
+                  <Input
+                    label={__('application.tenantSmtpFromEmail')}
+                    type="email"
+                    error={errors.smtpFromEmail?.message}
+                    {...register('smtpFromEmail')}
+                  />
+                  <CheckBox
+                    label={__('application.tenantSmtpSecure')}
+                    error={errors.smtpSecure?.message}
+                    {...register('smtpSecure')}
+                  />
+                  <CheckBox
+                    label={__('application.tenantSmtpIgnoreTls')}
+                    error={errors.smtpIgnoreTls?.message}
+                    {...register('smtpIgnoreTls')}
+                  />
+                </>
+              ) : null}
+
+              <ButtonsContainer>
+                <Button
+                  type="submit"
+                  variant="primary"
+                  text="application.save"
+                  disabled={saving}
+                />
+              </ButtonsContainer>
+            </Stack>
+          </Form>
+
           <Stack>
-            <CheckBox
-              label={__('application.tenantSmtpUseCustom')}
-              error={errors.useCustomSmtp?.message}
-              {...register('useCustomSmtp')}
-            />
-
-            {useCustomSmtp ? (
-              <>
-                <Input
-                  label={__('application.tenantSmtpHost')}
-                  placeholder="smtp.example.com"
-                  error={errors.smtpHost?.message}
-                  {...register('smtpHost')}
-                />
-                <Input
-                  label={__('application.tenantSmtpPort')}
-                  type="number"
-                  error={errors.smtpPort?.message}
-                  {...register('smtpPort', { valueAsNumber: true })}
-                />
-                <Input
-                  label={__('application.tenantSmtpUser')}
-                  error={errors.smtpUser?.message}
-                  {...register('smtpUser')}
-                />
-                <Input
-                  label={__('application.tenantSmtpPassword')}
-                  type="password"
-                  help={__('application.tenantSmtpPasswordHint')}
-                  error={errors.smtpPassword?.message}
-                  {...register('smtpPassword')}
-                />
-                <Input
-                  label={__('application.tenantSmtpFromEmail')}
-                  type="email"
-                  error={errors.smtpFromEmail?.message}
-                  {...register('smtpFromEmail')}
-                />
-                <CheckBox
-                  label={__('application.tenantSmtpSecure')}
-                  error={errors.smtpSecure?.message}
-                  {...register('smtpSecure')}
-                />
-                <CheckBox
-                  label={__('application.tenantSmtpIgnoreTls')}
-                  error={errors.smtpIgnoreTls?.message}
-                  {...register('smtpIgnoreTls')}
-                />
-              </>
-            ) : null}
-
+            <Header variant="h3">
+              {__('application.tenantSmtpTestSection')}
+            </Header>
+            <Stack>
+              <Input
+                label="application.tenantSmtpTestRecipient"
+                type="email"
+                name="tenant-smtp-test-to"
+                value={testRecipient}
+                autoComplete="off"
+                onChange={async (e) => {
+                  setTestRecipient(e.target.value);
+                }}
+                onBlur={async () => {}}
+                ref={() => {}}
+              />
+            </Stack>
             <ButtonsContainer>
               <Button
-                type="submit"
-                variant="primary"
-                text="application.save"
-                disabled={saving}
+                type="button"
+                variant="secondary"
+                text="application.tenantSmtpSendTest"
+                disabled={testing || !testRecipient.trim()}
+                onClick={handleSendTest}
               />
             </ButtonsContainer>
           </Stack>
-        </Form>
-
-        <Stack>
-          <Header variant="h3">
-            {__('application.tenantSmtpTestSection')}
-          </Header>
-          <Stack>
-            <Input
-              label="application.tenantSmtpTestRecipient"
-              type="email"
-              name="tenant-smtp-test-to"
-              value={testRecipient}
-              autoComplete="off"
-              onChange={async (e) => {
-                setTestRecipient(e.target.value);
-              }}
-              onBlur={async () => {}}
-              ref={() => {}}
-            />
-          </Stack>
-          <ButtonsContainer>
-            <Button
-              type="button"
-              variant="secondary"
-              text="application.tenantSmtpSendTest"
-              disabled={testing || !testRecipient.trim()}
-              onClick={handleSendTest}
-            />
-          </ButtonsContainer>
-        </Stack>
+        </FormContainer>
       </Stack>
     </Section>
   );

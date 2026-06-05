@@ -85,6 +85,8 @@ const Pricing = () => {
         pricing: [],
         id: v4(),
         price: null,
+        netPrice: null,
+        grossPrice: null,
         priceType: AddonVariantPriceType.Dynamic,
       },
     ]);

@@ -5,7 +5,6 @@ import { FieldType } from 'smartbox-tables';
 import { TTGatewayLockDeviceList, TTLockDeviceList } from 'smartbox-types';
 import { showModal } from 'src/actions/modal';
 import { successNotification } from 'src/actions/notifications';
-import { Spinner } from 'src/components/Branded';
 import { Alert, ApiTable } from 'src/components/Common';
 import { Header, Section } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
@@ -15,6 +14,7 @@ import { locksList } from 'src/smartbox-tables/schemas/locks-list.table';
 import { InteractiveTableSchema } from 'src/utils/table-schema-utils';
 import { LockDetails } from './components/LockDetails/LockDetails';
 import { history } from 'src/App';
+import { Spinner } from 'src/components/Branded';
 
 export const Locks = () => {
   const dispatch = useDispatch();
@@ -22,7 +22,7 @@ export const Locks = () => {
     type?: string;
     groupOrGatewayId?: string;
   }>();
-  const [loading, setLoading] = useState<boolean>(false);
+  const [actionLoading, setActionLoading] = useState<boolean>(false);
   const scheme = new InteractiveTableSchema(
     type === 'gateway' ? gatewayLocksList : locksList,
   );
@@ -116,19 +116,19 @@ export const Locks = () => {
     }
 
   const openLock = async (data: TTLockDeviceList) => {
-    setLoading(true);
+    setActionLoading(true);
     await ApiService.callFetch('PATCH', `driver/open/${data.lockId}`, () => {
       dispatch(successNotification('application.lockOpened'));
     });
-    setLoading(false);
+    setActionLoading(false);
   };
 
   const closeLock = async (data: TTLockDeviceList) => {
-    setLoading(true);
+    setActionLoading(true);
     await ApiService.callFetch('PATCH', `driver/close/${data.lockId}`, () => {
       dispatch(successNotification('application.lockClosed'));
     });
-    setLoading(false);
+    setActionLoading(false);
   };
 
   const url = useMemo(() => {
@@ -141,9 +141,12 @@ export const Locks = () => {
 
   return (
     <Section>
+      {actionLoading ? <Spinner halfTransparent overlay /> : null}
       <Header variant="h2">{__('application.locks')}</Header>
-      {loading && <Spinner overlay halfTransparent />}
-      <ApiTable scheme={scheme} apiEndpointSubUrl={url} />
+      <ApiTable
+        scheme={scheme}
+        apiEndpointSubUrl={url || 'driver/locks'}
+      />
     </Section>
   );
 };

@@ -1,17 +1,13 @@
 import React from 'react';
 import { ItfApiForm } from 'itf_formbuilder_react';
 import { useDispatch } from 'react-redux';
-import ReactCreatableSelect from 'react-select/creatable';
-import {
-  ButtonsContainer,
-  FormContainer,
-  FormHeader,
-} from '../../../../../components/Layout';
+import { ButtonsContainer, FormContainer } from '../../../../../components/Layout';
+import { Modal } from 'src/components/ui';
 import { Button, Spinner } from '../../../../../components/Branded';
 import ApiService from '../../../../../services/api-service';
 import { formOnTranslateString } from '../../../../../utils/trans-form';
 import { history } from '../../../../../App';
-import { ReactSelectOverride } from '../../../../../components/Common/ReactSelectOverride';
+import { ReactSelectOverride, ReactCreatableSelectOverride as ReactCreatableSelect } from '../../../../../components/Common/ReactSelectOverride';
 import { successNotification } from '../../../../../actions/notifications';
 import { mapFields } from '../../../../../utils/fields-mapper';
 import { __ } from '../../../../../helpers/i18n';
@@ -35,8 +31,10 @@ const Edit = ({ configId }: ExportProps) => {
   const sendUrl = `mobile-config/${configId}`;
 
   return (
-    <FormContainer highlight>
-      <FormHeader title="mobileConfig.edit" />
+    <>
+      <Modal.Header title={__('mobileConfig.edit')} />
+      <Modal.Content>
+      <FormContainer>
       <ItfApiForm
         formId="editMobileConfigForm"
         schemaCacheEnabled={false}
@@ -60,7 +58,9 @@ const Edit = ({ configId }: ExportProps) => {
           ReactCreatableSelect,
         }}
       />
-    </FormContainer>
+      </FormContainer>
+      </Modal.Content>
+    </>
   );
 };
 

@@ -6,6 +6,12 @@ import { ErrorText } from '../ErrorText';
 import { InputLabel } from '../InputLabel';
 import { Typography } from '../Typography';
 import { AsterixRequired } from 'src/components/Common';
+import {
+  getInputFieldStyles,
+  InputSize,
+  InputSizeProps,
+  resolveInputSize,
+} from 'src/components/Common/input-sizes';
 
 const StyledContainer = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -21,25 +27,12 @@ const StyledHelp = styled(Typography)({
   fontWeight: 400,
 });
 
-const StyledInput = styled('input')<{ error: boolean; disabled: boolean }>(
-  ({ theme, disabled, error }) => ({
-    fontSize: 14,
-    lineHeight: '20px',
-    color: theme.colors.text.primary,
-    background: disabled
-      ? theme.colors.border.disable
-      : theme.colors.background.white,
-    padding: `${theme.spacing * 3}px ${theme.spacing * 5}px`,
-    border: `1px solid ${error ? theme.colors.danger : theme.colors.border.primary}`,
-    borderRadius: theme.radius.outerSurface,
-    height: theme.spacing * 12,
-    '&::placeholder': {
-      color: theme.colors.text.tertiary,
-    },
-    '&:focus': {
-      borderColor: theme.colors.primary,
-    },
-  }),
+const StyledInput = styled('input')<{
+  $size: InputSize;
+  $error: boolean;
+  $disabled: boolean;
+}>(({ theme, $size, $error, $disabled }) =>
+  getInputFieldStyles(theme, $size, { error: $error, disabled: $disabled }),
 );
 
 export type InputProps = {
@@ -51,7 +44,8 @@ export type InputProps = {
   value?: string;
   defaultValue?: string;
   autoComplete?: string;
-} & UseFormRegisterReturn;
+} & InputSizeProps &
+  UseFormRegisterReturn;
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
   (
@@ -66,17 +60,26 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       value,
       defaultValue,
       autoComplete,
+      size,
+      big,
+      compact,
       ...register
     },
     ref,
   ) => {
+    const resolvedSize = resolveInputSize({ size, big, compact });
+
     return (
       <StyledContainer>
-        <InputLabel required={register.required} labelFor={name}>{__(label)}</InputLabel>
+        <InputLabel required={register.required} labelFor={name}>
+          {__(label)}
+        </InputLabel>
         <StyledInput
           {...register}
           disabled={!!disabled}
-          error={!!error}
+          $size={resolvedSize}
+          $error={!!error}
+          $disabled={!!disabled}
           name={name}
           id={name}
           ref={ref}
@@ -92,3 +95,5 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     );
   },
 );
+
+export type { InputSize };

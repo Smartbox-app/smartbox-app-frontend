@@ -1,17 +1,17 @@
 import React from 'react';
 import { ItfApiForm } from 'itf_formbuilder_react';
 import { useDispatch } from 'react-redux';
-import ReactCreatableSelect from 'react-select/creatable';
-import { ButtonsContainer, FormContainer, FormHeader } from '../../../../../../../components/Layout';
+import { ButtonsContainer, FormContainer } from '../../../../../../../components/Layout';
 import { Button, Spinner } from '../../../../../../../components/Branded';
 import ApiService from '../../../../../../../services/api-service';
 import { formOnTranslateString } from '../../../../../../../utils/trans-form';
-import { ReactSelectOverride } from '../../../../../../../components/Common/ReactSelectOverride';
+import { ReactSelectOverride, ReactCreatableSelectOverride as ReactCreatableSelect } from '../../../../../../../components/Common/ReactSelectOverride';
 import { successNotification } from '../../../../../../../actions/notifications';
 import { __ } from '../../../../../../../helpers/i18n';
 import { mapFields } from '../../../../../../../utils/fields-mapper';
 import { hideModal } from '../../../../../../../actions/modal';
 import { refreshApiTableData } from '../../../../../../../actions/api-table';
+import { Modal } from 'src/components/ui';
 
 interface Props {
     id: string;
@@ -31,27 +31,31 @@ const Edit = ({ id, stockId }: Props) => {
     const sendUrl = `box/${id}`;
 
     return (
-        <FormContainer>
-            <FormHeader title="application.editBox" />
-            <ItfApiForm
-                formId="updateBox"
-                schemaCacheEnabled={false}
-                schemaMayBeDynamic={true}
-                loadingInfo={<Spinner transparent />}
-                schemaFetcher={() => ApiService.loadForm(fetchUrl)}
-                sendFetcher={(formId: string, values: any) => ApiService.sendForm(sendUrl, { ...values, stockId }, 'PATCH')}
-                submitButton={submitButton}
-                onRenderFullField={mapFields}
-                onSavedSuccessfully={() => {
-                    dispatch(successNotification('application.boxEdited'));
-                    dispatch(hideModal());
-                    dispatch(refreshApiTableData());
-                }}
-                onTranslateString={formOnTranslateString}
-                thirdPartyComponents={{ ReactSelect: ReactSelectOverride, ReactCreatableSelect }}
-            />
-        </FormContainer>
+        <>
+            <Modal.Header title={__('application.editBox')} />
+            <Modal.Content>
+                <FormContainer>
+                <ItfApiForm
+                    formId="updateBox"
+                    schemaCacheEnabled={false}
+                    schemaMayBeDynamic={true}
+                    loadingInfo={<Spinner transparent />}
+                    schemaFetcher={() => ApiService.loadForm(fetchUrl)}
+                    sendFetcher={(formId: string, values: any) => ApiService.sendForm(sendUrl, { ...values, stockId }, 'PATCH')}
+                    submitButton={submitButton}
+                    onRenderFullField={mapFields}
+                    onSavedSuccessfully={() => {
+                        dispatch(successNotification('application.boxEdited'));
+                        dispatch(hideModal());
+                        dispatch(refreshApiTableData());
+                    }}
+                    onTranslateString={formOnTranslateString}
+                    thirdPartyComponents={{ ReactSelect: ReactSelectOverride, ReactCreatableSelect }}
+                />
+                </FormContainer>
+            </Modal.Content>
+        </>
     );
 };
 
-export { Edit }
+export { Edit };

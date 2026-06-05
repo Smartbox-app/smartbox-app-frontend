@@ -1,16 +1,21 @@
 import React from 'react';
-import { __ } from '../../../helpers/i18n';
-import './InputError.scss';
+import { InputSizeProps, resolveInputSize } from '../input-sizes';
+import { StyledInputError } from '../input-styled';
 
-interface Props {
-    error: string;
-    big?: boolean;
+interface Props extends InputSizeProps {
+  error: string;
 }
 
-const InputError = ({ error, big }: Props) => {
-    if (!error) return null;
+const InputError = ({ error, size, big, compact }: Props) => {
+  if (!error) return null;
 
-    return <p className={`input-error ${big ? 'big' : 'compact'}`}><span className='fa fa-exclamation-circle' /> {error} </p>;
-}
+  const resolvedSize = resolveInputSize({ size, big, compact });
 
-export { InputError }
+  return (
+    <StyledInputError $size={resolvedSize}>
+      <span className="fa fa-exclamation-circle" /> {error}
+    </StyledInputError>
+  );
+};
+
+export { InputError };

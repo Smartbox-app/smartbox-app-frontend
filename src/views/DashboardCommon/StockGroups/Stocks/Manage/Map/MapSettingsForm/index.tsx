@@ -18,7 +18,6 @@ import { useGetMyDetailsQuery } from 'src/queries';
 
 interface Props {
   stock: StockRes;
-  refreshStock: () => void;
   userId?: string;
 }
 
@@ -26,7 +25,7 @@ const Container = styled.div`
   margin-bottom: 30px;
 `;
 
-const MapSettingsForm = ({ userId, stock, refreshStock }: Props) => {
+const MapSettingsForm = ({ userId, stock }: Props) => {
   const dispatch = useDispatch();
   const { stockId } = useParams<{ stockId: string }>();
   const { data: user } = useGetMyDetailsQuery();
@@ -74,7 +73,6 @@ const MapSettingsForm = ({ userId, stock, refreshStock }: Props) => {
           onRenderFullField={mapFields}
           onSavedSuccessfully={() => {
             dispatch(successNotification(__('application.mapSettingsUpdated')));
-            refreshStock();
           }}
           onTranslateString={formOnTranslateString}
         />

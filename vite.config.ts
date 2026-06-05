@@ -57,6 +57,7 @@ export default defineConfig(async () => {
           },
           manualChunks: {
             pdfjs: ['pdfjs-dist'],
+            'recharts': ['recharts'],
             'react-id-swiper': ['react-id-swiper'],
             'react-moveable': ['react-moveable']
           },

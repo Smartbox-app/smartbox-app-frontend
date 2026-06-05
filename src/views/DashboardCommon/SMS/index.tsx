@@ -1,16 +1,21 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { ItfApiForm } from 'itf_formbuilder_react';
-import ReactCreatableSelect from 'react-select/creatable';
 import { DiscountReq } from 'smartbox-types';
 import { connect } from 'react-redux';
 import flatpickr from 'flatpickr';
-import { FormContainer, ButtonsContainer, FieldsColumn, PageHeader, Section } from '../../../components/Layout';
+import {
+  FormContainer,
+  ButtonsContainer,
+  FieldsColumn,
+  PageHeader,
+  Section,
+} from '../../../components/Layout';
 import { Button, Spinner } from '../../../components/Branded';
 import ApiService from '../../../services/api-service';
 import { formOnTranslateString } from '../../../utils/trans-form';
 import { notifications } from '../../../actions';
-import { ReactSelectOverride } from '../../../components/Common/ReactSelectOverride';
+import { ReactSelectOverride, ReactCreatableSelectOverride as ReactCreatableSelect } from '../../../components/Common/ReactSelectOverride';
 import { mapFields } from '../../../utils/fields-mapper';
 
 interface Props {
@@ -27,30 +32,37 @@ const SMS = ({ successNotification }: Props) => {
   const fetchUrl = 'user/form/send-sms';
   const sendUrl = 'user/send-sms';
 
-  const customSendFetcher = (formId: string, values: DiscountReq) => ApiService.sendForm(sendUrl, values, 'POST');
+  const customSendFetcher = (formId: string, values: DiscountReq) =>
+    ApiService.sendForm(sendUrl, values, 'POST');
 
   return (
- <>
+    <>
       <PageHeader title="application.sendSms" />
-      <FormContainer highlight>
-        <FieldsColumn>
-          <ItfApiForm
-            formId="sendSmsForm"
-            schemaMayBeDynamic={false}
-            schemaCacheEnabled={false}
-            loadingInfo={<Spinner transparent />}
-            schemaFetcher={() => ApiService.loadForm(fetchUrl)}
-            sendFetcher={customSendFetcher}
-            submitButton={submitButton}
-            onSavedSuccessfully={() => {
-              successNotification('application.smsSent');
-            }}
-            onRenderFullField={mapFields}
-            onTranslateString={formOnTranslateString}
-            thirdPartyComponents={{ ReactSelect: ReactSelectOverride, ReactCreatableSelect, flatpickr }}
-          />
-        </FieldsColumn>
-      </FormContainer>
+      <Section>
+        <FormContainer highlight>
+          <FieldsColumn>
+            <ItfApiForm
+              formId="sendSmsForm"
+              schemaMayBeDynamic={false}
+              schemaCacheEnabled={false}
+              loadingInfo={<Spinner transparent />}
+              schemaFetcher={() => ApiService.loadForm(fetchUrl)}
+              sendFetcher={customSendFetcher}
+              submitButton={submitButton}
+              onSavedSuccessfully={() => {
+                successNotification('application.smsSent');
+              }}
+              onRenderFullField={mapFields}
+              onTranslateString={formOnTranslateString}
+              thirdPartyComponents={{
+                ReactSelect: ReactSelectOverride,
+                ReactCreatableSelect,
+                flatpickr,
+              }}
+            />
+          </FieldsColumn>
+        </FormContainer>
+      </Section>
     </>
   );
 };

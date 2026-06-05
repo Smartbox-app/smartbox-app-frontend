@@ -7,6 +7,7 @@ import ApiService from '../../../services/api-service';
 import './GateStatus.scss';
 import { __ } from '../../../helpers/i18n';
 import { useTenantNaming } from 'src/hooks/useTenantNaming';
+import { Skeleton } from 'src/components/ui';
 
 interface Props {
   stockId?: string;
@@ -89,7 +90,13 @@ const GateStatus = ({ stockId, stockGroupId }: Props) => {
     }
   };
 
-  if (!status) return <Spinner />;
+  if (!status)
+    return (
+      <div className="gate-status">
+        <Skeleton radius={2} height={83} width={'350px'} />
+      </div>
+    );
+  if (!status || status.length === 0) return null;
 
   return (
     <div className="gate-status">

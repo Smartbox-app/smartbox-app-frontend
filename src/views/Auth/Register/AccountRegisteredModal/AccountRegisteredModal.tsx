@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
 import { hideModal } from 'src/actions/modal';
-import { Button, Header, Typography } from 'src/components/ui';
+import { Button, Modal, Typography } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
 import { SuccessCheck } from 'src/icons';
 import styled from 'styled-components';
@@ -22,12 +22,16 @@ export const AccountRegisteredModal = () => {
   };
 
   return (
-    <Content>
-      <SuccessCheck />
-      <Header variant="h2">{__('application.thanksForRegister')}</Header>
-      <Typography>{__('application.toEndRegisterVerifyMail')}</Typography>
-      <Typography>{__('application.msgWasSentOnEmail')}</Typography>
-      <Button size="large" text="application.backToApp" onClick={closeModal} />
-    </Content>
+    <>
+      <Modal.Header title={__('application.thanksForRegister')} />
+      <Modal.Content>
+        <Content>
+          <SuccessCheck />
+          <Typography>{__('application.toEndRegisterVerifyMail')}</Typography>
+          <Typography>{__('application.msgWasSentOnEmail')}</Typography>
+          <Button size="large" text="application.backToApp" onClick={closeModal} />
+        </Content>
+      </Modal.Content>
+    </>
   );
 };

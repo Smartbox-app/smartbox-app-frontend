@@ -1,23 +1,24 @@
 import React from 'react';
 import { ItfApiForm } from 'itf_formbuilder_react';
 import { useDispatch } from 'react-redux';
-import ReactCreatableSelect from 'react-select/creatable';
 import {
   ButtonsContainer,
   FormContainer,
+  Section,
   SimpleHeader,
 } from '../../../../../../../components/Layout';
 import { Button, Spinner } from '../../../../../../../components/Branded';
 import ApiService from '../../../../../../../services/api-service';
 import { formOnTranslateString } from '../../../../../../../utils/trans-form';
 import { history } from '../../../../../../../App';
-import { ReactSelectOverride } from '../../../../../../../components/Common/ReactSelectOverride';
+import { ReactSelectOverride, ReactCreatableSelectOverride as ReactCreatableSelect } from '../../../../../../../components/Common/ReactSelectOverride';
 import { successNotification } from '../../../../../../../actions/notifications';
 import { __ } from '../../../../../../../helpers/i18n';
 import UserService from '../../../../../../../services/user-service';
 import { mapFields } from '../../../../../../../utils/fields-mapper';
 import { useParams } from 'react-router';
 import { useGetMyDetailsQuery } from 'src/queries';
+import { HeaderWithActions } from 'src/components/ui';
 
 const AddBatch = () => {
   const dispatch = useDispatch();
@@ -35,15 +36,21 @@ const AddBatch = () => {
   const sendUrl = 'box/multiple';
 
   return (
-    <>
-      <SimpleHeader title="application.addBoxes" />
-      <ButtonsContainer>
-        <Button
-          to={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/boxes`}
-          text="application.back"
-          primary
-        />
-      </ButtonsContainer>
+    <Section>
+      <HeaderWithActions
+        actions={
+          <ButtonsContainer>
+            <Button
+              to={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/boxes`}
+              text="application.back"
+              primary
+            />
+          </ButtonsContainer>
+        }
+      >
+        {__('application.addBoxes')}
+      </HeaderWithActions>
+
       <FormContainer highlight>
         <ItfApiForm
           formId="addBox"
@@ -69,7 +76,7 @@ const AddBatch = () => {
           }}
         />
       </FormContainer>
-    </>
+    </Section>
   );
 };
 

@@ -1,7 +1,7 @@
-import { useForm } from 'react-hook-form';
+import React from 'react';
+import { type SubmitHandler, useForm } from 'react-hook-form';
 import { BoxGroupUserRes } from 'smartbox-types';
-import { ButtonsContainer } from 'src/components/Layout';
-import { Button, CheckBox, Form, Typography } from 'src/components/ui';
+import { Button, CheckBox, Form, Modal, Typography } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
 import { NotificationDto } from './dto/NotificationDto';
 import { ClassValidatorResolver } from 'src/resolvers/ClassValidatorResolver';
@@ -40,7 +40,7 @@ export const NotifyWhenAvailableModal = ({
 
   const { mutate, isPending, data, error } = useCreateNotificationMutation();
 
-  const onSubmit = (data: NotificationDto) => {
+  const onSubmit: SubmitHandler<NotificationDto> = (data) => {
     if (!tenant) return;
     mutate({
       email: data.email,
@@ -64,30 +64,33 @@ export const NotifyWhenAvailableModal = ({
   };
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
-      {isPending ? <Spinner overlay halfTransparent /> : null}
-      <StyledContent>
-        <Typography>
-          {__('application.notification_for')}
-          <strong>{option.name}</strong>
-        </Typography>
-        <Typography>{__('application.notification_type')}</Typography>
+      <Modal.Header title={__('application.notificationsAboutBoxes')} />
+      <Modal.Content>
+          {isPending ? <Spinner overlay halfTransparent /> : null}
+          <StyledContent>
+            <Typography>
+              {__('application.notification_for')}
+              <strong>{option.name}</strong>
+            </Typography>
+            <Typography>{__('application.notification_type')}</Typography>
 
-        <CheckBox
-          {...register('email')}
-          label={<Typography>{__('application.email')}</Typography>}
-        />
+            <CheckBox
+              {...register('email')}
+              label={<Typography>{__('application.email')}</Typography>}
+            />
 
-        {tenant?.smsAvailable ? (
-          <CheckBox
-            {...register('sms')}
-            label={<Typography>{__('application.sms')}</Typography>}
-          />
-        ) : null}
-        {errors.atLeastOne?.message ? (
-          <ErrorText error={errors.atLeastOne.message} />
-        ) : null}
-
-        <ButtonsContainer>
+            {tenant?.smsAvailable ? (
+              <CheckBox
+                {...register('sms')}
+                label={<Typography>{__('application.sms')}</Typography>}
+              />
+            ) : null}
+            {errors.atLeastOne?.message ? (
+              <ErrorText error={errors.atLeastOne.message} />
+            ) : null}
+          </StyledContent>
+        </Modal.Content>
+        <Modal.Actions>
           <Button
             variant="secondary"
             text={__('application.cancel')}
@@ -100,8 +103,7 @@ export const NotifyWhenAvailableModal = ({
             text={__('application.save')}
             type="submit"
           />
-        </ButtonsContainer>
-      </StyledContent>
+      </Modal.Actions>
     </Form>
   );
 };

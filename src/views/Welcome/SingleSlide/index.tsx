@@ -33,11 +33,6 @@ const SingleSlide = ({ item, last }: Props) => {
     return (
         <StyledSlideContainer  background={getTenantBackgroundPath(tenant)}  className="slide-container">
             <div className="slide-overlayer"></div>
-            <div className="slide-logo">
-                <Link to="/">
-                    <Logo />
-                </Link>
-            </div>
             <div className="slide-content">
                 <div className="slide-description">
                     <img src={`${ApiService.url}tenant/slide/${item}`} />

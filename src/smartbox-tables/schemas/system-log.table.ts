@@ -13,6 +13,7 @@ export const systemLogTableSchema: TableSchema = {
       searchable: true,
       defaultSort: true,
       oppositeSortDir: false,
+      mobile: true,
     },
     {
       name: 'Akcja',
@@ -20,6 +21,7 @@ export const systemLogTableSchema: TableSchema = {
       type: FieldType.Text,
       sortable: true,
       searchable: true,
+      mobile: true,
     },
     {
       name: 'Email',
@@ -27,6 +29,7 @@ export const systemLogTableSchema: TableSchema = {
       type: FieldType.Email,
       sortable: true,
       searchable: true,
+      mobile: true,
     },
     {
       name: 'Rola',
@@ -34,6 +37,7 @@ export const systemLogTableSchema: TableSchema = {
       type: FieldType.Text,
       sortable: true,
       searchable: true,
+      mobile: true,
     },
 
     {
@@ -42,6 +46,7 @@ export const systemLogTableSchema: TableSchema = {
       type: FieldType.Text,
       sortable: true,
       searchable: true,
+      mobile: true,
       customValue: (row) => {
         const code = row.appErrorCode;
         if (code === null || code === undefined || code === '') return '-';

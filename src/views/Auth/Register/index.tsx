@@ -29,6 +29,8 @@ import { useForm } from 'react-hook-form';
 import { ClassValidatorResolver } from 'src/resolvers/ClassValidatorResolver';
 import styled from 'styled-components';
 import { AccountRegisteredModal } from './AccountRegisteredModal';
+import { isSmsAccountConfirmation } from 'src/utils/account-confirmation';
+import { buildActivateAccountPath } from 'src/utils/activate-account-url';
 
 const RegisterForm = styled('div')(({ theme }) => ({
   width: '100%',
@@ -76,13 +78,22 @@ const Register = () => {
   };
 
   useEffect(() => {
-    if (!data || !isSuccess) return;
-    dispatch(modal.showModal(<AccountRegisteredModal />));
+    if (!data || !isSuccess || !tenant) return;
+
+    const smsActivation = isSmsAccountConfirmation(tenant);
+
     dispatch(
       notifications.successNotification('notification.accountRegistered'),
     );
+
+    if (smsActivation && data.activationToken) {
+      history.push(buildActivateAccountPath(data.activationToken));
+      return;
+    }
+
+    dispatch(modal.showModal(<AccountRegisteredModal />));
     history.push('/');
-  }, [data, isSuccess]);
+  }, [data, isSuccess, tenant, dispatch]);
 
   if (!tenant) return null;
 
@@ -162,7 +173,7 @@ const Register = () => {
                     i{' '}
                     <Link
                       target="_blank"
-                      href={`${ApiService.url}tenant/privacy/${tenant.id}`}
+                      href='/privacy-policy'
                       rel="noreferrer"
                     >
                       <u>{__('application.privacyPolices')}</u>

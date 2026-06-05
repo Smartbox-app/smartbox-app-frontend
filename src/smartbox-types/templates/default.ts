@@ -9,13 +9,17 @@ Twoje konto zostało pomyślnie założone, teraz możesz wynająć odpowiedni d
   [TemplateType.USER_BLOCKED_EMAIL]: `Twoje konto użytkownika zostało zablokowane. Prosimy o kontakt z biurem obsługi klienta pod adresem {{email}} lub tel: {{phone}} w celu wyjaśnienia zaistniałej sytuacji.`,
   [TemplateType.USER_UNBLOCKED_EMAIL]: `Zostałeś odblokowany, możesz kontynuować korzystanie z mini magazynów w {{company}}, zapraszamy.`,
   [TemplateType.RENTAL_EXTENDED_MAIL]: `Cześć {{name}}!
-Przedłużyłeś wynajęcie skrytki numer {{number}} do {{rentUntil}} za {{cost}} zł.`,
-  [TemplateType.RENTAL_PERIOD_PAID_MAIL]: `Cześć {{name}}! Opłaciłeś okres {{periodFrom}} - {{periodTo}} wynajęcia skrytki numer {{number}} za {{cost}} zł.`,
+Przedłużyłeś wynajęcie {{boxTypeNoun}} numer {{number}} do {{rentUntil}} za {{cost}} zł.`,
+  [TemplateType.RENTAL_PERIOD_PAID_MAIL]: `Cześć {{name}}!
+Opłaciłeś okres {{periodFrom}} - {{periodTo}} wynajęcia {{boxTypeNoun}} numer {{number}} za {{cost}} zł.`,
   [TemplateType.NEW_RENTAL_MAIL]: `Cześć {{name}}!
-Udało się! Wynająłeś domek dla Twoich rzeczy. Masz box o numerze {{number}} od {{rentFrom}} do {{rentUntil}} za {{cost}} zł.`,
-  [TemplateType.RENTAL_EXTENDED_ADMIN_NOTIFICATION_MAIL]: `Użytkownik {{email}} przedłużył wynajęcie skrytki numer {{number}} na placu {{stock}} do {{rentUntil}} za {{cost}} zł.`,
-  [TemplateType.RENTAL_PERIOD_PAID_ADMIN_NOTIFICATION_MAIL]: `Użytkownik {{email}} opłacił okres {{periodFrom}} - {{periodTo}} wynajęcia skrytki numer {{number}} na placu {{stock}} do {{rentUntil}} za {{cost}} zł.`,
-  [TemplateType.NEW_RENTAL_ADMIN_NOTIFICATION_MAIL]: `Użytkownik {{email}} wynajął skrytkę numer {{number}} na placu {{stock}} od {{rentFrom}} do {{rentUntil}} za {{cost}} zł.`,
+Udało się! Wynająłeś {{boxTypeAccusative}} numer {{number}} od {{rentFrom}} do {{rentUntil}} za {{cost}} zł.`,
+  [TemplateType.RENTAL_EXTENDED_ADMIN_NOTIFICATION_MAIL]: `Użytkownik {{email}} przedłużył wynajęcie {{boxTypeNoun}} numer {{number}} na placu {{stock}} do {{rentUntil}} za {{cost}} zł.`,
+  [TemplateType.RENTAL_PERIOD_PAID_ADMIN_NOTIFICATION_MAIL]: `Użytkownik {{email}} opłacił okres {{periodFrom}} - {{periodTo}} wynajęcia {{boxTypeNoun}} numer {{number}} na placu {{stock}} do {{rentUntil}} za {{cost}} zł.`,
+  [TemplateType.NEW_RENTAL_ADMIN_NOTIFICATION_MAIL]: `Użytkownik {{email}} wynajął {{boxTypeAccusative}} numer {{number}} na placu {{stock}} od {{rentFrom}} do {{rentUntil}} za {{cost}} zł.`,
+  [TemplateType.RENT_ENDED_MAIL]: `Cześć {{name}}!
+Zakończyłeś wynajem {{boxTypeNoun}} numer {{number}} na placu {{stock}}. Wynajem trwał od {{rentFrom}} do {{rentUntil}}.`,
+  [TemplateType.RENT_ENDED_ADMIN_NOTIFICATION_MAIL]: `Użytkownik {{email}} zakończył wynajem {{boxTypeNoun}} numer {{number}} na placu {{stock}}. Wynajem trwał od {{rentFrom}} do {{rentUntil}}.`,
   [TemplateType.NO_PAYMENT_EMAIL]: `Cześć {{name}}!
 Nie odnotowaliśmy płatności za kontynuację wynajmu mini magazynu w {{company}}. Aby dokonać opłaty lub zakończyć wynajem zaloguj się do aplikacji, kliknij na swój magazyn i dokonaj wybranej czynności.
 Brak płatności może spowodować zablokowanie dostępu do skrytki.`,
@@ -45,7 +49,8 @@ Rozmiar skrytki {{size}}, którym się interesujesz, jest ponownie dostępny.`,
 Wystawiliśmy fakturę na kolejny okres Twojego wynajmu skrytki {{number}}, masz czas na zapłatę do {{paymentUntil}}. Zaloguj się do panelu i opłać dalszy wynajem.`,
   [TemplateType.USER_BLOCKED_SMS]: `Twoje konto użytkownika zostało zablokowane. Prosimy o kontakt z biurem obsługi klienta pod adresem {{email}} lub tel: {{phone}}`,
   [TemplateType.USER_UNBLOCKED_SMS]: `Twoje konto w {{company}} znow jest aktywne.`,
-  [TemplateType.NEW_RENTAL_SMS]: `Czesc {{name}}! Udalo sie! Do dnia {{rentUntil}} wynajales domek dla Twoich rzeczy. Pamietaj o zabraniu ze soba klodki :)`,
+  [TemplateType.NEW_RENTAL_SMS]: `Czesc {{name}}! Udalo sie! Wynajales {{boxTypeAccusative}} nr {{number}} do dnia {{rentUntil}} w {{company}}.`,
+  [TemplateType.RENT_ENDED_SMS]: `Czesc {{name}}! Zakonczyles wynajem {{boxTypeNoun}} nr {{number}} w {{company}}. Wynajem trwal od {{rentFrom}} do {{rentUntil}}.`,
   [TemplateType.RENTAL_EXTENDED_SMS]: `Dziekujemy za dokonanie platnosci. Twoje skarby sa u nas nadal bezpieczne. Cieszymy sie z dalszej, dobrej wspolpracy.`,
   [TemplateType.NO_PAYMENT_SMS]: `Nie odnotowalismy platnosci za kontynuacje wynajmu mini magazynu w {{company}}. Oplac prosze swoja skrytke w ciagu 1 dnia lub zakoncz wynajem.`,
   [TemplateType.NO_PERIOD_PAYMENT_SMS]: `Nie odnotowalismy platnosci za okres wynajmu mini magazynu w {{company}}. Oplac prosze swoja skrytke.`,
@@ -60,4 +65,5 @@ Wystawiliśmy fakturę na kolejny okres Twojego wynajmu skrytki {{number}}, masz
   [TemplateType.BOX_GROUP_FREE_SMS]: `Czesc {{name}}! Rozmiar skrytki {{size}}, ktorym sie interesujesz, jest ponownie dostepny.`,
   [TemplateType.ACCESS_CODE_EMAIL]: `Cześć {{name}}! Oto Twój kod dostępu do skrytki nr {{number}} w {{company}}: {{passcode}}`,
   [TemplateType.ACCESS_CODE_SMS]: `Twój kod dostepu do skrytki {{number}} w {{company}} to {{passcode}}`,
+
 };

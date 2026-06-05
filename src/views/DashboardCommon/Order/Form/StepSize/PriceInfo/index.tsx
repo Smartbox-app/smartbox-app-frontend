@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { BoxGroupUserRes } from 'smartbox-types';
 import styled from 'styled-components';
 import { __ } from '../../../../../../helpers/i18n';
 import { formatPrice } from '../../../../../../utils/format-price';
 import { PricingType } from 'smartbox-types';
 import { getColorForBackground } from 'src/utils/color';
+import { PriceDisplayForClients } from 'src/smartbox-types/stock/price-display-for-clients';
 
 interface Props {
   disabled?: boolean;
@@ -68,19 +69,50 @@ const PriceInfo = ({ box, active, disabled }: Props) => {
 
   if (!firstPricing.price || !firstPricing.quantity) return null;
 
+  const { display, netPrice, grossPrice } = box.pricing[0];
+
+  const priceInfo = useMemo(() => {
+    switch (display) {
+      case PriceDisplayForClients.gross:
+        return (
+          <strong>
+            {__('application.rentFrom')}{' '}
+            {formatPrice(firstPricing.grossPrice || 0)}{' '}
+            {__('application.gross')}
+          </strong>
+        );
+      case PriceDisplayForClients.net:
+        return (
+          <strong>
+            {__('application.rentFrom')}{' '}
+            {formatPrice(firstPricing.netPrice || 0)} {__('application.net')}
+          </strong>
+        );
+      case PriceDisplayForClients.both:
+        return (
+          <>
+            <strong>
+              {__('application.rentFrom')}{' '}
+              {formatPrice(firstPricing.grossPrice || 0)}{' '}
+              {__('application.gross')}
+            </strong>{' '}
+            (
+            <strong>
+              {formatPrice(firstPricing.netPrice || 0)} {__('application.net')}
+            </strong>
+            )
+          </>
+        );
+    }
+  }, [display, netPrice, grossPrice]);
+
   return (
     <StyledPriceInfo active={active} disabled={disabled}>
       {disabled ? (
         <strong>Brak</strong>
       ) : (
         <>
-          <strong>
-            {__('application.rentFrom')} {formatPrice(firstPricing.price || 0)}{' '}
-            {firstPricing.isGross
-              ? __('application.gross')
-              : __('application.net')}
-          </strong>{' '}
-          /{' '}
+          {priceInfo} /{' '}
           <span>
             {firstPricing.quantity}{' '}
             {formatQuantity(firstPricing.type, firstPricing.quantity || 0)}

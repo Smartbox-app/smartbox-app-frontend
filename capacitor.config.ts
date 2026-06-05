@@ -19,7 +19,6 @@ let config: CapacitorConfig = {
   
   plugins: {
     SplashScreen: {
-      launchShowDuration: 5000,
       androidScaleType: 'CENTER_CROP',
       splashFullScreen: true,
       splashImmersive: false,

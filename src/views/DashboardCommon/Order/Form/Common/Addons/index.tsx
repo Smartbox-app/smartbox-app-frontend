@@ -102,6 +102,8 @@ export const Addons = ({ stockId, boxGroupId }: Props) => {
   if (loadingAddons) return <Spinner />;
   if (!addons || addons.length === 0) return null;
 
+  console.log('ACCEPTANCES', sortedAddons);
+
   return (
     <>
       {sortedAddons.map((addon) => (
@@ -134,7 +136,7 @@ export const Addons = ({ stockId, boxGroupId }: Props) => {
                   variant={variant}
                   addon={addon}
                   addonId={addon.id}
-                  isGross={addon.isGross}
+                  display={addon.display}
                 />
               ))}
             </ul>

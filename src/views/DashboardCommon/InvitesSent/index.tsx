@@ -1,17 +1,11 @@
 import React from 'react';
-import { connect, useDispatch } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { invitationList, TableSchema } from 'smartbox-tables';
-import {
-  PageHeader,
-  Section,
-  ButtonsContainer,
-} from '../../../components/Layout';
+import { useDispatch } from 'react-redux';
+import { invitationList } from 'smartbox-tables';
+import { Section, ButtonsContainer } from '../../../components/Layout';
 import { ApiTable, ConfirmModal } from '../../../components/Common';
 import { Button } from '../../../components/Branded';
 import { InteractiveTableSchema } from '../../../utils/table-schema-utils';
 import { __ } from '../../../helpers/i18n';
-import { invitations, modal } from '../../../actions';
 import { HeaderWithActions } from 'src/components/ui';
 import UserService from 'src/services/user-service';
 import { useGetMyDetailsQuery } from 'src/queries';

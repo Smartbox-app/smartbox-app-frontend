@@ -1,60 +1,32 @@
 import React from 'react';
 import { Route, Redirect, Switch } from 'react-router-dom';
 
-import { Main, DashboardContainer, Navigation } from '../../components/Layout';
-import MobileLogoContainer from '../../components/Layout/MobileLogoContainer';
-
-import { MenuItemType } from '../../types/menu-item';
-
+import { Main, DashboardContainer, DashboardSidebar } from '../../components/Layout';
 import Management from './Management';
 import Profile from '../DashboardCommon/Profile';
 import SingleRentDetail from '../DashboardCommon/SingleRentDetail';
 import { StockGroups } from '../DashboardCommon/StockGroups';
-import { HomeWifi, Manage, Settings, Stocks } from '../../icons';
-import { useTenantNaming } from 'src/hooks/useTenantNaming';
 import { TTLockManagement } from './TTLockManagement';
+import { useDashboardSidebarNav } from 'src/hooks/useDashboardSidebarNav';
 
 const DashboardAdmin = () => {
-  const {getText} = useTenantNaming();
-  
-  const menuItems: MenuItemType[] = [
-    {
-      icon: <Manage />,
-      text: 'application.management',
-      to: '/admin/management',
-    },
-    {
-      icon: <Stocks />,
-      text: getText('many'),
-      to: '/admin/locations',
-    },
-    {
-      icon: <HomeWifi />,
-      text: 'application.ttlock',
-      to: '/admin/drivers'
-    },
-    {
-      icon: <Settings />,
-      text: 'application.account',
-      to: '/admin/profile',
-    },
-  ];
+  const sidebarGroups = useDashboardSidebarNav();
 
   return (
-    <DashboardContainer>
-      <MobileLogoContainer />
-      <Navigation menuItems={menuItems} />
+    <DashboardContainer
+      sidebar={<DashboardSidebar groups={sidebarGroups} />}
+    >
       <Main>
         <Switch>
           <Route
             exact
             path="/admin"
-            render={() => <Redirect to="/admin/management" />}
+            render={() => <Redirect to="/admin/management/users" />}
           />
           <Route path="/admin/management/" component={Management} />
           <Route path="/admin/profile" component={Profile} />
           <Route path="/admin/drivers" component={TTLockManagement} />
-          <Route path={`/admin/locations`} component={StockGroups} />
+          <Route path="/admin/locations" component={StockGroups} />
           <Route
             exact
             path="/admin/single-rent/:orderId"

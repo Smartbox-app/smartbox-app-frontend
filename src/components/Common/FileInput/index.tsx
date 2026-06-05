@@ -4,6 +4,7 @@ import ApiService from '../../../services/api-service';
 import { Button } from '../../Branded/Button';
 import './FileInput.scss';
 import { __ } from '../../../helpers/i18n';
+import { StyledFieldContainer } from '../input-styled';
 import { ButtonsContainer } from '../../../components/Layout';
 
 interface Props {
@@ -265,7 +266,7 @@ class FileInput extends React.Component<Props, State> {
       </div>
     );
     return (
-      <div className="input-container">
+      <StyledFieldContainer $noMargin={this.props.nomargin}>
         <label>
           <p className="form-field-title">{__(this.props.label)}</p>
           <div
@@ -297,9 +298,7 @@ class FileInput extends React.Component<Props, State> {
                 disabled={multiple && loadedFiles.length >= 10}
                 // {...(this.props.isNotImage !== true ? { accept: accept || 'image/*' } : { accept: accept || '*' })}
                 accept={accept}
-                className={`input input-file ${this.props.max ? 'input-max' : ''} ${
-                  this.props.nomargin ? 'nomargin' : ''
-                }`}
+                className="input-file"
                 id={this.props.input.name}
                 readOnly={this.props.readonly}
                 placeholder={this.props.placeholder}
@@ -349,7 +348,7 @@ class FileInput extends React.Component<Props, State> {
         {this.props.meta.error && this.props.meta.touched && (
           <small className="text-danger">{this.props.meta.error}</small>
         )}
-      </div>
+      </StyledFieldContainer>
     );
   }
 }

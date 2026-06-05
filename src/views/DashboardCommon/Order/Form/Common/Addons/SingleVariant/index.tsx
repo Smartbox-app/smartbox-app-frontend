@@ -2,7 +2,9 @@ import React, { useMemo } from 'react';
 import {
   AddonRes,
   AddonUserFileRequirementType,
+  PriceDisplayForClients,
   SingleAddonVariant,
+  SingleAddonVariantForUser,
 } from 'smartbox-types';
 import styled from 'styled-components';
 import { PriceInfo } from '../PriceInfo';
@@ -47,11 +49,11 @@ const StyledVariantName = styled('h5')({
 interface Props {
   addon: AddonRes;
   addonId: string;
-  isGross: boolean;
-  variant: SingleAddonVariant;
+  display: PriceDisplayForClients;
+  variant: SingleAddonVariantForUser;
 }
 
-export const SingleVariant = ({ variant, addonId, addon, isGross }: Props) => {
+export const SingleVariant = ({ variant, addonId, addon, display }: Props) => {
   const { orderAddons } = useSelector((state: ApplicationState) => state.order);
   const dispatch = useDispatch();
 
@@ -76,20 +78,24 @@ export const SingleVariant = ({ variant, addonId, addon, isGross }: Props) => {
     );
   };
 
-  const variantWithCorrectedPrice = useMemo(() => {
+  const variantWithCorrectedPrice: SingleAddonVariantForUser = useMemo(() => {
     const parsedTax = parseInt(addon.tax);
 
     if(isNaN(parsedTax)) return variant;
 
-    if(isGross && variant.price) {
+    if(variant.price) {
       return {
         ...variant,
-        price: variant.price * (1 + Number(addon.tax) / 100)
+        price: variant.price * (1 + Number(addon.tax) / 100),
+        netPrice: variant.price,
+        grossPrice: variant.price * (1 + Number(addon.tax) / 100),
       }
     }
 
     return variant
   }, [variant])
+
+  console.log('VARIANT WITH CORRECTED PRICE', variantWithCorrectedPrice, variant, addon);
 
   return (
     <StyledAddonVariant
@@ -101,7 +107,7 @@ export const SingleVariant = ({ variant, addonId, addon, isGross }: Props) => {
         <Indicator selected={isSelected} />
         <StyledVariantName>{variant.name}</StyledVariantName>
       </VariantSelect>
-      <PriceInfo variant={variantWithCorrectedPrice} isGross={isGross} />
+      <PriceInfo variant={variantWithCorrectedPrice} display={display} />
     </StyledAddonVariant>
   );
 };

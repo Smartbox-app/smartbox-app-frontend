@@ -6,6 +6,7 @@ import {
   CalculatedPriceRes,
   IStock,
   PaymentDocument,
+  PriceDisplayForClients,
   RentPaymentType,
   SingleAcceptance,
   StockRes,
@@ -33,7 +34,7 @@ export type OrderAddon = {
   userFileAllowed: boolean;
   noPricing: boolean;
   userFileRequirement: AddonUserFileRequirementType | null;
-  price: { value: number; isGross: boolean }[] | null;
+  price: { value: number; isGross: boolean, netPrice: number, grossPrice: number, display: PriceDisplayForClients }[] | null;
   file: File | null;
   tax: string;
 };
@@ -51,7 +52,7 @@ export type OrderState = {
   maxRentPeriod: number | null;
   startDate: Date;
   endDate: Date | null;
-  calculatedPrice: { value: number; isGross: boolean }[];
+  calculatedPrice: { value: number; isGross: boolean, netPrice: number, grossPrice: number, display: PriceDisplayForClients }[];
   loadingPrice: boolean;
   discountCode: string;
   // for displaying
@@ -288,7 +289,7 @@ const initialState: OrderState = {
   maxRentPeriod: null,
   startDate: new Date(),
   endDate: null,
-  calculatedPrice: [{ value: 0, isGross: false }],
+  calculatedPrice: [{ value: 0, isGross: false, netPrice: 0, grossPrice: 0, display: PriceDisplayForClients.net }],
   calculatedPriceDetails: [],
   loadingPrice: false,
   discountCode: '',

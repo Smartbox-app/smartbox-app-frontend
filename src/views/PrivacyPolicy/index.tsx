@@ -12,6 +12,7 @@ import React from 'react';
 import { Spinner } from 'src/components/Branded';
 import { useTenant } from 'src/hooks/useTenant';
 import { useGetDocumentByTypeQuery } from 'src/queries';
+import ApiService from 'src/services/api-service';
 import { dateOnly } from 'src/utils/format-date';
 import styled from 'styled-components';
 
@@ -94,7 +95,9 @@ export const PrivacyPolicy = () => {
     );
   }
 
-  if (!['aplikacja'].includes(tenant.identifier)) return null;
+  if (!['aplikacja'].includes(tenant.identifier)) {
+    window.location.href = `${ApiService.url}tenant/privacy/${tenant.id}`;
+  }
 
   return (
     <Page>

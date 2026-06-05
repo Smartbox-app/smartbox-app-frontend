@@ -78,7 +78,10 @@ const List = () => {
         {__('mobileConfig.list')}
       </HeaderWithActions>
 
-      <ApiTable scheme={scheme} apiEndpointSubUrl={`mobile-config`} />
+      <ApiTable
+        scheme={scheme}
+        apiEndpointSubUrl="mobile-config"
+      />
     </Section>
   );
 };

@@ -14,10 +14,10 @@ const CustomThemeProvider = ({ children }: Props) => {
     () => ({
       spacing: 4,
       shadows: {
-        primary: '0 16px 32px 0 rgba(178, 178, 178, 0.28)',
+        primary: '0 16px 32px 0 rgba(178, 178, 178, 0.1)',
       },
       radius: {
-        outerSurface: 24,
+        outerSurface: 20,
         innerSurface: 16,
       },
       colors: {

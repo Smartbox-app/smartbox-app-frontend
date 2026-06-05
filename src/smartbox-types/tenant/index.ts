@@ -1,5 +1,8 @@
 import { LocationSelectType } from '../location';
 import { DebtResolveType } from '../debt';
+import { AccountConfirmationMethod } from './account-confirmation-method';
+
+export { AccountConfirmationMethod } from './account-confirmation-method';
 
 export interface TenantEntity {
   id: string;
@@ -53,6 +56,7 @@ export interface TenantEntity {
   smtpSecure: boolean;
   smtpIgnoreTls: boolean;
   smtpFromEmail: string | null;
+  accountConfirmationMethod: AccountConfirmationMethod;
 }
 
 export type UpdateTenantReq = Pick<
@@ -103,6 +107,7 @@ export type UpdateTenantByAdminReq = Pick<
   | 'agreementDisclaimer'
   | 'paymentDisclaimer'
   | 'homeMessage'
+  | 'accountConfirmationMethod'
 >;
 
 export type TenantForUsers = Omit<
@@ -128,6 +133,8 @@ export type TenantForUsers = Omit<
   | 'smtpFromEmail'
 > & {
   smsAvailable: boolean;
+  /** Resolved method used for new registrations (falls back to email when SMS is not configured). */
+  accountConfirmationMethodEffective: AccountConfirmationMethod;
   links: { id: string; name: string; fileName: string }[];
 };
 

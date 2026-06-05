@@ -52,6 +52,7 @@ import { ArrowLeft, ArrowRight } from 'src/icons';
 import { textToSimpleMD } from 'src/utils/text-to-simple-md';
 import { ClientSourceForm } from './ClientSourceForm';
 import { PaymentDocumentType } from '../Common/PaymentDocumentType';
+import { useI18n } from 'src/i18n';
 
 interface Props {
   formData: FormType;
@@ -62,7 +63,7 @@ interface Props {
 
 const StepSummary = ({ formData, updateFormData }: Props) => {
   const { tenant } = useTenant();
-
+  const { t } = useI18n();
   const dispatch = useDispatch();
   const {
     stock,
@@ -95,6 +96,7 @@ const StepSummary = ({ formData, updateFormData }: Props) => {
     mailToSendInvoice: user?.email || '',
     phone: user?.phone || '',
     withBirthDate: !!tenant?.birthDateNecessary,
+    withClientSource: !rentId && !!tenant?.clientSourceField,
     clientSource: '',
     nip: user?.companyData?.nip?.trim() || '',
     companyPostCode: user?.companyData.companyPostCode || '',
@@ -216,7 +218,7 @@ const StepSummary = ({ formData, updateFormData }: Props) => {
   const onSubmit = (data: RentDataDto) => {
     if (!isValid) return;
     if (!user) return;
-    const { withBirthDate, ...rest } = data;
+    const { withBirthDate, withClientSource, ...rest } = data;
     updateFormData({ ...rest, isCompany: invoiceNeeded });
     history.push(
       `/${UserService.getSlugByRole(user.role)}/order/step/agreement/${rentId || ''}`,
@@ -242,7 +244,7 @@ const StepSummary = ({ formData, updateFormData }: Props) => {
               checked={!!discount}
               name="discount"
               handleChange={(checked) => setDiscount(checked)}
-              label="rent.i_have_a_discount"
+              label={t('rent.i_have_a_discount')}
             />
           </>
         )}

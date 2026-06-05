@@ -1,19 +1,15 @@
 import { ItfApiForm } from "itf_formbuilder_react";
 import React from "react";
 import { connect } from "react-redux";
-import ReactCreatableSelect from "react-select/creatable";
 import { bindActionCreators } from "redux";
 import { modal, notifications } from "../../../../../actions";
 import { Button, Spinner } from "../../../../../components/Branded";
-import { ReactSelectOverride } from "../../../../../components/Common/ReactSelectOverride";
-import {
-  ButtonsContainer,
-  FormContainer,
-} from "../../../../../components/Layout";
+import { ReactSelectOverride, ReactCreatableSelectOverride as ReactCreatableSelect } from "../../../../../components/Common/ReactSelectOverride";
+import { ButtonsContainer } from "../../../../../components/Layout";
 import ApiService from "../../../../../services/api-service";
 import { formOnTranslateString } from "../../../../../utils/trans-form";
 import { mapFields } from "../../../../../utils/fields-mapper";
-import { Header } from "src/components/ui";
+import { Modal } from "src/components/ui";
 import { __ } from "src/helpers/i18n";
 
 interface Props {
@@ -34,9 +30,8 @@ const EditAssign = ({ userId, successNotification, hideModal }: Props) => {
 
   return (
     <>
-      <Header variant='h1'>{__("application.workerAssignChange")}</Header>
-
-      <FormContainer>
+      <Modal.Header title={__("application.workerAssignChange")} />
+      <Modal.Content>
         <ItfApiForm
           formId="addOrderForm"
           schemaMayBeDynamic={false}
@@ -54,11 +49,11 @@ const EditAssign = ({ userId, successNotification, hideModal }: Props) => {
           onRenderFullField={mapFields}
           onTranslateString={formOnTranslateString}
           thirdPartyComponents={{
-            ReactSelect: ReactSelectOverride,
-            ReactCreatableSelect,
+            // ReactSelect: ReactSelectOverride,
+            // ReactCreatableSelect,
           }}
         />
-      </FormContainer>
+      </Modal.Content>
     </>
   );
 };

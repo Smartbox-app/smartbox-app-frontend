@@ -58,6 +58,8 @@ export const List = () => {
     );
   };
 
+  if (!lockId) return null;
+
   return (
     <Section>
       <HeaderWithActions

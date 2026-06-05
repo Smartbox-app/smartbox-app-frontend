@@ -48,6 +48,7 @@ const StyledSingleOption = styled('div')({
   flex: 1,
   cursor: 'pointer',
   whiteSpace: 'nowrap',
+  minHeight: 450,
   "input[type='radio']": {
     display: 'none',
   },
@@ -78,7 +79,8 @@ const StyledOptionSize = styled('div')<{
     : `1px solid ${theme.colors.border.primary}`,
   background: active ? theme.colors.primary : theme.colors.background.primary,
   color: getColor(active || false, disabled || false, theme),
-  borderRadius: theme.spacing * 4,
+  borderRadius: theme.spacing * 3,
+  fontSize: 14,
 }));
 
 const SingleOption = ({ singleOptionData, disable }: Props) => {

@@ -1,17 +1,19 @@
 import React from 'react';
 import { ItfApiForm } from 'itf_formbuilder_react';
 import { connect, useDispatch } from 'react-redux';
-import ReactCreatableSelect from 'react-select/creatable';
 import { bindActionCreators } from 'redux';
 import { AddGiftReq } from 'smartbox-types';
 import { modal, notifications } from '../../../../../actions';
-import { FormContainer, ButtonsContainer, FormHeader, FieldsColumn } from '../../../../../components/Layout';
+import { ButtonsContainer, FieldsColumn } from '../../../../../components/Layout';
+import { Modal } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
 import { Button, Spinner } from '../../../../../components/Branded';
 import ApiService from '../../../../../services/api-service';
 import { formOnTranslateString } from '../../../../../utils/trans-form';
-import { ReactSelectOverride } from '../../../../../components/Common/ReactSelectOverride';
+import { ReactSelectOverride, ReactCreatableSelectOverride as ReactCreatableSelect } from '../../../../../components/Common/ReactSelectOverride';
 import { hideModal } from 'src/actions/modal';
 import { successNotification } from 'src/actions/notifications';
+import { mapFields } from 'src/utils/fields-mapper';
 
 
 const UpdatePass = () => {
@@ -35,8 +37,9 @@ const UpdatePass = () => {
     );
 
   return (
-    <FormContainer>
-      <FormHeader title="application.changePasswordToService" />
+    <>
+      <Modal.Header title={__('application.changePasswordToService')} />
+      <Modal.Content>
       <FieldsColumn>
         <ItfApiForm
           formId="changePass"
@@ -46,6 +49,7 @@ const UpdatePass = () => {
           schemaFetcher={() => ApiService.loadForm(fetchUrl)}
           sendFetcher={customSendFetcher}
           submitButton={submitButton}
+          onRenderFullField={mapFields}
           onSavedSuccessfully={() => {
             dispatch(successNotification('notification.passChangedSuccess'));
             dispatch(hideModal());
@@ -54,7 +58,8 @@ const UpdatePass = () => {
           thirdPartyComponents={{ ReactSelect: ReactSelectOverride, ReactCreatableSelect }}
         />
       </FieldsColumn>
-    </FormContainer>
+      </Modal.Content>
+    </>
   );
 };
 

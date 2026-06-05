@@ -1,3 +1,5 @@
+import { PriceDisplayForClients } from '../stock/price-display-for-clients';
+
 export enum PricingType {
   Day = 'day',
   Week = 'week',
@@ -11,9 +13,14 @@ export interface SinglePricing {
   type: PricingType;
   quantity: number | null;
   price: number | null;
-  // only in response to user
-  isGross?: boolean;
 }
+
+export type SinglePricingForUser = SinglePricing & {
+  display: PriceDisplayForClients;
+  netPrice: number;
+  grossPrice: number;
+  isGross: boolean;
+};
 
 export enum PriceResolveType {
   Proportional = 'proportional',
@@ -24,10 +31,4 @@ export enum PriceResolveType {
 export interface PricingReq {
   pricing: SinglePricing[];
   priceResolveType: PriceResolveType;
-}
-
-export interface CalculatedPriceRes {
-  price: { value: number; isGross: boolean }[];
-  details: string[];
-  error?: string;
 }

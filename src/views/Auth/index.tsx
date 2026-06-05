@@ -7,6 +7,7 @@ import EmailSend from "./EmailSend";
 import GoogleAuth from "./GoogleAuth";
 import { TenantActivation } from "./TenantActivation";
 import { ResendActivationLink } from "./ResendActivationLink";
+import { ActivateAccount } from "./ActivateAccount";
 
 export {
   GoogleAuth,
@@ -18,4 +19,5 @@ export {
   EmailSend,
   TenantActivation,
   ResendActivationLink,
+  ActivateAccount,
 };

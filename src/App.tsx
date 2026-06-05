@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 
-import React, { useState, useEffect, Suspense } from 'react';
+import React, { Suspense } from 'react';
 import { applyMiddleware, createStore } from 'redux';
 import { Provider } from 'react-redux';
 import reduxThunk from 'redux-thunk';
@@ -35,11 +35,11 @@ import {
   GoogleAuth,
   TenantActivation,
   ResendActivationLink,
+  ActivateAccount,
 } from './views/Auth';
 import { PaymentResult } from './views/DashboardCommon';
 import { NotificationContainer } from './components/Notifications';
 import AppOffline from './components/AppOffline';
-import { i18n } from './helpers/i18n';
 import { appStatus } from './actions/app-status';
 
 import 'flatpickr/dist/flatpickr.min.css';
@@ -48,15 +48,11 @@ import BannerAndroid from './components/Common/BannerAndroid';
 import BannerIos from './components/Common/BanneriOS';
 import { CustomThemeProvider } from './providers';
 import { AppWrapper } from './components/AppWrapper';
-import { GlobalStyle, GlobalFont } from './globalStyles';
-import { useTenant } from './hooks/useTenant';
-import { PaymentStatus, TenantForUsers } from 'smartbox-types';
+import { PaymentStatus } from 'smartbox-types';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { RouteGuest } from './components/Common/RouteGuest';
-import { MaintenanceScreen } from './components/MaintenanceScreen';
 import { App as CapacitorApp } from '@capacitor/app';
 import { Capacitor } from '@capacitor/core';
-import { getHostName } from './utils/hostname';
 import { AppGlobalStyles } from './AppGlobalStyles';
 
 import countries from 'i18n-iso-countries';
@@ -94,23 +90,6 @@ CapacitorApp.addListener('appUrlOpen', async ({ url }) => {
 });
 
 const App = () => {
-  const [loading, setLoading] = useState(true);
-  const checkI18nLoaded = () => {
-    if (i18n.loaded) {
-      setLoading(false);
-    } else {
-      setTimeout(checkI18nLoaded, 100);
-    }
-  };
-
-  useEffect(() => {
-    const lang = store.getState().lang.current;
-    i18n.load(lang);
-    checkI18nLoaded();
-  }, []);
-
-  if (loading || !i18n.loaded) return null;
-
   return (
     <QueryClientProvider client={queryClient}>
       <Provider store={store}>
@@ -123,7 +102,7 @@ const App = () => {
                 <NotificationContainer />
 
                 <ErrorBoundary>
-                  <Suspense fallback={<Spinner />}>
+                  <Suspense>
                     <Switch>
                       <Route
                         exact
@@ -155,6 +134,10 @@ const App = () => {
                         component={ResendActivationLink}
                       />
                       <RouteGuest
+                        path="/activate-account"
+                        component={ActivateAccount}
+                      />
+                      <RouteGuest
                         path="/user-activation/:invitationId/:updateToken"
                         component={UserActivation}
                       />
@@ -180,21 +163,15 @@ const App = () => {
 
                       <Route
                         path="/payment-success/"
-                        render={() => (
-                          <PaymentResult status={PaymentStatus.accepted} />
-                        )}
+                        render={() => <PaymentResult />}
                       />
                       <Route
                         path="/payment-failed/"
-                        render={() => (
-                          <PaymentResult status={PaymentStatus.failure} />
-                        )}
+                        render={() => <PaymentResult />}
                       />
                       <Route
                         path="/payment-pending/"
-                        render={() => (
-                          <PaymentResult status={PaymentStatus.wait} />
-                        )}
+                        render={() => <PaymentResult />}
                       />
                       <Route
                         path="/payment-error/"

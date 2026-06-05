@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { stockGroupsList } from 'smartbox-tables';
 import { StockGroupData, UserRole } from 'smartbox-types';
 import { showModal } from '../../../../../actions/modal';
@@ -11,11 +11,7 @@ import { InteractiveTableSchema } from '../../../../../utils/table-schema-utils'
 import { refreshApiTableData } from '../../../../../actions/api-table';
 import UserService from '../../../../../services/user-service';
 import { history } from '../../../../../App';
-import {
-  ButtonsContainer,
-  PageHeader,
-  Section,
-} from '../../../../../components/Layout';
+import { ButtonsContainer, Section } from '../../../../../components/Layout';
 import { Button } from '../../../../../components/Branded';
 import { useGetMyDetailsQuery } from 'src/queries';
 import { HeaderWithActions } from 'src/components/ui';
@@ -23,7 +19,7 @@ import { useTenantNaming } from 'src/hooks/useTenantNaming';
 
 const GroupsList = () => {
   const dispatch = useDispatch();
-  const {getText} = useTenantNaming();
+  const { getText } = useTenantNaming();
 
   const scheme = new InteractiveTableSchema(stockGroupsList);
   const { data: user } = useGetMyDetailsQuery();
@@ -90,7 +86,7 @@ const GroupsList = () => {
         {getText('group_list')}
       </HeaderWithActions>
 
-      <ApiTable scheme={scheme} apiEndpointSubUrl={`stock-group/admin-list`} />
+      <ApiTable scheme={scheme} apiEndpointSubUrl="stock-group/admin-list" />
     </Section>
   );
 };

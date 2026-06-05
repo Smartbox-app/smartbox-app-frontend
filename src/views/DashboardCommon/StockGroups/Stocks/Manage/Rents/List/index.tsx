@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import { AdminRentListDetails, UserRole } from 'smartbox-types';
 import { FieldType, rentsList } from 'smartbox-tables';
@@ -21,9 +21,7 @@ const List = () => {
   const { stockId } = useParams<{ stockId: string }>();
   const { data: user } = useGetMyDetailsQuery();
 
-  if (!user) return null;
-
-  const slug = UserService.getSlugByRole(user.role);
+  const slug = user ? UserService.getSlugByRole(user.role) : '';
 
   const openAuthorizationsModal = (rentData: AdminRentListDetails) => {
     dispatch(
@@ -32,7 +30,9 @@ const List = () => {
       ),
     );
   };
-  const scheme = new InteractiveTableSchema(rentsList)
+
+  const scheme = useMemo(() => {
+    const base = new InteractiveTableSchema(rentsList)
     .removeFields('description', 'id', 'userId')
     .addFieldAtTheEnd({
       name: __('application.actions'),
@@ -47,7 +47,8 @@ const List = () => {
             text="application.rentPeriods"
             to={`/${slug}/locations/stocks/${stockId}/rents/${rentData.id}/periods`}
           />
-          {[UserRole.admin, UserRole.client].includes(user.role) ? (
+          {user &&
+          [UserRole.admin, UserRole.client].includes(user.role) ? (
             <UIButton
               variant="secondary"
               type="button"
@@ -77,6 +78,9 @@ const List = () => {
       ),
     });
 
+    return base;
+  }, [user, stockId, slug, dispatch]);
+
   return (
     <Section>
       <Header variant="h2">{__('application.stockRents')}</Header>
@@ -86,7 +90,10 @@ const List = () => {
         przycisku „Pobierz raport” z poziomu listy placów.
       </p>
 
-      <ApiTable scheme={scheme} apiEndpointSubUrl={`rent/list/${stockId}`} />
+      <ApiTable
+        scheme={scheme}
+        apiEndpointSubUrl={`rent/list/${stockId}`}
+      />
     </Section>
   );
 };

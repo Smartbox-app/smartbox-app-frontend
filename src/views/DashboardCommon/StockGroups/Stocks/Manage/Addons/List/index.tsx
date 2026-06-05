@@ -6,7 +6,6 @@ import { Alert, ApiTable } from '../../../../../../../components/Common';
 import { Button } from '../../../../../../../components/Branded';
 import {
   ButtonsContainer,
-  SimpleHeader,
 } from '../../../../../../../components/Layout';
 import { __ } from '../../../../../../../helpers/i18n';
 import { InteractiveTableSchema } from '../../../../../../../utils/table-schema-utils';
@@ -55,7 +54,11 @@ const List = () => {
       customRender: (value, field, addonData) => {
         if (addonData.noPricing === true) {
           return (
-            <Alert compact type="success" text="application.addonWithoutPrice" />
+            <Alert
+              compact
+              type="success"
+              text="application.addonWithoutPrice"
+            />
           );
         }
 
@@ -76,7 +79,6 @@ const List = () => {
           type: 'primary',
           to: (data: AddonListRes) =>
             `/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/addons/${data.id}/pricing`,
-          // click: (data: AddonListRes) => dispatch(showModal(<Edit id={data.id} stockId={data.stockId} />)),
         },
         {
           name: 'application.edit',

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { __ } from '../../../../helpers/i18n';
-import { Typography } from '../../../ui';
+import { Modal, Typography } from '../../../ui';
 import { Logo } from 'src/components/Branded';
 
 const StyledContainer = styled('div')({
@@ -29,18 +29,22 @@ export type AppOutdatedModalProps = {
 
 export const AppOutdatedModal = ({ platform }: AppOutdatedModalProps) => {
   return (
-    <StyledContainer>
-      <Logo />
-      <StyledTitle>{__('mobileConfig.newVersion')}</StyledTitle>
-      {platform === 'android' ? (
-        <StyledDescription>
-          {__('mobileConfig.androidNewVersion')}
-        </StyledDescription>
-      ) : (
-        <StyledDescription>
-          {__('mobileConfig.iosNewVersion')}
-        </StyledDescription>
-      )}
-    </StyledContainer>
+    <Modal closable={false}>
+      <Modal.Content>
+        <StyledContainer>
+          <Logo />
+          <StyledTitle>{__('mobileConfig.newVersion')}</StyledTitle>
+          {platform === 'android' ? (
+            <StyledDescription>
+              {__('mobileConfig.androidNewVersion')}
+            </StyledDescription>
+          ) : (
+            <StyledDescription>
+              {__('mobileConfig.iosNewVersion')}
+            </StyledDescription>
+          )}
+        </StyledContainer>
+      </Modal.Content>
+    </Modal>
   );
 };

@@ -1,15 +1,18 @@
-import { PriceResolveType, SinglePricing } from './pricing';
+import { PriceResolveType, SinglePricing, SinglePricingForUser } from './pricing';
+import { BoxGroupType } from './box-group-type';
 export * from './pricing';
 
 export interface BoxGroupEntity {
   id: string;
   name: string;
+  type: BoxGroupType;
   image: string;
   stockId: string;
   pricing: SinglePricing[];
   priceResolveType: PriceResolveType;
   minRentPeriod: number;
   maxRentPeriod: number;
+  limitToNotify: number | null;
   width?: number;
   height?: number;
   depth?: number;
@@ -21,6 +24,7 @@ export interface BoxGroupEntity {
 export type BoxGroupReq = Pick<
   BoxGroupEntity,
   | 'name'
+  | 'type'
   | 'stockId'
   | 'width'
   | 'height'
@@ -29,6 +33,7 @@ export type BoxGroupReq = Pick<
   | 'volume'
   | 'minRentPeriod'
   | 'maxRentPeriod'
+  | 'limitToNotify'
   | 'order'
 >;
 export type BoxGroupListRes = Pick<
@@ -53,16 +58,19 @@ export type BoxGroupUserRes = Pick<
   | 'depth'
   | 'area'
   | 'volume'
-  | 'pricing'
   | 'minRentPeriod'
   | 'maxRentPeriod'
   | 'order'
-> & { available: boolean; left: number | null };
-
+> & {
+  available: boolean;
+  left: number | null;
+  pricing: SinglePricingForUser[];
+};
 export type BoxGroupAdminClientRes = Pick<
   BoxGroupEntity,
   | 'id'
   | 'name'
+  | 'type'
   | 'stockId'
   | 'image'
   | 'width'

@@ -1,29 +1,17 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import styled from 'styled-components';
-import { lighten } from 'polished';
 import { modal } from '../../../actions';
 import { Modal } from '../../../types/modal';
 import { ApplicationState } from '../../../reducers';
 
 import './Modal.scss';
-import ModalContent from './ModalContent';
-import { colorOrDark } from '../../../utils/color';
-
+import { Modal as UiModal } from 'src/components/ui';
 
 interface Props {
   modal: Modal;
   hideModal: () => void;
 }
-
-const StyledModalExit = styled.span`
-    color: ${props => colorOrDark(props.theme.colors.primary)};
-
-    &:hover {
-        color: ${props => lighten(0.2, colorOrDark(props.theme.colors.primary))};
-      }
-`
 
 class ModalWrapper extends React.Component<Props> {
   private handleClickOutside = (e: any) => {
@@ -36,6 +24,7 @@ class ModalWrapper extends React.Component<Props> {
     if (!modal.isVisible && !modal.isPrepared) {
       return null;
     }
+
     return (
       <>
         <div
@@ -44,14 +33,12 @@ class ModalWrapper extends React.Component<Props> {
           onMouseDown={this.handleClickOutside}
         >
           <div className="modal-body">
-            <ModalContent>
+            <UiModal
+              onClose={modal.isClosable ? hideModal : undefined}
+              closable={modal.isClosable}
+            >
               {modal.content}
-              {modal.isClosable && (
-                <StyledModalExit className="modal-exit" role="button" tabIndex={0} onClick={() => hideModal()}>
-                  &times;
-                </StyledModalExit>
-              )}
-            </ModalContent>
+            </UiModal>
           </div>
         </div>
       </>

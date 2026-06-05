@@ -2,11 +2,7 @@ import ApiService from '../services/api-service';
 import { DEFAULT_API_TABLE_INSTANCE_ID } from '../constants/api-table-instances';
 
 export const fetchApiTableData =
-  (
-    url: string,
-    method = 'GET',
-    instanceId = DEFAULT_API_TABLE_INSTANCE_ID,
-  ) =>
+  (url: string, method = 'GET', instanceId = DEFAULT_API_TABLE_INSTANCE_ID) =>
   async (dispatch: any) => {
     dispatch({ type: 'LOADING', payload: true });
     try {
@@ -25,7 +21,10 @@ export const fetchApiTableData =
         });
       }
     } finally {
-      setTimeout(() => dispatch({ type: 'LOADING', payload: false }), 200);
+      dispatch({
+        type: 'LOADING_API_TABLE',
+        payload: { isLoading: false, instanceId },
+      });
     }
   };
 
@@ -33,6 +32,13 @@ export const clearApiTableData = (
   instanceId = DEFAULT_API_TABLE_INSTANCE_ID,
 ) => ({
   type: 'CLEAR_API_TABLE',
+  payload: { instanceId },
+});
+
+export const loadingApiTableData = (
+  instanceId = DEFAULT_API_TABLE_INSTANCE_ID,
+) => ({
+  type: 'LOADING_API_TABLE',
   payload: { instanceId },
 });
 

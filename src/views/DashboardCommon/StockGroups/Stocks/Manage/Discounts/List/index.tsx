@@ -1,5 +1,5 @@
 import React from 'react';
-import { FieldType, discounTable, giftsListTable } from 'smartbox-tables';
+import { FieldType, giftsListTable } from 'smartbox-tables';
 import { useDispatch } from 'react-redux';
 import {
   Section,
@@ -111,6 +111,8 @@ const List = () => {
         },
       ],
     });
+
+  if (!stockId) return null;
 
   return (
     <>

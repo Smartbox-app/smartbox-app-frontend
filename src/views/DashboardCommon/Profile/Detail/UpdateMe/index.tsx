@@ -1,18 +1,13 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { ItfApiForm } from 'itf_formbuilder_react';
-import ReactCreatableSelect from 'react-select/creatable';
 import { AddGiftReq } from 'smartbox-types';
-import {
-  FormContainer,
-  ButtonsContainer,
-  FieldsColumn,
-} from '../../../../../components/Layout';
+import { ButtonsContainer, FieldsColumn } from '../../../../../components/Layout';
 import { Button, Spinner } from '../../../../../components/Branded';
 import ApiService from '../../../../../services/api-service';
 import { formOnTranslateString } from '../../../../../utils/trans-form';
 import { modal } from '../../../../../actions';
-import { ReactSelectOverride } from '../../../../../components/Common/ReactSelectOverride';
+import { ReactSelectOverride, ReactCreatableSelectOverride as ReactCreatableSelect } from '../../../../../components/Common/ReactSelectOverride';
 import { mapFields } from '../../../../../utils/fields-mapper';
 import { useQueryClient } from '@tanstack/react-query';
 import { successNotification } from 'src/actions/notifications';
@@ -48,9 +43,8 @@ export const UpdateMe = () => {
     );
 
   return (
-    <FormContainer>
-      <FieldsColumn>
-        <ItfApiForm
+    <FieldsColumn>
+      <ItfApiForm
           formId="EditUserProfileData"
           schemaMayBeDynamic={false}
           schemaCacheEnabled={false}
@@ -70,7 +64,6 @@ export const UpdateMe = () => {
             ReactCreatableSelect,
           }}
         />
-      </FieldsColumn>
-    </FormContainer>
+    </FieldsColumn>
   );
 };

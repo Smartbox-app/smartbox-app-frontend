@@ -1,16 +1,22 @@
 import React from 'react';
 import { __ } from '../../../helpers/i18n';
-import './InputHelp.scss';
+import { InputSizeProps, resolveInputSize } from '../input-sizes';
+import { StyledInputHelp } from '../input-styled';
 
-interface Props {
-    text: string;
-    big?: boolean;
+interface Props extends InputSizeProps {
+  text: string;
 }
 
-const InputHelp = ({ text, big }: Props) => {
-    if (!text) return null;
+const InputHelp = ({ text, size, big, compact }: Props) => {
+  if (!text) return null;
 
-    return <p className={`${big ? 'big' : ''} input-help`}><span className='fa fa-info-circle' /> {__(text)} </p>;
-}
+  const resolvedSize = resolveInputSize({ size, big, compact });
 
-export { InputHelp }
+  return (
+    <StyledInputHelp $size={resolvedSize}>
+      <span className="fa fa-info-circle" /> {__(text)}
+    </StyledInputHelp>
+  );
+};
+
+export { InputHelp };

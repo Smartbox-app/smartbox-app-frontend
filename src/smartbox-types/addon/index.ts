@@ -1,3 +1,5 @@
+import { PriceDisplayForClients } from '../stock';
+
 export enum AddonVariantPriceType {
   Dynamic = 'dynamic',
   Fixed = 'fixed',
@@ -12,14 +14,28 @@ export enum AddonDynamicPricingType {
   Year = 'year',
 }
 
+export type SingleAddonPricingForUser = SingleAddonPricing & {
+  display: PriceDisplayForClients;
+  netPrice: number;
+  grossPrice: number;
+  isGross: boolean;
+};
+
 export interface SingleAddonVariant {
   id: string;
   name: string;
   default: boolean;
   pricing: SingleAddonPricing[];
   priceType: AddonVariantPriceType;
+  // legacy
   price: number | null;
 }
+
+export type SingleAddonVariantForUser = Omit<SingleAddonVariant, 'pricing'> & {
+  pricing: SingleAddonPricingForUser[];
+  netPrice: number | null;
+  grossPrice: number | null;
+};
 
 export interface SingleAddonPricing {
   id: string;
@@ -164,7 +180,6 @@ export type AddonRes = Pick<
   | 'name'
   | 'slug'
   | 'stockId'
-  | 'pricing'
   | 'userFileAllowed'
   | 'userFileText'
   | 'noPricing'
@@ -174,6 +189,9 @@ export type AddonRes = Pick<
   | 'active'
   | 'newRentOnly'
 > & {
+  display: PriceDisplayForClients;
+  pricing: SingleAddonVariantForUser[];
+  // legacy
   isGross: boolean;
 };
 export type AddonClientAdminRes = Omit<AddonRes, 'isGross'> & {

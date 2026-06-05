@@ -2,7 +2,6 @@ import React, { useMemo } from 'react';
 import { withRouter, RouteComponentProps, useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { RentStatus } from 'smartbox-types';
-import { Spinner } from '../../../components/Branded';
 import { UserStockMap } from '../../../components/Common/UserStockMap';
 
 import { ApplicationState } from '../../../reducers';
@@ -15,13 +14,14 @@ import { OpenBox } from './OpenBox';
 import styled from 'styled-components';
 import { Description } from './RentDescription';
 import { isAfter } from 'date-fns';
-import { Header, PageHeader, Section } from 'src/components/ui';
+import { Header, PageHeader, Section, Skeleton } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
 import { PeriodUnpaidAlert } from './PeriodUnpaidAlert';
 import { useTenantNaming } from 'src/hooks/useTenantNaming';
 import { PendingPaymentAlert } from './PendingPaymentAlert';
 import { RentAuthorizations } from './RentAuthorizations';
 import { useMyRentDetailsQuery } from 'src/queries';
+import { RentNote } from './RentNote';
 
 interface RouteProps {
   orderId: string;
@@ -68,7 +68,14 @@ const SingleRentDetail = ({ showUserStockMap, match }: Props) => {
     return true;
   }, [singleRent]);
 
-  if (loading) return <Spinner />;
+  if (loading)
+    return (
+      <>
+        <Skeleton radius={16} height={73} />
+        <Skeleton radius={16} height={454} />
+        <Skeleton radius={16} height={300} />
+      </>
+    );
   if (isError || !singleRent) return null;
 
   const isAuthorizedViewer = singleRent.isAuthorized === true;
@@ -88,6 +95,7 @@ const SingleRentDetail = ({ showUserStockMap, match }: Props) => {
       ) : null}
       <Section>
         <Action rent={singleRent} isAuthorizedViewer={isAuthorizedViewer} />
+
         {!showUserStockMap ? (
           <>
             <Details singleRent={singleRent} />
@@ -101,7 +109,10 @@ const SingleRentDetail = ({ showUserStockMap, match }: Props) => {
           />
         )}
       </Section>
-
+      <Section>
+        <Header variant="h2">{__('application.note')}</Header>
+        <RentNote rentId={orderId} canEdit={!isAuthorizedViewer} />
+      </Section>
       {displayAccess ? (
         <Section>
           <Header variant="h2">{__('application.access')}</Header>

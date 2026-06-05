@@ -4,7 +4,7 @@ import { useParams } from 'react-router';
 import { FieldType, rentAuthorizationsList } from 'smartbox-tables';
 import { RentAuthorizationListItem } from 'smartbox-types';
 import { ApiTable, ConfirmModal } from 'src/components/Common';
-import { Button, Spinner } from 'src/components/Branded';
+import { Button } from 'src/components/Branded';
 import { __ } from 'src/helpers/i18n';
 import { InteractiveTableSchema } from 'src/utils/table-schema-utils';
 import { showModal } from 'src/actions/modal';
@@ -63,12 +63,9 @@ export const RentAuthorizationsList = () => {
       ),
     });
 
-  if (!user || !stockId) return null;
-
   return (
     <Section>
       <Header variant="h2">{__('application.rentAuthManagementTitle')}</Header>
-      {isPending ? <Spinner overlay halfTransparent /> : null}
       <ApiTable
         scheme={scheme}
         apiEndpointSubUrl={`rent/authorizations/${stockId}`}

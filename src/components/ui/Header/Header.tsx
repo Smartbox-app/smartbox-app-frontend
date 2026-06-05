@@ -30,7 +30,7 @@ const StyledH2 = styled('h2')(({ theme }) => ({
 const StyledH3 = styled('h3')(({ theme }) => ({
   fontSize: '1rem',
   lineHeight: '1.375rem',
-  fontWeight: 700,
+  fontWeight: 400,
   color: theme.colors.text.secondary,
 }));
 

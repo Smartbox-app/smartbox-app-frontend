@@ -1,65 +1,55 @@
-import { useFormContext } from 'react-hook-form';
-
-import { Header, Input, Section, Select } from 'src/components/ui';
-import { __ } from 'src/helpers/i18n';
+import { Controller, useFormContext } from 'react-hook-form';
+import { InputSelect } from 'src/components/Common';
+import { Section } from 'src/components/ui';
 import { useTenantNaming } from 'src/hooks/useTenantNaming';
 import { RentDataDto } from '../TenantDetailsForm/dto/RentDataDto';
-import { InputSelect } from 'src/components/Common';
+
+const clientSourceOptions = [
+  {
+    label: 'Zobaczyłem Was przejeżdżając obok',
+    value: 'Zobaczyłem Was przejeżdżając obok',
+  },
+  { label: 'Ulotka', value: 'Ulotka' },
+  { label: 'Baner zewnętrzny', value: 'Baner zewnętrzny' },
+  {
+    label: 'Media społecznościowe (Facebook, Instagram, Tiktok, inne)',
+    value: 'Media społecznościowe (Facebook, Instagram, Tiktok, inne)',
+  },
+  {
+    label: 'Google (inna wyszukiwarka)',
+    value: 'Google (inna wyszukiwarka)',
+  },
+  {
+    label: 'Ogłoszenie internetowe (OLX, inne)',
+    value: 'Ogłoszenie internetowe (OLX, inne)',
+  },
+  { label: 'Polecenie od znajomego', value: 'Polecenie od znajomego' },
+  { label: 'Radio', value: 'Radio' },
+  { label: 'Inne', value: 'Inne' },
+];
 
 export const ClientSourceForm = () => {
   const { getText } = useTenantNaming();
-
-  const {
-    register,
-    formState: { errors },
-  } = useFormContext<RentDataDto>();
+  const { control } = useFormContext<RentDataDto>();
 
   return (
     <Section>
-      <Select
-        label={getText('client_source')}
-        placeholder={getText('client_source_placeholder')}
-        {...register('clientSource')}
-        options={[
-          {
-            label: 'Zobaczyłem Was przejeżdżając obok',
-            value: 'Zobaczyłem Was przejeżdżając obok',
-          },
-          {
-            label: 'Ulotka',
-            value: 'Ulotka',
-          },
-          {
-            label: 'Baner zewnętrzny',
-            value: 'Baner zewnętrzny',
-          },
-          {
-            label: 'Media społecznościowe (Facebook, Instagram, Tiktok, inne)',
-            value: 'Media społecznościowe (Facebook, Instagram, Tiktok, inne)',
-          },
-          {
-            label: 'Google (inna wyszukiwarka)',
-            value: 'Google (inna wyszukiwarka)',
-          },
-          {
-            label: 'Ogłoszenie internetowe (OLX, inne)',
-            value: 'Ogłoszenie internetowe (OLX, inne)',
-          },
-          {
-            label: 'Polecenie od znajomego',
-            value: 'Polecenie od znajomego',
-          },
-          {
-            label: 'Radio',
-            value: 'Radio',
-          },
-          {
-            label: 'Inne',
-            value: 'Inne',
-          },
-        ]}
-        required={true}
-        error={errors.clientSource?.message}
+      <Controller
+        name="clientSource"
+        control={control}
+        render={({ field, fieldState }) => (
+          <InputSelect
+            name="clientSource"
+            label={getText('client_source')}
+            placeholder={getText('client_source_placeholder')}
+            options={clientSourceOptions}
+            value={field.value}
+            onChange={field.onChange}
+            onBlur={field.onBlur}
+            required
+            error={fieldState.error?.message}
+          />
+        )}
       />
     </Section>
   );

@@ -5,21 +5,20 @@ import {
   BoxMapRes,
   RentDetailsRes,
   RentStatus,
-  UserRes,
+  StockRes,
 } from 'smartbox-types';
 import { connect, useDispatch } from 'react-redux';
 import { boxes } from '../../../actions';
-import { PageHeader } from '../../../components/Layout';
+import { Row } from '../../../components/Common';
 import { ApplicationState } from '../../../reducers';
 import { dateOnly } from '../../../utils/format-date';
 import { __ } from '../../../helpers/i18n';
 
-import DescriptionRow from './DescriptionRow';
 import { Edit } from './Edit';
 
 import './BoxDetail.scss';
 import { useGetMyDetailsQuery } from '../../../queries';
-import { Header, Link } from 'src/components/ui';
+import { Link, Modal } from 'src/components/ui';
 
 interface Props {
   singleBoxDetail: RentDetailsRes;
@@ -50,75 +49,82 @@ const BoxDetail = ({
   if (!user) return null;
 
   const isThisBoxFree = (data: string): boolean => data === '';
+  const displayStatus = singleBoxDetail.status ?? status;
+
 
   return (
-    <div className="detail-wrapper">
-      <Header variant="h2">{__('application.singleStoreDetail')}</Header>
+    <>
+      <Modal.Header title={__('application.singleStoreDetail')} />
+      <Modal.Content>
+        <div className="detail-wrapper">
+          <Row label="application.storeNumber" content={identifier} />
+          <Row label="application.storeSize" content={`${area}m²`} />
 
-      <DescriptionRow icon="fa-lock" text="application.storeNumber">
-        {identifier}
-      </DescriptionRow>
-      <DescriptionRow icon="fa-arrows-alt" text="application.storeSize">
-        {area}m²
-      </DescriptionRow>
+          {rentId && status !== RentStatus.free && (
+            <>
+              <Row
+                label="application.rentedBy"
+                content={
+                  singleBoxDetail.owner
+                    ? `${singleBoxDetail.owner.firstName} ${singleBoxDetail.owner.lastName}`
+                    : '---'
+                }
+              />
+              <Row
+                label="application.startDate"
+                content={dateOnly(singleBoxDetail.startAt)}
+              />
+              <Row
+                label="application.endDate"
+                content={dateOnly(singleBoxDetail.finishAt)}
+              />
+              <Row
+                label="application.phone"
+                content={
+                  singleBoxDetail?.owner?.phone ? (
+                    <Link href={`tel:${singleBoxDetail.owner.phone}`}>
+                      {singleBoxDetail.owner.phone}
+                    </Link>
+                  ) : (
+                    '---'
+                  )
+                }
+              />
+              <Row
+                label="application.mail"
+                content={
+                  isThisBoxFree(rentId) ? (
+                    '---'
+                  ) : (
+                    <Link
+                      href={`mailto:${singleBoxDetail.owner?.email ?? ''}`}
+                    >
+                      {singleBoxDetail.owner
+                        ? singleBoxDetail.owner.email
+                        : __('application.lack')}
+                    </Link>
+                  )
+                }
+              />
+            </>
+          )}
 
-      {rentId && status !== RentStatus.free && (
-        <>
-          <DescriptionRow icon="fa-user" text="application.rentedBy">
-            {singleBoxDetail.owner
-              ? `${singleBoxDetail.owner.firstName} ${singleBoxDetail.owner.lastName}`
-              : '---'}
-          </DescriptionRow>
+          <Row
+            label="application.storeState"
+            content={displayStatus}
+          />
 
-          <DescriptionRow icon="fa-calendar" text="application.startDate">
-            {dateOnly(singleBoxDetail.startAt)}
-          </DescriptionRow>
-
-          <DescriptionRow icon="fa-calendar" text="application.endDate">
-            {dateOnly(singleBoxDetail.finishAt)}
-          </DescriptionRow>
-
-          <DescriptionRow icon="fa-mobile" text="application.phone">
-            {singleBoxDetail?.owner?.phone ? (
-              <Link href={`tel:${singleBoxDetail.owner.phone}`}>
-                {singleBoxDetail.owner.phone}
-              </Link>
-            ) : (
-              '---'
-            )}
-          </DescriptionRow>
-
-          <DescriptionRow icon="fa-envelope" text="application.mail">
-            {isThisBoxFree(rentId) ? (
-              '---'
-            ) : (
-              <a
-                href={`mailto:${singleBoxDetail.owner?.email ? singleBoxDetail.owner?.email : 'error'}`}
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                {singleBoxDetail.owner
-                  ? singleBoxDetail.owner.email
-                  : __('application.lack')}
-              </a>
-            )}
-          </DescriptionRow>
-        </>
-      )}
-
-      <DescriptionRow icon="fa-arrow-right" text="application.storeState">
-        {`${singleBoxDetail.status}`}
-      </DescriptionRow>
-
-      <Edit
-        display
-        callback={callback}
-        selectedBoxId={id}
-        rentId={rentId}
-        singleBoxDetailStatus={singleBoxDetail.status}
-        stockId={stockId}
-      />
-    </div>
+          <Edit
+            display
+            callback={callback}
+            selectedBoxId={id}
+            rentId={rentId}
+            singleBoxDetailStatus={singleBoxDetail.status}
+            stockId={stockId}
+          />
+        </div>
+      </Modal.Content>
+    </>
   );
 };
 

@@ -1,5 +1,4 @@
 import { useForm } from 'react-hook-form';
-import { useLoginMutation } from '../../../mutations/useLoginMutation';
 import { LoginDto } from '../../../dto/LoginDto';
 import { ClassValidatorResolver } from '../../../resolvers/ClassValidatorResolver';
 import { Input } from '../../../components/ui/Input';
@@ -15,14 +14,28 @@ import { Logo, PageContent } from '../../../components/Branded';
 import { Stack } from '../../../components/ui/Stack';
 import { __ } from '../../../helpers/i18n';
 import { useTenant } from '../../../hooks/useTenant';
+import { isSmsAccountConfirmation } from 'src/utils/account-confirmation';
+import { buildActivateAccountPath } from 'src/utils/activate-account-url';
 import { FbButton } from './components/FbButton';
 import { AppVersion } from '../../../components/AppVersion';
 import { GoogleButton } from './components/GoogleButton';
 import { Capacitor } from '@capacitor/core';
 import { Device } from '@capacitor/device';
 import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import {
+  AccountActivationTokenPayload,
+  ApiErrorCode,
+} from 'smartbox-types';
+import { history } from 'src/App';
+import { notifications } from 'src/actions';
+import {
+  LoginMutationError,
+  useLoginMutation,
+} from '../../../mutations/useLoginMutation';
 
 export const Login = () => {
+  const dispatch = useDispatch();
   const { tenant } = useTenant();
   const [buttonsAvailable, setButtonsAvailable] = useState(false);
 
@@ -60,14 +73,39 @@ export const Login = () => {
   });
 
   const onSubmit = (data: LoginDto) => {
-    if (!isValid) return;
-    login({
-      ...data,
-      email: data.email.trim(),
-    });
+    if (!isValid || !tenant) return;
+    const email = data.email.trim();
+    const smsActivation = isSmsAccountConfirmation(tenant);
+
+    login(
+      { ...data, email },
+      {
+        onError: (error) => {
+          if (
+            error instanceof LoginMutationError &&
+            error.errorCode === ApiErrorCode.FirstActiveUser &&
+            smsActivation
+          ) {
+            const payload = error.payload as
+              | AccountActivationTokenPayload
+              | undefined;
+            if (payload?.activationToken) {
+              history.push(buildActivateAccountPath(payload.activationToken));
+            }
+            return;
+          }
+
+          if (error instanceof LoginMutationError) {
+            dispatch(notifications.errorNotification(error.errorCode));
+          }
+        },
+      },
+    );
   };
 
   if (!tenant) return null;
+
+  const smsActivation = isSmsAccountConfirmation(tenant);
 
   return (
     <PageContent bg>
@@ -121,11 +159,13 @@ export const Login = () => {
               <Link to="/restore-pass">{__('application.clickHere')}</Link>
             </Typography>
 
-            <Typography>
-              <Link to="/resend-activation-link">
-                {__('application.noActivationEmail')}
-              </Link>
-            </Typography>
+            {!smsActivation ? (
+              <Typography>
+                <Link to="/resend-activation-link">
+                  {__('application.noActivationEmail')}
+                </Link>
+              </Typography>
+            ) : null}
             <AppVersion variant="secondary" />
           </Section>
         </Stack>

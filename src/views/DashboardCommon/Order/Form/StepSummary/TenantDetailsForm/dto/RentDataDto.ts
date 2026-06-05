@@ -1,13 +1,11 @@
 import {
   IsEmail,
   IsNotEmpty,
-  IsOptional,
   IsPhoneNumber,
   IsPostalCode,
   MinLength,
   ValidateIf,
 } from 'class-validator';
-import { __ } from 'src/helpers/i18n';
 import { errors } from 'src/validation/errors';
 import { ValidCharacters } from 'src/validators/areValidCharacters';
 import { IsCountry } from 'src/validators/isCorrectCountry';
@@ -15,6 +13,7 @@ import { IsNip } from 'src/validators/IsCorrectNip';
 
 export class RentDataDto {
   withBirthDate: boolean;
+  withClientSource: boolean;
 
   @ValidCharacters({
     message: errors.incorrect_characters,
@@ -138,6 +137,9 @@ export class RentDataDto {
   })
   nip: string;
 
-  @IsOptional()
+  @ValidateIf((d) => !!d.withClientSource)
+  @IsNotEmpty({
+    message: errors.field_required,
+  })
   clientSource: string;
 }

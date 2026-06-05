@@ -4,6 +4,7 @@ import { DEFAULT_API_TABLE_INSTANCE_ID } from '../constants/api-table-instances'
 
 interface ApiTable {
   uuid: string;
+  loading: boolean;
 }
 
 export type ApiTableState = TableResponse<any> & ApiTable;
@@ -16,6 +17,7 @@ const createEmptyTableState = (): ApiTableState => ({
   countTotal: 0,
   items: [],
   uuid: v4(),
+  loading: false,
 });
 
 const initialState: ApiTableRootState = {
@@ -38,19 +40,27 @@ interface RefreshApiTable {
   payload?: { instanceId?: string };
 }
 
+interface LoadingApiTable {
+  type: 'LOADING_API_TABLE';
+  payload?: { instanceId?: string; isLoading?: boolean };
+}
+
 interface ClearApiTable {
   type: 'CLEAR_API_TABLE';
   payload?: { instanceId?: string };
 }
 
-type Action = FetchApiTableDataSuccess | RefreshApiTable | ClearApiTable;
+type Action =
+  | FetchApiTableDataSuccess
+  | RefreshApiTable
+  | ClearApiTable
+  | LoadingApiTable;
 
 export default (state: ApiTableRootState = initialState, action: Action) => {
   switch (action.type) {
     case 'FETCH_API_TABLE_DATA_SUCCESS': {
       const { instanceId, ...data } = action.payload;
-      const normalizedInstance =
-      instanceId ?? DEFAULT_API_TABLE_INSTANCE_ID;
+      const normalizedInstance = instanceId ?? DEFAULT_API_TABLE_INSTANCE_ID;
 
       const prev =
         state.instances[normalizedInstance] ?? createEmptyTableState();
@@ -88,6 +98,18 @@ export default (state: ApiTableRootState = initialState, action: Action) => {
             ...current,
             uuid: v4(),
           },
+        },
+      };
+    }
+    case 'LOADING_API_TABLE': {
+      const instanceId =
+        action.payload?.instanceId ?? DEFAULT_API_TABLE_INSTANCE_ID;
+      const isLoading = action.payload?.isLoading ?? true;
+      return {
+        ...state,
+        instances: {
+          ...state.instances,
+          [instanceId]: { ...state.instances[instanceId], loading: isLoading },
         },
       };
     }

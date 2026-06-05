@@ -1,5 +1,6 @@
 import React, { StrictMode } from 'react';
 import ReactDOM from 'react-dom/client';
+import './i18n/i18n';
 import './index.scss';
 import 'font-awesome/css/font-awesome.min.css';
 import App from './App';

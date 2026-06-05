@@ -1,41 +1,14 @@
 import { PaymentDetails, PaymentStatus } from 'smartbox-types';
 
 import { __ } from '../../../helpers/i18n';
-import { useDispatch } from 'react-redux';
 import React, { useEffect, useRef, useState } from 'react';
-import { Button, Header, Typography } from 'src/components/ui';
+import { Button, Header, InfoContent, Typography } from 'src/components/ui';
 import { SuccessCheck } from 'src/icons';
 import { useParams } from 'react-router';
 import ApiService from 'src/services/api-service';
-import styled from 'styled-components';
 import { Logo, Spinner } from 'src/components/Branded';
 import TagManager from 'react-gtm-module';
 import { history } from 'src/App';
-
-interface Props {
-  status?: PaymentStatus;
-}
-
-const Content = styled('div')(({ theme }) => ({
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'center',
-  alignItems: 'center',
-  textAlign: 'center',
-  minHeight: '100vh',
-}));
-
-const Wrapper = styled('div')(({ theme }) => ({
-  display: 'flex',
-  background: '#fff',
-  flexDirection: 'column',
-  justifyContent: 'center',
-  alignItems: 'center',
-  textAlign: 'center',
-  gap: theme.spacing * 4,
-  borderRadius: theme.spacing * 4,
-  padding: theme.spacing * 10,
-}));
 
 export const PaymentResult = () => {
   const { id } = useParams<{ id: string }>();
@@ -203,29 +176,27 @@ export const PaymentResult = () => {
 
   if (paymentStatus === null && !paymentStatusError)
     return (
-      <Content>
+      <InfoContent>
         <Spinner transparent />
-      </Content>
+      </InfoContent>
     );
 
   return (
-    <Content>
-      <Wrapper>
-        <Logo />
-        {paymentStatus === PaymentStatus.accepted ? <SuccessCheck /> : null}
-        <Header variant="h2">{getHeader()}</Header>
-        {paymentStatus === PaymentStatus.accepted ? (
-          <>
-            <Typography>{__('application.thanks')}</Typography>
-            <Typography>{__('application.invoiceWasSent')}</Typography>
-          </>
-        ) : null}
-        <Button
-          size="large"
-          text="application.backToApp"
-          onClick={() => history.push('/')}
-        />
-      </Wrapper>
-    </Content>
+    <InfoContent>
+      <Logo />
+      {paymentStatus === PaymentStatus.accepted ? <SuccessCheck /> : null}
+      <Header variant="h2">{getHeader()}</Header>
+      {paymentStatus === PaymentStatus.accepted ? (
+        <>
+          <Typography>{__('application.thanks')}</Typography>
+          <Typography>{__('application.invoiceWasSent')}</Typography>
+        </>
+      ) : null}
+      <Button
+        size="large"
+        text="application.backToApp"
+        onClick={() => history.push('/')}
+      />
+    </InfoContent>
   );
 };

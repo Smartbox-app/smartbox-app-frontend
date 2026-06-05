@@ -40,7 +40,8 @@ const List = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { stockId } = useParams<{ stockId: string }>();
 
-  const hasFullAccess = [UserRole.admin, UserRole.client].includes(user!.role);
+  const hasFullAccess =
+    !!user && [UserRole.admin, UserRole.client].includes(user.role);
 
   const getStock = async () => {
     await ApiService.callFetch('GET', `stock/${stockId}`, (res: StockRes) => {
@@ -189,12 +190,12 @@ const List = () => {
               <Button
                 text="application.addBox"
                 primary
-                to={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/boxes/add`}
+                to={`/${UserService.getSlugByRole(user.role)}/locations/stocks/${stockId}/boxes/add`}
               />
               <Button
                 text="application.addBoxes"
                 secondary
-                to={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/boxes/add-multiple`}
+                to={`/${UserService.getSlugByRole(user.role)}/locations/stocks/${stockId}/boxes/add-multiple`}
               />
             </ButtonsContainer>
           )
@@ -203,7 +204,10 @@ const List = () => {
         {__('application.boxesList')}
       </HeaderWithActions>
 
-      <ApiTable scheme={scheme} apiEndpointSubUrl={`box/list/${stockId}`} />
+      <ApiTable
+        scheme={scheme}
+        apiEndpointSubUrl={`box/list/${stockId}`}
+      />
     </Section>
   );
 };

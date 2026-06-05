@@ -7,6 +7,7 @@ import { ChangeEvent } from "react";
 import CheckBox from "../CheckBox";
 import styled from "styled-components";
 import { v4 } from "uuid";
+import { useI18n } from "src/i18n";
 
 interface Props {
     value: SingleAcceptance[];
@@ -28,6 +29,7 @@ const StyledSingleAcceptance = styled('div')(({ theme }) => ({
 }))
 
 export const AcceptancesField = ({ value, onChange }: Props) => {
+    const { t } = useI18n();
     const acceptances = value || [];
 
     const addAcceptance = () => {
@@ -82,7 +84,7 @@ export const AcceptancesField = ({ value, onChange }: Props) => {
                     value: acceptance.text,
                     onChange: (value: ChangeEvent<HTMLInputElement>) => updateAcceptanceText(index, value)
                 }} />
-                <CheckBox label='application.acceptanceRequired'
+                <CheckBox label={t('application.acceptanceRequired')}
                     name={`acceptance_required_${index}`}
                     checked={acceptance.required}
                     handleChange={(checked: boolean) => updateAcceptanceRequired(index, checked)}

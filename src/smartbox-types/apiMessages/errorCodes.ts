@@ -66,5 +66,6 @@ export enum ApiErrorCode {
   LockIsInSleepMode,
   NeedAtLeastOneAddonVariant,
   RequiredAddonNotSelected,
-  AcceptanceNotSelected
+  AcceptanceNotSelected,
+  InvalidActivationCode,
 }

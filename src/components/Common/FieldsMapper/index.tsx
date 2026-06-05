@@ -11,6 +11,8 @@ import { useSelector } from 'react-redux';
 import { ApplicationState } from '../../../reducers';
 import { AcceptancesField } from '../AcceptancesField';
 import { Link } from '../../ui';
+import { InputSize } from '../input-sizes';
+import { I18nResourceKey, useI18n } from 'src/i18n';
 
 interface Props {
     fieldHtmlId: string;
@@ -20,6 +22,8 @@ interface Props {
     onChange: (e: any) => void;
     onFocus: FieldAndEventFunction;
     onBlur: FieldAndEventFunction;
+    size?: InputSize;
+    /** @deprecated Use `size="large"` */
     big?: boolean;
 }
 
@@ -27,7 +31,9 @@ const parseInputNumber = (value: unknown) => {
     return typeof value === 'undefined' || (!value && value !== 0) ? value : Number(value);
 }
 
-const FieldsMapper = ({ field, fieldHtmlId, currentValue, errors, big, onFocus, onBlur, onChange }: Props) => {
+const FieldsMapper = ({ field, fieldHtmlId, currentValue, errors, size, big, onFocus, onBlur, onChange }: Props) => {
+   const { t } = useI18n();
+    const fieldSize = size ?? (big ? 'large' : 'medium');
     const getProperType = useCallback((field: FormFieldToRender) => {
         if (field.type === 'variablePlaceholder') return field.id;
         if (!field.options.type) return field.type;
@@ -43,19 +49,19 @@ const FieldsMapper = ({ field, fieldHtmlId, currentValue, errors, big, onFocus, 
 
     const getCustomCheckboxLabel = useCallback((field: FormFieldToRender) => {
         if (field.options?.type === 'checkboxRules' && tenant) return <small>
-            {__('application.readTheProvisions')}{' '}
+            {t('application.readTheProvisions')}{' '}
 
             <Link target="_blank" href={`${ApiService.url}tenant/rules/${tenant.id}`} rel="noreferrer">
-                <u>{__('application.statutes')}</u>
+                <u>{t('application.statutes')}</u>
             </Link>{' '}
             i{' '}
-            <Link target="_blank" href={`${ApiService.url}tenant/privacy/${tenant.id}`} rel="noreferrer">
-                <u>{__('application.privacyPolices')}</u>
+            <Link target="_blank" href='/privacy-policy' rel="noreferrer">
+                <u>{t('application.privacyPolices')}</u>
             </Link>{' '}
-            {__('application.acceptContent')}
+            {t('application.acceptContent')}
         </small>
 
-        return field.title;
+        return t(field.title as unknown as I18nResourceKey);
     }, [])
 
     const type = getProperType(field);
@@ -64,11 +70,10 @@ const FieldsMapper = ({ field, fieldHtmlId, currentValue, errors, big, onFocus, 
     switch (type) {
         // Handline Addon acceptances
         case 'acceptances': return <AcceptancesField value={currentValue} onChange={onChange} />
-        case 'phone': return <InputPhone big={big} errors={translateErrors(errors)} label={field.title} name={fieldHtmlId} value={currentValue} onChange={onChange} />;
+        case 'phone': return <InputPhone size={fieldSize} errors={translateErrors(errors)} label={field.title} name={fieldHtmlId} value={currentValue} onChange={onChange} />;
         case 'text': return <Input
-            big={big}
+            size={fieldSize}
             key={fieldHtmlId}
-            className="register-input"
             type={field.options.type}
             help={field.descr}
             input={{
@@ -84,9 +89,8 @@ const FieldsMapper = ({ field, fieldHtmlId, currentValue, errors, big, onFocus, 
             }}
         />
         case 'number': return <Input
-            big={big}
+            size={fieldSize}
             key={fieldHtmlId}
-            className="register-input"
             type={field.type || field.options.type}
             help={field.descr}
             step={field.options.step}
@@ -103,9 +107,8 @@ const FieldsMapper = ({ field, fieldHtmlId, currentValue, errors, big, onFocus, 
             }}
         />
         case 'textarea': return <Input
-            big={big}
+            size={fieldSize}
             key={fieldHtmlId}
-            className="register-input"
             type='textarea'
             help={field.descr}
             input={{
@@ -177,8 +180,24 @@ const FieldsMapper = ({ field, fieldHtmlId, currentValue, errors, big, onFocus, 
                         }
                     )
                 }
-                onChange={(e: any) => {
-                    onChange(e);
+                onChange={(val: string | number | null | (string | number)[]) => {
+                    if (field.options?.multipleChoices) {
+                        const values = Array.isArray(val) ? val : [];
+                        onChange(
+                            values.map((v) => ({
+                                value: v,
+                                label:
+                                    field.options.possibleValues?.find(
+                                        (opt: string | SelectOption) =>
+                                            typeof opt === 'object'
+                                                ? opt.value === v
+                                                : false,
+                                    )?.name ?? String(v),
+                            })),
+                        );
+                        return;
+                    }
+                    onChange(val);
                 }}
                 value={currentValue}
                 placeholder={field.placeholder}
@@ -192,6 +211,7 @@ const FieldsMapper = ({ field, fieldHtmlId, currentValue, errors, big, onFocus, 
                 value={currentValue}
                 name={fieldHtmlId}
                 inline={false}
+                size={fieldSize}
                 errors={translateErrors(errors)}
                 onChange={(val: Date[]) => {
                     onChange(val[0]);

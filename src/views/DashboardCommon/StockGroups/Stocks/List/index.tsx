@@ -1,15 +1,14 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { stocksList } from 'smartbox-tables';
 import { showModal } from '../../../../../actions/modal';
 import { successNotification } from '../../../../../actions/notifications';
 import ApiService from '../../../../../services/api-service';
 import { NamingType, StockAdminList, UserRole } from 'smartbox-types';
-import { ApiTable, ConfirmModal } from '../../../../../components/Common';
+import { ApiTable } from '../../../../../components/Common';
 import { Button } from '../../../../../components/Branded';
 import {
   Section,
-  PageHeader,
   ButtonsContainer,
 } from '../../../../../components/Layout';
 import { __ } from '../../../../../helpers/i18n';
@@ -17,7 +16,6 @@ import { InteractiveTableSchema } from '../../../../../utils/table-schema-utils'
 import { refreshApiTableData } from '../../../../../actions/api-table';
 import { history } from '../../../../../App';
 import UserService from '../../../../../services/user-service';
-import { ApplicationState } from '../../../../../reducers';
 import { useGetMyDetailsQuery } from 'src/queries';
 import { HeaderWithActions, Button as UIButton } from 'src/components/ui';
 import { DeleteStockModal } from 'src/components/Common/DeleteStockModal';
@@ -119,7 +117,10 @@ const List = () => {
         {getText('list')}
       </HeaderWithActions>
 
-      <ApiTable scheme={scheme} apiEndpointSubUrl={`stock/admin-list`} />
+      <ApiTable
+        scheme={scheme}
+        apiEndpointSubUrl="stock/admin-list"
+      />
     </Section>
   );
 };

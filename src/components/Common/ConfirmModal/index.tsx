@@ -1,11 +1,11 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { ButtonsContainer } from '../../Layout';
 import { Button, Spinner } from '../../Branded';
 import { modal } from '../../../actions';
 
 import { __ } from '../../../helpers/i18n';
+import { Modal } from 'src/components/ui';
 
 interface Props {
   mainText: string;
@@ -25,9 +25,12 @@ const ConfirmModal = ({
   isLoading,
 }: Props) => (
   <>
-    {isLoading ? <Spinner halfTransparent overlay /> : null}
-    <p>{__(mainText)}</p>
-    <ButtonsContainer>
+    <Modal.Header title={__('application.confirmation')} />
+    <Modal.Content>
+      {isLoading ? <Spinner halfTransparent overlay /> : null}
+      <p>{__(mainText)}</p>
+    </Modal.Content>
+    <Modal.Actions>
       <Button click={() => hideModal()} text={cancelButtonText} success />
       <Button
         danger
@@ -37,7 +40,7 @@ const ConfirmModal = ({
         }}
         text={approveButtonText}
       />
-    </ButtonsContainer>
+    </Modal.Actions>
   </>
 );
 

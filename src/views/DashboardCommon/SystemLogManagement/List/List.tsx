@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useMemo } from 'react';
 import {
   FieldType,
   systemLogAdminTableSchema,
@@ -55,32 +55,32 @@ const formatMeta = (meta: unknown): ReactNode => {
 export const List = () => {
   const { data: user } = useGetMyDetailsQuery();
 
-  if (!user) return null;
+  const scheme: TableSchema = useMemo(() => {
+    const baseScheme: TableSchema =
+      user?.role === UserRole.admin
+        ? systemLogAdminTableSchema
+        : systemLogTableSchema;
 
-  const baseScheme: TableSchema =
-    user.role === UserRole.admin
-      ? systemLogAdminTableSchema
-      : systemLogTableSchema;
+    return new InteractiveTableSchema(baseScheme)
+      .removeFields('meta')
+      .addFieldAfter('action', {
+        name: 'Szczegóły',
+        field: 'meta',
+        type: FieldType.Custom,
+        sortable: false,
+        searchable: false,
+        customRender: (
+          _value,
+          _field,
+          row: SystemLogAdminListItem | SystemLogClientListItem,
+        ) => {
+          const rawMeta = row.meta;
 
-  const scheme: TableSchema = new InteractiveTableSchema(baseScheme)
-    .removeFields('meta')
-    .addFieldAfter('action', {
-      name: 'Szczegóły',
-      field: 'meta',
-      type: FieldType.Custom,
-      sortable: false,
-      searchable: false,
-      customRender: (
-        _value,
-        _field,
-        row: SystemLogAdminListItem | SystemLogClientListItem,
-      ) => {
-        const rawMeta = row.meta;
-
-        if (!rawMeta) return '-';
-        return <pre>{formatMeta(rawMeta)}</pre>;
-      },
-    });
+          if (!rawMeta) return '-';
+          return <pre>{formatMeta(rawMeta)}</pre>;
+        },
+      });
+  }, [user]);
 
   const handleSystemLogsCsvDownload = () => {
     handleFileOpen('system-log/export/csv');
@@ -102,7 +102,10 @@ export const List = () => {
         {__('application.systemLogs')}
       </HeaderWithActions>
       <Typography>{__('application.systemLogsRetentionInfo')}</Typography>
-      <ApiTable scheme={scheme} apiEndpointSubUrl={`system-log/list`} />
+      <ApiTable
+        scheme={scheme}
+        apiEndpointSubUrl="system-log/list"
+      />
     </Section>
   );
 };

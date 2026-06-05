@@ -1,43 +1,49 @@
-import clsx from 'clsx';
-import React, { useRef } from 'react';
-import { ReactSelect } from '../../../App';
+import React, { useMemo } from 'react';
+import ReactSelect from 'react-select';
+import CreatableSelect from 'react-select/creatable';
 import { __ } from '../../../helpers/i18n';
 import { TranslatableObject } from '../../../utils/errors-trans';
 import { InputErrors } from '../InputErrors';
-import './InputSelect.scss';
-import styled from 'styled-components';
 import { InputHelp } from '../InputHelp';
 import { InputLabel } from 'src/components/ui/InputLabel';
+import { ErrorText } from 'src/components/ui/ErrorText';
+import {
+  getReactSelectStyles,
+  InputSizeProps,
+  resolveInputSize,
+} from '../input-sizes';
+import { StyledFieldContainer, StyledFieldWrapper } from '../input-styled';
+import { useTheme } from 'styled-components';
 
-interface Props {
-  options: { label: string; value: string | number }[];
-  onChange: any;
-  value: any;
-  big?: boolean;
+export type InputSelectOption = {
+  label: string;
+  value: string | number;
+};
+
+export type InputSelectProps = InputSizeProps & {
+  options: InputSelectOption[];
+  onChange: (value: string | number | null | (string | number)[]) => void;
+  value?: string | number | null | (string | number)[];
   help?: string;
-  placeholder: any;
+  placeholder?: string;
   name: string;
   label?: string;
   multiple?: boolean;
   noMargin?: boolean;
-  compact?: boolean;
   readonly?: boolean;
+  disabled?: boolean;
   allowCustomValue?: boolean;
+  creatable?: boolean;
+  isClearable?: boolean;
+  required?: boolean;
+  error?: string;
   errors?: TranslatableObject[];
-}
-
-const StyledContainer = styled.div`
-  &.big {
-    .input-select__control {
-      border: 2px solid ${(props) => props.theme.colors.primary};
-    }
-  }
-  &.compact {
-    .input-select__control {
-      border-bottom: 2px solid ${(props) => props.theme.colors.primary};
-    }
-  }
-`;
+  className?: string;
+  onBlur?: () => void;
+  formatCreateLabel?: (inputValue: string) => string;
+  onCreateOption?: (inputValue: string) => void;
+  isValidNewOption?: (inputValue: string) => boolean;
+};
 
 const InputSelect = ({
   options,
@@ -46,90 +52,140 @@ const InputSelect = ({
   placeholder,
   multiple,
   errors,
-  compact,
+  error,
   help,
   noMargin,
-  big,
   readonly,
+  disabled,
   label,
   name,
   allowCustomValue,
-}: Props) => {
-  const selector = useRef<any>(null);
+  creatable = false,
+  isClearable = true,
+  required,
+  size,
+  big,
+  compact,
+  className,
+  onBlur,
+  formatCreateLabel,
+  onCreateOption,
+  isValidNewOption,
+}: InputSelectProps) => {
+  const theme = useTheme();
+  const resolvedSize = resolveInputSize({ size, big, compact });
+  const isDisabled = !!(readonly || disabled);
+  const invalid = !!(error || (errors && errors.length));
+  const selectStyles = useMemo(
+    () =>
+      getReactSelectStyles(theme, resolvedSize, {
+        error: invalid,
+        disabled: isDisabled,
+      }),
+    [theme, resolvedSize, invalid, isDisabled],
+  );
 
-  const handleBlur = () => {
-    const { inputValue, value } = selector.current.state;
-    if (inputValue)
-      selector.current.onChange(
-        inputValue ? { label: inputValue, value: inputValue } : value,
-      );
-  };
-
-  const handleClick = (e: any) => {
-    if (e.keyCode === 13) {
-      const { inputValue, value } = selector.current.state;
-      selector.current.onChange(
-        inputValue ? { label: inputValue, value: inputValue } : value,
-      );
-    }
-  };
-
-  const getDefaultValue = () => {
+  const getSelectedValue = () => {
     if (multiple) {
-      return value
-        ? value.map((val: string) => {
-            return options.find((opt) => opt.value === val);
-          })
-        : [];
-    } else {
-      const found = options.find((opt) => opt.value === value);
-      if (found) return found;
+      const values = Array.isArray(value) ? value : [];
+      return values.map((val) => {
+        const found = options.find((opt) => opt.value === (val as unknown as InputSelectOption).value || opt.value === val);
 
-      if (!found && allowCustomValue) {
-        return { label: value, value };
-      }
+        if (found) return found;
+        return { label: String(val), value: val };
+      });
     }
+
+    if (value === null || value === undefined || value === '') {
+      return null;
+    }
+
+    const found = options.find((opt) => opt.value === value);
+    if (found) return found;
+
+    if (allowCustomValue) {
+      return { label: String(value), value };
+    }
+
+    return null;
   };
 
-  const handleChange = (val: null | any[] | any) => {
-    if (multiple) onChange(val || []);
-    else if (typeof val !== 'undefined' && val !== null) onChange(val.value);
-    else onChange(null);
+  const handleChange = (val: null | InputSelectOption | InputSelectOption[]) => {
+    if (multiple) {
+      const selected = (val as InputSelectOption[]) || [];
+      console.log('VALLL', val, selected);
+      onChange(selected.map((item) => item.value));
+      return;
+    }
+
+    if (val && typeof val === 'object' && 'value' in val) {
+      onChange(val.value);
+      return;
+    }
+
+    onChange(null);
+  };
+
+  const selectProps = {
+    menuPortalTarget: document.body,
+    menuPlacement: 'auto' as const,
+    styles: selectStyles,
+    isDisabled: isDisabled,
+    value: getSelectedValue(),
+    classNamePrefix: 'input-select',
+    inputId: name,
+    onChange: handleChange,
+    onBlur,
+    options,
+    isClearable,
+    isMulti: multiple,
+    placeholder: placeholder ? __(placeholder) : __('application.select'),
+    noOptionsMessage: () => __('application.selectNoOptions'),
+    formatCreateLabel: creatable
+      ? formatCreateLabel ??
+        ((input: string) =>
+          `${__('application.inviteUsersAddEmail')}: ${input}`)
+      : undefined,
+    isValidNewOption: creatable ? isValidNewOption ?? (() => true) : undefined,
+    onCreateOption: creatable
+      ? (input: string) => {
+          if (onCreateOption) {
+            onCreateOption(input);
+            return;
+          }
+          if (multiple) {
+            const current = Array.isArray(value) ? value : [];
+            onChange([...current, input]);
+            return;
+          }
+          handleChange({
+            label: input,
+            value: input,
+          } as InputSelectOption);
+        }
+      : undefined,
   };
 
   return (
-    <StyledContainer
-      className={`input-select-container ${big ? 'big' : 'compact'} ${errors && errors.length > 0 ? 'is-invalid' : ''}`}
-    >
-      <InputLabel labelFor={name}>{__(label)}</InputLabel>
-      <div className="input-wrapper">
-        <ReactSelect
-          menuPortalTarget={document.body}
-          menuPlacement="auto"
-          styles={{ menuPortal: (base) => ({ ...base, zIndex: 9999 }) }}
-          isDisabled={readonly}
-          defaultValue={getDefaultValue()}
-          className={clsx('input-select', { compact })}
-          classNamePrefix="input-select"
-          inputId="input-select-field"
-          onChange={handleChange}
-          options={options}
-          onBlurResetsInput={false}
-          onBlur={handleBlur}
-          onKeyDown={handleClick}
-          formatCreateLabel={() => false}
-          isValidNewOption={() => false}
-          noOptionsMessage={() => null}
-          isClearable
-          creatable={true}
-          isMulti={multiple}
-          placeholder={placeholder ? __(placeholder) : ''}
-          ref={selector}
-        />
-      </div>
-      {errors && <InputErrors errors={errors} />}
-      {help && <InputHelp text={help} />}
-    </StyledContainer>
+    <StyledFieldContainer className={className} $noMargin={noMargin}>
+      {label ? (
+        <InputLabel labelFor={name} required={required}>
+          {__(label)}
+        </InputLabel>
+      ) : null}
+      <StyledFieldWrapper>
+        {creatable ? (
+          <CreatableSelect {...selectProps} />
+        ) : (
+          <ReactSelect {...selectProps} />
+        )}
+      </StyledFieldWrapper>
+      {error ? <ErrorText error={error} /> : null}
+      {errors && errors.length > 0 ? (
+        <InputErrors size={resolvedSize} errors={errors} />
+      ) : null}
+      {help ? <InputHelp size={resolvedSize} text={help} /> : null}
+    </StyledFieldContainer>
   );
 };
 

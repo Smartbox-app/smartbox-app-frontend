@@ -17,11 +17,7 @@ import {
 } from 'smartbox-types';
 import { ApiTable, ConfirmModal } from '../../../../components/Common';
 import { Button } from '../../../../components/Branded';
-import {
-  ButtonsContainer,
-  PageHeader,
-  Section,
-} from '../../../../components/Layout';
+import { ButtonsContainer, Section } from '../../../../components/Layout';
 import { __ } from '../../../../helpers/i18n';
 import { InteractiveTableSchema } from '../../../../utils/table-schema-utils';
 import { modal, user } from '../../../../actions';
@@ -29,7 +25,8 @@ import UserDetail from './UserDetail';
 import UserEdit from './UserEdit';
 import UserService from '../../../../services/user-service';
 import { useGetMyDetailsQuery } from 'src/queries';
-import { Header, HeaderWithActions } from 'src/components/ui';
+import { HeaderWithActions } from 'src/components/ui';
+import { UserNoteEditModal } from './UserDetail/UserNoteEditModal';
 
 interface Props {
   showModal: (content: React.ReactNode) => void;
@@ -126,6 +123,13 @@ const List = ({
             />
             {hasFullAccess && (
               <>
+                <Button
+                  secondary
+                  text="application.userNote"
+                  click={() =>
+                    showModal(<UserNoteEditModal userId={userData.id} />)
+                  }
+                />
                 <Button
                   secondary
                   text="application.edit"

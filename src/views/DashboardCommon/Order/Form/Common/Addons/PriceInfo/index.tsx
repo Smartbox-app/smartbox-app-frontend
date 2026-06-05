@@ -1,16 +1,19 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import {
   AddonDynamicPricingType,
   AddonVariantPriceType,
   SingleAddonVariant,
+  PriceDisplayForClients,
+  SingleAddonVariantForUser,
 } from 'smartbox-types';
 import styled from 'styled-components';
 import { __ } from '../../../../../../../helpers/i18n';
 import { formatPrice } from '../../../../../../../utils/format-price';
+import { useI18n } from 'src/i18n';
 
 interface Props {
-  isGross: boolean;
-  variant: SingleAddonVariant;
+  display: PriceDisplayForClients;
+  variant: SingleAddonVariantForUser;
 }
 
 const StyledPriceInfo = styled('div')(({ theme }) => ({
@@ -61,18 +64,50 @@ const formatQuantity = (type: AddonDynamicPricingType, quantity: number) => {
   }
 };
 
-const PriceInfo = ({ variant, isGross }: Props) => {
-  const { priceType, price, pricing } = variant;
+const PriceInfo = ({ variant, display }: Props) => {
+  const { priceType, netPrice: fixedNetPrice, grossPrice: fixedGrossPrice, pricing } = variant;
+  const { t } = useI18n();
+  const priceInfo = useMemo(() => {
+    const netPrice = priceType === AddonVariantPriceType.Fixed ? fixedNetPrice : pricing[0].netPrice;
+    const grossPrice = priceType === AddonVariantPriceType.Fixed ? fixedGrossPrice : pricing[0].grossPrice;
+
+    switch (display) {
+      case PriceDisplayForClients.gross:
+        return (
+          <>
+            <strong className="price-value">
+              {formatPrice(grossPrice || 0)}
+            </strong>
+            <span className="price-type">{t('application.gross')}</span>
+          </>
+        );
+      case PriceDisplayForClients.net:
+        return (
+          <>
+            <strong className="price-value">
+              {formatPrice(netPrice || 0)}
+            </strong>
+            <span className="price-type">{t('application.net')}</span>
+          </>
+        );
+      case PriceDisplayForClients.both:
+        return (
+          <>
+            <strong className="price-value">
+              {formatPrice(grossPrice || 0)}
+            </strong>
+            <span className="price-type">{t('application.gross')}</span>/
+            <span className="price-value">
+              {formatPrice(netPrice || 0)}
+            </span>
+            <span className="price-type">{t('application.net')}</span>
+          </>
+        );
+    }
+  }, [variant, display]);
 
   if (priceType === AddonVariantPriceType.Fixed) {
-    return (
-      <StyledPriceInfo>
-        <strong className="price-value">{formatPrice(price || 0)}</strong>
-        <span className="price-type">
-          {isGross ? __('application.gross') : __('application.net')}
-        </span>
-      </StyledPriceInfo>
-    );
+    return <StyledPriceInfo>{priceInfo}</StyledPriceInfo>;
   }
 
   const firstPricing = pricing[0];
@@ -81,13 +116,7 @@ const PriceInfo = ({ variant, isGross }: Props) => {
 
   return (
     <StyledPriceInfo>
-      <strong className="price-value">
-        {formatPrice(firstPricing.price || 0)}
-      </strong>
-      <span className="price-type">
-        {isGross ? __('application.gross') : __('application.net')}
-      </span>
-      /
+      {priceInfo}/
       <span>
         {firstPricing.quantity}{' '}
         {formatQuantity(firstPricing.type, firstPricing.quantity || 0)}

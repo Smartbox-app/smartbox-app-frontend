@@ -3,18 +3,15 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { UserListRes, UserRes, UserRole } from 'smartbox-types';
 import { user } from '../../../../../actions';
-import {
-  Section,
-  SectionHeader,
-  SimpleHeader,
-} from '../../../../../components/Layout';
+import { Modal } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
 
 import './UserDetail.scss';
 import { ApplicationState } from '../../../../../reducers';
-import DataGroup from './DataGroup';
 import UserRentList from 'src/views/DashboardCommon/UserRentList';
 import { Row } from 'src/components/Common';
 import { Spinner } from 'src/components/Branded';
+import { useUserNoteQuery } from 'src/queries';
 
 interface Props {
   userId: string;
@@ -29,6 +26,8 @@ const UserDetail = ({
   fetchSingleUser,
   singleUser,
 }: Props) => {
+  const { data: noteData, isPending: isNotePending } = useUserNoteQuery(userId);
+
   useEffect(() => {
     fetchSingleUser(userId);
   }, []);
@@ -37,42 +36,50 @@ const UserDetail = ({
 
   return (
     <>
-      <SectionHeader title="application.userData" />
-      <Row label="application.firstName" content={singleUser.firstName} />
-      <Row label="application.lastName" content={singleUser.lastName} />
-      <Row label="application.userRole" content={singleUser.role} />
+      <Modal.Header title={__('application.userDetails')} />
+      <Modal.Content>
+        <Row label="application.firstName" content={singleUser.firstName} />
+        <Row label="application.lastName" content={singleUser.lastName} />
+        <Row label="application.userRole" content={singleUser.role} />
 
-      <SectionHeader title="application.contactData" />
-      <Row label="application.mail" content={singleUser.email} />
-      <Row label="application.phone" content={singleUser.phone} />
+        <Row label="application.mail" content={singleUser.email} />
+        <Row label="application.phone" content={singleUser.phone} />
 
-      <Row label="application.city" content={singleUser.city} />
-      <Row label="application.street" content={singleUser.street} />
-      <Row label="application.postCode" content={singleUser.postCode} />
+        <Row label="application.city" content={singleUser.city} />
+        <Row label="application.street" content={singleUser.street} />
+        <Row label="application.postCode" content={singleUser.postCode} />
 
-      {singleUser.companyData && singleUser.role === UserRole.user && (
-        <>
-          <SectionHeader title="application.contactCompanyData" />
+        {singleUser.companyData && singleUser.role === UserRole.user && (
+          <>
+            <Row
+              label="application.companyName"
+              content={singleUser.companyData.companyName}
+            />
+            <Row label="application.nip" content={singleUser.companyData.nip} />
+            <Row
+              label="application.city"
+              content={singleUser.companyData.companyCity}
+            />
+            <Row
+              label="application.street"
+              content={singleUser.companyData.companyStreet}
+            />
+            <Row
+              label="application.postCode"
+              content={singleUser.companyData.companyPostCode}
+            />
+          </>
+        )}
+
+        {isNotePending ? null : (
           <Row
-            label="application.companyName"
-            content={singleUser.companyData.companyName}
+            label="application.userNote"
+            content={noteData?.note || __('application.lack')}
           />
-          <Row label="application.nip" content={singleUser.companyData.nip} />
-          <Row
-            label="application.city"
-            content={singleUser.companyData.companyCity}
-          />
-          <Row
-            label="application.street"
-            content={singleUser.companyData.companyStreet}
-          />
-          <Row
-            label="application.postCode"
-            content={singleUser.companyData.companyPostCode}
-          />
-        </>
-      )}
-      <UserRentList rentList={singleUser?.activeRents || []} />
+        )}
+
+        <UserRentList rentList={singleUser?.activeRents || []} />
+      </Modal.Content>
     </>
   );
 };

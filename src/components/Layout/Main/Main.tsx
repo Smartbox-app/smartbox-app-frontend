@@ -5,11 +5,12 @@ interface Props {
   children: React.ReactNode;
 }
 
-const StyledMain = styled('main')(({theme}) => ({
+const StyledMain = styled('main')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   gap: theme.spacing * 4,
-  width: '100%'
-}))
+  width: '100%',
+  flex: 1,
+}));
 
 export const Main = ({ children }: Props) => <StyledMain>{children}</StyledMain>;

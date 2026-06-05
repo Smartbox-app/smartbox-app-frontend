@@ -1,7 +1,8 @@
 import countries from 'i18n-iso-countries';
-import { useFormContext } from 'react-hook-form';
+import { Controller, useFormContext } from 'react-hook-form';
 import { RentDataDto } from '../TenantDetailsForm/dto/RentDataDto';
-import { Header, Input, Section, Select } from 'src/components/ui';
+import { Header, Input, Section } from 'src/components/ui';
+import { InputSelect } from 'src/components/Common';
 import { __ } from 'src/helpers/i18n';
 
 interface Props {
@@ -11,27 +12,36 @@ interface Props {
 const prepareCountries = (): { label: string; value: string }[] => {
   const names = countries.getNames('pl');
   return Object.entries(names)
-  .sort((a, b) => b[1] < a[1] ? 1 : -1)
-  .map(([value, label]) => ({ value, label }));
+    .sort((a, b) => (b[1] < a[1] ? 1 : -1))
+    .map(([value, label]) => ({ value, label }));
 };
-
 
 export const CompanyDetailsForm = ({ disabled }: Props) => {
   const {
     register,
+    control,
     formState: { errors },
   } = useFormContext<RentDataDto>();
 
   return (
     <Section>
       <Header variant="h2">{__('rent.company_data')}</Header>
-      <Select
-        label="rent.company_country"
-        placeholder="rent.company_country_placeholder"
-        {...register('companyCountry')}
-        options={prepareCountries()}
-        required={true}
-        error={errors.companyCountry?.message}
+      <Controller
+        name="companyCountry"
+        control={control}
+        render={({ field, fieldState }) => (
+          <InputSelect
+            name="companyCountry"
+            label="rent.company_country"
+            placeholder="rent.company_country_placeholder"
+            options={prepareCountries()}
+            value={field.value}
+            onChange={field.onChange}
+            onBlur={field.onBlur}
+            required
+            error={fieldState.error?.message}
+          />
+        )}
       />
       <Input
         label="rent.company_name"

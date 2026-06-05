@@ -1,19 +1,27 @@
 /* eslint-disable */
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import Flatpickr from 'react-flatpickr';
+import React, {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   FieldType,
   TableFieldSearchableValues,
   TableSchema,
   TableSchemaField,
 } from 'smartbox-tables';
-import { Spinner } from '../../Branded';
 import Table from '../Table';
+import DateInput from '../DateInput';
+import { InputSelect } from '../InputSelect';
+import { StyledNativeSelect } from '../input-styled';
+import { Input, Skeleton } from '../../ui';
 import debounce from '../../../utils/debounce';
 import {
   clearApiTableData,
   fetchApiTableData,
+  loadingApiTableData,
 } from '../../../actions/api-table';
 import { ApplicationState } from '../../../reducers';
 import { DEFAULT_API_TABLE_INSTANCE_ID } from '../../../constants/api-table-instances';
@@ -21,17 +29,37 @@ import { DEFAULT_API_TABLE_INSTANCE_ID } from '../../../constants/api-table-inst
 import './ApiTable.scss';
 import { __ } from '../../../helpers/i18n';
 import styled from 'styled-components';
+import { Spinner } from 'src/components/Branded';
 
 const StyledContainer = styled('div')({
   position: 'relative',
 });
+
+const SkeletonStack = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: ${({ theme }) => theme.spacing}px;
+`;
+
+const TABLE_ROW_HEIGHT = 56;
+const TABLE_HEADER_HEIGHT = 60;
+
+const ApiTableSkeleton = () => (
+  <SkeletonStack>
+    <Skeleton height={45} width={'340px'} radius={8} />
+    <Skeleton height={TABLE_HEADER_HEIGHT} radius={8} />
+    {Array.from({ length: 5 }, (_, index) => (
+      <Skeleton key={index} height={TABLE_ROW_HEIGHT} radius={8} />
+    ))}
+  </SkeletonStack>
+);
 
 interface SelectOption {
   value: string;
   content: string;
 }
 
-export interface ApiTableOwnProps {
+export interface ApiTableProps {
   scheme: TableSchema;
   apiEndpointSubUrl: string;
   apiEndpointMethod?: string;
@@ -41,13 +69,29 @@ export interface ApiTableOwnProps {
   selectSearchByOption?: SelectOption[];
 }
 
-interface DispatchProps {
-  fetchApiTableData: (url: string, method?: string) => void;
-  clearApiTableData: () => void;
-}
+/** @deprecated Use ApiTableProps */
+export type ApiTableOwnProps = ApiTableProps;
 
-type Props = ApiTableOwnProps &
-  DispatchProps & { loading: boolean; data: any };
+const emptyTableData = { countTotal: 0, items: [] };
+
+function getInitialSearchState(scheme: TableSchema) {
+  const defaultSearchField = scheme.fields.find(
+    (field) => ['string', 'number'].indexOf(typeof field.defaultSearch) > -1,
+  );
+  const defaultSortField = scheme.fields.find((f) => f.defaultSort === true) as
+    | TableSchemaField
+    | undefined;
+
+  return {
+    searchQuery: defaultSearchField
+      ? String(defaultSearchField.defaultSearch)
+      : '',
+    searchBy: defaultSearchField?.field ?? '',
+    page: 1,
+    sortBy: defaultSortField?.field ?? '',
+    sortDirBack: defaultSortField?.oppositeSortDir === true,
+  };
+}
 
 const searchComponent = (
   allFields: TableSchemaField[],
@@ -61,7 +105,6 @@ const searchComponent = (
   };
 
   const handleSearchByChange = (searchBy: string) => {
-    handleSearchQueryChange('');
     onSearchChange(searchBy, '');
   };
 
@@ -81,8 +124,9 @@ const searchComponent = (
     searchElement = null;
   } else if (searchableValues && typeof searchableValues === 'object') {
     searchElement = (
-      <select
-        className="input"
+      <StyledNativeSelect
+        $size="small"
+        $error={false}
         onChange={(e) => handleSearchQueryChange(e.target.value)}
       >
         <option value={''}>{__('application.select')}</option>
@@ -93,12 +137,13 @@ const searchComponent = (
             </option>
           ),
         )}
-      </select>
+      </StyledNativeSelect>
     );
   } else if (selectSearchByField && search.searchBy === 'currentActionName') {
     searchElement = (
-      <select
-        className="input"
+      <StyledNativeSelect
+        $size="small"
+        $error={false}
         onChange={(e) => handleSearchQueryChange(e.target.value)}
       >
         {selectSearchByOption &&
@@ -107,60 +152,72 @@ const searchComponent = (
               {data.content}
             </option>
           ))}
-      </select>
+      </StyledNativeSelect>
     );
-  } else if (fields.type && [FieldType.Date].includes(fields.type)) {
-    searchElement = (
-      <div className="date-fields-group">
-        <div className="filter-field">
-          <Flatpickr
-            placeholder="Wybierz datę"
-            options={{
-              defaultDate: search.searchQuery
-                ? new Date(search.searchQuery)
-                : undefined,
-              enableTime: false,
+  } else if (fields?.type && [FieldType.Date].includes(fields.type)) {
+    const parsedDate = search.searchQuery
+      ? new Date(Number(search.searchQuery))
+      : undefined;
+    const dateValue =
+      parsedDate && !Number.isNaN(parsedDate.getTime())
+        ? [parsedDate]
+        : undefined;
 
-              locale: 'pl',
-            }}
-            onChange={(date: Date[]) => {
-              if (date && date.length === 1)
-                handleSearchQueryChange(date[0].getTime().toString());
-              else handleSearchQueryChange('');
-            }}
-          />
-        </div>
-      </div>
+    searchElement = (
+      <DateInput
+        name="api-table-search-date"
+        label=""
+        size="small"
+        inline={false}
+        required={false}
+        value={dateValue}
+        onChange={(dates: Date[]) => {
+          if (dates?.length === 1) {
+            handleSearchQueryChange(dates[0].getTime().toString());
+          } else {
+            handleSearchQueryChange('');
+          }
+        }}
+      />
     );
   } else {
     searchElement = (
-      <input
-        className="input"
+      <Input
+        label=""
+        name="api-table-search-query"
         type="text"
-        placeholder={__('application.typeSearchedValue')}
+        size="small"
+        placeholder="application.typeSearchedValue"
         value={search.searchQuery}
-        onChange={(e) => handleSearchQueryChange(e.target.value)}
+        onChange={async (e) => {
+          handleSearchQueryChange(e.target.value);
+        }}
+        onBlur={async () => {}}
       />
     );
   }
 
+  const searchByOptions = searchableFields.map((field) => ({
+    value: field.field,
+    label: field.name,
+  }));
+
   return (
     <div className="search-box">
-      <h3>{__('application.search')}</h3>
       <div className="search-fields">
         <div className="search-field">
-          <select
-            className="input"
-            value={search.searchBy}
-            onChange={(e) => handleSearchByChange(e.target.value)}
-          >
-            <option value="">{__('application.chooseFieldToSearch')}</option>
-            {searchableFields.map((field) => (
-              <option value={field.field} key={field.field}>
-                {field.name}
-              </option>
-            ))}
-          </select>
+          <InputSelect
+            key={search.searchBy}
+            className="api-table-search-select"
+            name="api-table-search-by"
+            placeholder="application.search"
+            options={searchByOptions}
+            value={search.searchBy || null}
+            onChange={(value: string | null) =>
+              handleSearchByChange(value ?? '')
+            }
+            size="small"
+          />
         </div>
         <div className="search-query">{searchElement}</div>
       </div>
@@ -168,207 +225,209 @@ const searchComponent = (
   );
 };
 
-const emptyTableData = { countTotal: 0, items: [] };
+export const ApiTable = ({
+  scheme,
+  apiEndpointSubUrl,
+  apiEndpointMethod,
+  instanceId,
+  selectSearchByField,
+  selectSearchByOption,
+}: ApiTableProps) => {
+  const dispatch = useDispatch();
+  const resolvedInstanceId = instanceId ?? DEFAULT_API_TABLE_INSTANCE_ID;
 
-class ApiTable extends Component<Props> {
-  private debouncedFetch: () => void;
+  const data = useSelector(
+    (state: ApplicationState) =>
+      state.apiTable.instances[resolvedInstanceId] ?? emptyTableData,
+  );
 
-  state = {
-    searchQuery: '',
-    searchBy: '',
-    page: 1,
-    sortBy: '',
-    sortDirBack: false,
-    loading: false,
-    data: {
-      countTotal: 0,
-      items: [],
-    },
-  };
+  const [searchQuery, setSearchQuery] = useState(
+    () => getInitialSearchState(scheme).searchQuery,
+  );
+  const [searchBy, setSearchBy] = useState(
+    () => getInitialSearchState(scheme).searchBy,
+  );
+  const [page, setPage] = useState(() => getInitialSearchState(scheme).page);
+  const [sortBy, setSortBy] = useState(
+    () => getInitialSearchState(scheme).sortBy,
+  );
+  const [sortDirBack, setSortDirBack] = useState(
+    () => getInitialSearchState(scheme).sortDirBack,
+  );
 
-  constructor(props: Props) {
-    super(props);
-    this.debouncedFetch = debounce(this.fetch, 600);
+  const buildUrl = useCallback(() => {
+    return `${apiEndpointSubUrl}?${new URLSearchParams({
+      searchBy,
+      searchQuery,
+      page: String(page),
+      sortBy,
+      sortDirBack: String(sortDirBack),
+    } as Record<string, string>)}`;
+  }, [apiEndpointSubUrl, searchBy, searchQuery, page, sortBy, sortDirBack]);
 
-    const defaultSearchField = this.props.scheme.fields.find(
-      (field) => ['string', 'number'].indexOf(typeof field.defaultSearch) > -1,
+  const fetch = useCallback(() => {
+    dispatch(loadingApiTableData(resolvedInstanceId));
+    dispatch(
+      fetchApiTableData(buildUrl(), apiEndpointMethod, resolvedInstanceId),
     );
-    if (defaultSearchField) {
-      this.state.searchBy = defaultSearchField.field;
-      this.state.searchQuery = String(defaultSearchField.defaultSearch);
-    }
-    const defaultSortFieldield = this.props.scheme.fields.find(
-      (f) => f.defaultSort === true,
-    ) as TableSchemaField;
-    if (defaultSortFieldield) {
-      this.state.sortBy = defaultSortFieldield.field;
-      this.state.sortDirBack = defaultSortFieldield.oppositeSortDir === true;
-    }
-  }
+  }, [dispatch, buildUrl, apiEndpointMethod, resolvedInstanceId]);
 
-  private buildUrl(): string {
-    const { apiEndpointSubUrl } = this.props;
-    const { searchBy, searchQuery, page, sortBy, sortDirBack } = this.state;
-    return `${apiEndpointSubUrl}?${new URLSearchParams({ searchBy, searchQuery, page, sortBy, sortDirBack } as any)}`;
-  }
+  const debouncedSearchFetchRef = useRef(
+    debounce(() => {
+      fetchRef.current();
+    }, 600),
+  );
 
-  private async fetch() {
-    this.props.fetchApiTableData(
-      this.buildUrl(),
-      this.props.apiEndpointMethod,
-    );
-  }
-
-  private getCurrentSort(): {
+  const getCurrentSort = useCallback((): {
     sortBy: string;
     sortDirBack: boolean;
-  } | null {
-    const { sortBy, sortDirBack } = this.state;
-    const { scheme } = this.props;
-
+  } | null => {
     if (sortBy !== '') {
-      return {
-        sortBy,
-        sortDirBack,
-      };
-    } else {
-      const field = scheme.fields.find(
-        (f) => f.defaultSort === true,
-      ) as TableSchemaField;
-      if (!field) return null;
-      return {
-        sortBy: field.field,
-        sortDirBack: field.oppositeSortDir === true,
-      };
+      return { sortBy, sortDirBack };
     }
-  }
+    const field = scheme.fields.find((f) => f.defaultSort === true) as
+      | TableSchemaField
+      | undefined;
+    if (!field) return null;
+    return {
+      sortBy: field.field,
+      sortDirBack: field.oppositeSortDir === true,
+    };
+  }, [sortBy, sortDirBack, scheme.fields]);
 
-  componentDidMount() {
-    this.props.clearApiTableData();
-    this.fetch();
-  }
+  const skipPageSortFetchRef = useRef(true);
+  const skipPageFetchFromSearchRef = useRef(false);
+  const pendingSearchResetRef = useRef(false);
+  const skipEndpointClearRef = useRef(true);
+  const prevUuidRef = useRef<string | undefined>(undefined);
+  const fetchRef = useRef(fetch);
+  fetchRef.current = fetch;
 
-  componentDidUpdate(prevProps: Props) {
-    const {data, apiEndpointSubUrl, instanceId} = this.props;
+  useEffect(() => {
+    dispatch(clearApiTableData(resolvedInstanceId));
+    dispatch(loadingApiTableData(resolvedInstanceId));
+    fetchRef.current();
+  }, [resolvedInstanceId, dispatch]);
 
-    if (
-      apiEndpointSubUrl !== prevProps.apiEndpointSubUrl ||
-      instanceId !== prevProps.instanceId
-    ) {
-      this.props.clearApiTableData();
-    }
-
-
-    if (
-      data.uuid &&
-      prevProps.data.uuid &&
-      data.uuid !== prevProps.data.uuid
-    ) {
-      this.fetch();
-    }
-  }
-
-  handlePageChange = (page: number) => {
-    if (page === this.state.page) return;
-
-    this.setState(
-      {
-        page,
-      },
-      this.fetch,
-    );
-  };
-
-  handleSortChange = (sortBy: string, sortDirBack: boolean) => {
-    const currSort = this.getCurrentSort();
-    if (!currSort) return;
-
-    if (currSort.sortBy === sortBy && currSort.sortDirBack === sortDirBack)
+  useEffect(() => {
+    if (skipEndpointClearRef.current) {
+      skipEndpointClearRef.current = false;
       return;
+    }
+    dispatch(clearApiTableData(resolvedInstanceId));
+  }, [apiEndpointSubUrl, resolvedInstanceId, dispatch]);
 
-    this.setState(
-      {
-        sortBy,
-        sortDirBack,
-      },
-      this.fetch,
-    );
-  };
+  useEffect(() => {
+    if (skipPageSortFetchRef.current) {
+      skipPageSortFetchRef.current = false;
+      return;
+    }
+    if (skipPageFetchFromSearchRef.current) {
+      skipPageFetchFromSearchRef.current = false;
+      return;
+    }
+    fetch();
+  }, [page, sortBy, sortDirBack, fetch]);
 
-  handleSearchChange = (searchBy: string, searchQuery: string) => {
-    const { searchBy: searchByNow, searchQuery: searchQueryNow } = this.state;
-    if (searchBy === searchByNow && searchQuery === searchQueryNow) return;
+  useEffect(() => {
+    if (data.uuid && prevUuidRef.current && data.uuid !== prevUuidRef.current) {
+      fetch();
+    }
+    prevUuidRef.current = data.uuid;
+  }, [data.uuid, fetch]);
 
-    this.setState(
-      {
-        searchBy,
-        searchQuery,
-      },
-      this.debouncedFetch,
-    );
-  };
+  useEffect(() => {
+    if (!pendingSearchResetRef.current) return;
+    pendingSearchResetRef.current = false;
+    fetchRef.current();
+  }, [searchBy, searchQuery, page]);
 
-  render() {
-    const { page, searchQuery, searchBy } = this.state;
-    const { loading, data, scheme } = this.props;
+  const handlePageChange = useCallback(
+    (nextPage: number) => {
+      if (nextPage === page) return;
+      setPage(nextPage);
+    },
+    [page],
+  );
 
-    const table = (
-      <>
-        {loading ? <Spinner halfTransparent overlay /> : null}
-        <Table
-          data={data}
-          scheme={scheme}
-          initialPage={page}
-          sort={this.getCurrentSort()}
-          onPageChange={this.handlePageChange}
-          onSortChange={this.handleSortChange}
-        />
-      </>
-    );
+  const handleSortChange = useCallback(
+    (nextSortBy: string, nextSortDirBack: boolean) => {
+      const currSort = getCurrentSort();
+      if (!currSort) return;
+      if (
+        currSort.sortBy === nextSortBy &&
+        currSort.sortDirBack === nextSortDirBack
+      ) {
+        return;
+      }
+      setSortBy(nextSortBy);
+      setSortDirBack(nextSortDirBack);
+    },
+    [getCurrentSort],
+  );
 
-    return (
-      <StyledContainer>
-        {data &&
-          (data.countTotal > 0 || searchQuery) &&
-          searchComponent(
-            scheme.fields,
-            {
-              searchBy,
-              searchQuery,
-            },
-            this.handleSearchChange,
-            this.props.selectSearchByField,
-            this.props.selectSearchByOption,
-          )}
-        {table}
-      </StyledContainer>
-    );
-  }
-}
+  const handleSearchChange = useCallback(
+    (nextSearchBy: string, nextSearchQuery: string) => {
+      if (nextSearchBy === searchBy && nextSearchQuery === searchQuery) return;
 
-const mapStateToProps = (
-  state: ApplicationState,
-  ownProps: ApiTableOwnProps,
-) => {
-  const instanceId =
-    ownProps.instanceId ?? DEFAULT_API_TABLE_INSTANCE_ID;
-  return {
-    data: state.apiTable.instances[instanceId] ?? emptyTableData,
-    loading: state.spinner.loading,
-  };
+      const searchFieldCleared = nextSearchBy === '' && searchBy !== '';
+      const onlySearchFieldSwitched =
+        nextSearchBy !== '' &&
+        nextSearchBy !== searchBy &&
+        nextSearchQuery === '';
+
+      skipPageFetchFromSearchRef.current = true;
+      setSearchBy(nextSearchBy);
+      setSearchQuery(nextSearchQuery);
+      if (page !== 1) {
+        setPage(1);
+      }
+
+      if (searchFieldCleared) {
+        pendingSearchResetRef.current = true;
+        return;
+      }
+
+      if (onlySearchFieldSwitched) {
+        return;
+      }
+
+      debouncedSearchFetchRef.current();
+    },
+    [searchBy, searchQuery, page],
+  );
+
+  const showSkeleton = data.loading === true && data.countTotal === 0;
+  const showSpinner = data.loading === true && data.countTotal > 0;
+
+  return (
+    <StyledContainer>
+      {showSpinner && <Spinner halfTransparent overlay />}
+      {data &&
+        (data.countTotal > 0 || searchQuery) &&
+        searchComponent(
+          scheme.fields,
+          { searchBy, searchQuery },
+          handleSearchChange,
+          selectSearchByField,
+          selectSearchByOption,
+        )}
+      {showSkeleton && !showSpinner ? (
+        <ApiTableSkeleton />
+      ) : (
+        <>
+          <Table
+            data={data}
+            scheme={scheme}
+            initialPage={page}
+            sort={getCurrentSort()}
+            onPageChange={handlePageChange}
+            onSortChange={handleSortChange}
+          />
+        </>
+      )}
+    </StyledContainer>
+  );
 };
 
-function mapDispatchToProps(
-  dispatch: any,
-  ownProps: ApiTableOwnProps,
-) {
-  const instanceId =
-    ownProps.instanceId ?? DEFAULT_API_TABLE_INSTANCE_ID;
-  return {
-    fetchApiTableData: (url: string, method?: string) =>
-      dispatch(fetchApiTableData(url, method, instanceId)),
-    clearApiTableData: () => dispatch(clearApiTableData(instanceId)),
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(ApiTable);
+export default ApiTable;

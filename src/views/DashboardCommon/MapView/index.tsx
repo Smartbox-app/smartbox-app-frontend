@@ -1,10 +1,11 @@
-import React, { useState } from "react";
-import ApiService from "../../../services/api-service";
-import styled, { css } from "styled-components";
-import { SingleBox } from "../StockGroups/Stocks/Manage/Map/SingleBox";
-import { MapGrid } from "../StockGroups/Stocks/Manage/Map/MapGrid";
-import { BoxMapRes, BoxMapUserRes, StockRes } from "smartbox-types";
-import { CheckBox } from "../../../components/Common";
+import React, { useState } from 'react';
+import ApiService from '../../../services/api-service';
+import styled, { css } from 'styled-components';
+import { SingleBox } from '../StockGroups/Stocks/Manage/Map/SingleBox';
+import { MapGrid } from '../StockGroups/Stocks/Manage/Map/MapGrid';
+import { BoxMapRes, BoxMapUserRes, StockRes } from 'smartbox-types';
+import { CheckBox } from '../../../components/Common';
+import { useI18n } from 'src/i18n';
 
 interface Props {
   boxes: (BoxMapRes | BoxMapUserRes)[];
@@ -53,17 +54,17 @@ const MapView = ({
   onBoxClick,
 }: Props) => {
   const [useGrid, setUseGrid] = useState<boolean>(true);
-
+  const { t } = useI18n();
   const handleChange = () => {
     setUseGrid((prev) => !prev);
   };
 
   const filteredBoxes = boxes.filter((box, index, all) => {
-    const lastIndex = boxes.findLastIndex(subBox => box.id === subBox.id);
+    const lastIndex = boxes.findLastIndex((subBox) => box.id === subBox.id);
 
-    if(lastIndex === index) return true;
+    if (lastIndex === index) return true;
     return false;
-  })
+  });
 
   return (
     <div>
@@ -71,7 +72,7 @@ const MapView = ({
         <CheckBox
           checked={useGrid}
           handleChange={handleChange}
-          label="application.useGridForMap"
+          label={t('application.useGridForMap')}
           name="useGrid"
         />
       ) : null}

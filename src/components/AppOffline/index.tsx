@@ -12,7 +12,6 @@ color: ${props => getColorForBackground(props.theme.colors.primary)};
 
 const AppOffline = () => (
     <StyledAppStatus className="app-status">
-        <span className="app-status-title">Application</span>
         <strong>{__('application.offlineInfo')}</strong>
         <svg
             className="nowifi-icon"

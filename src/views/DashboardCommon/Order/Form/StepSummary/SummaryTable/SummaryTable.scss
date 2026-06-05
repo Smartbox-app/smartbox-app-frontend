@@ -20,8 +20,15 @@
       font-weight: 600;
       font-size: 25px;
 
+      .price-net {
+        font-size: 16px;
+        font-weight: 400;
+      }
       @include gt-sm {
         font-size: 40px;
+        .price-net {
+          font-size: 20px;
+        }
       }
     }
   }
@@ -49,7 +56,11 @@
 
       .fat {
         font-weight: 600;
-        font-size: 40pxrem;
+        font-size: 40px;
+
+        .price-net {
+          font-size: 20px;
+        }
       }
     }
   }

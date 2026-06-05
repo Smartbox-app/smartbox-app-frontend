@@ -1,4 +1,5 @@
 import { BoxGroupUserRes } from 'smartbox-types';
+import { StockImage } from 'src/icons/StockImage';
 import ApiService from 'src/services/api-service';
 import styled from 'styled-components';
 
@@ -13,6 +14,20 @@ const StyledOptionWrapper = styled('div')(({ theme }) => ({
   alignItems: 'center',
 }));
 
+const StyledPlaceholder = styled('div')(({ theme }) => ({
+  flex: 1,
+  width: '100%',
+  padding: theme.spacing * 2.5,
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  svg: {
+    fill: '#f8f8f7',
+    width: '60%',
+    height: '100%',
+  },
+}));
+
 export const OptionImage = ({ option }: OptionImageProps) => {
   return (
     <>
@@ -24,7 +39,9 @@ export const OptionImage = ({ option }: OptionImageProps) => {
           />
         </StyledOptionWrapper>
       ) : (
-        <span />
+        <StyledPlaceholder>
+          <StockImage />
+        </StyledPlaceholder>
       )}
     </>
   );

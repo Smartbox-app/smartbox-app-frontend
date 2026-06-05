@@ -51,7 +51,10 @@ export const List = () => {
         {__('application.documentList')}
       </HeaderWithActions>
 
-      <ApiTable scheme={scheme} apiEndpointSubUrl={`document`} />
+      <ApiTable
+        scheme={scheme}
+        apiEndpointSubUrl="document"
+      />
     </Section>
   );
 };

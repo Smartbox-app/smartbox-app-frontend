@@ -13,7 +13,6 @@ import {
 import { __ } from '../../../../helpers/i18n';
 import { InteractiveTableSchema } from '../../../../utils/table-schema-utils';
 import { refreshApiTableData } from '../../../../actions/api-table';
-import { history } from '../../../../App';
 import UserService from '../../../../services/user-service';
 import { useGetMyDetailsQuery } from 'src/queries';
 import { HeaderWithActions } from 'src/components/ui';
@@ -90,7 +89,10 @@ const List = () => {
         {__('application.attachmentList')}
       </HeaderWithActions>
 
-      <ApiTable scheme={scheme} apiEndpointSubUrl={`attachment`} />
+      <ApiTable
+        scheme={scheme}
+        apiEndpointSubUrl="attachment"
+      />
     </Section>
   );
 };

@@ -3,6 +3,8 @@ import { BaseResponse } from '../base/baseRes';
 import { Prop } from '../store/prop.decorator';
 import type { CompanyData } from '../payment';
 import { RentStatus } from '../rent';
+import { ApiErrorCode } from '../apiMessages/errorCodes';
+import { SelectOption } from '../select';
 
 export class UserRes extends BaseResponse {
   @Prop() id: string;
@@ -74,6 +76,14 @@ export interface AddUserReq {
   pwd2: string;
 }
 
+export type RegisterUserRes = {
+  activationToken?: string;
+};
+
+export type AccountActivationTokenPayload = {
+  activationToken: string;
+};
+
 export interface AddInvitedUserReq {
   invitationId: string;
   token: string;
@@ -95,10 +105,23 @@ export interface AddInvitedTenantReq {
 }
 
 export interface InviteWorkerReq {
-  email: string,
-  role: UserRole,
-  tenantId: string,
-  stockIds: string[],
+  /** Legacy single invite when `emails` is omitted or empty. */
+  email?: string;
+  /** Bulk invite; non-empty array returns {@link InviteUsersRes}. */
+  emails?: string[];
+  role: UserRole;
+  tenantId?: string;
+  stockIds: SelectOption[];
+}
+
+export interface InviteUserFailure {
+  email: string;
+  errorCode: ApiErrorCode;
+}
+
+export interface InviteUsersRes {
+  invited: string[];
+  failed: InviteUserFailure[];
 }
 
 export interface AddTenantReq {

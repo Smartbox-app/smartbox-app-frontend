@@ -1,6 +1,7 @@
 import { Main } from './Main';
 import ButtonsContainer from './ButtonsContainer';
 import { DashboardContainer } from './DashboardContainer';
+import { DashboardSidebar } from './DashboardSidebar';
 import Footer from './Footer';
 import PageHeader from './PageHeader';
 import FormContainer from './FormContainer';
@@ -17,6 +18,7 @@ export {
   Main,
   ButtonsContainer,
   DashboardContainer,
+  DashboardSidebar,
   Footer,
   PageHeader,
   FormContainer,

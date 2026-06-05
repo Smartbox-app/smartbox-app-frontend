@@ -1,18 +1,15 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { ItfApiForm } from 'itf_formbuilder_react';
-import ReactCreatableSelect from 'react-select/creatable';
 import { AddGiftReq } from 'smartbox-types';
-import {
-  FormContainer,
-  ButtonsContainer,
-  FieldsColumn,
-} from '../../../../../components/Layout';
+import { ButtonsContainer, FieldsColumn } from '../../../../../components/Layout';
+import { Modal } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
 import { Button, Spinner } from '../../../../../components/Branded';
 import ApiService from '../../../../../services/api-service';
 import { formOnTranslateString } from '../../../../../utils/trans-form';
 import { modal } from '../../../../../actions';
-import { ReactSelectOverride } from '../../../../../components/Common/ReactSelectOverride';
+import { ReactSelectOverride, ReactCreatableSelectOverride as ReactCreatableSelect } from '../../../../../components/Common/ReactSelectOverride';
 import { mapFields } from '../../../../../utils/fields-mapper';
 import { useQueryClient } from '@tanstack/react-query';
 import { successNotification } from 'src/actions/notifications';
@@ -48,7 +45,9 @@ export const UpdateCompany = () => {
     );
 
   return (
-    <FormContainer>
+    <>
+      <Modal.Header title={__('application.contactCompanyData')} />
+      <Modal.Content>
       <FieldsColumn>
         <ItfApiForm
           formId="editUserCompanyData"
@@ -71,6 +70,7 @@ export const UpdateCompany = () => {
           }}
         />
       </FieldsColumn>
-    </FormContainer>
+      </Modal.Content>
+    </>
   );
 };

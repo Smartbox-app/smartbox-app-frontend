@@ -2,12 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { hideModal } from 'src/actions/modal';
-import {
-  ButtonsContainer,
-  FormContainer,
-  FormHeader,
-} from 'src/components/Layout';
-import { Button, Form, Input, Typography } from 'src/components/ui';
+import { ButtonsContainer } from 'src/components/Layout';
+import { Button, Form, Input, Modal, Typography } from 'src/components/ui';
 import { DeleteAccountDto } from 'src/dto/DeleteAccountDto';
 import { __ } from 'src/helpers/i18n';
 import { useTenant } from 'src/hooks/useTenant';
@@ -53,27 +49,32 @@ export const DeleteAccountConfirmation = () => {
   };
 
   return (
-    <FormContainer>
-      <FormHeader title="application.deleteAccount" />
-      <Typography>{__('application.deleteAccountInfo')}</Typography>
-      <Typography>
-        {__('application.deleteAccountConfirmation')}{' '}
-        <strong>{tenant?.identifier}</strong>
-      </Typography>
+    <>
+      <Modal.Header title={__('application.deleteAccount')} />
       <Form onSubmit={handleSubmit(onSubmit)}>
-        <Input
-          label=""
-          error={errors['identifier']?.message}
-          {...register('identifier')}
-        />
-        <ButtonsContainer>
-          <Button
-            text="application.deleteAccount"
-            type="submit"
-            disabled={identifier !== tenant?.identifier}
+        <Modal.Content>
+          <Typography>{__('application.deleteAccountInfo')}</Typography>
+          <Typography>
+            {__('application.deleteAccountConfirmation')}{' '}
+            <strong>{tenant?.identifier}</strong>
+          </Typography>
+
+          <Input
+            label=""
+            error={errors['identifier']?.message}
+            {...register('identifier')}
           />
-        </ButtonsContainer>
+        </Modal.Content>
+        <Modal.Actions>
+          <ButtonsContainer>
+            <Button
+              text="application.deleteAccount"
+              type="submit"
+              disabled={identifier !== tenant?.identifier}
+            />
+          </ButtonsContainer>
+        </Modal.Actions>
       </Form>
-    </FormContainer>
+    </>
   );
 };

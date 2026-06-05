@@ -1,16 +1,18 @@
-import React from "react";
-import { ItfApiForm } from "itf_formbuilder_react";
-import { UserRole } from "smartbox-types";
-import { useDispatch, useSelector } from "react-redux";
-import { Button, Spinner } from "../../../../components/Branded";
-import { ButtonsContainer, Section } from "../../../../components/Layout";
-import ApiService from "../../../../services/api-service";
-import { formOnTranslateString } from "../../../../utils/trans-form";
-import { ApplicationState } from "../../../../reducers";
-import { successNotification } from "../../../../actions/notifications";
-import { __ } from "../../../../helpers/i18n";
-import { mapFields } from "../../../../utils/fields-mapper";
-import { useGetMyDetailsQuery } from "src/queries";
+import React from 'react';
+import { ItfApiForm } from 'itf_formbuilder_react';
+import { UserRole } from 'smartbox-types';
+import { useDispatch, useSelector } from 'react-redux';
+import { Button, Spinner } from '../../../../components/Branded';
+import { ButtonsContainer, FormContainer, Section } from '../../../../components/Layout';
+import ApiService from '../../../../services/api-service';
+import { formOnTranslateString } from '../../../../utils/trans-form';
+import { ApplicationState } from '../../../../reducers';
+import { successNotification } from '../../../../actions/notifications';
+import { __ } from '../../../../helpers/i18n';
+import { mapFields } from '../../../../utils/fields-mapper';
+import { useGetMyDetailsQuery } from 'src/queries';
+import { Link, Typography } from 'src/components/ui';
+import UserService from 'src/services/user-service';
 
 interface Props {
   userId?: string;
@@ -25,11 +27,11 @@ const ManageTenantPrivacy = ({ userId }: Props) => {
   const fetchUrl =
     user.role === UserRole.admin && userId
       ? `tenant/form/admin-privacy/${userId}`
-      : "tenant/form/privacy";
+      : 'tenant/form/privacy';
   const sendUrl =
     user.role === UserRole.admin && userId
       ? `tenant/admin/privacy/${userId}`
-      : "tenant/privacy";
+      : 'tenant/privacy';
 
   const submitButton = (
     <ButtonsContainer>
@@ -38,26 +40,37 @@ const ManageTenantPrivacy = ({ userId }: Props) => {
   );
 
   const customSendFetcher = (formId: string, values) => {
-    return ApiService.sendForm(sendUrl, values, "POST");
+    return ApiService.sendForm(sendUrl, values, 'POST');
   };
 
   return (
     <Section highlight>
-      <ItfApiForm
-        formId="tenantPrivacyForm"
-        schemaMayBeDynamic={false}
-        schemaCacheEnabled={false}
-        useFormDataInsteadOfPlainObject
-        loadingInfo={<Spinner transparent />}
-        schemaFetcher={() => ApiService.loadForm(fetchUrl)}
-        sendFetcher={customSendFetcher}
-        submitButton={submitButton}
-        onRenderFullField={mapFields}
-        onSavedSuccessfully={() => {
-          dispatch(successNotification(__("application.tenantUpdated")));
-        }}
-        onTranslateString={formOnTranslateString}
-      />
+      <Typography>
+        Nowy sposób zarządzania polityką prywatności znajduje się w sekcji{' '}
+        <Link
+          to={`/${UserService.getSlugByRole(user.role)}/management/documents`}
+        >
+          Dokumenty
+        </Link>
+        .
+      </Typography>
+      <FormContainer>
+        <ItfApiForm
+          formId="tenantPrivacyForm"
+          schemaMayBeDynamic={false}
+          schemaCacheEnabled={false}
+          useFormDataInsteadOfPlainObject
+          loadingInfo={<Spinner transparent />}
+          schemaFetcher={() => ApiService.loadForm(fetchUrl)}
+          sendFetcher={customSendFetcher}
+          submitButton={submitButton}
+          onRenderFullField={mapFields}
+          onSavedSuccessfully={() => {
+            dispatch(successNotification(__('application.tenantUpdated')));
+          }}
+          onTranslateString={formOnTranslateString}
+        />
+      </FormContainer>
     </Section>
   );
 };

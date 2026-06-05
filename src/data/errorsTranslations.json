@@ -450,6 +450,18 @@
       "102": {
         "text": "Nie można otworzyć bramy w tej chwili! Spróbuj ponownie za chwilę",
         "__type_alias_do_not_touch": "ApiErrorCode.OpenGateTooSoon"
+      },
+      "103": {
+        "text": "Ten użytkownik został już zaproszony",
+        "__type_alias_do_not_touch": "ApiErrorCode.InvitationAlreadyExists"
+      },
+      "104": {
+        "text": "Nieprawidłowy lub wygasły kod aktywacyjny.",
+        "__type_alias_do_not_touch": "ApiErrorCode.InvalidActivationCode"
+      },
+      "105": {
+        "text": "Nowy kod można wygenerować po 5 minutach.",
+        "__type_alias_do_not_touch": "ApiErrorCode.ActivationCodeResendTooSoon,"
       }
     }
   }

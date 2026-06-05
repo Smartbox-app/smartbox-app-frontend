@@ -9,11 +9,12 @@ import './SummaryTable.scss';
 import { __ } from '../../../../../../helpers/i18n';
 import styled from 'styled-components';
 import { darken } from 'polished';
-import { AddonRes } from 'smartbox-types';
+import { AddonRes, PriceDisplayForClients } from 'smartbox-types';
 import { OrderAddon } from '../../../../../../reducers/order-reducer';
 import { SelectedVariant } from './SelectedVariant';
 import { colorOrDark } from '../../../../../../utils/color';
 import { Header, Section } from 'src/components/ui';
+import React from 'react';
 
 const StyledCell = styled.div`
   color: ${(props) => colorOrDark(props.theme.colors.primary)};
@@ -25,37 +26,26 @@ const StyledRow = styled.div`
 
 const StyledDetailsList = styled.ul`
   list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 `;
 
 const StyledDetailsRow = styled.li(
   ({ theme }) => `
-    border-bottom: 1px solid #fbfbfb;
-       padding: 8px 0;
     font-size: 14px;
     display: flex;
     flex-direction: column;
     gap: 4px;
-
-    .row-dash {
-    display: none;
-    
-    }
-    
-    &:nth-child(even) {
-      background:${theme.colors.background.tertiary}
-    }
-  
-      @media(min-width: 768px) {
-          padding: 16px;
-     padding: 16px;
-     flex-direction: row;
-
-     .row-dash {
-     display: block;
-     }
-    }
+    border-bottom: 1px solid #eee;
+    padding: 8px 0;
 `,
 );
+
+const StyledRentPrice = styled('div')`
+  font-size: 14px;
+  font-weight: 300;
+`;
 
 interface Props {
   dateStart: Date;
@@ -63,6 +53,9 @@ interface Props {
   countedPrice: {
     value: number;
     isGross: boolean;
+    display: PriceDisplayForClients;
+    grossPrice: number;
+    netPrice: number;
   }[];
   addons?: AddonRes[];
   orderAddons?: { [addonId: string]: OrderAddon };
@@ -77,13 +70,21 @@ const SummaryTable = ({
 }: Props) => {
   const addonsPricesPerPeriod = useMemo(() => {
     if (!orderAddons) return [];
-    const everyAddonPricePerPeriod: number[] = [];
+    const everyAddonPricePerPeriod: { net: number; gross: number }[] = [];
     for (const addon of Object.values(orderAddons)) {
-      const pricePerPeriod = (addon.price || []).map((price) => price.value);
+      const pricePerPeriod = (addon.price || []).map((price) => ({
+        net: price.netPrice,
+        gross: price.grossPrice,
+      }));
 
       for (let i = 0; i < pricePerPeriod.length; i++) {
-        everyAddonPricePerPeriod[i] =
-          (everyAddonPricePerPeriod[i] || 0) + pricePerPeriod[i];
+        if (!everyAddonPricePerPeriod[i]) {
+          everyAddonPricePerPeriod[i] = { net: 0, gross: 0 };
+        }
+        everyAddonPricePerPeriod[i].net =
+          (everyAddonPricePerPeriod[i].net || 0) + pricePerPeriod[i].net;
+        everyAddonPricePerPeriod[i].gross =
+          (everyAddonPricePerPeriod[i].gross || 0) + pricePerPeriod[i].gross;
       }
     }
 
@@ -91,13 +92,69 @@ const SummaryTable = ({
   }, [orderAddons]);
 
   const rentPricesPerPeriod = useMemo(() => {
-    return countedPrice.map((price) => price.value);
+    return countedPrice.map((price) => ({
+      net: price.netPrice,
+      gross: price.grossPrice,
+    }));
   }, [countedPrice]);
 
+  const firstPeriodPrice = useMemo(() => {
+    switch (countedPrice[0].display) {
+      case PriceDisplayForClients.gross:
+        return <strong>{formatPrice(rentPricesPerPeriod[0].gross)}</strong>;
+      case PriceDisplayForClients.net:
+        return <strong>{formatPrice(rentPricesPerPeriod[0].net)}</strong>;
+      case PriceDisplayForClients.both:
+        return <><strong>{formatPrice(rentPricesPerPeriod[0].gross)} {__('application.gross')}</strong>/{formatPrice(rentPricesPerPeriod[0].net)} {__('application.net')}</>;
+    }
+  }, [rentPricesPerPeriod, countedPrice]);
+
   const fullPrice = useMemo(() => {
-    
-    return (addonsPricesPerPeriod[0] || 0) + rentPricesPerPeriod[0];
-  }, [rentPricesPerPeriod, addonsPricesPerPeriod]);
+    const netFullPrice =
+      (addonsPricesPerPeriod[0]?.net || 0) + rentPricesPerPeriod[0].net;
+    const grossFullPrice =
+      (addonsPricesPerPeriod[0]?.gross || 0) + rentPricesPerPeriod[0].gross;
+
+    switch (countedPrice[0].display) {
+      case PriceDisplayForClients.gross:
+        return formatPrice(grossFullPrice);
+      case PriceDisplayForClients.net:
+        return formatPrice(netFullPrice);
+      case PriceDisplayForClients.both:
+        return (
+          <div>
+            {formatPrice(grossFullPrice)} {__('application.gross')}{' '}
+            <div className="price-net">
+              {formatPrice(netFullPrice)} {__('application.net')}
+            </div>
+          </div>
+        );
+    }
+  }, [rentPricesPerPeriod, addonsPricesPerPeriod, countedPrice]);
+
+  const rentPriceTitle = useMemo(() => {
+    switch (countedPrice[0].display) {
+      case PriceDisplayForClients.gross:
+        return __('application.grossPaymentForRent');
+      case PriceDisplayForClients.net:
+        return __('application.netPaymentForRent');
+      case PriceDisplayForClients.both:
+        return __('application.paymentForRent');
+    }
+  }, [countedPrice]);
+
+  const fullPriceTitle = useMemo(() => {
+    switch (countedPrice[0].display) {
+      case PriceDisplayForClients.gross:
+        return __('application.grossPayment');
+      case PriceDisplayForClients.net:
+        return __('application.netPayment');
+      case PriceDisplayForClients.both:
+        return __('application.payment');
+    }
+  }, [countedPrice]);
+
+  console.log('COUNTED PRICE', countedPrice);
 
   return (
     <>
@@ -120,34 +177,24 @@ const SummaryTable = ({
         </StyledRow>
         <StyledRow className="row">
           <StyledCell className="cell">
-            <Header variant="h2">
-              {countedPrice[0].isGross
-                ? __('application.grossPayment')
-                : __('application.netPayment')}
-            </Header>
+            <Header variant="h2">{fullPriceTitle}</Header>
           </StyledCell>
-          <StyledCell className="cell fat">
-            <span>{formatPrice(fullPrice)}</span>
-          </StyledCell>
+          <StyledCell className="cell fat">{fullPrice}</StyledCell>
         </StyledRow>
       </div>
       <Header variant="h2">{__('application.priceDetails')}</Header>
       <StyledDetailsList>
         <StyledDetailsRow>
-          {countedPrice[0].isGross
-            ? __('application.paymentForRent')
-            : __('application.netPaymentForRent')}
-          <span className="row-dash">-</span>
-          <strong>{formatPrice(rentPricesPerPeriod[0])}</strong>
+          <Header variant="h3">{rentPriceTitle}</Header>
+          <StyledRentPrice>{firstPeriodPrice}</StyledRentPrice>
         </StyledDetailsRow>
         {addons && orderAddons
           ? addons
               .filter((addon) => !addon.noPricing)
               .map((addon) => (
                 <StyledDetailsRow key={addon.id}>
-                  <span>{addon.name}</span>
-                  <span className="row-dash">-</span>
                   <SelectedVariant
+                    addonName={addon.name}
                     addonId={addon.id}
                     addons={addons}
                     orderAddons={orderAddons}

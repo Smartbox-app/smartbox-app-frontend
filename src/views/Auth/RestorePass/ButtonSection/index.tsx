@@ -1,20 +1,16 @@
 import React from 'react';
 import { ButtonsContainer } from '../../../../components/Layout';
-import { Button } from '../../../../components/Branded';
-
-import './ButtonSection.scss';
+import { Button } from 'src/components/ui';
 
 interface Props {
   mainButtonText: string;
 }
 
 const ButtonsSection = ({ mainButtonText }: Props) => (
-  <div className="restore-pass-buttons-section">
     <ButtonsContainer max column>
-      <Button text={mainButtonText} big type="submit" primary rounded />
-      <Button text='application.back' big outline rounded to="/" />
+      <Button text={mainButtonText} size='large' variant='primary' type="submit" />
+      <Button text='application.back' size='large' variant='secondary' to="/" />
     </ButtonsContainer>
-  </div>
 );
 
 export default ButtonsSection;

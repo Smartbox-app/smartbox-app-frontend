@@ -28,7 +28,7 @@ export const Description = ({ description, rent }: Props) => {
       <Header variant="h2">{__('application.rentHistory')}</Header>
       {clientSource ? (
         <StyledClientSource>
-          <strong>{__(getText('client_source'))}</strong>
+          <strong>{getText('client_source')}</strong>
           <Typography>{clientSource}</Typography>{' '}
         </StyledClientSource>
       ) : (

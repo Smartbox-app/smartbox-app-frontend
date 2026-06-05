@@ -22,8 +22,7 @@ type PeriodRow = {
 };
 
 const isInvoiceIssued = (invoiceId: string | null | undefined) =>
-  !!invoiceId &&
-  !['error', 'pending'].includes(invoiceId);
+  !!invoiceId && !['error', 'pending'].includes(invoiceId);
 
 const List = () => {
   const dispatch = useDispatch();
@@ -112,6 +111,8 @@ const List = () => {
       }),
     [handleViewDocument, confirmMarkPeriodAsPaid],
   );
+
+  if (!rentId) return null;
 
   return (
     <Section>

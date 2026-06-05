@@ -1,7 +1,16 @@
 import React from 'react';
-import { FieldsMapper } from "../components/Common";
+import { FieldsMapper } from '../components/Common';
 
-export const mapFieldsBig = (field, errors, fieldHtmlId, currentValue, onChange, onFocus, onBlur) => <FieldsMapper
+export const mapFieldsBig = (
+  field,
+  errors,
+  fieldHtmlId,
+  currentValue,
+  onChange,
+  onFocus,
+  onBlur,
+) => (
+  <FieldsMapper
     fieldHtmlId={fieldHtmlId}
     field={field}
     onChange={onChange}
@@ -9,10 +18,20 @@ export const mapFieldsBig = (field, errors, fieldHtmlId, currentValue, onChange,
     onBlur={onBlur}
     currentValue={currentValue}
     errors={errors}
-    big
-/>
+    size="large"
+  />
+);
 
-export const mapFields = (field, errors, fieldHtmlId, currentValue, onChange, onFocus, onBlur) => <FieldsMapper
+export const mapFields = (
+  field,
+  errors,
+  fieldHtmlId,
+  currentValue,
+  onChange,
+  onFocus,
+  onBlur,
+) => (
+  <FieldsMapper
     fieldHtmlId={fieldHtmlId}
     field={field}
     onChange={onChange}
@@ -20,4 +39,6 @@ export const mapFields = (field, errors, fieldHtmlId, currentValue, onChange, on
     onBlur={onBlur}
     currentValue={currentValue}
     errors={errors}
-/>
+    size="medium"
+  />
+);

@@ -2,13 +2,9 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Controller, useForm } from 'react-hook-form';
 import { Button } from 'src/components/Branded';
-import { InputPhone } from 'src/components/Common';
-import {
-  ButtonsContainer,
-  FormContainer,
-  SectionHeader,
-} from 'src/components/Layout';
-import { Form, Input, Select } from 'src/components/ui';
+import { InputPhone, InputSelect } from 'src/components/Common';
+import { ButtonsContainer } from 'src/components/Layout';
+import { Form, Input, Modal } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
 import { successNotification } from 'src/actions/notifications';
 import { hideModal } from 'src/actions/modal';
@@ -105,17 +101,26 @@ export const StaffAddRentAuthorizationModal = ({ stockId, rentId }: Props) => {
   };
 
   return (
-    <FormContainer>
-      <SectionHeader title="application.rentAuthorizationsAdd" />
-      <p>{__('application.rentAuthorizationsDescription')}</p>
-
+    <>
+      <Modal.Header title={__('application.rentAuthorizationsAdd')} />
       <Form onSubmit={handleSubmit(onSubmit)}>
-        <Select
-          {...register('lookupMode')}
-          label="application.rentAuthorizationsLookupBy"
-          options={lookupOptions}
-          error={errors.lookupMode?.message}
-          disabled={isPending}
+        <Modal.Content>
+          <p>{__('application.rentAuthorizationsDescription')}</p>
+        <Controller
+          name="lookupMode"
+          control={control}
+          render={({ field, fieldState }) => (
+            <InputSelect
+              name="lookupMode"
+              label="application.rentAuthorizationsLookupBy"
+              options={lookupOptions}
+              value={field.value}
+              onChange={field.onChange}
+              onBlur={field.onBlur}
+              error={fieldState.error?.message}
+              disabled={isPending}
+            />
+          )}
         />
 
         {lookupMode === 'email' ? (
@@ -148,21 +153,24 @@ export const StaffAddRentAuthorizationModal = ({ stockId, rentId }: Props) => {
           />
         )}
 
-        <ButtonsContainer>
-          <Button
-            text="application.cancel"
-            success
-            click={handleCancel}
-            disabled={isPending}
-          />
-          <Button
-            text="application.save"
-            primary
-            type="submit"
-            disabled={isPending}
-          />
-        </ButtonsContainer>
+        </Modal.Content>
+        <Modal.Actions>
+          <ButtonsContainer>
+            <Button
+              text="application.cancel"
+              success
+              click={handleCancel}
+              disabled={isPending}
+            />
+            <Button
+              text="application.save"
+              primary
+              type="submit"
+              disabled={isPending}
+            />
+          </ButtonsContainer>
+        </Modal.Actions>
       </Form>
-    </FormContainer>
+    </>
   );
 };

@@ -1,47 +1,32 @@
 import React from 'react';
 import { Route, Redirect, Switch } from 'react-router-dom';
 
-import { Main, DashboardContainer, Navigation } from '../../components/Layout';
-import MobileLogoContainer from '../../components/Layout/MobileLogoContainer';
-import { MenuItemType } from '../../types/menu-item';
+import {
+  Main,
+  DashboardContainer,
+  DashboardSidebar,
+} from '../../components/Layout';
 import Management from './Management';
 import { Profile } from '../DashboardCommon';
 import { StockGroups } from '../DashboardCommon/StockGroups';
 import { TenantStatus } from './TenantStatus';
-import { Manage, Settings, Stocks } from '../../icons';
-import { useTenantNaming } from 'src/hooks/useTenantNaming';
+import { useDashboardSidebarNav } from 'src/hooks/useDashboardSidebarNav';
 
 const DashboardTenant = () => {
-  const {getText} = useTenantNaming();
-  const menuItems: MenuItemType[] = [
-    {
-      icon: <Manage />,
-      text: 'application.management',
-      to: '/client/management',
-    },
-    {
-      icon: <Stocks />,
-      text: getText('many'),
-      to: '/client/locations',
-    },
-    {
-      icon: <Settings />,
-      text: 'application.account',
-      to: '/client/profile',
-    },
-  ];
+  const sidebarGroups = useDashboardSidebarNav();
 
   return (
-    <DashboardContainer>
-      <MobileLogoContainer />
-      <Navigation menuItems={menuItems} />
-      <TenantStatus />
+    <DashboardContainer
+      sidebar={
+        <DashboardSidebar groups={sidebarGroups} bottom={<TenantStatus />} />
+      }
+    >
       <Main>
         <Switch>
           <Route
             exact
             path="/client"
-            render={() => <Redirect to="/client/management" />}
+            render={() => <Redirect to="/client/management/users/list" />}
           />
           <Route path="/client/management/" component={Management} />
           <Route path="/client/profile" component={Profile} />

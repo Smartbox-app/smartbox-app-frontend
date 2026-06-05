@@ -8,25 +8,29 @@ export type TabsProps = {
 };
 
 const StyledTabs = styled('div')(({ theme }) => ({
-  display: 'flex',
-  gap: theme.spacing * 2,
-  flexWrap: 'wrap',
+  '@media (min-width: 768px)': {
+    display: 'flex',
+    gap: theme.spacing * 2,
+    flexWrap: 'wrap',
+  },
 }));
 
 const tabStyles = css<{ active?: boolean }>(({ theme, active }) => ({
   display: 'flex',
   alignItems: 'center',
-  justifyContent: 'center',
+  // justifyContent: 'center',
 
-  fontSize: 14,
+  fontSize: 12,
   gap: theme.spacing,
-  padding: theme.spacing * 2,
+  padding: theme.spacing,
   color: active ? theme.colors.primary : theme.colors.text.primary,
   svg: {
+    width: theme.spacing * 5,
+    height: theme.spacing * 5,
     fill: active ? theme.colors.primary : theme.colors.text.primary,
   },
   cursor: 'pointer',
-  borderBottom: `1px solid ${active ? theme.colors.primary : theme.colors.text.primary}`,
+
   '&:link, &:visited, &:hover, &:active': {
     color: active ? theme.colors.primary : theme.colors.text.primary,
     svg: {
@@ -39,6 +43,11 @@ const tabStyles = css<{ active?: boolean }>(({ theme, active }) => ({
     svg: {
       fill: theme.colors.primary,
     },
+  },
+  '@media (min-width: 768px)': {
+    fontSize: 14,
+    padding: theme.spacing * 2,
+    borderBottom: `1px solid ${active ? theme.colors.primary : theme.colors.text.primary}`,
   },
 }));
 

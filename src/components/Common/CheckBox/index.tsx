@@ -61,7 +61,7 @@ const CheckBox = ({
       checked={!!checked}
       disabled={disabled}
     />
-    <label htmlFor={name}>{__(label)}</label>
+    <label htmlFor={name}>{label}</label>
     {errors && <InputErrors errors={errors} />}
     {help && <InputHelp text={help} />}
   </StyledCheckbox>

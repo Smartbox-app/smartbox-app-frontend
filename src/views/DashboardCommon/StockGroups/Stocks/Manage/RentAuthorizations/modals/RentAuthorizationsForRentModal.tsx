@@ -4,7 +4,7 @@ import { FieldType, rentAuthorizationsList } from 'smartbox-tables';
 import { AdminRentListDetails, RentAuthorizationListItem } from 'smartbox-types';
 import { ApiTable, ConfirmModal } from 'src/components/Common';
 import { Button } from 'src/components/Branded';
-import { ButtonsContainer, FormContainer, SectionHeader } from 'src/components/Layout';
+import { ButtonsContainer } from 'src/components/Layout';
 import { __ } from 'src/helpers/i18n';
 import { InteractiveTableSchema } from 'src/utils/table-schema-utils';
 import { showModal, hideModal } from 'src/actions/modal';
@@ -12,7 +12,7 @@ import { successNotification } from 'src/actions/notifications';
 import { refreshApiTableData } from 'src/actions/api-table';
 import { useGetMyDetailsQuery } from 'src/queries';
 import { useRevokeRentAuthorizationByStaffMutation } from 'src/mutations';
-import { Header } from 'src/components/ui';
+import { Header, Modal } from 'src/components/ui';
 import UserService from 'src/services/user-service';
 import { history } from 'src/App';
 import { RENT_AUTHORIZATIONS_MODAL } from 'src/constants/api-table-instances';
@@ -102,37 +102,37 @@ export const RentAuthorizationsForRentModal = ({ stockId, rent }: Props) => {
     [openRevokeConfirm],
   );
 
-  if (!user) return null;
-
   return (
-    <FormContainer>
-      <SectionHeader title="application.rentAuthorizations" />
-      <Header variant="h3">
-        {__('application.rentAuthForRentSubtitle', {
-          number: rent.number,
-        })}
-      </Header>
+    <>
+      <Modal.Header title={__('application.rentAuthorizations')} />
+      <Modal.Content>
+        <Header variant="h3">
+          {__('application.rentAuthForRentSubtitle', {
+            number: rent.number,
+          })}
+        </Header>
 
-      <ButtonsContainer>
-        <Button
-          text="application.rentAuthorizationsAdd"
-          primary
-          small
-          click={openAddAuthorizationModal}
-        />
-        <Button
-          text="application.rentAuthOpenStockAuthorizationsTab"
-          secondary
-          small
-          click={goToStockAuthorizationsTab}
-        />
-      </ButtonsContainer>
+        <ButtonsContainer>
+          <Button
+            text="application.rentAuthorizationsAdd"
+            primary
+            small
+            click={openAddAuthorizationModal}
+          />
+          <Button
+            text="application.rentAuthOpenStockAuthorizationsTab"
+            secondary
+            small
+            click={goToStockAuthorizationsTab}
+          />
+        </ButtonsContainer>
 
-      <ApiTable
-        scheme={scheme}
-        instanceId={RENT_AUTHORIZATIONS_MODAL}
-        apiEndpointSubUrl={`rent/authorizations/${stockId}/${rent.id}`}
-      />
-    </FormContainer>
+        <ApiTable
+          scheme={scheme}
+          instanceId={RENT_AUTHORIZATIONS_MODAL}
+          apiEndpointSubUrl={`rent/authorizations/${stockId}/${rent.id}`}
+        />
+      </Modal.Content>
+    </>
   );
 };

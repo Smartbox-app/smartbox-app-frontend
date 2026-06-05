@@ -15,10 +15,18 @@ import { AppMaintenanceModal } from './components/AppMaintenanceModal';
 import { useTenant } from '../../hooks/useTenant';
 import { SocialLogin } from '@capgo/capacitor-social-login';
 import { Preferences } from '@capacitor/preferences';
+import styled from 'styled-components';
 
 interface Props {
   children: React.ReactNode;
 }
+
+const SpinnerContainer = styled.div`  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+`;
 
 const AppWrapper = ({ children }: Props) => {
   const dispatch = useDispatch();
@@ -193,7 +201,7 @@ const AppWrapper = ({ children }: Props) => {
     if (config) setIsMaintenanceScreen(false);
   }, [config, error]);
 
-  if (!config && isLoading) return <Spinner />;
+  if (!config && isLoading) return <SpinnerContainer><Spinner /></SpinnerContainer>;
 
   // if (isMaintenanceScreen) return <MaintenanceScreen />;
 

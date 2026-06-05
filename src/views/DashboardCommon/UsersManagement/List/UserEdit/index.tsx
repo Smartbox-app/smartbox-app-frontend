@@ -4,7 +4,8 @@ import { DiscountReq } from 'smartbox-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Button, Spinner } from '../../../../../components/Branded';
-import { ButtonsContainer, FieldsColumn, FormContainer, FormHeader } from '../../../../../components/Layout';
+import { ButtonsContainer, FieldsColumn } from '../../../../../components/Layout';
+import { Modal } from 'src/components/ui';
 import ApiService from '../../../../../services/api-service';
 import { formOnTranslateString } from '../../../../../utils/trans-form';
 import { apiTable, modal, notifications } from '../../../../../actions';
@@ -39,8 +40,9 @@ const UserEdit = ({ userId, successNotification, hideModal, refreshApiTableData 
   };
 
   return (
-    <FormContainer>
-      <FormHeader title="application.editUserData" />
+    <>
+      <Modal.Header title={__('application.editUserData')} />
+      <Modal.Content>
       <FieldsColumn>
         <ItfApiForm
           formId="editUserForm"
@@ -59,7 +61,8 @@ const UserEdit = ({ userId, successNotification, hideModal, refreshApiTableData 
           onTranslateString={formOnTranslateString}
         />
       </FieldsColumn>
-    </FormContainer>
+      </Modal.Content>
+    </>
   );
 };
 

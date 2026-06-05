@@ -3,7 +3,7 @@ import { ItfApiForm } from "itf_formbuilder_react";
 import { UserRole } from "smartbox-types";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Spinner } from "../../../../components/Branded";
-import { ButtonsContainer, Section } from "../../../../components/Layout";
+import { ButtonsContainer, FormContainer, Section } from "../../../../components/Layout";
 import ApiService from "../../../../services/api-service";
 import { formOnTranslateString } from "../../../../utils/trans-form";
 import { ApplicationState } from "../../../../reducers";
@@ -43,7 +43,8 @@ const ManageTenantLogo = ({ userId }: Props) => {
   };
 
   return (
-    <Section highlight>
+    <Section highlight half>
+      <FormContainer>
       <ItfApiForm
         formId="tenantLogoForm"
         schemaMayBeDynamic={false}
@@ -60,6 +61,7 @@ const ManageTenantLogo = ({ userId }: Props) => {
         }}
         onTranslateString={formOnTranslateString}
       />
+      </FormContainer>
     </Section>
   );
 };

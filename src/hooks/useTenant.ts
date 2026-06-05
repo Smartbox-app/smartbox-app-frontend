@@ -1,7 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router';
-import { DebtResolveType, NamingType, TenantForUsers } from 'smartbox-types';
+import {
+  AccountConfirmationMethod,
+  DebtResolveType,
+  NamingType,
+  TenantForUsers,
+} from 'smartbox-types';
 import { setTenant as setTenantAction } from '../actions/tenant';
 import ApiService from '../services/api-service';
 import { ApplicationState } from 'src/reducers';
@@ -66,6 +71,8 @@ const useTenant = (): UseTenant => {
       newRentNotification: false,
       rentExtendedNotification: false,
       smsAvailable: false,
+      accountConfirmationMethodEffective:
+        AccountConfirmationMethod.email_link,
       invoiceServiceDepartmentID: '',
       debtResolveType: DebtResolveType.DebtOnly,
       paymentDisclaimer: '',

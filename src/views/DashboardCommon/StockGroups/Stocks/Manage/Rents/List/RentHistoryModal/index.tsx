@@ -8,6 +8,8 @@ import {
 import { RentHistory } from '../../../../../../RentHistory';
 import ApiService from '../../../../../../../../services/api-service';
 import { Spinner } from '../../../../../../../../components/Branded';
+import { Modal } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
 
 interface Props {
   description: RentDescription[];
@@ -31,15 +33,22 @@ export const RentHistoryModal = ({ description, rent }: Props) => {
     getRentDetails();
   }, []);
 
-  if (!fullRent) return <Spinner />;
-
   return (
-    <RentHistory
-      description={description}
-      rentId={fullRent.id}
-      paymentType={fullRent.paymentType}
-      periods={fullRent.periods}
-      decisionFinishAt={fullRent.decisionFinishAt}
-    />
+    <>
+      <Modal.Header title={__('application.rentHistory')} />
+      <Modal.Content>
+        {fullRent ? (
+          <RentHistory
+            description={description}
+            rentId={fullRent.id}
+            paymentType={fullRent.paymentType}
+            periods={fullRent.periods}
+            decisionFinishAt={fullRent.decisionFinishAt}
+          />
+        ) : (
+          <Spinner />
+        )}
+      </Modal.Content>
+    </>
   );
 };

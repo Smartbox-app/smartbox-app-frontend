@@ -1,19 +1,18 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { SingleAlarmRes, UserRole } from 'smartbox-types';
-import { alarmsList, gateList } from 'smartbox-tables';
+import { SingleAlarmRes } from 'smartbox-types';
+import { alarmsList } from 'smartbox-tables';
 import { showModal } from '../../../../../../../actions/modal';
 
 import { ApiTable, ConfirmModal } from '../../../../../../../components/Common';
-import { Button, Spinner } from '../../../../../../../components/Branded';
+import { Spinner } from '../../../../../../../components/Branded';
 import { Section } from '../../../../../../../components/Layout';
 import { __ } from '../../../../../../../helpers/i18n';
 import { InteractiveTableSchema } from '../../../../../../../utils/table-schema-utils';
 import { refreshApiTableData } from '../../../../../../../actions/api-table';
 import { useParams } from 'react-router';
-import UserService from '../../../../../../../services/user-service';
 import { useGetMyDetailsQuery } from 'src/queries';
-import { Header, HeaderWithActions, Typography } from 'src/components/ui';
+import { Header, Typography } from 'src/components/ui';
 import ApiService from '../../../../../../../services/api-service';
 import { successNotification } from '../../../../../../../actions/notifications';
 
@@ -23,7 +22,7 @@ const List = () => {
   const scheme = new InteractiveTableSchema(alarmsList);
   const { stockId } = useParams<{ stockId: string }>();
 
-  const [loading, setLoading] = useState(false);
+  const [actionLoading, setActionLoading] = useState(false);
 
   scheme.addFieldAtTheEnd({
     name: __('application.actions'),
@@ -69,7 +68,7 @@ const List = () => {
   };
 
   const armAlarm = async (data: SingleAlarmRes) => {
-    setLoading(true);
+    setActionLoading(true);
     await ApiService.callFetch(
       'PATCH',
       `driver/alarm/${stockId}/${data.id}`,
@@ -83,11 +82,11 @@ const List = () => {
         command: 'arm',
       },
     );
-    setLoading(false);
+    setActionLoading(false);
   };
 
   const disarmAlarm = async (data: SingleAlarmRes) => {
-    setLoading(true);
+    setActionLoading(true);
     await ApiService.callFetch(
       'PATCH',
       `driver/alarm/${stockId}/${data.id}`,
@@ -101,14 +100,14 @@ const List = () => {
         command: 'disarm',
       },
     );
-    setLoading(false);
+    setActionLoading(false);
   };
 
   return (
     <Section>
+      {actionLoading ? <Spinner halfTransparent overlay /> : null}
       <Header variant="h2">{__('application.alarmsList')}</Header>
       <Typography>{__('application.alarmsListDescription')}</Typography>
-      {loading ? <Spinner halfTransparent overlay /> : null}
       <ApiTable
         scheme={scheme}
         apiEndpointSubUrl={`gate/alarms-list/${stockId}`}

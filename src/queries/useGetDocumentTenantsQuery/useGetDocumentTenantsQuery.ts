@@ -2,9 +2,10 @@ import { useQuery } from '@tanstack/react-query';
 import ApiService from '../../services/api-service';
 import { SelectOption } from 'src/types/select';
 
-export const useGetDocumentTenantsQuery = () => {
+export const useGetTenantOptionsQuery = (options?: { enabled?: boolean }) => {
   return useQuery({
     queryKey: ['document', 'tenants'],
+    enabled: options?.enabled ?? true,
     queryFn: async () => {
       const response = await ApiService.callFetch<SelectOption[]>(
         'get',

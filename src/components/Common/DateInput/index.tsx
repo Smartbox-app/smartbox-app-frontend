@@ -4,7 +4,6 @@ import { useForm } from 'react-hook-form';
 import flatpickr from 'flatpickr'; // Check out other cool Themes: https://flatpickr.js.org/themes/
 import { Polish } from 'flatpickr/dist/l10n/pl';
 
-// import './DateInput.scss';
 import { __ } from '../../../helpers/i18n';
 import styled from 'styled-components';
 import { TranslatableObject } from '../../../utils/errors-trans';
@@ -15,11 +14,18 @@ import { ErrorText } from 'src/components/ui/ErrorText';
 import { darken } from 'polished';
 import { getColorForBackground } from 'src/utils/color';
 import { formatInTimeZone } from 'date-fns-tz';
+import {
+  getInputFieldStyles,
+  InputSize,
+  InputSizeProps,
+  resolveInputSize,
+} from '../input-sizes';
+import { StyledFieldContainer } from '../input-styled';
 
 flatpickr.localize(Polish);
 flatpickr.defaultConfig.time_24hr = true;
 
-interface Props {
+interface Props extends InputSizeProps {
   name: string;
   value?: Date[] | Date;
   label?: string;
@@ -28,7 +34,6 @@ interface Props {
   maxDate?: Date;
   register?: any;
   inline?: boolean;
-  big?: boolean;
   errors?: TranslatableObject[];
   error?: string;
   noPadding?: boolean;
@@ -37,10 +42,12 @@ interface Props {
   highlightEnd?: Date | null;
 }
 
-const StyledContainer = styled('div')(({ theme }) => ({
+const StyledDateContainer = styled(StyledFieldContainer)<{ $size: InputSize }>(
+  ({ theme, $size }) => ({
   display: 'flex',
   gap: theme.spacing * 2,
   flexDirection: 'column',
+  width: 'auto',
 
   '.flatpickr-calendar': {
     width: 'unset',
@@ -54,22 +61,7 @@ const StyledContainer = styled('div')(({ theme }) => ({
     gap: '5px !important',
   },
 
-  '.flatpickr-input': {
-    fontSize: 14,
-    lineHeight: '20px',
-    color: theme.colors.text.primary,
-    background: theme.colors.background.white,
-    padding: `${theme.spacing * 3}px ${theme.spacing * 5}px`,
-    border: `1px solid ${theme.colors.border.primary}`,
-    borderRadius: theme.radius.outerSurface,
-    height: theme.spacing * 12,
-    '&::placeholder': {
-      color: theme.colors.text.tertiary,
-    },
-    '&:focus': {
-      borderColor: theme.colors.primary,
-    },
-  },
+  '.flatpickr-input': getInputFieldStyles(theme, $size),
   '.flatpickr-day': {
     '&.today': {
       borderColor: theme.colors.primary,
@@ -104,7 +96,8 @@ const StyledContainer = styled('div')(({ theme }) => ({
     alignItems: 'center',
     height: 42,
   },
-}));
+  }),
+);
 
 const timeZone = 'Europe/Warsaw';
 
@@ -122,10 +115,14 @@ const DateInput = ({
   highlightStart,
   required = true,
   inline = true,
+  size,
+  big,
+  compact,
 }: Props) => {
+  const resolvedSize = resolveInputSize({ size, big, compact });
 
   return (
-    <StyledContainer>
+    <StyledDateContainer $size={resolvedSize} $noMargin>
       <InputLabel labelFor={name} required={required}>{__(label)}</InputLabel>
       <Flatpickr
         onDayCreate={(dates, curentDateString, self, data) => {
@@ -155,8 +152,8 @@ const DateInput = ({
         }}
       />
       {error ? <ErrorText error={error} /> : null}
-      {errors && <InputErrors errors={errors} />}
-    </StyledContainer>
+      {errors && <InputErrors size={resolvedSize} errors={errors} />}
+    </StyledDateContainer>
   );
 };
 

@@ -31,3 +31,4 @@ export * from './List';
 export * from './Percentage';
 export * from './Groups';
 export * from './Boxes';
+export * from './Close';

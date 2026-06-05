@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { __ } from '../../../../helpers/i18n';
-import { Typography } from '../../../ui';
+import { Modal, Typography } from '../../../ui';
 import { Settings } from '../../../../icons';
 
 const StyledContainer = styled('div')({
@@ -26,9 +26,11 @@ const StyledTypography = styled(Typography)({
 
 export const AppMaintenanceModal = () => {
   return (
-    <StyledContainer>
-      <Settings />
-      <StyledTypography>{__('mobileConfig.maintenance')}</StyledTypography>
-    </StyledContainer>
+    <Modal.Content>
+      <StyledContainer>
+        <Settings />
+        <StyledTypography>{__('mobileConfig.maintenance')}</StyledTypography>
+      </StyledContainer>
+    </Modal.Content>
   );
 };
