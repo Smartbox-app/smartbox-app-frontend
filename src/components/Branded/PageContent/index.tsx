@@ -48,7 +48,7 @@ const StyledPageContent = styled.div<{
   return {
     ...base,
     flex: '1 0 auto',
-    minHeight: '100vh',
+    minHeight: '100%',
     justifyContent: 'center',
     alignItems: 'center',
     overflow: 'auto',

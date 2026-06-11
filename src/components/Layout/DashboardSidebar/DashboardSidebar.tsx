@@ -18,7 +18,6 @@ const StyledDashboardSidebar = styled.aside(({ theme }) => ({
   gap: theme.spacing * 4,
   width: '100%',
   height: '100%',
-  minHeight: '100vh',
   flexShrink: 0,
   overflow: 'auto',
   padding: theme.spacing * 2,
@@ -29,8 +28,6 @@ const StyledDashboardSidebar = styled.aside(({ theme }) => ({
 
   '@media (min-width: 768px)': {
     width: 240,
-    height: '100vh',
-    minHeight: '100vh',
     padding: theme.spacing * 4,
     paddingTop: `calc(${theme.spacing * 4}px + env(safe-area-inset-top))`,
     paddingBottom: `calc(${theme.spacing * 4}px + env(safe-area-inset-bottom))`,

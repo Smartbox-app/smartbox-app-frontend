@@ -1,5 +1,6 @@
 import { Redirect, Route } from 'react-router-dom';
 import { UserRole } from 'smartbox-types';
+import { AppMessage } from 'src/components/AppMessage';
 import { useGetMyDetailsQuery } from 'src/queries';
 
 export type RouteGuestProps = {
@@ -26,5 +27,10 @@ export const RouteGuest = ({ component, exact, path }: RouteGuestProps) => {
     }
   }
 
-  return <Route exact={exact} path={path} component={component} />;
+  return (
+    <>
+      <AppMessage />
+      <Route exact={exact} path={path} component={component} />
+    </>
+  );
 };

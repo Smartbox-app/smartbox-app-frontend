@@ -48,6 +48,9 @@ export interface TenantEntity {
   agreementDisclaimer: string;
   paymentDisclaimer: string;
   homeMessage: string;
+  systemMessage: string;
+  mobileAppAndroidLink: string | null;
+  mobileAppIosLink: string | null;
   useCustomSmtp: boolean;
   smtpHost: string | null;
   smtpPort: number | null;
@@ -108,6 +111,9 @@ export type UpdateTenantByAdminReq = Pick<
   | 'paymentDisclaimer'
   | 'homeMessage'
   | 'accountConfirmationMethod'
+  | 'mobileAppAndroidLink'
+  | 'mobileAppIosLink'
+  | 'systemMessage'
 >;
 
 export type TenantForUsers = Omit<

@@ -33,3 +33,10 @@ export interface MobileConfigReq {
   value: string;
   appId: string;
 }
+
+export interface MobileAppConfigResponse {
+  versions: string[];
+  isMaintenance: boolean;
+  /** Platform-specific + shared mobile messages (non-empty only). */
+  messages: string[];
+}

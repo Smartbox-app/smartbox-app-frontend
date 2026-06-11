@@ -1,10 +1,12 @@
 import React, { useEffect, useState, useCallback } from 'react';
-
+import { useTenant } from 'src/hooks/useTenant';
+import { hasMobileAppIosLink } from 'src/utils/tenant-mobile-app-links';
 import { Icon } from '..';
 
 import './BanneriOS.scss';
 
 const BannerIos = () => {
+  const { tenant } = useTenant();
   const [isIos, setIsIos] = useState<boolean>();
   const [isComponentVisible, setComponentVisible] = useState<boolean>(false);
 
@@ -30,6 +32,8 @@ const BannerIos = () => {
     localStorage.setItem('banner-displayed', 'true');
     setComponentVisible(false);
   };
+
+  if (hasMobileAppIosLink(tenant)) return null;
 
   return (
     <div className="banner-ios">

@@ -5,15 +5,35 @@ import './index.scss';
 import 'font-awesome/css/font-awesome.min.css';
 import App from './App';
 import ApiService from './services/api-service';
+import { unregisterServiceWorkersIfNative } from './utils/unregister-service-workers';
+import { getMobileBuildId } from './utils/mobile-build-id';
+import { syncNativeWebBundleCache } from './utils/sync-native-web-bundle-cache';
 
-const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement,
-);
+const bootstrap = async () => {
+  unregisterServiceWorkersIfNative();
 
-ApiService.setUrl();
+  const mobileBuildId = getMobileBuildId();
+  console.log('MOBILE BUILD ID', mobileBuildId);
+  if (mobileBuildId) {
+    window.__MOBILE_BUILD_ID__ = mobileBuildId;
+  }
 
-root.render(
-  <StrictMode>
-    <App />
-  </StrictMode>,
-);
+  const reloaded = await syncNativeWebBundleCache();
+  if (reloaded) {
+    return;
+  }
+
+  const root = ReactDOM.createRoot(
+    document.getElementById('root') as HTMLElement,
+  );
+
+  ApiService.setUrl();
+
+  root.render(
+    <StrictMode>
+      <App />
+    </StrictMode>,
+  );
+};
+
+bootstrap();

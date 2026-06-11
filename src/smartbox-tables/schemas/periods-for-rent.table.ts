@@ -20,6 +20,7 @@ export const periodsForRentList: TableSchema = {
       sortable: true,
       searchable: true,
       alias: 'period',
+      mobile: true,
     },
     {
       name: 'Utworzono',
@@ -30,6 +31,7 @@ export const periodsForRentList: TableSchema = {
       defaultSort: true,
       oppositeSortDir: true,
       alias: 'period',
+      mobile: true,
     },
     {
       name: 'Początek',
@@ -38,6 +40,7 @@ export const periodsForRentList: TableSchema = {
       sortable: true,
       searchable: true,
       alias: 'period',
+      mobile: true,
     },
     {
       name: 'Koniec',
@@ -46,6 +49,7 @@ export const periodsForRentList: TableSchema = {
       sortable: true,
       searchable: true,
       alias: 'period',
+      mobile: true,
     },
     {
       name: 'Zakończenie wynajmu',
@@ -54,6 +58,7 @@ export const periodsForRentList: TableSchema = {
       sortable: true,
       searchable: true,
       alias: 'period',
+      mobile: true,
     },
     {
       name: 'Płatność do',
@@ -62,6 +67,7 @@ export const periodsForRentList: TableSchema = {
       sortable: true,
       searchable: true,
       alias: 'period',
+      mobile: true,
     },
     {
       name: 'Wartość',
@@ -70,6 +76,7 @@ export const periodsForRentList: TableSchema = {
       sortable: true,
       searchable: true,
       alias: 'period',
+      mobile: true,
     },
     {
       name: 'Opłacone',
@@ -78,6 +85,7 @@ export const periodsForRentList: TableSchema = {
       sortable: true,
       searchable: false,
       alias: 'period',
+      mobile: true,
     },
     {
       name: 'ID faktury',
@@ -86,6 +94,7 @@ export const periodsForRentList: TableSchema = {
       sortable: true,
       searchable: true,
       alias: 'period',
+      mobile: true,
     },
   ],
 };

@@ -1,8 +1,8 @@
 import { App } from '@capacitor/app';
 import { Capacitor } from '@capacitor/core';
-import { Device } from '@capacitor/device';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { getMobileBuildId } from 'src/utils/mobile-build-id';
 
 type AppVersionVariants = 'default' | 'secondary';
 
@@ -20,20 +20,29 @@ export type AppVersionProps = {
 
 export const AppVersion = ({ variant = 'default' }: AppVersionProps) => {
   const [appVersion, setAppVersion] = useState<string>();
-
-  const setVersion = async () => {
-    if (Capacitor.isNativePlatform()) {
-      const { version } = await App.getInfo();
-      setAppVersion(version);
-      return;
-    }
-
-    setAppVersion(localStorage.getItem('v') || '-');
-  };
+  const mobileBuildId = getMobileBuildId();
 
   useEffect(() => {
-    setVersion();
-  }, [])
+    const setVersion = async () => {
+      if (Capacitor.isNativePlatform()) {
+        const { version } = await App.getInfo();
+        setAppVersion(version);
+        return;
+      }
 
-  return <StyledVersion variant={variant}>{appVersion}</StyledVersion>;
+      setAppVersion(localStorage.getItem('v') || '-');
+    };
+
+    void setVersion();
+  }, []);
+
+  const parts = [appVersion, mobileBuildId].filter(Boolean);
+
+  if (parts.length === 0) return null;
+
+  return (
+    <StyledVersion variant={variant} data-testid="app-version">
+      {parts.join(' | ')}
+    </StyledVersion>
+  );
 };

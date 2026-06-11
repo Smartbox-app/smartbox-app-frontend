@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import { PageContent } from 'src/components/Branded';
 import { List } from 'src/icons';
 import { __ } from 'src/helpers/i18n';
+import { AppMessage } from 'src/components/AppMessage';
 
 interface Props {
   children: ReactNode;
@@ -14,13 +15,19 @@ interface Props {
 
 const StyledDashboardShell = styled.div({
   display: 'flex',
-  flexDirection: 'row',
-  alignItems: 'stretch',
+  flexDirection: 'column',
   position: 'relative',
   width: '100%',
   height: '100dvh',
   minHeight: '100vh',
+});
+
+const StyledDashboardContent = styled.div({
+  display: 'flex',
+  flexDirection: 'row',
   overflow: 'hidden',
+  height: '100%',
+  flex: 1,
 });
 
 const StyledSidebarBackdrop = styled.button<{ $visible: boolean }>(
@@ -141,7 +148,10 @@ export const DashboardContainer = ({ children, sidebar }: Props) => {
   }, [location.pathname]);
 
   const pageContent = (
-    <PageContent variant={isManagementDashboard ? 'dashboard' : 'default'} conditionalBg>
+    <PageContent
+      variant={isManagementDashboard ? 'dashboard' : 'default'}
+      conditionalBg
+    >
       <StyledDashboardContainer $fullScreen={isManagementDashboard}>
         {children}
         <Footer />
@@ -150,30 +160,38 @@ export const DashboardContainer = ({ children, sidebar }: Props) => {
   );
 
   if (!isManagementDashboard) {
-    return pageContent;
+    return (
+      <>
+        <AppMessage />
+        {pageContent}
+      </>
+    );
   }
 
   return (
     <StyledDashboardShell>
-      <StyledSidebarBackdrop
-        type="button"
-        $visible={mobileNavOpen}
-        aria-hidden={!mobileNavOpen}
-        tabIndex={mobileNavOpen ? 0 : -1}
-        onClick={() => setMobileNavOpen(false)}
-      />
-      <StyledSidebarSlot $open={mobileNavOpen}>{sidebar}</StyledSidebarSlot>
-      <StyledPageContentArea>{pageContent}</StyledPageContentArea>
-      <StyledMobileMenuFab>
-        <StyledMenuButton
+      <AppMessage />
+      <StyledDashboardContent>
+        <StyledSidebarBackdrop
           type="button"
-          aria-expanded={mobileNavOpen}
-          aria-label={__('application.management')}
-          onClick={() => setMobileNavOpen((open) => !open)}
-        >
-          <List />
-        </StyledMenuButton>
-      </StyledMobileMenuFab>
+          $visible={mobileNavOpen}
+          aria-hidden={!mobileNavOpen}
+          tabIndex={mobileNavOpen ? 0 : -1}
+          onClick={() => setMobileNavOpen(false)}
+        />
+        <StyledSidebarSlot $open={mobileNavOpen}>{sidebar}</StyledSidebarSlot>
+        <StyledPageContentArea>{pageContent}</StyledPageContentArea>
+        <StyledMobileMenuFab>
+          <StyledMenuButton
+            type="button"
+            aria-expanded={mobileNavOpen}
+            aria-label={__('application.management')}
+            onClick={() => setMobileNavOpen((open) => !open)}
+          >
+            <List />
+          </StyledMenuButton>
+        </StyledMobileMenuFab>
+      </StyledDashboardContent>
     </StyledDashboardShell>
   );
 };

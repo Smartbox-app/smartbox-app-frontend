@@ -1,4 +1,5 @@
 export * from './useGetMyDetailsQuery';
+export * from './useGetTenantQuery';
 export * from './useMyRentDetailsQuery';
 export * from './useGetVersionQuery';
 export * from './useGetDocumentByIdQuery';

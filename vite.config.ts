@@ -1,14 +1,11 @@
-import { defineConfig, PluginOption } from 'vite';
-import react from '@vitejs/plugin-react';
-import viteTsconfigPaths from 'vite-tsconfig-paths';
-// import { viteCommonjs, esbuildCommonjs } from '@originjs/vite-plugin-commonjs';
+import { defineConfig, type PluginOption } from 'vite';
 import { VitePWA } from 'vite-plugin-pwa';
+import { createViteConfig } from './vite.config.base';
 
 export default defineConfig(async () => {
   const { visualizer } = await import('rollup-plugin-visualizer');
-  return {
-    // depending on your application, base can also be "/"
-    base: '.',
+
+  return createViteConfig({
     plugins: [
       VitePWA({
         registerType: 'autoUpdate',
@@ -18,54 +15,22 @@ export default defineConfig(async () => {
         },
         workbox: {
           skipWaiting: true,
+          maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
         },
       }),
-      // viteCommonjs(),
-      react(),
-      viteTsconfigPaths(),
       visualizer({ open: true }) as PluginOption,
     ],
-    resolve: {
-      alias: [
-        { find: 'path', replacement: 'path-browserify' }, // this!!
-      ],
-    },
-    server: {
-      // this ensures that the browser opens upon server start
-      open: true,
-      // this sets a default port to 3000
-      port: 3000,
-    },
-    define: {
-      // here is the main update
-      global: 'globalThis',
-    },
     build: {
       rollupOptions: {
         output: {
-          chunkFileNames: 'static/js/[name]-[hash].js',
-          entryFileNames: 'static/js/[name]-[hash].js',
-          assetFileNames: ({ name }) => {
-            if (/\.js$/.test(name ?? '')) {
-              return 'static/js/[name]-[hash][extname]';
-            }
-
-            if (/\.css$/.test(name ?? '')) {
-              return 'static/css/[name]-[hash][extname]';
-            }
-            return 'assets/[name]-[hash][extname]';
-          },
           manualChunks: {
             pdfjs: ['pdfjs-dist'],
             'recharts': ['recharts'],
             'react-id-swiper': ['react-id-swiper'],
-            'react-moveable': ['react-moveable']
+            'react-moveable': ['react-moveable'],
           },
         },
       },
     },
-    optimizeDeps: {
-      include: ['@tiptap/react', '@tiptap/starter-kit'],
-    },
-  };
+  });
 });

@@ -154,8 +154,6 @@ const SummaryTable = ({
     }
   }, [countedPrice]);
 
-  console.log('COUNTED PRICE', countedPrice);
-
   return (
     <>
       <div className="order-summary-wrapper">

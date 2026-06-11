@@ -1,9 +1,12 @@
 import React, { useEffect, useState, useCallback } from 'react';
+import { useTenant } from 'src/hooks/useTenant';
+import { hasMobileAppAndroidLink } from 'src/utils/tenant-mobile-app-links';
 import { Icon } from '..';
 
 import './BannerAndroid.scss';
 
 const BannerAndroid = () => {
+  const { tenant } = useTenant();
   const [isAndroid, setIsAndroid] = useState<boolean>();
   const [isComponentVisible, setComponentVisible] = useState<boolean>(false);
 
@@ -29,6 +32,8 @@ const BannerAndroid = () => {
     localStorage.setItem('banner-displayed', 'true');
     setComponentVisible(false);
   };
+
+  if (hasMobileAppAndroidLink(tenant)) return null;
 
   return (
     <div className="android-banner">

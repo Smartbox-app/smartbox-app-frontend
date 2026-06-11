@@ -18,7 +18,10 @@ const application = {
     "phone": "Telefon",
     "phone_placeholder": "+48123456789",
     "register": "Zarejestruj się",
-    "login": "Zaloguj się"
+    "login": "Zaloguj się",
+    "mobile_app_heading": "Pobierz aplikację mobilną",
+    "mobile_app_android": "Google Play",
+    "mobile_app_ios": "App Store"
   },
   "rent": {
     "rentier_data": "Dane najemcy",

@@ -153,6 +153,12 @@ function run(command, options = {}) {
   execSync(command, { stdio: 'inherit', ...options });
 }
 
+function removePath(targetPath) {
+  if (!fs.existsSync(targetPath)) return;
+  console.log(`Removing ${targetPath}`);
+  fs.rmSync(targetPath, { recursive: true, force: true });
+}
+
 async function copyFiles(srcDir, destDir, files) {
   await Promise.all(
     files.map((file) =>
@@ -161,13 +167,96 @@ async function copyFiles(srcDir, destDir, files) {
   );
 }
 
+function getCapacitorEnv(folderName) {
+  const appName = folderToAppName[folderName] || folderName;
+  const appId = folderToAppIdentifier.android[folderName] || folderName;
+
+  return {
+    appName,
+    appId,
+    shellEnv: `NODE_APP_NAME="${appName}" NODE_APP_ID="${appId}"`,
+  };
+}
+
+async function cleanWebBuildArtifacts() {
+  for (const targetPath of ['./dist', './node_modules/.vite', './stats.html']) {
+    removePath(targetPath);
+  }
+}
+
 async function deleteNativeFolders() {
   for (const dir of ['./android', './ios']) {
-    if (fs.existsSync(dir)) {
-      console.log(`Removing ${dir}`);
-      fs.rmSync(dir, { recursive: true, force: true });
+    removePath(dir);
+  }
+}
+
+function cleanNativeWebAssets() {
+  removePath('./android/app/src/main/assets/public');
+  removePath('./android/app/build');
+  removePath('./ios/App/App/public');
+}
+
+async function cleanAndroidGradleBuild() {
+  const gradlew = process.platform === 'win32' ? 'gradlew.bat' : './gradlew';
+  if (!fs.existsSync('./android')) return;
+
+  run(`cd android && ${gradlew} clean && cd ..`);
+}
+
+const PWA_ARTIFACTS = [
+  'manifest.json',
+  'serviceWorkerMessageHandler.js',
+  'registerSW.js',
+  'sw.js',
+];
+
+function assertNoPwaArtifactsInDist() {
+  const distPath = './dist';
+  const found = PWA_ARTIFACTS.filter((fileName) =>
+    fs.existsSync(path.join(distPath, fileName)),
+  );
+
+  if (fs.existsSync(distPath)) {
+    found.push(
+      ...fs
+        .readdirSync(distPath)
+        .filter((fileName) => fileName.startsWith('workbox-')),
+    );
+  }
+
+  const indexPath = path.join(distPath, 'index.html');
+  if (fs.existsSync(indexPath)) {
+    const indexHtml = fs.readFileSync(indexPath, 'utf8');
+    if (/rel=["']manifest["']/i.test(indexHtml)) {
+      found.push('index.html (manifest link)');
+    }
+    if (/registerSW|vite-plugin-pwa/i.test(indexHtml)) {
+      found.push('index.html (service worker registration)');
     }
   }
+
+  if (found.length > 0) {
+    throw new Error(
+      `PWA artifacts found in mobile dist: ${found.join(', ')}`,
+    );
+  }
+
+  console.log('\nPWA/service worker check: dist is clean');
+}
+
+function logWebBundleEntrypoint(mobileBuildId) {
+  const indexPath = './dist/index.html';
+  if (!fs.existsSync(indexPath)) return;
+
+  const indexHtml = fs.readFileSync(indexPath, 'utf8');
+  const match = indexHtml.match(/src="([^"]+index-[^"]+\.js)"/);
+
+  console.log(
+    match
+      ? `Web bundle entry: ${match[1]}`
+      : 'Web bundle entry: not found in dist/index.html',
+  );
+  console.log(`Mobile build id: ${mobileBuildId}`);
 }
 
 // -----------------------------------------------------------------------------
@@ -214,22 +303,30 @@ async function copyAndroidManifest(folderName) {
   await writeFile('./android/app/src/main/AndroidManifest.xml', content);
 }
 
-async function copyAndroidMainActivity(folderName) {
+async function copyAndroidJavaFile(folderName, fileName) {
   const appId = folderToAppIdentifier.android[folderName] || folderName;
-  const hostName = folderToHostName[mode]?.[folderName] || folderName;
-
   const segments = appId.split('.');
 
-  const template = await readFile(
-    './app-config/android/MainActivity.java',
-    'utf8',
-  );
+  const template = await readFile(`./app-config/android/${fileName}`, 'utf8');
   const content = template.replace('{ANDROID_APP_ID}', appId);
 
   await writeFile(
-    `./android/app/src/main/java/${segments[0]}/${segments[1]}/${segments[2]}/${segments[3]}/MainActivity.java`,
+    `./android/app/src/main/java/${segments[0]}/${segments[1]}/${segments[2]}/${segments[3]}/${fileName}`,
     content,
   );
+}
+
+const ANDROID_JAVA_FILES = [
+  'MainActivity.java',
+  'WebViewCachePlugin.java',
+  'WebViewCacheHelper.java',
+  'WebBundleVersionSync.java',
+];
+
+async function copyAndroidMainActivity(folderName) {
+  for (const fileName of ANDROID_JAVA_FILES) {
+    await copyAndroidJavaFile(folderName, fileName);
+  }
 }
 
 async function copyAndroidStrings(folderName) {
@@ -271,10 +368,9 @@ async function addSecurityConfigFile() {
 // -----------------------------------------------------------------------------
 
 function initAndroid(folderName) {
-  const appName = folderToAppName[folderName] || folderName;
-  const appId = folderToAppIdentifier.android[folderName] || folderName;
+  const { shellEnv } = getCapacitorEnv(folderName);
 
-  run(`NODE_APP_NAME="${appName}" NODE_APP_ID="${appId}" npx cap add android`);
+  run(`${shellEnv} npx cap add android`);
 }
 
 function initIos(folderName) {
@@ -284,6 +380,14 @@ function initIos(folderName) {
   run(
     `NODE_APP_NAME="${appName}" NODE_APP_ID="${appId}" npx cap add ios --packagemanager CocoaPods`,
   );
+}
+
+function syncCapacitorProjects(folderName) {
+  cleanNativeWebAssets();
+
+  const { shellEnv } = getCapacitorEnv(folderName);
+
+  run(`${shellEnv} npx cap sync`);
 }
 
 // -----------------------------------------------------------------------------
@@ -334,22 +438,29 @@ async function main() {
   }
 
   // --------------------------------------------------
-  // Build
+  // Clean + build
   // --------------------------------------------------
+
+  console.log('\nCleaning previous web and native build artifacts...');
+  await cleanWebBuildArtifacts();
+  await deleteNativeFolders();
 
   const hostName = folderToHostName[mode]?.[app] || app;
   const hostSuffix = mode === 'prod' ? '.smartbox-app.pl' : '@TODO';
   const fullAddress = `${hostName}${hostSuffix}`;
+  const mobileBuildId = Date.now();
 
   run(
-    `VITE_APP_HOSTNAME="${fullAddress}" VITE_APP_API_URL=${mode === 'prod' ? 'https://api.smartbox-app.pl' : 'http://10.0.2.2:3001'} npx vite build`,
+    `MOBILE_BUILD_ID="${mobileBuildId}" VITE_APP_HOSTNAME="${fullAddress}" VITE_APP_API_URL=${mode === 'prod' ? 'https://api.smartbox-app.pl' : 'http://10.0.2.2:3001'} npx vite build --config vite.config.mobile.ts`,
+    { env: { ...process.env, MOBILE_BUILD_ID: String(mobileBuildId) } },
   );
+
+  logWebBundleEntrypoint(mobileBuildId);
+  assertNoPwaArtifactsInDist();
 
   // --------------------------------------------------
   // Native setup
   // --------------------------------------------------
-
-  await deleteNativeFolders();
 
   initAndroid(app);
   initIos(app);
@@ -357,11 +468,16 @@ async function main() {
   await addConfigFiles(app);
   await addSecurityConfigFile();
 
+  syncCapacitorProjects(app);
+
   // iOS dependencies
   run('cd ./ios/App && pod install && cd ../../');
 
   // Assets
   run(`npx @capacitor/assets generate --assetPath "./app-assets/${app}"`);
+
+  syncCapacitorProjects(app);
+  await cleanAndroidGradleBuild();
 
   console.log('\nIMPORTANT:');
   console.log('- Add app capabilities in Xcode');

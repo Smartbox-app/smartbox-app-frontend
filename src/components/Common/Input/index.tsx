@@ -144,6 +144,7 @@ const Input = (props: Props) => {
         {props.input.errors && (
           <InputErrors size={resolvedSize} errors={props.input.errors} />
         )}
+        {props.help && <InputHelp size={resolvedSize} text={props.help} />}
       </StyledFieldContainer>
     );
   }

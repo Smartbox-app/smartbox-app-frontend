@@ -59,6 +59,7 @@ import countries from 'i18n-iso-countries';
 import pl from 'i18n-iso-countries/langs/pl.json';
 import { PrivacyPolicy } from './views/PrivacyPolicy';
 import { Browser } from '@capacitor/browser';
+import { AppMessage } from './components/AppMessage';
 
 const DashboardAdmin = React.lazy(() => import('./views/DashboardAdmin'));
 const DashboardUser = React.lazy(() => import('./views/DashboardUser'));
@@ -100,7 +101,7 @@ const App = () => {
               <OnlineContent>
                 {/* <UpdateInfoBar /> */}
                 <NotificationContainer />
-
+                {/* <AppMessage /> */}
                 <ErrorBoundary>
                   <Suspense>
                     <Switch>

@@ -19,6 +19,7 @@ import { buildActivateAccountPath } from 'src/utils/activate-account-url';
 import { FbButton } from './components/FbButton';
 import { AppVersion } from '../../../components/AppVersion';
 import { GoogleButton } from './components/GoogleButton';
+import { MobileAppLinks } from './components/MobileAppLinks';
 import { Capacitor } from '@capacitor/core';
 import { Device } from '@capacitor/device';
 import { useEffect, useState } from 'react';
@@ -153,6 +154,7 @@ export const Login = () => {
               {/* )} */}
             </Section>
           </Form>
+          <MobileAppLinks tenant={tenant} />
           <Section align="center">
             <Typography>
               {__('application.forgotPass')}{' '}
