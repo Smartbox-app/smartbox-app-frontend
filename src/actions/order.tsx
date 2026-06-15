@@ -59,6 +59,10 @@ export const setMaxRentPeriod = (days: number) => ({
   type: 'SET_MAX_RENT_PERIOD',
   payload: days,
 });
+export const setMaxAdvanceBookingDays = (days: number) => ({
+  type: 'SET_MAX_ADVANCE_BOOKING_DAYS',
+  payload: days,
+});
 export const setRentStartDate = (date: Date) => ({
   type: 'SET_RENT_START_DATE',
   payload: date,

@@ -80,8 +80,10 @@ export default class ApiService {
             history.push('/');
           } else {
             dispatch({ type: failedAction, payload: data.result });
-            if (failedCb) failedCb(data);
-            dispatch(notifications.errorNotification(data.error_code));
+            const errorHandled = failedCb ? failedCb(data) === true : false;
+            if (!errorHandled) {
+              dispatch(notifications.errorNotification(data.error_code));
+            }
             setTimeout(
               () => dispatch({ type: loadingAction, payload: false }),
               200,

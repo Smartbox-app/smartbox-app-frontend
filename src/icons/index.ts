@@ -32,3 +32,4 @@ export * from './Percentage';
 export * from './Groups';
 export * from './Boxes';
 export * from './Close';
+export * from './GateBig';

@@ -84,7 +84,8 @@ const application = {
     "note": "Note",
     "notePlaceholder": "Add a note for this rent...",
     "userNote": "User note",
-    "userNotePlaceholder": "Add a note for this user..."
+    "userNotePlaceholder": "Add a note for this user...",
+    "maxAdvanceBookingDaysInfo": "The start date can be selected up to {{days}} days in advance from today."
   }
 } as const;
 

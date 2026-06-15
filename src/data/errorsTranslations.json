@@ -461,7 +461,7 @@
       },
       "105": {
         "text": "Nowy kod można wygenerować po 5 minutach.",
-        "__type_alias_do_not_touch": "ApiErrorCode.ActivationCodeResendTooSoon,"
+        "__type_alias_do_not_touch": "ApiErrorCode.ActivationCodeResendTooSoon"
       }
     }
   }
