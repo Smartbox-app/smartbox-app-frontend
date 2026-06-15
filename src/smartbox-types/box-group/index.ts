@@ -11,6 +11,7 @@ export interface BoxGroupEntity {
   pricing: SinglePricing[];
   priceResolveType: PriceResolveType;
   minRentPeriod: number;
+  maxAdvanceBookingDays: number;
   maxRentPeriod: number;
   limitToNotify: number | null;
   width?: number;
@@ -32,6 +33,7 @@ export type BoxGroupReq = Pick<
   | 'area'
   | 'volume'
   | 'minRentPeriod'
+  | 'maxAdvanceBookingDays'
   | 'maxRentPeriod'
   | 'limitToNotify'
   | 'order'
@@ -59,6 +61,7 @@ export type BoxGroupUserRes = Pick<
   | 'area'
   | 'volume'
   | 'minRentPeriod'
+  | 'maxAdvanceBookingDays'
   | 'maxRentPeriod'
   | 'order'
 > & {
@@ -81,5 +84,6 @@ export type BoxGroupAdminClientRes = Pick<
   | 'pricing'
   | 'priceResolveType'
   | 'minRentPeriod'
+  | 'maxAdvanceBookingDays'
   | 'maxRentPeriod'
 >;
