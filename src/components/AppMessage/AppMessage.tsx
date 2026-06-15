@@ -7,7 +7,7 @@ import styled from 'styled-components';
 
 const StyledAppMessage = styled.div`
   padding: ${(props) => props.theme.spacing * 4}px;
-  padding-top: calc(${(props) => props.theme.spacing * 2}px + env(safe-area-inset-top));
+  padding-top: calc(${(props) => props.theme.spacing * 4}px + env(safe-area-inset-top));
   background-color: ${(props) => props.theme.colors.primary};
   color: ${(props) => getColorForBackground(props.theme.colors.primary)};
   font-size: 12px;
