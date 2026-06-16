@@ -75,6 +75,7 @@ const application = {
     "rentAuthOpenStockAuthorizationsTab": "Full list for this location",
     "authorizedRents": "Rentals shared with you",
     "tenantSmtpUpdated": "SMTP settings saved",
+    "mapLayoutSaved": "Box layout on the map has been saved",
     "tenantSmtpTestSection": "Send test",
     "tenantSmtpTestRecipient": "Test recipient e-mail",
     "tenantSmtpSendTest": "Send test message",

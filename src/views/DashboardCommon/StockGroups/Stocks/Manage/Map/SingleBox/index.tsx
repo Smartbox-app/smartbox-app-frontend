@@ -1,9 +1,14 @@
 import { BoxMapRes, BoxMapUserRes, RentStatus, StockRes } from 'smartbox-types';
-import ApiService from '../../../../../../../services/api-service';
 import styled, { css } from 'styled-components';
 import Moveable from 'react-moveable';
 import { colorOrDark } from '../../../../../../../utils/color';
-import { CSSProperties, useEffect, useRef, useState } from 'react';
+import React, { CSSProperties, useCallback, useEffect, useRef, useState } from 'react';
+import {
+  BoxMapLayoutUpdate,
+  getBoxHeight,
+  getBoxWidth,
+} from '../utils/map-layout';
+import { useMapLayoutContext } from '../MapLayoutContext';
 
 interface Props {
   box: BoxMapRes | BoxMapUserRes;
@@ -12,6 +17,7 @@ interface Props {
   admin?: boolean;
   user?: boolean;
   useGrid?: boolean;
+  editable?: boolean;
   onBoxClick?: (box: BoxMapRes) => void;
 }
 
@@ -27,10 +33,6 @@ const commonStyles = css`
   color: ${(props) => colorOrDark(props.theme.colors.primary)};
   font-weight: 500;
   cursor: pointer;
-`;
-
-const StyledDraggableBox = styled<typeof Moveable>(Moveable)`
-  ${commonStyles}
 `;
 
 const StyledDraggableContent = styled.div<{
@@ -145,12 +147,14 @@ const SingleBox = ({
   user,
   highlightId,
   useGrid,
+  editable,
   onBoxClick,
 }: Props) => {
   const ref = useRef<Moveable>(null);
   const boxRef = useRef<HTMLDivElement>(null);
-  const [rotation, setRotation] = useState<number>(box.rotation || 0);
   const [target, setTarget] = useState<HTMLDivElement | null>(null);
+  const mapLayoutContext = useMapLayoutContext();
+
   const normalizePosition = (position: number, rotation: number) => {
     if (rotation !== 0) return position;
 
@@ -162,60 +166,29 @@ const SingleBox = ({
     position: 'absolute',
   };
 
-  const normalizeWidth = (box: BoxMapRes | BoxMapUserRes) => {
-    if (box.width) return box.width;
-    if (!box.groupWidth) return 50;
-    const ratio = stock.mapWidth / stock.mapWidthMeters;
-    return Math.round(box.groupWidth * ratio);
+  const getCurrentLayout = (): BoxMapLayoutUpdate | null => {
+    const rect = ref.current?.getRect();
+    if (!rect) return null;
+
+    const { beforeOrigin, offsetHeight, offsetWidth, rotation } = rect;
+
+    return {
+      x: Math.round(beforeOrigin[0] - offsetWidth / 2),
+      y: Math.round(beforeOrigin[1] - offsetHeight / 2),
+      width: Math.round(offsetWidth),
+      height: Math.round(offsetHeight),
+      rotation: Math.round(rotation),
+    };
   };
 
-  const normalizeHeight = (box: BoxMapRes | BoxMapUserRes) => {
-    if (box.height) return box.height;
-    if (!box.groupHeight) return 50;
-    const ratio = stock.mapHeight / stock.mapHeightMeters;
-    return Math.round(box.groupHeight * ratio);
-  };
-
-  const updatePosition = async (x: number, y: number) => {
-    await ApiService.callFetch(
-      'PATCH',
-      `box/position/${box.id}`,
-      () => {},
-      null,
-      { x, y },
-    );
-  };
-
-  const updateRotation = async (rotation: number) => {
-    await ApiService.callFetch(
-      'PATCH',
-      `box/rotation/${box.id}`,
-      () => {},
-      null,
-      { rotation },
-    );
-  };
-
-  const updateSize = async (width: number, height: number) => {
-    await ApiService.callFetch('PATCH', `box/size/${box.id}`, () => {}, null, {
-      width,
-      height,
-    });
+  const handleInteractionEnd = () => {
+    const layout = getCurrentLayout();
+    if (!layout) return;
+    mapLayoutContext?.onLayoutChange(box.id, layout);
   };
 
   const handleDrop = (target: HTMLElement | SVGElement, transform: string) => {
     target.style.transform = transform;
-  };
-
-  const handleMoveUpdate = () => {
-    const rect = ref.current?.getRect();
-
-    if (!rect) return;
-    const { beforeOrigin, offsetHeight, offsetWidth } = rect;
-    updatePosition(
-      Math.round(beforeOrigin[0] - offsetWidth / 2),
-      Math.round(beforeOrigin[1] - offsetHeight / 2),
-    );
   };
 
   const handleResize = (
@@ -229,19 +202,14 @@ const SingleBox = ({
     target.style.transform = transform;
   };
 
-  const handleResizeUpdate = (width: number, height: number) => {
-    updateSize(Math.round(width), Math.round(height));
-  };
-
   const handleBoxClick = () => {
     if (!onBoxClick) return;
     if (!admin) return;
     onBoxClick(box as BoxMapRes);
   };
 
-  const onMouseDown = (e) => {
-    const nativeEvent = e.nativeEvent;
-    setTarget(nativeEvent.target);
+  const onMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+    setTarget(e.currentTarget);
   };
 
   const getBoxStatus = (box: BoxMapUserRes | BoxMapRes) => {
@@ -250,52 +218,57 @@ const SingleBox = ({
     return (box as BoxMapRes).status || RentStatus.free;
   };
 
-  const getNewRotation = (previous: number, change: number) => {
-    const newRotation = previous + change;
-    if (newRotation > 360) return 0;
-    if (newRotation < 0) return 360;
-    return newRotation;
-  };
+  const applyLayoutToElement = useCallback(() => {
+    if (!boxRef.current) return;
 
-  const rotate = (
-    target: HTMLElement | SVGElement,
-    transform: string,
-    deg: number,
-  ) => {
-    target.style.transform = transform;
-    const newRotation = getNewRotation(rotation, deg);
-    setRotation(newRotation);
-  };
+    const width = getBoxWidth(box, stock);
+    const height = getBoxHeight(box, stock);
 
-  const handleRotationUpdate = () => {
-    updateRotation(rotation);
-  };
-
-  useEffect(() => {
-    if (!box || !boxRef || !boxRef.current) return;
-
-    boxRef.current.style.width = `${normalizeWidth(box)}px`;
-    boxRef.current.style.height = `${normalizeHeight(box)}px`;
+    boxRef.current.style.width = `${width}px`;
+    boxRef.current.style.height = `${height}px`;
     boxRef.current.style.left = `${box.x || 0}px`;
     boxRef.current.style.top = `${box.y || 0}px`;
     boxRef.current.style.transform = `rotate(${box.rotation || 0}deg)`;
-  }, [ref, box]);
+    ref.current?.updateRect();
+  }, [box, stock]);
+
+  useEffect(() => {
+    if (!editable) return;
+    applyLayoutToElement();
+  }, [editable, applyLayoutToElement]);
+
+  useEffect(() => {
+    if (!editable || !mapLayoutContext) return;
+
+    const resetLayout = () => {
+      setTarget(null);
+      applyLayoutToElement();
+    };
+
+    mapLayoutContext.registerResetHandler(box.id, resetLayout);
+
+    return () => {
+      mapLayoutContext.unregisterResetHandler(box.id);
+    };
+  }, [editable, box.id, mapLayoutContext, applyLayoutToElement]);
 
   const handleClickOutside = (e: Event) => {
-    const target = e.target as HTMLElement;
+    const eventTarget = e.target as HTMLElement;
 
-    if (target.className.includes(`box-${box.id}`)) return;
+    if (eventTarget.className.includes(`box-${box.id}`)) return;
 
     setTarget(null);
   };
 
   useEffect(() => {
+    if (!editable) return;
+
     document.addEventListener('click', handleClickOutside);
 
     return () => {
       document.removeEventListener('click', handleClickOutside);
     };
-  }, []);
+  }, [editable, box.id]);
 
   if (admin || user)
     return (
@@ -303,13 +276,13 @@ const SingleBox = ({
         status={getBoxStatus(box)}
         user={user}
         stock={stock}
-        width={normalizeWidth(box)}
+        width={getBoxWidth(box, stock)}
         style={{
           position: 'absolute',
           left: normalizePosition(box.x || 0, box.rotation || 0),
           top: normalizePosition(box.y || 0, box.rotation || 0),
-          width: normalizeWidth(box),
-          height: normalizeHeight(box),
+          width: getBoxWidth(box, stock),
+          height: getBoxHeight(box, stock),
           transform: `rotate(${box.rotation || 0}deg)`,
         }}
         onClick={handleBoxClick}
@@ -326,7 +299,10 @@ const SingleBox = ({
         onMouseDown={onMouseDown}
         ref={boxRef}
       >
-        <StyledDraggableContent  width={normalizeWidth(box)} className={`box-${box.id}-content`}>
+        <StyledDraggableContent
+          width={getBoxWidth(box, stock)}
+          className={`box-${box.id}-content`}
+        >
           {box.identifier}
         </StyledDraggableContent>
       </div>
@@ -334,7 +310,6 @@ const SingleBox = ({
         ref={ref}
         target={target}
         origin={true}
-        // snappable={true}
         edge={false}
         draggable={true}
         throttleDrag={useGrid ? 5 : 0}
@@ -345,23 +320,11 @@ const SingleBox = ({
         onResize={({ target, transform, width, height }) =>
           handleResize(target, transform, width, height)
         }
-        onResizeEnd={({ target }) =>
-          handleResizeUpdate(target.clientWidth, target.clientHeight)
-        }
+        onResizeEnd={() => handleInteractionEnd()}
         onDrag={({ target, transform }) => handleDrop(target, transform)}
-        onDragEnd={({ clientX, clientY }) => handleMoveUpdate()}
-        onRotate={({ target, transform, delta }) =>
-          rotate(target, transform, delta)
-        }
-        onRotateEnd={() => handleRotationUpdate()}
-        // default={{
-        //   x: normalizePosition(box.x || 0),
-        //   y: normalizePosition(box.y || 0),
-        //   width: normalizeWidth(box),
-        //   height: normalizeHeight(box),
-        // }}
-        // bounds="parent"
-        // onClick={handleBoxClick}
+        onDragEnd={() => handleInteractionEnd()}
+        onRotate={({ target, transform }) => handleDrop(target, transform)}
+        onRotateEnd={() => handleInteractionEnd()}
       />
     </div>
   );

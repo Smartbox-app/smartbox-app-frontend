@@ -1,6 +1,7 @@
 import { Button as UIButton } from 'src/components/ui';
 import { __ } from '../../../helpers/i18n';
 import './Button.scss';
+import React from 'react';
 
 interface ButtonProps {
   to?: string;
@@ -71,7 +72,7 @@ const Button = (props: ButtonProps) => {
       return 'button';
   }
 
-  return <UIButton variant={getVariant()} to={blank ? undefined : to} href={blank ? to : undefined} onClick={click} text={text} size={getSize()} type={getType()}/>;
+  return <UIButton variant={getVariant()} to={blank ? undefined : to} href={blank ? to : undefined} onClick={click} text={text} size={getSize()} type={getType()} disabled={disabled}/>;
 };
 
 export { Button };

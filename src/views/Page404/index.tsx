@@ -2,7 +2,6 @@ import React from 'react';
 
 import { Button } from '../../components/Branded';
 import { ButtonsContainer, DashboardContainer, SectionHeader } from '../../components/Layout';
-import { __ } from '../../helpers/i18n';
 
 import styled from 'styled-components';
 import { colorOrDark } from '../../utils/color';

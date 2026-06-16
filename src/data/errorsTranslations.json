@@ -23,7 +23,7 @@
     "Invalid option: {0}.": "Nieprawidłowa opcja: {0}.",
     "Invalid phone number": "Błędny numer telefonu",
     "Invalid post code": "Niepoprawny kod pocztowy",
-    "Invalid identifier": "Niepoprawny identyfikator",
+    "Invalid identifier": "Niepoprawny identyfikator, dopuszczalne małe litery, cyfry i -.",
     "Invalid type of value: {0} expected.": "Niewłaściwy typ: {0} oczekiwany.",
     "New password": "Nowe hasło",
     "Password": "Hasło",

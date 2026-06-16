@@ -7,7 +7,7 @@ import { Spinner, Button, PageContent } from '../../../components/Branded';
 import { Logo } from '../../../components/Branded';
 import { formOnTranslateString } from '../../../utils/trans-form';
 import { FormContainer, ButtonsContainer } from '../../../components/Layout';
-import { history } from '../../../App';
+import { history } from 'src/history';
 import { __ } from '../../../helpers/i18n';
 import { mapFieldsBig } from '../../../utils/fields-mapper';
 import { useParams } from 'react-router';
@@ -72,4 +72,4 @@ const TenantActivation = () => {
   );
 };
 
-export { TenantActivation };
+export default TenantActivation;

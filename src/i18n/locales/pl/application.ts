@@ -774,6 +774,7 @@ const application = {
     "giftActivated": "Aktywowano kod zniżkowy",
     "giftDeactivated": "Deaktywowano kod zniżkowy",
     "mapSettingsUpdated": "Zaktalizowano ustawienia mapy",
+    "mapLayoutSaved": "Zapisano układ mapy",
     "stockDetails": "Szczegóły placów",
     "boxesShortcut": "kontenerów",
     "stocksCount": "Ilość placów",

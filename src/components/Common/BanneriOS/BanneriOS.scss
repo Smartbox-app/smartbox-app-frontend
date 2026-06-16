@@ -10,7 +10,7 @@
 
   .banner-icon {
     display: inline-flex;
-
+    vertical-align: middle;
     svg {
       width: $main-spacing * 1.5;
       height: $main-spacing * 1.5;
@@ -18,7 +18,7 @@
   }
 
   .banner-text {
-    box-shadow: $box-shadow-small;
+    line-height: 1.5;
     font-size: 0.85rem;
     background-color: $color-primary;
     padding: $main-spacing;

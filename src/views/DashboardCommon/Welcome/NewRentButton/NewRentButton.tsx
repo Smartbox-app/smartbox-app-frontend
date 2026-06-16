@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { showModal } from '../../../../actions/modal';
 import { NoPhoneModal } from '../../../../components/Common/NoPhoneModal';
 import UserService from '../../../../services/user-service';
-import { history } from '../../../../App';
+import { history } from 'src/history';
 import { useGetMyDetailsQuery } from 'src/queries';
 import { Button } from '../../../../components/ui';
 import { Add } from '../../../../icons';

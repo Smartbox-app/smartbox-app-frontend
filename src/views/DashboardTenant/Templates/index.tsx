@@ -3,8 +3,6 @@ import { Switch, Route, Redirect } from 'react-router';
 
 import { List } from './List';
 import UserService from '../../../services/user-service';
-import { useSelector } from 'react-redux';
-import { ApplicationState } from '../../../reducers';
 import { Manage } from './Manage';
 import { useGetMyDetailsQuery } from 'src/queries';
 

@@ -1,6 +1,6 @@
 import { lighten } from 'polished';
 import { createGlobalStyle } from 'styled-components';
-import ApiService from './services/api-service';
+import { getApiBaseUrl } from './config/api-url';
 import { colorOrDark } from './utils/color';
 import { TenantForUsers } from 'smartbox-types';
 
@@ -15,14 +15,14 @@ interface GlobalFontProps {
 export const GlobalFont = createGlobalStyle<GlobalFontProps>`
   @font-face {
     font-family: 'smartbox';
-    src: url(${ApiService.url}tenant/fonts/light/?tenantId=${(props) => props.tenantId});
+    src: url(${(props) => `${getApiBaseUrl()}tenant/fonts/light/?tenantId=${props.tenantId}`});
     font-weight: 300;
     font-style: normal;
     font-display: fallback;
   }
   @font-face {
     font-family: 'smartbox';
-    src: url(${ApiService.url}tenant/fonts/normal/?tenantId=${(props) => props.tenantId});
+    src: url(${(props) => `${getApiBaseUrl()}tenant/fonts/normal/?tenantId=${props.tenantId}`});
     font-weight: 400;
     font-style: normal;
     font-display: auto;
@@ -30,7 +30,7 @@ export const GlobalFont = createGlobalStyle<GlobalFontProps>`
   }
   @font-face {
     font-family: 'smartbox';
-    src: url(${ApiService.url}tenant/fonts/bold/?tenantId=${(props) => props.tenantId});
+    src: url(${(props) => `${getApiBaseUrl()}tenant/fonts/bold/?tenantId=${props.tenantId}`});
     font-weight: 700;
     font-style: normal;
     font-display: auto;

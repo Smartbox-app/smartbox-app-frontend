@@ -53,6 +53,16 @@ export type BoxesBatchReq = {
   boxGroupId: string;
 };
 
+export type BoxMapLayoutItem = Pick<
+  BoxEntity,
+  'id' | 'x' | 'y' | 'width' | 'height' | 'rotation'
+>;
+
+export type BoxesMapLayoutBatchReq = {
+  stockId: string;
+  boxes: BoxMapLayoutItem[];
+};
+
 export interface IBoxGroup extends IBase {
   size: number;
   free: string[];

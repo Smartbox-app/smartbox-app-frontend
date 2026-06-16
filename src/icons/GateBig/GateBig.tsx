@@ -16,7 +16,7 @@ export const GateBig = () => (
         id="Repeat_Grid_1"
         data-name="Repeat Grid 1"
         transform="translate(61 77)"
-        clip-path="url(#clip-path)"
+        clipPath="url(#clip-path)"
       >
         <g transform="translate(-69 -77)">
           <rect

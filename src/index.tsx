@@ -9,6 +9,7 @@ import ApiService from './services/api-service';
 import { unregisterServiceWorkersIfNative } from './utils/unregister-service-workers';
 import { getMobileBuildId } from './utils/mobile-build-id';
 import { syncNativeWebBundleCache } from './utils/sync-native-web-bundle-cache';
+import { isLocalEnvironment } from './utils/environment';
 
 const bootstrap = async () => {
   unregisterServiceWorkersIfNative();
@@ -24,9 +25,11 @@ const bootstrap = async () => {
     return;
   }
 
-  Sentry.init({
-    dsn: "https://9093709c7c66b68dd936c1317550042f@o4511569107288064.ingest.de.sentry.io/4511569204609104",
-  });
+  if (!isLocalEnvironment()) {
+    Sentry.init({
+      dsn: 'https://9093709c7c66b68dd936c1317550042f@o4511569107288064.ingest.de.sentry.io/4511569204609104',
+    });
+  }
 
   const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement,

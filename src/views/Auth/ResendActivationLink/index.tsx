@@ -7,7 +7,7 @@ import ApiService from '../../../services/api-service';
 import { formOnTranslateString } from '../../../utils/trans-form';
 import { FormContainer } from '../../../components/Layout';
 import { __ } from '../../../helpers/i18n';
-import { history } from '../../../App';
+import { history } from 'src/history';
 
 import { mapFieldsBig } from '../../../utils/fields-mapper';
 import { ButtonsSection } from './ButtonsSection';
@@ -15,7 +15,7 @@ import { Header, InfoContent } from '../../../components/ui';
 import { useTenant } from 'src/hooks/useTenant';
 import { isSmsAccountConfirmation } from 'src/utils/account-confirmation';
 
-export const ResendActivationLink = () => {
+export default ResendActivationLink = () => {
   const dispatch = useDispatch();
   const { tenant } = useTenant();
 

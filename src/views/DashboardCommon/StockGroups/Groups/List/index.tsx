@@ -10,7 +10,7 @@ import { __ } from '../../../../../helpers/i18n';
 import { InteractiveTableSchema } from '../../../../../utils/table-schema-utils';
 import { refreshApiTableData } from '../../../../../actions/api-table';
 import UserService from '../../../../../services/user-service';
-import { history } from '../../../../../App';
+import { history } from 'src/history';
 import { ButtonsContainer, Section } from '../../../../../components/Layout';
 import { Button } from '../../../../../components/Branded';
 import { useGetMyDetailsQuery } from 'src/queries';

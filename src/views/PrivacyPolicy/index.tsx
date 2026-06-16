@@ -61,11 +61,6 @@ const P = styled.p`
   margin: 8px 0;
 `;
 
-const List = styled.ul`
-  margin: 10px 0 10px 22px;
-  list-style: disc;
-`;
-
 export const PrivacyPolicy = () => {
   const { tenant } = useTenant();
   const { data: policy, isLoading } =

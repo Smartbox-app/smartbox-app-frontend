@@ -33,3 +33,5 @@ export * from './Groups';
 export * from './Boxes';
 export * from './Close';
 export * from './GateBig';
+export * from './Dots';
+export * from './IOSShare';

@@ -13,7 +13,7 @@ import { formOnTranslateString } from '../../../utils/trans-form';
 import { FormContainer } from '../../../components/Layout';
 import { ApplicationState } from '../../../reducers';
 import { __ } from '../../../helpers/i18n';
-import { history } from '../../../App';
+import { history } from 'src/history';
 
 import ButtonsSection from './ButtonSection';
 

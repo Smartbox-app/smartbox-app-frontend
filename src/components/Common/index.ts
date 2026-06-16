@@ -7,7 +7,7 @@ import RouteWorker from './RouteWorker';
 import RouteUser from './RouteUser';
 import RouteTenant from './RouteTenant';
 import CheckBox from './CheckBox';
-import Icon from './Icon';
+
 import Input from './Input';
 import DateInput from './DateInput';
 import ProgressIndicator from './ProgressIndicator';
@@ -63,7 +63,6 @@ export {
   RouteTenant,
   CheckBox,
   ConfirmModal,
-  Icon,
   Input,
   LoginLogo,
   DateInput,

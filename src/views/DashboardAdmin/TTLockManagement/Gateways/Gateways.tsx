@@ -1,6 +1,6 @@
 import { FieldType, gatewayList } from 'smartbox-tables';
 import { TTLockGateway } from 'smartbox-types';
-import { history } from 'src/App';
+import { history } from 'src/history';
 import { Alert, ApiTable } from 'src/components/Common';
 import { Header, Section } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';

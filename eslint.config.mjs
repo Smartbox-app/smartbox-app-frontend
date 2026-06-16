@@ -6,6 +6,15 @@ import pluginReact from 'eslint-plugin-react';
 import reactHooks from 'eslint-plugin-react-hooks';
 
 export default defineConfig([
+  {
+    ignores: [
+      'dist/**',
+      'node_modules/**',
+      'build/**',
+      'src/serviceWorker.ts',
+      'config-overrides.js',
+    ],
+  },
   { files: ['**/*.{js,mjs,cjs,ts,jsx,tsx}'] },
   {
     files: ['**/*.{js,mjs,cjs,ts,jsx,tsx}'],
@@ -22,6 +31,8 @@ export default defineConfig([
   {
     rules: {
       'react/react-in-jsx-scope': 'off',
+      'react-hooks/rules-of-hooks': 'error',
+      'react-hooks/exhaustive-deps': 'warn',
     },
   },
 ]);

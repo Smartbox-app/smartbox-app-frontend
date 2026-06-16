@@ -1,4 +1,4 @@
-// eslint-disable-next-line no-restricted-imports
+ 
 import { useTranslation } from 'react-i18next';
 
 import { defaultNS } from '../../constants';

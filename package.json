@@ -120,7 +120,6 @@
     "react-router-dom": "^5.1.2",
     "react-select": "^3.1.0",
     "react-slick": "^0.25.2",
-    "react-svg": "^11.0.11",
     "react-workbox": "^0.5.9",
     "recharts": "^3.8.1",
     "redux": "^4.0.5",
@@ -142,6 +141,8 @@
   "scripts": {
     "start": "VITE_IS_LOCAL=true && vite",
     "lint": "eslint './src/**/*.{ts,tsx}' --fix",
+    "lint:staged": "lint-staged",
+    "prepare": "husky",
     "test": "jest",
     "test:watch": "jest --watch",
     "build-mobile": "node ./build-mobile-app.mjs --mode=prod",
@@ -184,15 +185,22 @@
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^5.2.0",
     "globals": "^16.0.0",
+    "husky": "^9.1.7",
     "itf_formbuilder_translation_tool": "git+https://gitlab.com/IT.focus/itf_formbuilder_translation_tool.git",
     "jest": "^30.4.2",
     "jest-environment-jsdom": "^30.4.1",
+    "lint-staged": "^15.5.0",
     "prettier": "^4.0.0-alpha.10",
     "react-app-rewire-alias": "^1.1.7",
     "rollup-plugin-visualizer": "^6.0.5",
     "typescript-eslint": "^8.29.0"
   },
+  "lint-staged": {
+    "*.{ts,tsx}": "eslint -c eslint.config.mjs"
+  },
   "resolutions": {
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
     "styled-components": "^5",
     "@tiptap/core": "3.20.0",
     "@tiptap/extension-placeholder": "3.20.0",

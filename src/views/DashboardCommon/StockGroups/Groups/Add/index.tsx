@@ -11,7 +11,7 @@ import {
 import { Button, Spinner } from '../../../../../components/Branded';
 import ApiService from '../../../../../services/api-service';
 import { formOnTranslateString } from '../../../../../utils/trans-form';
-import { history } from '../../../../../App';
+import { history } from 'src/history';
 import { ReactSelectOverride, ReactCreatableSelectOverride as ReactCreatableSelect } from '../../../../../components/Common/ReactSelectOverride';
 import { successNotification } from '../../../../../actions/notifications';
 import { __ } from '../../../../../helpers/i18n';

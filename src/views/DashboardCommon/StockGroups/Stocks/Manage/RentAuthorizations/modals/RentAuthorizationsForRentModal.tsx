@@ -14,7 +14,7 @@ import { useGetMyDetailsQuery } from 'src/queries';
 import { useRevokeRentAuthorizationByStaffMutation } from 'src/mutations';
 import { Header, Modal } from 'src/components/ui';
 import UserService from 'src/services/user-service';
-import { history } from 'src/App';
+import { history } from 'src/history';
 import { RENT_AUTHORIZATIONS_MODAL } from 'src/constants/api-table-instances';
 import { StaffAddRentAuthorizationModal } from './StaffAddRentAuthorizationModal';
 

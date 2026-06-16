@@ -4,6 +4,7 @@ import { ApplicationState } from 'src/reducers';
 import { useDispatch, useSelector } from 'react-redux';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import ApiService from 'src/services/api-service';
+import { getTenantLogoUrl } from 'src/config/tenant-assets';
 import { useTenant } from 'src/hooks/useTenant';
 import './Map.scss';
 import { ActiveLocation } from './components/ActiveLocation';
@@ -99,8 +100,7 @@ export const Map = () => {
 
   const logoUrl = useMemo(() => {
     if (!tenant) return null;
-    if (!tenant.id) return tenant.logo;
-    return `${ApiService.url}tenant/logo/${tenant.id}`;
+    return getTenantLogoUrl(tenant);
   }, [tenant]);
 
   const activeStock = useMemo(() => {

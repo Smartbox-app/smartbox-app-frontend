@@ -3,7 +3,7 @@ import { Capacitor } from '@capacitor/core';
 import { isBefore } from 'date-fns';
 import { useEffect, useMemo } from 'react';
 import { MyRentDetails } from 'smartbox-types';
-import { history } from 'src/App';
+import { history } from 'src/history';
 import { SectionHeader } from 'src/components/Layout';
 import { Button, Section } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';

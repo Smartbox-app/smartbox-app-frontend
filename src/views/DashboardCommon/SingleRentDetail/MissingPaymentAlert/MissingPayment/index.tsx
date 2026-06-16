@@ -8,7 +8,7 @@ import UserService from '../../../../../services/user-service';
 import { dateOnly } from '../../../../../utils/format-date';
 import { __ } from '../../../../../helpers/i18n';
 import { clearOrder, updateFormData } from '../../../../../actions/order';
-import { history } from '../../../../../App';
+import { history } from 'src/history';
 import { useGetMyDetailsQuery } from 'src/queries';
 import styled from 'styled-components';
 import { Button, Stack, Typography } from 'src/components/ui';

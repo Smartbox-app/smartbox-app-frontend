@@ -14,7 +14,7 @@ import {
   buildActivateAccountPath,
   getActivationTokenFromSearch,
 } from 'src/utils/activate-account-url';
-import { history } from 'src/App';
+import { history } from 'src/history';
 import { notifications } from 'src/actions';
 import { Logo } from 'src/components/Branded';
 import { FormContainer } from 'src/components/Layout';
@@ -31,7 +31,7 @@ import {
 } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
 
-export const ActivateAccount = () => {
+export default ActivateAccount = () => {
   const dispatch = useDispatch();
   const { tenant } = useTenant();
   const location = useLocation();

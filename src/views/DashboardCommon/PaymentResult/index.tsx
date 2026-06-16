@@ -8,7 +8,7 @@ import { useParams } from 'react-router';
 import ApiService from 'src/services/api-service';
 import { Logo, Spinner } from 'src/components/Branded';
 import TagManager from 'react-gtm-module';
-import { history } from 'src/App';
+import { history } from 'src/history';
 
 export const PaymentResult = () => {
   const { id } = useParams<{ id: string }>();

@@ -1,7 +1,7 @@
 import React from 'react';
 import { documentListAdmin, documentListClient } from 'smartbox-tables';
 import { DocumentListRes } from 'smartbox-types';
-import { history } from 'src/App';
+import { history } from 'src/history';
 import { Button } from 'src/components/Branded';
 import { ApiTable } from 'src/components/Common';
 import { ButtonsContainer } from 'src/components/Layout';

@@ -1,5 +1,4 @@
 import React, { MouseEvent } from 'react';
-import { Icon } from '..';
 import ApiService from '../../../services/api-service';
 import { Button } from '../../Branded/Button';
 import './FileInput.scss';

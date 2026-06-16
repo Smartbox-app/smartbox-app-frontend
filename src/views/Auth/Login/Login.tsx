@@ -28,7 +28,7 @@ import {
   AccountActivationTokenPayload,
   ApiErrorCode,
 } from 'smartbox-types';
-import { history } from 'src/App';
+import { history } from 'src/history';
 import { notifications } from 'src/actions';
 import {
   LoginMutationError,

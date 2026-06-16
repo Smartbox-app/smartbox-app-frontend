@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { MyRentDetails, RentStatus } from 'smartbox-types';
 import { FormType } from '../../../../types/order-form';
 import { modal, order, singleRent } from '../../../../actions';
-import { history } from '../../../../App';
+import { history } from 'src/history';
 import { ButtonsContainer } from '../../../../components/Layout';
 import { ApplicationState } from '../../../../reducers';
 import UserService from '../../../../services/user-service';

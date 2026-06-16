@@ -15,7 +15,7 @@ import {
   ButtonsContainer,
   PageHeader,
 } from "../../../components/Layout";
-import { history } from "../../../App";
+import { history } from 'src/history';
 import { __ } from "../../../helpers/i18n";
 import { mapFieldsBig } from "../../../utils/fields-mapper";
 

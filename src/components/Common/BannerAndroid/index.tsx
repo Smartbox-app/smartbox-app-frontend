@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useTenant } from 'src/hooks/useTenant';
 import { hasMobileAppAndroidLink } from 'src/utils/tenant-mobile-app-links';
-import { Icon } from '..';
 
 import './BannerAndroid.scss';
+import { Dots } from 'src/icons';
 
 const BannerAndroid = () => {
   const { tenant } = useTenant();
@@ -17,7 +17,10 @@ const BannerAndroid = () => {
   }, []);
   // Detects if device is in standalone mode
   //@ts-ignore for ios
-  const isInStandaloneMode = useCallback(() => window.matchMedia('(display-mode: standalone)').matches, []);
+  const isInStandaloneMode = useCallback(
+    () => window.matchMedia('(display-mode: standalone)').matches,
+    [],
+  );
 
   useEffect(() => {
     // Checks if should display install popup notification:
@@ -33,28 +36,24 @@ const BannerAndroid = () => {
     setComponentVisible(false);
   };
 
-  if (hasMobileAppAndroidLink(tenant)) return null;
+  if (hasMobileAppAndroidLink(tenant) || !isComponentVisible || !isAndroid) {
+    return null;
+  }
 
   return (
     <div className="android-banner">
-      {isComponentVisible && (
-        <>
-          {isAndroid && (
-            <div className="banner-text">
-              <div>
-                <strong>Zainstaluj aplikację</strong>. Naciśnij
-                <div className="banner-icon">
-                  <Icon icon="dots" noWrapper />
-                </div>{' '}
-                i "dodaj do ekranu głównego"{' '}
-              </div>
-              <button onClick={hide} className="banner-close">
-                &times;
-              </button>
-            </div>
-          )}
-        </>
-      )}
+      <div className="banner-text">
+        <div>
+          <strong>Zainstaluj aplikację</strong>. Naciśnij
+          <div className="banner-icon">
+            <Dots />
+          </div>{' '}
+          i "dodaj do ekranu głównego"{' '}
+        </div>
+        <button onClick={hide} className="banner-close">
+          &times;
+        </button>
+      </div>
     </div>
   );
 };

@@ -22,7 +22,7 @@ import {
   ButtonsContainer,
   SectionHeader,
 } from '../../../../../components/Layout';
-import { history } from '../../../../../App';
+import { history } from 'src/history';
 import { FormType } from '../../../../../types/order-form';
 
 import UserService from '../../../../../services/user-service';

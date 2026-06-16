@@ -1,5 +1,5 @@
 import { UserRole } from 'smartbox-types';
-import { history } from '../App';
+import { history } from '../history';
 
 export const rememberRedirect = (role: UserRole) => {
   sessionStorage.setItem('user-redirect', JSON.stringify({ to: history.location.pathname, role }));

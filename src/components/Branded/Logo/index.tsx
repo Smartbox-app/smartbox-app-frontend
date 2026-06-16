@@ -1,11 +1,11 @@
 import React, { useCallback } from 'react';
 import { TenantForUsers } from 'smartbox-types';
 import { useTenant } from '../../../hooks/useTenant';
-import { history } from '../../../App';
+import { history } from 'src/history';
 import UserService from '../../../services/user-service';
-import ApiService from '../../../services/api-service';
 import styled from 'styled-components';
 import { useGetMyDetailsQuery } from '../../../queries';
+import { getTenantLogoUrl } from 'src/config/tenant-assets';
 
 type LogoWidths = 'large' | 'medium' | 'small';
 
@@ -42,11 +42,8 @@ const Logo = ({ width = 'large' }: LogoProps) => {
   const { data: user } = useGetMyDetailsQuery();
 
   const getTenantLogoPath = useCallback(
-    (tenant: TenantForUsers) => {
-      if (!tenant.id) return tenant.logo;
-      return `${ApiService.url}tenant/logo/${tenant.id}`;
-    },
-    [tenant],
+    (tenant: TenantForUsers) => getTenantLogoUrl(tenant) ?? tenant.logo,
+    [],
   );
 
   const handleLogoClick = () => {

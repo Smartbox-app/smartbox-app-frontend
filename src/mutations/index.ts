@@ -18,3 +18,4 @@ export * from './useStaffRevokeRentAuthorizationMutation';
 export * from './useInviteUsersMutation';
 export * from './useSetRentNoteMutation';
 export * from './useSetUserNoteMutation';
+export * from './useUpdateBoxesMapLayoutMutation';

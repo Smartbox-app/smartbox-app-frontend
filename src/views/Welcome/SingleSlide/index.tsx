@@ -1,7 +1,6 @@
 import React, { useCallback } from 'react';
-import { Link } from 'react-router-dom';
 import { ButtonsContainer } from '../../../components/Layout';
-import { Logo, Button } from '../../../components/Branded';
+import { Button } from '../../../components/Branded';
 import styled from 'styled-components';
 import { useTenant } from '../../../hooks/useTenant';
 import ApiService from '../../../services/api-service';
@@ -22,10 +21,10 @@ background-position: center;
 const SingleSlide = ({ item, last }: Props) => {
     const { tenant } = useTenant();
 
-    const getTenantBackgroundPath = useCallback((tenant: TenantForUsers) => {
-        if (!tenant.id) return tenant.background;
-        return `${ApiService.url}tenant/background/${tenant.id}`;
-    }, [tenant])
+    const getTenantBackgroundPath = useCallback((t: TenantForUsers) => {
+        if (!t.id) return t.background;
+        return `${ApiService.url}tenant/background/${t.id}`;
+    }, []);
 
 
     if (!tenant) return null;

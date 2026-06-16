@@ -5,7 +5,9 @@ import { formOnTranslateString } from '../../../utils/trans-form';
 import { TranslatableObject, translateErrors } from '../../../utils/errors-trans';
 import { __ } from '../../../helpers/i18n';
 import FileInput from '../FileInput';
+import { LogoFileInput } from '../LogoFileInput';
 import ApiService from '../../../services/api-service';
+import { getTenantLogoUrl } from 'src/config/tenant-assets';
 import { SelectOption } from '../../../types/select';
 import { useSelector } from 'react-redux';
 import { ApplicationState } from '../../../reducers';
@@ -134,7 +136,34 @@ const FieldsMapper = ({ field, fieldHtmlId, currentValue, errors, size, big, onF
                 label={getCustomCheckboxLabel(field)}
             />
         );
-        case 'fileDragDrop': return (
+        case 'fileDragDrop':
+            if (field.id === 'logo') {
+                return (
+                    <LogoFileInput
+                        accept={field.options.accept}
+                        previewUrl={
+                            field.options.previewUrl ??
+                            getTenantLogoUrl(tenant) ??
+                            null
+                        }
+                        label={field.title}
+                        input={{
+                            name: fieldHtmlId,
+                            id: fieldHtmlId,
+                            value: currentValue,
+                            onChange,
+                        }}
+                        meta={{
+                            touched: errors.length > 0,
+                            error: errors.length
+                                ? formOnTranslateString(errors[0].messageWithPlaceholders, errors[0].params)
+                                : null,
+                        }}
+                    />
+                );
+            }
+
+            return (
             <FileInput
                 accept={field.options.accept}
                 hasImage={field.options.previewUrl}
@@ -153,7 +182,8 @@ const FieldsMapper = ({ field, fieldHtmlId, currentValue, errors, size, big, onF
                         ? formOnTranslateString(errors[0].messageWithPlaceholders, errors[0].params)
                         : null,
                 }}
-            />)
+            />
+            );
         case 'staticSelect': return (
             <InputSelect
                 label={field.title}

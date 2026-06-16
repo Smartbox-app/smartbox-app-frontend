@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { MyRentDetails, RentStatus } from 'smartbox-types';
 import { successNotification } from '../../../../../actions/notifications';
-import { history } from '../../../../../App';
+import { history } from 'src/history';
 import { ConfirmModal } from '../../../../../components/Common';
 import { useEndMyRentMutation } from 'src/mutations';
 

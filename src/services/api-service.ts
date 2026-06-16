@@ -1,14 +1,13 @@
 import { ApiErrorCode, ApiResult } from 'smartbox-types';
 import { Capacitor, CapacitorHttp } from '@capacitor/core';
-import { notifications } from '../actions';
-import { store, history } from '../App';
+import * as notifications from '../actions/notifications';
+import { store } from '../store';
+import { history } from '../history';
 import { Preferences } from '@capacitor/preferences';
 
-const getUrl = async () => {
-  return typeof import.meta.env.VITE_APP_API_URL === 'string'
-    ? `${import.meta.env.VITE_APP_API_URL.trim()}/`
-    : 'http://localhost:3001/';
-};
+import { getApiBaseUrl } from '../config/api-url';
+
+const getUrl = async () => getApiBaseUrl();
 
 export default class ApiService {
   static url = '';
@@ -135,10 +134,10 @@ export default class ApiService {
 
     console.log('CALLING FETCH', url);
 
-    if (Capacitor.isNativePlatform()) {
-      const token = await Preferences.get({ key: 'smst_token' });
-      headers.Authorization = `Bearer ${token.value}`;
-    }
+    // if (Capacitor.isNativePlatform()) {
+    //   const token = await Preferences.get({ key: 'smst_token' });
+    //   headers.Authorization = `Bearer ${token.value}`;
+    // }
 
     const wrappedUrl = ApiService.wrapUrlWithTenant(url);
     try {

@@ -1,4 +1,4 @@
-package com.smartbox.aplikacja.app;
+package com.smartbox.wlasnybox.app;
 import android.os.Bundle;
 import ee.forgr.capacitor.social.login.GoogleProvider;
 import ee.forgr.capacitor.social.login.SocialLoginPlugin;

@@ -1,26 +1,11 @@
-import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { TenantForUsers } from 'smartbox-types';
-import { setTenant as setTenantAction } from '../actions/tenant';
-import { useGetTenantQuery } from 'src/queries/useGetTenantQuery';
+import { useTenantContext } from '../providers/TenantProvider';
 
 interface UseTenant {
-  tenant: TenantForUsers | null;
+  tenant: ReturnType<typeof useTenantContext>;
 }
 
-const useTenant = (): UseTenant => {
-  const dispatch = useDispatch();
-  const { data: tenant } = useGetTenantQuery();
-
-  useEffect(() => {
-    if (tenant) {
-      dispatch(setTenantAction(tenant));
-    }
-  }, [tenant, dispatch]);
-
-  return {
-    tenant: tenant ?? null,
-  };
-};
+const useTenant = (): UseTenant => ({
+  tenant: useTenantContext(),
+});
 
 export { useTenant };

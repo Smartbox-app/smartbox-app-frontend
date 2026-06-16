@@ -3,7 +3,7 @@ import { Header } from '../Header';
 import { Section } from '../Section';
 import styled from 'styled-components';
 import { ArrowBack } from '../../../icons';
-import { history } from '../../../App';
+import { history } from 'src/history';
 
 export type PageHeaderProps = {
   children: ReactNode;

@@ -1,4 +1,4 @@
-package com.smartbox.aplikacja.app;
+package com.smartbox.wlasnybox.app;
 
 import android.webkit.WebView;
 import com.getcapacitor.Plugin;

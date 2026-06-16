@@ -1,20 +1,12 @@
-import { AuthLoginRequest, AuthLoginResult, UserRes } from 'smartbox-types';
+import { AuthLoginResult, UserRes } from 'smartbox-types';
 import ApiService from '../services/api-service';
-import { notifications, order } from '../actions';
-import { history } from '../App';
-import { hideModal } from './modal';
-import {
-  getRememberedRedirect,
-  clearRememberedRedirect,
-} from '../utils/remeber-redirect';
-import { Capacitor } from '@capacitor/core';
-import { Preferences } from '@capacitor/preferences';
+import { notifications } from '../actions';
+import { history } from '../history';
 
 export const saveUser = (userData: AuthLoginResult) => ({
   type: 'LOGIN_SUCCESS',
   payload: userData,
 });
-
 
 export const clearUserSession = () => ({ type: 'CLEAR_USER_SESSION' });
 

@@ -13,8 +13,9 @@ import { gatewayLocksList } from 'src/smartbox-tables/schemas/gateway-lock-list.
 import { locksList } from 'src/smartbox-tables/schemas/locks-list.table';
 import { InteractiveTableSchema } from 'src/utils/table-schema-utils';
 import { LockDetails } from './components/LockDetails/LockDetails';
-import { history } from 'src/App';
+import { history } from 'src/history';
 import { Spinner } from 'src/components/Branded';
+import React from 'react';
 
 export const Locks = () => {
   const dispatch = useDispatch();

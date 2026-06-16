@@ -20,7 +20,7 @@ import { successNotification } from 'src/actions/notifications';
 import { InviteUsersSuccessModal } from './InviteUsersSuccessModal';
 import { InviteEmailsField } from './InviteEmailsField';
 import UserService from 'src/services/user-service';
-import { history } from 'src/App';
+import { history } from 'src/history';
 
 export const InviteUserForm = () => {
   const dispatch = useDispatch();

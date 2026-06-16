@@ -17,7 +17,7 @@ import {
   Alert,
   CheckBox as ControlledCheckbox,
 } from '../../../../../components/Common';
-import { history } from '../../../../../App';
+import { history } from 'src/history';
 import { FormType } from '../../../../../types/order-form';
 
 import UserService from '../../../../../services/user-service';

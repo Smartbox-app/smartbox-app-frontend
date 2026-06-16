@@ -8,7 +8,7 @@ import { LoginLogo } from '../../../components/Common';
 import { Spinner, PageContent, Logo } from '../../../components/Branded';
 import { formOnTranslateString } from '../../../utils/trans-form';
 import { modal, notifications } from '../../../actions';
-import { history } from '../../../App';
+import { history } from 'src/history';
 import { __ } from '../../../helpers/i18n';
 
 import {

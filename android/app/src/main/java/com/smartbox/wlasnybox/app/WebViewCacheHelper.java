@@ -1,4 +1,4 @@
-package com.smartbox.aplikacja.app;
+package com.smartbox.wlasnybox.app;
 
 import android.content.Context;
 import android.webkit.CookieManager;
