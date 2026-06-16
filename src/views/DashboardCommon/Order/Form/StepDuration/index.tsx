@@ -19,6 +19,8 @@ import {
   StockRes,
 } from 'smartbox-types';
 import { DateInput } from '../../../../../components/Common';
+import { __ } from '../../../../../helpers/i18n';
+import { StyledInputHelp } from '../../../../../components/Common/input-styled';
 import { Spinner } from '../../../../../components/Branded';
 import { order } from '../../../../../actions';
 import { ButtonsContainer } from '../../../../../components/Layout';
@@ -56,6 +58,11 @@ const StyledCalendarPicker = styled.div`
   gap: 20px;
 `;
 
+const StyledStartDateField = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
 interface Props {
   history: any;
   formData: FormType;
@@ -72,6 +79,9 @@ const StepDuration = ({ clearPaymentDetails }: Props) => {
   );
   const maxRentPeriod = useSelector(
     (state: ApplicationState) => state.order.maxRentPeriod,
+  );
+  const maxAdvanceBookingDays = useSelector(
+    (state: ApplicationState) => state.order.maxAdvanceBookingDays,
   );
   // box groupId is used directly only when new rent is created
   const boxGroupId = useSelector(
@@ -234,8 +244,9 @@ const StepDuration = ({ clearPaymentDetails }: Props) => {
   const setMaxDateForEnd = (addAmount = 0) =>
     endOfDay(addDays(startDate, addAmount));
 
-  // people should be able to start rent two weeks before
-  const setMaxDateForStart = () => addDays(new Date(), 13);
+  const advanceBookingDays = 14; /* maxAdvanceBookingDays ?? 14;*/
+
+  const setMaxDateForStart = () => addDays(startOfToday(), advanceBookingDays);
 
   const defaultValues = {
     startDate: addDays(startDate, 0),
@@ -351,25 +362,33 @@ const StepDuration = ({ clearPaymentDetails }: Props) => {
         <Section>
           {loadingPrice && <Spinner halfTransparent overlay />}
           <StyledCalendarPicker className="calendars-picker-wrapper">
-            <Controller
-              name="startDate"
-              control={control}
-              render={({ field }) => (
-                <DateInput
-                  {...field}
-                  value={startDate!}
-                  name="startDate"
-                  highlightStart={startDate}
-                  highlightEnd={endDate}
-                  label="application.selectStartRentDate"
-                  minDate={setMinDate()}
-                  maxDate={setMaxDateForStart()}
-                  onChange={([selected]) => {
-                    dispatch(setRentStartDate(selected));
-                  }}
-                />
-              )}
-            />
+            <StyledStartDateField>
+              <Controller
+                name="startDate"
+                control={control}
+                render={({ field }) => (
+                  <DateInput
+                    {...field}
+                    value={startDate!}
+                    name="startDate"
+                    highlightStart={startDate}
+                    highlightEnd={endDate}
+                    label="application.selectStartRentDate"
+                    minDate={setMinDate()}
+                    maxDate={setMaxDateForStart()}
+                    onChange={([selected]) => {
+                      dispatch(setRentStartDate(selected));
+                    }}
+                  />
+                )}
+              />
+              <StyledInputHelp $size="medium">
+                <span className="fa fa-info-circle" />{' '}
+                {__('application.maxAdvanceBookingDaysInfo', {
+                  days: advanceBookingDays,
+                })}
+              </StyledInputHelp>
+            </StyledStartDateField>
             <Controller
               name="endDate"
               control={control}

@@ -49,6 +49,7 @@ export type OrderState = {
   boxGroupName: string;
   boxGroupArea: string;
   minRentPeriod: number | null;
+  maxAdvanceBookingDays: number | null;
   maxRentPeriod: number | null;
   startDate: Date;
   endDate: Date | null;
@@ -115,6 +116,11 @@ interface SetMinRentPeriod {
 
 interface SetMaxRentPeriod {
   type: 'SET_MAX_RENT_PERIOD';
+  payload: number;
+}
+
+interface SetMaxAdvanceBookingDays {
+  type: 'SET_MAX_ADVANCE_BOOKING_DAYS';
   payload: number;
 }
 
@@ -250,6 +256,7 @@ type Action =
   | SetOrderBoxGroup
   | SetMinRentPeriod
   | SetMaxRentPeriod
+  | SetMaxAdvanceBookingDays
   | SetRentStartDate
   | SetRentEndDate
   | SetCalculatedPrice
@@ -286,6 +293,7 @@ const initialState: OrderState = {
   boxGroupName: '',
   boxGroupArea: '',
   minRentPeriod: null,
+  maxAdvanceBookingDays: null,
   maxRentPeriod: null,
   startDate: new Date(),
   endDate: null,
@@ -383,6 +391,12 @@ export default (
       return {
         ...state,
         maxRentPeriod: action.payload || 0,
+      };
+    }
+    case 'SET_MAX_ADVANCE_BOOKING_DAYS': {
+      return {
+        ...state,
+        maxAdvanceBookingDays: action.payload,
       };
     }
     case 'FETCH_RENT_PERIOD_CONFIG_SUCCESS': {
