@@ -55,7 +55,7 @@ export default class ApiService {
     try {
       const response = await fetch(`${ApiService.url}${wrappedUrl}`, {
         method,
-        headers: requestData && requestData instanceof FormData ? {} : headers,
+        headers: !Capacitor.isNativePlatform() && requestData && requestData instanceof FormData ? {} : headers,
         credentials: 'include',
         body:
           requestData && requestData instanceof FormData
@@ -144,7 +144,7 @@ export default class ApiService {
     try {
       const response = await fetch(`${ApiService.url}${wrappedUrl}`, {
         method,
-        headers: requestData && requestData instanceof FormData ? {} : headers,
+        headers: !Capacitor.isNativePlatform() && requestData && requestData instanceof FormData ? {} : headers,
         credentials: 'include',
         body:
           requestData && requestData instanceof FormData
