@@ -93,7 +93,6 @@ const Status = ({
                   () => {
                     successNotification('notification.userStatusChanged');
                     dispatch(refreshApiTableData());
-                    console.log('I WILL INVALIDATAE BROTHER')
                     queryClient.invalidateQueries({
                       queryKey: stockBoxesQueryKey(stockId),
                     });

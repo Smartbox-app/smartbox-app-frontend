@@ -36,11 +36,10 @@ export const useLoginMutation = () => {
       );
 
       if (response && Capacitor.isNativePlatform()) {
-        console.log('GOT TOKEN', response.accessToken);
-        // await Preferences.set({
-        //   key: 'smst_token',
-        //   value: response.accessToken,
-        // });
+        await Preferences.set({
+          key: 'smst_token',
+          value: response.accessToken,
+        });
       }
 
       return response;

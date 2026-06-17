@@ -2,9 +2,9 @@ import React, { useCallback } from 'react';
 import { TenantForUsers } from 'smartbox-types';
 import styled from 'styled-components';
 import { useTenant } from '../../../hooks/useTenant';
-import ApiService from '../../../services/api-service';
 import { Container } from '../../ui';
 import { useLocation } from 'react-router';
+import { getTenantBackgroundUrl } from 'src/config/tenant-assets';
 
 export type PageContentVariant = 'default' | 'dashboard';
 
@@ -83,11 +83,9 @@ const PageContent = ({
   const location = useLocation();
 
   const getTenantBackgroundPath = useCallback(
-    (tenant: TenantForUsers) => {
-      if (!tenant.id) return tenant.background;
-      return `${ApiService.url}tenant/background/${tenant.id}`;
-    },
-    [tenant],
+    (tenant: TenantForUsers) =>
+      getTenantBackgroundUrl(tenant) ?? tenant.background,
+    [],
   );
 
   const showConditionalBg =

@@ -142,6 +142,7 @@ export type TenantForUsers = Omit<
   /** Resolved method used for new registrations (falls back to email when SMS is not configured). */
   accountConfirmationMethodEffective: AccountConfirmationMethod;
   links: { id: string; name: string; fileName: string }[];
+  publicAssetsBaseUrl: string;
 };
 
 export enum NamingType {

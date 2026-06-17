@@ -93,17 +93,17 @@ const StepAgreement = ({ formData, isResignationMarked }: Props): any => {
 
   const startNewRent = async (data: FormData, tenantId: string) => {
     setLoading(true);
-    console.log('STARTING NEW RENT');
+
     try {
       await ApiService.callFetch(
         'POST',
         `rent/new?source=${Capacitor.isNativePlatform() ? 'mobile' : 'web'}`,
         (response: PayForRentResponse) => {
-          console.log('GOT RESPONSE', response);
+ 
           if (response.paymentStatus === PaymentStatus.succes) {
             history.push(`/payment-success/${response.paymentId}`);
           } else {
-            console.log('TRYING TO PAY');
+   
             if (Capacitor.isNativePlatform()) {
               history.push('/');
               Browser.open({

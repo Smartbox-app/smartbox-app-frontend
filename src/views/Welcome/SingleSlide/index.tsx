@@ -3,8 +3,9 @@ import { ButtonsContainer } from '../../../components/Layout';
 import { Button } from '../../../components/Branded';
 import styled from 'styled-components';
 import { useTenant } from '../../../hooks/useTenant';
-import ApiService from '../../../services/api-service';
 import { TenantForUsers } from 'smartbox-types';
+import ApiService from '../../../services/api-service';
+import { getTenantBackgroundUrl } from 'src/config/tenant-assets';
 import './SingleSlide.scss';
 
 interface Props {
@@ -21,10 +22,10 @@ background-position: center;
 const SingleSlide = ({ item, last }: Props) => {
     const { tenant } = useTenant();
 
-    const getTenantBackgroundPath = useCallback((t: TenantForUsers) => {
-        if (!t.id) return t.background;
-        return `${ApiService.url}tenant/background/${t.id}`;
-    }, []);
+    const getTenantBackgroundPath = useCallback(
+        (t: TenantForUsers) => getTenantBackgroundUrl(t) ?? t.background,
+        [],
+    );
 
 
     if (!tenant) return null;

@@ -72,7 +72,6 @@ export const GoogleButton = () => {
           tenant: tenant.identifier,
         });
       }
-      console.log('GOT GOOGLE LOGIN RESULT', JSON.stringify(res));
     } else {
       window.open(`${ApiService.url}auth/google?tenantId=${tenant.identifier}`);
     }

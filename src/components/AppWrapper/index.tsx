@@ -138,12 +138,6 @@ const AppWrapper = ({ children }: Props) => {
   }, [user, tenant]);
 
   const initGoogleAuth = async () => {
-    console.log('TRYING TO INIT GOOGLE AUTH');
-
-    console.log(
-      'TRYING TO INIT FACEBOOK AUTH META',
-      JSON.stringify(import.meta.env),
-    );
     try {
       await SocialLogin.initialize({
         google: {

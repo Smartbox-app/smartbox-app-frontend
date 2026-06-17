@@ -95,8 +95,6 @@ export const SingleVariant = ({ variant, addonId, addon, display }: Props) => {
     return variant
   }, [variant])
 
-  console.log('VARIANT WITH CORRECTED PRICE', variantWithCorrectedPrice, variant, addon);
-
   return (
     <StyledAddonVariant
       isSelected={isSelected}

@@ -85,8 +85,6 @@ export const FbButton = () => {
           tenant: tenant.identifier,
         });
       }
-
-      console.log('GOT FB LOGIN RESULT', JSON.stringify(res.result));
     } else {
       window.open(
         `${ApiService.url}auth/facebook?tenantId=${tenant.identifier}`,

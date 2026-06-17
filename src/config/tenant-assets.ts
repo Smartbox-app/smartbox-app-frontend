@@ -1,9 +1,22 @@
-const TENANT_LOGO_BASE_URL =
-  import.meta.env.VITE_TENANT_LOGO_BASE_URL ??
-  'https://storage.googleapis.com/smartbox-app/logo';
+const GCS_ASSET_FOLDERS = {
+  logo: 'logo',
+  background: 'background',
+  boxGroup: 'box-group',
+  stockMapBackground: 'stockBackgrounds',
+} as const;
 
-interface TenantLogoSource {
+interface TenantAssetSource {
   logo?: string | null;
+  background?: string | null;
+  publicAssetsBaseUrl?: string | null;
+}
+
+interface BoxGroupImageSource {
+  image?: string | null;
+}
+
+interface StockMapBackgroundSource {
+  mapBackground?: string | null;
 }
 
 const isAbsoluteAssetUrl = (value: string) =>
@@ -11,14 +24,61 @@ const isAbsoluteAssetUrl = (value: string) =>
   value.startsWith('https://') ||
   value.startsWith('/');
 
-const getTenantLogoUrl = (tenant?: TenantLogoSource | null): string | null => {
-  if (!tenant?.logo) return null;
+const normalizeBaseUrl = (baseUrl?: string | null) =>
+  baseUrl?.replace(/\/$/, '') ?? null;
 
-  if (isAbsoluteAssetUrl(tenant.logo)) {
-    return tenant.logo;
+const buildGcsAssetUrl = (
+  baseUrl: string | null | undefined,
+  folder: string,
+  fileName?: string | null,
+): string | null => {
+  if (!fileName) return null;
+
+  if (isAbsoluteAssetUrl(fileName)) {
+    return fileName;
   }
 
-  return `${TENANT_LOGO_BASE_URL}/${tenant.logo}`;
+  const normalizedBaseUrl = normalizeBaseUrl(baseUrl);
+  if (!normalizedBaseUrl) return null;
+
+  return `${normalizedBaseUrl}/${folder}/${fileName}`;
 };
 
-export { TENANT_LOGO_BASE_URL, getTenantLogoUrl };
+const getTenantLogoUrl = (tenant?: TenantAssetSource | null): string | null =>
+  buildGcsAssetUrl(tenant?.publicAssetsBaseUrl, GCS_ASSET_FOLDERS.logo, tenant?.logo);
+
+const getTenantBackgroundUrl = (
+  tenant?: TenantAssetSource | null,
+): string | null =>
+  buildGcsAssetUrl(
+    tenant?.publicAssetsBaseUrl,
+    GCS_ASSET_FOLDERS.background,
+    tenant?.background,
+  );
+
+const getBoxGroupImageUrl = (
+  boxGroup?: BoxGroupImageSource | null,
+  tenant?: Pick<TenantAssetSource, 'publicAssetsBaseUrl'> | null,
+): string | null =>
+  buildGcsAssetUrl(
+    tenant?.publicAssetsBaseUrl,
+    GCS_ASSET_FOLDERS.boxGroup,
+    boxGroup?.image,
+  );
+
+const getStockMapBackgroundUrl = (
+  stock?: StockMapBackgroundSource | null,
+  tenant?: Pick<TenantAssetSource, 'publicAssetsBaseUrl'> | null,
+): string | null =>
+  buildGcsAssetUrl(
+    tenant?.publicAssetsBaseUrl,
+    GCS_ASSET_FOLDERS.stockMapBackground,
+    stock?.mapBackground,
+  );
+
+export {
+  getTenantLogoUrl,
+  getTenantBackgroundUrl,
+  getBoxGroupImageUrl,
+  getStockMapBackgroundUrl,
+};

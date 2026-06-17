@@ -54,7 +54,12 @@ export default class ApiService {
     try {
       const response = await fetch(`${ApiService.url}${wrappedUrl}`, {
         method,
-        headers: !Capacitor.isNativePlatform() && requestData && requestData instanceof FormData ? {} : headers,
+        headers:
+          !Capacitor.isNativePlatform() &&
+          requestData &&
+          requestData instanceof FormData
+            ? {}
+            : headers,
         credentials: 'include',
         body:
           requestData && requestData instanceof FormData
@@ -132,18 +137,21 @@ export default class ApiService {
       'Content-Type': 'application/json',
     };
 
-    console.log('CALLING FETCH', url);
-
-    // if (Capacitor.isNativePlatform()) {
-    //   const token = await Preferences.get({ key: 'smst_token' });
-    //   headers.Authorization = `Bearer ${token.value}`;
-    // }
+    if (Capacitor.isNativePlatform()) {
+      const token = await Preferences.get({ key: 'smst_token' });
+      headers.Authorization = `Bearer ${token.value}`;
+    }
 
     const wrappedUrl = ApiService.wrapUrlWithTenant(url);
     try {
       const response = await fetch(`${ApiService.url}${wrappedUrl}`, {
         method,
-        headers: !Capacitor.isNativePlatform() && requestData && requestData instanceof FormData ? {} : headers,
+        headers:
+          !Capacitor.isNativePlatform() &&
+          requestData &&
+          requestData instanceof FormData
+            ? {}
+            : headers,
         credentials: 'include',
         body:
           requestData && requestData instanceof FormData

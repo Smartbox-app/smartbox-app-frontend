@@ -28,6 +28,7 @@ export const getDefaultTenant = (): TenantForUsers => ({
   newRentNotification: false,
   rentExtendedNotification: false,
   smsAvailable: false,
+  publicAssetsBaseUrl: '',
   accountConfirmationMethodEffective: AccountConfirmationMethod.email_link,
   invoiceServiceDepartmentID: '',
   debtResolveType: DebtResolveType.DebtOnly,

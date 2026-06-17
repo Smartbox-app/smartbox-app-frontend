@@ -1,5 +1,4 @@
 import React, { useCallback, useMemo, useRef, useState } from 'react';
-import ApiService from '../../../services/api-service';
 import styled, { css } from 'styled-components';
 import { SingleBox } from '../StockGroups/Stocks/Manage/Map/SingleBox';
 import { MapGrid } from '../StockGroups/Stocks/Manage/Map/MapGrid';
@@ -17,6 +16,8 @@ import {
   getBoxLayoutFromBox,
   isSameBoxLayout,
 } from '../StockGroups/Stocks/Manage/Map/utils/map-layout';
+import { getStockMapBackgroundUrl } from 'src/config/tenant-assets';
+import { useTenant } from 'src/hooks/useTenant';
 
 interface Props {
   boxes: (BoxMapRes | BoxMapUserRes)[];
@@ -35,8 +36,7 @@ const StyledMapOuterContainer = styled.div`
 const StyledMapContainer = styled.div<{
   height: number;
   width: number;
-  background: string;
-  stockId: string;
+  backgroundUrl: string | null;
 }>`
   position: relative;
   border: 1px solid ${(props) => props.theme.colors.primary};
@@ -46,9 +46,9 @@ const StyledMapContainer = styled.div<{
   margin: 0 auto;
   border-radius: 5px;
   ${(props) =>
-    props.background &&
+    props.backgroundUrl &&
     css`
-      background-image: url(${ApiService.url}stock/background/${props.stockId});
+      background-image: url(${props.backgroundUrl});
       background-size: contain;
       background-position: center;
       background-repeat: no-repeat;
@@ -79,6 +79,7 @@ const MapView = ({
   >({});
   const resetHandlersRef = useRef(new Map<string, () => void>());
   const { t } = useI18n();
+  const { tenant } = useTenant();
   const dispatch = useDispatch();
   const { mutateAsync: saveMapLayout, isPending: isSaving } =
     useUpdateBoxesMapLayoutMutation(stock.id);
@@ -169,6 +170,11 @@ const MapView = ({
     dispatch(successNotification(t('application.mapLayoutSaved')));
   };
 
+  const mapBackgroundUrl = useMemo(
+    () => getStockMapBackgroundUrl(stock, tenant),
+    [stock, tenant],
+  );
+
   return (
     <div>
       <StyledMapActions>
@@ -205,8 +211,7 @@ const MapView = ({
         <StyledMapContainer
           height={stock.mapHeight}
           width={stock.mapWidth}
-          background={stock.mapBackground}
-          stockId={stock.id}
+          backgroundUrl={mapBackgroundUrl}
         >
           {!admin && !user && (
             <MapGrid height={stock.mapHeight} width={stock.mapWidth} />

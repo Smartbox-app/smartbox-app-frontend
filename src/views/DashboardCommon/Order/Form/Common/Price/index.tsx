@@ -31,7 +31,7 @@ const Price = () => {
   const { t } = useI18n();
   const { calculatedPrice, orderAddons, startDate, endDate, rentPaymentType } =
     useSelector((state: ApplicationState) => state.order);
-  console.log('ORDER ADDONS', orderAddons);
+
   const addonsPricesPerPeriod = useMemo(() => {
     const everyAddonPricePerPeriod: { net: number; gross: number }[] = [];
     for (const addon of Object.values(orderAddons)) {

@@ -119,6 +119,13 @@ const StepExtensionDuration = ({ clearPaymentDetails }: Props) => {
 
     const parsedStart = new Date(`${normalizedStart} 00:00:00`);
     const added = addDays(parsedStart, 1);
+    console.log(
+      'normalizedStart',
+      normalizedStart,
+      rent.finishAt,
+      added,
+      parsedStart,
+    );
     dispatch(setRentStartDate(added));
     dispatch(setOrderStock(rent.stockId, rent.stockName, rent.stockAddress));
   }, [rent]);
@@ -147,7 +154,6 @@ const StepExtensionDuration = ({ clearPaymentDetails }: Props) => {
 
         const parsedEnd = new Date(`${normalizedEnd} 23:59:59`);
 
-
         const difference = differenceInDays(parsedEnd, new Date(rent.finishAt));
         const minPeriodsAmount = Math.ceil(difference / minRentPeriod);
 
@@ -171,16 +177,19 @@ const StepExtensionDuration = ({ clearPaymentDetails }: Props) => {
       ? differenceInCalendarDays(endDate, startDate)
       : null;
 
+    console.log('difference', difference);
+
+    const normalizedRentFinishAt = dateOnlyNormalized(rent.finishAt);
+
+    const parsedFinishAt = new Date(`${normalizedRentFinishAt} 00:00:00`);
+
     if (
       rentPaymentType === RentPaymentType.Installments &&
       minRentDaysForInstallments
     ) {
       if (difference && difference >= minRentDaysForInstallments) return;
 
-      const newEnd = addDays(
-        startOfDay(new Date(rent.finishAt)),
-        minRentDaysForInstallments,
-      );
+      const newEnd = addDays(parsedFinishAt, minRentDaysForInstallments);
       const newEndOrToday = isBefore(newEnd, new Date())
         ? startOfDay(addDays(new Date(), 1))
         : newEnd;
@@ -188,10 +197,7 @@ const StepExtensionDuration = ({ clearPaymentDetails }: Props) => {
     } else {
       if (difference && difference >= minRentPeriod) return;
 
-      const newEnd = addDays(
-        startOfDay(new Date(rent.finishAt)),
-        minRentPeriod,
-      );
+      const newEnd = addDays(parsedFinishAt, minRentPeriod);
       const newEndOrToday = isBefore(newEnd, new Date())
         ? startOfDay(addDays(new Date(), 1))
         : newEnd;
@@ -285,7 +291,12 @@ const StepExtensionDuration = ({ clearPaymentDetails }: Props) => {
     )
       return endOfDay(new Date());
 
-    const minDate = addDays(startOfDay(new Date(rent.finishAt)), addAmount);
+    const normalizedRentFinishAt = dateOnlyNormalized(rent.finishAt);
+
+    const parsedFinishAt = new Date(`${normalizedRentFinishAt} 00:00:00`);
+
+    const minDate = addDays(parsedFinishAt, addAmount);
+
     if (isBefore(minDate, new Date())) return startOfDay(new Date());
     return minDate;
   };

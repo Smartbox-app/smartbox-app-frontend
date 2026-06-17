@@ -4,7 +4,7 @@ import { Toolbar, Button } from '../styled';
 
 export const TiptapMenuBar = ({ editor }: { editor: Editor | null }) => {
   if (!editor) return null;
-    console.log('IN MENU BAR', editor);
+
   const setLink = () => {
     const url = prompt('Podaj URL');
     if (!url) return;

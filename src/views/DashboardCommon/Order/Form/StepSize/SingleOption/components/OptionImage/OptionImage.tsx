@@ -1,6 +1,7 @@
 import { BoxGroupUserRes } from 'smartbox-types';
 import { StockImage } from 'src/icons/StockImage';
-import ApiService from 'src/services/api-service';
+import { getBoxGroupImageUrl } from 'src/config/tenant-assets';
+import { useTenant } from 'src/hooks/useTenant';
 import styled from 'styled-components';
 
 export type OptionImageProps = {
@@ -29,14 +30,14 @@ const StyledPlaceholder = styled('div')(({ theme }) => ({
 }));
 
 export const OptionImage = ({ option }: OptionImageProps) => {
+  const { tenant } = useTenant();
+  const imageUrl = getBoxGroupImageUrl(option, tenant);
+
   return (
     <>
-      {option.image ? (
+      {imageUrl ? (
         <StyledOptionWrapper>
-          <img
-            src={`${ApiService.url}box-group-new/image/${option.id}`}
-            alt={option.name}
-          />
+          <img src={imageUrl} alt={option.name} />
         </StyledOptionWrapper>
       ) : (
         <StyledPlaceholder>
