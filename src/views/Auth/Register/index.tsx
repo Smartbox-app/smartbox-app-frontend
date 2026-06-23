@@ -163,17 +163,13 @@ const Register = () => {
                 label={
                   <Typography>
                     {__('application.readTheProvisions')}{' '}
-                    <Link
-                      target="_blank"
-                      href={`${ApiService.url}tenant/rules/${tenant.id}`}
-                      rel="noreferrer"
-                    >
+                    <Link target="_blank" href="/rules" rel="noreferrer">
                       <u>{__('application.statutes')}</u>
                     </Link>{' '}
                     i{' '}
                     <Link
                       target="_blank"
-                      href='/privacy-policy'
+                      href="/privacy-policy"
                       rel="noreferrer"
                     >
                       <u>{__('application.privacyPolices')}</u>

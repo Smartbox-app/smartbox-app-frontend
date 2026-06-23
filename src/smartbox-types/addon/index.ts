@@ -198,3 +198,8 @@ export type AddonClientAdminRes = Omit<AddonRes, 'isGross'> & {
   pricing: SingleAddonVariant[];
   priceResolveType: AddonPriceResolveType;
 };
+
+export type AddonTemplateVariableRes = {
+  slug: string;
+  name: string;
+};

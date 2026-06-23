@@ -1,10 +1,9 @@
-import React, { useCallback } from 'react';
-import { TenantForUsers } from 'smartbox-types';
+import React from 'react';
 import styled from 'styled-components';
 import { useTenant } from '../../../hooks/useTenant';
 import { Container } from '../../ui';
 import { useLocation } from 'react-router';
-import { getTenantBackgroundUrl } from 'src/config/tenant-assets';
+import { useFileStorage } from 'src/hooks/useFileStorage';
 
 export type PageContentVariant = 'default' | 'dashboard';
 
@@ -81,12 +80,7 @@ const PageContent = ({
 }: Props) => {
   const { tenant } = useTenant();
   const location = useLocation();
-
-  const getTenantBackgroundPath = useCallback(
-    (tenant: TenantForUsers) =>
-      getTenantBackgroundUrl(tenant) ?? tenant.background,
-    [],
-  );
+  const { getAssetPath } = useFileStorage();
 
   const showConditionalBg =
     variant === 'default' && conditionalBg
@@ -100,7 +94,7 @@ const PageContent = ({
   return (
     <StyledPageContent
       $variant={variant}
-      $backgroundUrl={showBackground ? getTenantBackgroundPath(tenant) : null}
+      $backgroundUrl={showBackground ? getAssetPath('background', tenant.background) : null}
     >
       {variant === 'dashboard' ? children : <Container>{children}</Container>}
     </StyledPageContent>

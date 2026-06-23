@@ -60,6 +60,7 @@ export interface TenantEntity {
   smtpIgnoreTls: boolean;
   smtpFromEmail: string | null;
   accountConfirmationMethod: AccountConfirmationMethod;
+  publicAssetsBaseUrl: string;
 }
 
 export type UpdateTenantReq = Pick<

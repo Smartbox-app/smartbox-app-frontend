@@ -4,22 +4,18 @@ import { ApplicationState } from 'src/reducers';
 import { useDispatch, useSelector } from 'react-redux';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import ApiService from 'src/services/api-service';
-import { getTenantLogoUrl } from 'src/config/tenant-assets';
 import { useTenant } from 'src/hooks/useTenant';
 import './Map.scss';
 import { ActiveLocation } from './components/ActiveLocation';
-import { setOrderFullStock, setOrderStock } from 'src/actions/order';
-import {
-  StockGroupData,
-  StockGroupWithStocks,
-  StockList,
-} from 'smartbox-types';
+import { setOrderStock } from 'src/actions/order';
+import { StockGroupWithStocks, StockList } from 'smartbox-types';
 import { Skeleton } from 'src/components/ui';
-import type mapboxglType from 'mapbox-gl' // import type only
+import type mapboxglType from 'mapbox-gl'; // import type only
+import { useFileStorage } from 'src/hooks/useFileStorage';
 
 let mapboxgl: typeof mapboxglType;
 async function loadMapbox() {
-  mapboxgl = (await import('mapbox-gl')).default
+  mapboxgl = (await import('mapbox-gl')).default;
   // initialize your map here
 }
 
@@ -40,7 +36,7 @@ export const Map = () => {
   const mapRef = useRef<unknown>(null);
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const stockId = useSelector((state: ApplicationState) => state.order.stockId);
-
+  const { tenant } = useTenant();
   const [stocksLoading, setStocksLoading] = useState<boolean>(true);
   const [groupsLoading, setGroupsLoading] = useState<boolean>(true);
   const [stocks, setStocks] = useState<StockList[] | null>(null);
@@ -66,7 +62,7 @@ export const Map = () => {
 
   const dispatch = useDispatch();
 
-  const { tenant } = useTenant();
+  const { getAssetPath } = useFileStorage();
 
   useEffect(() => {
     loadMapbox();
@@ -98,11 +94,6 @@ export const Map = () => {
     };
   }, [mapContainerRef, stocks, groups]);
 
-  const logoUrl = useMemo(() => {
-    if (!tenant) return null;
-    return getTenantLogoUrl(tenant);
-  }, [tenant]);
-
   const activeStock = useMemo(() => {
     if (!stockId || !stocks || !groups) return null;
     const allStocks = [
@@ -133,7 +124,7 @@ export const Map = () => {
       if (!stock.lat || !stock.lon) continue;
 
       const el = document.createElement('div');
-      el.innerHTML = `<div class="map-marker"><img src=${logoUrl} /><span>${stock.name}</span></div>`;
+      el.innerHTML = `<div class="map-marker"><img src=${getAssetPath('logo', tenant.logo)} /><span>${stock.name}</span></div>`;
 
       const marker = new mapboxgl.Marker({ element: el })
         .setLngLat([Number(stock.lon), Number(stock.lat)])

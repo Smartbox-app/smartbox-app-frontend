@@ -1,13 +1,4 @@
 import { generateHTML } from '@tiptap/core';
-import {
-  Table,
-  TableCell,
-  TableHeader,
-  TableRow,
-} from '@tiptap/extension-table';
-import { TextStyleKit } from '@tiptap/extension-text-style';
-
-import StarterKit from '@tiptap/starter-kit';
 import React from 'react';
 import { Spinner } from 'src/components/Branded';
 import { useTenant } from 'src/hooks/useTenant';
@@ -15,6 +6,7 @@ import { useGetDocumentByTypeQuery } from 'src/queries';
 import ApiService from 'src/services/api-service';
 import { dateOnly } from 'src/utils/format-date';
 import styled from 'styled-components';
+import { getDocumentEditorExtensions } from 'src/config/tiptap';
 
 const Page = styled.main`
   max-width: 1000px;
@@ -69,16 +61,10 @@ export const PrivacyPolicy = () => {
   if (!tenant || isLoading) return <Spinner />;
 
   if (policy) {
-    const html = generateHTML(policy.content, [
-      Table.configure({
-        resizable: true,
-      }),
-      TableRow,
-      TableHeader,
-      TableCell,
-      TextStyleKit,
-      StarterKit,
-    ]);
+    const html = generateHTML(
+      policy.content,
+      getDocumentEditorExtensions(false),
+    );
     return (
       <Page>
         <header>
@@ -91,7 +77,11 @@ export const PrivacyPolicy = () => {
   }
 
   if (!['aplikacja'].includes(tenant.identifier)) {
-    window.location.href = `${ApiService.url}tenant/privacy/${tenant.id}`;
+    if (tenant.privacy) {
+      window.location.href = `${ApiService.url}tenant/privacy/${tenant.id}`;
+    } else {
+      return null;
+    }
   }
 
   return (

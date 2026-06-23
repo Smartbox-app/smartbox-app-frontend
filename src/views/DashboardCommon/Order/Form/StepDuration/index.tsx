@@ -238,8 +238,9 @@ const StepDuration = ({ clearPaymentDetails }: Props) => {
     });
   };
 
-  const setMinDate = (addAmount = 0, end?: boolean) =>
-    addDays(end ? startDate : startOfToday(), addAmount);
+  const setMinDate = (addAmount = 0, end?: boolean) => {
+    return addDays(end ? startDate : startOfToday(), addAmount);
+  };
 
   const setMaxDateForEnd = (addAmount = 0) =>
     endOfDay(addDays(startDate, addAmount));
@@ -382,12 +383,12 @@ const StepDuration = ({ clearPaymentDetails }: Props) => {
                   />
                 )}
               />
-              <StyledInputHelp $size="medium">
+              {/* <StyledInputHelp $size="medium">
                 <span className="fa fa-info-circle" />{' '}
                 {__('application.maxAdvanceBookingDaysInfo', {
                   days: advanceBookingDays,
                 })}
-              </StyledInputHelp>
+              </StyledInputHelp> */}
             </StyledStartDateField>
             <Controller
               name="endDate"

@@ -10,7 +10,7 @@ export type TiptapDocument = {
   content: TiptapNode[];
 };
 
-export type DocumentType = 'privacy-policy';
+export type DocumentType = 'privacy-policy' | 'rules' | 'agreement';
 
 export type DocumentEntity = {
   id: string;
@@ -23,4 +23,41 @@ export type DocumentEntity = {
 
 export type DocumentListRes = Pick<DocumentEntity, 'id' | 'type'>
 
-export type DocumentRes = Pick<DocumentEntity, 'id' | 'type' | 'content' | 'updatedAt' | 'tenantId'>
+export type DocumentRes = Pick<DocumentEntity, 'id' | 'type' | 'content' | 'updatedAt' | 'tenantId'>;
+
+export type DocumentHtmlRes = {
+  html: string;
+};
+
+export type AgreementAddonTemplate = {
+  slug: string;
+  variant: string | null;
+  price: number | null;
+};
+
+export type AgreementTemplateInput = {
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  phone?: string;
+  cost?: string;
+  startAt?: string;
+  finishAt?: string;
+  city?: string;
+  street?: string;
+  postCode?: string;
+  date?: string;
+  stockName?: string;
+  stockAddress?: string;
+  size?: string;
+  area?: string;
+  mailToSendInvoice?: string;
+  addons?: string | AgreementAddonTemplate[];
+  isCompany?: string | boolean;
+  nip?: string;
+  companyName?: string;
+  companyPostCode?: string;
+  companyStreet?: string;
+  companyCity?: string;
+  birthDate?: string;
+};

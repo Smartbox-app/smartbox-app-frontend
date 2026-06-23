@@ -113,7 +113,6 @@ const InputSelect = ({
   const handleChange = (val: null | InputSelectOption | InputSelectOption[]) => {
     if (multiple) {
       const selected = (val as InputSelectOption[]) || [];
-      console.log('VALLL', val, selected);
       onChange(selected.map((item) => item.value));
       return;
     }

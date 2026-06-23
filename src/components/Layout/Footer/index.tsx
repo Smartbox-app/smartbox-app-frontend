@@ -24,7 +24,7 @@ const StyledFooter = styled('footer')(({ theme }) => ({
 }));
 
 const StyledSpacer = styled('div')(({ theme }) => ({
-  width: 80
+  width: 80,
 }));
 
 const Data = styled('div')(({ theme }) => ({
@@ -42,24 +42,13 @@ const Footer = () => {
       <StyledFooter>
         <Logo width="small" />
         <Data>
-          {tenant?.rules && (
-            <Link
-              target="_blank"
-              href={`${ApiService.url}tenant/rules/${tenant.id}`}
-              rel="noreferrer"
-            >
-              {__('application.statute')}
-            </Link>
-          )}
-          {tenant?.privacy && (
-            <Link
-              target="_blank"
-              href={`${ApiService.url}tenant/privacy/${tenant.id}`}
-              rel="noreferrer"
-            >
-              {__('application.privacyPolicy')}
-            </Link>
-          )}
+          <Link target="_blank" href={'/rules'} rel="noreferrer">
+            {__('application.statute')}
+          </Link>
+
+          <Link target="_blank" href={'/privacy-policy'} rel="noreferrer">
+            {__('application.privacyPolicy')}
+          </Link>
 
           {tenant?.links.map((link) => (
             <Link

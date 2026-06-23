@@ -136,7 +136,6 @@ export default class ApiService {
     } = {
       'Content-Type': 'application/json',
     };
-
     if (Capacitor.isNativePlatform()) {
       const token = await Preferences.get({ key: 'smst_token' });
       headers.Authorization = `Bearer ${token.value}`;

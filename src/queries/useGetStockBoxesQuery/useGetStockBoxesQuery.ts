@@ -3,7 +3,6 @@ import { BoxMapRes } from 'smartbox-types';
 import ApiService from 'src/services/api-service';
 
 export const stockBoxesQueryKey = (stockId: string) => {
-  console.log('GETTING STOCK ID', ['stock', stockId, 'boxes']);
   return ['stock', stockId, 'boxes'] as const;
 };
 

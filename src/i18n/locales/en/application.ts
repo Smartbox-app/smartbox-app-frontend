@@ -87,6 +87,10 @@ const application = {
     "userNote": "User note",
     "userNotePlaceholder": "Add a note for this user...",
     "maxAdvanceBookingDaysInfo": "The start date can be selected up to {{days}} days in advance from today."
+    "agreementPreviewError": "Failed to load agreement preview.",
+    "agreementPreviewLegacy": "Legacy preview (PDF/DOCX)",
+    "agreementPreviewNew": "New preview (HTML)",
+    "agreementPreviewOpenNew": "Open new preview"
   }
 } as const;
 

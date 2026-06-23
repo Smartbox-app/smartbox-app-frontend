@@ -102,7 +102,6 @@ export const PaymentResult = () => {
       );
     } catch (e) {
       setDetailsUnavailable(true);
-      console.log('details error', e);
       setPaymentDetails(null);
     }
   };

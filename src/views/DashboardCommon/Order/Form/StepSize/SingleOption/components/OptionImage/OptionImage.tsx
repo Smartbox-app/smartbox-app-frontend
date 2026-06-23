@@ -1,7 +1,6 @@
 import { BoxGroupUserRes } from 'smartbox-types';
+import { useFileStorage } from 'src/hooks/useFileStorage';
 import { StockImage } from 'src/icons/StockImage';
-import { getBoxGroupImageUrl } from 'src/config/tenant-assets';
-import { useTenant } from 'src/hooks/useTenant';
 import styled from 'styled-components';
 
 export type OptionImageProps = {
@@ -30,14 +29,15 @@ const StyledPlaceholder = styled('div')(({ theme }) => ({
 }));
 
 export const OptionImage = ({ option }: OptionImageProps) => {
-  const { tenant } = useTenant();
-  const imageUrl = getBoxGroupImageUrl(option, tenant);
-
+  const { getAssetPath } = useFileStorage();
   return (
     <>
       {imageUrl ? (
         <StyledOptionWrapper>
-          <img src={imageUrl} alt={option.name} />
+          <img
+            src={getAssetPath('box-group', option.image)}
+            alt={option.name}
+          />
         </StyledOptionWrapper>
       ) : (
         <StyledPlaceholder>

@@ -41,6 +41,7 @@ import { AppGlobalStyles } from './AppGlobalStyles';
 import countries from 'i18n-iso-countries';
 import pl from 'i18n-iso-countries/langs/pl.json';
 import { PrivacyPolicy } from './views/PrivacyPolicy';
+import { Rules } from './views/Rules';
 import { Browser } from '@capacitor/browser';
 import { AppMessage } from './components/AppMessage';
 import { store } from './store';
@@ -187,7 +188,7 @@ const App = () => {
                           path="/client"
                           component={DashboardTenant}
                         />
-
+                        <Route exact path="/rules" component={Rules} />
                         <Route
                           exact
                           path="/privacy-policy"

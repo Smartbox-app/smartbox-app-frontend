@@ -16,8 +16,8 @@ import {
   getBoxLayoutFromBox,
   isSameBoxLayout,
 } from '../StockGroups/Stocks/Manage/Map/utils/map-layout';
-import { getStockMapBackgroundUrl } from 'src/config/tenant-assets';
 import { useTenant } from 'src/hooks/useTenant';
+import { useFileStorage } from 'src/hooks/useFileStorage';
 
 interface Props {
   boxes: (BoxMapRes | BoxMapUserRes)[];
@@ -73,6 +73,7 @@ const MapView = ({
   highlightId,
   onBoxClick,
 }: Props) => {
+  const { getAssetPath } = useFileStorage();
   const [useGrid, setUseGrid] = useState<boolean>(true);
   const [pendingLayouts, setPendingLayouts] = useState<
     Record<string, BoxMapLayoutUpdate>
@@ -89,6 +90,8 @@ const MapView = ({
   const handleChange = () => {
     setUseGrid((prev) => !prev);
   };
+
+  const mapBackgroundUrl = stock.mapBackground ? getAssetPath('map', stock.mapBackground) : null;
 
   const filteredBoxes = boxes.filter((box, index, all) => {
     const lastIndex = boxes.findLastIndex((subBox) => box.id === subBox.id);
@@ -169,11 +172,6 @@ const MapView = ({
     setPendingLayouts({});
     dispatch(successNotification(t('application.mapLayoutSaved')));
   };
-
-  const mapBackgroundUrl = useMemo(
-    () => getStockMapBackgroundUrl(stock, tenant),
-    [stock, tenant],
-  );
 
   return (
     <div>

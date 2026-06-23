@@ -177,8 +177,6 @@ const StepExtensionDuration = ({ clearPaymentDetails }: Props) => {
       ? differenceInCalendarDays(endDate, startDate)
       : null;
 
-    console.log('difference', difference);
-
     const normalizedRentFinishAt = dateOnlyNormalized(rent.finishAt);
 
     const parsedFinishAt = new Date(`${normalizedRentFinishAt} 00:00:00`);
@@ -406,12 +404,6 @@ const StepExtensionDuration = ({ clearPaymentDetails }: Props) => {
 
   if (!rent || !minRentPeriod || maxRentPeriod === null)
     return <Spinner overlay />;
-
-  console.log(
-    'Date generated',
-    dateOnly(new Date()),
-    formatForPLTimeZone(new Date()),
-  );
 
   return (
     <form className="form-step-two">

@@ -30,7 +30,7 @@ export const SelectedVariant = ({
   orderAddons,
   addonId,
 }: Props) => {
-  console.log('SELECTED VARIANT', orderAddons, addons, addonId);
+
   const formatVariantPrice = (addon: OrderAddon, selectedAddon: AddonRes) => {
     const addonPricing = (addon.price || [])[0];
     switch (selectedAddon.display) {

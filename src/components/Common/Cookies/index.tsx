@@ -42,7 +42,7 @@ const Cookies = () => {
           {__('application.privacyPoliceInfo')}{' '}
           <Link
             target="_blank"
-            href={`${ApiService.url}tenant/privacy/${tenant.id}`}
+            href="/privacy-policy"
             rel="noreferrer"
           >
             <u>{__('application.privacyPolicy1')}</u>

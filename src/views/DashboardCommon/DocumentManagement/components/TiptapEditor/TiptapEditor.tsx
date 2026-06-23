@@ -1,58 +1,74 @@
 import '@tiptap/extension-table';
 import '@tiptap/extension-text-align';
 import { useEditor, EditorContent } from '@tiptap/react';
-import StarterKit from '@tiptap/starter-kit';
-import { TextStyleKit } from '@tiptap/extension-text-style';
-import React, { useEffect } from 'react';
-import { EditorWrapper } from '../styled';
+import React, { useEffect, useMemo, useRef } from 'react';
+import { EditorRoot, EditorToolbarSticky, EditorWrapper } from '../styled';
 import { TiptapMenuBar } from '../TiptapMenuBar';
 import { TiptapTableToolbar } from '../TiptapTableToolbar';
-import {
-  Table,
-  TableCell,
-  TableHeader,
-  TableRow,
-} from '@tiptap/extension-table';
+import { TiptapTemplateToolbar } from '../TiptapTemplateToolbar';
+import { getDocumentEditorExtensions } from 'src/config/tiptap';
+import { DocumentType } from 'smartbox-types';
 
 type Props = {
   value: any;
   onChange: (value: any) => void;
+  documentType?: DocumentType;
+  templateTenantId?: string;
 };
 
-export const TiptapEditor = ({ value, onChange }: Props) => {
-  const editor = useEditor({
-    extensions: [
-      Table.configure({
-        resizable: true,
-      }),
-      TableRow,
-      TableHeader,
-      TableCell,
-      TextStyleKit,
-      StarterKit,
-    ],
-    content: value,
-    onUpdate({ editor }) {
-      onChange(editor.getJSON());
+export const TiptapEditor = ({
+  value,
+  onChange,
+  documentType,
+  templateTenantId,
+}: Props) => {
+  const isAgreement = documentType === 'agreement';
+
+  const extensions = useMemo(
+    () => getDocumentEditorExtensions(isAgreement),
+    [isAgreement],
+  );
+  const isInternalUpdate = useRef(false);
+
+  const editor = useEditor(
+    {
+      extensions,
+      content: value,
+      onUpdate({ editor }) {
+        isInternalUpdate.current = true;
+        onChange(editor.getJSON());
+      },
     },
-  });
+    [isAgreement],
+  );
 
-  console.log('EDITOR', editor);
-
-  // Sync external value (important for reset/edit mode)
+  // Sync only external value changes (e.g. form reset when loading a document).
   useEffect(() => {
-    if (!editor) return;
-    editor.commands.setContent(value);
-  }, [value]);
+    if (!editor || value == null) return;
+    if (isInternalUpdate.current) {
+      isInternalUpdate.current = false;
+      return;
+    }
+
+    editor.commands.setContent(value, { emitUpdate: false });
+  }, [editor, value]);
 
   return (
-    <div>
-      <TiptapMenuBar editor={editor} />
-      <TiptapTableToolbar editor={editor} />
+    <EditorRoot>
+      <EditorToolbarSticky>
+        <TiptapMenuBar editor={editor} />
+        {isAgreement ? (
+          <TiptapTemplateToolbar
+            editor={editor}
+            templateTenantId={templateTenantId}
+          />
+        ) : null}
+        {editor ? <TiptapTableToolbar editor={editor} /> : null}
+      </EditorToolbarSticky>
 
       <EditorWrapper>
         <EditorContent editor={editor} />
       </EditorWrapper>
-    </div>
+    </EditorRoot>
   );
 };
