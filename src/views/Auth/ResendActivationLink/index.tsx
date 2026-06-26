@@ -15,7 +15,7 @@ import { Header, InfoContent } from '../../../components/ui';
 import { useTenant } from 'src/hooks/useTenant';
 import { isSmsAccountConfirmation } from 'src/utils/account-confirmation';
 
-export default ResendActivationLink = () => {
+const ResendActivationLink = () => {
   const dispatch = useDispatch();
   const { tenant } = useTenant();
 
@@ -61,3 +61,5 @@ export default ResendActivationLink = () => {
     </InfoContent>
   );
 };
+
+export default ResendActivationLink;

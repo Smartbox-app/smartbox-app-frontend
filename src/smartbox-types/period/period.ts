@@ -7,4 +7,5 @@ export type PeriodEntity = {
     value: number;
     paid: boolean;
     invoiceId: string;
+    agreementDocumentId?: string | null;
 }

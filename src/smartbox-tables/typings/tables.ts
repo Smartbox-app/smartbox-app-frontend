@@ -46,6 +46,7 @@ export interface TableSchemaField {
 export interface TableSchema {
     countPerPage: number;
     fields: TableSchemaField[];
+    highlightRow?: (row: Record<string, unknown>) => boolean;
 }
 
 export interface TableQuery {

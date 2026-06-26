@@ -83,7 +83,7 @@ export const RentAuthorizations = ({ rent }: Props) => {
   if (!canManage) return null;
 
   return (
-    <div>
+    <>
       <Header variant="h2">{__('application.rentAuthorizations')}</Header>
 
       <ButtonsContainer>
@@ -117,6 +117,6 @@ export const RentAuthorizations = ({ rent }: Props) => {
           ))}
         </StyledAuthorizations>
       )}
-    </div>
+    </>
   );
 };

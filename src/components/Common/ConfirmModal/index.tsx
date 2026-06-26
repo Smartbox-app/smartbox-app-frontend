@@ -6,6 +6,7 @@ import { modal } from '../../../actions';
 
 import { __ } from '../../../helpers/i18n';
 import { Modal } from 'src/components/ui';
+import { ButtonsContainer } from 'src/components/Layout';
 
 interface Props {
   mainText: string;
@@ -31,15 +32,17 @@ const ConfirmModal = ({
       <p>{__(mainText)}</p>
     </Modal.Content>
     <Modal.Actions>
-      <Button click={() => hideModal()} text={cancelButtonText} success />
-      <Button
-        danger
-        click={() => {
-          approveAction();
-          hideModal();
-        }}
-        text={approveButtonText}
-      />
+      <ButtonsContainer>
+        <Button click={() => hideModal()} text={cancelButtonText} success />
+        <Button
+          danger
+          click={() => {
+            approveAction();
+            hideModal();
+          }}
+          text={approveButtonText}
+        />
+      </ButtonsContainer>
     </Modal.Actions>
   </>
 );

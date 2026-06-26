@@ -36,15 +36,24 @@ const TableContainer = styled('div')(({ theme }) => ({
   width: '100%',
 }));
 
-const StyledRow = styled('tr')(({ theme }) => {
+const StyledRow = styled('tr')<{ $highlight?: boolean }>(({ theme, $highlight }) => {
   const secondaryLight = setLightness(0.95, theme.colors.secondary);
+  const highlightBackground = theme.colors.surface.attention.secondary;
 
   return {
     height: 56,
-    '&:nth-child(odd)': {
-      backgroundColor: secondaryLight,
-      color: getColorForBackground(secondaryLight),
-    },
+    ...($highlight
+      ? {
+          backgroundColor: highlightBackground,
+          color: getColorForBackground(highlightBackground),
+          boxShadow: `inset 4px 0 0 ${theme.colors.surface.attention.primary}`,
+        }
+      : {
+          '&:nth-child(odd)': {
+            backgroundColor: secondaryLight,
+            color: getColorForBackground(secondaryLight),
+          },
+        }),
   };
 });
 
@@ -73,7 +82,7 @@ const formatValue = (value: any, field: TableSchemaField, allValues: any) => {
         '-'
       ) : (
         <Link
-          href={`mailto: ${value}`}
+          href={`mailto:${value}`}
           rel="noopener noreferrer"
           target="_blank"
         >
@@ -85,7 +94,7 @@ const formatValue = (value: any, field: TableSchemaField, allValues: any) => {
       return value === null ? (
         '-'
       ) : (
-        <Link href={`tel: ${value} `} rel="noopener noreferrer" target="_blank">
+        <Link href={`tel:${value} `} rel="noopener noreferrer" target="_blank">
           {value}
         </Link>
       );
@@ -191,7 +200,10 @@ class Table extends React.Component<Props> {
         ),
       );
       const rows = this.props.data.items.map((row: any, rowIndex: number) => (
-        <StyledRow key={rowIndex}>
+        <StyledRow
+          key={rowIndex}
+          $highlight={this.props.scheme.highlightRow?.(row) === true}
+        >
           {this.props.scheme.fields.map(
             (header: TableSchemaField, index: number) => (
               <td

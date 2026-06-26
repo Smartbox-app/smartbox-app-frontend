@@ -99,16 +99,19 @@ const StyledActions = styled.div(({ theme }) => {
   const paddingY = modalSectionGap(spacing);
 
   return {
-    display: 'flex',
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-    gap: theme.spacing * 2,
-    flexShrink: 0,
-    flexWrap: 'wrap',
     padding: `${paddingY}px ${paddingX}px ${modalPaddingBottom(spacing)}px`,
     borderTop: `1px solid #eee`,
     '[data-modal-root] > &:only-child': {
       padding: `${modalPaddingTop(spacing)}px ${paddingX}px ${modalPaddingBottom(spacing)}px`,
+    },
+
+    '@media (min-width: 768px)': {
+      display: 'flex',
+      justifyContent: 'flex-end',
+      alignItems: 'center',
+      gap: theme.spacing * 2,
+      flexShrink: 0,
+      flexWrap: 'wrap',
     },
   };
 });
@@ -140,7 +143,6 @@ const ModalHeader = ({ title, right }: ModalHeaderProps) => {
     <StyledHeaderRow>
       <StyledHeaderText>
         {title ? <Header variant="h2">{title}</Header> : null}
-
       </StyledHeaderText>
       {right ??
         (closable && onClose ? (

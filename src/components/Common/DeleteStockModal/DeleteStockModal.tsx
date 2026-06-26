@@ -4,6 +4,7 @@ import { __ } from '../../../helpers/i18n';
 import { hideModal } from 'src/actions/modal';
 import { Input, Modal } from 'src/components/ui';
 import { useForm } from 'react-hook-form';
+import { ButtonsContainer } from 'src/components/Layout';
 
 interface Props {
   mainText: string;
@@ -28,15 +29,21 @@ export const DeleteStockModal = ({
         <Input {...register('stockName')} label="Nazwa placu" />
       </Modal.Content>
       <Modal.Actions>
-        <Button click={() => dispatch(hideModal())} text={cancelButtonText} success />
-        <Button
-          danger
-          click={() => {
-            approveAction(getValues('stockName') || '');
-            dispatch(hideModal());
-          }}
-          text={approveButtonText}
-        />
+        <ButtonsContainer>
+          <Button
+            click={() => dispatch(hideModal())}
+            text={cancelButtonText}
+            success
+          />
+          <Button
+            danger
+            click={() => {
+              approveAction(getValues('stockName') || '');
+              dispatch(hideModal());
+            }}
+            text={approveButtonText}
+          />
+        </ButtonsContainer>
       </Modal.Actions>
     </>
   );

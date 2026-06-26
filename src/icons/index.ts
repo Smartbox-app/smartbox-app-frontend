@@ -35,3 +35,7 @@ export * from './Close';
 export * from './GateBig';
 export * from './Dots';
 export * from './IOSShare';
+export * from './Area';
+export * from './Cube';
+export * from './ErrorCircle';
+export * from './Alert';

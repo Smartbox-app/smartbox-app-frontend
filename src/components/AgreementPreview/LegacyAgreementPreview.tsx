@@ -7,8 +7,12 @@ import { Button } from 'src/components/ui';
 import { SearchZoomIn } from 'src/icons';
 import { ButtonsContainer } from 'src/components/Layout';
 import ApiService from 'src/services/api-service';
-import { buildLegacyAgreementUrl } from 'src/utils/agreement-template-query';
+import {
+  buildLegacyAgreementPath,
+  buildLegacyAgreementUrl,
+} from 'src/utils/agreement-template-query';
 import { Capacitor } from '@capacitor/core';
+import { handleFileOpen } from 'src/utils/handle-file-open';
 
 const AgreementWrapper = styled.div`
   position: relative;
@@ -33,6 +37,7 @@ export const LegacyAgreementPreview = ({
   template,
 }: Props) => {
   const [agreementLoaded, setAgreementLoaded] = useState(false);
+  const [isDownloading, setIsDownloading] = useState(false);
   const frameRef = useRef<HTMLIFrameElement>(null);
 
   const agreementType = useMemo(() => {
@@ -41,12 +46,33 @@ export const LegacyAgreementPreview = ({
     return 'pdf';
   }, [agreementFile]);
 
+  const legacyAgreementPath = useMemo(
+    () => buildLegacyAgreementPath(tenantId, template),
+    [tenantId, template],
+  );
+
   const legacyAgreementUrl = useMemo(
     () => buildLegacyAgreementUrl(tenantId, template, ApiService.url),
     [tenantId, template],
   );
 
   const encodedLegacyUrl = encodeURIComponent(legacyAgreementUrl);
+
+  const openAgreement = async () => {
+    if (Capacitor.isNativePlatform()) {
+      setIsDownloading(true);
+
+      try {
+        await handleFileOpen(legacyAgreementPath, agreementFile);
+      } finally {
+        setIsDownloading(false);
+      }
+
+      return;
+    }
+
+    window.open(legacyAgreementUrl, '_blank', 'noopener,noreferrer');
+  };
 
   const checkFrame = () => {
     if (!frameRef.current) return false;
@@ -107,11 +133,12 @@ export const LegacyAgreementPreview = ({
       </AgreementWrapper>
       <ButtonsContainer center>
         <Button
-          href={legacyAgreementUrl}
           size="large"
           type="button"
           text="application.click_to_open"
           iconLeft={<SearchZoomIn />}
+          disabled={isDownloading}
+          onClick={() => void openAgreement()}
         />
       </ButtonsContainer>
     </>

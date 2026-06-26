@@ -245,7 +245,7 @@ const StepDuration = ({ clearPaymentDetails }: Props) => {
   const setMaxDateForEnd = (addAmount = 0) =>
     endOfDay(addDays(startDate, addAmount));
 
-  const advanceBookingDays = 14; /* maxAdvanceBookingDays ?? 14;*/
+  const advanceBookingDays = maxAdvanceBookingDays ?? 14;
 
   const setMaxDateForStart = () => addDays(startOfToday(), advanceBookingDays);
 
@@ -383,12 +383,6 @@ const StepDuration = ({ clearPaymentDetails }: Props) => {
                   />
                 )}
               />
-              {/* <StyledInputHelp $size="medium">
-                <span className="fa fa-info-circle" />{' '}
-                {__('application.maxAdvanceBookingDaysInfo', {
-                  days: advanceBookingDays,
-                })}
-              </StyledInputHelp> */}
             </StyledStartDateField>
             <Controller
               name="endDate"
@@ -414,6 +408,12 @@ const StepDuration = ({ clearPaymentDetails }: Props) => {
               )}
             />
           </StyledCalendarPicker>
+          <StyledInputHelp $size="medium">
+            <span className="fa fa-info-circle" />{' '}
+            {__('application.maxAdvanceBookingDaysInfo', {
+              days: advanceBookingDays,
+            })}
+          </StyledInputHelp>
           <RentDuration />
         </Section>
 

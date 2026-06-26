@@ -1,30 +1,48 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import ApiService from '../../services/api-service';
-import {
-  myRentDetailsQueryKey,
-} from '../../queries';
+import { getEndRentSource } from 'src/utils/can-capture-end-rent-photo';
+import { myRentDetailsQueryKey } from '../../queries';
 
 export const useEndMyRentMutation = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationKey: ['end-my-rent'],
-    mutationFn: async ({ rentId }: { rentId: string }) => {
+    mutationFn: async ({
+      rentId,
+      photo,
+      photoTakenAt,
+    }: {
+      rentId: string;
+      photo?: File | null;
+      photoTakenAt?: Date | null;
+    }) => {
+      const source = getEndRentSource();
+      const formData = new FormData();
+
+      if (photo) {
+        formData.append('file', photo, photo.name);
+      }
+
+      if (photoTakenAt) {
+        formData.append('endRentPhotoTakenAt', photoTakenAt.toISOString());
+      }
+
       await ApiService.callFetch(
-        'PATCH',
-        `rent/finish/${rentId}`,
+        'POST',
+        `rent/end/${rentId}?source=${source}`,
         undefined,
         undefined,
-        undefined,
+        formData,
         true,
       );
     },
     onSuccess: (_data, { rentId }) => {
-      queryClient.invalidateQueries({ queryKey: ['my-rents'] }),
-      queryClient.invalidateQueries({ queryKey: ['my-rent-story'] }),
-      queryClient.invalidateQueries({
-        queryKey: myRentDetailsQueryKey(rentId),
-      });
+      (queryClient.invalidateQueries({ queryKey: ['my-rents'] }),
+        queryClient.invalidateQueries({ queryKey: ['my-rent-story'] }),
+        queryClient.invalidateQueries({
+          queryKey: myRentDetailsQueryKey(rentId),
+        }));
       queryClient.invalidateQueries({
         queryKey: ['rent-authorized-users', rentId],
       });

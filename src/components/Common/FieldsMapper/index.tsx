@@ -51,7 +51,7 @@ const FieldsMapper = ({ field, fieldHtmlId, currentValue, errors, size, big, onF
         if (field.options?.type === 'checkboxRules' && tenant) return <small>
             {t('application.readTheProvisions')}{' '}
 
-            <Link target="_blank" href={`${ApiService.url}tenant/rules/${tenant.id}`} rel="noreferrer">
+            <Link target="_blank" href='/rules' rel="noreferrer">
                 <u>{t('application.statutes')}</u>
             </Link>{' '}
             i{' '}

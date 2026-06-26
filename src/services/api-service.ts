@@ -40,9 +40,12 @@ export default class ApiService {
 
     const headers: {
       [key: string]: string;
-    } = {
-      'Content-Type': 'application/json',
-    };
+    } =
+      requestData && requestData instanceof FormData
+        ? {}
+        : {
+            'Content-Type': 'application/json',
+          };
 
     if (Capacitor.isNativePlatform()) {
       const token = await Preferences.get({ key: 'smst_token' });
@@ -54,13 +57,8 @@ export default class ApiService {
     try {
       const response = await fetch(`${ApiService.url}${wrappedUrl}`, {
         method,
-        headers:
-          !Capacitor.isNativePlatform() &&
-          requestData &&
-          requestData instanceof FormData
-            ? {}
-            : headers,
-        credentials: 'include',
+        headers,
+        credentials: !Capacitor.isNativePlatform() ? 'include' : undefined,
         body:
           requestData && requestData instanceof FormData
             ? requestData
@@ -131,11 +129,15 @@ export default class ApiService {
     throwError?: boolean,
     muteNotification?: boolean,
   ) => {
+
     const headers: {
       [key: string]: string;
-    } = {
-      'Content-Type': 'application/json',
-    };
+    } =
+      requestData && requestData instanceof FormData
+        ? {}
+        : {
+            'Content-Type': 'application/json',
+          };
     if (Capacitor.isNativePlatform()) {
       const token = await Preferences.get({ key: 'smst_token' });
       headers.Authorization = `Bearer ${token.value}`;
@@ -145,13 +147,8 @@ export default class ApiService {
     try {
       const response = await fetch(`${ApiService.url}${wrappedUrl}`, {
         method,
-        headers:
-          !Capacitor.isNativePlatform() &&
-          requestData &&
-          requestData instanceof FormData
-            ? {}
-            : headers,
-        credentials: 'include',
+        headers,
+        credentials: !Capacitor.isNativePlatform() ? 'include' : undefined,
         body:
           requestData && requestData instanceof FormData
             ? requestData
@@ -179,7 +176,7 @@ export default class ApiService {
           }
       }
     } catch (error) {
-      if (!muteNotification && !throwError)
+      if (!muteNotification)
         store.dispatch(
           notifications.errorNotification(ApiErrorCode.OtherError),
         );
@@ -204,7 +201,7 @@ export default class ApiService {
     const response = await fetch(wrappedUrl, {
       method,
       headers,
-      credentials: 'include',
+      credentials: !Capacitor.isNativePlatform() ? 'include' : undefined,
     });
 
     return response;
@@ -344,7 +341,7 @@ export default class ApiService {
     url: string,
     data?: any,
     excludeApiURL = false,
-  ): Promise<{ filename: string; data: string }> => {
+  ): Promise<{ filename: string; data: string; contentType?: string }> => {
     const headers: {
       [key: string]: string;
     } = {
@@ -360,20 +357,29 @@ export default class ApiService {
     const capacitorMethod = data ? CapacitorHttp.post : CapacitorHttp.get;
 
     try {
+      const wrappedUrl = excludeApiURL
+        ? url
+        : `${ApiService.url}${ApiService.wrapUrlWithTenant(url)}`;
+
       const response = await capacitorMethod({
         headers,
-        url: excludeApiURL ? url : `${ApiService.url}${url}`,
+        url: wrappedUrl,
         responseType: 'blob',
         data: data ? data : undefined,
         webFetchExtra: {
-          credentials: 'include',
+          credentials: !Capacitor.isNativePlatform() ? 'include' : undefined,
         },
       });
       const received = response.data;
+
       const filename =
         response.headers['Filename'] || response.headers['filename'];
 
-      return { filename, data: received };
+      return {
+        filename,
+        data: received,
+        contentType: response.headers['Content-Type'] || response.headers['content-type'],
+      };
     } catch (e) {
       throw e;
     }

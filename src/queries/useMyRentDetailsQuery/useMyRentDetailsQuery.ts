@@ -19,6 +19,7 @@ export const useMyRentDetailsQuery = (
         undefined,
         undefined,
         true,
+        true
       );
       return res;
     },

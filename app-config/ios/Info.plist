@@ -97,5 +97,9 @@
 	<string>Your app needs your location to your boxes and gates leading to them.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>Your app needs your location to your boxes and gates leading to them.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Aparat jest potrzebny do zrobienia zdjęcia schowka przy zakończeniu wynajmu.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Aparat jest potrzebny do zrobienia zdjęcia schowka przy zakończeniu wynajmu.</string>
 </dict>
 </plist>

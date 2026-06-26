@@ -25,6 +25,7 @@ const StyledPriceInfo = styled('div')<{ disabled?: boolean; active?: boolean }>(
     padding: `${theme.spacing * 2}px ${theme.spacing * 2}px`,
     opacity: disabled ? 0.5 : 1,
     border: `2px solid ${active ? theme.colors.primary : theme.colors.border.secondary}`,
+    whiteSpace: 'normal',
   }),
 );
 
@@ -107,19 +108,22 @@ const PriceInfo = ({ box, active, disabled }: Props) => {
   }, [display, netPrice, grossPrice]);
 
   return (
-    <StyledPriceInfo active={active} disabled={disabled}>
-      {disabled ? (
-        <strong>Brak</strong>
-      ) : (
-        <>
-          {priceInfo} /{' '}
-          <span>
-            {firstPricing.quantity}{' '}
-            {formatQuantity(firstPricing.type, firstPricing.quantity || 0)}
-          </span>
-        </>
-      )}
-    </StyledPriceInfo>
+    <>
+      {/* {disabled ? (
+        <StyledPriceInfo active={active} disabled={disabled}>
+          <strong>Brak</strong>
+        </StyledPriceInfo>
+      ) :  <StyledPriceInfo active={active} disabled={disabled}>
+      <strong>Dostępny!</strong>
+    </StyledPriceInfo>} */}
+      <StyledPriceInfo active={active} disabled={disabled}>
+        {priceInfo} /{' '}
+        <span>
+          {firstPricing.quantity}{' '}
+          {formatQuantity(firstPricing.type, firstPricing.quantity || 0)}
+        </span>
+      </StyledPriceInfo>
+    </>
   );
 };
 

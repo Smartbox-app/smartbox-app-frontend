@@ -1,5 +1,4 @@
-import { IsIn, IsObject } from 'class-validator';
-import { __ } from 'src/helpers/i18n';
+import { IsIn, IsObject, IsOptional, IsString, ValidateIf } from 'class-validator';
 import { TiptapDocument, DocumentType } from '../smartbox-types';
 
 export const DOCUMENT_TYPES: DocumentType[] = ['privacy-policy', 'rules', 'agreement'];
@@ -14,4 +13,9 @@ export class DocumentDto {
   type: DocumentType;
 
   tenantId?: string;
+
+  @ValidateIf((dto: DocumentDto) => dto.type === 'agreement')
+  @IsOptional()
+  @IsString()
+  stockId?: string | null;
 }

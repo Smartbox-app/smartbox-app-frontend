@@ -10,19 +10,29 @@ export const documentAgreementHtmlQueryKey = (
 export const useGetDocumentAgreementHtmlQuery = (
   template?: AgreementTemplateInput,
   enabled = true,
+  stockId?: string | null,
 ) => {
   return useQuery({
     enabled: enabled && !!template,
     queryKey: template
-      ? documentAgreementHtmlQueryKey(template)
+      ? [...documentAgreementHtmlQueryKey(template), stockId ?? 'default']
       : ['document', 'agreement', 'html', 'missing'],
     queryFn: async () => {
       if (!template) return null;
 
       const query = agreementTemplateToQueryString(template);
-      const url = query
-        ? `document/type/agreement/html?${query}`
-        : 'document/type/agreement/html';
+      const params = new URLSearchParams(query);
+
+      if (stockId) {
+        params.set('stockId', stockId);
+      }
+
+      const queryString = params.toString();
+      const url = queryString
+        ? `document/type/agreement/html?${queryString}`
+        : stockId
+          ? `document/type/agreement/html?stockId=${encodeURIComponent(stockId)}`
+          : 'document/type/agreement/html';
 
       const response = await ApiService.callFetch<DocumentHtmlRes>(
         'GET',

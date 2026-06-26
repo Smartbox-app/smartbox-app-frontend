@@ -4,14 +4,18 @@ import { __ } from '../../../helpers/i18n';
 import React, { useEffect, useRef, useState } from 'react';
 import { Button, Header, InfoContent, Typography } from 'src/components/ui';
 import { SuccessCheck } from 'src/icons';
-import { useParams } from 'react-router';
+import { useLocation, useParams } from 'react-router';
 import ApiService from 'src/services/api-service';
 import { Logo, Spinner } from 'src/components/Branded';
 import TagManager from 'react-gtm-module';
 import { history } from 'src/history';
+import { Capacitor } from '@capacitor/core';
+import { Browser } from '@capacitor/browser';
 
 export const PaymentResult = () => {
   const { id } = useParams<{ id: string }>();
+  const location = useLocation();
+  const source = new URLSearchParams(location.search).get('source');
   const tracked = useRef<boolean>(false);
 
   const trackPurchase = (details: PaymentDetails) => {
@@ -173,6 +177,10 @@ export const PaymentResult = () => {
     }
   };
 
+  const handleClick = () => {
+    history.push('/');
+  };
+
   if (paymentStatus === null && !paymentStatusError)
     return (
       <InfoContent>
@@ -191,11 +199,18 @@ export const PaymentResult = () => {
           <Typography>{__('application.invoiceWasSent')}</Typography>
         </>
       ) : null}
-      <Button
-        size="large"
-        text="application.backToApp"
-        onClick={() => history.push('/')}
-      />
+
+      {source === 'mobile' ? (
+        <Typography>
+          {__('application.youCanCloseThisPageAndGoBack')}
+        </Typography>
+      ) : (
+        <Button
+          size="large"
+          text="application.backToApp"
+          onClick={handleClick}
+        />
+      )}
     </InfoContent>
   );
 };

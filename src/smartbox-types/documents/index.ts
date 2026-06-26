@@ -19,11 +19,23 @@ export type DocumentEntity = {
   updatedAt: Date;
   type: DocumentType;
   tenantId: string;
+  stockId: string | null;
+  isDraft?: boolean;
 };
 
-export type DocumentListRes = Pick<DocumentEntity, 'id' | 'type'>
+export type DocumentListRes = Pick<
+  DocumentEntity,
+  'id' | 'type' | 'updatedAt' | 'isDraft' | 'stockId'
+> & {
+  identifier?: string;
+  tenantId?: string;
+  stockName?: string | null;
+};
 
-export type DocumentRes = Pick<DocumentEntity, 'id' | 'type' | 'content' | 'updatedAt' | 'tenantId'>;
+export type DocumentRes = Pick<
+  DocumentEntity,
+  'id' | 'type' | 'content' | 'updatedAt' | 'tenantId' | 'stockId' | 'isDraft'
+>;
 
 export type DocumentHtmlRes = {
   html: string;

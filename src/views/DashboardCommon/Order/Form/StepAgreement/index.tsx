@@ -60,7 +60,7 @@ interface Props {
   paymentType: PaymentType;
 }
 
-const StepAgreement = ({ formData, isResignationMarked }: Props): any => {
+const StepAgreement = ({ formData, isResignationMarked, stockId }: Props): any => {
   const { data: user } = useGetMyDetailsQuery();
   const order = useSelector((state: ApplicationState) => state.order);
   const tenant = useSelector((state: ApplicationState) => state.tenant);
@@ -87,7 +87,7 @@ const StepAgreement = ({ formData, isResignationMarked }: Props): any => {
             if (Capacitor.isNativePlatform()) {
               history.push('/');
               Browser.open({
-                url: `${ApiService.url}rent/ipg-redirect/${tenantId}/${response.paymentId}`,
+                url: `${ApiService.url}rent/ipg-redirect/${tenantId}/${response.paymentId}?source=mobile`,
               });
             } else {
               prepareAndSentPaymentForm(response);
@@ -119,7 +119,7 @@ const StepAgreement = ({ formData, isResignationMarked }: Props): any => {
           if (Capacitor.isNativePlatform()) {
             history.push('/');
             Browser.open({
-              url: `${ApiService.url}rent/ipg-redirect/${tenantId}/${response.paymentId}`,
+              url: `${ApiService.url}rent/ipg-redirect/${tenantId}/${response.paymentId}?source=mobile`,
             });
           } else {
             prepareAndSentPaymentForm(response);
@@ -351,7 +351,7 @@ const StepAgreement = ({ formData, isResignationMarked }: Props): any => {
   }, [formData, order, tenant, user]);
 
   const { data: agreementDocument, isLoading: isAgreementDocumentLoading } =
-    useGetDocumentByTypeQuery('agreement');
+    useGetDocumentByTypeQuery('agreement', stockId);
 
   if (!tenant) return null;
 
@@ -365,7 +365,11 @@ const StepAgreement = ({ formData, isResignationMarked }: Props): any => {
           {isAgreementDocumentLoading ? (
             <Spinner overlay halfTransparent />
           ) : agreementDocument ? (
-            <AgreementPreview source="template" template={agreementTemplate} />
+            <AgreementPreview
+              source="template"
+              template={agreementTemplate}
+              stockId={stockId}
+            />
           ) : (
             <LegacyAgreementPreview
               tenantId={tenant.id}

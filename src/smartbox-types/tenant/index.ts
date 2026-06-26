@@ -40,6 +40,7 @@ export interface TenantEntity {
   useProd: boolean;
   birthDateNecessary: boolean;
   clientSourceField: boolean;
+  requireEndRentPhoto: boolean;
   newRentNotification: boolean;
   rentExtendedNotification: boolean;
   debtResolveType: DebtResolveType;
@@ -105,6 +106,7 @@ export type UpdateTenantByAdminReq = Pick<
   | 'rentExtendedNotification'
   | 'birthDateNecessary'
   | 'clientSourceField'
+  | 'requireEndRentPhoto'
   | 'debtResolveType'
   | 'locationSelectType'
   | 'namingType'

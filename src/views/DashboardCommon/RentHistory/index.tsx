@@ -3,9 +3,13 @@ import { dateOnly } from '../../../utils/format-date';
 import { formatPrice } from '../../../utils/format-price';
 import { __ } from '../../../helpers/i18n';
 import styled from 'styled-components';
-import { Button } from '../../../components/Branded';
-import ApiService from '../../../services/api-service';
+import { RentAttachedFileButton } from 'src/components/Common/RentAttachedFileButton';
 import { useMemo } from 'react';
+import { RentAgreementButton } from '../SingleRentDetail/RentAgreementButton';
+import {
+  hasViewableAgreementPeriod,
+  resolveRentAgreementForDescriptionLine,
+} from 'src/utils/rent-agreement';
 import { isAfter, isBefore } from 'date-fns';
 import { Alert } from 'src/components/Common';
 
@@ -21,8 +25,9 @@ const StyledPeriodHeader = styled('h4')({
   color: '#333',
   fontWeight: 700,
   fontSize: '1rem',
-  marginBottom: '10px',
+  margin: 0,
 });
+
 const StyledSubHeader = styled('h4')({
   color: '#333',
   fontWeight: 700,
@@ -54,6 +59,11 @@ const StyledSingleAddon = styled('li')(({ theme }) => ({
 
 const StyledRentAgreementButton = styled('div')({
   display: 'flex',
+  padding: '16px 0',
+});
+
+const AttachedFileButtonContainer = styled('div')({
+  padding: '8px 0',
 });
 
 const getPaymentTypeLabel = (type: RentPaymentType) => {
@@ -89,116 +99,122 @@ export const RentHistory = ({
         </Alert>
       ) : null}
       <ul>
-        {description.map((line, index) => (
-          <StyledSinglePeriod key={index}>
-            <StyledPeriodHeader>
-              {dateOnly(line.startAt)} - {dateOnly(line.finishAt)}
-            </StyledPeriodHeader>
-            <p>
-              {__('application.price')} - {formatPrice(Number(line.cost))}
-            </p>
-            <p>
-              {__('application.paymentType')} -{' '}
-              {__(getPaymentTypeLabel(line.paymentType || paymentType))}
-            </p>
-            {line.agreement ? (
-              <StyledRentAgreementButton>
-                <Button
-                  small
-                  primary
-                  blank
-                  text="application.seeRentAgreement"
-                  to={`${ApiService.url}rent/agreement/${rentId}/${index}`}
-                />
-              </StyledRentAgreementButton>
-            ) : null}
+        {description.map((line, index) => {
+          const resolvedAgreement = resolveRentAgreementForDescriptionLine(
+            line,
+            periods,
+          );
 
-            {line.addons && line.addons.length > 0 ? (
-              <div>
-                <StyledSubHeader>
-                  {__('application.selectedAddons')}
-                </StyledSubHeader>
-                <ul>
-                  {line.addons.map((addon) => (
-                    <StyledSingleAddon key={addon.id}>
-                      <div>
-                        <strong>{addon.name}</strong>
-                        {typeof addon.price === 'number' &&
-                        addon.selectedVariantName ? (
-                          <>
-                            {' '}
-                            - {addon.selectedVariantName} -{' '}
-                            {formatPrice(Number(addon.price))}
-                          </>
+          return (
+            <StyledSinglePeriod key={index}>
+              <StyledPeriodHeader>
+                {dateOnly(line.startAt)} - {dateOnly(line.finishAt)}
+              </StyledPeriodHeader>
+              {hasViewableAgreementPeriod(line, periods) ? (
+                <StyledRentAgreementButton>
+                  <RentAgreementButton
+                    rentId={rentId}
+                    periodIndex={index}
+                    documentId={resolvedAgreement.documentId}
+                    agreement={resolvedAgreement.agreement}
+                  />
+                </StyledRentAgreementButton>
+              ) : null}
+
+              <p>
+                {__('application.price')} - {formatPrice(Number(line.cost))}
+              </p>
+              <p>
+                {__('application.paymentType')} -{' '}
+                {__(getPaymentTypeLabel(line.paymentType || paymentType))}
+              </p>
+
+              {line.addons && line.addons.length > 0 ? (
+                <div>
+                  <StyledSubHeader>
+                    {__('application.selectedAddons')}
+                  </StyledSubHeader>
+                  <ul>
+                    {line.addons.map((addon) => (
+                      <StyledSingleAddon key={addon.id}>
+                        <div>
+                          <strong>{addon.name}</strong>
+                          {typeof addon.price === 'number' &&
+                          addon.selectedVariantName ? (
+                            <>
+                              {' '}
+                              - {addon.selectedVariantName} -{' '}
+                              {formatPrice(Number(addon.price))}
+                            </>
+                          ) : null}
+                        </div>
+
+                        {addon.acceptance ? (
+                          <p>
+                            {addon.acceptance} -{' '}
+                            <strong>{addon.accepted ? 'Tak' : 'Nie'}</strong>
+                          </p>
                         ) : null}
-                      </div>
-
-                      {addon.acceptance ? (
-                        <p>
-                          {addon.acceptance} -{' '}
-                          <strong>{addon.accepted ? 'Tak' : 'Nie'}</strong>
-                        </p>
-                      ) : null}
-                      {!!addon.acceptances && !!addon.acceptancesStatus
-                        ? addon.acceptances.map((acceptance) => (
-                            <p key={acceptance.id}>
-                              {acceptance.text} -{' '}
-                              <strong>
-                                {addon.acceptancesStatus![acceptance.id]
-                                  .accepted
-                                  ? 'Tak'
-                                  : 'Nie'}
-                              </strong>
-                            </p>
-                          ))
-                        : null}
-                      {addon.file ? (
-                        <Button
-                          small
-                          blank
-                          primary
-                          to={`${ApiService.url}rent/file/${rentId}/${addon.file}`}
-                          text="application.seeAttachedFile"
-                        />
-                      ) : null}
-                    </StyledSingleAddon>
-                  ))}
-                </ul>
-              </div>
-            ) : null}
-            {line.paymentType === RentPaymentType.Installments ? (
-              <>
-                <StyledSubHeader>{__('application.periods')}</StyledSubHeader>
-                <ul>
-                  {sortedPeriods
-                    .filter(
-                      (period) =>
-                        !isBefore(
-                          new Date(period.startAt),
-                          new Date(line.startAt),
-                        ) &&
-                        !isAfter(
-                          new Date(period.finishAt),
-                          new Date(line.finishAt),
-                        ),
-                    )
-                    .map((period) => {
-                      return (
-                        <StyledSinglePaymentPeriod key={period.id}>
-                          {dateOnly(period.startAt)} -{' '}
-                          {dateOnly(period.finishAt)} -{' '}
-                          <strong>{formatPrice(period.value)}</strong> -{' '}
-                          {period.paid
-                            ? __('application.periodPaid')
-                            : __('application.periodUnpaid')}
-                        </StyledSinglePaymentPeriod>
-                      );
-                    })}
-                </ul>
-              </>
-            ) : null}
-          </StyledSinglePeriod>
-        ))}
+                        {!!addon.acceptances && !!addon.acceptancesStatus
+                          ? addon.acceptances.map((acceptance) => (
+                              <p key={acceptance.id}>
+                                {acceptance.text} -{' '}
+                                <strong>
+                                  {addon.acceptancesStatus![acceptance.id]
+                                    .accepted
+                                    ? 'Tak'
+                                    : 'Nie'}
+                                </strong>
+                              </p>
+                            ))
+                          : null}
+                        {addon.file ? (
+                          <AttachedFileButtonContainer>
+                            <RentAttachedFileButton
+                              rentId={rentId}
+                              fileName={addon.file}
+                            />
+                          </AttachedFileButtonContainer>
+                        ) : null}
+                      </StyledSingleAddon>
+                    ))}
+                  </ul>
+                </div>
+              ) : null}
+              {line.paymentType === RentPaymentType.Installments ? (
+                <>
+                  <StyledSubHeader>{__('application.periods')}</StyledSubHeader>
+                  <ul>
+                    {sortedPeriods
+                      .filter(
+                        (period) =>
+                          !isBefore(
+                            new Date(period.startAt),
+                            new Date(line.startAt),
+                          ) &&
+                          !isAfter(
+                            new Date(period.finishAt),
+                            new Date(line.finishAt),
+                          ),
+                      )
+                      .map((period) => {
+                        return (
+                          <StyledSinglePaymentPeriod key={period.id}>
+                            {dateOnly(period.startAt)} -{' '}
+                            {dateOnly(period.finishAt)} -{' '}
+                            <strong>{formatPrice(period.value)}</strong> -{' '}
+                            {period.paid
+                              ? __('application.periodPaid')
+                              : __('application.periodUnpaid')}
+                          </StyledSinglePaymentPeriod>
+                        );
+                      })}
+                  </ul>
+                </>
+              ) : null}
+            </StyledSinglePeriod>
+          );
+        })}
       </ul>
     </>
   );

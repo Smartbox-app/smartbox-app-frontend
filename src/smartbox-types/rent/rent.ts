@@ -178,6 +178,7 @@ export class RentDetailsRes {
   description: RentDescription[];
   paymentType: RentPaymentType;
   isAuthorized: boolean;
+  endRentPhoto?: string | null;
 }
 
 export class RentDetailsUser {
@@ -336,3 +337,12 @@ export type PayForRentResponse = {
   paymentData?: GeneratePaymentDataResponse;
   url?: string;
 };
+
+export type SignedDownloadUrlRes = {
+  url: string;
+  expiresAt: string;
+};
+
+export type EndRentPhotoDownloadUrlRes = SignedDownloadUrlRes;
+
+export type RentFileDownloadUrlRes = SignedDownloadUrlRes;

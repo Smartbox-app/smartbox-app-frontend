@@ -105,4 +105,7 @@ export enum ApiErrorCode {
   InvitationAlreadyExists,
   InvalidActivationCode,
   ActivationCodeResendTooSoon,
+  EndRentPhotoRequired,
+  EndRentPhotoMobileOnly,
+  EndRentPhotoTooOld,
 }

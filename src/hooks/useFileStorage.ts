@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 import { useTenant } from './useTenant';
 import { TenantForUsers } from 'smartbox-types';
 
-type AssetType = 'logo' | 'background' | 'slide' | 'icon' | 'box-group' | 'map';
+type AssetType = 'logo' | 'background' | 'slide' | 'icon' | 'box-group' | 'map' | 'attachment';
 
 export const useFileStorage = () => {
   const { tenant } = useTenant();

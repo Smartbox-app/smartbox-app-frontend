@@ -462,6 +462,18 @@
       "105": {
         "text": "Nowy kod można wygenerować po 5 minutach.",
         "__type_alias_do_not_touch": "ApiErrorCode.ActivationCodeResendTooSoon"
+      },
+      "106": {
+        "text": "Zdjęcie jest wymagane, aby zakończyć wynajem.",
+        "__type_alias_do_not_touch": "ApiErrorCode.EndRentPhotoRequired"
+      },
+      "107": {
+        "text": "Zakończenie wynajmu ze zdjęciem jest dostępne tylko w aplikacji mobilnej lub w przeglądarce na telefonie.",
+        "__type_alias_do_not_touch": "ApiErrorCode.EndRentPhotoMobileOnly"
+      },
+      "108": {
+        "text": "Zdjęcie jest zbyt stare. Zrób nowe zdjęcie schowka (nie starsze niż 15 minut).",
+        "__type_alias_do_not_touch": "ApiErrorCode.EndRentPhotoTooOld"
       }
     }
   }

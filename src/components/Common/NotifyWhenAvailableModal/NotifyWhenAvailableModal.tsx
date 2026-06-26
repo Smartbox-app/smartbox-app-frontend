@@ -13,6 +13,7 @@ import { useCreateNotificationMutation } from './query/useCreateNotificationMuta
 import { useTenant } from 'src/hooks/useTenant';
 import { Spinner } from 'src/components/Branded';
 import { useEffect } from 'react';
+import { ButtonsContainer } from 'src/components/Layout';
 
 const StyledContent = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -66,31 +67,32 @@ export const NotifyWhenAvailableModal = ({
     <Form onSubmit={handleSubmit(onSubmit)}>
       <Modal.Header title={__('application.notificationsAboutBoxes')} />
       <Modal.Content>
-          {isPending ? <Spinner overlay halfTransparent /> : null}
-          <StyledContent>
-            <Typography>
-              {__('application.notification_for')}
-              <strong>{option.name}</strong>
-            </Typography>
-            <Typography>{__('application.notification_type')}</Typography>
+        {isPending ? <Spinner overlay halfTransparent /> : null}
+        <StyledContent>
+          <Typography>
+            {__('application.notification_for')}
+            <strong>{option.name}</strong>
+          </Typography>
+          <Typography>{__('application.notification_type')}</Typography>
 
+          <CheckBox
+            {...register('email')}
+            label={<Typography>{__('application.email')}</Typography>}
+          />
+
+          {tenant?.smsAvailable ? (
             <CheckBox
-              {...register('email')}
-              label={<Typography>{__('application.email')}</Typography>}
+              {...register('sms')}
+              label={<Typography>{__('application.sms')}</Typography>}
             />
-
-            {tenant?.smsAvailable ? (
-              <CheckBox
-                {...register('sms')}
-                label={<Typography>{__('application.sms')}</Typography>}
-              />
-            ) : null}
-            {errors.atLeastOne?.message ? (
-              <ErrorText error={errors.atLeastOne.message} />
-            ) : null}
-          </StyledContent>
-        </Modal.Content>
-        <Modal.Actions>
+          ) : null}
+          {errors.atLeastOne?.message ? (
+            <ErrorText error={errors.atLeastOne.message} />
+          ) : null}
+        </StyledContent>
+      </Modal.Content>
+      <Modal.Actions>
+        <ButtonsContainer>
           <Button
             variant="secondary"
             text={__('application.cancel')}
@@ -103,6 +105,7 @@ export const NotifyWhenAvailableModal = ({
             text={__('application.save')}
             type="submit"
           />
+        </ButtonsContainer>
       </Modal.Actions>
     </Form>
   );

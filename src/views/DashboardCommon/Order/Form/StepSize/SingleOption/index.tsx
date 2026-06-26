@@ -20,7 +20,7 @@ import {
 import { Card } from 'src/components/ui';
 import { OptionImage } from './components/OptionImage';
 import { OptionData } from './components/OptionData';
-import { OptionNotification } from './components/OptionNotification';
+import { OptionActions, OptionNotification } from './components/OptionActions';
 import { LeftCounter } from './components/LeftCounter';
 
 export type SingleOptionType = {
@@ -71,21 +71,31 @@ const StyledOptionSize = styled('div')<{
 }>(({ theme, active, disabled }) => ({
   position: 'absolute',
   minWidth: theme.spacing * 8,
-  height: theme.spacing * 8,
-  top: theme.spacing * 3,
-  right: theme.spacing * 3,
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
+  height: theme.spacing * 10,
+  top: theme.spacing * 4,
+  right: theme.spacing * 4,
+  display: 'inline-block',
   fontWeight: 700,
-  padding: theme.spacing * 2,
+  padding: `${theme.spacing * 2}px ${theme.spacing * 4}px`,
   border: active
     ? `1px solid ${theme.colors.primary}`
     : `1px solid ${theme.colors.border.primary}`,
   background: active ? theme.colors.primary : theme.colors.background.primary,
   color: getColor(active || false, disabled || false, theme),
-  borderRadius: theme.spacing * 3,
-  fontSize: 14,
+  borderRadius: theme.spacing * 5,
+  fontSize: '0.9rem',
+  maxWidth: 150,
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+  whiteSpace: 'nowrap',
+  lineHeight: '22px'
+}));
+
+const StyledCardBottom = styled('div')(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: theme.spacing * 2,
+  width: '100%',
 }));
 
 const SingleOption = ({ singleOptionData, disable }: Props) => {
@@ -106,10 +116,18 @@ const SingleOption = ({ singleOptionData, disable }: Props) => {
     (state: ApplicationState) => state.order.boxGroupId,
   );
 
-  const selectOption = (e: ChangeEvent<HTMLInputElement>) => {
-    dispatch(setBoxGroup(singleOptionData.id, singleOptionData.name, singleOptionData.area ? singleOptionData.area.toString() : ''));
+  const selectOption = () => {
+    dispatch(
+      setBoxGroup(
+        singleOptionData.id,
+        singleOptionData.name,
+        singleOptionData.area ? singleOptionData.area.toString() : '',
+      ),
+    );
     dispatch(setMinRentPeriod(singleOptionData.minRentPeriod));
-    dispatch(setMaxAdvanceBookingDays(singleOptionData.maxAdvanceBookingDays ?? 14));
+    dispatch(
+      setMaxAdvanceBookingDays(singleOptionData.maxAdvanceBookingDays ?? 14),
+    );
     dispatch(setMaxRentPeriod(singleOptionData.maxRentPeriod));
   };
 
@@ -129,6 +147,10 @@ const SingleOption = ({ singleOptionData, disable }: Props) => {
             >
               {singleOptionData.name}
             </StyledOptionSize>
+            <LeftCounter
+              option={singleOptionData}
+              disabled={!singleOptionData.available || disable}
+            />
             <input
               name={singleOptionData.name}
               type="radio"
@@ -138,16 +160,18 @@ const SingleOption = ({ singleOptionData, disable }: Props) => {
               onChange={selectOption}
               disabled={!singleOptionData.available}
             />
+            <span />
             <OptionImage option={singleOptionData} />
-            <OptionData option={singleOptionData} disable={disable} />
+            <StyledCardBottom>
+              <OptionData option={singleOptionData} disable={disable} />
 
-            <PriceInfo
-              box={singleOptionData}
-              disabled={!singleOptionData.available || disable}
-              active={singleOptionData.id === boxGroupId}
-            />
-            <OptionNotification option={singleOptionData} />
-            <LeftCounter option={singleOptionData} />
+              <PriceInfo
+                box={singleOptionData}
+                disabled={!singleOptionData.available || disable}
+                active={singleOptionData.id === boxGroupId}
+              />
+              <OptionActions option={singleOptionData} onSelectOption={selectOption}/>
+            </StyledCardBottom>
           </Content>
         </Card>
       </label>

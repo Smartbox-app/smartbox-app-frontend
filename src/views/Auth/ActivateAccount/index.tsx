@@ -24,14 +24,14 @@ import {
   Header,
   InfoContent,
   Input,
-  Link,
   Section,
   Stack,
   Typography,
 } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
+import { Link } from 'react-router-dom';
 
-export default ActivateAccount = () => {
+const ActivateAccount = () => {
   const dispatch = useDispatch();
   const { tenant } = useTenant();
   const location = useLocation();
@@ -145,3 +145,5 @@ export default ActivateAccount = () => {
     </InfoContent>
   );
 };
+
+export default ActivateAccount;

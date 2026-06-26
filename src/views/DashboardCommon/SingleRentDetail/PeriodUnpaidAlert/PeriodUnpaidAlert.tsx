@@ -83,7 +83,7 @@ export const PeriodUnpaidAlert = ({ rent }: Props) => {
     if (Capacitor.isNativePlatform()) {
       history.push('/');
       Browser.open({
-        url: `${ApiService.url}rent/ipg-redirect/${tenantId}/${data.paymentId}`,
+        url: `${ApiService.url}rent/ipg-redirect/${tenantId}/${data.paymentId}?source=mobile`,
       });
     } else {
       prepareAndSentPaymentForm(data);

@@ -17,6 +17,7 @@ import FileInput from '../../../../../../components/Common/FileInput';
 import { AddonRes, AddonUserFileRequirementType } from 'smartbox-types';
 import { OrderAddon } from 'src/reducers/order-reducer';
 import { Button, Header, Section, Typography } from 'src/components/ui';
+import { useFileStorage } from 'src/hooks/useFileStorage';
 
 const StyledFileDescription = styled('div')(({ theme }) => ({
   background: theme.colors.background.secondary,
@@ -36,6 +37,7 @@ interface Props {
 }
 
 export const Addons = ({ stockId, boxGroupId }: Props) => {
+  const { getAssetPath } = useFileStorage();
   const { addons, loadingAddons, orderAddons } = useSelector(
     (state: ApplicationState) => state.order,
   );
@@ -117,7 +119,7 @@ export const Addons = ({ stockId, boxGroupId }: Props) => {
                 <Button
                   text="application.seeFile"
                   size="large"
-                  href={`${ApiService.url}addon/file/${addon.id}/${addon.file}`}
+                  href={getAssetPath('addon', addon.file)}
                 />
               </ButtonsContainer>
             </StyledFileDescription>

@@ -1,11 +1,12 @@
 import React from 'react';
-import { documentListAdmin, documentListClient } from 'smartbox-tables';
-import { DocumentListRes } from 'smartbox-types';
+import { documentListAdmin, documentListClient, FieldType } from 'smartbox-tables';
+import { DocumentListRes, DocumentType } from 'smartbox-types';
 import { history } from 'src/history';
 import { Button } from 'src/components/Branded';
 import { ApiTable } from 'src/components/Common';
 import { ButtonsContainer } from 'src/components/Layout';
 import { HeaderWithActions, Section } from 'src/components/ui';
+import styled from 'styled-components';
 
 import { __ } from 'src/helpers/i18n';
 import { useGetMyDetailsQuery } from 'src/queries';
@@ -13,11 +14,63 @@ import UserService from 'src/services/user-service';
 import { InteractiveTableSchema } from 'src/utils/table-schema-utils';
 import { UserRole } from 'smartbox-types';
 
+const documentTypeLabels: Record<DocumentType, string> = {
+  'privacy-policy': 'application.documentTypePrivacyPolicy',
+  rules: 'application.documentTypeRules',
+  agreement: 'application.documentTypeAgreement',
+};
+
+const StyledStatusBadge = styled.span<{ $draft?: boolean }>`
+  display: inline-flex;
+  align-items: center;
+  gap: ${({ theme }) => theme.spacing}px;
+  padding: ${({ theme }) => `${theme.spacing}px ${theme.spacing * 2}px`};
+  border-radius: ${({ theme }) => theme.radius.innerSurface}px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  line-height: 1.2;
+  background: ${({ theme, $draft }) =>
+    $draft
+      ? theme.colors.surface.attention.secondary
+      : theme.colors.surface.success.secondary};
+  color: ${({ theme, $draft }) =>
+    $draft
+      ? theme.colors.dark
+      : theme.colors.surface.success.primary};
+`;
+
+const DocumentStatusBadge = ({ isDraft }: { isDraft?: boolean }) => (
+  <StyledStatusBadge $draft={isDraft}>
+    {__(isDraft ? 'application.documentStatusDraft' : 'application.documentStatusPublished')}
+  </StyledStatusBadge>
+);
+
 export const List = () => {
   const { data: user } = useGetMyDetailsQuery();
   const baseSchema =
     user?.role === UserRole.admin ? documentListAdmin : documentListClient;
-  const scheme = new InteractiveTableSchema(baseSchema);
+  const scheme = new InteractiveTableSchema(baseSchema)
+    .modifyFieldStatic('type', {
+      type: FieldType.Custom,
+      customRender: (_value, _field, row: DocumentListRes) =>
+        __(documentTypeLabels[row.type]),
+    })
+    .modifyFieldStatic('stockName', {
+      type: FieldType.Custom,
+      customRender: (_value, _field, row: DocumentListRes) => {
+        if (row.type !== 'agreement') return '—';
+
+        return row.stockName
+          ? row.stockName
+          : __('application.documentStockDefault');
+      },
+    })
+    .modifyFieldStatic('isDraft', {
+      type: FieldType.Custom,
+      customRender: (_value, _field, row: DocumentListRes) => (
+        <DocumentStatusBadge isDraft={row.isDraft} />
+      ),
+    });
 
   scheme.addFieldAtTheEnd({
     name: __('application.actions'),
@@ -51,10 +104,7 @@ export const List = () => {
         {__('application.documentList')}
       </HeaderWithActions>
 
-      <ApiTable
-        scheme={scheme}
-        apiEndpointSubUrl="document"
-      />
+      <ApiTable scheme={scheme} apiEndpointSubUrl="document" />
     </Section>
   );
 };

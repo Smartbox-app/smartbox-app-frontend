@@ -18,7 +18,8 @@ import { Edit } from './Edit';
 
 import './BoxDetail.scss';
 import { useGetMyDetailsQuery } from '../../../queries';
-import { Link, Modal } from 'src/components/ui';
+import { Header, Link, Modal, Section, Typography } from 'src/components/ui';
+import { EndRentPhoto } from 'src/components/Common/EndRentPhoto';
 
 interface Props {
   singleBoxDetail: RentDetailsRes;
@@ -50,7 +51,6 @@ const BoxDetail = ({
 
   const isThisBoxFree = (data: string): boolean => data === '';
   const displayStatus = singleBoxDetail.status ?? status;
-
 
   return (
     <>
@@ -96,9 +96,7 @@ const BoxDetail = ({
                   isThisBoxFree(rentId) ? (
                     '---'
                   ) : (
-                    <Link
-                      href={`mailto:${singleBoxDetail.owner?.email ?? ''}`}
-                    >
+                    <Link href={`mailto:${singleBoxDetail.owner?.email ?? ''}`}>
                       {singleBoxDetail.owner
                         ? singleBoxDetail.owner.email
                         : __('application.lack')}
@@ -109,10 +107,16 @@ const BoxDetail = ({
             </>
           )}
 
-          <Row
-            label="application.storeState"
-            content={displayStatus}
-          />
+          <Row label="application.storeState" content={displayStatus} />
+
+          {singleBoxDetail.endRentPhoto &&
+          singleBoxDetail.status !== RentStatus.rented ? (
+            <Section variant="bordered">
+              <Header variant="h3">{__('application.endRentPhoto')}</Header>
+              <Typography>{__('application.endRentPhotoShowFull')}</Typography>
+              <EndRentPhoto rentId={rentId} />
+            </Section>
+          ) : null}
 
           <Edit
             display

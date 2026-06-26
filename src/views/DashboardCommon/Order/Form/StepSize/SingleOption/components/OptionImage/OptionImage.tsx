@@ -32,7 +32,7 @@ export const OptionImage = ({ option }: OptionImageProps) => {
   const { getAssetPath } = useFileStorage();
   return (
     <>
-      {imageUrl ? (
+      {option.image ? (
         <StyledOptionWrapper>
           <img
             src={getAssetPath('box-group', option.image)}

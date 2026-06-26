@@ -3,7 +3,6 @@ import { LoginDto } from '../../../dto/LoginDto';
 import { ClassValidatorResolver } from '../../../resolvers/ClassValidatorResolver';
 import { Input } from '../../../components/ui/Input';
 import {
-  Link,
   Narrow,
   Section,
   Typography,
@@ -34,6 +33,7 @@ import {
   LoginMutationError,
   useLoginMutation,
 } from '../../../mutations/useLoginMutation';
+import { Link } from 'react-router-dom';
 
 export const Login = () => {
   const dispatch = useDispatch();

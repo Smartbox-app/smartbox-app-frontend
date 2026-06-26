@@ -37,7 +37,7 @@
     position: relative;
     z-index: 1000;
     overflow: auto;
-    max-width: 600px;
+    max-width: 95vw;
     width: 100%;
     position: relative;
     transform: scale(0.9);
@@ -45,6 +45,9 @@
     max-height: 80%;
     border-radius: 16px;
 
+    @media (min-width: 768px) {
+      max-width: 600px;
+    }
   }
 
   &.full-screen {

@@ -7,21 +7,44 @@ import { __ } from 'src/helpers/i18n';
 import { useTenant } from 'src/hooks/useTenant';
 import { ClassValidatorResolver } from 'src/resolvers/ClassValidatorResolver';
 import { DocumentForm } from '../DocumentForm';
-import { useUpdateDocumentMutation } from 'src/mutations';
+import {
+  usePublishDocumentMutation,
+  useSaveDocumentDraftMutation,
+} from 'src/mutations';
 import { useDispatch } from 'react-redux';
 import { Redirect, useParams } from 'react-router';
 import { successNotification } from 'src/actions/notifications';
-import { useGetDocumentByIdQuery, useGetMyDetailsQuery } from 'src/queries';
+import {
+  useGetDocumentByIdQuery,
+  useGetDocumentDraftQuery,
+  useGetMyDetailsQuery,
+} from 'src/queries';
 import UserService from 'src/services/user-service';
 import { UserRole } from 'smartbox-types';
+import { useQueryClient } from '@tanstack/react-query';
+import { documentDraftQueryKey } from 'src/queries/useGetDocumentDraftQuery/useGetDocumentDraftQuery';
+import { history } from 'src/history';
 
 export const Edit = () => {
   const { data: user } = useGetMyDetailsQuery();
   const { id } = useParams<{ id: string }>();
   const { tenant } = useTenant();
   const dispatch = useDispatch();
+  const queryClient = useQueryClient();
   const { data: document, isLoading } = useGetDocumentByIdQuery(id);
-  const { mutate: save, isPending, isSuccess } = useUpdateDocumentMutation(id);
+  const { data: draft, isLoading: isDraftLoading } =
+    useGetDocumentDraftQuery(id);
+  const {
+    mutate: saveDraft,
+    data: savedDraft,
+    isPending: isDraftSaving,
+    isSuccess: isDraftSuccess,
+  } = useSaveDocumentDraftMutation(id);
+  const {
+    mutate: publish,
+    isPending: isPublishing,
+    isSuccess: isPublishSuccess,
+  } = usePublishDocumentMutation(id);
 
   const methods = useForm<DocumentDto>({
     mode: 'onSubmit',
@@ -35,19 +58,32 @@ export const Edit = () => {
     },
   });
 
-  const onSubmit = (data: DocumentDto) => {
-    if (user?.role === UserRole.client) {
-      save({
-        type: data.type,
-        content: data.content,
-      });
-    } else {
-      save({
-        type: data.type,
-        content: data.content,
-        tenantId: data.tenantId,
-      });
+  const buildPayload = (data: DocumentDto): DocumentDto => {
+    const payload: DocumentDto = {
+      type: data.type,
+      content: data.content,
+    };
+
+    if (data.type === 'agreement') {
+      payload.stockId = data.stockId || null;
     }
+
+    if (user?.role === UserRole.client) {
+      return payload;
+    }
+
+    return {
+      ...payload,
+      tenantId: data.tenantId,
+    };
+  };
+
+  const onSaveDraft = (data: DocumentDto) => {
+    saveDraft(buildPayload(data));
+  };
+
+  const onPublish = (data: DocumentDto) => {
+    publish(buildPayload(data));
   };
 
   useEffect(() => {
@@ -57,30 +93,59 @@ export const Edit = () => {
       tenantId: user?.role === UserRole.client ? tenant?.id : document.tenantId,
       type: document.type,
       content: document.content,
+      stockId: document.stockId ?? null,
     });
-  }, [document]);
+  }, [document, user, tenant]);
+
+  const isEditingPublished = Boolean(document && !document.isDraft);
+  const hasSeparateDraft = Boolean(isEditingPublished && draft);
 
   useEffect(() => {
-    if (!isSuccess) return;
+    if (!isDraftSuccess || !savedDraft) return;
 
-    dispatch(successNotification('application.documentEdited'));
-  }, [isSuccess]);
+    dispatch(successNotification('application.documentDraftSaved'));
 
-  if (isSuccess || !id)
+    if (isEditingPublished) {
+      history.replace(
+        `/${UserService.getSlugByRole(user?.role)}/management/documents/${savedDraft.id}`,
+      );
+    }
+    queryClient.invalidateQueries({ queryKey: documentDraftQueryKey(id) });
+  }, [isDraftSuccess, savedDraft, isEditingPublished]);
+
+  useEffect(() => {
+    if (!isPublishSuccess) return;
+
+    dispatch(
+      successNotification(
+        isEditingPublished
+          ? 'application.documentNewVersionPublished'
+          : 'application.documentPublished',
+      ),
+    );
+  }, [isPublishSuccess, isEditingPublished, dispatch]);
+
+  if (isPublishSuccess || !id) {
     return (
       <Redirect
         to={`/${UserService.getSlugByRole(user?.role)}/management/documents`}
       />
     );
+  }
 
   return (
     <>
-      <PageHeader>{__('application.addDocument')}</PageHeader>
+      <PageHeader>{__('application.editDocument')}</PageHeader>
       <Section>
         <FormProvider {...methods}>
           <DocumentForm
-            onSubmit={onSubmit}
-            isLoading={isPending || isLoading}
+            onSaveDraft={onSaveDraft}
+            onPublish={onPublish}
+            isLoading={
+              isDraftSaving || isPublishing || isLoading || isDraftLoading
+            }
+            hasDraft={hasSeparateDraft}
+            isEditingPublished={isEditingPublished}
           />
         </FormProvider>
       </Section>

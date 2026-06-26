@@ -415,7 +415,7 @@ const Pricing = () => {
                 ]}
               />
               <CheckBox
-                label="application.addonVariantSelectByDefault"
+                label={__('application.addonVariantSelectByDefault')}
                 name={`addon_default_${variant.id}`}
                 checked={variant.default}
                 handleChange={(checked: boolean) =>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
+import { FieldErrors, FormProvider, useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
 
 import { bindActionCreators } from 'redux';
@@ -53,6 +53,27 @@ import { textToSimpleMD } from 'src/utils/text-to-simple-md';
 import { ClientSourceForm } from './ClientSourceForm';
 import { PaymentDocumentType } from '../Common/PaymentDocumentType';
 import { useI18n } from 'src/i18n';
+import { scrollToFirstFormError } from 'src/utils/scroll-to-form-error';
+
+const STEP_SUMMARY_FIELD_ORDER: (keyof RentDataDto)[] = [
+  'firstName',
+  'lastName',
+  'birthDate',
+  'country',
+  'street',
+  'city',
+  'postCode',
+  'mailToSendInvoice',
+  'phone',
+  'invoiceNeeded',
+  'companyCountry',
+  'companyName',
+  'companyStreet',
+  'companyCity',
+  'companyPostCode',
+  'nip',
+  'clientSource',
+];
 
 interface Props {
   formData: FormType;
@@ -116,7 +137,7 @@ const StepSummary = ({ formData, updateFormData }: Props) => {
     register,
     setValue,
     watch,
-    formState: { errors, isValid },
+    formState: { errors },
   } = methods;
 
   const invoiceNeeded = watch('invoiceNeeded');
@@ -216,13 +237,16 @@ const StepSummary = ({ formData, updateFormData }: Props) => {
   }, [stock, rentPaymentType]);
 
   const onSubmit = (data: RentDataDto) => {
-    if (!isValid) return;
     if (!user) return;
     const { withBirthDate, withClientSource, ...rest } = data;
     updateFormData({ ...rest, isCompany: invoiceNeeded });
     history.push(
       `/${UserService.getSlugByRole(user.role)}/order/step/agreement/${rentId || ''}`,
     );
+  };
+
+  const onInvalid = (formErrors: FieldErrors<RentDataDto>) => {
+    scrollToFirstFormError(formErrors, STEP_SUMMARY_FIELD_ORDER);
   };
 
   return (
@@ -261,7 +285,7 @@ const StepSummary = ({ formData, updateFormData }: Props) => {
 
       <DiscountsList />
 
-      <Form onSubmit={handleSubmit(onSubmit)}>
+      <Form onSubmit={handleSubmit(onSubmit, onInvalid)}>
         <FormProvider {...methods}>
           <Stack>
             <Section>

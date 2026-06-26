@@ -28,10 +28,18 @@ const StyledRouterLink = styled(NavLink)`
 export const Link = ({ href, to, children, target, rel }: LinkProps) => {
   const handleCapacitorOpenLink = () => {
     if (!href) return;
-    Browser.open({ url: href });
+    const normalizedHref = href.startsWith(`https://`)
+      ? href
+      : `https://${import.meta.env.VITE_APP_HOSTNAME}${href}`;
+    Browser.open({ url: normalizedHref });
   };
 
-  if (Capacitor.isNativePlatform() && href)
+  if (
+    Capacitor.isNativePlatform() &&
+    href &&
+    !href.includes('mailto:') &&
+    !href.includes('tel:')
+  )
     return <StyledA onClick={handleCapacitorOpenLink}>{children}</StyledA>;
   if (href)
     return (

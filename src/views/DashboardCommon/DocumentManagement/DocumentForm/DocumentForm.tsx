@@ -1,21 +1,32 @@
+import React, { useEffect } from 'react';
 import { useFormContext, Controller } from 'react-hook-form';
 import { DocumentDto } from 'src/dto/DocumentDto';
 import { ButtonsContainer, FormContainer } from 'src/components/Layout';
 import { Button, Form } from 'src/components/ui';
 import { InputSelect } from 'src/components/Common';
-import React from 'react';
 import { TiptapEditor } from '../components/TiptapEditor';
 import { Spinner } from 'src/components/Branded';
-import { useGetTenantOptionsQuery, useGetMyDetailsQuery } from 'src/queries';
+import {
+  useGetTenantOptionsQuery,
+  useGetMyDetailsQuery,
+  useGetInviteStockOptionsQuery,
+} from 'src/queries';
 import { DocumentType, UserRole } from 'smartbox-types';
 import { useTenant } from 'src/hooks/useTenant';
+import { Alert, ConfirmModal } from 'src/components/Common';
+import { useDispatch } from 'react-redux';
+import { showModal } from 'src/actions/modal';
+import { __ } from 'src/helpers/i18n';
 
 export type DocumentFormProps = {
   isLoading: boolean;
-  onSubmit: (dto: DocumentDto) => void;
+  hasDraft?: boolean;
+  isEditingPublished?: boolean;
+  onSaveDraft: (dto: DocumentDto) => void;
+  onPublish: (dto: DocumentDto) => void;
 };
 
-const documentTypeOptions: {label: string, value: DocumentType}[] = [
+const documentTypeOptions: { label: string; value: DocumentType }[] = [
   {
     label: 'Polityka prywatności',
     value: 'privacy-policy',
@@ -30,22 +41,59 @@ const documentTypeOptions: {label: string, value: DocumentType}[] = [
   },
 ];
 
-export const DocumentForm = ({ onSubmit, isLoading }: DocumentFormProps) => {
-  const { handleSubmit, control, watch } = useFormContext<DocumentDto>();
+export const DocumentForm = ({
+  onSaveDraft,
+  onPublish,
+  isLoading,
+  hasDraft = false,
+  isEditingPublished = false,
+}: DocumentFormProps) => {
+  const dispatch = useDispatch();
+  const { handleSubmit, control, watch, setValue } =
+    useFormContext<DocumentDto>();
   const selectedTenantId = watch('tenantId');
   const documentType = watch('type');
+  const isAgreement = documentType === 'agreement';
 
   const { data: user } = useGetMyDetailsQuery();
   const { tenant } = useTenant();
   const templateTenantId =
     user?.role === UserRole.admin ? selectedTenantId : tenant?.id;
   const { data: tenants = [], isLoading: tenantsLoading } =
-  useGetTenantOptionsQuery({ enabled: user?.role === UserRole.admin });
+    useGetTenantOptionsQuery({ enabled: user?.role === UserRole.admin });
+  const canLoadStocks =
+    isAgreement &&
+    (user?.role !== UserRole.admin || Boolean(selectedTenantId));
+  const { data: stockOptions = [], isLoading: stocksLoading } =
+    useGetInviteStockOptionsQuery(canLoadStocks);
+
+  useEffect(() => {
+    if (!isAgreement) {
+      setValue('stockId', null);
+    }
+  }, [isAgreement, setValue]);
+
+  const confirmPublish = handleSubmit((data) => {
+    dispatch(
+      showModal(
+        <ConfirmModal
+          mainText="application.documentPublishConfirm"
+          approveButtonText="application.publishDocument"
+          approveAction={() => onPublish(data)}
+        />,
+      ),
+    );
+  });
 
   return (
     <FormContainer highlight fullWidth>
       {isLoading ? <Spinner overlay halfTransparent /> : null}
-      <Form onSubmit={handleSubmit(onSubmit)}>
+      {hasDraft ? (
+        <Alert type="notice" text="application.documentDraftExists" />
+      ) : isEditingPublished ? (
+        <Alert type="notice" text="application.documentEditingPublishedInfo" />
+      ) : null}
+      <Form onSubmit={(event) => event.preventDefault()}>
         {user?.role === UserRole.admin ? (
           <Controller
             name="tenantId"
@@ -86,6 +134,38 @@ export const DocumentForm = ({ onSubmit, isLoading }: DocumentFormProps) => {
             />
           )}
         />
+        {isAgreement ? (
+          <Controller
+            name="stockId"
+            control={control}
+            render={({ field, fieldState }) => (
+              <InputSelect
+                name="stockId"
+                label={__('application.documentStock')}
+                placeholder={__('application.documentStockPlaceholder')}
+                options={[
+                  {
+                    label: __('application.documentStockDefault'),
+                    value: '',
+                  },
+                  ...stockOptions.map((stock) => ({
+                    label: stock.label,
+                    value: stock.value,
+                  })),
+                ]}
+                value={field.value ?? ''}
+                onChange={(value) => field.onChange(value || null)}
+                onBlur={field.onBlur}
+                disabled={
+                  isLoading ||
+                  stocksLoading ||
+                  (user?.role === UserRole.admin && !selectedTenantId)
+                }
+                error={fieldState.error?.message}
+              />
+            )}
+          />
+        ) : null}
         <Controller
           name="content"
           control={control}
@@ -100,11 +180,25 @@ export const DocumentForm = ({ onSubmit, isLoading }: DocumentFormProps) => {
         />
         <ButtonsContainer>
           <Button
-            variant="primary"
-            text="application.apply"
-            type="submit"
+            variant={isEditingPublished ? 'primary' : 'secondary'}
+            text={
+              isEditingPublished
+                ? 'application.saveDocumentAsDraft'
+                : 'application.saveDocumentDraft'
+            }
+            type="button"
             disabled={isLoading}
+            onClick={handleSubmit(onSaveDraft)}
           />
+          {!isEditingPublished ? (
+            <Button
+              variant="primary"
+              text="application.publishDocument"
+              type="button"
+              disabled={isLoading}
+              onClick={() => void confirmPublish()}
+            />
+          ) : null}
         </ButtonsContainer>
       </Form>
     </FormContainer>

@@ -8,6 +8,7 @@ import ApiService from '../../../services/api-service';
 import { AppVersion } from '../../../components/AppVersion';
 import { Link, Section, Typography } from '../../ui';
 import { Logo } from '../../Branded';
+import { useFileStorage } from 'src/hooks/useFileStorage';
 
 const StyledFooter = styled('footer')(({ theme }) => ({
   display: 'flex',
@@ -36,6 +37,7 @@ const Data = styled('div')(({ theme }) => ({
 }));
 
 const Footer = () => {
+  const { getAssetPath } = useFileStorage();
   const tenant = useSelector((state: ApplicationState) => state.tenant);
   return (
     <Section>
@@ -54,7 +56,7 @@ const Footer = () => {
             <Link
               key={link.id}
               target="_blank"
-              href={`${ApiService.url}attachment/file/${link.id}/${link.fileName}`}
+              href={getAssetPath('attachment', link.fileName)}
               rel="noreferrer"
             >
               {link.name}

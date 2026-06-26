@@ -1,5 +1,8 @@
-import { DownloadService } from "src/services/download-service";
+import { DownloadService } from 'src/services/download-service';
 
-export const handleFileOpen = async (url: string): Promise<void> => {
-  await DownloadService.download(`${url}`);
+export const handleFileOpen = async (
+  url: string,
+  filename?: string,
+): Promise<void> => {
+  await DownloadService.download(url, undefined, filename);
 };

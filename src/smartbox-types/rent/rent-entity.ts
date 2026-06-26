@@ -25,6 +25,7 @@ export interface RentDescription {
   price: CalculatedPriceRes;
   paymentType?: RentPaymentType;
   agreement?: string;
+  documentId?: string | null;
   data?: RentUserData;
   addons: RentDescriptionAddon[];
   stockDiscount?: {

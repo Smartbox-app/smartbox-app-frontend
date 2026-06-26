@@ -11,8 +11,9 @@ import { successNotification } from '../../../../actions/notifications';
 import { __ } from '../../../../helpers/i18n';
 import { mapFields } from '../../../../utils/fields-mapper';
 import { useGetMyDetailsQuery } from 'src/queries';
-import { Link, Typography } from 'src/components/ui';
+import { Typography } from 'src/components/ui';
 import UserService from 'src/services/user-service';
+import { Link } from 'react-router-dom';
 
 interface Props {
   userId?: string;

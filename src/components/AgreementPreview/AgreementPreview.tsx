@@ -47,6 +47,7 @@ export type AgreementPreviewProps = {
   template?: AgreementTemplateInput;
   rentId?: string;
   periodIndex?: number;
+  stockId?: string | null;
   enabled?: boolean;
   className?: string;
 };
@@ -58,6 +59,7 @@ export const AgreementPreview = ({
   template,
   enabled,
   source,
+  stockId,
 }: AgreementPreviewProps) => {
   const rentQuery = useGetRentAgreementHtmlQuery(
     source === 'rent' ? rentId : undefined,
@@ -67,6 +69,7 @@ export const AgreementPreview = ({
   const templateQuery = useGetDocumentAgreementHtmlQuery(
     source === 'template' ? template : undefined,
     source === 'template' && (enabled ?? true),
+    stockId,
   );
 
   const { data, isLoading, isError } =

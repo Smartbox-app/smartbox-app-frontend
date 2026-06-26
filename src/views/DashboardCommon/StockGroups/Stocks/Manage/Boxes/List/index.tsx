@@ -102,7 +102,10 @@ const List = () => {
     getStock();
   }, [stockId]);
 
-  const scheme = new InteractiveTableSchema(boxesList)
+  const scheme = new InteractiveTableSchema(boxesList);
+  scheme.highlightRow = (row) => row.status === RentStatus.toCheck;
+
+  scheme
     .modifyFieldStatic('pricing', {
       name: __('application.pricingIsSet'),
       field: 'pricing',

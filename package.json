@@ -8,6 +8,7 @@
     "@capacitor/app": "^8.0.0",
     "@capacitor/assets": "^3.0.5",
     "@capacitor/browser": "^8.0.0",
+    "@capacitor/camera": "^8.2.0",
     "@capacitor/core": "^8.0.0",
     "@capacitor/device": "^8.0.0",
     "@capacitor/filesystem": "^8.0.0",
@@ -146,6 +147,7 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "build-mobile": "node ./build-mobile-app.mjs --mode=prod",
+    "build-mobile-local": "node ./build-mobile-app.mjs --mode=local",
     "sync-mobile": "node ./scripts/sync-mobile.mjs",
     "android": "node ./scripts/sync-mobile.mjs && npx cap run android",
     "build-new-prod": "VITE_APP_URL=https://smartbox-app.pl VITE_APP_API_URL=https://api.smartbox-app.pl vite build"

@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { useDispatch } from 'react-redux';
-import { AdminRentListDetails, UserRole } from 'smartbox-types';
+import { AdminRentListDetails, RentStatus, UserRole } from 'smartbox-types';
 import { FieldType, rentsList } from 'smartbox-tables';
 import { ApiTable } from '../../../../../../../components/Common';
 import { Button } from '../../../../../../../components/Branded';
@@ -32,7 +32,10 @@ const List = () => {
   };
 
   const scheme = useMemo(() => {
-    const base = new InteractiveTableSchema(rentsList)
+    const base = new InteractiveTableSchema(rentsList);
+    base.highlightRow = (row) => row.status === RentStatus.toCheck;
+
+    return base
     .removeFields('description', 'id', 'userId')
     .addFieldAtTheEnd({
       name: __('application.actions'),
@@ -77,8 +80,6 @@ const List = () => {
         </ButtonsContainer>
       ),
     });
-
-    return base;
   }, [user, stockId, slug, dispatch]);
 
   return (

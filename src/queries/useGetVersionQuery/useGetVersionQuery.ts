@@ -24,6 +24,7 @@ export const useGetVersionQuery = () => {
           undefined,
           undefined,
           true,
+          true
         );
 
         if (!response) {
@@ -40,6 +41,7 @@ export const useGetVersionQuery = () => {
         undefined,
         undefined,
         true,
+        true
       );
 
       if (!response?.version) {

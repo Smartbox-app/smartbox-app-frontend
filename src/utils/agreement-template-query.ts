@@ -23,13 +23,18 @@ export const agreementTemplateToQueryString = (
   return params.toString();
 };
 
+export const buildLegacyAgreementPath = (
+  tenantId: string,
+  template: AgreementTemplateInput,
+): string => {
+  const query = agreementTemplateToQueryString(template);
+  return query
+    ? `tenant/agreement/${tenantId}?${query}`
+    : `tenant/agreement/${tenantId}`;
+};
+
 export const buildLegacyAgreementUrl = (
   tenantId: string,
   template: AgreementTemplateInput,
   apiBaseUrl: string,
-): string => {
-  const query = agreementTemplateToQueryString(template);
-  return query
-    ? `${apiBaseUrl}tenant/agreement/${tenantId}?${query}`
-    : `${apiBaseUrl}tenant/agreement/${tenantId}`;
-};
+): string => `${apiBaseUrl}${buildLegacyAgreementPath(tenantId, template)}`;

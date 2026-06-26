@@ -32,6 +32,8 @@ import { InvoiceStatus } from './InvoiceStatus';
 import { PaymentServiceStatus } from './PaymentServiceStatus';
 import { NotifyWhenAvailableModal } from './NotifyWhenAvailableModal';
 import { AsterixRequired } from './AsterixRequired';
+import { EndRentPhoto } from './EndRentPhoto';
+import { RentAttachedFileButton } from './RentAttachedFileButton';
 export type { InputSize } from './input-sizes';
 export {
   DEFAULT_INPUT_SIZE,
@@ -79,4 +81,6 @@ export {
   NotifyWhenAvailableModal,
   AsterixRequired,
   PaymentServiceStatus,
+  EndRentPhoto,
+  RentAttachedFileButton,
 };

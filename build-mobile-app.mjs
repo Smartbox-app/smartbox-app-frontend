@@ -36,6 +36,7 @@ const assetsFolder = './app-assets';
 // -----------------------------------------------------------------------------
 
 const folderToAppName = {
+  testowa: 'Testowa aplikacja',
   aplikacja: 'Smartbox Storage',
   wlasnybox: 'Własny Box Self Storage',
   superbox: 'Superbox Self Storage',
@@ -43,11 +44,12 @@ const folderToAppName = {
   hdbox: 'HD-BOX Self-Storage',
   nidobox: 'NidoBox Self-Storage',
   krakbox: 'Krak-Box Self-Storage',
-  moibox: 'Moibox - Self Storage'
+  moibox: 'Moibox - Self Storage',
 };
 
 const folderToAppIdentifier = {
   ios: {
+    testowa: 'com.smartbox.testowa.app',
     aplikacja: 'com.smartbox.aplikacja.app',
     wlasnybox: 'com.smartbox.wlasnybox.app',
     superbox: 'com.smartbox.superbox.app',
@@ -58,6 +60,7 @@ const folderToAppIdentifier = {
     moibox: 'com.smartbox.moibox.app',
   },
   android: {
+    testowa: 'com.smartbox.testowa.app',
     aplikacja: 'com.smartbox.aplikacja.app',
     wlasnybox: 'com.smartbox.wlasnybox.app',
     superbox: 'com.smartbox.superbox.app',
@@ -71,6 +74,7 @@ const folderToAppIdentifier = {
 
 const folderToHostName = {
   prod: {
+    testowa: 'testowa',
     aplikacja: 'aplikacja',
     wlasnybox: 'wlasnybox',
     superbox: 'superbox',
@@ -85,6 +89,13 @@ const folderToHostName = {
 
 const authIds = {
   ios: {
+    testowa: {
+      google: {
+        id: '315516464384-g7cbrcua1bs804r0lgvhlgv94jqdfthu.apps.googleusercontent.com',
+        reversed:
+          'com.googleusercontent.apps.315516464384-g7cbrcua1bs804r0lgvhlgv94jqdfthu',
+      },
+    },
     aplikacja: {
       google: {
         id: '315516464384-g7cbrcua1bs804r0lgvhlgv94jqdfthu.apps.googleusercontent.com',
@@ -236,9 +247,7 @@ function assertNoPwaArtifactsInDist() {
   }
 
   if (found.length > 0) {
-    throw new Error(
-      `PWA artifacts found in mobile dist: ${found.join(', ')}`,
-    );
+    throw new Error(`PWA artifacts found in mobile dist: ${found.join(', ')}`);
   }
 
   console.log('\nPWA/service worker check: dist is clean');
@@ -447,11 +456,11 @@ async function main() {
 
   const hostName = folderToHostName[mode]?.[app] || app;
   const hostSuffix = mode === 'prod' ? '.smartbox-app.pl' : '@TODO';
-  const fullAddress = `${hostName}${hostSuffix}`;
+  const fullAddress = mode === 'prod' ? `${hostName}${hostSuffix}` : 'test';
   const mobileBuildId = Date.now();
 
   run(
-    `MOBILE_BUILD_ID="${mobileBuildId}" VITE_APP_HOSTNAME="${fullAddress}" VITE_APP_API_URL=${mode === 'prod' ? 'https://api.smartbox-app.pl' : 'http://10.0.2.2:3001'} npx vite build --config vite.config.mobile.ts`,
+    `MOBILE_BUILD_ID="${mobileBuildId}" VITE_APP_HOSTNAME="${fullAddress}" VITE_APP_API_URL=${mode === 'prod' ? 'https://api.smartbox-app.pl' : 'http://192.168.0.198:3001'} npx vite build --config vite.config.mobile.ts`,
     { env: { ...process.env, MOBILE_BUILD_ID: String(mobileBuildId) } },
   );
 
