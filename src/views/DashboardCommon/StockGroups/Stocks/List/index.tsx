@@ -21,7 +21,7 @@ import { HeaderWithActions, Button as UIButton } from 'src/components/ui';
 import { DeleteStockModal } from 'src/components/Common/DeleteStockModal';
 import { useTenantNaming } from 'src/hooks/useTenantNaming';
 import { useTenant } from 'src/hooks/useTenant';
-import { handleFileOpen } from 'src/utils/handle-file-open';
+import { DownloadReportModal } from 'src/components/Common/DownloadReportModal';
 
 const List = () => {
   const dispatch = useDispatch();
@@ -34,13 +34,11 @@ const List = () => {
   const hasFullAccess = [UserRole.admin, UserRole.client].includes(user!.role);
 
   const handleReportDownload = () => {
-    if (!tenant) return;
-    handleFileOpen(`rent/report?tenantId=${tenant.id}`);
+    dispatch(showModal(<DownloadReportModal reportType="rent" />));
   };
 
   const handlePaymentsReportDownload = () => {
-    if (!tenant) return;
-    handleFileOpen(`payment/report?tenantId=${tenant.id}`);
+    dispatch(showModal(<DownloadReportModal reportType="payment" />));
   };
 
   scheme.addFieldAtTheEnd({

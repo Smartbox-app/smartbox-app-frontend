@@ -15,7 +15,7 @@ export const getBoxWidth = (
   if (box.width) return box.width;
   if (!box.groupWidth) return 50;
   const ratio = stock.mapWidth / stock.mapWidthMeters;
-  return Math.round(box.groupWidth * ratio);
+  return Math.round(Number(box.groupWidth) * ratio);
 };
 
 export const getBoxHeight = (
@@ -25,7 +25,7 @@ export const getBoxHeight = (
   if (box.height) return box.height;
   if (!box.groupHeight) return 50;
   const ratio = stock.mapHeight / stock.mapHeightMeters;
-  return Math.round(box.groupHeight * ratio);
+  return Math.round(Number(box.groupHeight) * ratio);
 };
 
 export const getBoxLayoutFromBox = (

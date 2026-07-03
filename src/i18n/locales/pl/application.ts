@@ -722,6 +722,11 @@ const application = {
     rentPeriodsButton: 'Okresy',
     downloadReport: 'Pobierz raport',
     downloadPaymentsReport: 'Pobierz raport płatności',
+    selectReportDate: 'Wybierz dzień raportu',
+    reportWillBeSentToEmail:
+      'Raport zostanie wysłany na adres e-mail powiązany z Twoim kontem, gdy będzie gotowy.',
+    reportQueuedForEmail:
+      'Raport został zamówiony. Otrzymasz go na adres e-mail powiązany z Twoim kontem.',
     paymentListDate: 'Data',
     paymentListStatus: 'Status',
     paymentListType: 'Typ',

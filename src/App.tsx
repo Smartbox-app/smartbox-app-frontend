@@ -79,12 +79,20 @@ countries.registerLocale(pl);
 const queryClient = new QueryClient();
 
 CapacitorApp.addListener('appUrlOpen', async ({ url }) => {
-  if (url.includes('payment')) {
-    const parts = url.split('payment/');
+  try {
+    const parsed = new URL(url);
 
-    history.push(`/payment/${parts[1]}`);
+    // If your app is hosted at https://my-app.com
+    const path = parsed.pathname + parsed.search + parsed.hash;
+
+    history.push(path);
+  } finally {
+    try {
+      await Browser.close();
+    } catch {
+      // Ignore if Browser wasn't opened or can't be closed
+    }
   }
-  await Browser.close();
 });
 
 const App = () => {
