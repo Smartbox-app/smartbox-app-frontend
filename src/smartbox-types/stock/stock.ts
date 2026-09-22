@@ -78,6 +78,7 @@ export interface GateAdminList {
   id: string;
   ident: string;
   passcode?: string;
+  hasKeypad?: boolean;
 }
 
 export interface UpdateGateReq {
@@ -158,6 +159,7 @@ export type StatsByStatus = {
   noPaidExtension: number;
   noPaidPeriod: number;
   outOfService: number;
+  pendingFinish: number;
 };
 
 export type StatsByGroup = {

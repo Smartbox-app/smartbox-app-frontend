@@ -26,7 +26,7 @@ const initialState: RentsStatus = {
     createdAt: new Date(),
     startAt: new Date(),
     finishAt: new Date(),
-    status: RentStatus.free,
+    status: RentStatus.reserved,
     size: 0,
     stockName: '',
     stockId: '',

@@ -71,13 +71,46 @@ export const List = () => {
     );
   };
 
+  const forcePaymentCancellation = async (
+    rentId: string,
+    paymentId: string,
+  ) => {
+    await ApiService.callFetch(
+      'POST',
+      `rent/payment/force-cancel/${rentId}/${paymentId}`,
+      () => {
+        dispatch(
+          successNotification('application.forcePaymentCancellationSuccess'),
+        );
+        dispatch(refreshApiTableData());
+      },
+    );
+  };
+
   const confirmForcePaymentAcceptance = (rentId: string, paymentId: string) => {
     dispatch(
       showModal(
         <ConfirmModal
           mainText="application.forcePaymentAcceptanceConfirm"
+          secondaryText="application.forcePaymentStatusDisclaimer"
           approveButtonText="application.yes"
           approveAction={() => void forcePaymentAcceptance(rentId, paymentId)}
+        />,
+      ),
+    );
+  };
+
+  const confirmForcePaymentCancellation = (
+    rentId: string,
+    paymentId: string,
+  ) => {
+    dispatch(
+      showModal(
+        <ConfirmModal
+          mainText="application.forcePaymentCancellationConfirm"
+          secondaryText="application.forcePaymentStatusDisclaimer"
+          approveButtonText="application.yes"
+          approveAction={() => void forcePaymentCancellation(rentId, paymentId)}
         />,
       ),
     );
@@ -121,14 +154,24 @@ export const List = () => {
               />
             ) : null}
             {canForce ? (
-              <UIButton
-                variant="primary"
-                type="button"
-                text="application.forcePaymentAcceptance"
-                onClick={() =>
-                  confirmForcePaymentAcceptance(row.rentId!, row.id)
-                }
-              />
+              <>
+                <UIButton
+                  variant="primary"
+                  type="button"
+                  text="application.forcePaymentAcceptance"
+                  onClick={() =>
+                    confirmForcePaymentAcceptance(row.rentId!, row.id)
+                  }
+                />
+                <UIButton
+                  variant="error"
+                  type="button"
+                  text="application.forcePaymentCancellation"
+                  onClick={() =>
+                    confirmForcePaymentCancellation(row.rentId!, row.id)
+                  }
+                />
+              </>
             ) : null}
           </ButtonsContainer>
         );
@@ -136,7 +179,12 @@ export const List = () => {
     });
 
     return apiScheme;
-  }, [user, handleViewDocument, confirmForcePaymentAcceptance]);
+  }, [
+    user,
+    handleViewDocument,
+    confirmForcePaymentAcceptance,
+    confirmForcePaymentCancellation,
+  ]);
 
   if (!user || !scheme) return null;
 

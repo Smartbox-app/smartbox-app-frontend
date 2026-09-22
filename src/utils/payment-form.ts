@@ -1,31 +1,21 @@
-import { PayForRentResponse } from "smartbox-types";
+import { Browser } from '@capacitor/browser';
+import { Capacitor } from '@capacitor/core';
+import { history } from 'src/history';
+import ApiService from 'src/services/api-service';
 
-  export const prepareAndSentPaymentForm = (data: PayForRentResponse) => {
-    const { url, paymentData } = data;
+export const getIpgRedirectUrl = (tenantId: string, paymentId: string) => {
+  const source = Capacitor.isNativePlatform() ? 'mobile' : 'web';
+  return `${ApiService.url}rent/ipg-redirect/${tenantId}/${paymentId}?source=${source}`;
+};
 
-    if (!url || !paymentData) return;
+export const redirectToIpg = (tenantId: string, paymentId: string) => {
+  const url = getIpgRedirectUrl(tenantId, paymentId);
 
-    const { hash, ...restData } = paymentData;
-    const form = document.createElement('form');
-    form.method = 'post';
-    form.action = url;
+  if (Capacitor.isNativePlatform()) {
+    history.push('/');
+    Browser.open({ url });
+    return;
+  }
 
-    const hashInput = document.createElement('input');
-    hashInput.value = hash;
-    hashInput.name = 'hashExtended';
-    hashInput.type = 'hidden';
-    form.appendChild(hashInput);
-
-    Object.keys(restData).forEach((key) => {
-      const input = document.createElement('input');
-      input.type = 'hidden';
-      input.value = restData[key];
-      input.name = key;
-      form.appendChild(input);
-    });
-
-    document.body.appendChild(form);
-    form.submit();
-    form.remove();
- 
-  };
+  window.location.assign(url);
+};

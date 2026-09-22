@@ -10,6 +10,7 @@ import { DashboardContainer } from '../../components/Layout/DashboardContainer';
 import { Navigation } from '../../components/Layout/Navigation';
 import SingleRentDetail from '../DashboardCommon/SingleRentDetail';
 import { Home, Settings } from '../../icons';
+import { withAttributionSearch } from 'src/utils/attribution-params';
 
 const DashboardUser = () => {
   const menuItems: MenuItemType[] = [
@@ -34,7 +35,7 @@ const DashboardUser = () => {
           <Route
             exact
             path="/user"
-            render={() => <Redirect to="/user/main" />}
+            render={() => <Redirect to={withAttributionSearch('/user/main')} />}
           />
           <Route path="/user/main" component={Welcome} />
           <Route path="/user/profile" component={Profile} />

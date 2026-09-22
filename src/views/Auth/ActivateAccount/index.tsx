@@ -17,7 +17,7 @@ import {
 import { history } from 'src/history';
 import { notifications } from 'src/actions';
 import { Logo } from 'src/components/Branded';
-import { FormContainer } from 'src/components/Layout';
+import { ButtonsContainer, FormContainer } from 'src/components/Layout';
 import {
   Button,
   Form,
@@ -30,6 +30,18 @@ import {
 } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
 import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+
+const StyledContent = styled('div')({
+  maxWidth: 600,
+  margin: '0 auto',
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'center',
+  height: '100vh',
+  gap: 24,
+});
 
 const ActivateAccount = () => {
   const dispatch = useDispatch();
@@ -103,46 +115,50 @@ const ActivateAccount = () => {
   }
 
   return (
-    <InfoContent>
+    <StyledContent>
       <Logo width="medium" />
-      <Header variant="h2">{__('application.activateAccountBySms')}</Header>
-      <Typography>{__('application.activateAccountBySmsHint')}</Typography>
-      <FormContainer>
-        <Form onSubmit={handleSubmit(onSubmit)}>
-          <Stack>
-            <Section>
-              <Input
-                label="application.activationCode"
-                placeholder="application.activationCodePlaceholder"
-                error={errors.code?.message}
-                required
-                autoComplete="one-time-code"
-                {...register('code')}
-              />
-            </Section>
-            <Section variant="transparent" align="center">
-              <Button
-                text="application.activateAccount"
-                type="submit"
-                size="large"
-                disabled={activating}
-              />
-              <Button
-                text="application.resendActivationSms"
-                type="button"
-                variant="secondary"
-                size="large"
-                disabled={resending}
-                onClick={onResend}
-              />
-              <Typography>
-                <Link to="/login">{__('application.back')}</Link>
-              </Typography>
-            </Section>
-          </Stack>
-        </Form>
-      </FormContainer>
-    </InfoContent>
+      <Section variant="bordered">
+        <Header variant="h2">{__('application.activateAccountBySms')}</Header>
+        <Typography>{__('application.activateAccountBySmsHint')}</Typography>
+
+        <FormContainer fullWidth>
+         
+            <Form onSubmit={handleSubmit(onSubmit)}>
+              <Stack>
+                <Input
+                  label="application.activationCode"
+                  placeholder="application.activationCodePlaceholder"
+                  error={errors.code?.message}
+                  required
+                  autoComplete="one-time-code"
+                  {...register('code')}
+                />
+
+                <ButtonsContainer center column>
+                  <Button
+                    text="application.activateAccount"
+                    type="submit"
+                    size="large"
+                    disabled={activating}
+                  />
+                  <Button
+                    text="application.resendActivationSms"
+                    type="button"
+                    variant="secondary"
+                    size="large"
+                    disabled={resending}
+                    onClick={onResend}
+                  />
+                  <Typography>
+                    <Link to="/login">{__('application.back')}</Link>
+                  </Typography>
+                </ButtonsContainer>
+              </Stack>
+            </Form>
+
+        </FormContainer>
+      </Section>
+    </StyledContent>
   );
 };
 

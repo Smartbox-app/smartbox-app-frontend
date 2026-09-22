@@ -10,6 +10,7 @@ interface Props {
   template: TemplateType;
   isSet: boolean;
   index: number;
+  manageTo: string;
 }
 
 const StyledSingleTemplate = styled('li')<{ isSet: boolean; even: boolean }>(
@@ -67,7 +68,7 @@ const StyledTitle = styled('h3')`
   }
 `;
 
-export const SingleTemplate = ({ type, template, isSet, index }: Props) => {
+export const SingleTemplate = ({ type, template, isSet, index, manageTo }: Props) => {
   return (
     <StyledSingleTemplate isSet={isSet} even={index % 2 === 0}>
       <MainData>
@@ -82,7 +83,7 @@ export const SingleTemplate = ({ type, template, isSet, index }: Props) => {
       <ButtonsContainer>
         <Button
           primary
-          to={`/client/management/templates/manage/${type}/${template}`}
+          to={manageTo}
           text="application.manageTemplate"
         />
       </ButtonsContainer>

@@ -4,6 +4,7 @@ import styled, { DefaultTheme } from 'styled-components';
 
 export type CardBackgroundProps = {
   warning?: boolean;
+  notice?: boolean;
   hovered?: boolean;
   disabled?: boolean;
   active?: boolean;
@@ -13,6 +14,7 @@ export type CardBackgroundProps = {
 const getBackground = (
   disabled: boolean,
   warning: boolean,
+  notice: boolean,
   active: boolean,
   theme: DefaultTheme,
 ) => {
@@ -22,6 +24,8 @@ const getBackground = (
     return `linear-gradient(0deg, ${opacify(-0.9, theme.colors.danger)} 0%, ${theme.colors.background.primary} 70%)`;
   if (active)
     return `linear-gradient(0deg, ${opacify(-0.9, theme.colors.primary)} 0%, ${theme.colors.background.primary} 70%)`;
+  if (notice)
+    return `linear-gradient(0deg, ${opacify(-0.9, theme.colors.secondary)} 0%, ${theme.colors.background.secondary} 70%)`;
   return theme.colors.background.primary;
 };
 
@@ -42,10 +46,11 @@ const getBoxShadow = (
 
 const StyledBackground = styled('div')<{
   warning: boolean;
+  notice: boolean;
   hovered: boolean;
   active: boolean;
   disabled: boolean;
-}>(({ warning, theme, active, hovered, disabled }) => ({
+}>(({ warning, theme, active, notice, hovered, disabled }) => ({
   position: 'absolute',
   left: 0,
   top: 0,
@@ -61,19 +66,26 @@ const StyledBackground = styled('div')<{
     marginLeft: '10%',
   },
   boxShadow: getBoxShadow(disabled, hovered, warning, active, theme),
-  background: getBackground(disabled, warning, active, theme),
+  background: getBackground(disabled, warning, notice, active, theme),
   transition: '.3s all',
 }));
 
 export const CardBackground = ({
   warning = false,
+  notice = false,
   hovered = false,
   active = false,
   disabled = false,
   image,
 }: CardBackgroundProps) => {
   return (
-    <StyledBackground warning={warning} hovered={hovered} active={active} disabled={disabled}>
+    <StyledBackground
+      warning={warning}
+      notice={notice}
+      hovered={hovered}
+      active={active}
+      disabled={disabled}
+    >
       {image}
     </StyledBackground>
   );

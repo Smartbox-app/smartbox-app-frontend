@@ -18,4 +18,9 @@ export class DocumentDto {
   @IsOptional()
   @IsString()
   stockId?: string | null;
+
+  @ValidateIf((dto: DocumentDto) => dto.type === 'agreement')
+  @IsOptional()
+  @IsString()
+  companyId?: string | null;
 }

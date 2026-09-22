@@ -11,9 +11,11 @@ import Settings from './Settings';
 import ClientsManagement from './ClientsManagement';
 import { useGetMyDetailsQuery } from '../../../queries';
 import MobileAppsConfig from './MobileAppsConfig/MobileAppsConfig';
+import ApiAccess from './ApiAccess/ApiAccess';
 import SystemNotificationManagement from 'src/views/DashboardCommon/SystemNotificationManagement';
 import { SystemLogManagement } from 'src/views/DashboardCommon/SystemLogManagement';
 import { DocumentsManagement } from 'src/views/DashboardCommon/DocumentManagement';
+import { CompaniesManagement } from 'src/views/DashboardCommon/CompanyManagement';
 
 const Management = () => {
   const { data: user } = useGetMyDetailsQuery();
@@ -60,6 +62,10 @@ const Management = () => {
         component={MobileAppsConfig}
       />
       <Route
+        path={`/${UserService.getSlugByRole(user.role)}/management/api-access`}
+        component={ApiAccess}
+      />
+      <Route
         path={`/${UserService.getSlugByRole(user.role)}/management/notifications`}
         component={SystemNotificationManagement}
       />
@@ -70,6 +76,18 @@ const Management = () => {
       <Route
         path={`/${UserService.getSlugByRole(user.role)}/management/documents`}
         component={DocumentsManagement}
+      />
+      <Route
+        path={`/${UserService.getSlugByRole(user.role)}/management/settlements`}
+        component={CompaniesManagement}
+      />
+      <Route
+        path={`/${UserService.getSlugByRole(user.role)}/management/companies`}
+        render={() => (
+          <Redirect
+            to={`/${UserService.getSlugByRole(user.role)}/management/settlements`}
+          />
+        )}
       />
       <Route
         path={`/${UserService.getSlugByRole(user.role)}/management/attachments`}

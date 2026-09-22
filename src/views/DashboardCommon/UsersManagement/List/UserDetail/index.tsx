@@ -78,7 +78,7 @@ const UserDetail = ({
           />
         )}
 
-        <UserRentList rentList={singleUser?.activeRents || []} />
+        <UserRentList userId={userId} />
       </Modal.Content>
     </>
   );

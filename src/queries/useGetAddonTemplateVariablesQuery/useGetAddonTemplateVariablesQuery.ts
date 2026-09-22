@@ -2,16 +2,26 @@ import { useQuery } from '@tanstack/react-query';
 import { AddonTemplateVariableRes } from 'smartbox-types';
 import ApiService from '../../services/api-service';
 
-export const addonTemplateVariablesQueryKey = () =>
-  ['addon', 'template-variables'] as const;
+export const addonTemplateVariablesQueryKey = (stockId?: string | null) =>
+  ['addon', 'template-variables', stockId] as const;
 
-export const useGetAddonTemplateVariablesQuery = () => {
+type UseGetAddonTemplateVariablesQueryOptions = {
+  stockId?: string | null;
+  enabled?: boolean;
+};
+
+export const useGetAddonTemplateVariablesQuery = (
+  options?: UseGetAddonTemplateVariablesQueryOptions,
+) => {
+  const { stockId, enabled = true } = options ?? {};
+
   return useQuery({
-    queryKey: addonTemplateVariablesQueryKey(),
+    queryKey: addonTemplateVariablesQueryKey(stockId),
+    enabled: enabled && !!stockId,
     queryFn: async () => {
       const response = await ApiService.callFetch<AddonTemplateVariableRes[]>(
         'GET',
-        `addon/template-variables`,
+        `addon/template-variables/${stockId}`,
         undefined,
         undefined,
         undefined,

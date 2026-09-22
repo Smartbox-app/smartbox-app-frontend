@@ -1,4 +1,4 @@
-import { BoxMapRes, BoxMapUserRes, RentStatus, StockRes } from 'smartbox-types';
+import { BoxMapRes, BoxMapUserRes, BoxStatus, RentStatus, StockRes } from 'smartbox-types';
 import styled, { css } from 'styled-components';
 import Moveable from 'react-moveable';
 import { colorOrDark } from '../../../../../../../utils/color';
@@ -9,6 +9,8 @@ import {
   getBoxWidth,
 } from '../utils/map-layout';
 import { useMapLayoutContext } from '../MapLayoutContext';
+import { Tooltip } from 'src/components/ui';
+import { getAdminBoxMapTooltipContent } from '../utils/admin-box-tooltip';
 
 interface Props {
   box: BoxMapRes | BoxMapUserRes;
@@ -51,7 +53,7 @@ const StyledDraggableContent = styled.div<{
 `;
 
 const StyledBox = styled.div<{
-  status: RentStatus | null;
+  status: RentStatus | BoxStatus | null;
   stock: StockRes;
   user?: boolean;
   width?: number;
@@ -68,7 +70,7 @@ const StyledBox = styled.div<{
     `}
 
 ${(props) =>
-    props.status === RentStatus.free &&
+    props.status === BoxStatus.free &&
     css`
       background-color: ${props.stock.colorFree};
     `};
@@ -109,7 +111,7 @@ ${(props) =>
       background-color: ${props.stock.colorNoPaidExtensionWithWarning};
     `};
   ${(props) =>
-    props.status === RentStatus.outOfService &&
+    props.status === BoxStatus.outOfService &&
     css`
       background-color: ${props.stock.colorOutOfService};
     `};
@@ -122,6 +124,11 @@ ${(props) =>
     props.status === RentStatus.failure &&
     css`
       background-color: ${props.stock.colorFailure};
+    `};
+  ${(props) =>
+    props.status === RentStatus.pendingFinish &&
+    css`
+      background-color: ${props.stock.colorPendingFinish};
     `};
 
   ${(props) =>
@@ -215,7 +222,7 @@ const SingleBox = ({
   const getBoxStatus = (box: BoxMapUserRes | BoxMapRes) => {
     if (user && highlightId === box.id) return RentStatus.rented;
     if (user) return null;
-    return (box as BoxMapRes).status || RentStatus.free;
+    return (box as BoxMapRes).status || BoxStatus.free;
   };
 
   const applyLayoutToElement = useCallback(() => {
@@ -287,7 +294,14 @@ const SingleBox = ({
         }}
         onClick={handleBoxClick}
       >
-        <StyledContent>{box.identifier}</StyledContent>
+        <Tooltip
+          disabled={!admin}
+          content={
+            admin ? getAdminBoxMapTooltipContent(box as BoxMapRes) : null
+          }
+        >
+          <StyledContent>{box.identifier}</StyledContent>
+        </Tooltip>
       </StyledBox>
     );
 

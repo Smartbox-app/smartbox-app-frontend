@@ -1,0 +1,36 @@
+import { useQuery } from '@tanstack/react-query';
+import { SelectOption, UserRole } from 'smartbox-types';
+import ApiService from '../../services/api-service';
+import { useGetMyDetailsQuery } from '../useGetMyDetailsQuery';
+
+export type StockSelectOption = { label: string; value: string };
+
+export const useGetStockOptionsQuery = (
+  tenantId?: string | null,
+  enabled = true,
+) => {
+  const { data: user } = useGetMyDetailsQuery();
+  const isAdmin = user?.role === UserRole.admin;
+  const canFetch = Boolean(enabled && user && (!isAdmin || tenantId));
+
+  return useQuery({
+    queryKey: ['stock', 'options', isAdmin ? tenantId : 'session'],
+    queryFn: async () => {
+      const path = isAdmin ? `stock/options/${tenantId}` : 'stock/options';
+      const stocks = await ApiService.callFetch<SelectOption[]>(
+        'GET',
+        path,
+      );
+
+      return (stocks ?? []).map(
+        (stock): StockSelectOption => ({
+          label: stock.name.toString(),
+          value: stock.value.toString(),
+        }),
+      );
+    },
+    enabled: canFetch,
+    gcTime: 300000,
+    retry: false,
+  });
+};

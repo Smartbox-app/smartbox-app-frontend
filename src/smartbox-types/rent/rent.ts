@@ -1,4 +1,5 @@
 import { RentDescription, RentPaymentType, RentStatus } from './rent-entity';
+import { BoxStatus } from '../box/box-entity';
 import { BaseResponse } from '../base/baseRes';
 import { Prop } from '../store/prop.decorator';
 import {
@@ -147,9 +148,11 @@ export class BoxListItem extends BaseResponse {
   status: RentStatus;
 }
 
+export type ChangeableBoxStatus = BoxStatus.free | BoxStatus.outOfService;
+
 export interface ChangeStatusReq {
   boxId: string;
-  status: RentStatus;
+  status: RentStatus | ChangeableBoxStatus;
 }
 
 export interface ChangeBoxReq {
@@ -162,6 +165,7 @@ export type RentGate = {
   description: string;
   controlled: boolean;
   passcode?: string;
+  version?: number;
 };
 
 export class RentDetailsRes {
@@ -170,6 +174,7 @@ export class RentDetailsRes {
   number: string;
   size?: string;
   status: RentStatus;
+  createdAt: Date;
   startAt: Date;
   finishAt: Date;
   decisionFinishAt: Date;
@@ -200,6 +205,8 @@ export class MyRentList extends BaseResponse {
   startAt: Date;
   @Prop()
   finishAt: Date;
+  @Prop()
+  decisionFinishAt: Date;
   @Prop()
   size: number;
   @Prop()
@@ -301,6 +308,7 @@ export type RentUserData = CompanyData & {
   stockName: string;
   stockAddress: string;
   size: string;
+  boxNumber?: string;
   mailToSendInvoice: string;
   isCompany: boolean;
   date: Date;
@@ -336,6 +344,8 @@ export type PayForRentResponse = {
   paymentStatus: PaymentStatus;
   paymentData?: GeneratePaymentDataResponse;
   url?: string;
+  rentId?: string;
+  boxId?: string;
 };
 
 export type SignedDownloadUrlRes = {

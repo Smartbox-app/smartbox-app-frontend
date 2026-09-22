@@ -41,6 +41,9 @@ export interface StocksByTenant {
 
 export interface UserListRes extends UserRes {
   status: UserStatus;
+  tenant?: string;
+  hasPasswordSet?: boolean;
+  canResendActivationEmail?: boolean;
 }
 
 export interface UserClientListRes {
@@ -82,6 +85,15 @@ export type RegisterUserRes = {
 
 export type AccountActivationTokenPayload = {
   activationToken: string;
+};
+
+export interface ActivateUserReq {
+  pwd?: string;
+  pwd2?: string;
+}
+
+export type ActivationStatusRes = {
+  needsPassword: boolean;
 };
 
 export interface AddInvitedUserReq {

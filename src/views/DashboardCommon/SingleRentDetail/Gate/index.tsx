@@ -10,9 +10,11 @@ import { useGetMyDetailsQuery } from 'src/queries';
 import { Geolocation, PermissionStatus } from '@capacitor/geolocation';
 import { Capacitor } from '@capacitor/core';
 import { ButtonsContainer } from 'src/components/Layout';
+import { KsmGateButton } from '../Action/KsmGateButton';
 
 interface Props {
   gate: RentGate;
+  showKsmGateOpenV2?: boolean;
 }
 
 const StyledGateContainer = styled.div`
@@ -167,12 +169,20 @@ const Gate = ({ gate }: Props) => {
             </p>
           ) : null}
           <ButtonsContainer left>
-            <Button
-              text={getButtonText()}
-              type="button"
-              success
-              click={handleClick}
-            />
+            {gate.version === 2 ? (
+              <KsmGateButton
+                gate={gate}
+                layout="detail"
+                buttonText={getButtonText()}
+              />
+            ) : (
+              <Button
+                text={getButtonText()}
+                type="button"
+                success
+                click={handleClick}
+              />
+            )}
           </ButtonsContainer>
         </div>
       )}

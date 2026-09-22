@@ -3,6 +3,7 @@ import {
   ArrowRightCircle,
   ArrowRightCircleHovered,
   Error,
+  InfoCircle
 } from '../../../../../../../../icons';
 import { Badge } from 'src/components/ui';
 
@@ -27,21 +28,23 @@ const StorageIcon = styled('div')<{ isWarning: boolean }>(
 export type StorageHeaderProps = {
   stockName: string;
   isWarning: boolean;
+  isNotice: boolean;
   hovered: boolean;
 };
 
-const getIcon = (isWarning: boolean, isHovered: boolean) => {
+const getIcon = (isWarning: boolean, isNotice: boolean, isHovered: boolean) => {
   if (isWarning) return <Error />;
   if (isHovered) return <ArrowRightCircleHovered />;
+  if(isNotice) return <InfoCircle />;
   return <ArrowRightCircle />;
 };
 
-export const StorageHeader = ({ stockName, isWarning, isHovered }) => {
+export const StorageHeader = ({ stockName, isWarning, isNotice, isHovered }) => {
   return (
     <StyledStorageHeader>
       <Badge>{stockName}</Badge>
       <StorageIcon isWarning={isWarning}>
-        {getIcon(isWarning, isHovered)}
+        {getIcon(isWarning, isNotice, isHovered)}
       </StorageIcon>
     </StyledStorageHeader>
   );

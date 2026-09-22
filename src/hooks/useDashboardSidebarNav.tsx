@@ -1,9 +1,8 @@
 import { useMemo } from 'react';
-import { useSelector } from 'react-redux';
 import { UserRole } from 'smartbox-types';
-import { ApplicationState } from '../reducers';
 import UserService from '../services/user-service';
 import { useGetMyDetailsQuery, useSmsServiceStatusQuery } from 'src/queries';
+import { useTenant } from './useTenant';
 import { SidebarNavGroup } from 'src/types/sidebar-nav';
 import {
   Adjustments,
@@ -22,6 +21,7 @@ import {
   Users,
   Manage,
   Workers,
+  Wallet,
 } from 'src/icons';
 import type { NamingTypeKey } from 'src/i18n/types/keys';
 import { useTenantNaming } from './useTenantNaming';
@@ -33,6 +33,7 @@ type SidebarNavContext = {
 
 type ClientSidebarNavContext = SidebarNavContext & {
   smsStatus?: boolean;
+  apiAccessEnabled?: boolean;
 };
 
 const getLocationsNavGroups = ({
@@ -111,9 +112,19 @@ const getAdminSidebarNavGroups = ({
           icon: <Adjustments />,
         },
         {
+          to: `${managementBase}/settlements`,
+          text: 'application.settlements',
+          icon: <Wallet />,
+        },
+        {
           to: `${managementBase}/mobile-config`,
           text: 'application.mobileAppsConfig',
           icon: <Adjustments />,
+        },
+        {
+          to: `${managementBase}/api-access`,
+          text: 'application.apiAccess',
+          icon: <Settings />,
         },
         {
           to: `${managementBase}/attachments`,
@@ -166,6 +177,7 @@ const getClientSidebarNavGroups = ({
   slug,
   getText,
   smsStatus,
+  apiAccessEnabled,
 }: ClientSidebarNavContext): SidebarNavGroup[] => {
   const managementBase = `/${slug}/management`;
   const managementItems = [
@@ -188,6 +200,11 @@ const getClientSidebarNavGroups = ({
       to: `${managementBase}/settings/appearance`,
       text: 'application.settings',
       icon: <Adjustments />,
+    },
+    {
+      to: `${managementBase}/settlements`,
+      text: 'application.settlements',
+      icon: <Wallet />,
     },
     {
       to: `${managementBase}/templates`,
@@ -215,6 +232,14 @@ const getClientSidebarNavGroups = ({
       icon: <List />,
     },
   ];
+
+  if (apiAccessEnabled) {
+    managementItems.push({
+      to: `${managementBase}/api-access`,
+      text: 'application.apiAccess',
+      icon: <Settings />,
+    });
+  }
 
   if (smsStatus) {
     managementItems.push({
@@ -280,11 +305,13 @@ const getSidebarNavGroupsForRole = (
 export const useDashboardSidebarNav = (): SidebarNavGroup[] => {
   const { data: user } = useGetMyDetailsQuery();
   const { getText } = useTenantNaming();
-  const tenant = useSelector((state: ApplicationState) => state.tenant);
+  const { tenant } = useTenant();
   const isClient = user?.role === UserRole.client;
   const { data: smsStatus } = useSmsServiceStatusQuery(
     isClient ? tenant?.id : undefined,
   );
+  const hasApiAccess =
+    tenant && 'hasApiAccess' in tenant ? tenant.hasApiAccess : false;
 
   return useMemo(() => {
     if (!user) return [];
@@ -292,11 +319,16 @@ export const useDashboardSidebarNav = (): SidebarNavGroup[] => {
     const slug = UserService.getSlugByRole(user.role as UserRole);
     if (!slug) return [];
 
-    const ctx: ClientSidebarNavContext = { slug, getText, smsStatus };
+    const ctx: ClientSidebarNavContext = {
+      slug,
+      getText,
+      smsStatus,
+      apiAccessEnabled: hasApiAccess,
+    };
 
     return [
       ...getSidebarNavGroupsForRole(user.role as UserRole, ctx),
       getAccountNavGroup(ctx),
     ];
-  }, [user, getText, smsStatus]);
+  }, [user, getText, smsStatus, hasApiAccess]);
 };

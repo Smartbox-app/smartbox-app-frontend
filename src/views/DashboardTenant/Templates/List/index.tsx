@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { Header, PageHeader, Section } from 'src/components/ui';
+import React from 'react';
+import { Header, Section } from 'src/components/ui';
 import { SingleTemplate } from './SingleTemplate';
-import { TemplateEntity, TemplateType } from 'smartbox-types';
-import ApiService from '../../../../services/api-service';
+import { TemplateType } from 'smartbox-types';
 import { Spinner } from '../../../../components/Branded';
 import { __ } from 'src/helpers/i18n';
+import { useTemplatesQuery } from 'src/queries';
 
 const emailTemplates = [
   TemplateType.INVITE_USER_EMAIL,
@@ -30,6 +30,7 @@ const emailTemplates = [
   TemplateType.PERIOD_PAYMENT_ENDS_EMAIL,
   TemplateType.BOX_GROUP_FREE_EMAIL,
   TemplateType.ACCESS_CODE_EMAIL,
+  TemplateType.GATE_ACCESS_CODE_EMAIL,
 ];
 
 const smsTemplates = [
@@ -50,22 +51,17 @@ const smsTemplates = [
   TemplateType.PERIOD_PAYMENT_ENDS_SMS,
   TemplateType.BOX_GROUP_FREE_SMS,
   TemplateType.ACCESS_CODE_SMS,
+  TemplateType.GATE_ACCESS_CODE_SMS,
 ];
 
-export const List = () => {
-  const [allTemplates, setAllTemplates] = useState<TemplateEntity[]>([]);
-  const [isLoading, setLoading] = useState(true);
-
-  const getAllTemplates = async () => {
-    await ApiService.callFetch(
-      'GET',
-      'template/all',
-      (data: TemplateEntity[]) => {
-        setAllTemplates(data);
-      },
-    );
-    setLoading(false);
-  };
+export const List = ({
+  basePath,
+  tenantId,
+}: {
+  basePath: string;
+  tenantId?: string;
+}) => {
+  const { data: allTemplates = [], isPending } = useTemplatesQuery(tenantId);
 
   const isSet = (templateToCheck: TemplateType) => {
     const found = allTemplates.find(
@@ -75,15 +71,11 @@ export const List = () => {
     return !!found.content;
   };
 
-  useEffect(() => {
-    getAllTemplates();
-  }, []);
-
   return (
     <Section>
       <Header variant="h2">{__('application.templatesList')}</Header>
-      {isLoading && <Spinner overlay />}
-      {!isLoading && (
+      {isPending && <Spinner overlay />}
+      {!isPending && (
         <>
           <ul>
             {emailTemplates.map((template, index) => (
@@ -93,6 +85,7 @@ export const List = () => {
                 type="email"
                 template={template}
                 isSet={isSet(template)}
+                manageTo={`${basePath}/manage/email/${template}`}
               />
             ))}
           </ul>
@@ -104,6 +97,7 @@ export const List = () => {
                 type="sms"
                 template={template}
                 isSet={isSet(template)}
+                manageTo={`${basePath}/manage/sms/${template}`}
               />
             ))}
           </ul>

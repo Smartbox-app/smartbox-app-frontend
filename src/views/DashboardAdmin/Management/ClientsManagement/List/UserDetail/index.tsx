@@ -49,7 +49,7 @@ const UserDetail = ({ userId, userData, fetchSingleUser, singleUser }: Props) =>
               singleUser?.companyData?.nip,
             ]}
           />
-          <UserRentList rentList={singleUser?.activeRents || []} />
+          <UserRentList userId={userId} />
         </div>
       </div>
     </div>

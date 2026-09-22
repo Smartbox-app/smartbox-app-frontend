@@ -4,6 +4,7 @@ import { FieldType, boxesList } from 'smartbox-tables';
 import {
   AccessControl,
   BoxListRes,
+  BoxStatus,
   RentStatus,
   StockRes,
   UserRole,
@@ -16,6 +17,7 @@ import {
 } from '../../../../../../../components/Layout';
 import { __ } from '../../../../../../../helpers/i18n';
 import { InteractiveTableSchema } from '../../../../../../../utils/table-schema-utils';
+import { boxDisplayStatusSearchValues } from '../../../../../../../utils/box-display-status';
 import UserService from '../../../../../../../services/user-service';
 import { showModal } from '../../../../../../../actions/modal';
 import { ConfirmModal } from '../../../../../../../components/Common';
@@ -28,7 +30,7 @@ import { refreshApiTableData } from '../../../../../../../actions/api-table';
 import { useParams } from 'react-router';
 import { Edit } from '../Edit';
 import BoxDetail from '../../../../../BoxDetail';
-import { BoxStatus } from './BoxStatus';
+import { BoxStatus as BoxStatusBadge } from './BoxStatus';
 import { AssignRentToUser } from '../../../../../AssignRentToUser';
 import { useGetMyDetailsQuery } from 'src/queries';
 import { HeaderWithActions, Section } from 'src/components/ui';
@@ -124,9 +126,11 @@ const List = () => {
       field: 'status',
       mobile: true,
       defaultSort: true,
+      searchable: true,
+      searchableValues: boxDisplayStatusSearchValues(),
       type: FieldType.Custom,
       customRender: (value, field, boxData) => (
-        <BoxStatus box={boxData} stock={stock} />
+        <BoxStatusBadge box={boxData} stock={stock} />
       ),
     })
     .addFieldAtTheEnd({
@@ -143,7 +147,7 @@ const List = () => {
             />
           ) : undefined}
           {hasFullAccess &&
-          (!boxData.status || boxData.status === RentStatus.free) ? (
+          (!boxData.status || boxData.status === BoxStatus.free) ? (
             <Button
               secondary
               text="application.assignRent"

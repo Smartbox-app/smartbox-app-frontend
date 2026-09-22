@@ -1,40 +1,17 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router"
-import { __ } from "../../../../../../helpers/i18n";
-import ApiService from "../../../../../../services/api-service";
-import { Button, Spinner } from "../../../../../../components/Branded";
-import { LockInfo } from "../LockInfo";
-import { ButtonsContainer } from "../../../../../../components/Layout";
-import './PaymentForm.scss';
-import { useSelector } from "react-redux";
-import { ApplicationState } from "../../../../../../reducers";
+import React, { useEffect } from 'react';
+import { useParams } from 'react-router';
+import { Spinner } from '../../../../../../components/Branded';
+import { redirectToIpg } from 'src/utils/payment-form';
+import { useTenant } from 'src/hooks/useTenant';
 
 export const PaymentForm = () => {
-    const { paymentId } = useParams<{ paymentId: string }>();
-    const tenant = useSelector((state: ApplicationState) => state.tenant);
+  const { paymentId } = useParams<{ paymentId: string }>();
+  const { tenant } = useTenant();
 
-    const [hash, setHash] = useState('')
-    const [payload, setPayload] = useState<any>();
+  useEffect(() => {
+    if (!paymentId || !tenant?.id) return;
+    redirectToIpg(tenant.id, paymentId);
+  }, [paymentId, tenant?.id]);
 
-    const getPaymentHash = async () => {
-        await ApiService.callFetch('GET', `rent/generate-payment-hash/${paymentId}`, (response: any) => {
-            const { hash, ...rest } = response;
-            setHash(hash);
-            setPayload(rest);
-        })
-    }
-
-    useEffect(() => {
-        getPaymentHash();
-    }, [])
-
-    if (!hash || !payload) return <Spinner />;
-
-    return <form method="get" action={`https://${tenant?.useProd === false ? 'test.' : 'www.'}ipg-online.com/connect/gateway/processing`}>
-        <input type="hidden" name="hashExtended" value={hash} />
-        {Object.keys(payload).map(key => <input type="hidden" key={key} value={payload[key]} name={key} />)}
-        <ButtonsContainer className='payment-form-button'>
-            <Button big type="submit" primary text="application.pay" />
-        </ButtonsContainer>
-    </form>
-}
+  return <Spinner />;
+};

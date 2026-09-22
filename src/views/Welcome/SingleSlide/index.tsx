@@ -34,7 +34,7 @@ const SingleSlide = ({ item, last }: Props) => {
           <img src={getAssetPath('slide', item)} />
         </div>
         {last && (
-          <ButtonsContainer className="swiper-buttons-container">
+          <ButtonsContainer className="swiper-buttons-container" center>
             <Button
               text="application.register"
               to="/register"
@@ -44,7 +44,7 @@ const SingleSlide = ({ item, last }: Props) => {
             />
           </ButtonsContainer>
         )}
-        <ButtonsContainer className="swiper-buttons-container">
+        <ButtonsContainer className="swiper-buttons-container" center>
           <Button
             text="application.back"
             to="/login"

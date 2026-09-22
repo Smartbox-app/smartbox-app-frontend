@@ -24,6 +24,7 @@ const clientSourceOptions = [
     value: 'Ogłoszenie internetowe (OLX, inne)',
   },
   { label: 'Polecenie od znajomego', value: 'Polecenie od znajomego' },
+  { label: 'AI (ChatGPT, Claude, Gemini itp.)', value: 'AI (ChatGPT, Claude, Gemini itp.)' },
   { label: 'Radio', value: 'Radio' },
   { label: 'Inne', value: 'Inne' },
 ];

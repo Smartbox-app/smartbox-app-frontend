@@ -23,6 +23,7 @@ import {
   Typography,
 } from 'src/components/ui';
 import { useTenant } from 'src/hooks/useTenant';
+import { useTracking } from 'src/hooks/useTracking';
 import { useRegisterMutation } from 'src/mutations';
 import { RegisterDto } from 'src/dto/RegisterDto';
 import { useForm } from 'react-hook-form';
@@ -51,6 +52,7 @@ const LogoContainer = styled('div')({
 
 const Register = () => {
   const { tenant } = useTenant();
+  const { trackCompleteRegistration } = useTracking();
   const dispatch = useDispatch();
   const {
     mutate: registerUser,
@@ -82,6 +84,8 @@ const Register = () => {
 
     const smsActivation = isSmsAccountConfirmation(tenant);
 
+    trackCompleteRegistration();
+
     dispatch(
       notifications.successNotification('notification.accountRegistered'),
     );
@@ -93,7 +97,7 @@ const Register = () => {
 
     dispatch(modal.showModal(<AccountRegisteredModal />));
     history.push('/');
-  }, [data, isSuccess, tenant, dispatch]);
+  }, [data, isSuccess, tenant, dispatch, trackCompleteRegistration]);
 
   if (!tenant) return null;
 

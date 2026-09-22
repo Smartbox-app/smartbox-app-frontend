@@ -57,6 +57,7 @@ export const Add = () => {
 
     if (data.type === 'agreement') {
       payload.stockId = data.stockId || null;
+      payload.companyId = data.companyId || null;
     }
 
     if (user?.role === UserRole.client) {

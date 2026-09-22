@@ -1,6 +1,7 @@
 import { PriceResolveType, SinglePricing, SinglePricingForUser } from './pricing';
 import { BoxGroupType } from './box-group-type';
 export * from './pricing';
+export * from './box-group-type';
 
 export interface BoxGroupEntity {
   id: string;
@@ -53,6 +54,7 @@ export type BoxGroupUserRes = Pick<
   BoxGroupEntity,
   | 'id'
   | 'name'
+  | 'type'
   | 'stockId'
   | 'image'
   | 'width'

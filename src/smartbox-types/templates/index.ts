@@ -39,6 +39,8 @@ export enum TemplateType {
   BOX_GROUP_FREE_SMS = 'box_group_free_sms',
   ACCESS_CODE_EMAIL = 'access_code_email',
   ACCESS_CODE_SMS = 'access_code_sms',
+  GATE_ACCESS_CODE_EMAIL = 'gate_access_code_email',
+  GATE_ACCESS_CODE_SMS = 'gate_access_code_sms',
 }
 
 export type TemplateEntity = {

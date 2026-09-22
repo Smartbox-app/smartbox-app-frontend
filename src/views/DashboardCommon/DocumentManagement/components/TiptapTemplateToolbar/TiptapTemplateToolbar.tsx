@@ -10,13 +10,21 @@ import { useGetAddonTemplateVariablesQuery } from 'src/queries';
 type Props = {
   editor: Editor | null;
   templateTenantId?: string;
+  templateStockId?: string | null;
 };
 
-export const TiptapTemplateToolbar = ({ editor, templateTenantId }: Props) => {
+export const TiptapTemplateToolbar = ({
+  editor,
+  templateTenantId,
+  templateStockId,
+}: Props) => {
   const [customCondition, setCustomCondition] = useState('');
   const [customExpression, setCustomExpression] = useState('');
 
-  const { data: addons = [] } = useGetAddonTemplateVariablesQuery();
+  const { data: addons = [] } = useGetAddonTemplateVariablesQuery({
+    tenantId: templateTenantId,
+    stockId: templateStockId,
+  });
 
   const addonVariableOptions = useMemo(
     () => buildAddonTemplateVariableOptions(addons),

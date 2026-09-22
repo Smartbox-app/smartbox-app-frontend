@@ -54,6 +54,10 @@ const Position = ({
             text="application.userWillGetMailWithInformation"
           />
           <Alert type="notice" text="application.actionCanNotBeUnDone" />
+          <Alert
+            type="notice"
+            text="application.boxMoveAgreementAddendumNotice"
+          />
         </Modal.Content>
         <Modal.Actions>
           <ButtonsContainer max>
@@ -88,25 +92,31 @@ const Position = ({
   };
 
   return (
-    <ItfApiForm
-      formId="change-user-box"
-      schemaMayBeDynamic={false}
-      schemaCacheEnabled={false}
-      schemaFetcher={() => ApiService.loadForm(fetchUrl)}
-      sendFetcher={customSendFetcher}
-      submitButton={submitButton}
-      loadingInfo={<Spinner transparent />}
-      onSavedSuccessfully={() => {
-        hideModal();
-        dispatch(refreshApiTableData());
-      }}
-      onTranslateString={formOnTranslateString}
-      thirdPartyComponents={{
-        ReactSelect: ReactSelectOverride,
-        ReactCreatableSelect,
-      }}
-      onRenderFullField={mapFields}
-    />
+    <>
+      <Alert
+        type="notice"
+        text="application.boxMoveAgreementAddendumNotice"
+      />
+      <ItfApiForm
+        formId="change-user-box"
+        schemaMayBeDynamic={false}
+        schemaCacheEnabled={false}
+        schemaFetcher={() => ApiService.loadForm(fetchUrl)}
+        sendFetcher={customSendFetcher}
+        submitButton={submitButton}
+        loadingInfo={<Spinner transparent />}
+        onSavedSuccessfully={() => {
+          hideModal();
+          dispatch(refreshApiTableData());
+        }}
+        onTranslateString={formOnTranslateString}
+        thirdPartyComponents={{
+          ReactSelect: ReactSelectOverride,
+          ReactCreatableSelect,
+        }}
+        onRenderFullField={mapFields}
+      />
+    </>
   );
 };
 

@@ -1,7 +1,7 @@
 import { AgreementTemplateInput } from 'smartbox-types';
 
 export const agreementTemplateToQueryString = (
-  template: AgreementTemplateInput,
+  template: AgreementTemplateInput & { stockId?: string | null },
 ): string => {
   const params = new URLSearchParams();
 

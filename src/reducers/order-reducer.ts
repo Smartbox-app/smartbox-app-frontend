@@ -4,7 +4,9 @@ import {
   AddonUserFileRequirementType,
   CalculatedAddonPriceRes,
   CalculatedPriceRes,
+  BoxGroupType,
   IStock,
+  PayForRentResponse,
   PaymentDocument,
   PriceDisplayForClients,
   RentPaymentType,
@@ -48,6 +50,7 @@ export type OrderState = {
   boxGroupId: string;
   boxGroupName: string;
   boxGroupArea: string;
+  boxGroupType: BoxGroupType;
   minRentPeriod: number | null;
   maxAdvanceBookingDays: number | null;
   maxRentPeriod: number | null;
@@ -78,6 +81,7 @@ export type OrderState = {
   paymentSuccess: boolean;
   isAgreementAccepted: boolean;
   isResignationMarked: boolean;
+  pendingCheckout: PayForRentResponse | null;
 };
 
 interface SetOrderStock {
@@ -106,6 +110,7 @@ interface SetOrderBoxGroup {
     boxGroupId: string;
     boxGroupName: string;
     boxGroupArea: string;
+    boxGroupType: BoxGroupType;
   };
 }
 
@@ -240,6 +245,11 @@ interface ClearOrder {
   type: 'CLEAR_ORDER';
 }
 
+interface SetPendingCheckout {
+  type: 'SET_PENDING_CHECKOUT';
+  payload: PayForRentResponse | null;
+}
+
 interface FetchRentPeriodConfig {
   type: 'FETCH_RENT_PERIOD_CONFIG_SUCCESS';
   payload: {
@@ -279,6 +289,7 @@ type Action =
   | CheckPaymentStatus
   | ClearPaymentMethodSuccess
   | ClearOrder
+  | SetPendingCheckout
   | FetchAddons
   | ResetDiscountCode
   | FetchRentPeriodConfig;
@@ -292,6 +303,7 @@ const initialState: OrderState = {
   boxGroupId: '',
   boxGroupName: '',
   boxGroupArea: '',
+  boxGroupType: BoxGroupType.storage,
   minRentPeriod: null,
   maxAdvanceBookingDays: null,
   maxRentPeriod: null,
@@ -334,6 +346,7 @@ const initialState: OrderState = {
   discountList: [{ text: __('application.disposableDiscount5'), value: 5 }],
   isAgreementAccepted: false,
   isResignationMarked: false,
+  pendingCheckout: null,
 };
 
 export default (
@@ -347,6 +360,7 @@ export default (
         stockId: action.payload.stockId,
         stockName: action.payload.stockName,
         stockAddress: action.payload.stockAddress,
+        pendingCheckout: null,
       };
     }
 
@@ -372,6 +386,8 @@ export default (
         boxGroupId: action.payload.boxGroupId,
         boxGroupName: action.payload.boxGroupName,
         boxGroupArea: action.payload.boxGroupArea,
+        boxGroupType: action.payload.boxGroupType,
+        pendingCheckout: null,
       };
     }
 
@@ -411,6 +427,7 @@ export default (
       return {
         ...state,
         startDate: action.payload,
+        pendingCheckout: null,
       };
     }
 
@@ -418,6 +435,7 @@ export default (
       return {
         ...state,
         endDate: action.payload,
+        pendingCheckout: null,
       };
     }
 
@@ -651,6 +669,14 @@ export default (
 
     case 'CLEAR_ORDER': {
       return initialState;
+    }
+
+    case 'SET_PENDING_CHECKOUT': {
+      return {
+        ...state,
+        pendingCheckout: action.payload,
+        paymentId: action.payload?.paymentId || state.paymentId,
+      };
     }
 
     default:

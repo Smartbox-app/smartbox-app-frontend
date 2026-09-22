@@ -11,6 +11,7 @@ import { Profile } from '../DashboardCommon';
 import { StockGroups } from '../DashboardCommon/StockGroups';
 import { TenantStatus } from './TenantStatus';
 import { useDashboardSidebarNav } from 'src/hooks/useDashboardSidebarNav';
+import { withAttributionSearch } from 'src/utils/attribution-params';
 
 const DashboardTenant = () => {
   const sidebarGroups = useDashboardSidebarNav();
@@ -26,7 +27,11 @@ const DashboardTenant = () => {
           <Route
             exact
             path="/client"
-            render={() => <Redirect to="/client/management/users/list" />}
+            render={() => (
+              <Redirect
+                to={withAttributionSearch('/client/management/users/list')}
+              />
+            )}
           />
           <Route path="/client/management/" component={Management} />
           <Route path="/client/profile" component={Profile} />

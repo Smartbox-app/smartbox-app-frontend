@@ -14,6 +14,7 @@ type Props = {
   onChange: (value: any) => void;
   documentType?: DocumentType;
   templateTenantId?: string;
+  templateStockId?: string | null;
 };
 
 export const TiptapEditor = ({
@@ -21,6 +22,7 @@ export const TiptapEditor = ({
   onChange,
   documentType,
   templateTenantId,
+  templateStockId,
 }: Props) => {
   const isAgreement = documentType === 'agreement';
 
@@ -61,6 +63,7 @@ export const TiptapEditor = ({
           <TiptapTemplateToolbar
             editor={editor}
             templateTenantId={templateTenantId}
+            templateStockId={templateStockId}
           />
         ) : null}
         {editor ? <TiptapTableToolbar editor={editor} /> : null}

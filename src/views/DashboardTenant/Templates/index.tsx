@@ -6,29 +6,37 @@ import UserService from '../../../services/user-service';
 import { Manage } from './Manage';
 import { useGetMyDetailsQuery } from 'src/queries';
 
-const TemplatesManagement = () => {
+type TemplatesManagementProps = {
+  basePath?: string;
+  tenantId?: string;
+};
+
+const TemplatesManagement = ({
+  basePath: basePathOverride,
+  tenantId,
+}: TemplatesManagementProps) => {
   const { data: user } = useGetMyDetailsQuery();
 
   if (!user) return null;
+
+  const basePath =
+    basePathOverride ??
+    `/${UserService.getSlugByRole(user.role)}/management/templates`;
 
   return (
     <Switch>
       <Route
         exact
-        path={`/${UserService.getSlugByRole(user.role)}/management/templates`}
-        render={() => (
-          <Redirect
-            to={`/${UserService.getSlugByRole(user.role)}/management/templates/list`}
-          />
-        )}
+        path={basePath}
+        render={() => <Redirect to={`${basePath}/list`} />}
       />
       <Route
-        path={`/${UserService.getSlugByRole(user.role)}/management/templates/list`}
-        component={List}
+        path={`${basePath}/list`}
+        render={() => <List basePath={basePath} tenantId={tenantId} />}
       />
       <Route
-        path={`/${UserService.getSlugByRole(user.role)}/management/templates/manage/:type/:template`}
-        component={Manage}
+        path={`${basePath}/manage/:type/:template`}
+        render={() => <Manage basePath={basePath} tenantId={tenantId} />}
       />
     </Switch>
   );

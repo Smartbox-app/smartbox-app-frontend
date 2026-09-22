@@ -2,11 +2,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router';
 import { Button, Spinner } from '../../../../components/Branded';
-import {
-  ButtonsContainer,
-  FormContainer,
-  FormHeader,
-} from '../../../../components/Layout';
+import { ButtonsContainer } from '../../../../components/Layout';
 import { ItfApiForm } from 'itf_formbuilder_react';
 import ApiService from '../../../../services/api-service';
 import { mapFields } from '../../../../utils/fields-mapper';
@@ -16,6 +12,8 @@ import { hideModal } from '../../../../actions/modal';
 import { TemplateType } from 'smartbox-types';
 import { __ } from '../../../../helpers/i18n';
 import { PageHeader, Section } from 'src/components/ui';
+import { useQueryClient } from '@tanstack/react-query';
+import { templatesQueryKey, useGetMyDetailsQuery } from 'src/queries';
 
 const allowedTags = {
   [TemplateType.INVITE_USER_EMAIL]: ['company'],
@@ -174,6 +172,8 @@ const allowedTags = {
   [TemplateType.NO_PERIOD_PAYMENT_SMS]: ['name', 'company', 'number'],
   [TemplateType.ACCESS_CODE_EMAIL]: ['name', 'company', 'number', 'passcode'],
   [TemplateType.ACCESS_CODE_SMS]: ['name', 'company', 'number', 'passcode'],
+  [TemplateType.GATE_ACCESS_CODE_EMAIL]: ['name', 'company', 'stock', 'passcode'],
+  [TemplateType.GATE_ACCESS_CODE_SMS]: ['name', 'company', 'stock', 'passcode'],
   [TemplateType.RENT_ENDED_MAIL]: [
     'name',
     'number',
@@ -206,24 +206,41 @@ const allowedTags = {
   ],
 };
 
-export const Manage = () => {
+export const Manage = ({
+  basePath,
+  tenantId: tenantIdOverride,
+}: {
+  basePath: string;
+  tenantId?: string;
+}) => {
   const { type, template } = useParams<{
     type: 'email' | 'sms';
     template: TemplateType;
   }>();
+  const { data: user } = useGetMyDetailsQuery();
+  const tenantId = tenantIdOverride ?? user?.tenantId ?? undefined;
+  const queryClient = useQueryClient();
 
   const dispatch = useDispatch();
 
   const submitButton = (
     <ButtonsContainer>
+      <Button
+        text="application.back"
+        to={`${basePath}/list`}
+      />
       <Button text="application.save" type="submit" primary />
     </ButtonsContainer>
   );
 
-  const fetchUrl = `template/form-${type}/${template}`;
-  const sendUrl = `template/${type}/${template}`;
+  const fetchUrl = tenantIdOverride
+    ? `template/admin/form-${type}/${tenantIdOverride}/${template}`
+    : `template/form-${type}/${template}`;
+  const sendUrl = tenantIdOverride
+    ? `template/admin/${type}/${tenantIdOverride}/${template}`
+    : `template/${type}/${template}`;
 
-  const tagsToUse = allowedTags[template];
+  const tagsToUse = allowedTags[template] ?? [];
 
   return (
     <>
@@ -249,6 +266,11 @@ export const Manage = () => {
           submitButton={submitButton}
           onRenderFullField={mapFields}
           onSavedSuccessfully={() => {
+            if (tenantId) {
+              queryClient.invalidateQueries({
+                queryKey: templatesQueryKey(tenantId),
+              });
+            }
             dispatch(successNotification('application.templateSaved'));
             dispatch(hideModal());
           }}

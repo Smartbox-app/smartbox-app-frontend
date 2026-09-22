@@ -13,6 +13,7 @@ export const useRegisterMutation = () => {
         null,
         null,
         dto,
+        true,
       );
 
       return response ?? {};

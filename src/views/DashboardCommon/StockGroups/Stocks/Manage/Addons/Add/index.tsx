@@ -20,6 +20,7 @@ import { useParams } from 'react-router';
 import { AddonReq } from 'smartbox-types';
 import { useGetMyDetailsQuery } from 'src/queries';
 import { HeaderWithActions, Section } from 'src/components/ui';
+import { serializeBoxGroupIds } from '../serialize-box-group-ids';
 
 const Add = () => {
   const dispatch = useDispatch();
@@ -84,7 +85,10 @@ const Add = () => {
               values.userFileAllowed.toString(),
             );
             formData.append('noPricing', values.noPricing.toString());
-            formData.append('boxGroupId', values.boxGroupId || '');
+            formData.append(
+              'boxGroupIds',
+              serializeBoxGroupIds(values.boxGroupIds),
+            );
             formData.append('newRentOnly', values.newRentOnly.toString());
             formData.append(
               'userFileRequirement',

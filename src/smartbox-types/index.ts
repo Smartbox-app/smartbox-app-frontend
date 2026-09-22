@@ -22,4 +22,7 @@ export * from './attachment';
 export * from './ttlock';
 export * from './mobile-config';
 export * from './documents';
+export * from './company';
 export * from './system-log';
+export * from './api-access';
+export * from './location-activity';

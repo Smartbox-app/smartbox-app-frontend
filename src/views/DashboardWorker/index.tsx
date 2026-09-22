@@ -9,6 +9,7 @@ import Profile from '../DashboardCommon/Profile';
 import ManagementWorker from './ManagementWorker';
 import { StockGroups } from '../DashboardCommon/StockGroups';
 import { useDashboardSidebarNav } from 'src/hooks/useDashboardSidebarNav';
+import { withAttributionSearch } from 'src/utils/attribution-params';
 
 const DashboardWorker = () => {
   const sidebarGroups = useDashboardSidebarNav();
@@ -22,7 +23,11 @@ const DashboardWorker = () => {
           <Route
             exact
             path="/worker"
-            render={() => <Redirect to="/worker/management/users/list" />}
+            render={() => (
+              <Redirect
+                to={withAttributionSearch('/worker/management/users/list')}
+              />
+            )}
           />
           <Route path="/worker/management/" component={ManagementWorker} />
           <Route path="/worker/profile" component={Profile} />

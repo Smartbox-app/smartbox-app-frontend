@@ -40,6 +40,7 @@ export interface IStock extends IBase {
   colorFinished: string;
   colorFailure: string;
   colorFree: string;
+  colorPendingFinish: string;
   showGrossPricesToClient: boolean;
   accessControl: AccessControl;
   gateAccessControl: AccessControl;
@@ -79,6 +80,7 @@ export type StockRes = Pick<
   | 'colorReserved'
   | 'colorToCheck'
   | 'colorToExplain'
+  | 'colorPendingFinish'
   | 'id'
   | 'isMapActive'
   | 'lat'

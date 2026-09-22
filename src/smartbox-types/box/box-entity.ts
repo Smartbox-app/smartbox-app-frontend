@@ -2,6 +2,13 @@ import { SinglePricing } from '../box-group';
 import { IBase } from '../base/base.interface';
 import { RentStatus } from '../rent';
 
+export enum BoxStatus {
+  free = 'free',
+  outOfService = 'outOfService',
+}
+
+export type BoxDisplayStatus = RentStatus | BoxStatus;
+
 export interface BoxEntity {
   id: string;
   identifier: string;
@@ -15,14 +22,17 @@ export interface BoxEntity {
   rotation?: number;
   ksmIdentifier?: string;
   active: boolean;
+  companyId?: string | null;
 }
 
 export type BoxListRes = Pick<BoxEntity, 'id' | 'identifier' | 'stockId'> & {
   controlled: boolean;
   area: number;
-  status: RentStatus;
+  status: BoxDisplayStatus;
   rentId: string;
   pricing: SinglePricing[];
+  companyId?: string | null;
+  companyName?: string | null;
 };
 export type BoxMapRes = Pick<
   BoxEntity,
@@ -31,8 +41,10 @@ export type BoxMapRes = Pick<
   groupWidth: number;
   groupHeight: number;
   area: number;
-  status: RentStatus;
+  status: BoxDisplayStatus;
   rentId: string;
+  finishAt?: Date | string | null;
+  decisionFinishAt?: Date | string | null;
 };
 export type BoxMapUserRes = Pick<
   BoxEntity,
@@ -41,7 +53,12 @@ export type BoxMapUserRes = Pick<
 
 export type BoxReq = Pick<
   BoxEntity,
-  'identifier' | 'additionalInfo' | 'stockId' | 'boxGroupId' | 'ksmIdentifier'
+  | 'identifier'
+  | 'additionalInfo'
+  | 'stockId'
+  | 'boxGroupId'
+  | 'ksmIdentifier'
+  | 'companyId'
 >;
 export type BoxPositionReq = Pick<BoxEntity, 'x' | 'y' | 'stockId'>;
 export type BoxActiveReq = Pick<BoxEntity, 'active'>;
@@ -51,6 +68,7 @@ export type BoxesBatchReq = {
   identifiers: string;
   stockId: string;
   boxGroupId: string;
+  companyId?: string | null;
 };
 
 export type BoxMapLayoutItem = Pick<
@@ -73,7 +91,7 @@ export interface QueryBuilderBox {
   stockId: string;
   area: number;
   identifier: string;
-  status: RentStatus | null;
+  status: BoxDisplayStatus | null;
   rentId: string | null;
   pricing: SinglePricing[];
   ksmIdentifier: string;

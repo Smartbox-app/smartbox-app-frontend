@@ -14,6 +14,7 @@ import { Alert } from 'src/components/Common';
 import { Button, Tabs } from 'src/components/ui';
 import { Calendar, CloseCircle, InfoCircle, Map } from 'src/icons';
 import { GateButton } from './GateButton';
+import { KsmGateButton } from './KsmGateButton';
 
 interface Props {
   showUserStockMap: boolean;
@@ -45,7 +46,7 @@ const Action = ({
   };
 
   const canExtendRent = useMemo(() => {
-    if(rent.pendingPayments) return false;
+    if (rent.pendingPayments) return false;
     if (rent.status !== RentStatus.rented) return false;
     if ((rent.periods || []).some((period) => !period.paid)) return false;
     return true;
@@ -76,6 +77,15 @@ const Action = ({
           ]}
         />
         <ButtonsContainer>
+          {rent.gates
+            .filter((gate) => !!gate.controlled)
+            .map((gate) =>
+              gate.version === 2 ? (
+                <KsmGateButton key={gate.id} gate={gate} />
+              ) : (
+                <GateButton key={gate.id} gate={gate} />
+              ),
+            )}
           {!isAuthorizedViewer ? (
             <>
               <Button
@@ -93,8 +103,6 @@ const Action = ({
               />
             </>
           ) : null}
-        { rent.gates.filter(gate => !!gate.controlled).map(gate => <GateButton gate={gate} key={gate.id} />)}
-          
         </ButtonsContainer>
       </ButtonsContainer>
       {!isAuthorizedViewer && !canExtendRent ? (

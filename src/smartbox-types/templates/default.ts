@@ -65,5 +65,7 @@ Wystawiliśmy fakturę na kolejny okres Twojego wynajmu skrytki {{number}}, masz
   [TemplateType.BOX_GROUP_FREE_SMS]: `Czesc {{name}}! Rozmiar skrytki {{size}}, ktorym sie interesujesz, jest ponownie dostepny.`,
   [TemplateType.ACCESS_CODE_EMAIL]: `Cześć {{name}}! Oto Twój kod dostępu do skrytki nr {{number}} w {{company}}: {{passcode}}`,
   [TemplateType.ACCESS_CODE_SMS]: `Twój kod dostepu do skrytki {{number}} w {{company}} to {{passcode}}`,
+  [TemplateType.GATE_ACCESS_CODE_EMAIL]: `Cześć {{name}}! Oto Twój kod dostępu do bramy na placu {{stock}} w {{company}}: {{passcode}}`,
+  [TemplateType.GATE_ACCESS_CODE_SMS]: `Twoj kod dostepu do bramy {{stock}} w {{company}} to {{passcode}}`,
 
 };

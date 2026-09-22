@@ -57,6 +57,9 @@ import {
 } from 'src/utils/format-date';
 import { useTenant } from 'src/hooks/useTenant';
 import { RentDuration } from '../Common/RentDuration';
+import { history } from 'src/history';
+import { useTracking } from 'src/hooks/useTracking';
+import { buildInitiateCheckoutPayload } from 'src/utils/build-initiate-checkout-payload';
 
 const StyledCalendarPicker = styled.div`
   margin: 0 -10px;
@@ -72,6 +75,7 @@ interface Props {
 const StepExtensionDuration = ({ clearPaymentDetails }: Props) => {
   const { data: user } = useGetMyDetailsQuery();
   const dispatch = useDispatch();
+  const { trackInitiateCheckout } = useTracking();
   const { rentId } = useParams<{ step: string; rentId?: string }>();
   const { tenant } = useTenant();
   const { data: rent } = useMyRentDetailsQuery(rentId);
@@ -91,6 +95,7 @@ const StepExtensionDuration = ({ clearPaymentDetails }: Props) => {
     orderAddons,
     orderAddonsId,
     minRentDaysForInstallments,
+    calculatedPrice,
   } = useSelector((state: ApplicationState) => state.order);
 
   const getStock = async () => {
@@ -119,13 +124,7 @@ const StepExtensionDuration = ({ clearPaymentDetails }: Props) => {
 
     const parsedStart = new Date(`${normalizedStart} 00:00:00`);
     const added = addDays(parsedStart, 1);
-    console.log(
-      'normalizedStart',
-      normalizedStart,
-      rent.finishAt,
-      added,
-      parsedStart,
-    );
+
     dispatch(setRentStartDate(added));
     dispatch(setOrderStock(rent.stockId, rent.stockName, rent.stockAddress));
   }, [rent]);
@@ -405,6 +404,27 @@ const StepExtensionDuration = ({ clearPaymentDetails }: Props) => {
   if (!rent || !minRentPeriod || maxRentPeriod === null)
     return <Spinner overlay />;
 
+  const summaryPath = `/${UserService.getSlugByRole(user.role)}/order/step/summary/${rentId}`;
+
+  const handleContinue = () => {
+    const payload = buildInitiateCheckoutPayload(
+      { calculatedPrice, orderAddons },
+      {
+        boxGroupId: rent.boxGroupId,
+        boxGroupArea: String(rent.size),
+        stockName: rent.stockName,
+      },
+    );
+    if (payload) {
+      trackInitiateCheckout({
+        ...payload,
+        email: user.email,
+        userId: user.id,
+      });
+    }
+    history.push(summaryPath);
+  };
+
   return (
     <form className="form-step-two">
       <Stack>
@@ -457,11 +477,17 @@ const StepExtensionDuration = ({ clearPaymentDetails }: Props) => {
           <ButtonsContainer spaceBetween>
             <span />
             <Button
+              type="button"
               size="large"
-              to={`/${UserService.getSlugByRole(user.role)}/order/step/summary/${rentId}`}
+              onClick={handleContinue}
               text="application.next"
               iconRight={<ArrowRight />}
-              disabled={!correctPeriodSelected || !allRequiredAddonsSelected}
+              disabled={
+                !correctPeriodSelected ||
+                !allRequiredAddonsSelected ||
+                !calculatedPrice ||
+                calculatedPrice.length === 0
+              }
             />
           </ButtonsContainer>
         </Section>

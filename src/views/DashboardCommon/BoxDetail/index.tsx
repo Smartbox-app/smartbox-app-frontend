@@ -3,9 +3,9 @@ import { bindActionCreators } from 'redux';
 import {
   BoxListRes,
   BoxMapRes,
+  BoxStatus,
   RentDetailsRes,
   RentStatus,
-  StockRes,
 } from 'smartbox-types';
 import { connect, useDispatch } from 'react-redux';
 import { boxes } from '../../../actions';
@@ -13,6 +13,7 @@ import { Row } from '../../../components/Common';
 import { ApplicationState } from '../../../reducers';
 import { dateOnly } from '../../../utils/format-date';
 import { __ } from '../../../helpers/i18n';
+import { translateBoxDisplayStatus } from '../../../utils/box-display-status';
 
 import { Edit } from './Edit';
 
@@ -50,7 +51,12 @@ const BoxDetail = ({
   if (!user) return null;
 
   const isThisBoxFree = (data: string): boolean => data === '';
-  const displayStatus = singleBoxDetail.status ?? status;
+  // Prefer list/map box status when there is no occupying rent; Redux rent
+  // details default to "reserved" and would otherwise override outOfService/free.
+  const displayStatus =
+    rentId && singleBoxDetail.id === rentId
+      ? singleBoxDetail.status
+      : status ?? BoxStatus.free;
 
   return (
     <>
@@ -60,7 +66,7 @@ const BoxDetail = ({
           <Row label="application.storeNumber" content={identifier} />
           <Row label="application.storeSize" content={`${area}m²`} />
 
-          {rentId && status !== RentStatus.free && (
+          {rentId && status !== BoxStatus.free && (
             <>
               <Row
                 label="application.rentedBy"
@@ -76,7 +82,7 @@ const BoxDetail = ({
               />
               <Row
                 label="application.endDate"
-                content={dateOnly(singleBoxDetail.finishAt)}
+                content={dateOnly(singleBoxDetail.decisionFinishAt ?? singleBoxDetail.finishAt)}
               />
               <Row
                 label="application.phone"
@@ -107,7 +113,10 @@ const BoxDetail = ({
             </>
           )}
 
-          <Row label="application.storeState" content={displayStatus} />
+          <Row
+            label="application.storeState"
+            content={translateBoxDisplayStatus(displayStatus)}
+          />
 
           {singleBoxDetail.endRentPhoto &&
           singleBoxDetail.status !== RentStatus.rented ? (
@@ -123,7 +132,7 @@ const BoxDetail = ({
             callback={callback}
             selectedBoxId={id}
             rentId={rentId}
-            singleBoxDetailStatus={singleBoxDetail.status}
+            singleBoxDetailStatus={displayStatus}
             stockId={stockId}
           />
         </div>

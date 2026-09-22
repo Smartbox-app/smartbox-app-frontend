@@ -8,6 +8,7 @@ import SingleRentDetail from '../DashboardCommon/SingleRentDetail';
 import { StockGroups } from '../DashboardCommon/StockGroups';
 import { TTLockManagement } from './TTLockManagement';
 import { useDashboardSidebarNav } from 'src/hooks/useDashboardSidebarNav';
+import { withAttributionSearch } from 'src/utils/attribution-params';
 
 const DashboardAdmin = () => {
   const sidebarGroups = useDashboardSidebarNav();
@@ -21,7 +22,9 @@ const DashboardAdmin = () => {
           <Route
             exact
             path="/admin"
-            render={() => <Redirect to="/admin/management/users" />}
+            render={() => (
+              <Redirect to={withAttributionSearch('/admin/management/users')} />
+            )}
           />
           <Route path="/admin/management/" component={Management} />
           <Route path="/admin/profile" component={Profile} />

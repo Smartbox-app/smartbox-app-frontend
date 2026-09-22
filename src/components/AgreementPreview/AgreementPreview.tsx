@@ -50,6 +50,7 @@ export type AgreementPreviewProps = {
   stockId?: string | null;
   enabled?: boolean;
   className?: string;
+  fallback?: React.ReactNode;
 };
 
 export const AgreementPreview = ({
@@ -60,6 +61,7 @@ export const AgreementPreview = ({
   enabled,
   source,
   stockId,
+  fallback,
 }: AgreementPreviewProps) => {
   const rentQuery = useGetRentAgreementHtmlQuery(
     source === 'rent' ? rentId : undefined,
@@ -80,6 +82,7 @@ export const AgreementPreview = ({
   }
 
   if (isError || !data?.html) {
+    if (fallback) return <>{fallback}</>;
     return <Alert type="error" text="application.agreementPreviewError" />;
   }
 

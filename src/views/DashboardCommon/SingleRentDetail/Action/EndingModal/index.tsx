@@ -54,7 +54,6 @@ const EndingModal = ({ rent }: Props) => {
   useEffect(() => {
     if (!isSuccess) return;
 
-    history.push('/user/main');
     dispatch(
       showModal(<RentEndedSuccessModal requiresStaffCheck={requirePhoto} />),
     );

@@ -22,3 +22,4 @@ export * from './InfoContent';
 export * from './Modal';
 export * from './PieChart';
 export * from './StatsWithPieChart';
+export * from './Tooltip';

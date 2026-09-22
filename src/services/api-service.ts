@@ -6,8 +6,22 @@ import { history } from '../history';
 import { Preferences } from '@capacitor/preferences';
 
 import { getApiBaseUrl } from '../config/api-url';
+import { queryClient } from '../query-client';
+import { clearUserSession } from '../actions/auth';
+import { order } from '../actions';
+import { getCachedTenant } from '../queries/useGetTenantQuery/tenant-query';
 
 const getUrl = async () => getApiBaseUrl();
+
+const handleUnauthorized = async () => {
+  // queryClient.setQueryData(['my-details'], null);
+  // queryClient.invalidateQueries({ queryKey: ['tenant'] });
+  // store.dispatch(clearUserSession());
+  // store.dispatch(order.clearOrder());
+  // if (Capacitor.isNativePlatform()) {
+  //   await Preferences.clear();
+  // }
+};
 
 export default class ApiService {
   static url = '';
@@ -17,7 +31,7 @@ export default class ApiService {
   };
 
   static wrapUrlWithTenant = (url: string) => {
-    const tenantIdentifier = store.getState().tenant?.identifier;
+    const tenantIdentifier = getCachedTenant()?.identifier;
 
     if (!tenantIdentifier) return url;
 
@@ -96,6 +110,7 @@ export default class ApiService {
           if (ApiService.is404(data)) {
             history.push('/');
           } else if (ApiService.is401(data)) {
+            await handleUnauthorized();
             setTimeout(
               () => dispatch({ type: loadingAction, payload: false }),
               200,
@@ -169,14 +184,14 @@ export default class ApiService {
           break;
         default:
           if (ApiService.is401(data)) {
-            //
+            await handleUnauthorized();
           } else {
             if (!muteNotification)
               store.dispatch(notifications.errorNotification(data.error_code));
           }
       }
     } catch (error) {
-      if (!muteNotification)
+      if (!muteNotification && !throwError)
         store.dispatch(
           notifications.errorNotification(ApiErrorCode.OtherError),
         );

@@ -34,6 +34,7 @@ import {
   useLoginMutation,
 } from '../../../mutations/useLoginMutation';
 import { Link } from 'react-router-dom';
+import { withAttributionSearch } from 'src/utils/attribution-params';
 
 export const Login = () => {
   const dispatch = useDispatch();
@@ -149,7 +150,9 @@ export const Login = () => {
                 variant="secondary"
                 text="application.register"
                 size="large"
-                to={tenant.slides.length > 0 ? '/welcome' : 'register'}
+                to={withAttributionSearch(
+                  tenant.slides.length > 0 ? '/welcome' : '/register',
+                )}
               />
               {/* )} */}
             </Section>
@@ -158,12 +161,14 @@ export const Login = () => {
           <Section align="center">
             <Typography>
               {__('application.forgotPass')}{' '}
-              <Link to="/restore-pass">{__('application.clickHere')}</Link>
+              <Link to={withAttributionSearch('/restore-pass')}>
+                {__('application.clickHere')}
+              </Link>
             </Typography>
 
             {!smsActivation ? (
               <Typography>
-                <Link to="/resend-activation-link">
+                <Link to={withAttributionSearch('/resend-activation-link')}>
                   {__('application.noActivationEmail')}
                 </Link>
               </Typography>

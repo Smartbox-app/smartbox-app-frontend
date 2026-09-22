@@ -38,18 +38,24 @@ const SingleStorage = ({ single }: Props) => {
   const isWarning = [
     RentStatus.noPaidExtension,
     RentStatus.noPaidExtensionWithWarning,
-    RentStatus.noPaidPeriod
+    RentStatus.noPaidPeriod,
   ].includes(single.status);
+
+  const isNotice = [
+    RentStatus.pendingFinish
+  ].includes(single.status);
+
   return (
     <StyledStorage
       onMouseEnter={handleHover}
       onMouseLeave={handleBlur}
       to={`/${UserService.getSlugByRole(user!.role)}/single-rent/${single.id}`}
     >
-      <Card warning={isWarning} hovered={isHovered} image={<StockImage />}>
+      <Card warning={isWarning} notice={isNotice} hovered={isHovered} image={<StockImage />}>
         <StorageHeader
           isWarning={isWarning}
           isHovered={isHovered}
+          isNotice={isNotice}
           stockName={single.stockName}
         />
         <StorageMainInfo identifier={single.number} isWarning={isWarning} />

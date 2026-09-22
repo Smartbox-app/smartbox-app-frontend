@@ -10,7 +10,7 @@ const initialState: Boxes = {
     number: '',
     startAt: new Date(),
     finishAt: new Date(),
-    status: RentStatus.free,
+    status: RentStatus.reserved,
     paymentType: RentPaymentType.InAdvance,
     description: [],
     periods: [],
@@ -52,7 +52,7 @@ export default (state: Boxes = initialState, action: Action): any => {
           number: '',
           startAt: new Date(),
           finishAt: new Date(),
-          status: RentStatus.free,
+          status: RentStatus.reserved,
           owner: {
             email: '',
             firstName: '',

@@ -1,10 +1,8 @@
 import { useEffect, useState, useMemo } from 'react';
-import { useSelector } from 'react-redux';
 import { AccessControl, StockRes, TenantEntity, UserRole } from 'smartbox-types';
 
 import { Redirect, Route, Switch, useParams } from 'react-router';
 import UserService from '../../../../../services/user-service';
-import { ApplicationState } from '../../../../../reducers';
 import { BasicData } from '../../../StockGroups/Stocks/Manage/BasicData';
 import { Boxes } from './Boxes';
 import { Rents } from './Rents';
@@ -34,6 +32,7 @@ import {
 } from 'src/icons';
 import GateStatus from 'src/views/DashboardCommon/GateStatus';
 import { useTenantNaming } from 'src/hooks/useTenantNaming';
+import { useTenant } from 'src/hooks/useTenant';
 import { Statistics } from './Statistics';
 import { Alarms } from './Alarms';
 import { Payments } from './Payments';
@@ -43,7 +42,7 @@ import { RentAuthorizationsList } from './RentAuthorizations';
 const Manage = () => {
   const { stockId } = useParams<{ stockId: string }>();
   const { data: user } = useGetMyDetailsQuery();
-  const tenant = useSelector((state: ApplicationState) => state.tenant);
+  const { tenant } = useTenant();
   const { getText } = useTenantNaming();
   const [tenantForAdmin, setTenantForAdmin] = useState<TenantEntity>();
   const [isMapActive, setMapActive] = useState<boolean>(false);

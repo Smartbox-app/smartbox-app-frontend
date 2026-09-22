@@ -14,9 +14,9 @@ import { ButtonsContainer } from '../../../../../components/Layout';
 import { __ } from '../../../../../helpers/i18n';
 import { InteractiveTableSchema } from '../../../../../utils/table-schema-utils';
 import { modal, user } from '../../../../../actions';
-import { TenantEdit } from '../Edit';
 import { TenantStatus } from '../Status';
 import { HeaderWithActions, Section } from 'src/components/ui';
+import { history } from 'src/history';
 
 interface Props {
   showModal: (content: React.ReactNode) => void;
@@ -57,10 +57,12 @@ class List extends React.Component<Props> {
           //     click: (data: UserListRes) => this.props.showModal(<UserDetail userId={data.id} userData={data} />),
           // },
           {
-            name: 'application.edit',
+            name: 'application.settings',
             type: 'primary',
             click: (data: UserClientListRes) =>
-              this.props.showModal(<TenantEdit userId={data.id} />),
+              history.push(
+                `/admin/management/clients/${data.id}/${data.tenantId}/settings`,
+              ),
           },
           {
             name: 'application.status',

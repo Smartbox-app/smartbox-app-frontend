@@ -11,7 +11,16 @@ export const saveUser = (userData: AuthLoginResult) => ({
 export const clearUserSession = () => ({ type: 'CLEAR_USER_SESSION' });
 
 export const emailVerification =
-  (userId: string, updateToken: string) => async (dispatch: any) => {
+  (userId: string, updateToken: string, pwd?: string, pwd2?: string) =>
+  async (dispatch: any) => {
+    const body =
+      pwd || pwd2
+        ? {
+            ...(pwd ? { pwd } : {}),
+            ...(pwd2 ? { pwd2 } : {}),
+          }
+        : {};
+
     await ApiService.post(
       dispatch,
       'EMAIL_VERIFICATION_SUCCESS',
@@ -19,15 +28,17 @@ export const emailVerification =
       () => {
         dispatch(
           notifications.successNotification(
-            'notification.useEmailVerificationSuccess',
+            pwd
+              ? 'notification.accountHasBeenActivated'
+              : 'notification.useEmailVerificationSuccess',
           ),
         );
-        history.push('/');
+        history.push(pwd ? '/login' : '/');
       },
       null,
       `user/active/${userId}/${updateToken}`,
       'LOADING',
-      {},
+      body,
     );
   };
 

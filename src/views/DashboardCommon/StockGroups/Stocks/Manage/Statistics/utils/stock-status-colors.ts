@@ -11,6 +11,7 @@ export const STATUS_STATS_KEYS: (keyof StatsByStatus)[] = [
   'toCheck',
   'toExplain',
   'outOfService',
+  'pendingFinish',
 ];
 
 /** Box status colors configured per stock (tenant location settings). */
@@ -25,6 +26,7 @@ export const getStockStatusColors = (
     | 'colorToCheck'
     | 'colorToExplain'
     | 'colorOutOfService'
+    | 'colorPendingFinish'
   >,
 ): StockStatusColors => ({
   free: stock.colorFree,
@@ -35,4 +37,5 @@ export const getStockStatusColors = (
   toCheck: stock.colorToCheck,
   toExplain: stock.colorToExplain,
   outOfService: stock.colorOutOfService,
+  pendingFinish: stock.colorPendingFinish,
 });

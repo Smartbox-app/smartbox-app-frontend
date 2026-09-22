@@ -44,8 +44,7 @@ export const RentAuthorizations = ({ rent }: Props) => {
 
   const canManage =
     rent.status !== RentStatus.finished &&
-    rent.status !== RentStatus.failure &&
-    rent.status !== RentStatus.free;
+    rent.status !== RentStatus.failure;
 
   const { data: authorizations = [], isPending: listLoading } =
     useRentAuthorizedUsersQuery(rent.id, { enabled: canManage });

@@ -44,7 +44,7 @@ const colorStatusCalc = (s: string): string => {
 const Single = ({ single }: Props) => (
   <StyledLine className={`history-line ${colorStatusCalc(single.status)}`}>
     <span className="line-cell period">
-      {dateOnly(single.startAt, 5)} - {dateOnly(single.finishAt)}
+      {dateOnly(single.startAt, 5)} - {dateOnly(single.decisionFinishAt || single.finishAt)}
     </span>
     <span className="line-cell number">{single.number}</span>
     <span className="line-cell size small">{single.size} m²</span>

@@ -1,4 +1,5 @@
 import countries from 'i18n-iso-countries';
+import { subYears } from 'date-fns';
 import { DateInput, InputSelect } from '../../../../../../components/Common';
 import { useTenant } from '../../../../../../hooks/useTenant';
 import { Controller, useFormContext } from 'react-hook-form';
@@ -54,9 +55,12 @@ const TenantDetailsForm = ({ disabled }: Props) => {
               {...field}
               required
               inline={false}
+              allowInput
               name="birthDate"
               error={errors.birthDate?.message}
               label="rent.birth_date"
+              maxDate={new Date()}
+              minDate={subYears(new Date(), 120)}
               onChange={([selected]) => {
                 field.onChange(selected);
               }}

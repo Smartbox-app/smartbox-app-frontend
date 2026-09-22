@@ -10,7 +10,6 @@ import orderReducer, { OrderState } from './order-reducer';
 import boxesReducer, { Boxes } from './boxes-reducer';
 import rentReducer, { RentsStatus } from './rent-reducer';
 import stockReducer, { StockStatus } from './stock-reducer';
-import tenantReducer, { TenantState } from './tenant-reducer';
 
 import { Modal } from '../types/modal';
 import stockGroupReducer, { StockGroupStatus } from './stock-group-reducer';
@@ -28,7 +27,6 @@ export interface ApplicationState {
   stock: StockStatus;
   stockGroup: StockGroupStatus;
   lang: LangStatus;
-  tenant: TenantState;
 }
 
 const appReducer = combineReducers({
@@ -44,7 +42,6 @@ const appReducer = combineReducers({
   rent: rentReducer,
   stock: stockReducer,
   stockGroup: stockGroupReducer,
-  tenant: tenantReducer,
 });
 
 const rootReducer = (state: any, action: any) => appReducer(state, action);

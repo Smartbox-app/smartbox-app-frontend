@@ -65,6 +65,22 @@ export const deleteUserByForce = (userId: string) => async (dispatch: any) => {
   );
 };
 
+export const resendActivationEmail = (userId: string) => async (dispatch: any) => {
+  await ApiService.post(
+    dispatch,
+    'RESEND_ACTIVATION_EMAIL_SUCCESS',
+    'RESEND_ACTIVATION_EMAIL_FAILED',
+    () => {
+      dispatch(successNotification('notification.activationEmailResent'));
+      dispatch(refreshApiTableData());
+    },
+    null,
+    `user/${userId}/resend-activation-email`,
+    'LOADING',
+    {},
+  );
+};
+
 export const fetchSingleUser = (userId: string) => async (dispatch: any) => {
   await ApiService.get(
     dispatch,

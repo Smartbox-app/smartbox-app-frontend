@@ -112,7 +112,7 @@ export interface AddonEntity {
   order: number;
   active: boolean;
   newRentOnly: boolean;
-  boxGroupId: string | null;
+  boxGroupIds: string[];
 }
 
 export type AddonFormDataReq = Pick<
@@ -126,9 +126,9 @@ export type AddonFormDataReq = Pick<
   | 'userFileText'
   | 'userFileRequirement'
   | 'tax'
-  | 'boxGroupId'
 > & {
   acceptances: string;
+  boxGroupIds: string;
   required: string;
   userFileAllowed: string;
   noPricing: string;
@@ -155,7 +155,7 @@ export type AddonReq = Pick<
   | 'order'
   | 'active'
   | 'newRentOnly'
-  | 'boxGroupId'
+  | 'boxGroupIds'
 >;
 export type AddonListRes = Pick<
   AddonEntity,
@@ -197,6 +197,7 @@ export type AddonRes = Pick<
 export type AddonClientAdminRes = Omit<AddonRes, 'isGross'> & {
   pricing: SingleAddonVariant[];
   priceResolveType: AddonPriceResolveType;
+  boxGroupIds: string[];
 };
 
 export type AddonTemplateVariableRes = {

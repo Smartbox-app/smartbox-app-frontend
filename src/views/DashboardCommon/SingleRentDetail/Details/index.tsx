@@ -1,6 +1,7 @@
 import { MyRentDetails } from 'smartbox-types';
 import { dateOnly, dateOnlyLocalTime, formatForPLTimeZone } from '../../../../utils/format-date';
 import { __ } from '../../../../helpers/i18n';
+import { translateBoxDisplayStatus } from '../../../../utils/box-display-status';
 import { Row } from '../../../../components/Common';
 
 import './Details.scss';
@@ -36,7 +37,11 @@ const Details = ({ singleRent }: Props) => {
       />
       <Row
         label="application.storeState"
-        content={singleRent.status || __('application.lack')}
+        content={
+          singleRent.status
+            ? translateBoxDisplayStatus(singleRent.status)
+            : __('application.lack')
+        }
       />
     </div>
   );

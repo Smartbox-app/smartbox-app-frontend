@@ -66,6 +66,7 @@ export const Edit = () => {
 
     if (data.type === 'agreement') {
       payload.stockId = data.stockId || null;
+      payload.companyId = data.companyId || null;
     }
 
     if (user?.role === UserRole.client) {
@@ -94,6 +95,7 @@ export const Edit = () => {
       type: document.type,
       content: document.content,
       stockId: document.stockId ?? null,
+      companyId: document.companyId ?? null,
     });
   }, [document, user, tenant]);
 

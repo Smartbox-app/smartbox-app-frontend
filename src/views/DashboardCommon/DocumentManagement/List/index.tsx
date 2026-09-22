@@ -65,6 +65,16 @@ export const List = () => {
           : __('application.documentStockDefault');
       },
     })
+    .modifyFieldStatic('companyName', {
+      type: FieldType.Custom,
+      customRender: (_value, _field, row: DocumentListRes) => {
+        if (row.type !== 'agreement') return '—';
+
+        return row.companyName
+          ? row.companyName
+          : __('application.documentCompanyDefault');
+      },
+    })
     .modifyFieldStatic('isDraft', {
       type: FieldType.Custom,
       customRender: (_value, _field, row: DocumentListRes) => (

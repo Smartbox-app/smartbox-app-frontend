@@ -1,9 +1,9 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
 
 import { bindActionCreators } from 'redux';
-import { connect, useSelector } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import {
   RentBoxReq,
   ExtendRentalReq,
@@ -17,6 +17,7 @@ import { PaymentType } from 'smartbox-types';
 import { Alert } from '../../../../../components/Common';
 import { Spinner } from '../../../../../components/Branded';
 import { order } from '../../../../../actions';
+import { setPendingCheckout } from '../../../../../actions/order';
 import {
   ButtonsContainer,
   SectionHeader,
@@ -41,30 +42,33 @@ import { dateOnly } from '../../../../../utils/format-date';
 import { useGetDocumentByTypeQuery, useGetMyDetailsQuery } from 'src/queries';
 import { Button, Section, Stack } from 'src/components/ui';
 import { ArrowLeft, ArrowRight } from 'src/icons';
-import { prepareAndSentPaymentForm } from 'src/utils/payment-form';
+import { redirectToIpg } from 'src/utils/payment-form';
 import { format } from 'date-fns';
 import { textToSimpleMD } from 'src/utils/text-to-simple-md';
 import { Capacitor } from '@capacitor/core';
-import { Browser } from '@capacitor/browser';
 import {
   AgreementPreview,
   LegacyAgreementPreview,
 } from 'src/components/AgreementPreview';
 import { __ } from 'src/helpers/i18n';
+import { getBoxGroupTypeLabel } from 'src/utils/box-group-labels';
+import { useTenant } from 'src/hooks/useTenant';
 
 interface Props {
   formData: FormType;
   isAgreementAccepted: boolean;
   isResignationMarked: boolean;
-  stockId: string;
   paymentType: PaymentType;
 }
 
-const StepAgreement = ({ formData, isResignationMarked, stockId }: Props): any => {
+const StepAgreement = ({ formData, isResignationMarked }: Props): any => {
   const { data: user } = useGetMyDetailsQuery();
+  const dispatch = useDispatch();
   const order = useSelector((state: ApplicationState) => state.order);
-  const tenant = useSelector((state: ApplicationState) => state.tenant);
+  const pendingCheckout = order.pendingCheckout;
+  const { tenant } = useTenant();
   const [loading, setLoading] = useState(false);
+  const creatingRentRef = useRef(false);
 
   const { rentId } = useParams<{ step: string; rentId?: string }>();
   useEffect(() => {
@@ -74,6 +78,18 @@ const StepAgreement = ({ formData, isResignationMarked, stockId }: Props): any =
     }
   }, []);
 
+  const proceedToPayment = (
+    response: PayForRentResponse,
+    tenantId: string,
+  ) => {
+    if (response.paymentStatus === PaymentStatus.succes) {
+      history.push(`/payment-success/${response.paymentId}`);
+      return;
+    }
+
+    redirectToIpg(tenantId, response.paymentId);
+  };
+
   const startNewRent = async (data: FormData, tenantId: string) => {
     setLoading(true);
     try {
@@ -81,18 +97,7 @@ const StepAgreement = ({ formData, isResignationMarked, stockId }: Props): any =
         'POST',
         `rent/new?source=${Capacitor.isNativePlatform() ? 'mobile' : 'web'}`,
         (response: PayForRentResponse) => {
-          if (response.paymentStatus === PaymentStatus.succes) {
-            history.push(`/payment-success/${response.paymentId}`);
-          } else {
-            if (Capacitor.isNativePlatform()) {
-              history.push('/');
-              Browser.open({
-                url: `${ApiService.url}rent/ipg-redirect/${tenantId}/${response.paymentId}?source=mobile`,
-              });
-            } else {
-              prepareAndSentPaymentForm(response);
-            }
-          }
+          dispatch(setPendingCheckout(response));
         },
         null,
         data,
@@ -113,18 +118,7 @@ const StepAgreement = ({ formData, isResignationMarked, stockId }: Props): any =
       'POST',
       `rent/extend-rent/${rentId}?source=${Capacitor.isNativePlatform() ? 'mobile' : 'web'}`,
       (response: PayForRentResponse) => {
-        if (response.paymentStatus === PaymentStatus.succes) {
-          history.push(`/payment-success/${response.paymentId}`);
-        } else {
-          if (Capacitor.isNativePlatform()) {
-            history.push('/');
-            Browser.open({
-              url: `${ApiService.url}rent/ipg-redirect/${tenantId}/${response.paymentId}?source=mobile`,
-            });
-          } else {
-            prepareAndSentPaymentForm(response);
-          }
-        }
+        proceedToPayment(response, tenantId);
       },
       null,
       data,
@@ -291,10 +285,8 @@ const StepAgreement = ({ formData, isResignationMarked, stockId }: Props): any =
       // rent extension
       const rentFormData = getFormDataFromCollection(dataCollectionExtendRent);
       extendRent(rentFormData, rentId, tenant.id);
-    } else {
-      // new Rent
-      const rentFormData = getFormDataFromCollection(dataCollectionRent);
-      startNewRent(rentFormData, tenant?.id);
+    } else if (pendingCheckout) {
+      proceedToPayment(pendingCheckout, tenant.id);
     }
   };
 
@@ -350,10 +342,106 @@ const StepAgreement = ({ formData, isResignationMarked, stockId }: Props): any =
     };
   }, [formData, order, tenant, user]);
 
+  useEffect(() => {
+    if (rentId || pendingCheckout?.rentId) return;
+    if (!user || !tenant || !order.endDate || !order.boxGroupId) return;
+    if (creatingRentRef.current) return;
+
+    creatingRentRef.current = true;
+
+    const commonCollection = {
+      finishAt: order.endDate,
+      cost: getCorrectPrice(
+        order.calculatedPrice,
+        order.calculatedPrice[0].isGross,
+        tenant.tax,
+      ),
+      discountCode: order.discountCode,
+      firstName: formData.firstName,
+      lastName: formData.lastName,
+      street: formData.street,
+      city: formData.city,
+      country: formData.country,
+      postCode: formData.postCode,
+      isCompany: formData.isCompany || false,
+      phone: formData.phone,
+      mailToSendInvoice: formData.mailToSendInvoice,
+      companyName: formData.companyName || '',
+      companyStreet: formData.companyStreet || '',
+      companyCity: formData.companyCity || '',
+      companyPostCode: formData.companyPostCode || '',
+      companyCountry: formData.companyCountry || '',
+      nip: formData.nip?.trim() || '',
+      rentPaymentType: order.rentPaymentType || RentPaymentType.InAdvance,
+      paymentDocument: order.paymentDocumentType || PaymentDocument.Invoice,
+      orderAddons: getAddonsWithCorrectPrice(order.orderAddons),
+    };
+
+    if (formData.birthDate) {
+      commonCollection['birthDate'] = formData.birthDate;
+    }
+
+    if (formData.clientSource) {
+      commonCollection['clientSource'] = formData.clientSource;
+    }
+
+    const dataCollectionRent: RentBoxReq = {
+      ...commonCollection,
+      startAt: order.startDate,
+      stockId: order.stockId,
+      boxGroupId: order.boxGroupId,
+    };
+
+    startNewRent(getFormDataFromCollection(dataCollectionRent), tenant.id).finally(
+      () => {
+        creatingRentRef.current = false;
+      },
+    );
+  }, [user, tenant, rentId, pendingCheckout?.rentId, order.boxGroupId, order.endDate]);
+
   const { data: agreementDocument, isLoading: isAgreementDocumentLoading } =
-    useGetDocumentByTypeQuery('agreement', stockId);
+    useGetDocumentByTypeQuery('agreement', order.stockId);
+
+  const previewRentId = rentId || pendingCheckout?.rentId;
 
   if (!tenant) return null;
+
+  const renderAgreementPreview = () => {
+    const legacyPreview = (
+      <LegacyAgreementPreview
+        tenantId={tenant.id}
+        agreementFile={tenant.agreement}
+        template={agreementTemplate}
+      />
+    );
+
+    if (previewRentId) {
+      return (
+        <AgreementPreview
+          source="rent"
+          rentId={previewRentId}
+          periodIndex={0}
+          fallback={legacyPreview}
+        />
+      );
+    }
+
+    if (isAgreementDocumentLoading || loading) {
+      return <Spinner overlay halfTransparent />;
+    }
+
+    if (agreementDocument) {
+      return (
+        <AgreementPreview
+          source="template"
+          template={agreementTemplate}
+          stockId={order.stockId}
+        />
+      );
+    }
+
+    return legacyPreview;
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -361,22 +449,15 @@ const StepAgreement = ({ formData, isResignationMarked, stockId }: Props): any =
       <Stack>
         <Section>
           <SectionHeader title="application.orderAgreement" />
+          {pendingCheckout?.rentId ? (
+            <Alert type="notice">
+              {__('application.orderAssignedBox', {
+                type: getBoxGroupTypeLabel(order.boxGroupType),
+              })}
+            </Alert>
+          ) : null}
 
-          {isAgreementDocumentLoading ? (
-            <Spinner overlay halfTransparent />
-          ) : agreementDocument ? (
-            <AgreementPreview
-              source="template"
-              template={agreementTemplate}
-              stockId={stockId}
-            />
-          ) : (
-            <LegacyAgreementPreview
-              tenantId={tenant.id}
-              agreementFile={tenant.agreement}
-              template={agreementTemplate}
-            />
-          )}
+          {renderAgreementPreview()}
         </Section>
         <Section>
           <Alert type="notice" text="application.orderAgreementAcceptation" />
@@ -402,7 +483,11 @@ const StepAgreement = ({ formData, isResignationMarked, stockId }: Props): any =
               type="submit"
               size="large"
               text="application.goToPayment"
-              disabled={!isResignationMarked || loading}
+              disabled={
+                !isResignationMarked ||
+                loading ||
+                (!rentId && !pendingCheckout)
+              }
             />
           </ButtonsContainer>
         </Section>
@@ -414,7 +499,6 @@ const StepAgreement = ({ formData, isResignationMarked, stockId }: Props): any =
 const mapStateToProps = (state: ApplicationState) => ({
   formData: state.order.formData,
   isResignationMarked: state.order.isResignationMarked,
-  stockId: state.order.formData.stock,
 });
 
 const mapDispatchToProps = (dispatch: any) =>

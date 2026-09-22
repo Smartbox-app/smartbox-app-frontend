@@ -34,6 +34,7 @@ interface Props {
   blockUser: (userId: string) => void;
   deleteUser: (userId: string) => void;
   deleteUserByForce: (userId: string) => void;
+  resendActivationEmail: (userId: string) => void;
 }
 
 const List = ({
@@ -42,6 +43,7 @@ const List = ({
   blockUser,
   deleteUser,
   deleteUserByForce,
+  resendActivationEmail,
 }: Props) => {
   const { data: user } = useGetMyDetailsQuery();
 
@@ -135,6 +137,13 @@ const List = ({
                   text="application.edit"
                   click={() => showModal(<UserEdit userId={userData.id} />)}
                 />
+                {userData.canResendActivationEmail && (
+                  <Button
+                    secondary
+                    text="application.resendActivationEmail"
+                    click={() => resendActivationEmail(userData.id)}
+                  />
+                )}
                 <Button
                   danger
                   text="application.delete"

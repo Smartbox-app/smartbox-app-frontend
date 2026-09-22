@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useGetVersionQuery, useGetMyDetailsQuery } from '../../queries';
 import { useLogoutMutation } from 'src/mutations/useLogoutMutation';
 import { useLocation } from 'react-router';
 import { scrollTop } from 'src/utils/scroll-top';
-import TagManager from 'react-gtm-module';
 import { Spinner } from '../Branded';
 import { Capacitor } from '@capacitor/core';
 import { Device } from '@capacitor/device';
@@ -13,20 +12,28 @@ import { showModal } from '../../actions/modal';
 import { AppOutdatedModal } from './components/AppOutdatedModal';
 import { AppMaintenanceModal } from './components/AppMaintenanceModal';
 import { useTenant } from '../../hooks/useTenant';
+import { useTracking } from '../../hooks/useTracking';
 import { SocialLogin } from '@capgo/capacitor-social-login';
 import { Preferences } from '@capacitor/preferences';
 import styled from 'styled-components';
+import { history } from 'src/history';
+import { queryClient } from 'src/query-client';
+import { clearUserSession } from 'src/actions/auth';
+import { order } from 'src/actions';
+import { withAttributionSearch } from 'src/utils/attribution-params';
 
 interface Props {
   children: React.ReactNode;
 }
 
-const SpinnerContainer = styled.div`  
+const SpinnerContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
 `;
+
+const INACTIVE_PATH = '/inactive';
 
 const AppWrapper = ({ children }: Props) => {
   const dispatch = useDispatch();
@@ -35,35 +42,38 @@ const AppWrapper = ({ children }: Props) => {
   const { data: config, error } = useGetVersionQuery();
   const location = useLocation();
   const { tenant } = useTenant();
+  useTracking({ initialize: true });
   const [isMaintenanceScreen, setIsMaintenanceScreen] =
     useState<boolean>(false);
+  const versionReloadTriggeredRef = useRef(false);
 
   const handleWebVersion = (newConfig: { versions: string[] }) => {
-    const currentVersion = localStorage.getItem('v') || null;
+    const latestVersion = newConfig?.versions?.[0];
+    if (!latestVersion) return;
 
-    if (!config) return;
+    const currentVersion = localStorage.getItem('v');
+    if (currentVersion === latestVersion) return;
+    if (versionReloadTriggeredRef.current) return;
 
-    if (!currentVersion || !config.versions.includes(currentVersion)) {
-      localStorage.setItem('v', config.versions[0]);
+    versionReloadTriggeredRef.current = true;
+    localStorage.setItem('v', latestVersion);
 
-      if ('serviceWorker' in navigator) {
-        navigator.serviceWorker
-          .getRegistrations()
-          .then(function (registrations) {
-            //returns installed service workers
-            if (registrations.length) {
-              Promise.all(
-                registrations.map((registration) => registration.unregister()),
-              ).then(function () {
-                window.location.reload();
-              });
-            } else {
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker
+        .getRegistrations()
+        .then(function (registrations) {
+          if (registrations.length) {
+            Promise.all(
+              registrations.map((registration) => registration.unregister()),
+            ).then(function () {
               window.location.reload();
-            }
-          });
-      } else {
-        window.location.reload();
-      }
+            });
+          } else {
+            window.location.reload();
+          }
+        });
+    } else {
+      window.location.reload();
     }
   };
 
@@ -115,8 +125,9 @@ const AppWrapper = ({ children }: Props) => {
   };
 
   useEffect(() => {
+    if (!config) return;
     handleConfig(config);
-  }, [config]);
+  }, [config?.versions?.[0], config?.isMaintenance]);
 
   const verifyNativeToken = async () => {
     const token = await Preferences.get({ key: 'smst_token' });
@@ -142,7 +153,9 @@ const AppWrapper = ({ children }: Props) => {
       await SocialLogin.initialize({
         google: {
           webClientId: import.meta.env.VITE_GOOGLE_WEB_CLIENT_ID, // Required for Android and Web
-          iOSClientId: import.meta.env[`VITE_GOOGLE_IOS_${tenant?.identifier.toUpperCase()}_CLIENT_ID`], // Required for iOS
+          iOSClientId: import.meta.env[
+            `VITE_GOOGLE_IOS_${tenant?.identifier.toUpperCase()}_CLIENT_ID`
+          ], // Required for iOS
           iOSServerClientId: import.meta.env.VITE_GOOGLE_WEB_CLIENT_ID, // Required for iOS offline mode and server authorization (same as webClientId)
           mode: 'online', // 'online' or 'offline'
         },
@@ -163,30 +176,6 @@ const AppWrapper = ({ children }: Props) => {
   }, []);
 
   useEffect(() => {
-    if (!tenant || !['rentbox', 'kielceboxy'].includes(tenant.identifier))
-      return;
-
-    let tagManagerArgs = {};
-
-    switch (tenant.identifier) {
-      case 'rentbox': {
-        tagManagerArgs = {
-          gtmId: 'GTM-PR56955H',
-        };
-        break;
-      }
-      case 'kielceboxy': {
-        tagManagerArgs = {
-          gtmId: 'GTM-WBS77MJS',
-        };
-        break;
-      }
-    }
-
-    TagManager.initialize(tagManagerArgs);
-  }, [tenant]);
-
-  useEffect(() => {
     scrollTop();
   }, [location.pathname]);
 
@@ -195,7 +184,38 @@ const AppWrapper = ({ children }: Props) => {
     if (config) setIsMaintenanceScreen(false);
   }, [config, error]);
 
-  if (!config && isLoading) return <SpinnerContainer><Spinner /></SpinnerContainer>;
+  useEffect(() => {
+    if (!tenant) return;
+
+    const onInactivePath = location.pathname === INACTIVE_PATH;
+
+    if (onInactivePath && !!tenant.active) {
+      history.replace(withAttributionSearch('/login'));
+    }
+
+    if (onInactivePath && !tenant.active) return;
+
+    if (tenant.active === false) {
+      queryClient.setQueryData(['my-details'], null);
+      dispatch(clearUserSession());
+      dispatch(order.clearOrder());
+
+      if (Capacitor.isNativePlatform()) {
+        Preferences.clear();
+      }
+
+      history.replace(INACTIVE_PATH);
+
+      return;
+    }
+  }, [tenant?.active, tenant?.id, dispatch, location.pathname]);
+
+  if (!config && isLoading)
+    return (
+      <SpinnerContainer>
+        <Spinner />
+      </SpinnerContainer>
+    );
 
   // if (isMaintenanceScreen) return <MaintenanceScreen />;
 

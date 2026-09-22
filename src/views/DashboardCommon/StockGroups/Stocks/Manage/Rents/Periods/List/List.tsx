@@ -14,6 +14,8 @@ import { InteractiveTableSchema } from 'src/utils/table-schema-utils';
 import { Capacitor } from '@capacitor/core';
 import { Browser } from '@capacitor/browser';
 import { ButtonsContainer } from 'src/components/Layout';
+import { useRentDetailsQuery } from 'src/queries';
+import { RentSummary } from '../../../../../../../../components/Common/RentSummary/RentSummary';
 
 type PeriodRow = {
   id: string;
@@ -27,6 +29,7 @@ const isInvoiceIssued = (invoiceId: string | null | undefined) =>
 const List = () => {
   const dispatch = useDispatch();
   const { rentId } = useParams<{ stockId: string; rentId: string }>();
+  const { data: rent } = useRentDetailsQuery(rentId);
 
   const handleViewDocument = useCallback(
     async (periodId: string) => {
@@ -117,6 +120,7 @@ const List = () => {
   return (
     <Section>
       <Header variant="h2">{__('application.rentPeriods')}</Header>
+      {rent ? <RentSummary rent={rent} /> : null}
       <ApiTable scheme={scheme} apiEndpointSubUrl={`rent/${rentId}/periods`} />
     </Section>
   );

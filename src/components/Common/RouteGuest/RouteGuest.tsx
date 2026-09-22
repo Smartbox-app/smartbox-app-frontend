@@ -2,6 +2,7 @@ import { Redirect, Route } from 'react-router-dom';
 import { UserRole } from 'smartbox-types';
 import { AppMessage } from 'src/components/AppMessage';
 import { useGetMyDetailsQuery } from 'src/queries';
+import { withAttributionSearch } from 'src/utils/attribution-params';
 
 export type RouteGuestProps = {
   component: any;
@@ -15,13 +16,13 @@ export const RouteGuest = ({ component, exact, path }: RouteGuestProps) => {
   if (user) {
     switch (user!.role) {
       case UserRole.admin:
-        return <Redirect to="/admin" />;
+        return <Redirect to={withAttributionSearch('/admin')} />;
       case UserRole.user:
-        return <Redirect to="/user" />;
+        return <Redirect to={withAttributionSearch('/user')} />;
       case UserRole.worker:
-        return <Redirect to="/worker" />;
+        return <Redirect to={withAttributionSearch('/worker')} />;
       case UserRole.client:
-        return <Redirect to="/client" />;
+        return <Redirect to={withAttributionSearch('/client')} />;
       default:
         return null;
     }

@@ -74,7 +74,7 @@ const StyledContent = styled.div(({ theme }) => {
   return {
     display: 'flex',
     flexDirection: 'column',
-    gap: theme.spacing * 2,
+    gap: theme.spacing * 4,
     flex: 1,
     minHeight: 0,
     padding: `${paddingY}px ${paddingX}px`,

@@ -7,51 +7,27 @@ import { SuccessCheck } from 'src/icons';
 import { useLocation, useParams } from 'react-router';
 import ApiService from 'src/services/api-service';
 import { Logo, Spinner } from 'src/components/Branded';
-import TagManager from 'react-gtm-module';
 import { history } from 'src/history';
 import { Capacitor } from '@capacitor/core';
 import { Browser } from '@capacitor/browser';
+import { useTracking } from 'src/hooks/useTracking';
+import { useGetMyDetailsQuery } from 'src/queries';
 
 export const PaymentResult = () => {
   const { id } = useParams<{ id: string }>();
   const location = useLocation();
   const source = new URLSearchParams(location.search).get('source');
   const tracked = useRef<boolean>(false);
+  const { trackPurchase } = useTracking();
+  const { data: user, isFetched: isUserFetched } = useGetMyDetailsQuery();
 
-  const trackPurchase = (details: PaymentDetails) => {
+  const handleTrackPurchase = (
+    details: PaymentDetails,
+    email?: string,
+    userId?: string,
+  ) => {
     if (tracked.current) return;
-    const { rentGrossPrice, addons, type, name, groupId, area } = details;
-
-    const addonsPrice = addons
-      .filter((addon) => !isNaN(Number(addon.grossPrice)))
-      .reduce((acc, curr) => acc + Number(curr.grossPrice), 0);
-
-    const totalPrice = rentGrossPrice + addonsPrice;
-
-    TagManager.dataLayer({
-      dataLayer: {
-        event: 'purchase',
-        ecommerce: {
-          transaction_id: id,
-          value: totalPrice,
-          currency: 'PLN',
-          items: [
-            {
-              item_id: groupId,
-              item_name: `${name} - ${area}m²`,
-              item_category: type,
-              price: rentGrossPrice,
-              quantity: 1,
-            },
-            addons.map((addon) => ({
-              item_id: addon.slug,
-              item_price: addon.grossPrice,
-              item_name: addon.name,
-            })),
-          ],
-        },
-      },
-    });
+    trackPurchase({ paymentId: id, details, email, userId });
     tracked.current = true;
   };
 
@@ -139,10 +115,17 @@ export const PaymentResult = () => {
       paymentDetails?.status === PaymentStatus.accepted
     ) {
       clearInterval(detailsIntervalRef.current);
-
-      trackPurchase(paymentDetails);
     }
   }, [paymentDetails]);
+
+  useEffect(() => {
+    if (paymentDetails?.status !== PaymentStatus.accepted) return;
+
+    const email = paymentDetails.mailToSendInvoice || user?.email;
+    if (!email && !user?.id && !isUserFetched) return;
+
+    handleTrackPurchase(paymentDetails, email, user?.id);
+  }, [paymentDetails, user?.email, isUserFetched]);
 
   useEffect(() => {
     if (statusIntervalRef.current && paymentStatus === PaymentStatus.accepted) {

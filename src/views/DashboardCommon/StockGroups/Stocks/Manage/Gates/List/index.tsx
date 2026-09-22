@@ -1,7 +1,7 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { GateAdminList, UserRole } from 'smartbox-types';
-import { gateList } from 'smartbox-tables';
+import { FieldType, gateList } from 'smartbox-tables';
 import { showModal } from '../../../../../../../actions/modal';
 import { successNotification } from '../../../../../../../actions/notifications';
 import ApiService from '../../../../../../../services/api-service';
@@ -10,7 +10,6 @@ import { Button } from '../../../../../../../components/Branded';
 import {
   Section,
   ButtonsContainer,
-  SimpleHeader,
 } from '../../../../../../../components/Layout';
 import { __ } from '../../../../../../../helpers/i18n';
 import { InteractiveTableSchema } from '../../../../../../../utils/table-schema-utils';
@@ -32,33 +31,61 @@ const List = () => {
   scheme.addFieldAtTheEnd({
     name: __('application.actions'),
     field: 'actions',
+    type: FieldType.Custom,
     mobile: true,
-    buttons: [
-      {
-        name: 'application.openGate',
-        type: 'success',
-        click: (data: GateAdminList) => openGate(data),
-      },
-      hasFullAccess
-        ? {
-            name: 'application.edit',
-            type: 'primary',
-            to: (data: GateAdminList) =>
-              `/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/gates/${data.id}/edit`,
-          }
-        : null,
-      hasFullAccess
-        ? {
-            name: 'application.delete',
-            type: 'danger',
-            click: (data: GateAdminList) => confirmGateDelete(data),
-          }
-        : null,
-    ],
+    customRender: (_value, _field, data: GateAdminList) => (
+      <ButtonsContainer noWrap>
+        <Button
+          success
+          text="application.openGate"
+          click={() => openGate(data)}
+        />
+        {hasFullAccess && data.hasKeypad && data.passcode ? (
+          <Button
+            secondary
+            text="application.resetPasscode"
+            click={() => confirmResetPasscode(data)}
+          />
+        ) : null}
+        {hasFullAccess ? (
+          <Button
+            primary
+            text="application.edit"
+            to={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/gates/${data.id}/edit`}
+          />
+        ) : null}
+        {hasFullAccess ? (
+          <Button
+            danger
+            text="application.delete"
+            click={() => confirmGateDelete(data)}
+          />
+        ) : null}
+      </ButtonsContainer>
+    ),
   });
 
   const openGate = (data: GateAdminList) => {
     dispatch(gate.askGateToOpenByStaff(data.id));
+  };
+
+  const confirmResetPasscode = (data: GateAdminList) => {
+    dispatch(
+      showModal(
+        <ConfirmModal
+          mainText="application.confirmResetPasscode"
+          approveButtonText="application.yes"
+          approveAction={() => resetPasscode(data)}
+        />,
+      ),
+    );
+  };
+
+  const resetPasscode = async (data: GateAdminList) => {
+    await ApiService.callFetch('PATCH', `gate/${data.id}/passcode/reset`, () => {
+      dispatch(successNotification('application.passcodeReset'));
+      dispatch(refreshApiTableData());
+    });
   };
 
   const confirmGateDelete = (data: GateAdminList) => {

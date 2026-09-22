@@ -61,17 +61,16 @@ export interface IExtension extends IBase {
 }
 
 export enum RentStatus {
-  reserved = 'zarezerwowany',
-  rented = 'wynajęty',
-  noPaidExtension = 'nieopłacone przedłużenie',
-  noPaidExtensionWithWarning = 'nieopłacone przedłużenie z wykrzyknikiem',
-  toCheck = 'do sprawdzenia',
-  toExplain = 'do wyjaśnienia',
-  outOfService = 'wyłączony z użytku',
-  finished = 'zakończone',
-  failure = 'zakończone bez wynajęcia',
-  free = 'wolny',
-  noPaidPeriod = 'nieopłacony okres',
+  reserved = 'reserved',
+  rented = 'rented',
+  noPaidExtension = 'noPaidExtension',
+  noPaidExtensionWithWarning = 'noPaidExtensionWithWarning',
+  toCheck = 'toCheck',
+  toExplain = 'toExplain',
+  finished = 'finished',
+  failure = 'failure',
+  noPaidPeriod = 'noPaidPeriod',
+  pendingFinish = 'pendingFinish',
 }
 
 export interface AdminRentListDetailsQuery {
@@ -87,7 +86,9 @@ export interface AdminRentListDetailsQuery {
   startAt: Date;
   finishAt: Date;
   paymentType: RentPaymentType;
-}
+  stockId: string;
+  stockName: string;
+ }
 
 export interface AdminRentListDetails {
   id: string;
@@ -104,4 +105,6 @@ export interface AdminRentListDetails {
   finishAt: Date;
   paymentType: RentPaymentType;
   decisionFinishAt: Date | null;
+  stockId: string;
+  stockName: string;
 }

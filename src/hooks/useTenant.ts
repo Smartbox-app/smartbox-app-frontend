@@ -1,11 +1,16 @@
-import { useTenantContext } from '../providers/TenantProvider';
+import { TenantForClients, TenantForUsers } from 'smartbox-types';
+import { useGetTenantQuery } from 'src/queries/useGetTenantQuery';
 
 interface UseTenant {
-  tenant: ReturnType<typeof useTenantContext>;
+  tenant: TenantForUsers | TenantForClients | null;
 }
 
-const useTenant = (): UseTenant => ({
-  tenant: useTenantContext(),
-});
+const useTenant = (): UseTenant => {
+  const { data: tenant } = useGetTenantQuery();
+
+  return {
+    tenant: tenant ?? null,
+  };
+};
 
 export { useTenant };

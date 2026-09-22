@@ -10,6 +10,7 @@ import ApiService from '../../../../../../../../services/api-service';
 import { Spinner } from '../../../../../../../../components/Branded';
 import { Modal } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
+import { RentSummary } from '../../../../../../../../components/Common/RentSummary/RentSummary';
 
 interface Props {
   description: RentDescription[];
@@ -37,6 +38,7 @@ export const RentHistoryModal = ({ description, rent }: Props) => {
     <>
       <Modal.Header title={__('application.rentHistory')} />
       <Modal.Content>
+        <RentSummary rent={rent} />
         {fullRent ? (
           <RentHistory
             description={description}

@@ -29,10 +29,9 @@ import 'flatpickr/dist/flatpickr.min.css';
 // import "flatpickr/dist/themes/airbnb.css";
 import BannerAndroid from './components/Common/BannerAndroid';
 import BannerIos from './components/Common/BanneriOS';
-import { CustomThemeProvider, TenantProvider } from './providers';
+import { CustomThemeProvider } from './providers';
 import { AppWrapper } from './components/AppWrapper';
-import { PaymentStatus } from 'smartbox-types';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { QueryClientProvider } from '@tanstack/react-query';
 import { RouteGuest } from './components/Common/RouteGuest';
 import { App as CapacitorApp } from '@capacitor/app';
 import { Capacitor } from '@capacitor/core';
@@ -43,9 +42,10 @@ import pl from 'i18n-iso-countries/langs/pl.json';
 import { PrivacyPolicy } from './views/PrivacyPolicy';
 import { Rules } from './views/Rules';
 import { Browser } from '@capacitor/browser';
-import { AppMessage } from './components/AppMessage';
 import { store } from './store';
 import { history } from './history';
+import { queryClient } from './query-client';
+import { TenantInactiveScreen } from './components/TenantInactiveScreen';
 
 const EmailConfirm = React.lazy(() => import('./views/Auth/EmailConfirm'));
 const Login = React.lazy(() =>
@@ -76,8 +76,6 @@ flatpickr.defaultConfig.time_24hr = true;
 
 countries.registerLocale(pl);
 
-const queryClient = new QueryClient();
-
 CapacitorApp.addListener('appUrlOpen', async ({ url }) => {
   try {
     const parsed = new URL(url);
@@ -100,7 +98,6 @@ const App = () => {
     <QueryClientProvider client={queryClient}>
       <Provider store={store}>
         <Router history={history}>
-          <TenantProvider>
             <CustomThemeProvider>
               <AppWrapper>
                 <AppGlobalStyles />
@@ -113,8 +110,17 @@ const App = () => {
                       <Switch>
                         <Route
                           exact
+                          path="/inactive"
+                          component={TenantInactiveScreen}
+                        />
+                        <Route
+                          exact
                           path="/"
-                          render={() => <Redirect to="/login" />}
+                          render={({ location }) => (
+                            <Redirect
+                              to={`/login${location.search || ''}${location.hash || ''}`}
+                            />
+                          )}
                         />
                         <RouteGuest path="/welcome" component={Welcome} />
                         <RouteGuest path="/login" component={Login} />
@@ -222,7 +228,6 @@ const App = () => {
                 </OfflineContent>
               </AppWrapper>
             </CustomThemeProvider>
-          </TenantProvider>
         </Router>
       </Provider>
     </QueryClientProvider>

@@ -40,6 +40,7 @@ interface Props extends InputSizeProps {
   required?: boolean;
   highlightStart?: Date | null;
   highlightEnd?: Date | null;
+  allowInput?: boolean;
 }
 
 const StyledDateContainer = styled(StyledFieldContainer)<{ $size: InputSize }>(
@@ -118,6 +119,7 @@ const DateInput = ({
   size,
   big,
   compact,
+  allowInput = false,
 }: Props) => {
   const resolvedSize = resolveInputSize({ size, big, compact });
 
@@ -142,11 +144,11 @@ const DateInput = ({
         required={required}
         value={value}
         options={{
-          allowInput: false,
+          allowInput,
           inline,
           enableTime: false,
           locale: 'pl',
-
+          ...(allowInput ? { dateFormat: 'd.m.Y' } : {}),
           minDate,
           maxDate,
         }}

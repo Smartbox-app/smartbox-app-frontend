@@ -16,6 +16,7 @@ import { mapFields } from '../../../../../../../utils/fields-mapper';
 import { hideModal } from '../../../../../../../actions/modal';
 import { refreshApiTableData } from '../../../../../../../actions/api-table';
 import { AddonReq } from 'smartbox-types';
+import { serializeBoxGroupIds } from '../serialize-box-group-ids';
 
 interface Props {
   id: string;
@@ -69,7 +70,10 @@ const Edit = ({ id, stockId }: Props) => {
               formData.append('required', values.required.toString());
               formData.append('fileText', values.fileText || '');
               formData.append('noPricing', values.noPricing.toString());
-              formData.append('boxGroupId', values.boxGroupId || '');
+              formData.append(
+                'boxGroupIds',
+                serializeBoxGroupIds(values.boxGroupIds),
+              );
               formData.append('newRentOnly', values.newRentOnly.toString());
               formData.append(
                 'userFileAllowed',

@@ -14,13 +14,12 @@ import {
   setMinRentPeriod,
 } from '../../../../../../actions/order';
 import {
-  colorOrDark,
   getColorForBackground,
 } from '../../../../../../utils/color';
 import { Card } from 'src/components/ui';
 import { OptionImage } from './components/OptionImage';
 import { OptionData } from './components/OptionData';
-import { OptionActions, OptionNotification } from './components/OptionActions';
+import { OptionActions } from './components/OptionActions';
 import { LeftCounter } from './components/LeftCounter';
 
 export type SingleOptionType = {
@@ -122,6 +121,7 @@ const SingleOption = ({ singleOptionData, disable }: Props) => {
         singleOptionData.id,
         singleOptionData.name,
         singleOptionData.area ? singleOptionData.area.toString() : '',
+        singleOptionData.type,
       ),
     );
     dispatch(setMinRentPeriod(singleOptionData.minRentPeriod));

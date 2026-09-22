@@ -36,7 +36,6 @@ const Welcome = () => {
   const { data: rentsList = [], isPending: loadingRents } =
     useGetMyRentsQuery();
   const { data: authorizedRentsList = [] } = useGetMyAuthorizedRentsQuery();
-  const { data: rentsHistoryList = [] } = useGetMyRentsQuery();
 
   useAppForeground(
     () => {
@@ -73,7 +72,7 @@ const Welcome = () => {
           title="manage_authorized_boxes"
         />
       ) : null}
-      <OrdersHistory rentsHistoryList={rentsHistoryList} />
+      <OrdersHistory />
     </>
   );
 };

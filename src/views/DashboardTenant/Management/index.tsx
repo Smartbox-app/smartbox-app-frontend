@@ -13,6 +13,8 @@ import { AttachmentManagement } from 'src/views/DashboardCommon/AttachmentManage
 import SystemNotificationManagement from 'src/views/DashboardCommon/SystemNotificationManagement';
 import { DocumentsManagement } from 'src/views/DashboardCommon/DocumentManagement';
 import { SystemLogManagement } from 'src/views/DashboardCommon/SystemLogManagement';
+import { CompaniesManagement } from 'src/views/DashboardCommon/CompanyManagement';
+import { TenantApiAccess } from '../ApiAccess';
 
 const Management = () => {
   const { data: user } = useGetMyDetailsQuery();
@@ -39,8 +41,16 @@ const Management = () => {
         component={UsersManagement}
       />
       <Route
+        path={`/${UserService.getSlugByRole(user.role)}/management/settlements`}
+        component={CompaniesManagement}
+      />
+      <Route
         path={`/${UserService.getSlugByRole(user.role)}/management/settings`}
         component={Settings}
+      />
+      <Route
+        path={`/${UserService.getSlugByRole(user.role)}/management/api-access`}
+        component={TenantApiAccess}
       />
       <Route
         path={`/${UserService.getSlugByRole(user.role)}/management/invitations`}
@@ -69,6 +79,14 @@ const Management = () => {
       <Route
         path={`/${UserService.getSlugByRole(user.role)}/management/documents`}
         component={DocumentsManagement}
+      />
+      <Route
+        path={`/${UserService.getSlugByRole(user.role)}/management/companies`}
+        render={() => (
+          <Redirect
+            to={`/${UserService.getSlugByRole(user.role)}/management/settlements`}
+          />
+        )}
       />
     </Switch>
   );

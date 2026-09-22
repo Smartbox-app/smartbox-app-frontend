@@ -52,6 +52,9 @@ import { ArrowLeft, ArrowRight } from 'src/icons';
 import { RentDurationDto } from 'src/dto/RentDurationDto';
 import { ClassValidatorResolver } from 'src/resolvers/ClassValidatorResolver';
 import { RentDuration } from '../Common/RentDuration';
+import { history } from 'src/history';
+import { useTracking } from 'src/hooks/useTracking';
+import { buildInitiateCheckoutPayload } from 'src/utils/build-initiate-checkout-payload';
 
 const StyledCalendarPicker = styled.div`
   justify-content: center;
@@ -74,6 +77,7 @@ interface Props {
 const StepDuration = ({ clearPaymentDetails }: Props) => {
   const { data: user } = useGetMyDetailsQuery();
   const dispatch = useDispatch();
+  const { trackInitiateCheckout } = useTracking();
   const minRentPeriod = useSelector(
     (state: ApplicationState) => state.order.minRentPeriod,
   );
@@ -84,9 +88,6 @@ const StepDuration = ({ clearPaymentDetails }: Props) => {
     (state: ApplicationState) => state.order.maxAdvanceBookingDays,
   );
   // box groupId is used directly only when new rent is created
-  const boxGroupId = useSelector(
-    (state: ApplicationState) => state.order.boxGroupId,
-  );
   const {
     stock,
     stockId,
@@ -98,6 +99,10 @@ const StepDuration = ({ clearPaymentDetails }: Props) => {
     calculatedPrice,
     rentPaymentType,
     minRentDaysForInstallments,
+    boxGroupId,
+    boxGroupName,
+    boxGroupArea,
+    stockName,
   } = useSelector((state: ApplicationState) => state.order);
   const getStock = async () => {
     await ApiService.callFetch('GET', `stock/${stockId}`, (res: StockRes) => {
@@ -357,6 +362,23 @@ const StepDuration = ({ clearPaymentDetails }: Props) => {
 
   if (!user || !minRentPeriod || maxRentPeriod === null) return null;
 
+  const summaryPath = `/${UserService.getSlugByRole(user.role)}/order/step/summary`;
+
+  const handleContinue = () => {
+    const payload = buildInitiateCheckoutPayload(
+      { calculatedPrice, orderAddons },
+      { boxGroupId, boxGroupName, boxGroupArea, stockName },
+    );
+    if (payload) {
+      trackInitiateCheckout({
+        ...payload,
+        email: user.email,
+        userId: user.id,
+      });
+    }
+    history.push(summaryPath);
+  };
+
   return (
     <form className="form-step-two">
       <Stack>
@@ -431,7 +453,8 @@ const StepDuration = ({ clearPaymentDetails }: Props) => {
               to={`/${UserService.getSlugByRole(user.role)}/order/step/stock`}
             />
             <Button
-              to={`/${UserService.getSlugByRole(user.role)}/order/step/summary`}
+              type="button"
+              onClick={handleContinue}
               size="large"
               text="application.next"
               iconRight={<ArrowRight />}

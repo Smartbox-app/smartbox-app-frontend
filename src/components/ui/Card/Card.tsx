@@ -24,6 +24,7 @@ const StyledCard = styled('div')(({ theme }) => ({
 
 export type CardProps = {
   warning?: boolean;
+  notice?: boolean;
   disabled?: boolean;
   hovered?: boolean;
   active?: boolean;
@@ -35,6 +36,7 @@ export const Card = ({
   warning,
   disabled,
   hovered,
+  notice,
   image,
   active,
   children,
@@ -46,6 +48,7 @@ export const Card = ({
         disabled={disabled}
         hovered={hovered}
         warning={warning}
+        notice={notice}
         active={active}
       />
       {children}

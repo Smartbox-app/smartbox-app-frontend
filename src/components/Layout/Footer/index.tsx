@@ -2,13 +2,11 @@ import React from 'react';
 
 import { __ } from '../../../helpers/i18n';
 import styled from 'styled-components';
-import { useSelector } from 'react-redux';
-import { ApplicationState } from '../../../reducers';
-import ApiService from '../../../services/api-service';
 import { AppVersion } from '../../../components/AppVersion';
 import { Link, Section, Typography } from '../../ui';
 import { Logo } from '../../Branded';
 import { useFileStorage } from 'src/hooks/useFileStorage';
+import { useTenant } from 'src/hooks/useTenant';
 
 const StyledFooter = styled('footer')(({ theme }) => ({
   display: 'flex',
@@ -38,7 +36,7 @@ const Data = styled('div')(({ theme }) => ({
 
 const Footer = () => {
   const { getAssetPath } = useFileStorage();
-  const tenant = useSelector((state: ApplicationState) => state.tenant);
+  const { tenant } = useTenant();
   return (
     <Section>
       <StyledFooter>

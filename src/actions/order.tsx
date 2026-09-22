@@ -1,4 +1,4 @@
-import { PaymentDocument, RentPaymentType, StockRes } from 'smartbox-types';
+import { PaymentDocument, PayForRentResponse, RentPaymentType, StockRes, BoxGroupType } from 'smartbox-types';
 import ApiService from '../services/api-service';
 import { FormType } from '../types/order-form';
 import { format } from 'date-fns';
@@ -24,6 +24,11 @@ export const formResignationMarked = () => ({
 
 export const clearOrder = () => ({ type: 'CLEAR_ORDER' });
 
+export const setPendingCheckout = (payload: PayForRentResponse | null) => ({
+  type: 'SET_PENDING_CHECKOUT',
+  payload,
+});
+
 export const clearPaymentDetails = () => ({
   type: 'CLEAR_PAYMENT_METHOD_SUCCESS',
 });
@@ -47,9 +52,10 @@ export const setBoxGroup = (
   boxGroupId: string,
   boxGroupName: string,
   boxGroupArea: string,
+  boxGroupType: BoxGroupType = BoxGroupType.storage,
 ) => ({
   type: 'SET_ORDER_BOX_GROUP',
-  payload: { boxGroupId, boxGroupName, boxGroupArea },
+  payload: { boxGroupId, boxGroupName, boxGroupArea, boxGroupType },
 });
 export const setMinRentPeriod = (days: number) => ({
   type: 'SET_MIN_RENT_PERIOD',

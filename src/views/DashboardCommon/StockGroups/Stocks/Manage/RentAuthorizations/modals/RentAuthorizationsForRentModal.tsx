@@ -12,11 +12,12 @@ import { successNotification } from 'src/actions/notifications';
 import { refreshApiTableData } from 'src/actions/api-table';
 import { useGetMyDetailsQuery } from 'src/queries';
 import { useRevokeRentAuthorizationByStaffMutation } from 'src/mutations';
-import { Header, Modal } from 'src/components/ui';
+import { Modal } from 'src/components/ui';
 import UserService from 'src/services/user-service';
 import { history } from 'src/history';
 import { RENT_AUTHORIZATIONS_MODAL } from 'src/constants/api-table-instances';
 import { StaffAddRentAuthorizationModal } from './StaffAddRentAuthorizationModal';
+import { RentSummary } from '../../../../../../../components/Common/RentSummary/RentSummary';
 
 type Props = {
   stockId: string;
@@ -106,11 +107,7 @@ export const RentAuthorizationsForRentModal = ({ stockId, rent }: Props) => {
     <>
       <Modal.Header title={__('application.rentAuthorizations')} />
       <Modal.Content>
-        <Header variant="h3">
-          {__('application.rentAuthForRentSubtitle', {
-            number: rent.number,
-          })}
-        </Header>
+        <RentSummary rent={rent} />
 
         <ButtonsContainer>
           <Button

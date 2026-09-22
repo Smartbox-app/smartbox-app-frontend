@@ -37,6 +37,7 @@ export const getDefaultTenant = (): TenantForUsers => ({
   agreementDisclaimer: '',
   clientSourceField: false,
   allowAddonsToRent: false,
+  allowMultipleCompanies: false,
   links: [],
   icon: '',
   useProd: false,
@@ -48,4 +49,8 @@ export const getDefaultTenant = (): TenantForUsers => ({
   mobileAppIosLink: null,
   accountConfirmationMethod: AccountConfirmationMethod.email_link,
   publicAssetsBaseUrl: 'https://storage.googleapis.com/smartbox-app',
+  allowFinishGracePeriod: false,
+  gtmId: null,
+  metaPixelId: null,
+  active: true,
 });

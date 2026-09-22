@@ -34,7 +34,7 @@ export const documentListClient: TableSchema = {
       alias: 'document',
     },
     {
-      name: 'Magazyn',
+      name: 'Plac',
       field: 'stockName',
       mobile: true,
       searchable: true,
@@ -42,6 +42,16 @@ export const documentListClient: TableSchema = {
       defaultSort: false,
       type: FieldType.Text,
       alias: 'stock',
+    },
+    {
+      name: 'Rozliczenie',
+      field: 'companyName',
+      mobile: true,
+      searchable: true,
+      sortable: true,
+      defaultSort: false,
+      type: FieldType.Text,
+      alias: 'company',
     },
     {
       name: 'Status',

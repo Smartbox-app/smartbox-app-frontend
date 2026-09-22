@@ -2,7 +2,12 @@ import React from 'react';
 import { ItfApiForm } from 'itf_formbuilder_react';
 import { connect, useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { ChangeStatusReq } from 'smartbox-types';
+import {
+  BoxDisplayStatus,
+  BoxStatus,
+  ChangeStatusReq,
+  RentStatus,
+} from 'smartbox-types';
 import { boxes, modal, notifications, stock } from '../../../../../actions';
 import { ButtonsContainer } from '../../../../../components/Layout';
 import { Modal } from 'src/components/ui';
@@ -22,6 +27,15 @@ import { mapFields } from '../../../../../utils/fields-mapper';
 import { useQueryClient } from '@tanstack/react-query';
 import { stockBoxesQueryKey } from 'src/queries';
 
+const STATUSES_REQUIRING_FREE_CONFIRMATION: BoxDisplayStatus[] = [
+  RentStatus.rented,
+  RentStatus.toCheck,
+  RentStatus.toExplain,
+];
+
+const hasSelectedStatus = (status: ChangeStatusReq['status'] | undefined) =>
+  status !== null && status !== undefined && String(status).length > 0;
+
 interface Props {
   selectedBoxId: string;
   stockId: string;
@@ -29,6 +43,7 @@ interface Props {
   successNotification: (text: string) => void;
   showModal: (content: React.ReactNode) => void;
   rentId?: string;
+  currentStatus: BoxDisplayStatus;
 }
 
 const Status = ({
@@ -37,6 +52,7 @@ const Status = ({
   successNotification,
   stockId,
   rentId,
+  currentStatus,
   showModal,
 }: Props) => {
   const dispatch = useDispatch();
@@ -50,24 +66,47 @@ const Status = ({
 
   if (!stock) return null;
 
-  const fetchUrl = `rent/form/change-status/${rentId || ''}`;
+  const fetchUrl = rentId
+    ? `rent/form/change-box-status/${selectedBoxId}/${rentId}`
+    : `rent/form/change-box-status/${selectedBoxId}`;
   const sendUrl = `rent/status/${stockId}/${rentId || ''}`;
 
-  const customSendFetcher = (formId: string, values: ChangeStatusReq) => {
+  const submitStatusChange = (values: ChangeStatusReq) => {
+    ApiService.sendForm(
+      sendUrl,
+      {
+        ...values,
+        boxId: selectedBoxId,
+      } as ChangeStatusReq,
+      'PATCH',
+      () => {
+        successNotification('notification.userStatusChanged');
+        dispatch(refreshApiTableData());
+        queryClient.invalidateQueries({
+          queryKey: stockBoxesQueryKey(stockId),
+        });
+        hideModal();
+      },
+    );
+  };
+
+  const customSendFetcher = (_formId: string, values: ChangeStatusReq) => {
+    const isFreeingOccupyingRent =
+      values.status === BoxStatus.free &&
+      STATUSES_REQUIRING_FREE_CONFIRMATION.includes(currentStatus);
+
     showModal(
       <>
         <Modal.Header title={__('application.confirmation')} />
         <Modal.Content>
-          {values.status === null || values.status.length === 0 ? (
-            <Alert type="error" text="application.notChooseStatus" />
+          <Alert
+            type="warning"
+            text="application.userWillNotGetMailWithInformation"
+          />
+          {isFreeingOccupyingRent ? (
+            <Alert type="error" text="application.confirmFreeBoxIrreversible" />
           ) : (
-            <>
-              <Alert
-                type="warning"
-                text="application.userWillNotGetMailWithInformation"
-              />
-              <Alert type="notice" text="application.actionCanNotBeUnDone" />
-            </>
+            <Alert type="notice" text="application.confirmChangeStatusAction" />
           )}
         </Modal.Content>
         <Modal.Actions>
@@ -80,26 +119,8 @@ const Status = ({
             <Button
               success
               type="submit"
-              text="application.understood"
-              disabled={values.status === null || values.status.length === 0}
-              click={() =>
-                ApiService.sendForm(
-                  sendUrl,
-                  {
-                    ...values,
-                    boxId: selectedBoxId,
-                  } as ChangeStatusReq,
-                  'PATCH',
-                  () => {
-                    successNotification('notification.userStatusChanged');
-                    dispatch(refreshApiTableData());
-                    queryClient.invalidateQueries({
-                      queryKey: stockBoxesQueryKey(stockId),
-                    });
-                    hideModal();
-                  },
-                )
-              }
+              text="application.yes"
+              click={() => submitStatusChange(values)}
             />
           </ButtonsContainer>
         </Modal.Actions>
@@ -119,6 +140,12 @@ const Status = ({
         loadingInfo={<Spinner transparent />}
         onTranslateString={formOnTranslateString}
         onRenderFullField={mapFields}
+        onValidateField={(field) => {
+          if (field.id === 'status' && !hasSelectedStatus(field.value)) {
+            return __('application.notChooseStatus');
+          }
+          return undefined;
+        }}
         thirdPartyComponents={{
           ReactSelect: ReactSelectOverride,
           ReactCreatableSelect,

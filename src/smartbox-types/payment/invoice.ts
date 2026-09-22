@@ -81,12 +81,18 @@ export type FakturowniaInvoiceRes = {
     invoice: InvoiceIssuedBody;
   };
   
-  export type UpdateInvoiceReq = {
-    api_token: string;
-    invoice: Partial<
-      InvoiceBodyBase & {
-        status: 'paid' | 'issued';
-      }
-    >;
-  };
+export type UpdateInvoiceReq = {
+  api_token: string;
+  invoice: Partial<
+    InvoiceBodyBase & {
+      status: 'paid' | 'issued';
+    }
+  >;
+};
+
+export type InvoiceConnector = {
+  invoiceServiceApiKey: string;
+  invoiceServiceDomain: string;
+  invoiceServiceDepartmentID: string | null;
+};
   

@@ -3,7 +3,7 @@ import { ButtonsContainer } from '../../Layout';
 import { Button } from '../../Branded';
 import { __ } from "../../../helpers/i18n";
 import { useDispatch } from 'react-redux';
-import { modal, gate } from '../../../actions';
+import { modal, gate, ksmGate } from '../../../actions';
 import { Coordinate } from 'smartbox-types';
 import { Modal } from 'src/components/ui';
 
@@ -13,9 +13,10 @@ interface Props {
     notSupported?: boolean;
     cantRead?: boolean;
     tooFarAway?: boolean;
+    useKsmV2?: boolean;
 }
 
-const OpenGateByForceModal = ({ gateId, latlon, tooFarAway, notSupported, cantRead }: Props) => {
+const OpenGateByForceModal = ({ gateId, latlon, tooFarAway, notSupported, cantRead, useKsmV2 }: Props) => {
     const dispatch = useDispatch();
     return (
       <>
@@ -31,8 +32,12 @@ const OpenGateByForceModal = ({ gateId, latlon, tooFarAway, notSupported, cantRe
             <Button
               success
               click={() => {
-                dispatch(gate.askGateToOpenByForce(gateId, latlon));
-                dispatch(modal.hideModal());
+                if (useKsmV2) {
+                  dispatch(ksmGate.requestKsmGateOpenByForceV2(gateId, latlon));
+                } else {
+                  dispatch(gate.askGateToOpenByForce(gateId, latlon));
+                  dispatch(modal.hideModal());
+                }
               }}
               text="application.openGate"
             />

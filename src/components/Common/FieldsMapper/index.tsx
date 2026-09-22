@@ -7,12 +7,11 @@ import { __ } from '../../../helpers/i18n';
 import FileInput from '../FileInput';
 import ApiService from '../../../services/api-service';
 import { SelectOption } from '../../../types/select';
-import { useSelector } from 'react-redux';
-import { ApplicationState } from '../../../reducers';
 import { AcceptancesField } from '../AcceptancesField';
 import { Link } from '../../ui';
 import { InputSize } from '../input-sizes';
 import { I18nResourceKey, useI18n } from 'src/i18n';
+import { useTenant } from 'src/hooks/useTenant';
 
 interface Props {
     fieldHtmlId: string;
@@ -45,7 +44,7 @@ const FieldsMapper = ({ field, fieldHtmlId, currentValue, errors, size, big, onF
         return field.type;
     }, [])
 
-    const tenant = useSelector((state: ApplicationState) => state.tenant);
+    const { tenant } = useTenant();
 
     const getCustomCheckboxLabel = useCallback((field: FormFieldToRender) => {
         if (field.options?.type === 'checkboxRules' && tenant) return <small>

@@ -15,6 +15,7 @@ import { useGetMyDetailsQuery } from 'src/queries';
 import { Header, Typography } from 'src/components/ui';
 import ApiService from '../../../../../../../services/api-service';
 import { successNotification } from '../../../../../../../actions/notifications';
+import { LocationActivityList } from '../LocationActivityList';
 
 const List = () => {
   const { data: user } = useGetMyDetailsQuery();
@@ -104,15 +105,18 @@ const List = () => {
   };
 
   return (
-    <Section>
-      {actionLoading ? <Spinner halfTransparent overlay /> : null}
-      <Header variant="h2">{__('application.alarmsList')}</Header>
-      <Typography>{__('application.alarmsListDescription')}</Typography>
-      <ApiTable
-        scheme={scheme}
-        apiEndpointSubUrl={`gate/alarms-list/${stockId}`}
-      />
-    </Section>
+    <>
+      <Section>
+        {actionLoading ? <Spinner halfTransparent overlay /> : null}
+        <Header variant="h2">{__('application.alarmsList')}</Header>
+        <Typography>{__('application.alarmsListDescription')}</Typography>
+        <ApiTable
+          scheme={scheme}
+          apiEndpointSubUrl={`gate/alarms-list/${stockId}`}
+        />
+      </Section>
+      <LocationActivityList />
+    </>
   );
 };
 

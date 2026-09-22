@@ -4,10 +4,8 @@ import { __ } from '../../../helpers/i18n';
 import styled from 'styled-components';
 import { darken } from 'polished';
 import { getColorForBackground } from '../../../utils/color';
-import { useSelector } from 'react-redux';
-import { ApplicationState } from 'src/reducers';
 import { Link } from 'src/components/ui';
-import ApiService from 'src/services/api-service';
+import { useTenant } from 'src/hooks/useTenant';
 
 const StyledCookieWrapper = styled.div`
   background-color: ${(props) => props.theme.colors.primary};
@@ -16,7 +14,7 @@ const StyledCookieWrapper = styled.div`
 `;
 
 const Cookies = () => {
-  const tenant = useSelector((state: ApplicationState) => state.tenant);
+  const { tenant } = useTenant();
 
   const areAccepted = () => {
     try {

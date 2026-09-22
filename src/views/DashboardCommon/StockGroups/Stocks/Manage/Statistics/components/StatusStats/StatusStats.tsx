@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { StatsByStatus } from 'smartbox-types';
 import { ColorIndicator, Row } from 'src/components/Common';
 import { StatsWithPieChart } from 'src/components/ui/StatsWithPieChart';
@@ -7,6 +7,7 @@ import {
   STATUS_STATS_KEYS,
   StockStatusColors,
 } from '../../utils/stock-status-colors';
+import { useTenant } from 'src/hooks/useTenant';
 
 export type StatusStatsProps = {
   stats: StatsByStatus;
@@ -20,11 +21,17 @@ export const StatusStats = ({
   statusColors,
 }: StatusStatsProps) => {
   const segments = statsByStatusToPieSegments(stats, statusColors);
+  const { tenant } = useTenant();
+
+const visibleStats = useMemo(() => {
+  if(tenant?.allowFinishGracePeriod) return STATUS_STATS_KEYS;
+  return STATUS_STATS_KEYS.filter((key) => key !== 'pendingFinish');
+}, [tenant]);
 
   return (
     <StatsWithPieChart segments={segments} legendTotal={totalCount}>
       
-      {STATUS_STATS_KEYS.map((key) => (
+      {visibleStats.map((key) => (
         <Row
           key={key}
           label={`stats.${key}`}

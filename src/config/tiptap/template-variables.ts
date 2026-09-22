@@ -23,6 +23,7 @@ export const AGREEMENT_TEMPLATE_VARIABLES: TemplateVariableOption[] = [
   { name: 'agreementAddress', label: 'Adres na umowie' },
   { name: 'boxSize', label: 'Rozmiar boksu' },
   { name: 'boxArea', label: 'Powierzchnia boksu' },
+  { name: 'boxNumber', label: 'Numer boksu' },
   { name: 'invoiceMail', label: 'E-mail do faktury' },
   { name: 'stockName', label: 'Nazwa lokalizacji' },
   { name: 'stockAddress', label: 'Adres lokalizacji' },

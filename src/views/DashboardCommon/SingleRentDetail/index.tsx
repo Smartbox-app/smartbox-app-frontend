@@ -1,5 +1,10 @@
 import React, { useMemo } from 'react';
-import { withRouter, RouteComponentProps, useParams } from 'react-router-dom';
+import {
+  withRouter,
+  RouteComponentProps,
+  useParams,
+  Redirect,
+} from 'react-router-dom';
 import { connect } from 'react-redux';
 import { RentStatus } from 'smartbox-types';
 import { UserStockMap } from '../../../components/Common/UserStockMap';
@@ -22,6 +27,7 @@ import { PendingPaymentAlert } from './PendingPaymentAlert';
 import { RentAuthorizations } from './RentAuthorizations';
 import { useMyRentDetailsQuery } from 'src/queries';
 import { RentNote } from './RentNote';
+import { MainData } from './MainData';
 
 interface RouteProps {
   orderId: string;
@@ -55,10 +61,15 @@ const SingleRentDetail = ({ showUserStockMap, match }: Props) => {
     isError,
   } = useMyRentDetailsQuery(orderId);
 
+  const restrictedAccess = singleRent?.status === RentStatus.pendingFinish;
+
   const displayAccess = useMemo(() => {
     if (!singleRent) return false;
 
-    if (singleRent.status !== RentStatus.rented) return false;
+    if (
+      ![RentStatus.rented, RentStatus.pendingFinish].includes(singleRent.status)
+    )
+      return false;
 
     const currentDate = new Date();
 
@@ -67,6 +78,8 @@ const SingleRentDetail = ({ showUserStockMap, match }: Props) => {
 
     return true;
   }, [singleRent]);
+
+  if (isError) return <Redirect to="/" />;
 
   if (loading)
     return (
@@ -93,26 +106,16 @@ const SingleRentDetail = ({ showUserStockMap, match }: Props) => {
           <PeriodUnpaidAlert rent={singleRent} />
         </>
       ) : null}
-      <Section>
-        <Action rent={singleRent} isAuthorizedViewer={isAuthorizedViewer} />
-
-        {!showUserStockMap ? (
-          <>
-            <Details singleRent={singleRent} />
-          </>
-        ) : (
-          <UserStockMap
-            boxId={singleRent.boxId}
-            boxNumber={singleRent.boxNumber}
-            boxAdditionalInfo={singleRent.boxAdditionalInfo}
-            stockId={singleRent.stockId}
-          />
-        )}
-      </Section>
-      <Section>
-        <Header variant="h2">{__('application.note')}</Header>
-        <RentNote rentId={orderId} canEdit={!isAuthorizedViewer} />
-      </Section>
+      <MainData
+        singleRent={singleRent}
+        isAuthorizedViewer={isAuthorizedViewer}
+      />
+      {!restrictedAccess ? (
+        <Section>
+          <Header variant="h2">{__('application.note')}</Header>
+          <RentNote rentId={orderId} canEdit={!isAuthorizedViewer} />
+        </Section>
+      ) : null}
       {displayAccess ? (
         <Section>
           <Header variant="h2">{__('application.access')}</Header>
@@ -140,7 +143,7 @@ const SingleRentDetail = ({ showUserStockMap, match }: Props) => {
         </Section>
       ) : null}
 
-      {!isAuthorizedViewer ? (
+      {!isAuthorizedViewer && !restrictedAccess ? (
         <>
           <Section>
             <RentAuthorizations rent={singleRent} />

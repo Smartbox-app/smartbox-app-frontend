@@ -1,19 +1,15 @@
-import { Browser } from '@capacitor/browser';
-import { Capacitor } from '@capacitor/core';
 import { isBefore } from 'date-fns';
 import { useEffect, useMemo } from 'react';
 import { MyRentDetails } from 'smartbox-types';
-import { history } from 'src/history';
 import { SectionHeader } from 'src/components/Layout';
 import { Button, Section } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
 import { useTenant } from 'src/hooks/useTenant';
 import { Wallet } from 'src/icons';
 import { usePayForPeriodMutation } from 'src/mutations/usePayForPeriodMutation';
-import ApiService from 'src/services/api-service';
 import { dateOnly } from 'src/utils/format-date';
 import { formatPrice } from 'src/utils/format-price';
-import { prepareAndSentPaymentForm } from 'src/utils/payment-form';
+import { redirectToIpg } from 'src/utils/payment-form';
 import styled from 'styled-components';
 
 interface Props {
@@ -80,14 +76,7 @@ export const PeriodUnpaidAlert = ({ rent }: Props) => {
   useEffect(() => {
     if (!isSuccess || !data || !tenantId) return;
 
-    if (Capacitor.isNativePlatform()) {
-      history.push('/');
-      Browser.open({
-        url: `${ApiService.url}rent/ipg-redirect/${tenantId}/${data.paymentId}?source=mobile`,
-      });
-    } else {
-      prepareAndSentPaymentForm(data);
-    }
+    redirectToIpg(tenantId, data.paymentId);
   }, [isSuccess, data, tenantId]);
 
   if (unpaidPeriods.length === 0) return null;

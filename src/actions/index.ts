@@ -11,8 +11,8 @@ import * as singleRent from './single-rent';
 import * as stock from './stock';
 import * as stockGroup from './stock-group';
 import * as gate from './gate';
+import * as ksmGate from './ksm-gate';
 import * as invitations from './invitations';
-import * as tenant from './tenant';
 
 export {
   appStatus,
@@ -28,6 +28,6 @@ export {
   stock,
   stockGroup,
   gate,
+  ksmGate,
   invitations,
-  tenant
 };

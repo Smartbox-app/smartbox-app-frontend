@@ -9,7 +9,8 @@ import { Spinner } from 'src/components/Branded';
 import {
   useGetTenantOptionsQuery,
   useGetMyDetailsQuery,
-  useGetInviteStockOptionsQuery,
+  useGetStockOptionsQuery,
+  useGetCompanyOptionsQuery,
 } from 'src/queries';
 import { DocumentType, UserRole } from 'smartbox-types';
 import { useTenant } from 'src/hooks/useTenant';
@@ -52,6 +53,7 @@ export const DocumentForm = ({
   const { handleSubmit, control, watch, setValue } =
     useFormContext<DocumentDto>();
   const selectedTenantId = watch('tenantId');
+  const selectedStockId = watch('stockId');
   const documentType = watch('type');
   const isAgreement = documentType === 'agreement';
 
@@ -65,11 +67,23 @@ export const DocumentForm = ({
     isAgreement &&
     (user?.role !== UserRole.admin || Boolean(selectedTenantId));
   const { data: stockOptions = [], isLoading: stocksLoading } =
-    useGetInviteStockOptionsQuery(canLoadStocks);
+    useGetStockOptionsQuery(
+      user?.role === UserRole.admin ? selectedTenantId : tenant?.id,
+      canLoadStocks,
+    );
+  const canLoadCompanies =
+    isAgreement &&
+    (user?.role !== UserRole.admin || Boolean(selectedTenantId));
+  const { data: companyOptions = [], isLoading: companiesLoading } =
+    useGetCompanyOptionsQuery(
+      user?.role === UserRole.admin ? selectedTenantId : tenant?.id,
+      canLoadCompanies,
+    );
 
   useEffect(() => {
     if (!isAgreement) {
       setValue('stockId', null);
+      setValue('companyId', null);
     }
   }, [isAgreement, setValue]);
 
@@ -108,7 +122,11 @@ export const DocumentForm = ({
                   value: t.value.toString(),
                 }))}
                 value={field.value}
-                onChange={field.onChange}
+                onChange={(value) => {
+                  field.onChange(value);
+                  setValue('stockId', null);
+                  setValue('companyId', null);
+                }}
                 onBlur={field.onBlur}
                 required
                 disabled={tenantsLoading || isLoading}
@@ -135,6 +153,7 @@ export const DocumentForm = ({
           )}
         />
         {isAgreement ? (
+          <>
           <Controller
             name="stockId"
             control={control}
@@ -154,7 +173,9 @@ export const DocumentForm = ({
                   })),
                 ]}
                 value={field.value ?? ''}
-                onChange={(value) => field.onChange(value || null)}
+                onChange={(value) => {
+                  field.onChange(value || null);
+                }}
                 onBlur={field.onBlur}
                 disabled={
                   isLoading ||
@@ -165,6 +186,39 @@ export const DocumentForm = ({
               />
             )}
           />
+          <Controller
+            name="companyId"
+            control={control}
+            render={({ field, fieldState }) => (
+              <InputSelect
+                name="companyId"
+                label={__('application.documentCompany')}
+                placeholder={__('application.documentCompanyPlaceholder')}
+                options={[
+                  {
+                    label: __('application.documentCompanyDefault'),
+                    value: '',
+                  },
+                  ...companyOptions.map((company) => ({
+                    label: company.label,
+                    value: company.value,
+                  })),
+                ]}
+                value={field.value ?? ''}
+                onChange={(value) => {
+                  field.onChange(value || null);
+                }}
+                onBlur={field.onBlur}
+                disabled={
+                  isLoading ||
+                  companiesLoading ||
+                  (user?.role === UserRole.admin && !selectedTenantId)
+                }
+                error={fieldState.error?.message}
+              />
+            )}
+          />
+          </>
         ) : null}
         <Controller
           name="content"
@@ -175,6 +229,7 @@ export const DocumentForm = ({
               onChange={field.onChange}
               documentType={documentType}
               templateTenantId={templateTenantId}
+              templateStockId={selectedStockId}
             />
           )}
         />

@@ -4,7 +4,7 @@ import { AccountConfirmationMethod } from './account-confirmation-method';
 
 export { AccountConfirmationMethod } from './account-confirmation-method';
 
-export interface TenantEntity {
+export interface  TenantEntity {
   id: string;
   name: string;
   identifier: string;
@@ -37,6 +37,7 @@ export interface TenantEntity {
   storeId: string;
   sharedSecret: string;
   allowAddonsToRent: boolean;
+  allowMultipleCompanies: boolean;
   useProd: boolean;
   birthDateNecessary: boolean;
   clientSourceField: boolean;
@@ -62,6 +63,10 @@ export interface TenantEntity {
   smtpFromEmail: string | null;
   accountConfirmationMethod: AccountConfirmationMethod;
   publicAssetsBaseUrl: string;
+  allowFinishGracePeriod: boolean;
+  gtmId: string | null;
+  metaPixelId: string | null;
+  active: boolean;
 }
 
 export type UpdateTenantReq = Pick<
@@ -74,9 +79,6 @@ export type UpdateTenantReq = Pick<
   | 'contactPhone'
   | 'additionalMailInfo'
   | 'tax'
-  | 'agreementDisclaimer'
-  | 'paymentDisclaimer'
-  | 'homeMessage'
 >;
 export type UpdateTenantByAdminReq = Pick<
   TenantEntity,
@@ -102,6 +104,7 @@ export type UpdateTenantByAdminReq = Pick<
   | 'storeId'
   | 'sharedSecret'
   | 'allowAddonsToRent'
+  | 'allowMultipleCompanies'
   | 'newRentNotification'
   | 'rentExtendedNotification'
   | 'birthDateNecessary'
@@ -110,13 +113,22 @@ export type UpdateTenantByAdminReq = Pick<
   | 'debtResolveType'
   | 'locationSelectType'
   | 'namingType'
+  | 'accountConfirmationMethod'
+>;
+export type UpdateTenantMessagingReq = Pick<
+  TenantEntity,
   | 'agreementDisclaimer'
   | 'paymentDisclaimer'
   | 'homeMessage'
-  | 'accountConfirmationMethod'
-  | 'mobileAppAndroidLink'
-  | 'mobileAppIosLink'
   | 'systemMessage'
+>;
+export type UpdateTenantMobileAppsReq = Pick<
+  TenantEntity,
+  'mobileAppAndroidLink' | 'mobileAppIosLink'
+>;
+export type UpdateTenantAnalyticsReq = Pick<
+  TenantEntity,
+  'gtmId' | 'metaPixelId'
 >;
 
 export type TenantForUsers = Omit<
@@ -146,6 +158,10 @@ export type TenantForUsers = Omit<
   accountConfirmationMethodEffective: AccountConfirmationMethod;
   links: { id: string; name: string; fileName: string }[];
   publicAssetsBaseUrl: string;
+};
+
+export type TenantForClients = TenantForUsers & {
+  hasApiAccess: boolean;
 };
 
 export enum NamingType {

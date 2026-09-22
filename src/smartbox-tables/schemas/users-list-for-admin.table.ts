@@ -82,6 +82,15 @@ export const usersListForAdmin: TableSchema = {
       type: FieldType.Text,
     },
     {
+      name: 'Hasło ustawione',
+      field: 'hasPasswordSet',
+      mobile: true,
+      searchable: false,
+      sortable: false,
+      defaultSort: false,
+      type: FieldType.Boolean,
+    },
+    {
       name: 'Status',
       field: 'status',
       mobile: true,
