@@ -9,15 +9,17 @@ import { mapFields } from '../../../../utils/fields-mapper';
 import { successNotification } from '../../../../actions/notifications';
 import { formOnTranslateString } from '../../../../utils/trans-form';
 import { hideModal } from '../../../../actions/modal';
-import { TemplateType } from 'smartbox-types';
+import { isStockScopedTemplate, TemplateReq, TemplateType } from 'smartbox-types';
 import { __ } from '../../../../helpers/i18n';
 import { PageHeader, Section } from 'src/components/ui';
 import { useQueryClient } from '@tanstack/react-query';
 import { templatesQueryKey, useGetMyDetailsQuery } from 'src/queries';
+import { history } from 'src/history';
 
 const allowedTags = {
   [TemplateType.INVITE_USER_EMAIL]: ['company'],
   [TemplateType.ACCOUNT_ACTIVATED_EMAIL]: ['name'],
+  [TemplateType.ACCOUNT_ACTIVATION_SMS]: ['name', 'company', 'code'],
   [TemplateType.USER_BLOCKED_EMAIL]: ['name', 'phone', 'email'],
   [TemplateType.USER_UNBLOCKED_EMAIL]: ['name', 'company'],
   [TemplateType.RENTAL_EXTENDED_MAIL]: ['name', 'number', 'rentUntil', 'cost', 'boxTypeNoun', 'boxTypeAccusative', 'boxTypeYourGenitive'],
@@ -170,6 +172,207 @@ const allowedTags = {
   ],
   [TemplateType.NO_PERIOD_PAYMENT_EMAIL]: ['name', 'company', 'number'],
   [TemplateType.NO_PERIOD_PAYMENT_SMS]: ['name', 'company', 'number'],
+  [TemplateType.OPEN_ENDED_NEW_RENTAL_MAIL]: [
+    'name',
+    'number',
+    'rentFrom',
+    'cost',
+    'boxTypeNoun',
+    'boxTypeAccusative',
+    'boxTypeYourGenitive',
+  ],
+  [TemplateType.OPEN_ENDED_NEW_RENTAL_SMS]: [
+    'name',
+    'number',
+    'company',
+    'boxTypeNoun',
+    'boxTypeAccusative',
+    'boxTypeYourGenitive',
+  ],
+  [TemplateType.OPEN_ENDED_NEW_RENTAL_ADMIN_NOTIFICATION_MAIL]: [
+    'email',
+    'stock',
+    'number',
+    'rentFrom',
+    'cost',
+    'boxTypeNoun',
+    'boxTypeAccusative',
+    'boxTypeYourGenitive',
+  ],
+  [TemplateType.OPEN_ENDED_PERIOD_PAYMENT_EMAIL]: [
+    'name',
+    'number',
+    'company',
+    'paymentUntil',
+  ],
+  [TemplateType.OPEN_ENDED_PERIOD_PAYMENT_SMS]: [
+    'name',
+    'number',
+    'company',
+    'paymentUntil',
+  ],
+  [TemplateType.OPEN_ENDED_RENTAL_PERIOD_PAID_MAIL]: [
+    'name',
+    'number',
+    'company',
+    'cost',
+    'periodFrom',
+    'periodTo',
+    'boxTypeNoun',
+  ],
+  [TemplateType.OPEN_ENDED_RENTAL_PERIOD_PAID_SMS]: [
+    'name',
+    'number',
+    'company',
+    'periodFrom',
+    'periodTo',
+  ],
+  [TemplateType.OPEN_ENDED_RENTAL_PERIOD_PAID_ADMIN_NOTIFICATION_MAIL]: [
+    'email',
+    'number',
+    'company',
+    'stock',
+    'cost',
+    'periodFrom',
+    'periodTo',
+    'boxTypeNoun',
+  ],
+  [TemplateType.OPEN_ENDED_NO_PERIOD_PAYMENT_EMAIL]: [
+    'name',
+    'company',
+    'number',
+    'daysToRecoverAccess',
+  ],
+  [TemplateType.OPEN_ENDED_NO_PERIOD_PAYMENT_SMS]: [
+    'name',
+    'company',
+    'number',
+    'daysToRecoverAccess',
+  ],
+  [TemplateType.OPEN_ENDED_PERIOD_PAYMENT_ENDS_EMAIL]: [
+    'name',
+    'company',
+    'number',
+    'paymentUntil',
+  ],
+  [TemplateType.OPEN_ENDED_PERIOD_PAYMENT_ENDS_SMS]: [
+    'name',
+    'company',
+    'number',
+    'paymentUntil',
+  ],
+  [TemplateType.OPEN_ENDED_PERIOD_PAYMENT_DUE_TODAY_EMAIL]: [
+    'name',
+    'company',
+    'number',
+    'paymentUntil',
+  ],
+  [TemplateType.OPEN_ENDED_PERIOD_PAYMENT_DUE_TODAY_SMS]: [
+    'name',
+    'company',
+    'number',
+    'paymentUntil',
+  ],
+  [TemplateType.OPEN_ENDED_PERIOD_PAYMENT_MID_WINDOW_EMAIL]: [
+    'name',
+    'company',
+    'number',
+    'paymentUntil',
+  ],
+  [TemplateType.OPEN_ENDED_PERIOD_PAYMENT_MID_WINDOW_SMS]: [
+    'name',
+    'company',
+    'number',
+    'paymentUntil',
+  ],
+  [TemplateType.OPEN_ENDED_RECOVER_ACCESS_ENDS_IN_2_DAYS_EMAIL]: [
+    'name',
+    'company',
+    'number',
+    'accessUntil',
+    'daysToRecoverAccess',
+  ],
+  [TemplateType.OPEN_ENDED_RECOVER_ACCESS_ENDS_IN_2_DAYS_SMS]: [
+    'name',
+    'company',
+    'number',
+    'accessUntil',
+    'daysToRecoverAccess',
+  ],
+  [TemplateType.OPEN_ENDED_RECOVER_ACCESS_ENDS_TODAY_EMAIL]: [
+    'name',
+    'company',
+    'number',
+    'accessUntil',
+  ],
+  [TemplateType.OPEN_ENDED_RECOVER_ACCESS_ENDS_TODAY_SMS]: [
+    'name',
+    'company',
+    'number',
+    'accessUntil',
+  ],
+  [TemplateType.OPEN_ENDED_AGREEMENT_ENDED_ADMIN_NOTIFICATION_MAIL]: [
+    'email',
+    'number',
+    'company',
+    'stock',
+    'rentFrom',
+    'rentUntil',
+    'boxTypeNoun',
+  ],
+  [TemplateType.OPEN_ENDED_RENT_ENDED_MAIL]: [
+    'name',
+    'number',
+    'company',
+    'stock',
+    'rentFrom',
+    'rentUntil',
+    'boxTypeNoun',
+    'boxTypeAccusative',
+    'boxTypeYourGenitive',
+  ],
+  [TemplateType.OPEN_ENDED_RENT_ENDED_SMS]: [
+    'name',
+    'number',
+    'company',
+    'stock',
+    'rentFrom',
+    'rentUntil',
+    'boxTypeNoun',
+    'boxTypeAccusative',
+    'boxTypeYourGenitive',
+  ],
+  [TemplateType.OPEN_ENDED_RENT_ENDED_ADMIN_NOTIFICATION_MAIL]: [
+    'email',
+    'number',
+    'company',
+    'stock',
+    'rentFrom',
+    'rentUntil',
+    'boxTypeNoun',
+    'boxTypeAccusative',
+    'boxTypeYourGenitive',
+  ],
+  [TemplateType.OPEN_ENDED_RENT_ENDED_UNPAID_MAIL]: [
+    'name',
+    'number',
+    'company',
+    'stock',
+    'boxTypeNoun',
+  ],
+  [TemplateType.OPEN_ENDED_RENT_ENDED_UNPAID_SMS]: [
+    'name',
+    'number',
+    'company',
+    'stock',
+  ],
+  [TemplateType.OPEN_ENDED_RENT_ENDED_UNPAID_ADMIN_NOTIFICATION_MAIL]: [
+    'email',
+    'number',
+    'company',
+    'stock',
+    'boxTypeNoun',
+  ],
   [TemplateType.ACCESS_CODE_EMAIL]: ['name', 'company', 'number', 'passcode'],
   [TemplateType.ACCESS_CODE_SMS]: ['name', 'company', 'number', 'passcode'],
   [TemplateType.GATE_ACCESS_CODE_EMAIL]: ['name', 'company', 'stock', 'passcode'],
@@ -206,17 +409,27 @@ const allowedTags = {
   ],
 };
 
+function templateTitleKey(forStock: boolean, stockScoped: boolean) {
+  if (forStock) return 'application.templateForStock';
+  if (stockScoped) return 'application.templateGeneric';
+  return 'application.manageTemplate';
+}
+
 export const Manage = ({
   basePath,
   tenantId: tenantIdOverride,
+  forStock = false,
 }: {
   basePath: string;
   tenantId?: string;
+  forStock?: boolean;
 }) => {
-  const { type, template } = useParams<{
+  const { type, template, id: templateId } = useParams<{
     type: 'email' | 'sms';
     template: TemplateType;
+    id?: string;
   }>();
+  const stockScoped = isStockScopedTemplate(template);
   const { data: user } = useGetMyDetailsQuery();
   const tenantId = tenantIdOverride ?? user?.tenantId ?? undefined;
   const queryClient = useQueryClient();
@@ -233,18 +446,25 @@ export const Manage = ({
     </ButtonsContainer>
   );
 
-  const fetchUrl = tenantIdOverride
-    ? `template/admin/form-${type}/${tenantIdOverride}/${template}`
-    : `template/form-${type}/${template}`;
-  const sendUrl = tenantIdOverride
-    ? `template/admin/${type}/${tenantIdOverride}/${template}`
-    : `template/${type}/${template}`;
+  const stockPath = forStock ? `/stock${templateId ? `/${templateId}` : ''}` : '';
+  const fetchUrl = `${
+    tenantIdOverride
+      ? `template/admin/form-${type}/${tenantIdOverride}/${template}`
+      : `template/form-${type}/${template}`
+  }${stockPath}`;
+  const sendUrl = `${
+    tenantIdOverride
+      ? `template/admin/${type}/${tenantIdOverride}/${template}`
+      : `template/${type}/${template}`
+  }${stockPath}`;
 
   const tagsToUse = allowedTags[template] ?? [];
 
   return (
     <>
-      <PageHeader>{__('application.manageTemplate')}</PageHeader>
+      <PageHeader>
+        {__(templateTitleKey(forStock, stockScoped))}
+      </PageHeader>
       <Section>
         <ul>
           {tagsToUse.map((tag) => (
@@ -254,17 +474,54 @@ export const Manage = ({
           ))}
         </ul>
         <ItfApiForm
+          key={forStock ? templateId ?? 'stock' : 'tenant'}
           formId="manageTemplate"
           schemaCacheEnabled={false}
           schemaMayBeDynamic={true}
           useFormDataInsteadOfPlainObject={type === 'email'}
           loadingInfo={<Spinner transparent />}
           schemaFetcher={() => ApiService.loadForm(fetchUrl)}
-          sendFetcher={(formId: string, values) => {
-            return ApiService.sendForm(sendUrl, values, 'PATCH');
-          }}
+          sendFetcher={(_formId: string, values: FormData | TemplateReq) =>
+            ApiService.sendForm(sendUrl, values, 'PATCH', (payload) => {
+              const savedId = (payload as { id?: string } | null)?.id;
+              if (forStock && savedId && savedId !== templateId) {
+                history.push(
+                  `${basePath}/manage/${type}/${template}/stock/${savedId}`,
+                );
+              }
+            })
+          }
           submitButton={submitButton}
-          onRenderFullField={mapFields}
+          onRenderFullField={(
+            field,
+            errors,
+            fieldHtmlId,
+            currentValue,
+            onChange,
+            onFocus,
+            onBlur,
+          ) =>
+            mapFields(
+              field,
+              errors,
+              fieldHtmlId,
+              currentValue,
+              field.id === 'stockIds'
+                ? (next) => {
+                    const list = Array.isArray(next) ? next : [];
+                    onChange(
+                      list.map((item) =>
+                        item && typeof item === 'object' && 'value' in item
+                          ? (item as { value: string }).value
+                          : item,
+                      ),
+                    );
+                  }
+                : onChange,
+              onFocus,
+              onBlur,
+            )
+          }
           onSavedSuccessfully={() => {
             if (tenantId) {
               queryClient.invalidateQueries({

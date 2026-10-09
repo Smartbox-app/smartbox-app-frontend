@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
 import {
   MyRentDetails,
@@ -93,11 +93,11 @@ export const RentAuthorizations = ({ rent }: Props) => {
         />
       </ButtonsContainer>
 
-      {listLoading ? (
-        <Spinner transparent />
-      ) : authorizations.length === 0 ? (
+      {listLoading && <Spinner transparent />}
+      {!listLoading && authorizations.length === 0 && (
         <p>{__('application.rentAuthorizationsNone')}</p>
-      ) : (
+      )}
+      {!listLoading && authorizations.length > 0 && (
         <StyledAuthorizations>
           {authorizations.map((row) => (
             <StyledAuthorization key={row.authorizationId}>

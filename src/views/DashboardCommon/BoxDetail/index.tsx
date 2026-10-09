@@ -1,14 +1,12 @@
 import React, { useEffect } from 'react';
-import { bindActionCreators } from 'redux';
 import {
   BoxListRes,
   BoxMapRes,
   BoxStatus,
-  RentDetailsRes,
   RentStatus,
 } from 'smartbox-types';
-import { connect, useDispatch } from 'react-redux';
-import { boxes } from '../../../actions';
+import { useDispatch, useSelector } from 'react-redux';
+import { boxDataCleanUp, fetchSingleBoxDetails } from '../../../actions/boxes';
 import { Row } from '../../../components/Common';
 import { ApplicationState } from '../../../reducers';
 import { dateOnly } from '../../../utils/format-date';
@@ -19,32 +17,33 @@ import { Edit } from './Edit';
 
 import './BoxDetail.scss';
 import { useGetMyDetailsQuery } from '../../../queries';
+import { useRent } from 'src/hooks/useRent';
 import { Header, Link, Modal, Section, Typography } from 'src/components/ui';
 import { EndRentPhoto } from 'src/components/Common/EndRentPhoto';
 
 interface Props {
-  singleBoxDetail: RentDetailsRes;
   box: BoxListRes | BoxMapRes;
   stockId: string;
-  boxDataCleanUp: () => void;
   callback?: () => void;
 }
 
 const BoxDetail = ({
-  boxDataCleanUp,
   box: { rentId, id, identifier, status, area },
-  singleBoxDetail,
   stockId,
   callback,
 }: Props) => {
   const dispatch = useDispatch();
+  const singleBoxDetail = useSelector(
+    (state: ApplicationState) => state.boxes.singleBoxDetail,
+  );
   const { data: user } = useGetMyDetailsQuery();
+  const { formatFinishAt, resolveRentFinishAt } = useRent();
 
   useEffect(() => {
-    if (rentId) dispatch(boxes.fetchSingleBoxDetails(rentId));
+    if (rentId) dispatch(fetchSingleBoxDetails(rentId));
 
     return () => {
-      boxDataCleanUp();
+      dispatch(boxDataCleanUp());
     };
   }, []);
 
@@ -82,7 +81,10 @@ const BoxDetail = ({
               />
               <Row
                 label="application.endDate"
-                content={dateOnly(singleBoxDetail.decisionFinishAt ?? singleBoxDetail.finishAt)}
+                content={formatFinishAt(
+                  resolveRentFinishAt(singleBoxDetail),
+                  singleBoxDetail.agreementType,
+                )}
               />
               <Row
                 label="application.phone"
@@ -141,11 +143,4 @@ const BoxDetail = ({
   );
 };
 
-const mapStateToProps = (state: ApplicationState) => ({
-  singleBoxDetail: state.boxes.singleBoxDetail,
-});
-
-const mapDispatchToProps = (dispatch: any) =>
-  bindActionCreators({ ...boxes }, dispatch);
-
-export default connect(mapStateToProps, mapDispatchToProps)(BoxDetail);
+export default BoxDetail;

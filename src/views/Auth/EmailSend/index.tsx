@@ -1,8 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
-import { bindActionCreators } from 'redux';
-import { auth } from '../../../actions';
 import { Button, LogoContainer, PageContent } from '../../../components/Branded';
 import {
     ButtonsContainer,
@@ -11,13 +7,8 @@ import {
     SectionHeader,
 } from '../../../components/Layout';
 import { __ } from '../../../helpers/i18n';
-import { ApplicationState } from '../../../reducers';
 
-interface Props {
-    emailVerificationResendMail: () => void;
-}
-
-const EmailSend = ({ emailVerificationResendMail }: Props) => {
+const EmailSend = () => {
     return (
         <PageContent>
             <Section>
@@ -40,14 +31,4 @@ const EmailSend = ({ emailVerificationResendMail }: Props) => {
     );
 };
 
-const mapStateToProps = (state: ApplicationState) => ({});
-
-const mapDispatchToProps = (dispatch: any) =>
-    bindActionCreators(
-        {
-            ...auth,
-        },
-        dispatch,
-    );
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(EmailSend));
+export default EmailSend;

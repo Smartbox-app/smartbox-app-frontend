@@ -4,6 +4,7 @@ import { AccessControl, StockRes, TenantEntity, UserRole } from 'smartbox-types'
 import { Redirect, Route, Switch, useParams } from 'react-router';
 import UserService from '../../../../../services/user-service';
 import { BasicData } from '../../../StockGroups/Stocks/Manage/BasicData';
+import { StockAgreements } from '../../../StockGroups/Stocks/Manage/Agreements';
 import { Boxes } from './Boxes';
 import { Rents } from './Rents';
 import { Map } from './Map';
@@ -29,6 +30,7 @@ import {
   Error,
   Wallet,
   Users,
+  Settings,
 } from 'src/icons';
 import GateStatus from 'src/views/DashboardCommon/GateStatus';
 import { useTenantNaming } from 'src/hooks/useTenantNaming';
@@ -38,6 +40,12 @@ import { Alarms } from './Alarms';
 import { Payments } from './Payments';
 import { RentAuthorizationsList } from './RentAuthorizations';
 
+const publicTenantAllowsAddons = (tenant: object | null | undefined) =>
+  Boolean(
+    tenant &&
+      'allowAddonsToRent' in tenant &&
+      (tenant as { allowAddonsToRent?: boolean }).allowAddonsToRent,
+  );
 
 const Manage = () => {
   const { stockId } = useParams<{ stockId: string }>();
@@ -54,7 +62,9 @@ const Manage = () => {
     await ApiService.callFetch('GET', `stock/${stockId}`, (stock: StockRes) => {
       setMapActive(stock.isMapActive);
       setAlarmsActive(stock.gateAccessControl === AccessControl.ksm);
-      if (user?.role === UserRole.admin) getTenantForAdmin(stock.tenantId);
+      if (user?.role === UserRole.admin && stock.tenantId) {
+        getTenantForAdmin(stock.tenantId);
+      }
     });
   };
 
@@ -93,6 +103,11 @@ const Manage = () => {
             to: `/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/data`,
             text: 'application.stockBasicData',
             icon: <InfoCircle />,
+          },
+          {
+            to: `/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/agreements`,
+            text: 'application.stockAgreements',
+            icon: <Settings />,
           },
           {
             to: `/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/rents`,
@@ -165,7 +180,10 @@ const Manage = () => {
       });
     }
 
-    if (hasFullAccess && tenantForAdmin?.allowAddonsToRent) {
+    if (
+      hasFullAccess &&
+      (tenantForAdmin?.allowAddonsToRent || publicTenantAllowsAddons(tenant))
+    ) {
       elements.push({
         to: `/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/addons`,
         text: 'application.stockAddons',
@@ -182,6 +200,7 @@ const Manage = () => {
     return elements;
   }, [
     isMapActive,
+    tenant,
     tenantForAdmin,
     hasFullAccess,
     isAlarmsActive,
@@ -219,6 +238,13 @@ const Manage = () => {
               exact
               path={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/:stockId/data`}
               component={BasicData}
+            />
+          )}
+          {hasFullAccess && (
+            <Route
+              exact
+              path={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/:stockId/agreements`}
+              component={StockAgreements}
             />
           )}
           <Route
@@ -282,7 +308,8 @@ const Manage = () => {
               component={Handling}
             />
           )}
-          {(tenantForAdmin?.allowAddonsToRent || tenant?.allowAddonsToRent) &&
+          {(tenantForAdmin?.allowAddonsToRent ||
+            publicTenantAllowsAddons(tenant)) &&
             hasFullAccess && (
               <Route
                 path={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/:stockId/addons`}

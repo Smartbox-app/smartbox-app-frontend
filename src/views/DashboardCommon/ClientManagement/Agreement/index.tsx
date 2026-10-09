@@ -1,7 +1,7 @@
 import React from 'react';
 import { ItfApiForm } from 'itf_formbuilder_react';
 import { UserRole } from 'smartbox-types';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Button, Spinner } from '../../../../components/Branded';
 import { ButtonsContainer, FormContainer, Section } from '../../../../components/Layout';
 import ApiService from '../../../../services/api-service';
@@ -36,7 +36,7 @@ const ManageTenantAgreement = ({ userId }: Props) => {
     </ButtonsContainer>
   );
 
-  const customSendFetcher = (formId: string, values) => {
+  const customSendFetcher = (_formId: string, values: FormData) => {
     return ApiService.sendForm(sendUrl, values, 'POST');
   };
 

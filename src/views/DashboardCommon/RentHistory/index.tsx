@@ -16,9 +16,10 @@ import { Alert } from 'src/components/Common';
 interface Props {
   description: RentDescription[];
   rentId: string;
-  paymentType: RentPaymentType;
-  periods: PeriodEntity[];
+  paymentType?: RentPaymentType;
+  periods?: PeriodEntity[];
   decisionFinishAt?: Date;
+  isOpenEnded?: boolean;
 }
 
 const StyledPeriodHeader = styled('h4')({
@@ -35,11 +36,11 @@ const StyledSubHeader = styled('h4')({
   fontSize: '0.95rem',
 });
 
-const StyledSinglePeriod = styled('li')(({ theme }) => ({
+const StyledSinglePeriod = styled('li')({
   marginBottom: '10px',
   paddingBottom: '10px',
-  borderBottom: `1px solid #fbfbfb`,
-}));
+  borderBottom: '1px solid #fbfbfb',
+});
 
 const StyledSinglePaymentPeriod = styled('li')(({ theme }) => ({
   marginBottom: '10px',
@@ -79,8 +80,9 @@ export const RentHistory = ({
   description,
   rentId,
   paymentType,
-  periods,
+  periods = [],
   decisionFinishAt,
+  isOpenEnded,
 }: Props) => {
   const sortedPeriods = useMemo(() => {
     const periodsCopy = [...periods];
@@ -108,7 +110,9 @@ export const RentHistory = ({
           return (
             <StyledSinglePeriod key={index}>
               <StyledPeriodHeader>
-                {dateOnly(line.startAt)} - {dateOnly(line.finishAt)}
+                {line.finishAt && !isOpenEnded
+                  ? `${dateOnly(line.startAt)} - ${dateOnly(line.finishAt)}`
+                  : dateOnly(line.startAt)}
               </StyledPeriodHeader>
               {hasViewableAgreementPeriod(line, periods) ? (
                 <StyledRentAgreementButton>
@@ -124,10 +128,14 @@ export const RentHistory = ({
               <p>
                 {__('application.price')} - {formatPrice(Number(line.cost))}
               </p>
-              <p>
-                {__('application.paymentType')} -{' '}
-                {__(getPaymentTypeLabel(line.paymentType || paymentType))}
-              </p>
+              {isOpenEnded ? null : (
+                <p>
+                  {__('application.paymentType')} -{' '}
+                  {line.paymentType || paymentType
+                    ? __(getPaymentTypeLabel((line.paymentType || paymentType)!))
+                    : null}
+                </p>
+              )}
 
               {line.addons && line.addons.length > 0 ? (
                 <div>
@@ -155,19 +163,6 @@ export const RentHistory = ({
                             <strong>{addon.accepted ? 'Tak' : 'Nie'}</strong>
                           </p>
                         ) : null}
-                        {!!addon.acceptances && !!addon.acceptancesStatus
-                          ? addon.acceptances.map((acceptance) => (
-                              <p key={acceptance.id}>
-                                {acceptance.text} -{' '}
-                                <strong>
-                                  {addon.acceptancesStatus![acceptance.id]
-                                    .accepted
-                                    ? 'Tak'
-                                    : 'Nie'}
-                                </strong>
-                              </p>
-                            ))
-                          : null}
                         {addon.file ? (
                           <AttachedFileButtonContainer>
                             <RentAttachedFileButton
@@ -181,25 +176,30 @@ export const RentHistory = ({
                   </ul>
                 </div>
               ) : null}
-              {line.paymentType === RentPaymentType.Installments ? (
+              {isOpenEnded ||
+              line.paymentType === RentPaymentType.Installments ? (
                 <>
                   <StyledSubHeader>{__('application.periods')}</StyledSubHeader>
                   <ul>
                     {sortedPeriods
-                      .filter(
-                        (period) =>
-                          !isBefore(
-                            new Date(period.startAt),
-                            new Date(line.startAt),
-                          ) &&
-                          !isAfter(
-                            new Date(period.finishAt),
-                            new Date(line.finishAt),
-                          ),
-                      )
-                      .map((period) => {
+                      .filter((period) => {
+                        if (isOpenEnded) return true;
+                        const startsOnOrAfterLine = !isBefore(
+                          new Date(period.startAt),
+                          new Date(line.startAt),
+                        );
+                        if (!startsOnOrAfterLine) return false;
+                        if (!line.finishAt) return true;
+                        return !isAfter(
+                          new Date(period.finishAt),
+                          new Date(line.finishAt),
+                        );
+                      })
+                      .map((period, index) => {
                         return (
-                          <StyledSinglePaymentPeriod key={period.id}>
+                          <StyledSinglePaymentPeriod
+                            key={`${String(period.startAt)}-${String(period.finishAt)}-${index}`}
+                          >
                             {dateOnly(period.startAt)} -{' '}
                             {dateOnly(period.finishAt)} -{' '}
                             <strong>{formatPrice(period.value)}</strong> -{' '}

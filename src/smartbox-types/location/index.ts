@@ -1,4 +1,4 @@
 export enum LocationSelectType {
-  Tiles = 'tiles',
-  Map = 'map',
+    Tiles = 'tiles',
+    Map = 'map'
 }

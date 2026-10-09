@@ -1,14 +1,12 @@
-import React from "react";
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
+import { useDispatch } from "react-redux";
+import { useParams } from "react-router";
 
 import { ItfApiForm } from "itf_formbuilder_react";
-import { AddInvitedUserReq, UserRes } from "smartbox-types";
-import { notifications, auth } from "../../../actions";
+import { AddInvitedUserReq } from "smartbox-types";
+import { successNotification } from "../../../actions/notifications";
 import ApiService from "../../../services/api-service";
 
-import { Spinner, Button, PageContent } from "../../../components/Branded";
-import { Logo } from "../../../components/Branded";
+import { Spinner, Button, PageContent , Logo } from "../../../components/Branded";
 import { formOnTranslateString } from "../../../utils/trans-form";
 import {
   FormContainer,
@@ -19,14 +17,12 @@ import { history } from 'src/history';
 import { __ } from "../../../helpers/i18n";
 import { mapFieldsBig } from "../../../utils/fields-mapper";
 
-interface Props {
-  match: any;
-  userRole: UserRes;
-  logout: () => void;
-  successNotification: (text: string) => void;
-}
-
-const UserActivation = ({ successNotification, match }: Props) => {
+const UserActivation = () => {
+  const dispatch = useDispatch();
+  const { invitationId, updateToken } = useParams<{
+    invitationId: string;
+    updateToken: string;
+  }>();
   const loadUrl = "user/form/add-invited-user";
   const sendUrl = "user/add-invited";
 
@@ -35,14 +31,14 @@ const UserActivation = ({ successNotification, match }: Props) => {
       sendUrl,
       {
         ...values,
-        invitationId: match.params.invitationId,
-        token: match.params.updateToken,
+        invitationId,
+        token: updateToken,
       },
       "POST"
     );
 
   const success = () => {
-    successNotification("notification.accountHasBeenActivated");
+    dispatch(successNotification("notification.accountHasBeenActivated"));
     history.push("/");
   };
 
@@ -77,13 +73,4 @@ const UserActivation = ({ successNotification, match }: Props) => {
   );
 };
 
-const mapDispatchToProps = (dispatch: any): any =>
-  bindActionCreators(
-    {
-      ...notifications,
-      ...auth,
-    },
-    dispatch
-  );
-
-export default connect(null, mapDispatchToProps)(UserActivation);
+export default UserActivation;

@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { useState } from 'react';
 import './SingleOption.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { ApplicationState } from '../../../../../../../reducers';
@@ -51,7 +51,7 @@ export const SingleOption = ({ name, address, value, disable }: Props) => {
   const dispatch = useDispatch();
   const stockId = useSelector((state: ApplicationState) => state.order.stockId);
 
-  const selectOption = (e: ChangeEvent<HTMLInputElement>) => {
+  const selectOption = () => {
     dispatch(setOrderStock(value, name, address));
   };
 

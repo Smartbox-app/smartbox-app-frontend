@@ -1,6 +1,6 @@
 import React from 'react';
 import { documentListAdmin, documentListClient, FieldType } from 'smartbox-tables';
-import { DocumentListRes, DocumentType } from 'smartbox-types';
+import { DocumentListResClient, DocumentType , UserRole } from 'smartbox-types';
 import { history } from 'src/history';
 import { Button } from 'src/components/Branded';
 import { ApiTable } from 'src/components/Common';
@@ -12,7 +12,6 @@ import { __ } from 'src/helpers/i18n';
 import { useGetMyDetailsQuery } from 'src/queries';
 import UserService from 'src/services/user-service';
 import { InteractiveTableSchema } from 'src/utils/table-schema-utils';
-import { UserRole } from 'smartbox-types';
 
 const documentTypeLabels: Record<DocumentType, string> = {
   'privacy-policy': 'application.documentTypePrivacyPolicy',
@@ -35,7 +34,7 @@ const StyledStatusBadge = styled.span<{ $draft?: boolean }>`
       : theme.colors.surface.success.secondary};
   color: ${({ theme, $draft }) =>
     $draft
-      ? theme.colors.dark
+      ? theme.colors.text.primary
       : theme.colors.surface.success.primary};
 `;
 
@@ -52,12 +51,12 @@ export const List = () => {
   const scheme = new InteractiveTableSchema(baseSchema)
     .modifyFieldStatic('type', {
       type: FieldType.Custom,
-      customRender: (_value, _field, row: DocumentListRes) =>
+      customRender: (_value, _field, row: DocumentListResClient) =>
         __(documentTypeLabels[row.type]),
     })
     .modifyFieldStatic('stockName', {
       type: FieldType.Custom,
-      customRender: (_value, _field, row: DocumentListRes) => {
+      customRender: (_value, _field, row: DocumentListResClient) => {
         if (row.type !== 'agreement') return '—';
 
         return row.stockName
@@ -67,7 +66,7 @@ export const List = () => {
     })
     .modifyFieldStatic('companyName', {
       type: FieldType.Custom,
-      customRender: (_value, _field, row: DocumentListRes) => {
+      customRender: (_value, _field, row: DocumentListResClient) => {
         if (row.type !== 'agreement') return '—';
 
         return row.companyName
@@ -77,7 +76,7 @@ export const List = () => {
     })
     .modifyFieldStatic('isDraft', {
       type: FieldType.Custom,
-      customRender: (_value, _field, row: DocumentListRes) => (
+      customRender: (_value, _field, row: DocumentListResClient) => (
         <DocumentStatusBadge isDraft={row.isDraft} />
       ),
     });
@@ -90,7 +89,7 @@ export const List = () => {
       {
         name: 'application.edit',
         type: 'primary',
-        click: (data: DocumentListRes) =>
+        click: (data: DocumentListResClient) =>
           history.push(
             `/${UserService.getSlugByRole(user?.role)}/management/documents/${data.id}`,
           ),

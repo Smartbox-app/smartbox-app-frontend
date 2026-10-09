@@ -3,7 +3,6 @@ import {
   IsNotEmpty,
   IsPhoneNumber,
   IsPostalCode,
-  MinLength,
   ValidateIf,
 } from 'class-validator';
 import { errors } from 'src/validation/errors';
@@ -132,7 +131,7 @@ export class RentDataDto {
   @IsNotEmpty({
     message: errors.field_required,
   })
-  @IsNip((d) => d.companyCountry, {
+  @IsNip<RentDataDto>((d) => d.companyCountry, {
     message: errors.incorrect_nip,
   })
   nip: string;

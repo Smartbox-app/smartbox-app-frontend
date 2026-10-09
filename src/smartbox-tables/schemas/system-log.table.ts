@@ -47,7 +47,7 @@ export const systemLogTableSchema: TableSchema = {
       sortable: true,
       searchable: true,
       mobile: true,
-      customValue: (row) => {
+      customValue: (row: { appErrorCode?: string | number | null }) => {
         const code = row.appErrorCode;
         if (code === null || code === undefined || code === '') return '-';
         return translateApiErrorCode(Number(code) as ApiErrorCode, 'pl');

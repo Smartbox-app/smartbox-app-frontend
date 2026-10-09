@@ -1,6 +1,6 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { Controller, useForm, type Resolver } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { Button } from 'src/components/Branded';
 import { InputPhone, InputSelect } from 'src/components/Common';
 import { ButtonsContainer } from 'src/components/Layout';

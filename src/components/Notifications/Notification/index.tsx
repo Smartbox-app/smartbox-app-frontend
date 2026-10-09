@@ -1,3 +1,4 @@
+import type { AppDispatch } from 'src/types/app-dispatch';
 import React from 'react';
 
 import { connect } from 'react-redux';
@@ -15,7 +16,7 @@ interface Props {
 }
 
 class Notification extends React.Component<Props> {
-  timeout: any;
+  timeout: ReturnType<typeof setTimeout> | null = null;
 
   componentDidMount() {
     this.timeout = setTimeout(() => {
@@ -40,7 +41,7 @@ class Notification extends React.Component<Props> {
   }
 }
 
-const mapDispatchToProps = (dispatch: any) =>
+const mapDispatchToProps = (dispatch: AppDispatch) =>
   bindActionCreators(
     {
       hideNotification: notifications.hideNotification,

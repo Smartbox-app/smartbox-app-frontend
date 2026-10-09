@@ -1,6 +1,6 @@
 import { isBefore } from 'date-fns';
 import { useEffect, useMemo } from 'react';
-import { MyRentDetails } from 'smartbox-types';
+import { MyRentDetails, RentAgreementType } from 'smartbox-types';
 import { SectionHeader } from 'src/components/Layout';
 import { Button, Section } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
@@ -37,16 +37,6 @@ const StyledMissingPeriodPayment = styled('li')(({ theme }) => ({
   },
 }));
 
-const Info = styled('div')(({ theme }) => ({
-  display: 'flex',
-  gap: theme.spacing * 2,
-}));
-
-const StyledIcon = styled('span')(({ theme }) => ({
-  paddingTop: theme.spacing / 4,
-  color: theme.colors.surface.error.primary,
-}));
-
 // @TODO HANDLE
 export const PeriodUnpaidAlert = ({ rent }: Props) => {
   const { tenant } = useTenant();
@@ -59,9 +49,10 @@ export const PeriodUnpaidAlert = ({ rent }: Props) => {
   } = usePayForPeriodMutation();
 
   const unpaidPeriods = useMemo(() => {
-    return rent.periods
+    return (rent.periods ?? [])
       .filter(
         (period) =>
+          rent.agreementType === RentAgreementType.OpenEnded && !period.paid ||
           isBefore(new Date(period.startAt), new Date()) && !period.paid,
       )
       .sort((a, b) =>
@@ -85,8 +76,12 @@ export const PeriodUnpaidAlert = ({ rent }: Props) => {
     <Section>
       <SectionHeader title="Nieopłacone okresy" />
       <StyledMissingPeriodLists>
-        {unpaidPeriods.map((period) => (
-          <StyledMissingPeriodPayment key={period.id}>
+        {unpaidPeriods.map((period, index) => {
+          const periodId =
+            'id' in period && typeof period.id === 'string' ? period.id : undefined;
+
+          return (
+          <StyledMissingPeriodPayment key={periodId ?? index}>
             <div>
               {dateOnly(period.startAt)} - {dateOnly(period.finishAt)} -{' '}
               <strong>{formatPrice(period.value)}</strong>
@@ -96,12 +91,15 @@ export const PeriodUnpaidAlert = ({ rent }: Props) => {
               type="button"
               size="large"
               iconLeft={<Wallet />}
-              disabled={isPending || !!data || !period.invoiceId}
-              onClick={() => pay(period.id)}
+              disabled={isPending || !!data || !period.invoiceId || !periodId}
+              onClick={() => {
+                if (periodId) pay(periodId);
+              }}
               text={__('application.pay')}
             />
           </StyledMissingPeriodPayment>
-        ))}
+          );
+        })}
       </StyledMissingPeriodLists>
     </Section>
   );

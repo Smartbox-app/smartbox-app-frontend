@@ -23,7 +23,6 @@ import {
   useTestTenantSmtpMutation,
 } from 'src/mutations';
 import { successNotification } from 'src/actions/notifications';
-import { useTenant } from 'src/hooks/useTenant';
 import { TenantSmtpConfigFormDto } from './dto/TenantSmtpConfigFormDto';
 import type { UpdateTenantSmtpBody } from 'src/mutations/useUpdateTenantSmtpMutation';
 
@@ -49,7 +48,6 @@ const mapToPayload = (data: TenantSmtpConfigFormDto): UpdateTenantSmtpBody => {
 
 export const ManageTenantSmtp = ({ userId }: Props) => {
   const dispatch = useDispatch();
-  const { tenant } = useTenant();
   const { data, isPending: loadingConfig } = useTenantSmtpConfigQuery(userId);
   const {
     mutate,
@@ -118,7 +116,7 @@ export const ManageTenantSmtp = ({ userId }: Props) => {
   const handleSendTest = () => {
     const to = testRecipient.trim();
     if (!to) return;
-    sendTest({ ownerUserId: userId, body: { to } });
+    sendTest({ body: { to } });
   };
 
   if (loadingConfig && !data) {

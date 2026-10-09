@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import {
   AdminRentListDetails,
+  RentAgreementType,
   RentDescription,
   RentDetailsRes,
 } from 'smartbox-types';
@@ -44,6 +45,7 @@ export const RentHistoryModal = ({ description, rent }: Props) => {
             description={description}
             rentId={fullRent.id}
             paymentType={fullRent.paymentType}
+            isOpenEnded={fullRent.agreementType === RentAgreementType.OpenEnded}
             periods={fullRent.periods}
             decisionFinishAt={fullRent.decisionFinishAt}
           />

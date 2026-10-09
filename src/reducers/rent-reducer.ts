@@ -1,7 +1,7 @@
 import { MyRentList, RentStatus } from 'smartbox-types';
 
 export type RentsStatus = {
-  singleRent: MyRentList;
+  singleRent: MyRentList | null;
   stockId: string;
   showUserStockMap: boolean;
   loading: boolean;
@@ -24,6 +24,7 @@ const initialState: RentsStatus = {
     boxAdditionalInfo: '',
     boxNumber: '',
     createdAt: new Date(),
+    decisionFinishAt: new Date(),
     startAt: new Date(),
     finishAt: new Date(),
     status: RentStatus.reserved,
@@ -31,14 +32,13 @@ const initialState: RentsStatus = {
     stockName: '',
     stockId: '',
     number: '',
-    getProps: () => [],
   },
   stockId: '',
   showUserStockMap: false,
   loading: false,
 };
 
-export default (state: RentsStatus = initialState, action: Action): any => {
+export default (state: RentsStatus = initialState, action: Action): RentsStatus => {
   switch (action.type) {
     case 'CLEAR_ORDER': {
       return {

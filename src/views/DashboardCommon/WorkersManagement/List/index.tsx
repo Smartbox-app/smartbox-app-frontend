@@ -1,17 +1,16 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { FieldType, TableSchemaField, usersList } from 'smartbox-tables';
-import { IUser, UserStatus, UserType } from 'smartbox-types';
+import { UserListRes, UserStatus, UserType } from 'smartbox-types';
 import { ApiTable } from '../../../../components/Common';
 import { Button } from '../../../../components/Branded';
 import { ButtonsContainer } from '../../../../components/Layout';
 import { __ } from '../../../../helpers/i18n';
 import { InteractiveTableSchema } from '../../../../utils/table-schema-utils';
-import { modal, user } from '../../../../actions';
 import { isWorker } from '../../../../utils/role-check';
 
 import EditAssign from './EditAssign';
-import { HeaderWithActions, PageHeader, Section } from 'src/components/ui';
+import { HeaderWithActions, Section } from 'src/components/ui';
 import UserService from 'src/services/user-service';
 import { showModal } from 'src/actions/modal';
 import { blockUser, enableUser } from 'src/actions/users';
@@ -29,7 +28,7 @@ export const List = () => {
       mobile: true,
       defaultSort: true,
       type: FieldType.Custom,
-      customRender: (value, field, userData) =>
+      customRender: (value, field, userData: UserListRes) =>
         getLockButton(value, field, userData),
     })
     .addFieldAfter('role', {
@@ -38,14 +37,14 @@ export const List = () => {
       mobile: true,
       type: FieldType.Custom,
       sortable: true,
-      customRender: (value, field, userData) =>
+      customRender: (value, field, userData: UserListRes) =>
         getAssignButton(value, field, userData),
     });
 
   const getAssignButton = (
-    value: any,
-    field: TableSchemaField,
-    userData: IUser,
+    _value: unknown,
+    _field: TableSchemaField,
+    userData: UserListRes,
   ) => {
     if (isWorker(userData.role)) {
       return (
@@ -59,15 +58,14 @@ export const List = () => {
           />
         </ButtonsContainer>
       );
-    } else {
-      return __('application.notApplicable');
     }
+    return __('application.notApplicable');
   };
 
   const getLockButton = (
-    value: boolean,
+    _value: unknown,
     field: TableSchemaField,
-    userData: IUser,
+    userData: UserListRes,
   ) => {
     if (userData.status === UserStatus.blocked) {
       return (
@@ -79,17 +77,16 @@ export const List = () => {
           />
         </ButtonsContainer>
       );
-    } else {
-      return (
-        <ButtonsContainer max>
-          <Button
-            text="application.block"
-            danger
-            click={() => dispatch(blockUser(userData.id))}
-          />
-        </ButtonsContainer>
-      );
     }
+    return (
+      <ButtonsContainer max>
+        <Button
+          text="application.block"
+          danger
+          click={() => dispatch(blockUser(userData.id))}
+        />
+      </ButtonsContainer>
+    );
   };
 
   return (

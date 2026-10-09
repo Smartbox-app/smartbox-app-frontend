@@ -32,13 +32,8 @@ const List = () => {
 
   const hasAdminAccess = [UserRole.admin].includes(user!.role);
   const hasFullAccess = [UserRole.admin, UserRole.client].includes(user!.role);
-  const hasApiAccess =
-    tenant && 'hasApiAccess' in tenant ? tenant.hasApiAccess : false;
-  const showStockId = hasAdminAccess || hasApiAccess;
 
-  if (!showStockId) {
-    scheme.removeFields('id');
-  }
+  scheme.removeFields('id');
 
   const handleReportDownload = () => {
     dispatch(showModal(<DownloadReportModal reportType="rent" />));

@@ -11,7 +11,7 @@ import { __ } from 'src/helpers/i18n';
 
 @ValidatorConstraint({ name: 'atLeastOne', async: false })
 export class AtLeastOneSelected implements ValidatorConstraintInterface {
-  validate(dval: any, args: ValidationArguments) {
+  validate(_dval: unknown, args: ValidationArguments) {
     const dto = args.object as NotificationDto;
 
     return dto.email === true || dto.sms === true;

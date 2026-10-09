@@ -1,7 +1,7 @@
 import React from 'react';
 import { ItfApiForm } from 'itf_formbuilder_react';
 import { UserRole } from 'smartbox-types';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Button, Spinner } from '../../../../components/Branded';
 import {
   ButtonsContainer,
@@ -10,7 +10,7 @@ import {
 } from '../../../../components/Layout';
 import ApiService from '../../../../services/api-service';
 import { formOnTranslateString } from '../../../../utils/trans-form';
-import { ApplicationState } from '../../../../reducers';
+
 import { successNotification } from '../../../../actions/notifications';
 import { __ } from '../../../../helpers/i18n';
 import { mapFields } from '../../../../utils/fields-mapper';
@@ -40,14 +40,20 @@ const ManageTenantSlides = ({ userId }: Props) => {
       ? `tenant/admin/slides/${userId}`
       : 'tenant/slides';
 
-  const customSendFetcher = (formId: string, values) => {
+  const customSendFetcher = (
+    formId: string,
+    values: { slides?: File[]; [key: string]: string | File[] | undefined },
+  ) => {
     const fd = new FormData();
     for (const key in values) {
-      if (key === 'slides' && values.slides) {
-        for (const file of values.slides) {
+      const value = values[key];
+      if (key === 'slides' && Array.isArray(value)) {
+        for (const file of value) {
           fd.append('slides', file);
         }
-      } else fd.append(key, values[key]);
+      } else if (typeof value === 'string') {
+        fd.append(key, value);
+      }
     }
 
     return ApiService.sendForm(sendUrl, fd, 'PATCH');

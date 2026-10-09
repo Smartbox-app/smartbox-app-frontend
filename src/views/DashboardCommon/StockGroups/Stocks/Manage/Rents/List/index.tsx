@@ -23,7 +23,8 @@ const List = () => {
     .removeFields('description', 'id', 'userId')
     .modifyFieldStatic('status', {
       searchableValues: rentStatusSearchValues(),
-      customValue: (row) => translateBoxDisplayStatus(row.status),
+      customValue: (row: { status?: Parameters<typeof translateBoxDisplayStatus>[0] }) =>
+        translateBoxDisplayStatus(row.status),
     })
     .addFieldAtTheEnd({
       name: __('application.actions'),

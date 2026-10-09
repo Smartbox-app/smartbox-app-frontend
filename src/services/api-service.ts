@@ -1,3 +1,4 @@
+import type { AppDispatch } from 'src/types/app-dispatch';
 import { ApiErrorCode, ApiResult } from 'smartbox-types';
 import { Capacitor, CapacitorHttp } from '@capacitor/core';
 import * as notifications from '../actions/notifications';
@@ -6,12 +7,25 @@ import { history } from '../history';
 import { Preferences } from '@capacitor/preferences';
 
 import { getApiBaseUrl } from '../config/api-url';
-import { queryClient } from '../query-client';
-import { clearUserSession } from '../actions/auth';
-import { order } from '../actions';
+
 import { getCachedTenant } from '../queries/useGetTenantQuery/tenant-query';
 
 const getUrl = async () => getApiBaseUrl();
+
+type SuccessHandler<T> = {
+  (payload: T): void;
+} | null;
+type ErrorBody = {
+  form_errors?: unknown;
+  result?: unknown;
+  statusCode?: number;
+  error_code?: string;
+  payload?: unknown;
+};
+type ErrorHandler = {
+  (data: ErrorBody): boolean | void;
+} | null;
+type StatusBody = { statusCode?: number };
 
 const handleUnauthorized = async () => {
   // queryClient.setQueryData(['my-details'], null);
@@ -39,16 +53,16 @@ export default class ApiService {
     return `${url}?tenantId=${tenantIdentifier}`;
   };
 
-  static call = async (
-    dispatch: any,
+  static call = async <R = unknown>(
+    dispatch: AppDispatch,
     method: string,
     successAction: string,
     failedAction: string,
-    successCb: any,
-    failedCb: any,
+    successCb: SuccessHandler<R>,
+    failedCb: ErrorHandler,
     url: string,
     loadingAction = 'LOADING',
-    requestData?: any,
+    requestData?: object,
   ) => {
     dispatch({ type: loadingAction, payload: true });
 
@@ -126,7 +140,7 @@ export default class ApiService {
             );
           }
       }
-    } catch (error) {
+    } catch {
       dispatch(notifications.errorNotification(ApiErrorCode.OtherError));
       dispatch({ type: failedAction, payload: ApiErrorCode.OtherError });
       // if (SessionService.isUserSet()) dispatch(auth.clearUserSession());
@@ -135,12 +149,12 @@ export default class ApiService {
     }
   };
 
-  static callFetch = async <R>(
+  static callFetch = async <R = unknown>(
     method: string,
     url: string,
-    successCb?: any,
-    failedCb?: any,
-    requestData?: any,
+    successCb?: ((payload: R) => void) | null,
+    failedCb?: ((data: ErrorBody) => boolean | void) | null,
+    requestData?: object,
     throwError?: boolean,
     muteNotification?: boolean,
   ) => {
@@ -185,10 +199,8 @@ export default class ApiService {
         default:
           if (ApiService.is401(data)) {
             await handleUnauthorized();
-          } else {
-            if (!muteNotification)
+          } else if (!muteNotification)
               store.dispatch(notifications.errorNotification(data.error_code));
-          }
       }
     } catch (error) {
       if (!muteNotification && !throwError)
@@ -223,26 +235,28 @@ export default class ApiService {
   };
 
   static loadForm = async (url: string) => {
-    return JSON.parse(((await ApiService.callFetch('GET', url)) as any).form);
+    const payload = await ApiService.callFetch<{ form: string }>('GET', url);
+    if (!payload) return {};
+    return JSON.parse(payload.form);
   };
 
-  static sendForm = async (
+  static sendForm = (
     url: string,
-    values: any,
+    values: object,
     method = 'POST',
-    successCb?: any,
-    failedCb?: any,
-  ): Promise<any | void> => {
-    return new Promise(async (resolve, reject) => {
-      await ApiService.callFetch(
+    successCb?: (payload: unknown) => void,
+    failedCb?: (data: ErrorBody) => void,
+  ): Promise<void> => {
+    return new Promise<unknown>((resolve, reject) => {
+      void ApiService.callFetch(
         method,
         url,
-        (payload: any) => {
+        (payload: unknown) => {
           if (successCb) successCb(payload);
 
           resolve(payload);
         },
-        (data: any) => {
+        (data: ErrorBody) => {
           if (data.form_errors) {
             resolve(data);
           } else {
@@ -251,25 +265,25 @@ export default class ApiService {
           }
         },
         values,
-      );
-    });
+      ).catch(reject);
+    }) as Promise<void>;
   };
 
-  static is401 = (response: any) => response.statusCode === 401;
+  static is401 = (response: StatusBody) => response.statusCode === 401;
 
-  static is404 = (response: any) => response.statusCode === 404;
+  static is404 = (response: StatusBody) => response.statusCode === 404;
 
-  static is502 = (response: any) => response.statusCode === 502;
+  static is502 = (response: StatusBody) => response.statusCode === 502;
 
-  static post = async (
-    dispatch: any,
+  static post = async <R = unknown>(
+    dispatch: AppDispatch,
     successAction: string,
     failedAction: string,
-    successCb: any,
-    failedCb: any,
+    successCb: SuccessHandler<R>,
+    failedCb: ErrorHandler,
     url: string,
     loadingAction = 'LOADING',
-    requestData: any,
+    requestData: object,
   ) => {
     await ApiService.call(
       dispatch,
@@ -284,15 +298,15 @@ export default class ApiService {
     );
   };
 
-  static patch = async (
-    dispatch: any,
+  static patch = async <R = unknown>(
+    dispatch: AppDispatch,
     successAction: string,
     failedAction: string,
-    successCb: any,
-    failedCb: any,
+    successCb: SuccessHandler<R>,
+    failedCb: ErrorHandler,
     url: string,
     loadingAction = 'LOADING',
-    requestData?: any,
+    requestData?: object,
   ) => {
     await ApiService.call(
       dispatch,
@@ -307,15 +321,15 @@ export default class ApiService {
     );
   };
 
-  static get = async (
-    dispatch: any,
+  static get = async <R = unknown>(
+    dispatch: AppDispatch,
     successAction: string,
     failedAction: string,
-    successCb: any,
-    failedCb: any,
+    successCb: SuccessHandler<R>,
+    failedCb: ErrorHandler,
     url: string,
     loadingAction = 'LOADING',
-    requestData?: any,
+    requestData?: object,
   ) => {
     await ApiService.call(
       dispatch,
@@ -330,12 +344,12 @@ export default class ApiService {
     );
   };
 
-  static delete = async (
-    dispatch: any,
+  static delete = async <R = unknown>(
+    dispatch: AppDispatch,
     successAction: string,
     failedAction: string,
-    successCb: any,
-    failedCb: any,
+    successCb: SuccessHandler<R>,
+    failedCb: ErrorHandler,
     url: string,
     loadingAction = 'LOADING',
   ) => {
@@ -354,7 +368,7 @@ export default class ApiService {
   static sendForFile = async (
     method: string,
     url: string,
-    data?: any,
+    data?: object,
     excludeApiURL = false,
   ): Promise<{ filename: string; data: string; contentType?: string }> => {
     const headers: {
@@ -371,32 +385,28 @@ export default class ApiService {
 
     const capacitorMethod = data ? CapacitorHttp.post : CapacitorHttp.get;
 
-    try {
-      const wrappedUrl = excludeApiURL
-        ? url
-        : `${ApiService.url}${ApiService.wrapUrlWithTenant(url)}`;
+    const wrappedUrl = excludeApiURL
+      ? url
+      : `${ApiService.url}${ApiService.wrapUrlWithTenant(url)}`;
 
-      const response = await capacitorMethod({
-        headers,
-        url: wrappedUrl,
-        responseType: 'blob',
-        data: data ? data : undefined,
-        webFetchExtra: {
-          credentials: !Capacitor.isNativePlatform() ? 'include' : undefined,
-        },
-      });
-      const received = response.data;
+    const response = await capacitorMethod({
+      headers,
+      url: wrappedUrl,
+      responseType: 'blob',
+      data: data ? data : undefined,
+      webFetchExtra: {
+        credentials: !Capacitor.isNativePlatform() ? 'include' : undefined,
+      },
+    });
+    const received = response.data;
 
-      const filename =
-        response.headers['Filename'] || response.headers['filename'];
+    const filename =
+      response.headers['Filename'] || response.headers['filename'];
 
-      return {
-        filename,
-        data: received,
-        contentType: response.headers['Content-Type'] || response.headers['content-type'],
-      };
-    } catch (e) {
-      throw e;
-    }
+    return {
+      filename,
+      data: received,
+      contentType: response.headers['Content-Type'] || response.headers['content-type'],
+    };
   };
 }

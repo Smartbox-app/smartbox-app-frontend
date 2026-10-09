@@ -3,6 +3,7 @@ import UserService from 'src/services/user-service';
 import { useGetMyDetailsQuery } from 'src/queries';
 import { SingleTab } from 'src/types/tab';
 import { UserRole } from 'smartbox-types';
+import { useTenant } from 'src/hooks/useTenant';
 import {
   Adjustments,
   Alert,
@@ -13,6 +14,8 @@ import {
   Message,
   Size,
   Templates,
+  Calendar,
+  Wallet,
 } from 'src/icons';
 
 export const TENANT_SETTINGS_DEFAULT_SEGMENT = 'appearance';
@@ -24,11 +27,13 @@ export const useTenantSettingsTabs = (
   tabs: SingleTab[];
 } => {
   const { data: user } = useGetMyDetailsQuery();
+  const { tenant } = useTenant();
 
   return useMemo(() => {
     const slug = UserService.getSlugByRole(user?.role as UserRole);
     const basePath = basePathOverride ?? `/${slug}/management/settings`;
     const isAdmin = user?.role === UserRole.admin;
+    const hasTracking = Boolean(tenant?.gtmId || tenant?.metaPixelId);
 
     const tabs: SingleTab[] = [
       {
@@ -36,7 +41,21 @@ export const useTenantSettingsTabs = (
         text: 'application.tenantSettingsBasicData',
         icon: <InfoCircle />,
       },
-
+      {
+        to: `${basePath}/agreements`,
+        text: 'application.tenantSettingsAgreements',
+        icon: <Calendar />,
+      },
+      {
+        to: `${basePath}/communications`,
+        text: 'application.tenantSettingsCommunications',
+        icon: <Alert />,
+      },
+      {
+        to: `${basePath}/integrations`,
+        text: 'application.tenantSettingsIntegrations',
+        icon: <Wallet />,
+      },
       {
         to: `${basePath}/appearance`,
         text: 'application.tenantSettingsAppearance',
@@ -62,11 +81,6 @@ export const useTenantSettingsTabs = (
         text: 'application.documents',
         icon: <List />,
       },
-      {
-        to: `${basePath}/messaging`,
-        text: 'application.tenantSettingsMessaging',
-        icon: <Alert />,
-      },
       ...(isAdmin
         ? [
             {
@@ -79,6 +93,10 @@ export const useTenantSettingsTabs = (
               text: 'application.tenantSettingsMobileApps',
               icon: <HomeWifi />,
             },
+          ]
+        : []),
+      ...(isAdmin || hasTracking
+        ? [
             {
               to: `${basePath}/analytics`,
               text: 'application.tenantSettingsAnalytics',
@@ -89,5 +107,5 @@ export const useTenantSettingsTabs = (
     ];
 
     return { basePath, tabs };
-  }, [user, basePathOverride]);
+  }, [user, basePathOverride, tenant?.gtmId, tenant?.metaPixelId]);
 };

@@ -1,33 +1,26 @@
 import React, { useEffect } from "react";
 import { Route, Redirect } from "react-router-dom";
-import { connect, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { UserRole } from "smartbox-types";
-import { bindActionCreators } from "redux";
-import { stock, stockGroup } from "../../../actions";
+import { getStockList } from "../../../actions/stock";
+import { getStockGroupsList } from "../../../actions/stock-group";
 import { rememberRedirect } from "../../../utils/remeber-redirect";
 import { useGetMyDetailsQuery } from "../../../queries";
 
 interface Props {
-  getStockList: () => void;
-  getStockGroupsList: () => void;
-  component: any;
+  component: React.ComponentType;
   exact?: boolean;
   path?: string;
 }
 
-const RouteAdmin = ({
-  exact,
-  path,
-  component,
-  getStockList,
-  getStockGroupsList,
-}: Props) => {
+const RouteAdmin = ({ exact, path, component }: Props) => {
+  const dispatch = useDispatch();
   const { data: user } = useGetMyDetailsQuery();
 
   useEffect(() => {
-    getStockList();
-    getStockGroupsList();
-  }, []);
+    dispatch(getStockList());
+    dispatch(getStockGroupsList());
+  }, [dispatch]);
 
   if (!user || user.role !== UserRole.admin) {
     return <Route render={() => <Redirect to="/" />} />;
@@ -36,7 +29,4 @@ const RouteAdmin = ({
   return <Route exact={exact} path={path} component={component} />;
 };
 
-const mapDispatchToProps = (dispatch: any) =>
-  bindActionCreators({ ...stock, ...stockGroup }, dispatch);
-
-export default connect(null, mapDispatchToProps)(RouteAdmin);
+export default RouteAdmin;

@@ -13,12 +13,6 @@ interface Props {
   addonId: string;
 }
 
-const StyledSelectedVariant = styled('div')`
-  display: flex;
-  justify-content: space-between;
-  gap: 5px;
-`;
-
 const StyledVariantPrice = styled('div')`
   font-size: 14px;
   font-weight: 300;

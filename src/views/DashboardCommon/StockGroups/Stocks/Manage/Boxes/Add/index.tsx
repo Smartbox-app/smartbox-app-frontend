@@ -4,7 +4,6 @@ import { useDispatch } from 'react-redux';
 import {
   ButtonsContainer,
   FormContainer,
-  SimpleHeader,
 } from '../../../../../../../components/Layout';
 import { Button, Spinner } from '../../../../../../../components/Branded';
 import ApiService from '../../../../../../../services/api-service';
@@ -18,6 +17,7 @@ import { mapFields } from '../../../../../../../utils/fields-mapper';
 import { useParams } from 'react-router';
 import { useGetMyDetailsQuery } from 'src/queries';
 import { HeaderWithActions, Section } from 'src/components/ui';
+import { BoxReq } from 'smartbox-types';
 
 const Add = () => {
   const dispatch = useDispatch();
@@ -57,7 +57,7 @@ const Add = () => {
           schemaMayBeDynamic={true}
           loadingInfo={<Spinner transparent />}
           schemaFetcher={() => ApiService.loadForm(fetchUrl)}
-          sendFetcher={(formId: string, values: any) =>
+          sendFetcher={(_formId: string, values: BoxReq) =>
             ApiService.sendForm(sendUrl, { ...values, stockId })
           }
           submitButton={submitButton}

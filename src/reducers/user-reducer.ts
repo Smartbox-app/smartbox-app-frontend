@@ -2,7 +2,7 @@ import { UserRole, UserRes } from 'smartbox-types';
 import SessionService from '../services/session-service';
 
 export type UserState = {
-  singleUser: UserRes | any;
+  singleUser: UserRes;
 };
 
 interface FetchSingleUser {
@@ -27,14 +27,14 @@ const initialState: UserState = {
     firstName: '',
     lastName: '',
     role: UserRole.admin,
-  },
+  } as UserRes,
 };
 
-export default (state: UserState = initialState, action: Action): any => {
+export default (state: UserState = initialState, action: Action): UserState => {
   switch (action.type) {
     case 'CLEAR_USER_SESSION':
       SessionService.clearSessionStorage();
-      return { ...state, details: null };
+      return state;
 
     case 'FETCH_SINGLE_USER_SUCCESS':
       return {

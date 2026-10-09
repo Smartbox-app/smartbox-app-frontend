@@ -1,9 +1,9 @@
 import React, { useMemo } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { MyRentDetails, RentStatus } from 'smartbox-types';
-import { FormType } from '../../../../types/order-form';
-import { modal, order, singleRent } from '../../../../actions';
+import { showModal } from '../../../../actions/modal';
+import { clearOrder, updateFormData } from '../../../../actions/order';
+import { toggleShowUserStockMap } from '../../../../actions/single-rent';
 import { history } from 'src/history';
 import { ButtonsContainer } from '../../../../components/Layout';
 import { ApplicationState } from '../../../../reducers';
@@ -15,37 +15,32 @@ import { Button, Tabs } from 'src/components/ui';
 import { Calendar, CloseCircle, InfoCircle, Map } from 'src/icons';
 import { GateButton } from './GateButton';
 import { KsmGateButton } from './KsmGateButton';
+import { isOpenEndedAgreement, hasDateValue } from 'src/utils/rent';
+import { dateOnly } from 'src/utils/format-date';
+import { __ } from 'src/helpers/i18n';
 
 interface Props {
-  showUserStockMap: boolean;
   rent: MyRentDetails;
   isAuthorizedViewer?: boolean;
-  showModal: (content: React.ReactNode) => void;
-  updateFormData: (data: Partial<FormType>) => void;
-  toggleShowUserStockMap: () => void;
-  clearOrder: () => void;
 }
 
-const Action = ({
-  showModal,
-  updateFormData,
-  rent,
-  clearOrder,
-  showUserStockMap,
-  toggleShowUserStockMap,
-  isAuthorizedViewer = false,
-}: Props) => {
+const Action = ({ rent, isAuthorizedViewer = false }: Props) => {
+  const dispatch = useDispatch();
+  const showUserStockMap = useSelector(
+    (state: ApplicationState) => state.rent.showUserStockMap,
+  );
   const { data: user } = useGetMyDetailsQuery();
 
   const handleExtendingOrderData = (rentId: string) => {
-    clearOrder();
-    updateFormData({ size: rent.size.toString(), stock: rent.stockId });
+    dispatch(clearOrder());
+    dispatch(updateFormData({ size: rent.size.toString(), stock: rent.stockId }));
     history.push(
       `/${UserService.getSlugByRole(user!.role)}/order/step/duration/${rentId}`,
     );
   };
 
   const canExtendRent = useMemo(() => {
+    if (isOpenEndedAgreement(rent.agreementType)) return false;
     if (rent.pendingPayments) return false;
     if (rent.status !== RentStatus.rented) return false;
     if ((rent.periods || []).some((period) => !period.paid)) return false;
@@ -53,9 +48,59 @@ const Action = ({
   }, [rent]);
 
   const canEndRent = useMemo(() => {
+    if (rent.status === RentStatus.endedUnpaid) return false;
+    if (rent.status === RentStatus.awaitingFinish) {
+      if (
+        hasDateValue(rent.finishAt) &&
+        new Date(rent.finishAt) < new Date()
+      ) {
+        return false;
+      }
+      return true;
+    }
+    if (isOpenEndedAgreement(rent.agreementType)) {
+      if (
+        hasDateValue(rent.finishAt) &&
+        rent.status === RentStatus.rented
+      ) {
+        return new Date(rent.finishAt) >= new Date();
+      }
+      if (hasDateValue(rent.finishAt)) return false;
+      const now = new Date();
+      return !(rent.periods || []).some(
+        (period) => !period.paid && new Date(period.startAt) <= now,
+      );
+    }
     if ((rent.periods || []).some((period) => !period.paid)) return false;
     return true;
   }, [rent]);
+
+  const isPastScheduledFinish =
+    isOpenEndedAgreement(rent.agreementType) &&
+    hasDateValue(rent.finishAt) &&
+    new Date(rent.finishAt) < new Date();
+  const isAwaitingFinish =
+    !isPastScheduledFinish &&
+    (rent.status === RentStatus.awaitingFinish ||
+      (isOpenEndedAgreement(rent.agreementType) &&
+        hasDateValue(rent.finishAt) &&
+        rent.status === RentStatus.rented));
+  const isScheduledOpenEndedEnd =
+    isOpenEndedAgreement(rent.agreementType) &&
+    rent.status !== RentStatus.endedUnpaid &&
+    isAwaitingFinish;
+  const showEndedUnpaidAlert =
+    rent.status === RentStatus.endedUnpaid ||
+    (isPastScheduledFinish &&
+      (rent.status === RentStatus.awaitingFinish ||
+        rent.status === RentStatus.rented));
+
+  let endButtonText = 'application.end';
+  if (isAwaitingFinish) {
+    endButtonText = 'application.confirmOpenEndedFinish';
+  } else if (isOpenEndedAgreement(rent.agreementType)) {
+    endButtonText = 'application.endAgreement';
+  }
 
   return (
     <>
@@ -64,13 +109,13 @@ const Action = ({
           tabs={[
             {
               text: 'application.showDetail',
-              onClick: toggleShowUserStockMap,
+              onClick: () => dispatch(toggleShowUserStockMap()),
               icon: <InfoCircle />,
               active: !showUserStockMap,
             },
             {
               text: 'application.showOnStockMap',
-              onClick: toggleShowUserStockMap,
+              onClick: () => dispatch(toggleShowUserStockMap()),
               icon: <Map />,
               active: showUserStockMap,
             },
@@ -88,45 +133,53 @@ const Action = ({
             )}
           {!isAuthorizedViewer ? (
             <>
+              {!isOpenEndedAgreement(rent.agreementType) ? (
               <Button
                 iconLeft={<Calendar />}
                 text="application.goToAgreement"
                 onClick={() => handleExtendingOrderData(rent.id)}
                 disabled={!canExtendRent}
               />
+              ) : null}
               <Button
                 disabled={!canEndRent}
                 iconLeft={<CloseCircle />}
-                text="application.end"
+                text={endButtonText}
                 variant="error"
-                onClick={() => showModal(<EndingModal rent={rent} />)}
+                onClick={() => dispatch(showModal(<EndingModal rent={rent} />))}
               />
             </>
           ) : null}
         </ButtonsContainer>
       </ButtonsContainer>
-      {!isAuthorizedViewer && !canExtendRent ? (
+      {!isAuthorizedViewer &&
+      !isOpenEndedAgreement(rent.agreementType) &&
+      !canExtendRent ? (
         <Alert type="notice" text="application.cantExtendDescription" />
       ) : null}
-      {!isAuthorizedViewer && !canEndRent ? (
+      {!isAuthorizedViewer && showEndedUnpaidAlert ? (
+        <Alert type="error" text="application.endedUnpaidContactStock" />
+      ) : null}
+      {!isAuthorizedViewer && isScheduledOpenEndedEnd ? (
+        <Alert type="notice">
+          {__(
+            isAwaitingFinish
+              ? 'application.openEndedAwaitingFinishInfo'
+              : 'application.openEndedAccessUntil',
+            {
+              date: dateOnly(rent.finishAt),
+            },
+          )}
+        </Alert>
+      ) : null}
+      {!isAuthorizedViewer &&
+      rent.status !== RentStatus.endedUnpaid &&
+      !isScheduledOpenEndedEnd &&
+      !canEndRent ? (
         <Alert type="notice" text="application.cantEndDescription" />
       ) : null}
     </>
   );
 };
 
-const mapStateToProps = (state: ApplicationState) => ({
-  showUserStockMap: state.rent.showUserStockMap,
-});
-
-const mapDispatchToProps = (dispatch: any) =>
-  bindActionCreators(
-    {
-      ...modal,
-      ...singleRent,
-      ...order,
-    },
-    dispatch,
-  );
-
-export default connect(mapStateToProps, mapDispatchToProps)(Action);
+export default Action;

@@ -53,7 +53,7 @@ export const systemLogAdminTableSchema: TableSchema = {
       sortable: false,
       searchable: false,
       mobile: true,
-      customValue: (row) => {
+      customValue: (row: { appErrorCode?: string | number | null }) => {
         const code = row.appErrorCode;
         if (code === null || code === undefined || code === '') return '-';
         return translateApiErrorCode(Number(code) as ApiErrorCode, 'pl');

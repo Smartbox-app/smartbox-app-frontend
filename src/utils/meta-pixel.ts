@@ -33,16 +33,38 @@ export type MetaPurchasePayload = MetaEcommerceValuePayload & {
     item_price?: number;
   }>;
   num_items?: number;
+  /** new_rent | extension | period_payment */
+  payment_type?: string;
+  /** Payment id on the Purchase parameters. */
+  order_id?: string;
+  /** Payment id. Fourth fbq argument; dedupes this browser event against a Conversions API event. */
+  eventId?: string;
   /** Plain-text email for Advanced Matching; hashed by the pixel (SHA-256). */
   email?: string;
   /** App user id; sent as Meta `external_id`. */
   userId?: string;
 };
 
+export type TrackingLineItem = {
+  id: string;
+  name?: string;
+  price: number;
+};
+
 export type MetaInitiateCheckoutPayload = MetaEcommerceValuePayload & {
   content_name?: string;
   content_ids?: string[];
   content_type?: string;
+  contents?: Array<{
+    id: string;
+    quantity: number;
+    item_price?: number;
+  }>;
+  num_items?: number;
+  /** new_rent | extension */
+  payment_type?: string;
+  /** GA4 line items. Not sent to Meta. */
+  items?: TrackingLineItem[];
   email?: string;
   userId?: string;
 };
@@ -105,31 +127,39 @@ export const setMetaUserData = (user?: { email?: string; userId?: string }) => {
 export const trackMetaEvent = (
   event: string,
   params?: Record<string, unknown>,
+  eventId?: string,
 ) => {
   if (!window.fbq || !initializedPixelId) return;
+  const options = eventId ? { eventID: eventId } : undefined;
+  if (params && options) {
+    window.fbq('track', event, params, options);
+    return;
+  }
   if (params) {
     window.fbq('track', event, params);
-  } else {
-    window.fbq('track', event);
+    return;
   }
+  window.fbq('track', event);
 };
 
-export const trackMetaCompleteRegistration = () => {
+export const trackMetaCompleteRegistration = (email?: string) => {
+  setMetaUserData({ email });
   trackMetaEvent('CompleteRegistration');
 };
 
 export const trackMetaInitiateCheckout = (
   payload: MetaInitiateCheckoutPayload,
 ) => {
-  const { email, userId, ...eventPayload } = payload;
+  const { email, userId, items, ...eventPayload } = payload;
+  void items;
   setMetaUserData({ email, userId });
   trackMetaEvent('InitiateCheckout', eventPayload);
 };
 
 export const trackMetaPurchase = (payload: MetaPurchasePayload) => {
-  const { email, userId, ...eventPayload } = payload;
+  const { email, userId, eventId, ...eventPayload } = payload;
   setMetaUserData({ email, userId });
-  trackMetaEvent('Purchase', eventPayload);
+  trackMetaEvent('Purchase', eventPayload, eventId);
 };
 
 export const isMetaPixelReady = () =>

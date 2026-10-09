@@ -40,7 +40,7 @@ const ManageTenantData = ({ userId }: Props) => {
       ? `tenant/admin/data/${userId}`
       : 'tenant/data';
 
-  const customSendFetcher = (formId: string, values) => {
+  const customSendFetcher = (formId: string, values: object) => {
     return ApiService.sendForm(sendUrl, values, 'PATCH');
   };
 

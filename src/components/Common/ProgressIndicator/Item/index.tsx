@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 import { __ } from '../../../../helpers/i18n';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { getColorForBackground } from '../../../../utils/color';
 
 interface Props {
@@ -72,7 +72,7 @@ const ItemDescription = styled('div')<{ done: boolean; current: boolean }>(
 export const Item = ({ value, order, done, current }: Props) => {
   return (
     <ItemWrapper>
-      <StyledItem done={done} current={current} className={`item-icon`}>
+      <StyledItem done={done} current={current} className="item-icon">
         {done ? <span className="fa fa-check" /> : order}
       </StyledItem>
       <ItemDescription done={done} current={current}>

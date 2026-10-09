@@ -7,10 +7,13 @@ import {
   BoxMapLayoutUpdate,
   getBoxHeight,
   getBoxWidth,
+  getMapBoxFontSize,
+  layoutFromMoveableRect,
+  normalizeMapPosition,
 } from '../utils/map-layout';
 import { useMapLayoutContext } from '../MapLayoutContext';
 import { Tooltip } from 'src/components/ui';
-import { getAdminBoxMapTooltipContent } from '../utils/admin-box-tooltip';
+import { AdminBoxMapTooltipContent } from '../AdminBoxMapTooltipContent';
 
 interface Props {
   box: BoxMapRes | BoxMapUserRes;
@@ -23,12 +26,6 @@ interface Props {
   onBoxClick?: (box: BoxMapRes) => void;
 }
 
-const getFontSize = (width: number) => {
-  if (width > 80) return 13;
-  if (width > 60) return 12;
-  if (width > 50) return 11;
-  return 10;
-};
 
 const commonStyles = css`
   display: flex;
@@ -48,7 +45,7 @@ const StyledDraggableContent = styled.div<{
   align-items: center;
   justify-content: center;
   pointer-events: none;
-  font-size: ${(props) => getFontSize(props.width || 0)}px;
+  font-size: ${(props) => getMapBoxFontSize(props.width || 0)}px;
   text-align: center';
 `;
 
@@ -60,7 +57,7 @@ const StyledBox = styled.div<{
 }>`
   background: #fff;
   border: 1px solid ${(props) => props.theme.colors.primary};
-  font-size: ${(props) => getFontSize(props.width || 0)}px;
+  font-size: ${(props) => getMapBoxFontSize(props.width || 0)}px;
   text-align: center;
   ${commonStyles}
   ${(props) =>
@@ -126,9 +123,15 @@ ${(props) =>
       background-color: ${props.stock.colorFailure};
     `};
   ${(props) =>
-    props.status === RentStatus.pendingFinish &&
+    (props.status === RentStatus.pendingFinish ||
+      props.status === RentStatus.awaitingFinish) &&
     css`
       background-color: ${props.stock.colorPendingFinish};
+    `};
+  ${(props) =>
+    props.status === RentStatus.endedUnpaid &&
+    css`
+      background-color: ${props.stock.colorNoPaidPeriod};
     `};
 
   ${(props) =>
@@ -162,13 +165,6 @@ const SingleBox = ({
   const [target, setTarget] = useState<HTMLDivElement | null>(null);
   const mapLayoutContext = useMapLayoutContext();
 
-  const normalizePosition = (position: number, rotation: number) => {
-    if (rotation !== 0) return position;
-
-    const rest = position % 5;
-    return rest > 2 ? position + (5 - rest) : position - rest;
-  };
-
   const style: CSSProperties = {
     position: 'absolute',
   };
@@ -179,13 +175,12 @@ const SingleBox = ({
 
     const { beforeOrigin, offsetHeight, offsetWidth, rotation } = rect;
 
-    return {
-      x: Math.round(beforeOrigin[0] - offsetWidth / 2),
-      y: Math.round(beforeOrigin[1] - offsetHeight / 2),
-      width: Math.round(offsetWidth),
-      height: Math.round(offsetHeight),
-      rotation: Math.round(rotation),
-    };
+    return layoutFromMoveableRect(
+      beforeOrigin,
+      offsetWidth,
+      offsetHeight,
+      rotation,
+    );
   };
 
   const handleInteractionEnd = () => {
@@ -286,8 +281,8 @@ const SingleBox = ({
         width={getBoxWidth(box, stock)}
         style={{
           position: 'absolute',
-          left: normalizePosition(box.x || 0, box.rotation || 0),
-          top: normalizePosition(box.y || 0, box.rotation || 0),
+          left: normalizeMapPosition(box.x || 0, box.rotation || 0),
+          top: normalizeMapPosition(box.y || 0, box.rotation || 0),
           width: getBoxWidth(box, stock),
           height: getBoxHeight(box, stock),
           transform: `rotate(${box.rotation || 0}deg)`,
@@ -297,7 +292,7 @@ const SingleBox = ({
         <Tooltip
           disabled={!admin}
           content={
-            admin ? getAdminBoxMapTooltipContent(box as BoxMapRes) : null
+            admin ? <AdminBoxMapTooltipContent box={box as BoxMapRes} /> : null
           }
         >
           <StyledContent>{box.identifier}</StyledContent>

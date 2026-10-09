@@ -16,7 +16,6 @@ import {
   getBoxLayoutFromBox,
   isSameBoxLayout,
 } from '../StockGroups/Stocks/Manage/Map/utils/map-layout';
-import { useTenant } from 'src/hooks/useTenant';
 import { useFileStorage } from 'src/hooks/useFileStorage';
 
 interface Props {
@@ -80,7 +79,6 @@ const MapView = ({
   >({});
   const resetHandlersRef = useRef(new Map<string, () => void>());
   const { t } = useI18n();
-  const { tenant } = useTenant();
   const dispatch = useDispatch();
   const { mutateAsync: saveMapLayout, isPending: isSaving } =
     useUpdateBoxesMapLayoutMutation(stock.id);
@@ -93,7 +91,7 @@ const MapView = ({
 
   const mapBackgroundUrl = stock.mapBackground ? getAssetPath('map', stock.mapBackground) : null;
 
-  const filteredBoxes = boxes.filter((box, index, all) => {
+  const filteredBoxes = boxes.filter((box, index) => {
     const lastIndex = boxes.findLastIndex((subBox) => box.id === subBox.id);
 
     if (lastIndex === index) return true;

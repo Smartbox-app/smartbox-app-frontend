@@ -1,4 +1,4 @@
-import { MyRentDetails, RentDescription, RentUserData } from 'smartbox-types';
+import { MyRentDetails, RentAgreementType, RentDescription } from 'smartbox-types';
 import { __ } from '../../../../helpers/i18n';
 import { RentHistory } from '../../RentHistory';
 import { Header, Section, Typography } from 'src/components/ui';
@@ -37,9 +37,10 @@ export const Description = ({ description, rent }: Props) => {
       <RentHistory
         description={description}
         rentId={rent.id}
+        isOpenEnded={rent.agreementType === RentAgreementType.OpenEnded}
         paymentType={rent.paymentType}
-        periods={rent.periods}
-      />
-    </Section>
+        periods={rent.periods ?? []}
+          />
+        </Section>
   );
 };

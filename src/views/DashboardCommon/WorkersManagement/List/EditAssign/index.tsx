@@ -1,24 +1,23 @@
 import { ItfApiForm } from "itf_formbuilder_react";
 import React from "react";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import { modal, notifications } from "../../../../../actions";
+import { useDispatch } from "react-redux";
 import { Button, Spinner } from "../../../../../components/Branded";
-import { ReactSelectOverride, ReactCreatableSelectOverride as ReactCreatableSelect } from "../../../../../components/Common/ReactSelectOverride";
 import { ButtonsContainer } from "../../../../../components/Layout";
 import ApiService from "../../../../../services/api-service";
 import { formOnTranslateString } from "../../../../../utils/trans-form";
 import { mapFields } from "../../../../../utils/fields-mapper";
 import { Modal } from "src/components/ui";
 import { __ } from "src/helpers/i18n";
+import { UpdateWorkerStocksReq } from "smartbox-types";
+import { hideModal } from "src/actions/modal";
+import { successNotification } from "src/actions/notifications";
 
 interface Props {
   userId: string;
-  successNotification: (text: string) => void;
-  hideModal: () => void;
 }
 
-const EditAssign = ({ userId, successNotification, hideModal }: Props) => {
+const EditAssign = ({ userId }: Props) => {
+  const dispatch = useDispatch();
   const submitButton = (
     <ButtonsContainer>
       <Button text="application.save" type="submit" primary />
@@ -38,13 +37,13 @@ const EditAssign = ({ userId, successNotification, hideModal }: Props) => {
           schemaCacheEnabled={false}
           loadingInfo={<Spinner transparent />}
           schemaFetcher={() => ApiService.loadForm(fetchUrl)}
-          sendFetcher={(formId: string, values: any) =>
+          sendFetcher={(_formId: string, values: UpdateWorkerStocksReq) =>
             ApiService.sendForm(sendUrl, values, "PATCH")
           }
           submitButton={submitButton}
           onSavedSuccessfully={() => {
-            successNotification("notification.userAssigmentChanged");
-            hideModal();
+            dispatch(successNotification("notification.userAssigmentChanged"));
+            dispatch(hideModal());
           }}
           onRenderFullField={mapFields}
           onTranslateString={formOnTranslateString}
@@ -58,7 +57,4 @@ const EditAssign = ({ userId, successNotification, hideModal }: Props) => {
   );
 };
 
-const mapDispatchToProps = (dispatch: any) =>
-  bindActionCreators({ ...notifications, ...modal }, dispatch);
-
-export default connect(null, mapDispatchToProps)(EditAssign);
+export default EditAssign;

@@ -9,6 +9,7 @@ module.exports = {
         esModuleInterop: true,
         allowSyntheticDefaultImports: true,
         isolatedModules: true,
+        jsx: ts.JsxEmit.React,
       },
       fileName: sourcePath,
     });

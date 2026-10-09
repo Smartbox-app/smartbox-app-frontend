@@ -38,11 +38,11 @@ export const useEndMyRentMutation = () => {
       );
     },
     onSuccess: (_data, { rentId }) => {
-      (queryClient.invalidateQueries({ queryKey: ['my-rents'] }),
-        queryClient.invalidateQueries({ queryKey: ['my-rent-story'] }),
-        queryClient.invalidateQueries({
-          queryKey: myRentDetailsQueryKey(rentId),
-        }));
+      queryClient.invalidateQueries({ queryKey: ['my-rents'] });
+      queryClient.invalidateQueries({ queryKey: ['my-rent-story'] });
+      queryClient.invalidateQueries({
+        queryKey: myRentDetailsQueryKey(rentId),
+      });
       queryClient.invalidateQueries({
         queryKey: ['rent-authorized-users', rentId],
       });

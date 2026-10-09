@@ -3,7 +3,7 @@ import { useFormContext, Controller } from 'react-hook-form';
 import { DocumentDto } from 'src/dto/DocumentDto';
 import { ButtonsContainer, FormContainer } from 'src/components/Layout';
 import { Button, Form } from 'src/components/ui';
-import { InputSelect } from 'src/components/Common';
+import { InputSelect , Alert, ConfirmModal } from 'src/components/Common';
 import { TiptapEditor } from '../components/TiptapEditor';
 import { Spinner } from 'src/components/Branded';
 import {
@@ -14,7 +14,6 @@ import {
 } from 'src/queries';
 import { DocumentType, UserRole } from 'smartbox-types';
 import { useTenant } from 'src/hooks/useTenant';
-import { Alert, ConfirmModal } from 'src/components/Common';
 import { useDispatch } from 'react-redux';
 import { showModal } from 'src/actions/modal';
 import { __ } from 'src/helpers/i18n';
@@ -102,11 +101,12 @@ export const DocumentForm = ({
   return (
     <FormContainer highlight fullWidth>
       {isLoading ? <Spinner overlay halfTransparent /> : null}
-      {hasDraft ? (
+      {hasDraft && (
         <Alert type="notice" text="application.documentDraftExists" />
-      ) : isEditingPublished ? (
+      )}
+      {!hasDraft && isEditingPublished && (
         <Alert type="notice" text="application.documentEditingPublishedInfo" />
-      ) : null}
+      )}
       <Form onSubmit={(event) => event.preventDefault()}>
         {user?.role === UserRole.admin ? (
           <Controller

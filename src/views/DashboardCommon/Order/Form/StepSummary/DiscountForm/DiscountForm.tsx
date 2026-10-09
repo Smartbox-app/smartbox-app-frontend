@@ -40,7 +40,7 @@ export const DiscountForm = ({ stockId, boxGroupId, rentEnd, rentStart }: Props)
   });
   const dispatch = useDispatch();
 
-  const { mutate, isPending, data } = useDiscountCodeMutation(stockId, boxGroupId);
+  const { mutate, data } = useDiscountCodeMutation(stockId, boxGroupId);
 
   const onSubmit = (data: DiscountCodeDto) => {
     if (!isValid) return;

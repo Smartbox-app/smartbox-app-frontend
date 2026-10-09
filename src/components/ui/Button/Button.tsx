@@ -1,10 +1,9 @@
 import { Link } from 'react-router-dom';
 import { getColorForBackground } from '../../../utils/color';
-import styled, { css, DefaultTheme, keyframes } from 'styled-components';
+import styled, { css, DefaultTheme } from 'styled-components';
 import { __ } from '../../../helpers/i18n';
 import { darken } from 'polished';
 import React, {
-  MouseEventHandler,
   ReactNode,
   useEffect,
   useState,
@@ -142,13 +141,11 @@ const buttonStyles = css<ButtonStyleProps>(
   }),
 );
 
-const StyledButton = styled('button')<ButtonStyleProps>(
-  ({ theme }) => buttonStyles,
-);
+const StyledButton = styled('button')<ButtonStyleProps>(() => buttonStyles);
 
-const StyledA = styled('a')<ButtonStyleProps>(({ theme }) => buttonStyles);
+const StyledA = styled('a')<ButtonStyleProps>(() => buttonStyles);
 
-const StyledLink = styled(Link)<ButtonStyleProps>(({ theme }) => buttonStyles);
+const StyledLink = styled(Link)<ButtonStyleProps>(() => buttonStyles);
 
 export const Button = ({
   to,
@@ -176,9 +173,7 @@ export const Button = ({
     }, 150);
   };
 
-  const handleLinkClick = (
-    e: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
-  ) => {
+  const handleLinkClick = () => {
     setClicked(true);
   };
 

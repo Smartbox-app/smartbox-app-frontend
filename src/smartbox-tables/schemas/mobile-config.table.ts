@@ -22,7 +22,7 @@ export const mobileConfigTableSchema: TableSchema = {
       searchable: true,
       sortable: true,
       type: FieldType.Text,
-      customValue: value => configTypeToText[value.type],
+      customValue: (value: { type: string }) => configTypeToText[value.type],
     },
     {
       name: 'Identyfikator aplikacji',

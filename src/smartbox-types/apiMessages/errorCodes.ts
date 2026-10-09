@@ -108,4 +108,10 @@ export enum ApiErrorCode {
   EndRentPhotoRequired,
   EndRentPhotoMobileOnly,
   EndRentPhotoTooOld,
+  OpenEndedAgreementsNotAllowed,
+  FixedTermAgreementsNotAllowed,
+  PaymentMethodNotAllowed,
+  CanNotExtendOpenEndedRent,
+  CanNotDeleteAddonUsedByOpenEndedRent,
+  PinConflict,
 }

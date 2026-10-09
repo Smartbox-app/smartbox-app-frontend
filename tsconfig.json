@@ -14,10 +14,16 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react",
+    "jsx": "react-jsx",
     "types": ["vite/client", "jest"],
     "module": "esnext"
   },
   "extends": "./tsconfig.paths.json",
-  "include": ["src"]
+  "include": ["src"],
+  "exclude": [
+    "src/**/*.spec.ts",
+    "src/**/*.spec.tsx",
+    "src/**/*.test.ts",
+    "src/**/*.test.tsx"
+  ]
 }

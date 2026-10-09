@@ -1,10 +1,13 @@
-import { IBase } from '../base/base.interface';
-import { IUser } from '../user';
-import { CalculatedPriceRes, IPayment, RentUserData } from '..';
+import { CalculatedPriceRes, RentUserData } from '..';
 
 export enum RentPaymentType {
   InAdvance = 'in-advance',
   Installments = 'installments',
+}
+
+export enum RentAgreementType {
+  FixedTerm = 'fixed-term',
+  OpenEnded = 'open-ended',
 }
 
 export type RentDescriptionAddon = {
@@ -16,11 +19,44 @@ export type RentDescriptionAddon = {
   acceptance?: string;
   accepted: boolean;
   price: string;
+  tax: string;
+  file?: string;
+};
+
+export type PeriodDescriptionAddon = {
+  id: string;
+  name: string;
+  slug: string;
+  price: number;
+  tax: string;
+  selectedVariantId?: string;
+};
+
+export interface PeriodDescription {
+  price: number;
+  tax: string;
+  addons: PeriodDescriptionAddon[];
+}
+
+export type OpenEndedPeriodPriceItem = {
+  id: string;
+  name: string;
+  price: number;
+};
+
+export type OpenEndedNextPeriodPreview = {
+  startAt: Date;
+  finishAt: Date;
+  value: number;
+  boxPrice: number;
+  currentValue: number;
+  priceChanged: boolean;
+  addons: OpenEndedPeriodPriceItem[];
 };
 
 export interface RentDescription {
   startAt: Date;
-  finishAt: Date;
+  finishAt?: Date;
   cost: number;
   price: CalculatedPriceRes;
   paymentType?: RentPaymentType;
@@ -31,33 +67,6 @@ export interface RentDescription {
   stockDiscount?: {
     value: number;
   };
-}
-
-export interface IRent extends IBase {
-  number: string;
-  status: RentStatus;
-  startAt: Date;
-  finishAt: Date;
-  owner: IUser;
-  payments: IPayment[];
-  isCompany: boolean;
-  decisionFinishAt: Date;
-  createdAt: Date;
-  description: RentDescription[];
-  data: RentUserData;
-  agreementFile: string;
-  paymentType: RentPaymentType;
-  previousRentId?: string;
-}
-
-export interface IExtension extends IBase {
-  createdAt: Date;
-  to: Date;
-  payment: IPayment;
-  expirationAt: Date;
-  description: RentDescription;
-  paymentType: RentPaymentType;
-  cost: number;
 }
 
 export enum RentStatus {
@@ -71,6 +80,19 @@ export enum RentStatus {
   failure = 'failure',
   noPaidPeriod = 'noPaidPeriod',
   pendingFinish = 'pendingFinish',
+  awaitingFinish = 'awaitingFinish',
+  endedUnpaid = 'endedUnpaid',
+}
+
+export interface RentAuthorizationListQueryRow {
+  id: string;
+  rentId: string;
+  tenantId: string | null;
+  email: string;
+  phone: string | null;
+  boxNumber: string | null;
+  startAt: Date | string;
+  finishAt: Date | string | null;
 }
 
 export interface AdminRentListDetailsQuery {
@@ -79,6 +101,7 @@ export interface AdminRentListDetailsQuery {
   description: string;
   status: RentStatus;
   name: string;
+  firstName: string;
   lastName: string;
   email: string;
   number: string;
@@ -86,9 +109,10 @@ export interface AdminRentListDetailsQuery {
   startAt: Date;
   finishAt: Date;
   paymentType: RentPaymentType;
+  decisionFinishAt: Date | null;
   stockId: string;
   stockName: string;
- }
+}
 
 export interface AdminRentListDetails {
   id: string;

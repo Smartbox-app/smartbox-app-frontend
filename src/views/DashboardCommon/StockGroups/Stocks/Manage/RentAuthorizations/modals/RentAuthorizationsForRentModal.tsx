@@ -68,7 +68,6 @@ export const RentAuthorizationsForRentModal = ({ stockId, rent }: Props) => {
     dispatch(
       showModal(
         <StaffAddRentAuthorizationModal
-          stockId={stockId}
           rentId={rent.id}
         />,
       ),

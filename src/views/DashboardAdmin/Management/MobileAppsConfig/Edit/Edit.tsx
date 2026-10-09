@@ -11,9 +11,10 @@ import { ReactSelectOverride, ReactCreatableSelectOverride as ReactCreatableSele
 import { successNotification } from '../../../../../actions/notifications';
 import { mapFields } from '../../../../../utils/fields-mapper';
 import { __ } from '../../../../../helpers/i18n';
-import { useParams } from 'react-router';
+
 import { hideModal } from '../../../../../actions/modal';
 import { refreshApiTableData } from '../../../../../actions/api-table';
+import { MobileConfigReq } from 'smartbox-types';
 
 export type ExportProps = {
   configId: string;
@@ -41,7 +42,7 @@ const Edit = ({ configId }: ExportProps) => {
         schemaMayBeDynamic={true}
         loadingInfo={<Spinner transparent />}
         schemaFetcher={() => ApiService.loadForm(fetchUrl)}
-        sendFetcher={(formId: string, values: any) =>
+        sendFetcher={(_formId: string, values: MobileConfigReq) =>
           ApiService.sendForm(sendUrl, values, 'PATCH')
         }
         submitButton={submitButton}

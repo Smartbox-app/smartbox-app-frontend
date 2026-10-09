@@ -11,13 +11,12 @@ const isPeriodWithinDescriptionLine = (
   line: RentDescription,
 ) => {
   const lineStart = new Date(line.startAt);
-  const lineFinish = new Date(line.finishAt);
   const periodStart = new Date(period.startAt);
   const periodFinish = new Date(period.finishAt);
 
-  return (
-    !isBefore(periodStart, lineStart) && !isAfter(periodFinish, lineFinish)
-  );
+  if (isBefore(periodStart, lineStart)) return false;
+  if (!line.finishAt) return true;
+  return !isAfter(periodFinish, new Date(line.finishAt));
 };
 
 export const resolveRentAgreementForDescriptionLine = (

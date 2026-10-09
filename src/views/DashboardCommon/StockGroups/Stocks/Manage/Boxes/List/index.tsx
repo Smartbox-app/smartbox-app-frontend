@@ -9,18 +9,16 @@ import {
   StockRes,
   UserRole,
 } from 'smartbox-types';
-import { Alert, ApiTable } from '../../../../../../../components/Common';
+import { Alert, ApiTable , ConfirmModal } from '../../../../../../../components/Common';
 import { Button, Spinner } from '../../../../../../../components/Branded';
 import {
   ButtonsContainer,
-  SimpleHeader,
 } from '../../../../../../../components/Layout';
 import { __ } from '../../../../../../../helpers/i18n';
 import { InteractiveTableSchema } from '../../../../../../../utils/table-schema-utils';
 import { boxDisplayStatusSearchValues } from '../../../../../../../utils/box-display-status';
 import UserService from '../../../../../../../services/user-service';
 import { showModal } from '../../../../../../../actions/modal';
-import { ConfirmModal } from '../../../../../../../components/Common';
 import ApiService from '../../../../../../../services/api-service';
 import {
   errorNotificationText,
@@ -114,7 +112,7 @@ const List = () => {
       mobile: true,
       defaultSort: true,
       type: FieldType.Custom,
-      customRender: (value, field, boxData) =>
+      customRender: (value, field, boxData: BoxListRes) =>
         boxData.pricing && boxData.pricing.length > 0 ? (
           <Alert compact type="success" text="application.yes" />
         ) : (
@@ -129,7 +127,7 @@ const List = () => {
       searchable: true,
       searchableValues: boxDisplayStatusSearchValues(),
       type: FieldType.Custom,
-      customRender: (value, field, boxData) => (
+      customRender: (value, field, boxData: BoxListRes) => (
         <BoxStatusBadge box={boxData} stock={stock} />
       ),
     })

@@ -1,6 +1,6 @@
 import React from 'react';
 import Flatpickr from 'react-flatpickr';
-import { useForm } from 'react-hook-form';
+
 import flatpickr from 'flatpickr'; // Check out other cool Themes: https://flatpickr.js.org/themes/
 import { Polish } from 'flatpickr/dist/l10n/pl';
 
@@ -13,7 +13,7 @@ import { InputLabel } from 'src/components/ui/InputLabel';
 import { ErrorText } from 'src/components/ui/ErrorText';
 import { darken } from 'polished';
 import { getColorForBackground } from 'src/utils/color';
-import { formatInTimeZone } from 'date-fns-tz';
+
 import {
   getInputFieldStyles,
   InputSize,
@@ -29,10 +29,10 @@ interface Props extends InputSizeProps {
   name: string;
   value?: Date[] | Date;
   label?: string;
-  onChange?: any;
+  onChange?: (dates: Date[]) => void;
   minDate?: Date;
   maxDate?: Date;
-  register?: any;
+  register?: (field: { name: string }) => React.Ref<Flatpickr> | undefined;
   inline?: boolean;
   errors?: TranslatableObject[];
   error?: string;
@@ -100,8 +100,6 @@ const StyledDateContainer = styled(StyledFieldContainer)<{ $size: InputSize }>(
   }),
 );
 
-const timeZone = 'Europe/Warsaw';
-
 const DateInput = ({
   name,
   value,
@@ -125,7 +123,7 @@ const DateInput = ({
 
   return (
     <StyledDateContainer $size={resolvedSize} $noMargin>
-      <InputLabel labelFor={name} required={required}>{__(label)}</InputLabel>
+      <InputLabel labelFor={name} required={required}>{__(label ?? '')}</InputLabel>
       <Flatpickr
         onDayCreate={(dates, curentDateString, self, data) => {
           if (!highlightEnd || !highlightStart) return;
@@ -139,7 +137,7 @@ const DateInput = ({
         name={name}
         ref={register && register({ name })}
         onChange={(data: Date[]) => {
-          onChange(data);
+          onChange?.(data);
         }}
         required={required}
         value={value}

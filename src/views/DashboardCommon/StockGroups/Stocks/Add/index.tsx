@@ -18,6 +18,7 @@ import UserService from '../../../../../services/user-service';
 import { mapFields } from '../../../../../utils/fields-mapper';
 import { useGetMyDetailsQuery } from 'src/queries';
 import { Header } from 'src/components/ui';
+import { StockCreateReq } from 'smartbox-types';
 
 const Add = () => {
   const dispatch = useDispatch();
@@ -44,7 +45,7 @@ const Add = () => {
             schemaMayBeDynamic={true}
             loadingInfo={<Spinner transparent />}
             schemaFetcher={() => ApiService.loadForm(fetchUrl)}
-            sendFetcher={(formId: string, values: any) =>
+            sendFetcher={(_formId: string, values: StockCreateReq) =>
               ApiService.sendForm(sendUrl, values)
             }
             submitButton={submitButton}

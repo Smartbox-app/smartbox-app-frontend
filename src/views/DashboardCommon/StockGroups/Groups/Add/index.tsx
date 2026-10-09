@@ -1,9 +1,8 @@
 import React from 'react';
 import { ItfApiForm } from 'itf_formbuilder_react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { StockGroupReq } from 'smartbox-types';
 import {
-  PageHeader,
   ButtonsContainer,
   FormContainer,
   Section,
@@ -12,11 +11,11 @@ import { Button, Spinner } from '../../../../../components/Branded';
 import ApiService from '../../../../../services/api-service';
 import { formOnTranslateString } from '../../../../../utils/trans-form';
 import { history } from 'src/history';
-import { ReactSelectOverride, ReactCreatableSelectOverride as ReactCreatableSelect } from '../../../../../components/Common/ReactSelectOverride';
+
 import { successNotification } from '../../../../../actions/notifications';
 import { __ } from '../../../../../helpers/i18n';
 import UserService from '../../../../../services/user-service';
-import { ApplicationState } from '../../../../../reducers';
+
 import { mapFields } from '../../../../../utils/fields-mapper';
 import { useGetMyDetailsQuery } from 'src/queries';
 import { HeaderWithActions } from 'src/components/ui';

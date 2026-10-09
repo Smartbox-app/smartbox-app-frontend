@@ -14,6 +14,7 @@ import { successNotification } from '../../../../../actions/notifications';
 import { mapFields } from '../../../../../utils/fields-mapper';
 import { __ } from '../../../../../helpers/i18n';
 import { PageHeader } from 'src/components/ui';
+import { AddTenantReq } from 'smartbox-types';
 
 const AddTenant = () => {
   const dispatch = useDispatch();
@@ -43,7 +44,7 @@ const AddTenant = () => {
           schemaMayBeDynamic={false}
           loadingInfo={<Spinner transparent />}
           schemaFetcher={() => ApiService.loadForm(fetchUrl)}
-          sendFetcher={(formId: string, values: any) =>
+          sendFetcher={(_formId: string, values: AddTenantReq) =>
             ApiService.sendForm(sendUrl, values)
           }
           submitButton={submitButton}

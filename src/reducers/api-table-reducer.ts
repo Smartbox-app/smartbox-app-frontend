@@ -7,7 +7,7 @@ interface ApiTable {
   loading: boolean;
 }
 
-export type ApiTableState = TableResponse<any> & ApiTable;
+export type ApiTableState = TableResponse<Record<string, unknown>> & ApiTable;
 
 export type ApiTableRootState = {
   instances: Record<string, ApiTableState>;
@@ -26,7 +26,7 @@ const initialState: ApiTableRootState = {
   },
 };
 
-export type FetchApiTableSuccessPayload = TableResponse<any> & {
+export type FetchApiTableSuccessPayload = TableResponse<Record<string, unknown>> & {
   instanceId?: string;
 };
 

@@ -22,9 +22,9 @@ const StyledFooter = styled('footer')(({ theme }) => ({
   },
 }));
 
-const StyledSpacer = styled('div')(({ theme }) => ({
+const StyledSpacer = styled('div')({
   width: 80,
-}));
+});
 
 const Data = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -42,11 +42,11 @@ const Footer = () => {
       <StyledFooter>
         <Logo width="small" />
         <Data>
-          <Link target="_blank" href={'/rules'} rel="noreferrer">
+          <Link target="_blank" href="/rules" rel="noreferrer">
             {__('application.statute')}
           </Link>
 
-          <Link target="_blank" href={'/privacy-policy'} rel="noreferrer">
+          <Link target="_blank" href="/privacy-policy" rel="noreferrer">
             {__('application.privacyPolicy')}
           </Link>
 

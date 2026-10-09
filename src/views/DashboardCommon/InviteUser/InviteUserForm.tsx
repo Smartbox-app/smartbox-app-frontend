@@ -52,7 +52,6 @@ export const InviteUserForm = () => {
     handleSubmit,
     watch,
     control,
-    formState: { errors },
   } = useForm<InviteUserFormDto>({
     mode: 'onSubmit',
     resolver: ClassValidatorResolver(new InviteUserFormDto()),

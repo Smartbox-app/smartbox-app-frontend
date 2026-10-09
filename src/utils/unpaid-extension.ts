@@ -7,8 +7,11 @@ export const isUnpaidExtensionStatus = (status: RentStatus) =>
 export const isUnpaidPeriodStatus = (status: RentStatus) =>
   status === RentStatus.noPaidPeriod;
 
+export const isEndedUnpaidStatus = (status: RentStatus) =>
+  status === RentStatus.endedUnpaid;
+
 export const isUnpaidRentStatus = (status: RentStatus) =>
-  isUnpaidExtensionStatus(status) || isUnpaidPeriodStatus(status);
+  isUnpaidExtensionStatus(status) || isUnpaidPeriodStatus(status) || isEndedUnpaidStatus(status);
 
 export const findUnpaidRent = (rents: MyRentList[] = []) =>
   rents.find((rent) => isUnpaidRentStatus(rent.status));

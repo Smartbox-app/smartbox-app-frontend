@@ -1,8 +1,7 @@
 import React from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Button, Spinner } from '../../Branded';
-import { modal } from '../../../actions';
+import { hideModal } from '../../../actions/modal';
 
 import { __ } from '../../../helpers/i18n';
 import { Modal } from 'src/components/ui';
@@ -13,7 +12,6 @@ interface Props {
   secondaryText?: string;
   cancelButtonText?: string;
   approveButtonText: string;
-  hideModal: () => void;
   approveAction: () => void;
   isLoading?: boolean;
 }
@@ -24,9 +22,11 @@ const ConfirmModal = ({
   cancelButtonText = 'application.cancel',
   approveButtonText,
   approveAction,
-  hideModal,
   isLoading,
-}: Props) => (
+}: Props) => {
+  const dispatch = useDispatch();
+
+  return (
   <>
     <Modal.Header title={__('application.confirmation')} />
     <Modal.Content>
@@ -40,21 +40,23 @@ const ConfirmModal = ({
     </Modal.Content>
     <Modal.Actions>
       <ButtonsContainer>
-        <Button click={() => hideModal()} text={cancelButtonText} danger />
+        <Button
+          click={() => dispatch(hideModal())}
+          text={cancelButtonText}
+          danger
+        />
         <Button
           success
           click={() => {
             approveAction();
-            hideModal();
+            dispatch(hideModal());
           }}
           text={approveButtonText}
         />
       </ButtonsContainer>
     </Modal.Actions>
   </>
-);
+  );
+};
 
-const mapDispatchToProps = (dispatch: any) =>
-  bindActionCreators({ ...modal }, dispatch);
-
-export default connect(null, mapDispatchToProps)(ConfirmModal);
+export default ConfirmModal;

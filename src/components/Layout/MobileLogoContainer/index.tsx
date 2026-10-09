@@ -13,7 +13,7 @@ const MobileLogoContainer = ({
   small,
   onlyBottomMargin,
   className,
-}: Props): any => (
+}: Props) => (
   <div
     className={`mobile-logo-container ${className || ''} ${small ? 'small' : ''} ${
       onlyBottomMargin ? 'only-bottom-margin' : ''

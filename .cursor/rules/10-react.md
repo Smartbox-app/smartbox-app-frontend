@@ -598,7 +598,9 @@ if (!user) {
 return <UserDetails user={user} />;
 ```
 
-Avoid deeply nested ternaries.
+Ternary conditions must not be nested. Only one level is allowed (`condition ? a : b`). Use `if` / `else if` or a helper instead of `a ? b : c ? d : e`.
+
+Use `const` by default. Use `let` only when the binding is reassigned. Never use `var`.
 
 ---
 

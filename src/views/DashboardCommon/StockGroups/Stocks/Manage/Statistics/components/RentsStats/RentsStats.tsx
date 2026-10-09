@@ -1,4 +1,3 @@
-import { Row } from 'src/components/Common';
 import { Header, Section, Typography } from 'src/components/ui';
 import { StatusStats } from '../StatusStats';
 import { StockStatistics } from 'smartbox-types';

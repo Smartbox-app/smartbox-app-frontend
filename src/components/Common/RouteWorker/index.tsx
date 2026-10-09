@@ -1,27 +1,25 @@
 import React, { useEffect } from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import { connect, useSelector } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import { useDispatch } from 'react-redux';
 import { UserRole } from 'smartbox-types';
-import { stock, stockGroup } from '../../../actions';
+import { getStockList } from '../../../actions/stock';
+import { getStockGroupsList } from '../../../actions/stock-group';
 import { rememberRedirect } from '../../../utils/remeber-redirect';
-import { ApplicationState } from '../../../reducers';
 import { useGetMyDetailsQuery } from 'src/queries';
 
 interface Props {
-    getStockList: () => void;
-    getStockGroupsList: () => void;
-    component: any;
+    component: React.ComponentType;
     exact?: boolean;
     path?: string;
 }
 
-const RouteWorker = ({ exact, path, component, getStockList, getStockGroupsList }: Props) => {
+const RouteWorker = ({ exact, path, component }: Props) => {
+  const dispatch = useDispatch();
   const { data: user } = useGetMyDetailsQuery();
     useEffect(() => {
-        getStockList();
-        getStockGroupsList();
-    }, []);
+        dispatch(getStockList());
+        dispatch(getStockGroupsList());
+    }, [dispatch]);
 
     if (!user || user.role !== UserRole.worker) {
         return <Route render={() => <Redirect to="/" />} />;
@@ -30,7 +28,4 @@ const RouteWorker = ({ exact, path, component, getStockList, getStockGroupsList 
     return <Route exact={exact} path={path} component={component} />;
 };
 
-
-const mapDispatchToProps = (dispatch: any) => bindActionCreators({ ...stock, ...stockGroup }, dispatch);
-
-export default connect(null, mapDispatchToProps)(RouteWorker);
+export default RouteWorker;

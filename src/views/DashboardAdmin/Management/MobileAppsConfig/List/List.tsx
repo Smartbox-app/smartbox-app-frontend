@@ -14,13 +14,11 @@ import { refreshApiTableData } from '../../../../../actions/api-table';
 import UserService from '../../../../../services/user-service';
 import { useGetMyDetailsQuery } from 'src/queries';
 import { HeaderWithActions } from 'src/components/ui';
-import { DeleteStockModal } from 'src/components/Common/DeleteStockModal';
-import { useTenantNaming } from 'src/hooks/useTenantNaming';
+
 import { Edit } from '../Edit';
 
 const List = () => {
   const dispatch = useDispatch();
-  const { getText } = useTenantNaming();
 
   const scheme = new InteractiveTableSchema(mobileConfigTableSchema);
   const { data: user } = useGetMyDetailsQuery();
@@ -68,7 +66,7 @@ const List = () => {
         actions={
           <ButtonsContainer>
             <Button
-              text={'mobileConfig.add'}
+              text="mobileConfig.add"
               primary
               to={`/${UserService.getSlugByRole(user!.role)}/management/mobile-config/add`}
             />

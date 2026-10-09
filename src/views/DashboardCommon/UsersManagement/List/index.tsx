@@ -1,6 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import { useDispatch } from 'react-redux';
 import {
   FieldType,
   TableSchema,
@@ -9,7 +8,6 @@ import {
   usersListForAdmin,
 } from 'smartbox-tables';
 import {
-  IUser,
   UserListRes,
   UserRole,
   UserStatus,
@@ -20,7 +18,14 @@ import { Button } from '../../../../components/Branded';
 import { ButtonsContainer, Section } from '../../../../components/Layout';
 import { __ } from '../../../../helpers/i18n';
 import { InteractiveTableSchema } from '../../../../utils/table-schema-utils';
-import { modal, user } from '../../../../actions';
+import { showModal } from '../../../../actions/modal';
+import {
+  blockUser,
+  deleteUser,
+  deleteUserByForce,
+  enableUser,
+  resendActivationEmail,
+} from '../../../../actions/users';
 import UserDetail from './UserDetail';
 import UserEdit from './UserEdit';
 import UserService from '../../../../services/user-service';
@@ -28,69 +33,58 @@ import { useGetMyDetailsQuery } from 'src/queries';
 import { HeaderWithActions } from 'src/components/ui';
 import { UserNoteEditModal } from './UserDetail/UserNoteEditModal';
 
-interface Props {
-  showModal: (content: React.ReactNode) => void;
-  enableUser: (userId: string) => void;
-  blockUser: (userId: string) => void;
-  deleteUser: (userId: string) => void;
-  deleteUserByForce: (userId: string) => void;
-  resendActivationEmail: (userId: string) => void;
-}
-
-const List = ({
-  showModal,
-  enableUser,
-  blockUser,
-  deleteUser,
-  deleteUserByForce,
-  resendActivationEmail,
-}: Props) => {
+const List = () => {
+  const dispatch = useDispatch();
   const { data: user } = useGetMyDetailsQuery();
 
   const hasFullAccess = [UserRole.admin, UserRole.client].includes(user!.role);
 
   const confirmUserDelete = (userId: string) => {
-    showModal(
-      <ConfirmModal
-        approveButtonText="application.delete"
-        mainText="application.deleteUserText"
-        approveAction={() => deleteUser(userId)}
-      />,
+    dispatch(
+      showModal(
+        <ConfirmModal
+          approveButtonText="application.delete"
+          mainText="application.deleteUserText"
+          approveAction={() => dispatch(deleteUser(userId))}
+        />,
+      ),
     );
   };
 
   const confirmUserDeleteByForce = (userId: string) => {
-    showModal(
-      <ConfirmModal
-        approveButtonText="application.delete"
-        mainText="application.deleteUserText"
-        approveAction={() => deleteUserByForce(userId)}
-      />,
+    dispatch(
+      showModal(
+        <ConfirmModal
+          approveButtonText="application.delete"
+          mainText="application.deleteUserText"
+          approveAction={() => dispatch(deleteUserByForce(userId))}
+        />,
+      ),
     );
   };
 
   const getLockButton = (
-    value: boolean,
+    _value: unknown,
     field: TableSchemaField,
-    userData: IUser,
+    userData: UserListRes,
   ) => {
     if ([UserStatus.blocked, UserStatus.preActive].includes(userData.status)) {
       return (
         <Button
           text="application.active"
           success
-          click={() => enableUser(userData.id)}
+          click={() => dispatch(enableUser(userData.id))}
         />
       );
-    } else {
+    } 
       return (
         <Button
           text="application.block"
           danger
-          click={() => blockUser(userData.id)}
+          click={() => dispatch(blockUser(userData.id))}
         />
       );
-    }
+    
   };
 
   const scheme: TableSchema = new InteractiveTableSchema(
@@ -102,7 +96,7 @@ const List = ({
       mobile: true,
       defaultSort: true,
       type: FieldType.Custom,
-      customRender: (value, field, userData) =>
+      customRender: (value, field, userData: UserListRes) =>
         getLockButton(value, field, userData),
     })
     .removeFields('role')
@@ -118,8 +112,10 @@ const List = ({
               primary
               text="application.userDetails"
               click={() =>
-                showModal(
-                  <UserDetail userId={userData.id} userData={userData} />,
+                dispatch(
+                  showModal(
+                    <UserDetail userId={userData.id} userData={userData} />,
+                  ),
                 )
               }
             />
@@ -129,19 +125,21 @@ const List = ({
                   secondary
                   text="application.userNote"
                   click={() =>
-                    showModal(<UserNoteEditModal userId={userData.id} />)
+                    dispatch(showModal(<UserNoteEditModal userId={userData.id} />))
                   }
                 />
                 <Button
                   secondary
                   text="application.edit"
-                  click={() => showModal(<UserEdit userId={userData.id} />)}
+                  click={() =>
+                    dispatch(showModal(<UserEdit userId={userData.id} />))
+                  }
                 />
                 {userData.canResendActivationEmail && (
                   <Button
                     secondary
                     text="application.resendActivationEmail"
-                    click={() => resendActivationEmail(userData.id)}
+                    click={() => dispatch(resendActivationEmail(userData.id))}
                   />
                 )}
                 <Button
@@ -195,7 +193,4 @@ const List = ({
   );
 };
 
-const mapDispatchToProps = (dispatch: any) =>
-  bindActionCreators({ ...modal, ...user }, dispatch);
-
-export default connect(null, mapDispatchToProps)(List);
+export default List;

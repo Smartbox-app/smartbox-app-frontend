@@ -1,4 +1,4 @@
-import { MyRentList } from "smartbox-types";
+
 import { i18n } from '../helpers/i18n';
 import SessionService from '../services/session-service';
 

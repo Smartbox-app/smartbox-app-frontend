@@ -51,8 +51,8 @@ const tabStyles = css<{ active?: boolean }>(({ theme, active }) => ({
   },
 }));
 
-const StyledTab = styled('div')(({ theme }) => tabStyles);
-const StyledTabLink = styled(NavLink)(({ theme }) => tabStyles);
+const StyledTab = styled('div')(() => tabStyles);
+const StyledTabLink = styled(NavLink)(() => tabStyles);
 
 export const Tabs = ({ tabs }: TabsProps) => {
   return (

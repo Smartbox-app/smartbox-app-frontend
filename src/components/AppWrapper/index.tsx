@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { useGetVersionQuery, useGetMyDetailsQuery } from '../../queries';
 import { useLogoutMutation } from 'src/mutations/useLogoutMutation';
@@ -21,6 +21,10 @@ import { queryClient } from 'src/query-client';
 import { clearUserSession } from 'src/actions/auth';
 import { order } from 'src/actions';
 import { withAttributionSearch } from 'src/utils/attribution-params';
+import {
+  clearPreloadReloadFlag,
+  reloadWithoutServiceWorker,
+} from 'src/utils/reload-without-service-worker';
 
 interface Props {
   children: React.ReactNode;
@@ -39,12 +43,10 @@ const AppWrapper = ({ children }: Props) => {
   const dispatch = useDispatch();
   const { data: user, isLoading } = useGetMyDetailsQuery();
   const { mutate: logout } = useLogoutMutation();
-  const { data: config, error } = useGetVersionQuery();
+  const { data: config } = useGetVersionQuery();
   const location = useLocation();
   const { tenant } = useTenant();
   useTracking({ initialize: true });
-  const [isMaintenanceScreen, setIsMaintenanceScreen] =
-    useState<boolean>(false);
   const versionReloadTriggeredRef = useRef(false);
 
   const handleWebVersion = (newConfig: { versions: string[] }) => {
@@ -52,29 +54,15 @@ const AppWrapper = ({ children }: Props) => {
     if (!latestVersion) return;
 
     const currentVersion = localStorage.getItem('v');
-    if (currentVersion === latestVersion) return;
+    if (currentVersion === latestVersion) {
+      clearPreloadReloadFlag();
+      return;
+    }
     if (versionReloadTriggeredRef.current) return;
 
     versionReloadTriggeredRef.current = true;
     localStorage.setItem('v', latestVersion);
-
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker
-        .getRegistrations()
-        .then(function (registrations) {
-          if (registrations.length) {
-            Promise.all(
-              registrations.map((registration) => registration.unregister()),
-            ).then(function () {
-              window.location.reload();
-            });
-          } else {
-            window.location.reload();
-          }
-        });
-    } else {
-      window.location.reload();
-    }
+    reloadWithoutServiceWorker();
   };
 
   const handleAndroidVersion = (
@@ -165,7 +153,7 @@ const AppWrapper = ({ children }: Props) => {
         },
       });
     } catch (e) {
-      console.log('INIT ERROR', e);
+      console.error('INIT ERROR', e);
     }
   };
 
@@ -178,11 +166,6 @@ const AppWrapper = ({ children }: Props) => {
   useEffect(() => {
     scrollTop();
   }, [location.pathname]);
-
-  useEffect(() => {
-    if (error) setIsMaintenanceScreen(true);
-    if (config) setIsMaintenanceScreen(false);
-  }, [config, error]);
 
   useEffect(() => {
     if (!tenant) return;
@@ -216,8 +199,6 @@ const AppWrapper = ({ children }: Props) => {
         <Spinner />
       </SpinnerContainer>
     );
-
-  // if (isMaintenanceScreen) return <MaintenanceScreen />;
 
   if (isLoading || (user && user.tenantId && (!tenant || !tenant.id)))
     return null;

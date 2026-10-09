@@ -13,6 +13,8 @@ const RENT_STATUS_LABEL_KEYS: Record<RentStatus, string> = {
   [RentStatus.failure]: 'application.rentStatus.failure',
   [RentStatus.noPaidPeriod]: 'application.rentStatus.noPaidPeriod',
   [RentStatus.pendingFinish]: 'application.rentStatus.pendingFinish',
+  [RentStatus.awaitingFinish]: 'application.rentStatus.awaitingFinish',
+  [RentStatus.endedUnpaid]: 'application.rentStatus.endedUnpaid',
 };
 
 const BOX_STATUS_LABEL_KEYS: Record<BoxStatus, string> = {
@@ -38,6 +40,9 @@ export const boxDisplayStatusSearchValues = (): Record<string, string> => ({
   [RentStatus.pendingFinish]: translateBoxDisplayStatus(
     RentStatus.pendingFinish,
   ),
+  [RentStatus.awaitingFinish]: translateBoxDisplayStatus(
+    RentStatus.awaitingFinish,
+  ),
   [RentStatus.noPaidExtension]: translateBoxDisplayStatus(
     RentStatus.noPaidExtension,
   ),
@@ -49,6 +54,7 @@ export const boxDisplayStatusSearchValues = (): Record<string, string> => ({
   [RentStatus.toExplain]: translateBoxDisplayStatus(RentStatus.toExplain),
   [RentStatus.finished]: translateBoxDisplayStatus(RentStatus.finished),
   [RentStatus.failure]: translateBoxDisplayStatus(RentStatus.failure),
+  [RentStatus.endedUnpaid]: translateBoxDisplayStatus(RentStatus.endedUnpaid),
 });
 
 export const rentStatusSearchValues = (): Record<string, string> => ({
@@ -57,6 +63,9 @@ export const rentStatusSearchValues = (): Record<string, string> => ({
   [RentStatus.pendingFinish]: translateBoxDisplayStatus(
     RentStatus.pendingFinish,
   ),
+  [RentStatus.awaitingFinish]: translateBoxDisplayStatus(
+    RentStatus.awaitingFinish,
+  ),
   [RentStatus.noPaidExtension]: translateBoxDisplayStatus(
     RentStatus.noPaidExtension,
   ),
@@ -68,4 +77,5 @@ export const rentStatusSearchValues = (): Record<string, string> => ({
   [RentStatus.toExplain]: translateBoxDisplayStatus(RentStatus.toExplain),
   [RentStatus.finished]: translateBoxDisplayStatus(RentStatus.finished),
   [RentStatus.failure]: translateBoxDisplayStatus(RentStatus.failure),
+  [RentStatus.endedUnpaid]: translateBoxDisplayStatus(RentStatus.endedUnpaid),
 });

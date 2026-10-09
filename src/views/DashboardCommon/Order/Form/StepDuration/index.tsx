@@ -1,20 +1,14 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { useForm, Controller, FormProvider } from 'react-hook-form';
-import { useParams } from 'react-router-dom';
-import { bindActionCreators } from 'redux';
-import { connect, useDispatch, useSelector } from 'react-redux';
+import React, { useEffect, useMemo } from 'react';
+import { useForm, Controller } from 'react-hook-form';
 
-import {
-  addDays,
-  differenceInCalendarDays,
-  differenceInDays,
-  endOfDay,
-  startOfDay,
-  startOfToday,
-} from 'date-fns';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { addDays, endOfDay, startOfDay, startOfToday } from 'date-fns';
 import {
   AddonUserFileRequirementType,
+  RentAgreementType,
   RentPaymentType,
+  StockAgreementType,
   StockPaymentType,
   StockRes,
 } from 'smartbox-types';
@@ -22,9 +16,7 @@ import { DateInput } from '../../../../../components/Common';
 import { __ } from '../../../../../helpers/i18n';
 import { StyledInputHelp } from '../../../../../components/Common/input-styled';
 import { Spinner } from '../../../../../components/Branded';
-import { order } from '../../../../../actions';
 import { ButtonsContainer } from '../../../../../components/Layout';
-import { FormType } from '../../../../../types/order-form';
 import { ApplicationState } from '../../../../../reducers';
 import UserService from '../../../../../services/user-service';
 
@@ -35,16 +27,21 @@ import './StepDuration.scss';
 import styled from 'styled-components';
 import {
   calculateAddonPrice,
+  calculateOpenEndedAddonPrice,
+  calculateOpenEndedPrice,
   calculatePrice,
   clearAddonPrice,
+  clearPaymentDetails,
   setMinDaysForInstallments,
   setOrderFullStock,
+  setRentAgreementType,
   setRentEndDate,
   setRentPaymentType,
   setRentStartDate,
 } from '../../../../../actions/order';
 import { Addons } from '../Common/Addons';
 import { PaymentType } from '../Common/PaymentType';
+import { AgreementTypeSelect } from '../Common/AgreementTypeSelect';
 import ApiService from '../../../../../services/api-service';
 import { useGetMyDetailsQuery } from 'src/queries';
 import { Button, Section, Stack } from 'src/components/ui';
@@ -54,6 +51,12 @@ import { ClassValidatorResolver } from 'src/resolvers/ClassValidatorResolver';
 import { RentDuration } from '../Common/RentDuration';
 import { history } from 'src/history';
 import { useTracking } from 'src/hooks/useTracking';
+import { resolveCheckoutAgreementType } from 'src/utils/agreement-policy';
+import {
+  clampedFixedTermEndDate,
+  initialFixedTermEndDate,
+  isNewRentPeriodAcceptable,
+} from 'src/utils/rent-period-bounds';
 import { buildInitiateCheckoutPayload } from 'src/utils/build-initiate-checkout-payload';
 
 const StyledCalendarPicker = styled.div`
@@ -66,15 +69,7 @@ const StyledStartDateField = styled.div`
   flex-direction: column;
 `;
 
-interface Props {
-  history: any;
-  formData: FormType;
-  stockId: string;
-  updateFormData: (data: Partial<FormType>) => void;
-  clearPaymentDetails: () => void;
-}
-
-const StepDuration = ({ clearPaymentDetails }: Props) => {
+const StepDuration = () => {
   const { data: user } = useGetMyDetailsQuery();
   const dispatch = useDispatch();
   const { trackInitiateCheckout } = useTracking();
@@ -98,52 +93,59 @@ const StepDuration = ({ clearPaymentDetails }: Props) => {
     orderAddonsId,
     calculatedPrice,
     rentPaymentType,
+    agreementType,
     minRentDaysForInstallments,
     boxGroupId,
     boxGroupName,
     boxGroupArea,
     stockName,
   } = useSelector((state: ApplicationState) => state.order);
+
+  const selectedAgreementType = resolveCheckoutAgreementType(
+    stock?.allowedAgreementType,
+    agreementType,
+  );
+  const isOpenEnded = selectedAgreementType === RentAgreementType.OpenEnded;
+  const periodDays = stock?.openEndedPeriodDays || 30;
+  const paymentMethods = stock?.clientPaymentTypeConfig;
+
   const getStock = async () => {
     await ApiService.callFetch('GET', `stock/${stockId}`, (res: StockRes) => {
       dispatch(setOrderFullStock(res));
     });
   };
 
-  const setRentEndDateAccordingToType = (
-    startDate: Date,
-    rentPaymentType: RentPaymentType | null,
-    minRentPeriod: number,
-    minRentDaysForInstallments: number | null,
-  ) => {
-    switch (rentPaymentType) {
-      case RentPaymentType.Installments: {
-        if (!minRentDaysForInstallments) return;
-        dispatch(
-          setRentEndDate(
-            endOfDay(addDays(startDate, minRentDaysForInstallments - 1)),
-          ),
-        );
-        break;
-      }
-      default: {
-        dispatch(
-          setRentEndDate(endOfDay(addDays(startDate, minRentPeriod - 1))),
-        );
-        break;
-      }
+  useEffect(() => {
+    if (!stock) return;
+    const nextType = resolveCheckoutAgreementType(
+      stock.allowedAgreementType,
+      agreementType,
+    );
+    if (nextType !== agreementType) {
+      dispatch(setRentAgreementType(nextType));
     }
-  };
+  }, [stock, agreementType]);
 
   useEffect(() => {
     if (!minRentPeriod) return;
+    if (isOpenEnded) {
+      if (endDate) {
+        dispatch(setRentEndDate(null));
+        return;
+      }
+      getStock();
+      dispatch(calculateOpenEndedPrice(boxGroupId, startOfDay(startDate)));
+      calculateAllAddons();
+      return;
+    }
     if (!endDate) {
-      setRentEndDateAccordingToType(
+      const nextEnd = initialFixedTermEndDate(
         startDate,
         rentPaymentType,
         minRentPeriod,
         minRentDaysForInstallments,
       );
+      if (nextEnd) dispatch(setRentEndDate(nextEnd));
       return;
     }
 
@@ -151,32 +153,16 @@ const StepDuration = ({ clearPaymentDetails }: Props) => {
 
     const startOfStart = startOfDay(startDate);
     const endOfEnd = endOfDay(endDate);
-
-    const difference = differenceInDays(endOfEnd, startOfStart);
-
-    if (
-      rentPaymentType === RentPaymentType.Installments &&
-      !!minRentDaysForInstallments
-    ) {
-      if (difference < minRentDaysForInstallments - 1) {
-        dispatch(
-          setRentEndDate(
-            endOfDay(addDays(startDate, minRentDaysForInstallments - 1)),
-          ),
-        );
-        return;
-      }
-    } else {
-      if (difference < minRentPeriod - 1) {
-        dispatch(
-          setRentEndDate(endOfDay(addDays(startDate, minRentPeriod - 1))),
-        );
-        return;
-      }
-    }
-
-    if (maxRentPeriod && difference > maxRentPeriod - 1) {
-      dispatch(setRentEndDate(endOfDay(addDays(startDate, maxRentPeriod - 1))));
+    const clampedEnd = clampedFixedTermEndDate(
+      startDate,
+      endDate,
+      rentPaymentType,
+      minRentPeriod,
+      maxRentPeriod,
+      minRentDaysForInstallments,
+    );
+    if (clampedEnd) {
+      dispatch(setRentEndDate(clampedEnd));
       return;
     }
 
@@ -197,6 +183,7 @@ const StepDuration = ({ clearPaymentDetails }: Props) => {
     maxRentPeriod,
     rentPaymentType,
     minRentDaysForInstallments,
+    isOpenEnded,
   ]);
 
   useEffect(() => {
@@ -204,11 +191,20 @@ const StepDuration = ({ clearPaymentDetails }: Props) => {
   }, [orderAddonsId]);
 
   useEffect(() => {
-    if (!stock || rentPaymentType) return;
+    if (!stock) return;
 
     dispatch(setMinDaysForInstallments(stock.minRentDaysForInstallments));
 
-    switch (stock.clientPaymentTypeConfig) {
+    if (isOpenEnded) {
+      if (rentPaymentType !== RentPaymentType.Installments) {
+        dispatch(setRentPaymentType(RentPaymentType.Installments));
+      }
+      return;
+    }
+
+    if (rentPaymentType) return;
+
+    switch (paymentMethods || stock.clientPaymentTypeConfig) {
       case StockPaymentType.InAdvance: {
         dispatch(setRentPaymentType(RentPaymentType.InAdvance));
         break;
@@ -222,9 +218,27 @@ const StepDuration = ({ clearPaymentDetails }: Props) => {
         break;
       }
     }
-  }, [stock]);
+  }, [stock, isOpenEnded, paymentMethods]);
 
   const calculateAllAddons = () => {
+    if (isOpenEnded) {
+      Object.keys(orderAddons).forEach((addonId) => {
+        const addon = orderAddons[addonId];
+        if (addon.selectedVariant) {
+          dispatch(
+            calculateOpenEndedAddonPrice(
+              addonId,
+              startDate,
+              addon.selectedVariant,
+              boxGroupId,
+            ),
+          );
+          return;
+        }
+        dispatch(clearAddonPrice(addonId));
+      });
+      return;
+    }
     if (!endDate) return;
     Object.keys(orderAddons).forEach((addonId) => {
       const addon = orderAddons[addonId];
@@ -261,7 +275,7 @@ const StepDuration = ({ clearPaymentDetails }: Props) => {
 
   useEffect(() => {
     if (!user) return;
-    clearPaymentDetails();
+    dispatch(clearPaymentDetails());
   }, []);
 
   const { reset, control } = useForm<RentDurationDto>({
@@ -337,20 +351,15 @@ const StepDuration = ({ clearPaymentDetails }: Props) => {
   }, [orderAddons]);
 
   const correctPeriodSelected = useMemo(() => {
-    if (!endDate || !startDate || !minRentPeriod || maxRentPeriod === null)
-      return false;
-    const difference = differenceInCalendarDays(endDate, startDate);
-
-    if (
-      rentPaymentType === RentPaymentType.Installments &&
-      minRentDaysForInstallments &&
-      difference < minRentDaysForInstallments - 1
-    )
-      return false;
-
-    if (difference >= minRentPeriod - 1) return true;
-    if (difference <= maxRentPeriod) return true;
-    return false;
+    return isNewRentPeriodAcceptable({
+      startDate,
+      endDate,
+      isOpenEnded,
+      minRentPeriod,
+      maxRentPeriod,
+      rentPaymentType,
+      minRentDaysForInstallments,
+    });
   }, [
     startDate,
     endDate,
@@ -367,7 +376,7 @@ const StepDuration = ({ clearPaymentDetails }: Props) => {
   const handleContinue = () => {
     const payload = buildInitiateCheckoutPayload(
       { calculatedPrice, orderAddons },
-      { boxGroupId, boxGroupName, boxGroupArea, stockName },
+      { boxGroupId, boxGroupName, boxGroupArea, stockName, paymentType: 'new_rent' },
     );
     if (payload) {
       trackInitiateCheckout({
@@ -382,6 +391,9 @@ const StepDuration = ({ clearPaymentDetails }: Props) => {
   return (
     <form className="form-step-two">
       <Stack>
+        {stock?.allowedAgreementType === StockAgreementType.Both ? (
+          <AgreementTypeSelect />
+        ) : null}
         <Section>
           {loadingPrice && <Spinner halfTransparent overlay />}
           <StyledCalendarPicker className="calendars-picker-wrapper">
@@ -395,51 +407,59 @@ const StepDuration = ({ clearPaymentDetails }: Props) => {
                     value={startDate!}
                     name="startDate"
                     highlightStart={startDate}
-                    highlightEnd={endDate}
+                    highlightEnd={isOpenEnded ? undefined : endDate}
                     label="application.selectStartRentDate"
                     minDate={setMinDate()}
                     maxDate={setMaxDateForStart()}
-                    onChange={([selected]) => {
+                    onChange={([selected]: Date[]) => {
                       dispatch(setRentStartDate(selected));
                     }}
                   />
                 )}
               />
             </StyledStartDateField>
-            <Controller
-              name="endDate"
-              control={control}
-              render={({ field }) => (
-                <DateInput
-                  {...field}
-                  value={endDate!}
-                  name="endDate"
-                  highlightStart={startDate}
-                  highlightEnd={endDate}
-                  label="application.selectEndRentDate"
-                  minDate={setMinDate(minRentPeriod - 1, true)}
-                  maxDate={
-                    maxRentPeriod
-                      ? setMaxDateForEnd(maxRentPeriod - 1)
-                      : undefined
-                  }
-                  onChange={([selected]) => {
-                    dispatch(setRentEndDate(selected));
-                  }}
-                />
-              )}
-            />
+            {!isOpenEnded ? (
+              <Controller
+                name="endDate"
+                control={control}
+                render={({ field }) => (
+                  <DateInput
+                    {...field}
+                    value={endDate!}
+                    name="endDate"
+                    highlightStart={startDate}
+                    highlightEnd={endDate}
+                    label="application.selectEndRentDate"
+                    minDate={setMinDate(minRentPeriod - 1, true)}
+                    maxDate={
+                      maxRentPeriod
+                        ? setMaxDateForEnd(maxRentPeriod - 1)
+                        : undefined
+                    }
+                    onChange={([selected]: Date[]) => {
+                      dispatch(setRentEndDate(selected));
+                    }}
+                  />
+                )}
+              />
+            ) : null}
           </StyledCalendarPicker>
+          {isOpenEnded ? (
+            <StyledInputHelp $size="medium">
+              <span className="fa fa-info-circle" />{' '}
+              {__('application.openEndedPeriodInfo', { days: periodDays })}
+            </StyledInputHelp>
+          ) : null}
           <StyledInputHelp $size="medium">
             <span className="fa fa-info-circle" />{' '}
             {__('application.maxAdvanceBookingDaysInfo', {
               days: advanceBookingDays,
             })}
           </StyledInputHelp>
-          <RentDuration />
+          {!isOpenEnded ? <RentDuration /> : null}
         </Section>
 
-        {stock ? <PaymentType stock={stock} /> : null}
+        {stock && !isOpenEnded ? <PaymentType stock={stock} /> : null}
         <Addons stockId={stockId} boxGroupId={boxGroupId} />
         <Price />
         <Section>
@@ -462,7 +482,7 @@ const StepDuration = ({ clearPaymentDetails }: Props) => {
                 !correctPeriodSelected ||
                 !allRequiredAddonsSelected ||
                 !stock ||
-                !endDate ||
+                (!isOpenEnded && !endDate) ||
                 !calculatedPrice ||
                 calculatedPrice.length === 0
               }
@@ -474,16 +494,4 @@ const StepDuration = ({ clearPaymentDetails }: Props) => {
   );
 };
 
-const mapStateToProps = (state: ApplicationState) => ({
-  formData: state.order.formData,
-});
-
-const mapDispatchToProps = (dispatch: any) =>
-  bindActionCreators(
-    {
-      ...order,
-    },
-    dispatch,
-  );
-
-export default connect(mapStateToProps, mapDispatchToProps)(StepDuration);
+export default StepDuration;

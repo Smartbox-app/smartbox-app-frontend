@@ -89,7 +89,9 @@ const activeItemStyles = css(({ theme }) => ({
   },
 }));
 
-const StyledSidebarLink = styled(NavLink)(itemStyles);
+const StyledSidebarLink = styled(NavLink)`
+  ${itemStyles}
+`;
 const StyledSidebarItem = styled.button<{ $active?: boolean }>`
   ${itemStyles}
   width: 100%;

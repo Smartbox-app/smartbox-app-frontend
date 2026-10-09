@@ -1,13 +1,5 @@
 import { FieldType, TableSchema } from '../typings';
 
-const roleToText: {
-  [key: string]: string;
-} = {
-  Administrator: 'Administrator',
-  Pracownik: 'Pracownik',
-  Użytkownik: 'Użytkownik',
-};
-
 export const giftsListTable: TableSchema = {
   countPerPage: 20,
   fields: [

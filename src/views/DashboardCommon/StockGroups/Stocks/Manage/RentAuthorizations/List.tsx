@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router';
 import { FieldType, rentAuthorizationsList } from 'smartbox-tables';
@@ -10,14 +10,13 @@ import { InteractiveTableSchema } from 'src/utils/table-schema-utils';
 import { showModal } from 'src/actions/modal';
 import { successNotification } from 'src/actions/notifications';
 import { refreshApiTableData } from 'src/actions/api-table';
-import { useGetMyDetailsQuery } from 'src/queries';
 import { useRevokeRentAuthorizationByStaffMutation } from 'src/mutations';
 import { Header, Section } from 'src/components/ui';
 
 export const RentAuthorizationsList = () => {
   const dispatch = useDispatch();
   const { stockId } = useParams<{ stockId: string }>();
-  const { data: user } = useGetMyDetailsQuery();
+
   const {
     mutate: revokeAuthorization,
     isPending,

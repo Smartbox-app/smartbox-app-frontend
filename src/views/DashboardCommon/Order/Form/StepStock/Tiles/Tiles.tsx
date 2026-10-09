@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { order } from '../../../../../../actions';
 import { Section as InsideSection } from '../../../../../../components/Layout';
 import { SingleOption } from './SingleOption';
-import { ApplicationState } from '../../../../../../reducers';
 
 import '../StepStock.scss';
 import { useGetMyDetailsQuery } from 'src/queries';
@@ -11,8 +10,6 @@ import { Header, Skeleton } from '../../../../../../components/ui';
 import { __ } from '../../../../../../helpers/i18n';
 import { StockGroupWithStocks, StockList } from 'smartbox-types';
 import ApiService from 'src/services/api-service';
-import styled from 'styled-components';
-
 
 export const Tiles = () => {
   const dispatch = useDispatch();

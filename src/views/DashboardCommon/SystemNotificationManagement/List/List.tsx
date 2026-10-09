@@ -17,7 +17,7 @@ export const List = () => {
   return (
     <Section>
       <Header variant="h2">{__('application.notificationsAboutBoxes')}</Header>
-      <ApiTable scheme={scheme} apiEndpointSubUrl={`system-notification`} />
+      <ApiTable scheme={scheme} apiEndpointSubUrl="system-notification" />
     </Section>
   );
 };

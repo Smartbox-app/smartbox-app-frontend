@@ -11,9 +11,7 @@ import { Button } from 'src/components/Branded';
 import { useDispatch } from 'react-redux';
 import { showModal } from 'src/actions/modal';
 import UpdatePass from 'src/views/DashboardCommon/Profile/Detail/UpdatePass';
-import { UpdateBasic } from 'src/views/DashboardCommon/Profile/Detail/UpdateBasic';
-import { UpdateContact } from 'src/views/DashboardCommon/Profile/Detail/UpdateContact';
-import { UpdateCompany } from 'src/views/DashboardCommon/Profile/Detail/UpdateCompany';
+
 import { DeleteAccountConfirmation } from 'src/views/DashboardCommon/Profile/Detail/DeleteAccountConfirmation/DeleteAccountConfirmation';
 
 const UserData = () => {
@@ -29,12 +27,6 @@ const UserData = () => {
         <Row label="application.lastName" content={user.lastName} />
         <Row label="application.userRole" content={user.role} />
         <ButtonsContainer>
-          {/* USER CANT CHANGE HIS BASIC DATA */}
-          {/* <Button
-            text="application.edit"
-            primary
-            click={() => dispatch(showModal(<UpdateBasic />))}
-          /> */}
           <Button
             text="application.changPassword"
             primary
@@ -59,14 +51,6 @@ const UserData = () => {
             <Row label="application.postCode" content={user.postCode} />
           </>
         )}
-          {/* USER CANT CHANGE HIS CONTACT DATA */}
-         {/* <ButtonsContainer>
-          <Button
-            text="application.edit"
-            primary
-            click={() => dispatch(showModal(<UpdateContact />))}
-          />
-        </ButtonsContainer> */}
       </Section>
       {role === UserRole.user && (
         <Section highlight>
@@ -92,14 +76,6 @@ const UserData = () => {
             label="application.postCode"
             content={user.companyData.companyPostCode}
           />
-            {/* USER CANT CHANGE HIS COMPANY DATA */}
-            {/* <ButtonsContainer>
-          <Button
-            text="application.edit"
-            primary
-            click={() => dispatch(showModal(<UpdateCompany />))}
-          />
-        </ButtonsContainer> */}
         </Section>
       )}
     </>

@@ -1,29 +1,17 @@
 import React from 'react';
-import { TemplateType } from 'smartbox-types';
-import { Button } from '../../../../../components/Branded';
-import { __ } from '../../../../../helpers/i18n';
 import styled from 'styled-components';
 import { ButtonsContainer } from '../../../../../components/Layout';
 
-interface Props {
-  type: 'email' | 'sms';
-  template: TemplateType;
-  isSet: boolean;
-  index: number;
-  manageTo: string;
-}
-
-const StyledSingleTemplate = styled('li')<{ isSet: boolean; even: boolean }>(
-  ({ isSet, theme, even }) => ({
+const StyledSingleTemplate = styled('li')<{ $set: boolean; $even: boolean }>(
+  ({ $set, theme, $even }) => ({
     borderRadius: 5,
     marginBottom: 10,
     display: 'flex',
-    background: even
+    background: $even
       ? theme.colors.background.tertiary
       : theme.colors.background.primary,
-    borderLeft: isSet ? `3px solid ${theme.colors.primary}` : 'none',
+    borderLeft: $set ? `3px solid ${theme.colors.primary}` : 'none',
     justifyContent: 'space-between',
-
     padding: 10,
     gap: 5,
     flexDirection: 'column',
@@ -62,31 +50,32 @@ const StyledTitle = styled('h3')`
   margin: 10px 0;
   font-size: 0.9rem;
   flex: 0 0 100%;
-  @media(min-width: 768px) {
-    flex-direction: row;
+  @media (min-width: 768px) {
     flex: 0 1 auto;
   }
 `;
 
-export const SingleTemplate = ({ type, template, isSet, index, manageTo }: Props) => {
-  return (
-    <StyledSingleTemplate isSet={isSet} even={index % 2 === 0}>
-      <MainData>
-        <StyledTemplateType>{type}</StyledTemplateType>
-        <StyledTemplateInfo>
-          {isSet
-            ? __('application.templateSet')
-            : __('application.defaultTemplateUsed')}
-        </StyledTemplateInfo>
-        <StyledTitle>{__(`templates.${template}`)}</StyledTitle>
-      </MainData>
-      <ButtonsContainer>
-        <Button
-          primary
-          to={manageTo}
-          text="application.manageTemplate"
-        />
-      </ButtonsContainer>
-    </StyledSingleTemplate>
-  );
-};
+export const SingleTemplate = ({
+  type,
+  title,
+  info,
+  isSet,
+  even,
+  children,
+}: {
+  type: string;
+  title: string;
+  info?: string;
+  isSet: boolean;
+  even: boolean;
+  children: React.ReactNode;
+}) => (
+  <StyledSingleTemplate $set={isSet} $even={even}>
+    <MainData>
+      <StyledTemplateType>{type}</StyledTemplateType>
+      {info && <StyledTemplateInfo>{info}</StyledTemplateInfo>}
+      <StyledTitle>{title}</StyledTitle>
+    </MainData>
+    <ButtonsContainer>{children}</ButtonsContainer>
+  </StyledSingleTemplate>
+);

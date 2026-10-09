@@ -9,6 +9,7 @@ const statusToText: {
   [RentStatus.reserved]: 'Zarezerwowany',
   [RentStatus.rented]: 'Wynajęty',
   [RentStatus.pendingFinish]: 'Oczekuje na zakończenie',
+  [RentStatus.awaitingFinish]: 'Oczekiwanie na zakończenie umowy',
   [RentStatus.noPaidExtension]: 'Nieopłacone przedłużenie',
   [RentStatus.noPaidExtensionWithWarning]:
     'Nieopłacone przedłużenie z wykrzyknikiem',
@@ -17,6 +18,7 @@ const statusToText: {
   [RentStatus.toExplain]: 'Do wyjaśnienia',
   [RentStatus.finished]: 'Zakończone',
   [RentStatus.failure]: 'Zakończone bez wynajęcia',
+  [RentStatus.endedUnpaid]: 'Umowa zakończona — brak płatności',
 };
 
 export const boxesList: TableSchema = {

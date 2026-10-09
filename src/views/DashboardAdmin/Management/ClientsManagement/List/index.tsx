@@ -7,7 +7,7 @@ import {
   TableSchemaField,
   tenantsList,
 } from 'smartbox-tables';
-import { IUser, UserClientListRes, UserStatus } from 'smartbox-types';
+import { UserClientListRes, UserStatus } from 'smartbox-types';
 import { ApiTable } from '../../../../../components/Common';
 import { Button } from '../../../../../components/Branded';
 import { ButtonsContainer } from '../../../../../components/Layout';
@@ -36,7 +36,7 @@ class List extends React.Component<Props> {
         mobile: true,
         defaultSort: true,
         type: FieldType.Custom,
-        customRender: (value, field, userData) =>
+        customRender: (value, field, userData: UserClientListRes) =>
           this.getLockButton(value, field, userData),
       })
       // .addFieldAfter('phone', {
@@ -51,11 +51,6 @@ class List extends React.Component<Props> {
         field: 'actions',
         mobile: true,
         buttons: [
-          // {
-          //     name: 'application.userDetails',
-          //     type: 'primary',
-          //     click: (data: UserListRes) => this.props.showModal(<UserDetail userId={data.id} userData={data} />),
-          // },
           {
             name: 'application.settings',
             type: 'primary',
@@ -77,9 +72,9 @@ class List extends React.Component<Props> {
   }
 
   private getLockButton = (
-    value: boolean,
+    _value: unknown,
     field: TableSchemaField,
-    userData: IUser,
+    userData: UserClientListRes,
   ) => {
     if ([UserStatus.blocked, UserStatus.preActive].includes(userData.status)) {
       return (
@@ -89,7 +84,7 @@ class List extends React.Component<Props> {
           click={() => this.props.enableUser(userData.id)}
         />
       );
-    } else {
+    } 
       return (
         <Button
           text="application.block"
@@ -97,7 +92,7 @@ class List extends React.Component<Props> {
           click={() => this.props.blockUser(userData.id)}
         />
       );
-    }
+    
   };
 
   render() {
@@ -117,7 +112,7 @@ class List extends React.Component<Props> {
           {__('application.tenantsList')}
         </HeaderWithActions>
 
-        <ApiTable scheme={this.scheme} apiEndpointSubUrl={`user/tenants`} />
+        <ApiTable scheme={this.scheme} apiEndpointSubUrl="user/tenants" />
       </Section>
     );
   }

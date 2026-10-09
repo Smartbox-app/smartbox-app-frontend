@@ -2,9 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Capacitor } from '@capacitor/core';
 import { MyRentDetails, RentStatus } from 'smartbox-types';
-import { history } from 'src/history';
 import { ConfirmModal } from '../../../../../components/Common';
-import { useEndMyRentMutation } from 'src/mutations';
+import { useEndMyAgreementMutation, useEndMyRentMutation } from 'src/mutations';
 import { useTenant } from 'src/hooks/useTenant';
 import { canCaptureEndRentPhoto } from 'src/utils/can-capture-end-rent-photo';
 import {
@@ -23,10 +22,12 @@ import { ButtonsContainer } from 'src/components/Layout';
 import { hideModal, showModal } from 'src/actions/modal';
 import { RentEndedSuccessModal } from './RentEndedSuccessModal';
 import { errorNotificationText } from 'src/actions/notifications';
+import { isOpenEndedAgreement, latestPeriodFinishAt } from 'src/utils/rent';
+import { dateOnly } from 'src/utils/format-date';
 
-interface Props {
+type EndingModalProps = {
   rent: MyRentDetails;
-}
+};
 
 const StyledPhotoInput = styled.input`
   display: none;
@@ -37,10 +38,13 @@ const StyledPreviewImage = styled.img`
   max-height: 30vh;
 `;
 
-const EndingModal = ({ rent }: Props) => {
+const EndingModal = ({ rent }: EndingModalProps) => {
   const dispatch = useDispatch();
   const { tenant } = useTenant();
-  const { mutate: endRent, isSuccess, isPending } = useEndMyRentMutation();
+  const { mutate: endRent, isPending: isEndingRent } = useEndMyRentMutation();
+  const { mutate: endAgreement, isPending: isEndingAgreement } =
+    useEndMyAgreementMutation();
+  const isPending = isEndingRent || isEndingAgreement;
   const [photo, setPhoto] = useState<File | null>(null);
   const [photoTakenAt, setPhotoTakenAt] = useState<Date | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
@@ -50,14 +54,33 @@ const EndingModal = ({ rent }: Props) => {
   const requirePhoto = tenant?.requireEndRentPhoto === true;
   const canCapture = canCaptureEndRentPhoto();
   const isNativeApp = Capacitor.isNativePlatform();
+  const isOpenEnded = isOpenEndedAgreement(rent.agreementType);
+  const isAwaitingFinish = rent.status === RentStatus.awaitingFinish;
+  const accessUntil = latestPeriodFinishAt(rent.periods);
+  const accessUntilLabel = accessUntil ? dateOnly(accessUntil) : null;
 
-  useEffect(() => {
-    if (!isSuccess) return;
-
+  const showScheduledSuccessModal = () => {
+    if (!accessUntilLabel) return;
     dispatch(
-      showModal(<RentEndedSuccessModal requiresStaffCheck={requirePhoto} />),
+      showModal(
+        <RentEndedSuccessModal
+          variant="scheduled"
+          accessUntil={accessUntilLabel}
+        />,
+      ),
     );
-  }, [isSuccess, dispatch, requirePhoto]);
+  };
+
+  const showEndedSuccessModal = () => {
+    dispatch(
+      showModal(
+        <RentEndedSuccessModal
+          variant="ended"
+          requiresStaffCheck={requirePhoto}
+        />,
+      ),
+    );
+  };
 
   useEffect(() => {
     if (!photo) {
@@ -73,7 +96,14 @@ const EndingModal = ({ rent }: Props) => {
     };
   }, [photo]);
 
-  const handleConfirm = () => {
+  const handleScheduleOpenEndedEnd = () => {
+    endAgreement(
+      { rentId: rent.id },
+      { onSuccess: showScheduledSuccessModal },
+    );
+  };
+
+  const handleConfirmFinish = () => {
     if (requirePhoto && !photo) return;
 
     if (requirePhoto && photoTakenAt) {
@@ -87,11 +117,16 @@ const EndingModal = ({ rent }: Props) => {
       }
     }
 
-    endRent({
-      rentId: rent.id,
-      photo,
-      photoTakenAt,
-    });
+    endRent(
+      {
+        rentId: rent.id,
+        photo,
+        photoTakenAt,
+      },
+      {
+        onSuccess: showEndedSuccessModal,
+      },
+    );
   };
 
   const applyCapturedPhoto = (file: File, takenAt: Date) => {
@@ -150,12 +185,40 @@ const EndingModal = ({ rent }: Props) => {
     inputRef.current?.click();
   };
 
-  if (rent.status !== RentStatus.rented) {
+  if (
+    rent.status !== RentStatus.rented &&
+    rent.status !== RentStatus.awaitingFinish
+  ) {
     return (
       <ConfirmModal
         mainText="application.youCanNotEndRentNow"
         approveButtonText="application.understood"
         approveAction={() => {}}
+        cancelButtonText="application.back"
+      />
+    );
+  }
+
+  if (isOpenEnded && !isAwaitingFinish) {
+    if (!accessUntilLabel) {
+      return (
+        <ConfirmModal
+          mainText="application.youCanNotEndRentNow"
+          approveButtonText="application.understood"
+          approveAction={() => {}}
+          cancelButtonText="application.back"
+        />
+      );
+    }
+
+    return (
+      <ConfirmModal
+        isLoading={isPending}
+        mainText={__('application.endOpenEndedRental', {
+          date: accessUntilLabel,
+        })}
+        approveButtonText="application.endAgreement"
+        approveAction={handleScheduleOpenEndedEnd}
         cancelButtonText="application.back"
       />
     );
@@ -178,9 +241,17 @@ const EndingModal = ({ rent }: Props) => {
     return (
       <ConfirmModal
         isLoading={isPending}
-        mainText="application.endRental"
-        approveButtonText="application.endRent"
-        approveAction={handleConfirm}
+        mainText={
+          isAwaitingFinish
+            ? 'application.confirmOpenEndedFinishInfo'
+            : 'application.endRental'
+        }
+        approveButtonText={
+          isAwaitingFinish
+            ? 'application.confirmOpenEndedFinish'
+            : 'application.endRent'
+        }
+        approveAction={handleConfirmFinish}
         cancelButtonText="application.back"
       />
     );
@@ -188,8 +259,17 @@ const EndingModal = ({ rent }: Props) => {
 
   return (
     <>
-      <Modal.Header title={__('application.endRental')} />
+      <Modal.Header
+        title={__(
+          isAwaitingFinish
+            ? 'application.confirmOpenEndedFinish'
+            : 'application.endRental',
+        )}
+      />
       <Modal.Content>
+        {isAwaitingFinish ? (
+          <p>{__('application.confirmOpenEndedFinishInfo')}</p>
+        ) : null}
         <p>{__('application.endRentPhotoRequiredInfo')}</p>
         <p>{__('application.endRentPhotoMaxAgeInfo')}</p>
         {previewUrl ? <StyledPreviewImage src={previewUrl} /> : null}
@@ -228,9 +308,13 @@ const EndingModal = ({ rent }: Props) => {
           <Button
             type="button"
             variant="primary"
-            text="application.endRent"
+            text={
+              isAwaitingFinish
+                ? 'application.confirmOpenEndedFinish'
+                : 'application.endRent'
+            }
             disabled={!photo || isPending || isCapturing}
-            onClick={handleConfirm}
+            onClick={handleConfirmFinish}
           />
         </ButtonsContainer>
       </Modal.Actions>

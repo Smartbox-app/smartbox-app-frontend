@@ -1,9 +1,7 @@
 import React from 'react';
 import { ItfApiForm } from 'itf_formbuilder_react';
-import { connect, useDispatch } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { AddGiftReq } from 'smartbox-types';
-import { modal, notifications } from '../../../../../actions';
+import { useDispatch } from 'react-redux';
+import { UpdatePwdReq } from 'smartbox-types';
 import { ButtonsContainer, FieldsColumn } from '../../../../../components/Layout';
 import { Modal } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
@@ -27,7 +25,7 @@ const UpdatePass = () => {
   const fetchUrl = 'user/form/update-password';
   const sendUrl = 'user/pwd';
 
-  const customSendFetcher = (formId: string, values: AddGiftReq) =>
+  const customSendFetcher = (_formId: string, values: UpdatePwdReq) =>
     ApiService.sendForm(
       sendUrl,
       {
@@ -63,13 +61,4 @@ const UpdatePass = () => {
   );
 };
 
-const mapDispatchToProps = (dispatch: any) =>
-  bindActionCreators(
-    {
-      ...modal,
-      ...notifications,
-    },
-    dispatch,
-  );
-
-export default connect(null, mapDispatchToProps)(UpdatePass);
+export default UpdatePass;

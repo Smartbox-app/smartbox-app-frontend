@@ -1,4 +1,4 @@
-import { PriceDisplayForClients } from '../stock/price-display-for-clients';
+import { PriceDisplayForClients } from "../stock";
 
 export enum PricingType {
   Day = 'day',
@@ -31,4 +31,16 @@ export enum PriceResolveType {
 export interface PricingReq {
   pricing: SinglePricing[];
   priceResolveType: PriceResolveType;
+}
+
+export interface CalculatedPriceRes {
+  price: {
+    value: number;
+    isGross: boolean;
+    netPrice: number;
+    grossPrice: number;
+    display: PriceDisplayForClients;
+  }[];
+  details: string[];
+  error?: string;
 }

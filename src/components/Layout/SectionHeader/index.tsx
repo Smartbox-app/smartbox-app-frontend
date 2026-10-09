@@ -6,7 +6,7 @@ interface Props {
   noMargin?: boolean;
 }
 
-const SectionHeader = ({ title, noMargin }: Props) => (
+const SectionHeader = ({ title }: Props) => (
   <UIHeader variant="h2">{__(title)}</UIHeader>
 );
 

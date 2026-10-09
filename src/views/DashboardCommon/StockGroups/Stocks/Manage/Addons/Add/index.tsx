@@ -1,10 +1,9 @@
 import React from 'react';
 import { ItfApiForm } from 'itf_formbuilder_react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import {
   ButtonsContainer,
   FormContainer,
-  SimpleHeader,
 } from '../../../../../../../components/Layout';
 import { Button, Spinner } from '../../../../../../../components/Branded';
 import ApiService from '../../../../../../../services/api-service';
@@ -14,7 +13,7 @@ import { ReactSelectOverride, ReactCreatableSelectOverride as ReactCreatableSele
 import { successNotification } from '../../../../../../../actions/notifications';
 import { __ } from '../../../../../../../helpers/i18n';
 import UserService from '../../../../../../../services/user-service';
-import { ApplicationState } from '../../../../../../../reducers';
+
 import { mapFields } from '../../../../../../../utils/fields-mapper';
 import { useParams } from 'react-router';
 import { AddonReq } from 'smartbox-types';

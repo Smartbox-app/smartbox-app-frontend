@@ -13,7 +13,7 @@ import { StockDiscount } from '../StockDiscount';
 import { GiftModal } from '../GiftModal';
 import { useParams } from 'react-router';
 import { ApiTable, ConfirmModal } from '../../../../../../../components/Common';
-import { GiftRes, GiftType } from 'smartbox-types';
+import { GiftListRes, GiftRes, GiftType } from 'smartbox-types';
 import ApiService from '../../../../../../../services/api-service';
 import { refreshApiTableData } from '../../../../../../../actions/api-table';
 import { HeaderWithActions } from 'src/components/ui';
@@ -40,7 +40,7 @@ const List = () => {
     });
   };
 
-  const toggleGift = async (gift: GiftRes) => {
+  const toggleGift = async (gift: GiftListRes) => {
     await ApiService.callFetch(
       'PATCH',
       `gift/${gift.id}/toggle`,
@@ -66,7 +66,7 @@ const List = () => {
       mobile: true,
       defaultSort: true,
       type: FieldType.Custom,
-      customRender: (value, field, gift) => getType(gift.type),
+      customRender: (value, field, gift: GiftListRes) => getType(gift.type),
       searchableValues: {
         [GiftType.ReducePeriodByPercent]: getType(
           GiftType.ReducePeriodByPercent,
@@ -81,7 +81,7 @@ const List = () => {
       mobile: true,
       defaultSort: true,
       type: FieldType.Custom,
-      customRender: (value, field, gift) => (
+      customRender: (value, field, gift: GiftListRes) => (
         <Button
           text={gift.active ? 'application.block' : 'application.active'}
           success={!gift.active}
@@ -98,7 +98,7 @@ const List = () => {
         {
           name: 'application.delete',
           type: 'danger',
-          click: (data: GiftRes) =>
+          click: (data: GiftListRes) =>
             dispatch(
               modal.showModal(
                 <ConfirmModal

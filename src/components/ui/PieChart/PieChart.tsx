@@ -7,6 +7,7 @@ import {
   ResponsiveContainer,
   Tooltip,
 } from 'recharts';
+import { pieLegendPercent } from 'src/utils/chart-percent';
 
 export type PieChartSegment = {
   label: string;
@@ -129,7 +130,7 @@ export const PieChart = ({
     totalOverride !== undefined && totalOverride > 0 ? totalOverride : sum;
 
   const getPercent = (value: number) =>
-    legendTotal ? Math.round((value / legendTotal) * 100).toFixed(2) : 0;
+    pieLegendPercent(value, legendTotal);
 
   const pieData = isEmpty ? EMPTY_SLICE : chartData;
 

@@ -1,9 +1,10 @@
+import type { AppDispatch } from 'src/types/app-dispatch';
 import { UserStatus } from 'smartbox-types';
 import ApiService from '../services/api-service';
 import { refreshApiTableData } from './api-table';
 import { successNotification } from './notifications';
 
-export const enableUser = (userId: string) => async (dispatch: any) => {
+export const enableUser = (userId: string) => async (dispatch: AppDispatch) => {
   await ApiService.patch(
     dispatch,
     'ENABLE_USER_SUCCESS',
@@ -19,7 +20,7 @@ export const enableUser = (userId: string) => async (dispatch: any) => {
   );
 };
 
-export const blockUser = (userId: string) => async (dispatch: any) => {
+export const blockUser = (userId: string) => async (dispatch: AppDispatch) => {
   await ApiService.patch(
     dispatch,
     'BLOCK_USER_SUCCESS',
@@ -35,7 +36,7 @@ export const blockUser = (userId: string) => async (dispatch: any) => {
   );
 };
 
-export const deleteUser = (userId: string) => async (dispatch: any) => {
+export const deleteUser = (userId: string) => async (dispatch: AppDispatch) => {
   await ApiService.delete(
     dispatch,
     'DELETE_USER_SUCCESS',
@@ -50,7 +51,7 @@ export const deleteUser = (userId: string) => async (dispatch: any) => {
   );
 };
 
-export const deleteUserByForce = (userId: string) => async (dispatch: any) => {
+export const deleteUserByForce = (userId: string) => async (dispatch: AppDispatch) => {
   await ApiService.delete(
     dispatch,
     'DELETE_USER_BY_FORCE_SUCCESS',
@@ -65,7 +66,7 @@ export const deleteUserByForce = (userId: string) => async (dispatch: any) => {
   );
 };
 
-export const resendActivationEmail = (userId: string) => async (dispatch: any) => {
+export const resendActivationEmail = (userId: string) => async (dispatch: AppDispatch) => {
   await ApiService.post(
     dispatch,
     'RESEND_ACTIVATION_EMAIL_SUCCESS',
@@ -81,7 +82,7 @@ export const resendActivationEmail = (userId: string) => async (dispatch: any) =
   );
 };
 
-export const fetchSingleUser = (userId: string) => async (dispatch: any) => {
+export const fetchSingleUser = (userId: string) => async (dispatch: AppDispatch) => {
   await ApiService.get(
     dispatch,
     'FETCH_SINGLE_USER_SUCCESS',
@@ -95,7 +96,7 @@ export const fetchSingleUser = (userId: string) => async (dispatch: any) => {
 
 export const acceptationCookies = () => ({ type: 'ACCEPTATION_COOKIES', payload: true });
 
-export const fetchUserDetailsForAdmin = (userId: string) => async (dispatch: any) => {
+export const fetchUserDetailsForAdmin = (userId: string) => async (dispatch: AppDispatch) => {
   await ApiService.get(
     dispatch,
     'FETCH_USER_DETAILS_FOR_ADMIN_SUCCESS',

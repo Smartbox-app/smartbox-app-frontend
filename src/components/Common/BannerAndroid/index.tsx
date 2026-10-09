@@ -16,7 +16,6 @@ const BannerAndroid = () => {
     return /android/.test(userAgent) && /chrome/i.test(userAgent);
   }, []);
   // Detects if device is in standalone mode
-  //@ts-ignore for ios
   const isInStandaloneMode = useCallback(
     () => window.matchMedia('(display-mode: standalone)').matches,
     [],
@@ -48,7 +47,7 @@ const BannerAndroid = () => {
           <div className="banner-icon">
             <Dots />
           </div>{' '}
-          i "dodaj do ekranu głównego"{' '}
+          i &quot;dodaj do ekranu głównego&quot;{' '}
         </div>
         <button onClick={hide} className="banner-close">
           &times;

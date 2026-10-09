@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { UserListRes, UserRes, UserRole } from 'smartbox-types';
-import { user } from '../../../../../actions';
+import { fetchSingleUser } from '../../../../../actions/users';
 import { Modal } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
 
@@ -16,21 +15,18 @@ import { useUserNoteQuery } from 'src/queries';
 interface Props {
   userId: string;
   userData: UserListRes;
-  fetchSingleUser: (userId: string) => void;
-  singleUser: UserRes | any;
 }
 
-const UserDetail = ({
-  userId,
-  userData,
-  fetchSingleUser,
-  singleUser,
-}: Props) => {
+const UserDetail = ({ userId, userData }: Props) => {
+  const dispatch = useDispatch();
+  const singleUser = useSelector(
+    (state: ApplicationState) => state.user.singleUser,
+  ) as UserRes;
   const { data: noteData, isPending: isNotePending } = useUserNoteQuery(userId);
 
   useEffect(() => {
-    fetchSingleUser(userId);
-  }, []);
+    dispatch(fetchSingleUser(userId));
+  }, [dispatch, userId]);
 
   if (!userData) return <Spinner />;
 
@@ -84,16 +80,4 @@ const UserDetail = ({
   );
 };
 
-const mapStateToProps = (state: ApplicationState) => ({
-  singleUser: state.user.singleUser,
-});
-
-const mapDispatchToProps = (dispatch: any) =>
-  bindActionCreators(
-    {
-      ...user,
-    },
-    dispatch,
-  );
-
-export default connect(mapStateToProps, mapDispatchToProps)(UserDetail);
+export default UserDetail;

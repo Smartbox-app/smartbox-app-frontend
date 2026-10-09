@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import { MyRentList } from 'smartbox-types';
 import { modal } from 'src/actions';
@@ -9,7 +9,10 @@ import { __ } from 'src/helpers/i18n';
 import { history } from 'src/history';
 import { useGetMyDetailsQuery } from 'src/queries';
 import UserService from 'src/services/user-service';
-import { isUnpaidPeriodStatus } from 'src/utils/unpaid-extension';
+import {
+  isUnpaidPeriodStatus,
+  isEndedUnpaidStatus,
+} from 'src/utils/unpaid-extension';
 import Alert from '../Alert';
 
 export type UnpaidRentModalProps = {
@@ -44,18 +47,20 @@ export const UnpaidRentModal = ({ rent }: UnpaidRentModalProps) => {
     );
   };
 
+  const status = useMemo(() => {
+    if (isEndedUnpaidStatus(rent.status))
+      return 'application.cannotStartNewRentEndedUnpaid';
+    if (isUnpaidPeriodStatus(rent.status))
+      return 'application.cannotStartNewRentUnpaidPeriod';
+
+    return 'application.cannotStartNewRentUnpaid';
+  }, [rent.status]);
+
   return (
     <>
       <Modal.Header title={__('application.cannotStartNewRentUnpaidTitle')} />
       <Modal.Content>
-        <Alert
-          type="error"
-          text={
-            isUnpaidPeriodStatus(rent.status)
-              ? 'application.cannotStartNewRentUnpaidPeriod'
-              : 'application.cannotStartNewRentUnpaid'
-          }
-        />
+        <Alert type="error" text={status} />
       </Modal.Content>
       <Modal.Actions>
         <ButtonsContainer>
@@ -65,12 +70,14 @@ export const UnpaidRentModal = ({ rent }: UnpaidRentModalProps) => {
             onClick={close}
             type="button"
           />
-          <Button
-            variant="primary"
-            text="application.payOffDebt"
-            onClick={goPay}
-            type="button"
-          />
+          {!isEndedUnpaidStatus(rent.status) && (
+            <Button
+              variant="primary"
+              text="application.payOffDebt"
+              onClick={goPay}
+              type="button"
+            />
+          )}
         </ButtonsContainer>
       </Modal.Actions>
     </>

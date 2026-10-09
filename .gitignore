@@ -5,3 +5,7 @@ build
 .env
 dist
 .vite
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/

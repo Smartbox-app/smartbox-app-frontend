@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { ItfApiForm } from 'itf_formbuilder_react';
-import { AddGiftReq } from 'smartbox-types';
+import { UpdateUserReq } from 'smartbox-types';
 import { ButtonsContainer, FieldsColumn } from '../../../../../components/Layout';
 import { Button, Spinner } from '../../../../../components/Branded';
 import ApiService from '../../../../../services/api-service';
@@ -33,7 +33,7 @@ export const UpdateMe = () => {
   const fetchUrl = 'user/form/update-me';
   const sendUrl = 'user/me';
 
-  const customSendFetcher = (formId: string, values: AddGiftReq) =>
+  const customSendFetcher = (_formId: string, values: Pick<UpdateUserReq, 'phone'>) =>
     ApiService.sendForm(
       sendUrl,
       {

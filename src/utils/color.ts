@@ -7,7 +7,7 @@ const rgbToHex = (r: number, g: number, b: number) => {
   return '#' + componentToHex(r) + componentToHex(g) + componentToHex(b);
 };
 
-const hexToHSL = (hex: string) => {
+const hexToHSL = (hex: string): [number, number, number] => {
   // remove #
   const shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
   const fullHex = hex.replace(shorthandRegex, function (m, r, g, b) {
@@ -26,9 +26,9 @@ const hexToHSL = (hex: string) => {
   b /= 255;
   const max = Math.max(r, g, b),
     min = Math.min(r, g, b);
-  let h,
-    s,
-    l = (max + min) / 2;
+  let h = 0;
+  let s = 0;
+  const l = (max + min) / 2;
   if (max == min) {
     h = s = 0; // achromatic
   } else {
@@ -55,7 +55,7 @@ export const getColorForBackground = (bg: string) => {
   let parsedColor = bg;
   if (bg.includes('rgb')) {
     const values = bg.split('(')[1].split(')')[0];
-    const [r, g, b] = values.split(',').map((part) => parseInt(part));
+    const [r = 0, g = 0, b = 0] = values.split(',').map((part) => parseInt(part));
     parsedColor = rgbToHex(r, g, b);
   }
 
@@ -76,7 +76,7 @@ export const colorOrDark = (color: string) => {
   let parsedColor = color;
   if (color.includes('rgb')) {
     const values = color.split('(')[1].split(')')[0];
-    const [r, g, b] = values.split(',').map((part) => parseInt(part));
+    const [r = 0, g = 0, b = 0] = values.split(',').map((part) => parseInt(part));
     parsedColor = rgbToHex(r, g, b);
   }
   const [h, s, l] = hexToHSL(parsedColor);

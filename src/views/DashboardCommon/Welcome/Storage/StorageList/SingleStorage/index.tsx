@@ -39,10 +39,12 @@ const SingleStorage = ({ single }: Props) => {
     RentStatus.noPaidExtension,
     RentStatus.noPaidExtensionWithWarning,
     RentStatus.noPaidPeriod,
+    RentStatus.endedUnpaid,
   ].includes(single.status);
 
   const isNotice = [
-    RentStatus.pendingFinish
+    RentStatus.pendingFinish,
+    RentStatus.awaitingFinish,
   ].includes(single.status);
 
   return (
@@ -59,7 +61,11 @@ const SingleStorage = ({ single }: Props) => {
           stockName={single.stockName}
         />
         <StorageMainInfo identifier={single.number} isWarning={isWarning} />
-        <StorageDetails size={single.size} date={single.finishAt} />
+        <StorageDetails
+          size={single.size}
+          date={single.finishAt}
+          agreementType={single.agreementType}
+        />
       </Card>
     </StyledStorage>
     // </div>

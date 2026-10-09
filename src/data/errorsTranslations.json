@@ -474,6 +474,26 @@
       "108": {
         "text": "Zdjęcie jest zbyt stare. Zrób nowe zdjęcie schowka (nie starsze niż 15 minut).",
         "__type_alias_do_not_touch": "ApiErrorCode.EndRentPhotoTooOld"
+      },
+      "109": {
+        "text": "Umowy bezterminowe nie są dostępne dla tego najemcy.",
+        "__type_alias_do_not_touch": "ApiErrorCode.OpenEndedAgreementsNotAllowed"
+      },
+      "110": {
+        "text": "Umowy z datą końcową nie są dostępne dla tego najemcy.",
+        "__type_alias_do_not_touch": "ApiErrorCode.FixedTermAgreementsNotAllowed"
+      },
+      "111": {
+        "text": "Wybrany sposób płatności nie jest dostępny.",
+        "__type_alias_do_not_touch": "ApiErrorCode.PaymentMethodNotAllowed"
+      },
+      "112": {
+        "text": "Umowy bezterminowej nie można przedłużyć. Zakończ wynajem, jeśli chcesz zrezygnować.",
+        "__type_alias_do_not_touch": "ApiErrorCode.CanNotExtendOpenEndedRent"
+      },
+      "113": {
+        "text": "Nie można usunąć dodatku, ponieważ jest używany w trwającej umowie bezterminowej.",
+        "__type_alias_do_not_touch": "ApiErrorCode.CanNotDeleteAddonUsedByOpenEndedRent"
       }
     }
   }

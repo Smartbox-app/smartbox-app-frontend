@@ -4,14 +4,20 @@ import { getApiBaseUrl } from 'src/config/api-url';
 import { __ } from 'src/helpers/i18n';
 import { StyledPre } from './styles';
 
-export const GeneralInfo = () => {
+export type GeneralInfoProps = {
+  forAdmin?: boolean;
+};
+
+export const GeneralInfo = ({ forAdmin = false }: GeneralInfoProps) => {
   const apiUrl = getApiBaseUrl();
   const docsUrl = `${apiUrl}public-docs`;
 
   return (
     <Section>
       <Header variant="h2">{__('application.apiAccess')}</Header>
-      <Typography>{__('application.apiAccessKeyFromAdmin')}</Typography>
+      {!forAdmin ? (
+        <Typography>{__('application.apiAccessKeyFromAdmin')}</Typography>
+      ) : null}
 
       <div>
         <Header variant="h3">{__('application.apiAccessUrl')}</Header>

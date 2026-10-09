@@ -16,9 +16,10 @@ const BannerIos = () => {
     return /iphone|ipad|ipod/.test(userAgent);
   }, []);
   // Detects if device is in standalone mode
-  //@ts-ignore for ios
   const isInStandaloneMode = useCallback(
-    () => 'standalone' in window.navigator && window.navigator.standalone,
+    () =>
+      'standalone' in window.navigator &&
+      (window.navigator as Navigator & { standalone?: boolean }).standalone,
     [],
   );
 
@@ -48,7 +49,7 @@ const BannerIos = () => {
           <div className="banner-icon">
             <IOSShare />
           </div>{' '}
-          i "dodaj do ekranu początkowego"
+          i &quot;dodaj do ekranu początkowego&quot;
         </div>
         <button onClick={hide} className="banner-close">
           &times;

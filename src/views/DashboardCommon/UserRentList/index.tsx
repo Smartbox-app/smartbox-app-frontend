@@ -32,7 +32,8 @@ const UserRentList = ({ userId }: Props) => {
       )
       .modifyFieldStatic('status', {
         searchableValues: rentStatusSearchValues(),
-        customValue: (row) => translateBoxDisplayStatus(row.status),
+        customValue: (row: { status?: Parameters<typeof translateBoxDisplayStatus>[0] }) =>
+          translateBoxDisplayStatus(row.status),
       })
       .addFieldAfter('number', {
         name: __('application.stock'),

@@ -1,48 +1,39 @@
-import { StockListRes } from '../stock/stock-entity';
+import { StockListRes } from "../stock/stock-entity";
 
 export interface StockGroupEntity {
-  id: string;
-  name: string;
-  tenantId: string;
-  accessControl: AccessControl;
-  boxAccessControl: AccessControl;
-  gateAccessControl: AccessControl;
-  ksmLogin: string;
-  ksmPassword: string;
-  ksmLocation: string;
+    id: string;
+    name: string;
+    tenantId: string;
+    accessControl: AccessControl;
+    boxAccessControl: AccessControl;
+    gateAccessControl: AccessControl;
+    ksmLogin: string;
+    ksmPassword: string;
+    ksmLocation: string;
+    keylessboxLocation: number | null;
 }
 
-export type StockGroupData = Omit<
-  StockGroupEntity,
-  'ksmLogin' | 'ksmPassword' | 'ksmLocation'
->;
+export type StockGroupData = Omit<StockGroupEntity, 'ksmLogin' | 'ksmPassword' | 'ksmLocation' | 'keylessboxLocation'>;
 
 export interface StockGroupWithStocks {
-  id: string;
-  name: string;
-  tenantId: string;
-  boxAccessControl: AccessControl;
-  gateAccessControl: AccessControl;
-  // legacy
-  accessControl: AccessControl;
-  stocks: StockListRes[];
+    id: string;
+    name: string;
+    tenantId: string;
+    boxAccessControl: AccessControl;
+    gateAccessControl: AccessControl;
+    // legacy
+    accessControl: AccessControl;
+    stocks: StockListRes[];
 }
 
-export type StockGroupReq = Pick<
-  StockGroupEntity,
-  | 'name'
-  | 'boxAccessControl'
-  | 'gateAccessControl'
-  | 'ksmLogin'
-  | 'ksmPassword'
-  | 'ksmLocation'
-> & {
-  tenantId?: string;
+export type StockGroupReq = Pick<StockGroupEntity, 'name' | 'boxAccessControl' | 'gateAccessControl' | 'ksmLogin' | 'ksmPassword' | 'ksmLocation' | 'keylessboxLocation'> & {
+    tenantId?: string;
 };
 
 export enum AccessControl {
-  none = 'none',
-  smartbox = 'smartbox',
-  ksm = 'ksm',
-  ttlock = 'ttlock',
+    none = 'none',
+    smartbox = 'smartbox',
+    keylessbox = 'keylessbox',
+    ksm = 'ksm',
+    ttlock = 'ttlock'
 }

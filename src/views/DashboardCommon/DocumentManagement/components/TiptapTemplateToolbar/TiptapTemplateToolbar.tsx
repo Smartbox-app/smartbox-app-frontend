@@ -22,7 +22,6 @@ export const TiptapTemplateToolbar = ({
   const [customExpression, setCustomExpression] = useState('');
 
   const { data: addons = [] } = useGetAddonTemplateVariablesQuery({
-    tenantId: templateTenantId,
     stockId: templateStockId,
   });
 

@@ -12,6 +12,7 @@ import { mapFields } from '../../../../../../../utils/fields-mapper';
 import { hideModal } from '../../../../../../../actions/modal';
 import { refreshApiTableData } from '../../../../../../../actions/api-table';
 import { Modal } from 'src/components/ui';
+import { BoxReq } from 'smartbox-types';
 
 interface Props {
     id: string;
@@ -41,7 +42,7 @@ const Edit = ({ id, stockId }: Props) => {
                     schemaMayBeDynamic={true}
                     loadingInfo={<Spinner transparent />}
                     schemaFetcher={() => ApiService.loadForm(fetchUrl)}
-                    sendFetcher={(formId: string, values: any) => ApiService.sendForm(sendUrl, { ...values, stockId }, 'PATCH')}
+                    sendFetcher={(_formId: string, values: BoxReq) => ApiService.sendForm(sendUrl, { ...values, stockId }, 'PATCH')}
                     submitButton={submitButton}
                     onRenderFullField={mapFields}
                     onSavedSuccessfully={() => {

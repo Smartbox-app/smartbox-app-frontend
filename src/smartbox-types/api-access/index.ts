@@ -5,6 +5,9 @@ export enum PublicApiScope {
 
 export const PUBLIC_API_SCOPES = Object.values(PublicApiScope);
 
+export const isPublicApiScope = (value: string): value is PublicApiScope =>
+  (PUBLIC_API_SCOPES as string[]).includes(value);
+
 export type ApiAccessEntity = {
   id: string;
   name: string;

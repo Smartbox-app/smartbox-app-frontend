@@ -5,10 +5,10 @@ import {
   CalculatedAddonPriceRes,
   CalculatedPriceRes,
   BoxGroupType,
-  IStock,
   PayForRentResponse,
   PaymentDocument,
   PriceDisplayForClients,
+  RentAgreementType,
   RentPaymentType,
   SingleAcceptance,
   StockRes,
@@ -36,7 +36,7 @@ export type OrderAddon = {
   userFileAllowed: boolean;
   noPricing: boolean;
   userFileRequirement: AddonUserFileRequirementType | null;
-  price: { value: number; isGross: boolean, netPrice: number, grossPrice: number, display: PriceDisplayForClients }[] | null;
+  price: { value: number, netPrice: number, grossPrice: number, isGross: boolean }[] | null;
   file: File | null;
   tax: string;
 };
@@ -56,7 +56,7 @@ export type OrderState = {
   maxRentPeriod: number | null;
   startDate: Date;
   endDate: Date | null;
-  calculatedPrice: { value: number; isGross: boolean, netPrice: number, grossPrice: number, display: PriceDisplayForClients }[];
+  calculatedPrice: CalculatedPriceRes['price'];
   loadingPrice: boolean;
   discountCode: string;
   // for displaying
@@ -69,15 +69,15 @@ export type OrderState = {
   orderAddonsId: string;
   loadingAddons: boolean;
   rentPaymentType: RentPaymentType | null;
+  agreementType: RentAgreementType | null;
   paymentDocumentType: PaymentDocument | null;
 
   minRentDaysForInstallments: number | null;
-  // @TODO FIX
-  calculatedPriceDetails: any[];
+  calculatedPriceDetails: CalculatedPriceRes['details'];
   //
   formData: FormType;
   paymentId: string;
-  discountList: any[];
+  discountList: { text: string; value: number }[];
   paymentSuccess: boolean;
   isAgreementAccepted: boolean;
   isResignationMarked: boolean;
@@ -142,6 +142,11 @@ interface SetRentEndDate {
 interface SetRentPaymentType {
   type: 'SET_RENT_PAYMENT_TYPE';
   payload: RentPaymentType;
+}
+
+interface SetRentAgreementType {
+  type: 'SET_RENT_AGREEMENT_TYPE';
+  payload: RentAgreementType;
 }
 
 interface SetRentPaymentDocumentType {
@@ -280,6 +285,7 @@ type Action =
   | ClearAddonPrice
   | SetBirthDate
   | SetRentPaymentType
+  | SetRentAgreementType
   | SetRentPaymentDocumentType
   | SetMinDaysForInstallments
   //
@@ -318,6 +324,7 @@ const initialState: OrderState = {
   loadingAddons: false,
   orderAddonsId: '',
   rentPaymentType: null,
+  agreementType: null,
   paymentDocumentType: null,
   minRentDaysForInstallments: null,
   //
@@ -338,6 +345,7 @@ const initialState: OrderState = {
     street: '',
     city: '',
     postCode: '',
+    country: '',
     phone: '',
     mailToSendInvoice: '',
   },
@@ -391,12 +399,6 @@ export default (
       };
     }
 
-    case 'SET_MIN_RENT_PERIOD': {
-      return {
-        ...state,
-        minRentPeriod: action.payload,
-      };
-    }
     case 'SET_MIN_RENT_PERIOD': {
       return {
         ...state,
@@ -515,6 +517,13 @@ export default (
       return {
         ...state,
         rentPaymentType: action.payload,
+      };
+    }
+
+    case 'SET_RENT_AGREEMENT_TYPE': {
+      return {
+        ...state,
+        agreementType: action.payload,
       };
     }
 

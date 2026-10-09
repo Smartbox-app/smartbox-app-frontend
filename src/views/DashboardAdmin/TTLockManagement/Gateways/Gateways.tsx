@@ -41,7 +41,7 @@ export const Gateways = () => {
   return (
     <Section>
       <Header variant="h2">{__('application.gateways')}</Header>
-      <ApiTable scheme={scheme} apiEndpointSubUrl={`driver/gateways`} />
+      <ApiTable scheme={scheme} apiEndpointSubUrl="driver/gateways" />
     </Section>
   );
 };

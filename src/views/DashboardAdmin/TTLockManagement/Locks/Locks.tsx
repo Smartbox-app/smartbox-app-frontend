@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router';
 import { FieldType } from 'smartbox-tables';
@@ -15,7 +15,6 @@ import { InteractiveTableSchema } from 'src/utils/table-schema-utils';
 import { LockDetails } from './components/LockDetails/LockDetails';
 import { history } from 'src/history';
 import { Spinner } from 'src/components/Branded';
-import React from 'react';
 
 export const Locks = () => {
   const dispatch = useDispatch();

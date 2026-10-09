@@ -19,7 +19,7 @@ const Cookies = () => {
   const areAccepted = () => {
     try {
       return JSON.parse(localStorage.getItem('cookies') || 'false');
-    } catch (e) {
+    } catch {
       return false;
     }
   };

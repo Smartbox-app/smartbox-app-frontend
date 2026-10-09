@@ -1,13 +1,19 @@
-export type LocationActivityStatus = 'inside' | 'outside';
-
-export interface LocationActivityListItem {
+export class LocationActivityListItem {
   id: string;
+
   userId: string;
+
   firstName: string;
+
   lastName: string;
+
   email: string;
+
   alarm: string;
+
   location: string;
-  status: LocationActivityStatus;
+
+  status: 'inside' | 'outside';
+
   statusUpdate: Date;
 }

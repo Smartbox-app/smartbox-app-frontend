@@ -5,7 +5,6 @@ import { forwardRef } from 'react';
 import { ErrorText } from '../ErrorText';
 import { InputLabel } from '../InputLabel';
 import { Typography } from '../Typography';
-import { AsterixRequired } from 'src/components/Common';
 import {
   getInputFieldStyles,
   InputSize,
@@ -95,5 +94,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     );
   },
 );
+
+Input.displayName = 'Input';
 
 export type { InputSize };

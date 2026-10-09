@@ -8,7 +8,7 @@ interface ApiMessage {
 export interface ApiErrorMessage extends ApiMessage{
     error_code: ApiErrorCode;
     details?: string;
-    form_errors?: any;
+    form_errors?: unknown;
     error_log_id?: string;
     payload?: unknown;
 }

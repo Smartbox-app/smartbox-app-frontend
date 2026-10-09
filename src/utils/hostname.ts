@@ -7,11 +7,11 @@ const readValue = (): string => {
   }
   if (import.meta.env.DEV) {
     return import.meta.env.VITE_APP_HOSTNAME || '';
-  } else {
+  } 
     return Capacitor.isNativePlatform() && import.meta.env.VITE_APP_HOSTNAME
       ? import.meta.env.VITE_APP_HOSTNAME
       : window.location.hostname;
-  }
+  
 };
 
 export const getHostName = (): string | null => {

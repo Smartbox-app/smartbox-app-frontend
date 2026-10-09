@@ -1,9 +1,53 @@
-import { IBase } from '../base/base.interface';
-import { AccessControl } from '../stock-group';
+import type { AccessControl } from '../stock-group';
+
+/** Field subset of the backend Stock entity used by StockRes / StockListRes. */
+interface Stock {
+  id: string;
+  accessControl: AccessControl;
+  gateAccessControl: AccessControl;
+  boxAccessControl: AccessControl;
+  address: string;
+  clientPaymentTypeConfig: StockPaymentType;
+  allowedAgreementType: StockAgreementType;
+  openEndedInvoiceDaysBefore: number;
+  openEndedDaysForPayment: number;
+  openEndedDaysAfterDueToLoseAccess: number;
+  openEndedPeriodDays: number;
+  colorFailure: string;
+  colorFinished: string;
+  colorFree: string;
+  colorNoPaidExtension: string;
+  colorNoPaidExtensionWithWarning: string;
+  colorNoPaidPeriod: string;
+  colorOutOfService: string;
+  colorRented: string;
+  colorPendingFinish: string;
+  colorReserved: string;
+  colorToCheck: string;
+  colorToExplain: string;
+  isMapActive: boolean;
+  lat: string | null;
+  lon: string | null;
+  mapWidth: number;
+  mapHeight: number;
+  mapHeightMeters: number;
+  mapWidthMeters: number;
+  minRentDaysForInstallments: number;
+  name: string;
+  paymentDocumentConfig: StockPaymentDocument;
+  mapBackground: string;
+  tenantId: string | null;
+}
 
 export enum StockPaymentType {
   InAdvance = 'in-advance',
   Installments = 'installments',
+  Both = 'both',
+}
+
+export enum StockAgreementType {
+  FixedTerm = 'fixed-term',
+  OpenEnded = 'open-ended',
   Both = 'both',
 }
 
@@ -13,62 +57,19 @@ export enum StockPaymentDocument {
   Both = 'both',
 }
 
-export interface IStock extends IBase {
-  name: string;
-  address: string;
-  gate: IGate;
-  discount: IDiscount;
-  map: string;
-  visible: boolean;
-  isMapActive: boolean;
-  mapBackground: string;
-  mapWidth: number;
-  mapHeight: number;
-  mapWidthMeters: number;
-  mapHeightMeters: number;
-  mapDefaultScale: number;
-  tenantId: string;
-  stockGroupId?: string;
-  colorReserved: string;
-  colorRented: string;
-  colorNoPaidExtension: string;
-  colorNoPaidPeriod: string;
-  colorNoPaidExtensionWithWarning: string;
-  colorToCheck: string;
-  colorToExplain: string;
-  colorOutOfService: string;
-  colorFinished: string;
-  colorFailure: string;
-  colorFree: string;
-  colorPendingFinish: string;
-  showGrossPricesToClient: boolean;
-  accessControl: AccessControl;
-  gateAccessControl: AccessControl;
-  boxAccessControl: AccessControl;
-  ksmLogin: string;
-  ksmPassword: string;
-  ksmLocation: string;
-  allowedBoxesCount: number;
-  activeBoxesCount: number;
-  // config whether user wants to pay all in advance or in installments (or if we want to give the user choice)
-  clientPaymentTypeConfig: StockPaymentType;
-  paymentDocumentConfig: StockPaymentDocument;
-  // days to pay the rent invoice
-  daysForPayment: number;
-  minRentDaysForInstallments: number | null;
-  lat?: string;
-  lon?: string;
-  invoiceServiceDepartmentID?: string;
-}
-
 export type StockRes = Pick<
-  IStock,
+  Stock,
   | 'id'
   | 'accessControl'
   | 'gateAccessControl'
   | 'boxAccessControl'
   | 'address'
   | 'clientPaymentTypeConfig'
+  | 'allowedAgreementType'
+  | 'openEndedInvoiceDaysBefore'
+  | 'openEndedDaysForPayment'
+  | 'openEndedDaysAfterDueToLoseAccess'
+  | 'openEndedPeriodDays'
   | 'colorFailure'
   | 'colorFinished'
   | 'colorFree'
@@ -77,10 +78,10 @@ export type StockRes = Pick<
   | 'colorNoPaidPeriod'
   | 'colorOutOfService'
   | 'colorRented'
+  | 'colorPendingFinish'
   | 'colorReserved'
   | 'colorToCheck'
   | 'colorToExplain'
-  | 'colorPendingFinish'
   | 'id'
   | 'isMapActive'
   | 'lat'
@@ -97,7 +98,7 @@ export type StockRes = Pick<
 >;
 
 export type StockListRes = Pick<
-  IStock,
+  Stock,
   | 'id'
   | 'accessControl'
   | 'boxAccessControl'
@@ -108,27 +109,7 @@ export type StockListRes = Pick<
   | 'lon'
 >;
 
-export interface IDiscount extends IBase {
-  value: number;
-  expireAt: Date;
-}
-
-export interface IGate extends IBase {
-  ident: string;
-  openReq: boolean;
-  lastConnection: Date;
-  tenantId: string;
-  ksmIdentifier?: string;
-  ttlockIdentifier?: string;
-}
-
 export interface Coordinate {
   lat: string;
   lon: string;
-}
-
-export interface IReading {
-  date: Date;
-  moduleId: string;
-  moduleVoltage: number;
 }

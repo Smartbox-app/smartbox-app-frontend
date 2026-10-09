@@ -9,12 +9,13 @@ import { Button, Spinner } from '../../../../../components/Branded';
 import ApiService from '../../../../../services/api-service';
 import { formOnTranslateString } from '../../../../../utils/trans-form';
 import { history } from 'src/history';
-import { ReactSelectOverride, ReactCreatableSelectOverride as ReactCreatableSelect } from '../../../../../components/Common/ReactSelectOverride';
+
 import { successNotification } from '../../../../../actions/notifications';
 import { mapFields } from '../../../../../utils/fields-mapper';
 import { __ } from '../../../../../helpers/i18n';
 import { PageHeader, Section } from 'src/components/ui';
 import { useParams } from 'react-router';
+import { TTLockPasscodeReq } from 'smartbox-types';
 
 export const Add = () => {
   const { lockId } = useParams<{ lockId: string }>();
@@ -46,7 +47,7 @@ export const Add = () => {
             schemaMayBeDynamic={false}
             loadingInfo={<Spinner transparent />}
             schemaFetcher={() => ApiService.loadForm(fetchUrl)}
-            sendFetcher={(formId: string, values: any) =>
+            sendFetcher={(_formId: string, values: TTLockPasscodeReq) =>
               ApiService.sendForm(sendUrl, values)
             }
             submitButton={submitButton}

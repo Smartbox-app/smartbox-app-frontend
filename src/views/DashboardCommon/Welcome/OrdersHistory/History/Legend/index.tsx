@@ -12,6 +12,7 @@ const StyledActive = styled.p`
 
 const Legend = () => {
   const {getText} = useTenantNaming();
+  return (
   <div className="history-legend">
     <div className='single-legend-entry'>
       <StyledActive className="legend-color" />
@@ -26,6 +27,7 @@ const Legend = () => {
       <p className="legend-desc">{__('application.finished')}</p>
     </div>
   </div>
+  );
 }
 
 export default Legend;

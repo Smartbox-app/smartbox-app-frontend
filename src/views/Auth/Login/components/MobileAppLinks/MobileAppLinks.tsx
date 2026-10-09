@@ -25,11 +25,6 @@ const BadgeLink = styled('a')({
   lineHeight: 0,
 });
 
-const BadgeImage = styled('img')({
-  height: 40,
-  width: 'auto',
-});
-
 type MobileAppLinksProps = {
   tenant: TenantForUsers;
 };

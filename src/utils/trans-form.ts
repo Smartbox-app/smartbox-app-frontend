@@ -5,33 +5,32 @@ import { ApiErrorCode } from 'smartbox-types';
 import errors from '../data/errorsTranslations.json';
 // JK: dont know why, but works. Sholud be import..
 
-export function formOnTranslateString(s: string, params?: any[]): string {
-    const transes: {
-        [lang: string]: {
-            [key: string]: string;
-        };
-    } = errors;
+export function formOnTranslateString(s: string, params?: unknown[]): string {
+    const pl = (errors as unknown as { pl?: Record<string, string> }).pl;
 
-    let translated;
-    if (transes && transes.pl && transes.pl[s]) {
-        translated = transes.pl[s];
-    } else return s;
+    if (!pl?.[s]) return s;
+    const translated = pl[s];
 
     if (params && translated) {
-        return translated.replace(/{(\d+)}/g, (match: any, number: number) =>
-            typeof params[number] !== 'undefined'
-                ? typeof params[number] === 'object'
-                    ? Object.values(params[number])
-                    : params[number]
-                : match,
-        );
+        return translated.replace(/{(\d+)}/g, (match: string, number: string) => {
+            const value = params[Number(number)];
+            if (typeof value === 'undefined') return match;
+            if (typeof value === 'object' && value !== null) {
+                return Object.values(value).join(',');
+            }
+            return String(value);
+        });
     }
 
     return translated;
 }
 
 export function translateApiErrorCode(apiErrorCode: ApiErrorCode, lang: string): string {
-    const msg = errors[lang]._API_ERROR_CODES_[String(apiErrorCode)];
+    const catalog = errors as unknown as Record<
+        string,
+        { _API_ERROR_CODES_?: Record<string, { text?: string }> }
+    >;
+    const msg = catalog[lang]?._API_ERROR_CODES_?.[String(apiErrorCode)];
 
     if (!msg) {
         console.error(
@@ -44,5 +43,5 @@ export function translateApiErrorCode(apiErrorCode: ApiErrorCode, lang: string):
         );
     }
 
-    return msg.text || ApiErrorCode[apiErrorCode];
+    return msg?.text || ApiErrorCode[apiErrorCode];
 }

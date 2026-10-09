@@ -2,23 +2,20 @@ import React, { useEffect, useState } from 'react';
 import { FieldErrors, FormProvider, useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
 
-import { bindActionCreators } from 'redux';
-import { connect, useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
-  PaymentType,
   PaymentDocument,
+  RentAgreementType,
   RentPaymentType,
   StockPaymentDocument,
 } from 'smartbox-types';
 import { Spinner } from '../../../../../components/Branded';
-import { order, modal, notifications, user } from '../../../../../actions';
 import { ButtonsContainer } from '../../../../../components/Layout';
 import {
   Alert,
   CheckBox as ControlledCheckbox,
 } from '../../../../../components/Common';
 import { history } from 'src/history';
-import { FormType } from '../../../../../types/order-form';
 
 import UserService from '../../../../../services/user-service';
 import { ApplicationState } from '../../../../../reducers';
@@ -30,10 +27,12 @@ import SummaryTable from './SummaryTable';
 import TenantDetailsForm from './TenantDetailsForm';
 
 import {
+  calculateOpenEndedPrice,
   calculatePrice,
   calculatePriceForRent,
   setBirthDate,
   setRentPaymentDocumentType,
+  updateFormData,
 } from '../../../../../actions/order';
 import { useTenant } from '../../../../../hooks/useTenant';
 import { useGetMyDetailsQuery, useMyRentDetailsQuery } from 'src/queries';
@@ -54,6 +53,7 @@ import { ClientSourceForm } from './ClientSourceForm';
 import { PaymentDocumentType } from '../Common/PaymentDocumentType';
 import { useI18n } from 'src/i18n';
 import { scrollToFirstFormError } from 'src/utils/scroll-to-form-error';
+import { openEndedFirstPeriodFinish } from 'src/utils/open-ended-period';
 
 const STEP_SUMMARY_FIELD_ORDER: (keyof RentDataDto)[] = [
   'firstName',
@@ -75,14 +75,7 @@ const STEP_SUMMARY_FIELD_ORDER: (keyof RentDataDto)[] = [
   'clientSource',
 ];
 
-interface Props {
-  formData: FormType;
-  updateFormData: (data: Partial<FormType>) => void;
-  showModal: (content: React.ReactNode) => void;
-  successNotification: (text: string) => void;
-}
-
-const StepSummary = ({ formData, updateFormData }: Props) => {
+const StepSummary = () => {
   const { tenant } = useTenant();
   const { t } = useI18n();
   const dispatch = useDispatch();
@@ -98,10 +91,20 @@ const StepSummary = ({ formData, updateFormData }: Props) => {
     startDate,
     endDate,
     rentPaymentType,
+    agreementType,
   } = useSelector((state: ApplicationState) => state.order);
 
   const { data: user } = useGetMyDetailsQuery();
   const { rentId } = useParams<{ step: string; rentId: string }>();
+  const isOpenEnded = agreementType === RentAgreementType.OpenEnded;
+  const pricePaymentType = isOpenEnded
+    ? RentPaymentType.InAdvance
+    : rentPaymentType || RentPaymentType.InAdvance;
+  const periodDays = stock?.openEndedPeriodDays || 30;
+  const firstPeriodEnd =
+    isOpenEnded && startDate
+      ? openEndedFirstPeriodFinish(startDate, periodDays)
+      : endDate;
   const isFirstRent = user && !user.rentCount;
   const [discount, setDiscount] = useState<boolean>(false);
   const { data: rent } = useMyRentDetailsQuery(rentId);
@@ -157,6 +160,13 @@ const StepSummary = ({ formData, updateFormData }: Props) => {
       history.push(`/${UserService.getSlugByRole(user.role)}/order/step/stock`);
     }
 
+    if (isOpenEnded) {
+      if (!rentId) {
+        dispatch(calculateOpenEndedPrice(boxGroupId, startDate));
+      }
+      return;
+    }
+
     if (!endDate) return;
 
     if (rentId) {
@@ -174,7 +184,7 @@ const StepSummary = ({ formData, updateFormData }: Props) => {
           boxGroupId,
           startDate,
           endDate,
-          rentPaymentType || RentPaymentType.InAdvance,
+          pricePaymentType,
         ),
       );
     }
@@ -187,6 +197,13 @@ const StepSummary = ({ formData, updateFormData }: Props) => {
   }, [user]);
 
   useEffect(() => {
+    if (isOpenEnded) {
+      if (!rentId) {
+        dispatch(calculateOpenEndedPrice(boxGroupId, startDate, discountCode));
+      }
+      return;
+    }
+
     if (!endDate) return;
 
     if (rentId) {
@@ -205,7 +222,7 @@ const StepSummary = ({ formData, updateFormData }: Props) => {
           boxGroupId,
           startDate,
           endDate,
-          rentPaymentType || RentPaymentType.InAdvance,
+          pricePaymentType,
           discountCode,
         ),
       );
@@ -215,7 +232,7 @@ const StepSummary = ({ formData, updateFormData }: Props) => {
   useEffect(() => {
     if (!stock) return;
 
-    if (rentPaymentType === RentPaymentType.Installments) {
+    if (isOpenEnded || rentPaymentType === RentPaymentType.Installments) {
       dispatch(setRentPaymentDocumentType(PaymentDocument.Invoice));
       return;
     }
@@ -234,12 +251,12 @@ const StepSummary = ({ formData, updateFormData }: Props) => {
         break;
       }
     }
-  }, [stock, rentPaymentType]);
+  }, [stock, rentPaymentType, isOpenEnded]);
 
   const onSubmit = (data: RentDataDto) => {
     if (!user) return;
-    const { withBirthDate, withClientSource, ...rest } = data;
-    updateFormData({ ...rest, isCompany: invoiceNeeded });
+    const { withBirthDate: _withBirthDate, withClientSource: _withClientSource, ...rest } = data;
+    dispatch(updateFormData({ ...rest, isCompany: invoiceNeeded }));
     history.push(
       `/${UserService.getSlugByRole(user.role)}/order/step/agreement/${rentId || ''}`,
     );
@@ -254,14 +271,17 @@ const StepSummary = ({ formData, updateFormData }: Props) => {
       {loadingPrice && <Spinner overlay halfTransparent />}
 
       <Section>
-        {endDate && (
+        {firstPeriodEnd && (
           <>
             <SummaryTable
               dateStart={startDate}
-              dateEnd={endDate}
+              dateEnd={firstPeriodEnd}
               countedPrice={calculatedPrice}
               addons={addons}
               orderAddons={orderAddons}
+              isOpenEnded={isOpenEnded}
+              periodDays={periodDays}
+              invoiceDaysBefore={stock?.openEndedInvoiceDaysBefore || 7}
             />
             <Header variant="h2">{__('rent.discount')}</Header>
             <ControlledCheckbox
@@ -274,12 +294,12 @@ const StepSummary = ({ formData, updateFormData }: Props) => {
         )}
       </Section>
 
-      {discount && endDate ? (
+      {discount && firstPeriodEnd ? (
         <DiscountForm
           stockId={stockId}
           boxGroupId={rent?.boxGroupId || boxGroupId}
           rentStart={startDate}
-          rentEnd={endDate}
+          rentEnd={firstPeriodEnd}
         />
       ) : null}
 
@@ -337,19 +357,4 @@ const StepSummary = ({ formData, updateFormData }: Props) => {
   );
 };
 
-const mapStateToProps = (state: ApplicationState) => ({
-  formData: state.order.formData,
-});
-
-const mapDispatchToProps = (dispatch: any) =>
-  bindActionCreators(
-    {
-      ...order,
-      ...modal,
-      ...notifications,
-      ...user,
-    },
-    dispatch,
-  );
-
-export default connect(mapStateToProps, mapDispatchToProps)(StepSummary);
+export default StepSummary;

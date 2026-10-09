@@ -1,3 +1,4 @@
+import type { AppDispatch } from 'src/types/app-dispatch';
 import React from 'react';
 import { ApiErrorCode, Coordinate } from 'smartbox-types';
 import ApiService from '../services/api-service';
@@ -8,7 +9,7 @@ import { OpenGateTooSoonModal } from '../components/Common/OpenGateTooSoonModal'
 import { OpenGateByForceModal } from '../components/Common/OpenGateByForceModal';
 import { KsmGateOpenModal } from '../components/Common/KsmGateOpenModal';
 
-const showKsmGateOpenModal = (dispatch: any, requestId: string) => {
+const showKsmGateOpenModal = (dispatch: AppDispatch, requestId: string) => {
   dispatch(
     modalActions.showModal(
       React.createElement(KsmGateOpenModal, { requestId }),
@@ -17,7 +18,7 @@ const showKsmGateOpenModal = (dispatch: any, requestId: string) => {
 };
 
 const handleKsmGateOpenError = (
-  dispatch: any,
+  dispatch: AppDispatch,
   result: { error_code: ApiErrorCode },
   onTooFarAway?: () => void,
 ): boolean => {
@@ -35,16 +36,17 @@ const handleKsmGateOpenError = (
 };
 
 export const requestKsmGateOpenV2 =
-  (gateId: string, geo: Coordinate) => async (dispatch: any) => {
+  (gateId: string, geo: Coordinate) => async (dispatch: AppDispatch) => {
     await ApiService.callFetch(
       'PATCH',
       `v2/stock/ksm/open-gate/${gateId}/${geo.lat}/${geo.lon}`,
       (payload: { id: string }) => {
         showKsmGateOpenModal(dispatch, payload.id);
       },
-      (result: { error_code: ApiErrorCode }) => {
+      (result) => {
+        const errorCode = (result as unknown as { error_code: ApiErrorCode }).error_code;
         if (
-          handleKsmGateOpenError(dispatch, result, () => {
+          handleKsmGateOpenError(dispatch, { error_code: errorCode }, () => {
             dispatch(
               modalActions.showModal(
                 React.createElement(OpenGateByForceModal, {
@@ -60,7 +62,7 @@ export const requestKsmGateOpenV2 =
           return;
         }
 
-        store.dispatch(errorNotification(result.error_code));
+        store.dispatch(errorNotification(errorCode));
       },
       undefined,
       undefined,
@@ -69,7 +71,7 @@ export const requestKsmGateOpenV2 =
   };
 
 export const requestKsmGateOpenByForceV2 =
-  (gateId: string, geo: Coordinate) => async (dispatch: any) => {
+  (gateId: string, geo: Coordinate) => async (dispatch: AppDispatch) => {
     await ApiService.callFetch(
       'PATCH',
       `v2/stock/ksm/open-gate-by-force/${gateId}/${geo.lat}/${geo.lon}`,
@@ -77,12 +79,13 @@ export const requestKsmGateOpenByForceV2 =
         dispatch(modalActions.hideModal());
         showKsmGateOpenModal(dispatch, payload.id);
       },
-      (result: { error_code: ApiErrorCode }) => {
-        if (handleKsmGateOpenError(dispatch, result)) {
+      (result) => {
+        const errorCode = (result as unknown as { error_code: ApiErrorCode }).error_code;
+        if (handleKsmGateOpenError(dispatch, { error_code: errorCode })) {
           return;
         }
 
-        store.dispatch(errorNotification(result.error_code));
+        store.dispatch(errorNotification(errorCode));
       },
       undefined,
       undefined,

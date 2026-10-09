@@ -1,5 +1,7 @@
 import { SingleAcceptance } from "smartbox-types"
-import { ButtonsContainer, Section, SimpleHeader } from "../../../components/Layout"
+import {
+  ButtonsContainer,
+} from "../../../components/Layout";
 import { __ } from "../../../helpers/i18n";
 import { Button } from "../../../components/Branded";
 import Input from "../Input";
@@ -71,7 +73,6 @@ export const AcceptancesField = ({ value, onChange }: Props) => {
         const newAcceptances = acceptances.filter((_, index) => index !== indexToDelete);
         onChange(newAcceptances);
     }
-
 
     return <div>
         <label className='input-label compact'>{__('application.addonAcceptances')}</ label>

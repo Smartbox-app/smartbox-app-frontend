@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect } from 'react';
 import { Spinner } from '../../../../../../components/Branded';
 import { ButtonsContainer } from '../../../../../../components/Layout';
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,7 +12,7 @@ import {
   setAddonFile,
 } from '../../../../../../actions/order';
 import { SingleVariant } from './SingleVariant';
-import ApiService from '../../../../../../services/api-service';
+
 import FileInput from '../../../../../../components/Common/FileInput';
 import { AddonRes, AddonUserFileRequirementType } from 'smartbox-types';
 import { OrderAddon } from 'src/reducers/order-reducer';
@@ -148,8 +148,8 @@ export const Addons = ({ stockId, boxGroupId }: Props) => {
               <FileInput
                 input={{
                   value: orderAddons[addon.id].file,
-                  onChange: (file: File | null) =>
-                    handleAddonFile(addon.id, file),
+                  onChange: (file) =>
+                    handleAddonFile(addon.id, file instanceof File ? file : null),
                 }}
                 accept=".jpg,.jpeg,.png,.pdf,.docx"
                 multiple={false}

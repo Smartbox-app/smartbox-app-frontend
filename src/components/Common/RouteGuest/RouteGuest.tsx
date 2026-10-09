@@ -1,3 +1,4 @@
+import React from 'react';
 import { Redirect, Route } from 'react-router-dom';
 import { UserRole } from 'smartbox-types';
 import { AppMessage } from 'src/components/AppMessage';
@@ -5,7 +6,7 @@ import { useGetMyDetailsQuery } from 'src/queries';
 import { withAttributionSearch } from 'src/utils/attribution-params';
 
 export type RouteGuestProps = {
-  component: any;
+  component: React.ComponentType;
   exact?: boolean;
   path?: string;
 };

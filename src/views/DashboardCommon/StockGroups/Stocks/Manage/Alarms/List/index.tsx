@@ -11,14 +11,12 @@ import { __ } from '../../../../../../../helpers/i18n';
 import { InteractiveTableSchema } from '../../../../../../../utils/table-schema-utils';
 import { refreshApiTableData } from '../../../../../../../actions/api-table';
 import { useParams } from 'react-router';
-import { useGetMyDetailsQuery } from 'src/queries';
 import { Header, Typography } from 'src/components/ui';
 import ApiService from '../../../../../../../services/api-service';
 import { successNotification } from '../../../../../../../actions/notifications';
 import { LocationActivityList } from '../LocationActivityList';
 
 const List = () => {
-  const { data: user } = useGetMyDetailsQuery();
   const dispatch = useDispatch();
   const scheme = new InteractiveTableSchema(alarmsList);
   const { stockId } = useParams<{ stockId: string }>();

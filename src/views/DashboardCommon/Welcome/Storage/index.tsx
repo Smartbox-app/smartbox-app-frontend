@@ -4,11 +4,12 @@ import StorageList from './StorageList';
 import { Header, Section } from '../../../../components/ui';
 import { __ } from '../../../../helpers/i18n';
 import { useTenantNaming } from 'src/hooks/useTenantNaming';
+import type { NamingTypeKey } from 'src/i18n/types/keys';
 
 interface Props {
   myRentList: MyRentList[];
   loading: boolean;
-  title: string;
+  title: NamingTypeKey;
 }
 
 const Storage = ({ myRentList, loading, title }: Props) => {

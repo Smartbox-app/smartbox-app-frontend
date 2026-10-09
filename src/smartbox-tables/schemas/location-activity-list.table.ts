@@ -16,7 +16,11 @@ export const locationActivityList: TableSchema = {
       sortable: false,
       defaultSort: false,
       type: FieldType.Text,
-      customValue: (row) =>
+      customValue: (row: {
+        firstName?: string;
+        lastName?: string;
+        email?: string;
+      }) =>
         [row.firstName, row.lastName].filter(Boolean).join(' ') || row.email,
     },
     {
@@ -54,7 +58,8 @@ export const locationActivityList: TableSchema = {
       sortable: false,
       defaultSort: false,
       type: FieldType.Text,
-      customValue: (row) => statusToText[row.status] ?? row.status,
+      customValue: (row: { status: string }) =>
+        statusToText[row.status] ?? row.status,
     },
     {
       name: 'Ostatnia aktualizacja',

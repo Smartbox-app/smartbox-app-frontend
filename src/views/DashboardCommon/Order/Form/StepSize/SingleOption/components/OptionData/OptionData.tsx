@@ -10,15 +10,6 @@ import styled from 'styled-components';
 //   }),
 // );
 
-const StyledAreaVolumeContainer = styled.div<{ disabled?: boolean }>`
-  background-color: transparent;
-  color: ${(props) =>
-    props.disabled
-      ? props.theme.colors.disabled
-      : colorOrDark(props.theme.colors.primary)};
-  text-align: center;
-`;
-
 const StyledSizeDataContainer = styled('div')<{ disabled?: boolean }>(
   ({ theme, disabled }) => ({
     display: 'flex',
@@ -54,13 +45,13 @@ export const OptionData = ({ option, disable }: OptionDataProps) => {
       <StyledSizeDataContainer disabled={!option.available || disable}>
         <StyledInfoGroup>
           {option.area ? (
-            <StyledSingleInfo disabled={!option.available || disable}>
+            <StyledSingleInfo>
               <Area />
               <strong>{option.area}m²</strong>
             </StyledSingleInfo>
           ) : null}
           {option.volume ? (
-            <StyledSingleInfo disabled={!option.available || disable}>
+            <StyledSingleInfo>
               <Cube /> <strong>{option.volume}m³</strong>
             </StyledSingleInfo>
           ) : null}

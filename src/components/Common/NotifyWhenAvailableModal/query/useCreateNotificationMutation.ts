@@ -1,10 +1,16 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 
-import { NotificationEntity, NotificationReq } from 'smartbox-types';
+import { NotificationEntity } from 'smartbox-types';
+
+type NotificationReq = {
+  email: boolean;
+  sms?: boolean;
+  boxGroupId: string;
+  tenantId: string;
+};
 import ApiService from 'src/services/api-service';
 
 export const useCreateNotificationMutation = () => {
-  const queryClient = useQueryClient();
   return useMutation({
     mutationKey: ['discount'],
     mutationFn: async (body: NotificationReq) => {

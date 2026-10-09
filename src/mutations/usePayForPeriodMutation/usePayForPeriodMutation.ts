@@ -1,4 +1,4 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import ApiService from '../../services/api-service';
 import { PayForRentResponse } from 'smartbox-types';
 import { Capacitor } from '@capacitor/core';

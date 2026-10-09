@@ -29,3 +29,4 @@ export * from './useGetRentFileUrlQuery';
 export * from './useLocationActivityQuery';
 export * from './useRentDetailsQuery';
 export * from './useTemplatesQuery';
+export * from './useTemplateListQuery';

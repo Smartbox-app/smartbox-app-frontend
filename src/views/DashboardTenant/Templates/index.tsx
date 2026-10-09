@@ -35,6 +35,12 @@ const TemplatesManagement = ({
         render={() => <List basePath={basePath} tenantId={tenantId} />}
       />
       <Route
+        path={`${basePath}/manage/:type/:template/stock/:id?`}
+        render={() => (
+          <Manage forStock basePath={basePath} tenantId={tenantId} />
+        )}
+      />
+      <Route
         path={`${basePath}/manage/:type/:template`}
         render={() => <Manage basePath={basePath} tenantId={tenantId} />}
       />

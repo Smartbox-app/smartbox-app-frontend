@@ -1,9 +1,9 @@
 import React from 'react';
 import { ItfApiForm } from 'itf_formbuilder_react';
-import { connect, useDispatch } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { ChangeStatusReq } from 'smartbox-types';
-import { boxes, modal, notifications } from '../../../../../actions';
+import { useDispatch } from 'react-redux';
+import { ChangeBoxReq } from 'smartbox-types';
+import { hideModal, showModal } from '../../../../../actions/modal';
+import { successNotification } from '../../../../../actions/notifications';
 import { ButtonsContainer } from '../../../../../components/Layout';
 import { Modal } from 'src/components/ui';
 import { Alert } from '../../../../../components/Common';
@@ -22,17 +22,9 @@ import { refreshApiTableData } from '../../../../../actions/api-table';
 
 interface Props {
   rentId: string;
-  hideModal: () => void;
-  successNotification: (text: string) => void;
-  showModal: (content: React.ReactNode) => void;
 }
 
-const Position = ({
-  rentId,
-  successNotification,
-  hideModal,
-  showModal,
-}: Props) => {
+const Position = ({ rentId }: Props) => {
   const dispatch = useDispatch();
 
   const submitButton = (
@@ -44,8 +36,8 @@ const Position = ({
   const fetchUrl = `rent/form/change-user-box/${rentId}`;
   const sendUrl = `rent/user-box/${rentId}`;
 
-  const customSendFetcher = (formId: string, values: ChangeStatusReq) => {
-    showModal(
+  const customSendFetcher = (_formId: string, values: ChangeBoxReq) => {
+    dispatch(showModal(
       <>
         <Modal.Header title={__('application.confirmation')} />
         <Modal.Content>
@@ -64,7 +56,7 @@ const Position = ({
             <Button
               text="application.cancel"
               danger
-              click={() => hideModal()}
+              click={() => dispatch(hideModal())}
             />
             <Button
               success
@@ -78,9 +70,9 @@ const Position = ({
                   },
                   'PATCH',
                   () => {
-                    successNotification('notification.userMovedSuccess');
+                    dispatch(successNotification('notification.userMovedSuccess'));
                     dispatch(refreshApiTableData());
-                    hideModal();
+                    dispatch(hideModal());
                   },
                 )
               }
@@ -88,7 +80,7 @@ const Position = ({
           </ButtonsContainer>
         </Modal.Actions>
       </>,
-    );
+    ));
   };
 
   return (
@@ -106,7 +98,7 @@ const Position = ({
         submitButton={submitButton}
         loadingInfo={<Spinner transparent />}
         onSavedSuccessfully={() => {
-          hideModal();
+          dispatch(hideModal());
           dispatch(refreshApiTableData());
         }}
         onTranslateString={formOnTranslateString}
@@ -120,7 +112,4 @@ const Position = ({
   );
 };
 
-const mapDispatchToProps = (dispatch: any) =>
-  bindActionCreators({ ...modal, ...boxes, ...notifications }, dispatch);
-
-export default connect(null, mapDispatchToProps)(Position);
+export default Position;

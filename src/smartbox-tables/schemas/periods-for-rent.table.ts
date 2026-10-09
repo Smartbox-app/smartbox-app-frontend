@@ -95,5 +95,14 @@ export const periodsForRentList: TableSchema = {
       alias: 'period',
       mobile: true,
     },
+    {
+      name: 'Nr faktury',
+      field: 'invoiceNumber',
+      type: FieldType.Text,
+      sortable: true,
+      searchable: true,
+      alias: 'period',
+      mobile: true,
+    },
   ],
 };

@@ -1,6 +1,8 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import ApiService from '../../services/api-service';
-import { AuthLoginResult } from 'smartbox-types';
+type SocialLoginPayload = {
+  accessToken?: string;
+};
 import { Capacitor } from '@capacitor/core';
 import { Preferences } from '@capacitor/preferences';
 import { SocialLoginDto } from 'src/dto/SocialLoginDto';
@@ -10,7 +12,7 @@ export const useSocialLoginMutation = () => {
   return useMutation({
     mutationKey: ['social-login'],
     mutationFn: async (dto: SocialLoginDto) => {
-      const response = await ApiService.callFetch<AuthLoginResult>(
+      const response = await ApiService.callFetch<SocialLoginPayload>(
         'post',
         `auth/social-login`,
         null,
@@ -18,7 +20,7 @@ export const useSocialLoginMutation = () => {
         dto,
       );
 
-      if (response && Capacitor.isNativePlatform()) {
+      if (response?.accessToken && Capacitor.isNativePlatform()) {
         await Preferences.set({
           key: 'smst_token',
           value: response.accessToken,

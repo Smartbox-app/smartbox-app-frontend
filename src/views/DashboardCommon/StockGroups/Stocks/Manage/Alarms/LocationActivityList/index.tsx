@@ -4,7 +4,7 @@ import { useParams } from 'react-router';
 import { FieldType, locationActivityList } from 'smartbox-tables';
 import { LocationActivityListItem } from 'smartbox-types';
 import { ConfirmModal, Table } from 'src/components/Common';
-import { Spinner } from 'src/components/Branded';
+import { Spinner , Button } from 'src/components/Branded';
 import { ButtonsContainer, Section } from 'src/components/Layout';
 import { __ } from 'src/helpers/i18n';
 import { InteractiveTableSchema } from 'src/utils/table-schema-utils';
@@ -16,7 +16,6 @@ import {
   useToggleLocationActivityMutation,
 } from 'src/mutations';
 import { Header, Typography, Button as UIButton } from 'src/components/ui';
-import { Button } from 'src/components/Branded';
 
 export const LocationActivityList = () => {
   const dispatch = useDispatch();

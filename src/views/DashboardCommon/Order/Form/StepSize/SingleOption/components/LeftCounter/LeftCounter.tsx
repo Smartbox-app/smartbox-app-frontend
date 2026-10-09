@@ -10,7 +10,7 @@ export type LeftCounterProps = {
 };
 
 const StyledCounter = styled('div')<{ disabled?: boolean }>(
-  ({ theme, disabled }) => ({
+  ({ theme }) => ({
     height: 40,
     display: 'flex',
     alignItems: 'center',
@@ -54,7 +54,7 @@ export const LeftCounter = ({ option, disabled }: LeftCounterProps) => {
         <>
           <Alert />
           <span>
-            {__(getText())} <strong>{option.left}</strong>!
+            {__(getText() ?? '')} <strong>{option.left}</strong>!
           </span>
         </>
       )}

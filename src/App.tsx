@@ -1,3 +1,4 @@
+import type { AppDispatch } from 'src/types/app-dispatch';
 import 'reflect-metadata';
 
 import React, { Suspense } from 'react';
@@ -19,7 +20,7 @@ import {
   Cookies,
   RouteTenant,
 } from './components/Common';
-import { Spinner } from './components/Branded';
+
 import { PaymentResult } from './views/DashboardCommon';
 import { NotificationContainer } from './components/Notifications';
 import AppOffline from './components/AppOffline';
@@ -135,7 +136,7 @@ const App = () => {
                         />
                         <RouteGuest
                           exact
-                          path="/restore-pass/"
+                          path="/restore-pass"
                           component={RestorePass}
                         />
                         <RouteGuest
@@ -235,9 +236,10 @@ const App = () => {
 };
 
 const listenToWindowEvent =
-  (name: string, mapEventToAction: any) => (dispatch: any) => {
-    const handleEvent = (e: any) => {
-      dispatch(mapEventToAction(e));
+  (name: string, mapEventToAction: (event: Event) => { type: string }) =>
+  (dispatch: AppDispatch) => {
+    const handleEvent = (event: Event) => {
+      dispatch(mapEventToAction(event));
     };
     window.addEventListener(name, handleEvent);
   };

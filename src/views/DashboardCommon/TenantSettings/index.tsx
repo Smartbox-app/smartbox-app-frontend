@@ -8,8 +8,10 @@ import { Header, HeaderWithActions, Section, Tabs } from 'src/components/ui';
 import { Button } from 'src/components/Branded';
 import { ButtonsContainer } from 'src/components/Layout';
 import { AppearanceSettings } from './sections/AppearanceSettings';
+import { AgreementsSettings } from './sections/AgreementsSettings';
 import { DocumentsSettings } from './sections/DocumentsSettings';
-import { MessagingSettings } from './sections/MessagingSettings';
+import { CommunicationsSettings } from './sections/CommunicationsSettings';
+import { IntegrationsSettings } from './sections/IntegrationsSettings';
 import { MobileAppsSettings } from './sections/MobileAppsSettings';
 import { AnalyticsSettings } from './sections/AnalyticsSettings';
 import { TemplatesSettings } from './sections/TemplatesSettings';
@@ -79,7 +81,19 @@ export const TenantSettings = ({
           path={`${basePath}/data`}
           render={() => <ManageTenantData userId={userId} />}
         />
-        <Route path={`${basePath}/messaging`} component={MessagingSettings} />
+        <Route path={`${basePath}/agreements`} component={AgreementsSettings} />
+        <Route
+          path={`${basePath}/communications`}
+          component={CommunicationsSettings}
+        />
+        <Route
+          path={`${basePath}/integrations`}
+          component={IntegrationsSettings}
+        />
+        <Route
+          path={`${basePath}/messaging`}
+          render={() => <Redirect to={`${basePath}/communications`} />}
+        />
         <Route path={`${basePath}/mobile-apps`} component={MobileAppsSettings} />
         <Route path={`${basePath}/analytics`} component={AnalyticsSettings} />
         <Route

@@ -21,17 +21,22 @@ export type DocumentEntity = {
   tenantId: string;
   stockId: string | null;
   companyId: string | null;
-  isDraft?: boolean;
+  isCurrent: boolean;
+  isDraft: boolean;
 };
 
-export type DocumentListRes = Pick<
+export type DocumentListResClient = Pick<
   DocumentEntity,
   'id' | 'type' | 'updatedAt' | 'isDraft' | 'stockId' | 'companyId'
 > & {
+  stockName?: string | null;
+  companyName?: string | null;
+};
+
+export type DocumentListResAdmin = DocumentListResClient & {
   identifier?: string;
   tenantId?: string;
   stockName?: string | null;
-  companyName?: string | null;
 };
 
 export type DocumentRes = Pick<
@@ -48,38 +53,4 @@ export type DocumentRes = Pick<
 
 export type DocumentHtmlRes = {
   html: string;
-};
-
-export type AgreementAddonTemplate = {
-  slug: string;
-  variant: string | null;
-  price: number | null;
-};
-
-export type AgreementTemplateInput = {
-  firstName?: string;
-  lastName?: string;
-  email?: string;
-  phone?: string;
-  cost?: string;
-  startAt?: string;
-  finishAt?: string;
-  city?: string;
-  street?: string;
-  postCode?: string;
-  date?: string;
-  stockName?: string;
-  stockAddress?: string;
-  size?: string;
-  area?: string;
-  boxNumber?: string;
-  mailToSendInvoice?: string;
-  addons?: string | AgreementAddonTemplate[];
-  isCompany?: string | boolean;
-  nip?: string;
-  companyName?: string;
-  companyPostCode?: string;
-  companyStreet?: string;
-  companyCity?: string;
-  birthDate?: string;
 };

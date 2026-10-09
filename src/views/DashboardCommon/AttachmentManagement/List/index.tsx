@@ -16,16 +16,11 @@ import { refreshApiTableData } from '../../../../actions/api-table';
 import UserService from '../../../../services/user-service';
 import { useGetMyDetailsQuery } from 'src/queries';
 import { HeaderWithActions } from 'src/components/ui';
-import { useTenantNaming } from 'src/hooks/useTenantNaming';
-import { useTenant } from 'src/hooks/useTenant';
 import { attachmentList, attachmentListForAdmin } from 'smartbox-tables';
 import { Edit } from '../Edit';
 
 const List = () => {
   const dispatch = useDispatch();
-  const { getText } = useTenantNaming();
-  const { tenant } = useTenant();
-
   const { data: user } = useGetMyDetailsQuery();
   const scheme = new InteractiveTableSchema(user?.role === UserRole.admin ? attachmentListForAdmin : attachmentList);
   const hasAdminAccess = [UserRole.admin].includes(user!.role);

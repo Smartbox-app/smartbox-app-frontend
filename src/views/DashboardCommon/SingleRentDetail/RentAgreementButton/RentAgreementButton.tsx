@@ -21,7 +21,6 @@ export const RentAgreementButton = ({
   periodIndex,
   documentId,
   agreement,
-  small = true,
 }: RentAgreementButtonProps) => {
   const dispatch = useDispatch();
 

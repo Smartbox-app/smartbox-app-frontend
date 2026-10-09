@@ -1,9 +1,8 @@
 import React, { useMemo } from 'react';
-import { BoxGroupUserRes } from 'smartbox-types';
+import { BoxGroupUserRes , PricingType } from 'smartbox-types';
 import styled from 'styled-components';
 import { __ } from '../../../../../../helpers/i18n';
 import { formatPrice } from '../../../../../../utils/format-price';
-import { PricingType } from 'smartbox-types';
 import { getColorForBackground } from 'src/utils/color';
 import { PriceDisplayForClients } from 'src/smartbox-types/stock/price-display-for-clients';
 
@@ -67,10 +66,7 @@ const formatQuantity = (type: PricingType, quantity: number) => {
 
 const PriceInfo = ({ box, active, disabled }: Props) => {
   const firstPricing = box.pricing[0];
-
-  if (!firstPricing.price || !firstPricing.quantity) return null;
-
-  const { display, netPrice, grossPrice } = box.pricing[0];
+  const { display } = firstPricing;
 
   const priceInfo = useMemo(() => {
     switch (display) {
@@ -105,7 +101,9 @@ const PriceInfo = ({ box, active, disabled }: Props) => {
           </>
         );
     }
-  }, [display, netPrice, grossPrice]);
+  }, [display, firstPricing]);
+
+  if (!firstPricing.price || !firstPricing.quantity) return null;
 
   return (
     <>

@@ -8,8 +8,7 @@ import { ApplicationState } from '../../../../../../reducers';
 
 import './Price.scss';
 import { Header, Section } from 'src/components/ui';
-import { differenceInDays } from 'date-fns';
-import { PriceDisplayForClients } from 'smartbox-types';
+import { PriceDisplayForClients, RentAgreementType } from 'smartbox-types';
 import { useI18n } from 'src/i18n';
 
 const StyledPrice = styled.strong`
@@ -29,13 +28,24 @@ const StyledPrices = styled.div`
 
 const Price = () => {
   const { t } = useI18n();
-  const { calculatedPrice, orderAddons, startDate, endDate, rentPaymentType } =
-    useSelector((state: ApplicationState) => state.order);
+  const {
+    calculatedPrice,
+    agreementType,
+    orderAddons,
+    startDate,
+    endDate,
+    rentPaymentType,
+  } = useSelector((state: ApplicationState) => state.order);
+
+  const isOpenEnded = agreementType === RentAgreementType.OpenEnded;
 
   const addonsPricesPerPeriod = useMemo(() => {
     const everyAddonPricePerPeriod: { net: number; gross: number }[] = [];
     for (const addon of Object.values(orderAddons)) {
-      const pricePerPeriod = (addon.price || []).map((price) => ({ net: price.netPrice, gross: price.grossPrice }));
+      const pricePerPeriod = (addon.price || []).map((price) => ({
+        net: price.netPrice,
+        gross: price.grossPrice,
+      }));
 
       for (let i = 0; i < pricePerPeriod.length; i++) {
         if (!everyAddonPricePerPeriod[i]) {
@@ -62,7 +72,8 @@ const Price = () => {
   }, [calculatedPrice]);
 
   const toPayNow = useMemo(() => {
-    if (!endDate || !startDate) return null;
+    if (!startDate) return null;
+    if (!isOpenEnded && !endDate) return null;
 
     return {
       net:
@@ -72,10 +83,21 @@ const Price = () => {
         (rentPricesPerPeriod[0]?.gross || 0) +
         (addonsPricesPerPeriod[0]?.gross || 0),
     };
-  }, [addonsPricesPerPeriod, rentPricesPerPeriod]);
+  }, [addonsPricesPerPeriod, rentPricesPerPeriod, startDate, endDate, isOpenEnded]);
 
   const headerTitle = useMemo(() => {
     const { display } = calculatedPrice[0];
+    if (isOpenEnded) {
+      switch (display) {
+        case PriceDisplayForClients.gross:
+          return __('application.grossPriceForPeriod');
+        case PriceDisplayForClients.net:
+          return __('application.netPriceForPeriod');
+        case PriceDisplayForClients.both:
+          return __('application.priceForPeriod');
+      }
+    }
+
     switch (display) {
       case PriceDisplayForClients.gross:
         return __('application.grossPriceForSelectedPeriod');
@@ -84,7 +106,7 @@ const Price = () => {
       case PriceDisplayForClients.both:
         return __('application.priceForSelectedPeriod');
     }
-  }, [calculatedPrice]);
+  }, [calculatedPrice, isOpenEnded]);
 
   const priceInfo = useMemo(() => {
     const { display } = calculatedPrice[0];
@@ -107,7 +129,7 @@ const Price = () => {
           </StyledPrices>
         );
     }
-  }, [toPayNow]);
+  }, [toPayNow, calculatedPrice, t]);
 
   return (
     <Section>

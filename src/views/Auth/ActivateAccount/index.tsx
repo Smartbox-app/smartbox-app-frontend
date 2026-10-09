@@ -22,7 +22,6 @@ import {
   Button,
   Form,
   Header,
-  InfoContent,
   Input,
   Section,
   Stack,

@@ -41,41 +41,37 @@ export const GateButton = ({ gate }: Props) => {
   };
 
   const getCurrentLocation = async (): Promise<Coordinate> => {
-    try {
-      if (Capacitor.isNativePlatform()) {
-        const hasPermission = await ensurePermission();
-        if (!hasPermission) throw new Error('permission_denied');
+    if (Capacitor.isNativePlatform()) {
+      const hasPermission = await ensurePermission();
+      if (!hasPermission) throw new Error('permission_denied');
 
-        const position = await Geolocation.getCurrentPosition();
-        return {
-          lat: position.coords.latitude.toString(),
-          lon: position.coords.longitude.toString(),
-        };
-      } else if (navigator.geolocation) {
-        return new Promise<Coordinate>((resolve, reject) => {
-          navigator.geolocation.getCurrentPosition(
-            (pos) =>
-              resolve({
-                lat: pos.coords.latitude.toString(),
-                lon: pos.coords.longitude.toString(),
-              }),
-            reject,
-          );
-        });
-      } else {
-        throw new Error('not_supported');
-      }
-    } catch (error) {
-      throw error;
+      const position = await Geolocation.getCurrentPosition();
+      return {
+        lat: position.coords.latitude.toString(),
+        lon: position.coords.longitude.toString(),
+      };
+    } else if (navigator.geolocation) {
+      return new Promise<Coordinate>((resolve, reject) => {
+        navigator.geolocation.getCurrentPosition(
+          (pos) =>
+            resolve({
+              lat: pos.coords.latitude.toString(),
+              lon: pos.coords.longitude.toString(),
+            }),
+          reject,
+        );
+      });
     }
+
+    throw new Error('not_supported');
   };
 
   const tryToOpenGateByLocation = async () => {
     try {
       const location = await getCurrentLocation();
       dispatch(askGateToOpen(gate.id, location));
-    } catch (error: any) {
-      if (error.message === 'not_supported') {
+    } catch (error: unknown) {
+      if (error instanceof Error && error.message === 'not_supported') {
         dispatch(
           modal.showModal(
             <OpenGateByForceModal
@@ -85,7 +81,7 @@ export const GateButton = ({ gate }: Props) => {
             />,
           ),
         );
-      } else if (error.message === 'permission_denied') {
+      } else if (error instanceof Error && error.message === 'permission_denied') {
         dispatch(
           modal.showModal(
             <OpenGateByForceModal

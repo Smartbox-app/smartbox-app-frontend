@@ -30,13 +30,6 @@ const Field = styled('div')(({ theme }) => ({
   width: '100%',
 }));
 
-const InputRow = styled('div')(({ theme }) => ({
-  display: 'flex',
-  gap: theme.spacing * 2,
-  alignItems: 'flex-start',
-  flexWrap: 'wrap',
-}));
-
 const DraftInputWrap = styled('div')({
   flex: 1,
   minWidth: 200,
@@ -171,7 +164,6 @@ export const InviteEmailsField = ({
           type="text"
           $size={inputSize}
           $error={!!draftError}
-          $disabled={!!disabled}
           value={draft}
           onChange={(event) => {
             setDraft(event.target.value);

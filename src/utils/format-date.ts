@@ -1,8 +1,8 @@
 // import { format } from 'date-fns';
-import { isDate } from 'date-fns';
+
 import { format, formatInTimeZone, toZonedTime } from 'date-fns-tz';
 
-export function dateOnly(n: Date | string, slice?: number): any {
+export function dateOnly(n: Date | string | null, slice?: number): string {
   if (n === null) return '---';
 
   if (slice) {
@@ -11,7 +11,7 @@ export function dateOnly(n: Date | string, slice?: number): any {
   return formatInTimeZone(n, 'Europe/Warsaw', 'dd.MM.yyyy');
 }
 
-export function dateOnlyNormalized(n: Date | string, slice?: number): any {
+export function dateOnlyNormalized(n: Date | string | null, slice?: number): string {
   if (n === null) return '---';
 
   if (slice) {
@@ -35,9 +35,6 @@ export function dateOnlyLocalTime(n: Date | string) {
   return format(n, 'dd.MM.yyyy');
 }
 
-export const formatForPLTimeZone = (val: any) => {
-  const dateVal: Date = val as Date;
-  const timeZone = 'Europe/Warsaw';
-  const zonedDate = toZonedTime(dateVal, timeZone);
-  return zonedDate;
+export const formatForPLTimeZone = (val: Date | string | number): Date => {
+  return toZonedTime(val, 'Europe/Warsaw');
 };

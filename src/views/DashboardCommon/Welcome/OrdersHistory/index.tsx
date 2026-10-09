@@ -1,16 +1,13 @@
-import React, { useState } from 'react';
-import { MyRentList } from 'smartbox-types';
+import { useState } from 'react';
 import { Pagination } from '../../../../components/Common';
 import History from './History';
 import { Header, Section } from '../../../../components/ui';
 import { __ } from '../../../../helpers/i18n';
 import { useGetMyRentStoryQuery } from 'src/queries';
 
-
 const OrdersHistory = () => {
   const { data: rentsHistoryList = [] } = useGetMyRentStoryQuery();
-
-  const [listLength, setListLength] = useState(10);
+  const listLength = 10;
   const [page, setPage] = useState(1);
 
   const startFrom = (): number => (page - 1) * listLength;

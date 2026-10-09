@@ -2,28 +2,24 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
 
-import { bindActionCreators } from 'redux';
-import { connect, useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   RentBoxReq,
   ExtendRentalReq,
-  OrderAddons,
   RentPaymentType,
+  RentAgreementType,
   PayForRentResponse,
   PaymentStatus,
   PaymentDocument,
 } from 'smartbox-types';
-import { PaymentType } from 'smartbox-types';
 import { Alert } from '../../../../../components/Common';
 import { Spinner } from '../../../../../components/Branded';
-import { order } from '../../../../../actions';
 import { setPendingCheckout } from '../../../../../actions/order';
 import {
   ButtonsContainer,
   SectionHeader,
 } from '../../../../../components/Layout';
 import { history } from 'src/history';
-import { FormType } from '../../../../../types/order-form';
 
 import UserService from '../../../../../services/user-service';
 
@@ -33,11 +29,14 @@ import { ApplicationState } from '../../../../../reducers';
 import './StepAgreement.scss';
 import ApiService from '../../../../../services/api-service';
 import {
-  getCorrectPriceWithTax,
-  getCorrectPriceWithTaxForArray,
-  getCorrectTaxPercentAmount,
-} from '../../../../../utils/tax';
-import { OrderAddon } from '../../../../../reducers/order-reducer';
+  getAddonsWithCorrectPrice,
+  getCorrectPrice,
+  getSimplifiedAddons,
+} from 'src/utils/agreement-checkout-price';
+import {
+  appendAddonFiles,
+  appendCollectionFields,
+} from 'src/utils/rent-form-data';
 import { dateOnly } from '../../../../../utils/format-date';
 import { useGetDocumentByTypeQuery, useGetMyDetailsQuery } from 'src/queries';
 import { Button, Section, Stack } from 'src/components/ui';
@@ -54,23 +53,19 @@ import { __ } from 'src/helpers/i18n';
 import { getBoxGroupTypeLabel } from 'src/utils/box-group-labels';
 import { useTenant } from 'src/hooks/useTenant';
 
-interface Props {
-  formData: FormType;
-  isAgreementAccepted: boolean;
-  isResignationMarked: boolean;
-  paymentType: PaymentType;
-}
-
-const StepAgreement = ({ formData, isResignationMarked }: Props): any => {
+const StepAgreement = () => {
   const { data: user } = useGetMyDetailsQuery();
   const dispatch = useDispatch();
   const order = useSelector((state: ApplicationState) => state.order);
+  const formData = order.formData;
+  const isResignationMarked = order.isResignationMarked;
   const pendingCheckout = order.pendingCheckout;
   const { tenant } = useTenant();
   const [loading, setLoading] = useState(false);
   const creatingRentRef = useRef(false);
 
   const { rentId } = useParams<{ step: string; rentId?: string }>();
+  const isOpenEnded = order.agreementType === RentAgreementType.OpenEnded;
   useEffect(() => {
     if (!user) return;
     if (!order.boxGroupId && !rentId) {
@@ -82,7 +77,7 @@ const StepAgreement = ({ formData, isResignationMarked }: Props): any => {
     response: PayForRentResponse,
     tenantId: string,
   ) => {
-    if (response.paymentStatus === PaymentStatus.succes) {
+    if (response.paymentStatus === PaymentStatus.accepted) {
       history.push(`/payment-success/${response.paymentId}`);
       return;
     }
@@ -90,7 +85,7 @@ const StepAgreement = ({ formData, isResignationMarked }: Props): any => {
     redirectToIpg(tenantId, response.paymentId);
   };
 
-  const startNewRent = async (data: FormData, tenantId: string) => {
+  const startNewRent = async (data: FormData) => {
     setLoading(true);
     try {
       await ApiService.callFetch(
@@ -102,8 +97,8 @@ const StepAgreement = ({ formData, isResignationMarked }: Props): any => {
         null,
         data,
       );
-    } catch (e) {
-      console.log('ERROR IN TRYING TO START NEW RENT', e);
+    } catch {
+      // Leave checkout unset when the request fails. Loading is cleared below.
     }
     setLoading(false);
   };
@@ -126,74 +121,6 @@ const StepAgreement = ({ formData, isResignationMarked }: Props): any => {
     setLoading(false);
   };
 
-  const getCorrectPrice = (
-    price: { value: number }[],
-    isGross: boolean,
-    tax: string,
-  ) => {
-    if (isGross) return price.reduce((acc, curr) => acc + curr.value, 0);
-    const taxValue = getCorrectTaxPercentAmount(tax);
-
-    const priceWithTax = price.map((p) =>
-      getCorrectPriceWithTax(p.value, taxValue),
-    );
-
-    return priceWithTax.reduce((acc, curr) => acc + curr, 0);
-  };
-
-  const getAddonsWithCorrectPrice = (orderAddons: {
-    [addonId: string]: OrderAddon;
-  }): OrderAddons => {
-    const parsedAddons: OrderAddons = {};
-
-    Object.keys(orderAddons).forEach((addonId) => {
-      const addon = orderAddons[addonId];
-      const taxValue = getCorrectTaxPercentAmount(addon.tax);
-      // if (addon.price?.value && addon.selectedVariant) {
-
-      const totalAddonPrice = (addon.price || []).reduce(
-        (acc, curr) => acc + curr.value,
-        0,
-      );
-
-      parsedAddons[addonId] = {
-        name: addon.name,
-        slug: addon.slug,
-        tax: addon.tax,
-        acceptancesStatus: addon.acceptancesStatus,
-        acceptances: addon.acceptances,
-        price: addon.price
-          ? addon.price[0].isGross
-            ? totalAddonPrice
-            : getCorrectPriceWithTaxForArray(addon.price, taxValue)
-          : null,
-        selectedVariant: addon.selectedVariant,
-        selectedVariantName: addon.selectedVariantName,
-      };
-      // }
-    });
-
-    return parsedAddons;
-  };
-
-  const getSimplifiedAddons = (addons: OrderAddons) => {
-    const simplified: {
-      slug: string;
-      variant: string | null;
-      price: number | null;
-    }[] = [];
-    Object.keys(addons).forEach((addonId) => {
-      const addon = addons[addonId];
-      simplified.push({
-        slug: addon.slug,
-        variant: addon.selectedVariantName,
-        price: addon.price,
-      });
-    });
-
-    return simplified;
-  };
-
   const { handleSubmit } = useForm();
 
   const formatOnlyDate = (date: Date) => format(date, 'yyyy-MM-dd');
@@ -201,39 +128,22 @@ const StepAgreement = ({ formData, isResignationMarked }: Props): any => {
   const getFormDataFromCollection = (
     collection: RentBoxReq | ExtendRentalReq,
   ): FormData => {
-    const rentFormData = new FormData();
+    const rentFormData = appendCollectionFields(
+      new FormData(),
+      collection as unknown as Record<string, unknown>,
+    );
 
-    for (const key in collection) {
-      const value = collection[key];
-      if (key === 'startAt') rentFormData.append(key, formatOnlyDate(value));
-      else if (key === 'finishAt')
-        rentFormData.append(key, formatOnlyDate(value));
-      else if (key === 'orderAddons')
-        rentFormData.append(key, JSON.stringify(value));
-      else rentFormData.append(key, value);
-    }
-
-    for (const addonId of Object.keys(order.orderAddons)) {
-      const orderAddon = order.orderAddons[addonId];
-
-      if (orderAddon && orderAddon.file) {
-        rentFormData.append(
-          'addonFiles',
-          orderAddon.file,
-          `${addonId}--${orderAddon.file.name}`,
-        );
-      }
-    }
-
-    return rentFormData;
+    return appendAddonFiles(rentFormData, order.orderAddons);
   };
 
   const onSubmit = () => {
-    if (!user || !order.endDate) return;
-
+    if (!user) return;
+    if (!isOpenEnded && !order.endDate) return;
 
     const commonCollection = {
-      finishAt: order.endDate,
+      finishAt: order.endDate ? formatOnlyDate(order.endDate) : '',
+      birthDate: formData.birthDate,
+      clientSource: formData.clientSource,
       cost: getCorrectPrice(
         order.calculatedPrice,
         order.calculatedPrice[0].isGross,
@@ -255,28 +165,17 @@ const StepAgreement = ({ formData, isResignationMarked }: Props): any => {
       companyPostCode: formData.companyPostCode || '',
       companyCountry: formData.companyCountry || '',
       nip: formData.nip?.trim() || '',
-      rentPaymentType: order.rentPaymentType || RentPaymentType.InAdvance,
-      paymentDocument: order.paymentDocumentType || PaymentDocument.Invoice,
+      rentPaymentType: isOpenEnded
+        ? RentPaymentType.Installments
+        : order.rentPaymentType || RentPaymentType.InAdvance,
+      paymentDocument: isOpenEnded
+        ? PaymentDocument.Invoice
+        : order.paymentDocumentType || PaymentDocument.Invoice,
       orderAddons: getAddonsWithCorrectPrice(order.orderAddons),
     };
 
-    if (formData.birthDate) {
-      commonCollection['birthDate'] = formData.birthDate;
-    }
-
-    if (formData.clientSource) {
-      commonCollection['clientSource'] = formData.clientSource;
-    }
-
     const dataCollectionExtendRent: ExtendRentalReq = {
       ...commonCollection,
-    };
-
-    const dataCollectionRent: RentBoxReq = {
-      ...commonCollection,
-      startAt: order.startDate,
-      stockId: order.stockId,
-      boxGroupId: order.boxGroupId,
     };
 
     if (!tenant) return;
@@ -291,8 +190,12 @@ const StepAgreement = ({ formData, isResignationMarked }: Props): any => {
   };
 
   const getValuesForAgreement = () => {
+    const finishAt = isOpenEnded
+      ? ''
+      : (order.endDate && dateOnly(order.endDate)) || null;
+
     return {
-      finishAt: order.endDate ? dateOnly(order.endDate) : null,
+      finishAt,
       cost: getCorrectPrice(
         order.calculatedPrice,
         order.calculatedPrice[0].isGross,
@@ -313,9 +216,7 @@ const StepAgreement = ({ formData, isResignationMarked }: Props): any => {
       companyCity: formData.companyCity || undefined,
       companyPostCode: formData.companyPostCode || undefined,
       nip: formData.nip?.trim() || undefined,
-      simplifiedAddons: getSimplifiedAddons(
-        getAddonsWithCorrectPrice(order.orderAddons),
-      ),
+      simplifiedAddons: getSimplifiedAddons(order.orderAddons),
       date: dateOnly(new Date()),
       startAt: dateOnly(order.startDate),
       email: user?.email || undefined,
@@ -344,13 +245,17 @@ const StepAgreement = ({ formData, isResignationMarked }: Props): any => {
 
   useEffect(() => {
     if (rentId || pendingCheckout?.rentId) return;
-    if (!user || !tenant || !order.endDate || !order.boxGroupId) return;
+    if (!user || !tenant || !order.boxGroupId) return;
+    if (!isOpenEnded && !order.endDate) return;
+    if (isOpenEnded && !order.startDate) return;
     if (creatingRentRef.current) return;
 
     creatingRentRef.current = true;
 
     const commonCollection = {
-      finishAt: order.endDate,
+      finishAt: order.endDate ? formatOnlyDate(order.endDate) : '',
+      birthDate: formData.birthDate,
+      clientSource: formData.clientSource,
       cost: getCorrectPrice(
         order.calculatedPrice,
         order.calculatedPrice[0].isGross,
@@ -372,27 +277,25 @@ const StepAgreement = ({ formData, isResignationMarked }: Props): any => {
       companyPostCode: formData.companyPostCode || '',
       companyCountry: formData.companyCountry || '',
       nip: formData.nip?.trim() || '',
-      rentPaymentType: order.rentPaymentType || RentPaymentType.InAdvance,
-      paymentDocument: order.paymentDocumentType || PaymentDocument.Invoice,
+      rentPaymentType: isOpenEnded
+        ? RentPaymentType.Installments
+        : order.rentPaymentType || RentPaymentType.InAdvance,
+      paymentDocument: isOpenEnded
+        ? PaymentDocument.Invoice
+        : order.paymentDocumentType || PaymentDocument.Invoice,
       orderAddons: getAddonsWithCorrectPrice(order.orderAddons),
     };
 
-    if (formData.birthDate) {
-      commonCollection['birthDate'] = formData.birthDate;
-    }
-
-    if (formData.clientSource) {
-      commonCollection['clientSource'] = formData.clientSource;
-    }
-
     const dataCollectionRent: RentBoxReq = {
       ...commonCollection,
-      startAt: order.startDate,
+      startAt: formatOnlyDate(order.startDate),
       stockId: order.stockId,
       boxGroupId: order.boxGroupId,
+      agreementType: order.agreementType || RentAgreementType.FixedTerm,
+      ...(isOpenEnded ? { finishAt: null } : {}),
     };
 
-    startNewRent(getFormDataFromCollection(dataCollectionRent), tenant.id).finally(
+    startNewRent(getFormDataFromCollection(dataCollectionRent)).finally(
       () => {
         creatingRentRef.current = false;
       },
@@ -401,8 +304,6 @@ const StepAgreement = ({ formData, isResignationMarked }: Props): any => {
 
   const { data: agreementDocument, isLoading: isAgreementDocumentLoading } =
     useGetDocumentByTypeQuery('agreement', order.stockId);
-
-  const previewRentId = rentId || pendingCheckout?.rentId;
 
   if (!tenant) return null;
 
@@ -415,11 +316,11 @@ const StepAgreement = ({ formData, isResignationMarked }: Props): any => {
       />
     );
 
-    if (previewRentId) {
+    if (pendingCheckout?.rentId && !rentId) {
       return (
         <AgreementPreview
           source="rent"
-          rentId={previewRentId}
+          rentId={pendingCheckout.rentId}
           periodIndex={0}
           fallback={legacyPreview}
         />
@@ -496,17 +397,4 @@ const StepAgreement = ({ formData, isResignationMarked }: Props): any => {
   );
 };
 
-const mapStateToProps = (state: ApplicationState) => ({
-  formData: state.order.formData,
-  isResignationMarked: state.order.isResignationMarked,
-});
-
-const mapDispatchToProps = (dispatch: any) =>
-  bindActionCreators(
-    {
-      ...order,
-    },
-    dispatch,
-  );
-
-export default connect(mapStateToProps, mapDispatchToProps)(StepAgreement);
+export default StepAgreement;

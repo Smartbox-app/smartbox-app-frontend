@@ -31,7 +31,7 @@ const SingleSlide = ({ item, last }: Props) => {
       <div className="slide-overlayer"></div>
       <div className="slide-content">
         <div className="slide-description">
-          <img src={getAssetPath('slide', item)} />
+          <img src={getAssetPath('slide', item)} alt="" />
         </div>
         {last && (
           <ButtonsContainer className="swiper-buttons-container" center>

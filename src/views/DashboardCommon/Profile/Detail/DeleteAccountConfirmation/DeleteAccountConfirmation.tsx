@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { hideModal } from 'src/actions/modal';
@@ -18,7 +18,6 @@ export const DeleteAccountConfirmation = () => {
   const { data: user } = useGetMyDetailsQuery();
   const {
     mutate: deleteUser,
-    isPending,
     isSuccess,
   } = useDeleteAccountMutation(user?.id || '');
   const { mutate: logout } = useLogoutMutation();
@@ -27,7 +26,7 @@ export const DeleteAccountConfirmation = () => {
     handleSubmit,
     register,
     watch,
-    formState: { errors, isValid },
+    formState: { errors },
   } = useForm<DeleteAccountDto>({
     mode: 'onSubmit',
     resolver: ClassValidatorResolver(new DeleteAccountDto()),

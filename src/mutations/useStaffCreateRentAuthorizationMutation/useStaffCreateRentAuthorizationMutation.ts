@@ -1,6 +1,11 @@
 import { useMutation } from '@tanstack/react-query';
 import ApiService from '../../services/api-service';
-import type { CreateStaffRentAuthorizationReq } from 'smartbox-types';
+
+type CreateStaffRentAuthorizationReq = {
+  rentId: string;
+  email?: string;
+  phone?: string;
+};
 
 export const useStaffCreateRentAuthorizationMutation = () =>
   useMutation({

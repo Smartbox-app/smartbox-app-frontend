@@ -12,20 +12,13 @@ import { ReactSelectOverride, ReactCreatableSelectOverride as ReactCreatableSele
 import { useParams } from 'react-router';
 import { mapFields } from '../../../../../../../utils/fields-mapper';
 import { successNotification } from '../../../../../../../actions/notifications';
-import styled from 'styled-components';
 import { Header } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
 import { useTenantNaming } from 'src/hooks/useTenantNaming';
 
-const StyledWrapper = styled.div`
-border-bottom: 1px solid ${props => props.theme.colors.primary};
-margin-bottom: 15px;
-padding-bottom: 15px;
-`
-
 const StockDiscount = () => {
     const dispatch = useDispatch();
-    const [loading, setLoading] = useState<boolean>(false);
+    const [, setLoading] = useState<boolean>(false);
     const { stockId } = useParams<{ stockId: string }>();
     const {getText} = useTenantNaming();
 

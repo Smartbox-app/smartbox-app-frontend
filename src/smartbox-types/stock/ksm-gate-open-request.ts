@@ -1,5 +1,3 @@
-import { ApiErrorCode } from "../apiMessages";
-
 export enum KsmGateOpenRequestStatus {
   PENDING = 'pending',
   PROCESSING = 'processing',
@@ -9,15 +7,24 @@ export enum KsmGateOpenRequestStatus {
   FAILED = 'failed',
 }
 
-export interface KsmGateOpenRequestRes {
+export class KsmGateOpenRequestRes {
   id: string;
+
   gateId: string;
+
   status: KsmGateOpenRequestStatus;
-  errorCode: ApiErrorCode | null;
+
+  errorCode: number | null;
+
   errorDetails: string | null;
+
   expectedAlarmState: string | null;
+
   actualAlarmState: string | null;
+
   createdAt: Date;
+
   updatedAt: Date;
+
   completedAt: Date | null;
 }

@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { clearSelectedStock, setOrderStock } from 'src/actions/order';
+import { clearSelectedStock } from 'src/actions/order';
 import { Badge, Button, Card, Typography } from 'src/components/ui';
-import { Map, SearchZoomIn } from 'src/icons';
+import { Map } from 'src/icons';
 import { ApplicationState } from 'src/reducers';
 import styled, { keyframes } from 'styled-components';
 

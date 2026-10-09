@@ -15,13 +15,13 @@ import { fullDate } from '../../../utils/format-date';
 import { __ } from '../../../helpers/i18n';
 import styled from 'styled-components';
 import { getColorForBackground } from '../../../utils/color';
-import { lighten, setLightness } from 'polished';
+import { setLightness } from 'polished';
 import { ButtonsContainer } from 'src/components/Layout';
 import { Link } from '../../ui';
 
 interface Props {
   scheme: TableSchema;
-  data: TableResponse<any>;
+  data: TableResponse<object>;
   initialPage?: number;
   onPageChange?: (page: number) => void;
   sort?: {
@@ -31,10 +31,10 @@ interface Props {
   onSortChange?: (sortBy: string, sortDirBack: boolean) => void;
 }
 
-const TableContainer = styled('div')(({ theme }) => ({
+const TableContainer = styled('div')({
   overflow: 'auto',
   width: '100%',
-}));
+});
 
 const StyledRow = styled('tr')<{ $highlight?: boolean }>(({ theme, $highlight }) => {
   const secondaryLight = setLightness(0.95, theme.colors.secondary);
@@ -57,22 +57,26 @@ const StyledRow = styled('tr')<{ $highlight?: boolean }>(({ theme, $highlight })
   };
 });
 
-const formatValue = (value: any, field: TableSchemaField, allValues: any) => {
+const formatValue = (
+  value: unknown,
+  field: TableSchemaField,
+  allValues: unknown,
+) => {
   if (typeof field.customValue === 'function') {
     value = field.customValue(allValues, field);
   }
 
   switch (field.type) {
     case FieldType.Custom: {
-      return field.customRender && field.customRender(value, field, allValues);
+      return field.customRender?.(value, field, allValues) ?? null;
     }
 
     case FieldType.Url: {
       return value === null ? (
         '-'
       ) : (
-        <Link href={value} rel="noopener noreferrer" target="_blank">
-          {value}
+        <Link href={String(value)} rel="noopener noreferrer" target="_blank">
+          {String(value)}
         </Link>
       );
     }
@@ -82,11 +86,11 @@ const formatValue = (value: any, field: TableSchemaField, allValues: any) => {
         '-'
       ) : (
         <Link
-          href={`mailto:${value}`}
+          href={`mailto:${String(value)}`}
           rel="noopener noreferrer"
           target="_blank"
         >
-          {value}
+          {String(value)}
         </Link>
       );
     }
@@ -94,38 +98,48 @@ const formatValue = (value: any, field: TableSchemaField, allValues: any) => {
       return value === null ? (
         '-'
       ) : (
-        <Link href={`tel:${value} `} rel="noopener noreferrer" target="_blank">
-          {value}
+        <Link href={`tel:${String(value)} `} rel="noopener noreferrer" target="_blank">
+          {String(value)}
         </Link>
       );
     }
     case FieldType.Img: {
-      return value !== null && <img src={value} alt={field.name} />;
+      return value !== null && <img src={String(value)} alt={field.name} />;
     }
     case FieldType.Date: {
-      return value === null || value === undefined
-        ? __('application.notEstablished')
-        : fullDate(value);
+      if (value === null || value === undefined) {
+        return __('application.notEstablished');
+      }
+      if (value instanceof Date || typeof value === 'string') {
+        return fullDate(value);
+      }
+      return __('application.notEstablished');
     }
     case FieldType.Boolean: {
-      return value === null
-        ? __('application.default')
-        : value
-          ? __('application.yes')
-          : __('application.no');
+      if (value === null) return __('application.default');
+      return value ? __('application.yes') : __('application.no');
     }
     case FieldType.Price: {
-      return !value && value !== 0 ? '-' : formatPrice(value);
+      return !value && value !== 0 ? '-' : formatPrice(Number(value));
     }
     case FieldType.Percent: {
       return !value && value !== 0 ? '-' : `${value} % `;
     }
     case FieldType.Text:
     default: {
-      return value === null ? '' : value;
+      if (value == null) return '';
+      if (typeof value === 'string' || typeof value === 'number') return value;
+      return String(value);
     }
   }
 };
+
+function buttonDestination(button: TableButton, row: object) {
+  if (!button.to) return '';
+  const id = 'id' in row && row.id != null ? String(row.id) : '';
+  if (typeof button.to === 'string') return `${button.to}${id} `;
+  return button.to(row);
+}
 
 function genSortItems(
   header: TableSchemaField,
@@ -139,20 +153,22 @@ function genSortItems(
   };
 
   const arrow1 = sort ? (
-    <a
+    <button
+      type="button"
       onClick={() => handleSortChange(false)}
       className={`sort sort - up ${sort.sortBy === header.field && sort.sortDirBack !== true ? 'active' : ''} `}
     >
       <span className="fa fa-chevron-up" />
-    </a>
+    </button>
   ) : null;
   const arrow2 = sort ? (
-    <a
+    <button
+      type="button"
       onClick={() => handleSortChange(true)}
       className={`sort sort - down ${sort.sortBy === header.field && sort.sortDirBack === true ? 'active' : ''} `}
     >
       <span className="fa fa-chevron-down" />
-    </a>
+    </button>
   ) : null;
 
   return (
@@ -176,7 +192,7 @@ class Table extends React.Component<Props> {
 
   render() {
     const desktop = window.matchMedia('(min-width: 920px)').matches;
-    let content: any = null;
+      let content: React.ReactNode = null;
     if (
       !this.props.data ||
       !this.props.data.items ||
@@ -199,13 +215,17 @@ class Table extends React.Component<Props> {
           </th>
         ),
       );
-      const rows = this.props.data.items.map((row: any, rowIndex: number) => (
+      const rows = this.props.data.items.map((row, rowIndex: number) => (
         <StyledRow
           key={rowIndex}
-          $highlight={this.props.scheme.highlightRow?.(row) === true}
+          $highlight={
+            this.props.scheme.highlightRow?.(
+              row as Record<string, unknown>,
+            ) === true
+          }
         >
           {this.props.scheme.fields.map(
-            (header: TableSchemaField, index: number) => (
+            (header: TableSchemaField) => (
               <td
                 className={`${header.mobile ? 'mobile' : ''} `}
                 key={`${header.field}_${rowIndex} `}
@@ -223,20 +243,18 @@ class Table extends React.Component<Props> {
                         danger={button.type === 'danger'}
                         success={button.type === 'success'}
                         secondary={button.type === 'secondary'}
-                        to={
-                          button.to
-                            ? typeof button.to === 'string'
-                              ? `${button.to}${row.id} `
-                              : button.to(row)
-                            : ''
-                        }
-                        click={button.click ? () => button.click(row) : null}
+                        to={buttonDestination(button, row)}
+                        click={button.click ? () => button.click?.(row) : undefined}
                         text={button.name}
                       />
                     ))}
                   </ButtonsContainer>
                 ) : (
-                  formatValue(row[header.field], header, row)
+                  formatValue(
+                    (row as Record<string, unknown>)[header.field],
+                    header,
+                    row,
+                  )
                 )}
               </td>
             ),
@@ -258,7 +276,7 @@ class Table extends React.Component<Props> {
       content = (
         <div className="list">
           <p>{__('application.clickToShowHideDetails')}</p>
-          {this.props.data.items.map((row: any, rowIndex: number) => (
+          {this.props.data.items.map((row, rowIndex: number) => (
             <div
               className={`list-element ${this.state.toggled === rowIndex ? 'toggled' : ''} `}
               onClick={() => this.toggleRow(rowIndex)}
@@ -267,6 +285,7 @@ class Table extends React.Component<Props> {
               {this.props.scheme.fields.map(
                 (header: TableSchemaField, index: number) => (
                   <div
+                    key={header.field || index}
                     className={`list-row ${header.type === FieldType.Custom || header.buttons ? 'column' : ''} ${header.mobile ? 'mobile' : ''} `}
                   >
                     {header.buttons ? (
@@ -282,15 +301,9 @@ class Table extends React.Component<Props> {
                             danger={button.type === 'danger'}
                             success={button.type === 'success'}
                             secondary={button.type === 'secondary'}
-                            to={
-                              button.to
-                                ? typeof button.to === 'string'
-                                  ? `${button.to}${row.id} `
-                                  : button.to(row)
-                                : ''
-                            }
+                            to={buttonDestination(button, row)}
                             click={
-                              button.click ? () => button.click(row) : null
+                              button.click ? () => button.click?.(row) : undefined
                             }
                             text={button.name}
                           />
@@ -300,7 +313,11 @@ class Table extends React.Component<Props> {
                       <>
                         <strong>{header.name}</strong>
                         <span className="list-value">
-                          {formatValue(row[header.field], header, row)}
+                          {formatValue(
+                            (row as Record<string, unknown>)[header.field],
+                            header,
+                            row,
+                          )}
                         </span>
                       </>
                     )}

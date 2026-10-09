@@ -17,7 +17,9 @@ export class I18n {
   }
 
   __(key: string, options?: Record<string, unknown>) {
-    return i18next.t(key, options);
+    return (
+      i18next.t as (key: string, options?: Record<string, unknown>) => string
+    )(key, options);
   }
 
   changeLang(newLang: string) {

@@ -10,5 +10,10 @@ export interface AuthLoginResult {
   firstName: string,
   lastName: string,
   role: UserRole,
-  accessToken: string
+}
+
+export type SocialLoginRequest = {
+  provider: 'google' | 'facebook' | 'facebook-jwt',
+  token: string,
+  tenant: string
 }

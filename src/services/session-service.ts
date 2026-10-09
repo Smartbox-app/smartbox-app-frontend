@@ -1,4 +1,4 @@
-import { UserRes } from 'smartbox-types';
+
 
 export default class SessionService {
   static setCurrentLanguage(lang: string) {
@@ -8,7 +8,6 @@ export default class SessionService {
   static getCurrentLanguage() {
     return JSON.parse(localStorage.getItem('language') || 'null') || 'pl';
   }
-
 
   static clearSessionStorage() {
     localStorage.clear();

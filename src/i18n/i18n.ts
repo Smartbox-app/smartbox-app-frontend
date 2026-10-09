@@ -30,6 +30,8 @@ i18next.use(initReactI18next).init({
 });
 
 export const t = (key: I18nResourceKey, options?: Options): string =>
-  i18next.t(key, options);
+  (
+    i18next.t as (key: I18nResourceKey, options?: Options) => string
+  )(key, options);
 
 export { i18next };

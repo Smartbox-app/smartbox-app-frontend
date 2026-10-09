@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { NestedSidebarNav } from 'src/components/ui/NestedSidebarNav';
 import { SidebarNavGroup } from 'src/types/sidebar-nav';
-import { Logo, LogoContainer } from 'src/components/Branded';
+import { Logo } from 'src/components/Branded';
 import { Logout } from 'src/icons';
 import { useLogoutMutation } from 'src/mutations';
 import { __ } from 'src/helpers/i18n';
@@ -35,13 +35,6 @@ const StyledDashboardSidebar = styled.aside(({ theme }) => ({
     borderRight: `1px solid ${theme.colors.border.secondary}`,
   },
 }));
-
-const StyledLogo = styled.div({
-  display: 'none',
-  '@media (min-width: 768px)': {
-    display: 'block',
-  },
-});
 
 const StyledLogoutButton = styled.button(({ theme }) => ({
   display: 'flex',

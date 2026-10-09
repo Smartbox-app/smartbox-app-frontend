@@ -57,7 +57,7 @@ const CheckBox = ({
       type="checkbox"
       id={name}
       name={name}
-      onChange={(e: any) => handleChange(e.target.checked)}
+      onChange={(event) => handleChange(event.target.checked)}
       checked={!!checked}
       disabled={disabled}
     />

@@ -46,7 +46,7 @@ const TABLE_HEADER_HEIGHT = 60;
 
 const ApiTableSkeleton = () => (
   <SkeletonStack>
-    <Skeleton height={45} width={'340px'} radius={8} />
+    <Skeleton height={45} width="340px" radius={8} />
     <Skeleton height={TABLE_HEADER_HEIGHT} radius={8} />
     {Array.from({ length: 5 }, (_, index) => (
       <Skeleton key={index} height={TABLE_ROW_HEIGHT} radius={8} />
@@ -129,7 +129,7 @@ const searchComponent = (
         $error={false}
         onChange={(e) => handleSearchQueryChange(e.target.value)}
       >
-        <option value={''}>{__('application.select')}</option>
+        <option value="">{__('application.select')}</option>
         {Object.keys(searchableValues as TableFieldSearchableValues).map(
           (key) => (
             <option value={key} key={key}>
@@ -213,8 +213,8 @@ const searchComponent = (
             placeholder="application.search"
             options={searchByOptions}
             value={search.searchBy || null}
-            onChange={(value: string | null) =>
-              handleSearchByChange(value ?? '')
+            onChange={(value) =>
+              handleSearchByChange(typeof value === 'string' ? value : '')
             }
             size="small"
           />

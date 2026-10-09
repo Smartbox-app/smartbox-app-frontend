@@ -1,3 +1,4 @@
+import type { AppDispatch } from 'src/types/app-dispatch';
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -14,9 +15,15 @@ interface Props {
 }
 
 class ModalWrapper extends React.Component<Props> {
-  private handleClickOutside = (e: any) => {
+  private handleClickOutside = (event: React.MouseEvent<HTMLDivElement>) => {
     const { modal, hideModal } = this.props;
-    if (e.target.id === 'modal' && modal.isClosable) hideModal();
+    if (
+      event.target instanceof Element &&
+      event.target.id === 'modal' &&
+      modal.isClosable
+    ) {
+      hideModal();
+    }
   };
 
   render() {
@@ -50,6 +57,6 @@ const mapStateToProps = (state: ApplicationState) => ({
   modal: state.modal,
 });
 
-const mapDispatchToProps = (dispatch: any) => bindActionCreators({ ...modal }, dispatch);
+const mapDispatchToProps = (dispatch: AppDispatch) => bindActionCreators({ ...modal }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(ModalWrapper);

@@ -4,7 +4,6 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { PageHeader, Section } from 'src/components/ui';
 import { DocumentDto } from 'src/dto/DocumentDto';
 import { __ } from 'src/helpers/i18n';
-import { useTenant } from 'src/hooks/useTenant';
 import { ClassValidatorResolver } from 'src/resolvers/ClassValidatorResolver';
 import { DocumentForm } from '../DocumentForm';
 import {
@@ -20,7 +19,6 @@ import { UserRole } from 'smartbox-types';
 
 export const Add = () => {
   const { data: user } = useGetMyDetailsQuery();
-  const { tenant } = useTenant();
   const dispatch = useDispatch();
 
   const history = useHistory();

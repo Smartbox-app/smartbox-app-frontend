@@ -1,33 +1,48 @@
-import { Prop } from '../store/prop.decorator';
-import { BaseResponse } from '../base/baseRes';
 import { GiftType } from './gift-entity';
-export class GiftRes extends BaseResponse {
-  @Prop()
+export class GiftRes {
   id: string;
-  @Prop()
   code: string;
-  @Prop()
   discount: number;
-  @Prop()
   duration: number;
-  @Prop()
   type: GiftType;
-  @Prop()
   count: number;
-  @Prop()
   active: boolean;
-  @Prop()
   minRentPeriod: number;
+  startAt: Date | null;
 }
 
 
-export interface AddGiftReq {
+/** Row from GET gift/list/:stockId. */
+export interface GiftListRes {
+  id: string;
+  active: boolean;
   discount: number;
+  duration: number;
+  type: GiftType;
+  code: string;
+  count: number;
+  countLeft: number;
+  stockId: string;
+  minRentPeriod: number;
+  expireAt: Date;
+  startAt: Date | null;
+  newClientsOnly: boolean;
+  group: string;
+}
+
+export interface AddGiftReq {
+  code?: string;
+  discount: number;
+  reductionTo: number;
   duration: number;
   type: GiftType;
   count: number;
   stockId: string;
+  startAt: string;
   expireAt: string;
+  minRentPeriod: number;
+  boxGroupId?: string | null;
+  newClientsOnly?: boolean;
 }
 
 export interface GetGiftReq {

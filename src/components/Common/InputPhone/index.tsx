@@ -8,10 +8,10 @@ import { InputSizeProps, resolveInputSize } from '../input-sizes';
 import { StyledPhoneFieldContainer } from '../input-styled';
 
 interface Props extends InputSizeProps {
-  value: any;
+  value?: string;
   label: string;
   name: string;
-  onChange: (e: any) => void;
+  onChange: (value?: string) => void;
   disabled?: boolean;
   errors?: TranslatableObject[];
 }

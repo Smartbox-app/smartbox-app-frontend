@@ -7,7 +7,7 @@ import { lighten } from 'polished';
 import { getColorForBackground } from 'src/utils/color';
 // import { FacebookLogin } from '@capacitor-community/facebook-login';
 import { Capacitor } from '@capacitor/core';
-import { Browser } from '@capacitor/browser';
+
 import { useSocialLoginMutation } from 'src/mutations';
 import { Spinner } from 'src/components/Branded';
 import { SocialLogin } from '@capgo/capacitor-social-login';
@@ -70,7 +70,6 @@ export const FbButton = () => {
           limitedLogin: true,
         },
       });
-
 
       if (res.result.accessToken?.token) {
         socialLogin({

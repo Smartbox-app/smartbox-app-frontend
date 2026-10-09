@@ -1,20 +1,18 @@
-import { useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { formatPrice } from '../../../../../../utils/format-price';
-import {
-  dateOnly,
-  dateOnlyLocalTime,
-} from '../../../../../../utils/format-date';
+import { dateOnlyLocalTime } from '../../../../../../utils/format-date';
 
 import './SummaryTable.scss';
 import { __ } from '../../../../../../helpers/i18n';
 import styled from 'styled-components';
-import { darken } from 'polished';
-import { AddonRes, PriceDisplayForClients } from 'smartbox-types';
+
+import { AddonRes, CalculatedPriceRes, PriceDisplayForClients } from 'smartbox-types';
 import { OrderAddon } from '../../../../../../reducers/order-reducer';
 import { SelectedVariant } from './SelectedVariant';
 import { colorOrDark } from '../../../../../../utils/color';
-import { Header, Section } from 'src/components/ui';
-import React from 'react';
+import { openEndedNextInvoiceDate } from 'src/utils/open-ended-period';
+import { sumAddonPricesPerPeriod } from 'src/utils/summary-period-prices';
+import { Header } from 'src/components/ui';
 
 const StyledCell = styled.div`
   color: ${(props) => colorOrDark(props.theme.colors.primary)};
@@ -31,16 +29,14 @@ const StyledDetailsList = styled.ul`
   gap: 8px;
 `;
 
-const StyledDetailsRow = styled.li(
-  ({ theme }) => `
-    font-size: 14px;
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    border-bottom: 1px solid #eee;
-    padding: 8px 0;
-`,
-);
+const StyledDetailsRow = styled.li`
+  font-size: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  border-bottom: 1px solid #eee;
+  padding: 8px 0;
+`;
 
 const StyledRentPrice = styled('div')`
   font-size: 14px;
@@ -50,15 +46,12 @@ const StyledRentPrice = styled('div')`
 interface Props {
   dateStart: Date;
   dateEnd: Date;
-  countedPrice: {
-    value: number;
-    isGross: boolean;
-    display: PriceDisplayForClients;
-    grossPrice: number;
-    netPrice: number;
-  }[];
+  countedPrice: CalculatedPriceRes['price'];
   addons?: AddonRes[];
   orderAddons?: { [addonId: string]: OrderAddon };
+  isOpenEnded?: boolean;
+  periodDays?: number;
+  invoiceDaysBefore?: number;
 }
 
 const SummaryTable = ({
@@ -67,29 +60,14 @@ const SummaryTable = ({
   countedPrice,
   addons,
   orderAddons,
+  isOpenEnded,
+  periodDays,
+  invoiceDaysBefore,
 }: Props) => {
-  const addonsPricesPerPeriod = useMemo(() => {
-    if (!orderAddons) return [];
-    const everyAddonPricePerPeriod: { net: number; gross: number }[] = [];
-    for (const addon of Object.values(orderAddons)) {
-      const pricePerPeriod = (addon.price || []).map((price) => ({
-        net: price.netPrice,
-        gross: price.grossPrice,
-      }));
-
-      for (let i = 0; i < pricePerPeriod.length; i++) {
-        if (!everyAddonPricePerPeriod[i]) {
-          everyAddonPricePerPeriod[i] = { net: 0, gross: 0 };
-        }
-        everyAddonPricePerPeriod[i].net =
-          (everyAddonPricePerPeriod[i].net || 0) + pricePerPeriod[i].net;
-        everyAddonPricePerPeriod[i].gross =
-          (everyAddonPricePerPeriod[i].gross || 0) + pricePerPeriod[i].gross;
-      }
-    }
-
-    return everyAddonPricePerPeriod;
-  }, [orderAddons]);
+  const addonsPricesPerPeriod = useMemo(
+    () => sumAddonPricesPerPeriod(orderAddons ? Object.values(orderAddons) : []),
+    [orderAddons],
+  );
 
   const rentPricesPerPeriod = useMemo(() => {
     return countedPrice.map((price) => ({
@@ -105,7 +83,15 @@ const SummaryTable = ({
       case PriceDisplayForClients.net:
         return <strong>{formatPrice(rentPricesPerPeriod[0].net)}</strong>;
       case PriceDisplayForClients.both:
-        return <><strong>{formatPrice(rentPricesPerPeriod[0].gross)} {__('application.gross')}</strong>/{formatPrice(rentPricesPerPeriod[0].net)} {__('application.net')}</>;
+        return (
+          <>
+            <strong>
+              {formatPrice(rentPricesPerPeriod[0].gross)}{' '}
+              {__('application.gross')}
+            </strong>
+            /{formatPrice(rentPricesPerPeriod[0].net)} {__('application.net')}
+          </>
+        );
     }
   }, [rentPricesPerPeriod, countedPrice]);
 
@@ -144,6 +130,17 @@ const SummaryTable = ({
   }, [countedPrice]);
 
   const fullPriceTitle = useMemo(() => {
+    if (isOpenEnded) {
+      switch (countedPrice[0].display) {
+        case PriceDisplayForClients.gross:
+          return __('application.grossPriceForPeriod');
+        case PriceDisplayForClients.net:
+          return __('application.netPriceForPeriod');
+        case PriceDisplayForClients.both:
+          return __('application.priceForPeriod');
+      }
+    }
+
     switch (countedPrice[0].display) {
       case PriceDisplayForClients.gross:
         return __('application.grossPayment');
@@ -152,7 +149,7 @@ const SummaryTable = ({
       case PriceDisplayForClients.both:
         return __('application.payment');
     }
-  }, [countedPrice]);
+  }, [countedPrice, isOpenEnded]);
 
   return (
     <>
@@ -167,7 +164,11 @@ const SummaryTable = ({
         </StyledRow>
         <StyledRow className="row">
           <StyledCell className="cell">
-            <Header variant="h2">{__('application.finishTerm')}</Header>
+            <Header variant="h2">
+              {isOpenEnded
+                ? __('application.firstPeriodFinishTerm')
+                : __('application.finishTerm')}
+            </Header>
           </StyledCell>
           <StyledCell className="cell fat">
             <span>{dateOnlyLocalTime(dateEnd)}</span>
@@ -181,6 +182,18 @@ const SummaryTable = ({
         </StyledRow>
       </div>
       <Header variant="h2">{__('application.priceDetails')}</Header>
+      {isOpenEnded ? (
+        <StyledRentPrice>
+          {__('application.openEndedPeriodInfo', {
+            days: periodDays || 30,
+          })}{' '}
+          {__('application.openEndedNextInvoice', {
+            invoiceDate: dateOnlyLocalTime(
+              openEndedNextInvoiceDate(dateEnd, invoiceDaysBefore || 7),
+            ),
+          })}
+        </StyledRentPrice>
+      ) : null}
       <StyledDetailsList>
         <StyledDetailsRow>
           <Header variant="h3">{rentPriceTitle}</Header>

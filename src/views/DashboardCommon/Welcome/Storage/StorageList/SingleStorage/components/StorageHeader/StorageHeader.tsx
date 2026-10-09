@@ -29,7 +29,7 @@ export type StorageHeaderProps = {
   stockName: string;
   isWarning: boolean;
   isNotice: boolean;
-  hovered: boolean;
+  isHovered: boolean;
 };
 
 const getIcon = (isWarning: boolean, isNotice: boolean, isHovered: boolean) => {
@@ -39,7 +39,12 @@ const getIcon = (isWarning: boolean, isNotice: boolean, isHovered: boolean) => {
   return <ArrowRightCircle />;
 };
 
-export const StorageHeader = ({ stockName, isWarning, isNotice, isHovered }) => {
+export const StorageHeader = ({
+  stockName,
+  isWarning,
+  isNotice,
+  isHovered,
+}: StorageHeaderProps) => {
   return (
     <StyledStorageHeader>
       <Badge>{stockName}</Badge>

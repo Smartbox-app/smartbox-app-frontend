@@ -20,7 +20,7 @@ export const RentAttachedFileButton = ({ rentId, fileName }: Props) => {
 
       await openSignedDownloadUrl(data);
     } catch(e) {
-      console.log('ERROR FETCHING ATTACHED FILE', e);
+      console.error('ERROR FETCHING ATTACHED FILE', e);
     }
     finally {
       setIsLoading(false);

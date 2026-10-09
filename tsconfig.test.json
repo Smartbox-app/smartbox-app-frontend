@@ -1,9 +1,16 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "types": ["jest", "node"],
-    "module": "commonjs",
+    "types": ["vite/client", "jest", "node"],
+    "module": "esnext",
     "moduleResolution": "node"
   },
-  "include": ["src/**/*.spec.ts", "test.setup.ts"]
+  "include": [
+    "src/**/*.spec.ts",
+    "src/**/*.spec.tsx",
+    "src/**/*.test.ts",
+    "src/**/*.test.tsx",
+    "test.setup.ts"
+  ],
+  "exclude": ["node_modules"]
 }

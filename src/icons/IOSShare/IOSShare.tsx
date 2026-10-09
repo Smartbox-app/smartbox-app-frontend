@@ -1,7 +1,7 @@
 export const IOSShare = () => (
   <svg
     id="Capa_1"
-    enable-background="new 0 0 551.13 551.13"
+    enableBackground="new 0 0 551.13 551.13"
     height="15"
     viewBox="0 0 551.13 551.13"
     width="15"

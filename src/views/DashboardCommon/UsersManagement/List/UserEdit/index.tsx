@@ -1,25 +1,24 @@
 import React from 'react';
 import { ItfApiForm } from 'itf_formbuilder_react';
-import { DiscountReq } from 'smartbox-types';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import { UpdateUserReq } from 'smartbox-types';
+import { useDispatch } from 'react-redux';
 import { Button, Spinner } from '../../../../../components/Branded';
 import { ButtonsContainer, FieldsColumn } from '../../../../../components/Layout';
 import { Modal } from 'src/components/ui';
 import ApiService from '../../../../../services/api-service';
 import { formOnTranslateString } from '../../../../../utils/trans-form';
-import { apiTable, modal, notifications } from '../../../../../actions';
+import { refreshApiTableData } from '../../../../../actions/api-table';
+import { hideModal } from '../../../../../actions/modal';
+import { successNotification } from '../../../../../actions/notifications';
 import { __ } from '../../../../../helpers/i18n';
 import { mapFields } from '../../../../../utils/fields-mapper';
 
 interface Props {
   userId: string;
-  hideModal: () => void;
-  refreshApiTableData: () => void;
-  successNotification: (text: string) => void;
 }
 
-const UserEdit = ({ userId, successNotification, hideModal, refreshApiTableData }: Props) => {
+const UserEdit = ({ userId }: Props) => {
+  const dispatch = useDispatch();
   const submitButton = (
     <ButtonsContainer>
       <Button text="application.save" type="submit" primary />
@@ -29,7 +28,7 @@ const UserEdit = ({ userId, successNotification, hideModal, refreshApiTableData 
   const fetchUrl = `user/form/update-user/${userId}`;
   const sendUrl = `user/someone/${userId}`;
 
-  const customSendFetcher = (formId: string, values: DiscountReq) => {
+  const customSendFetcher = (_formId: string, values: UpdateUserReq) => {
     return ApiService.sendForm(
       sendUrl,
       {
@@ -54,9 +53,9 @@ const UserEdit = ({ userId, successNotification, hideModal, refreshApiTableData 
           submitButton={submitButton}
           onRenderFullField={mapFields}
           onSavedSuccessfully={() => {
-            successNotification(__('application.changesSavedSuccess'));
-            refreshApiTableData();
-            hideModal();
+            dispatch(successNotification(__('application.changesSavedSuccess')));
+            dispatch(refreshApiTableData());
+            dispatch(hideModal());
           }}
           onTranslateString={formOnTranslateString}
         />
@@ -66,14 +65,4 @@ const UserEdit = ({ userId, successNotification, hideModal, refreshApiTableData 
   );
 };
 
-const mapDispatchToProps = (dispatch: any) =>
-  bindActionCreators(
-    {
-      ...modal,
-      ...apiTable,
-      ...notifications,
-    },
-    dispatch,
-  );
-
-export default connect(null, mapDispatchToProps)(UserEdit);
+export default UserEdit;

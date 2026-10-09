@@ -1,4 +1,4 @@
-import { combineReducers } from 'redux';
+import { AnyAction, combineReducers } from 'redux';
 import apiTableReducer, { ApiTableRootState } from './api-table-reducer';
 import appStatusReducer, { AppStatus } from './app-status-reducer';
 import modalReducer from './modal-reducer';
@@ -44,6 +44,9 @@ const appReducer = combineReducers({
   stockGroup: stockGroupReducer,
 });
 
-const rootReducer = (state: any, action: any) => appReducer(state, action);
+const rootReducer = (
+  state: Parameters<typeof appReducer>[0],
+  action: AnyAction,
+) => appReducer(state, action);
 
 export default rootReducer;

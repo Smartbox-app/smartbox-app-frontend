@@ -1,31 +1,28 @@
 import React, { useEffect, useMemo } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { DiscountList } from 'smartbox-types';
-import { stock } from '../../../../actions';
+import { useDispatch, useSelector } from 'react-redux';
+import { getStockDiscountsList } from '../../../../actions/stock';
 import { ApplicationState } from '../../../../reducers';
 import Discounts from './Discounts';
 import { __ } from '../../../../helpers/i18n';
 import { Header, Section } from '../../../../components/ui';
 import { useTenantNaming } from 'src/hooks/useTenantNaming';
 
-interface Props {
-  discountsList: DiscountList[];
-  getStockDiscountsList: () => void;
-}
-
-const Sale = ({ discountsList, getStockDiscountsList }: Props) => {
+const Sale = () => {
+  const dispatch = useDispatch();
+  const discountsList = useSelector(
+    (state: ApplicationState) => state.stock.discountsList,
+  );
   const { getText } = useTenantNaming();
   useEffect(() => {
-    getStockDiscountsList();
-  }, []);
+    dispatch(getStockDiscountsList());
+  }, [dispatch]);
 
   const discounts = useMemo(() => {
     return discountsList
-      .filter((d) => !!d.discount)
+      .filter((d) => !!d.value)
       .map(
         (d) =>
-          `${__('application.discount')} ${d.discount}% ${getText('on')} ${d.name}`,
+          `${__('application.discount')} ${d.value}% ${getText('on')} ${d.name}`,
       );
   }, [discountsList]);
 
@@ -39,16 +36,4 @@ const Sale = ({ discountsList, getStockDiscountsList }: Props) => {
   );
 };
 
-const mapStateToProps = (state: ApplicationState) => ({
-  discountsList: state.stock.discountsList,
-});
-
-const mapDispatchToProps = (dispatch: any) =>
-  bindActionCreators(
-    {
-      ...stock,
-    },
-    dispatch,
-  );
-
-export default connect(mapStateToProps, mapDispatchToProps)(Sale);
+export default Sale;

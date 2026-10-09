@@ -124,9 +124,9 @@ export const Map = () => {
       if (!stock.lat || !stock.lon) continue;
 
       const el = document.createElement('div');
-      el.innerHTML = `<div class="map-marker"><img src=${getAssetPath('logo', tenant.logo)} /><span>${stock.name}</span></div>`;
+      el.innerHTML = `<div class="map-marker"><img src=${getAssetPath('logo', tenant?.logo ?? '')} /><span>${stock.name}</span></div>`;
 
-      const marker = new mapboxgl.Marker({ element: el })
+      new mapboxgl.Marker({ element: el })
         .setLngLat([Number(stock.lon), Number(stock.lat)])
         .addTo(map)
         .getElement()

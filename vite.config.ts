@@ -8,13 +8,17 @@ export default defineConfig(async () => {
   return createViteConfig({
     plugins: [
       VitePWA({
-        registerType: 'autoUpdate',
+        // autoUpdate forces skipWaiting and clientsClaim, which activate a new
+        // worker in open tabs and drop the hashed files those tabs still need.
+        registerType: 'prompt',
         manifest: false,
         injectManifest: {
           injectionPoint: undefined,
         },
         workbox: {
-          skipWaiting: true,
+          skipWaiting: false,
+          clientsClaim: false,
+          navigateFallback: null,
           maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
         },
       }),
@@ -24,7 +28,6 @@ export default defineConfig(async () => {
       rollupOptions: {
         output: {
           manualChunks: {
-            pdfjs: ['pdfjs-dist'],
             'recharts': ['recharts'],
             'react-id-swiper': ['react-id-swiper'],
             'react-moveable': ['react-moveable'],

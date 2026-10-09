@@ -15,7 +15,8 @@ import { useParams } from 'react-router';
 import { mapFields } from '../../../../../../../utils/fields-mapper';
 import UserService from '../../../../../../../services/user-service';
 import { useGetMyDetailsQuery } from 'src/queries';
-import { HeaderWithActions, PageHeader, Section } from 'src/components/ui';
+import { HeaderWithActions, Section } from 'src/components/ui';
+import { GateAdminReq } from 'smartbox-types';
 
 const Edit = () => {
   const dispatch = useDispatch();
@@ -55,7 +56,7 @@ const Edit = () => {
           schemaMayBeDynamic={true}
           loadingInfo={<Spinner transparent />}
           schemaFetcher={() => ApiService.loadForm(fetchUrl)}
-          sendFetcher={(formId: string, values: any) =>
+          sendFetcher={(_formId: string, values: GateAdminReq) =>
             ApiService.sendForm(sendUrl, values, 'PATCH')
           }
           submitButton={submitButton}

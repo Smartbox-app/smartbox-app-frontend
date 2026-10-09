@@ -1,17 +1,17 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { hideModal } from 'src/actions/modal';
-import { Button, Header, Modal, Typography } from 'src/components/ui';
+import { Button, Header, Modal } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
 import { translateApiErrorCode } from 'src/utils/trans-form';
 import type { InviteUsersRes } from 'smartbox-types';
 import styled from 'styled-components';
 
-const List = styled('ul')(({ theme }) => ({
+const List = styled('ul')({
   margin: 0,
   padding: 0,
   textAlign: 'left',
-}));
+});
 
 const FailedItem = styled('li')(({ theme }) => ({
   marginBottom: theme.spacing,

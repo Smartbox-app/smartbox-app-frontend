@@ -41,14 +41,7 @@ export type BoxGroupReq = Pick<
 >;
 export type BoxGroupListRes = Pick<
   BoxGroupEntity,
-  | 'id'
-  | 'name'
-  | 'stockId'
-  | 'area'
-  | 'minRentPeriod'
-  | 'maxRentPeriod'
-  | 'pricing'
-  | 'order'
+  'id' | 'name' | 'stockId' | 'area' | 'minRentPeriod' | 'maxRentPeriod' | 'pricing' | 'order'
 >;
 export type BoxGroupUserRes = Pick<
   BoxGroupEntity,
@@ -66,11 +59,7 @@ export type BoxGroupUserRes = Pick<
   | 'maxAdvanceBookingDays'
   | 'maxRentPeriod'
   | 'order'
-> & {
-  available: boolean;
-  left: number | null;
-  pricing: SinglePricingForUser[];
-};
+> & { available: boolean, left: number | null, pricing: SinglePricingForUser[] };
 export type BoxGroupAdminClientRes = Pick<
   BoxGroupEntity,
   | 'id'
@@ -89,3 +78,19 @@ export type BoxGroupAdminClientRes = Pick<
   | 'maxAdvanceBookingDays'
   | 'maxRentPeriod'
 >;
+
+export type BoxGroupPublicRes = Pick<BoxGroupEntity, 'id' | 'name' | 'stockId'> & {
+  stockName: string | null;
+  imageUrl: string | null;
+  freeBoxesCount: number;
+  closestAvailableAt: string | null;
+};
+
+export type BoxPublicRes = {
+  identifier: string;
+  available: boolean;
+};
+
+export type BoxGroupPublicWithBoxesRes = BoxGroupPublicRes & {
+  boxes: BoxPublicRes[];
+};

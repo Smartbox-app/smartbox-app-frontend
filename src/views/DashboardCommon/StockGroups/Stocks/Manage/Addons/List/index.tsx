@@ -1,44 +1,60 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { FieldType, addonList } from 'smartbox-tables';
-import { AddonListRes } from 'smartbox-types';
-import { Alert, ApiTable } from '../../../../../../../components/Common';
+import { AddonListRes, ApiErrorCode } from 'smartbox-types';
+import { Alert, ApiTable, ConfirmModal } from '../../../../../../../components/Common';
 import { Button } from '../../../../../../../components/Branded';
-import {
-  ButtonsContainer,
-} from '../../../../../../../components/Layout';
+import { ButtonsContainer } from '../../../../../../../components/Layout';
 import { __ } from '../../../../../../../helpers/i18n';
 import { InteractiveTableSchema } from '../../../../../../../utils/table-schema-utils';
 import UserService from '../../../../../../../services/user-service';
 import { showModal } from '../../../../../../../actions/modal';
-import { ConfirmModal } from '../../../../../../../components/Common';
-import ApiService from '../../../../../../../services/api-service';
-import { successNotification } from '../../../../../../../actions/notifications';
+import {
+  errorNotification,
+  successNotification,
+} from '../../../../../../../actions/notifications';
 import { refreshApiTableData } from '../../../../../../../actions/api-table';
 import { useParams } from 'react-router';
 import { Edit } from '../Edit';
 import { useGetMyDetailsQuery } from 'src/queries';
+import { useDeleteAddonMutation } from 'src/mutations';
 import { HeaderWithActions, Section } from 'src/components/ui';
+import { CannotDeleteAddonModal } from '../CannotDeleteAddonModal';
 
 const List = () => {
   const { data: user } = useGetMyDetailsQuery();
   const dispatch = useDispatch();
   const { stockId } = useParams<{ stockId: string }>();
+  const { mutate: deleteAddon } = useDeleteAddonMutation();
 
-  const deleteAddon = async (addonId: string) => {
-    await ApiService.callFetch('DELETE', `addon/${addonId}`, () => {
-      dispatch(successNotification('application.addonDeleted'));
-      dispatch(refreshApiTableData());
+  const handleDeleteSuccess = () => {
+    dispatch(successNotification('application.addonDeleted'));
+    dispatch(refreshApiTableData());
+  };
+
+  const handleDeleteError = (error: Error) => {
+    const errorCode = Number(error.message) as ApiErrorCode;
+    if (errorCode === ApiErrorCode.CanNotDeleteAddonUsedByOpenEndedRent) {
+      dispatch(showModal(<CannotDeleteAddonModal />));
+      return;
+    }
+    dispatch(errorNotification(errorCode));
+  };
+
+  const handleDelete = (addonId: string) => {
+    deleteAddon(addonId, {
+      onSuccess: handleDeleteSuccess,
+      onError: handleDeleteError,
     });
   };
 
-  const confirmAddonDelete = (addonId: string) => {
+  const confirmAddonDelete = (addon: AddonListRes) => {
     dispatch(
       showModal(
         <ConfirmModal
           approveButtonText="application.delete"
           mainText="application.deleteAddonText"
-          approveAction={() => deleteAddon(addonId)}
+          approveAction={() => handleDelete(addon.id)}
         />,
       ),
     );
@@ -51,7 +67,7 @@ const List = () => {
       mobile: true,
       defaultSort: true,
       type: FieldType.Custom,
-      customRender: (value, field, addonData) => {
+      customRender: (value, field, addonData: AddonListRes) => {
         if (addonData.noPricing === true) {
           return (
             <Alert
@@ -64,9 +80,9 @@ const List = () => {
 
         if (addonData.pricing && addonData.pricing.length > 0) {
           return <Alert compact type="success" text="application.yes" />;
-        } else {
+        } 
           return <Alert compact type="error" text="application.no" />;
-        }
+        
       },
     })
     .addFieldAtTheEnd({
@@ -77,8 +93,8 @@ const List = () => {
         {
           name: 'application.pricing',
           type: 'primary',
-          to: (data: AddonListRes) =>
-            `/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/addons/${data.id}/pricing`,
+          to: (data) =>
+            `/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/addons/${(data as AddonListRes).id}/pricing`,
         },
         {
           name: 'application.edit',
@@ -89,7 +105,7 @@ const List = () => {
         {
           name: 'application.delete',
           type: 'danger',
-          click: (data: AddonListRes) => confirmAddonDelete(data.id),
+          click: (data: AddonListRes) => confirmAddonDelete(data),
         },
       ],
     });

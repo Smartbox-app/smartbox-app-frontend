@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { UserRes } from 'smartbox-types';
+
 import UserService from '../../../../../services/user-service';
 import { ApplicationState } from '../../../../../reducers';
 import { history } from 'src/history';

@@ -48,10 +48,10 @@ const ManageTenantSettingsForm = ({
   const isAdminForm = user.role === UserRole.admin && !!userId;
   if ((!tenantFetchUrl || !tenantSendUrl) && !isAdminForm) return null;
 
-  const fetchUrl = isAdminForm ? adminFetchUrl(userId!) : tenantFetchUrl;
-  const sendUrl = isAdminForm ? adminSendUrl(userId!) : tenantSendUrl;
+  const fetchUrl = (isAdminForm ? adminFetchUrl(userId!) : tenantFetchUrl)!;
+  const sendUrl = (isAdminForm ? adminSendUrl(userId!) : tenantSendUrl)!;
 
-  const customSendFetcher = (formId: string, values) => {
+  const customSendFetcher = (formId: string, values: object) => {
     return ApiService.sendForm(sendUrl, values, 'PATCH');
   };
 

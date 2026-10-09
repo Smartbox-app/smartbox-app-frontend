@@ -102,7 +102,7 @@ export const systemNotificationListTable: TableSchema = {
       sortable: true,
       defaultSort: false,
       type: FieldType.Text,
-      customValue: (value) => statusToText[value.status],
+      customValue: (value: { status: string }) => statusToText[value.status],
       searchableValues: statusToText,
       alias: 'sn',
     },

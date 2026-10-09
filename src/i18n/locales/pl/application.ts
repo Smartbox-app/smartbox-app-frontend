@@ -215,6 +215,7 @@ const application = {
     notEstablished: 'Nie ustalono',
     default: 'Domyślnie',
     end: 'Zakończ',
+    endAgreement: 'Zakończ umowę',
     endRent: 'Zakończ wynajem',
     delete: 'Usuń',
     deleteByForce: 'Wymuś usunięcie',
@@ -271,7 +272,8 @@ const application = {
     newApiAccess: 'Nowy klucz API',
     apiAccessEdit: 'Edytuj klucz API',
     apiAccessRotateKey: 'Rotuj klucz',
-    apiAccessRotateConfirm: 'Czy na pewno chcesz wygenerować nowy klucz? Obecny klucz przestanie działać.',
+    apiAccessRotateConfirm:
+      'Czy na pewno chcesz wygenerować nowy klucz? Obecny klucz przestanie działać.',
     apiAccessDeleteConfirm: 'Czy na pewno chcesz usunąć ten klucz API?',
     apiAccessCreated: 'Klucz API został utworzony',
     apiAccessCreatedText:
@@ -293,10 +295,13 @@ const application = {
       'Klucz API otrzymasz od administratora. Wstaw go w nagłówku x-api-key w zapytaniach.',
     apiAccessUrl: 'Adres API',
     apiAccessDocs: 'Dokumentacja API',
-    apiAccessDocsDescription: 'Pełna dokumentacja API jest dostępna pod adresem: ',
+    apiAccessDocsDescription:
+      'Pełna dokumentacja API jest dostępna pod adresem: ',
     apiAccessDocsLink: 'Dokumentacja API',
     apiAccessStockIdInfo:
-      'Identyfikator lokalizacji (STOCK_ID) na liście placów w kolumnie ID.',
+      'Identyfikator lokalizacji (STOCK_ID) jest na liście poniżej.',
+    apiAccessStockIdAdminInfo:
+      'Każdy franczyzobiorca zobaczy listę swoich lokalizacji z identyfikatorami w swoim Dostęp API.',
     apiAccessStockIdHint:
       'Możesz przekazać go jako parametr stockId, aby ograniczyć wyniki zapytania do jednej lokalizacji.',
     apiAccessStockIdList: 'Identyfikatory Twoich lokalizacji',
@@ -307,10 +312,27 @@ const application = {
       'To samo co lista grup boksów, z dodatkową listą boksów w każdej grupie (numer i dostępność). Opcjonalny parametr stockId ogranicza wyniki do jednej lokalizacji.',
     templates: 'Szablony wiadomości',
     manageTemplate: 'Zarządzaj szablonem',
+    templateGeneric: 'Szablon ogólny',
+    templateForStock: 'Szablon dla placu',
+    templateScopeAll: 'Ogólny',
+    createTemplateOverride: 'Utwórz nadpisanie',
+    editGenericTemplate: 'Edytuj',
+    resetTemplate: 'Resetuj',
+    confirmTemplateReset: 'Czy na pewno chcesz zresetować szablon ogólny? Wróci do treści domyślnej.',
+    templateReset: 'Zresetowano szablon',
+    addStockTemplate: 'Dodaj',
+    noStockTemplates: 'Brak szablonów dla poszczególnych placów',
+    templatesForStocks: 'Szablony dla placów',
     defaultTemplateUsed: 'Domyślny szablon',
     templateSet: 'Własny szablon',
     templateSaved: 'Zapisano szablon',
+    templateDeleted: 'Usunięto szablon',
+    confirmTemplateDelete: 'Czy na pewno chcesz usunąć ten szablon? Wiadomości wrócą do szablonu ogólnego albo domyślnego.',
+    clickToExpandTemplate: 'Kliknij w pojedynczy szablon aby rozwinąć szczegóły.',
     templatesList: 'Lista szablonów',
+    templatesGeneral: 'Ogólne',
+    templatesEmail: 'E-mail',
+    templatesSms: 'SMS',
     sendSms: 'Wyślij SMS',
     smsSent: 'Wysłano SMS',
     systemNotifications: 'Powiadomienia',
@@ -345,6 +367,8 @@ const application = {
       failure: 'Zakończone bez wynajęcia',
       noPaidPeriod: 'Nieopłacony okres',
       pendingFinish: 'Oczekuje na zakończenie',
+      awaitingFinish: 'Oczekiwanie na zakończenie',
+      endedUnpaid: 'Umowa zakończona — brak płatności',
       free: 'Wolny',
       outOfService: 'Wyłączony z użytku',
     },
@@ -461,6 +485,8 @@ const application = {
     cantExtendDescription:
       'Możesz przedłużyć najem który jest aktywny oraz w całości opłacony',
     cantEndDescription: 'Możesz zakończyć najem który jest w całości opłacony',
+    endedUnpaidContactStock:
+      'Umowa została zakończona z powodu braku płatności. Opłacenie faktury nie przywróci dostępu. Skontaktuj się z obsługą placu w sprawie odbioru rzeczy i dalszych kroków.',
     showOnStockMap: 'Pokaż mapę',
     showDetail: 'Pokaż detale',
     rentDetail: 'Szczegóły najmu',
@@ -545,6 +571,17 @@ const application = {
     okConnection: 'Połączenie OK',
     lastConnection: 'Ostatnie połączenie',
     endRental: 'Czy jesteś pewien, że chcesz zakończyć tę umowę?',
+    endOpenEndedRental:
+      'Czy jesteś pewien, że chcesz zakończyć tę umowę? Zachowasz dostęp do końca ostatniego okresu rozliczeniowego, czyli do {{date}}. Zakończenie umowy nie kończy procesu — musisz jeszcze potwierdzić, że odebrałeś rzeczy.',
+    endOpenEndedRentalScheduledTitle: 'Zakończenie umowy zaplanowane',
+    endOpenEndedRentalScheduledInfo:
+      'Zachowasz dostęp do {{date}}. Zakończenie umowy nie kończy procesu — musisz jeszcze potwierdzić, że odebrałeś rzeczy i schowek jest pusty.',
+    openEndedAccessUntil: 'Zachowasz dostęp do {{date}}.',
+    openEndedAwaitingFinishInfo:
+      'Zachowasz dostęp do {{date}}. Zakończenie umowy nie kończy procesu — potwierdź, że odebrałeś rzeczy, aby faktycznie zakończyć wynajem.',
+    confirmOpenEndedFinish: 'Potwierdź zakończenie',
+    confirmOpenEndedFinishInfo:
+      'Potwierdź, że odebrałeś rzeczy ze schowka i chcesz zakończyć wynajem.',
     endRentPhotoRequiredInfo:
       'Aby zakończyć wynajem, zrób zdjęcie schowka. Zdjęcie będzie widoczne dla obsługi placu.',
     endRentPhotoMaxAgeInfo:
@@ -587,12 +624,16 @@ const application = {
       'Posiadasz nieopłacone przedłużenie istniejącego wynajmu. Opłać zaległość, zanim wynajmiesz kolejną skrytkę.',
     cannotStartNewRentUnpaidPeriod:
       'Posiadasz nieopłacony okres istniejącego wynajmu. Opłać ten okres, zanim wynajmiesz kolejną skrytkę.',
+    cannotStartNewRentEndedUnpaid:
+      'Posiadasz wynajem którego umowa została zakończona z powodu braku płatności. Skontaktuj się z obsługą placu zanim wynajmiesz kolejną skrytkę.',
     boxWasBlockedDueNoPayment:
       'Twój schowek został zablokowany ze względu na brak płatności, prosimy o kontakt z administratorem.',
-    boxIsPendingFinish: 'Zakończyłeś już ten wynajem, możesz otworzyć bramę przez godzinę od jego zakończenia.',
+    boxIsPendingFinish:
+      'Zakończyłeś już ten wynajem, możesz otworzyć bramę przez godzinę od jego zakończenia.',
     penaltyPayment: 'Opłacenie kary umownej:',
     startTerm: 'Termin rozpoczęcia',
     finishTerm: 'Termin zakończenia',
+    firstPeriodFinishTerm: 'Koniec pierwszego okresu',
     grossPaymentForRent: 'Opłata brutto za wynajem',
     netPaymentForRent: 'Opłata netto za wynajem',
     paymentForRent: 'Opłata za wynajem',
@@ -629,9 +670,23 @@ const application = {
     maxAdvanceBookingDaysInfo:
       'Datę rozpoczęcia można wybrać maksymalnie na {{days}} dni do przodu od dzisiaj.',
     selectEndRentDate: 'Wybierz datę zakończenia wynajmu',
+    agreementType: 'Rodzaj umowy',
+    fixedTermAgreement: 'Umowa z datą końcową',
+    openEndedAgreement: 'Umowa bezterminowa',
+    openEndedPeriodInfo:
+      'Umowa bezterminowa. Okres trwa {{days}} dni, kolejne okresy są rozliczane automatycznie.',
+    openEndedNextInvoice:
+      'Następna faktura zostanie wystawiona {{invoiceDate}}.',
+    openEndedNextPeriodPrice: 'Cena kolejnego okresu',
+    openEndedNextPriceChanged:
+      'Cena kolejnego okresu zmieni się z {{current}} na {{next}}.',
+    firstBillingPeriodUntil: 'Pierwszy okres do {{date}}',
     grossPriceForSelectedPeriod: 'Cena brutto za wybrany okres',
     netPriceForSelectedPeriod: 'Cena netto za wybrany okres',
     priceForSelectedPeriod: 'Cena za wybrany okres',
+    grossPriceForPeriod: 'Cena brutto za okres',
+    netPriceForPeriod: 'Cena netto za okres',
+    priceForPeriod: 'Cena za okres',
     firstRentFreePracing: 'Rabat pierwszego wynajmu',
     withDicoutnPricing: 'Cena uwzględnia zniżkę ogólną placu',
     cardPricing: 'Zniżka za wykorzystanie jednorazowego kodu rabatowego',
@@ -810,12 +865,15 @@ const application = {
     clearLocationActivity: 'Wyczyść listę',
     confirmClearLocationActivity:
       'Czy na pewno chcesz usunąć wszystkie wpisy aktywności na tym placu?',
-    locationActivityClearedSuccessfully: 'Usunięto {{count}} wpisów aktywności.',
-    locationActivityAlarmInfo: 'Zmiana statusu pojedynczej aktywności/wyczyszczenie listy nie spowoduje uzbrojenia/rozbrojenia alarmu - stan alarmu powinien zostać zmieniony ręcznie.',
+    locationActivityClearedSuccessfully:
+      'Usunięto {{count}} wpisów aktywności.',
+    locationActivityAlarmInfo:
+      'Zmiana statusu pojedynczej aktywności/wyczyszczenie listy nie spowoduje uzbrojenia/rozbrojenia alarmu - stan alarmu powinien zostać zmieniony ręcznie.',
     armAlarm: 'Uzbrój',
     disarmAlarm: 'Rozbrój',
     gateDeleted: 'Usunięto bramę',
     stockBasicData: 'Podstawowe informacje',
+    stockAgreements: 'Umowy i rozliczenia',
     stockRents: 'Wynajmy',
     rentPeriods: 'Okresy wynajmu',
     rentPeriodsButton: 'Okresy',
@@ -836,6 +894,7 @@ const application = {
     paymentListMethod: 'Metoda',
     paymentListDocument: 'Dokument',
     paymentListInvoiceId: 'ID faktury',
+    paymentListInvoiceNumber: 'Nr faktury',
     paymentListStock: 'Plac',
     paymentListGroup: 'Grupa',
     paymentListBoxNumber: 'Nr skrytki',
@@ -865,17 +924,147 @@ const application = {
     tenantSettingsAppearance: 'Wygląd',
     tenantSettingsFonts: 'Fonty',
     tenantSettingsBasicData: 'Dane podstawowe',
+    tenantSettingsAgreements: 'Umowy',
+    tenantSettingsCommunications: 'Komunikacja',
+    tenantSettingsIntegrations: 'Integracje',
     tenantSettingsMessaging: 'Komunikaty',
     tenantSettingsMobileApps: 'Aplikacje mobilne',
     tenantSettingsAnalytics: 'Analityka',
     tenantAnalyticsDescription:
       'Po skonfigurowaniu identyfikatorów GTM i Meta Pixel aplikacja automatycznie wysyła zdarzenia konwersji:',
     tenantAnalyticsEventSignUp:
-      'Rejestracja konta — strona /register (po pomyślnej rejestracji). GTM: sign_up, Meta Pixel: CompleteRegistration',
+      'Rejestracja konta — strona /register (po pomyślnej rejestracji). GTM: sign_up z user_data.email. Meta Pixel: CompleteRegistration z Advanced Matching (em — e-mail). Identyfikator użytkownika nie jest wysyłany, bo rejestracja go nie zwraca.',
     tenantAnalyticsEventBeginCheckout:
-      'Rozpoczęcie zamówienia — potwierdzenie dat wynajmu w zamówieniu (/order/step/duration). GTM: begin_checkout z user_data.email i user_data.user_id, Meta Pixel: InitiateCheckout z e-mail i external_id (Advanced Matching; value = brutto; dodatkowo value_gross i value_net)',
+      'Rozpoczęcie zamówienia — potwierdzenie dat wynajmu w nowym zamówieniu (/order/step/duration) albo przy przedłużeniu (/order/step/duration/:rentId). GTM: begin_checkout z user_id, user_data.email i payment_type (new_rent albo extension), Meta Pixel: InitiateCheckout z e-mail, external_id, contents i payment_type (Advanced Matching; value = brutto; dodatkowo value_gross i value_net)',
     tenantAnalyticsEventPurchase:
-      'Zakończenie płatności — strona wyniku płatności (/payment/:id). GTM: purchase z user_data.email i user_data.user_id (rozszerzone konwersje Google Ads), Meta Pixel: Purchase z adresem e-mail i external_id (Advanced Matching; value = brutto; dodatkowo value_gross i value_net)',
+      'Zakończenie płatności — strona wyniku płatności (/payment/:id), raz na id płatności. GTM: purchase z user_id, user_data.email i payment_type (new_rent, extension, period_payment; rozszerzone konwersje Google Ads), Meta Pixel: Purchase z adresem e-mail, external_id, order_id i payment_type (Advanced Matching; value = brutto; dodatkowo value_gross i value_net)',
+    tenantAnalyticsReadonlyIntro:
+      'Te zdarzenia są wysyłane automatycznie. Kanał jest używany tylko wtedy, gdy dla tego najemcy ustawiono jego identyfikator.',
+    tenantAnalyticsAdvancedMatching:
+      'Advanced Matching łączy zdarzenie Meta z konkretną osobą. To nie są parametry zdarzenia (value, payment_type i pozostałe). Aplikacja przekazuje e-mail klienta jako em oraz, gdy go ma, identyfikator użytkownika jako external_id. Pixel hashuje e-mail w przeglądarce (SHA-256) i wysyła tylko skrót. Meta używa tego skrótu albo identyfikatora, żeby przypisać konwersję do konta na Facebooku lub Instagramie, gdy brakuje ciasteczek. W Google Ads tę samą rolę pełni user_data w GTM.',
+    tenantAnalyticsMatchingSignUp:
+      'Przy rejestracji Meta dostaje tylko e-mail z formularza (em). Pixel hashuje go w przeglądarce. Identyfikator użytkownika (external_id) nie jest wysyłany, bo odpowiedź rejestracji go nie zawiera. Ten sam e-mail trafia do GTM jako user_data.email.',
+    tenantAnalyticsMatchingCustomer:
+      'Meta dostaje e-mail klienta (em; pixel hashuje go w przeglądarce) oraz identyfikator użytkownika w aplikacji (external_id). Te pola są wysyłane osobno od parametrów zdarzenia poniżej.',
+    tenantAnalyticsGtmId: 'Google Tag Manager',
+    tenantAnalyticsMetaPixelId: 'Meta Pixel',
+    tenantAnalyticsWhenLabel: 'Kiedy',
+    tenantAnalyticsSignUpTitle: 'Rejestracja konta',
+    tenantAnalyticsSignUpWhen: 'Po pomyślnej rejestracji na stronie /register.',
+    tenantAnalyticsBeginCheckoutTitle: 'Rozpoczęcie zamówienia',
+    tenantAnalyticsBeginCheckoutWhen:
+      'Po potwierdzeniu dat wynajmu i przejściu dalej w nowym zamówieniu (/order/step/duration) albo przy przedłużeniu wynajmu (/order/step/duration/:rentId).',
+    tenantAnalyticsPurchaseTitle: 'Zakończenie płatności',
+    tenantAnalyticsPurchaseWhen:
+      'Na stronie wyniku płatności (/payment/:id), jeden raz, gdy status płatności to zaakceptowana.',
+    tenantAnalyticsPayloadGtmSignUp: `{
+  "event": "sign_up",
+  "method": "email",
+  "user_data": { "email": "<e-mail>" }
+}`,
+    tenantAnalyticsPayloadMetaSignUp: `CompleteRegistration
+Advanced Matching (osobno od zdarzenia, e-mail hashowany w przeglądarce):
+  em: <e-mail z formularza rejestracji>
+  external_id: nie jest wysyłany — rejestracja nie zwraca id użytkownika`,
+    tenantAnalyticsPayloadGtmCheckout: `{
+  "event": "begin_checkout",
+  "user_id": "<id użytkownika>",
+  "user_data": { "email": "<e-mail>" },
+  "payment_type": "new_rent | extension",
+  "value_gross": "<brutto>",
+  "value_net": "<netto>",
+  "ecommerce": {
+    "currency": "PLN",
+    "payment_type": "new_rent | extension",
+    "value": "<brutto>",
+    "items": [
+      {
+        "item_id": "<id grupy kontenerów>",
+        "item_name": "<nazwa — metraż — lokalizacja>",
+        "item_category": "new_rent | extension",
+        "price": "<brutto wynajmu>",
+        "quantity": 1
+      },
+      {
+        "item_id": "<slug dodatku>",
+        "item_name": "<nazwa dodatku>",
+        "item_category": "new_rent | extension",
+        "price": "<brutto dodatku>",
+        "quantity": 1
+      }
+    ]
+  }
+}`,
+    tenantAnalyticsPayloadMetaCheckout: `InitiateCheckout
+Advanced Matching (osobno od parametrów poniżej, e-mail hashowany w przeglądarce):
+  em: <e-mail>
+  external_id: <id użytkownika>
+{
+  "value": "<brutto>",
+  "value_gross": "<brutto>",
+  "value_net": "<netto>",
+  "currency": "PLN",
+  "payment_type": "new_rent | extension",
+  "content_name": "<nazwa — metraż — lokalizacja>",
+  "content_ids": ["<id grupy kontenerów>", "<slug dodatku>"],
+  "content_type": "product",
+  "contents": [
+    { "id": "<id grupy kontenerów>", "quantity": 1, "item_price": "<brutto wynajmu>" },
+    { "id": "<slug dodatku>", "quantity": 1, "item_price": "<brutto dodatku>" }
+  ],
+  "num_items": "<1 + dodatki>"
+}`,
+    tenantAnalyticsPayloadGtmPurchase: `{
+  "event": "purchase",
+  "user_id": "<id użytkownika>",
+  "user_data": { "email": "<e-mail>" },
+  "payment_type": "new_rent | extension | period_payment",
+  "value_gross": "<brutto>",
+  "value_net": "<netto>",
+  "ecommerce": {
+    "transaction_id": "<id płatności>",
+    "payment_type": "new_rent | extension | period_payment",
+    "value": "<brutto>",
+    "currency": "PLN",
+    "items": [
+      {
+        "item_id": "<id grupy kontenerów>",
+        "item_name": "<nazwa - metraż m²>",
+        "item_category": "new_rent | extension | period_payment",
+        "price": "<brutto wynajmu>",
+        "quantity": 1
+      },
+      {
+        "item_id": "<slug dodatku>",
+        "item_name": "<nazwa dodatku>",
+        "item_category": "new_rent | extension | period_payment",
+        "price": "<brutto dodatku>",
+        "quantity": 1
+      }
+    ]
+  }
+}`,
+    tenantAnalyticsPayloadMetaPurchase: `Purchase
+eventID: <id płatności> (deduplikacja z Conversions API, nie parametr zdarzenia)
+Advanced Matching (osobno od parametrów poniżej, e-mail hashowany w przeglądarce):
+  em: <e-mail>
+  external_id: <id użytkownika>
+{
+  "value": "<brutto>",
+  "value_gross": "<brutto>",
+  "value_net": "<netto>",
+  "currency": "PLN",
+  "order_id": "<id płatności>",
+  "payment_type": "new_rent | extension | period_payment",
+  "content_name": "<nazwa - metraż m²>",
+  "content_ids": ["<id grupy kontenerów>", "<slug dodatku>"],
+  "content_type": "product",
+  "contents": [
+    { "id": "<id grupy kontenerów>", "quantity": 1, "item_price": "<brutto wynajmu>" },
+    { "id": "<slug dodatku>", "quantity": 1, "item_price": "<brutto dodatku>" }
+  ],
+  "num_items": "<1 + dodatki>"
+}`,
     tenantSettingsSmtp: 'SMTP',
     tenantPlatformInactive:
       'Platforma jest nieaktywna. Skontaktuj się z administratorem.',
@@ -929,6 +1118,9 @@ const application = {
     addonAdded: 'Dodano dodatek',
     addonEdited: 'Edytowano dodatek',
     deleteAddonText: 'Czy na pewno chcesz usunąć dodatek?',
+    cannotDeleteAddon: 'Nie można usunąć dodatku',
+    cannotDeleteAddonUsedByOpenEnded:
+      'Ten dodatek jest używany w trwającej umowie bezterminowej, dlatego nie można go usunąć.',
     addonsList: 'Lista dodatków',
     periods: 'Okresy',
     periodPaid: 'opłacony',
@@ -1121,6 +1313,8 @@ const application = {
     outOfService: 'Wyłączonych z użytku',
     free: 'Wolnych',
     pendingFinish: 'W trakcie zakończenia wynajmu',
+    awaitingFinish: 'Oczekujących na zakończenie wynajmu',
+    endedUnpaid: 'Zakończonych umów bezterminowych bez płatności',
     byStatus: 'Sumarycznie statusami',
     byGroup: 'Podział na grupy',
     totalInGroup: 'Łącznie w grupie',
@@ -1228,6 +1422,7 @@ const application = {
     extend_rental_sms: 'Wynajem wkrótce się kończy',
     rental_ends_today_sms: 'Wynajem kończy się dzisiaj',
     account_activated_sms: 'Konto aktywowane',
+    account_activation_sms: 'Konto aktywowane',
     account_activated_email: 'Konto aktywowane',
     invite_user_email: 'Zaproszenie użytkownika',
     rental_ends_in_3_days_email: 'Wynajem kończy się za 3 dni',
@@ -1249,6 +1444,56 @@ const application = {
     period_payment_ends: 'Zbliża się koniec terminu płatności za okres wynajmu',
     period_payment_ends_sms:
       'Zbliża się koniec terminu płatności za okres wynajmu',
+    open_ended_new_rental_email: 'Nowy wynajem (umowa bezterminowa)',
+    open_ended_new_rental_sms: 'Nowy wynajem (umowa bezterminowa)',
+    open_ended_new_rental_admin_notification_email:
+      'Wiadomość do administracji o nowym wynajmie (umowa bezterminowa)',
+    open_ended_period_payment_email:
+      'Wystawienie faktury za okres (umowa bezterminowa)',
+    open_ended_period_payment_sms:
+      'Wystawienie faktury za okres (umowa bezterminowa)',
+    open_ended_rental_period_paid_email:
+      'Opłacono okres wynajmu (umowa bezterminowa)',
+    open_ended_rental_period_paid_sms:
+      'Opłacono okres wynajmu (umowa bezterminowa)',
+    open_ended_rental_period_paid_admin_notification_email:
+      'Wiadomość do administracji o opłaceniu okresu (umowa bezterminowa)',
+    open_ended_no_period_payment_email:
+      'Brak płatności za okres (umowa bezterminowa)',
+    open_ended_no_period_payment_sms:
+      'Brak płatności za okres (umowa bezterminowa)',
+    open_ended_period_payment_ends_email:
+      'Zbliża się termin płatności za okres (umowa bezterminowa)',
+    open_ended_period_payment_ends_sms:
+      'Zbliża się termin płatności za okres (umowa bezterminowa)',
+    open_ended_period_payment_due_today_email:
+      'Termin płatności za okres jest dzisiaj (umowa bezterminowa)',
+    open_ended_period_payment_due_today_sms:
+      'Termin płatności za okres jest dzisiaj (umowa bezterminowa)',
+    open_ended_period_payment_mid_window_email:
+      'Połowa czasu na opłacenie okresu (umowa bezterminowa)',
+    open_ended_period_payment_mid_window_sms:
+      'Połowa czasu na opłacenie okresu (umowa bezterminowa)',
+    open_ended_recover_access_ends_in_2_days_email:
+      'Za 2 dni kończy się czas na odzyskanie dostępu (umowa bezterminowa)',
+    open_ended_recover_access_ends_in_2_days_sms:
+      'Za 2 dni kończy się czas na odzyskanie dostępu (umowa bezterminowa)',
+    open_ended_recover_access_ends_today_email:
+      'Dzisiaj kończy się czas na odzyskanie dostępu (umowa bezterminowa)',
+    open_ended_recover_access_ends_today_sms:
+      'Dzisiaj kończy się czas na odzyskanie dostępu (umowa bezterminowa)',
+    open_ended_agreement_ended_admin_notification_email:
+      'Użytkownik zakończył umowę bezterminową',
+    open_ended_rent_ended_email: 'Wynajem bezterminowy zakończony',
+    open_ended_rent_ended_sms: 'Wynajem bezterminowy zakończony',
+    open_ended_rent_ended_admin_notification_email:
+      'Wiadomość do administracji o zakończeniu wynajmu bezterminowego',
+    open_ended_rent_ended_unpaid_email:
+      'Umowa bezterminowa zakończona — brak płatności',
+    open_ended_rent_ended_unpaid_sms:
+      'Umowa bezterminowa zakończona — brak płatności',
+    open_ended_rent_ended_unpaid_admin_notification_email:
+      'Wiadomość do administracji o zakończeniu umowy bezterminowej z powodu braku płatności',
     access_code_sms: 'Wygenerowano kod dostępu do skrytki',
     access_code_email: 'Wygenerowano kod dostępu do skrytki',
     gate_access_code_sms: 'Wygenerowano kod dostępu do bramy',
@@ -1273,9 +1518,12 @@ const application = {
     oldNumber: 'Stary numer skrytki',
     newNumber: 'Nowy numer skrytki',
     paymentUntil: 'Płatność do',
+    accessUntil: 'Dostęp do odzyskania do',
     periodFrom: 'Początek okresu',
     periodTo: 'Koniec okresu',
     size: 'Rozmiar skrytki',
+    stock: 'Plac',
+    daysToRecoverAccess: 'Liczba dni na odzyskanie dostępu',
   },
 } as const;
 

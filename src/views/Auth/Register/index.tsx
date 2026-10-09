@@ -1,12 +1,11 @@
 import React, { useEffect } from 'react';
-import { ItfApiForm } from 'itf_formbuilder_react';
-import { bindActionCreators } from 'redux';
-import { connect, useDispatch, useSelector } from 'react-redux';
-import ApiService from '../../../services/api-service';
-import { ButtonsContainer, FormContainer } from '../../../components/Layout';
-import { LoginLogo } from '../../../components/Common';
-import { Spinner, PageContent, Logo } from '../../../components/Branded';
-import { formOnTranslateString } from '../../../utils/trans-form';
+
+import { useDispatch } from 'react-redux';
+
+import { ButtonsContainer } from '../../../components/Layout';
+
+import { PageContent, Logo } from '../../../components/Branded';
+
 import { modal, notifications } from '../../../actions';
 import { history } from 'src/history';
 import { __ } from '../../../helpers/i18n';
@@ -59,6 +58,7 @@ const Register = () => {
     isPending,
     data,
     isSuccess,
+    variables,
   } = useRegisterMutation();
 
   const {
@@ -84,7 +84,7 @@ const Register = () => {
 
     const smsActivation = isSmsAccountConfirmation(tenant);
 
-    trackCompleteRegistration();
+    trackCompleteRegistration(variables?.email);
 
     dispatch(
       notifications.successNotification('notification.accountRegistered'),
@@ -97,7 +97,7 @@ const Register = () => {
 
     dispatch(modal.showModal(<AccountRegisteredModal />));
     history.push('/');
-  }, [data, isSuccess, tenant, dispatch, trackCompleteRegistration]);
+  }, [data, isSuccess, tenant, variables?.email, dispatch, trackCompleteRegistration]);
 
   if (!tenant) return null;
 
@@ -202,10 +202,4 @@ const Register = () => {
   );
 };
 
-const mapDispatchToProps = (dispatch: any): any =>
-  bindActionCreators(
-    { successNotification: notifications.successNotification },
-    dispatch,
-  );
-
-export default connect(null, mapDispatchToProps)(Register);
+export default Register;

@@ -5,7 +5,7 @@ import React from 'react';
 
 interface ButtonProps {
   to?: string;
-  click?: any;
+  click?: (event: React.MouseEvent<HTMLButtonElement>) => void;
   primary?: boolean;
   secondary?: boolean;
   danger?: boolean;
@@ -25,15 +25,8 @@ interface ButtonProps {
   onlyIcon?: boolean;
 }
 
-enum ButtonType {
-  Submit = 'submit',
-  Button = 'button',
-  Reset = 'reset',
-}
-
 const Button = (props: ButtonProps) => {
   const {
-    className,
     danger,
     primary,
     secondary,
@@ -41,17 +34,12 @@ const Button = (props: ButtonProps) => {
     tertiary,
     small,
     disabled,
-    outline,
     big,
-    auto,
     to,
     type,
     blank,
     click,
     text,
-    rounded,
-    icon,
-    onlyIcon,
   } = props;
 
   const getSize = () => {

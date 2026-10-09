@@ -83,10 +83,10 @@ export const KsmGateButton = ({
     try {
       const location = await getCurrentLocation();
       dispatch(requestKsmGateOpenV2(gate.id, location));
-    } catch (error: any) {
-      if (error.message === 'not_supported') {
+    } catch (error: unknown) {
+      if (error instanceof Error && error.message === 'not_supported') {
         showForceModal({ notSupported: true });
-      } else if (error.message === 'permission_denied') {
+      } else if (error instanceof Error && error.message === 'permission_denied') {
         showForceModal({ cantRead: true });
       } else {
         showForceModal({ cantRead: true });

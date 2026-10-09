@@ -71,7 +71,7 @@ export const DownloadReportModal = ({ reportType }: DownloadReportModalProps) =>
             value={selectedDate}
             maxDate={new Date()}
             inline={false}
-            onChange={([selected]) => {
+            onChange={([selected]: Date[]) => {
               if (selected) setSelectedDate(selected);
             }}
           />

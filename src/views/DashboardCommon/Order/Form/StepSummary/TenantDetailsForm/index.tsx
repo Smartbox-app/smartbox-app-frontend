@@ -61,7 +61,7 @@ const TenantDetailsForm = ({ disabled }: Props) => {
               label="rent.birth_date"
               maxDate={new Date()}
               minDate={subYears(new Date(), 120)}
-              onChange={([selected]) => {
+              onChange={([selected]: Date[]) => {
                 field.onChange(selected);
               }}
             />

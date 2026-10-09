@@ -1,5 +1,5 @@
 import React from 'react';
-import { PageHeader, Section } from '../../../components/Layout';
+import { PageHeader } from '../../../components/Layout';
 import SingleDepartment from './SingleDepartment';
 
 import './Contact.scss';

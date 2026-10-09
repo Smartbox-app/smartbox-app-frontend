@@ -8,7 +8,7 @@ interface Props {
   highlight?: boolean;
 }
 
-const Section = ({ children, full, half, highlight }: Props) => (
+const Section = ({ children }: Props) => (
   <UISection>{children}</UISection>
 );
 

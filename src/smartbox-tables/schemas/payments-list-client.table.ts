@@ -5,7 +5,7 @@ const statusToText: {
   [key: string]: string;
 } = {
   [PaymentStatus.wait]: 'Oczekuje',
-  [PaymentStatus.inProgress]: 'W trakcie',
+  [PaymentStatus.pending]: 'W trakcie',
   [PaymentStatus.accepted]: 'Sukces',
   [PaymentStatus.failure]: 'Błąd',
 };
@@ -58,7 +58,7 @@ export const paymentsListClientTableSchema: TableSchema = {
       sortable: true,
       searchable: true,
       searchableValues: statusToText,
-      customValue: (row) => statusToText[row.status],
+      customValue: (row: { status: string }) => statusToText[row.status],
       alias: 'payment',
       mobile: true
     },
@@ -69,7 +69,7 @@ export const paymentsListClientTableSchema: TableSchema = {
       sortable: true,
       searchable: true,
       searchableValues: typeToText,
-      customValue: (row) => typeToText[row.type],
+      customValue: (row: { type: string }) => typeToText[row.type],
       alias: 'payment',
     },
     {
@@ -96,12 +96,20 @@ export const paymentsListClientTableSchema: TableSchema = {
       sortable: true,
       searchable: true,
       searchableValues: documentToText,
-      customValue: (row) => documentToText[row.document],
+      customValue: (row: { document: string }) => documentToText[row.document],
       alias: 'payment',
     },
     {
       name: 'ID faktury',
       field: 'invoiceId',
+      type: FieldType.Text,
+      sortable: true,
+      searchable: true,
+      alias: 'payment',
+    },
+    {
+      name: 'Nr faktury',
+      field: 'invoiceNumber',
       type: FieldType.Text,
       sortable: true,
       searchable: true,

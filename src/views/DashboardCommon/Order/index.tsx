@@ -27,9 +27,8 @@ export const Order = () => {
   const { data: user } = useGetMyDetailsQuery();
   const { data: rentsList = [], isPending: loadingRents } =
     useGetMyRentsQuery();
-  const { step, paymentId, rentId } = useParams<{
+  const { step, rentId } = useParams<{
     step: string;
-    paymentId: string;
     rentId?: string;
   }>();
 

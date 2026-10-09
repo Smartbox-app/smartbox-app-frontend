@@ -1,6 +1,13 @@
 import { useMutation } from '@tanstack/react-query';
 import ApiService from '../../services/api-service';
-import type { InviteUsersRes, InviteWorkerReq } from 'smartbox-types';
+import type { InviteUsersRes, UserRole } from 'smartbox-types';
+
+type InviteWorkerReq = {
+  emails: string[];
+  role: UserRole;
+  tenantId?: string;
+  stockIds: { value: string; name: string }[];
+};
 
 export const useInviteUsersMutation = () =>
   useMutation({

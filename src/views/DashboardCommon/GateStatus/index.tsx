@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { GateHealthCheckStatus, GatesStatusForAdminRes } from 'smartbox-types';
-import { Spinner } from '../../../components/Branded';
+
 import { fullDate } from '../../../utils/format-date';
 import ApiService from '../../../services/api-service';
 
@@ -93,7 +93,7 @@ const GateStatus = ({ stockId, stockGroupId }: Props) => {
   if (!status)
     return (
       <div className="gate-status">
-        <Skeleton radius={2} height={83} width={'350px'} />
+        <Skeleton radius={2} height={83} width="350px" />
       </div>
     );
   if (!status || status.length === 0) return null;

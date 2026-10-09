@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
-import { AgreementTemplateInput, DocumentHtmlRes } from 'smartbox-types';
+import { DocumentHtmlRes } from 'smartbox-types';
+import type { AgreementTemplateInput } from '../../utils/agreement-template-query';
 import ApiService from '../../services/api-service';
 import { agreementTemplateToQueryString } from '../../utils/agreement-template-query';
 
@@ -28,11 +29,12 @@ export const useGetDocumentAgreementHtmlQuery = (
       }
 
       const queryString = params.toString();
-      const url = queryString
-        ? `document/type/agreement/html?${queryString}`
-        : stockId
-          ? `document/type/agreement/html?stockId=${encodeURIComponent(stockId)}`
-          : 'document/type/agreement/html';
+      let url = 'document/type/agreement/html';
+      if (queryString) {
+        url = `document/type/agreement/html?${queryString}`;
+      } else if (stockId) {
+        url = `document/type/agreement/html?stockId=${encodeURIComponent(stockId)}`;
+      }
 
       const response = await ApiService.callFetch<DocumentHtmlRes>(
         'GET',

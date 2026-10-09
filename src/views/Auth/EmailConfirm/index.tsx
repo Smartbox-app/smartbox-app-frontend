@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import  { useEffect, useState } from 'react';
 import { ItfApiForm } from 'itf_formbuilder_react';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router';
@@ -64,7 +64,7 @@ const EmailConfirm = () => {
         }
 
         setPageState('activating');
-        dispatch(auth.emailVerification(userId, updateToken) as any);
+        dispatch(auth.emailVerification(userId, updateToken));
       } catch {
         if (!cancelled) {
           setPageState('error');

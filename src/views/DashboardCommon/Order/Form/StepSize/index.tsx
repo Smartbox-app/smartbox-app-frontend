@@ -2,21 +2,19 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { BoxGroupUserRes } from 'smartbox-types';
 import {
-  FormContainer,
   ButtonsContainer,
 } from '../../../../../components/Layout';
 import SingleOption from './SingleOption';
 import { ApplicationState } from '../../../../../reducers';
-import FormHeader from '../../../../../components/Layout/FormHeader';
+
 import UserService from '../../../../../services/user-service';
 import ApiService from '../../../../../services/api-service';
 
 import './StepSize.scss';
 import { Alert } from '../../../../../components/Common';
 import { useGetMyDetailsQuery } from 'src/queries';
-import { Header, Section, Skeleton } from 'src/components/ui';
+import { Header, Section, Skeleton , Stack, Button } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
-import { Stack, Button } from 'src/components/ui';
 import { ArrowLeft, ArrowRight } from 'src/icons';
 import { useTenantNaming } from 'src/hooks/useTenantNaming';
 import { Redirect } from 'react-router';

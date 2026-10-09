@@ -16,7 +16,7 @@ interface Props {
   fullWidth?: boolean;
 }
 
-const FormContainer = ({ children, max, className, highlight, fullWidth }: Props) => (
+const FormContainer = ({ children, max, className, fullWidth }: Props) => (
   <StyledFormContainer
     $fullWidth={fullWidth}
     className={`form-container ${max ? 'max' : ''} ${className || ''}`}

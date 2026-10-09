@@ -1,4 +1,4 @@
-import { PriceDisplayForClients } from '../stock';
+import { PriceDisplayForClients } from "../stock";
 
 export enum AddonVariantPriceType {
   Dynamic = 'dynamic',
@@ -14,27 +14,23 @@ export enum AddonDynamicPricingType {
   Year = 'year',
 }
 
-export type SingleAddonPricingForUser = SingleAddonPricing & {
-  display: PriceDisplayForClients;
-  netPrice: number;
-  grossPrice: number;
-  isGross: boolean;
-};
-
 export interface SingleAddonVariant {
   id: string;
   name: string;
   default: boolean;
   pricing: SingleAddonPricing[];
   priceType: AddonVariantPriceType;
-  // legacy
   price: number | null;
 }
 
 export type SingleAddonVariantForUser = Omit<SingleAddonVariant, 'pricing'> & {
   pricing: SingleAddonPricingForUser[];
-  netPrice: number | null;
-  grossPrice: number | null;
+}
+
+export type SingleAddonVariantForUserWithCorrectedPrice = SingleAddonVariantForUser & {
+  price: number;
+  netPrice: number;
+  grossPrice: number;
 };
 
 export interface SingleAddonPricing {
@@ -44,6 +40,14 @@ export interface SingleAddonPricing {
   price: number | null;
   quantity: number | null;
 }
+
+export type SingleAddonPricingForUser = Omit<SingleAddonPricing, 'type'> & {
+  display: PriceDisplayForClients;
+  netPrice: number;
+  grossPrice: number;
+  isGross: boolean;
+  type: AddonDynamicPricingType | null;
+};
 
 export enum AddonPriceResolveType {
   Proportional = 'proportional',
@@ -71,7 +75,7 @@ export interface AddonPricingReq {
 export interface CalculatedAddonPriceRes {
   addonId: string;
   variantId: string;
-  price: { value: number; isGross: boolean }[];
+  price: { value: number; netPrice: number; grossPrice: number; isGross: boolean }[];
   details: string[];
   error?: string;
 }
@@ -190,11 +194,10 @@ export type AddonRes = Pick<
   | 'newRentOnly'
 > & {
   display: PriceDisplayForClients;
-  pricing: SingleAddonVariantForUser[];
-  // legacy
   isGross: boolean;
+  pricing: SingleAddonVariantForUser[];
 };
-export type AddonClientAdminRes = Omit<AddonRes, 'isGross'> & {
+export type AddonClientAdminRes = Omit<AddonRes, 'isGross' | 'display' | 'pricing'> & {
   pricing: SingleAddonVariant[];
   priceResolveType: AddonPriceResolveType;
   boxGroupIds: string[];

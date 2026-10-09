@@ -8,8 +8,7 @@ import { useLocation, useParams } from 'react-router';
 import ApiService from 'src/services/api-service';
 import { Logo, Spinner } from 'src/components/Branded';
 import { history } from 'src/history';
-import { Capacitor } from '@capacitor/core';
-import { Browser } from '@capacitor/browser';
+
 import { useTracking } from 'src/hooks/useTracking';
 import { useGetMyDetailsQuery } from 'src/queries';
 
@@ -59,7 +58,7 @@ export const PaymentResult = () => {
         true,
         true,
       );
-    } catch (e) {
+    } catch {
       setPaymentStatusError(true);
     }
   };
@@ -80,7 +79,7 @@ export const PaymentResult = () => {
         true,
         true,
       );
-    } catch (e) {
+    } catch {
       setDetailsUnavailable(true);
       setPaymentDetails(null);
     }
@@ -121,7 +120,7 @@ export const PaymentResult = () => {
   useEffect(() => {
     if (paymentDetails?.status !== PaymentStatus.accepted) return;
 
-    const email = paymentDetails.mailToSendInvoice || user?.email;
+    const email = user?.email;
     if (!email && !user?.id && !isUserFetched) return;
 
     handleTrackPurchase(paymentDetails, email, user?.id);

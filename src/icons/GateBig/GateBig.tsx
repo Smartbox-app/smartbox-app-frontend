@@ -1,7 +1,7 @@
 export const GateBig = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    xmlns:xlink="http://www.w3.org/1999/xlink"
+    xmlnsXlink="http://www.w3.org/1999/xlink"
     width="220"
     height="109"
     viewBox="0 0 220 109"

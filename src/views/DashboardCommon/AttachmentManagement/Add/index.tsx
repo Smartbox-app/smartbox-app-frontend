@@ -43,7 +43,7 @@ const Add = () => {
             schemaMayBeDynamic={true}
             loadingInfo={<Spinner transparent />}
             schemaFetcher={() => ApiService.loadForm(fetchUrl)}
-            sendFetcher={(formId: string, values: any) =>
+            sendFetcher={(_formId: string, values: FormData) =>
               ApiService.sendForm(sendUrl, values)
             }
             submitButton={submitButton}

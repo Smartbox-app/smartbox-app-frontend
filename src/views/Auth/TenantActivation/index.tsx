@@ -1,10 +1,9 @@
 import React from 'react';
 import { ItfApiForm } from 'itf_formbuilder_react';
-import { AddInvitedTenantReq, AddInvitedUserReq } from 'smartbox-types';
+import { AddInvitedTenantReq } from 'smartbox-types';
 import ApiService from '../../../services/api-service';
 
-import { Spinner, Button, PageContent } from '../../../components/Branded';
-import { Logo } from '../../../components/Branded';
+import { Spinner, Button, PageContent , Logo } from '../../../components/Branded';
 import { formOnTranslateString } from '../../../utils/trans-form';
 import { FormContainer, ButtonsContainer } from '../../../components/Layout';
 import { history } from 'src/history';

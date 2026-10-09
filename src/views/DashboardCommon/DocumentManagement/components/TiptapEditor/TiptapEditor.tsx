@@ -1,17 +1,17 @@
 import '@tiptap/extension-table';
 import '@tiptap/extension-text-align';
 import { useEditor, EditorContent } from '@tiptap/react';
-import React, { useEffect, useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { EditorRoot, EditorToolbarSticky, EditorWrapper } from '../styled';
 import { TiptapMenuBar } from '../TiptapMenuBar';
 import { TiptapTableToolbar } from '../TiptapTableToolbar';
 import { TiptapTemplateToolbar } from '../TiptapTemplateToolbar';
 import { getDocumentEditorExtensions } from 'src/config/tiptap';
-import { DocumentType } from 'smartbox-types';
+import { DocumentType, TiptapDocument } from 'smartbox-types';
 
 type Props = {
-  value: any;
-  onChange: (value: any) => void;
+  value: TiptapDocument;
+  onChange: (value: TiptapDocument) => void;
   documentType?: DocumentType;
   templateTenantId?: string;
   templateStockId?: string | null;

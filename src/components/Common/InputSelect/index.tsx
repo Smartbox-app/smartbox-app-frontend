@@ -133,7 +133,16 @@ const InputSelect = ({
     value: getSelectedValue(),
     classNamePrefix: 'input-select',
     inputId: name,
-    onChange: handleChange,
+    onChange: (
+      value:
+        | { [key: string]: unknown }
+        | ReadonlyArray<{ [key: string]: unknown }>
+        | null
+        | undefined,
+    ) =>
+      handleChange(
+        (value ?? null) as InputSelectOption | InputSelectOption[] | null,
+      ),
     onBlur,
     options,
     isClearable,

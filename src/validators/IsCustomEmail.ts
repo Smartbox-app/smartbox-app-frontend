@@ -9,7 +9,7 @@ import isEmail from 'validator/lib/isEmail';
 
 @ValidatorConstraint({ async: false })
 export class CustomEmailValidator implements ValidatorConstraintInterface {
-  validate(email: any, args: ValidationArguments): boolean {
+  validate(email: unknown, _args: ValidationArguments): boolean {
     if (typeof email !== 'string') {
       return false;
     }
@@ -19,7 +19,7 @@ export class CustomEmailValidator implements ValidatorConstraintInterface {
     return isEmail(trimed);
   }
 
-  defaultMessage(args: ValidationArguments) {
+  defaultMessage(_args: ValidationArguments) {
     return 'Invalid email address';
   }
 }

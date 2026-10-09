@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { type SubmitHandler, useForm } from 'react-hook-form';
 import { BoxGroupUserRes } from 'smartbox-types';
 import { Button, CheckBox, Form, Modal, Typography } from 'src/components/ui';
@@ -12,7 +12,6 @@ import styled from 'styled-components';
 import { useCreateNotificationMutation } from './query/useCreateNotificationMutation';
 import { useTenant } from 'src/hooks/useTenant';
 import { Spinner } from 'src/components/Branded';
-import { useEffect } from 'react';
 import { ButtonsContainer } from 'src/components/Layout';
 
 const StyledContent = styled('div')(({ theme }) => ({
@@ -39,7 +38,7 @@ export const NotifyWhenAvailableModal = ({
     resolver: ClassValidatorResolver(new NotificationDto()),
   });
 
-  const { mutate, isPending, data, error } = useCreateNotificationMutation();
+  const { mutate, isPending, data } = useCreateNotificationMutation();
 
   const onSubmit: SubmitHandler<NotificationDto> = (data) => {
     if (!tenant) return;

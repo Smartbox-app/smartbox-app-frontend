@@ -84,7 +84,6 @@ export const GoogleButton = () => {
         type="button"
         size="large"
         disabled={isPending}
-        disabled={isPending}
         iconLeft={<span className="fa fa-google" />}
         onClick={goToGoogleLogin}
         text="application.sign_in_google"

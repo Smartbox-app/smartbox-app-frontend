@@ -1,9 +1,10 @@
+import type { AppDispatch } from 'src/types/app-dispatch';
 import ApiService from '../services/api-service';
 import { DEFAULT_API_TABLE_INSTANCE_ID } from '../constants/api-table-instances';
 
 export const fetchApiTableData =
   (url: string, method = 'GET', instanceId = DEFAULT_API_TABLE_INSTANCE_ID) =>
-  async (dispatch: any) => {
+  async (dispatch: AppDispatch) => {
     dispatch({ type: 'LOADING', payload: true });
     try {
       const payload = await ApiService.callFetch(

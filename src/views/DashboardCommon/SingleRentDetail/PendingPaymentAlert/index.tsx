@@ -1,4 +1,4 @@
-import { MyRentDetails, RentStatus } from 'smartbox-types';
+import { MyRentDetails } from 'smartbox-types';
 
 // import './MissingPaymentAlert.scss';
 import { Alert } from 'src/components/Common';

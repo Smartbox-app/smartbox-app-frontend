@@ -1,6 +1,6 @@
-import React from 'react';
 import { useDispatch } from 'react-redux';
 import { invitationList } from 'smartbox-tables';
+import { UserInvitationListItem } from 'smartbox-types';
 import { Section, ButtonsContainer } from '../../../components/Layout';
 import { ApiTable, ConfirmModal } from '../../../components/Common';
 import { Button } from '../../../components/Branded';
@@ -26,12 +26,13 @@ export const InvitesSent = () => {
       {
         name: 'application.resend',
         type: 'primary',
-        click: (data: any) => dispatch(resendInvitations(data.id)),
+        click: (data: UserInvitationListItem) =>
+          dispatch(resendInvitations(data.id)),
       },
       {
         name: 'application.delete',
         type: 'danger',
-        click: (data: any) =>
+        click: (data: UserInvitationListItem) =>
           dispatch(
             showModal(
               <ConfirmModal

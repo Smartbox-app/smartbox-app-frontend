@@ -15,6 +15,7 @@ import { successNotification } from '../../../actions/notifications';
 import { mapFields } from '../../../utils/fields-mapper';
 import { __ } from '../../../helpers/i18n';
 import { Section, Typography } from 'src/components/ui';
+import { AddUserByAdminReq } from 'smartbox-types';
 
 const fetchUrl = 'user/form/add-user-by-admin';
 const sendUrl = 'user/add-user-by-admin';
@@ -47,7 +48,7 @@ export const AddUser = () => {
             schemaMayBeDynamic={false}
             loadingInfo={<Spinner transparent />}
             schemaFetcher={() => ApiService.loadForm(fetchUrl)}
-            sendFetcher={(formId: string, values: any) =>
+            sendFetcher={(_formId: string, values: AddUserByAdminReq) =>
               ApiService.sendForm(sendUrl, values)
             }
             submitButton={submitButton}

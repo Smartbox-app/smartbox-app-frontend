@@ -1,24 +1,14 @@
 import React, { useMemo } from 'react';
-import {
-  withRouter,
-  RouteComponentProps,
-  useParams,
-  Redirect,
-} from 'react-router-dom';
-import { connect } from 'react-redux';
+import { useParams, Redirect } from 'react-router-dom';
 import { RentStatus } from 'smartbox-types';
-import { UserStockMap } from '../../../components/Common/UserStockMap';
 
-import { ApplicationState } from '../../../reducers';
-
-import Action from './Action';
-import Details from './Details';
 import Gate from './Gate';
 import { MissingPaymentAlert } from './MissingPaymentAlert';
 import { OpenBox } from './OpenBox';
 import styled from 'styled-components';
 import { Description } from './RentDescription';
 import { isAfter } from 'date-fns';
+import { isRentAccessActive } from 'src/utils/rent';
 import { Header, PageHeader, Section, Skeleton } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
 import { PeriodUnpaidAlert } from './PeriodUnpaidAlert';
@@ -28,13 +18,6 @@ import { RentAuthorizations } from './RentAuthorizations';
 import { useMyRentDetailsQuery } from 'src/queries';
 import { RentNote } from './RentNote';
 import { MainData } from './MainData';
-
-interface RouteProps {
-  orderId: string;
-}
-interface Props extends RouteComponentProps<RouteProps> {
-  showUserStockMap: boolean;
-}
 
 const StyledGatesHeader = styled.div`
   font-weight: 700;
@@ -51,7 +34,7 @@ const StyledBoxContainer = styled.div`
   }
 `;
 
-const SingleRentDetail = ({ showUserStockMap, match }: Props) => {
+const SingleRentDetail = () => {
   const { getText } = useTenantNaming();
   const { orderId } = useParams<{ orderId: string }>();
 
@@ -67,14 +50,18 @@ const SingleRentDetail = ({ showUserStockMap, match }: Props) => {
     if (!singleRent) return false;
 
     if (
-      ![RentStatus.rented, RentStatus.pendingFinish].includes(singleRent.status)
+      ![
+        RentStatus.rented,
+        RentStatus.pendingFinish,
+        RentStatus.awaitingFinish,
+      ].includes(singleRent.status)
     )
       return false;
 
     const currentDate = new Date();
 
     if (isAfter(new Date(singleRent.startAt), currentDate)) return false;
-    if (isAfter(currentDate, new Date(singleRent.finishAt))) return false;
+    if (!isRentAccessActive(singleRent, currentDate)) return false;
 
     return true;
   }, [singleRent]);
@@ -149,15 +136,14 @@ const SingleRentDetail = ({ showUserStockMap, match }: Props) => {
             <RentAuthorizations rent={singleRent} />
           </Section>
 
-          <Description description={singleRent.description} rent={singleRent} />
+          <Description
+            description={singleRent.description ?? []}
+            rent={singleRent}
+          />
         </>
       ) : null}
     </>
   );
 };
 
-const mapStateToProps = (state: ApplicationState) => ({
-  showUserStockMap: state.rent.showUserStockMap,
-});
-
-export default withRouter(connect(mapStateToProps)(SingleRentDetail));
+export default SingleRentDetail;

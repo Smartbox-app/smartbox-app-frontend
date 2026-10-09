@@ -2,9 +2,8 @@ import React, { useMemo } from 'react';
 import {
   AddonDynamicPricingType,
   AddonVariantPriceType,
-  SingleAddonVariant,
+  SingleAddonVariantForUserWithCorrectedPrice,
   PriceDisplayForClients,
-  SingleAddonVariantForUser,
 } from 'smartbox-types';
 import styled from 'styled-components';
 import { __ } from '../../../../../../../helpers/i18n';
@@ -13,7 +12,7 @@ import { useI18n } from 'src/i18n';
 
 interface Props {
   display: PriceDisplayForClients;
-  variant: SingleAddonVariantForUser;
+  variant: SingleAddonVariantForUserWithCorrectedPrice;
 }
 
 const StyledPriceInfo = styled('div')(({ theme }) => ({
@@ -112,7 +111,9 @@ const PriceInfo = ({ variant, display }: Props) => {
 
   const firstPricing = pricing[0];
 
-  if (!firstPricing.price || !firstPricing.quantity) return null;
+  if (!firstPricing.price || !firstPricing.quantity || !firstPricing.type) {
+    return null;
+  }
 
   return (
     <StyledPriceInfo>

@@ -16,6 +16,7 @@ import {
 } from 'src/mutations';
 import { InteractiveTableSchema } from 'src/utils/table-schema-utils';
 import { useApiAccessScopes } from 'src/hooks/useApiAccessScopes';
+import { TenantApiAccess } from 'src/views/DashboardTenant/ApiAccess';
 import { CreateApiAccessModal } from '../CreateApiAccessModal';
 import { EditApiAccessModal } from '../EditApiAccessModal';
 import { ApiKeyCreatedModal } from '../ApiKeyCreatedModal';
@@ -119,22 +120,25 @@ const List = () => {
   };
 
   return (
-    <Section>
-      <HeaderWithActions
-        actions={
-          <ButtonsContainer>
-            <Button
-              text="application.newApiAccess"
-              primary
-              click={() => dispatch(showModal(<CreateApiAccessModal />))}
-            />
-          </ButtonsContainer>
-        }
-      >
-        {__('application.apiAccessList')}
-      </HeaderWithActions>
-      <ApiTable scheme={scheme} apiEndpointSubUrl="api-access" />
-    </Section>
+    <>
+      <Section>
+        <HeaderWithActions
+          actions={
+            <ButtonsContainer>
+              <Button
+                text="application.newApiAccess"
+                primary
+                click={() => dispatch(showModal(<CreateApiAccessModal />))}
+              />
+            </ButtonsContainer>
+          }
+        >
+          {__('application.apiAccessList')}
+        </HeaderWithActions>
+        <ApiTable scheme={scheme} apiEndpointSubUrl="api-access" />
+      </Section>
+      <TenantApiAccess forAdmin />
+    </>
   );
 };
 

@@ -1,11 +1,17 @@
-import { BaseResponse } from '../base/baseRes';
-import { Prop } from '../store/prop.decorator';
 import { GateHealthCheckStatus } from './gate-health-check-status';
-import { AlarmHealthCheckStatus } from './alarm-health-check-status';
 import { AccessControl } from '../stock-group';
+
+import { AlarmHealthCheckStatus } from './alarm-health-check-status';
+import { PriceDisplayForClients } from './price-display-for-clients';
+import {
+  StockAgreementType,
+  StockPaymentDocument,
+  StockPaymentType,
+} from './stock-entity';
 
 export interface DiscountReq {
   value: number;
+  startAt?: Date | null;
   expireAt: Date;
 }
 
@@ -14,30 +20,23 @@ export interface DiscountList {
   stockId: string;
   name: string;
   value: number;
+  startAt: Date | null;
+  expireAt: Date;
 }
 
-export class StockList extends BaseResponse {
-  @Prop()
+export class StockList {
   id: string;
-  @Prop()
   name: string;
-  @Prop()
   address: string;
 
-  @Prop()
   lat?: string;
-  @Prop()
   lon?: string;
 }
 
-export class StockDiscountList extends BaseResponse {
-  @Prop()
+export class StockDiscountList {
   id: string;
-  @Prop()
   name: string;
-  @Prop()
   discount: number | null;
-  @Prop()
   address: string;
 }
 
@@ -47,8 +46,7 @@ export interface StockAdminList {
   address: string;
 }
 
-export class GateStatus extends BaseResponse {
-  @Prop()
+export class GateStatus {
   openReq: boolean;
 }
 
@@ -95,6 +93,8 @@ export interface GateAdminReq {
   ksmIdentifier: string;
   ksmAlarmIdentifier: string;
   ttlockIdentifier: string;
+  keylessboxIdentifier: string;
+  hasKeypad?: boolean;
   description: string;
 }
 
@@ -103,11 +103,84 @@ export interface StockReq {
   address: string;
   stockGroupId?: string;
   tenantId?: string;
-  accessControl: AccessControl;
+  boxAccessControl: AccessControl;
+  gateAccessControl: AccessControl;
   ksmLogin: string;
   ksmPassword: string;
   ksmLocation: string;
+  keylessboxLocation?: number | null;
   allowedBoxesCount?: number | null;
+}
+
+/** POST stock — fields from stock/form/add. */
+export interface StockCreateReq {
+  name: string;
+  address?: string;
+  lat?: string;
+  lon?: string;
+  visible?: boolean;
+  isMapActive?: boolean;
+  priceDisplayForClients: PriceDisplayForClients;
+  daysForPayment?: number | '';
+  clientPaymentTypeConfig?: StockPaymentType;
+  paymentDocumentConfig?: StockPaymentDocument;
+  minRentDaysForInstallments?: number | null;
+  allowedBoxesCount?: number | null;
+  boxAccessControl: AccessControl;
+  gateAccessControl: AccessControl;
+  ksmLogin: string;
+  ksmPassword: string;
+  ksmLocation: string;
+  keylessboxLocation?: number | null;
+  invoiceServiceDepartmentID?: string;
+  stockGroupId?: string | null;
+  tenantId?: string;
+}
+
+/** PATCH stock/:id/basic — fields from stock/form/basic. */
+export interface StockBasicReq {
+  name: string;
+  address?: string;
+  lat?: string;
+  lon?: string;
+  visible?: boolean;
+  isMapActive?: boolean;
+  colorFree: string;
+  colorReserved: string;
+  colorRented: string;
+  colorFinished: string;
+  colorFailure: string;
+  colorToCheck: string;
+  colorToExplain: string;
+  colorOutOfService: string;
+  colorNoPaidExtension: string;
+  colorNoPaidPeriod: string;
+  colorNoPaidExtensionWithWarning: string;
+  colorPendingFinish?: string;
+  allowedBoxesCount?: number | null;
+  activeBoxesCount?: number | null;
+  boxAccessControl: AccessControl;
+  gateAccessControl: AccessControl;
+  ksmLogin: string;
+  ksmPassword: string;
+  ksmLocation: string;
+  keylessboxLocation?: number | null;
+  stockGroupId?: string | null;
+}
+
+/** PATCH stock/:id/agreements — fields from stock/form/agreements. */
+export interface StockAgreementsReq {
+  allowedAgreementType: StockAgreementType;
+  openEndedPeriodDays: number;
+  openEndedInvoiceDaysBefore: number;
+  openEndedDaysForPayment: number;
+  openEndedDaysAfterDueToLoseAccess: number;
+  priceDisplayForClients: PriceDisplayForClients;
+  clientPaymentTypeConfig: StockPaymentType;
+  daysForPayment: number;
+  paymentDocumentConfig?: StockPaymentDocument;
+  minRentDaysForInstallments?: number | null;
+  invoiceServiceDepartmentID?: string;
 }
 
 export interface StockMapReq {
@@ -134,6 +207,7 @@ export interface StockManageReq {
   visible: boolean;
   colorReserved: string;
   colorRented: string;
+  colorPendingFinish?: string;
   colorNoPaidExtension: string;
   colorNoPaidPeriod: string;
   colorNoPaidExtensionWithWarning: string;
@@ -143,10 +217,13 @@ export interface StockManageReq {
   colorFinished: string;
   colorFailure: string;
   colorFree: string;
-  accessControl: AccessControl;
+  boxAccessControl: AccessControl;
+  gateAccessControl: AccessControl;
+  priceDisplayForClients: PriceDisplayForClients;
   ksmLogin: string;
   ksmPassword: string;
   ksmLocation: string;
+  keylessboxLocation?: number | null;
   allowedBoxesCount?: number | null;
 }
 
@@ -154,12 +231,12 @@ export type StatsByStatus = {
   free: number;
   reserved: number;
   rented: number;
+  pendingFinish: number;
   toCheck: number;
   toExplain: number;
   noPaidExtension: number;
   noPaidPeriod: number;
   outOfService: number;
-  pendingFinish: number;
 };
 
 export type StatsByGroup = {

@@ -1,14 +1,14 @@
+import type { ReactNode } from 'react';
 import styled from 'styled-components';
 
-const Content = styled('div')(({ theme }) => ({
+const Content = styled('div')({
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
   alignItems: 'center',
   textAlign: 'center',
   minHeight: '100vh',
-
-}));
+});
 
 const Wrapper = styled('div')(({ theme }) => ({
   display: 'flex',

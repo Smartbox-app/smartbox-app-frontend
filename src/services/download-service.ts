@@ -43,7 +43,7 @@ export class DownloadService {
     return blob;
   }
 
-  static async download(url: string, payload?: any, filenameFallback?: string) {
+  static async download(url: string, payload?: object, filenameFallback?: string) {
     const {
       data: dataBase64,
       filename,
@@ -51,7 +51,7 @@ export class DownloadService {
     } = await ApiService.sendForFile(payload ? 'POST' : 'GET', url, payload);
 
     let normalizedName = (filename || filenameFallback || 'download').replace(
-      /[&\/\\#,+()$~%'":*?<>{} ]/g,
+      /[&/\\#,+()$~%'":*?<>{} ]/g,
       '_',
     );
 
@@ -84,10 +84,10 @@ export class DownloadService {
             openWithDefault: true,
           });
         } catch (e) {
-          console.log('Error opening file', e);
+          console.error('Error opening file', e);
         }
       } catch (e) {
-        console.log('ERROR', e);
+        console.error('ERROR', e);
       }
     } else {
       FileSaver.saveAs(

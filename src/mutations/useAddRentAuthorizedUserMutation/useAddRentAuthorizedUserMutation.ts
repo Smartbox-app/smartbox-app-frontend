@@ -1,6 +1,10 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import ApiService from '../../services/api-service';
-import { AddRentAuthorizedUserReq } from 'smartbox-types';
+
+type AddRentAuthorizedUserReq = {
+  email?: string;
+  phone?: string;
+};
 
 export const useAddRentAuthorizedUserMutation = () => {
   const queryClient = useQueryClient();

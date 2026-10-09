@@ -14,39 +14,60 @@ const Content = styled('div')(({ theme }) => ({
   gap: theme.spacing * 4,
 }));
 
-type Props = {
-  requiresStaffCheck?: boolean;
-};
+type RentEndedSuccessModalProps =
+  | {
+      variant: 'scheduled';
+      accessUntil: string;
+    }
+  | {
+      variant: 'ended';
+      requiresStaffCheck?: boolean;
+    };
 
-export const RentEndedSuccessModal = ({
-  requiresStaffCheck = false,
-}: Props) => {
+const SuccessBody = ({
+  title,
+  info,
+}: {
+  title: string;
+  info: string;
+}) => {
   const dispatch = useDispatch();
-
-  const closeModal = () => {
-    dispatch(hideModal());
-  };
 
   return (
     <>
-      <Modal.Header title={__('application.rentEndedSuccessTitle')} />
+      <Modal.Header title={title} />
       <Modal.Content>
         <Content>
           <SuccessCheck />
-          <Typography>
-            {__(
-              requiresStaffCheck
-                ? 'application.rentEndedSuccessInfoWithPhoto'
-                : 'application.rentEndedSuccessInfo',
-            )}
-          </Typography>
+          <Typography>{info}</Typography>
           <Button
             size="large"
             text="application.understood"
-            onClick={closeModal}
+            onClick={() => dispatch(hideModal())}
           />
         </Content>
       </Modal.Content>
     </>
+  );
+};
+
+export const RentEndedSuccessModal = (props: RentEndedSuccessModalProps) => {
+  if (props.variant === 'scheduled') {
+    return (
+      <SuccessBody
+        title={__('application.endOpenEndedRentalScheduledTitle')}
+        info={__('application.endOpenEndedRentalScheduledInfo', {
+          date: props.accessUntil,
+        })}
+      />
+    );
+  }
+
+  const info = props.requiresStaffCheck
+    ? __('application.rentEndedSuccessInfoWithPhoto')
+    : __('application.rentEndedSuccessInfo');
+
+  return (
+    <SuccessBody title={__('application.rentEndedSuccessTitle')} info={info} />
   );
 };

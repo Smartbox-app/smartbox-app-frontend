@@ -101,7 +101,7 @@ export const EditApiAccessModal = ({ row }: EditApiAccessModalProps) => {
                 name="expiresAt"
                 label="application.apiAccessExpiresAt"
                 value={field.value ?? undefined}
-                onChange={([selected]) => {
+                onChange={([selected]: Date[]) => {
                   field.onChange(selected ?? null);
                 }}
                 inline={false}

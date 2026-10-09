@@ -1,14 +1,14 @@
 import React from 'react';
 import { ItfApiForm } from 'itf_formbuilder_react';
-import { connect, useDispatch } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import { useDispatch } from 'react-redux';
 import {
   BoxDisplayStatus,
   BoxStatus,
   ChangeStatusReq,
   RentStatus,
 } from 'smartbox-types';
-import { boxes, modal, notifications, stock } from '../../../../../actions';
+import { hideModal, showModal } from '../../../../../actions/modal';
+import { successNotification } from '../../../../../actions/notifications';
 import { ButtonsContainer } from '../../../../../components/Layout';
 import { Modal } from 'src/components/ui';
 import { __ } from '../../../../../helpers/i18n';
@@ -39,21 +39,15 @@ const hasSelectedStatus = (status: ChangeStatusReq['status'] | undefined) =>
 interface Props {
   selectedBoxId: string;
   stockId: string;
-  hideModal: () => void;
-  successNotification: (text: string) => void;
-  showModal: (content: React.ReactNode) => void;
   rentId?: string;
   currentStatus: BoxDisplayStatus;
 }
 
 const Status = ({
   selectedBoxId,
-  hideModal,
-  successNotification,
   stockId,
   rentId,
   currentStatus,
-  showModal,
 }: Props) => {
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
@@ -63,8 +57,6 @@ const Status = ({
       <Button text="application.changeStatus" type="submit" danger />
     </ButtonsContainer>
   );
-
-  if (!stock) return null;
 
   const fetchUrl = rentId
     ? `rent/form/change-box-status/${selectedBoxId}/${rentId}`
@@ -80,12 +72,12 @@ const Status = ({
       } as ChangeStatusReq,
       'PATCH',
       () => {
-        successNotification('notification.userStatusChanged');
+        dispatch(successNotification('notification.userStatusChanged'));
         dispatch(refreshApiTableData());
         queryClient.invalidateQueries({
           queryKey: stockBoxesQueryKey(stockId),
         });
-        hideModal();
+        dispatch(hideModal());
       },
     );
   };
@@ -95,7 +87,8 @@ const Status = ({
       values.status === BoxStatus.free &&
       STATUSES_REQUIRING_FREE_CONFIRMATION.includes(currentStatus);
 
-    showModal(
+    dispatch(
+      showModal(
       <>
         <Modal.Header title={__('application.confirmation')} />
         <Modal.Content>
@@ -114,7 +107,7 @@ const Status = ({
             <Button
               text="application.cancel"
               danger
-              click={() => hideModal()}
+              click={() => dispatch(hideModal())}
             />
             <Button
               success
@@ -125,7 +118,7 @@ const Status = ({
           </ButtonsContainer>
         </Modal.Actions>
       </>,
-    );
+    ));
   };
 
   return (
@@ -144,7 +137,7 @@ const Status = ({
           if (field.id === 'status' && !hasSelectedStatus(field.value)) {
             return __('application.notChooseStatus');
           }
-          return undefined;
+          return undefined as never;
         }}
         thirdPartyComponents={{
           ReactSelect: ReactSelectOverride,
@@ -160,10 +153,4 @@ const Status = ({
   );
 };
 
-const mapDispatchToProps = (dispatch: any) =>
-  bindActionCreators(
-    { ...stock, ...modal, ...notifications, ...boxes },
-    dispatch,
-  );
-
-export default connect(null, mapDispatchToProps)(Status);
+export default Status;

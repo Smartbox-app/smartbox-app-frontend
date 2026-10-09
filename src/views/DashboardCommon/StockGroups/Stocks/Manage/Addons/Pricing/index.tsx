@@ -6,7 +6,6 @@ import {
   AddonClientAdminRes,
   AddonPriceResolveType,
   AddonDynamicPricingType,
-  SingleAddonPricing,
   SingleAddonVariant,
   AddonVariantPriceType,
   AddonFixedPriceInstallmentsResolveType,
@@ -22,7 +21,6 @@ import {
   ButtonsContainer,
   FormContainer,
   Section,
-  SimpleHeader,
 } from '../../../../../../../components/Layout';
 import { Button, Spinner } from '../../../../../../../components/Branded';
 import { __ } from '../../../../../../../helpers/i18n';
@@ -475,9 +473,14 @@ const Pricing = () => {
                                 label: __('application.year'),
                               },
                             ]}
-                            onChange={(value: AddonDynamicPricingType) =>
-                              updateType(variant.id, singlePricing.id, value)
-                            }
+                            onChange={(value) => {
+                              if (typeof value !== 'string') return;
+                              updateType(
+                                variant.id,
+                                singlePricing.id,
+                                value as AddonDynamicPricingType,
+                              );
+                            }}
                           />
                           <Input
                             type="number"

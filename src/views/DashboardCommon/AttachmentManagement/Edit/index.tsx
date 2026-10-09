@@ -12,7 +12,6 @@ import { __ } from '../../../../helpers/i18n';
 import { mapFields } from '../../../../utils/fields-mapper';
 import { hideModal } from '../../../../actions/modal';
 import { refreshApiTableData } from '../../../../actions/api-table';
-import { AttachmentReq } from 'smartbox-types';
 
 interface Props {
   id: string;
@@ -42,7 +41,7 @@ const Edit = ({ id }: Props) => {
         schemaMayBeDynamic={true}
         loadingInfo={<Spinner transparent />}
         schemaFetcher={() => ApiService.loadForm(fetchUrl)}
-        sendFetcher={(formId: string, values: AttachmentReq) =>
+        sendFetcher={(_formId: string, values: FormData) =>
           ApiService.sendForm(sendUrl, values, 'PATCH')
         }
         submitButton={submitButton}

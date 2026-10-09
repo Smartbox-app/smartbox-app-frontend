@@ -1,4 +1,5 @@
-import { PaymentDocument, PayForRentResponse, RentPaymentType, StockRes, BoxGroupType } from 'smartbox-types';
+import type { AppDispatch } from 'src/types/app-dispatch';
+import { PaymentDocument, PayForRentResponse, RentAgreementType, RentPaymentType, StockRes, BoxGroupType } from 'smartbox-types';
 import ApiService from '../services/api-service';
 import { FormType } from '../types/order-form';
 import { format } from 'date-fns';
@@ -73,7 +74,7 @@ export const setRentStartDate = (date: Date) => ({
   type: 'SET_RENT_START_DATE',
   payload: date,
 });
-export const setRentEndDate = (date: Date) => ({
+export const setRentEndDate = (date: Date | null) => ({
   type: 'SET_RENT_END_DATE',
   payload: date,
 });
@@ -81,6 +82,11 @@ export const setRentEndDate = (date: Date) => ({
 export const setRentPaymentType = (paymentType: RentPaymentType) => ({
   type: 'SET_RENT_PAYMENT_TYPE',
   payload: paymentType,
+});
+
+export const setRentAgreementType = (agreementType: RentAgreementType) => ({
+  type: 'SET_RENT_AGREEMENT_TYPE',
+  payload: agreementType,
 });
 
 export const setRentPaymentDocumentType = (
@@ -105,14 +111,32 @@ export const calculatePrice =
     type: RentPaymentType,
     code?: string,
   ) =>
-  async (dispatch: any) => {
+  async (dispatch: AppDispatch) => {
+    const base = `box-group-new/price/${boxGroupId}/${formatOnlyDate(start)}/${formatOnlyDate(end)}/${type}`;
+    const path = code ? `${base}/${code}` : base;
     await ApiService.get(
       dispatch,
       'CALCULATE_RENT_PRICE_SUCCESS',
       'CALCULATE_RENT_PRICE_FAILED',
       null,
       null,
-      `box-group-new/price/${boxGroupId}/${formatOnlyDate(start)}/${formatOnlyDate(end)}/${type}/${code || ''}`,
+      path,
+      'LOADING_PRICE',
+    );
+  };
+
+export const calculateOpenEndedPrice =
+  (boxGroupId: string, start: Date, code?: string) =>
+  async (dispatch: AppDispatch) => {
+    const base = `box-group-new/price-open-ended/${boxGroupId}/${formatOnlyDate(start)}`;
+    const path = code ? `${base}/${code}` : base;
+    await ApiService.get(
+      dispatch,
+      'CALCULATE_RENT_PRICE_SUCCESS',
+      'CALCULATE_RENT_PRICE_FAILED',
+      null,
+      null,
+      path,
       'LOADING_PRICE',
     );
   };
@@ -125,7 +149,7 @@ export const calculatePriceForRent =
     type: RentPaymentType,
     code?: string,
   ) =>
-  async (dispatch: any) => {
+  async (dispatch: AppDispatch) => {
     await ApiService.get(
       dispatch,
       'CALCULATE_RENT_PRICE_SUCCESS',
@@ -151,7 +175,7 @@ export const calculateAddonPrice =
     variantId: string,
     boxGroupId: string,
   ) =>
-  async (dispatch: any) => {
+  async (dispatch: AppDispatch) => {
     await ApiService.get(
       dispatch,
       'CALCULATE_VARIANT_PRICE_SUCCESS',
@@ -163,8 +187,27 @@ export const calculateAddonPrice =
     );
   };
 
+export const calculateOpenEndedAddonPrice =
+  (
+    addonId: string,
+    start: Date,
+    variantId: string,
+    boxGroupId: string,
+  ) =>
+  async (dispatch: AppDispatch) => {
+    await ApiService.get(
+      dispatch,
+      'CALCULATE_VARIANT_PRICE_SUCCESS',
+      'CALCULATE_VARIANT_PRICE_FAILED',
+      null,
+      null,
+      `addon/price-open-ended/${addonId}/${formatOnlyDate(start)}/${variantId}/${boxGroupId}`,
+      'LOADING_VARIANT_PRICE',
+    );
+  };
+
 export const fetchAddons =
-  (stockId: string, boxGroupId: string) => async (dispatch: any) => {
+  (stockId: string, boxGroupId: string) => async (dispatch: AppDispatch) => {
     await ApiService.get(
       dispatch,
       'FETCH_ADDONS_SUCCESS',

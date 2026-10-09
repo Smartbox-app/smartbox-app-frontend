@@ -26,7 +26,7 @@ export const LockGroups = () => {
   return (
     <Section>
       <Header variant="h2">{__('application.lockGroups')}</Header>
-      <ApiTable scheme={scheme} apiEndpointSubUrl={`driver/groups/`} />
+      <ApiTable scheme={scheme} apiEndpointSubUrl="driver/groups/" />
     </Section>
   );
 };

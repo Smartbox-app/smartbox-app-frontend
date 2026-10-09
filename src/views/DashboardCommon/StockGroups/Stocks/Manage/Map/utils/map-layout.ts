@@ -48,3 +48,30 @@ export const isSameBoxLayout = (
   left.width === right.width &&
   left.height === right.height &&
   left.rotation === right.rotation;
+
+export const normalizeMapPosition = (position: number, rotation: number) => {
+  if (rotation !== 0) return position;
+
+  const rest = position % 5;
+  return rest > 2 ? position + (5 - rest) : position - rest;
+};
+
+export const layoutFromMoveableRect = (
+  beforeOrigin: readonly number[],
+  offsetWidth: number,
+  offsetHeight: number,
+  rotation: number,
+): BoxMapLayoutUpdate => ({
+  x: Math.round(beforeOrigin[0] - offsetWidth / 2),
+  y: Math.round(beforeOrigin[1] - offsetHeight / 2),
+  width: Math.round(offsetWidth),
+  height: Math.round(offsetHeight),
+  rotation: Math.round(rotation),
+});
+
+export const getMapBoxFontSize = (width: number) => {
+  if (width > 80) return 13;
+  if (width > 60) return 12;
+  if (width > 50) return 11;
+  return 10;
+};

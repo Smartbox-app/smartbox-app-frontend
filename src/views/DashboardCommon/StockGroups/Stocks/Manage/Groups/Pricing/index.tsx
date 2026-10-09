@@ -1,11 +1,11 @@
-import React, { useState, useEffect, ChangeEvent } from 'react';
+import { useState, useEffect, ChangeEvent } from 'react';
 import { useParams } from 'react-router';
 import { useDispatch } from 'react-redux';
 import ApiService from '../../../../../../../services/api-service';
 import { BoxGroupAdminClientRes, PriceResolveType, PricingType, SinglePricing } from 'smartbox-types';
 import styled from 'styled-components';
 import { Alert, Input, InputSelect } from '../../../../../../../components/Common';
-import { ButtonsContainer, FormContainer, SimpleHeader } from '../../../../../../../components/Layout';
+import { ButtonsContainer, FormContainer } from '../../../../../../../components/Layout';
 import { Button, Spinner } from '../../../../../../../components/Branded';
 import { __ } from '../../../../../../../helpers/i18n';
 import { successNotification } from '../../../../../../../actions/notifications';
@@ -145,7 +145,10 @@ const Pricing = () => {
                                     label: __('application.year'),
                                 },
                             ]}
-                            onChange={(value: PricingType) => updateType(index, value)}
+                            onChange={(value) => {
+                                if (typeof value !== 'string') return;
+                                updateType(index, value as PricingType);
+                            }}
                         />
                         <Input type='number' input={{
                             label: 'application.quantity',

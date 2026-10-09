@@ -1,6 +1,6 @@
 import { RentPaymentType } from "../rent";
 import { PaymentDocument, PaymentStatus, PaymentType } from "./payment-entity";
-import { PriceDisplayForClients } from "../stock/price-display-for-clients";
+import { CalculatedPriceRes } from "../box-group/pricing";
 
 export interface CompanyData {
   companyName: string;
@@ -11,47 +11,85 @@ export interface CompanyData {
   nip: string;
 }
 
-export type CalculatedPricePeriod = {
-  isGross: boolean;
-  value: number;
-  grossPrice: number;
-  netPrice: number;
-  display?: PriceDisplayForClients;
+export type PaymentTransaction = {
+  approvedAmount: {
+    total: number;
+  };
+  transactionResult: string;
+  approvalCode: string;
+  paymentMethodDetails: {
+    paymentMethodType: string;
+    paymentMethodBrand: string;
+  }
 };
+
+export type PaymentResponse = {
+  transactions: PaymentTransaction[];
+};
+
+export type PaymentErrorResponse = {
+  response: {
+    data: {
+      error: {
+        code: string;
+        message: string;
+        details: {
+          field: string;
+          message: string;
+        }[];
+      };
+    };
+  };
+};
+
+export type PaymentNotificationBody = {
+  approval_code: string;
+  txndate_processed: string;
+  txndatetime: string;
+  timezone: string;
+  response_hash?: string;
+  notification_hash?: string;
+  oid: string;
+  status: string;
+  chargetotal: string;
+  currency: string;
+  paymentMethod: string;
+}
 
 export type PaymentDetails = {
   status: PaymentStatus;
   type: PaymentType;
   paymentType: RentPaymentType;
-  /** Rent price breakdown (same shape as calculate-price API). Optional — use for net/gross tracking. */
-  price?: CalculatedPricePeriod[];
+  /** Rent price breakdown (same shape as calculate-price API). */
+  price?: CalculatedPriceRes['price'];
   addons: {
     slug: string;
     grossPrice: number | string;
     netPrice?: number | string;
     name: string
   }[];
+  groupId: string;
   /** Legacy display value for the first rent period (unchanged semantics). */
   rentGrossPrice: number;
   name: string;
   area: string | number;
   stockName: string;
   stockAddress: string;
-  groupId: string;
-  /** Email provided during the order (invoice recipient). Used for GTM enhanced conversions. */
-  mailToSendInvoice?: string;
+  value: number
 }
 
 export type PaymentAdminListItem = {
   id: string;
-  createdAt: Date;
-  updatedAt: Date;
+  date: Date;
+  updated: Date;
+  mailToSendInvoice: string;
   status: PaymentStatus;
   type: PaymentType;
   value: number;
   method: string;
   document: PaymentDocument;
   invoiceId: string;
+  invoiceNumber: string;
   orderId: string;
   rentId: string | null;
   periodId: string | null;
@@ -67,14 +105,16 @@ export type PaymentAdminListItem = {
 export type PaymentClientListItem = Pick<
   PaymentAdminListItem,
   | 'id'
-  | 'createdAt'
-  | 'updatedAt'
+  | 'date'
+  | 'updated'
+  | 'mailToSendInvoice'
   | 'status'
   | 'type'
   | 'value'
   | 'method'
   | 'document'
   | 'invoiceId'
+  | 'invoiceNumber'
   | 'orderId'
   | 'rentId'
   | 'periodId'

@@ -7,6 +7,7 @@ import Action from '../Action';
 import Details from '../Details';
 import { UserStockMap } from 'src/components/Common/UserStockMap';
 import { Alert } from 'src/components/Common';
+import { OpenEndedNextPrice } from '../OpenEndedNextPrice';
 
 export type MainDataProps = {
   singleRent: MyRentDetails;
@@ -33,9 +34,7 @@ export const MainData = ({ singleRent, isAuthorizedViewer }: MainDataProps) => {
       <Action rent={singleRent} isAuthorizedViewer={isAuthorizedViewer} />
 
       {!showUserStockMap ? (
-        <>
-          <Details singleRent={singleRent} />
-        </>
+        <Details singleRent={singleRent} />
       ) : (
         <UserStockMap
           boxId={singleRent.boxId}
@@ -44,6 +43,9 @@ export const MainData = ({ singleRent, isAuthorizedViewer }: MainDataProps) => {
           stockId={singleRent.stockId}
         />
       )}
+      {singleRent.nextPeriodPreview ? (
+        <OpenEndedNextPrice preview={singleRent.nextPeriodPreview} />
+      ) : null}
     </Section>
   );
 };

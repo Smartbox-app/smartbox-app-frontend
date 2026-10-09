@@ -5,7 +5,6 @@ import {
   ButtonsContainer,
   FormContainer,
   Section,
-  SimpleHeader,
 } from '../../../../../../../components/Layout';
 import { Button, Spinner } from '../../../../../../../components/Branded';
 import ApiService from '../../../../../../../services/api-service';
@@ -19,6 +18,7 @@ import { mapFields } from '../../../../../../../utils/fields-mapper';
 import { useParams } from 'react-router';
 import { useGetMyDetailsQuery } from 'src/queries';
 import { HeaderWithActions } from 'src/components/ui';
+import { BoxesBatchReq } from 'smartbox-types';
 
 const AddBatch = () => {
   const dispatch = useDispatch();
@@ -58,7 +58,7 @@ const AddBatch = () => {
           schemaMayBeDynamic={true}
           loadingInfo={<Spinner transparent />}
           schemaFetcher={() => ApiService.loadForm(fetchUrl)}
-          sendFetcher={(formId: string, values: any) =>
+          sendFetcher={(_formId: string, values: BoxesBatchReq) =>
             ApiService.sendForm(sendUrl, { ...values, stockId })
           }
           submitButton={submitButton}

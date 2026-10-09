@@ -38,4 +38,3 @@ export default (state: StockStatus = initialState, action: Action) => {
       return state;
   }
 };
-51.9194

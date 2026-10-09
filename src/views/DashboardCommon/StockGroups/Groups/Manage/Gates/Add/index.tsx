@@ -5,7 +5,6 @@ import {
   ButtonsContainer,
   FormContainer,
   Section,
-  SimpleHeader,
 } from '../../../../../../../components/Layout';
 import { Button, Spinner } from '../../../../../../../components/Branded';
 import ApiService from '../../../../../../../services/api-service';
@@ -19,6 +18,7 @@ import { useParams } from 'react-router';
 import UserService from '../../../../../../../services/user-service';
 import { useGetMyDetailsQuery } from 'src/queries';
 import { HeaderWithActions } from 'src/components/ui';
+import { GateAdminReq } from 'smartbox-types';
 
 const Add = () => {
   const dispatch = useDispatch();
@@ -58,7 +58,7 @@ const Add = () => {
           schemaMayBeDynamic={true}
           loadingInfo={<Spinner transparent />}
           schemaFetcher={() => ApiService.loadForm(fetchUrl)}
-          sendFetcher={(formId: string, values: any) =>
+          sendFetcher={(_formId: string, values: GateAdminReq) =>
             ApiService.sendForm(sendUrl, values)
           }
           submitButton={submitButton}

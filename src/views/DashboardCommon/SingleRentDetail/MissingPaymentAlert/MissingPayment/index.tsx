@@ -1,9 +1,6 @@
-import { connect, useDispatch } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import { useDispatch } from 'react-redux';
 import { MyRentDetails } from 'smartbox-types';
-import { singleRent } from '../../../../../actions';
 import { ButtonsContainer } from '../../../../../components/Layout';
-import { ApplicationState } from '../../../../../reducers';
 import UserService from '../../../../../services/user-service';
 import { dateOnly } from '../../../../../utils/format-date';
 import { __ } from '../../../../../helpers/i18n';
@@ -91,16 +88,4 @@ const MissingPayment = ({ rent }: Props) => {
   );
 };
 
-const mapStateToProps = (state: ApplicationState) => ({
-  singleRent: state.rent.singleRent,
-});
-
-const mapDispatchToProps = (dispatch: any) =>
-  bindActionCreators(
-    {
-      ...singleRent,
-    },
-    dispatch,
-  );
-
-export default connect(mapStateToProps, mapDispatchToProps)(MissingPayment);
+export default MissingPayment;

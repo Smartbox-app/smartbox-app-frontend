@@ -36,8 +36,10 @@ ${props => props.status === RentStatus.finished && css`
 background-color: ${props.stock?.colorFinished}`};
 ${props => props.status === RentStatus.failure && css`
 background-color: ${props.stock?.colorFailure}`};
-${props => props.status === RentStatus.pendingFinish && css`
+${props => (props.status === RentStatus.pendingFinish || props.status === RentStatus.awaitingFinish) && css`
 background-color: ${props.stock?.colorPendingFinish}`};
+${props => props.status === RentStatus.endedUnpaid && css`
+background-color: ${props.stock?.colorNoPaidPeriod}`};
 `
 
 const BoxStatusBadge = ({ box, stock }: Props) => {

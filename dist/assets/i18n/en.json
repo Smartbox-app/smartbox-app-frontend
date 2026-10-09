@@ -86,6 +86,11 @@
       "authorizedRents": "Rentals shared with you",
       "tenantSmtpUpdated": "SMTP settings saved",
       "tenantSettingsMessaging": "System messaging",
+      "cannotDeleteAddon": "Cannot delete add-on",
+      "cannotDeleteAddonUsedByOpenEnded":
+        "This add-on is used in an ongoing open-ended agreement, so it cannot be deleted.",
+      "tenantSettingsCommunications": "Communications",
+      "tenantSettingsIntegrations": "Integrations",
       "tenantSettingsMobileApps": "Mobile apps",
       "tenantSettingsAnalytics": "Analytics",
       "tenantPlatformInactive":

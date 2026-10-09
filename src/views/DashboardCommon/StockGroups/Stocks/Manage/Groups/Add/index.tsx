@@ -1,10 +1,8 @@
-import React from 'react';
 import { ItfApiForm } from 'itf_formbuilder_react';
 import { useDispatch } from 'react-redux';
 import {
   ButtonsContainer,
   FormContainer,
-  SimpleHeader,
 } from '../../../../../../../components/Layout';
 import { Button, Spinner } from '../../../../../../../components/Branded';
 import ApiService from '../../../../../../../services/api-service';

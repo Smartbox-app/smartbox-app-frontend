@@ -6,9 +6,10 @@ export interface TranslatableObject {
   params: string[];
 }
 
-export const format = (s: string, params: any[]) => {
-  return s.replace(/{(\d+)}/g, (match, number) => {
-    return typeof params[number] != 'undefined' ? params[number] : match;
+export const format = (s: string, params: string[]) => {
+  return s.replace(/{(\d+)}/g, (match: string, number: string) => {
+    const value = params[Number(number)];
+    return typeof value !== 'undefined' ? value : match;
   });
 };
 
@@ -20,7 +21,7 @@ export const translateErrors = (data: TranslatableObject[]) => {
       params: data[0].params,
     };
     return [returnData];
-  } else {
+  } 
     return data;
-  }
+  
 };

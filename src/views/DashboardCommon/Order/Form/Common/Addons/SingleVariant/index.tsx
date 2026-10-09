@@ -3,8 +3,8 @@ import {
   AddonRes,
   AddonUserFileRequirementType,
   PriceDisplayForClients,
-  SingleAddonVariant,
   SingleAddonVariantForUser,
+  SingleAddonVariantForUserWithCorrectedPrice,
 } from 'smartbox-types';
 import styled from 'styled-components';
 import { PriceInfo } from '../PriceInfo';
@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ApplicationState } from '../../../../../../../reducers';
 import { selectAddon, setAddonFile } from '../../../../../../../actions/order';
 import { Indicator } from './components/Indicator';
+import { correctAddonVariantPrice } from 'src/utils/addon-variant-price';
 
 const StyledAddonVariant = styled('li')<{ isSelected: boolean }>(
   ({ isSelected, theme }) => ({
@@ -35,11 +36,11 @@ const StyledAddonVariant = styled('li')<{ isSelected: boolean }>(
   }),
 );
 
-const VariantSelect = styled('div')(({theme}) => ({
+const VariantSelect = styled('div')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
-  gap: theme.spacing * 2
-}))
+  gap: theme.spacing * 2,
+}));
 
 const StyledVariantName = styled('h5')({
   margin: '5px 0',
@@ -78,22 +79,11 @@ export const SingleVariant = ({ variant, addonId, addon, display }: Props) => {
     );
   };
 
-  const variantWithCorrectedPrice: SingleAddonVariantForUser = useMemo(() => {
-    const parsedTax = parseInt(addon.tax);
-
-    if(isNaN(parsedTax)) return variant;
-
-    if(variant.price) {
-      return {
-        ...variant,
-        price: variant.price * (1 + Number(addon.tax) / 100),
-        netPrice: variant.price,
-        grossPrice: variant.price * (1 + Number(addon.tax) / 100),
-      }
-    }
-
-    return variant
-  }, [variant])
+  const variantWithCorrectedPrice: SingleAddonVariantForUserWithCorrectedPrice =
+    useMemo(
+      () => correctAddonVariantPrice(variant, addon.tax),
+      [variant, addon.tax],
+    );
 
   return (
     <StyledAddonVariant

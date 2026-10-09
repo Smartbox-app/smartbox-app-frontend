@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import styled from 'styled-components';
-import { AgreementTemplateInput } from 'smartbox-types';
+import type { AgreementTemplateInput } from 'src/utils/agreement-template-query';
 import { Spinner } from 'src/components/Branded';
 import { Alert } from 'src/components/Common';
 import { Button } from 'src/components/ui';
@@ -128,6 +128,7 @@ export const LegacyAgreementPreview = ({
             className="rules-embed"
             data={`${legacyAgreementUrl}#toolbar=0&navpanes=0&scrollbar=0`}
             type="application/pdf"
+            aria-label="Agreement preview"
           />
         ) : null}
       </AgreementWrapper>

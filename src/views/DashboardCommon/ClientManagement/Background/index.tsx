@@ -32,7 +32,7 @@ const ManageTenantBackground = ({ userId }: Props) => {
 
 
 
-    const customSendFetcher = (formId: string, values) => {
+    const customSendFetcher = (_formId: string, values: FormData) => {
         return ApiService.sendForm(
             sendUrl,
             values,

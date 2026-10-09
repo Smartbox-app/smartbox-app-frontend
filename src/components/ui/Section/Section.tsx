@@ -16,7 +16,7 @@ const getBackgroundByVariant = (
 
 const getBorderByVariant = (
   variant: SectionVariants,
-  theme: DefaultTheme,
+  _theme: DefaultTheme,
 ) => {  
   if (variant === 'bordered') return `1px solid rgba(0, 0, 0, 0.08)`;
   return 'none';

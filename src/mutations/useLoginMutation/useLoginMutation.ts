@@ -1,7 +1,11 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import ApiService from '../../services/api-service';
 import { LoginDto } from '../../dto/LoginDto';
-import { ApiErrorCode, AuthLoginResult } from 'smartbox-types';
+import { ApiErrorCode } from 'smartbox-types';
+
+type LoginPayload = {
+  accessToken?: string;
+};
 import { Capacitor } from '@capacitor/core';
 import { Preferences } from '@capacitor/preferences';
 
@@ -20,14 +24,19 @@ export const useLoginMutation = () => {
   return useMutation({
     mutationKey: ['login'],
     mutationFn: async (dto: LoginDto) => {
-      const response = await new Promise<AuthLoginResult | undefined>(
+      const response = await new Promise<LoginPayload | undefined>(
         (resolve, reject) => {
-          ApiService.callFetch<AuthLoginResult>(
+          ApiService.callFetch<LoginPayload>(
             'post',
             `auth/login${Capacitor.isNativePlatform() ? '?source=mobile' : ''}`,
-            (payload) => resolve(payload),
+            (payload: LoginPayload) => resolve(payload),
             (data) =>
-              reject(new LoginMutationError(data.error_code, data.payload)),
+              reject(
+                new LoginMutationError(
+                  data.error_code as unknown as ApiErrorCode,
+                  data.payload,
+                ),
+              ),
             dto,
             undefined,
             true,
@@ -35,7 +44,7 @@ export const useLoginMutation = () => {
         },
       );
 
-      if (response && Capacitor.isNativePlatform()) {
+      if (response?.accessToken && Capacitor.isNativePlatform()) {
         await Preferences.set({
           key: 'smst_token',
           value: response.accessToken,

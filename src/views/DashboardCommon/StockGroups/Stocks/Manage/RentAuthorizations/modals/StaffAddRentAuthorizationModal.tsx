@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Controller, useForm } from 'react-hook-form';
 import { Button } from 'src/components/Branded';
@@ -22,11 +22,10 @@ const defaultFormValues: StaffAddRentAuthorizationFormDto = {
 };
 
 type Props = {
-  stockId: string;
   rentId: string;
 };
 
-export const StaffAddRentAuthorizationModal = ({ stockId, rentId }: Props) => {
+export const StaffAddRentAuthorizationModal = ({ rentId }: Props) => {
   const dispatch = useDispatch();
   const {
     mutate: createAuthorization,

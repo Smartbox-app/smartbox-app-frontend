@@ -2,17 +2,15 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { FieldType, boxGroupsList } from 'smartbox-tables';
 import { BoxGroupListRes } from 'smartbox-types';
-import { Alert, ApiTable } from '../../../../../../../components/Common';
+import { Alert, ApiTable , ConfirmModal } from '../../../../../../../components/Common';
 import { Button } from '../../../../../../../components/Branded';
 import {
   ButtonsContainer,
-  SimpleHeader,
 } from '../../../../../../../components/Layout';
 import { __ } from '../../../../../../../helpers/i18n';
 import { InteractiveTableSchema } from '../../../../../../../utils/table-schema-utils';
 import UserService from '../../../../../../../services/user-service';
 import { showModal } from '../../../../../../../actions/modal';
-import { ConfirmModal } from '../../../../../../../components/Common';
 import ApiService from '../../../../../../../services/api-service';
 import { successNotification } from '../../../../../../../actions/notifications';
 import { refreshApiTableData } from '../../../../../../../actions/api-table';
@@ -52,7 +50,7 @@ const List = () => {
       mobile: true,
       defaultSort: true,
       type: FieldType.Custom,
-      customRender: (value, field, boxData) =>
+      customRender: (value, field, boxData: BoxGroupListRes) =>
         boxData.pricing && boxData.pricing.length > 0 ? (
           <Alert compact type="success" text="application.yes" />
         ) : (
@@ -76,8 +74,8 @@ const List = () => {
         {
           name: 'application.pricing',
           type: 'primary',
-          to: (data: BoxGroupListRes) =>
-            `/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/groups/${data.id}/pricing`,
+          to: (data) =>
+            `/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/groups/${(data as BoxGroupListRes).id}/pricing`,
           // click: (data: BoxGroupListRes) => dispatch(showModal(<Edit id={data.id} stockId={data.stockId} />)),
         },
         {

@@ -10,12 +10,22 @@ import { unregisterServiceWorkersIfNative } from './utils/unregister-service-wor
 import { getMobileBuildId } from './utils/mobile-build-id';
 import { syncNativeWebBundleCache } from './utils/sync-native-web-bundle-cache';
 import { isLocalEnvironment } from './utils/environment';
+import {
+  beginPreloadReload,
+  reloadWithoutServiceWorker,
+} from './utils/reload-without-service-worker';
+
+window.addEventListener('vite:preloadError', (event) => {
+  if (!beginPreloadReload()) return;
+
+  event.preventDefault();
+  reloadWithoutServiceWorker();
+});
 
 const bootstrap = async () => {
   unregisterServiceWorkersIfNative();
 
   const mobileBuildId = getMobileBuildId();
-  console.log('MOBILE BUILD ID', mobileBuildId);
   if (mobileBuildId) {
     window.__MOBILE_BUILD_ID__ = mobileBuildId;
   }

@@ -5,6 +5,20 @@ import { InputErrors } from '../InputErrors';
 import styled, { css } from 'styled-components';
 import { getColorForBackground } from '../../../utils/color';
 import { InputLabel } from 'src/components/ui/InputLabel';
+import { FieldAndEventFunction } from 'itf_formbuilder_react';
+import { TranslatableObject } from '../../../utils/errors-trans';
+
+export type FormFieldInput = {
+  label?: string;
+  name: string;
+  id?: string;
+  placeholder?: string;
+  errors?: TranslatableObject[];
+  value?: unknown;
+  onChange?: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>;
+  onFocus?: FieldAndEventFunction;
+  onBlur?: FieldAndEventFunction;
+};
 import { InputSizeProps, resolveInputSize } from '../input-sizes';
 import {
   StyledFieldContainer,
@@ -16,14 +30,19 @@ import {
 
 interface Props extends InputSizeProps {
   type: string;
-  input: any;
-  error?: any;
-  meta?: any;
-  touched?: any;
+  input: FormFieldInput;
+  error?: string;
+  meta?: { touched?: boolean; error?: string | null };
+  touched?: boolean;
   min?: number;
   max?: boolean;
   step?: number;
-  options?: any[];
+  options?: {
+    name?: string;
+    label?: string;
+    value: string | number;
+    disabled?: boolean;
+  }[];
   readonly?: boolean;
   required?: boolean;
   nomargin?: boolean;
@@ -73,14 +92,15 @@ const StyledRadioCheck = styled.span<{ checked: boolean }>`
     `}
 `;
 
-const hasErrors = (errors: any[] | undefined) => !!(errors && errors.length);
+const hasErrors = (errors: TranslatableObject[] | undefined) =>
+  !!(errors && errors.length);
 
 const Input = (props: Props) => {
   const resolvedSize = resolveInputSize(props);
   const invalid = hasErrors(props.input.errors);
 
   if (props.type === 'hidden') {
-    return <input type="hidden" {...props.input} />;
+    return <input type="hidden" {...(props.input as React.InputHTMLAttributes<HTMLInputElement>)} />;
   }
 
   if (props.type === 'select') {
@@ -102,15 +122,20 @@ const Input = (props: Props) => {
         $noMargin={props.nomargin}
       >
         <InputLabel labelFor={props.input.name} required={props.required}>
-          {__(props.input.label)}
+          {__(props.input.label ?? '')}
         </InputLabel>
         <StyledFieldWrapper>
           <StyledNativeSelect
             $size={resolvedSize}
             $error={invalid}
-            value={props.input.value || '0'}
+            value={
+              typeof props.input.value === 'string' ||
+              typeof props.input.value === 'number'
+                ? props.input.value
+                : '0'
+            }
             id={props.input.name}
-            {...props.input}
+            {...(props.input as unknown as React.SelectHTMLAttributes<HTMLSelectElement>)}
           >
             {options}
           </StyledNativeSelect>
@@ -129,7 +154,7 @@ const Input = (props: Props) => {
         $noMargin={props.nomargin}
       >
         <InputLabel labelFor={props.input.name}>
-          {__(props.input.label)}
+          {__(props.input.label ?? '')}
         </InputLabel>
         <StyledFieldWrapper>
           <StyledTextarea
@@ -137,7 +162,7 @@ const Input = (props: Props) => {
             $error={invalid}
             id={props.input.name}
             readOnly={props.readonly}
-            {...props.input}
+            {...(props.input as unknown as React.TextareaHTMLAttributes<HTMLTextAreaElement>)}
             placeholder={props.input.placeholder}
           />
         </StyledFieldWrapper>
@@ -156,7 +181,7 @@ const Input = (props: Props) => {
         $noMargin={props.nomargin}
       >
         <InputLabel labelFor={props.input.name}>
-          {__(props.input.label)}
+          {__(props.input.label ?? '')}
         </InputLabel>
         {props.options?.map((option) => (
           <StyledRadioOptionContainer key={option.value}>
@@ -169,7 +194,7 @@ const Input = (props: Props) => {
                 value={option.value}
                 checked={props.input.value === option.value}
               />
-              <p>{__(option.label)}</p>
+              <p>{__(option.label ?? '')}</p>
               <StyledRadioCheck checked={props.input.value === option.value} />
             </label>
           </StyledRadioOptionContainer>
@@ -185,7 +210,7 @@ const Input = (props: Props) => {
       $noMargin={props.nomargin}
     >
       <InputLabel labelFor={props.input.name}>
-        {__(props.input.label)}
+        {__(props.input.label ?? '')}
       </InputLabel>
       <StyledFieldWrapper>
         <StyledTextInput
@@ -194,7 +219,7 @@ const Input = (props: Props) => {
           $colorInput={props.type === 'color'}
           id={props.input.name}
           readOnly={props.readonly}
-          {...props.input}
+          {...(props.input as unknown as React.InputHTMLAttributes<HTMLInputElement>)}
           placeholder={props.input.placeholder}
           type={props.type}
           min={props.min || 0}

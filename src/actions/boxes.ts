@@ -1,6 +1,7 @@
+import type { AppDispatch } from 'src/types/app-dispatch';
 import ApiService from '../services/api-service';
 
-export const fetchSingleBoxDetails = (rentId: string) => async (dispatch: any) => {
+export const fetchSingleBoxDetails = (rentId: string) => async (dispatch: AppDispatch) => {
   await ApiService.get(
     dispatch,
     'FETCH_SINGLE_BOX_DETAILS_SUCCESS',

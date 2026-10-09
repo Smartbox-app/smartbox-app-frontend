@@ -9,7 +9,6 @@ import {
   Calendar,
   ArrowRightCircle,
 } from 'src/icons';
-import styled from 'styled-components';
 
 export type OptionActionsProps = {
   option: BoxGroupUserRes;

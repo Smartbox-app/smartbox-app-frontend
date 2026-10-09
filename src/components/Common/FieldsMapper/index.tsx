@@ -16,9 +16,9 @@ import { useTenant } from 'src/hooks/useTenant';
 interface Props {
     fieldHtmlId: string;
     field: FormFieldToRender;
-    currentValue: any;
+    currentValue: unknown;
     errors: TranslatableObject[],
-    onChange: (e: any) => void;
+    onChange(value: unknown): void;
     onFocus: FieldAndEventFunction;
     onBlur: FieldAndEventFunction;
     size?: InputSize;
@@ -68,8 +68,8 @@ const FieldsMapper = ({ field, fieldHtmlId, currentValue, errors, size, big, onF
 
     switch (type) {
         // Handline Addon acceptances
-        case 'acceptances': return <AcceptancesField value={currentValue} onChange={onChange} />
-        case 'phone': return <InputPhone size={fieldSize} errors={translateErrors(errors)} label={field.title} name={fieldHtmlId} value={currentValue} onChange={onChange} />;
+        case 'acceptances': return <AcceptancesField value={Array.isArray(currentValue) ? currentValue : []} onChange={onChange} />
+        case 'phone': return <InputPhone size={fieldSize} errors={translateErrors(errors)} label={field.title} name={fieldHtmlId} value={typeof currentValue === 'string' ? currentValue : undefined} onChange={onChange} />;
         case 'text': return <Input
             size={fieldSize}
             key={fieldHtmlId}
@@ -82,7 +82,8 @@ const FieldsMapper = ({ field, fieldHtmlId, currentValue, errors, size, big, onF
                 placeholder: formOnTranslateString(field.placeholder),
                 errors: translateErrors(errors),
                 value: currentValue,
-                onChange: (e: any) => onChange(e.target.value),
+                onChange: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+                    onChange(event.target.value),
                 onFocus,
                 onBlur,
             }}
@@ -100,7 +101,8 @@ const FieldsMapper = ({ field, fieldHtmlId, currentValue, errors, size, big, onF
                 placeholder: formOnTranslateString(field.placeholder),
                 errors: translateErrors(errors),
                 value: currentValue,
-                onChange: (e: any) => onChange(parseInputNumber(e.target.value)),
+                onChange: (event: React.ChangeEvent<HTMLInputElement>) =>
+                    onChange(parseInputNumber(event.target.value)),
                 onFocus,
                 onBlur,
             }}
@@ -117,7 +119,8 @@ const FieldsMapper = ({ field, fieldHtmlId, currentValue, errors, size, big, onF
                 placeholder: formOnTranslateString(field.placeholder),
                 errors: translateErrors(errors),
                 value: currentValue,
-                onChange: (e: any) => onChange(e.target.value),
+                onChange: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+                    onChange(event.target.value),
                 onFocus,
                 onBlur,
             }}
@@ -126,7 +129,7 @@ const FieldsMapper = ({ field, fieldHtmlId, currentValue, errors, size, big, onF
             <CheckBox
                 key={fieldHtmlId}
                 name={field.id}
-                checked={currentValue}
+                checked={Boolean(currentValue)}
                 handleChange={() => onChange(!currentValue)}
                 errors={translateErrors(errors)}
                 help={field.descr}
@@ -168,7 +171,7 @@ const FieldsMapper = ({ field, fieldHtmlId, currentValue, errors, size, big, onF
                         ) => {
                             if (typeof val === 'object') {
                                 return {
-                                    label: __(val.name),
+                                    label: __(String(val.name)),
                                     value: val.value,
                                 };
                             }
@@ -198,7 +201,14 @@ const FieldsMapper = ({ field, fieldHtmlId, currentValue, errors, size, big, onF
                     }
                     onChange(val);
                 }}
-                value={currentValue}
+                value={
+                    typeof currentValue === 'string' ||
+                    typeof currentValue === 'number' ||
+                    currentValue == null ||
+                    Array.isArray(currentValue)
+                        ? currentValue
+                        : undefined
+                }
                 placeholder={field.placeholder}
                 errors={translateErrors(errors)}
             />
@@ -207,7 +217,11 @@ const FieldsMapper = ({ field, fieldHtmlId, currentValue, errors, size, big, onF
             <DateInput
                 label={field.title}
                 required={field.required}
-                value={currentValue}
+                value={
+                    currentValue instanceof Date || Array.isArray(currentValue)
+                        ? currentValue
+                        : undefined
+                }
                 name={fieldHtmlId}
                 inline={false}
                 size={fieldSize}
@@ -222,11 +236,13 @@ const FieldsMapper = ({ field, fieldHtmlId, currentValue, errors, size, big, onF
                 multiple
                 accept={field.options.accept}
                 hasImage={field.options.previewUrl}
-                label={'application.slides'}
+                label="application.slides"
                 input={{
                     name: fieldHtmlId,
                     id: fieldHtmlId,
-                    value: (currentValue || []).map(slide => `${ApiService.url}tenant/slide/${slide}`),
+                    value: (Array.isArray(currentValue) ? currentValue : []).map(
+                        (slide) => `${ApiService.url}tenant/slide/${String(slide)}`,
+                    ),
                     onChange,
                     onFocus,
                     onBlur,

@@ -9,7 +9,7 @@ interface Props {
   noMargin?: boolean;
 }
 
-const FormHeader = ({ title, noMargin }: Props) => (
+const FormHeader = ({ title }: Props) => (
   <Header variant='h2'>{__(title)}</Header>
 );
 

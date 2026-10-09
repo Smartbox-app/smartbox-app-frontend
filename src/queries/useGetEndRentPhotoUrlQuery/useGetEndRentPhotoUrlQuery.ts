@@ -40,6 +40,7 @@ export const useGetEndRentPhotoUrlQuery = (rentId?: string) => {
 
     const load = async () => {
       try {
+        if (!query.data) return;
         const resolvedUrl = await loadEndRentPhotoDisplayUrl(query.data);
         if (cancelled) {
           if (resolvedUrl.startsWith('blob:')) {

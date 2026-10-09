@@ -2,9 +2,7 @@ import { LocationSelectType } from '../location';
 import { DebtResolveType } from '../debt';
 import { AccountConfirmationMethod } from './account-confirmation-method';
 
-export { AccountConfirmationMethod } from './account-confirmation-method';
-
-export interface  TenantEntity {
+export interface TenantEntity {
   id: string;
   name: string;
   identifier: string;
@@ -42,17 +40,20 @@ export interface  TenantEntity {
   birthDateNecessary: boolean;
   clientSourceField: boolean;
   requireEndRentPhoto: boolean;
+  allowFinishGracePeriod: boolean;
   newRentNotification: boolean;
   rentExtendedNotification: boolean;
+  rentEndedNotification: boolean;
+  accountConfirmationMethod: AccountConfirmationMethod;
   debtResolveType: DebtResolveType;
   locationSelectType: LocationSelectType;
   namingType: NamingType;
   agreementDisclaimer: string;
   paymentDisclaimer: string;
   homeMessage: string;
-  systemMessage: string;
   mobileAppAndroidLink: string | null;
   mobileAppIosLink: string | null;
+  systemMessage: string;
   useCustomSmtp: boolean;
   smtpHost: string | null;
   smtpPort: number | null;
@@ -61,9 +62,6 @@ export interface  TenantEntity {
   smtpSecure: boolean;
   smtpIgnoreTls: boolean;
   smtpFromEmail: string | null;
-  accountConfirmationMethod: AccountConfirmationMethod;
-  publicAssetsBaseUrl: string;
-  allowFinishGracePeriod: boolean;
   gtmId: string | null;
   metaPixelId: string | null;
   active: boolean;
@@ -95,7 +93,24 @@ export type UpdateTenantByAdminReq = Pick<
   | 'invoiceServiceApiKey'
   | 'invoiceServiceDomain'
   | 'invoiceServiceDepartmentID'
+  | 'allowAddonsToRent'
+  | 'allowMultipleCompanies'
+  | 'accountConfirmationMethod'
+  | 'birthDateNecessary'
+  | 'clientSourceField'
+  | 'locationSelectType'
+  | 'namingType'
+>;
+export type UpdateTenantAgreementsReq = Pick<
+  TenantEntity,
+  | 'requireEndRentPhoto'
+  | 'allowFinishGracePeriod'
+  | 'debtResolveType'
   | 'useProd'
+>;
+export type UpdateTenantAgreementsByAdminReq = UpdateTenantAgreementsReq;
+export type UpdateTenantIntegrationsReq = Pick<
+  TenantEntity,
   | 'smsName'
   | 'smsApiKey'
   | 'smsApiPassword'
@@ -103,17 +118,6 @@ export type UpdateTenantByAdminReq = Pick<
   | 'paymentSystemSecretKey'
   | 'storeId'
   | 'sharedSecret'
-  | 'allowAddonsToRent'
-  | 'allowMultipleCompanies'
-  | 'newRentNotification'
-  | 'rentExtendedNotification'
-  | 'birthDateNecessary'
-  | 'clientSourceField'
-  | 'requireEndRentPhoto'
-  | 'debtResolveType'
-  | 'locationSelectType'
-  | 'namingType'
-  | 'accountConfirmationMethod'
 >;
 export type UpdateTenantMessagingReq = Pick<
   TenantEntity,
@@ -122,6 +126,13 @@ export type UpdateTenantMessagingReq = Pick<
   | 'homeMessage'
   | 'systemMessage'
 >;
+export type UpdateTenantCommunicationsReq = UpdateTenantMessagingReq &
+  Pick<
+    TenantEntity,
+    | 'newRentNotification'
+    | 'rentExtendedNotification'
+    | 'rentEndedNotification'
+  >;
 export type UpdateTenantMobileAppsReq = Pick<
   TenantEntity,
   'mobileAppAndroidLink' | 'mobileAppIosLink'
@@ -130,7 +141,6 @@ export type UpdateTenantAnalyticsReq = Pick<
   TenantEntity,
   'gtmId' | 'metaPixelId'
 >;
-
 export type TenantForUsers = Omit<
   TenantEntity,
   | 'allowedBoxesCount'
@@ -144,6 +154,7 @@ export type TenantForUsers = Omit<
   | 'storeId'
   | 'paymentSystemSecretKey'
   | 'paymentSystemApiKey'
+  | 'allowAddonsToRent'
   | 'useCustomSmtp'
   | 'smtpHost'
   | 'smtpPort'
@@ -168,6 +179,12 @@ export enum NamingType {
   Stock = 'stock',
   Location = 'location',
 }
+
+export type SmsPlanetConnectionResponse =
+  | { errorMsg: string }
+  | { senderFields: string };
+
+export { AccountConfirmationMethod } from './account-confirmation-method';
 
 export type TenantSmtpConfig = Pick<
   TenantEntity,

@@ -1,7 +1,6 @@
 import {
   Equals,
   IsBoolean,
-  IsEmail,
   IsEmpty,
   IsNotEmpty,
   IsPhoneNumber,

@@ -1,8 +1,7 @@
 import React from 'react';
-import { bindActionCreators } from 'redux';
 import { ItfApiForm } from 'itf_formbuilder_react';
-import { DiscountReq } from 'smartbox-types';
-import { connect } from 'react-redux';
+import { UpdateSettingsReq } from 'smartbox-types';
+import { useDispatch } from 'react-redux';
 import flatpickr from 'flatpickr';
 import {
   FormContainer,
@@ -14,7 +13,7 @@ import {
 import { Button, Spinner } from '../../../../components/Branded';
 import ApiService from '../../../../services/api-service';
 import { formOnTranslateString } from '../../../../utils/trans-form';
-import { notifications } from '../../../../actions';
+import { successNotification } from '../../../../actions/notifications';
 import {
   ReactSelectOverride,
   ReactCreatableSelectOverride as ReactCreatableSelect,
@@ -22,11 +21,8 @@ import {
 import { __ } from '../../../../helpers/i18n';
 import { mapFields } from 'src/utils/fields-mapper';
 
-interface Props {
-  successNotification: (text: string) => void;
-}
-
-const SMS = ({ successNotification }: Props) => {
+const SMS = () => {
+  const dispatch = useDispatch();
   const submitButton = (
     <ButtonsContainer>
       <Button text="application.save" type="submit" primary />
@@ -36,7 +32,7 @@ const SMS = ({ successNotification }: Props) => {
   const fetchUrl = 'settings/form';
   const sendUrl = 'settings';
 
-  const customSendFetcher = (formId: string, values: DiscountReq) =>
+  const customSendFetcher = (_formId: string, values: UpdateSettingsReq) =>
     ApiService.sendForm(sendUrl, values, 'PATCH');
 
   return (
@@ -55,7 +51,7 @@ const SMS = ({ successNotification }: Props) => {
               sendFetcher={customSendFetcher}
               submitButton={submitButton}
               onSavedSuccessfully={() => {
-                successNotification('settings.saved');
+                dispatch(successNotification('settings.saved'));
               }}
               onRenderFullField={mapFields}
               onTranslateString={formOnTranslateString}
@@ -72,12 +68,4 @@ const SMS = ({ successNotification }: Props) => {
   );
 };
 
-const mapDispatchToProps = (dispatch: any) =>
-  bindActionCreators(
-    {
-      ...notifications,
-    },
-    dispatch,
-  );
-
-export default connect(null, mapDispatchToProps)(SMS);
+export default SMS;

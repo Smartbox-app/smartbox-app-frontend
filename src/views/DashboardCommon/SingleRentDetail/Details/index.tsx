@@ -1,11 +1,12 @@
 import { MyRentDetails } from 'smartbox-types';
-import { dateOnly, dateOnlyLocalTime, formatForPLTimeZone } from '../../../../utils/format-date';
+import { dateOnly, dateOnlyLocalTime } from '../../../../utils/format-date';
 import { __ } from '../../../../helpers/i18n';
 import { translateBoxDisplayStatus } from '../../../../utils/box-display-status';
 import { Row } from '../../../../components/Common';
 
 import './Details.scss';
 import { useTenantNaming } from 'src/hooks/useTenantNaming';
+import { useRent } from 'src/hooks/useRent';
 
 interface Props {
   singleRent: MyRentDetails;
@@ -13,15 +14,28 @@ interface Props {
 
 const Details = ({ singleRent }: Props) => {
   const { getText } = useTenantNaming();
+  const { formatFinishAt, getAgreementTypeLabel } = useRent();
   return (
     <div>
       <Row
         label="application.startDate"
-        content={singleRent ? dateOnly(singleRent.startAt) : dateOnlyLocalTime(new Date())}
+        content={
+          singleRent
+            ? dateOnly(singleRent.startAt)
+            : dateOnlyLocalTime(new Date())
+        }
       />
       <Row
         label="application.endDate"
-        content={singleRent ?  dateOnly(singleRent.finishAt) : dateOnlyLocalTime(new Date())}
+        content={
+          singleRent
+            ? formatFinishAt(singleRent.finishAt, singleRent.agreementType)
+            : dateOnlyLocalTime(new Date())
+        }
+      />
+      <Row
+        label="application.agreementType"
+        content={getAgreementTypeLabel(singleRent?.agreementType)}
       />
       <Row
         label={getText('name_of')}

@@ -1,6 +1,6 @@
 import { CSSProperties } from 'react';
 import { DefaultTheme } from 'styled-components';
-import { StylesConfig } from 'react-select';
+import { OptionTypeBase, StylesConfig } from 'react-select';
 
 export type InputSize = 'small' | 'medium' | 'large';
 
@@ -178,11 +178,20 @@ export const getInputErrorStyles = (theme: DefaultTheme, size: InputSize) => ({
   ...(size === 'large' ? { marginLeft: theme.spacing * 7.5 } : {}),
 });
 
+function optionBackground(
+  theme: DefaultTheme,
+  optionState: { isFocused: boolean; isSelected: boolean },
+) {
+  if (optionState.isSelected) return theme.colors.primary;
+  if (optionState.isFocused) return theme.colors.border.secondary;
+  return theme.colors.background.white;
+}
+
 export const getReactSelectStyles = (
   theme: DefaultTheme,
   size: InputSize,
   state: InputFieldStyleState = {},
-): StylesConfig<any, boolean> => {
+): StylesConfig<OptionTypeBase, boolean> => {
   const metrics = SIZE_METRICS[size];
   const textStyle = getInputTextStyle(theme, size);
   const indicatorPadding = Math.max(metrics.paddingHorizontal - 8, 4);
@@ -271,10 +280,7 @@ export const getReactSelectStyles = (
         color: theme.colors.background.white,
       },
     }),
-    indicatorsContainer: (
-      base: CSSProperties,
-      selectState?: { isDisabled?: boolean },
-    ) => ({
+    indicatorsContainer: (base: CSSProperties) => ({
       ...base,
       height: metrics.height,
       alignItems: 'center',
@@ -322,11 +328,7 @@ export const getReactSelectStyles = (
       ...base,
       ...textStyle,
       cursor: 'pointer',
-      backgroundColor: optionState.isSelected
-        ? theme.colors.primary
-        : optionState.isFocused
-          ? theme.colors.border.secondary
-          : theme.colors.background.white,
+      backgroundColor: optionBackground(theme, optionState),
       color: optionState.isSelected
         ? theme.colors.background.white
         : theme.colors.text.primary,

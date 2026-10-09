@@ -4,7 +4,6 @@ import { isAdminOrTenant } from '../../../../utils/role-check';
 import Position from './Position';
 import Status from './Status';
 import './Edit.scss';
-import { Alert } from '../../../../components/Common';
 import { useGetMyDetailsQuery } from '../../../../queries';
 
 interface Props {
