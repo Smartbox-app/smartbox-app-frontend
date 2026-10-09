@@ -19,12 +19,18 @@ describe('correctAddonVariantPrice', () => {
     });
   });
 
-  it('zeroes the prices when the tax cannot be parsed', () => {
-    expect(correctAddonVariantPrice(variant, 'abc')).toMatchObject({
-      price: 0,
-      netPrice: 0,
-      grossPrice: 0,
+  it('keeps the net price when the rate is exempt', () => {
+    expect(correctAddonVariantPrice(variant, 'zw')).toMatchObject({
+      price: 100,
+      netPrice: 100,
+      grossPrice: 100,
     });
+  });
+
+  it('throws when the tax cannot be parsed', () => {
+    expect(() => correctAddonVariantPrice(variant, 'abc')).toThrow(
+      'Invalid addon tax',
+    );
   });
 
   it('zeroes the prices when the variant has no price', () => {

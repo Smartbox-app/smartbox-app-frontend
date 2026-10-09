@@ -4,7 +4,7 @@ import {
   e2eRenter,
   e2eViewer,
 } from './accounts';
-import { login, openMyBox } from './helpers';
+import { expectApiOk, login, openMyBox } from './helpers';
 
 test('adds and removes a rent authorization', async ({ page }) => {
   await login(page, e2eViewer.email, e2eViewer.password, /\/user/);
@@ -29,7 +29,7 @@ test('adds and removes a rent authorization', async ({ page }) => {
     page.waitForTimeout(4_000).then(() => 'retry' as const),
   ]);
   if (submitted === 'retry') await save.click();
-  expect((await added).ok()).toBeTruthy();
+  await expectApiOk(await added);
 
   await expect(page.getByText(e2eRenter.email)).toBeVisible();
 
@@ -43,8 +43,7 @@ test('adds and removes a rent authorization', async ({ page }) => {
       response.request().method() === 'DELETE',
   );
   await page.getByRole('button', { name: 'Cofnij upoważnienie' }).last().click();
-  const removedResponse = await removed;
-  expect(removedResponse.ok()).toBeTruthy();
+  await expectApiOk(await removed);
 
   await expect(
     page.getByText('Nikt poza Tobą nie ma upoważnienia do tego wynajmu.'),

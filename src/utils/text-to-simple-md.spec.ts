@@ -19,4 +19,12 @@ describe('textToSimpleMD', () => {
   it('returns the whole string when there are no markers', () => {
     expect(textToSimpleMD('plain')).toEqual(['plain']);
   });
+
+  it('returns an empty list for an empty string', () => {
+    expect(textToSimpleMD('')).toEqual([]);
+  });
+
+  it('leaves an unclosed marker as text', () => {
+    expect(textToSimpleMD('Hello **bold')).toEqual(['Hello **bold']);
+  });
 });

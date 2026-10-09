@@ -12,9 +12,11 @@ describe('validateNip by country', () => {
     expect(validateNip('PL1234563219', 'PL')).toBe(false);
   });
 
-  it('checks length for Ukraine and accepts other countries', () => {
+  it('checks a 10-digit Ukrainian number and accepts countries without a rule', () => {
     expect(validateNip('1234567890', 'UA')).toBe(true);
-    expect(validateNip('123', 'UA')).toBe(false);
+    expect(validateNip('123456789', 'UA')).toBe(false);
+    expect(validateNip('12345678901', 'UA')).toBe(false);
+    expect(validateNip('abcdefghij', 'UA')).toBe(false);
     expect(validateNip('anything', 'XX')).toBe(true);
   });
 });

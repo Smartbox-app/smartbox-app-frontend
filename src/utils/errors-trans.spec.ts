@@ -6,7 +6,7 @@ describe('error translation', () => {
     expect(format('Hello {0}', [])).toBe('Hello {0}');
   });
 
-  it('translates the first error and fills its placeholders', () => {
+  it('translates every error and fills its placeholders', () => {
     expect(
       translateErrors([
         {
@@ -14,12 +14,22 @@ describe('error translation', () => {
           messageCompiled: '',
           params: ['5'],
         },
+        {
+          messageWithPlaceholders: 'Field required.',
+          messageCompiled: '',
+          params: [],
+        },
       ]),
     ).toEqual([
       {
         messageWithPlaceholders: 'Wartość za mała. Min. {0}.',
         messageCompiled: 'Wartość za mała. Min. 5.',
         params: ['5'],
+      },
+      {
+        messageWithPlaceholders: 'To pole jest wymagane.',
+        messageCompiled: 'To pole jest wymagane.',
+        params: [],
       },
     ]);
   });

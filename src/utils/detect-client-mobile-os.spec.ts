@@ -21,6 +21,9 @@ describe('getClientMobileOs', () => {
     setUserAgent('Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X)');
     expect(getClientMobileOs()).toBe('ios');
 
+    setUserAgent('Mozilla/5.0 (iPad; CPU OS 17_0 like Mac OS X)');
+    expect(getClientMobileOs()).toBe('ios');
+
     setUserAgent('Mozilla/5.0 (Macintosh; Intel Mac OS X)');
     expect(getClientMobileOs()).toBeNull();
   });

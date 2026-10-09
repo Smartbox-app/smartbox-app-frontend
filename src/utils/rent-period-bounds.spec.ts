@@ -135,7 +135,7 @@ describe('period acceptance', () => {
     ).toBe(false);
   });
 
-  it('accepts a range that meets the minimum, including one past the maximum', () => {
+  it('accepts a span inside the bounds and rejects one past the maximum', () => {
     expect(
       isNewRentPeriodAcceptable({ ...bounds, isOpenEnded: false }),
     ).toBe(true);
@@ -143,9 +143,24 @@ describe('period acceptance', () => {
       isNewRentPeriodAcceptable({
         ...bounds,
         isOpenEnded: false,
-        endDate: new Date(2026, 11, 1),
+        endDate: new Date(2026, 9, 30),
       }),
     ).toBe(true);
+    expect(
+      isNewRentPeriodAcceptable({
+        ...bounds,
+        isOpenEnded: false,
+        endDate: new Date(2026, 9, 31),
+      }),
+    ).toBe(false);
+    expect(
+      isExtensionPeriodAcceptable({
+        hasRent: true,
+        ...bounds,
+        unpaidExtension: false,
+        endDate: new Date(2026, 11, 1),
+      }),
+    ).toBe(false);
   });
 
   it('accepts an unpaid extension without checking the length', () => {

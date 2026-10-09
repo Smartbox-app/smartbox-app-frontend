@@ -4,7 +4,7 @@ import {
   e2eOpenEnded,
   e2eStockName,
 } from './accounts';
-import { acceptAgreementAndPay, clickNext, login } from './helpers';
+import { acceptAgreementAndPay, clickNext, expectApiOk, login } from './helpers';
 
 test('creates an open-ended rent and redirects to the payment gateway', async ({
   page,
@@ -39,8 +39,7 @@ test('creates an open-ended rent and redirects to the payment gateway', async ({
   );
   await page.getByRole('button', { name: 'Przejdź do umowy' }).click();
 
-  const response = await rentCreated;
-  expect(response.ok()).toBeTruthy();
+  await expectApiOk(await rentCreated);
   await expect(page.getByRole('heading', { name: 'Umowa wynajmu' })).toBeVisible();
   await expect(page.getByText(/Zarezerwowano minimagazyn/)).toBeVisible();
   await acceptAgreementAndPay(page);

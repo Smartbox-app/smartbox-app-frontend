@@ -22,6 +22,7 @@ export const createTranslateFunction =
     return translate(key, {
       ...options,
       interpolation: options?.interpolation ?? {
+        escapeValue: true,
         escape: sanitize,
       },
     });

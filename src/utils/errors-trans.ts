@@ -13,15 +13,17 @@ export const format = (s: string, params: string[]) => {
   });
 };
 
-export const translateErrors = (data: TranslatableObject[]) => {
-  if (data.length >= 1) {
-    const returnData: TranslatableObject = {
-      messageWithPlaceholders: formOnTranslateString(data[0].messageWithPlaceholders),
-      messageCompiled: format(formOnTranslateString(data[0].messageWithPlaceholders), data[0].params),
-      params: data[0].params,
-    };
-    return [returnData];
-  } 
-    return data;
-  
+const translateError = (error: TranslatableObject): TranslatableObject => {
+  const messageWithPlaceholders = formOnTranslateString(
+    error.messageWithPlaceholders,
+  );
+
+  return {
+    messageWithPlaceholders,
+    messageCompiled: format(messageWithPlaceholders, error.params),
+    params: error.params,
+  };
 };
+
+export const translateErrors = (data: TranslatableObject[]) =>
+  data.map(translateError);

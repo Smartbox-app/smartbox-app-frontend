@@ -51,6 +51,13 @@ type ApiBody = {
   error_code?: unknown;
 };
 
+export const expectApiOk = async (response: Response) => {
+  const body = (await response.json()) as ApiBody;
+  expect(response.ok()).toBeTruthy();
+  expect(body.result).toBe(1);
+  expect(body.error_code).toBeUndefined();
+};
+
 export const readApiResponse = (
   page: Page,
   matches: (response: Response) => boolean,
@@ -135,7 +142,7 @@ export const submitExtensionPayment = async (page: Page) => {
   );
   const paid = acceptAgreementAndPay(page);
   const response = await extended;
-  expect(response.ok()).toBeTruthy();
+  await expectApiOk(response);
   await paid;
 };
 

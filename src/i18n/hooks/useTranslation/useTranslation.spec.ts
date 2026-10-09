@@ -11,33 +11,19 @@ const wrapper = ({ children }: { children: ReactNode }) =>
   React.createElement(I18nextProvider, { i18n: i18next }, children);
 
 describe('useTranslation', () => {
-  it('correctly translates value without parameters', () => {
+  it('uses a string argument as the fallback for a missing key', () => {
     const { result } = renderHook(() => useI18n(), { wrapper });
 
-    const translated = result.current.t('application.management');
-
-    expect(translated).toEqual(application.application.management);
+    expect(
+      result.current.t('missing.key' as I18nResourceKey, 'fallback text'),
+    ).toBe('fallback text');
   });
 
-  it('correctly translates value with parameter', () => {
+  it('strips characters the interpolator does not allow', () => {
     const { result } = renderHook(() => useI18n(), { wrapper });
 
-    const translated = result.current.t('validation.min_chars', {
-      length: 5,
-    });
-
-    expect(translated).toEqual(
-      application.validation.min_chars.replace('{{length}}', '5'),
-    );
-  });
-
-  it('correctly renders value with incorrect key', () => {
-    const { result } = renderHook(() => useI18n(), { wrapper });
-
-    const translated = result.current.t(
-      'incorrect_key_that_does_not_exist' as I18nResourceKey,
-    );
-
-    expect(translated).toEqual('incorrect_key_that_does_not_exist');
+    expect(
+      result.current.t('validation.min_chars', { length: '<b>5</b>' }),
+    ).toBe(application.validation.min_chars.replace('{{length}}', 'b5b'));
   });
 });

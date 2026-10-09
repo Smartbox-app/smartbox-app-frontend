@@ -66,9 +66,9 @@ export const isPeriodWithinConfiguredBounds = (
   )
     return false;
 
-  if (difference >= minRentPeriod - 1) return true;
-  if (difference <= maxRentPeriod) return true;
-  return false;
+  if (difference < minRentPeriod - 1) return false;
+  if (difference > maxRentPeriod - 1) return false;
+  return true;
 };
 
 export const isNewRentPeriodAcceptable = (input: {

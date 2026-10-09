@@ -10,12 +10,7 @@ export const validateNip = (value: string, countryCode: string): boolean => {
     return checkVAT(value, [matchingCountry]).isValid;
   }
 
-  switch (countryCode) {
-    case 'UA':
-      return value.length === 10;
-  }
-
-  if (!value) return false;
+  if (countryCode === 'UA') return /^\d{10}$/.test(value);
 
   return true;
 };
