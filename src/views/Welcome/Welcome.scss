@@ -1,6 +1,6 @@
-@import './Swiper.scss';
-@import '../../config/variables.scss';
-@import '../../config/mixins.scss';
+@use './Swiper.scss' as *;
+@use '../../config/variables.scss' as *;
+@use '../../config/mixins.scss' as *;
 
 .welcome-container {
   height: 100%;
@@ -16,8 +16,8 @@
   height: 100%;
   background-image: linear-gradient(
     to bottom,
-    rgba(darken($color-secondary, 50%), 0),
-    rgba(darken($color-text, 40%), 0.55)
+    rgba(adjust-lightness($color-secondary, -50%), 0),
+    rgba(adjust-lightness($color-text, -40%), 0.55)
   );
 }
 

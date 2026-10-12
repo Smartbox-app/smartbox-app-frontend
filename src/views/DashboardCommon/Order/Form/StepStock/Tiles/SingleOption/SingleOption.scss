@@ -1,6 +1,6 @@
 @use "sass:math";
-@import '../../../../../../../config/variables.scss';
-@import '../../../../../../../config/mixins.scss';
+@use '../../../../../../../config/variables.scss' as *;
+@use '../../../../../../../config/mixins.scss' as *;
 
 .single-stock-wrapper {
     display: flex;
@@ -8,7 +8,7 @@
     flex: 0 0 100%;
     justify-content: center;
     align-items: center;
-    padding: $main-spacing / 2;
+    padding: math.div($main-spacing, 2);
 
     span {
         font-size: 0.9rem;

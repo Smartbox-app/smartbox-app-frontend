@@ -1,5 +1,5 @@
-@import '../../../../config/variables';
-@import '../../../../config/mixins';
+@use '../../../../config/variables' as *;
+@use '../../../../config/mixins' as *;
 
 .department {
   margin: $main-spacing 0;
@@ -8,7 +8,7 @@
   position: relative;
   overflow: hidden;
   width: 300px;
-  box-shadow: 0 15px 20px -15px lighten(rgba(#000, 0.4), 30%);
+  box-shadow: 0 15px 20px -15px adjust-lightness(rgba(#000, 0.4), 30%);
   border-radius: 10px;
 
   @include gt-sm {
@@ -79,7 +79,7 @@
       content: '';
       width: 350px;
       height: 350px;
-      background: lighten($color-disabled, 5%);
+      background: adjust-lightness($color-disabled, 5%);
       border-radius: 50%;
 
       position: absolute;

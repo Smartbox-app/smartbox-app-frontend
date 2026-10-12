@@ -1,6 +1,6 @@
 @use "sass:math";
-@import './variables';
-@import './mixins.scss';
+@use './variables' as *;
+@use './mixins.scss' as *;
 
 html {
   font-size: 14px;
@@ -91,7 +91,7 @@ a {
     }
 
     &:hover {
-      color: darken($color-text, 10%);
+      color: adjust-lightness($color-text, -10%);
     }
 
     &:visited,
@@ -109,7 +109,7 @@ a {
 pre {
   padding: $main-spacing;
   font-family: monospace;
-  border: 1px solid lighten($color-background, 20%);
+  border: 1px solid adjust-lightness($color-background, 20%);
   margin: $main-spacing 0;
   word-wrap: break-word;
   overflow-x: auto;

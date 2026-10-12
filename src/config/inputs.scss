@@ -1,5 +1,5 @@
 @use "sass:math";
-@import './variables';
+@use './variables' as *;
 
 %input-base-bordering {
   border: 1px solid $color-disabled;
@@ -20,7 +20,7 @@
   @extend %input-base-bordering;
 
   &:hover {
-    background-color: darken($color-background, 2%);
+    background-color: adjust-lightness($color-background, -2%);
   }
 
   &.is-invalid {
@@ -36,7 +36,7 @@
   }
 
   &:read-only {
-    background-color: darken($color-background, 20%);
+    background-color: adjust-lightness($color-background, -20%);
   }
 }
 
@@ -54,7 +54,7 @@
 }
 
 .form-field-errors {
-  color: lighten($color-danger, 20%);
+  color: adjust-lightness($color-danger, 20%);
   font-size: 0.85rem;
   margin-top: math.div($main-spacing, 4);
 }
@@ -84,16 +84,16 @@ select,
   margin-left: 5px;
   padding: math.div($main-spacing, 2) $main-spacing;
   cursor: pointer;
-  background-color: lighten($color-background, 20%);
+  background-color: adjust-lightness($color-background, 20%);
 
   &:hover {
-    background-color: lighten(#906090, 10%);
+    background-color: adjust-lightness(#906090, 10%);
   }
 }
 
 .text-danger {
   margin-top: 2px;
-  color: lighten($color-danger, 20%);
+  color: adjust-lightness($color-danger, 20%);
   font-weight: 300;
   margin-bottom: $main-spacing * 0.25;
 }

@@ -1,6 +1,6 @@
 @use "sass:math";
-@import "../../../../../../config/variables.scss";
-@import "../../../../../../config/mixins.scss";
+@use "../../../../../../config/variables.scss" as *;
+@use "../../../../../../config/mixins.scss" as *;
 
 .single-option-wrapper {
   display: flex;
@@ -20,8 +20,8 @@
     border-radius: 10px;
     overflow: hidden;
     // box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.1);
-    border: 2px solid darken($color-background, 5%);
-    box-shadow: 0 15px 20px -15px lighten(rgba(#000, 0.4), 30%);
+    border: 2px solid adjust-lightness($color-background, -5%);
+    box-shadow: 0 15px 20px -15px adjust-lightness(rgba(#000, 0.4), 30%);
 
     img {
       max-width: 100%;
@@ -71,7 +71,7 @@
   left: 50%;
   transform: translateX(-50%) translateY(-20%) rotate(10deg);
   font-size: 2rem;
-  color: darken($color-primary, 15%);
+  color: adjust-lightness($color-primary, -15%);
   font-weight: 600;
   padding: 0 10px;
 }
@@ -84,7 +84,7 @@
   cursor: not-allowed !important;
 
   .radio-img {
-    border: 2px solid darken($color-disabled, 1%);
+    border: 2px solid adjust-lightness($color-disabled, -1%);
   }
 }
 

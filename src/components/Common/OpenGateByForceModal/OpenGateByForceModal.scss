@@ -1,4 +1,4 @@
-@import '../../../config/variables.scss';
+@use '../../../config/variables.scss' as *;
 
 .open-gate-by-force-modal-wrapper {
   margin: $main-spacing;

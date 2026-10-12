@@ -1,7 +1,7 @@
-@import "./config/reset.scss";
-@import "./config/variables.scss";
-@import "./config/typography.scss";
-@import "./config/inputs.scss";
+@use "./config/reset.scss" as *;
+@use "./config/variables.scss" as *;
+@use "./config/typography.scss" as *;
+@use "./config/inputs.scss" as *;
 
 .noscroll {
     overflow: hidden !important;

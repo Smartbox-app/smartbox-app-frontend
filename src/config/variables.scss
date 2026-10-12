@@ -1,4 +1,12 @@
+@use "sass:color";
 @use "sass:math";
+
+// Same result as the old lighten()/darken(): shift HSL lightness, then clamp to 0–100%.
+@function adjust-lightness($color, $amount) {
+  $current: color.channel($color, "lightness", $space: hsl);
+  $target: math.clamp(0%, $current + $amount, 100%);
+  @return color.change($color, $lightness: $target, $space: hsl);
+}
 
 $font-primary: 'smartbox', 'Inter', 'Tahoma', sans-serif;
 $basic-font-size: 14px;
@@ -7,7 +15,7 @@ $border-radius: 5px;
 
 //COLORS
 $color-primary: #0674bd;
-$color-primary-light: lighten(#0674bd, 20%);
+$color-primary-light: adjust-lightness(#0674bd, 20%);
 $color-secondary: #003e67;
 $color-tertiary: #fbb03b;
 $color-facebook: #4267b2;
@@ -19,7 +27,7 @@ $color-text-light: #fff;
 
 
 $color-background: #fafafa;
-$color-background-darken: darken($color-background, 4%);
+$color-background-darken: adjust-lightness($color-background, -4%);
 
 $color-danger: #a51727;
 $color-notice: #bb9c71;
@@ -30,7 +38,7 @@ $color-disabled: #aaa;
 
 $color-warning: #ec8628;
 $standard-shadow: 0px 0px 8px 8px rgba(0, 0, 0, 0.05);
-$box-shadow-small: 0px 0px 8px 8px darken($color-background, 4%);
+$box-shadow-small: 0px 0px 8px 8px adjust-lightness($color-background, -4%);
 $box-shadow-input: 0 10px 20px -20px;
 
 // SIZING

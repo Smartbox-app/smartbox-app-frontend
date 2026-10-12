@@ -1,20 +1,13 @@
-import countries from 'i18n-iso-countries';
 import { Controller, useFormContext } from 'react-hook-form';
 import { RentDataDto } from '../TenantDetailsForm/dto/RentDataDto';
 import { Header, Input, Section } from 'src/components/ui';
 import { InputSelect } from 'src/components/Common';
 import { __ } from 'src/helpers/i18n';
+import { useGetCountriesList } from 'src/hooks/useGetCountriesList';
 
 interface Props {
   disabled?: boolean;
 }
-
-const prepareCountries = (): { label: string; value: string }[] => {
-  const names = countries.getNames('pl');
-  return Object.entries(names)
-    .sort((a, b) => (b[1] < a[1] ? 1 : -1))
-    .map(([value, label]) => ({ value, label }));
-};
 
 export const CompanyDetailsForm = ({ disabled }: Props) => {
   const {
@@ -22,6 +15,8 @@ export const CompanyDetailsForm = ({ disabled }: Props) => {
     control,
     formState: { errors },
   } = useFormContext<RentDataDto>();
+
+  const countriesList = useGetCountriesList();
 
   return (
     <Section>
@@ -34,7 +29,7 @@ export const CompanyDetailsForm = ({ disabled }: Props) => {
             name="companyCountry"
             label="rent.company_country"
             placeholder="rent.company_country_placeholder"
-            options={prepareCountries()}
+            options={countriesList}
             value={field.value}
             onChange={field.onChange}
             onBlur={field.onBlur}

@@ -1,4 +1,4 @@
-@import '../../../config/variables.scss';
+@use '../../../config/variables.scss' as *;
 
 .spinner-container {
   min-height: 100px;

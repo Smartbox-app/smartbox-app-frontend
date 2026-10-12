@@ -1,6 +1,6 @@
 @use "sass:math";
-@import '../../../../../../config/variables.scss';
-@import '../../../../../../config/mixins.scss';
+@use '../../../../../../config/variables.scss' as *;
+@use '../../../../../../config/mixins.scss' as *;
 
 .single-wrapper {
   padding: math.div($main-spacing, 4);
@@ -30,7 +30,7 @@
       border-color: $color-danger;
 
       .storage-warning-overlay {
-        background-color: rgba(lighten($color-danger, 10%), 0.75);
+        background-color: rgba(adjust-lightness($color-danger, 10%), 0.75);
         position: absolute;
         top: 0;
         left: 0;

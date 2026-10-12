@@ -1,10 +1,11 @@
-@import '../../../../../../config/variables';
-@import '../../../../../../config/mixins';
+@use "sass:math";
+@use '../../../../../../config/variables' as *;
+@use '../../../../../../config/mixins' as *;
 
 .line-cell {
   line-height: 1;
 
-  padding-right: $table-item-spacing/4;
+  padding-right: math.div($table-item-spacing, 4);
   font-size: 0.8rem;
   word-break: normal;
 

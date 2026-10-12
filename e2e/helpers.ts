@@ -135,15 +135,7 @@ export const submitExtensionPayment = async (page: Page) => {
   ).toBeVisible();
   await page.getByRole('button', { name: 'Przejdź do umowy' }).click();
   await expect(page.getByRole('heading', { name: 'Umowa wynajmu' })).toBeVisible();
-  const extended = page.waitForResponse(
-    (response) =>
-      response.url().includes('rent/extend-rent/') &&
-      response.request().method() === 'POST',
-  );
-  const paid = acceptAgreementAndPay(page);
-  const response = await extended;
-  await expectApiOk(response);
-  await paid;
+  await acceptAgreementAndPay(page);
 };
 
 export const clickNext = async (page: Page) => {

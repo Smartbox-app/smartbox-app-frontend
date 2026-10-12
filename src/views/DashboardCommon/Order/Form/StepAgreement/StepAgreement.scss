@@ -1,5 +1,5 @@
-@import '../../../../../config/variables.scss';
-@import '../../../../../config/mixins.scss';
+@use '../../../../../config/variables.scss' as *;
+@use '../../../../../config/mixins.scss' as *;
 
 .order-summary-wrapper {
   width: 100%;

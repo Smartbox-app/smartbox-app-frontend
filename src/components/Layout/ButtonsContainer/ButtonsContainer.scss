@@ -1,6 +1,6 @@
 @use "sass:math";
-@import '../../../config/variables';
-@import '../../../config/mixins.scss';
+@use '../../../config/variables' as *;
+@use '../../../config/mixins.scss' as *;
 
 .buttons-container {
   display: flex;

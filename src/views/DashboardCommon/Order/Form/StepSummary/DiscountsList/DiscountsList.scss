@@ -1,6 +1,6 @@
 @use "sass:math";
-@import '../../../../../../config/variables.scss';
-@import '../../../../../../config/mixins.scss';
+@use '../../../../../../config/variables.scss' as *;
+@use '../../../../../../config/mixins.scss' as *;
 
 .discounts-list-wrapper {
   display: flex;
@@ -20,7 +20,7 @@
   background: #fff;
   margin: math.div($main-spacing, 2) 0;
   padding: $main-spacing;
-  box-shadow: 0 0 1px 2px lighten($color-disabled, 25%);
+  box-shadow: 0 0 1px 2px adjust-lightness($color-disabled, 25%);
   cursor: default;
   position: relative;
   justify-content: center;

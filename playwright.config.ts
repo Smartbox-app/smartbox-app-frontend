@@ -22,7 +22,9 @@ export default defineConfig({
   },
   webServer: [
     {
-      command: 'bash scripts/start-e2e.sh',
+      // globalSetup runs only after this process is healthy, so the database has to come up here.
+      command:
+        'docker compose -f docker-compose.e2e.yml up -d --wait && bash scripts/start-e2e.sh',
       cwd: backendRoot,
       url: 'http://localhost:3002/tenant/e2e',
       reuseExistingServer,
