@@ -4,6 +4,7 @@ import { hideModal } from 'src/actions/modal';
 import { Button, Header, Modal } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
 import { translateApiErrorCode } from 'src/utils/trans-form';
+import { currentAppLanguage } from 'src/i18n/app-language';
 import type { InviteUsersRes } from 'smartbox-types';
 import styled from 'styled-components';
 
@@ -53,7 +54,7 @@ export const InviteUsersSuccessModal = ({ result }: Props) => {
               {result.failed.map(({ email, errorCode }) => (
                 <FailedItem key={email}>
                   <strong>{email}</strong> —{' '}
-                  {translateApiErrorCode(errorCode, 'pl')}
+                  {translateApiErrorCode(errorCode, currentAppLanguage())}
                 </FailedItem>
               ))}
             </List>

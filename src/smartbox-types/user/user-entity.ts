@@ -17,6 +17,6 @@ export enum UserStatus {
 }
 
 export enum Language {
-  'pl',
-  'en',
+  pl = 'pl',
+  en = 'en',
 }

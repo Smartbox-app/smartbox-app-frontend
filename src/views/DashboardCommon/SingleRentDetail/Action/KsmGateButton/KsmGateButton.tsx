@@ -8,11 +8,13 @@ import { Button as UIButton } from 'src/components/ui';
 import { Button as BrandedButton } from 'src/components/Branded';
 import { Geolocation, PermissionStatus } from '@capacitor/geolocation';
 import { Capacitor } from '@capacitor/core';
+import { __ } from 'src/helpers/i18n';
 
 interface Props {
   gate: RentGate;
   layout?: 'action' | 'detail';
   buttonText?: string;
+  withName?: boolean;
 }
 
 type ForceModalProps = Pick<
@@ -24,6 +26,7 @@ export const KsmGateButton = ({
   gate,
   layout = 'action',
   buttonText = 'application.openGate',
+  withName = false,
 }: Props) => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
@@ -86,7 +89,10 @@ export const KsmGateButton = ({
     } catch (error: unknown) {
       if (error instanceof Error && error.message === 'not_supported') {
         showForceModal({ notSupported: true });
-      } else if (error instanceof Error && error.message === 'permission_denied') {
+      } else if (
+        error instanceof Error &&
+        error.message === 'permission_denied'
+      ) {
         showForceModal({ cantRead: true });
       } else {
         showForceModal({ cantRead: true });
@@ -118,8 +124,13 @@ export const KsmGateButton = ({
   return (
     <UIButton
       disabled={loading}
-      text={buttonText}
       type="button"
+      text={withName ? undefined : 'application.openGate'}
+      rawText={
+        withName
+          ? __('application.openNamedGate', { name: gate.name })
+          : undefined
+      }
       variant="success"
       size="small"
       onClick={handleClick}

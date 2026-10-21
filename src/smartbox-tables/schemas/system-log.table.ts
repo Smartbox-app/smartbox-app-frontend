@@ -1,6 +1,8 @@
 import { ApiErrorCode } from 'smartbox-types';
 import { translateApiErrorCode } from '../../utils/trans-form';
+import { currentAppLanguage } from '../../i18n/app-language';
 import { FieldType, TableSchema } from '../typings';
+import { translateSystemLogAction } from './system-log-actions';
 
 export const systemLogTableSchema: TableSchema = {
   countPerPage: 50,
@@ -21,6 +23,8 @@ export const systemLogTableSchema: TableSchema = {
       type: FieldType.Text,
       sortable: true,
       searchable: true,
+      customValue: (row: { action?: string | null }) =>
+        translateSystemLogAction(row.action),
       mobile: true,
     },
     {
@@ -50,7 +54,7 @@ export const systemLogTableSchema: TableSchema = {
       customValue: (row: { appErrorCode?: string | number | null }) => {
         const code = row.appErrorCode;
         if (code === null || code === undefined || code === '') return '-';
-        return translateApiErrorCode(Number(code) as ApiErrorCode, 'pl');
+        return translateApiErrorCode(Number(code) as ApiErrorCode, currentAppLanguage());
       },
     },
     {

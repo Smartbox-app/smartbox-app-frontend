@@ -376,7 +376,13 @@ const StepDuration = () => {
   const handleContinue = () => {
     const payload = buildInitiateCheckoutPayload(
       { calculatedPrice, orderAddons },
-      { boxGroupId, boxGroupName, boxGroupArea, stockName, paymentType: 'new_rent' },
+      {
+        boxGroupId,
+        boxGroupName,
+        boxGroupArea,
+        stockName,
+        paymentType: 'new_rent',
+      },
     );
     if (payload) {
       trackInitiateCheckout({

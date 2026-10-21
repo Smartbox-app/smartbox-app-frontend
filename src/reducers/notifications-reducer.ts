@@ -2,6 +2,7 @@ import { v4 } from 'uuid';
 import { ApiErrorCode } from 'smartbox-types';
 import { SingleNotification } from '../types/notifications';
 import { translateApiErrorCode } from '../utils/trans-form';
+import { currentAppLanguage } from '../i18n/app-language';
 
 interface HideNotification {
   type: 'HIDE_NOTIFICATION';
@@ -29,7 +30,8 @@ export type NotificationState = SingleNotification[];
 
 const initialState: NotificationState = [];
 
-const getError = (error: ApiErrorCode) => translateApiErrorCode(error, 'pl');
+const getError = (error: ApiErrorCode) =>
+  translateApiErrorCode(error, currentAppLanguage());
 
 const getErrorNotification = (text: string) => ({
   type: 'error',

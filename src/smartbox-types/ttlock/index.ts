@@ -124,6 +124,8 @@ export interface TTLockPasscode {
   keyboardPwdName: string;
   startDate: number;
   endDate: number;
+  /** True when this code is the rent passcode and must be rotated, not deleted. */
+  assignedToRent?: boolean;
 }
 
 export interface TTLockPasscodeListResponse {

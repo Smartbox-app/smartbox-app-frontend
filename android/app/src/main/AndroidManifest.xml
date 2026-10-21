@@ -33,7 +33,7 @@
                 <!-- <data android:scheme="myapp" /> -->
 
                 <!-- Example: https URL -->
-                <data android:scheme="https" android:host="wlasnybox.smartbox-app.pl" android:pathPrefix="/" />
+                <data android:scheme="https" android:host="pakstak.smartbox-app.pl" android:pathPrefix="/" />
             </intent-filter>
         </activity>
 

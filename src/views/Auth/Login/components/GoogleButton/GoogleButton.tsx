@@ -53,6 +53,7 @@ export const GoogleButton = () => {
       'osiedle',
       's3box',
       'test',
+      'pakstak'
     ].includes(tenant.identifier)
   )
     return null;

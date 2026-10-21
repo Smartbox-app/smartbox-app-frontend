@@ -126,9 +126,9 @@ const Action = ({ rent, isAuthorizedViewer = false }: Props) => {
             .filter((gate) => !!gate.controlled)
             .map((gate) =>
               gate.version === 2 ? (
-                <KsmGateButton key={gate.id} gate={gate} />
+                <KsmGateButton key={gate.id} gate={gate} withName={rent.gates.length > 1}/>
               ) : (
-                <GateButton key={gate.id} gate={gate} />
+                <GateButton key={gate.id} gate={gate} withName={rent.gates.length > 1} />
               ),
             )}
           {!isAuthorizedViewer ? (

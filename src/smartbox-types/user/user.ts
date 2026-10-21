@@ -19,6 +19,7 @@ export class UserRes {
   companyData: CompanyData;
   tenantId: string | null;
   stocks: string[];
+  lang: Language | null;
 }
 
 export interface BoxesSummary {
@@ -76,6 +77,33 @@ export interface UpdateUserReq {
   city: string;
   postCode: string;
   companyData: CompanyData;
+  daysForPayment?: number | null;
+  openEndedDaysForPayment?: number | null;
+}
+
+export interface PaymentDeadlinePreviewReq {
+  daysForPayment?: number | null;
+  openEndedDaysForPayment?: number | null;
+}
+
+export interface UpdateSomeoneBasicReq {
+  firstName: string;
+  lastName: string;
+  country: string;
+  street: string;
+  postCode: string;
+  city: string;
+  phone: string;
+  email: string;
+}
+
+export interface UpdateSomeoneCompanyReq {
+  companyData: CompanyData;
+}
+
+export interface UpdateSomeonePaymentReq {
+  daysForPayment?: number | null;
+  openEndedDaysForPayment?: number | null;
 }
 
 export interface UpdateUserBasicReq {
@@ -202,6 +230,10 @@ export interface RestorPwdReq {
 }
 
 export class MyLang {
+  lang: Language;
+}
+
+export interface UpdateLangReq {
   lang: Language;
 }
 

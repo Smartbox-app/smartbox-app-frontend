@@ -7,12 +7,14 @@ import { askGateToOpen } from 'src/actions/gate';
 import { Button } from 'src/components/ui';
 import { Geolocation, PermissionStatus } from '@capacitor/geolocation';
 import { Capacitor } from '@capacitor/core';
+import { __ } from 'src/helpers/i18n';
 
 interface Props {
   gate: RentGate;
+  withName?: boolean;
 }
 
-export const GateButton = ({ gate }: Props) => {
+export const GateButton = ({ gate, withName = false }: Props) => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
 
@@ -81,7 +83,10 @@ export const GateButton = ({ gate }: Props) => {
             />,
           ),
         );
-      } else if (error instanceof Error && error.message === 'permission_denied') {
+      } else if (
+        error instanceof Error &&
+        error.message === 'permission_denied'
+      ) {
         dispatch(
           modal.showModal(
             <OpenGateByForceModal
@@ -109,7 +114,12 @@ export const GateButton = ({ gate }: Props) => {
   return (
     <Button
       disabled={loading}
-      text="application.openGate"
+      text={withName ? undefined : 'application.openGate'}
+      rawText={
+        withName
+          ? __('application.openNamedGate', { name: gate.name })
+          : undefined
+      }
       type="button"
       variant="success"
       size="small"

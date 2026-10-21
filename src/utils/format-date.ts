@@ -20,11 +20,21 @@ export function dateOnlyNormalized(n: Date | string | null, slice?: number): str
   return formatInTimeZone(n, 'Europe/Warsaw', 'yyyy-MM-dd');
 }
 
-export const fullDate = (d: Date | string): string => {
+export const toDate = (value: Date | string | number): Date | null => {
+  const date =
+    typeof value === 'string' && /^\d+$/.test(value)
+      ? new Date(Number(value))
+      : new Date(value);
+  return Number.isNaN(date.getTime()) ? null : date;
+};
+
+export const fullDate = (d: Date | string | number): string => {
   if (d === null) return '---';
+  const date = toDate(d);
+  if (!date) return '---';
 
   try {
-    return formatInTimeZone(d, 'Europe/Warsaw', 'dd.MM.yyyy HH:mm');
+    return formatInTimeZone(date, 'Europe/Warsaw', 'dd.MM.yyyy HH:mm');
   } catch {
     return '---';
   }

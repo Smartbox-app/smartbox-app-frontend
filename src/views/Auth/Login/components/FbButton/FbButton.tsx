@@ -56,6 +56,7 @@ export const FbButton = () => {
       'osiedle',
       's3box',
       'test',
+      'pakstak'
     ].includes(tenant.identifier)
   )
     return null;

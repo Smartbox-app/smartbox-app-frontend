@@ -21,6 +21,9 @@ import { queryClient } from 'src/query-client';
 import { clearUserSession } from 'src/actions/auth';
 import { order } from 'src/actions';
 import { withAttributionSearch } from 'src/utils/attribution-params';
+import i18next from 'i18next';
+import SessionService from 'src/services/session-service';
+import { isAppLanguage } from 'src/i18n/app-language';
 import {
   clearPreloadReloadFlag,
   reloadWithoutServiceWorker,
@@ -166,6 +169,19 @@ const AppWrapper = ({ children }: Props) => {
   useEffect(() => {
     scrollTop();
   }, [location.pathname]);
+
+  useEffect(() => {
+    if (!isAppLanguage(user?.lang)) return;
+
+    if (SessionService.getCurrentLanguage() !== user.lang) {
+      SessionService.setCurrentLanguage(user.lang);
+    }
+
+    const active = i18next.language?.toLowerCase().split('-')[0];
+    if (active !== user.lang) {
+      window.location.reload();
+    }
+  }, [user?.lang]);
 
   useEffect(() => {
     if (!tenant) return;

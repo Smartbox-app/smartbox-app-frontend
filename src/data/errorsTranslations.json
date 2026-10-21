@@ -494,6 +494,512 @@
       "113": {
         "text": "Nie można usunąć dodatku, ponieważ jest używany w trwającej umowie bezterminowej.",
         "__type_alias_do_not_touch": "ApiErrorCode.CanNotDeleteAddonUsedByOpenEndedRent"
+      },
+      "114": {
+        "text": "Ten kod nie jest dostępny, ponieważ został już użyty wcześniej dla tego zamka.",
+        "__type_alias_do_not_touch": "ApiErrorCode.PassCodeAlreadyExists"
+      }
+    }
+  },
+  "en": {
+    "Both new passwords have to be identical.": "Both new passwords have to be identical.",
+    "Cannot decode this type of data when using FormData.": "Cannot decode this type of data when using FormData.",
+    "Company city": "Contact details: City",
+    "Company name": "Company name",
+    "Company post code": "Contact details: Post code",
+    "Compnay street": "Contact details: Street",
+    "Data początku nie może być wcześniejsza od końcowej": "The start date cannot be earlier than the end date",
+    "Date too high. Max. {0}.": "Date too high. Max. {0}.",
+    "Date too low. Min. {0}.": "The date has passed. Min. {0}.",
+    "Discount value": "Discount value",
+    "Expiration Date": "Expiration date",
+    "Field required.": "This field is required.",
+    "Invalid NIP.": "Invalid tax ID (NIP).",
+    "Incorrect character detected.": "Invalid character. Polish letters, digits, and special characters are allowed.",
+    "Invalid Zip code.": "Invalid post code.",
+    "Invalid absolute URL.": "Invalid absolute URL.",
+    "Invalid bank account number": "Invalid bank account number",
+    "Invalid color hash.": "Invalid color hash.",
+    "Invalid e-mail address.": "Invalid email address.",
+    "Invalid email.": "Invalid email address.",
+    "Invalid option: {0}.": "Invalid option: {0}.",
+    "Invalid phone number": "Invalid phone number",
+    "Invalid post code": "Invalid post code",
+    "Invalid identifier": "Invalid identifier. Lowercase letters, digits, and - are allowed.",
+    "Invalid type of value: {0} expected.": "Invalid value type: {0} expected.",
+    "New password": "New password",
+    "Password": "Password",
+    "Phone": "Phone",
+    "Repeat new password": "Repeat new password",
+    "Select...": "Select...",
+    "Stock": "Site",
+    "Stocks": "Site",
+    "Value": "Value",
+    "Value too high. Max. {0}.": "Value too high. Max. {0}.",
+    "Value too long (max. {0})": "Value too long (max. {0})",
+    "Value too low. Min. {0}.": "Value too low. Min. {0}.",
+    "Value too short (min. {0})": "Value too short (min. {0})",
+    "Value%": "Value [%]",
+    "_API_ERROR_CODES_": {
+      "0": {
+        "text": "An error occurred!",
+        "__type_alias_do_not_touch": "ApiErrorCode.OtherError"
+      },
+      "1": {
+        "text": "No object with the given id!",
+        "__type_alias_do_not_touch": "ApiErrorCode.NoSuchObjectWithThisId"
+      },
+      "2": {
+        "text": "The object is not unique!",
+        "__type_alias_do_not_touch": "ApiErrorCode.ObjectNotUniuque"
+      },
+      "3": {
+        "text": "Invalid login details!",
+        "__type_alias_do_not_touch": "ApiErrorCode.InvalidLoginData"
+      },
+      "4": {
+        "text": "Invalid data provided!",
+        "__type_alias_do_not_touch": "ApiErrorCode.InvalidData"
+      },
+      "5": {
+        "text": "Form validation error!",
+        "__type_alias_do_not_touch": "ApiErrorCode.FormValidationError"
+      },
+      "6": {
+        "text": "A user with these details already exists!",
+        "__type_alias_do_not_touch": "ApiErrorCode.UserExist"
+      },
+      "7": {
+        "text": "Invalid price!",
+        "__type_alias_do_not_touch": "ApiErrorCode.InvalidPrice"
+      },
+      "8": {
+        "text": "No free unit of this size!",
+        "__type_alias_do_not_touch": "ApiErrorCode.NoFreeBoxInThisSize"
+      },
+      "9": {
+        "text": "Payment error!",
+        "__type_alias_do_not_touch": "ApiErrorCode.PaymentError"
+      },
+      "10": {
+        "text": "This action is not available before payment!",
+        "__type_alias_do_not_touch": "ApiErrorCode.PayFirst"
+      },
+      "11": {
+        "text": "This change is not allowed in the current status!",
+        "__type_alias_do_not_touch": "ApiErrorCode.CantChangeThisBoxOnThisStatus"
+      },
+      "12": {
+        "text": "It is too late to make this change!",
+        "__type_alias_do_not_touch": "ApiErrorCode.TooLateForCahnge"
+      },
+      "13": {
+        "text": "No free units!",
+        "__type_alias_do_not_touch": "ApiErrorCode.NotFreeBox"
+      },
+      "14": {
+        "text": "Invalid discount code!",
+        "__type_alias_do_not_touch": "ApiErrorCode.InvalidDiscountCode"
+      },
+      "15": {
+        "text": "This card has already used a one-time discount!",
+        "__type_alias_do_not_touch": "ApiErrorCode.CardHasBeenUsedWithDiscount"
+      },
+      "16": {
+        "text": "Invalid unit number!",
+        "__type_alias_do_not_touch": "ApiErrorCode.InvalidBoxNumber"
+      },
+      "17": {
+        "text": "Failed to create the invoice!",
+        "__type_alias_do_not_touch": "ApiErrorCode.CreatingInvoiceFailure"
+      },
+      "18": {
+        "text": "Failed to send the invoice!",
+        "__type_alias_do_not_touch": "ApiErrorCode.SendingEmailWithInvoiceFailure"
+      },
+      "19": {
+        "text": "Invalid language selected!",
+        "__type_alias_do_not_touch": "ApiErrorCode.InvalidLang"
+      },
+      "20": {
+        "text": "A site must be selected for a worker!",
+        "__type_alias_do_not_touch": "ApiErrorCode.StckIdIsRequiredForWorkerRole"
+      },
+      "21": {
+        "text": "No unit with this number was found at the site!",
+        "__type_alias_do_not_touch": "ApiErrorCode.NoFoundBoxNumberOnStock"
+      },
+      "22": {
+        "text": "Action not allowed!",
+        "__type_alias_do_not_touch": "ApiErrorCode.ActionForebiden"
+      },
+      "23": {
+        "text": "Invalid geographic coordinates!",
+        "__type_alias_do_not_touch": "ApiErrorCode.InvalidCoordinate"
+      },
+      "24": {
+        "text": "You are too far away!",
+        "__type_alias_do_not_touch": "ApiErrorCode.UAreTooFarAway"
+      },
+      "25": {
+        "text": "The selected site already has a discount!",
+        "__type_alias_do_not_touch": "ApiErrorCode.StockHasActiveDiscont"
+      },
+      "26": {
+        "text": "Invalid BLIK code!",
+        "__type_alias_do_not_touch": "ApiErrorCode.InvalidBlik"
+      },
+      "27": {
+        "text": "Invalid bank group number!",
+        "__type_alias_do_not_touch": "ApiErrorCode.InvalidGroup"
+      },
+      "28": {
+        "text": "The unit with the selected number is reserved!",
+        "__type_alias_do_not_touch": "ApiErrorCode.BoxNumberIsReserved"
+      },
+      "29": {
+        "text": "A phone number is required to place an order. Please complete your profile!",
+        "__type_alias_do_not_touch": "ApiErrorCode.PhoneIsRequiredForRent"
+      },
+      "30": {
+        "text": "Invalid role!",
+        "__type_alias_do_not_touch": "ApiErrorCode.InvalidUserType"
+      },
+      "31": {
+        "text": "Company details are required!",
+        "__type_alias_do_not_touch": "ApiErrorCode.CompanyDataIsRequired"
+      },
+      "32": {
+        "text": "The unit has already been reserved!",
+        "__type_alias_do_not_touch": "ApiErrorCode.BoxIsReserved"
+      },
+      "33": {
+        "text": "The user has been blocked!",
+        "__type_alias_do_not_touch": "ApiErrorCode.UserIsBlocked"
+      },
+      "34": {
+        "text": "Rental is blocked. You have an unpaid rental!",
+        "__type_alias_do_not_touch": "ApiErrorCode.YouHaveNoPaidBoxes"
+      },
+      "35": {
+        "text": "You do not have permission to open the gate!",
+        "__type_alias_do_not_touch": "ApiErrorCode.NoAccessToTheGate"
+      },
+      "36": {
+        "text": "User activation is required!",
+        "__type_alias_do_not_touch": "ApiErrorCode.FirstActiveUser"
+      },
+      "37": {
+        "text": "The payment is not marked as BLIK!",
+        "__type_alias_do_not_touch": "ApiErrorCode.PaymentIsntBlikType"
+      },
+      "38": {
+        "text": "The payment is not marked as a transfer!",
+        "__type_alias_do_not_touch": "ApiErrorCode.PaymentIsntTransferType"
+      },
+      "39": {
+        "text": "The payment is not marked as a card payment!",
+        "__type_alias_do_not_touch": "ApiErrorCode.PaymentIsntCardType"
+      },
+      "40": {
+        "text": "Invalid tax rate!",
+        "__type_alias_do_not_touch": "ApiErrorCode.InvalidTaxValue"
+      },
+      "41": {
+        "text": "Failed to connect to the gate!",
+        "__type_alias_do_not_touch": "ApiErrorCode.ErrorConnectingToGate"
+      },
+      "42": {
+        "text": "Invalid file format!",
+        "__type_alias_do_not_touch": "ApiErrorCode.ForbiddenFileFormat"
+      },
+      "43": {
+        "text": "This phone number is already in use!",
+        "__type_alias_do_not_touch": "ApiErrorCode.PhoneNumberIsAlreadyInUse"
+      },
+      "44": {
+        "text": "This identifier is already in use!",
+        "__type_alias_do_not_touch": "ApiErrorCode.IdentifierAlreadyInUse"
+      },
+      "45": {
+        "text": "No such tenant was found!",
+        "__type_alias_do_not_touch": "ApiErrorCode.TenantDoesNotExist"
+      },
+      "46": {
+        "text": "You cannot delete a unit that is not empty!",
+        "__type_alias_do_not_touch": "ApiErrorCode.CanNotDeleteNotEmptyBox"
+      },
+      "47": {
+        "text": "At least one period is required!",
+        "__type_alias_do_not_touch": "ApiErrorCode.NeedAtLeastOnePricingPeriod"
+      },
+      "48": {
+        "text": "Periods and prices must be set in ascending order!",
+        "__type_alias_do_not_touch": "ApiErrorCode.PricesAndPeriodsNeedsToBeInAscendingOrder"
+      },
+      "49": {
+        "text": "A period longer than 28 days is not allowed!",
+        "__type_alias_do_not_touch": "ApiErrorCode.PeriodMax28Days"
+      },
+      "50": {
+        "text": "A period longer than 4 weeks is not allowed!",
+        "__type_alias_do_not_touch": "ApiErrorCode.PeriodMax4Weeks"
+      },
+      "51": {
+        "text": "A period longer than 12 months is not allowed!",
+        "__type_alias_do_not_touch": "ApiErrorCode.PeriodMax12Months"
+      },
+      "52": {
+        "text": "The minimum number of periods is 1!",
+        "__type_alias_do_not_touch": "ApiErrorCode.PeriodAtLeast1"
+      },
+      "53": {
+        "text": "You must set a price for 1 day of rental!",
+        "__type_alias_do_not_touch": "ApiErrorCode.YouNeedToSetPriceForOneDay"
+      },
+      "54": {
+        "text": "The selected time period is too short!",
+        "__type_alias_do_not_touch": "ApiErrorCode.RentPeriodTooShort"
+      },
+      "55": {
+        "text": "The site has no discount!",
+        "__type_alias_do_not_touch": "ApiErrorCode.NoDiscountSet"
+      },
+      "56": {
+        "text": "The discount code is invalid!",
+        "__type_alias_do_not_touch": "ApiErrorCode.GiftCodeInvalid"
+      },
+      "57": {
+        "text": "A discount code that has been used cannot be deleted!",
+        "__type_alias_do_not_touch": "ApiErrorCode.CantRemoveUsedGift"
+      },
+      "58": {
+        "text": "The platform is inactive!",
+        "__type_alias_do_not_touch": "ApiErrorCode.TenantNotActive"
+      },
+      "59": {
+        "text": "You cannot delete a group that contains units with a status other than free!",
+        "__type_alias_do_not_touch": "ApiErrorCode.CanNotRemoveGroupWithRents"
+      },
+      "60": {
+        "text": "An invoice cannot be issued!",
+        "__type_alias_do_not_touch": "ApiErrorCode.NoInvoiceServiceData"
+      },
+      "61": {
+        "text": "The unit limit has been reached!",
+        "__type_alias_do_not_touch": "ApiErrorCode.BoxesLimitReached"
+      },
+      "62": {
+        "text": "This many units cannot be added. Reduce the quantity to stay within the limit.",
+        "__type_alias_do_not_touch": "ApiErrorCode.TryingToAddTooManyBoxes"
+      },
+      "63": {
+        "text": "The site limit has been reached!",
+        "__type_alias_do_not_touch": "ApiErrorCode.StocksLimitReached"
+      },
+      "64": {
+        "text": "The lock is asleep. Press the button on the lock to wake it.",
+        "__type_alias_do_not_touch": "ApiErrorCode.LockIsInSleepMode"
+      },
+      "65": {
+        "text": "At least one add-on variant is required!",
+        "__type_alias_do_not_touch": "ApiErrorCode.NeedAtLeastOneAddonVariant"
+      },
+      "66": {
+        "text": "A required add-on was not selected!",
+        "__type_alias_do_not_touch": "ApiErrorCode.RequiredAddonNotSelected"
+      },
+      "67": {
+        "text": "You must accept the selected add-on!",
+        "__type_alias_do_not_touch": "ApiErrorCode.AcceptanceNotSelected"
+      },
+      "68": {
+        "text": "The uploaded file is too large!",
+        "__type_alias_do_not_touch": "ApiErrorCode.FileIsTooBig"
+      },
+      "69": {
+        "text": "A required file is missing!",
+        "__type_alias_do_not_touch": "ApiErrorCode.AddonFileIsMissing"
+      },
+      "70": {
+        "text": "Date of birth is missing!",
+        "__type_alias_do_not_touch": "ApiErrorCode.BirthDateMissing"
+      },
+      "71": {
+        "text": "The maximum number of active units has been reached!",
+        "__type_alias_do_not_touch": "ApiErrorCode.ActiveBoxesLimitReached"
+      },
+      "72": {
+        "text": "A unit that is not free cannot be deactivated!",
+        "__type_alias_do_not_touch": "ApiErrorCode.CanNotSetNotEmptyBoxAsInactive"
+      },
+      "73": {
+        "text": "No free units!",
+        "__type_alias_do_not_touch": "ApiErrorCode.NoMoreAvailableBoxes"
+      },
+      "74": {
+        "text": "A user with an active rental cannot be deleted!",
+        "__type_alias_do_not_touch": "ApiErrorCode.CanNotDeleteUserWithRent"
+      },
+      "75": {
+        "text": "An unpaid rental cannot be extended!",
+        "__type_alias_do_not_touch": "ApiErrorCode.CanNotExtendUnpaidRent"
+      },
+      "76": {
+        "text": "A unit with a payment in progress cannot be released!",
+        "__type_alias_do_not_touch": "ApiErrorCode.CantFreeBoxWithPendingPayment"
+      },
+      "77": {
+        "text": "A period longer than half a year is not allowed!",
+        "__type_alias_do_not_touch": "ApiErrorCode.PeriodMax1HalfYear"
+      },
+      "78": {
+        "text": "A period longer than two quarters is not allowed!",
+        "__type_alias_do_not_touch": "ApiErrorCode.PeriodMax2Quarters"
+      },
+      "79": {
+        "text": "You are already subscribed to this notification.",
+        "__type_alias_do_not_touch": "ApiErrorCode.YouAreAlreadySubscribed"
+      },
+      "80": {
+        "text": "An error occurred while trying to open.",
+        "__type_alias_do_not_touch": "ApiErrorCode.ErrorWhenTryingToOpen"
+      },
+      "81": {
+        "text": "The lock could not be unlocked.",
+        "__type_alias_do_not_touch": "ApiErrorCode.UnableToUnlock"
+      },
+      "82": {
+        "text": "The client source is missing!",
+        "__type_alias_do_not_touch": "ApiErrorCode.ClientSourceMissing"
+      },
+      "83": {
+        "text": "This discount code cannot be used with installment payments!",
+        "__type_alias_do_not_touch": "ApiErrorCode.CantUseDiscountCodeWithInstallments"
+      },
+      "84": {
+        "text": "The selected rental period is too long!",
+        "__type_alias_do_not_touch": "ApiErrorCode.RentPeriodTooLong"
+      },
+      "85": {
+        "text": "The maximum rental time cannot be shorter than the minimum!",
+        "__type_alias_do_not_touch": "ApiErrorCode.MaxPeriodCantBeLowerThanMin"
+      },
+      "86": {
+        "text": "The rental period is too short for installment payments!",
+        "__type_alias_do_not_touch": "ApiErrorCode.RentPeriodTooShortForInstallments"
+      },
+      "87": {
+        "text": "You must set a valid fixed price for the add-on variant!",
+        "__type_alias_do_not_touch": "ApiErrorCode.YouNeedToSetCorrectFixedPriceForVariant"
+      },
+      "88": {
+        "text": "There was a problem calculating the rental price. Refresh the page and try again.",
+        "__type_alias_do_not_touch": "ApiErrorCode.AddonNotAvailableForThisGroup"
+      },
+      "89": {
+        "text": "The tax ID (NIP) is invalid!",
+        "__type_alias_do_not_touch": "ApiErrorCode.InvalidNIP"
+      },
+      "90": {
+        "text": "The lock is not connected to a gateway!",
+        "__type_alias_do_not_touch": "ApiErrorCode.LockNotConnectedToTheGateway"
+      },
+      "91": {
+        "text": "The lock does not support this setting!",
+        "__type_alias_do_not_touch": "ApiErrorCode.LockFunctionNotSupported"
+      },
+      "92": {
+        "text": "An error occurred while communicating with the lock (invalid parameter)!",
+        "__type_alias_do_not_touch": "ApiErrorCode.LockInvalidParameter"
+      },
+      "93": {
+        "text": "Invalid code!",
+        "__type_alias_do_not_touch": "ApiErrorCode.IncorrectPasscode"
+      },
+      "94": {
+        "text": "Invalid sales document!",
+        "__type_alias_do_not_touch": "ApiErrorCode.SelectedIncorrectPaymentDocument"
+      },
+      "95": {
+        "text": "This code already exists!",
+        "__type_alias_do_not_touch": "ApiErrorCode.GiftCodeExists"
+      },
+      "96": {
+        "text": "The selected country is invalid!",
+        "__type_alias_do_not_touch": "ApiErrorCode.InvalidCountry"
+      },
+      "97": {
+        "text": "The account cannot be deleted. Make sure you have no outstanding balance and no active rentals.",
+        "__type_alias_do_not_touch": "ApiErrorCode.UnableToDeleteAccount"
+      },
+      "98": {
+        "text": "This document type already exists.",
+        "__type_alias_do_not_touch": "ApiErrorCode.DocumentTypeAlreadyExists"
+      },
+      "99": {
+        "text": "This discount code is available only to new customers.",
+        "__type_alias_do_not_touch": "ApiErrorCode.GiftForNewClientsOnly"
+      },
+      "100": {
+        "text": "Invalid authorization details.",
+        "__type_alias_do_not_touch": "ApiErrorCode.IncorrectAuthorizationData"
+      },
+      "101": {
+        "text": "No saved SMTP configuration.",
+        "__type_alias_do_not_touch": "ApiErrorCode.MissingSmtpSettings"
+      },
+      "102": {
+        "text": "The gate cannot be opened right now. Try again in a moment.",
+        "__type_alias_do_not_touch": "ApiErrorCode.OpenGateTooSoon"
+      },
+      "103": {
+        "text": "This user has already been invited.",
+        "__type_alias_do_not_touch": "ApiErrorCode.InvitationAlreadyExists"
+      },
+      "104": {
+        "text": "Invalid or expired activation code.",
+        "__type_alias_do_not_touch": "ApiErrorCode.InvalidActivationCode"
+      },
+      "105": {
+        "text": "A new code can be generated after 5 minutes.",
+        "__type_alias_do_not_touch": "ApiErrorCode.ActivationCodeResendTooSoon"
+      },
+      "106": {
+        "text": "A photo is required to end the rental.",
+        "__type_alias_do_not_touch": "ApiErrorCode.EndRentPhotoRequired"
+      },
+      "107": {
+        "text": "Ending a rental with a photo is available only in the mobile app or a phone browser.",
+        "__type_alias_do_not_touch": "ApiErrorCode.EndRentPhotoMobileOnly"
+      },
+      "108": {
+        "text": "The photo is too old. Take a new photo of the unit (no older than 15 minutes).",
+        "__type_alias_do_not_touch": "ApiErrorCode.EndRentPhotoTooOld"
+      },
+      "109": {
+        "text": "Open-ended agreements are not available for this tenant.",
+        "__type_alias_do_not_touch": "ApiErrorCode.OpenEndedAgreementsNotAllowed"
+      },
+      "110": {
+        "text": "Fixed-term agreements are not available for this tenant.",
+        "__type_alias_do_not_touch": "ApiErrorCode.FixedTermAgreementsNotAllowed"
+      },
+      "111": {
+        "text": "The selected payment method is not available.",
+        "__type_alias_do_not_touch": "ApiErrorCode.PaymentMethodNotAllowed"
+      },
+      "112": {
+        "text": "An open-ended agreement cannot be extended. End the rental if you want to stop it.",
+        "__type_alias_do_not_touch": "ApiErrorCode.CanNotExtendOpenEndedRent"
+      },
+      "113": {
+        "text": "The add-on cannot be deleted because it is used by an active open-ended agreement.",
+        "__type_alias_do_not_touch": "ApiErrorCode.CanNotDeleteAddonUsedByOpenEndedRent"
+      },
+      "114": {
+        "text": "This code is not available because it was already used for this lock.",
+        "__type_alias_do_not_touch": "ApiErrorCode.PassCodeAlreadyExists"
       }
     }
   }

@@ -1,4 +1,4 @@
-package com.smartbox.wlasnybox.app;
+package com.smartbox.pakstak.app;
 
 import android.content.Context;
 import android.content.SharedPreferences;

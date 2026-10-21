@@ -23,6 +23,8 @@ export type ButtonProps = {
   fullWidth?: boolean;
   disabled?: boolean;
   text?: string;
+  rawText?: string;
+  children?: ReactNode;
   iconLeft?: ReactNode;
   iconRight?: ReactNode;
   className?: string;
@@ -159,6 +161,8 @@ export const Button = ({
   iconLeft,
   iconRight,
   text,
+  rawText,
+  children,
   className,
 }: ButtonProps) => {
   const [clicked, setClicked] = useState(false);
@@ -200,6 +204,7 @@ export const Button = ({
         disabled={disabled}
       >
         {iconLeft || <span />}
+        {children}
         {text ? __(text) : null}
         {iconRight || <span />}
       </StyledButton>
@@ -218,6 +223,7 @@ export const Button = ({
           disabled={disabled}
         >
           {iconLeft || <span />}
+          {children}
           {text ? __(text) : null}
           {iconRight || <span />}
         </StyledButton>
@@ -236,7 +242,9 @@ export const Button = ({
         clicked={clicked}
       >
         {iconLeft || <span />}
+        {children}
         {text ? __(text) : null}
+        {rawText ?rawText: null}
         {iconRight || <span />}
       </StyledA>
     );
@@ -254,7 +262,9 @@ export const Button = ({
         clicked={clicked}
       >
         {iconLeft || <span />}
+        {children}
         {text ? __(text) : null}
+        {rawText ?rawText: null}
         {iconRight || <span />}
       </StyledLink>
     );
@@ -272,7 +282,9 @@ export const Button = ({
       disabled={disabled}
     >
       {iconLeft || <span />}
+      {children}
       {text ? __(text) : null}
+      {rawText ?rawText: null}
       {iconRight || <span />}
     </StyledButton>
   );

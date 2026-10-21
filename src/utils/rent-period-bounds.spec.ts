@@ -121,7 +121,7 @@ describe('period acceptance', () => {
         isOpenEnded: false,
         maxRentPeriod: null,
       }),
-    ).toBe(false);
+    ).toBe(true);
   });
 
   it('rejects an installment range shorter than the installment minimum', () => {

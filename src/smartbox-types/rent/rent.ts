@@ -178,6 +178,8 @@ export class RentDetailsRes {
   /** True when the current user was granted access via rent authorization (not the rent owner). */
   isAuthorized: boolean;
   endRentPhoto?: string | null;
+  /** Set for keypad boxes (TTLock, Keylessbox). Null until a code is issued. */
+  passcode?: string | null;
 }
 
 export class RentDetailsUser {

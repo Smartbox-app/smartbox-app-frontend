@@ -1,4 +1,4 @@
-package com.smartbox.wlasnybox.app;
+package com.smartbox.pakstak.app;
 import android.os.Bundle;
 import ee.forgr.capacitor.social.login.GoogleProvider;
 import ee.forgr.capacitor.social.login.SocialLoginPlugin;

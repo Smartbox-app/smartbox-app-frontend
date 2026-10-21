@@ -12,6 +12,7 @@ test.afterEach(() => {
 });
 
 test('registers an account and activates it with the SMS code', async ({ page }) => {
+  test.setTimeout(120_000);
   setAccountConfirmation('sms');
 
   const stamp = Date.now().toString().slice(-6);

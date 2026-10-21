@@ -2,6 +2,7 @@ import i18next from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
 import application from './locales/pl/application';
+import applicationEn from './locales/en/application';
 import SessionService from '../services/session-service';
 import type { I18nResourceKey, Options } from './types';
 
@@ -12,6 +13,9 @@ export { allNS, defaultNS };
 export const resources = {
   pl: {
     application,
+  },
+  en: {
+    application: applicationEn,
   },
 };
 

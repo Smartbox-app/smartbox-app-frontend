@@ -45,6 +45,7 @@ const folderToAppName = {
   nidobox: 'NidoBox Self-Storage',
   krakbox: 'Krak-Box Self-Storage',
   moibox: 'Moibox - Self Storage',
+  pakstak: 'PakStak - magazyn Ursynów'
 };
 
 const folderToAppIdentifier = {
@@ -58,6 +59,7 @@ const folderToAppIdentifier = {
     nidobox: 'com.smartbox.nidobox.app',
     krakbox: 'com.smartbox.krakbox.app',
     moibox: 'com.smartbox.moibox.app',
+    pakstak: 'com.smartbox.pakstak.app',
   },
   android: {
     testowa: 'com.smartbox.testowa.app',
@@ -69,6 +71,7 @@ const folderToAppIdentifier = {
     nidobox: 'com.smartbox.nidobox.app',
     krakbox: 'com.smartbox.krakbox.app',
     moibox: 'com.smartbox.moibox.app',
+    pakstak: 'com.smartbox.pakstak.app',
   },
 };
 
@@ -83,6 +86,7 @@ const folderToHostName = {
     nidobox: 'nidobox',
     krakbox: 'krakbox',
     moibox: 'moibox',
+    pakstak: 'pakstak',
   },
   local: { aplikacja: 'test' },
 };
@@ -150,6 +154,13 @@ const authIds = {
         id: '315516464384-5buggcs7htvkj7lh9aghlpgh2bjbmnv5.apps.googleusercontent.com',
         reversed:
           'com.googleusercontent.apps.315516464384-5buggcs7htvkj7lh9aghlpgh2bjbmnv5',
+      },
+    },
+    pakstak: {
+      google: {
+        id: '315516464384-gp7k3f9u4s5t90su06qdfrk5acos2cce.apps.googleusercontent.com',
+        reversed:
+          'com.googleusercontent.apps.315516464384-gp7k3f9u4s5t90su06qdfrk5acos2cce',
       },
     },
   },

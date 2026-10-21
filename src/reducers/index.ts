@@ -3,7 +3,6 @@ import apiTableReducer, { ApiTableRootState } from './api-table-reducer';
 import appStatusReducer, { AppStatus } from './app-status-reducer';
 import modalReducer from './modal-reducer';
 import notificationsReducer, { NotificationState } from './notifications-reducer';
-import langReducer, { LangStatus } from './lang-reducer';
 import userReducer, { UserState } from './user-reducer';
 import spinnerReducer, { SpinnerState } from './spinner-reducer';
 import orderReducer, { OrderState } from './order-reducer';
@@ -26,13 +25,11 @@ export interface ApplicationState {
   rent: RentsStatus;
   stock: StockStatus;
   stockGroup: StockGroupStatus;
-  lang: LangStatus;
 }
 
 const appReducer = combineReducers({
   appStatus: appStatusReducer,
   apiTable: apiTableReducer,
-  lang: langReducer,
   modal: modalReducer,
   notifications: notificationsReducer,
   user: userReducer,

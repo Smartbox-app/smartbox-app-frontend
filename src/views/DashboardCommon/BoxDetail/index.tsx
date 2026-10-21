@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   BoxListRes,
   BoxMapRes,
@@ -7,18 +7,20 @@ import {
 } from 'smartbox-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { boxDataCleanUp, fetchSingleBoxDetails } from '../../../actions/boxes';
+import { successNotification } from '../../../actions/notifications';
 import { Row } from '../../../components/Common';
 import { ApplicationState } from '../../../reducers';
 import { dateOnly } from '../../../utils/format-date';
 import { __ } from '../../../helpers/i18n';
 import { translateBoxDisplayStatus } from '../../../utils/box-display-status';
+import ApiService from '../../../services/api-service';
 
 import { Edit } from './Edit';
 
 import './BoxDetail.scss';
 import { useGetMyDetailsQuery } from '../../../queries';
 import { useRent } from 'src/hooks/useRent';
-import { Header, Link, Modal, Section, Typography } from 'src/components/ui';
+import { Button, Header, Link, Modal, Section, Typography } from 'src/components/ui';
 import { EndRentPhoto } from 'src/components/Common/EndRentPhoto';
 
 interface Props {
@@ -38,6 +40,18 @@ const BoxDetail = ({
   );
   const { data: user } = useGetMyDetailsQuery();
   const { formatFinishAt, resolveRentFinishAt } = useRent();
+  const [confirmingRotate, setConfirmingRotate] = useState(false);
+  const [rotating, setRotating] = useState(false);
+
+  const rotatePasscode = async () => {
+    setRotating(true);
+    await ApiService.callFetch('POST', `rent/${rentId}/passcode/rotate`, () => {
+      dispatch(successNotification(__('application.passcodeRotated')));
+      dispatch(fetchSingleBoxDetails(rentId));
+      setConfirmingRotate(false);
+    });
+    setRotating(false);
+  };
 
   useEffect(() => {
     if (rentId) dispatch(fetchSingleBoxDetails(rentId));
@@ -112,6 +126,51 @@ const BoxDetail = ({
                   )
                 }
               />
+              {singleBoxDetail.id === rentId && 'passcode' in singleBoxDetail && (
+                <Row
+                  label="application.passcode"
+                  content={
+                    <span
+                      style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: 8,
+                        flexWrap: 'wrap',
+                      }}
+                    >
+                      <span>{singleBoxDetail.passcode || '---'}</span>
+                      {singleBoxDetail.status === RentStatus.rented &&
+                        !confirmingRotate && (
+                          <Button
+                            size="small"
+                            variant="secondary"
+                            text="application.rotatePasscode"
+                            onClick={() => setConfirmingRotate(true)}
+                          />
+                        )}
+                      {singleBoxDetail.status === RentStatus.rented &&
+                        confirmingRotate && (
+                          <>
+                            <Button
+                              size="small"
+                              variant="primary"
+                              text="application.yes"
+                              disabled={rotating}
+                              onClick={() => void rotatePasscode()}
+                            />
+                            <Button
+                              size="small"
+                              variant="tertiary"
+                              text="application.cancel"
+                              disabled={rotating}
+                              onClick={() => setConfirmingRotate(false)}
+                            />
+                          </>
+                        )}
+                    </span>
+                  }
+                />
+              )}
             </>
           )}
 

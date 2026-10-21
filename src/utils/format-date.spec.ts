@@ -19,6 +19,8 @@ describe('format-date', () => {
     expect(dateOnly(instant, 5)).toBe('16.01');
     expect(dateOnlyNormalized(instant)).toBe('2026-01-16');
     expect(fullDate(instant)).toBe('16.01.2026 00:30');
+    expect(fullDate(Date.parse(instant))).toBe('16.01.2026 00:30');
+    expect(fullDate(String(Date.parse(instant)))).toBe('16.01.2026 00:30');
   });
 
   it('formats a local calendar date and replaces an invalid value', () => {

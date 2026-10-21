@@ -1,6 +1,7 @@
 import { execFileSync } from 'child_process';
 import path from 'path';
 import { expect, Locator, Page, Response } from '@playwright/test';
+import { e2eAdmin, e2eStockName } from './accounts';
 
 const backendRoot = path.resolve(process.cwd(), '../smartbox-back');
 
@@ -56,6 +57,7 @@ export const expectApiOk = async (response: Response) => {
   expect(response.ok()).toBeTruthy();
   expect(body.result).toBe(1);
   expect(body.error_code).toBeUndefined();
+  return body;
 };
 
 export const readApiResponse = (
@@ -110,22 +112,72 @@ export const openMyBox = async (page: Page, identifier: string) => {
   await page.getByRole('link', { name: new RegExp(identifier) }).click();
 };
 
-const ipgPaymentUrl =
-  /https:\/\/(?:test|www)\.ipg-online\.com\/connect\/gateway\/processing/;
+export const logout = async (page: Page) => {
+  const loggedOut = page.waitForResponse(
+    (response) =>
+      response.url().includes('auth/logout') && response.request().method() === 'GET',
+  );
+  await page.getByRole('button', { name: 'Wyloguj' }).click();
+  await loggedOut;
+  await page.goto('/login');
+};
 
-export const acceptAgreementAndPay = async (page: Page) => {
+export const rentStatus = (page: Page) =>
+  page.locator('.row').filter({ hasText: 'Status wynajmu:' }).locator('.row-content');
+
+export const rentFinish = (page: Page) =>
+  page.locator('.row').filter({ hasText: 'Data zakończenia:' }).locator('.row-content');
+
+const pendingPayments = (page: Page, email: string) =>
+  page
+    .getByRole('row')
+    .filter({ hasText: email })
+    .filter({
+      has: page.getByRole('button', { name: 'Wymuś akceptację płatności' }),
+    });
+
+export const forceAcceptPayments = async (page: Page, email: string, count = 1) => {
+  await page.goto('/client/locations/stocks/list');
+  await page
+    .getByRole('row', { name: new RegExp(e2eStockName) })
+    .getByRole('button', { name: 'Zarządzaj' })
+    .click();
+  await page.getByRole('link', { name: 'Płatności', exact: true }).click();
+  await expect(pendingPayments(page, email)).toHaveCount(count);
+
+  for (let left = count; left > 0; left -= 1) {
+    await pendingPayments(page, email)
+      .first()
+      .getByRole('button', { name: 'Wymuś akceptację płatności' })
+      .click();
+    const forced = page.waitForResponse(
+      (response) =>
+        response.url().includes('rent/payment/force/') &&
+        response.request().method() === 'POST',
+    );
+    await page.getByRole('button', { name: 'Tak' }).click();
+    await expectApiOk(await forced);
+    await expect(pendingPayments(page, email)).toHaveCount(left - 1);
+  }
+};
+
+export const confirmPaymentAsAdmin = async (page: Page, email: string, count = 1) => {
+  await logout(page);
+  await login(page, e2eAdmin.email, e2eAdmin.password, /\/client/);
+  await forceAcceptPayments(page, email, count);
+  await logout(page);
+};
+
+export const reachPaymentRedirect = async (page: Page) => {
   await page.getByText('Akceptuję warunki Umowy').click();
   const pay = page.getByRole('button', { name: 'Przejdź do płatności' });
   await expect(pay).toBeEnabled();
-  const sentToIpg = page.waitForRequest(
-    (request) => request.method() === 'POST' && ipgPaymentUrl.test(request.url()),
+  const redirect = page.waitForRequest((request) =>
+    request.url().includes('rent/ipg-redirect/'),
   );
-  await pay.click();
-  expect((await sentToIpg).url()).toMatch(ipgPaymentUrl);
-  await page.waitForURL(/https:\/\/(?:test|www)\.ipg-online\.com\//, {
-    waitUntil: 'commit',
-    timeout: 30_000,
-  });
+  await pay.click({ noWaitAfter: true });
+  await redirect;
+  await page.goto('/user');
 };
 
 export const submitExtensionPayment = async (page: Page) => {
@@ -135,7 +187,7 @@ export const submitExtensionPayment = async (page: Page) => {
   ).toBeVisible();
   await page.getByRole('button', { name: 'Przejdź do umowy' }).click();
   await expect(page.getByRole('heading', { name: 'Umowa wynajmu' })).toBeVisible();
-  await acceptAgreementAndPay(page);
+  await reachPaymentRedirect(page);
 };
 
 export const clickNext = async (page: Page) => {

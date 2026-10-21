@@ -1,15 +1,18 @@
 // import * as errorTranslations from '../data/errorsTranslations.json';
  
 import { ApiErrorCode } from 'smartbox-types';
+import { currentAppLanguage } from '../i18n/app-language';
 
 import errors from '../data/errorsTranslations.json';
 // JK: dont know why, but works. Sholud be import..
 
-export function formOnTranslateString(s: string, params?: unknown[]): string {
-    const pl = (errors as unknown as { pl?: Record<string, string> }).pl;
+const catalogs = errors as unknown as Record<string, Record<string, string>>;
 
-    if (!pl?.[s]) return s;
-    const translated = pl[s];
+export function formOnTranslateString(s: string, params?: unknown[]): string {
+    const lang = currentAppLanguage();
+    const translated = catalogs[lang]?.[s] ?? catalogs.pl?.[s];
+
+    if (!translated || typeof translated !== 'string') return s;
 
     if (params && translated) {
         return translated.replace(/{(\d+)}/g, (match: string, number: string) => {

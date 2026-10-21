@@ -7,6 +7,7 @@ import { PageContent } from 'src/components/Branded';
 import { List } from 'src/icons';
 import { __ } from 'src/helpers/i18n';
 import { AppMessage } from 'src/components/AppMessage';
+import { LanguageSwitcher } from 'src/components/LanguageSwitcher';
 
 interface Props {
   children: ReactNode;
@@ -163,6 +164,7 @@ export const DashboardContainer = ({ children, sidebar }: Props) => {
     return (
       <>
         <AppMessage />
+        <LanguageSwitcher />
         {pageContent}
       </>
     );
@@ -171,6 +173,7 @@ export const DashboardContainer = ({ children, sidebar }: Props) => {
   return (
     <StyledDashboardShell>
       <AppMessage />
+
       <StyledDashboardContent>
         <StyledSidebarBackdrop
           type="button"
@@ -180,7 +183,10 @@ export const DashboardContainer = ({ children, sidebar }: Props) => {
           onClick={() => setMobileNavOpen(false)}
         />
         <StyledSidebarSlot $open={mobileNavOpen}>{sidebar}</StyledSidebarSlot>
-        <StyledPageContentArea>{pageContent}</StyledPageContentArea>
+        <StyledPageContentArea>
+          <LanguageSwitcher />
+          {pageContent}
+        </StyledPageContentArea>
         <StyledMobileMenuFab>
           <StyledMenuButton
             type="button"

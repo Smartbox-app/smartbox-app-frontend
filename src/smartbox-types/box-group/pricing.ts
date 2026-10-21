@@ -9,13 +9,19 @@ export enum PricingType {
   Year = 'year',
 }
 
+export interface PriceThreshold {
+  boxesLeft: number | null;
+  price: number | null;
+}
+
 export interface SinglePricing {
   type: PricingType;
   quantity: number | null;
   price: number | null;
+  thresholds?: PriceThreshold[];
 }
 
-export type SinglePricingForUser = SinglePricing & {
+export type SinglePricingForUser = Omit<SinglePricing, 'thresholds'> & {
   display: PriceDisplayForClients;
   netPrice: number;
   grossPrice: number;

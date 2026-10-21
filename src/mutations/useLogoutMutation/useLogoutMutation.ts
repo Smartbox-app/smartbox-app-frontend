@@ -4,6 +4,9 @@ import { useDispatch } from 'react-redux';
 import { notifications, order } from 'src/actions';
 import { Capacitor } from '@capacitor/core';
 import { Preferences } from '@capacitor/preferences';
+import i18next from 'i18next';
+import SessionService from 'src/services/session-service';
+import { detectBrowserLanguage } from 'src/i18n/app-language';
 
 export const useLogoutMutation = () => {
   const queryClient = useQueryClient();
@@ -30,7 +33,14 @@ export const useLogoutMutation = () => {
       return response;
     },
     onSuccess: () => {
+      SessionService.clearCurrentLanguage();
       queryClient.setQueryData(['my-details'], () => null);
+
+      const browserLang = detectBrowserLanguage();
+      const active = i18next.language?.toLowerCase().split('-')[0];
+      if (active !== browserLang) {
+        window.location.reload();
+      }
     },
   });
 };

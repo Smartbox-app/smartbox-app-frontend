@@ -205,7 +205,7 @@ export const RentHistory = ({
                             <strong>{formatPrice(period.value)}</strong> -{' '}
                             {period.paid
                               ? __('application.periodPaid')
-                              : __('application.periodUnpaid')}
+                              : <>{__('application.periodUnpaid')} ({__('application.periodPaymentTo', { date: dateOnly(period.paymentTo) })})</>}
                           </StyledSinglePaymentPeriod>
                         );
                       })}

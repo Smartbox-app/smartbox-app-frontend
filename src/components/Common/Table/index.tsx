@@ -110,7 +110,11 @@ const formatValue = (
       if (value === null || value === undefined) {
         return __('application.notEstablished');
       }
-      if (value instanceof Date || typeof value === 'string') {
+      if (
+        value instanceof Date ||
+        typeof value === 'string' ||
+        typeof value === 'number'
+      ) {
         return fullDate(value);
       }
       return __('application.notEstablished');

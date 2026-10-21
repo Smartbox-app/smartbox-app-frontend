@@ -138,7 +138,7 @@ const List = () => {
       mobile: true,
       customRender: (value, field, boxData: BoxListRes) => (
         <ButtonsContainer noWrap>
-          {stock?.boxAccessControl === AccessControl.ksm && boxData.controlled ? (
+          {stock?.boxAccessControl && [AccessControl.keylessbox, AccessControl.ksm].includes(stock.boxAccessControl) && boxData.controlled ? (
             <Button
               text="application.openBox"
               click={() => confirmBoxOpen(boxData.id)}

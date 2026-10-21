@@ -625,9 +625,11 @@ Avoid array indexes as keys unless the list is genuinely static and cannot chang
 
 ## Component Files
 
-Prefer one main React component per file.
+Only one React component per file is allowed.
 
-Supporting types, constants, and small helpers may live in the same file when they are tightly coupled to that component.
+Do not declare a second function or class component in the same file. Extract it.
+
+Supporting types, constants, pure functions, and styled-components used only by that component may live in the same file.
 
 Example:
 
@@ -654,6 +656,28 @@ UserCard/
 ```
 
 rather than large generic component files.
+
+---
+
+## User-Facing Text
+
+Any new user-facing text must be added to `src/i18n/locales/pl/application.ts`.
+
+Do not hardcode labels, messages, placeholders, or button copy in components.
+
+Read the string with `__()` from `src/helpers/i18n`:
+
+```tsx
+__('application.editUserData')
+```
+
+When a prop already translates its value, pass the key:
+
+```tsx
+<Button text="application.save" />
+```
+
+Leave technical values in code: URLs, form ids, route paths, and test ids.
 
 ---
 
@@ -690,6 +714,8 @@ Every extracted component should have a meaningful responsibility or reusable pu
 Avoid:
 
 * class components in new code
+* more than one React component in a file
+* hardcoded user-facing text
 * giant components
 * components with multiple unrelated responsibilities
 * API implementation details inside presentational components

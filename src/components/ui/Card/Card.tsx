@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { AriaRole, ReactNode } from 'react';
 import styled from 'styled-components';
 import { CardBackground } from './components/CardBackground';
 
@@ -30,6 +30,9 @@ export type CardProps = {
   active?: boolean;
   image?: ReactNode;
   children?: ReactNode;
+  role?: AriaRole;
+  'aria-label'?: string;
+  className?: string;
 };
 
 export const Card = ({
@@ -40,9 +43,12 @@ export const Card = ({
   image,
   active,
   children,
+  role,
+  className,
+  'aria-label': ariaLabel,
 }: CardProps) => {
   return (
-    <StyledCard>
+    <StyledCard role={role} aria-label={ariaLabel} className={className}>
       <CardBackground
         image={image}
         disabled={disabled}

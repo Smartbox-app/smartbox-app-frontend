@@ -1,5 +1,6 @@
 export * from './useLoginMutation';
 export * from './useLogoutMutation';
+export * from './useUpdateMyLangMutation';
 export * from './useDiscountCodeMutation';
 export * from './useRegisterMutation';
 export * from './useActivateUserByCodeMutation';

@@ -55,7 +55,7 @@ export const clampedFixedTermEndDate = (
 export const isPeriodWithinConfiguredBounds = (
   difference: number,
   minRentPeriod: number,
-  maxRentPeriod: number,
+  maxRentPeriod: number | null,
   rentPaymentType: RentPaymentType | null,
   minRentDaysForInstallments: number | null,
 ) => {
@@ -66,7 +66,9 @@ export const isPeriodWithinConfiguredBounds = (
   )
     return false;
 
+
   if (difference < minRentPeriod - 1) return false;
+  if (maxRentPeriod === null || maxRentPeriod === 0) return true;
   if (difference > maxRentPeriod - 1) return false;
   return true;
 };
@@ -82,8 +84,7 @@ export const isNewRentPeriodAcceptable = (input: {
 }) => {
   if (!input.startDate) return false;
   if (input.isOpenEnded) return true;
-  if (!input.endDate || !input.minRentPeriod || input.maxRentPeriod === null)
-    return false;
+  if (!input.endDate || !input.minRentPeriod) return false;
 
   return isPeriodWithinConfiguredBounds(
     differenceInCalendarDays(input.endDate, input.startDate),

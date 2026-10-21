@@ -1,8 +1,10 @@
 import React from 'react';
 import Flatpickr from 'react-flatpickr';
 
-import flatpickr from 'flatpickr'; // Check out other cool Themes: https://flatpickr.js.org/themes/
-import { Polish } from 'flatpickr/dist/l10n/pl';
+import {
+  applyFlatpickrLocale,
+  flatpickrLocale,
+} from 'src/i18n/flatpickr-locale';
 
 import { __ } from '../../../helpers/i18n';
 import styled from 'styled-components';
@@ -22,8 +24,7 @@ import {
 } from '../input-sizes';
 import { StyledFieldContainer } from '../input-styled';
 
-flatpickr.localize(Polish);
-flatpickr.defaultConfig.time_24hr = true;
+applyFlatpickrLocale();
 
 interface Props extends InputSizeProps {
   name: string;
@@ -145,7 +146,7 @@ const DateInput = ({
           allowInput,
           inline,
           enableTime: false,
-          locale: 'pl',
+          locale: flatpickrLocale(),
           ...(allowInput ? { dateFormat: 'd.m.Y' } : {}),
           minDate,
           maxDate,

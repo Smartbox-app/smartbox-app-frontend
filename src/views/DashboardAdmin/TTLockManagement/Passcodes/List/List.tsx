@@ -23,15 +23,31 @@ export const List = () => {
       field: 'actions',
       type: FieldType.Custom,
       mobile: true,
-      customRender: (value, field, passcode: TTLockPasscode) => (
-        <ButtonsContainer noWrap>
-          <Button
-            variant="error"
-            text="application.delete"
-            onClick={() => confirmPasscodeDelete(passcode.keyboardPwdId)}
-          />
-        </ButtonsContainer>
-      ),
+      customRender: (value, field, passcode: TTLockPasscode) => {
+        const dates = new URLSearchParams();
+        if (passcode.startDate) dates.set('startDate', String(passcode.startDate));
+        if (passcode.endDate) dates.set('endDate', String(passcode.endDate));
+        const query = dates.toString();
+
+        return (
+          <ButtonsContainer noWrap>
+            <Button
+              variant="secondary"
+              text="application.editPasscode"
+              to={`/admin/drivers/locks/${lockId}/passcodes/${passcode.keyboardPwdId}/edit${
+                query ? `?${query}` : ''
+              }`}
+            />
+            {!passcode.assignedToRent && (
+              <Button
+                variant="error"
+                text="application.delete"
+                onClick={() => confirmPasscodeDelete(passcode.keyboardPwdId)}
+              />
+            )}
+          </ButtonsContainer>
+        );
+      },
     },
   );
 

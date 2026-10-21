@@ -129,6 +129,12 @@ class FileInput extends React.Component<Props, State> {
     return this.props.hasImage || this.props.input.value;
   };
 
+  private onZoneKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (event.key !== 'Enter' && event.key !== ' ') return;
+    event.preventDefault();
+    event.currentTarget.querySelector<HTMLInputElement>('input[type="file"]')?.click();
+  };
+
   private onDragEnter = (event: React.DragEvent) => {
     event.preventDefault();
     this.setState({
@@ -295,6 +301,9 @@ class FileInput extends React.Component<Props, State> {
             <span className="input-name">{this.props.placeholder} </span>
             <div
               className={`file-wrapper ${this.hasImage() ? 'has-image' : ''}`}
+              role="button"
+              tabIndex={0}
+              onKeyDown={this.onZoneKeyDown}
               onDrop={this.onDrop}
               onDragEnter={this.onDragEnter}
               onDragOver={this.onDragEnter}
@@ -346,7 +355,14 @@ class FileInput extends React.Component<Props, State> {
 
         <ul>
           {loadedFiles.map((file, index) => (
-            <li className="single-selected-file" key={index}>
+            <li
+              className="single-selected-file"
+              key={
+                typeof file === 'string'
+                  ? file
+                  : `${file.name}-${file.lastModified}-${file.size}`
+              }
+            >
               {typeof file === 'string' && (
                 <img
                   className="single-selected-file-preview"

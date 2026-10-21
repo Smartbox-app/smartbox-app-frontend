@@ -1,14 +1,16 @@
 import { expect, test } from '@playwright/test';
+import { e2eBoxGroupName, e2eOpenEnded, e2eStockName } from './accounts';
 import {
-  e2eBoxGroupName,
-  e2eOpenEnded,
-  e2eStockName,
-} from './accounts';
-import { acceptAgreementAndPay, clickNext, expectApiOk, login } from './helpers';
+  clickNext,
+  confirmPaymentAsAdmin,
+  expectApiOk,
+  login,
+  reachPaymentRedirect,
+  rentStatus,
+} from './helpers';
 
-test('creates an open-ended rent and redirects to the payment gateway', async ({
-  page,
-}) => {
+test('creates an open-ended rent after the payment is accepted', async ({ page }) => {
+  test.setTimeout(120_000);
   await login(page, e2eOpenEnded.email, e2eOpenEnded.password, /\/user/);
   await page.getByRole('button', { name: 'Nowy minimagazyn' }).click();
 
@@ -24,9 +26,7 @@ test('creates an open-ended rent and redirects to the payment gateway', async ({
 
   await expect(page.getByRole('heading', { name: 'Rodzaj umowy' })).toBeVisible();
   await page.getByText('Umowa bezterminowa', { exact: true }).click();
-  await expect(
-    page.getByText('Umowa bezterminowa. Okres trwa 30 dni'),
-  ).toBeVisible();
+  await expect(page.getByText('Umowa bezterminowa. Okres trwa 30 dni')).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Cena brutto za okres' })).toBeVisible();
   await clickNext(page);
 
@@ -39,8 +39,23 @@ test('creates an open-ended rent and redirects to the payment gateway', async ({
   );
   await page.getByRole('button', { name: 'Przejdź do umowy' }).click();
 
-  await expectApiOk(await rentCreated);
+  const created = await expectApiOk(await rentCreated);
+  const rentId = (created.payload as { rentId?: string }).rentId;
+  expect(rentId).toBeTruthy();
   await expect(page.getByRole('heading', { name: 'Umowa wynajmu' })).toBeVisible();
   await expect(page.getByText(/Zarezerwowano minimagazyn/)).toBeVisible();
-  await acceptAgreementAndPay(page);
+  await reachPaymentRedirect(page);
+  await confirmPaymentAsAdmin(page, e2eOpenEnded.email);
+
+  await login(page, e2eOpenEnded.email, e2eOpenEnded.password, /\/user/);
+  const rented = page.locator(`a[href*="/single-rent/${rentId}"]`);
+  await expect(async () => {
+    await page.goto('/user');
+    await expect(rented).toBeVisible();
+  }).toPass();
+  await rented.click();
+  await expect(rentStatus(page)).toHaveText('Wynajęty');
+  await expect(
+    page.locator('.row').filter({ hasText: 'Rodzaj umowy:' }).locator('.row-content'),
+  ).toHaveText('Umowa bezterminowa');
 });
