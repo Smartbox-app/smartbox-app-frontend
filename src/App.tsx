@@ -40,6 +40,9 @@ import { AppGlobalStyles } from './AppGlobalStyles';
 import countries from 'i18n-iso-countries';
 import pl from 'i18n-iso-countries/langs/pl.json';
 import en from 'i18n-iso-countries/langs/en.json';
+import cs from 'i18n-iso-countries/langs/cs.json';
+import uk from 'i18n-iso-countries/langs/uk.json';
+import de from 'i18n-iso-countries/langs/de.json';
 import { PrivacyPolicy } from './views/PrivacyPolicy';
 import { Rules } from './views/Rules';
 import { Browser } from '@capacitor/browser';
@@ -76,6 +79,9 @@ applyFlatpickrLocale();
 
 countries.registerLocale(pl);
 countries.registerLocale(en);
+countries.registerLocale(cs);
+countries.registerLocale(uk);
+countries.registerLocale(de);
 
 CapacitorApp.addListener('appUrlOpen', async ({ url }) => {
   try {

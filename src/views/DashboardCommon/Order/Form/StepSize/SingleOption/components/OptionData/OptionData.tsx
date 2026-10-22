@@ -1,4 +1,5 @@
 import { BoxGroupUserRes } from 'smartbox-types';
+import { __ } from 'src/helpers/i18n';
 import { Area, Cube } from 'src/icons';
 import { colorOrDark } from 'src/utils/color';
 import styled from 'styled-components';
@@ -58,8 +59,11 @@ export const OptionData = ({ option, disable }: OptionDataProps) => {
         </StyledInfoGroup>
         {option.height && option.width && option.depth ? (
           <StyledSingleInfo>
-            sz. <strong>{option.width}m</strong> x gł.{' '}
-            <strong>{option.depth}m</strong> x wys.{' '}
+            {__('application.phrases.sizeWidth')}{' '}
+            <strong>{option.width}m</strong> x{' '}
+            {__('application.phrases.sizeDepth')}{' '}
+            <strong>{option.depth}m</strong> x{' '}
+            {__('application.phrases.sizeHeight')}{' '}
             <strong>{option.height}m</strong>
           </StyledSingleInfo>
         ) : null}

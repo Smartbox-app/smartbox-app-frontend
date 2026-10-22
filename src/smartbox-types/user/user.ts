@@ -153,6 +153,7 @@ export interface AddUserByAdminReq {
   firstName: string;
   lastName: string;
   tenantId?: string;
+  lang?: Language;
 }
 
 export interface ActivateUserReq {
@@ -199,6 +200,7 @@ export interface AddTenantReq {
   phone: string;
   firstName: string;
   lastName: string;
+  lang?: Language;
 }
 
 export interface ChangeRoleReq {

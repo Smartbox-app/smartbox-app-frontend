@@ -4,7 +4,7 @@ export const documentListClient: TableSchema = {
   countPerPage: 20,
   fields: [
     {
-      name: 'ID',
+      name: 'application.tables.id',
       field: 'id',
       mobile: true,
       searchable: false,
@@ -14,7 +14,7 @@ export const documentListClient: TableSchema = {
       alias: 'document',
     },
     {
-      name: 'Data modyfikacji',
+      name: 'application.tables.modified',
       field: 'updatedAt',
       mobile: true,
       searchable: false,
@@ -24,7 +24,7 @@ export const documentListClient: TableSchema = {
       alias: 'document',
     },
     {
-      name: 'Typ',
+      name: 'application.tables.type',
       field: 'type',
       mobile: true,
       searchable: false,
@@ -34,7 +34,7 @@ export const documentListClient: TableSchema = {
       alias: 'document',
     },
     {
-      name: 'Plac',
+      name: 'application.tables.site',
       field: 'stockName',
       mobile: true,
       searchable: true,
@@ -44,7 +44,7 @@ export const documentListClient: TableSchema = {
       alias: 'stock',
     },
     {
-      name: 'Rozliczenie',
+      name: 'application.tables.settlement',
       field: 'companyName',
       mobile: true,
       searchable: true,
@@ -54,7 +54,7 @@ export const documentListClient: TableSchema = {
       alias: 'company',
     },
     {
-      name: 'Status',
+      name: 'application.tables.status',
       field: 'isDraft',
       mobile: true,
       searchable: false,
@@ -65,4 +65,3 @@ export const documentListClient: TableSchema = {
     },
   ],
 };
-

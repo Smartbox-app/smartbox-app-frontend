@@ -4,7 +4,7 @@ export const companyList: TableSchema = {
   countPerPage: 20,
   fields: [
     {
-      name: 'Nazwa',
+      name: 'application.tables.name',
       field: 'name',
       mobile: true,
       searchable: true,

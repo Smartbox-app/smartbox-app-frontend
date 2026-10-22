@@ -4,7 +4,7 @@ export const lockGroupsList: TableSchema = {
   countPerPage: 20,
   fields: [
     {
-      name: 'ID',
+      name: 'application.tables.id',
       field: 'groupId',
       mobile: true,
       searchable: false,
@@ -13,7 +13,7 @@ export const lockGroupsList: TableSchema = {
       type: FieldType.Text,
     },
     {
-      name: 'Nazwa',
+      name: 'application.tables.name',
       field: 'name',
       mobile: true,
       searchable: false,

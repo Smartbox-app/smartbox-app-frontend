@@ -2,6 +2,7 @@ import React from 'react';
 
 import './SingleDepartment.scss';
 import { Link } from '../../../../components/ui';
+import { __ } from '../../../../helpers/i18n';
 
 interface Props {
   name: string;
@@ -12,14 +13,21 @@ interface Props {
   openHour?: string;
 }
 
-const SingleDepartment = ({ name, phone, mail, organisationRole, closeHour, openHour }: Props) => (
+const SingleDepartment = ({
+  name,
+  phone,
+  mail,
+  organisationRole,
+  closeHour,
+  openHour,
+}: Props) => (
   <div className="department">
     <div className="content">
       <p className="department-row main">
-        <strong>{name}</strong>
+        <strong>{name ? __(name) : null}</strong>
       </p>
       <p className="department-row organisation-role">
-        {organisationRole}{' '}
+        {organisationRole ? __(organisationRole) : null}{' '}
         {closeHour && (
           <>
             <br />{' '}

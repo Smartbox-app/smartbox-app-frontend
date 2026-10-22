@@ -1,3 +1,5 @@
+import { Language } from '../user/user-entity';
+
 export enum TemplateType {
   USER_BLOCKED_SMS = 'user_blocked_sms',
   USER_UNBLOCKED_SMS = 'user_unblocked_sms',
@@ -88,6 +90,13 @@ export const stockScopedTemplateTypes = new Set(
 export const isStockScopedTemplate = (type: TemplateType) =>
   stockScopedTemplateTypes.has(type);
 
+const languageCodes = new Set<string>(Object.values(Language));
+
+export const templateLanguage = (value: unknown): Language =>
+  typeof value === 'string' && languageCodes.has(value)
+    ? (value as Language)
+    : Language.pl;
+
 export type TemplateStockRef = {
   id: string;
   name: string;
@@ -97,6 +106,7 @@ export type TemplateEntity = {
   type: TemplateType;
   content: string;
   tenantId: string;
+  lang: Language;
   image?: string;
 };
 
@@ -106,6 +116,7 @@ export type TemplateListItem = TemplateEntity & {
 };
 
 export type TemplateReq = Pick<TemplateEntity, 'content' | 'image'> & {
+  lang?: Language;
   stockIds?: string[] | string;
 };
 
@@ -113,8 +124,10 @@ export type TemplateListRow = {
   id: string;
   type: TemplateType;
   channel: 'email' | 'sms';
+  lang: Language;
   stockNames: string;
   forStock: boolean;
   isDefault: boolean;
   canOverride: boolean;
+  content?: string;
 };

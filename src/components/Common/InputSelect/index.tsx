@@ -85,11 +85,20 @@ const InputSelect = ({
     [theme, resolvedSize, invalid, isDisabled],
   );
 
+  const translatedOptions = options.map((option) => ({
+    ...option,
+    label: __(String(option.label)),
+  }));
+
   const getSelectedValue = () => {
     if (multiple) {
       const values = Array.isArray(value) ? value : [];
       return values.map((val) => {
-        const found = options.find((opt) => opt.value === (val as unknown as InputSelectOption).value || opt.value === val);
+        const found = translatedOptions.find(
+          (opt) =>
+            opt.value === (val as unknown as InputSelectOption).value ||
+            opt.value === val,
+        );
 
         if (found) return found;
         return { label: String(val), value: val };
@@ -100,7 +109,7 @@ const InputSelect = ({
       return null;
     }
 
-    const found = options.find((opt) => opt.value === value);
+    const found = translatedOptions.find((opt) => opt.value === value);
     if (found) return found;
 
     if (allowCustomValue) {
@@ -110,7 +119,9 @@ const InputSelect = ({
     return null;
   };
 
-  const handleChange = (val: null | InputSelectOption | InputSelectOption[]) => {
+  const handleChange = (
+    val: null | InputSelectOption | InputSelectOption[],
+  ) => {
     if (multiple) {
       const selected = (val as InputSelectOption[]) || [];
       onChange(selected.map((item) => item.value));
@@ -144,17 +155,19 @@ const InputSelect = ({
         (value ?? null) as InputSelectOption | InputSelectOption[] | null,
       ),
     onBlur,
-    options,
+    options: translatedOptions,
     isClearable,
     isMulti: multiple,
     placeholder: placeholder ? __(placeholder) : __('application.select'),
     noOptionsMessage: () => __('application.selectNoOptions'),
     formatCreateLabel: creatable
-      ? formatCreateLabel ??
+      ? (formatCreateLabel ??
         ((input: string) =>
-          `${__('application.inviteUsersAddEmail')}: ${input}`)
+          `${__('application.inviteUsersAddEmail')}: ${input}`))
       : undefined,
-    isValidNewOption: creatable ? isValidNewOption ?? (() => true) : undefined,
+    isValidNewOption: creatable
+      ? (isValidNewOption ?? (() => true))
+      : undefined,
     onCreateOption: creatable
       ? (input: string) => {
           if (onCreateOption) {

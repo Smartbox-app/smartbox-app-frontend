@@ -7,7 +7,7 @@ import {
   IsUUID,
   ValidateIf,
 } from 'class-validator';
-import { UserRole } from 'smartbox-types';
+import { Language, UserRole } from 'smartbox-types';
 import { errors } from 'src/validation/errors';
 
 export class InviteUserFormDto {
@@ -19,6 +19,10 @@ export class InviteUserFormDto {
   @IsEnum(UserRole, { message: errors.field_required })
   @IsNotEmpty({ message: errors.field_required })
   role: UserRole;
+
+  @IsEnum(Language, { message: errors.field_required })
+  @IsNotEmpty({ message: errors.field_required })
+  lang: Language;
 
   @ValidateIf((o: InviteUserFormDto) => o.requireTenantId === true)
   @IsUUID('4', { message: errors.field_required })

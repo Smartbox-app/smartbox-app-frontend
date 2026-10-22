@@ -4,7 +4,7 @@ export const giftsListTable: TableSchema = {
   countPerPage: 20,
   fields: [
     {
-      name: 'Kod',
+      name: 'application.tables.code',
       field: 'code',
       mobile: true,
       searchable: true,
@@ -13,7 +13,7 @@ export const giftsListTable: TableSchema = {
       type: FieldType.Text,
     },
     {
-      name: 'Data rozpoczęcia',
+      name: 'application.tables.startDate',
       field: 'startAt',
       mobile: true,
       searchable: true,
@@ -22,7 +22,7 @@ export const giftsListTable: TableSchema = {
       type: FieldType.Date,
     },
     {
-      name: 'Data wygaśnięcia',
+      name: 'application.tables.expirationDate',
       field: 'expireAt',
       mobile: true,
       searchable: true,
@@ -32,7 +32,7 @@ export const giftsListTable: TableSchema = {
     },
 
     {
-      name: 'Grupa',
+      name: 'application.tables.group',
       field: 'group',
       mobile: true,
       searchable: false,
@@ -41,7 +41,7 @@ export const giftsListTable: TableSchema = {
       type: FieldType.Text,
     },
     {
-      name: 'Typ',
+      name: 'application.tables.type',
       field: 'type',
       mobile: true,
       searchable: true,
@@ -50,7 +50,7 @@ export const giftsListTable: TableSchema = {
       type: FieldType.Text,
     },
     {
-      name: 'Aktywny',
+      name: 'application.tables.active',
       field: 'active',
       mobile: true,
       searchable: true,
@@ -59,7 +59,7 @@ export const giftsListTable: TableSchema = {
       type: FieldType.Boolean,
     },
     {
-      name: 'Tylko dla nowych klientów',
+      name: 'application.tables.newClientsOnly',
       field: 'newClientsOnly',
       mobile: true,
       searchable: true,
@@ -68,7 +68,7 @@ export const giftsListTable: TableSchema = {
       type: FieldType.Boolean,
     },
     {
-      name: 'Maksymalnie użyć',
+      name: 'application.tables.maxUses',
       field: 'count',
       mobile: true,
       searchable: true,
@@ -77,7 +77,7 @@ export const giftsListTable: TableSchema = {
       type: FieldType.Text,
     },
     {
-      name: 'Pozostało użyć',
+      name: 'application.tables.usesLeft',
       field: 'countLeft',
       mobile: true,
       searchable: true,
@@ -86,7 +86,7 @@ export const giftsListTable: TableSchema = {
       type: FieldType.Text,
     },
     {
-      name: 'Minimalny okres wynajmu',
+      name: 'application.tables.minRentPeriod',
       field: 'minRentPeriod',
       mobile: true,
       searchable: true,
@@ -95,7 +95,7 @@ export const giftsListTable: TableSchema = {
       type: FieldType.Text,
     },
     {
-      name: 'Na okres',
+      name: 'application.tables.forPeriod',
       field: 'duration',
       mobile: true,
       searchable: true,
@@ -104,7 +104,7 @@ export const giftsListTable: TableSchema = {
       type: FieldType.Text,
     },
     {
-      name: 'Zniżka',
+      name: 'application.tables.discount',
       field: 'discount',
       mobile: true,
       searchable: true,

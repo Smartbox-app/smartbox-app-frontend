@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ApplicationState } from '../../../../../../reducers';
 import { order } from '../../../../../../actions';
 import { CheckBox } from '../../../../../../components/Common';
+import { __ } from 'src/helpers/i18n';
 import { useTenant } from 'src/hooks/useTenant';
 
 const ScrollPosition = () => {
@@ -18,7 +19,9 @@ const ScrollPosition = () => {
         name="resignation"
         checked={isResignationMarked}
         handleChange={() => dispatch(order.formResignationMarked())}
-        label={`Akceptuję warunki Umowy i zgadzam się na rozpoczęcie świadczenia usług ${tenant?.name} przed upływem terminu do odstąpienia od Umowy`}
+        label={__('application.phrases.agreementEarlyStart', {
+          name: tenant?.name ?? '',
+        })}
       />
     </>
   );

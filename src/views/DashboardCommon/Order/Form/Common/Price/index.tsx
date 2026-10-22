@@ -83,7 +83,13 @@ const Price = () => {
         (rentPricesPerPeriod[0]?.gross || 0) +
         (addonsPricesPerPeriod[0]?.gross || 0),
     };
-  }, [addonsPricesPerPeriod, rentPricesPerPeriod, startDate, endDate, isOpenEnded]);
+  }, [
+    addonsPricesPerPeriod,
+    rentPricesPerPeriod,
+    startDate,
+    endDate,
+    isOpenEnded,
+  ]);
 
   const headerTitle = useMemo(() => {
     const { display } = calculatedPrice[0];
@@ -136,7 +142,7 @@ const Price = () => {
       <Header variant="h2">{headerTitle}</Header>
       {priceInfo}
       {rentPaymentType === 'installments' ? (
-        <p>Zaprezentowana kwota to wartość pierwszego okresu wynajmu.</p>
+        <p>{t('application.phrases.firstPeriodAmount')}</p>
       ) : null}
     </Section>
   );

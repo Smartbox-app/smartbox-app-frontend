@@ -1,10 +1,11 @@
+import { SUPPORTED_LANGUAGES } from '../i18n/app-language';
 import { i18next } from '../i18n/i18n';
 import SessionService from '../services/session-service';
 
 export class I18n {
   loaded = true;
 
-  langNames = ['pl', 'en'];
+  langNames = SUPPORTED_LANGUAGES;
 
   currentLang: string | null = i18next.language;
 

@@ -3,6 +3,7 @@ import { useTenant } from 'src/hooks/useTenant';
 import { hasMobileAppIosLink } from 'src/utils/tenant-mobile-app-links';
 
 import './BanneriOS.scss';
+import { __ } from 'src/helpers/i18n';
 import { IOSShare } from 'src/icons';
 
 const BannerIos = () => {
@@ -45,11 +46,12 @@ const BannerIos = () => {
     <div className="banner-ios">
       <div className="banner-text">
         <div>
-          <strong>Zainstaluj aplikację</strong>. Naciśnij{' '}
+          <strong>{__('application.phrases.installApp')}</strong>.{' '}
+          {__('application.phrases.installPress')}{' '}
           <div className="banner-icon">
             <IOSShare />
           </div>{' '}
-          i &quot;dodaj do ekranu początkowego&quot;
+          {__('application.phrases.installIos')}
         </div>
         <button onClick={hide} className="banner-close">
           &times;

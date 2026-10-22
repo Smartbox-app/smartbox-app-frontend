@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { TemplateListRow } from 'smartbox-types';
+import { templateLanguage, TemplateListRow } from 'smartbox-types';
 import { Button } from 'src/components/Branded';
 import { Alert } from 'src/components/Common';
 import { Header, Section } from 'src/components/ui';
@@ -8,13 +8,16 @@ import { SingleTemplate } from '../SingleTemplate';
 import { TemplateChannelGroup } from '../types';
 import { ButtonsContainer } from 'src/components/Layout';
 
+const withLang = (path: string, lang: TemplateListRow['lang']) =>
+  `${path}?lang=${templateLanguage(lang)}`;
+
 const editTo = (basePath: string, row: TemplateListRow) =>
   row.forStock
     ? `${basePath}/manage/${row.channel}/${row.type}/stock/${row.id}`
-    : `${basePath}/manage/${row.channel}/${row.type}`;
+    : withLang(`${basePath}/manage/${row.channel}/${row.type}`, row.lang);
 
 const overrideTo = (basePath: string, row: TemplateListRow) =>
-  `${basePath}/manage/${row.channel}/${row.type}/stock`;
+  withLang(`${basePath}/manage/${row.channel}/${row.type}/stock`, row.lang);
 
 const Group = styled('div')(({ theme }) => ({
   marginTop: theme.spacing * 4,
@@ -59,13 +62,16 @@ export const ChannelTemplates = ({
           <ul>
             <SingleTemplate
               type={channelLabel(channel)}
-              title={__('application.templateScopeAll')}
+              title={`${__('application.templateScopeAll')} · ${templateLanguage(group.generic.lang).toUpperCase()}`}
               info={__(
                 group.generic.isDefault
                   ? 'application.defaultTemplateUsed'
                   : 'application.templateSet',
               )}
               isSet={!group.generic.isDefault}
+              preview={
+                group.generic.isDefault ? group.generic.content : undefined
+              }
               even
             >
               <Button

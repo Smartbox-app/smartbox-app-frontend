@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { TemplateListRow } from 'smartbox-types';
+import { templateLanguage, TemplateListRow } from 'smartbox-types';
 import { __ } from 'src/helpers/i18n';
 import { TemplateChannelGroup } from '../types';
 
@@ -26,10 +26,21 @@ const stockNamesFor = (groups: TemplateChannelGroup<TemplateListRow>[]) => {
   return names;
 };
 
+const langCode = (lang: TemplateListRow['lang']) =>
+  templateLanguage(lang).toUpperCase();
+
 export const ChannelStatus = ({ channel, groups }: ChannelStatusProps) => {
-  const custom = groups.some((group) => !group.generic.isDefault);
+  const customGroups = groups.filter((group) => !group.generic.isDefault);
   const stockNames = stockNamesFor(groups);
   const canOverride = groups.some((group) => group.generic.canOverride);
+  const customLabel =
+    groups.length > 1 && customGroups.length > 0
+      ? `${__('application.templateSet')} (${customGroups.map((group) => langCode(group.generic.lang)).join(', ')})`
+      : __(
+          customGroups.length
+            ? 'application.templateSet'
+            : 'application.defaultTemplateUsed',
+        );
 
   return (
     <ChannelLine>
@@ -41,7 +52,7 @@ export const ChannelStatus = ({ channel, groups }: ChannelStatusProps) => {
         )}
       </strong>
       {': '}
-      {__(custom ? 'application.templateSet' : 'application.defaultTemplateUsed')}
+      {customLabel}
       {stockNames.length > 0 && ` · ${stockNames.join(', ')}`}
       {stockNames.length === 0 &&
         canOverride &&

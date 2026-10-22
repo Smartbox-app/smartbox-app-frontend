@@ -10,11 +10,11 @@ import { Spinner } from 'src/components/Branded';
 import { SocialLogin } from '@capgo/capacitor-social-login';
 
 const StyledButton = styled(Button)({
-  backgroundColor: '#fff',
-  color: '#000',
+  backgroundColor: '#db4a39',
+  color: '#fff',
   '&:hover': {
     color: '#000',
-    backgroundColor: darken(0.2, '#fff'),
+    backgroundColor: darken(0.2, '#db4a39'),
   },
 });
 

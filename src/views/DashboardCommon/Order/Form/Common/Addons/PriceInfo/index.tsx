@@ -1,12 +1,12 @@
 import React, { useMemo } from 'react';
 import {
-  AddonDynamicPricingType,
   AddonVariantPriceType,
   SingleAddonVariantForUserWithCorrectedPrice,
   PriceDisplayForClients,
 } from 'smartbox-types';
 import styled from 'styled-components';
 import { __ } from '../../../../../../../helpers/i18n';
+import { formatPeriodQuantity } from '../../../../../../../utils/format-period-quantity';
 import { formatPrice } from '../../../../../../../utils/format-price';
 import { useI18n } from 'src/i18n';
 
@@ -27,48 +27,23 @@ const StyledPriceInfo = styled('div')(({ theme }) => ({
   },
 }));
 
-const formatQuantity = (type: AddonDynamicPricingType, quantity: number) => {
-  switch (type) {
-    case AddonDynamicPricingType.Day: {
-      if (quantity > 1) return 'dni';
-      return 'dzień';
-    }
-    case AddonDynamicPricingType.Week: {
-      if (quantity >= 5) return 'tygodni';
-      if (quantity > 1) return 'tygodnie';
-      return 'tydzień';
-    }
-
-    case AddonDynamicPricingType.Month: {
-      if (quantity >= 5) return 'miesięcy';
-      if (quantity > 1) return 'miesiące';
-      return 'miesiąc';
-    }
-
-    case AddonDynamicPricingType.Quarter: {
-      if (quantity >= 5) return 'kwartałów';
-      if (quantity > 1) return 'kwartały';
-      return 'kwartał';
-    }
-
-    case AddonDynamicPricingType.HalfYear: {
-      return 'pół roku';
-    }
-
-    case AddonDynamicPricingType.Year: {
-      if (quantity >= 5) return 'lat';
-      if (quantity > 1) return 'lata';
-      return 'rok';
-    }
-  }
-};
-
 const PriceInfo = ({ variant, display }: Props) => {
-  const { priceType, netPrice: fixedNetPrice, grossPrice: fixedGrossPrice, pricing } = variant;
+  const {
+    priceType,
+    netPrice: fixedNetPrice,
+    grossPrice: fixedGrossPrice,
+    pricing,
+  } = variant;
   const { t } = useI18n();
   const priceInfo = useMemo(() => {
-    const netPrice = priceType === AddonVariantPriceType.Fixed ? fixedNetPrice : pricing[0].netPrice;
-    const grossPrice = priceType === AddonVariantPriceType.Fixed ? fixedGrossPrice : pricing[0].grossPrice;
+    const netPrice =
+      priceType === AddonVariantPriceType.Fixed
+        ? fixedNetPrice
+        : pricing[0].netPrice;
+    const grossPrice =
+      priceType === AddonVariantPriceType.Fixed
+        ? fixedGrossPrice
+        : pricing[0].grossPrice;
 
     switch (display) {
       case PriceDisplayForClients.gross:
@@ -96,9 +71,7 @@ const PriceInfo = ({ variant, display }: Props) => {
               {formatPrice(grossPrice || 0)}
             </strong>
             <span className="price-type">{t('application.gross')}</span>/
-            <span className="price-value">
-              {formatPrice(netPrice || 0)}
-            </span>
+            <span className="price-value">{formatPrice(netPrice || 0)}</span>
             <span className="price-type">{t('application.net')}</span>
           </>
         );
@@ -120,7 +93,7 @@ const PriceInfo = ({ variant, display }: Props) => {
       {priceInfo}/
       <span>
         {firstPricing.quantity}{' '}
-        {formatQuantity(firstPricing.type, firstPricing.quantity || 0)}
+        {formatPeriodQuantity(firstPricing.type, firstPricing.quantity || 0)}
       </span>
     </StyledPriceInfo>
   );

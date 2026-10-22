@@ -4,13 +4,10 @@ import { stocksList } from 'smartbox-tables';
 import { showModal } from '../../../../../actions/modal';
 import { successNotification } from '../../../../../actions/notifications';
 import ApiService from '../../../../../services/api-service';
-import { NamingType, StockAdminList, UserRole } from 'smartbox-types';
+import { StockAdminList, UserRole } from 'smartbox-types';
 import { ApiTable } from '../../../../../components/Common';
 import { Button } from '../../../../../components/Branded';
-import {
-  Section,
-  ButtonsContainer,
-} from '../../../../../components/Layout';
+import { Section, ButtonsContainer } from '../../../../../components/Layout';
 import { __ } from '../../../../../helpers/i18n';
 import { InteractiveTableSchema } from '../../../../../utils/table-schema-utils';
 import { refreshApiTableData } from '../../../../../actions/api-table';
@@ -20,13 +17,11 @@ import { useGetMyDetailsQuery } from 'src/queries';
 import { HeaderWithActions, Button as UIButton } from 'src/components/ui';
 import { DeleteStockModal } from 'src/components/Common/DeleteStockModal';
 import { useTenantNaming } from 'src/hooks/useTenantNaming';
-import { useTenant } from 'src/hooks/useTenant';
 import { DownloadReportModal } from 'src/components/Common/DownloadReportModal';
 
 const List = () => {
   const dispatch = useDispatch();
   const { getText } = useTenantNaming();
-  const { tenant } = useTenant();
   const scheme = new InteractiveTableSchema(stocksList);
   const { data: user } = useGetMyDetailsQuery();
 
@@ -70,7 +65,10 @@ const List = () => {
     dispatch(
       showModal(
         <DeleteStockModal
-          mainText={`Zamierzasz usunąć ${tenant?.namingType === NamingType.Stock ? 'plac' : 'lokalizację'} ${data.name} (${data.address}), czy na pewno chcesz to zrobić? Tej operacji nie da się cofnąć. Potwierdź chęć wykonania tej operacji poprzez wpisanie nazwy ${tenant?.namingType === NamingType.Stock ? 'placu' : 'lokalizacji'} do poniższego pola.`}
+          mainText={getText('confirm_delete', {
+            name: data.name,
+            address: data.address,
+          })}
           approveButtonText="application.yes"
           approveAction={(stockName) => deleteStock(data, stockName)}
         />,
@@ -117,10 +115,7 @@ const List = () => {
         {getText('list')}
       </HeaderWithActions>
 
-      <ApiTable
-        scheme={scheme}
-        apiEndpointSubUrl="stock/admin-list"
-      />
+      <ApiTable scheme={scheme} apiEndpointSubUrl="stock/admin-list" />
     </Section>
   );
 };

@@ -3,7 +3,11 @@ import { ItfApiForm } from 'itf_formbuilder_react';
 import { UserRole } from 'smartbox-types';
 import { useDispatch } from 'react-redux';
 import { Button, Spinner } from '../../../../components/Branded';
-import { ButtonsContainer, FormContainer, Section } from '../../../../components/Layout';
+import {
+  ButtonsContainer,
+  FormContainer,
+  Section,
+} from '../../../../components/Layout';
 import ApiService from '../../../../services/api-service';
 import { formOnTranslateString } from '../../../../utils/trans-form';
 
@@ -47,11 +51,11 @@ const ManageTenantPrivacy = ({ userId }: Props) => {
   return (
     <Section highlight>
       <Typography>
-        Nowy sposób zarządzania polityką prywatności znajduje się w sekcji{' '}
+        {__('application.phrases.privacyMoved')}{' '}
         <Link
           to={`/${UserService.getSlugByRole(user.role)}/management/documents`}
         >
-          Dokumenty
+          {__('application.documents')}
         </Link>
         .
       </Typography>

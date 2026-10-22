@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { useParams } from 'react-router';
+import { useLocation, useParams } from 'react-router';
 import { Button, Spinner } from '../../../../components/Branded';
 import { ButtonsContainer } from '../../../../components/Layout';
 import { ItfApiForm } from 'itf_formbuilder_react';
@@ -9,11 +9,20 @@ import { mapFields } from '../../../../utils/fields-mapper';
 import { successNotification } from '../../../../actions/notifications';
 import { formOnTranslateString } from '../../../../utils/trans-form';
 import { hideModal } from '../../../../actions/modal';
-import { isStockScopedTemplate, TemplateReq, TemplateType } from 'smartbox-types';
+import {
+  isStockScopedTemplate,
+  templateLanguage,
+  TemplateReq,
+  TemplateType,
+} from 'smartbox-types';
 import { __ } from '../../../../helpers/i18n';
 import { PageHeader, Section } from 'src/components/ui';
 import { useQueryClient } from '@tanstack/react-query';
-import { templatesQueryKey, useGetMyDetailsQuery } from 'src/queries';
+import {
+  templateListQueryKey,
+  templatesQueryKey,
+  useGetMyDetailsQuery,
+} from 'src/queries';
 import { history } from 'src/history';
 
 const allowedTags = {
@@ -429,6 +438,9 @@ export const Manage = ({
     template: TemplateType;
     id?: string;
   }>();
+  const location = useLocation();
+  const lockLang = Boolean(forStock && templateId);
+  const lang = templateLanguage(new URLSearchParams(location.search).get('lang'));
   const stockScoped = isStockScopedTemplate(template);
   const { data: user } = useGetMyDetailsQuery();
   const tenantId = tenantIdOverride ?? user?.tenantId ?? undefined;
@@ -451,7 +463,7 @@ export const Manage = ({
     tenantIdOverride
       ? `template/admin/form-${type}/${tenantIdOverride}/${template}`
       : `template/form-${type}/${template}`
-  }${stockPath}`;
+  }${stockPath}${lockLang ? '' : `?lang=${lang}`}`;
   const sendUrl = `${
     tenantIdOverride
       ? `template/admin/${type}/${tenantIdOverride}/${template}`
@@ -474,7 +486,7 @@ export const Manage = ({
           ))}
         </ul>
         <ItfApiForm
-          key={forStock ? templateId ?? 'stock' : 'tenant'}
+          key={lockLang ? templateId ?? 'stock' : `${forStock ? 'stock' : 'tenant'}-${lang}`}
           formId="manageTemplate"
           schemaCacheEnabled={false}
           schemaMayBeDynamic={true}
@@ -500,34 +512,51 @@ export const Manage = ({
             onChange,
             onFocus,
             onBlur,
-          ) =>
-            mapFields(
+          ) => {
+            const onFieldChange = (next: Parameters<typeof onChange>[0]) => {
+              if (field.id === 'lang' && !lockLang) {
+                const language = templateLanguage(next);
+                if (language === lang) return;
+                const params = new URLSearchParams(location.search);
+                params.set('lang', language);
+                history.replace({
+                  pathname: location.pathname,
+                  search: `?${params.toString()}`,
+                });
+                return;
+              }
+              if (field.id === 'stockIds') {
+                const list = Array.isArray(next) ? next : [];
+                onChange(
+                  list.map((item) =>
+                    item && typeof item === 'object' && 'value' in item
+                      ? (item as { value: string }).value
+                      : item,
+                  ),
+                );
+                return;
+              }
+              onChange(next);
+            };
+            return mapFields(
               field,
               errors,
               fieldHtmlId,
               currentValue,
-              field.id === 'stockIds'
-                ? (next) => {
-                    const list = Array.isArray(next) ? next : [];
-                    onChange(
-                      list.map((item) =>
-                        item && typeof item === 'object' && 'value' in item
-                          ? (item as { value: string }).value
-                          : item,
-                      ),
-                    );
-                  }
-                : onChange,
+              onFieldChange,
               onFocus,
               onBlur,
-            )
-          }
+            );
+          }}
           onSavedSuccessfully={() => {
             if (tenantId) {
               queryClient.invalidateQueries({
                 queryKey: templatesQueryKey(tenantId),
               });
             }
+            queryClient.invalidateQueries({
+              queryKey: templateListQueryKey(tenantIdOverride),
+            });
             dispatch(successNotification('application.templateSaved'));
             dispatch(hideModal());
           }}

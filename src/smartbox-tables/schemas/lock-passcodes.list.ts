@@ -4,7 +4,7 @@ export const lockPasscodesList: TableSchema = {
   countPerPage: 20,
   fields: [
     {
-      name: 'ID',
+      name: 'application.tables.id',
       field: 'keyboardPwdId',
       mobile: true,
       searchable: false,
@@ -13,7 +13,7 @@ export const lockPasscodesList: TableSchema = {
       type: FieldType.Text,
     },
     {
-      name: 'Nazwa',
+      name: 'application.tables.name',
       field: 'keyboardPwdName',
       mobile: true,
       searchable: false,
@@ -22,7 +22,7 @@ export const lockPasscodesList: TableSchema = {
       type: FieldType.Text,
     },
     {
-      name: 'Kod',
+      name: 'application.tables.code',
       field: 'keyboardPwd',
       mobile: true,
       searchable: true,
@@ -31,7 +31,7 @@ export const lockPasscodesList: TableSchema = {
       type: FieldType.Text,
     },
     {
-      name: 'Ważne od',
+      name: 'application.tables.validFrom',
       field: 'startDate',
       mobile: true,
       searchable: false,
@@ -40,7 +40,7 @@ export const lockPasscodesList: TableSchema = {
       type: FieldType.Date,
     },
     {
-      name: 'Ważne do',
+      name: 'application.tables.validTo',
       field: 'endDate',
       mobile: true,
       searchable: false,

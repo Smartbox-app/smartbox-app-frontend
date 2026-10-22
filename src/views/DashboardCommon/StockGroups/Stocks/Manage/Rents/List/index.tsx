@@ -20,36 +20,30 @@ const List = () => {
     base.highlightRow = (row) => row.status === RentStatus.toCheck;
 
     return base
-    .removeFields('description', 'id', 'userId')
-    .modifyFieldStatic('status', {
-      searchableValues: rentStatusSearchValues(),
-      customValue: (row: { status?: Parameters<typeof translateBoxDisplayStatus>[0] }) =>
-        translateBoxDisplayStatus(row.status),
-    })
-    .addFieldAtTheEnd({
-      name: __('application.actions'),
-      field: 'actions',
-      type: FieldType.Custom,
-      mobile: true,
-      customRender: (_value, _field, rentData: AdminRentListDetails) => (
-        <RentListRowActions rent={rentData} />
-      ),
-    });
+      .removeFields('description', 'id', 'userId')
+      .modifyFieldStatic('status', {
+        searchableValues: rentStatusSearchValues(),
+        customValue: (row: {
+          status?: Parameters<typeof translateBoxDisplayStatus>[0];
+        }) => translateBoxDisplayStatus(row.status),
+      })
+      .addFieldAtTheEnd({
+        name: __('application.actions'),
+        field: 'actions',
+        type: FieldType.Custom,
+        mobile: true,
+        customRender: (_value, _field, rentData: AdminRentListDetails) => (
+          <RentListRowActions rent={rentData} />
+        ),
+      });
   }, []);
 
   return (
     <Section>
       <Header variant="h2">{__('application.stockRents')}</Header>
-      <p>
-        Podsumowanie wynajmów jest wysyłane codziennie na adres e-mail konta
-        franczyzobiorcy. Możesz również wygenerować raport ręcznie przy pomocy
-        przycisku „Pobierz raport” z poziomu listy placów.
-      </p>
+      <p>{__('application.phrases.rentsReportNote')}</p>
 
-      <ApiTable
-        scheme={scheme}
-        apiEndpointSubUrl={`rent/list/${stockId}`}
-      />
+      <ApiTable scheme={scheme} apiEndpointSubUrl={`rent/list/${stockId}`} />
     </Section>
   );
 };

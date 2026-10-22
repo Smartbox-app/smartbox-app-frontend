@@ -2,14 +2,17 @@ import styled from 'styled-components';
 import { useGetMyDetailsQuery } from 'src/queries';
 import { useUpdateMyLangMutation } from 'src/mutations/useUpdateMyLangMutation';
 import { i18n } from 'src/helpers/i18n';
-import { currentAppLanguage, type AppLanguage } from 'src/i18n/app-language';
+import {
+  currentAppLanguage,
+  SUPPORTED_LANGUAGES,
+  type AppLanguage,
+} from 'src/i18n/app-language';
 import { useState } from 'react';
 import { SidebarButton } from '../ui/SidebarButton';
 
-const OPTIONS: { value: AppLanguage; label: string }[] = [
-  { value: 'pl', label: 'PL' },
-  { value: 'en', label: 'EN' },
-];
+const OPTIONS: { value: AppLanguage; label: string }[] = SUPPORTED_LANGUAGES.map(
+  (value) => ({ value, label: value.toUpperCase() }),
+);
 
 const StyledSwitcherContainer = styled.div({
   position: 'relative',

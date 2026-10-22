@@ -1,12 +1,14 @@
 import React from 'react';
 import { NodeViewContent, NodeViewWrapper } from '@tiptap/react';
 import type { NodeViewProps } from '@tiptap/react';
+import { __ } from 'src/helpers/i18n';
 
-export const TemplateConditionalBranchNodeView = ({
-  node,
-}: NodeViewProps) => {
+export const TemplateConditionalBranchNodeView = ({ node }: NodeViewProps) => {
   const branch = node.attrs.branch === 'else' ? 'else' : 'if';
-  const label = branch === 'else' ? 'W przeciwnym razie' : 'Jeśli spełniony';
+  const label =
+    branch === 'else'
+      ? __('application.phrases.otherwise')
+      : __('application.phrases.ifMet');
 
   return (
     <NodeViewWrapper
@@ -14,7 +16,10 @@ export const TemplateConditionalBranchNodeView = ({
       className="template-conditional-branch"
       data-branch={branch}
     >
-      <div className="template-conditional-branch__label" contentEditable={false}>
+      <div
+        className="template-conditional-branch__label"
+        contentEditable={false}
+      >
         {label}
       </div>
       <NodeViewContent className="template-conditional-branch__content" />

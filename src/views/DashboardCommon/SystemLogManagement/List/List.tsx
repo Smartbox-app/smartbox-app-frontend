@@ -64,7 +64,7 @@ export const List = () => {
     return new InteractiveTableSchema(baseScheme)
       .removeFields('meta')
       .addFieldAfter('action', {
-        name: 'Szczegóły',
+        name: 'application.tables.details',
         field: 'meta',
         type: FieldType.Custom,
         sortable: false,
@@ -102,10 +102,7 @@ export const List = () => {
         {__('application.systemLogs')}
       </HeaderWithActions>
       <Typography>{__('application.systemLogsRetentionInfo')}</Typography>
-      <ApiTable
-        scheme={scheme}
-        apiEndpointSubUrl="system-log/list"
-      />
+      <ApiTable scheme={scheme} apiEndpointSubUrl="system-log/list" />
     </Section>
   );
 };

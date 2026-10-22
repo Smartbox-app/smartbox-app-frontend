@@ -4,28 +4,28 @@ import { BoxStatus, RentStatus } from 'smartbox-types';
 const statusToText: {
   [key: string]: string;
 } = {
-  [BoxStatus.free]: 'Wolny',
-  [BoxStatus.outOfService]: 'Wyłączony z użytku',
-  [RentStatus.reserved]: 'Zarezerwowany',
-  [RentStatus.rented]: 'Wynajęty',
-  [RentStatus.pendingFinish]: 'Oczekuje na zakończenie',
-  [RentStatus.awaitingFinish]: 'Oczekiwanie na zakończenie umowy',
-  [RentStatus.noPaidExtension]: 'Nieopłacone przedłużenie',
+  [BoxStatus.free]: 'application.rentStatus.free',
+  [BoxStatus.outOfService]: 'application.rentStatus.outOfService',
+  [RentStatus.reserved]: 'application.rentStatus.reserved',
+  [RentStatus.rented]: 'application.rentStatus.rented',
+  [RentStatus.pendingFinish]: 'application.rentStatus.pendingFinish',
+  [RentStatus.awaitingFinish]: 'application.rentStatus.awaitingFinish',
+  [RentStatus.noPaidExtension]: 'application.rentStatus.noPaidExtension',
   [RentStatus.noPaidExtensionWithWarning]:
-    'Nieopłacone przedłużenie z wykrzyknikiem',
-  [RentStatus.noPaidPeriod]: 'Nieopłacony okres',
-  [RentStatus.toCheck]: 'Do sprawdzenia',
-  [RentStatus.toExplain]: 'Do wyjaśnienia',
-  [RentStatus.finished]: 'Zakończone',
-  [RentStatus.failure]: 'Zakończone bez wynajęcia',
-  [RentStatus.endedUnpaid]: 'Umowa zakończona — brak płatności',
+    'application.rentStatus.noPaidExtensionWithWarning',
+  [RentStatus.noPaidPeriod]: 'application.rentStatus.noPaidPeriod',
+  [RentStatus.toCheck]: 'application.rentStatus.toCheck',
+  [RentStatus.toExplain]: 'application.rentStatus.toExplain',
+  [RentStatus.finished]: 'application.rentStatus.finished',
+  [RentStatus.failure]: 'application.rentStatus.failure',
+  [RentStatus.endedUnpaid]: 'application.rentStatus.endedUnpaid',
 };
 
 export const boxesList: TableSchema = {
   countPerPage: 20,
   fields: [
     {
-      name: 'Nr skrytki',
+      name: 'application.tables.lockerNumber',
       field: 'identifier',
       mobile: true,
       searchable: true,
@@ -35,7 +35,7 @@ export const boxesList: TableSchema = {
       type: FieldType.Text,
     },
     {
-      name: 'Powierzchnia',
+      name: 'application.tables.area',
       field: 'area',
       mobile: true,
       searchable: true,
@@ -44,7 +44,7 @@ export const boxesList: TableSchema = {
       type: FieldType.Text,
     },
     {
-      name: 'Cennik',
+      name: 'application.tables.priceList',
       field: 'pricing',
       mobile: true,
       searchable: false,
@@ -53,7 +53,7 @@ export const boxesList: TableSchema = {
       type: FieldType.Custom,
     },
     {
-      name: 'Status',
+      name: 'application.tables.status',
       field: 'status',
       mobile: true,
       searchable: true,
@@ -63,7 +63,7 @@ export const boxesList: TableSchema = {
       searchableValues: statusToText,
     },
     {
-      name: 'Rozliczenie',
+      name: 'application.tables.settlement',
       field: 'companyName',
       mobile: true,
       searchable: true,

@@ -14,11 +14,13 @@ const row = (overrides: {
   id: string;
   type: string;
   channel: 'email' | 'sms';
+  lang?: 'pl' | 'en';
   forStock?: boolean;
   stockNames?: string;
 }) => ({
   stockNames: '',
   forStock: false,
+  lang: 'pl' as const,
   isDefault: true,
   canOverride: true,
   ...overrides,
@@ -83,5 +85,70 @@ describe('useTemplateSections', () => {
 
     expect(result.current.sections[0].email).toHaveLength(1);
     expect(result.current.sections[0].sms).toHaveLength(0);
+  });
+
+  it('keeps stock templates with the language they were saved in', () => {
+    mockedQuery.mockReturnValue({
+      data: [
+        row({ id: 'pl', type: 'new_rental_email', channel: 'email' }),
+        row({ id: 'en', type: 'new_rental_email', channel: 'email', lang: 'en' }),
+        row({
+          id: 'pl-stock',
+          type: 'new_rental_email',
+          channel: 'email',
+          forStock: true,
+          stockNames: 'Plac',
+        }),
+        row({
+          id: 'en-stock',
+          type: 'new_rental_email',
+          channel: 'email',
+          lang: 'en',
+          forStock: true,
+          stockNames: 'Yard',
+        }),
+      ],
+      isPending: false,
+    });
+
+    const { result } = renderHook(() => useTemplateSections());
+    const email = result.current.sections[0].email;
+
+    expect(email.map((group: TemplateChannelGroup<TemplateSectionRow>) => group.generic.id)).toEqual([
+      'pl',
+      'en',
+    ]);
+    expect(email[0].stocks.map((stock: TemplateSectionRow) => stock.id)).toEqual([
+      'pl-stock',
+    ]);
+    expect(email[1].stocks.map((stock: TemplateSectionRow) => stock.id)).toEqual([
+      'en-stock',
+    ]);
+  });
+
+  it('shows a stock template when that language has no generic row', () => {
+    mockedQuery.mockReturnValue({
+      data: [
+        row({ id: 'pl', type: 'new_rental_email', channel: 'email' }),
+        row({
+          id: 'en-stock',
+          type: 'new_rental_email',
+          channel: 'email',
+          lang: 'en',
+          forStock: true,
+          stockNames: 'Yard',
+        }),
+      ],
+      isPending: false,
+    });
+
+    const { result } = renderHook(() => useTemplateSections());
+    const english = result.current.sections[0].email[1];
+
+    expect(english.generic.isDefault).toBe(true);
+    expect(english.generic.lang).toBe('en');
+    expect(english.stocks.map((stock: TemplateSectionRow) => stock.id)).toEqual([
+      'en-stock',
+    ]);
   });
 });

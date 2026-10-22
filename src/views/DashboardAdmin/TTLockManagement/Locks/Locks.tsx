@@ -67,7 +67,8 @@ export const Locks = () => {
         {
           name: 'application.lockPasscodes',
           type: 'secondary',
-          click: (data: TTLockDeviceList) => history.push(`/admin/drivers/locks/${data.lockId}/passcodes`),
+          click: (data: TTLockDeviceList) =>
+            history.push(`/admin/drivers/locks/${data.lockId}/passcodes`),
         },
         {
           name: 'application.unlock',
@@ -82,9 +83,9 @@ export const Locks = () => {
       ],
     });
 
-    if(type ==='gateway') {
-      scheme.modifyFieldStatic('rssi', {
-      name: 'Sygnał bramki',
+  if (type === 'gateway') {
+    scheme.modifyFieldStatic('rssi', {
+      name: 'application.tables.gatewaySignal',
       field: 'rssi',
       mobile: true,
       defaultSort: true,
@@ -93,27 +94,27 @@ export const Locks = () => {
         if (lock.rssi > -75)
           return (
             <Alert compact type="success">
-              Silny&nbsp;({lock.rssi})
+              {__('application.phrases.signalStrong')}&nbsp;({lock.rssi})
             </Alert>
           );
         if (lock.electricQuantity > -85)
           return (
             <Alert compact type="warning">
-              Średni&nbsp;({lock.rssi})
+              {__('application.phrases.signalAverage')}&nbsp;({lock.rssi})
             </Alert>
           );
         return (
           <Alert compact type="error">
-            Słaby&nbsp;({lock.rssi})
+            {__('application.phrases.signalWeak')}&nbsp;({lock.rssi})
           </Alert>
         );
       },
-    })
-    }
+    });
+  }
 
-    const openDetails = (lock: TTLockDeviceList) => {
-      dispatch(showModal(<LockDetails id={lock.lockId} />))
-    }
+  const openDetails = (lock: TTLockDeviceList) => {
+    dispatch(showModal(<LockDetails id={lock.lockId} />));
+  };
 
   const openLock = async (data: TTLockDeviceList) => {
     setActionLoading(true);
@@ -143,10 +144,7 @@ export const Locks = () => {
     <Section>
       {actionLoading ? <Spinner halfTransparent overlay /> : null}
       <Header variant="h2">{__('application.locks')}</Header>
-      <ApiTable
-        scheme={scheme}
-        apiEndpointSubUrl={url || 'driver/locks'}
-      />
+      <ApiTable scheme={scheme} apiEndpointSubUrl={url || 'driver/locks'} />
     </Section>
   );
 };

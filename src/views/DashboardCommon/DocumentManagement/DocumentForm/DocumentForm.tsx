@@ -3,7 +3,7 @@ import { useFormContext, Controller } from 'react-hook-form';
 import { DocumentDto } from 'src/dto/DocumentDto';
 import { ButtonsContainer, FormContainer } from 'src/components/Layout';
 import { Button, Form } from 'src/components/ui';
-import { InputSelect , Alert, ConfirmModal } from 'src/components/Common';
+import { InputSelect, Alert, ConfirmModal } from 'src/components/Common';
 import { TiptapEditor } from '../components/TiptapEditor';
 import { Spinner } from 'src/components/Branded';
 import {
@@ -28,15 +28,15 @@ export type DocumentFormProps = {
 
 const documentTypeOptions: { label: string; value: DocumentType }[] = [
   {
-    label: 'Polityka prywatności',
+    label: 'application.documentTypePrivacyPolicy',
     value: 'privacy-policy',
   },
   {
-    label: 'Regulamin',
+    label: 'application.documentTypeRules',
     value: 'rules',
   },
   {
-    label: 'Umowa',
+    label: 'application.documentTypeAgreement',
     value: 'agreement',
   },
 ];
@@ -63,16 +63,14 @@ export const DocumentForm = ({
   const { data: tenants = [], isLoading: tenantsLoading } =
     useGetTenantOptionsQuery({ enabled: user?.role === UserRole.admin });
   const canLoadStocks =
-    isAgreement &&
-    (user?.role !== UserRole.admin || Boolean(selectedTenantId));
+    isAgreement && (user?.role !== UserRole.admin || Boolean(selectedTenantId));
   const { data: stockOptions = [], isLoading: stocksLoading } =
     useGetStockOptionsQuery(
       user?.role === UserRole.admin ? selectedTenantId : tenant?.id,
       canLoadStocks,
     );
   const canLoadCompanies =
-    isAgreement &&
-    (user?.role !== UserRole.admin || Boolean(selectedTenantId));
+    isAgreement && (user?.role !== UserRole.admin || Boolean(selectedTenantId));
   const { data: companyOptions = [], isLoading: companiesLoading } =
     useGetCompanyOptionsQuery(
       user?.role === UserRole.admin ? selectedTenantId : tenant?.id,
@@ -115,8 +113,8 @@ export const DocumentForm = ({
             render={({ field, fieldState }) => (
               <InputSelect
                 name="tenantId"
-                label="Klient"
-                placeholder="Wybierz"
+                label="application.tables.customer"
+                placeholder="application.select"
                 options={tenants.map((t) => ({
                   label: t.name.toString(),
                   value: t.value.toString(),
@@ -141,8 +139,8 @@ export const DocumentForm = ({
           render={({ field, fieldState }) => (
             <InputSelect
               name="type"
-              label="Typ dokumentu"
-              placeholder="Wybierz"
+              label="application.phrases.documentType"
+              placeholder="application.select"
               options={documentTypeOptions}
               value={field.value}
               onChange={field.onChange}
@@ -154,70 +152,70 @@ export const DocumentForm = ({
         />
         {isAgreement ? (
           <>
-          <Controller
-            name="stockId"
-            control={control}
-            render={({ field, fieldState }) => (
-              <InputSelect
-                name="stockId"
-                label={__('application.documentStock')}
-                placeholder={__('application.documentStockPlaceholder')}
-                options={[
-                  {
-                    label: __('application.documentStockDefault'),
-                    value: '',
-                  },
-                  ...stockOptions.map((stock) => ({
-                    label: stock.label,
-                    value: stock.value,
-                  })),
-                ]}
-                value={field.value ?? ''}
-                onChange={(value) => {
-                  field.onChange(value || null);
-                }}
-                onBlur={field.onBlur}
-                disabled={
-                  isLoading ||
-                  stocksLoading ||
-                  (user?.role === UserRole.admin && !selectedTenantId)
-                }
-                error={fieldState.error?.message}
-              />
-            )}
-          />
-          <Controller
-            name="companyId"
-            control={control}
-            render={({ field, fieldState }) => (
-              <InputSelect
-                name="companyId"
-                label={__('application.documentCompany')}
-                placeholder={__('application.documentCompanyPlaceholder')}
-                options={[
-                  {
-                    label: __('application.documentCompanyDefault'),
-                    value: '',
-                  },
-                  ...companyOptions.map((company) => ({
-                    label: company.label,
-                    value: company.value,
-                  })),
-                ]}
-                value={field.value ?? ''}
-                onChange={(value) => {
-                  field.onChange(value || null);
-                }}
-                onBlur={field.onBlur}
-                disabled={
-                  isLoading ||
-                  companiesLoading ||
-                  (user?.role === UserRole.admin && !selectedTenantId)
-                }
-                error={fieldState.error?.message}
-              />
-            )}
-          />
+            <Controller
+              name="stockId"
+              control={control}
+              render={({ field, fieldState }) => (
+                <InputSelect
+                  name="stockId"
+                  label={__('application.documentStock')}
+                  placeholder={__('application.documentStockPlaceholder')}
+                  options={[
+                    {
+                      label: __('application.documentStockDefault'),
+                      value: '',
+                    },
+                    ...stockOptions.map((stock) => ({
+                      label: stock.label,
+                      value: stock.value,
+                    })),
+                  ]}
+                  value={field.value ?? ''}
+                  onChange={(value) => {
+                    field.onChange(value || null);
+                  }}
+                  onBlur={field.onBlur}
+                  disabled={
+                    isLoading ||
+                    stocksLoading ||
+                    (user?.role === UserRole.admin && !selectedTenantId)
+                  }
+                  error={fieldState.error?.message}
+                />
+              )}
+            />
+            <Controller
+              name="companyId"
+              control={control}
+              render={({ field, fieldState }) => (
+                <InputSelect
+                  name="companyId"
+                  label={__('application.documentCompany')}
+                  placeholder={__('application.documentCompanyPlaceholder')}
+                  options={[
+                    {
+                      label: __('application.documentCompanyDefault'),
+                      value: '',
+                    },
+                    ...companyOptions.map((company) => ({
+                      label: company.label,
+                      value: company.value,
+                    })),
+                  ]}
+                  value={field.value ?? ''}
+                  onChange={(value) => {
+                    field.onChange(value || null);
+                  }}
+                  onBlur={field.onBlur}
+                  disabled={
+                    isLoading ||
+                    companiesLoading ||
+                    (user?.role === UserRole.admin && !selectedTenantId)
+                  }
+                  error={fieldState.error?.message}
+                />
+              )}
+            />
           </>
         ) : null}
         <Controller

@@ -43,12 +43,7 @@ interface Props {
   currentStatus: BoxDisplayStatus;
 }
 
-const Status = ({
-  selectedBoxId,
-  stockId,
-  rentId,
-  currentStatus,
-}: Props) => {
+const Status = ({ selectedBoxId, stockId, rentId, currentStatus }: Props) => {
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
 
@@ -89,36 +84,43 @@ const Status = ({
 
     dispatch(
       showModal(
-      <>
-        <Modal.Header title={__('application.confirmation')} />
-        <Modal.Content>
-          <Alert
-            type="warning"
-            text="application.userWillNotGetMailWithInformation"
-          />
-          {isFreeingOccupyingRent ? (
-            <Alert type="error" text="application.confirmFreeBoxIrreversible" />
-          ) : (
-            <Alert type="notice" text="application.confirmChangeStatusAction" />
-          )}
-        </Modal.Content>
-        <Modal.Actions>
-          <ButtonsContainer>
-            <Button
-              text="application.cancel"
-              danger
-              click={() => dispatch(hideModal())}
+        <>
+          <Modal.Header title={__('application.confirmation')} />
+          <Modal.Content>
+            <Alert
+              type="warning"
+              text="application.userWillNotGetMailWithInformation"
             />
-            <Button
-              success
-              type="submit"
-              text="application.yes"
-              click={() => submitStatusChange(values)}
-            />
-          </ButtonsContainer>
-        </Modal.Actions>
-      </>,
-    ));
+            {isFreeingOccupyingRent ? (
+              <Alert
+                type="error"
+                text="application.confirmFreeBoxIrreversible"
+              />
+            ) : (
+              <Alert
+                type="notice"
+                text="application.confirmChangeStatusAction"
+              />
+            )}
+          </Modal.Content>
+          <Modal.Actions>
+            <ButtonsContainer>
+              <Button
+                text="application.cancel"
+                danger
+                click={() => dispatch(hideModal())}
+              />
+              <Button
+                success
+                type="submit"
+                text="application.yes"
+                click={() => submitStatusChange(values)}
+              />
+            </ButtonsContainer>
+          </Modal.Actions>
+        </>,
+      ),
+    );
   };
 
   return (
@@ -144,11 +146,7 @@ const Status = ({
           ReactCreatableSelect,
         }}
       />
-      <p>
-        Skrytki posiadające nieopłacone przedłużenie nie mogą być bezpośrednio
-        zwolnione ani wyłączone z użytku - najpierw należy zweryfikować kwestię
-        wynajmu.
-      </p>
+      <p>{__('application.phrases.boxUnpaidExtensionWarning')}</p>
     </>
   );
 };

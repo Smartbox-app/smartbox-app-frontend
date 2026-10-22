@@ -96,7 +96,7 @@ export const RentHistory = ({
     <>
       {decisionFinishAt ? (
         <Alert type="notice">
-          Wynajem zakończony przed czasem:{' '}
+          {__('application.phrases.rentEndedEarly')}{' '}
           <strong>{dateOnly(decisionFinishAt)}</strong>
         </Alert>
       ) : null}
@@ -132,7 +132,9 @@ export const RentHistory = ({
                 <p>
                   {__('application.paymentType')} -{' '}
                   {line.paymentType || paymentType
-                    ? __(getPaymentTypeLabel((line.paymentType || paymentType)!))
+                    ? __(
+                        getPaymentTypeLabel((line.paymentType || paymentType)!),
+                      )
                     : null}
                 </p>
               )}
@@ -203,9 +205,17 @@ export const RentHistory = ({
                             {dateOnly(period.startAt)} -{' '}
                             {dateOnly(period.finishAt)} -{' '}
                             <strong>{formatPrice(period.value)}</strong> -{' '}
-                            {period.paid
-                              ? __('application.periodPaid')
-                              : <>{__('application.periodUnpaid')} ({__('application.periodPaymentTo', { date: dateOnly(period.paymentTo) })})</>}
+                            {period.paid ? (
+                              __('application.periodPaid')
+                            ) : (
+                              <>
+                                {__('application.periodUnpaid')} (
+                                {__('application.periodPaymentTo', {
+                                  date: dateOnly(period.paymentTo),
+                                })}
+                                )
+                              </>
+                            )}
                           </StyledSinglePaymentPeriod>
                         );
                       })}

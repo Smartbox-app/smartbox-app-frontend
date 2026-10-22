@@ -37,6 +37,7 @@ import {
 import { Addons } from '../Common/Addons';
 import ApiService from '../../../../../services/api-service';
 import { PaymentType } from '../Common/PaymentType';
+import { __ } from 'src/helpers/i18n';
 import { getPeriodConfigForExtendingRent } from '../../../../../actions/single-rent';
 import { useGetMyDetailsQuery, useMyRentDetailsQuery } from 'src/queries';
 import { Button, Section, Stack } from 'src/components/ui';
@@ -121,11 +122,17 @@ const StepExtensionDuration = () => {
       RentStatus.noPaidExtensionWithWarning,
     ].includes(rent.status);
 
-    if (unpaidExtension && tenant.debtResolveType === DebtResolveType.DebtOnly) {
+    if (
+      unpaidExtension &&
+      tenant.debtResolveType === DebtResolveType.DebtOnly
+    ) {
       dispatch(setRentEndDate(debtOnlyResolvedEnd(new Date())));
       return;
     }
-    if (unpaidExtension && tenant.debtResolveType === DebtResolveType.MinPeriod) {
+    if (
+      unpaidExtension &&
+      tenant.debtResolveType === DebtResolveType.MinPeriod
+    ) {
       dispatch(
         setRentEndDate(
           minPeriodDebtResolvedEnd(
@@ -326,10 +333,12 @@ const StepExtensionDuration = () => {
       maxRentPeriod,
       rentPaymentType,
       minRentDaysForInstallments,
-      unpaidExtension: !!rent && [
-        RentStatus.noPaidExtension,
-        RentStatus.noPaidExtensionWithWarning,
-      ].includes(rent.status),
+      unpaidExtension:
+        !!rent &&
+        [
+          RentStatus.noPaidExtension,
+          RentStatus.noPaidExtensionWithWarning,
+        ].includes(rent.status),
     });
   }, [
     rent,
@@ -405,12 +414,11 @@ const StepExtensionDuration = () => {
         ].includes(rent.status) ? (
           <Section>
             <p>
-              Opłacasz zaległość dla Twojego wynajmu{' '}
+              {__('application.phrases.payingOverdue')}{' '}
               <strong>
                 {dateOnly(addDays(new Date(rent.finishAt ?? new Date()), 1))}
               </strong>{' '}
-              -{' '}
-              {endDate ? <strong>{dateOnly(endDate)}</strong> : null}
+              - {endDate ? <strong>{dateOnly(endDate)}</strong> : null}
             </p>
           </Section>
         ) : null}

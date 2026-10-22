@@ -4,7 +4,7 @@ export const documentList: TableSchema = {
   countPerPage: 20,
   fields: [
     {
-      name: 'ID',
+      name: 'application.tables.id',
       field: 'id',
       mobile: true,
       searchable: false,
@@ -14,7 +14,7 @@ export const documentList: TableSchema = {
       alias: 'document',
     },
     {
-      name: 'Data modyfikacji',
+      name: 'application.tables.modified',
       field: 'updatedAt',
       mobile: true,
       searchable: false,
@@ -24,7 +24,7 @@ export const documentList: TableSchema = {
       alias: 'document',
     },
     {
-      name: 'Typ',
+      name: 'application.tables.type',
       field: 'type',
       mobile: true,
       searchable: false,
@@ -34,7 +34,7 @@ export const documentList: TableSchema = {
       alias: 'document',
     },
     {
-      name: 'Klient',
+      name: 'application.tables.customer',
       field: 'identifier',
       mobile: true,
       searchable: true,

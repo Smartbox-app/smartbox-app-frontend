@@ -8,6 +8,12 @@ describe('translateSystemLogAction', () => {
     expect(translateSystemLogAction('api-access.rotate-key')).toBe(
       'Rotacja klucza API',
     );
+    expect(translateSystemLogAction('user.updateMyLang')).toBe(
+      'Aktualizacja własnego języka',
+    );
+    expect(translateSystemLogAction('invoice.issued')).toBe(
+      'Wystawienie faktury',
+    );
   });
 
   it('returns the raw key when the action is unknown', () => {

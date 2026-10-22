@@ -1,6 +1,7 @@
 import React from 'react';
 import { NodeViewContent, NodeViewWrapper } from '@tiptap/react';
 import type { NodeViewProps } from '@tiptap/react';
+import { __ } from 'src/helpers/i18n';
 
 export const TemplateConditionalNodeView = ({
   node,
@@ -13,14 +14,16 @@ export const TemplateConditionalNodeView = ({
     data-condition={node.attrs.condition}
   >
     <div className="template-conditional__header" contentEditable={false}>
-      <span className="template-conditional__label">Warunek:</span>
+      <span className="template-conditional__label">
+        {__('application.phrases.condition')}
+      </span>
       <input
         className="template-conditional__input"
         value={node.attrs.condition ?? ''}
         onChange={(event) =>
           updateAttributes({ condition: event.target.value })
         }
-        placeholder="np. isCompany, companyName, nip"
+        placeholder={__('application.phrases.conditionExample')}
         onKeyDown={(event) => event.stopPropagation()}
       />
     </div>

@@ -1002,5 +1002,1511 @@
         "__type_alias_do_not_touch": "ApiErrorCode.PassCodeAlreadyExists"
       }
     }
+  },
+  "cz": {
+    "Both new passwords have to be identical.": "Obě nová hesla musí být shodná.",
+    "Cannot decode this type of data when using FormData.": "Tento typ dat nelze při použití FormData dekódovat.",
+    "Company city": "Kontaktní údaje: Město",
+    "Company name": "Název firmy",
+    "Company post code": "Kontaktní údaje: PSČ",
+    "Compnay street": "Kontaktní údaje: Ulice",
+    "Data początku nie może być wcześniejsza od końcowej": "Datum začátku nesmí být dřívější než datum konce",
+    "Date too high. Max. {0}.": "Datum je příliš vysoké. Max. {0}.",
+    "Date too low. Min. {0}.": "Datum již uplynulo. Min. {0}.",
+    "Discount value": "Hodnota slevy",
+    "Expiration Date": "Datum vypršení",
+    "Field required.": "Toto pole je povinné.",
+    "Invalid NIP.": "Neplatné daňové identifikační číslo (NIP).",
+    "Incorrect character detected.": "Neplatný znak. Povoleny jsou polské znaky, číslice a speciální znaky.",
+    "Invalid Zip code.": "Neplatné PSČ.",
+    "Invalid absolute URL.": "Neplatná absolutní URL.",
+    "Invalid bank account number": "Neplatné číslo bankovního účtu",
+    "Invalid color hash.": "Neplatný hash barvy.",
+    "Invalid e-mail address.": "Neplatná e-mailová adresa.",
+    "Invalid email.": "Neplatná e-mailová adresa.",
+    "Invalid option: {0}.": "Neplatná možnost: {0}.",
+    "Invalid phone number": "Neplatné telefonní číslo",
+    "Invalid post code": "Neplatné PSČ",
+    "Invalid identifier": "Neplatný identifikátor. Povolena jsou malá písmena, číslice a -.",
+    "Invalid type of value: {0} expected.": "Neplatný typ hodnoty: očekává se {0}.",
+    "New password": "Nové heslo",
+    "Password": "Heslo",
+    "Phone": "Telefon",
+    "Repeat new password": "Zopakujte nové heslo",
+    "Select...": "Vyberte...",
+    "Stock": "Areál",
+    "Stocks": "Areál",
+    "Value": "Hodnota",
+    "Value too high. Max. {0}.": "Hodnota je příliš vysoká. Max. {0}.",
+    "Value too long (max. {0})": "Hodnota je příliš dlouhá (max. {0})",
+    "Value too low. Min. {0}.": "Hodnota je příliš nízká. Min. {0}.",
+    "Value too short (min. {0})": "Hodnota je příliš krátká (min. {0})",
+    "Value%": "Hodnota [%]",
+    "_API_ERROR_CODES_": {
+      "0": {
+        "text": "Došlo k chybě!",
+        "__type_alias_do_not_touch": "ApiErrorCode.OtherError"
+      },
+      "1": {
+        "text": "Objekt se zadaným ID neexistuje!",
+        "__type_alias_do_not_touch": "ApiErrorCode.NoSuchObjectWithThisId"
+      },
+      "2": {
+        "text": "Objekt není jedinečný!",
+        "__type_alias_do_not_touch": "ApiErrorCode.ObjectNotUniuque"
+      },
+      "3": {
+        "text": "Neplatné přihlašovací údaje!",
+        "__type_alias_do_not_touch": "ApiErrorCode.InvalidLoginData"
+      },
+      "4": {
+        "text": "Byly zadány neplatné údaje!",
+        "__type_alias_do_not_touch": "ApiErrorCode.InvalidData"
+      },
+      "5": {
+        "text": "Chyba ověření formuláře!",
+        "__type_alias_do_not_touch": "ApiErrorCode.FormValidationError"
+      },
+      "6": {
+        "text": "Uživatel s těmito údaji již existuje!",
+        "__type_alias_do_not_touch": "ApiErrorCode.UserExist"
+      },
+      "7": {
+        "text": "Neplatná cena!",
+        "__type_alias_do_not_touch": "ApiErrorCode.InvalidPrice"
+      },
+      "8": {
+        "text": "Žádný volný mini sklad této velikosti!",
+        "__type_alias_do_not_touch": "ApiErrorCode.NoFreeBoxInThisSize"
+      },
+      "9": {
+        "text": "Chyba platby!",
+        "__type_alias_do_not_touch": "ApiErrorCode.PaymentError"
+      },
+      "10": {
+        "text": "Tato akce není před platbou dostupná!",
+        "__type_alias_do_not_touch": "ApiErrorCode.PayFirst"
+      },
+      "11": {
+        "text": "Tato změna není v aktuálním stavu povolena!",
+        "__type_alias_do_not_touch": "ApiErrorCode.CantChangeThisBoxOnThisStatus"
+      },
+      "12": {
+        "text": "Na provedení této změny je příliš pozdě!",
+        "__type_alias_do_not_touch": "ApiErrorCode.TooLateForCahnge"
+      },
+      "13": {
+        "text": "Žádné volné mini sklady!",
+        "__type_alias_do_not_touch": "ApiErrorCode.NotFreeBox"
+      },
+      "14": {
+        "text": "Neplatný slevový kód!",
+        "__type_alias_do_not_touch": "ApiErrorCode.InvalidDiscountCode"
+      },
+      "15": {
+        "text": "Tato karta již využila jednorázovou slevu!",
+        "__type_alias_do_not_touch": "ApiErrorCode.CardHasBeenUsedWithDiscount"
+      },
+      "16": {
+        "text": "Neplatné číslo mini skladu!",
+        "__type_alias_do_not_touch": "ApiErrorCode.InvalidBoxNumber"
+      },
+      "17": {
+        "text": "Fakturu se nepodařilo vytvořit!",
+        "__type_alias_do_not_touch": "ApiErrorCode.CreatingInvoiceFailure"
+      },
+      "18": {
+        "text": "Fakturu se nepodařilo odeslat!",
+        "__type_alias_do_not_touch": "ApiErrorCode.SendingEmailWithInvoiceFailure"
+      },
+      "19": {
+        "text": "Byl vybrán neplatný jazyk!",
+        "__type_alias_do_not_touch": "ApiErrorCode.InvalidLang"
+      },
+      "20": {
+        "text": "Pro zaměstnance je nutné vybrat areál!",
+        "__type_alias_do_not_touch": "ApiErrorCode.StckIdIsRequiredForWorkerRole"
+      },
+      "21": {
+        "text": "V areálu nebyl nalezen žádný mini sklad s tímto číslem!",
+        "__type_alias_do_not_touch": "ApiErrorCode.NoFoundBoxNumberOnStock"
+      },
+      "22": {
+        "text": "Akce není povolena!",
+        "__type_alias_do_not_touch": "ApiErrorCode.ActionForebiden"
+      },
+      "23": {
+        "text": "Neplatné zeměpisné souřadnice!",
+        "__type_alias_do_not_touch": "ApiErrorCode.InvalidCoordinate"
+      },
+      "24": {
+        "text": "Jste příliš daleko!",
+        "__type_alias_do_not_touch": "ApiErrorCode.UAreTooFarAway"
+      },
+      "25": {
+        "text": "Vybraný areál již má slevu!",
+        "__type_alias_do_not_touch": "ApiErrorCode.StockHasActiveDiscont"
+      },
+      "26": {
+        "text": "Neplatný kód BLIK!",
+        "__type_alias_do_not_touch": "ApiErrorCode.InvalidBlik"
+      },
+      "27": {
+        "text": "Neplatné číslo bankovní skupiny!",
+        "__type_alias_do_not_touch": "ApiErrorCode.InvalidGroup"
+      },
+      "28": {
+        "text": "Mini sklad s vybraným číslem je rezervován!",
+        "__type_alias_do_not_touch": "ApiErrorCode.BoxNumberIsReserved"
+      },
+      "29": {
+        "text": "Pro zadání objednávky je vyžadováno telefonní číslo. Doplňte prosím svůj profil!",
+        "__type_alias_do_not_touch": "ApiErrorCode.PhoneIsRequiredForRent"
+      },
+      "30": {
+        "text": "Neplatná role!",
+        "__type_alias_do_not_touch": "ApiErrorCode.InvalidUserType"
+      },
+      "31": {
+        "text": "Údaje o firmě jsou vyžadovány!",
+        "__type_alias_do_not_touch": "ApiErrorCode.CompanyDataIsRequired"
+      },
+      "32": {
+        "text": "Mini sklad již byl rezervován!",
+        "__type_alias_do_not_touch": "ApiErrorCode.BoxIsReserved"
+      },
+      "33": {
+        "text": "Uživatel byl zablokován!",
+        "__type_alias_do_not_touch": "ApiErrorCode.UserIsBlocked"
+      },
+      "34": {
+        "text": "Pronájem je zablokován. Máte nezaplacený pronájem!",
+        "__type_alias_do_not_touch": "ApiErrorCode.YouHaveNoPaidBoxes"
+      },
+      "35": {
+        "text": "Nemáte oprávnění otevřít bránu!",
+        "__type_alias_do_not_touch": "ApiErrorCode.NoAccessToTheGate"
+      },
+      "36": {
+        "text": "Je vyžadována aktivace uživatele!",
+        "__type_alias_do_not_touch": "ApiErrorCode.FirstActiveUser"
+      },
+      "37": {
+        "text": "Platba není označena jako BLIK!",
+        "__type_alias_do_not_touch": "ApiErrorCode.PaymentIsntBlikType"
+      },
+      "38": {
+        "text": "Platba není označena jako bankovní převod!",
+        "__type_alias_do_not_touch": "ApiErrorCode.PaymentIsntTransferType"
+      },
+      "39": {
+        "text": "Platba není označena jako platba kartou!",
+        "__type_alias_do_not_touch": "ApiErrorCode.PaymentIsntCardType"
+      },
+      "40": {
+        "text": "Neplatná daňová sazba!",
+        "__type_alias_do_not_touch": "ApiErrorCode.InvalidTaxValue"
+      },
+      "41": {
+        "text": "Připojení k bráně se nezdařilo!",
+        "__type_alias_do_not_touch": "ApiErrorCode.ErrorConnectingToGate"
+      },
+      "42": {
+        "text": "Neplatný formát souboru!",
+        "__type_alias_do_not_touch": "ApiErrorCode.ForbiddenFileFormat"
+      },
+      "43": {
+        "text": "Toto telefonní číslo je již používáno!",
+        "__type_alias_do_not_touch": "ApiErrorCode.PhoneNumberIsAlreadyInUse"
+      },
+      "44": {
+        "text": "Tento identifikátor je již používán!",
+        "__type_alias_do_not_touch": "ApiErrorCode.IdentifierAlreadyInUse"
+      },
+      "45": {
+        "text": "Takový franšízant nebyl nalezen!",
+        "__type_alias_do_not_touch": "ApiErrorCode.TenantDoesNotExist"
+      },
+      "46": {
+        "text": "Nelze smazat schránku, která není prázdná!",
+        "__type_alias_do_not_touch": "ApiErrorCode.CanNotDeleteNotEmptyBox"
+      },
+      "47": {
+        "text": "Je vyžadováno alespoň jedno období!",
+        "__type_alias_do_not_touch": "ApiErrorCode.NeedAtLeastOnePricingPeriod"
+      },
+      "48": {
+        "text": "Období a ceny musí být nastaveny ve vzestupném pořadí!",
+        "__type_alias_do_not_touch": "ApiErrorCode.PricesAndPeriodsNeedsToBeInAscendingOrder"
+      },
+      "49": {
+        "text": "Období delší než 28 dní není povoleno!",
+        "__type_alias_do_not_touch": "ApiErrorCode.PeriodMax28Days"
+      },
+      "50": {
+        "text": "Období delší než 4 týdny není povoleno!",
+        "__type_alias_do_not_touch": "ApiErrorCode.PeriodMax4Weeks"
+      },
+      "51": {
+        "text": "Období delší než 12 měsíců není povoleno!",
+        "__type_alias_do_not_touch": "ApiErrorCode.PeriodMax12Months"
+      },
+      "52": {
+        "text": "Minimální počet období je 1!",
+        "__type_alias_do_not_touch": "ApiErrorCode.PeriodAtLeast1"
+      },
+      "53": {
+        "text": "Musíte nastavit cenu za 1 den pronájmu!",
+        "__type_alias_do_not_touch": "ApiErrorCode.YouNeedToSetPriceForOneDay"
+      },
+      "54": {
+        "text": "Vybrané časové období je příliš krátké!",
+        "__type_alias_do_not_touch": "ApiErrorCode.RentPeriodTooShort"
+      },
+      "55": {
+        "text": "Areál nemá slevu!",
+        "__type_alias_do_not_touch": "ApiErrorCode.NoDiscountSet"
+      },
+      "56": {
+        "text": "Slevový kód je neplatný!",
+        "__type_alias_do_not_touch": "ApiErrorCode.GiftCodeInvalid"
+      },
+      "57": {
+        "text": "Slevový kód, který již byl použit, nelze smazat!",
+        "__type_alias_do_not_touch": "ApiErrorCode.CantRemoveUsedGift"
+      },
+      "58": {
+        "text": "Platforma je neaktivní!",
+        "__type_alias_do_not_touch": "ApiErrorCode.TenantNotActive"
+      },
+      "59": {
+        "text": "Nelze smazat skupinu, která obsahuje kontejnery s jiným stavem než volný!",
+        "__type_alias_do_not_touch": "ApiErrorCode.CanNotRemoveGroupWithRents"
+      },
+      "60": {
+        "text": "Fakturu nelze vystavit!",
+        "__type_alias_do_not_touch": "ApiErrorCode.NoInvoiceServiceData"
+      },
+      "61": {
+        "text": "Byl dosažen limit kontejnerů!",
+        "__type_alias_do_not_touch": "ApiErrorCode.BoxesLimitReached"
+      },
+      "62": {
+        "text": "Nelze přidat takové množství kontejnerů. Snižte množství, abyste se vešli do limitu.",
+        "__type_alias_do_not_touch": "ApiErrorCode.TryingToAddTooManyBoxes"
+      },
+      "63": {
+        "text": "Byl dosažen limit areálů!",
+        "__type_alias_do_not_touch": "ApiErrorCode.StocksLimitReached"
+      },
+      "64": {
+        "text": "Zámek je v režimu spánku. Stiskněte tlačítko na zámku, abyste jej probudili.",
+        "__type_alias_do_not_touch": "ApiErrorCode.LockIsInSleepMode"
+      },
+      "65": {
+        "text": "Je vyžadována alespoň jedna varianta doplňku!",
+        "__type_alias_do_not_touch": "ApiErrorCode.NeedAtLeastOneAddonVariant"
+      },
+      "66": {
+        "text": "Nebyl vybrán povinný doplněk!",
+        "__type_alias_do_not_touch": "ApiErrorCode.RequiredAddonNotSelected"
+      },
+      "67": {
+        "text": "Musíte vyjádřit souhlas s vybraným doplňkem!",
+        "__type_alias_do_not_touch": "ApiErrorCode.AcceptanceNotSelected"
+      },
+      "68": {
+        "text": "Nahraný soubor je příliš velký!",
+        "__type_alias_do_not_touch": "ApiErrorCode.FileIsTooBig"
+      },
+      "69": {
+        "text": "Chybí povinný soubor!",
+        "__type_alias_do_not_touch": "ApiErrorCode.AddonFileIsMissing"
+      },
+      "70": {
+        "text": "Chybí datum narození!",
+        "__type_alias_do_not_touch": "ApiErrorCode.BirthDateMissing"
+      },
+      "71": {
+        "text": "Byl dosažen maximální počet aktivních schránek!",
+        "__type_alias_do_not_touch": "ApiErrorCode.ActiveBoxesLimitReached"
+      },
+      "72": {
+        "text": "Schránku, která není volná, nelze deaktivovat!",
+        "__type_alias_do_not_touch": "ApiErrorCode.CanNotSetNotEmptyBoxAsInactive"
+      },
+      "73": {
+        "text": "Žádné volné schránky!",
+        "__type_alias_do_not_touch": "ApiErrorCode.NoMoreAvailableBoxes"
+      },
+      "74": {
+        "text": "Uživatele s aktivním pronájmem nelze smazat!",
+        "__type_alias_do_not_touch": "ApiErrorCode.CanNotDeleteUserWithRent"
+      },
+      "75": {
+        "text": "Nezaplacený pronájem nelze prodloužit!",
+        "__type_alias_do_not_touch": "ApiErrorCode.CanNotExtendUnpaidRent"
+      },
+      "76": {
+        "text": "Schránku s probíhající platbou nelze uvolnit!",
+        "__type_alias_do_not_touch": "ApiErrorCode.CantFreeBoxWithPendingPayment"
+      },
+      "77": {
+        "text": "Období delší než půl roku není povoleno!",
+        "__type_alias_do_not_touch": "ApiErrorCode.PeriodMax1HalfYear"
+      },
+      "78": {
+        "text": "Období delší než dvě čtvrtletí není povoleno!",
+        "__type_alias_do_not_touch": "ApiErrorCode.PeriodMax2Quarters"
+      },
+      "79": {
+        "text": "K tomuto oznámení jste již přihlášeni.",
+        "__type_alias_do_not_touch": "ApiErrorCode.YouAreAlreadySubscribed"
+      },
+      "80": {
+        "text": "Při pokusu o otevření došlo k chybě.",
+        "__type_alias_do_not_touch": "ApiErrorCode.ErrorWhenTryingToOpen"
+      },
+      "81": {
+        "text": "Zámek se nepodařilo odemknout.",
+        "__type_alias_do_not_touch": "ApiErrorCode.UnableToUnlock"
+      },
+      "82": {
+        "text": "Chybí zdroj klienta!",
+        "__type_alias_do_not_touch": "ApiErrorCode.ClientSourceMissing"
+      },
+      "83": {
+        "text": "Tento slevový kód nelze použít při platbě na splátky!",
+        "__type_alias_do_not_touch": "ApiErrorCode.CantUseDiscountCodeWithInstallments"
+      },
+      "84": {
+        "text": "Vybrané období pronájmu je příliš dlouhé!",
+        "__type_alias_do_not_touch": "ApiErrorCode.RentPeriodTooLong"
+      },
+      "85": {
+        "text": "Maximální doba pronájmu nesmí být kratší než minimální!",
+        "__type_alias_do_not_touch": "ApiErrorCode.MaxPeriodCantBeLowerThanMin"
+      },
+      "86": {
+        "text": "Období pronájmu je pro platbu na splátky příliš krátké!",
+        "__type_alias_do_not_touch": "ApiErrorCode.RentPeriodTooShortForInstallments"
+      },
+      "87": {
+        "text": "Musíte nastavit platnou pevnou cenu pro variantu doplňku!",
+        "__type_alias_do_not_touch": "ApiErrorCode.YouNeedToSetCorrectFixedPriceForVariant"
+      },
+      "88": {
+        "text": "Při výpočtu ceny pronájmu došlo k problému. Obnovte stránku a zkuste to znovu.",
+        "__type_alias_do_not_touch": "ApiErrorCode.AddonNotAvailableForThisGroup"
+      },
+      "89": {
+        "text": "Daňové identifikační číslo (NIP) je neplatné!",
+        "__type_alias_do_not_touch": "ApiErrorCode.InvalidNIP"
+      },
+      "90": {
+        "text": "Zámek není připojen ke Gateway!",
+        "__type_alias_do_not_touch": "ApiErrorCode.LockNotConnectedToTheGateway"
+      },
+      "91": {
+        "text": "Zámek nepodporuje toto nastavení!",
+        "__type_alias_do_not_touch": "ApiErrorCode.LockFunctionNotSupported"
+      },
+      "92": {
+        "text": "Při komunikaci se zámkem došlo k chybě (neplatný parametr)!",
+        "__type_alias_do_not_touch": "ApiErrorCode.LockInvalidParameter"
+      },
+      "93": {
+        "text": "Neplatný kód!",
+        "__type_alias_do_not_touch": "ApiErrorCode.IncorrectPasscode"
+      },
+      "94": {
+        "text": "Neplatný prodejní doklad!",
+        "__type_alias_do_not_touch": "ApiErrorCode.SelectedIncorrectPaymentDocument"
+      },
+      "95": {
+        "text": "Tento kód již existuje!",
+        "__type_alias_do_not_touch": "ApiErrorCode.GiftCodeExists"
+      },
+      "96": {
+        "text": "Vybraná země je neplatná!",
+        "__type_alias_do_not_touch": "ApiErrorCode.InvalidCountry"
+      },
+      "97": {
+        "text": "Účet nelze smazat. Ujistěte se, že nemáte žádné nedoplatky ani aktivní pronájmy.",
+        "__type_alias_do_not_touch": "ApiErrorCode.UnableToDeleteAccount"
+      },
+      "98": {
+        "text": "Tento typ dokumentu již existuje.",
+        "__type_alias_do_not_touch": "ApiErrorCode.DocumentTypeAlreadyExists"
+      },
+      "99": {
+        "text": "Tento slevový kód je dostupný pouze pro nové zákazníky.",
+        "__type_alias_do_not_touch": "ApiErrorCode.GiftForNewClientsOnly"
+      },
+      "100": {
+        "text": "Neplatné údaje pro zmocnění.",
+        "__type_alias_do_not_touch": "ApiErrorCode.IncorrectAuthorizationData"
+      },
+      "101": {
+        "text": "Není uložena žádná konfigurace SMTP.",
+        "__type_alias_do_not_touch": "ApiErrorCode.MissingSmtpSettings"
+      },
+      "102": {
+        "text": "Bránu nyní nelze otevřít. Zkuste to znovu za chvíli.",
+        "__type_alias_do_not_touch": "ApiErrorCode.OpenGateTooSoon"
+      },
+      "103": {
+        "text": "Tento uživatel již byl pozván.",
+        "__type_alias_do_not_touch": "ApiErrorCode.InvitationAlreadyExists"
+      },
+      "104": {
+        "text": "Neplatný nebo prošlý aktivační kód.",
+        "__type_alias_do_not_touch": "ApiErrorCode.InvalidActivationCode"
+      },
+      "105": {
+        "text": "Nový kód lze vygenerovat po 5 minutách.",
+        "__type_alias_do_not_touch": "ApiErrorCode.ActivationCodeResendTooSoon"
+      },
+      "106": {
+        "text": "Pro ukončení pronájmu je vyžadována fotografie.",
+        "__type_alias_do_not_touch": "ApiErrorCode.EndRentPhotoRequired"
+      },
+      "107": {
+        "text": "Ukončení pronájmu s fotografií je dostupné pouze v mobilní aplikaci nebo v prohlížeči na telefonu.",
+        "__type_alias_do_not_touch": "ApiErrorCode.EndRentPhotoMobileOnly"
+      },
+      "108": {
+        "text": "Fotografie je příliš stará. Pořiďte novou fotografii schránky (ne starší než 15 minut).",
+        "__type_alias_do_not_touch": "ApiErrorCode.EndRentPhotoTooOld"
+      },
+      "109": {
+        "text": "Smlouvy na dobu neurčitou nejsou pro tohoto nájemce dostupné.",
+        "__type_alias_do_not_touch": "ApiErrorCode.OpenEndedAgreementsNotAllowed"
+      },
+      "110": {
+        "text": "Smlouvy na dobu určitou nejsou pro tohoto nájemce dostupné.",
+        "__type_alias_do_not_touch": "ApiErrorCode.FixedTermAgreementsNotAllowed"
+      },
+      "111": {
+        "text": "Vybraný způsob platby není dostupný.",
+        "__type_alias_do_not_touch": "ApiErrorCode.PaymentMethodNotAllowed"
+      },
+      "112": {
+        "text": "Smlouvu na dobu neurčitou nelze prodloužit. Ukončete pronájem, pokud jej chcete ukončit.",
+        "__type_alias_do_not_touch": "ApiErrorCode.CanNotExtendOpenEndedRent"
+      },
+      "113": {
+        "text": "Doplněk nelze smazat, protože je používán v aktivní smlouvě na dobu neurčitou.",
+        "__type_alias_do_not_touch": "ApiErrorCode.CanNotDeleteAddonUsedByOpenEndedRent"
+      },
+      "114": {
+        "text": "Tento kód není dostupný, protože již byl použit pro tento zámek.",
+        "__type_alias_do_not_touch": "ApiErrorCode.PassCodeAlreadyExists"
+      }
+    }
+  },
+  "ua": {
+    "Both new passwords have to be identical.": "Обидва нові паролі мають бути однаковими.",
+    "Cannot decode this type of data when using FormData.": "Неможливо декодувати цей тип даних під час використання FormData.",
+    "Company city": "Контактні дані: Місто",
+    "Company name": "Назва компанії",
+    "Company post code": "Контактні дані: Поштовий індекс",
+    "Compnay street": "Контактні дані: Вулиця",
+    "Data początku nie może być wcześniejsza od końcowej": "Дата початку не може бути раніше за дату закінчення",
+    "Date too high. Max. {0}.": "Дата занадто велика. Макс. {0}.",
+    "Date too low. Min. {0}.": "Дата вже минула. Мін. {0}.",
+    "Discount value": "Значення знижки",
+    "Expiration Date": "Дата закінчення терміну дії",
+    "Field required.": "Це поле є обов'язковим.",
+    "Invalid NIP.": "Недійсний податковий номер (NIP).",
+    "Incorrect character detected.": "Недійсний символ. Дозволені польські літери, цифри та спеціальні символи.",
+    "Invalid Zip code.": "Недійсний поштовий індекс.",
+    "Invalid absolute URL.": "Недійсна абсолютна URL-адреса.",
+    "Invalid bank account number": "Недійсний номер банківського рахунку",
+    "Invalid color hash.": "Недійсний хеш кольору.",
+    "Invalid e-mail address.": "Недійсна адреса електронної пошти.",
+    "Invalid email.": "Недійсна адреса електронної пошти.",
+    "Invalid option: {0}.": "Недійсна опція: {0}.",
+    "Invalid phone number": "Недійсний номер телефону",
+    "Invalid post code": "Недійсний поштовий індекс",
+    "Invalid identifier": "Недійсний ідентифікатор. Дозволені малі літери, цифри та -.",
+    "Invalid type of value: {0} expected.": "Недійсний тип значення: очікується {0}.",
+    "New password": "Новий пароль",
+    "Password": "Пароль",
+    "Phone": "Телефон",
+    "Repeat new password": "Повторіть новий пароль",
+    "Select...": "Виберіть...",
+    "Stock": "Майданчик",
+    "Stocks": "Майданчик",
+    "Value": "Значення",
+    "Value too high. Max. {0}.": "Значення занадто велике. Макс. {0}.",
+    "Value too long (max. {0})": "Значення занадто довге (макс. {0})",
+    "Value too low. Min. {0}.": "Значення занадто мале. Мін. {0}.",
+    "Value too short (min. {0})": "Значення занадто коротке (мін. {0})",
+    "Value%": "Значення [%]",
+    "_API_ERROR_CODES_": {
+      "0": {
+        "text": "Сталася помилка!",
+        "__type_alias_do_not_touch": "ApiErrorCode.OtherError"
+      },
+      "1": {
+        "text": "Немає об'єкта із зазначеним ID!",
+        "__type_alias_do_not_touch": "ApiErrorCode.NoSuchObjectWithThisId"
+      },
+      "2": {
+        "text": "Об'єкт не є унікальним!",
+        "__type_alias_do_not_touch": "ApiErrorCode.ObjectNotUniuque"
+      },
+      "3": {
+        "text": "Недійсні дані для входу!",
+        "__type_alias_do_not_touch": "ApiErrorCode.InvalidLoginData"
+      },
+      "4": {
+        "text": "Надано недійсні дані!",
+        "__type_alias_do_not_touch": "ApiErrorCode.InvalidData"
+      },
+      "5": {
+        "text": "Помилка перевірки форми!",
+        "__type_alias_do_not_touch": "ApiErrorCode.FormValidationError"
+      },
+      "6": {
+        "text": "Користувач із цими даними вже існує!",
+        "__type_alias_do_not_touch": "ApiErrorCode.UserExist"
+      },
+      "7": {
+        "text": "Недійсна ціна!",
+        "__type_alias_do_not_touch": "ApiErrorCode.InvalidPrice"
+      },
+      "8": {
+        "text": "Немає вільного мініскладу цього розміру!",
+        "__type_alias_do_not_touch": "ApiErrorCode.NoFreeBoxInThisSize"
+      },
+      "9": {
+        "text": "Помилка платежу!",
+        "__type_alias_do_not_touch": "ApiErrorCode.PaymentError"
+      },
+      "10": {
+        "text": "Ця дія недоступна до здійснення платежу!",
+        "__type_alias_do_not_touch": "ApiErrorCode.PayFirst"
+      },
+      "11": {
+        "text": "Ця зміна неприпустима в поточному статусі!",
+        "__type_alias_do_not_touch": "ApiErrorCode.CantChangeThisBoxOnThisStatus"
+      },
+      "12": {
+        "text": "Для цієї зміни вже занадто пізно!",
+        "__type_alias_do_not_touch": "ApiErrorCode.TooLateForCahnge"
+      },
+      "13": {
+        "text": "Немає вільних мініскладів!",
+        "__type_alias_do_not_touch": "ApiErrorCode.NotFreeBox"
+      },
+      "14": {
+        "text": "Недійсний код знижки!",
+        "__type_alias_do_not_touch": "ApiErrorCode.InvalidDiscountCode"
+      },
+      "15": {
+        "text": "Ця картка вже використала одноразову знижку!",
+        "__type_alias_do_not_touch": "ApiErrorCode.CardHasBeenUsedWithDiscount"
+      },
+      "16": {
+        "text": "Недійсний номер мініскладу!",
+        "__type_alias_do_not_touch": "ApiErrorCode.InvalidBoxNumber"
+      },
+      "17": {
+        "text": "Не вдалося створити рахунок!",
+        "__type_alias_do_not_touch": "ApiErrorCode.CreatingInvoiceFailure"
+      },
+      "18": {
+        "text": "Не вдалося надіслати рахунок!",
+        "__type_alias_do_not_touch": "ApiErrorCode.SendingEmailWithInvoiceFailure"
+      },
+      "19": {
+        "text": "Вибрано недійсну мову!",
+        "__type_alias_do_not_touch": "ApiErrorCode.InvalidLang"
+      },
+      "20": {
+        "text": "Для працівника необхідно вибрати майданчик!",
+        "__type_alias_do_not_touch": "ApiErrorCode.StckIdIsRequiredForWorkerRole"
+      },
+      "21": {
+        "text": "На майданчику не знайдено мініскладу з цим номером!",
+        "__type_alias_do_not_touch": "ApiErrorCode.NoFoundBoxNumberOnStock"
+      },
+      "22": {
+        "text": "Дію заборонено!",
+        "__type_alias_do_not_touch": "ApiErrorCode.ActionForebiden"
+      },
+      "23": {
+        "text": "Недійсні географічні координати!",
+        "__type_alias_do_not_touch": "ApiErrorCode.InvalidCoordinate"
+      },
+      "24": {
+        "text": "Ви занадто далеко!",
+        "__type_alias_do_not_touch": "ApiErrorCode.UAreTooFarAway"
+      },
+      "25": {
+        "text": "Вибраний майданчик вже має знижку!",
+        "__type_alias_do_not_touch": "ApiErrorCode.StockHasActiveDiscont"
+      },
+      "26": {
+        "text": "Недійсний код BLIK!",
+        "__type_alias_do_not_touch": "ApiErrorCode.InvalidBlik"
+      },
+      "27": {
+        "text": "Недійсний номер банківської групи!",
+        "__type_alias_do_not_touch": "ApiErrorCode.InvalidGroup"
+      },
+      "28": {
+        "text": "Мінісклад із вибраним номером зарезервовано!",
+        "__type_alias_do_not_touch": "ApiErrorCode.BoxNumberIsReserved"
+      },
+      "29": {
+        "text": "Для оформлення замовлення потрібен номер телефону. Будь ласка, заповніть свій профіль!",
+        "__type_alias_do_not_touch": "ApiErrorCode.PhoneIsRequiredForRent"
+      },
+      "30": {
+        "text": "Недійсна роль!",
+        "__type_alias_do_not_touch": "ApiErrorCode.InvalidUserType"
+      },
+      "31": {
+        "text": "Дані компанії є обов'язковими!",
+        "__type_alias_do_not_touch": "ApiErrorCode.CompanyDataIsRequired"
+      },
+      "32": {
+        "text": "Мінісклад вже зарезервовано!",
+        "__type_alias_do_not_touch": "ApiErrorCode.BoxIsReserved"
+      },
+      "33": {
+        "text": "Користувача заблоковано!",
+        "__type_alias_do_not_touch": "ApiErrorCode.UserIsBlocked"
+      },
+      "34": {
+        "text": "Оренду заблоковано. У вас є неоплачена оренда!",
+        "__type_alias_do_not_touch": "ApiErrorCode.YouHaveNoPaidBoxes"
+      },
+      "35": {
+        "text": "У вас немає дозволу відкрити браму!",
+        "__type_alias_do_not_touch": "ApiErrorCode.NoAccessToTheGate"
+      },
+      "36": {
+        "text": "Потрібна активація користувача!",
+        "__type_alias_do_not_touch": "ApiErrorCode.FirstActiveUser"
+      },
+      "37": {
+        "text": "Платіж не позначено як BLIK!",
+        "__type_alias_do_not_touch": "ApiErrorCode.PaymentIsntBlikType"
+      },
+      "38": {
+        "text": "Платіж не позначено як банківський переказ!",
+        "__type_alias_do_not_touch": "ApiErrorCode.PaymentIsntTransferType"
+      },
+      "39": {
+        "text": "Платіж не позначено як оплату карткою!",
+        "__type_alias_do_not_touch": "ApiErrorCode.PaymentIsntCardType"
+      },
+      "40": {
+        "text": "Недійсна ставка податку!",
+        "__type_alias_do_not_touch": "ApiErrorCode.InvalidTaxValue"
+      },
+      "41": {
+        "text": "Не вдалося підключитися до брами!",
+        "__type_alias_do_not_touch": "ApiErrorCode.ErrorConnectingToGate"
+      },
+      "42": {
+        "text": "Недійсний формат файлу!",
+        "__type_alias_do_not_touch": "ApiErrorCode.ForbiddenFileFormat"
+      },
+      "43": {
+        "text": "Цей номер телефону вже використовується!",
+        "__type_alias_do_not_touch": "ApiErrorCode.PhoneNumberIsAlreadyInUse"
+      },
+      "44": {
+        "text": "Цей ідентифікатор вже використовується!",
+        "__type_alias_do_not_touch": "ApiErrorCode.IdentifierAlreadyInUse"
+      },
+      "45": {
+        "text": "Такого франчайзі не знайдено!",
+        "__type_alias_do_not_touch": "ApiErrorCode.TenantDoesNotExist"
+      },
+      "46": {
+        "text": "Ви не можете видалити скриньку, яка не є порожньою!",
+        "__type_alias_do_not_touch": "ApiErrorCode.CanNotDeleteNotEmptyBox"
+      },
+      "47": {
+        "text": "Потрібно вказати принаймні один період!",
+        "__type_alias_do_not_touch": "ApiErrorCode.NeedAtLeastOnePricingPeriod"
+      },
+      "48": {
+        "text": "Періоди та ціни мають бути встановлені в порядку зростання!",
+        "__type_alias_do_not_touch": "ApiErrorCode.PricesAndPeriodsNeedsToBeInAscendingOrder"
+      },
+      "49": {
+        "text": "Період довший за 28 днів не допускається!",
+        "__type_alias_do_not_touch": "ApiErrorCode.PeriodMax28Days"
+      },
+      "50": {
+        "text": "Період довший за 4 тижні не допускається!",
+        "__type_alias_do_not_touch": "ApiErrorCode.PeriodMax4Weeks"
+      },
+      "51": {
+        "text": "Період довший за 12 місяців не допускається!",
+        "__type_alias_do_not_touch": "ApiErrorCode.PeriodMax12Months"
+      },
+      "52": {
+        "text": "Мінімальна кількість періодів становить 1!",
+        "__type_alias_do_not_touch": "ApiErrorCode.PeriodAtLeast1"
+      },
+      "53": {
+        "text": "Ви повинні встановити ціну за 1 день оренди!",
+        "__type_alias_do_not_touch": "ApiErrorCode.YouNeedToSetPriceForOneDay"
+      },
+      "54": {
+        "text": "Вибраний період часу занадто короткий!",
+        "__type_alias_do_not_touch": "ApiErrorCode.RentPeriodTooShort"
+      },
+      "55": {
+        "text": "Майданчик не має знижки!",
+        "__type_alias_do_not_touch": "ApiErrorCode.NoDiscountSet"
+      },
+      "56": {
+        "text": "Код знижки недійсний!",
+        "__type_alias_do_not_touch": "ApiErrorCode.GiftCodeInvalid"
+      },
+      "57": {
+        "text": "Код знижки, який вже було використано, не можна видалити!",
+        "__type_alias_do_not_touch": "ApiErrorCode.CantRemoveUsedGift"
+      },
+      "58": {
+        "text": "Платформа неактивна!",
+        "__type_alias_do_not_touch": "ApiErrorCode.TenantNotActive"
+      },
+      "59": {
+        "text": "Ви не можете видалити групу, яка містить контейнери зі статусом, відмінним від вільного!",
+        "__type_alias_do_not_touch": "ApiErrorCode.CanNotRemoveGroupWithRents"
+      },
+      "60": {
+        "text": "Неможливо виставити рахунок!",
+        "__type_alias_do_not_touch": "ApiErrorCode.NoInvoiceServiceData"
+      },
+      "61": {
+        "text": "Досягнуто ліміту контейнерів!",
+        "__type_alias_do_not_touch": "ApiErrorCode.BoxesLimitReached"
+      },
+      "62": {
+        "text": "Неможливо додати таку кількість контейнерів. Зменште кількість, щоб вміститися в ліміт.",
+        "__type_alias_do_not_touch": "ApiErrorCode.TryingToAddTooManyBoxes"
+      },
+      "63": {
+        "text": "Досягнуто ліміту майданчиків!",
+        "__type_alias_do_not_touch": "ApiErrorCode.StocksLimitReached"
+      },
+      "64": {
+        "text": "Замок перебуває в режимі сну. Натисніть кнопку на замку, щоб його розбудити.",
+        "__type_alias_do_not_touch": "ApiErrorCode.LockIsInSleepMode"
+      },
+      "65": {
+        "text": "Потрібно вказати принаймні один варіант додаткової опції!",
+        "__type_alias_do_not_touch": "ApiErrorCode.NeedAtLeastOneAddonVariant"
+      },
+      "66": {
+        "text": "Обов'язкову додаткову опцію не вибрано!",
+        "__type_alias_do_not_touch": "ApiErrorCode.RequiredAddonNotSelected"
+      },
+      "67": {
+        "text": "Ви повинні надати згоду на вибрану додаткову опцію!",
+        "__type_alias_do_not_touch": "ApiErrorCode.AcceptanceNotSelected"
+      },
+      "68": {
+        "text": "Завантажений файл занадто великий!",
+        "__type_alias_do_not_touch": "ApiErrorCode.FileIsTooBig"
+      },
+      "69": {
+        "text": "Відсутній обов'язковий файл!",
+        "__type_alias_do_not_touch": "ApiErrorCode.AddonFileIsMissing"
+      },
+      "70": {
+        "text": "Відсутня дата народження!",
+        "__type_alias_do_not_touch": "ApiErrorCode.BirthDateMissing"
+      },
+      "71": {
+        "text": "Досягнуто максимальної кількості активних скриньок!",
+        "__type_alias_do_not_touch": "ApiErrorCode.ActiveBoxesLimitReached"
+      },
+      "72": {
+        "text": "Скриньку, яка не є вільною, не можна деактивувати!",
+        "__type_alias_do_not_touch": "ApiErrorCode.CanNotSetNotEmptyBoxAsInactive"
+      },
+      "73": {
+        "text": "Немає вільних скриньок!",
+        "__type_alias_do_not_touch": "ApiErrorCode.NoMoreAvailableBoxes"
+      },
+      "74": {
+        "text": "Користувача з активною орендою не можна видалити!",
+        "__type_alias_do_not_touch": "ApiErrorCode.CanNotDeleteUserWithRent"
+      },
+      "75": {
+        "text": "Неоплачену оренду не можна продовжити!",
+        "__type_alias_do_not_touch": "ApiErrorCode.CanNotExtendUnpaidRent"
+      },
+      "76": {
+        "text": "Скриньку з платежем у процесі не можна звільнити!",
+        "__type_alias_do_not_touch": "ApiErrorCode.CantFreeBoxWithPendingPayment"
+      },
+      "77": {
+        "text": "Період довший за пів року не допускається!",
+        "__type_alias_do_not_touch": "ApiErrorCode.PeriodMax1HalfYear"
+      },
+      "78": {
+        "text": "Період довший за два квартали не допускається!",
+        "__type_alias_do_not_touch": "ApiErrorCode.PeriodMax2Quarters"
+      },
+      "79": {
+        "text": "Ви вже підписані на це сповіщення.",
+        "__type_alias_do_not_touch": "ApiErrorCode.YouAreAlreadySubscribed"
+      },
+      "80": {
+        "text": "Під час спроби відкриття сталася помилка.",
+        "__type_alias_do_not_touch": "ApiErrorCode.ErrorWhenTryingToOpen"
+      },
+      "81": {
+        "text": "Не вдалося відімкнути замок.",
+        "__type_alias_do_not_touch": "ApiErrorCode.UnableToUnlock"
+      },
+      "82": {
+        "text": "Відсутнє джерело клієнта!",
+        "__type_alias_do_not_touch": "ApiErrorCode.ClientSourceMissing"
+      },
+      "83": {
+        "text": "Цей код знижки не можна використати при оплаті частинами!",
+        "__type_alias_do_not_touch": "ApiErrorCode.CantUseDiscountCodeWithInstallments"
+      },
+      "84": {
+        "text": "Вибраний період оренди занадто довгий!",
+        "__type_alias_do_not_touch": "ApiErrorCode.RentPeriodTooLong"
+      },
+      "85": {
+        "text": "Максимальний час оренди не може бути коротшим за мінімальний!",
+        "__type_alias_do_not_touch": "ApiErrorCode.MaxPeriodCantBeLowerThanMin"
+      },
+      "86": {
+        "text": "Період оренди занадто короткий для оплати частинами!",
+        "__type_alias_do_not_touch": "ApiErrorCode.RentPeriodTooShortForInstallments"
+      },
+      "87": {
+        "text": "Ви повинні встановити дійсну фіксовану ціну для варіанта додаткової опції!",
+        "__type_alias_do_not_touch": "ApiErrorCode.YouNeedToSetCorrectFixedPriceForVariant"
+      },
+      "88": {
+        "text": "Під час розрахунку ціни оренди виникла проблема. Оновіть сторінку та спробуйте ще раз.",
+        "__type_alias_do_not_touch": "ApiErrorCode.AddonNotAvailableForThisGroup"
+      },
+      "89": {
+        "text": "Податковий номер (NIP) недійсний!",
+        "__type_alias_do_not_touch": "ApiErrorCode.InvalidNIP"
+      },
+      "90": {
+        "text": "Замок не підключено до Gateway!",
+        "__type_alias_do_not_touch": "ApiErrorCode.LockNotConnectedToTheGateway"
+      },
+      "91": {
+        "text": "Замок не підтримує це налаштування!",
+        "__type_alias_do_not_touch": "ApiErrorCode.LockFunctionNotSupported"
+      },
+      "92": {
+        "text": "Під час зв'язку із замком сталася помилка (недійсний параметр)!",
+        "__type_alias_do_not_touch": "ApiErrorCode.LockInvalidParameter"
+      },
+      "93": {
+        "text": "Недійсний код!",
+        "__type_alias_do_not_touch": "ApiErrorCode.IncorrectPasscode"
+      },
+      "94": {
+        "text": "Недійсний документ продажу!",
+        "__type_alias_do_not_touch": "ApiErrorCode.SelectedIncorrectPaymentDocument"
+      },
+      "95": {
+        "text": "Цей код вже існує!",
+        "__type_alias_do_not_touch": "ApiErrorCode.GiftCodeExists"
+      },
+      "96": {
+        "text": "Вибрана країна недійсна!",
+        "__type_alias_do_not_touch": "ApiErrorCode.InvalidCountry"
+      },
+      "97": {
+        "text": "Обліковий запис неможливо видалити. Переконайтеся, що у вас немає заборгованості та активних оренд.",
+        "__type_alias_do_not_touch": "ApiErrorCode.UnableToDeleteAccount"
+      },
+      "98": {
+        "text": "Цей тип документа вже існує.",
+        "__type_alias_do_not_touch": "ApiErrorCode.DocumentTypeAlreadyExists"
+      },
+      "99": {
+        "text": "Цей код знижки доступний лише для нових клієнтів.",
+        "__type_alias_do_not_touch": "ApiErrorCode.GiftForNewClientsOnly"
+      },
+      "100": {
+        "text": "Недійсні дані для уповноваження.",
+        "__type_alias_do_not_touch": "ApiErrorCode.IncorrectAuthorizationData"
+      },
+      "101": {
+        "text": "Немає збереженої конфігурації SMTP.",
+        "__type_alias_do_not_touch": "ApiErrorCode.MissingSmtpSettings"
+      },
+      "102": {
+        "text": "Браму зараз не можна відкрити. Спробуйте ще раз за мить.",
+        "__type_alias_do_not_touch": "ApiErrorCode.OpenGateTooSoon"
+      },
+      "103": {
+        "text": "Цього користувача вже запрошено.",
+        "__type_alias_do_not_touch": "ApiErrorCode.InvitationAlreadyExists"
+      },
+      "104": {
+        "text": "Недійсний або прострочений код активації.",
+        "__type_alias_do_not_touch": "ApiErrorCode.InvalidActivationCode"
+      },
+      "105": {
+        "text": "Новий код можна згенерувати через 5 хвилин.",
+        "__type_alias_do_not_touch": "ApiErrorCode.ActivationCodeResendTooSoon"
+      },
+      "106": {
+        "text": "Для завершення оренди потрібне фото.",
+        "__type_alias_do_not_touch": "ApiErrorCode.EndRentPhotoRequired"
+      },
+      "107": {
+        "text": "Завершення оренди з фото доступне лише в мобільному застосунку або в браузері на телефоні.",
+        "__type_alias_do_not_touch": "ApiErrorCode.EndRentPhotoMobileOnly"
+      },
+      "108": {
+        "text": "Фото занадто старе. Зробіть нове фото скриньки (не старше ніж 15 хвилин).",
+        "__type_alias_do_not_touch": "ApiErrorCode.EndRentPhotoTooOld"
+      },
+      "109": {
+        "text": "Безстрокові договори недоступні для цього орендаря.",
+        "__type_alias_do_not_touch": "ApiErrorCode.OpenEndedAgreementsNotAllowed"
+      },
+      "110": {
+        "text": "Строкові договори недоступні для цього орендаря.",
+        "__type_alias_do_not_touch": "ApiErrorCode.FixedTermAgreementsNotAllowed"
+      },
+      "111": {
+        "text": "Вибраний спосіб оплати недоступний.",
+        "__type_alias_do_not_touch": "ApiErrorCode.PaymentMethodNotAllowed"
+      },
+      "112": {
+        "text": "Безстроковий договір не можна продовжити. Завершіть оренду, якщо хочете її припинити.",
+        "__type_alias_do_not_touch": "ApiErrorCode.CanNotExtendOpenEndedRent"
+      },
+      "113": {
+        "text": "Додаткову опцію не можна видалити, оскільки вона використовується в активному безстроковому договорі.",
+        "__type_alias_do_not_touch": "ApiErrorCode.CanNotDeleteAddonUsedByOpenEndedRent"
+      },
+      "114": {
+        "text": "Цей код недоступний, оскільки його вже було використано для цього замка.",
+        "__type_alias_do_not_touch": "ApiErrorCode.PassCodeAlreadyExists"
+      }
+    }
+  },
+  "de": {
+    "Both new passwords have to be identical.": "Beide neuen Passwörter müssen identisch sein.",
+    "Cannot decode this type of data when using FormData.": "Dieser Datentyp kann bei Verwendung von FormData nicht dekodiert werden.",
+    "Company city": "Kontaktdaten: Stadt",
+    "Company name": "Firmenname",
+    "Company post code": "Kontaktdaten: Postleitzahl",
+    "Compnay street": "Kontaktdaten: Straße",
+    "Data początku nie może być wcześniejsza od końcowej": "Das Startdatum darf nicht früher als das Enddatum sein",
+    "Date too high. Max. {0}.": "Datum zu hoch. Max. {0}.",
+    "Date too low. Min. {0}.": "Das Datum ist bereits vergangen. Min. {0}.",
+    "Discount value": "Rabattwert",
+    "Expiration Date": "Ablaufdatum",
+    "Field required.": "Dieses Feld ist erforderlich.",
+    "Invalid NIP.": "Ungültige Steuernummer (NIP).",
+    "Incorrect character detected.": "Ungültiges Zeichen. Polnische Buchstaben, Ziffern und Sonderzeichen sind zulässig.",
+    "Invalid Zip code.": "Ungültige Postleitzahl.",
+    "Invalid absolute URL.": "Ungültige absolute URL.",
+    "Invalid bank account number": "Ungültige Bankkontonummer",
+    "Invalid color hash.": "Ungültiger Farb-Hash.",
+    "Invalid e-mail address.": "Ungültige E-Mail-Adresse.",
+    "Invalid email.": "Ungültige E-Mail-Adresse.",
+    "Invalid option: {0}.": "Ungültige Option: {0}.",
+    "Invalid phone number": "Ungültige Telefonnummer",
+    "Invalid post code": "Ungültige Postleitzahl",
+    "Invalid identifier": "Ungültiger Identifikator. Kleinbuchstaben, Ziffern und - sind zulässig.",
+    "Invalid type of value: {0} expected.": "Ungültiger Werttyp: {0} erwartet.",
+    "New password": "Neues Passwort",
+    "Password": "Passwort",
+    "Phone": "Telefon",
+    "Repeat new password": "Neues Passwort wiederholen",
+    "Select...": "Auswählen...",
+    "Stock": "Gelände",
+    "Stocks": "Gelände",
+    "Value": "Wert",
+    "Value too high. Max. {0}.": "Wert zu hoch. Max. {0}.",
+    "Value too long (max. {0})": "Wert zu lang (max. {0})",
+    "Value too low. Min. {0}.": "Wert zu niedrig. Min. {0}.",
+    "Value too short (min. {0})": "Wert zu kurz (min. {0})",
+    "Value%": "Wert [%]",
+    "_API_ERROR_CODES_": {
+      "0": {
+        "text": "Es ist ein Fehler aufgetreten!",
+        "__type_alias_do_not_touch": "ApiErrorCode.OtherError"
+      },
+      "1": {
+        "text": "Kein Objekt mit der angegebenen ID!",
+        "__type_alias_do_not_touch": "ApiErrorCode.NoSuchObjectWithThisId"
+      },
+      "2": {
+        "text": "Das Objekt ist nicht eindeutig!",
+        "__type_alias_do_not_touch": "ApiErrorCode.ObjectNotUniuque"
+      },
+      "3": {
+        "text": "Ungültige Anmeldedaten!",
+        "__type_alias_do_not_touch": "ApiErrorCode.InvalidLoginData"
+      },
+      "4": {
+        "text": "Es wurden ungültige Daten angegeben!",
+        "__type_alias_do_not_touch": "ApiErrorCode.InvalidData"
+      },
+      "5": {
+        "text": "Fehler bei der Formularvalidierung!",
+        "__type_alias_do_not_touch": "ApiErrorCode.FormValidationError"
+      },
+      "6": {
+        "text": "Ein Benutzer mit diesen Angaben existiert bereits!",
+        "__type_alias_do_not_touch": "ApiErrorCode.UserExist"
+      },
+      "7": {
+        "text": "Ungültiger Preis!",
+        "__type_alias_do_not_touch": "ApiErrorCode.InvalidPrice"
+      },
+      "8": {
+        "text": "Kein freies Minilager dieser Größe!",
+        "__type_alias_do_not_touch": "ApiErrorCode.NoFreeBoxInThisSize"
+      },
+      "9": {
+        "text": "Zahlungsfehler!",
+        "__type_alias_do_not_touch": "ApiErrorCode.PaymentError"
+      },
+      "10": {
+        "text": "Diese Aktion ist vor der Zahlung nicht verfügbar!",
+        "__type_alias_do_not_touch": "ApiErrorCode.PayFirst"
+      },
+      "11": {
+        "text": "Diese Änderung ist im aktuellen Status nicht zulässig!",
+        "__type_alias_do_not_touch": "ApiErrorCode.CantChangeThisBoxOnThisStatus"
+      },
+      "12": {
+        "text": "Es ist zu spät für diese Änderung!",
+        "__type_alias_do_not_touch": "ApiErrorCode.TooLateForCahnge"
+      },
+      "13": {
+        "text": "Keine freien Minilager!",
+        "__type_alias_do_not_touch": "ApiErrorCode.NotFreeBox"
+      },
+      "14": {
+        "text": "Ungültiger Rabattcode!",
+        "__type_alias_do_not_touch": "ApiErrorCode.InvalidDiscountCode"
+      },
+      "15": {
+        "text": "Diese Karte hat bereits einen einmaligen Rabatt verwendet!",
+        "__type_alias_do_not_touch": "ApiErrorCode.CardHasBeenUsedWithDiscount"
+      },
+      "16": {
+        "text": "Ungültige Minilager-Nummer!",
+        "__type_alias_do_not_touch": "ApiErrorCode.InvalidBoxNumber"
+      },
+      "17": {
+        "text": "Die Rechnung konnte nicht erstellt werden!",
+        "__type_alias_do_not_touch": "ApiErrorCode.CreatingInvoiceFailure"
+      },
+      "18": {
+        "text": "Die Rechnung konnte nicht gesendet werden!",
+        "__type_alias_do_not_touch": "ApiErrorCode.SendingEmailWithInvoiceFailure"
+      },
+      "19": {
+        "text": "Es wurde eine ungültige Sprache ausgewählt!",
+        "__type_alias_do_not_touch": "ApiErrorCode.InvalidLang"
+      },
+      "20": {
+        "text": "Für einen Mitarbeiter muss ein Gelände ausgewählt werden!",
+        "__type_alias_do_not_touch": "ApiErrorCode.StckIdIsRequiredForWorkerRole"
+      },
+      "21": {
+        "text": "Auf dem Gelände wurde kein Minilager mit dieser Nummer gefunden!",
+        "__type_alias_do_not_touch": "ApiErrorCode.NoFoundBoxNumberOnStock"
+      },
+      "22": {
+        "text": "Aktion nicht erlaubt!",
+        "__type_alias_do_not_touch": "ApiErrorCode.ActionForebiden"
+      },
+      "23": {
+        "text": "Ungültige geografische Koordinaten!",
+        "__type_alias_do_not_touch": "ApiErrorCode.InvalidCoordinate"
+      },
+      "24": {
+        "text": "Sie sind zu weit entfernt!",
+        "__type_alias_do_not_touch": "ApiErrorCode.UAreTooFarAway"
+      },
+      "25": {
+        "text": "Das ausgewählte Gelände hat bereits einen Rabatt!",
+        "__type_alias_do_not_touch": "ApiErrorCode.StockHasActiveDiscont"
+      },
+      "26": {
+        "text": "Ungültiger BLIK-Code!",
+        "__type_alias_do_not_touch": "ApiErrorCode.InvalidBlik"
+      },
+      "27": {
+        "text": "Ungültige Bankgruppennummer!",
+        "__type_alias_do_not_touch": "ApiErrorCode.InvalidGroup"
+      },
+      "28": {
+        "text": "Das Minilager mit der ausgewählten Nummer ist reserviert!",
+        "__type_alias_do_not_touch": "ApiErrorCode.BoxNumberIsReserved"
+      },
+      "29": {
+        "text": "Zum Aufgeben einer Bestellung ist eine Telefonnummer erforderlich. Bitte vervollständigen Sie Ihr Profil!",
+        "__type_alias_do_not_touch": "ApiErrorCode.PhoneIsRequiredForRent"
+      },
+      "30": {
+        "text": "Ungültige Rolle!",
+        "__type_alias_do_not_touch": "ApiErrorCode.InvalidUserType"
+      },
+      "31": {
+        "text": "Firmendaten sind erforderlich!",
+        "__type_alias_do_not_touch": "ApiErrorCode.CompanyDataIsRequired"
+      },
+      "32": {
+        "text": "Das Minilager wurde bereits reserviert!",
+        "__type_alias_do_not_touch": "ApiErrorCode.BoxIsReserved"
+      },
+      "33": {
+        "text": "Der Benutzer wurde gesperrt!",
+        "__type_alias_do_not_touch": "ApiErrorCode.UserIsBlocked"
+      },
+      "34": {
+        "text": "Die Miete ist gesperrt. Sie haben eine unbezahlte Miete!",
+        "__type_alias_do_not_touch": "ApiErrorCode.YouHaveNoPaidBoxes"
+      },
+      "35": {
+        "text": "Sie haben keine Berechtigung, das Tor zu öffnen!",
+        "__type_alias_do_not_touch": "ApiErrorCode.NoAccessToTheGate"
+      },
+      "36": {
+        "text": "Die Aktivierung des Benutzers ist erforderlich!",
+        "__type_alias_do_not_touch": "ApiErrorCode.FirstActiveUser"
+      },
+      "37": {
+        "text": "Die Zahlung ist nicht als BLIK gekennzeichnet!",
+        "__type_alias_do_not_touch": "ApiErrorCode.PaymentIsntBlikType"
+      },
+      "38": {
+        "text": "Die Zahlung ist nicht als Überweisung gekennzeichnet!",
+        "__type_alias_do_not_touch": "ApiErrorCode.PaymentIsntTransferType"
+      },
+      "39": {
+        "text": "Die Zahlung ist nicht als Kartenzahlung gekennzeichnet!",
+        "__type_alias_do_not_touch": "ApiErrorCode.PaymentIsntCardType"
+      },
+      "40": {
+        "text": "Ungültiger Steuersatz!",
+        "__type_alias_do_not_touch": "ApiErrorCode.InvalidTaxValue"
+      },
+      "41": {
+        "text": "Verbindung zum Tor fehlgeschlagen!",
+        "__type_alias_do_not_touch": "ApiErrorCode.ErrorConnectingToGate"
+      },
+      "42": {
+        "text": "Ungültiges Dateiformat!",
+        "__type_alias_do_not_touch": "ApiErrorCode.ForbiddenFileFormat"
+      },
+      "43": {
+        "text": "Diese Telefonnummer wird bereits verwendet!",
+        "__type_alias_do_not_touch": "ApiErrorCode.PhoneNumberIsAlreadyInUse"
+      },
+      "44": {
+        "text": "Dieser Identifikator wird bereits verwendet!",
+        "__type_alias_do_not_touch": "ApiErrorCode.IdentifierAlreadyInUse"
+      },
+      "45": {
+        "text": "Ein solcher Franchisenehmer wurde nicht gefunden!",
+        "__type_alias_do_not_touch": "ApiErrorCode.TenantDoesNotExist"
+      },
+      "46": {
+        "text": "Sie können kein Schließfach löschen, das nicht leer ist!",
+        "__type_alias_do_not_touch": "ApiErrorCode.CanNotDeleteNotEmptyBox"
+      },
+      "47": {
+        "text": "Mindestens ein Zeitraum ist erforderlich!",
+        "__type_alias_do_not_touch": "ApiErrorCode.NeedAtLeastOnePricingPeriod"
+      },
+      "48": {
+        "text": "Zeiträume und Preise müssen in aufsteigender Reihenfolge festgelegt werden!",
+        "__type_alias_do_not_touch": "ApiErrorCode.PricesAndPeriodsNeedsToBeInAscendingOrder"
+      },
+      "49": {
+        "text": "Ein Zeitraum von mehr als 28 Tagen ist nicht zulässig!",
+        "__type_alias_do_not_touch": "ApiErrorCode.PeriodMax28Days"
+      },
+      "50": {
+        "text": "Ein Zeitraum von mehr als 4 Wochen ist nicht zulässig!",
+        "__type_alias_do_not_touch": "ApiErrorCode.PeriodMax4Weeks"
+      },
+      "51": {
+        "text": "Ein Zeitraum von mehr als 12 Monaten ist nicht zulässig!",
+        "__type_alias_do_not_touch": "ApiErrorCode.PeriodMax12Months"
+      },
+      "52": {
+        "text": "Die Mindestanzahl der Zeiträume beträgt 1!",
+        "__type_alias_do_not_touch": "ApiErrorCode.PeriodAtLeast1"
+      },
+      "53": {
+        "text": "Sie müssen einen Preis für 1 Tag Miete festlegen!",
+        "__type_alias_do_not_touch": "ApiErrorCode.YouNeedToSetPriceForOneDay"
+      },
+      "54": {
+        "text": "Der ausgewählte Zeitraum ist zu kurz!",
+        "__type_alias_do_not_touch": "ApiErrorCode.RentPeriodTooShort"
+      },
+      "55": {
+        "text": "Das Gelände hat keinen Rabatt!",
+        "__type_alias_do_not_touch": "ApiErrorCode.NoDiscountSet"
+      },
+      "56": {
+        "text": "Der Rabattcode ist ungültig!",
+        "__type_alias_do_not_touch": "ApiErrorCode.GiftCodeInvalid"
+      },
+      "57": {
+        "text": "Ein Rabattcode, der bereits verwendet wurde, kann nicht gelöscht werden!",
+        "__type_alias_do_not_touch": "ApiErrorCode.CantRemoveUsedGift"
+      },
+      "58": {
+        "text": "Die Plattform ist inaktiv!",
+        "__type_alias_do_not_touch": "ApiErrorCode.TenantNotActive"
+      },
+      "59": {
+        "text": "Sie können keine Gruppe löschen, die Container mit einem anderen Status als frei enthält!",
+        "__type_alias_do_not_touch": "ApiErrorCode.CanNotRemoveGroupWithRents"
+      },
+      "60": {
+        "text": "Eine Rechnung kann nicht ausgestellt werden!",
+        "__type_alias_do_not_touch": "ApiErrorCode.NoInvoiceServiceData"
+      },
+      "61": {
+        "text": "Das Limit für Container wurde erreicht!",
+        "__type_alias_do_not_touch": "ApiErrorCode.BoxesLimitReached"
+      },
+      "62": {
+        "text": "Diese Anzahl an Containern kann nicht hinzugefügt werden. Verringern Sie die Anzahl, um innerhalb des Limits zu bleiben.",
+        "__type_alias_do_not_touch": "ApiErrorCode.TryingToAddTooManyBoxes"
+      },
+      "63": {
+        "text": "Das Limit für Gelände wurde erreicht!",
+        "__type_alias_do_not_touch": "ApiErrorCode.StocksLimitReached"
+      },
+      "64": {
+        "text": "Das Schloss befindet sich im Ruhemodus. Drücken Sie die Taste am Schloss, um es aufzuwecken.",
+        "__type_alias_do_not_touch": "ApiErrorCode.LockIsInSleepMode"
+      },
+      "65": {
+        "text": "Mindestens eine Variante der Zusatzoption ist erforderlich!",
+        "__type_alias_do_not_touch": "ApiErrorCode.NeedAtLeastOneAddonVariant"
+      },
+      "66": {
+        "text": "Eine erforderliche Zusatzoption wurde nicht ausgewählt!",
+        "__type_alias_do_not_touch": "ApiErrorCode.RequiredAddonNotSelected"
+      },
+      "67": {
+        "text": "Sie müssen der ausgewählten Zusatzoption zustimmen!",
+        "__type_alias_do_not_touch": "ApiErrorCode.AcceptanceNotSelected"
+      },
+      "68": {
+        "text": "Die hochgeladene Datei ist zu groß!",
+        "__type_alias_do_not_touch": "ApiErrorCode.FileIsTooBig"
+      },
+      "69": {
+        "text": "Eine erforderliche Datei fehlt!",
+        "__type_alias_do_not_touch": "ApiErrorCode.AddonFileIsMissing"
+      },
+      "70": {
+        "text": "Das Geburtsdatum fehlt!",
+        "__type_alias_do_not_touch": "ApiErrorCode.BirthDateMissing"
+      },
+      "71": {
+        "text": "Die maximale Anzahl aktiver Schließfächer wurde erreicht!",
+        "__type_alias_do_not_touch": "ApiErrorCode.ActiveBoxesLimitReached"
+      },
+      "72": {
+        "text": "Ein Schließfach, das nicht frei ist, kann nicht deaktiviert werden!",
+        "__type_alias_do_not_touch": "ApiErrorCode.CanNotSetNotEmptyBoxAsInactive"
+      },
+      "73": {
+        "text": "Keine freien Schließfächer!",
+        "__type_alias_do_not_touch": "ApiErrorCode.NoMoreAvailableBoxes"
+      },
+      "74": {
+        "text": "Ein Benutzer mit einer aktiven Miete kann nicht gelöscht werden!",
+        "__type_alias_do_not_touch": "ApiErrorCode.CanNotDeleteUserWithRent"
+      },
+      "75": {
+        "text": "Eine unbezahlte Miete kann nicht verlängert werden!",
+        "__type_alias_do_not_touch": "ApiErrorCode.CanNotExtendUnpaidRent"
+      },
+      "76": {
+        "text": "Ein Schließfach mit einer laufenden Zahlung kann nicht freigegeben werden!",
+        "__type_alias_do_not_touch": "ApiErrorCode.CantFreeBoxWithPendingPayment"
+      },
+      "77": {
+        "text": "Ein Zeitraum von mehr als einem halben Jahr ist nicht zulässig!",
+        "__type_alias_do_not_touch": "ApiErrorCode.PeriodMax1HalfYear"
+      },
+      "78": {
+        "text": "Ein Zeitraum von mehr als zwei Quartalen ist nicht zulässig!",
+        "__type_alias_do_not_touch": "ApiErrorCode.PeriodMax2Quarters"
+      },
+      "79": {
+        "text": "Sie haben diese Benachrichtigung bereits abonniert.",
+        "__type_alias_do_not_touch": "ApiErrorCode.YouAreAlreadySubscribed"
+      },
+      "80": {
+        "text": "Beim Versuch zu öffnen ist ein Fehler aufgetreten.",
+        "__type_alias_do_not_touch": "ApiErrorCode.ErrorWhenTryingToOpen"
+      },
+      "81": {
+        "text": "Das Schloss konnte nicht entriegelt werden.",
+        "__type_alias_do_not_touch": "ApiErrorCode.UnableToUnlock"
+      },
+      "82": {
+        "text": "Die Client-Quelle fehlt!",
+        "__type_alias_do_not_touch": "ApiErrorCode.ClientSourceMissing"
+      },
+      "83": {
+        "text": "Dieser Rabattcode kann nicht bei Ratenzahlungen verwendet werden!",
+        "__type_alias_do_not_touch": "ApiErrorCode.CantUseDiscountCodeWithInstallments"
+      },
+      "84": {
+        "text": "Der ausgewählte Mietzeitraum ist zu lang!",
+        "__type_alias_do_not_touch": "ApiErrorCode.RentPeriodTooLong"
+      },
+      "85": {
+        "text": "Die maximale Mietdauer darf nicht kürzer als die minimale sein!",
+        "__type_alias_do_not_touch": "ApiErrorCode.MaxPeriodCantBeLowerThanMin"
+      },
+      "86": {
+        "text": "Der Mietzeitraum ist für Ratenzahlungen zu kurz!",
+        "__type_alias_do_not_touch": "ApiErrorCode.RentPeriodTooShortForInstallments"
+      },
+      "87": {
+        "text": "Sie müssen einen gültigen Festpreis für die Variante der Zusatzoption festlegen!",
+        "__type_alias_do_not_touch": "ApiErrorCode.YouNeedToSetCorrectFixedPriceForVariant"
+      },
+      "88": {
+        "text": "Bei der Berechnung des Mietpreises ist ein Problem aufgetreten. Aktualisieren Sie die Seite und versuchen Sie es erneut.",
+        "__type_alias_do_not_touch": "ApiErrorCode.AddonNotAvailableForThisGroup"
+      },
+      "89": {
+        "text": "Die Steuernummer (NIP) ist ungültig!",
+        "__type_alias_do_not_touch": "ApiErrorCode.InvalidNIP"
+      },
+      "90": {
+        "text": "Das Schloss ist nicht mit einem Gateway verbunden!",
+        "__type_alias_do_not_touch": "ApiErrorCode.LockNotConnectedToTheGateway"
+      },
+      "91": {
+        "text": "Das Schloss unterstützt diese Einstellung nicht!",
+        "__type_alias_do_not_touch": "ApiErrorCode.LockFunctionNotSupported"
+      },
+      "92": {
+        "text": "Bei der Kommunikation mit dem Schloss ist ein Fehler aufgetreten (ungültiger Parameter)!",
+        "__type_alias_do_not_touch": "ApiErrorCode.LockInvalidParameter"
+      },
+      "93": {
+        "text": "Ungültiger Code!",
+        "__type_alias_do_not_touch": "ApiErrorCode.IncorrectPasscode"
+      },
+      "94": {
+        "text": "Ungültiges Verkaufsdokument!",
+        "__type_alias_do_not_touch": "ApiErrorCode.SelectedIncorrectPaymentDocument"
+      },
+      "95": {
+        "text": "Dieser Code existiert bereits!",
+        "__type_alias_do_not_touch": "ApiErrorCode.GiftCodeExists"
+      },
+      "96": {
+        "text": "Das ausgewählte Land ist ungültig!",
+        "__type_alias_do_not_touch": "ApiErrorCode.InvalidCountry"
+      },
+      "97": {
+        "text": "Das Konto kann nicht gelöscht werden. Stellen Sie sicher, dass Sie keine offenen Beträge und keine aktiven Mieten haben.",
+        "__type_alias_do_not_touch": "ApiErrorCode.UnableToDeleteAccount"
+      },
+      "98": {
+        "text": "Dieser Dokumenttyp existiert bereits.",
+        "__type_alias_do_not_touch": "ApiErrorCode.DocumentTypeAlreadyExists"
+      },
+      "99": {
+        "text": "Dieser Rabattcode ist nur für Neukunden verfügbar.",
+        "__type_alias_do_not_touch": "ApiErrorCode.GiftForNewClientsOnly"
+      },
+      "100": {
+        "text": "Ungültige Angaben für die Vollmacht.",
+        "__type_alias_do_not_touch": "ApiErrorCode.IncorrectAuthorizationData"
+      },
+      "101": {
+        "text": "Keine gespeicherte SMTP-Konfiguration.",
+        "__type_alias_do_not_touch": "ApiErrorCode.MissingSmtpSettings"
+      },
+      "102": {
+        "text": "Das Tor kann derzeit nicht geöffnet werden. Versuchen Sie es in einem Moment erneut.",
+        "__type_alias_do_not_touch": "ApiErrorCode.OpenGateTooSoon"
+      },
+      "103": {
+        "text": "Dieser Benutzer wurde bereits eingeladen.",
+        "__type_alias_do_not_touch": "ApiErrorCode.InvitationAlreadyExists"
+      },
+      "104": {
+        "text": "Ungültiger oder abgelaufener Aktivierungscode.",
+        "__type_alias_do_not_touch": "ApiErrorCode.InvalidActivationCode"
+      },
+      "105": {
+        "text": "Ein neuer Code kann nach 5 Minuten generiert werden.",
+        "__type_alias_do_not_touch": "ApiErrorCode.ActivationCodeResendTooSoon"
+      },
+      "106": {
+        "text": "Zum Beenden der Miete ist ein Foto erforderlich.",
+        "__type_alias_do_not_touch": "ApiErrorCode.EndRentPhotoRequired"
+      },
+      "107": {
+        "text": "Das Beenden einer Miete mit einem Foto ist nur in der mobilen App oder in einem Browser auf dem Telefon verfügbar.",
+        "__type_alias_do_not_touch": "ApiErrorCode.EndRentPhotoMobileOnly"
+      },
+      "108": {
+        "text": "Das Foto ist zu alt. Machen Sie ein neues Foto des Schließfachs (nicht älter als 15 Minuten).",
+        "__type_alias_do_not_touch": "ApiErrorCode.EndRentPhotoTooOld"
+      },
+      "109": {
+        "text": "Unbefristete Verträge sind für diesen Mieter nicht verfügbar.",
+        "__type_alias_do_not_touch": "ApiErrorCode.OpenEndedAgreementsNotAllowed"
+      },
+      "110": {
+        "text": "Befristete Verträge sind für diesen Mieter nicht verfügbar.",
+        "__type_alias_do_not_touch": "ApiErrorCode.FixedTermAgreementsNotAllowed"
+      },
+      "111": {
+        "text": "Die ausgewählte Zahlungsmethode ist nicht verfügbar.",
+        "__type_alias_do_not_touch": "ApiErrorCode.PaymentMethodNotAllowed"
+      },
+      "112": {
+        "text": "Ein unbefristeter Vertrag kann nicht verlängert werden. Beenden Sie die Miete, wenn Sie sie stoppen möchten.",
+        "__type_alias_do_not_touch": "ApiErrorCode.CanNotExtendOpenEndedRent"
+      },
+      "113": {
+        "text": "Die Zusatzoption kann nicht gelöscht werden, da sie von einem aktiven unbefristeten Vertrag verwendet wird.",
+        "__type_alias_do_not_touch": "ApiErrorCode.CanNotDeleteAddonUsedByOpenEndedRent"
+      },
+      "114": {
+        "text": "Dieser Code ist nicht verfügbar, da er für dieses Schloss bereits verwendet wurde.",
+        "__type_alias_do_not_touch": "ApiErrorCode.PassCodeAlreadyExists"
+      }
+    }
   }
 }

@@ -113,14 +113,14 @@ const SingleRentDetail = () => {
             </div>
           ) : null}
           {singleRent.gates && singleRent.gates.length > 0 && (
-            <StyledGatesHeader>Bramy</StyledGatesHeader>
+            <StyledGatesHeader>{__('application.gates')}</StyledGatesHeader>
           )}
           {singleRent.gates.map((gate) => (
             <Gate key={gate.id} gate={gate} />
           ))}
           {singleRent.controlled && (
             <>
-              <StyledGatesHeader>Skrytka</StyledGatesHeader>
+              <StyledGatesHeader>{getText('box')}</StyledGatesHeader>
               <StyledBoxContainer>
                 <h4>{singleRent.number}</h4>
                 <OpenBox id={singleRent.boxId} />

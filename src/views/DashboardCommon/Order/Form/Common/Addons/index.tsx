@@ -4,7 +4,11 @@ import { ButtonsContainer } from '../../../../../../components/Layout';
 import { useDispatch, useSelector } from 'react-redux';
 import { ApplicationState } from '../../../../../../reducers';
 import styled from 'styled-components';
-import { Alert, AsterixRequired, CheckBox } from '../../../../../../components/Common';
+import {
+  Alert,
+  AsterixRequired,
+  CheckBox,
+} from '../../../../../../components/Common';
 import {
   fetchAddons,
   selectAddon,
@@ -17,6 +21,7 @@ import FileInput from '../../../../../../components/Common/FileInput';
 import { AddonRes, AddonUserFileRequirementType } from 'smartbox-types';
 import { OrderAddon } from 'src/reducers/order-reducer';
 import { Button, Header, Section, Typography } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
 import { useFileStorage } from 'src/hooks/useFileStorage';
 
 const StyledFileDescription = styled('div')(({ theme }) => ({
@@ -108,7 +113,9 @@ export const Addons = ({ stockId, boxGroupId }: Props) => {
     <>
       {sortedAddons.map((addon) => (
         <Section key={addon.id}>
-          <Header variant="h2">{addon.name} {addon.required ? <AsterixRequired /> : null}</Header>
+          <Header variant="h2">
+            {addon.name} {addon.required ? <AsterixRequired /> : null}
+          </Header>
           {addon.description ? (
             <Typography>{addon.description}</Typography>
           ) : null}
@@ -144,12 +151,15 @@ export const Addons = ({ stockId, boxGroupId }: Props) => {
           {displayFileInput(addon, orderAddons[addon.id]) ? (
             <StyledUserFileContainer>
               <p>{addon.userFileText}</p>
-              <p>Maksymalny dopuszczalny rozmiar pliku: <strong>5MB</strong></p>
+              <p>{__('application.phrases.maxFileSize', { size: '5MB' })}</p>
               <FileInput
                 input={{
                   value: orderAddons[addon.id].file,
                   onChange: (file) =>
-                    handleAddonFile(addon.id, file instanceof File ? file : null),
+                    handleAddonFile(
+                      addon.id,
+                      file instanceof File ? file : null,
+                    ),
                 }}
                 accept=".jpg,.jpeg,.png,.pdf,.docx"
                 multiple={false}
@@ -167,7 +177,12 @@ export const Addons = ({ stockId, boxGroupId }: Props) => {
             ? addon.acceptances.map((acceptance) => (
                 <div key={acceptance.id}>
                   <CheckBox
-                    label={<>{acceptance.text} {acceptance.required ? <AsterixRequired /> : null}</>}
+                    label={
+                      <>
+                        {acceptance.text}{' '}
+                        {acceptance.required ? <AsterixRequired /> : null}
+                      </>
+                    }
                     name={`acceptance_${acceptance.id}`}
                     checked={
                       orderAddons[addon.id].acceptancesStatus[acceptance.id]

@@ -9,27 +9,25 @@ export type LeftCounterProps = {
   disabled?: boolean;
 };
 
-const StyledCounter = styled('div')<{ disabled?: boolean }>(
-  ({ theme }) => ({
-    height: 40,
-    display: 'flex',
-    alignItems: 'center',
-    textAlign: 'center',
-    justifyContent: 'center',
-    borderRadius: theme.spacing * 5,
-    padding: theme.spacing * 4,
-    background: theme.colors.secondary,
-    color: getColorForBackground(theme.colors.secondary),
-    position: 'absolute',
-    top: theme.spacing * 4,
-    left: theme.spacing * 4,
-    gap: theme.spacing * 1,
-    fontSize: '0.9rem',
-    svg: {
-      fill: getColorForBackground(theme.colors.secondary),
-    },
-  }),
-);
+const StyledCounter = styled('div')<{ disabled?: boolean }>(({ theme }) => ({
+  height: 40,
+  display: 'flex',
+  alignItems: 'center',
+  textAlign: 'center',
+  justifyContent: 'center',
+  borderRadius: theme.spacing * 5,
+  padding: theme.spacing * 4,
+  background: theme.colors.secondary,
+  color: getColorForBackground(theme.colors.secondary),
+  position: 'absolute',
+  top: theme.spacing * 4,
+  left: theme.spacing * 4,
+  gap: theme.spacing * 1,
+  fontSize: '0.9rem',
+  svg: {
+    fill: getColorForBackground(theme.colors.secondary),
+  },
+}));
 
 export const LeftCounter = ({ option, disabled }: LeftCounterProps) => {
   if (!option.left && !disabled) return null;
@@ -48,7 +46,7 @@ export const LeftCounter = ({ option, disabled }: LeftCounterProps) => {
     <StyledCounter disabled={disabled}>
       {disabled ? (
         <>
-          <ErrorCircle /> Niedostępny
+          <ErrorCircle /> {__('application.phrases.unavailable')}
         </>
       ) : (
         <>

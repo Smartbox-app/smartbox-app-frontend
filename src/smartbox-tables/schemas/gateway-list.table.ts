@@ -4,7 +4,7 @@ export const gatewayList: TableSchema = {
   countPerPage: 20,
   fields: [
     {
-      name: 'ID',
+      name: 'application.tables.id',
       field: 'gatewayId',
       mobile: true,
       searchable: false,
@@ -13,7 +13,7 @@ export const gatewayList: TableSchema = {
       type: FieldType.Text,
     },
     {
-      name: 'Nazwa',
+      name: 'application.tables.name',
       field: 'gatewayName',
       mobile: true,
       searchable: false,
@@ -22,7 +22,7 @@ export const gatewayList: TableSchema = {
       type: FieldType.Text,
     },
     {
-      name: 'MAC',
+      name: 'application.tables.mac',
       field: 'gatewayMac',
       mobile: true,
       searchable: false,
@@ -31,7 +31,7 @@ export const gatewayList: TableSchema = {
       type: FieldType.Text,
     },
     {
-      name: 'Nazwa sieci',
+      name: 'application.tables.networkName',
       field: 'networkName',
       mobile: true,
       searchable: true,
@@ -40,7 +40,7 @@ export const gatewayList: TableSchema = {
       type: FieldType.Text,
     },
     {
-      name: 'MAC sieci',
+      name: 'application.tables.networkMac',
       field: 'networkMac',
       mobile: true,
       searchable: true,
@@ -49,7 +49,7 @@ export const gatewayList: TableSchema = {
       type: FieldType.Text,
     },
     {
-      name: 'Ilość zamków',
+      name: 'application.tables.lockCount',
       field: 'lockNum',
       mobile: true,
       searchable: false,
@@ -58,7 +58,7 @@ export const gatewayList: TableSchema = {
       type: FieldType.Text,
     },
     {
-      name: 'Jest online',
+      name: 'application.tables.isOnline',
       field: 'isOnline',
       mobile: true,
       searchable: false,

@@ -4,7 +4,7 @@ export const periodsForRentList: TableSchema = {
   countPerPage: 10,
   fields: [
     {
-      name: 'ID',
+      name: 'application.tables.id',
       field: 'id',
       type: FieldType.Text,
       sortable: true,
@@ -14,7 +14,7 @@ export const periodsForRentList: TableSchema = {
       alias: 'period',
     },
     {
-      name: 'ID wynajmu',
+      name: 'application.tables.rentId',
       field: 'rentId',
       type: FieldType.Text,
       sortable: true,
@@ -23,7 +23,7 @@ export const periodsForRentList: TableSchema = {
       mobile: true,
     },
     {
-      name: 'Utworzono',
+      name: 'application.tables.created',
       field: 'createdAt',
       type: FieldType.Date,
       sortable: true,
@@ -32,7 +32,7 @@ export const periodsForRentList: TableSchema = {
       mobile: true,
     },
     {
-      name: 'Początek',
+      name: 'application.tables.start',
       field: 'startAt',
       type: FieldType.Date,
       sortable: true,
@@ -42,7 +42,7 @@ export const periodsForRentList: TableSchema = {
       mobile: true,
     },
     {
-      name: 'Koniec',
+      name: 'application.tables.end',
       field: 'finishAt',
       type: FieldType.Date,
       sortable: true,
@@ -51,7 +51,7 @@ export const periodsForRentList: TableSchema = {
       mobile: true,
     },
     {
-      name: 'Zakończenie wynajmu',
+      name: 'application.tables.rentEnd',
       field: 'rentFinishAt',
       type: FieldType.Date,
       sortable: true,
@@ -60,7 +60,7 @@ export const periodsForRentList: TableSchema = {
       mobile: true,
     },
     {
-      name: 'Płatność do',
+      name: 'application.tables.paymentUntil',
       field: 'paymentTo',
       type: FieldType.Date,
       sortable: true,
@@ -69,7 +69,7 @@ export const periodsForRentList: TableSchema = {
       mobile: true,
     },
     {
-      name: 'Wartość',
+      name: 'application.tables.value',
       field: 'value',
       type: FieldType.Price,
       sortable: true,
@@ -78,7 +78,7 @@ export const periodsForRentList: TableSchema = {
       mobile: true,
     },
     {
-      name: 'Opłacone',
+      name: 'application.tables.paid',
       field: 'paid',
       type: FieldType.Boolean,
       sortable: true,
@@ -87,7 +87,7 @@ export const periodsForRentList: TableSchema = {
       mobile: true,
     },
     {
-      name: 'ID faktury',
+      name: 'application.tables.invoiceId',
       field: 'invoiceId',
       type: FieldType.Text,
       sortable: true,
@@ -96,7 +96,7 @@ export const periodsForRentList: TableSchema = {
       mobile: true,
     },
     {
-      name: 'Nr faktury',
+      name: 'application.tables.invoiceNumber',
       field: 'invoiceNumber',
       type: FieldType.Text,
       sortable: true,

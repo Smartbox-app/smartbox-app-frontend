@@ -1,13 +1,13 @@
 export const errors = {
-    field_required: 'To pole jest wymagane',
-    incorrect_email: 'Niepoprawny adres e-mail',
-    incorrect_phone: 'Niepoprawny numer telefonu',
-    incorrect_activation_code: 'Kod aktywacyjny musi składać się z 6 cyfr',
-    incorrect_postcode: 'Niepoprawny kod pocztowy',
-    passwords_must_match: 'Hasła muszą się zgadzać',
-    check_required: 'Musisz zaznaczyć to pole',
-    incorrect_nip: 'Niepoprawny numer NIP',
-    incorrect_country: 'Niepoprawny kod kraju',
-    incorrect_characters: 'Niedozwolony znak, dozwolone polskie znaki, cyfry oraz znaki specjalne.',
-    min_chars: (chars: number) => `Wymagane min. ${chars} znaków`
-}
+  field_required: 'validation.field_required',
+  incorrect_email: 'validation.incorrect_email',
+  incorrect_phone: 'validation.incorrect_phone',
+  incorrect_activation_code: 'validation.incorrect_activation_code',
+  incorrect_postcode: 'validation.incorrect_postcode',
+  passwords_must_match: 'validation.passwords_must_match',
+  check_required: 'validation.check_required',
+  incorrect_nip: 'validation.incorrect_nip',
+  incorrect_country: 'validation.incorrect_country',
+  incorrect_characters: 'validation.incorrect_characters',
+  min_chars: (chars: number) => `validation.min_chars:${chars}`,
+};

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Editor, useEditorState } from '@tiptap/react';
+import { __ } from 'src/helpers/i18n';
 import { TableToolbarWrapper, Button } from '../styled';
 
 export const TiptapTableToolbar = ({ editor }: { editor: Editor }) => {
@@ -15,31 +16,31 @@ export const TiptapTableToolbar = ({ editor }: { editor: Editor }) => {
   return (
     <TableToolbarWrapper>
       <Button onClick={() => editor.chain().focus().addRowAfter().run()}>
-        + Wiersz
+        {__('application.phrases.addRow')}
       </Button>
 
       <Button onClick={() => editor.chain().focus().addColumnAfter().run()}>
-        + Kolumna
+        {__('application.phrases.addColumn')}
       </Button>
 
       <Button onClick={() => editor.chain().focus().deleteRow().run()}>
-        Usuń wiersz
+        {__('application.phrases.deleteRow')}
       </Button>
 
       <Button onClick={() => editor.chain().focus().deleteColumn().run()}>
-        Usuń kolumnę
+        {__('application.phrases.deleteColumn')}
       </Button>
 
       <Button onClick={() => editor.chain().focus().mergeCells().run()}>
-        Scal
+        {__('application.phrases.mergeCells')}
       </Button>
 
       <Button onClick={() => editor.chain().focus().splitCell().run()}>
-        Podziel
+        {__('application.phrases.splitCell')}
       </Button>
 
       <Button onClick={() => editor.chain().focus().deleteTable().run()}>
-        Usuń tabelę
+        {__('application.phrases.deleteTable')}
       </Button>
     </TableToolbarWrapper>
   );

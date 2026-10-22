@@ -3,6 +3,9 @@ import { initReactI18next } from 'react-i18next';
 
 import application from './locales/pl/application';
 import applicationEn from './locales/en/application';
+import applicationCz from './locales/cz/application';
+import applicationUa from './locales/ua/application';
+import applicationDe from './locales/de/application';
 import SessionService from '../services/session-service';
 import type { I18nResourceKey, Options } from './types';
 
@@ -16,6 +19,15 @@ export const resources = {
   },
   en: {
     application: applicationEn,
+  },
+  cz: {
+    application: applicationCz,
+  },
+  ua: {
+    application: applicationUa,
+  },
+  de: {
+    application: applicationDe,
   },
 };
 
@@ -33,9 +45,14 @@ i18next.use(initReactI18next).init({
   returnEmptyString: false,
 });
 
+if (typeof document !== 'undefined') {
+  document.documentElement.lang = initialLanguage;
+}
+
 export const t = (key: I18nResourceKey, options?: Options): string =>
-  (
-    i18next.t as (key: I18nResourceKey, options?: Options) => string
-  )(key, options);
+  (i18next.t as (key: I18nResourceKey, options?: Options) => string)(
+    key,
+    options,
+  );
 
 export { i18next };

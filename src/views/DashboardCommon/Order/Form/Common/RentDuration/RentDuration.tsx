@@ -1,5 +1,6 @@
 import { differenceInCalendarDays } from 'date-fns';
 import { useSelector } from 'react-redux';
+import { __ } from 'src/helpers/i18n';
 import { ApplicationState } from 'src/reducers';
 import styled from 'styled-components';
 
@@ -19,7 +20,7 @@ export const RentDuration = () => {
 
   return (
     <StyledInfo>
-      Ilość dni najmu w wybranym zakresie: <strong>{difference}</strong>
+      {__('application.phrases.rentDayCount')} <strong>{difference}</strong>
     </StyledInfo>
   );
 };

@@ -4,7 +4,7 @@ export const rentAuthorizationsList: TableSchema = {
   countPerPage: 20,
   fields: [
     {
-      name: 'ID autoryzacji',
+      name: 'application.tables.authorizationId',
       field: 'id',
       mobile: false,
       searchable: false,
@@ -13,7 +13,7 @@ export const rentAuthorizationsList: TableSchema = {
       type: FieldType.Text,
     },
     {
-      name: 'ID wynajmu',
+      name: 'application.tables.rentId',
       field: 'rentId',
       mobile: false,
       searchable: false,
@@ -22,7 +22,7 @@ export const rentAuthorizationsList: TableSchema = {
       type: FieldType.Text,
     },
     {
-      name: 'Email',
+      name: 'application.tables.email',
       field: 'email',
       mobile: true,
       searchable: true,
@@ -32,7 +32,7 @@ export const rentAuthorizationsList: TableSchema = {
       alias: 'user',
     },
     {
-      name: 'Telefon',
+      name: 'application.tables.phone',
       field: 'phone',
       mobile: true,
       searchable: true,
@@ -42,7 +42,7 @@ export const rentAuthorizationsList: TableSchema = {
       alias: 'user',
     },
     {
-      name: 'Numer skrytki',
+      name: 'application.tables.lockerNumberFull',
       field: 'boxNumber',
       mobile: true,
       searchable: true,
@@ -53,7 +53,7 @@ export const rentAuthorizationsList: TableSchema = {
       entityFieldName: 'identifier',
     },
     {
-      name: 'Początek wynajmu',
+      name: 'application.tables.rentStart',
       field: 'startAt',
       mobile: true,
       searchable: true,
@@ -63,7 +63,7 @@ export const rentAuthorizationsList: TableSchema = {
       alias: 'rent',
     },
     {
-      name: 'Koniec wynajmu',
+      name: 'application.tables.rentFinish',
       field: 'finishAt',
       mobile: true,
       searchable: true,

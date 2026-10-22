@@ -1,23 +1,22 @@
-import { FieldType, TableSchema } from "../typings";
-
+import { FieldType, TableSchema } from '../typings';
 
 const configTypeToText: {
   [key: string]: string;
 } = {
-  web: 'Wersja web',
-  ios: 'Wersja iOS',
-  ios_review: 'Wersja iOS w procesie weryfikacji',
-  android: 'Wersja Android',
-  android_review: 'Wersja Android w procesie weryfikacji',
-  ios_maintenance: 'Tryb maintenance iOS',
- android_maintenance: 'Tryb maintenance Android',
+  web: 'application.tables.versionWeb',
+  ios: 'application.tables.versionIos',
+  ios_review: 'application.tables.versionIosReview',
+  android: 'application.tables.versionAndroid',
+  android_review: 'application.tables.versionAndroidReview',
+  ios_maintenance: 'application.tables.maintenanceIos',
+  android_maintenance: 'application.tables.maintenanceAndroid',
 };
 
 export const mobileConfigTableSchema: TableSchema = {
   countPerPage: 10,
   fields: [
     {
-      name: 'Typ',
+      name: 'application.tables.type',
       field: 'type',
       searchable: true,
       sortable: true,
@@ -25,7 +24,7 @@ export const mobileConfigTableSchema: TableSchema = {
       customValue: (value: { type: string }) => configTypeToText[value.type],
     },
     {
-      name: 'Identyfikator aplikacji',
+      name: 'application.tables.appId',
       field: 'appId',
       searchable: true,
       sortable: true,
@@ -33,7 +32,7 @@ export const mobileConfigTableSchema: TableSchema = {
       type: FieldType.Text,
     },
     {
-      name: 'Wartość',
+      name: 'application.tables.value',
       field: 'value',
       searchable: false,
       sortable: false,

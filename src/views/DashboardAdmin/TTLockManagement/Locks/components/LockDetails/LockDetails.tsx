@@ -27,24 +27,28 @@ export const LockDetails = ({ id }: LockDetailsProps) => {
       <>
         <Modal.Header title={__('application.lockDetails')} />
         <Modal.Content>
-          <Alert type="error">Wystąpił błąd podczas pobierania szczegółów</Alert>
+          <Alert type="error" text="application.phrases.lockDetailsError" />
         </Modal.Content>
       </>
     );
   }
 
-  const {noKeyPwd, lockId, lockMac, lockName, lockAlias, electricQuantity} = data;
+  const { noKeyPwd, lockId, lockMac, lockName, lockAlias, electricQuantity } =
+    data;
 
   return (
     <>
       <Modal.Header title={__('application.lockDetails')} />
       <Modal.Content>
-      <Row label="ID" content={lockId} />
-      <Row label="Nazwa" content={lockName} />
-      <Row label="Alias" content={lockAlias} />
-      <Row label="MAC" content={lockMac} />
-      <Row label="Kod administratora" content={noKeyPwd} />
-      <Row label="Stan baterii" content={`${electricQuantity}%`} />
+        <Row label="application.tables.id" content={lockId} />
+        <Row label="application.tables.name" content={lockName} />
+        <Row label="application.tables.alias" content={lockAlias} />
+        <Row label="application.tables.mac" content={lockMac} />
+        <Row label="application.phrases.adminCode" content={noKeyPwd} />
+        <Row
+          label="application.batteryStatus"
+          content={`${electricQuantity}%`}
+        />
       </Modal.Content>
     </>
   );

@@ -5,6 +5,7 @@ import {
   AGREEMENT_TEMPLATE_VARIABLES,
   buildAddonTemplateVariableOptions,
 } from 'src/config/tiptap';
+import { __ } from 'src/helpers/i18n';
 import { useGetAddonTemplateVariablesQuery } from 'src/queries';
 
 type Props = {
@@ -26,7 +27,11 @@ export const TiptapTemplateToolbar = ({
   });
 
   const addonVariableOptions = useMemo(
-    () => buildAddonTemplateVariableOptions(addons),
+    () =>
+      buildAddonTemplateVariableOptions(addons, {
+        variant: __('application.phrases.addonVariant'),
+        price: __('application.phrases.addonPrice'),
+      }),
     [addons],
   );
 
@@ -55,11 +60,11 @@ export const TiptapTemplateToolbar = ({
         }}
       >
         <option value="" disabled>
-          Wstaw zmienną
+          {__('application.phrases.insertVariable')}
         </option>
         {AGREEMENT_TEMPLATE_VARIABLES.map((variable) => (
           <option key={variable.name} value={variable.name}>
-            {variable.label}
+            {__(variable.label)}
           </option>
         ))}
       </TemplateSelect>
@@ -74,8 +79,8 @@ export const TiptapTemplateToolbar = ({
       >
         <option value="" disabled>
           {templateTenantId
-            ? 'Wstaw zmienną dodatku'
-            : 'Wybierz klienta (dodatki)'}
+            ? __('application.phrases.insertAddonVariable')
+            : __('application.phrases.insertAddonChooseCustomer')}
         </option>
         {addonVariableOptions.map((variable) => (
           <option key={variable.name} value={variable.name}>
@@ -92,11 +97,11 @@ export const TiptapTemplateToolbar = ({
         }}
       >
         <option value="" disabled>
-          Wstaw warunek (zmienna)
+          {__('application.phrases.insertCondition')}
         </option>
         {AGREEMENT_TEMPLATE_VARIABLES.map((variable) => (
           <option key={variable.name} value={variable.name}>
-            {variable.label} ({variable.name})
+            {__(variable.label)} ({variable.name})
           </option>
         ))}
       </TemplateSelect>
@@ -105,7 +110,7 @@ export const TiptapTemplateToolbar = ({
         type="text"
         value={customCondition}
         onChange={(event) => setCustomCondition(event.target.value)}
-        placeholder="Własny warunek, np. isCompany"
+        placeholder={__('application.phrases.customConditionPlaceholder')}
         onKeyDown={(event) => {
           if (event.key === 'Enter') {
             event.preventDefault();
@@ -122,14 +127,14 @@ export const TiptapTemplateToolbar = ({
           setCustomCondition('');
         }}
       >
-        Blok warunkowy
+        {__('application.phrases.conditionalBlock')}
       </Button>
 
       <TemplateInput
         type="text"
         value={customExpression}
         onChange={(event) => setCustomExpression(event.target.value)}
-        placeholder="Wyrażenie, np. cost + insurance.price"
+        placeholder={__('application.phrases.expressionPlaceholder')}
         onKeyDown={(event) => {
           if (event.key === 'Enter') {
             event.preventDefault();
@@ -146,7 +151,7 @@ export const TiptapTemplateToolbar = ({
           setCustomExpression('');
         }}
       >
-        Wstaw wyrażenie
+        {__('application.phrases.insertExpression')}
       </Button>
     </Toolbar>
   );

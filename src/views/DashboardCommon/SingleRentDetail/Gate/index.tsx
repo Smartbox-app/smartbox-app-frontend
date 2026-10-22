@@ -10,6 +10,7 @@ import { useGetMyDetailsQuery } from 'src/queries';
 import { Geolocation, PermissionStatus } from '@capacitor/geolocation';
 import { Capacitor } from '@capacitor/core';
 import { ButtonsContainer } from 'src/components/Layout';
+import { __ } from 'src/helpers/i18n';
 import { KsmGateButton } from '../Action/KsmGateButton';
 
 interface Props {
@@ -111,7 +112,10 @@ const Gate = ({ gate }: Props) => {
             />,
           ),
         );
-      } else if (error instanceof Error && error.message === 'permission_denied') {
+      } else if (
+        error instanceof Error &&
+        error.message === 'permission_denied'
+      ) {
         dispatch(
           modal.showModal(
             <OpenGateByForceModal
@@ -161,7 +165,7 @@ const Gate = ({ gate }: Props) => {
         <div className="slide-to-open">
           {gate.passcode ? (
             <p>
-              Kod dostępu: <strong>{gate.passcode}</strong>
+              {__('application.passcode')}: <strong>{gate.passcode}</strong>
             </p>
           ) : null}
           <ButtonsContainer left>

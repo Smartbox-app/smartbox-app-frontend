@@ -52,8 +52,9 @@ export const PeriodUnpaidAlert = ({ rent }: Props) => {
     return (rent.periods ?? [])
       .filter(
         (period) =>
-          rent.agreementType === RentAgreementType.OpenEnded && !period.paid ||
-          isBefore(new Date(period.startAt), new Date()) && !period.paid,
+          (rent.agreementType === RentAgreementType.OpenEnded &&
+            !period.paid) ||
+          (isBefore(new Date(period.startAt), new Date()) && !period.paid),
       )
       .sort((a, b) =>
         isBefore(new Date(a.startAt), new Date(b.startAt)) ? 1 : -1,
@@ -74,30 +75,32 @@ export const PeriodUnpaidAlert = ({ rent }: Props) => {
 
   return (
     <Section>
-      <SectionHeader title="Nieopłacone okresy" />
+      <SectionHeader title="application.phrases.unpaidPeriods" />
       <StyledMissingPeriodLists>
         {unpaidPeriods.map((period, index) => {
           const periodId =
-            'id' in period && typeof period.id === 'string' ? period.id : undefined;
+            'id' in period && typeof period.id === 'string'
+              ? period.id
+              : undefined;
 
           return (
-          <StyledMissingPeriodPayment key={periodId ?? index}>
-            <div>
-              {dateOnly(period.startAt)} - {dateOnly(period.finishAt)} -{' '}
-              <strong>{formatPrice(period.value)}</strong>
-            </div>
-            <Button
-              variant="error"
-              type="button"
-              size="large"
-              iconLeft={<Wallet />}
-              disabled={isPending || !!data || !period.invoiceId || !periodId}
-              onClick={() => {
-                if (periodId) pay(periodId);
-              }}
-              text={__('application.pay')}
-            />
-          </StyledMissingPeriodPayment>
+            <StyledMissingPeriodPayment key={periodId ?? index}>
+              <div>
+                {dateOnly(period.startAt)} - {dateOnly(period.finishAt)} -{' '}
+                <strong>{formatPrice(period.value)}</strong>
+              </div>
+              <Button
+                variant="error"
+                type="button"
+                size="large"
+                iconLeft={<Wallet />}
+                disabled={isPending || !!data || !period.invoiceId || !periodId}
+                onClick={() => {
+                  if (periodId) pay(periodId);
+                }}
+                text={__('application.pay')}
+              />
+            </StyledMissingPeriodPayment>
           );
         })}
       </StyledMissingPeriodLists>

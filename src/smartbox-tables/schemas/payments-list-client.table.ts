@@ -4,33 +4,33 @@ import { FieldType, TableSchema } from '../typings';
 const statusToText: {
   [key: string]: string;
 } = {
-  [PaymentStatus.wait]: 'Oczekuje',
-  [PaymentStatus.pending]: 'W trakcie',
-  [PaymentStatus.accepted]: 'Sukces',
-  [PaymentStatus.failure]: 'Błąd',
+  [PaymentStatus.wait]: 'application.paymentListStatusWait',
+  [PaymentStatus.pending]: 'application.paymentListStatusInProgress',
+  [PaymentStatus.accepted]: 'application.paymentListStatusSuccess',
+  [PaymentStatus.failure]: 'application.paymentListStatusFailure',
 };
 
 const typeToText: {
   [key: string]: string;
 } = {
-  [PaymentType.Extension]: 'Przedłużenie',
-  [PaymentType.PeriodPayment]: 'Płatność za okres',
-  [PaymentType.NewRent]: 'Nowy wynajem',
-  [PaymentType.Unset]: 'Nieustawiony',
+  [PaymentType.Extension]: 'application.paymentListTypeExtension',
+  [PaymentType.PeriodPayment]: 'application.paymentListTypePeriodPayment',
+  [PaymentType.NewRent]: 'application.paymentListTypeNewRent',
+  [PaymentType.Unset]: 'application.paymentListTypeUnset',
 };
 
 const documentToText: {
   [key: string]: string;
 } = {
-  [PaymentDocument.Invoice]: 'Faktura',
-  [PaymentDocument.Receipt]: 'Paragon',
+  [PaymentDocument.Invoice]: 'application.documentInvoice',
+  [PaymentDocument.Receipt]: 'application.documentReceipt',
 };
 
 export const paymentsListClientTableSchema: TableSchema = {
   countPerPage: 10,
   fields: [
     {
-      name: 'Data',
+      name: 'application.tables.date',
       field: 'date',
       type: FieldType.Date,
       sortable: true,
@@ -39,20 +39,20 @@ export const paymentsListClientTableSchema: TableSchema = {
       oppositeSortDir: false,
       alias: 'payment',
       entityFieldName: 'date',
-      mobile: true
+      mobile: true,
     },
     {
-      name: 'E-mail do faktury',
+      name: 'application.tables.invoiceEmail',
       field: 'mailToSendInvoice',
       type: FieldType.Email,
       sortable: true,
       searchable: true,
       alias: 'payment',
       entityFieldName: 'mailToSendInvoice',
-      mobile: true
+      mobile: true,
     },
     {
-      name: 'Status',
+      name: 'application.tables.status',
       field: 'status',
       type: FieldType.Text,
       sortable: true,
@@ -60,10 +60,10 @@ export const paymentsListClientTableSchema: TableSchema = {
       searchableValues: statusToText,
       customValue: (row: { status: string }) => statusToText[row.status],
       alias: 'payment',
-      mobile: true
+      mobile: true,
     },
     {
-      name: 'Typ',
+      name: 'application.tables.type',
       field: 'type',
       type: FieldType.Text,
       sortable: true,
@@ -73,16 +73,16 @@ export const paymentsListClientTableSchema: TableSchema = {
       alias: 'payment',
     },
     {
-      name: 'Wartość',
+      name: 'application.tables.value',
       field: 'value',
       type: FieldType.Price,
       sortable: true,
       searchable: true,
       alias: 'payment',
-      mobile: true
+      mobile: true,
     },
     {
-      name: 'Metoda',
+      name: 'application.tables.method',
       field: 'method',
       type: FieldType.Text,
       sortable: true,
@@ -90,7 +90,7 @@ export const paymentsListClientTableSchema: TableSchema = {
       alias: 'payment',
     },
     {
-      name: 'Dokument',
+      name: 'application.tables.document',
       field: 'document',
       type: FieldType.Text,
       sortable: true,
@@ -100,7 +100,7 @@ export const paymentsListClientTableSchema: TableSchema = {
       alias: 'payment',
     },
     {
-      name: 'ID faktury',
+      name: 'application.tables.invoiceId',
       field: 'invoiceId',
       type: FieldType.Text,
       sortable: true,
@@ -108,7 +108,7 @@ export const paymentsListClientTableSchema: TableSchema = {
       alias: 'payment',
     },
     {
-      name: 'Nr faktury',
+      name: 'application.tables.invoiceNumber',
       field: 'invoiceNumber',
       type: FieldType.Text,
       sortable: true,
@@ -116,7 +116,7 @@ export const paymentsListClientTableSchema: TableSchema = {
       alias: 'payment',
     },
     {
-      name: 'Grupa',
+      name: 'application.tables.group',
       field: 'boxGroupName',
       type: FieldType.Text,
       sortable: true,
@@ -125,7 +125,7 @@ export const paymentsListClientTableSchema: TableSchema = {
       entityFieldName: 'name',
     },
     {
-      name: 'Nr skrytki',
+      name: 'application.tables.lockerNumber',
       field: 'boxNumber',
       type: FieldType.Text,
       sortable: true,
@@ -135,4 +135,3 @@ export const paymentsListClientTableSchema: TableSchema = {
     },
   ],
 };
-

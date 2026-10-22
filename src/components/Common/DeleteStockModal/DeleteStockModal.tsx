@@ -1,6 +1,7 @@
 import { useDispatch } from 'react-redux';
 import { Button } from '../../Branded';
 import { __ } from '../../../helpers/i18n';
+import { useTenantNaming } from 'src/hooks/useTenantNaming';
 import { hideModal } from 'src/actions/modal';
 import { Input, Modal } from 'src/components/ui';
 import { useForm } from 'react-hook-form';
@@ -20,13 +21,14 @@ export const DeleteStockModal = ({
   approveAction,
 }: Props) => {
   const dispatch = useDispatch();
+  const { getText } = useTenantNaming();
   const { register, getValues } = useForm<{ stockName: string }>();
   return (
     <>
       <Modal.Header title={__('application.confirmation')} />
       <Modal.Content>
         <p>{__(mainText)}</p>
-        <Input {...register('stockName')} label="Nazwa placu" />
+        <Input {...register('stockName')} label={getText('name_of')} />
       </Modal.Content>
       <Modal.Actions>
         <ButtonsContainer>

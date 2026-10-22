@@ -3,6 +3,7 @@ import { useTenant } from 'src/hooks/useTenant';
 import { hasMobileAppAndroidLink } from 'src/utils/tenant-mobile-app-links';
 
 import './BannerAndroid.scss';
+import { __ } from 'src/helpers/i18n';
 import { Dots } from 'src/icons';
 
 const BannerAndroid = () => {
@@ -43,11 +44,12 @@ const BannerAndroid = () => {
     <div className="android-banner">
       <div className="banner-text">
         <div>
-          <strong>Zainstaluj aplikację</strong>. Naciśnij
+          <strong>{__('application.phrases.installApp')}</strong>.{' '}
+          {__('application.phrases.installPress')}
           <div className="banner-icon">
             <Dots />
           </div>{' '}
-          i &quot;dodaj do ekranu głównego&quot;{' '}
+          {__('application.phrases.installAndroid')}{' '}
         </div>
         <button onClick={hide} className="banner-close">
           &times;

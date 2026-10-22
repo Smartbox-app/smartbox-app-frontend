@@ -23,8 +23,20 @@ describe('translateApiErrorCode', () => {
     );
   });
 
-  it('falls back to the enum name when the language has no catalog', () => {
+  it('returns the german message for a known code', () => {
     expect(translateApiErrorCode(ApiErrorCode.InvalidLoginData, 'de')).toBe(
+      'Ungültige Anmeldedaten!',
+    );
+    expect(translateApiErrorCode(ApiErrorCode.InvalidLoginData, 'cz')).toBe(
+      'Neplatné přihlašovací údaje!',
+    );
+    expect(translateApiErrorCode(ApiErrorCode.InvalidLoginData, 'ua')).toBe(
+      'Недійсні дані для входу!',
+    );
+  });
+
+  it('falls back to the enum name when the language has no catalog', () => {
+    expect(translateApiErrorCode(ApiErrorCode.InvalidLoginData, 'fr')).toBe(
       'InvalidLoginData',
     );
   });

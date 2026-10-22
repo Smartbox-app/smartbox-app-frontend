@@ -1,10 +1,4 @@
- 
-import React, {
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   FieldType,
@@ -133,7 +127,7 @@ const searchComponent = (
         {Object.keys(searchableValues as TableFieldSearchableValues).map(
           (key) => (
             <option value={key} key={key}>
-              {searchableValues[key]}
+              {__(String(searchableValues[key]))}
             </option>
           ),
         )}

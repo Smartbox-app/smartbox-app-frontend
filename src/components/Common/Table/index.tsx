@@ -36,7 +36,10 @@ const TableContainer = styled('div')({
   width: '100%',
 });
 
-const StyledRow = styled('tr')<{ $highlight?: boolean }>(({ theme, $highlight }) => {
+const StyledRow = styled('tr')<{ $highlight?: boolean }>(({
+  theme,
+  $highlight,
+}) => {
   const secondaryLight = setLightness(0.95, theme.colors.secondary);
   const highlightBackground = theme.colors.surface.attention.secondary;
 
@@ -64,6 +67,12 @@ const formatValue = (
 ) => {
   if (typeof field.customValue === 'function') {
     value = field.customValue(allValues, field);
+  } else if (
+    field.searchableValues &&
+    (typeof value === 'string' || typeof value === 'number') &&
+    field.searchableValues[String(value)]
+  ) {
+    value = field.searchableValues[String(value)];
   }
 
   switch (field.type) {
@@ -98,13 +107,17 @@ const formatValue = (
       return value === null ? (
         '-'
       ) : (
-        <Link href={`tel:${String(value)} `} rel="noopener noreferrer" target="_blank">
+        <Link
+          href={`tel:${String(value)} `}
+          rel="noopener noreferrer"
+          target="_blank"
+        >
           {String(value)}
         </Link>
       );
     }
     case FieldType.Img: {
-      return value !== null && <img src={String(value)} alt={field.name} />;
+      return value !== null && <img src={String(value)} alt={__(field.name)} />;
     }
     case FieldType.Date: {
       if (value === null || value === undefined) {
@@ -132,7 +145,10 @@ const formatValue = (
     case FieldType.Text:
     default: {
       if (value == null) return '';
-      if (typeof value === 'string' || typeof value === 'number') return value;
+      if (typeof value === 'number') return value;
+      if (typeof value === 'string') {
+        return value.startsWith('application.') ? __(value) : value;
+      }
       return String(value);
     }
   }
@@ -196,7 +212,7 @@ class Table extends React.Component<Props> {
 
   render() {
     const desktop = window.matchMedia('(min-width: 920px)').matches;
-      let content: React.ReactNode = null;
+    let content: React.ReactNode = null;
     if (
       !this.props.data ||
       !this.props.data.items ||
@@ -212,7 +228,7 @@ class Table extends React.Component<Props> {
             className={`${header.mobile ? 'mobile' : ''} `}
             key={header.field}
           >
-            {header.name}{' '}
+            {__(header.name)}{' '}
             {this.props.sort &&
               this.props.onSortChange &&
               genSortItems(header, this.props.sort, this.props.onSortChange)}
@@ -223,46 +239,43 @@ class Table extends React.Component<Props> {
         <StyledRow
           key={rowIndex}
           $highlight={
-            this.props.scheme.highlightRow?.(
-              row as Record<string, unknown>,
-            ) === true
+            this.props.scheme.highlightRow?.(row as Record<string, unknown>) ===
+            true
           }
         >
-          {this.props.scheme.fields.map(
-            (header: TableSchemaField) => (
-              <td
-                className={`${header.mobile ? 'mobile' : ''} `}
-                key={`${header.field}_${rowIndex} `}
-              >
-                {header.buttons ? (
-                  <ButtonsContainer noWrap>
-                    {(
-                      header.buttons.filter(
-                        (button) => !!button,
-                      ) as TableButton[]
-                    ).map((button: TableButton, index: number) => (
-                      <Button
-                        key={index}
-                        primary={button.type === 'primary'}
-                        danger={button.type === 'danger'}
-                        success={button.type === 'success'}
-                        secondary={button.type === 'secondary'}
-                        to={buttonDestination(button, row)}
-                        click={button.click ? () => button.click?.(row) : undefined}
-                        text={button.name}
-                      />
-                    ))}
-                  </ButtonsContainer>
-                ) : (
-                  formatValue(
-                    (row as Record<string, unknown>)[header.field],
-                    header,
-                    row,
-                  )
-                )}
-              </td>
-            ),
-          )}
+          {this.props.scheme.fields.map((header: TableSchemaField) => (
+            <td
+              className={`${header.mobile ? 'mobile' : ''} `}
+              key={`${header.field}_${rowIndex} `}
+            >
+              {header.buttons ? (
+                <ButtonsContainer noWrap>
+                  {(
+                    header.buttons.filter((button) => !!button) as TableButton[]
+                  ).map((button: TableButton, index: number) => (
+                    <Button
+                      key={index}
+                      primary={button.type === 'primary'}
+                      danger={button.type === 'danger'}
+                      success={button.type === 'success'}
+                      secondary={button.type === 'secondary'}
+                      to={buttonDestination(button, row)}
+                      click={
+                        button.click ? () => button.click?.(row) : undefined
+                      }
+                      text={button.name}
+                    />
+                  ))}
+                </ButtonsContainer>
+              ) : (
+                formatValue(
+                  (row as Record<string, unknown>)[header.field],
+                  header,
+                  row,
+                )
+              )}
+            </td>
+          ))}
         </StyledRow>
       ));
 
@@ -307,7 +320,9 @@ class Table extends React.Component<Props> {
                             secondary={button.type === 'secondary'}
                             to={buttonDestination(button, row)}
                             click={
-                              button.click ? () => button.click?.(row) : undefined
+                              button.click
+                                ? () => button.click?.(row)
+                                : undefined
                             }
                             text={button.name}
                           />
@@ -315,7 +330,7 @@ class Table extends React.Component<Props> {
                       </ButtonsContainer>
                     ) : (
                       <>
-                        <strong>{header.name}</strong>
+                        <strong>{__(header.name)}</strong>
                         <span className="list-value">
                           {formatValue(
                             (row as Record<string, unknown>)[header.field],

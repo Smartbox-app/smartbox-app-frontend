@@ -6,27 +6,36 @@ import { RentDataDto } from '../TenantDetailsForm/dto/RentDataDto';
 
 const clientSourceOptions = [
   {
-    label: 'Zobaczyłem Was przejeżdżając obok',
+    label: 'application.phrases.clientSourceDroveBy',
     value: 'Zobaczyłem Was przejeżdżając obok',
   },
-  { label: 'Ulotka', value: 'Ulotka' },
-  { label: 'Baner zewnętrzny', value: 'Baner zewnętrzny' },
+  { label: 'application.phrases.clientSourceFlyer', value: 'Ulotka' },
   {
-    label: 'Media społecznościowe (Facebook, Instagram, Tiktok, inne)',
+    label: 'application.phrases.clientSourceBanner',
+    value: 'Baner zewnętrzny',
+  },
+  {
+    label: 'application.phrases.clientSourceSocial',
     value: 'Media społecznościowe (Facebook, Instagram, Tiktok, inne)',
   },
   {
-    label: 'Google (inna wyszukiwarka)',
+    label: 'application.phrases.clientSourceGoogle',
     value: 'Google (inna wyszukiwarka)',
   },
   {
-    label: 'Ogłoszenie internetowe (OLX, inne)',
+    label: 'application.phrases.clientSourceListing',
     value: 'Ogłoszenie internetowe (OLX, inne)',
   },
-  { label: 'Polecenie od znajomego', value: 'Polecenie od znajomego' },
-  { label: 'AI (ChatGPT, Claude, Gemini itp.)', value: 'AI (ChatGPT, Claude, Gemini itp.)' },
-  { label: 'Radio', value: 'Radio' },
-  { label: 'Inne', value: 'Inne' },
+  {
+    label: 'application.phrases.clientSourceReferral',
+    value: 'Polecenie od znajomego',
+  },
+  {
+    label: 'application.phrases.clientSourceAi',
+    value: 'AI (ChatGPT, Claude, Gemini itp.)',
+  },
+  { label: 'application.phrases.clientSourceRadio', value: 'Radio' },
+  { label: 'application.phrases.clientSourceOther', value: 'Inne' },
 ];
 
 export const ClientSourceForm = () => {

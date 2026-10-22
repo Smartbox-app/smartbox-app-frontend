@@ -4,7 +4,7 @@ export const attachmentList: TableSchema = {
   countPerPage: 20,
   fields: [
     {
-      name: 'ID',
+      name: 'application.tables.id',
       field: 'id',
       mobile: true,
       searchable: false,
@@ -13,7 +13,7 @@ export const attachmentList: TableSchema = {
       type: FieldType.Text,
     },
     {
-      name: 'Nazwa',
+      name: 'application.tables.name',
       field: 'name',
       mobile: true,
       searchable: true,

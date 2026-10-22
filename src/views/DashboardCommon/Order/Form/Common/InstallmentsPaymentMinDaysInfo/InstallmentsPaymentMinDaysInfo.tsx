@@ -1,5 +1,6 @@
 import { useSelector } from 'react-redux';
 import { Alert } from 'src/components/Common';
+import { __ } from 'src/helpers/i18n';
 import { ApplicationState } from 'src/reducers';
 
 export const InstallmentsPaymentMinDaysInfo = () => {
@@ -11,7 +12,9 @@ export const InstallmentsPaymentMinDaysInfo = () => {
 
   return (
     <Alert type="notice">
-      Dla płatności okresowej wymagane minimum <strong>{minRentDaysForInstallments}</strong> dni najmu.
+      {__('application.phrases.installmentsMinDays', {
+        count: minRentDaysForInstallments,
+      })}
     </Alert>
   );
 };

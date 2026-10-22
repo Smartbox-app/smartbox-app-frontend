@@ -4,7 +4,7 @@ export const stocksList: TableSchema = {
   countPerPage: 20,
   fields: [
     {
-      name: 'ID',
+      name: 'application.tables.id',
       field: 'id',
       mobile: true,
       searchable: true,
@@ -13,7 +13,7 @@ export const stocksList: TableSchema = {
       type: FieldType.Text,
     },
     {
-      name: 'Nazwa',
+      name: 'application.tables.name',
       field: 'name',
       mobile: true,
       searchable: true,
@@ -22,7 +22,7 @@ export const stocksList: TableSchema = {
       type: FieldType.Text,
     },
     {
-      name: 'Adres',
+      name: 'application.tables.address',
       field: 'address',
       mobile: true,
       searchable: true,

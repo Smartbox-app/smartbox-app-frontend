@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
-import { UserRole, UserRoleForTenant } from 'smartbox-types';
+import { Language, UserRole, UserRoleForTenant } from 'smartbox-types';
 import { ButtonsContainer, FormContainer } from 'src/components/Layout';
 import { Spinner } from 'src/components/Branded';
 import { Form, Button } from 'src/components/ui';
@@ -21,6 +21,14 @@ import { InviteUsersSuccessModal } from './InviteUsersSuccessModal';
 import { InviteEmailsField } from './InviteEmailsField';
 import UserService from 'src/services/user-service';
 import { history } from 'src/history';
+
+const LANGUAGE_OPTIONS = [
+  { value: Language.pl, label: 'Polski' },
+  { value: Language.cz, label: 'Čeština' },
+  { value: Language.ua, label: 'Українська' },
+  { value: Language.de, label: 'Deutsch' },
+  { value: Language.en, label: 'English' },
+];
 
 export const InviteUserForm = () => {
   const dispatch = useDispatch();
@@ -58,6 +66,7 @@ export const InviteUserForm = () => {
     defaultValues: {
       emails: [],
       role: UserRole.user,
+      lang: Language.pl,
       tenantId: '',
       stockIds: [],
       requireTenantId: isAdmin,
@@ -86,6 +95,7 @@ export const InviteUserForm = () => {
     inviteUsers({
       emails: data.emails,
       role: isWorker ? UserRole.user : data.role,
+      lang: data.lang,
       tenantId: isAdmin ? data.tenantId : undefined,
       stockIds: (data.stockIds ?? []).map((id) => ({
         value: id,
@@ -135,6 +145,25 @@ export const InviteUserForm = () => {
             )}
           />
         ) : null}
+
+        <Controller
+          name="lang"
+          control={control}
+          render={({ field, fieldState }) => (
+            <InputSelect
+              name="lang"
+              label="application.inviteUsersLanguage"
+              placeholder="application.inviteUsersLanguage"
+              options={LANGUAGE_OPTIONS}
+              value={field.value}
+              onChange={field.onChange}
+              onBlur={field.onBlur}
+              required
+              disabled={isPending}
+              error={fieldState.error?.message}
+            />
+          )}
+        />
 
         {isAdmin ? (
           <Controller

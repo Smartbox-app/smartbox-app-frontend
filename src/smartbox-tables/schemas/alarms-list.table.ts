@@ -4,7 +4,7 @@ export const alarmsList: TableSchema = {
   countPerPage: 20,
   fields: [
     {
-      name: 'Identyfikator',
+      name: 'application.tables.identifier',
       field: 'id',
       mobile: true,
       searchable: false,
@@ -13,7 +13,7 @@ export const alarmsList: TableSchema = {
       type: FieldType.Text,
     },
     {
-      name: 'Nazwa',
+      name: 'application.tables.name',
       field: 'name',
       mobile: true,
       searchable: false,
@@ -22,7 +22,7 @@ export const alarmsList: TableSchema = {
       type: FieldType.Text,
     },
     {
-      name: 'Ostatnie połączenie',
+      name: 'application.tables.lastConnection',
       field: 'lastConnection',
       mobile: true,
       searchable: false,
@@ -31,7 +31,7 @@ export const alarmsList: TableSchema = {
       type: FieldType.Date,
     },
     {
-      name: 'Status',
+      name: 'application.tables.status',
       field: 'alarmState',
       mobile: true,
       searchable: false,

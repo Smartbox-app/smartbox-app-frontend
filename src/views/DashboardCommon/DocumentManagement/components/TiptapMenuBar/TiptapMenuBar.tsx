@@ -1,12 +1,13 @@
 import React from 'react';
 import { Editor } from '@tiptap/react';
+import { __ } from 'src/helpers/i18n';
 import { Toolbar, Button } from '../styled';
 
 export const TiptapMenuBar = ({ editor }: { editor: Editor | null }) => {
   if (!editor) return null;
 
   const setLink = () => {
-    const url = prompt('Podaj URL');
+    const url = prompt(__('application.phrases.enterUrl'));
     if (!url) return;
 
     editor.chain().focus().setLink({ href: url }).run();
@@ -110,7 +111,7 @@ export const TiptapMenuBar = ({ editor }: { editor: Editor | null }) => {
             .run()
         }
       >
-        Tabela
+        {__('application.phrases.insertTable')}
       </Button>
 
       {/* HISTORIA */}

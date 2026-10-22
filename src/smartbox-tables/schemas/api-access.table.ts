@@ -4,7 +4,7 @@ export const apiAccessTableSchema: TableSchema = {
   countPerPage: 20,
   fields: [
     {
-      name: 'Nazwa',
+      name: 'application.tables.name',
       field: 'name',
       mobile: true,
       searchable: true,
@@ -13,7 +13,7 @@ export const apiAccessTableSchema: TableSchema = {
       type: FieldType.Text,
     },
     {
-      name: 'Franczyzobiorca',
+      name: 'application.tables.franchisee',
       field: 'tenant',
       mobile: true,
       searchable: false,
@@ -21,14 +21,14 @@ export const apiAccessTableSchema: TableSchema = {
       type: FieldType.Text,
     },
     {
-      name: 'Uprawnienia',
+      name: 'application.tables.permissions',
       field: 'scopes',
       searchable: false,
       sortable: false,
       type: FieldType.Text,
     },
     {
-      name: 'Aktywny',
+      name: 'application.tables.active',
       field: 'isActive',
       mobile: true,
       searchable: true,
@@ -36,14 +36,14 @@ export const apiAccessTableSchema: TableSchema = {
       type: FieldType.Boolean,
     },
     {
-      name: 'Wygasa',
+      name: 'application.tables.expires',
       field: 'expiresAt',
       searchable: false,
       sortable: true,
       type: FieldType.Date,
     },
     {
-      name: 'Utworzono',
+      name: 'application.tables.created',
       field: 'createdAt',
       searchable: false,
       sortable: true,

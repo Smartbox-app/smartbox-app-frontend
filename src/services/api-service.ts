@@ -9,6 +9,7 @@ import { Preferences } from '@capacitor/preferences';
 import { getApiBaseUrl } from '../config/api-url';
 
 import { getCachedTenant } from '../queries/useGetTenantQuery/tenant-query';
+import { currentAppLanguage } from '../i18n/app-language';
 
 const getUrl = async () => getApiBaseUrl();
 
@@ -42,6 +43,11 @@ export default class ApiService {
 
   static setUrl = async () => {
     this.url = await getUrl();
+  };
+
+  static withLanguage = (headers: { [key: string]: string }) => {
+    headers.lang = currentAppLanguage();
+    return headers;
   };
 
   static wrapUrlWithTenant = (url: string) => {
@@ -79,6 +85,7 @@ export default class ApiService {
       const token = await Preferences.get({ key: 'smst_token' });
       headers.Authorization = `Bearer ${token.value}`;
     }
+    ApiService.withLanguage(headers);
 
     const wrappedUrl = ApiService.wrapUrlWithTenant(url);
 
@@ -171,6 +178,7 @@ export default class ApiService {
       const token = await Preferences.get({ key: 'smst_token' });
       headers.Authorization = `Bearer ${token.value}`;
     }
+    ApiService.withLanguage(headers);
 
     const wrappedUrl = ApiService.wrapUrlWithTenant(url);
     try {
@@ -222,6 +230,7 @@ export default class ApiService {
       const token = await Preferences.get({ key: 'smst_token' });
       headers.Authorization = `Bearer ${token.value}`;
     }
+    ApiService.withLanguage(headers);
 
     const wrappedUrl = ApiService.wrapUrlWithTenant(url);
 
@@ -382,6 +391,7 @@ export default class ApiService {
       const token = await Preferences.get({ key: 'smst_token' });
       headers.Authorization = `Bearer ${token.value}`;
     }
+    ApiService.withLanguage(headers);
 
     const capacitorMethod = data ? CapacitorHttp.post : CapacitorHttp.get;
 

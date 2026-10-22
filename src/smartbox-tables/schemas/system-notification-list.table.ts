@@ -3,15 +3,15 @@ import { FieldType, TableSchema } from '../typings';
 const statusToText: {
   [key: string]: string;
 } = {
-  pending: 'Oczekuje',
-  notified: 'Powiadomiono',
+  pending: 'application.paymentListStatusWait',
+  notified: 'application.tables.notified',
 };
 
 export const systemNotificationListTable: TableSchema = {
   countPerPage: 20,
   fields: [
     {
-      name: 'ID',
+      name: 'application.tables.id',
       field: 'id',
       mobile: true,
       searchable: true,
@@ -22,7 +22,7 @@ export const systemNotificationListTable: TableSchema = {
       alias: 'sn',
     },
     {
-      name: 'Imię',
+      name: 'application.tables.firstName',
       field: 'firstName',
       mobile: true,
       searchable: true,
@@ -33,7 +33,7 @@ export const systemNotificationListTable: TableSchema = {
       alias: 'u',
     },
     {
-      name: 'Nazwisko',
+      name: 'application.tables.lastName',
       field: 'lastName',
       mobile: true,
       searchable: true,
@@ -44,7 +44,7 @@ export const systemNotificationListTable: TableSchema = {
       alias: 'u',
     },
     {
-      name: 'Email',
+      name: 'application.tables.email',
       field: 'email',
       mobile: true,
       searchable: true,
@@ -55,7 +55,7 @@ export const systemNotificationListTable: TableSchema = {
       alias: 'u',
     },
     {
-      name: 'Telefon',
+      name: 'application.tables.phone',
       field: 'phone',
       mobile: true,
       searchable: true,
@@ -66,7 +66,7 @@ export const systemNotificationListTable: TableSchema = {
       alias: 'u',
     },
     {
-      name: 'Nazwa',
+      name: 'application.tables.name',
       field: 'box',
       mobile: true,
       searchable: true,
@@ -77,7 +77,7 @@ export const systemNotificationListTable: TableSchema = {
       //   alias: 'bg',
     },
     {
-      name: 'Wysyłka e-mail',
+      name: 'application.tables.emailDelivery',
       field: 'sendEmail',
       mobile: true,
       searchable: false,
@@ -86,7 +86,7 @@ export const systemNotificationListTable: TableSchema = {
       type: FieldType.Boolean,
     },
     {
-      name: 'Wysyłka SMS',
+      name: 'application.tables.smsDelivery',
       field: 'sendSms',
       mobile: true,
       searchable: false,
@@ -95,7 +95,7 @@ export const systemNotificationListTable: TableSchema = {
       type: FieldType.Boolean,
     },
     {
-      name: 'Status',
+      name: 'application.tables.status',
       field: 'status',
       mobile: true,
       searchable: true,
@@ -107,7 +107,7 @@ export const systemNotificationListTable: TableSchema = {
       alias: 'sn',
     },
     {
-      name: 'Utworzono',
+      name: 'application.tables.created',
       field: 'createdAt',
       mobile: true,
       searchable: true,
@@ -117,7 +117,7 @@ export const systemNotificationListTable: TableSchema = {
       alias: 'sn',
     },
     {
-      name: 'Aktualizacja',
+      name: 'application.tables.updated',
       field: 'updatedAt',
       mobile: true,
       searchable: true,

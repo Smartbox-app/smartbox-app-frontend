@@ -8,7 +8,7 @@ export const systemLogAdminTableSchema: TableSchema = {
   countPerPage: 50,
   fields: [
     {
-    name: 'Data',
+      name: 'application.tables.date',
       field: 'timestamp',
       type: FieldType.Date,
       sortable: true,
@@ -18,7 +18,7 @@ export const systemLogAdminTableSchema: TableSchema = {
       mobile: true,
     },
     {
-      name: 'Akcja',
+      name: 'application.tables.action',
       field: 'action',
       type: FieldType.Text,
       sortable: true,
@@ -28,7 +28,7 @@ export const systemLogAdminTableSchema: TableSchema = {
       mobile: true,
     },
     {
-      name: 'Email',
+      name: 'application.tables.email',
       field: 'userEmail',
       type: FieldType.Email,
       sortable: true,
@@ -36,7 +36,7 @@ export const systemLogAdminTableSchema: TableSchema = {
       mobile: true,
     },
     {
-      name: 'Rola',
+      name: 'application.tables.role',
       field: 'userRole',
       type: FieldType.Text,
       sortable: true,
@@ -44,14 +44,14 @@ export const systemLogAdminTableSchema: TableSchema = {
       mobile: true,
     },
     {
-      name: 'Status',
+      name: 'application.tables.status',
       field: 'statusCode',
       type: FieldType.Text,
       sortable: true,
       searchable: true,
     },
     {
-      name: 'Błąd',
+      name: 'application.tables.error',
       field: 'appErrorCode',
       type: FieldType.Text,
       sortable: false,
@@ -60,25 +60,28 @@ export const systemLogAdminTableSchema: TableSchema = {
       customValue: (row: { appErrorCode?: string | number | null }) => {
         const code = row.appErrorCode;
         if (code === null || code === undefined || code === '') return '-';
-        return translateApiErrorCode(Number(code) as ApiErrorCode, currentAppLanguage());
+        return translateApiErrorCode(
+          Number(code) as ApiErrorCode,
+          currentAppLanguage(),
+        );
       },
     },
     {
-      name: 'IP',
+      name: 'application.tables.ip',
       field: 'ip',
       type: FieldType.Text,
       sortable: true,
       searchable: true,
     },
     {
-      name: 'Klient',
+      name: 'application.tables.customer',
       field: 'tenantId',
       type: FieldType.Text,
       sortable: false,
       searchable: false,
     },
     {
-      name: 'Meta',
+      name: 'application.tables.meta',
       field: 'meta',
       type: FieldType.Text,
       sortable: false,

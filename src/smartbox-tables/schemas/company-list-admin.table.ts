@@ -4,7 +4,7 @@ export const companyListAdmin: TableSchema = {
   countPerPage: 20,
   fields: [
     {
-      name: 'Nazwa',
+      name: 'application.tables.name',
       field: 'name',
       mobile: true,
       searchable: true,
@@ -13,7 +13,7 @@ export const companyListAdmin: TableSchema = {
       type: FieldType.Text,
     },
     {
-      name: 'Franczyzobiorca',
+      name: 'application.tables.franchisee',
       field: 'identifier',
       mobile: true,
       searchable: true,

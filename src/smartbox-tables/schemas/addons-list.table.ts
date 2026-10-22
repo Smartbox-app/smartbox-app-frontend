@@ -4,7 +4,7 @@ export const addonList: TableSchema = {
   countPerPage: 20,
   fields: [
     {
-      name: 'Nazwa',
+      name: 'application.tables.name',
       field: 'name',
       mobile: true,
       searchable: true,
@@ -13,7 +13,7 @@ export const addonList: TableSchema = {
       type: FieldType.Text,
     },
     {
-      name: 'Cennik',
+      name: 'application.tables.priceList',
       field: 'pricing',
       mobile: true,
       searchable: false,
