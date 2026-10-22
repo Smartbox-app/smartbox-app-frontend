@@ -34,7 +34,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
  
     func applicationDidBecomeActive(_ application: UIApplication) {
-        UIApplication.shared.applicationIconBadgeNumber = 0;
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     }
 
@@ -45,16 +44,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
         // Called when the app was launched with a url. Feel free to add additional processing here,
         // but if you want the App API to support tracking app url opens, make sure to keep this call
-        if (FBSDKCoreKit.ApplicationDelegate.shared.application(
-            app,
-            open: url,
-            sourceApplication: options[UIApplication.OpenURLOptionsKey.sourceApplication] as? String,
-            annotation: options[UIApplication.OpenURLOptionsKey.annotation]
-        )) {
-            return true;
-        } else {
-            return ApplicationDelegateProxy.shared.application(app, open: url, options: options)
-        }
+        return ApplicationDelegateProxy.shared.application(app, open: url, options: options)
     }
     
     func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
@@ -78,4 +68,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 // func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
 //   NotificationCenter.default.post(name: .capacitorDidFailToRegisterForRemoteNotifications, object: error)
 // }
+
+    func application(_ application: UIApplication,
+                     configurationForConnecting connectingSceneSession: UISceneSession,
+                     options: UIScene.ConnectionOptions) -> UISceneConfiguration {
+
+        let config = UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
+        config.delegateClass = SceneDelegate.self
+        return config
+    }
 }

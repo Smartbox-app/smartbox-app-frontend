@@ -1021,10 +1021,10 @@
   resolved "https://registry.yarnpkg.com/@capacitor/browser/-/browser-8.0.2.tgz#3143cc70a470e4ecb0279b63782df7ff3480aa3e"
   integrity sha512-oJEtVP5huwPJ8GgOCH3OewhsBPTW6aVtWg8hU6g65MxBdhkcAKyzYrhsyXupC5GaMxltqLf1JzKETMmGkh6tDw==
 
-"@capacitor/camera@^8.2.0":
-  version "8.2.0"
-  resolved "https://registry.yarnpkg.com/@capacitor/camera/-/camera-8.2.0.tgz#66ee3593292137ac85a9e33ce3e002c449d613ff"
-  integrity sha512-hYfrT6xpL936qoEkIpJzSnb0fQCaTkOux1cXzGBfH8QLOGqr6gSLiWZlZz/fqMPmMKJMNRBqlTQkj5fuMhVZog==
+"@capacitor/camera@^8.0.0":
+  version "8.2.6"
+  resolved "https://registry.yarnpkg.com/@capacitor/camera/-/camera-8.2.6.tgz#04759cdfeee4dbb15233bb0e6e7c9d6b8df13be3"
+  integrity sha512-jzvrMrEKs5ACw1/HmcgN5XwSlXYF+/xRKzWtBUESQs5ePf3tTfnR8Nk/p+aSEgay8yZEI0aZQ+2/1xDwMCdV2w==
 
 "@capacitor/cli@^5.3.0":
   version "5.7.8"
@@ -1050,9 +1050,9 @@
     xml2js "^0.5.0"
 
 "@capacitor/cli@^8.0.0":
-  version "8.2.0"
-  resolved "https://registry.yarnpkg.com/@capacitor/cli/-/cli-8.2.0.tgz#8075f23fc4ca93e08d6965dc1f445752091aaab1"
-  integrity sha512-1cMEk0d/I6tl1U+v/lnJR5Oylpx8ZBIHrvQxD5zK0MkjYOUyQAAGJgh97rkhGJqjAUvrGpa8H4BmyhNQN9a17A==
+  version "8.5.3"
+  resolved "https://registry.yarnpkg.com/@capacitor/cli/-/cli-8.5.3.tgz#5eb66608123befc4890a6d92394358a0e2bb68d7"
+  integrity sha512-/G6xwna+p4GS3lthSdWN3OThCH2F85O0Ukdy8rv3oAXvgEMeyFgPEIA3PMAS++IkHwUuBYBAKOQJnZfcrh1n0w==
   dependencies:
     "@ionic/cli-framework-output" "^2.2.8"
     "@ionic/utils-subprocess" "^3.0.1"
@@ -1070,12 +1070,13 @@
     semver "^7.6.3"
     tar "^7.5.3"
     tslib "^2.8.1"
+    xcode "^3.0.1"
     xml2js "^0.6.2"
 
 "@capacitor/core@^8.0.0":
-  version "8.2.0"
-  resolved "https://registry.yarnpkg.com/@capacitor/core/-/core-8.2.0.tgz#7b9b012f1d34b62d441f557649b755ce451cb81e"
-  integrity sha512-oKaoNeNtH2iIZMDFVrb1atoyRECDGHcfLMunJ5KWN8DtvpVBeeA4c41e20NTuhMxw1cSYbpq2PV2hb+/9CJxlQ==
+  version "8.5.3"
+  resolved "https://registry.yarnpkg.com/@capacitor/core/-/core-8.5.3.tgz#9f4d92fe5eb2d44b01d920190a54ee965e9aeb5d"
+  integrity sha512-oBE1oGuYE4ZzYYrulC75OuHdSsD6zLUy7d5o1tFwDLG4govGoubY15cxpiI5l0+q87Lm5p0bhbehMdzJg4aFag==
   dependencies:
     tslib "^2.1.0"
 
@@ -1099,9 +1100,9 @@
     "@capacitor/synapse" "^1.0.4"
 
 "@capacitor/ios@^8.0.0":
-  version "8.2.0"
-  resolved "https://registry.yarnpkg.com/@capacitor/ios/-/ios-8.2.0.tgz#f346587edf9552d05a1a38d99cfbf469a814e878"
-  integrity sha512-X2/VtM4qP/R1SM0VQ5W/VotEc6PS/KTooD33EijsfAHWBdee+xmBapW8SeNLnu16wJ+tsfWlvtipaJEyfKbRKQ==
+  version "8.5.3"
+  resolved "https://registry.yarnpkg.com/@capacitor/ios/-/ios-8.5.3.tgz#3bed5ce0673bc04ad9a961458337658472388c52"
+  integrity sha512-HnnV92Jl8+3x0JUloXUMjFcUsQI8wHFVsKwkLn72DfRZXYGZW11tQbmNOWOnRTljaU18FdI1b9ipT09SzzPDNw==
 
 "@capacitor/preferences@^8.0.0":
   version "8.0.1"

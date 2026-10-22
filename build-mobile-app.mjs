@@ -363,7 +363,7 @@ async function copyAndroidStrings(folderName) {
 }
 
 async function addConfigFiles(folderName) {
-  await copyFiles('./app-config/ios', './ios/App/App', ['AppDelegate.swift']);
+  await copyFiles('./app-config/ios', './ios/App/App', ['AppDelegate.swift', 'SceneDelegate.swift']);
   // await copyFiles('./app-config/ios', './ios/App', ['Podfile']);
 
   // await copyFiles(`./app-config/ios/${folderName}`, './ios/App/App', [
