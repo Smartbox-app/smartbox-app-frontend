@@ -42,31 +42,3 @@ export const emailVerification =
       body,
     );
   };
-
-export const emailVerificationResendMail = () => async (dispatch: AppDispatch) => {
-  await ApiService.post(
-    dispatch,
-    'EMAIL_VERIFICATION_RESEND_MAIL_SUCCESS',
-    'EMAIL_VERIFICATION_RESEND_MAIL_FAILED',
-    null,
-    null,
-    'user/resend-active-email',
-    'LOADING',
-    {},
-  );
-};
-
-export const authGmailUser = (googleToken: string) => async (dispatch: AppDispatch) => {
-  await ApiService.get(
-    dispatch,
-    'LOGIN_SUCCESS',
-    'EMAIL_VERIFICATION_RESEND_MAIL_FAILED',
-    () => {
-      dispatch(notifications.successNotification('notification.logInSuccess'));
-      history.push('/');
-    },
-    null,
-    `auth/login-by-google-token/${googleToken}}`,
-    'LOADING',
-  );
-};

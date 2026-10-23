@@ -1,5 +1,5 @@
 import { useEffect, useState, useMemo } from 'react';
-import { AccessControl, StockRes, TenantEntity, UserRole } from 'smartbox-types';
+import { AccessControl, TenantEntity, UserRole } from 'smartbox-types';
 
 import { Redirect, Route, Switch, useParams } from 'react-router';
 import UserService from '../../../../../services/user-service';
@@ -14,7 +14,7 @@ import ApiService from '../../../../../services/api-service';
 import { Handling } from './Handling';
 import { Gates } from './Gates';
 import { Addons } from './Addons';
-import { useGetMyDetailsQuery } from 'src/queries';
+import { useGetMyDetailsQuery, useGetStockQuery } from 'src/queries';
 import { PageHeader, Section, Tabs } from 'src/components/ui';
 import {
   InfoCircle,
@@ -58,15 +58,7 @@ const Manage = () => {
 
   const hasFullAccess = [UserRole.admin, UserRole.client].includes(user!.role);
 
-  const getStockData = async () => {
-    await ApiService.callFetch('GET', `stock/${stockId}`, (stock: StockRes) => {
-      setMapActive(stock.isMapActive);
-      setAlarmsActive(stock.gateAccessControl === AccessControl.ksm);
-      if (user?.role === UserRole.admin && stock.tenantId) {
-        getTenantForAdmin(stock.tenantId);
-      }
-    });
-  };
+  const { data: stockData } = useGetStockQuery(stockId);
 
   const getTenantForAdmin = async (tenantId: string) => {
     await ApiService.callFetch(
@@ -79,8 +71,14 @@ const Manage = () => {
   };
 
   useEffect(() => {
-    getStockData();
-  }, []);
+    if (!stockData) return;
+
+    setMapActive(stockData.isMapActive);
+    setAlarmsActive(stockData.gateAccessControl === AccessControl.ksm);
+    if (user?.role === UserRole.admin && stockData.tenantId) {
+      getTenantForAdmin(stockData.tenantId);
+    }
+  }, [stockData, user?.role]);
 
   const tabs = useMemo(() => {
     const gatesAndAlarms = [

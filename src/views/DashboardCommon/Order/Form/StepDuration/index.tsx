@@ -10,7 +10,6 @@ import {
   RentPaymentType,
   StockAgreementType,
   StockPaymentType,
-  StockRes,
 } from 'smartbox-types';
 import { DateInput } from '../../../../../components/Common';
 import { __ } from '../../../../../helpers/i18n';
@@ -42,8 +41,7 @@ import {
 import { Addons } from '../Common/Addons';
 import { PaymentType } from '../Common/PaymentType';
 import { AgreementTypeSelect } from '../Common/AgreementTypeSelect';
-import ApiService from '../../../../../services/api-service';
-import { useGetMyDetailsQuery } from 'src/queries';
+import { useGetMyDetailsQuery, useGetStockQuery } from 'src/queries';
 import { Button, Section, Stack } from 'src/components/ui';
 import { ArrowLeft, ArrowRight } from 'src/icons';
 import { RentDurationDto } from 'src/dto/RentDurationDto';
@@ -109,11 +107,13 @@ const StepDuration = () => {
   const periodDays = stock?.openEndedPeriodDays || 30;
   const paymentMethods = stock?.clientPaymentTypeConfig;
 
-  const getStock = async () => {
-    await ApiService.callFetch('GET', `stock/${stockId}`, (res: StockRes) => {
-      dispatch(setOrderFullStock(res));
-    });
-  };
+  const { data: stockData } = useGetStockQuery(stockId);
+
+  useEffect(() => {
+    if (stockData) {
+      dispatch(setOrderFullStock(stockData));
+    }
+  }, [stockData, dispatch]);
 
   useEffect(() => {
     if (!stock) return;
@@ -133,7 +133,6 @@ const StepDuration = () => {
         dispatch(setRentEndDate(null));
         return;
       }
-      getStock();
       dispatch(calculateOpenEndedPrice(boxGroupId, startOfDay(startDate)));
       calculateAllAddons();
       return;
@@ -148,8 +147,6 @@ const StepDuration = () => {
       if (nextEnd) dispatch(setRentEndDate(nextEnd));
       return;
     }
-
-    getStock();
 
     const startOfStart = startOfDay(startDate);
     const endOfEnd = endOfDay(endDate);

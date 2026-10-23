@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { BoxGroupUserRes } from 'smartbox-types';
 import {
@@ -8,13 +8,11 @@ import SingleOption from './SingleOption';
 import { ApplicationState } from '../../../../../reducers';
 
 import UserService from '../../../../../services/user-service';
-import ApiService from '../../../../../services/api-service';
 
 import './StepSize.scss';
 import { Alert } from '../../../../../components/Common';
-import { useGetMyDetailsQuery } from 'src/queries';
+import { useBoxGroupsForStockQuery, useGetMyDetailsQuery } from 'src/queries';
 import { Header, Section, Skeleton , Stack, Button } from 'src/components/ui';
-import { __ } from 'src/helpers/i18n';
 import { ArrowLeft, ArrowRight } from 'src/icons';
 import { useTenantNaming } from 'src/hooks/useTenantNaming';
 import { Redirect } from 'react-router';
@@ -25,21 +23,8 @@ const StepSize = () => {
   );
   const { data: user } = useGetMyDetailsQuery();
   const { getText } = useTenantNaming();
-  const [loading, setLoading] = useState<boolean>(true);
-  const [boxGroups, setBoxGroups] = useState<BoxGroupUserRes[]>([]);
-
-  useEffect(() => {
-    if (!stockId) return;
-    setLoading(true);
-    ApiService.callFetch(
-      'GET',
-      `box-group-new/all/${stockId}`,
-      (boxes: BoxGroupUserRes[]) => {
-        setBoxGroups(boxes);
-        setLoading(false);
-      },
-    );
-  }, []);
+  const { data: boxGroups = [], isPending: loading } =
+    useBoxGroupsForStockQuery(stockId);
 
   const getSortingCriteria = (a: BoxGroupUserRes, b: BoxGroupUserRes) => {
     if (a.order && b.order) return a.order - b.order;
@@ -47,11 +32,15 @@ const StepSize = () => {
     return a.name > b.name ? 1 : -1;
   };
 
-  const options = [...boxGroups]
-    .sort((a, b) => getSortingCriteria(a, b))
-    .map((data: BoxGroupUserRes) => (
-      <SingleOption key={data.id} singleOptionData={data} />
-    ));
+  const options = useMemo(
+    () =>
+      [...boxGroups]
+        .sort((a, b) => getSortingCriteria(a, b))
+        .map((data: BoxGroupUserRes) => (
+          <SingleOption key={data.id} singleOptionData={data} />
+        )),
+    [boxGroups],
+  );
 
   if (!stockId) return <Redirect to="/user/order/step/stock" />;
 

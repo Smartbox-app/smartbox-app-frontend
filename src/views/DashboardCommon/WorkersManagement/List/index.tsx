@@ -13,11 +13,12 @@ import EditAssign from './EditAssign';
 import { HeaderWithActions, Section } from 'src/components/ui';
 import UserService from 'src/services/user-service';
 import { showModal } from 'src/actions/modal';
-import { blockUser, enableUser } from 'src/actions/users';
 import { useGetMyDetailsQuery } from 'src/queries';
+import { useSetUserStatusMutation } from 'src/mutations';
 
 export const List = () => {
   const { data: user } = useGetMyDetailsQuery();
+  const { mutate: setUserStatus } = useSetUserStatusMutation();
 
   const dispatch = useDispatch();
 
@@ -73,7 +74,9 @@ export const List = () => {
           <Button
             text="application.active"
             success
-            click={() => dispatch(enableUser(userData.id))}
+            click={() =>
+              setUserStatus({ userId: userData.id, status: 'active' })
+            }
           />
         </ButtonsContainer>
       );
@@ -83,7 +86,9 @@ export const List = () => {
         <Button
           text="application.block"
           danger
-          click={() => dispatch(blockUser(userData.id))}
+          click={() =>
+            setUserStatus({ userId: userData.id, status: 'blocked' })
+          }
         />
       </ButtonsContainer>
     );

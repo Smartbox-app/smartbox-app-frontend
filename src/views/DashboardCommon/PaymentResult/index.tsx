@@ -5,12 +5,17 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Button, Header, InfoContent, Typography } from 'src/components/ui';
 import { SuccessCheck } from 'src/icons';
 import { useLocation, useParams } from 'react-router';
-import ApiService from 'src/services/api-service';
 import { Logo, Spinner } from 'src/components/Branded';
 import { history } from 'src/history';
 
 import { useTracking } from 'src/hooks/useTracking';
-import { useGetMyDetailsQuery } from 'src/queries';
+import {
+  useGetMyDetailsQuery,
+  usePaymentDetailsQuery,
+  usePaymentStatusQuery,
+} from 'src/queries';
+
+const PAYMENT_POLL_MS = 3000;
 
 export const PaymentResult = () => {
   const { id } = useParams<{ id: string }>();
@@ -19,6 +24,13 @@ export const PaymentResult = () => {
   const tracked = useRef<boolean>(false);
   const { trackPurchase } = useTracking();
   const { data: user, isFetched: isUserFetched } = useGetMyDetailsQuery();
+
+  const [statusPollMs, setStatusPollMs] = useState<number | false>(
+    PAYMENT_POLL_MS,
+  );
+  const [detailsPollMs, setDetailsPollMs] = useState<number | false>(
+    PAYMENT_POLL_MS,
+  );
 
   const handleTrackPurchase = (
     details: PaymentDetails,
@@ -30,92 +42,33 @@ export const PaymentResult = () => {
     tracked.current = true;
   };
 
-  const statusIntervalRef = useRef<number | null>(null);
-  const detailsIntervalRef = useRef<number | null>(null);
+  const {
+    data: paymentStatus,
+    isError: paymentStatusError,
+    isPending: paymentStatusPending,
+  } = usePaymentStatusQuery(id, {
+    refetchInterval: statusPollMs,
+  });
 
-  const [paymentDetails, setPaymentDetails] = useState<PaymentDetails | null>(
-    null,
-  );
-  const [detailsUnaivalable, setDetailsUnavailable] = useState(false);
-
-  const [paymentStatus, setPaymentStatus] = useState<PaymentStatus | null>(
-    null,
-  );
-  const [paymentStatusError, setPaymentStatusError] = useState<boolean>(false);
-
-  const getPaymentStatus = async () => {
-    try {
-      await ApiService.callFetch(
-        'GET',
-        `payment/${id}`,
-        (response: PaymentStatus) => {
-          setPaymentStatus(response);
-        },
-        () => {
-          setPaymentStatusError(true);
-        },
-        undefined,
-        true,
-        true,
-      );
-    } catch {
-      setPaymentStatusError(true);
-    }
-  };
-
-  const getPaymentDetails = async () => {
-    try {
-      await ApiService.callFetch(
-        'GET',
-        `payment/details/${id}`,
-        (response: PaymentDetails) => {
-          setPaymentDetails(response);
-        },
-        () => {
-          setDetailsUnavailable(true);
-          setPaymentDetails(null);
-        },
-        undefined,
-        true,
-        true,
-      );
-    } catch {
-      setDetailsUnavailable(true);
-      setPaymentDetails(null);
-    }
-  };
+  const { data: paymentDetails, isError: paymentDetailsError } =
+    usePaymentDetailsQuery(id, {
+      refetchInterval: detailsPollMs,
+    });
 
   useEffect(() => {
-    if (!id) return;
-
-    getPaymentStatus();
-    getPaymentDetails();
-
-    const detailsInterval = setInterval(() => {
-      getPaymentDetails();
-    }, 3000);
-
-    const statusInterval = setInterval(() => {
-      getPaymentStatus();
-    }, 3000);
-
-    statusIntervalRef.current = statusInterval;
-    detailsIntervalRef.current = detailsInterval;
-
-    return () => {
-      clearInterval(statusInterval);
-      clearInterval(detailsInterval);
-    };
-  }, [id]);
+    if (paymentStatusError || paymentStatus === PaymentStatus.accepted) {
+      setStatusPollMs(false);
+    }
+  }, [paymentStatus, paymentStatusError]);
 
   useEffect(() => {
     if (
-      detailsIntervalRef.current &&
+      paymentDetailsError ||
       paymentDetails?.status === PaymentStatus.accepted
     ) {
-      clearInterval(detailsIntervalRef.current);
+      setDetailsPollMs(false);
     }
-  }, [paymentDetails]);
+  }, [paymentDetails, paymentDetailsError]);
 
   useEffect(() => {
     if (paymentDetails?.status !== PaymentStatus.accepted) return;
@@ -124,26 +77,7 @@ export const PaymentResult = () => {
     if (!email && !user?.id && !isUserFetched) return;
 
     handleTrackPurchase(paymentDetails, email, user?.id);
-  }, [paymentDetails, user?.email, isUserFetched]);
-
-  useEffect(() => {
-    if (statusIntervalRef.current && paymentStatus === PaymentStatus.accepted) {
-      clearInterval(statusIntervalRef.current);
-    }
-  }, [paymentStatus]);
-
-  useEffect(() => {
-    if (!detailsUnaivalable) return;
-
-    if (detailsIntervalRef.current) clearInterval(detailsIntervalRef.current);
-  }, [detailsUnaivalable]);
-
-  useEffect(() => {
-    if (!paymentStatusError) return;
-
-    if (statusIntervalRef.current) clearInterval(statusIntervalRef.current);
-    if (detailsIntervalRef.current) clearInterval(detailsIntervalRef.current);
-  }, [paymentStatusError]);
+  }, [paymentDetails, user?.email, user?.id, isUserFetched]);
 
   const getHeader = () => {
     if (paymentStatusError) return __('application.paymentError');
@@ -163,7 +97,7 @@ export const PaymentResult = () => {
     history.push('/');
   };
 
-  if (paymentStatus === null && !paymentStatusError)
+  if (paymentStatusPending && !paymentStatusError)
     return (
       <InfoContent>
         <Spinner transparent />

@@ -5,10 +5,8 @@ import * as notifications from './notifications';
 import * as user from './users';
 import * as order from './order';
 import * as apiTable from './api-table';
-import * as boxes from './boxes';
 import * as singleRent from './single-rent';
 import * as stock from './stock';
-import * as stockGroup from './stock-group';
 import * as gate from './gate';
 import * as ksmGate from './ksm-gate';
 import * as invitations from './invitations';
@@ -17,14 +15,12 @@ export {
   appStatus,
   apiTable,
   auth,
-  boxes,
   modal,
   notifications,
   user,
   order,
   singleRent,
   stock,
-  stockGroup,
   gate,
   ksmGate,
   invitations,

@@ -19,23 +19,26 @@ import { ButtonsContainer, Section } from '../../../../components/Layout';
 import { __ } from '../../../../helpers/i18n';
 import { InteractiveTableSchema } from '../../../../utils/table-schema-utils';
 import { showModal } from '../../../../actions/modal';
-import {
-  blockUser,
-  deleteUser,
-  deleteUserByForce,
-  enableUser,
-  resendActivationEmail,
-} from '../../../../actions/users';
 import UserDetail from './UserDetail';
 import UserEdit from './UserEdit';
 import UserService from '../../../../services/user-service';
 import { useGetMyDetailsQuery } from 'src/queries';
+import {
+  useDeleteUserByForceMutation,
+  useDeleteUserMutation,
+  useResendUserActivationMutation,
+  useSetUserStatusMutation,
+} from 'src/mutations';
 import { HeaderWithActions } from 'src/components/ui';
 import { UserNoteEditModal } from './UserDetail/UserNoteEditModal';
 
 const List = () => {
   const dispatch = useDispatch();
   const { data: user } = useGetMyDetailsQuery();
+  const { mutate: deleteUser } = useDeleteUserMutation();
+  const { mutate: deleteUserByForce } = useDeleteUserByForceMutation();
+  const { mutate: resendActivationEmail } = useResendUserActivationMutation();
+  const { mutate: setUserStatus } = useSetUserStatusMutation();
 
   const hasFullAccess = [UserRole.admin, UserRole.client].includes(user!.role);
 
@@ -45,7 +48,7 @@ const List = () => {
         <ConfirmModal
           approveButtonText="application.delete"
           mainText="application.deleteUserText"
-          approveAction={() => dispatch(deleteUser(userId))}
+          approveAction={() => deleteUser(userId)}
         />,
       ),
     );
@@ -57,7 +60,7 @@ const List = () => {
         <ConfirmModal
           approveButtonText="application.delete"
           mainText="application.deleteUserText"
-          approveAction={() => dispatch(deleteUserByForce(userId))}
+          approveAction={() => deleteUserByForce(userId)}
         />,
       ),
     );
@@ -73,7 +76,7 @@ const List = () => {
         <Button
           text="application.active"
           success
-          click={() => dispatch(enableUser(userData.id))}
+          click={() => setUserStatus({ userId: userData.id, status: 'active' })}
         />
       );
     } 
@@ -81,7 +84,7 @@ const List = () => {
         <Button
           text="application.block"
           danger
-          click={() => dispatch(blockUser(userData.id))}
+          click={() => setUserStatus({ userId: userData.id, status: 'blocked' })}
         />
       );
     
@@ -139,7 +142,7 @@ const List = () => {
                   <Button
                     secondary
                     text="application.resendActivationEmail"
-                    click={() => dispatch(resendActivationEmail(userData.id))}
+                    click={() => resendActivationEmail(userData.id)}
                   />
                 )}
                 <Button

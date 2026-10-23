@@ -1,14 +1,13 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import styled from 'styled-components';
 import { ApplicationState } from 'src/reducers';
 import { useDispatch, useSelector } from 'react-redux';
 import 'mapbox-gl/dist/mapbox-gl.css';
-import ApiService from 'src/services/api-service';
 import { useTenant } from 'src/hooks/useTenant';
+import { useGetStockGroupsListQuery, useGetStockListQuery } from 'src/queries';
 import './Map.scss';
 import { ActiveLocation } from './components/ActiveLocation';
 import { setOrderStock } from 'src/actions/order';
-import { StockGroupWithStocks, StockList } from 'smartbox-types';
 import { Skeleton } from 'src/components/ui';
 import type mapboxglType from 'mapbox-gl'; // import type only
 import { useFileStorage } from 'src/hooks/useFileStorage';
@@ -37,28 +36,10 @@ export const Map = () => {
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const stockId = useSelector((state: ApplicationState) => state.order.stockId);
   const { tenant } = useTenant();
-  const [stocksLoading, setStocksLoading] = useState<boolean>(true);
-  const [groupsLoading, setGroupsLoading] = useState<boolean>(true);
-  const [stocks, setStocks] = useState<StockList[] | null>(null);
-  const [groups, setGroups] = useState<StockGroupWithStocks[] | null>(null);
-
-  const getStocks = async () => {
-    await ApiService.callFetch('GET', `stock/list`, (data: StockList[]) => {
-      setStocks(data);
-    });
-    setStocksLoading(false);
-  };
-
-  const getGroups = async () => {
-    await ApiService.callFetch(
-      'GET',
-      `stock-group/list`,
-      (data: StockGroupWithStocks[]) => {
-        setGroups(data);
-      },
-    );
-    setGroupsLoading(false);
-  };
+  const { data: stocks = null, isPending: stocksLoading } =
+    useGetStockListQuery();
+  const { data: groups = null, isPending: groupsLoading } =
+    useGetStockGroupsListQuery();
 
   const dispatch = useDispatch();
 
@@ -66,8 +47,6 @@ export const Map = () => {
 
   useEffect(() => {
     loadMapbox();
-    getGroups();
-    getStocks();
   }, []);
 
   useEffect(() => {

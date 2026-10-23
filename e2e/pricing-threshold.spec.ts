@@ -46,15 +46,18 @@ const openGroupPricing = async (page: Page) => {
   await page.goto('/client/locations/stocks/list');
   await page
     .getByRole('row', { name: new RegExp(e2eStockName) })
-    .getByRole('button', { name: 'Zarządzaj' })
+    .getByRole('button', { name: /Zarządzaj|Manage/ })
     .click();
-  await page.getByRole('link', { name: 'Grupy', exact: true }).click();
+  // exact: avoid matching sidebar "Grupy obiektów"
+  await page.getByRole('link', { name: /^Grupy$|^Groups$/, exact: true }).click();
   await page
     .getByRole('row', { name: new RegExp(e2eBoxGroupName) })
-    .getByRole('link', { name: 'Cennik' })
+    .getByRole('link', { name: /Cennik|Price list/ })
     .click();
   await expect(
-    page.getByRole('heading', { name: `Cennik ${e2eBoxGroupName}` }),
+    page.getByRole('heading', {
+      name: new RegExp(`(Cennik|Price list) ${e2eBoxGroupName}`),
+    }),
   ).toBeVisible();
   await expect(page.locator('[name="price_0"]')).toHaveValue(String(baseNetPrice));
 };
@@ -109,7 +112,7 @@ const selectFullPeriod = async (page: Page) => {
 
 const readFreeBoxes = async (page: Page) => {
   await page.getByRole('button', { name: 'Nowy minimagazyn' }).click();
-  await expect(page.getByRole('heading', { name: 'Proszę wybrać plac' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Proszę wybrać obiekt' })).toBeVisible();
   const groups = page.waitForResponse(
     (response) =>
       response.url().includes('box-group-new/all/') &&
@@ -131,11 +134,11 @@ const readFreeBoxes = async (page: Page) => {
 const quoteFullMonth = async (page: Page, boxesLeft: number) => {
   await page.goto('/user');
   await page.getByRole('button', { name: 'Nowy minimagazyn' }).click();
-  await expect(page.getByRole('heading', { name: 'Proszę wybrać plac' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Proszę wybrać obiekt' })).toBeVisible();
   await page.getByText(e2eStockName, { exact: true }).click();
   await clickNext(page);
   await expect(
-    page.getByRole('heading', { name: 'Proszę wybrać rozmiar mini magazynu' }),
+    page.getByRole('heading', { name: 'Proszę wybrać rozmiar minimagazynu' }),
   ).toBeVisible();
   await expectBoxesLeft(page, boxesLeft);
   await page.getByText(e2eBoxGroupName, { exact: true }).click();
@@ -163,7 +166,7 @@ const expectRentedBoxes = async (page: Page, prices: string[]) => {
   const links = page
     .locator('section')
     .filter({
-      has: page.getByRole('heading', { name: 'Zarządzaj swoimi mini magazynami' }),
+      has: page.getByRole('heading', { name: 'Zarządzaj swoimi minimagazynami' }),
     })
     .locator('a[href*="/single-rent/"]');
   await expect(links).toHaveCount(prices.length);

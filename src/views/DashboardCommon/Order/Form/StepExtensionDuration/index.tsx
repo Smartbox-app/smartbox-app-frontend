@@ -9,7 +9,6 @@ import {
   RentPaymentType,
   RentStatus,
   StockPaymentType,
-  StockRes,
 } from 'smartbox-types';
 import { DateInput } from '../../../../../components/Common';
 import { Spinner } from '../../../../../components/Branded';
@@ -35,11 +34,14 @@ import {
   setRentStartDate,
 } from '../../../../../actions/order';
 import { Addons } from '../Common/Addons';
-import ApiService from '../../../../../services/api-service';
 import { PaymentType } from '../Common/PaymentType';
 import { __ } from 'src/helpers/i18n';
 import { getPeriodConfigForExtendingRent } from '../../../../../actions/single-rent';
-import { useGetMyDetailsQuery, useMyRentDetailsQuery } from 'src/queries';
+import {
+  useGetMyDetailsQuery,
+  useGetStockQuery,
+  useMyRentDetailsQuery,
+} from 'src/queries';
 import { Button, Section, Stack } from 'src/components/ui';
 import { ArrowRight } from 'src/icons';
 import { dateOnly } from 'src/utils/format-date';
@@ -88,16 +90,13 @@ const StepExtensionDuration = () => {
     calculatedPrice,
   } = useSelector((state: ApplicationState) => state.order);
 
-  const getStock = async () => {
-    if (!rent) return;
-    await ApiService.callFetch(
-      'GET',
-      `stock/${rent.stockId}`,
-      (res: StockRes) => {
-        dispatch(setOrderFullStock(res));
-      },
-    );
-  };
+  const { data: stockData } = useGetStockQuery(rent?.stockId);
+
+  useEffect(() => {
+    if (stockData) {
+      dispatch(setOrderFullStock(stockData));
+    }
+  }, [stockData, dispatch]);
 
   // get rent details if it is extended
   useEffect(() => {
@@ -108,7 +107,6 @@ const StepExtensionDuration = () => {
 
   useEffect(() => {
     if (!rent) return;
-    getStock();
 
     dispatch(setRentStartDate(extensionStartFromFinish(rent.finishAt ?? null)));
     dispatch(setOrderStock(rent.stockId, rent.stockName, rent.stockAddress));

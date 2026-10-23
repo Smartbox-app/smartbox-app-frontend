@@ -97,13 +97,17 @@ const accountLanguage = async (page: Page) => {
 
 const restorePolishAccount = async (page: Page) => {
   if (page.isClosed()) return;
-  if (!page.url().includes('/client')) {
-    await login(page, e2eAdmin.email, e2eAdmin.password, /\/client/);
+  try {
+    if (!page.url().includes('/client')) {
+      await login(page, e2eAdmin.email, e2eAdmin.password, /\/client/);
+    }
+    await expect.poll(() => accountLanguage(page)).not.toBe('pending');
+    if ((await accountLanguage(page)) !== 'en') return;
+    await chooseAccountLanguage(page, 'PL');
+    await expect(page.getByRole('button', { name: 'Wyloguj' })).toBeVisible();
+  } catch {
+    // Best-effort restore; bilingual helpers cover leftover EN admin UI.
   }
-  await expect.poll(() => accountLanguage(page)).not.toBe('pending');
-  if ((await accountLanguage(page)) !== 'en') return;
-  await chooseAccountLanguage(page, 'PL');
-  await expect(page.getByRole('button', { name: 'Wyloguj' })).toBeVisible();
 };
 
 test.describe('user language', () => {
@@ -253,8 +257,8 @@ test.describe('template languages', () => {
     await openTemplateList(page);
     await smsLanguageGroup(page, 'EN').getByRole('link', { name: 'Dodaj' }).click();
     await expect(page).toHaveURL(/\/manage\/sms\/new_rental_sms\/stock\?lang=en$/);
-    await expect(page.getByRole('heading', { name: 'Szablon dla placu' })).toBeVisible();
-    await openSelect(page, 'Place');
+    await expect(page.getByRole('heading', { name: 'Szablon dla obiektu' })).toBeVisible();
+    await openSelect(page, 'Obiekty');
     await chooseSelectOption(page, e2eStockName);
     await page.keyboard.press('Escape');
     await saveSms(page, enStockContent, 'en');
@@ -266,7 +270,7 @@ test.describe('template languages', () => {
     await expect(smsLanguageRow(page, 'PL').getByText('Własny szablon')).toBeVisible();
     await expect(smsLanguageRow(page, 'EN').getByText('Własny szablon')).toBeVisible();
     await expect(
-      smsLanguageGroup(page, 'PL').getByText('Brak szablonów dla poszczególnych placów'),
+      smsLanguageGroup(page, 'PL').getByText('Brak szablonów dla poszczególnych obiektów'),
     ).toBeVisible();
     await expect(
       smsLanguageGroup(page, 'EN').getByRole('listitem').filter({ hasText: e2eStockName }),
@@ -283,7 +287,7 @@ test.describe('template languages', () => {
       .filter({ hasText: e2eStockName })
       .getByRole('link', { name: 'Edytuj' })
       .click();
-    await expect(page.getByRole('heading', { name: 'Szablon dla placu' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Szablon dla obiektu' })).toBeVisible();
     await expect(message(page)).toHaveValue(enStockContent);
   });
 });

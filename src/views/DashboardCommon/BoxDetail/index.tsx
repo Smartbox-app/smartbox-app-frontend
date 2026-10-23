@@ -1,24 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
   BoxListRes,
   BoxMapRes,
   BoxStatus,
   RentStatus,
 } from 'smartbox-types';
-import { useDispatch, useSelector } from 'react-redux';
-import { boxDataCleanUp, fetchSingleBoxDetails } from '../../../actions/boxes';
+import { useDispatch } from 'react-redux';
 import { successNotification } from '../../../actions/notifications';
 import { Row } from '../../../components/Common';
-import { ApplicationState } from '../../../reducers';
 import { dateOnly } from '../../../utils/format-date';
 import { __ } from '../../../helpers/i18n';
 import { translateBoxDisplayStatus } from '../../../utils/box-display-status';
-import ApiService from '../../../services/api-service';
 
 import { Edit } from './Edit';
 
 import './BoxDetail.scss';
-import { useGetMyDetailsQuery } from '../../../queries';
+import { useGetMyDetailsQuery, useRentDetailsQuery } from '../../../queries';
+import { useRotatePasscodeMutation } from '../../../mutations';
 import { useRent } from 'src/hooks/useRent';
 import { Button, Header, Link, Modal, Section, Typography } from 'src/components/ui';
 import { EndRentPhoto } from 'src/components/Common/EndRentPhoto';
@@ -35,39 +33,30 @@ const BoxDetail = ({
   callback,
 }: Props) => {
   const dispatch = useDispatch();
-  const singleBoxDetail = useSelector(
-    (state: ApplicationState) => state.boxes.singleBoxDetail,
-  );
+  const { data: singleBoxDetail } = useRentDetailsQuery(rentId);
+  const { mutateAsync: rotatePasscodeMutate, isPending: rotating } =
+    useRotatePasscodeMutation(rentId);
   const { data: user } = useGetMyDetailsQuery();
   const { formatFinishAt, resolveRentFinishAt } = useRent();
   const [confirmingRotate, setConfirmingRotate] = useState(false);
-  const [rotating, setRotating] = useState(false);
 
   const rotatePasscode = async () => {
-    setRotating(true);
-    await ApiService.callFetch('POST', `rent/${rentId}/passcode/rotate`, () => {
+    try {
+      await rotatePasscodeMutate();
       dispatch(successNotification(__('application.passcodeRotated')));
-      dispatch(fetchSingleBoxDetails(rentId));
       setConfirmingRotate(false);
-    });
-    setRotating(false);
+    } catch {
+      // Error handling is handled by ApiService defaults.
+    }
   };
-
-  useEffect(() => {
-    if (rentId) dispatch(fetchSingleBoxDetails(rentId));
-
-    return () => {
-      dispatch(boxDataCleanUp());
-    };
-  }, []);
 
   if (!user) return null;
 
   const isThisBoxFree = (data: string): boolean => data === '';
-  // Prefer list/map box status when there is no occupying rent; Redux rent
+  // Prefer list/map box status when there is no occupying rent; rent
   // details default to "reserved" and would otherwise override outOfService/free.
   const displayStatus =
-    rentId && singleBoxDetail.id === rentId
+    rentId && singleBoxDetail?.id === rentId
       ? singleBoxDetail.status
       : status ?? BoxStatus.free;
 
@@ -84,21 +73,29 @@ const BoxDetail = ({
               <Row
                 label="application.rentedBy"
                 content={
-                  singleBoxDetail.owner
+                  singleBoxDetail?.owner
                     ? `${singleBoxDetail.owner.firstName} ${singleBoxDetail.owner.lastName}`
                     : '---'
                 }
               />
               <Row
                 label="application.startDate"
-                content={dateOnly(singleBoxDetail.startAt)}
+                content={
+                  singleBoxDetail?.startAt
+                    ? dateOnly(singleBoxDetail.startAt)
+                    : '---'
+                }
               />
               <Row
                 label="application.endDate"
-                content={formatFinishAt(
-                  resolveRentFinishAt(singleBoxDetail),
-                  singleBoxDetail.agreementType,
-                )}
+                content={
+                  singleBoxDetail
+                    ? formatFinishAt(
+                        resolveRentFinishAt(singleBoxDetail),
+                        singleBoxDetail.agreementType,
+                      )
+                    : '---'
+                }
               />
               <Row
                 label="application.phone"
@@ -118,15 +115,16 @@ const BoxDetail = ({
                   isThisBoxFree(rentId) ? (
                     '---'
                   ) : (
-                    <Link href={`mailto:${singleBoxDetail.owner?.email ?? ''}`}>
-                      {singleBoxDetail.owner
+                    <Link href={`mailto:${singleBoxDetail?.owner?.email ?? ''}`}>
+                      {singleBoxDetail?.owner
                         ? singleBoxDetail.owner.email
                         : __('application.lack')}
                     </Link>
                   )
                 }
               />
-              {singleBoxDetail.id === rentId && 'passcode' in singleBoxDetail && (
+              {singleBoxDetail?.id === rentId &&
+                'passcode' in singleBoxDetail && (
                 <Row
                   label="application.passcode"
                   content={
@@ -179,7 +177,7 @@ const BoxDetail = ({
             content={translateBoxDisplayStatus(displayStatus)}
           />
 
-          {singleBoxDetail.endRentPhoto &&
+          {singleBoxDetail?.endRentPhoto &&
           singleBoxDetail.status !== RentStatus.rented ? (
             <Section variant="bordered">
               <Header variant="h3">{__('application.endRentPhoto')}</Header>

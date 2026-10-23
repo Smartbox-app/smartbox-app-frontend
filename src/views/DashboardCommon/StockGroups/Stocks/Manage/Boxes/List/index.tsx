@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { FieldType, boxesList } from 'smartbox-tables';
 import {
@@ -6,7 +6,6 @@ import {
   BoxListRes,
   BoxStatus,
   RentStatus,
-  StockRes,
   UserRole,
 } from 'smartbox-types';
 import { Alert, ApiTable , ConfirmModal } from '../../../../../../../components/Common';
@@ -30,24 +29,18 @@ import { Edit } from '../Edit';
 import BoxDetail from '../../../../../BoxDetail';
 import { BoxStatus as BoxStatusBadge } from './BoxStatus';
 import { AssignRentToUser } from '../../../../../AssignRentToUser';
-import { useGetMyDetailsQuery } from 'src/queries';
+import { useGetMyDetailsQuery, useGetStockQuery } from 'src/queries';
 import { HeaderWithActions, Section } from 'src/components/ui';
 
 const List = () => {
   const { data: user } = useGetMyDetailsQuery();
   const dispatch = useDispatch();
-  const [stock, setStock] = useState<StockRes>();
   const [isLoading, setIsLoading] = useState(false);
   const { stockId } = useParams<{ stockId: string }>();
+  const { data: stock } = useGetStockQuery(stockId);
 
   const hasFullAccess =
     !!user && [UserRole.admin, UserRole.client].includes(user.role);
-
-  const getStock = async () => {
-    await ApiService.callFetch('GET', `stock/${stockId}`, (res: StockRes) => {
-      setStock(res);
-    });
-  };
 
   const deleteBox = async (boxId: string) => {
     setIsLoading(true);
@@ -97,10 +90,6 @@ const List = () => {
       ),
     );
   };
-
-  useEffect(() => {
-    getStock();
-  }, [stockId]);
 
   const scheme = new InteractiveTableSchema(boxesList);
   scheme.highlightRow = (row) => row.status === RentStatus.toCheck;

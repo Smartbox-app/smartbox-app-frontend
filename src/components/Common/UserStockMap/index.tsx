@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import ApiService from '../../../services/api-service';
-import { BoxMapRes, BoxMapUserRes, StockRes } from 'smartbox-types';
+import React from 'react';
 import { Spinner } from '../../../components/Branded';
 import { MapView } from '../../../views/DashboardCommon/MapView';
 import { __ } from '../../../helpers/i18n';
+import { useGetStockBoxesQuery, useGetStockQuery } from 'src/queries';
 
 interface Props {
   boxId: string;
@@ -18,33 +17,11 @@ const UserStockMap = ({
   boxNumber,
   boxAdditionalInfo,
 }: Props) => {
-  const [stock, setStock] = useState<StockRes>();
-  const [boxes, setBoxes] = useState<BoxMapUserRes[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const { data: stock, isPending: stockLoading } = useGetStockQuery(stockId);
+  const { data: boxes = [], isPending: boxesLoading } =
+    useGetStockBoxesQuery(stockId);
 
-  const getBoxes = async () => {
-    await ApiService.callFetch(
-      'GET',
-      `box/all/${stockId}`,
-      (data: BoxMapRes[]) => {
-        setBoxes(data);
-      },
-    );
-    setLoading(false);
-  };
-
-  const getStock = async () => {
-    await ApiService.callFetch('GET', `stock/${stockId}`, (res: StockRes) => {
-      setStock(res);
-    });
-  };
-
-  useEffect(() => {
-    getStock();
-    getBoxes();
-  }, []);
-
-  if (loading || !stock) return <Spinner />;
+  if (stockLoading || boxesLoading || !stock) return <Spinner />;
 
   return (
     <>

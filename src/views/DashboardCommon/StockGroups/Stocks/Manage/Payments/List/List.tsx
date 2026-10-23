@@ -17,10 +17,9 @@ import {
 import { ApiTable, ConfirmModal } from 'src/components/Common';
 import ApiService from 'src/services/api-service';
 import { showModal } from 'src/actions/modal';
-import { successNotification } from 'src/actions/notifications';
-import { refreshApiTableData } from 'src/actions/api-table';
 import { __ } from 'src/helpers/i18n';
 import { useGetMyDetailsQuery } from 'src/queries';
+import { useForcePaymentMutation } from 'src/mutations';
 import { InteractiveTableSchema } from 'src/utils/table-schema-utils';
 import { Section, Button as UIButton } from 'src/components/ui';
 import { Capacitor } from '@capacitor/core';
@@ -42,6 +41,7 @@ export const List = () => {
   const dispatch = useDispatch();
   const { stockId } = useParams<{ stockId: string }>();
   const { data: user } = useGetMyDetailsQuery();
+  const { mutate: forcePayment } = useForcePaymentMutation();
 
   const handleViewDocument = useCallback(async (paymentId: string) => {
     const payload = await ApiService.callFetch<FakturowniaInvoiceUserRes>(
@@ -58,35 +58,6 @@ export const List = () => {
     }
   }, []);
 
-  const forcePaymentAcceptance = async (rentId: string, paymentId: string) => {
-    await ApiService.callFetch(
-      'POST',
-      `rent/payment/force/${rentId}/${paymentId}`,
-      () => {
-        dispatch(
-          successNotification('application.forcePaymentAcceptanceSuccess'),
-        );
-        dispatch(refreshApiTableData());
-      },
-    );
-  };
-
-  const forcePaymentCancellation = async (
-    rentId: string,
-    paymentId: string,
-  ) => {
-    await ApiService.callFetch(
-      'POST',
-      `rent/payment/force-cancel/${rentId}/${paymentId}`,
-      () => {
-        dispatch(
-          successNotification('application.forcePaymentCancellationSuccess'),
-        );
-        dispatch(refreshApiTableData());
-      },
-    );
-  };
-
   const confirmForcePaymentAcceptance = (rentId: string, paymentId: string) => {
     dispatch(
       showModal(
@@ -94,7 +65,9 @@ export const List = () => {
           mainText="application.forcePaymentAcceptanceConfirm"
           secondaryText="application.forcePaymentStatusDisclaimer"
           approveButtonText="application.yes"
-          approveAction={() => void forcePaymentAcceptance(rentId, paymentId)}
+          approveAction={() =>
+            forcePayment({ rentId, paymentId, action: 'accept' })
+          }
         />,
       ),
     );
@@ -110,7 +83,9 @@ export const List = () => {
           mainText="application.forcePaymentCancellationConfirm"
           secondaryText="application.forcePaymentStatusDisclaimer"
           approveButtonText="application.yes"
-          approveAction={() => void forcePaymentCancellation(rentId, paymentId)}
+          approveAction={() =>
+            forcePayment({ rentId, paymentId, action: 'cancel' })
+          }
         />,
       ),
     );

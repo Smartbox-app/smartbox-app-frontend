@@ -6,9 +6,8 @@ import { FakturowniaInvoiceUserRes } from 'smartbox-types';
 import { ApiTable, ConfirmModal } from 'src/components/Common';
 import ApiService from 'src/services/api-service';
 import { showModal } from 'src/actions/modal';
-import { successNotification } from 'src/actions/notifications';
-import { refreshApiTableData } from 'src/actions/api-table';
 import { __ } from 'src/helpers/i18n';
+import { useMarkPeriodPaidMutation } from 'src/mutations';
 import { Section, Button as UIButton, Header } from 'src/components/ui';
 import { InteractiveTableSchema } from 'src/utils/table-schema-utils';
 import { Capacitor } from '@capacitor/core';
@@ -30,6 +29,7 @@ const List = () => {
   const dispatch = useDispatch();
   const { rentId } = useParams<{ stockId: string; rentId: string }>();
   const { data: rent } = useRentDetailsQuery(rentId);
+  const { mutate: markPeriodPaid } = useMarkPeriodPaidMutation();
 
   const handleViewDocument = useCallback(
     async (periodId: string) => {
@@ -49,24 +49,17 @@ const List = () => {
     [rentId],
   );
 
-  const markPeriodAsPaid = async (periodId: string) => {
-    await ApiService.callFetch(
-      'PATCH',
-      `rent/${rentId}/periods/${periodId}/paid`,
-      () => {
-        dispatch(successNotification('application.markPeriodAsPaidSuccess'));
-        dispatch(refreshApiTableData());
-      },
-    );
-  };
-
   const confirmMarkPeriodAsPaid = (periodId: string) => {
     dispatch(
       showModal(
         <ConfirmModal
           mainText="application.markPeriodAsPaidConfirm"
           approveButtonText="application.yes"
-          approveAction={() => markPeriodAsPaid(periodId)}
+          approveAction={() => {
+            if (rentId) {
+              markPeriodPaid({ rentId, periodId });
+            }
+          }}
         />,
       ),
     );

@@ -31,12 +31,12 @@ test('rents a seeded box after the payment is accepted', async ({ page }) => {
   await login(page, e2eRenter.email, e2eRenter.password, /\/user/);
   await page.getByRole('button', { name: 'Nowy minimagazyn' }).click();
 
-  await expect(page.getByRole('heading', { name: 'Proszę wybrać plac' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Proszę wybrać obiekt' })).toBeVisible();
   await page.getByText(e2eStockName, { exact: true }).click();
   await clickNext(page);
 
   await expect(
-    page.getByRole('heading', { name: 'Proszę wybrać rozmiar mini magazynu' }),
+    page.getByRole('heading', { name: 'Proszę wybrać rozmiar minimagazynu' }),
   ).toBeVisible();
   await page.getByText(e2eBoxGroupName, { exact: true }).click();
   await clickNext(page);

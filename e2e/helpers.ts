@@ -128,34 +128,39 @@ export const rentStatus = (page: Page) =>
 export const rentFinish = (page: Page) =>
   page.locator('.row').filter({ hasText: 'Data zakończenia:' }).locator('.row-content');
 
+const manageStockButton = /Zarządzaj|Manage/;
+const paymentsLink = /Płatności|Payments/;
+const forceAcceptButton = /Wymuś akceptację płatności|Force payment acceptance/;
+const confirmYesButton = /^(Tak|Yes)$/;
+
 const pendingPayments = (page: Page, email: string) =>
   page
     .getByRole('row')
     .filter({ hasText: email })
     .filter({
-      has: page.getByRole('button', { name: 'Wymuś akceptację płatności' }),
+      has: page.getByRole('button', { name: forceAcceptButton }),
     });
 
 export const forceAcceptPayments = async (page: Page, email: string, count = 1) => {
   await page.goto('/client/locations/stocks/list');
   await page
     .getByRole('row', { name: new RegExp(e2eStockName) })
-    .getByRole('button', { name: 'Zarządzaj' })
+    .getByRole('button', { name: manageStockButton })
     .click();
-  await page.getByRole('link', { name: 'Płatności', exact: true }).click();
+  await page.getByRole('link', { name: paymentsLink, exact: true }).click();
   await expect(pendingPayments(page, email)).toHaveCount(count);
 
   for (let left = count; left > 0; left -= 1) {
     await pendingPayments(page, email)
       .first()
-      .getByRole('button', { name: 'Wymuś akceptację płatności' })
+      .getByRole('button', { name: forceAcceptButton })
       .click();
     const forced = page.waitForResponse(
       (response) =>
         response.url().includes('rent/payment/force/') &&
         response.request().method() === 'POST',
     );
-    await page.getByRole('button', { name: 'Tak' }).click();
+    await page.getByRole('button', { name: confirmYesButton }).click();
     await expectApiOk(await forced);
     await expect(pendingPayments(page, email)).toHaveCount(left - 1);
   }

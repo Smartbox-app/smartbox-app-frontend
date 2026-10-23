@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
 
@@ -27,7 +27,6 @@ import ScrollPosition from './ScrollPosition';
 import { ApplicationState } from '../../../../../reducers';
 
 import './StepAgreement.scss';
-import ApiService from '../../../../../services/api-service';
 import {
   getAddonsWithCorrectPrice,
   getCorrectPrice,
@@ -39,12 +38,12 @@ import {
 } from 'src/utils/rent-form-data';
 import { dateOnly } from '../../../../../utils/format-date';
 import { useGetDocumentByTypeQuery, useGetMyDetailsQuery } from 'src/queries';
+import { useCreateRentMutation, useExtendRentMutation } from 'src/mutations';
 import { Button, Section, Stack } from 'src/components/ui';
 import { ArrowLeft, ArrowRight } from 'src/icons';
 import { redirectToIpg } from 'src/utils/payment-form';
 import { format } from 'date-fns';
 import { textToSimpleMD } from 'src/utils/text-to-simple-md';
-import { Capacitor } from '@capacitor/core';
 import {
   AgreementPreview,
   LegacyAgreementPreview,
@@ -63,6 +62,8 @@ const StepAgreement = () => {
   const { tenant } = useTenant();
   const [loading, setLoading] = useState(false);
   const creatingRentRef = useRef(false);
+  const { mutateAsync: createRent } = useCreateRentMutation();
+  const { mutateAsync: extendRentMutate } = useExtendRentMutation();
 
   const { rentId } = useParams<{ step: string; rentId?: string }>();
   const isOpenEnded = order.agreementType === RentAgreementType.OpenEnded;
@@ -88,15 +89,10 @@ const StepAgreement = () => {
   const startNewRent = async (data: FormData) => {
     setLoading(true);
     try {
-      await ApiService.callFetch(
-        'POST',
-        `rent/new?source=${Capacitor.isNativePlatform() ? 'mobile' : 'web'}`,
-        (response: PayForRentResponse) => {
-          dispatch(setPendingCheckout(response));
-        },
-        null,
-        data,
-      );
+      const response = await createRent(data);
+      if (response) {
+        dispatch(setPendingCheckout(response));
+      }
     } catch {
       // Leave checkout unset when the request fails. Loading is cleared below.
     }
@@ -109,15 +105,14 @@ const StepAgreement = () => {
     tenantId: string,
   ) => {
     setLoading(true);
-    await ApiService.callFetch(
-      'POST',
-      `rent/extend-rent/${rentId}?source=${Capacitor.isNativePlatform() ? 'mobile' : 'web'}`,
-      (response: PayForRentResponse) => {
+    try {
+      const response = await extendRentMutate({ rentId, body: data });
+      if (response) {
         proceedToPayment(response, tenantId);
-      },
-      null,
-      data,
-    );
+      }
+    } catch {
+      // Payment redirect is skipped when the request fails.
+    }
     setLoading(false);
   };
 

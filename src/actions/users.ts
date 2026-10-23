@@ -36,52 +36,6 @@ export const blockUser = (userId: string) => async (dispatch: AppDispatch) => {
   );
 };
 
-export const deleteUser = (userId: string) => async (dispatch: AppDispatch) => {
-  await ApiService.delete(
-    dispatch,
-    'DELETE_USER_SUCCESS',
-    'DELETE_USER_FAILED',
-    () => {
-      dispatch(successNotification('notification.userDeleted'));
-      dispatch(refreshApiTableData());
-    },
-    null,
-    `user/${userId}`,
-    'LOADING',
-  );
-};
-
-export const deleteUserByForce = (userId: string) => async (dispatch: AppDispatch) => {
-  await ApiService.delete(
-    dispatch,
-    'DELETE_USER_BY_FORCE_SUCCESS',
-    'DELETE_USER_BY_FORCE_FAILED',
-    () => {
-      dispatch(successNotification('notification.userDeleted'));
-      dispatch(refreshApiTableData());
-    },
-    null,
-    `user/force/${userId}`,
-    'LOADING',
-  );
-};
-
-export const resendActivationEmail = (userId: string) => async (dispatch: AppDispatch) => {
-  await ApiService.post(
-    dispatch,
-    'RESEND_ACTIVATION_EMAIL_SUCCESS',
-    'RESEND_ACTIVATION_EMAIL_FAILED',
-    () => {
-      dispatch(successNotification('notification.activationEmailResent'));
-      dispatch(refreshApiTableData());
-    },
-    null,
-    `user/${userId}/resend-activation-email`,
-    'LOADING',
-    {},
-  );
-};
-
 export const fetchSingleUser = (userId: string) => async (dispatch: AppDispatch) => {
   await ApiService.get(
     dispatch,
@@ -95,14 +49,3 @@ export const fetchSingleUser = (userId: string) => async (dispatch: AppDispatch)
 };
 
 export const acceptationCookies = () => ({ type: 'ACCEPTATION_COOKIES', payload: true });
-
-export const fetchUserDetailsForAdmin = (userId: string) => async (dispatch: AppDispatch) => {
-  await ApiService.get(
-    dispatch,
-    'FETCH_USER_DETAILS_FOR_ADMIN_SUCCESS',
-    'FETCH_USER_DETAILS_FOR_ADMIN_FAILED',
-    null,
-    null,
-    `user/details/${userId}`,
-  );
-};

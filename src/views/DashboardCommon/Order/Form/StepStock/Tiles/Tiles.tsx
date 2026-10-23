@@ -1,51 +1,32 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { order } from '../../../../../../actions';
 import { Section as InsideSection } from '../../../../../../components/Layout';
 import { SingleOption } from './SingleOption';
 
 import '../StepStock.scss';
-import { useGetMyDetailsQuery } from 'src/queries';
+import {
+  useGetMyDetailsQuery,
+  useGetStockGroupsListQuery,
+  useGetStockListQuery,
+} from 'src/queries';
 import { Header, Skeleton } from '../../../../../../components/ui';
-import { __ } from '../../../../../../helpers/i18n';
-import { StockGroupWithStocks, StockList } from 'smartbox-types';
-import ApiService from 'src/services/api-service';
 
 export const Tiles = () => {
   const dispatch = useDispatch();
 
-  const [stocksLoading, setStocksLoading] = useState<boolean>(true);
-  const [groupsLoading, setGroupsLoading] = useState<boolean>(true);
-  const [stocks, setStocks] = useState<StockList[] | null>(null);
-  const [groups, setGroups] = useState<StockGroupWithStocks[] | null>(null);
-
-  const getStocks = async () => {
-    await ApiService.callFetch('GET', `stock/list`, (data: StockList[]) => {
-      setStocks(data);
-    });
-    setStocksLoading(false);
-  };
-
-  const getGroups = async () => {
-    await ApiService.callFetch(
-      'GET',
-      `stock-group/list`,
-      (data: StockGroupWithStocks[]) => {
-        setGroups(data);
-      },
-    );
-    setGroupsLoading(false);
-  };
-
   const { data: user } = useGetMyDetailsQuery();
+  const { data: stocks, isPending: stocksLoading } = useGetStockListQuery(
+    !!user,
+  );
+  const { data: groups, isPending: groupsLoading } =
+    useGetStockGroupsListQuery(!!user);
 
   useEffect(() => {
     if (!user) return;
 
-    getStocks();
-    getGroups();
     dispatch(order.clearOrder());
-  }, [user]);
+  }, [user, dispatch]);
 
   if (!user || groupsLoading || stocksLoading || !groups || !stocks)
     return (

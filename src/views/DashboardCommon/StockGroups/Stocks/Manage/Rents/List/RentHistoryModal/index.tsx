@@ -1,17 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import {
   AdminRentListDetails,
   RentAgreementType,
   RentDescription,
-  RentDetailsRes,
 } from 'smartbox-types';
 
 import { RentHistory } from '../../../../../../RentHistory';
-import ApiService from '../../../../../../../../services/api-service';
 import { Spinner } from '../../../../../../../../components/Branded';
 import { Modal } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
 import { RentSummary } from '../../../../../../../../components/Common/RentSummary/RentSummary';
+import { useRentDetailsQuery } from 'src/queries';
 
 interface Props {
   description: RentDescription[];
@@ -19,21 +18,7 @@ interface Props {
 }
 
 export const RentHistoryModal = ({ description, rent }: Props) => {
-  const [fullRent, setFullRent] = useState<RentDetailsRes>();
-
-  const getRentDetails = async () => {
-    await ApiService.callFetch(
-      'GET',
-      `rent/details/${rent.id}`,
-      (data: RentDetailsRes) => {
-        setFullRent(data);
-      },
-    );
-  };
-
-  useEffect(() => {
-    getRentDetails();
-  }, []);
+  const { data: fullRent } = useRentDetailsQuery(rent.id);
 
   return (
     <>
