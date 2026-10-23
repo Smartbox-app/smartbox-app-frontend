@@ -30,8 +30,8 @@
     "Phone": "Telefon",
     "Repeat new password": "Powtórz nowe hasło",
     "Select...": "Wybierz...",
-    "Stock": "Plac",
-    "Stocks": "Plac",
+    "Stock": "Obiekt",
+    "Stocks": "Obiekty",
     "Value": "Wartość",
     "Value too high. Max. {0}.": "Wartość za duża. Max. {0}.",
     "Value too long (max. {0})": "Wartość za długa (max. {0})",
@@ -72,7 +72,7 @@
         "__type_alias_do_not_touch": "ApiErrorCode.InvalidPrice"
       },
       "8": {
-        "text": "Brak wolnego mini magazynu o tym rozmiarze!",
+        "text": "Brak wolnego minimagazynu o tym rozmiarze!",
         "__type_alias_do_not_touch": "ApiErrorCode.NoFreeBoxInThisSize"
       },
       "9": {
@@ -92,7 +92,7 @@
         "__type_alias_do_not_touch": "ApiErrorCode.TooLateForCahnge"
       },
       "13": {
-        "text": "Brak wolnych mini magazynów!",
+        "text": "Brak wolnych minimagazynów!",
         "__type_alias_do_not_touch": "ApiErrorCode.NotFreeBox"
       },
       "14": {
@@ -104,7 +104,7 @@
         "__type_alias_do_not_touch": "ApiErrorCode.CardHasBeenUsedWithDiscount"
       },
       "16": {
-        "text": "Błędny numer mini magazynu!",
+        "text": "Błędny numer minimagazynu!",
         "__type_alias_do_not_touch": "ApiErrorCode.InvalidBoxNumber"
       },
       "17": {
@@ -120,11 +120,11 @@
         "__type_alias_do_not_touch": "ApiErrorCode.InvalidLang"
       },
       "20": {
-        "text": "Wybranie placu dla pracownika jest wymagane!",
+        "text": "Wybranie obiektu dla pracownika jest wymagane!",
         "__type_alias_do_not_touch": "ApiErrorCode.StckIdIsRequiredForWorkerRole"
       },
       "21": {
-        "text": "Nie odnaleziono mini magazynu o wskazanym numerze!",
+        "text": "Nie odnaleziono minimagazynu o wskazanym numerze!",
         "__type_alias_do_not_touch": "ApiErrorCode.NoFoundBoxNumberOnStock"
       },
       "22": {
@@ -140,7 +140,7 @@
         "__type_alias_do_not_touch": "ApiErrorCode.UAreTooFarAway"
       },
       "25": {
-        "text": "Wybrany plac posiada już zniżkę!",
+        "text": "Wybrany obiekt posiada już zniżkę!",
         "__type_alias_do_not_touch": "ApiErrorCode.StockHasActiveDiscont"
       },
       "26": {
@@ -152,7 +152,7 @@
         "__type_alias_do_not_touch": "ApiErrorCode.InvalidGroup"
       },
       "28": {
-        "text": "Mini magazyn o wybranym numerze jest zarezerwowana!",
+        "text": "Minimagazyn o wybranym numerze jest zarezerwowany!",
         "__type_alias_do_not_touch": "ApiErrorCode.BoxNumberIsReserved"
       },
       "29": {
@@ -168,7 +168,7 @@
         "__type_alias_do_not_touch": "ApiErrorCode.CompanyDataIsRequired"
       },
       "32": {
-        "text": "Mini magazyn został już zarezerwowany!",
+        "text": "Minimagazyn został już zarezerwowany!",
         "__type_alias_do_not_touch": "ApiErrorCode.BoxIsReserved"
       },
       "33": {
@@ -260,7 +260,7 @@
         "__type_alias_do_not_touch": "ApiErrorCode.RentPeriodTooShort"
       },
       "55": {
-        "text": "Plac nie posiada zniżki!",
+        "text": "Obiekt nie posiada zniżki!",
         "__type_alias_do_not_touch": "ApiErrorCode.NoDiscountSet"
       },
       "56": {
@@ -276,7 +276,7 @@
         "__type_alias_do_not_touch": "ApiErrorCode.TenantNotActive"
       },
       "59": {
-        "text": "Nie możesz usunąć grupy posiadającej kontenery z innym statusem niż wolny!",
+        "text": "Nie możesz usunąć grupy posiadającej jednostki z innym statusem niż wolny!",
         "__type_alias_do_not_touch": "ApiErrorCode.CanNotRemoveGroupWithRents"
       },
       "60": {
@@ -284,15 +284,15 @@
         "__type_alias_do_not_touch": "ApiErrorCode.NoInvoiceServiceData"
       },
       "61": {
-        "text": "Osiągnięto limit kontenerów!",
+        "text": "Osiągnięto limit jednostek!",
         "__type_alias_do_not_touch": "ApiErrorCode.BoxesLimitReached"
       },
       "62": {
-        "text": "Brak możliwości dodania takiej ilości kontenerów - zmniejsz ilość aby zmieścić się w limicie.",
+        "text": "Brak możliwości dodania takiej ilości jednostek - zmniejsz ilość aby zmieścić się w limicie.",
         "__type_alias_do_not_touch": "ApiErrorCode.TryingToAddTooManyBoxes"
       },
       "63": {
-        "text": "Osiągnięto limit placów!",
+        "text": "Osiągnięto limit obiektów!",
         "__type_alias_do_not_touch": "ApiErrorCode.StocksLimitReached"
       },
       "64": {
@@ -472,7 +472,7 @@
         "__type_alias_do_not_touch": "ApiErrorCode.EndRentPhotoMobileOnly"
       },
       "108": {
-        "text": "Zdjęcie jest zbyt stare. Zrób nowe zdjęcie schowka (nie starsze niż 15 minut).",
+        "text": "Zdjęcie jest zbyt stare. Zrób nowe zdjęcie skrytki (nie starsze niż 15 minut).",
         "__type_alias_do_not_touch": "ApiErrorCode.EndRentPhotoTooOld"
       },
       "109": {
@@ -533,7 +533,7 @@
     "Repeat new password": "Repeat new password",
     "Select...": "Select...",
     "Stock": "Site",
-    "Stocks": "Site",
+    "Stocks": "Sites",
     "Value": "Value",
     "Value too high. Max. {0}.": "Value too high. Max. {0}.",
     "Value too long (max. {0})": "Value too long (max. {0})",
@@ -1034,8 +1034,8 @@
     "Phone": "Telefon",
     "Repeat new password": "Zopakujte nové heslo",
     "Select...": "Vyberte...",
-    "Stock": "Areál",
-    "Stocks": "Areál",
+    "Stock": "Skladovací areál",
+    "Stocks": "Skladovací areály",
     "Value": "Hodnota",
     "Value too high. Max. {0}.": "Hodnota je příliš vysoká. Max. {0}.",
     "Value too long (max. {0})": "Hodnota je příliš dlouhá (max. {0})",
@@ -1076,7 +1076,7 @@
         "__type_alias_do_not_touch": "ApiErrorCode.InvalidPrice"
       },
       "8": {
-        "text": "Žádný volný mini sklad této velikosti!",
+        "text": "Žádná volná skladovací jednotka této velikosti!",
         "__type_alias_do_not_touch": "ApiErrorCode.NoFreeBoxInThisSize"
       },
       "9": {
@@ -1096,7 +1096,7 @@
         "__type_alias_do_not_touch": "ApiErrorCode.TooLateForCahnge"
       },
       "13": {
-        "text": "Žádné volné mini sklady!",
+        "text": "Žádné volné skladovací jednotky!",
         "__type_alias_do_not_touch": "ApiErrorCode.NotFreeBox"
       },
       "14": {
@@ -1108,7 +1108,7 @@
         "__type_alias_do_not_touch": "ApiErrorCode.CardHasBeenUsedWithDiscount"
       },
       "16": {
-        "text": "Neplatné číslo mini skladu!",
+        "text": "Neplatné číslo skladovací jednotky!",
         "__type_alias_do_not_touch": "ApiErrorCode.InvalidBoxNumber"
       },
       "17": {
@@ -1128,7 +1128,7 @@
         "__type_alias_do_not_touch": "ApiErrorCode.StckIdIsRequiredForWorkerRole"
       },
       "21": {
-        "text": "V areálu nebyl nalezen žádný mini sklad s tímto číslem!",
+        "text": "V areálu nebyla nalezena žádná skladovací jednotka s tímto číslem!",
         "__type_alias_do_not_touch": "ApiErrorCode.NoFoundBoxNumberOnStock"
       },
       "22": {
@@ -1156,7 +1156,7 @@
         "__type_alias_do_not_touch": "ApiErrorCode.InvalidGroup"
       },
       "28": {
-        "text": "Mini sklad s vybraným číslem je rezervován!",
+        "text": "Skladovací jednotka s vybraným číslem je rezervován!",
         "__type_alias_do_not_touch": "ApiErrorCode.BoxNumberIsReserved"
       },
       "29": {
@@ -1172,7 +1172,7 @@
         "__type_alias_do_not_touch": "ApiErrorCode.CompanyDataIsRequired"
       },
       "32": {
-        "text": "Mini sklad již byl rezervován!",
+        "text": "Skladovací jednotka již byl rezervován!",
         "__type_alias_do_not_touch": "ApiErrorCode.BoxIsReserved"
       },
       "33": {
@@ -1228,7 +1228,7 @@
         "__type_alias_do_not_touch": "ApiErrorCode.TenantDoesNotExist"
       },
       "46": {
-        "text": "Nelze smazat schránku, která není prázdná!",
+        "text": "Nelze smazat úložnou schránku, která není prázdná!",
         "__type_alias_do_not_touch": "ApiErrorCode.CanNotDeleteNotEmptyBox"
       },
       "47": {
@@ -1264,7 +1264,7 @@
         "__type_alias_do_not_touch": "ApiErrorCode.RentPeriodTooShort"
       },
       "55": {
-        "text": "Areál nemá slevu!",
+        "text": "Skladovací areál nemá slevu!",
         "__type_alias_do_not_touch": "ApiErrorCode.NoDiscountSet"
       },
       "56": {
@@ -1280,7 +1280,7 @@
         "__type_alias_do_not_touch": "ApiErrorCode.TenantNotActive"
       },
       "59": {
-        "text": "Nelze smazat skupinu, která obsahuje kontejnery s jiným stavem než volný!",
+        "text": "Nelze smazat skupinu, která obsahuje jednotky s jiným stavem než volný!",
         "__type_alias_do_not_touch": "ApiErrorCode.CanNotRemoveGroupWithRents"
       },
       "60": {
@@ -1288,11 +1288,11 @@
         "__type_alias_do_not_touch": "ApiErrorCode.NoInvoiceServiceData"
       },
       "61": {
-        "text": "Byl dosažen limit kontejnerů!",
+        "text": "Byl dosažen limit jednotek!",
         "__type_alias_do_not_touch": "ApiErrorCode.BoxesLimitReached"
       },
       "62": {
-        "text": "Nelze přidat takové množství kontejnerů. Snižte množství, abyste se vešli do limitu.",
+        "text": "Nelze přidat takové množství jednotek. Snižte množství, abyste se vešli do limitu.",
         "__type_alias_do_not_touch": "ApiErrorCode.TryingToAddTooManyBoxes"
       },
       "63": {
@@ -1328,15 +1328,15 @@
         "__type_alias_do_not_touch": "ApiErrorCode.BirthDateMissing"
       },
       "71": {
-        "text": "Byl dosažen maximální počet aktivních schránek!",
+        "text": "Byl dosažen maximální počet aktivních úložných schránek!",
         "__type_alias_do_not_touch": "ApiErrorCode.ActiveBoxesLimitReached"
       },
       "72": {
-        "text": "Schránku, která není volná, nelze deaktivovat!",
+        "text": "Úložnou schránku, která není volná, nelze deaktivovat!",
         "__type_alias_do_not_touch": "ApiErrorCode.CanNotSetNotEmptyBoxAsInactive"
       },
       "73": {
-        "text": "Žádné volné schránky!",
+        "text": "Žádné volné úložné schránky!",
         "__type_alias_do_not_touch": "ApiErrorCode.NoMoreAvailableBoxes"
       },
       "74": {
@@ -1348,7 +1348,7 @@
         "__type_alias_do_not_touch": "ApiErrorCode.CanNotExtendUnpaidRent"
       },
       "76": {
-        "text": "Schránku s probíhající platbou nelze uvolnit!",
+        "text": "Úložnou schránku s probíhající platbou nelze uvolnit!",
         "__type_alias_do_not_touch": "ApiErrorCode.CantFreeBoxWithPendingPayment"
       },
       "77": {
@@ -1476,7 +1476,7 @@
         "__type_alias_do_not_touch": "ApiErrorCode.EndRentPhotoMobileOnly"
       },
       "108": {
-        "text": "Fotografie je příliš stará. Pořiďte novou fotografii schránky (ne starší než 15 minut).",
+        "text": "Fotografie je příliš stará. Pořiďte novou fotografii úložné schránky (ne starší než 15 minut).",
         "__type_alias_do_not_touch": "ApiErrorCode.EndRentPhotoTooOld"
       },
       "109": {
@@ -1536,8 +1536,8 @@
     "Phone": "Телефон",
     "Repeat new password": "Повторіть новий пароль",
     "Select...": "Виберіть...",
-    "Stock": "Майданчик",
-    "Stocks": "Майданчик",
+    "Stock": "Складський комплекс",
+    "Stocks": "Складські комплекси",
     "Value": "Значення",
     "Value too high. Max. {0}.": "Значення занадто велике. Макс. {0}.",
     "Value too long (max. {0})": "Значення занадто довге (макс. {0})",
@@ -1578,7 +1578,7 @@
         "__type_alias_do_not_touch": "ApiErrorCode.InvalidPrice"
       },
       "8": {
-        "text": "Немає вільного мініскладу цього розміру!",
+        "text": "Немає вільної складської комірки цього розміру!",
         "__type_alias_do_not_touch": "ApiErrorCode.NoFreeBoxInThisSize"
       },
       "9": {
@@ -1598,7 +1598,7 @@
         "__type_alias_do_not_touch": "ApiErrorCode.TooLateForCahnge"
       },
       "13": {
-        "text": "Немає вільних мініскладів!",
+        "text": "Немає вільних складських комірок!",
         "__type_alias_do_not_touch": "ApiErrorCode.NotFreeBox"
       },
       "14": {
@@ -1610,7 +1610,7 @@
         "__type_alias_do_not_touch": "ApiErrorCode.CardHasBeenUsedWithDiscount"
       },
       "16": {
-        "text": "Недійсний номер мініскладу!",
+        "text": "Недійсний номер складської комірки!",
         "__type_alias_do_not_touch": "ApiErrorCode.InvalidBoxNumber"
       },
       "17": {
@@ -1626,11 +1626,11 @@
         "__type_alias_do_not_touch": "ApiErrorCode.InvalidLang"
       },
       "20": {
-        "text": "Для працівника необхідно вибрати майданчик!",
+        "text": "Для працівника необхідно вибрати складський комплекс!",
         "__type_alias_do_not_touch": "ApiErrorCode.StckIdIsRequiredForWorkerRole"
       },
       "21": {
-        "text": "На майданчику не знайдено мініскладу з цим номером!",
+        "text": "На складському комплексі не знайдено складської комірки з цим номером!",
         "__type_alias_do_not_touch": "ApiErrorCode.NoFoundBoxNumberOnStock"
       },
       "22": {
@@ -1646,7 +1646,7 @@
         "__type_alias_do_not_touch": "ApiErrorCode.UAreTooFarAway"
       },
       "25": {
-        "text": "Вибраний майданчик вже має знижку!",
+        "text": "Вибраний складський комплекс вже має знижку!",
         "__type_alias_do_not_touch": "ApiErrorCode.StockHasActiveDiscont"
       },
       "26": {
@@ -1658,7 +1658,7 @@
         "__type_alias_do_not_touch": "ApiErrorCode.InvalidGroup"
       },
       "28": {
-        "text": "Мінісклад із вибраним номером зарезервовано!",
+        "text": "Складську комірку із вибраним номером зарезервовано!",
         "__type_alias_do_not_touch": "ApiErrorCode.BoxNumberIsReserved"
       },
       "29": {
@@ -1674,7 +1674,7 @@
         "__type_alias_do_not_touch": "ApiErrorCode.CompanyDataIsRequired"
       },
       "32": {
-        "text": "Мінісклад вже зарезервовано!",
+        "text": "Складську комірку вже зарезервовано!",
         "__type_alias_do_not_touch": "ApiErrorCode.BoxIsReserved"
       },
       "33": {
@@ -1730,7 +1730,7 @@
         "__type_alias_do_not_touch": "ApiErrorCode.TenantDoesNotExist"
       },
       "46": {
-        "text": "Ви не можете видалити скриньку, яка не є порожньою!",
+        "text": "Ви не можете видалити комірку, яка не є порожньою!",
         "__type_alias_do_not_touch": "ApiErrorCode.CanNotDeleteNotEmptyBox"
       },
       "47": {
@@ -1766,7 +1766,7 @@
         "__type_alias_do_not_touch": "ApiErrorCode.RentPeriodTooShort"
       },
       "55": {
-        "text": "Майданчик не має знижки!",
+        "text": "Складський комплекс не має знижки!",
         "__type_alias_do_not_touch": "ApiErrorCode.NoDiscountSet"
       },
       "56": {
@@ -1782,7 +1782,7 @@
         "__type_alias_do_not_touch": "ApiErrorCode.TenantNotActive"
       },
       "59": {
-        "text": "Ви не можете видалити групу, яка містить контейнери зі статусом, відмінним від вільного!",
+        "text": "Ви не можете видалити групу, яка містить одиниці зі статусом, відмінним від вільного!",
         "__type_alias_do_not_touch": "ApiErrorCode.CanNotRemoveGroupWithRents"
       },
       "60": {
@@ -1790,15 +1790,15 @@
         "__type_alias_do_not_touch": "ApiErrorCode.NoInvoiceServiceData"
       },
       "61": {
-        "text": "Досягнуто ліміту контейнерів!",
+        "text": "Досягнуто ліміту одиниць!",
         "__type_alias_do_not_touch": "ApiErrorCode.BoxesLimitReached"
       },
       "62": {
-        "text": "Неможливо додати таку кількість контейнерів. Зменште кількість, щоб вміститися в ліміт.",
+        "text": "Неможливо додати таку кількість одиниць. Зменште кількість, щоб вміститися в ліміт.",
         "__type_alias_do_not_touch": "ApiErrorCode.TryingToAddTooManyBoxes"
       },
       "63": {
-        "text": "Досягнуто ліміту майданчиків!",
+        "text": "Досягнуто ліміту складських комплексів!",
         "__type_alias_do_not_touch": "ApiErrorCode.StocksLimitReached"
       },
       "64": {
@@ -1830,15 +1830,15 @@
         "__type_alias_do_not_touch": "ApiErrorCode.BirthDateMissing"
       },
       "71": {
-        "text": "Досягнуто максимальної кількості активних скриньок!",
+        "text": "Досягнуто максимальної кількості активних комірок!",
         "__type_alias_do_not_touch": "ApiErrorCode.ActiveBoxesLimitReached"
       },
       "72": {
-        "text": "Скриньку, яка не є вільною, не можна деактивувати!",
+        "text": "Комірку, яка не є вільною, не можна деактивувати!",
         "__type_alias_do_not_touch": "ApiErrorCode.CanNotSetNotEmptyBoxAsInactive"
       },
       "73": {
-        "text": "Немає вільних скриньок!",
+        "text": "Немає вільних комірок!",
         "__type_alias_do_not_touch": "ApiErrorCode.NoMoreAvailableBoxes"
       },
       "74": {
@@ -1850,7 +1850,7 @@
         "__type_alias_do_not_touch": "ApiErrorCode.CanNotExtendUnpaidRent"
       },
       "76": {
-        "text": "Скриньку з платежем у процесі не можна звільнити!",
+        "text": "Комірку з платежем у процесі не можна звільнити!",
         "__type_alias_do_not_touch": "ApiErrorCode.CantFreeBoxWithPendingPayment"
       },
       "77": {
@@ -1978,7 +1978,7 @@
         "__type_alias_do_not_touch": "ApiErrorCode.EndRentPhotoMobileOnly"
       },
       "108": {
-        "text": "Фото занадто старе. Зробіть нове фото скриньки (не старше ніж 15 хвилин).",
+        "text": "Фото занадто старе. Зробіть нове фото комірки (не старше ніж 15 хвилин).",
         "__type_alias_do_not_touch": "ApiErrorCode.EndRentPhotoTooOld"
       },
       "109": {
@@ -2038,8 +2038,8 @@
     "Phone": "Telefon",
     "Repeat new password": "Neues Passwort wiederholen",
     "Select...": "Auswählen...",
-    "Stock": "Gelände",
-    "Stocks": "Gelände",
+    "Stock": "Lagerstandort",
+    "Stocks": "Lagerstandorte",
     "Value": "Wert",
     "Value too high. Max. {0}.": "Wert zu hoch. Max. {0}.",
     "Value too long (max. {0})": "Wert zu lang (max. {0})",
@@ -2080,7 +2080,7 @@
         "__type_alias_do_not_touch": "ApiErrorCode.InvalidPrice"
       },
       "8": {
-        "text": "Kein freies Minilager dieser Größe!",
+        "text": "Keine freie Lagereinheit dieser Größe!",
         "__type_alias_do_not_touch": "ApiErrorCode.NoFreeBoxInThisSize"
       },
       "9": {
@@ -2100,7 +2100,7 @@
         "__type_alias_do_not_touch": "ApiErrorCode.TooLateForCahnge"
       },
       "13": {
-        "text": "Keine freien Minilager!",
+        "text": "Keine freien Lagereinheiten!",
         "__type_alias_do_not_touch": "ApiErrorCode.NotFreeBox"
       },
       "14": {
@@ -2112,7 +2112,7 @@
         "__type_alias_do_not_touch": "ApiErrorCode.CardHasBeenUsedWithDiscount"
       },
       "16": {
-        "text": "Ungültige Minilager-Nummer!",
+        "text": "Ungültige Lagereinheitsnummer!",
         "__type_alias_do_not_touch": "ApiErrorCode.InvalidBoxNumber"
       },
       "17": {
@@ -2128,11 +2128,11 @@
         "__type_alias_do_not_touch": "ApiErrorCode.InvalidLang"
       },
       "20": {
-        "text": "Für einen Mitarbeiter muss ein Gelände ausgewählt werden!",
+        "text": "Für einen Mitarbeiter muss ein Lagerstandort ausgewählt werden!",
         "__type_alias_do_not_touch": "ApiErrorCode.StckIdIsRequiredForWorkerRole"
       },
       "21": {
-        "text": "Auf dem Gelände wurde kein Minilager mit dieser Nummer gefunden!",
+        "text": "Am Lagerstandort wurde keine Lagereinheit mit dieser Nummer gefunden!",
         "__type_alias_do_not_touch": "ApiErrorCode.NoFoundBoxNumberOnStock"
       },
       "22": {
@@ -2148,7 +2148,7 @@
         "__type_alias_do_not_touch": "ApiErrorCode.UAreTooFarAway"
       },
       "25": {
-        "text": "Das ausgewählte Gelände hat bereits einen Rabatt!",
+        "text": "Der ausgewählte Lagerstandort hat bereits einen Rabatt!",
         "__type_alias_do_not_touch": "ApiErrorCode.StockHasActiveDiscont"
       },
       "26": {
@@ -2160,7 +2160,7 @@
         "__type_alias_do_not_touch": "ApiErrorCode.InvalidGroup"
       },
       "28": {
-        "text": "Das Minilager mit der ausgewählten Nummer ist reserviert!",
+        "text": "Die Lagereinheit mit der ausgewählten Nummer ist reserviert!",
         "__type_alias_do_not_touch": "ApiErrorCode.BoxNumberIsReserved"
       },
       "29": {
@@ -2176,7 +2176,7 @@
         "__type_alias_do_not_touch": "ApiErrorCode.CompanyDataIsRequired"
       },
       "32": {
-        "text": "Das Minilager wurde bereits reserviert!",
+        "text": "Die Lagereinheit wurde bereits reserviert!",
         "__type_alias_do_not_touch": "ApiErrorCode.BoxIsReserved"
       },
       "33": {
@@ -2268,7 +2268,7 @@
         "__type_alias_do_not_touch": "ApiErrorCode.RentPeriodTooShort"
       },
       "55": {
-        "text": "Das Gelände hat keinen Rabatt!",
+        "text": "Der Lagerstandort hat keinen Rabatt!",
         "__type_alias_do_not_touch": "ApiErrorCode.NoDiscountSet"
       },
       "56": {
@@ -2284,7 +2284,7 @@
         "__type_alias_do_not_touch": "ApiErrorCode.TenantNotActive"
       },
       "59": {
-        "text": "Sie können keine Gruppe löschen, die Container mit einem anderen Status als frei enthält!",
+        "text": "Sie können keine Gruppe löschen, die Einheiten mit einem anderen Status als frei enthält!",
         "__type_alias_do_not_touch": "ApiErrorCode.CanNotRemoveGroupWithRents"
       },
       "60": {
@@ -2292,15 +2292,15 @@
         "__type_alias_do_not_touch": "ApiErrorCode.NoInvoiceServiceData"
       },
       "61": {
-        "text": "Das Limit für Container wurde erreicht!",
+        "text": "Das Limit für Einheiten wurde erreicht!",
         "__type_alias_do_not_touch": "ApiErrorCode.BoxesLimitReached"
       },
       "62": {
-        "text": "Diese Anzahl an Containern kann nicht hinzugefügt werden. Verringern Sie die Anzahl, um innerhalb des Limits zu bleiben.",
+        "text": "Diese Anzahl an Einheiten kann nicht hinzugefügt werden. Verringern Sie die Anzahl, um innerhalb des Limits zu bleiben.",
         "__type_alias_do_not_touch": "ApiErrorCode.TryingToAddTooManyBoxes"
       },
       "63": {
-        "text": "Das Limit für Gelände wurde erreicht!",
+        "text": "Das Limit für Lagerstandorte wurde erreicht!",
         "__type_alias_do_not_touch": "ApiErrorCode.StocksLimitReached"
       },
       "64": {

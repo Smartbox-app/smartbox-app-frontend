@@ -47,28 +47,32 @@ describe('box group type labels', () => {
     ).toContain('minimagazyn');
 
     await i18next.changeLanguage('cz');
-    expect(getBoxGroupTypeLabel(BoxGroupType.storage)).toBe('mini sklad');
+    expect(getBoxGroupTypeLabel(BoxGroupType.storage)).toBe(
+      'skladovací jednotku',
+    );
     expect(getBoxGroupTypeLabel(BoxGroupType.parking)).toBe('parkovací místo');
-    expect(getBoxGroupTypeLabel(BoxGroupType.locker)).toBe('schránku');
-    expect(t('templates.boxTypeAccusative')).toContain('schránku');
-    expect(t('templates.boxTypeNoun')).toContain('schránky');
+    expect(getBoxGroupTypeLabel(BoxGroupType.locker)).toBe('úložnou schránku');
+    expect(t('templates.boxTypeAccusative')).toContain('úložnou schránku');
+    expect(t('templates.boxTypeNoun')).toContain('úložné schránky');
     expect(t('templates.boxTypeNoun')).not.toEqual(
       t('templates.boxTypeAccusative'),
     );
 
     await i18next.changeLanguage('ua');
-    expect(getBoxGroupTypeLabel(BoxGroupType.locker)).toBe('скриньку');
-    expect(t('templates.boxTypeAccusative')).toContain('скриньку');
-    expect(t('templates.boxTypeNoun')).toContain('скриньки');
+    expect(getBoxGroupTypeLabel(BoxGroupType.storage)).toBe('складську комірку');
+    expect(getBoxGroupTypeLabel(BoxGroupType.locker)).toBe('комірку');
+    expect(t('templates.boxTypeAccusative')).toContain('комірку');
+    expect(t('templates.boxTypeNoun')).toContain('комірки');
 
     await i18next.changeLanguage('de');
+    expect(getBoxGroupTypeLabel(BoxGroupType.storage)).toBe('Lagereinheit');
     expect(getBoxGroupTypeLabel(BoxGroupType.locker)).toBe('Schließfach');
     expect(getBoxGroupTypeLabel(BoxGroupType.parking)).toBe('Stellplatz');
     expect(
       t('application.orderAssignedBox', {
         type: getBoxGroupTypeLabel(BoxGroupType.parking),
       }),
-    ).toContain('Ein Stellplatz');
+    ).toContain('Reserviert wurde: Stellplatz');
     expect(t('templates.boxTypeNoun')).toContain('Stellplatzes');
     expect(t('templates.boxTypeYourGenitive')).toContain('Ihres Stellplatzes');
   });

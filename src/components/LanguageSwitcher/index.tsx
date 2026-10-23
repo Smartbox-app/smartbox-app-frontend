@@ -56,13 +56,20 @@ const StyledSwitcherCard = styled('div')(({ theme }) => ({
   // width: '100%',q
 }));
 
-const LanguageSwitcherWrapper = styled.div(({ theme }) => ({
+const LanguageSwitcherWrapper = styled.div<{ $dashboard?: boolean }>(({ theme, $dashboard }) => ({
   display: 'flex',
   justifyContent: 'flex-end',
   padding: `${theme.spacing * 2}px ${theme.spacing * 4}px`,
+  marginBottom: $dashboard ? 0 : theme.spacing * -12,
+  zIndex: 2,
+  position: 'relative',
 }));
 
-export const LanguageSwitcher = () => {
+export type LanguageSwitcherProps = {
+  dashboard?: boolean;
+};
+
+export const LanguageSwitcher = ({ dashboard }: LanguageSwitcherProps) => {
   const { data: user, isFetched } = useGetMyDetailsQuery();
   const { mutate, isPending } = useUpdateMyLangMutation();
   const [opened, setOpened] = useState(false);
@@ -72,7 +79,7 @@ export const LanguageSwitcher = () => {
     if (!isFetched || isPending || lang === current) return;
 
     if (user) {
-      mutate(lang);
+      mutate(lang, { onSuccess: () => window.location.reload() });
       return;
     }
 
@@ -80,7 +87,7 @@ export const LanguageSwitcher = () => {
   };
 
   return (
-    <LanguageSwitcherWrapper>
+    <LanguageSwitcherWrapper $dashboard={dashboard}>
       <StyledSwitcherContainer>
         <SidebarButton small onClick={() => setOpened(!opened)}>
           <strong>{current.toLocaleUpperCase()}</strong>

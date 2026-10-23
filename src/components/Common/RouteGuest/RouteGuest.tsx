@@ -4,7 +4,6 @@ import { UserRole } from 'smartbox-types';
 import { AppMessage } from 'src/components/AppMessage';
 import { useGetMyDetailsQuery } from 'src/queries';
 import { withAttributionSearch } from 'src/utils/attribution-params';
-import styled from 'styled-components';
 import { LanguageSwitcher } from 'src/components/LanguageSwitcher';
 
 export type RouteGuestProps = {
@@ -12,13 +11,6 @@ export type RouteGuestProps = {
   exact?: boolean;
   path?: string;
 };
-
-const LanguageSwitcherWrapper = styled.div(({theme}) => ({
-  display: 'flex',
-  justifyContent: 'flex-end',
-  padding: theme.spacing * 4,
-}));
-
 
 export const RouteGuest = ({ component, exact, path }: RouteGuestProps) => {
   const { data: user } = useGetMyDetailsQuery();
@@ -41,9 +33,7 @@ export const RouteGuest = ({ component, exact, path }: RouteGuestProps) => {
   return (
     <>
       <AppMessage />
-      <LanguageSwitcherWrapper>
-          <LanguageSwitcher />
-        </LanguageSwitcherWrapper>
+      <LanguageSwitcher />
       <Route exact={exact} path={path} component={component} />
     </>
   );

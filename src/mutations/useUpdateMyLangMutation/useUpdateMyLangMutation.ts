@@ -14,10 +14,7 @@ export const useUpdateMyLangMutation = () => {
         { lang },
         true,
       );
-    },
-    onSuccess: (_data, lang) => {
       SessionService.setCurrentLanguage(lang);
-      window.location.reload();
     },
   });
 };

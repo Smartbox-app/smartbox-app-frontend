@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { useGetVersionQuery, useGetMyDetailsQuery } from '../../queries';
 import { useLogoutMutation } from 'src/mutations/useLogoutMutation';
+import { useUpdateMyLangMutation } from 'src/mutations/useUpdateMyLangMutation';
 import { useLocation } from 'react-router';
 import { scrollTop } from 'src/utils/scroll-top';
 import { Spinner } from '../Branded';
@@ -23,7 +24,7 @@ import { order } from 'src/actions';
 import { withAttributionSearch } from 'src/utils/attribution-params';
 import i18next from 'i18next';
 import SessionService from 'src/services/session-service';
-import { isAppLanguage } from 'src/i18n/app-language';
+import { currentAppLanguage, isAppLanguage } from 'src/i18n/app-language';
 import {
   clearPreloadReloadFlag,
   reloadWithoutServiceWorker,
@@ -46,6 +47,8 @@ const AppWrapper = ({ children }: Props) => {
   const dispatch = useDispatch();
   const { data: user, isLoading } = useGetMyDetailsQuery();
   const { mutate: logout } = useLogoutMutation();
+  const { mutate: updateMyLang } = useUpdateMyLangMutation();
+  const nullLangSavedRef = useRef(false);
   const { data: config } = useGetVersionQuery();
   const location = useLocation();
   const { tenant } = useTenant();
@@ -171,6 +174,17 @@ const AppWrapper = ({ children }: Props) => {
   }, [location.pathname]);
 
   useEffect(() => {
+    if (user && user.lang == null) {
+      if (nullLangSavedRef.current) return;
+      nullLangSavedRef.current = true;
+      updateMyLang(currentAppLanguage(), {
+        onSuccess: () => {
+          queryClient.invalidateQueries({ queryKey: ['my-details'] });
+        },
+      });
+      return;
+    }
+
     if (!isAppLanguage(user?.lang)) return;
 
     if (SessionService.getCurrentLanguage() !== user.lang) {
@@ -181,7 +195,7 @@ const AppWrapper = ({ children }: Props) => {
     if (active !== user.lang) {
       window.location.reload();
     }
-  }, [user?.lang]);
+  }, [user, updateMyLang]);
 
   useEffect(() => {
     if (!tenant) return;

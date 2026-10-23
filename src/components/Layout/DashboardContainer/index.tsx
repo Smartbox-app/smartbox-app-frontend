@@ -184,7 +184,7 @@ export const DashboardContainer = ({ children, sidebar }: Props) => {
         />
         <StyledSidebarSlot $open={mobileNavOpen}>{sidebar}</StyledSidebarSlot>
         <StyledPageContentArea>
-          <LanguageSwitcher />
+          <LanguageSwitcher dashboard />
           {pageContent}
         </StyledPageContentArea>
         <StyledMobileMenuFab>

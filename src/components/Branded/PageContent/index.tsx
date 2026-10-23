@@ -48,7 +48,7 @@ const StyledPageContent = styled.div<{
     ...base,
     flex: '1 0 auto',
     minHeight: '100%',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center',
     overflow: 'auto',
     paddingTop: 'env(safe-area-inset-top)',
