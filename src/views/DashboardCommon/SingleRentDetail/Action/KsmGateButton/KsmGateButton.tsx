@@ -15,6 +15,7 @@ interface Props {
   layout?: 'action' | 'detail';
   buttonText?: string;
   withName?: boolean;
+  disabled?: boolean;
 }
 
 type ForceModalProps = Pick<
@@ -27,6 +28,7 @@ export const KsmGateButton = ({
   layout = 'action',
   buttonText = 'application.openGate',
   withName = false,
+  disabled = false,
 }: Props) => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
@@ -103,7 +105,7 @@ export const KsmGateButton = ({
   };
 
   const handleClick = () => {
-    if (!gate.controlled) return;
+    if (disabled || !gate.controlled) return;
 
     setLoading(true);
     void tryToOpenGateByLocation();
@@ -112,7 +114,7 @@ export const KsmGateButton = ({
   if (layout === 'detail') {
     return (
       <BrandedButton
-        disabled={loading}
+        disabled={disabled || loading}
         text={buttonText}
         type="button"
         success
@@ -123,7 +125,7 @@ export const KsmGateButton = ({
 
   return (
     <UIButton
-      disabled={loading}
+      disabled={disabled || loading}
       type="button"
       text={withName ? undefined : 'application.openGate'}
       rawText={

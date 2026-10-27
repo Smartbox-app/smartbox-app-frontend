@@ -11,12 +11,14 @@ import { ButtonsContainer } from 'src/components/Layout';
 
 interface Props {
   id: string;
+  disabled?: boolean;
 }
 
-export const OpenBox = ({ id }: Props) => {
+export const OpenBox = ({ id, disabled = false }: Props) => {
   const [isOpening, setIsOpening] = useState(false);
   const dispatch = useDispatch();
   const openBox = async () => {
+    if (disabled) return;
     setIsOpening(true);
     await ApiService.callFetch(
       'GET',
@@ -36,7 +38,7 @@ export const OpenBox = ({ id }: Props) => {
     <ButtonsContainer left>
       <Button
         primary
-        disabled={isOpening}
+        disabled={disabled || isOpening}
         text="application.openBox"
         click={openBox}
       />

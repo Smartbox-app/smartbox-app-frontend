@@ -511,6 +511,8 @@ const application = {
     cantExtendDescription:
       'You can extend a rental that is active and fully paid',
     cantEndDescription: 'You can end a rental that is fully paid',
+    rentActionsAvailableAfterStart:
+      'Opening the gate, opening the locker, and ending the rental will be possible once the rental starts ({{date}}).',
     endedUnpaidContactStock:
       'The agreement was ended because of a missing payment. Paying the invoice will not restore access. Contact site staff about collecting your belongings and the next steps.',
     showOnStockMap: 'Show map',

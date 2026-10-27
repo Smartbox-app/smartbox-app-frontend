@@ -507,6 +507,8 @@ const application = {
     cantExtendDescription:
       'Możesz przedłużyć najem który jest aktywny oraz w całości opłacony',
     cantEndDescription: 'Możesz zakończyć najem który jest w całości opłacony',
+    rentActionsAvailableAfterStart:
+      'Otwarcie bramy, otwarcie skrytki oraz zakończenie najmu będą możliwe po rozpoczęciu wynajmu ({{date}}).',
     endedUnpaidContactStock:
       'Umowa została zakończona z powodu braku płatności. Opłacenie faktury nie przywróci dostępu. Skontaktuj się z obsługą obiektu w sprawie odbioru rzeczy i dalszych kroków.',
     showOnStockMap: 'Pokaż mapę',

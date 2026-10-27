@@ -16,6 +16,7 @@ import { KsmGateButton } from '../Action/KsmGateButton';
 interface Props {
   gate: RentGate;
   showKsmGateOpenV2?: boolean;
+  disabled?: boolean;
 }
 
 const StyledGateContainer = styled.div`
@@ -43,7 +44,7 @@ const StyledGateDescription = styled.p`
   }
 `;
 
-const Gate = ({ gate }: Props) => {
+const Gate = ({ gate, disabled = false }: Props) => {
   const dispatch = useDispatch();
   const { data: user } = useGetMyDetailsQuery();
   const [loading, setLoading] = useState(false);
@@ -134,7 +135,7 @@ const Gate = ({ gate }: Props) => {
   };
 
   const handleClick = () => {
-    if (!gate.controlled) return;
+    if (disabled || !gate.controlled) return;
 
     setLoading(true);
     if (!isUser(user!.role)) {
@@ -174,12 +175,14 @@ const Gate = ({ gate }: Props) => {
                 gate={gate}
                 layout="detail"
                 buttonText={getButtonText()}
+                disabled={disabled}
               />
             ) : (
               <Button
                 text={getButtonText()}
                 type="button"
                 success
+                disabled={disabled || loading}
                 click={handleClick}
               />
             )}

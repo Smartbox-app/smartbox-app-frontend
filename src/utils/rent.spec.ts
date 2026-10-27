@@ -1,5 +1,7 @@
 import { RentAgreementType, RentStatus } from 'smartbox-types';
 import {
+  canDisplayRentAccess,
+  canUseRentAccessActions,
   hasDateValue,
   isRentAccessActive,
   isRentWithinFinishAt,
@@ -60,6 +62,59 @@ describe('rent dates', () => {
         now,
       ),
     ).toBe(true);
+  });
+
+  it('shows access UI for future starts but disables actions until start', () => {
+    const futureStart = {
+      status: RentStatus.rented,
+      startAt: new Date(2026, 9, 10),
+      finishAt: new Date(2026, 9, 20),
+    };
+    expect(canDisplayRentAccess(futureStart, now)).toBe(true);
+    expect(canUseRentAccessActions(futureStart, now)).toBe(false);
+  });
+
+  it('allows gate/box/end actions only for active started rents', () => {
+    expect(
+      canUseRentAccessActions(
+        {
+          status: RentStatus.rented,
+          startAt: new Date(2026, 9, 1),
+          finishAt: new Date(2026, 9, 20),
+        },
+        now,
+      ),
+    ).toBe(true);
+    expect(
+      canDisplayRentAccess(
+        {
+          status: RentStatus.noPaidPeriod,
+          startAt: new Date(2026, 9, 1),
+          finishAt: new Date(2026, 9, 20),
+        },
+        now,
+      ),
+    ).toBe(false);
+    expect(
+      canUseRentAccessActions(
+        {
+          status: RentStatus.endedUnpaid,
+          startAt: new Date(2026, 9, 1),
+          finishAt: new Date(2026, 9, 20),
+        },
+        now,
+      ),
+    ).toBe(false);
+    expect(
+      canUseRentAccessActions(
+        {
+          status: RentStatus.rented,
+          startAt: new Date(2026, 9, 1),
+          finishAt: new Date(2026, 9, 1),
+        },
+        now,
+      ),
+    ).toBe(false);
   });
 
   it('prefers the decision finish date', () => {

@@ -15,7 +15,12 @@ import { Button, Tabs } from 'src/components/ui';
 import { Calendar, CloseCircle, InfoCircle, Map } from 'src/icons';
 import { GateButton } from './GateButton';
 import { KsmGateButton } from './KsmGateButton';
-import { isOpenEndedAgreement, hasDateValue } from 'src/utils/rent';
+import {
+  isOpenEndedAgreement,
+  hasDateValue,
+  canDisplayRentAccess,
+  canUseRentAccessActions,
+} from 'src/utils/rent';
 import { dateOnly } from 'src/utils/format-date';
 import { __ } from 'src/helpers/i18n';
 
@@ -47,7 +52,14 @@ const Action = ({ rent, isAuthorizedViewer = false }: Props) => {
     return true;
   }, [rent]);
 
+  const showAccessActions = useMemo(() => canDisplayRentAccess(rent), [rent]);
+  const canUseAccessActions = useMemo(
+    () => canUseRentAccessActions(rent),
+    [rent],
+  );
+
   const canEndRent = useMemo(() => {
+    if (!canUseAccessActions) return false;
     if (rent.status === RentStatus.endedUnpaid) return false;
     if (rent.status === RentStatus.awaitingFinish) {
       if (
@@ -73,7 +85,7 @@ const Action = ({ rent, isAuthorizedViewer = false }: Props) => {
     }
     if ((rent.periods || []).some((period) => !period.paid)) return false;
     return true;
-  }, [rent]);
+  }, [rent, canUseAccessActions]);
 
   const isPastScheduledFinish =
     isOpenEndedAgreement(rent.agreementType) &&
@@ -122,15 +134,27 @@ const Action = ({ rent, isAuthorizedViewer = false }: Props) => {
           ]}
         />
         <ButtonsContainer>
-          {rent.gates
-            .filter((gate) => !!gate.controlled)
-            .map((gate) =>
-              gate.version === 2 ? (
-                <KsmGateButton key={gate.id} gate={gate} withName={rent.gates.length > 1}/>
-              ) : (
-                <GateButton key={gate.id} gate={gate} withName={rent.gates.length > 1} />
-              ),
-            )}
+          {showAccessActions
+            ? rent.gates
+                .filter((gate) => !!gate.controlled)
+                .map((gate) =>
+                  gate.version === 2 ? (
+                    <KsmGateButton
+                      key={gate.id}
+                      gate={gate}
+                      withName={rent.gates.length > 1}
+                      disabled={!canUseAccessActions}
+                    />
+                  ) : (
+                    <GateButton
+                      key={gate.id}
+                      gate={gate}
+                      withName={rent.gates.length > 1}
+                      disabled={!canUseAccessActions}
+                    />
+                  ),
+                )
+            : null}
           {!isAuthorizedViewer ? (
             <>
               {!isOpenEndedAgreement(rent.agreementType) ? (
@@ -141,17 +165,29 @@ const Action = ({ rent, isAuthorizedViewer = false }: Props) => {
                 disabled={!canExtendRent}
               />
               ) : null}
-              <Button
-                disabled={!canEndRent}
-                iconLeft={<CloseCircle />}
-                text={endButtonText}
-                variant="error"
-                onClick={() => dispatch(showModal(<EndingModal rent={rent} />))}
-              />
+              {showAccessActions ? (
+                <Button
+                  disabled={!canEndRent}
+                  iconLeft={<CloseCircle />}
+                  text={endButtonText}
+                  variant="error"
+                  onClick={() =>
+                    dispatch(showModal(<EndingModal rent={rent} />))
+                  }
+                />
+              ) : null}
             </>
           ) : null}
         </ButtonsContainer>
       </ButtonsContainer>
+      {showAccessActions && !canUseAccessActions ? (
+        <Alert type="notice">
+          {__(
+            'application.rentActionsAvailableAfterStart',
+            { date: dateOnly(rent.startAt) },
+          )}
+        </Alert>
+      ) : null}
       {!isAuthorizedViewer &&
       !isOpenEndedAgreement(rent.agreementType) &&
       !canExtendRent ? (
@@ -173,6 +209,7 @@ const Action = ({ rent, isAuthorizedViewer = false }: Props) => {
         </Alert>
       ) : null}
       {!isAuthorizedViewer &&
+      canUseAccessActions &&
       rent.status !== RentStatus.endedUnpaid &&
       !isScheduledOpenEndedEnd &&
       !canEndRent ? (

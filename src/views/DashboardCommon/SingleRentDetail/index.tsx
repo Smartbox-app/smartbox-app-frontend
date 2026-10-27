@@ -7,8 +7,10 @@ import { MissingPaymentAlert } from './MissingPaymentAlert';
 import { OpenBox } from './OpenBox';
 import styled from 'styled-components';
 import { Description } from './RentDescription';
-import { isAfter } from 'date-fns';
-import { isRentAccessActive } from 'src/utils/rent';
+import {
+  canDisplayRentAccess,
+  canUseRentAccessActions,
+} from 'src/utils/rent';
 import { Header, PageHeader, Section, Skeleton } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
 import { PeriodUnpaidAlert } from './PeriodUnpaidAlert';
@@ -46,25 +48,14 @@ const SingleRentDetail = () => {
 
   const restrictedAccess = singleRent?.status === RentStatus.pendingFinish;
 
-  const displayAccess = useMemo(() => {
-    if (!singleRent) return false;
-
-    if (
-      ![
-        RentStatus.rented,
-        RentStatus.pendingFinish,
-        RentStatus.awaitingFinish,
-      ].includes(singleRent.status)
-    )
-      return false;
-
-    const currentDate = new Date();
-
-    if (isAfter(new Date(singleRent.startAt), currentDate)) return false;
-    if (!isRentAccessActive(singleRent, currentDate)) return false;
-
-    return true;
-  }, [singleRent]);
+  const displayAccess = useMemo(
+    () => (singleRent ? canDisplayRentAccess(singleRent) : false),
+    [singleRent],
+  );
+  const accessActionsEnabled = useMemo(
+    () => (singleRent ? canUseRentAccessActions(singleRent) : false),
+    [singleRent],
+  );
 
   if (isError) return <Redirect to="/" />;
 
@@ -116,14 +107,21 @@ const SingleRentDetail = () => {
             <StyledGatesHeader>{__('application.gates')}</StyledGatesHeader>
           )}
           {singleRent.gates.map((gate) => (
-            <Gate key={gate.id} gate={gate} />
+            <Gate
+              key={gate.id}
+              gate={gate}
+              disabled={!accessActionsEnabled}
+            />
           ))}
           {singleRent.controlled && (
             <>
               <StyledGatesHeader>{getText('box')}</StyledGatesHeader>
               <StyledBoxContainer>
                 <h4>{singleRent.number}</h4>
-                <OpenBox id={singleRent.boxId} />
+                <OpenBox
+                  id={singleRent.boxId}
+                  disabled={!accessActionsEnabled}
+                />
               </StyledBoxContainer>
             </>
           )}

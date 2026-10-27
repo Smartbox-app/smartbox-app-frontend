@@ -12,9 +12,14 @@ import { __ } from 'src/helpers/i18n';
 interface Props {
   gate: RentGate;
   withName?: boolean;
+  disabled?: boolean;
 }
 
-export const GateButton = ({ gate, withName = false }: Props) => {
+export const GateButton = ({
+  gate,
+  withName = false,
+  disabled = false,
+}: Props) => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
 
@@ -105,7 +110,7 @@ export const GateButton = ({ gate, withName = false }: Props) => {
   };
 
   const handleClick = () => {
-    if (!gate.controlled) return;
+    if (disabled || !gate.controlled) return;
 
     setLoading(true);
     tryToOpenGateByLocation();
@@ -113,7 +118,7 @@ export const GateButton = ({ gate, withName = false }: Props) => {
 
   return (
     <Button
-      disabled={loading}
+      disabled={disabled || loading}
       text={withName ? undefined : 'application.openGate'}
       rawText={
         withName

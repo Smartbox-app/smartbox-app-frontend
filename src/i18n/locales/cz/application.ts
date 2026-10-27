@@ -512,6 +512,8 @@ const application = {
     cantExtendDescription:
       'Prodloužit můžete pronájem, který je aktivní a plně uhrazený',
     cantEndDescription: 'Ukončit můžete pronájem, který je plně uhrazený',
+    rentActionsAvailableAfterStart:
+      'Otevření brány, otevření schránky a ukončení pronájmu budou možné po zahájení pronájmu ({{date}}).',
     endedUnpaidContactStock:
       'Smlouva byla ukončena kvůli chybějící platbě. Uhrazení faktury přístup neobnoví. Ohledně vyzvednutí vašich věcí a dalších kroků kontaktujte personál areálu.',
     showOnStockMap: 'Zobrazit mapu',

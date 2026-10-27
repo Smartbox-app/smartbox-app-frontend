@@ -521,6 +521,8 @@ const application = {
       'Sie können eine Miete verlängern, die aktiv und vollständig bezahlt ist',
     cantEndDescription:
       'Sie können eine Miete beenden, die vollständig bezahlt ist',
+    rentActionsAvailableAfterStart:
+      'Das Öffnen des Tors, das Öffnen des Schließfachs und das Beenden der Miete sind erst nach Beginn der Miete möglich ({{date}}).',
     endedUnpaidContactStock:
       'Der Vertrag wurde wegen einer fehlenden Zahlung beendet. Die Bezahlung der Rechnung stellt den Zugang nicht wieder her. Wenden Sie sich an das Personal des Lagerstandorts wegen der Abholung Ihrer Sachen und der weiteren Schritte.',
     showOnStockMap: 'Karte anzeigen',
