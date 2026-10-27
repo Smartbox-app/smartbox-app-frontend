@@ -5,7 +5,7 @@ import { useTenant } from 'src/hooks/useTenant';
 import { IOSShare } from 'src/icons';
 import { hasMobileAppIosLink } from 'src/utils/tenant-mobile-app-links';
 
-import 'src/components/Common/BanneriOS/BanneriOS.scss';
+import './BanneriOS.scss';
 
 const BannerIos = () => {
   const { tenant } = useTenant();

@@ -3,9 +3,9 @@ import { Switch, Route, Redirect, useParams } from 'react-router';
 
 import { useGetMyDetailsQuery } from 'src/queries';
 import UserService from 'src/services/user-service';
-import { Add } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Addons/Add';
-import { List } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Addons/List';
-import { Pricing } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Addons/Pricing';
+import { Add } from './Add';
+import { List } from './List';
+import { Pricing } from './Pricing';
 
 const Addons = () => {
   const { stockId } = useParams<{ stockId: string }>();

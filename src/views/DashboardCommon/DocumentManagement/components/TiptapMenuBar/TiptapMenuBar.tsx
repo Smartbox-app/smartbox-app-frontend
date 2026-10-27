@@ -2,7 +2,7 @@ import { Editor } from '@tiptap/react';
 import React from 'react';
 
 import { __ } from 'src/helpers/i18n';
-import { Toolbar, Button } from 'src/views/DashboardCommon/DocumentManagement/components/styled';
+import { Toolbar, Button } from '../styled';
 
 export const TiptapMenuBar = ({ editor }: { editor: Editor | null }) => {
   if (!editor) return null;

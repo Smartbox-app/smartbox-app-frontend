@@ -14,7 +14,7 @@ import { Header, Typography } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
 import ApiService from 'src/services/api-service';
 import { InteractiveTableSchema } from 'src/utils/table-schema-utils';
-import { LocationActivityList } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Alarms/LocationActivityList';
+import { LocationActivityList } from '../LocationActivityList';
 
 const List = () => {
   const dispatch = useDispatch();

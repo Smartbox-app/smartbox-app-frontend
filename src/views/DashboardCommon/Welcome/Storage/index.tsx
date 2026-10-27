@@ -5,7 +5,7 @@ import { Header, Section } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
 import { useTenantNaming } from 'src/hooks/useTenantNaming';
 import type { NamingTypeKey } from 'src/i18n/types/keys';
-import StorageList from 'src/views/DashboardCommon/Welcome/Storage/StorageList';
+import StorageList from './StorageList';
 
 interface Props {
   myRentList: MyRentList[];

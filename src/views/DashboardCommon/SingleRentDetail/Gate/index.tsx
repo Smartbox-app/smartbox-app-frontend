@@ -13,7 +13,7 @@ import { __ } from 'src/helpers/i18n';
 import { useOpenGateMutation } from 'src/mutations';
 import { useGetMyDetailsQuery } from 'src/queries';
 import { isUser } from 'src/utils/role-check';
-import { KsmGateButton } from 'src/views/DashboardCommon/SingleRentDetail/Action/KsmGateButton';
+import { KsmGateButton } from '../Action/KsmGateButton';
 
 interface Props {
   gate: RentGate;

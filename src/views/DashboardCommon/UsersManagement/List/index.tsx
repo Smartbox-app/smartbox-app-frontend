@@ -29,9 +29,9 @@ import {
 import { useGetMyDetailsQuery } from 'src/queries';
 import UserService from 'src/services/user-service';
 import { InteractiveTableSchema } from 'src/utils/table-schema-utils';
-import UserDetail from 'src/views/DashboardCommon/UsersManagement/List/UserDetail';
-import { UserNoteEditModal } from 'src/views/DashboardCommon/UsersManagement/List/UserDetail/UserNoteEditModal';
-import UserEdit from 'src/views/DashboardCommon/UsersManagement/List/UserEdit';
+import UserDetail from './UserDetail';
+import { UserNoteEditModal } from './UserDetail/UserNoteEditModal';
+import UserEdit from './UserEdit';
 
 const List = () => {
   const dispatch = useDispatch();

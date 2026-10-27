@@ -14,7 +14,7 @@ import { useGetMyDetailsQuery } from 'src/queries';
 import UserService from 'src/services/user-service';
 import { isWorker } from 'src/utils/role-check';
 import { InteractiveTableSchema } from 'src/utils/table-schema-utils';
-import EditAssign from 'src/views/DashboardCommon/WorkersManagement/List/EditAssign';
+import EditAssign from './EditAssign';
 
 export const List = () => {
   const { data: user } = useGetMyDetailsQuery();

@@ -3,7 +3,7 @@ import React from 'react';
 import { Link } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
 
-import 'src/views/DashboardCommon/Contact/SingleDepartment/SingleDepartment.scss';
+import './SingleDepartment.scss';
 
 interface Props {
   name: string;

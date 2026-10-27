@@ -19,8 +19,8 @@ import { useDeleteAddonMutation } from 'src/mutations';
 import { useGetMyDetailsQuery } from 'src/queries';
 import UserService from 'src/services/user-service';
 import { InteractiveTableSchema } from 'src/utils/table-schema-utils';
-import { CannotDeleteAddonModal } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Addons/CannotDeleteAddonModal';
-import { Edit } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Addons/Edit';
+import { CannotDeleteAddonModal } from '../CannotDeleteAddonModal';
+import { Edit } from '../Edit';
 
 const List = () => {
   const { data: user } = useGetMyDetailsQuery();

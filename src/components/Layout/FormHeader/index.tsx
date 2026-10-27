@@ -3,7 +3,7 @@ import React from 'react';
 import { Header } from 'src/components/ui';
 import {__} from "src/helpers/i18n";
 
-import 'src/components/Layout/FormHeader/FormHeader.scss';
+import './FormHeader.scss';
 
 interface Props {
   title: string;

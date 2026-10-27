@@ -1,1 +1,1 @@
-export * from 'src/views/Auth/Login/Login';
+export * from './Login';

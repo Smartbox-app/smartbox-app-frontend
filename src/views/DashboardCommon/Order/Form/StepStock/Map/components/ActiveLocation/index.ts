@@ -1,1 +1,1 @@
-export * from 'src/views/DashboardCommon/Order/Form/StepStock/Map/components/ActiveLocation/ActiveLocation';
+export * from './ActiveLocation';

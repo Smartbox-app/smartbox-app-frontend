@@ -1,1 +1,1 @@
-export * from 'src/views/DashboardAdmin/TTLockManagement/LockGroups/LockGroups'
+export * from './LockGroups'

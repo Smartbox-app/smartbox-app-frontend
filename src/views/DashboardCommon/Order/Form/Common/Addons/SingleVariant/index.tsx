@@ -12,8 +12,8 @@ import {
 import { selectAddon, setAddonFile } from 'src/actions/order';
 import { ApplicationState } from 'src/reducers';
 import { correctAddonVariantPrice } from 'src/utils/addon-variant-price';
-import { PriceInfo } from 'src/views/DashboardCommon/Order/Form/Common/Addons/PriceInfo';
-import { Indicator } from 'src/views/DashboardCommon/Order/Form/Common/Addons/SingleVariant/components/Indicator';
+import { PriceInfo } from '../PriceInfo';
+import { Indicator } from './components/Indicator';
 
 const StyledAddonVariant = styled('li')<{ isSelected: boolean }>(
   ({ isSelected, theme }) => ({

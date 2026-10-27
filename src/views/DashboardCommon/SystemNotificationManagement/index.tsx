@@ -3,7 +3,7 @@ import { Switch, Route, Redirect } from 'react-router';
 
 import { useGetMyDetailsQuery } from 'src/queries';
 import UserService from 'src/services/user-service';
-import { List } from 'src/views/DashboardCommon/SystemNotificationManagement/List';
+import { List } from './List';
 
 const SystemNotificationManagement = () => {
   const { data: user } = useGetMyDetailsQuery();

@@ -10,14 +10,14 @@ import { ButtonsContainer } from 'src/components/Layout';
 import { useFileStorage } from 'src/hooks/useFileStorage';
 import { useI18n } from 'src/i18n';
 import { useUpdateBoxesMapLayoutMutation } from 'src/mutations';
-import { MapGrid } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Map/MapGrid';
-import { MapLayoutContext } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Map/MapLayoutContext';
-import { SingleBox } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Map/SingleBox';
+import { MapGrid } from '../StockGroups/Stocks/Manage/Map/MapGrid';
+import { MapLayoutContext } from '../StockGroups/Stocks/Manage/Map/MapLayoutContext';
+import { SingleBox } from '../StockGroups/Stocks/Manage/Map/SingleBox';
 import {
   BoxMapLayoutUpdate,
   getBoxLayoutFromBox,
   isSameBoxLayout,
-} from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Map/utils/map-layout';
+} from '../StockGroups/Stocks/Manage/Map/utils/map-layout';
 
 interface Props {
   boxes: (BoxMapRes | BoxMapUserRes)[];

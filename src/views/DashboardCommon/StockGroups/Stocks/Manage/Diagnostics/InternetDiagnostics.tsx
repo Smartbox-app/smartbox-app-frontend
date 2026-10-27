@@ -4,16 +4,16 @@ import { LocationDiagnosticsRes } from 'smartbox-types';
 import { Header, Section, Stack } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
 import { fullDate } from 'src/utils/format-date';
-import { BusDevicesTable } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Diagnostics/BusDevicesTable';
+import { BusDevicesTable } from './BusDevicesTable';
 import {
   getDiagnosticsStatusText,
   getInternetTone,
   getWanText,
-} from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Diagnostics/diagnostics-health';
+} from './diagnostics-health';
 import {
   DiagnosticsCardsRow,
   DiagnosticsStatusCard,
-} from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Diagnostics/DiagnosticsStatusCard';
+} from './DiagnosticsStatusCard';
 
 type InternetDiagnosticsProps = {
   internet: NonNullable<LocationDiagnosticsRes>;

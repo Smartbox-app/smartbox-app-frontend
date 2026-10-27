@@ -1,2 +1,2 @@
-export * from 'src/components/AgreementPreview/AgreementPreview';
-export * from 'src/components/AgreementPreview/LegacyAgreementPreview';
+export * from './AgreementPreview';
+export * from './LegacyAgreementPreview';

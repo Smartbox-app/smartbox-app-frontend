@@ -7,7 +7,7 @@ import { ButtonsContainer } from 'src/components/Layout';
 import { Skeleton, Typography } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
 import { useRentNoteQuery } from 'src/queries';
-import { RentNoteEditModal } from 'src/views/DashboardCommon/SingleRentDetail/RentNote/RentNoteEditModal';
+import { RentNoteEditModal } from './RentNoteEditModal';
 
 interface Props {
   rentId: string;

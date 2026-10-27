@@ -19,7 +19,7 @@ import ApiService from 'src/services/api-service';
 import UserService from 'src/services/user-service';
 import { mapFields } from 'src/utils/fields-mapper';
 import { formOnTranslateString } from 'src/utils/trans-form';
-import { serializeBoxGroupIds } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Addons/serialize-box-group-ids';
+import { serializeBoxGroupIds } from '../serialize-box-group-ids';
 
 const Add = () => {
   const dispatch = useDispatch();

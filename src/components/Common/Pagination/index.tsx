@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { __ } from "src/helpers/i18n";
 import { getColorForBackground } from 'src/utils/color';
 
-import 'src/components/Common/Pagination/Pagination.scss';
+import './Pagination.scss';
 
 interface Props {
   pageCount: number;

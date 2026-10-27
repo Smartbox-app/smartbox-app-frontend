@@ -9,7 +9,7 @@ import { useI18n } from 'src/i18n';
 import { ApplicationState } from 'src/reducers';
 import { formatPrice } from 'src/utils/format-price';
 
-import 'src/views/DashboardCommon/Order/Form/Common/Price/Price.scss';
+import './Price.scss';
 
 const StyledPrice = styled.strong`
   font-size: 40px;

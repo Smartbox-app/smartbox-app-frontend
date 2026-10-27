@@ -1,1 +1,1 @@
-export * from 'src/views/DashboardCommon/SingleRentDetail/PeriodUnpaidAlert/PeriodUnpaidAlert';
+export * from './PeriodUnpaidAlert';

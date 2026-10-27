@@ -6,7 +6,7 @@ import { useTemplateListQuery } from 'src/queries';
 import {
   TemplateSection,
   TemplateSectionRow,
-} from 'src/views/DashboardTenant/Templates/List/types';
+} from './types';
 
 const groupKey = (row: TemplateSectionRow) =>
   `${row.type}:${row.channel}:${templateLanguage(row.lang)}`;

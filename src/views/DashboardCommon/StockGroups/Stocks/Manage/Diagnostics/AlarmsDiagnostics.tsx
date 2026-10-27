@@ -6,11 +6,11 @@ import {
   getHealthIcon,
   getHealthText,
   getHealthTone,
-} from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Diagnostics/diagnostics-health';
+} from './diagnostics-health';
 import {
   DiagnosticsCardsRow,
   DiagnosticsStatusCard,
-} from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Diagnostics/DiagnosticsStatusCard';
+} from './DiagnosticsStatusCard';
 
 type AlarmsDiagnosticsProps = {
   alarms: AlarmsStatusForAdminRes;

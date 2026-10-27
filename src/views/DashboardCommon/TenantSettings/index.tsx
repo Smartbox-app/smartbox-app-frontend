@@ -8,23 +8,23 @@ import { Header, HeaderWithActions, Section, Tabs } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
 import { useGetMyDetailsQuery } from 'src/queries';
 import UserService from 'src/services/user-service';
-import { ManageTenantFonts } from 'src/views/DashboardCommon/ClientManagement/Fonts';
-import { ManageTenantSlides } from 'src/views/DashboardCommon/ClientManagement/Slides';
-import { ManageTenantData } from 'src/views/DashboardCommon/ClientManagement/TenantData';
-import { ManageTenantSmtp } from 'src/views/DashboardCommon/ClientManagement/TenantSmtp';
-import { AgreementsSettings } from 'src/views/DashboardCommon/TenantSettings/sections/AgreementsSettings';
-import { AnalyticsSettings } from 'src/views/DashboardCommon/TenantSettings/sections/AnalyticsSettings';
-import { AppearanceSettings } from 'src/views/DashboardCommon/TenantSettings/sections/AppearanceSettings';
-import { CommunicationsSettings } from 'src/views/DashboardCommon/TenantSettings/sections/CommunicationsSettings';
-import { DocumentsSettings } from 'src/views/DashboardCommon/TenantSettings/sections/DocumentsSettings';
-import { IntegrationsSettings } from 'src/views/DashboardCommon/TenantSettings/sections/IntegrationsSettings';
-import { MobileAppsSettings } from 'src/views/DashboardCommon/TenantSettings/sections/MobileAppsSettings';
-import { TemplatesSettings } from 'src/views/DashboardCommon/TenantSettings/sections/TemplatesSettings';
+import { ManageTenantFonts } from '../ClientManagement/Fonts';
+import { ManageTenantSlides } from '../ClientManagement/Slides';
+import { ManageTenantData } from '../ClientManagement/TenantData';
+import { ManageTenantSmtp } from '../ClientManagement/TenantSmtp';
+import { AgreementsSettings } from './sections/AgreementsSettings';
+import { AnalyticsSettings } from './sections/AnalyticsSettings';
+import { AppearanceSettings } from './sections/AppearanceSettings';
+import { CommunicationsSettings } from './sections/CommunicationsSettings';
+import { DocumentsSettings } from './sections/DocumentsSettings';
+import { IntegrationsSettings } from './sections/IntegrationsSettings';
+import { MobileAppsSettings } from './sections/MobileAppsSettings';
+import { TemplatesSettings } from './sections/TemplatesSettings';
 import {
   TENANT_SETTINGS_DEFAULT_SEGMENT,
   useTenantSettingsTabs,
-} from 'src/views/DashboardCommon/TenantSettings/settingsTabs';
-import { TenantSettingsContext } from 'src/views/DashboardCommon/TenantSettings/TenantSettingsContext';
+} from './settingsTabs';
+import { TenantSettingsContext } from './TenantSettingsContext';
 
 type TenantSettingsProps = {
   userId?: string;

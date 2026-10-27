@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { ManageTenantBackground } from 'src/views/DashboardCommon/ClientManagement/Background';
-import { ManageTenantIcon } from 'src/views/DashboardCommon/ClientManagement/Icon';
-import { ManageTenantLogo } from 'src/views/DashboardCommon/ClientManagement/Logo';
-import { useTenantSettingsContext } from 'src/views/DashboardCommon/TenantSettings/TenantSettingsContext';
+import { ManageTenantBackground } from '../../ClientManagement/Background';
+import { ManageTenantIcon } from '../../ClientManagement/Icon';
+import { ManageTenantLogo } from '../../ClientManagement/Logo';
+import { useTenantSettingsContext } from '../TenantSettingsContext';
 
 export const AppearanceSettings = () => {
   const { userId } = useTenantSettingsContext();

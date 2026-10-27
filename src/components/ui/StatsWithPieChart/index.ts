@@ -1,1 +1,1 @@
-export * from 'src/components/ui/StatsWithPieChart/StatsWithPieChart';
+export * from './StatsWithPieChart';

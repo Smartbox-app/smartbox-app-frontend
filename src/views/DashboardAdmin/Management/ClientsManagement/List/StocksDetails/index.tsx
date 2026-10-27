@@ -4,7 +4,7 @@ import { UserClientListRes } from 'smartbox-types';
 import { __ } from 'src/helpers/i18n';
 import { useTenantNaming } from 'src/hooks/useTenantNaming';
 
-import 'src/views/DashboardAdmin/Management/ClientsManagement/List/StocksDetails/StockDetails.scss';
+import './StockDetails.scss';
 
 interface Props {
     user: UserClientListRes

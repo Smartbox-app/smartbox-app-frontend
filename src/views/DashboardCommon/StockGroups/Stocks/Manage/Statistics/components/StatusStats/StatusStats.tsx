@@ -4,11 +4,11 @@ import { StatsByStatus } from 'smartbox-types';
 import { ColorIndicator, Row } from 'src/components/Common';
 import { StatsWithPieChart } from 'src/components/ui/StatsWithPieChart';
 import { useTenant } from 'src/hooks/useTenant';
-import { getStatsText, statsByStatusToPieSegments } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Statistics/utils/stats-chart';
+import { getStatsText, statsByStatusToPieSegments } from '../../utils/stats-chart';
 import {
   STATUS_STATS_KEYS,
   StockStatusColors,
-} from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Statistics/utils/stock-status-colors';
+} from '../../utils/stock-status-colors';
 
 export type StatusStatsProps = {
   stats: StatsByStatus;

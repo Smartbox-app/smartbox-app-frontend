@@ -8,8 +8,8 @@ import {
 import { AsterixRequired } from 'src/components/Common';
 import { Header, Section } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
-import { InstallmentsPaymentMinDaysInfo } from 'src/views/DashboardCommon/Order/Form/Common/InstallmentsPaymentMinDaysInfo';
-import { SinglePaymentType } from 'src/views/DashboardCommon/Order/Form/Common/PaymentType/SinglePaymentType';
+import { InstallmentsPaymentMinDaysInfo } from '../InstallmentsPaymentMinDaysInfo';
+import { SinglePaymentType } from './SinglePaymentType';
 
 type Props = {
   stock: StockRes;

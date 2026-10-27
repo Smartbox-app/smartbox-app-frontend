@@ -18,7 +18,7 @@ import ApiService from 'src/services/api-service';
 import UserService from 'src/services/user-service';
 import { mapFields } from 'src/utils/fields-mapper';
 import { formOnTranslateString } from 'src/utils/trans-form';
-import { CompanyInvoiceStatus } from 'src/views/DashboardCommon/CompanyManagement/CompanyInvoiceStatus';
+import { CompanyInvoiceStatus } from '../CompanyInvoiceStatus';
 
 export const Edit = () => {
   const dispatch = useDispatch();

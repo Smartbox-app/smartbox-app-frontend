@@ -1,1 +1,1 @@
-export * from 'src/components/ui/InputLabel/InputLabel';
+export * from './InputLabel';

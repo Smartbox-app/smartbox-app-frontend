@@ -10,9 +10,9 @@ import {
   useGetStockStatisticsQuery,
 } from 'src/queries';
 import { SingleTab } from 'src/types/tab';
-import { PaymentsStats } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Statistics/components/PaymentsStats';
-import { RentsStats } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Statistics/components/RentsStats';
-import { getStockStatusColors } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Statistics/utils/stock-status-colors';
+import { PaymentsStats } from './components/PaymentsStats';
+import { RentsStats } from './components/RentsStats';
+import { getStockStatusColors } from './utils/stock-status-colors';
 
 export const Statistics = () => {
   const { stockId } = useParams<{ stockId: string }>();

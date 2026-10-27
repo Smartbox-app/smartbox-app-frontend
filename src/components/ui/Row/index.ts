@@ -1,1 +1,1 @@
-export * from 'src/components/ui/Row/Row';
+export * from './Row';

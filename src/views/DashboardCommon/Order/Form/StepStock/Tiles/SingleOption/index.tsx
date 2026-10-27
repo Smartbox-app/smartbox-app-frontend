@@ -6,7 +6,7 @@ import { setOrderStock } from 'src/actions/order';
 import { Badge, Card, Typography } from 'src/components/ui';
 import { ApplicationState } from 'src/reducers';
 
-import 'src/views/DashboardCommon/Order/Form/StepStock/Tiles/SingleOption/SingleOption.scss';
+import './SingleOption.scss';
 
 interface Props {
   name: string;

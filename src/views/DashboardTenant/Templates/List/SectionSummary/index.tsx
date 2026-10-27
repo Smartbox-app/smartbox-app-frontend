@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
 import { TemplateListRow } from 'smartbox-types';
-import { ChannelStatus } from 'src/views/DashboardTenant/Templates/List/ChannelStatus';
-import { TemplateSection } from 'src/views/DashboardTenant/Templates/List/types';
+import { ChannelStatus } from '../ChannelStatus';
+import { TemplateSection } from '../types';
 
 const Summary = styled('summary')({
   cursor: 'pointer',

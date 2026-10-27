@@ -14,14 +14,14 @@ import { __ } from 'src/helpers/i18n';
 import { useTenantNaming } from 'src/hooks/useTenantNaming';
 import { useMyRentDetailsQuery } from 'src/queries';
 import { isRentAccessActive } from 'src/utils/rent';
-import Gate from 'src/views/DashboardCommon/SingleRentDetail/Gate';
-import { MainData } from 'src/views/DashboardCommon/SingleRentDetail/MainData';
-import { MissingPaymentAlert } from 'src/views/DashboardCommon/SingleRentDetail/MissingPaymentAlert';
-import { OpenBox } from 'src/views/DashboardCommon/SingleRentDetail/OpenBox';
-import { PendingPaymentAlert } from 'src/views/DashboardCommon/SingleRentDetail/PendingPaymentAlert';
-import { PeriodUnpaidAlert } from 'src/views/DashboardCommon/SingleRentDetail/PeriodUnpaidAlert';
-import { RentAuthorizations } from 'src/views/DashboardCommon/SingleRentDetail/RentAuthorizations';
-import { RentNote } from 'src/views/DashboardCommon/SingleRentDetail/RentNote';
+import Gate from './Gate';
+import { MainData } from './MainData';
+import { MissingPaymentAlert } from './MissingPaymentAlert';
+import { OpenBox } from './OpenBox';
+import { PendingPaymentAlert } from './PendingPaymentAlert';
+import { PeriodUnpaidAlert } from './PeriodUnpaidAlert';
+import { RentAuthorizations } from './RentAuthorizations';
+import { RentNote } from './RentNote';
 
 const StyledGatesHeader = styled.div`
   font-weight: 700;

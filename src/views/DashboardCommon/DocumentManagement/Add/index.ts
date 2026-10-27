@@ -1,1 +1,1 @@
-export * from 'src/views/DashboardCommon/DocumentManagement/Add/Add';
+export * from './Add';

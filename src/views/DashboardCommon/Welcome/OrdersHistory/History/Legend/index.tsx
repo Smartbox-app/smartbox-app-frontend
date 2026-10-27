@@ -5,7 +5,7 @@ import { __ } from "src/helpers/i18n";
 import { useTenantNaming } from 'src/hooks/useTenantNaming';
 import { colorOrDark } from 'src/utils/color';
 
-import 'src/views/DashboardCommon/Welcome/OrdersHistory/History/Legend/Legend.scss';
+import './Legend.scss';
 
 const StyledActive = styled.p`
   background-color: ${({ theme }) => colorOrDark(theme.colors.primary)};

@@ -26,7 +26,7 @@ import ApiService from 'src/services/api-service';
 import { mapFields } from 'src/utils/fields-mapper';
 import { formOnTranslateString } from 'src/utils/trans-form';
 
-import 'src/views/DashboardCommon/BoxDetail/Edit/Status/Status.scss';
+import './Status.scss';
 
 const STATUSES_REQUIRING_FREE_CONFIRMATION: BoxDisplayStatus[] = [
   RentStatus.rented,

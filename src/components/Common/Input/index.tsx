@@ -2,8 +2,8 @@ import { FieldAndEventFunction } from 'itf_formbuilder_react';
 import * as React from 'react';
 import styled, { css } from 'styled-components';
 
-import { InputErrors } from 'src/components/Common/InputErrors';
-import { InputHelp } from 'src/components/Common/InputHelp';
+import { InputErrors } from '../InputErrors';
+import { InputHelp } from '../InputHelp';
 import { InputLabel } from 'src/components/ui/InputLabel';
 import { __ } from 'src/helpers/i18n';
 import { getColorForBackground } from 'src/utils/color';

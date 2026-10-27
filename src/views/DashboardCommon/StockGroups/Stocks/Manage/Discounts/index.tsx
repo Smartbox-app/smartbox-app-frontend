@@ -3,7 +3,7 @@ import { Switch, Route, Redirect, useParams, } from 'react-router';
 
 import { useGetMyDetailsQuery } from 'src/queries';
 import UserService from 'src/services/user-service';
-import { List } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Discounts/List';
+import { List } from './List';
 
 const Discounts = () => {
     const { stockId } = useParams<{ stockId: string }>();

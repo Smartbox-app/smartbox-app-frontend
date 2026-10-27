@@ -4,7 +4,7 @@ import { Header, Section } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
 import { useTenantNaming } from 'src/hooks/useTenantNaming';
 import { useStockDiscountsQuery } from 'src/queries';
-import Discounts from 'src/views/DashboardCommon/Welcome/Sale/Discounts';
+import Discounts from './Discounts';
 
 const Sale = () => {
   const { data: discountsList = [] } = useStockDiscountsQuery();

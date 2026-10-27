@@ -4,9 +4,9 @@ import { Switch, Route, Redirect, useParams } from "react-router";
 import { UserRole } from "smartbox-types";
 import { useGetMyDetailsQuery } from "src/queries";
 import UserService from "src/services/user-service";
-import { Add } from "src/views/DashboardCommon/StockGroups/Groups/Manage/Gates/Add";
-import { Edit } from "src/views/DashboardCommon/StockGroups/Groups/Manage/Gates/Edit";
-import { List } from "src/views/DashboardCommon/StockGroups/Groups/Manage/Gates/List";
+import { Add } from "./Add";
+import { Edit } from "./Edit";
+import { List } from "./List";
 
 const Gates = () => {
   const { stockGroupId } = useParams<{ stockGroupId: string }>();

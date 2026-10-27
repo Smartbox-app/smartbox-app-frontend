@@ -6,7 +6,7 @@ import { Modal } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
 import { colorOrDark } from 'src/utils/color';
 
-import 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Discounts/GiftModal/NewCode/NewCode.scss';
+import './NewCode.scss';
 
 interface Props {
   newCodeProps: GiftRes;

@@ -2,7 +2,7 @@ import React from 'react';
 
 import {__} from "src/helpers/i18n";
 
-import 'src/components/Layout/SimpleHeader/SimpleHeader.scss';
+import './SimpleHeader.scss';
 
 interface Props {
   title: string;

@@ -2,7 +2,7 @@ import { Editor, useEditorState } from '@tiptap/react';
 import React from 'react';
 
 import { __ } from 'src/helpers/i18n';
-import { TableToolbarWrapper, Button } from 'src/views/DashboardCommon/DocumentManagement/components/styled';
+import { TableToolbarWrapper, Button } from '../styled';
 
 export const TiptapTableToolbar = ({ editor }: { editor: Editor }) => {
   const { isTable } = useEditorState({

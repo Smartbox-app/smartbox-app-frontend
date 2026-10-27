@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import ApplicationError from 'src/views/ApplicationError';
+import ApplicationError from '../../../views/ApplicationError';
 
 interface State {
   hasError: boolean;

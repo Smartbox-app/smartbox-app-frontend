@@ -1,1 +1,1 @@
-export * from 'src/components/ui/Narrow/Narrow';
+export * from './Narrow';

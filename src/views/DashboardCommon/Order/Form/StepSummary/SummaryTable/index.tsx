@@ -10,9 +10,9 @@ import { dateOnlyLocalTime } from 'src/utils/format-date';
 import { formatPrice } from 'src/utils/format-price';
 import { openEndedNextInvoiceDate } from 'src/utils/open-ended-period';
 import { sumAddonPricesPerPeriod } from 'src/utils/summary-period-prices';
-import { SelectedVariant } from 'src/views/DashboardCommon/Order/Form/StepSummary/SummaryTable/SelectedVariant';
+import { SelectedVariant } from './SelectedVariant';
 
-import 'src/views/DashboardCommon/Order/Form/StepSummary/SummaryTable/SummaryTable.scss';
+import './SummaryTable.scss';
 
 const StyledCell = styled.div`
   color: ${(props) => colorOrDark(props.theme.colors.primary)};

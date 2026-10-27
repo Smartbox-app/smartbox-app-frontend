@@ -1,8 +1,8 @@
 import React from 'react';
 import { Switch, Route, Redirect } from 'react-router';
 
-import { Add } from 'src/views/DashboardAdmin/Management/MobileAppsConfig/Add';
-import { List } from 'src/views/DashboardAdmin/Management/MobileAppsConfig/List';
+import { Add } from './Add';
+import { List } from './List';
 
 const MobileAppsConfig = () => (
   <Switch>

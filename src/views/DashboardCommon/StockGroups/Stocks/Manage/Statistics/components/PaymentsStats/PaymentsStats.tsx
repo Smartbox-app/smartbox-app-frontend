@@ -4,7 +4,7 @@ import { Section, Typography } from 'src/components/ui';
 import { StatsWithPieChart } from 'src/components/ui/StatsWithPieChart';
 import { __ } from 'src/helpers/i18n';
 import { formatPrice } from 'src/utils/format-price';
-import { paymentMonthsToPieSegments } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Statistics/utils/stats-chart';
+import { paymentMonthsToPieSegments } from '../../utils/stats-chart';
 
 export type PaymentsStatsProps = {
   statistics: StockStatistics;

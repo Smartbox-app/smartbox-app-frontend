@@ -6,9 +6,9 @@ import { history } from 'src/history';
 import { useGetMyDetailsQuery } from 'src/queries';
 import { ApplicationState } from 'src/reducers';
 import UserService from 'src/services/user-service';
-import { PaymentForm } from 'src/views/DashboardCommon/Order/Form/StepPayment/PaymentForm';
+import { PaymentForm } from './PaymentForm';
 
-import 'src/views/DashboardCommon/Order/Form/StepPayment/StepPayment.scss';
+import './StepPayment.scss';
 
 export const StepPayment = () => {
   const { data: user } = useGetMyDetailsQuery();

@@ -17,7 +17,7 @@ import {
 } from 'src/queries';
 import UserService from 'src/services/user-service';
 import { findUnpaidRent } from 'src/utils/unpaid-extension';
-import { Form } from 'src/views/DashboardCommon/Order/Form/Index';
+import { Form } from './Form/Index';
 
 export const Order = () => {
   const dispatch = useDispatch();

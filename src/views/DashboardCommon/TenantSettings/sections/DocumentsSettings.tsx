@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { ManageTenantAgreement } from 'src/views/DashboardCommon/ClientManagement/Agreement';
-import { ManageTenantPrivacy } from 'src/views/DashboardCommon/ClientManagement/Privacy';
-import { ManageTenantRules } from 'src/views/DashboardCommon/ClientManagement/Rules';
-import { useTenantSettingsContext } from 'src/views/DashboardCommon/TenantSettings/TenantSettingsContext';
+import { ManageTenantAgreement } from '../../ClientManagement/Agreement';
+import { ManageTenantPrivacy } from '../../ClientManagement/Privacy';
+import { ManageTenantRules } from '../../ClientManagement/Rules';
+import { useTenantSettingsContext } from '../TenantSettingsContext';
 
 export const DocumentsSettings = () => {
   const { userId } = useTenantSettingsContext();

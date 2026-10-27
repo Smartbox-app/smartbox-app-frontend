@@ -1,1 +1,1 @@
-export * from 'src/views/DashboardCommon/DocumentManagement/DocumentForm/DocumentForm';
+export * from './DocumentForm';

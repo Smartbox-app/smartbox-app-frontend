@@ -46,9 +46,9 @@ import {
   appendCollectionFields,
 } from 'src/utils/rent-form-data';
 import { textToSimpleMD } from 'src/utils/text-to-simple-md';
-import ScrollPosition from 'src/views/DashboardCommon/Order/Form/StepAgreement/ScrollPosition';
+import ScrollPosition from './ScrollPosition';
 
-import 'src/views/DashboardCommon/Order/Form/StepAgreement/StepAgreement.scss';
+import './StepAgreement.scss';
 
 const StepAgreement = () => {
   const { data: user } = useGetMyDetailsQuery();

@@ -3,7 +3,7 @@ import React from 'react';
 import { Spinner } from 'src/components/Branded';
 import { __ } from 'src/helpers/i18n';
 import { useGetStockBoxesQuery, useGetStockQuery } from 'src/queries';
-import { MapView } from 'src/views/DashboardCommon/MapView';
+import { MapView } from '../../../views/DashboardCommon/MapView';
 
 interface Props {
   boxId: string;

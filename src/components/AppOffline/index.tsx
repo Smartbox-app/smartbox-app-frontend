@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { __ } from "src/helpers/i18n";
 import { getColorForBackground } from 'src/utils/color';
 
-import 'src/components/AppOffline/AppOffline.scss';
+import './AppOffline.scss';
 
 const StyledAppStatus = styled.div`
 background: ${props => props.theme.colors.primary};

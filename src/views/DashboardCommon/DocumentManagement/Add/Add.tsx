@@ -15,7 +15,7 @@ import {
 import { useGetMyDetailsQuery } from 'src/queries';
 import { ClassValidatorResolver } from 'src/resolvers/ClassValidatorResolver';
 import UserService from 'src/services/user-service';
-import { DocumentForm } from 'src/views/DashboardCommon/DocumentManagement/DocumentForm';
+import { DocumentForm } from '../DocumentForm';
 
 export const Add = () => {
   const { data: user } = useGetMyDetailsQuery();

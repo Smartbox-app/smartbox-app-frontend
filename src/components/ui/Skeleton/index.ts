@@ -1,1 +1,1 @@
-export * from 'src/components/ui/Skeleton/Skeleton';
+export * from './Skeleton';

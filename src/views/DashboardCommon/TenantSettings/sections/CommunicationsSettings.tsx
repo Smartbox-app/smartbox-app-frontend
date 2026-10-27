@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { ManageTenantCommunications } from 'src/views/DashboardCommon/ClientManagement/TenantCommunications';
-import { useTenantSettingsContext } from 'src/views/DashboardCommon/TenantSettings/TenantSettingsContext';
+import { ManageTenantCommunications } from '../../ClientManagement/TenantCommunications';
+import { useTenantSettingsContext } from '../TenantSettingsContext';
 
 export const CommunicationsSettings = () => {
   const { userId } = useTenantSettingsContext();

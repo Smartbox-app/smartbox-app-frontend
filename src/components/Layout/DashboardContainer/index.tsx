@@ -9,7 +9,7 @@ import { Footer } from 'src/components/Layout/index';
 import { __ } from 'src/helpers/i18n';
 import { List } from 'src/icons';
 
-import 'src/components/Layout/DashboardContainer/DashboardContainer.scss';
+import './DashboardContainer.scss';
 
 interface Props {
   children: ReactNode;

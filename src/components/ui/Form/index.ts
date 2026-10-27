@@ -1,1 +1,1 @@
-export * from 'src/components/ui/Form/Form';
+export * from './Form';

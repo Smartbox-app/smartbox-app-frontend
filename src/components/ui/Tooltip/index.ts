@@ -1,1 +1,1 @@
-export * from 'src/components/ui/Tooltip/Tooltip';
+export * from './Tooltip';

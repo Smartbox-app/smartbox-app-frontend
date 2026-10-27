@@ -3,9 +3,9 @@ import styled from 'styled-components';
 
 import { useTenant } from 'src/hooks/useTenant';
 import { getColorForBackground } from 'src/utils/color';
-import SingleSlide from 'src/views/Welcome/SingleSlide';
+import SingleSlide from './SingleSlide';
 
-import 'src/views/Welcome/Welcome.scss';
+import './Welcome.scss';
 
 const StyledWelcomeContainer = styled.div`
 .swiper-pagination-bullet-active {

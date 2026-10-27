@@ -11,7 +11,7 @@ import { __ } from 'src/helpers/i18n';
 import { history } from 'src/history';
 import { colorOrDark } from 'src/utils/color';
 
-import 'src/views/ApplicationError/ApplicationError.scss';
+import './ApplicationError.scss';
 
 const StyledApplicationError = styled.h1`
   color: ${(props) => colorOrDark(props.theme.colors.primary)};

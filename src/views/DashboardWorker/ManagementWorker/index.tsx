@@ -2,8 +2,8 @@ import { Redirect, Route, Switch } from 'react-router';
 
 import { useGetMyDetailsQuery } from 'src/queries';
 import UserService from 'src/services/user-service';
-import { InvitesSent } from 'src/views/DashboardCommon/InvitesSent';
-import UsersManagement from 'src/views/DashboardCommon/UsersManagement';
+import { InvitesSent } from '../../DashboardCommon/InvitesSent';
+import UsersManagement from '../../DashboardCommon/UsersManagement';
 
 const Management = () => {
   const { data: user } = useGetMyDetailsQuery();

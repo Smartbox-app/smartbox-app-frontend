@@ -8,9 +8,9 @@ import {
 } from 'src/components/Layout';
 import { useDashboardSidebarNav } from 'src/hooks/useDashboardSidebarNav';
 import { withAttributionSearch } from 'src/utils/attribution-params';
-import Profile from 'src/views/DashboardCommon/Profile';
-import { StockGroups } from 'src/views/DashboardCommon/StockGroups';
-import ManagementWorker from 'src/views/DashboardWorker/ManagementWorker';
+import Profile from '../DashboardCommon/Profile';
+import { StockGroups } from '../DashboardCommon/StockGroups';
+import ManagementWorker from './ManagementWorker';
 
 const DashboardWorker = () => {
   const sidebarGroups = useDashboardSidebarNav();

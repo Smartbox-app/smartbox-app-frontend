@@ -20,8 +20,8 @@ import {
 } from 'src/queries';
 import { ClassValidatorResolver } from 'src/resolvers/ClassValidatorResolver';
 import UserService from 'src/services/user-service';
-import { InviteEmailsField } from 'src/views/DashboardCommon/InviteUser/InviteEmailsField';
-import { InviteUsersSuccessModal } from 'src/views/DashboardCommon/InviteUser/InviteUsersSuccessModal';
+import { InviteEmailsField } from './InviteEmailsField';
+import { InviteUsersSuccessModal } from './InviteUsersSuccessModal';
 
 const LANGUAGE_OPTIONS = [
   { value: Language.pl, label: 'Polski' },

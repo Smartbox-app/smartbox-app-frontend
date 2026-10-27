@@ -7,9 +7,9 @@ import { __ } from 'src/helpers/i18n';
 import { InfoCircle, Stop } from 'src/icons';
 import { useGetMyDetailsQuery } from 'src/queries';
 import UserService from 'src/services/user-service';
-import GateStatus from 'src/views/DashboardCommon/GateStatus';
-import { BasicData } from 'src/views/DashboardCommon/StockGroups/Groups/Manage/BasicData';
-import { Gates } from 'src/views/DashboardCommon/StockGroups/Groups/Manage/Gates';
+import GateStatus from '../../../GateStatus';
+import { BasicData } from './BasicData';
+import { Gates } from './Gates';
 
 const ManageGroup = () => {
   const { stockGroupId } = useParams<{ stockGroupId: string }>();

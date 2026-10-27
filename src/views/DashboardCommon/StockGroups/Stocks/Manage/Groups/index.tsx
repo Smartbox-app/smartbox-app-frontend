@@ -3,10 +3,10 @@ import { Switch, Route, Redirect, useParams, } from 'react-router';
 
 import { useGetMyDetailsQuery } from 'src/queries';
 import UserService from 'src/services/user-service';
-import { Add } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Groups/Add';
-import { List } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Groups/List';
-import { Pricing } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Groups/Pricing';
-import { Map } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Map';
+import { Add } from './Add';
+import { List } from './List';
+import { Pricing } from './Pricing';
+import { Map } from '../Map';
 
 const Groups = () => {
     const { stockId } = useParams<{ stockId: string}>();

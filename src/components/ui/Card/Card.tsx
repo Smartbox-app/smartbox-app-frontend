@@ -1,7 +1,7 @@
 import { AriaRole, ReactNode } from 'react';
 import styled from 'styled-components';
 
-import { CardBackground } from 'src/components/ui/Card/components/CardBackground';
+import { CardBackground } from './components/CardBackground';
 
 const StyledCard = styled('div')(({ theme }) => ({
   borderRadius: theme.radius.innerSurface,

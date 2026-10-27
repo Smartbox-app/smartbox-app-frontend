@@ -1,7 +1,7 @@
 import React from 'react';
 import { useParams } from 'react-router';
 
-import { TenantSettings } from 'src/views/DashboardCommon/TenantSettings';
+import { TenantSettings } from '../../../../DashboardCommon/TenantSettings';
 
 export const AdminTenantSettings = () => {
   const { userId, tenantId } = useParams<{ userId: string; tenantId: string }>();

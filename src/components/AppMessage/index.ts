@@ -1,1 +1,1 @@
-export * from 'src/components/AppMessage/AppMessage';
+export * from './AppMessage';

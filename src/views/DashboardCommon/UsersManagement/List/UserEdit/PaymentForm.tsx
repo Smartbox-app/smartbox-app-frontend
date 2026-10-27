@@ -11,7 +11,7 @@ import { mapFields } from 'src/utils/fields-mapper';
 import { formOnTranslateString } from 'src/utils/trans-form';
 import {
   PaymentDeadlinePreviewModal,
-} from 'src/views/DashboardCommon/UsersManagement/List/UserEdit/components/PaymentDeadlinePreviewModal';
+} from './components/PaymentDeadlinePreviewModal';
 
 type PaymentFormProps = {
   userId: string;

@@ -1,1 +1,1 @@
-export { Diagnostics } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Diagnostics/Diagnostics';
+export { Diagnostics } from './Diagnostics';

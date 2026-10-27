@@ -7,7 +7,7 @@ import { ErrorText } from 'src/components/ui/ErrorText';
 import { __ } from 'src/helpers/i18n';
 import { getColorForBackground } from 'src/utils/color';
 
-import 'src/components/ui/Checkbox/CheckBox.scss';
+import './CheckBox.scss';
 
 export type CheckboxProps = {
   name: string;

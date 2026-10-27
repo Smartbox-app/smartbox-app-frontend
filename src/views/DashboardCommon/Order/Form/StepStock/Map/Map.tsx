@@ -12,10 +12,10 @@ import { currentAppLanguage } from 'src/i18n/app-language';
 import { useGetStockGroupsListQuery, useGetStockListQuery } from 'src/queries';
 import { ApplicationState } from 'src/reducers';
 import { MAPBOX_COUNTRY_NAME_FIELD } from 'src/utils/country-locale';
-import { ActiveLocation } from 'src/views/DashboardCommon/Order/Form/StepStock/Map/components/ActiveLocation';
+import { ActiveLocation } from './components/ActiveLocation';
 
 import 'mapbox-gl/dist/mapbox-gl.css';
-import 'src/views/DashboardCommon/Order/Form/StepStock/Map/Map.scss';
+import './Map.scss';
 
 let mapboxgl: typeof mapboxglType;
 async function loadMapbox() {

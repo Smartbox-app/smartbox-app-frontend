@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Logo } from 'src/components/Branded';
 
-import 'src/components/Layout/MobileLogoContainer/MobileLogoContainer.scss';
+import './MobileLogoContainer.scss';
 
 interface Props {
   small?: boolean;

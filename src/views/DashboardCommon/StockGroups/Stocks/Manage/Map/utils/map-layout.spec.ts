@@ -7,7 +7,7 @@ import {
   isSameBoxLayout,
   layoutFromMoveableRect,
   normalizeMapPosition,
-} from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Map/utils/map-layout';
+} from './map-layout';
 
 const stock = {
   mapWidth: 1000,

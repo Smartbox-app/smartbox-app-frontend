@@ -4,7 +4,7 @@ import { MyRentDetails, RentAgreementType, RentDescription } from 'smartbox-type
 import { Header, Section, Typography } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
 import { useTenantNaming } from 'src/hooks/useTenantNaming';
-import { RentHistory } from 'src/views/DashboardCommon/RentHistory';
+import { RentHistory } from '../../RentHistory';
 
 interface Props {
   description: RentDescription[];

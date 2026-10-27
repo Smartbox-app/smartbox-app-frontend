@@ -8,8 +8,8 @@ import { Navigation } from 'src/components/Layout/Navigation';
 import { Home, Settings } from 'src/icons';
 import { MenuItemType } from 'src/types/menu-item';
 import { withAttributionSearch } from 'src/utils/attribution-params';
-import { Welcome, Order, Profile, Contact } from 'src/views/DashboardCommon';
-import SingleRentDetail from 'src/views/DashboardCommon/SingleRentDetail';
+import { Welcome, Order, Profile, Contact } from '../DashboardCommon';
+import SingleRentDetail from '../DashboardCommon/SingleRentDetail';
 
 const DashboardUser = () => {
   const menuItems: MenuItemType[] = [

@@ -1,2 +1,2 @@
-export * from 'src/components/ui/Modal/Modal';
+export * from './Modal';
 

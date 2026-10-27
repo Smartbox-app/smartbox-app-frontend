@@ -17,7 +17,7 @@ import { __ } from 'src/helpers/i18n';
 import ApiService from 'src/services/api-service';
 import { mapFields } from 'src/utils/fields-mapper';
 import { formOnTranslateString } from 'src/utils/trans-form';
-import { serializeBoxGroupIds } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Addons/serialize-box-group-ids';
+import { serializeBoxGroupIds } from '../serialize-box-group-ids';
 
 interface Props {
   id: string;

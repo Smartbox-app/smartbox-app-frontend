@@ -4,7 +4,7 @@ import { UserClientListRes } from 'smartbox-types';
 import { InvoiceStatus, PaymentServiceStatus, SmsStatus } from 'src/components/Common';
 import { Modal } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
-import { StocksDetails } from 'src/views/DashboardAdmin/Management/ClientsManagement/List/StocksDetails';
+import { StocksDetails } from '../List/StocksDetails';
 
 interface Props {
   tenantId: string;

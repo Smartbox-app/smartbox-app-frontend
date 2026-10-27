@@ -18,8 +18,8 @@ import {
   useToggleGiftMutation,
 } from 'src/mutations';
 import { InteractiveTableSchema } from 'src/utils/table-schema-utils';
-import { GiftModal } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Discounts/GiftModal';
-import { StockDiscount } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Discounts/StockDiscount';
+import { GiftModal } from '../GiftModal';
+import { StockDiscount } from '../StockDiscount';
 
 const getType = (type: GiftType) => {
   switch (type) {

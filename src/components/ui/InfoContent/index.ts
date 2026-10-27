@@ -1,1 +1,1 @@
-export * from 'src/components/ui/InfoContent/InfoContent';
+export * from './InfoContent';

@@ -15,13 +15,13 @@ import { ApplicationState } from 'src/reducers';
 import {
   getColorForBackground,
 } from 'src/utils/color';
-import { PriceInfo } from 'src/views/DashboardCommon/Order/Form/StepSize/PriceInfo';
-import { LeftCounter } from 'src/views/DashboardCommon/Order/Form/StepSize/SingleOption/components/LeftCounter';
-import { OptionActions } from 'src/views/DashboardCommon/Order/Form/StepSize/SingleOption/components/OptionActions';
-import { OptionData } from 'src/views/DashboardCommon/Order/Form/StepSize/SingleOption/components/OptionData';
-import { OptionImage } from 'src/views/DashboardCommon/Order/Form/StepSize/SingleOption/components/OptionImage';
+import { PriceInfo } from '../PriceInfo';
+import { LeftCounter } from './components/LeftCounter';
+import { OptionActions } from './components/OptionActions';
+import { OptionData } from './components/OptionData';
+import { OptionImage } from './components/OptionImage';
 
-import 'src/views/DashboardCommon/Order/Form/StepSize/SingleOption/SingleOption.scss';
+import './SingleOption.scss';
 
 export type SingleOptionType = {
   name: string;

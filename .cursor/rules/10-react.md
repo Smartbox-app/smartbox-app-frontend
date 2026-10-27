@@ -1,5 +1,13 @@
 # React Engineering Rules
 
+## Import paths
+
+- Use absolute `src/...` only for **shared top-level** modules: `components/ui`, `components/Layout`, `components/Common`, `components/Branded`, `queries`, `mutations`, `hooks`, `helpers`, `utils`, `actions`, `services`, `icons`, etc.
+- Within a feature folder (`src/views/...` or a component package), use **relative** imports for siblings/children (`./RentNote`, `../Action`).
+- Do **not** rewrite local feature imports to long absolutes like `src/views/DashboardCommon/SingleRentDetail/RentNote`.
+
+---
+
 ## Component Style
 
 Use functional React components.

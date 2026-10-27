@@ -12,7 +12,7 @@ import {
   hasViewableAgreementPeriod,
   resolveRentAgreementForDescriptionLine,
 } from 'src/utils/rent-agreement';
-import { RentAgreementButton } from 'src/views/DashboardCommon/SingleRentDetail/RentAgreementButton';
+import { RentAgreementButton } from '../SingleRentDetail/RentAgreementButton';
 
 interface Props {
   description: RentDescription[];

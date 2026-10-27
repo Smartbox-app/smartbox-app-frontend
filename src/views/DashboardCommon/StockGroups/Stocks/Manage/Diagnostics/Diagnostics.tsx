@@ -9,9 +9,9 @@ import {
   useGatesStatusForStockQuery,
   useLocationDiagnosticsQuery,
 } from 'src/queries';
-import { AlarmsDiagnostics } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Diagnostics/AlarmsDiagnostics';
-import { GatesDiagnostics } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Diagnostics/GatesDiagnostics';
-import { InternetDiagnostics } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Diagnostics/InternetDiagnostics';
+import { AlarmsDiagnostics } from './AlarmsDiagnostics';
+import { GatesDiagnostics } from './GatesDiagnostics';
+import { InternetDiagnostics } from './InternetDiagnostics';
 
 const POLL_MS = 60_000;
 

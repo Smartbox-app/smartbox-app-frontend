@@ -1,10 +1,10 @@
 import { BoxDisplayStatus, RentStatus } from 'smartbox-types';
 import { useGetMyDetailsQuery } from 'src/queries';
 import { isAdminOrTenant } from 'src/utils/role-check';
-import Position from 'src/views/DashboardCommon/BoxDetail/Edit/Position';
-import Status from 'src/views/DashboardCommon/BoxDetail/Edit/Status';
+import Position from './Position';
+import Status from './Status';
 
-import 'src/views/DashboardCommon/BoxDetail/Edit/Edit.scss';
+import './Edit.scss';
 
 interface Props {
   selectedBoxId: string;

@@ -7,7 +7,7 @@ import { __ } from 'src/helpers/i18n';
 import { getColorForBackground } from 'src/utils/color';
 import { TranslatableObject } from 'src/utils/errors-trans';
 
-import 'src/components/Common/CheckBox/CheckBox.scss';
+import './CheckBox.scss';
 
 interface Props {
   name: string;

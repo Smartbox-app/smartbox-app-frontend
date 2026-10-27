@@ -6,8 +6,8 @@ import { Section } from 'src/components/Layout';
 import { Header } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
 import { useGetStockBoxesQuery, useGetStockQuery } from 'src/queries';
-import { MapView } from 'src/views/DashboardCommon/MapView';
-import { MapSettingsForm } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Map/MapSettingsForm';
+import { MapView } from '../../../../MapView';
+import { MapSettingsForm } from './MapSettingsForm';
 
 const Map = () => {
   const { stockId } = useParams<{ stockId: string }>();

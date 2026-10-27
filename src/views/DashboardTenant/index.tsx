@@ -8,10 +8,10 @@ import {
 } from 'src/components/Layout';
 import { useDashboardSidebarNav } from 'src/hooks/useDashboardSidebarNav';
 import { withAttributionSearch } from 'src/utils/attribution-params';
-import { Profile } from 'src/views/DashboardCommon';
-import { StockGroups } from 'src/views/DashboardCommon/StockGroups';
-import Management from 'src/views/DashboardTenant/Management';
-import { TenantStatus } from 'src/views/DashboardTenant/TenantStatus';
+import { Profile } from '../DashboardCommon';
+import { StockGroups } from '../DashboardCommon/StockGroups';
+import Management from './Management';
+import { TenantStatus } from './TenantStatus';
 
 const DashboardTenant = () => {
   const sidebarGroups = useDashboardSidebarNav();

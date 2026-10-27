@@ -2,9 +2,9 @@ import { StockStatistics } from 'smartbox-types';
 import { Header, Section, Typography } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
 import { useI18n } from 'src/i18n';
-import { StatusStats } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Statistics/components/StatusStats';
-import { getStatsText } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Statistics/utils/stats-chart';
-import { StockStatusColors } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Statistics/utils/stock-status-colors';
+import { StatusStats } from '../StatusStats';
+import { getStatsText } from '../../utils/stats-chart';
+import { StockStatusColors } from '../../utils/stock-status-colors';
 
 export type RentsStatsProps = {
   statistics: StockStatistics;

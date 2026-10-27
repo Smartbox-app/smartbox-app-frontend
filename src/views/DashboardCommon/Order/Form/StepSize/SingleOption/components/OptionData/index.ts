@@ -1,1 +1,1 @@
-export * from 'src/views/DashboardCommon/Order/Form/StepSize/SingleOption/components/OptionData/OptionData';
+export * from './OptionData';

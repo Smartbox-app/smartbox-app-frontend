@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { ManageTenantIntegrations } from 'src/views/DashboardCommon/ClientManagement/TenantIntegrations';
-import { useTenantSettingsContext } from 'src/views/DashboardCommon/TenantSettings/TenantSettingsContext';
+import { ManageTenantIntegrations } from '../../ClientManagement/TenantIntegrations';
+import { useTenantSettingsContext } from '../TenantSettingsContext';
 
 export const IntegrationsSettings = () => {
   const { userId } = useTenantSettingsContext();

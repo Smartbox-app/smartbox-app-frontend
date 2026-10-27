@@ -1,10 +1,10 @@
 import React from 'react';
 import { Redirect, Route, Switch } from 'react-router';
 
-import { Gateways } from 'src/views/DashboardAdmin/TTLockManagement/Gateways';
-import { LockGroups } from 'src/views/DashboardAdmin/TTLockManagement/LockGroups';
-import { Locks } from 'src/views/DashboardAdmin/TTLockManagement/Locks';
-import { Passcodes } from 'src/views/DashboardAdmin/TTLockManagement/Passcodes';
+import { Gateways } from './Gateways';
+import { LockGroups } from './LockGroups';
+import { Locks } from './Locks';
+import { Passcodes } from './Passcodes';
 
 export const TTLockManagement = () => {
   return (

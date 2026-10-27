@@ -1,1 +1,1 @@
-export * from 'src/components/Common/NotifyWhenAvailableModal/NotifyWhenAvailableModal';
+export * from './NotifyWhenAvailableModal';

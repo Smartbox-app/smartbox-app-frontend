@@ -1,1 +1,1 @@
-export * from 'src/components/Common/DeleteStockModal/DeleteStockModal';
+export * from './DeleteStockModal';

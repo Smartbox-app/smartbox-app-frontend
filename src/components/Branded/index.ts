@@ -1,8 +1,8 @@
-import { Button } from "src/components/Branded/Button";
-import { Logo } from "src/components/Branded/Logo";
-import { LogoContainer } from "src/components/Branded/LogoContainer";
-import { PageContent } from "src/components/Branded/PageContent";
-import { Spinner } from "src/components/Branded/Spinner";
+import { Button } from "./Button";
+import { Logo } from "./Logo";
+import { LogoContainer } from "./LogoContainer";
+import { PageContent } from "./PageContent";
+import { Spinner } from "./Spinner";
 
 export {
     Logo,

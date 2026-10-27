@@ -3,7 +3,7 @@ import styled, { DefaultTheme } from 'styled-components';
 
 import { __ } from 'src/helpers/i18n';
 
-import 'src/components/Common/Alert/Alert.scss';
+import './Alert.scss';
 
 type AlertTypes = 'error' | 'notice' | 'warning' | 'success';
 

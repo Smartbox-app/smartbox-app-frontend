@@ -3,8 +3,8 @@ import { Redirect, Route, Switch } from 'react-router';
 
 import { useGetMyDetailsQuery } from 'src/queries';
 import UserService from 'src/services/user-service';
-import { Add } from 'src/views/DashboardCommon/AttachmentManagement/Add';
-import { List } from 'src/views/DashboardCommon/AttachmentManagement/List';
+import { Add } from './Add';
+import { List } from './List';
 
 const AttachmentManagement = () => {
   const { data: user } = useGetMyDetailsQuery();

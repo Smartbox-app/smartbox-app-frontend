@@ -17,10 +17,10 @@ import {
   useRotateApiAccessKeyMutation,
 } from 'src/mutations';
 import { InteractiveTableSchema } from 'src/utils/table-schema-utils';
-import { ApiKeyCreatedModal } from 'src/views/DashboardAdmin/Management/ApiAccess/ApiKeyCreatedModal';
-import { CreateApiAccessModal } from 'src/views/DashboardAdmin/Management/ApiAccess/CreateApiAccessModal';
-import { EditApiAccessModal } from 'src/views/DashboardAdmin/Management/ApiAccess/EditApiAccessModal';
-import { TenantApiAccess } from 'src/views/DashboardTenant/ApiAccess';
+import { ApiKeyCreatedModal } from '../ApiKeyCreatedModal';
+import { CreateApiAccessModal } from '../CreateApiAccessModal';
+import { EditApiAccessModal } from '../EditApiAccessModal';
+import { TenantApiAccess } from '../../../../DashboardTenant/ApiAccess';
 
 const List = () => {
   const dispatch = useDispatch();

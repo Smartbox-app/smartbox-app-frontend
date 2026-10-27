@@ -1,7 +1,7 @@
 import { Alert } from 'src/components/Common';
 import { __ } from 'src/helpers/i18n';
 
-import 'src/views/DashboardCommon/Welcome/Sale/Discounts/Discounts.scss';
+import './Discounts.scss';
 
 interface Props {
   discounts: string[];

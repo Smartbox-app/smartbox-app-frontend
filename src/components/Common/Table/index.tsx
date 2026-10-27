@@ -18,7 +18,7 @@ import { getColorForBackground } from 'src/utils/color';
 import { fullDate } from 'src/utils/format-date';
 import { formatPrice } from 'src/utils/format-price';
 
-import 'src/components/Common/Table/Table.scss';
+import './Table.scss';
 
 interface Props {
   scheme: TableSchema;

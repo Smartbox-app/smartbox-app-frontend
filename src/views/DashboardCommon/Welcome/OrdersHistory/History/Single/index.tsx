@@ -6,7 +6,7 @@ import { useRent } from 'src/hooks/useRent';
 import { colorOrDark } from 'src/utils/color';
 import { dateOnly } from 'src/utils/format-date';
 
-import 'src/views/DashboardCommon/Welcome/OrdersHistory/History/Single/Single.scss';
+import './Single.scss';
 
 export interface SingleHistory {
   createdAt: Date;

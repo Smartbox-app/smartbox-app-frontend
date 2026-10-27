@@ -6,7 +6,7 @@ import { ButtonsContainer } from 'src/components/Layout';
 import { useFileStorage } from 'src/hooks/useFileStorage';
 import { useTenant } from 'src/hooks/useTenant';
 
-import 'src/views/Welcome/SingleSlide/SingleSlide.scss';
+import './SingleSlide.scss';
 
 interface Props {
   item: string;

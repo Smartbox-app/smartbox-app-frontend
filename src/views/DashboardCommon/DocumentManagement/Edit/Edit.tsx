@@ -23,7 +23,7 @@ import {
 import { documentDraftQueryKey } from 'src/queries/useGetDocumentDraftQuery/useGetDocumentDraftQuery';
 import { ClassValidatorResolver } from 'src/resolvers/ClassValidatorResolver';
 import UserService from 'src/services/user-service';
-import { DocumentForm } from 'src/views/DashboardCommon/DocumentManagement/DocumentForm';
+import { DocumentForm } from '../DocumentForm';
 
 export const Edit = () => {
   const { data: user } = useGetMyDetailsQuery();

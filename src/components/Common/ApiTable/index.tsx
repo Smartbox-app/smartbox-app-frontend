@@ -19,7 +19,7 @@ import { __ } from 'src/helpers/i18n';
 import ApiService from 'src/services/api-service';
 import debounce from 'src/utils/debounce';
 
-import 'src/components/Common/ApiTable/ApiTable.scss';
+import './ApiTable.scss';
 
 const StyledContainer = styled('div')({
   position: 'relative',

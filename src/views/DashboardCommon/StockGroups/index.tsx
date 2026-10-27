@@ -4,12 +4,12 @@ import { Redirect, Route, Switch } from 'react-router';
 import { UserRole } from 'smartbox-types';
 import { useGetMyDetailsQuery } from 'src/queries';
 import UserService from 'src/services/user-service';
-import { Add as AddGroup } from 'src/views/DashboardCommon/StockGroups/Groups/Add';
-import { GroupsList } from 'src/views/DashboardCommon/StockGroups/Groups/List';
-import { ManageGroup } from 'src/views/DashboardCommon/StockGroups/Groups/Manage';
-import { Add } from 'src/views/DashboardCommon/StockGroups/Stocks/Add';
-import { List } from 'src/views/DashboardCommon/StockGroups/Stocks/List';
-import { Manage } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage';
+import { Add as AddGroup } from './Groups/Add';
+import { GroupsList } from './Groups/List';
+import { ManageGroup } from './Groups/Manage';
+import { Add } from './Stocks/Add';
+import { List } from './Stocks/List';
+import { Manage } from './Stocks/Manage';
 
 const StockGroups = () => {
   const { data: user } = useGetMyDetailsQuery();

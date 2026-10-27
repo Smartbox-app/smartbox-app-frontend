@@ -5,8 +5,8 @@ import styled, { css } from 'styled-components';
 import { BoxMapRes, BoxMapUserRes, BoxStatus, RentStatus, StockRes } from 'smartbox-types';
 import { Tooltip } from 'src/components/ui';
 import { colorOrDark } from 'src/utils/color';
-import { AdminBoxMapTooltipContent } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Map/AdminBoxMapTooltipContent';
-import { useMapLayoutContext } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Map/MapLayoutContext';
+import { AdminBoxMapTooltipContent } from '../AdminBoxMapTooltipContent';
+import { useMapLayoutContext } from '../MapLayoutContext';
 import {
   BoxMapLayoutUpdate,
   getBoxHeight,
@@ -14,7 +14,7 @@ import {
   getMapBoxFontSize,
   layoutFromMoveableRect,
   normalizeMapPosition,
-} from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Map/utils/map-layout';
+} from '../utils/map-layout';
 
 interface Props {
   box: BoxMapRes | BoxMapUserRes;

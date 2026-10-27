@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import { colorOrDark } from 'src/utils/color';
 
-import 'src/components/Branded/Spinner/Spinner.scss';
+import './Spinner.scss';
 
 interface Props {
     overlay?: boolean;

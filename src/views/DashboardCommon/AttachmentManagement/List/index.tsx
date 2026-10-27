@@ -17,7 +17,7 @@ import { useDeleteAttachmentMutation } from 'src/mutations';
 import { useGetMyDetailsQuery } from 'src/queries';
 import UserService from 'src/services/user-service';
 import { InteractiveTableSchema } from 'src/utils/table-schema-utils';
-import { Edit } from 'src/views/DashboardCommon/AttachmentManagement/Edit';
+import { Edit } from '../Edit';
 
 const List = () => {
   const dispatch = useDispatch();

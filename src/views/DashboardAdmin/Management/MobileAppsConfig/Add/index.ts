@@ -1,1 +1,1 @@
-export * from 'src/views/DashboardAdmin/Management/MobileAppsConfig/Add/Add';
+export * from './Add';

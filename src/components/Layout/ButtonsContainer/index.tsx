@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import 'src/components/Layout/ButtonsContainer/ButtonsContainer.scss';
+import './ButtonsContainer.scss';
 
 interface Props {
   children: React.ReactNode;

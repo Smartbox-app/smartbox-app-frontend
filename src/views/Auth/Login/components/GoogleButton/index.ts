@@ -1,1 +1,1 @@
-export * from 'src/views/Auth/Login/components/GoogleButton/GoogleButton';
+export * from './GoogleButton';

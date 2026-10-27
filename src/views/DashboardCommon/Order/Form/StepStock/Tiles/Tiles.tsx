@@ -9,9 +9,9 @@ import {
   useGetStockGroupsListQuery,
   useGetStockListQuery,
 } from 'src/queries';
-import { SingleOption } from 'src/views/DashboardCommon/Order/Form/StepStock/Tiles/SingleOption';
+import { SingleOption } from './SingleOption';
 
-import 'src/views/DashboardCommon/Order/Form/StepStock/StepStock.scss';
+import '../StepStock.scss';
 
 export const Tiles = () => {
   const dispatch = useDispatch();

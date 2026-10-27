@@ -17,7 +17,7 @@ import {
   useGetStockOptionsQuery,
   useGetCompanyOptionsQuery,
 } from 'src/queries';
-import { TiptapEditor } from 'src/views/DashboardCommon/DocumentManagement/components/TiptapEditor';
+import { TiptapEditor } from '../components/TiptapEditor';
 
 export type DocumentFormProps = {
   isLoading: boolean;

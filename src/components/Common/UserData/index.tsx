@@ -11,8 +11,8 @@ import {
   SectionHeader,
 } from 'src/components/Layout';
 import { useGetMyDetailsQuery } from 'src/queries';
-import { DeleteAccountConfirmation } from 'src/views/DashboardCommon/Profile/Detail/DeleteAccountConfirmation/DeleteAccountConfirmation';
-import UpdatePass from 'src/views/DashboardCommon/Profile/Detail/UpdatePass';
+import { DeleteAccountConfirmation } from '../../../views/DashboardCommon/Profile/Detail/DeleteAccountConfirmation/DeleteAccountConfirmation';
+import UpdatePass from '../../../views/DashboardCommon/Profile/Detail/UpdatePass';
 
 const UserData = () => {
   const { data: user } = useGetMyDetailsQuery();

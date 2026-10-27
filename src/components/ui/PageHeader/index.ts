@@ -1,1 +1,1 @@
-export * from 'src/components/ui/PageHeader/PageHeader';
+export * from './PageHeader';

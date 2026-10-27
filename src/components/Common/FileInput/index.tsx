@@ -7,7 +7,7 @@ import { ButtonsContainer } from 'src/components/Layout';
 import { __ } from 'src/helpers/i18n';
 import ApiService from 'src/services/api-service';
 
-import 'src/components/Common/FileInput/FileInput.scss';
+import './FileInput.scss';
 
 interface FileFieldInput {
   name?: string;

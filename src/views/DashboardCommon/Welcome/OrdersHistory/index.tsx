@@ -4,7 +4,7 @@ import { Pagination } from 'src/components/Common';
 import { Header, Section } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
 import { useGetMyRentStoryQuery } from 'src/queries';
-import History from 'src/views/DashboardCommon/Welcome/OrdersHistory/History';
+import History from './History';
 
 const OrdersHistory = () => {
   const { data: rentsHistoryList = [] } = useGetMyRentStoryQuery();

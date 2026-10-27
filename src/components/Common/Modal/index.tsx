@@ -8,7 +8,7 @@ import { ApplicationState } from 'src/reducers';
 import type { AppDispatch } from 'src/types/app-dispatch';
 import { Modal } from 'src/types/modal';
 
-import 'src/components/Common/Modal/Modal.scss';
+import './Modal.scss';
 
 interface Props {
   modal: Modal;

@@ -15,7 +15,7 @@ import { useApiAccessScopes } from 'src/hooks/useApiAccessScopes';
 import { useCreateApiAccessMutation } from 'src/mutations';
 import { useGetTenantOptionsQuery } from 'src/queries';
 import { ClassValidatorResolver } from 'src/resolvers/ClassValidatorResolver';
-import { ApiKeyCreatedModal } from 'src/views/DashboardAdmin/Management/ApiAccess/ApiKeyCreatedModal';
+import { ApiKeyCreatedModal } from './ApiKeyCreatedModal';
 
 export const CreateApiAccessModal = () => {
   const dispatch = useDispatch();

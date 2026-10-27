@@ -1,5 +1,5 @@
 import React from 'react';
 
-import { TenantSettings } from 'src/views/DashboardCommon/TenantSettings';
+import { TenantSettings } from '../../DashboardCommon/TenantSettings';
 
 export const Settings = () => <TenantSettings />;

@@ -16,7 +16,7 @@ import { Header } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
 import { useRemoveRentAuthorizedUserMutation } from 'src/mutations';
 import { useRentAuthorizedUsersQuery } from 'src/queries';
-import { AddRentAuthorizationModal } from 'src/views/DashboardCommon/SingleRentDetail/RentAuthorizations/AddRentAuthorizationModal';
+import { AddRentAuthorizationModal } from './AddRentAuthorizationModal';
 
 function displayName(row: RentAuthorizedUserSummary): string {
   const name = [row.firstName, row.lastName].filter(Boolean).join(' ').trim();

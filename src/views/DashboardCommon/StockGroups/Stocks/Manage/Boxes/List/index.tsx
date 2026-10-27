@@ -26,10 +26,10 @@ import { useGetMyDetailsQuery, useGetStockQuery } from 'src/queries';
 import UserService from 'src/services/user-service';
 import { boxDisplayStatusSearchValues } from 'src/utils/box-display-status';
 import { InteractiveTableSchema } from 'src/utils/table-schema-utils';
-import { AssignRentToUser } from 'src/views/DashboardCommon/AssignRentToUser';
-import BoxDetail from 'src/views/DashboardCommon/BoxDetail';
-import { Edit } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Boxes/Edit';
-import { BoxStatus as BoxStatusBadge } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Boxes/List/BoxStatus';
+import { AssignRentToUser } from '../../../../../AssignRentToUser';
+import BoxDetail from '../../../../../BoxDetail';
+import { Edit } from '../Edit';
+import { BoxStatus as BoxStatusBadge } from './BoxStatus';
 
 const List = () => {
   const { data: user } = useGetMyDetailsQuery();

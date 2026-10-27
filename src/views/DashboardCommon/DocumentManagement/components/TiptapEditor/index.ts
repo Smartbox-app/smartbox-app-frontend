@@ -1,1 +1,1 @@
-export * from 'src/views/DashboardCommon/DocumentManagement/components/TiptapEditor/TiptapEditor';
+export * from './TiptapEditor';

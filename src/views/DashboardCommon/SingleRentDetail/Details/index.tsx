@@ -6,7 +6,7 @@ import { useTenantNaming } from 'src/hooks/useTenantNaming';
 import { translateBoxDisplayStatus } from 'src/utils/box-display-status';
 import { dateOnly, dateOnlyLocalTime } from 'src/utils/format-date';
 
-import 'src/views/DashboardCommon/SingleRentDetail/Details/Details.scss';
+import './Details.scss';
 
 interface Props {
   singleRent: MyRentDetails;

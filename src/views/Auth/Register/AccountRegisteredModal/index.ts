@@ -1,1 +1,1 @@
-export * from 'src/views/Auth/Register/AccountRegisteredModal/AccountRegisteredModal';
+export * from './AccountRegisteredModal';

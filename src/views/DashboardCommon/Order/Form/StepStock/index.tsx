@@ -18,10 +18,10 @@ import { useGetMyDetailsQuery } from 'src/queries';
 import { ApplicationState } from 'src/reducers';
 import UserService from 'src/services/user-service';
 import { LocationSelectType } from 'src/smartbox-types/location';
-import { Map } from 'src/views/DashboardCommon/Order/Form/StepStock/Map';
-import { Tiles } from 'src/views/DashboardCommon/Order/Form/StepStock/Tiles';
+import { Map } from './Map';
+import { Tiles } from './Tiles';
 
-import 'src/views/DashboardCommon/Order/Form/StepStock/StepStock.scss';
+import './StepStock.scss';
 
 const StepStock = () => {
   const dispatch = useDispatch();

@@ -24,22 +24,22 @@ import {
 import { useGetMyDetailsQuery, useGetStockQuery } from 'src/queries';
 import ApiService from 'src/services/api-service';
 import UserService from 'src/services/user-service';
-import GateStatus from 'src/views/DashboardCommon/GateStatus';
-import { Addons } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Addons';
-import { StockAgreements } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Agreements';
-import { Alarms } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Alarms';
-import { BasicData } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/BasicData';
-import { Boxes } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Boxes';
-import { Diagnostics } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Diagnostics';
-import { Discounts } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Discounts';
-import { Gates } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Gates';
-import { Groups } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Groups';
-import { Handling } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Handling';
-import { Map } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Map';
-import { Payments } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Payments';
-import { RentAuthorizationsList } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/RentAuthorizations';
-import { Rents } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Rents';
-import { Statistics } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Statistics';
+import GateStatus from '../../../GateStatus';
+import { Addons } from './Addons';
+import { StockAgreements } from './Agreements';
+import { Alarms } from './Alarms';
+import { BasicData } from './BasicData';
+import { Boxes } from './Boxes';
+import { Diagnostics } from './Diagnostics';
+import { Discounts } from './Discounts';
+import { Gates } from './Gates';
+import { Groups } from './Groups';
+import { Handling } from './Handling';
+import { Map } from './Map';
+import { Payments } from './Payments';
+import { RentAuthorizationsList } from './RentAuthorizations';
+import { Rents } from './Rents';
+import { Statistics } from './Statistics';
 
 const publicTenantAllowsAddons = (tenant: object | null | undefined) =>
   Boolean(

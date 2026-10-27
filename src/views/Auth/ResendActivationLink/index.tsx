@@ -13,7 +13,7 @@ import ApiService from 'src/services/api-service';
 import { isSmsAccountConfirmation } from 'src/utils/account-confirmation';
 import { mapFieldsBig } from 'src/utils/fields-mapper';
 import { formOnTranslateString } from 'src/utils/trans-form';
-import { ButtonsSection } from 'src/views/Auth/ResendActivationLink/ButtonsSection';
+import { ButtonsSection } from './ButtonsSection';
 
 const ResendActivationLink = () => {
   const dispatch = useDispatch();

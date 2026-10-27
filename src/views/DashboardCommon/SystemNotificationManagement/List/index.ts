@@ -1,1 +1,1 @@
-export * from 'src/views/DashboardCommon/SystemNotificationManagement/List/List';
+export * from './List';

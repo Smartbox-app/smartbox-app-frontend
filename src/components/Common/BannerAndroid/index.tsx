@@ -5,7 +5,7 @@ import { useTenant } from 'src/hooks/useTenant';
 import { Dots } from 'src/icons';
 import { hasMobileAppAndroidLink } from 'src/utils/tenant-mobile-app-links';
 
-import 'src/components/Common/BannerAndroid/BannerAndroid.scss';
+import './BannerAndroid.scss';
 
 const BannerAndroid = () => {
   const { tenant } = useTenant();

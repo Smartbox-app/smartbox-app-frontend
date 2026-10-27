@@ -6,7 +6,7 @@ import { Logout } from 'src/icons';
 import { useLogoutMutation } from 'src/mutations';
 import { MenuItemType } from 'src/types/menu-item';
 
-import 'src/components/Layout/Navigation/Navigation.scss';
+import './Navigation.scss';
 
 interface Props {
   menuItems: MenuItemType[];

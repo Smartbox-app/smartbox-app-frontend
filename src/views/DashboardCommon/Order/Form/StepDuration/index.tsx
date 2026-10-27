@@ -44,13 +44,13 @@ import {
   initialFixedTermEndDate,
   isNewRentPeriodAcceptable,
 } from 'src/utils/rent-period-bounds';
-import { Addons } from 'src/views/DashboardCommon/Order/Form/Common/Addons';
-import { AgreementTypeSelect } from 'src/views/DashboardCommon/Order/Form/Common/AgreementTypeSelect';
-import { PaymentType } from 'src/views/DashboardCommon/Order/Form/Common/PaymentType';
-import Price from 'src/views/DashboardCommon/Order/Form/Common/Price';
-import { RentDuration } from 'src/views/DashboardCommon/Order/Form/Common/RentDuration';
+import { Addons } from '../Common/Addons';
+import { AgreementTypeSelect } from '../Common/AgreementTypeSelect';
+import { PaymentType } from '../Common/PaymentType';
+import Price from '../Common/Price';
+import { RentDuration } from '../Common/RentDuration';
 
-import 'src/views/DashboardCommon/Order/Form/StepDuration/StepDuration.scss';
+import './StepDuration.scss';
 
 const StyledCalendarPicker = styled.div`
   justify-content: center;

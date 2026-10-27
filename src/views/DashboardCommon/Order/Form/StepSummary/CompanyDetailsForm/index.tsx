@@ -4,7 +4,7 @@ import { InputSelect } from 'src/components/Common';
 import { Header, Input, Section } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
 import { useGetCountriesList } from 'src/hooks/useGetCountriesList';
-import { RentDataDto } from 'src/views/DashboardCommon/Order/Form/StepSummary/TenantDetailsForm/dto/RentDataDto';
+import { RentDataDto } from '../TenantDetailsForm/dto/RentDataDto';
 
 interface Props {
   disabled?: boolean;

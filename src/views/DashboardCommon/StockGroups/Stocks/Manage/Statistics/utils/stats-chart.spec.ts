@@ -3,7 +3,7 @@ import {
   getStatsText,
   paymentMonthsToPieSegments,
   statsByStatusToPieSegments,
-} from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Statistics/utils/stats-chart';
+} from './stats-chart';
 
 const stats = {
   free: 1,

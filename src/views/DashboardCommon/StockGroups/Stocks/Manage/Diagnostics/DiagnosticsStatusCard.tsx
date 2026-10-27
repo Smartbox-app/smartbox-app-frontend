@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 import { darken } from 'polished';
 import styled, { DefaultTheme } from 'styled-components';
 
-import { DiagnosticsTone } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Diagnostics/diagnostics-health';
+import { DiagnosticsTone } from './diagnostics-health';
 
 type DiagnosticsStatusCardProps = {
   tone: DiagnosticsTone;

@@ -1,1 +1,1 @@
-export { List } from 'src/views/DashboardAdmin/Management/ApiAccess/List/List';
+export { List } from './List';

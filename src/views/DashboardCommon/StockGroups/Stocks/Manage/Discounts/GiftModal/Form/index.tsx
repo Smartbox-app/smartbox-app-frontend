@@ -13,7 +13,7 @@ import {
 import ApiService from 'src/services/api-service';
 import { mapFields } from 'src/utils/fields-mapper';
 import { formOnTranslateString } from 'src/utils/trans-form';
-import { NewCode } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Discounts/GiftModal/NewCode';
+import { NewCode } from '../NewCode';
 
 interface Props {
   stockId: string;

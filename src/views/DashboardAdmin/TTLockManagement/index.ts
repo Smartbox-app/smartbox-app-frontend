@@ -1,1 +1,1 @@
-export * from 'src/views/DashboardAdmin/TTLockManagement/TTLockManagement';
+export * from './TTLockManagement';

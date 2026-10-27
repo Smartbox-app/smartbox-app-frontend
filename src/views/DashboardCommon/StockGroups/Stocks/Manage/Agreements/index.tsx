@@ -2,7 +2,7 @@ import React from 'react';
 import { useParams } from 'react-router';
 
 import { StockAgreementsReq } from 'smartbox-types';
-import { StockSectionForm } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/StockSectionForm';
+import { StockSectionForm } from '../StockSectionForm';
 
 const StockAgreements = () => {
   const { stockId } = useParams<{ stockId: string }>();

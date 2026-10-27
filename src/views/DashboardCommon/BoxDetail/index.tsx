@@ -17,9 +17,9 @@ import { useRotatePasscodeMutation } from 'src/mutations';
 import { useGetMyDetailsQuery, useRentDetailsQuery } from 'src/queries';
 import { translateBoxDisplayStatus } from 'src/utils/box-display-status';
 import { dateOnly } from 'src/utils/format-date';
-import { Edit } from 'src/views/DashboardCommon/BoxDetail/Edit';
+import { Edit } from './Edit';
 
-import 'src/views/DashboardCommon/BoxDetail/BoxDetail.scss';
+import './BoxDetail.scss';
 
 interface Props {
   box: BoxListRes | BoxMapRes;

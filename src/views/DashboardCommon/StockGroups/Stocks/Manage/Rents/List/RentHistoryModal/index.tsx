@@ -10,7 +10,7 @@ import { RentSummary } from 'src/components/Common/RentSummary/RentSummary';
 import { Modal } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
 import { useRentDetailsQuery } from 'src/queries';
-import { RentHistory } from 'src/views/DashboardCommon/RentHistory';
+import { RentHistory } from '../../../../../../RentHistory';
 
 interface Props {
   description: RentDescription[];

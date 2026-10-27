@@ -8,7 +8,7 @@ import { Button, Header, Section, Typography } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
 import { ApplicationState } from 'src/reducers';
 
-import 'src/views/DashboardCommon/Order/Form/StepSummary/DiscountsList/DiscountsList.scss';
+import './DiscountsList.scss';
 
 const DiscountsList = () => {
   const { calculatedPriceDetails, endDate, discountCode, agreementType } =

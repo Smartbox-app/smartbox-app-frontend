@@ -11,11 +11,11 @@ import {
 } from 'src/queries';
 import { useGetMyAuthorizedRentsQuery } from 'src/queries/useGetMyAuthorizedRents/useGetMyAuthorizedRents';
 import { useGetMyRentsQuery } from 'src/queries/useGetMyRentsQuery/useGetMyRentsQuery';
-import { Message } from 'src/views/DashboardCommon/Welcome/Message';
-import { NewRentButton } from 'src/views/DashboardCommon/Welcome/NewRentButton/NewRentButton';
-import OrdersHistory from 'src/views/DashboardCommon/Welcome/OrdersHistory';
-import Sale from 'src/views/DashboardCommon/Welcome/Sale';
-import Storage from 'src/views/DashboardCommon/Welcome/Storage';
+import { Message } from './Message';
+import { NewRentButton } from './NewRentButton/NewRentButton';
+import OrdersHistory from './OrdersHistory';
+import Sale from './Sale';
+import Storage from './Storage';
 
 const WelcomeHeader = styled('div')(({ theme }) => ({
   display: 'flex',

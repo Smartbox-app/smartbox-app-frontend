@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { __ } from 'src/helpers/i18n';
 import { colorOrDark } from 'src/utils/color';
 
-import 'src/components/Common/Row/Row.scss';
+import './Row.scss';
 
 interface Props {
   label?: string;

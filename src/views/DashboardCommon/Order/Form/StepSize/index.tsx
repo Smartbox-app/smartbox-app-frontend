@@ -13,9 +13,9 @@ import { ArrowLeft, ArrowRight } from 'src/icons';
 import { useBoxGroupsForStockQuery, useGetMyDetailsQuery } from 'src/queries';
 import { ApplicationState } from 'src/reducers';
 import UserService from 'src/services/user-service';
-import SingleOption from 'src/views/DashboardCommon/Order/Form/StepSize/SingleOption';
+import SingleOption from './SingleOption';
 
-import 'src/views/DashboardCommon/Order/Form/StepSize/StepSize.scss';
+import './StepSize.scss';
 
 const StepSize = () => {
   const { stockId, boxGroupId } = useSelector(

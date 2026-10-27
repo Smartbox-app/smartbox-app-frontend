@@ -8,9 +8,9 @@ import { ConfirmModal } from 'src/components/Common';
 import { Header, Section, Typography } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
 import { useDeleteTemplateMutation } from 'src/mutations';
-import { ChannelTemplates } from 'src/views/DashboardTenant/Templates/List/ChannelTemplates';
-import { SectionSummary } from 'src/views/DashboardTenant/Templates/List/SectionSummary';
-import { useTemplateSections } from 'src/views/DashboardTenant/Templates/List/useTemplateSections';
+import { ChannelTemplates } from './ChannelTemplates';
+import { SectionSummary } from './SectionSummary';
+import { useTemplateSections } from './useTemplateSections';
 
 const Container = styled('div')({
   maxWidth: 1000,

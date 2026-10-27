@@ -9,8 +9,8 @@ import { Button as UIButton } from 'src/components/ui';
 import { history } from 'src/history';
 import { useGetMyDetailsQuery } from 'src/queries';
 import UserService from 'src/services/user-service';
-import { RentAuthorizationsForRentModal } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/RentAuthorizations/modals/RentAuthorizationsForRentModal';
-import { RentHistoryModal } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Rents/List/RentHistoryModal';
+import { RentAuthorizationsForRentModal } from '../../RentAuthorizations/modals/RentAuthorizationsForRentModal';
+import { RentHistoryModal } from './RentHistoryModal';
 
 type Props = {
   rent: AdminRentListDetails;

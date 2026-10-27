@@ -1,9 +1,9 @@
-import Contact from "src/views/DashboardCommon/Contact";
-import { Order } from "src/views/DashboardCommon/Order";
-import { PaymentResult } from "src/views/DashboardCommon/PaymentResult";
-import Profile from "src/views/DashboardCommon/Profile";
-import SingleRentDetail from "src/views/DashboardCommon/SingleRentDetail";
-import Welcome from "src/views/DashboardCommon/Welcome";
+import Contact from "./Contact";
+import { Order } from "./Order";
+import { PaymentResult } from "./PaymentResult";
+import Profile from "./Profile";
+import SingleRentDetail from "./SingleRentDetail";
+import Welcome from "./Welcome";
 
 export {
   Welcome,

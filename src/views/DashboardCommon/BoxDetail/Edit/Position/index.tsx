@@ -19,7 +19,7 @@ import ApiService from 'src/services/api-service';
 import { mapFields } from 'src/utils/fields-mapper';
 import { formOnTranslateString } from 'src/utils/trans-form';
 
-import 'src/views/DashboardCommon/BoxDetail/Edit/Position/Position.scss';
+import './Position.scss';
 
 interface Props {
   rentId: string;

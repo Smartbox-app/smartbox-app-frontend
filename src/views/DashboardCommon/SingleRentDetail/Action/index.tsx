@@ -8,19 +8,6 @@ import { toggleShowUserStockMap } from 'src/actions/single-rent';
 import { Alert } from 'src/components/Common';
 import { ButtonsContainer } from 'src/components/Layout';
 import { Button, Tabs } from 'src/components/ui';
-<<<<<<< HEAD
-import { Calendar, CloseCircle, InfoCircle, Map } from 'src/icons';
-import { GateButton } from './GateButton';
-import { KsmGateButton } from './KsmGateButton';
-import {
-  isOpenEndedAgreement,
-  hasDateValue,
-  canDisplayRentAccess,
-  canUseRentAccessActions,
-} from 'src/utils/rent';
-import { dateOnly } from 'src/utils/format-date';
-=======
->>>>>>> b49af9d3 (api improvements)
 import { __ } from 'src/helpers/i18n';
 import { history } from 'src/history';
 import { Calendar, CloseCircle, InfoCircle, Map } from 'src/icons';
@@ -28,10 +15,15 @@ import { useGetMyDetailsQuery } from 'src/queries';
 import { ApplicationState } from 'src/reducers';
 import UserService from 'src/services/user-service';
 import { dateOnly } from 'src/utils/format-date';
-import { isOpenEndedAgreement, hasDateValue } from 'src/utils/rent';
-import EndingModal from 'src/views/DashboardCommon/SingleRentDetail/Action/EndingModal';
-import { GateButton } from 'src/views/DashboardCommon/SingleRentDetail/Action/GateButton';
-import { KsmGateButton } from 'src/views/DashboardCommon/SingleRentDetail/Action/KsmGateButton';
+import {
+  canDisplayRentAccess,
+  canUseRentAccessActions,
+  hasDateValue,
+  isOpenEndedAgreement,
+} from 'src/utils/rent';
+import EndingModal from './EndingModal';
+import { GateButton } from './GateButton';
+import { KsmGateButton } from './KsmGateButton';
 
 interface Props {
   rent: MyRentDetails;

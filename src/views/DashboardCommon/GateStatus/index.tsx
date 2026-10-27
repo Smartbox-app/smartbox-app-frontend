@@ -7,7 +7,7 @@ import { useTenantNaming } from 'src/hooks/useTenantNaming';
 import ApiService from 'src/services/api-service';
 import { fullDate } from 'src/utils/format-date';
 
-import 'src/views/DashboardCommon/GateStatus/GateStatus.scss';
+import './GateStatus.scss';
 
 interface Props {
   stockId?: string;

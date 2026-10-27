@@ -9,8 +9,8 @@ import { Section } from 'src/components/Layout';
 import { Header } from 'src/components/ui';
 import { useTenantNaming } from 'src/hooks/useTenantNaming';
 import { useGetStockBoxesQuery, useGetStockQuery } from 'src/queries';
-import BoxDetail from 'src/views/DashboardCommon/BoxDetail';
-import { MapView } from 'src/views/DashboardCommon/MapView';
+import BoxDetail from '../../../../BoxDetail';
+import { MapView } from '../../../../MapView';
 
 const Handling = () => {
   const { stockId } = useParams<{ stockId: string }>();

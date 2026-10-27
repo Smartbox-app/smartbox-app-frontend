@@ -6,9 +6,9 @@ import { Row } from 'src/components/Common';
 import { Modal } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
 import { useUserDetailsQuery, useUserNoteQuery } from 'src/queries';
-import UserRentList from 'src/views/DashboardCommon/UserRentList';
+import UserRentList from '../../../UserRentList';
 
-import 'src/views/DashboardCommon/UsersManagement/List/UserDetail/UserDetail.scss';
+import './UserDetail.scss';
 
 interface Props {
   userId: string;

@@ -1,1 +1,1 @@
-export * from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Statistics/components/PaymentsStats/PaymentsStats';
+export * from './PaymentsStats';

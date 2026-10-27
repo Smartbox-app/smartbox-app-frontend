@@ -6,8 +6,8 @@ import { hideModal, showModal } from 'src/actions/modal';
 import { successNotification } from 'src/actions/notifications';
 import { Modal, Tabs } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
-import { PaymentForm } from 'src/views/DashboardCommon/UsersManagement/List/UserEdit/components/PaymentForm';
-import { SectionForm } from 'src/views/DashboardCommon/UsersManagement/List/UserEdit/components/SectionForm';
+import { PaymentForm } from './components/PaymentForm';
+import { SectionForm } from './components/SectionForm';
 
 type Section = 'basic' | 'company' | 'payment';
 

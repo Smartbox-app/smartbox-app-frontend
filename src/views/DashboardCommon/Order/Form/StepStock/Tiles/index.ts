@@ -1,1 +1,1 @@
-export * from 'src/views/DashboardCommon/Order/Form/StepStock/Tiles/Tiles';
+export * from './Tiles';

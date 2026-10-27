@@ -8,9 +8,9 @@ import { __ } from 'src/helpers/i18n';
 import { StockImage } from 'src/icons/StockImage';
 import { useGetMyDetailsQuery } from 'src/queries';
 import UserService from 'src/services/user-service';
-import { StorageDetails } from 'src/views/DashboardCommon/Welcome/Storage/StorageList/SingleStorage/components/StorageDetails';
-import { StorageHeader } from 'src/views/DashboardCommon/Welcome/Storage/StorageList/SingleStorage/components/StorageHeader';
-import { StorageMainInfo } from 'src/views/DashboardCommon/Welcome/Storage/StorageList/SingleStorage/components/StorageMainInfo';
+import { StorageDetails } from './components/StorageDetails';
+import { StorageHeader } from './components/StorageHeader';
+import { StorageMainInfo } from './components/StorageMainInfo';
 
 interface Props {
   single: MyRentList;

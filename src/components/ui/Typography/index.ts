@@ -1,1 +1,1 @@
-export * from 'src/components/ui/Typography/Typography';
+export * from './Typography';

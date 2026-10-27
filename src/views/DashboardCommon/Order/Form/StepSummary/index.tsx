@@ -45,14 +45,14 @@ import UserService from 'src/services/user-service';
 import { openEndedFirstPeriodFinish } from 'src/utils/open-ended-period';
 import { scrollToFirstFormError } from 'src/utils/scroll-to-form-error';
 import { textToSimpleMD } from 'src/utils/text-to-simple-md';
-import { PaymentDocumentType } from 'src/views/DashboardCommon/Order/Form/Common/PaymentDocumentType';
-import { ClientSourceForm } from 'src/views/DashboardCommon/Order/Form/StepSummary/ClientSourceForm';
-import { CompanyDetailsForm } from 'src/views/DashboardCommon/Order/Form/StepSummary/CompanyDetailsForm';
-import { DiscountForm } from 'src/views/DashboardCommon/Order/Form/StepSummary/DiscountForm';
-import { DiscountsList } from 'src/views/DashboardCommon/Order/Form/StepSummary/DiscountsList';
-import SummaryTable from 'src/views/DashboardCommon/Order/Form/StepSummary/SummaryTable';
-import TenantDetailsForm from 'src/views/DashboardCommon/Order/Form/StepSummary/TenantDetailsForm';
-import { RentDataDto } from 'src/views/DashboardCommon/Order/Form/StepSummary/TenantDetailsForm/dto/RentDataDto';
+import { PaymentDocumentType } from '../Common/PaymentDocumentType';
+import { ClientSourceForm } from './ClientSourceForm';
+import { CompanyDetailsForm } from './CompanyDetailsForm';
+import { DiscountForm } from './DiscountForm';
+import { DiscountsList } from './DiscountsList';
+import SummaryTable from './SummaryTable';
+import TenantDetailsForm from './TenantDetailsForm';
+import { RentDataDto } from './TenantDetailsForm/dto/RentDataDto';
 
 const STEP_SUMMARY_FIELD_ORDER: (keyof RentDataDto)[] = [
   'firstName',

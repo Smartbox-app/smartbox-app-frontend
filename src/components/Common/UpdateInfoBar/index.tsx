@@ -2,7 +2,7 @@ import { UpdateActivated, UpdateActivatedReload, UpdateAvailable } from 'react-w
 
 import {__} from "src/helpers/i18n";
 
-import 'src/components/Common/UpdateInfoBar/UpdateInfoBar.scss';
+import './UpdateInfoBar.scss';
 
 const onUpdateClick = async () => {
   const registration = await navigator.serviceWorker.getRegistration();

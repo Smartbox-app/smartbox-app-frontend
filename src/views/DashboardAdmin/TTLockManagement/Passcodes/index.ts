@@ -1,1 +1,1 @@
-export * from 'src/views/DashboardAdmin/TTLockManagement/Passcodes/Passcodes'
+export * from './Passcodes'
