@@ -1,9 +1,9 @@
 import { useMemo } from 'react';
+
 import { UserRole } from 'smartbox-types';
-import UserService from '../services/user-service';
-import { useGetMyDetailsQuery, useSmsServiceStatusQuery } from 'src/queries';
-import { useTenant } from './useTenant';
-import { SidebarNavGroup } from 'src/types/sidebar-nav';
+import { useTenant } from 'src/hooks/useTenant';
+import { useTenantNaming } from 'src/hooks/useTenantNaming';
+import type { NamingTypeKey } from 'src/i18n/types/keys';
 import {
   Adjustments,
   Boxes,
@@ -23,8 +23,9 @@ import {
   Workers,
   Wallet,
 } from 'src/icons';
-import type { NamingTypeKey } from 'src/i18n/types/keys';
-import { useTenantNaming } from './useTenantNaming';
+import { useGetMyDetailsQuery, useSmsServiceStatusQuery } from 'src/queries';
+import UserService from 'src/services/user-service';
+import { SidebarNavGroup } from 'src/types/sidebar-nav';
 
 type SidebarNavContext = {
   slug: string;

@@ -1,10 +1,11 @@
 import React, { useEffect, useState, useCallback } from 'react';
+
+import { __ } from 'src/helpers/i18n';
 import { useTenant } from 'src/hooks/useTenant';
+import { Dots } from 'src/icons';
 import { hasMobileAppAndroidLink } from 'src/utils/tenant-mobile-app-links';
 
-import './BannerAndroid.scss';
-import { __ } from 'src/helpers/i18n';
-import { Dots } from 'src/icons';
+import 'src/components/Common/BannerAndroid/BannerAndroid.scss';
 
 const BannerAndroid = () => {
   const { tenant } = useTenant();
@@ -36,7 +37,12 @@ const BannerAndroid = () => {
     setComponentVisible(false);
   };
 
-  if (hasMobileAppAndroidLink(tenant) || !isComponentVisible || !isAndroid) {
+  if (
+    tenant?.showPwaBannerAndroid === false ||
+    hasMobileAppAndroidLink(tenant) ||
+    !isComponentVisible ||
+    !isAndroid
+  ) {
     return null;
   }
 

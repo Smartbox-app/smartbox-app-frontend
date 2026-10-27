@@ -1,8 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
+
 import { DocumentHtmlRes } from 'smartbox-types';
-import type { AgreementTemplateInput } from '../../utils/agreement-template-query';
-import ApiService from '../../services/api-service';
-import { agreementTemplateToQueryString } from '../../utils/agreement-template-query';
+import ApiService from 'src/services/api-service';
+import type { AgreementTemplateInput } from 'src/utils/agreement-template-query';
+import { agreementTemplateToQueryString } from 'src/utils/agreement-template-query';
 
 export const documentAgreementHtmlQueryKey = (
   template: AgreementTemplateInput,

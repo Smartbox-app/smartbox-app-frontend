@@ -1,5 +1,5 @@
-import { FieldErrors, FieldValues, Resolver } from 'react-hook-form';
 import { validate, ValidationError } from 'class-validator';
+import { FieldErrors, FieldValues, Resolver } from 'react-hook-form';
 
 const toFieldErrors = <T extends FieldValues>(
   errors: ValidationError[],

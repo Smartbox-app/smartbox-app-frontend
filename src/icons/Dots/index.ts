@@ -1,1 +1,1 @@
-export * from './Dots';
+export * from 'src/icons/Dots/Dots';

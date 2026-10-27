@@ -1,1 +1,1 @@
-export * from './MainData';
+export * from 'src/views/DashboardCommon/SingleRentDetail/MainData/MainData';

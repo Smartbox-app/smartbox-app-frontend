@@ -1,12 +1,13 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
+import styled from 'styled-components';
+
+import type { InviteUsersRes } from 'smartbox-types';
 import { hideModal } from 'src/actions/modal';
 import { Button, Header, Modal } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
-import { translateApiErrorCode } from 'src/utils/trans-form';
 import { currentAppLanguage } from 'src/i18n/app-language';
-import type { InviteUsersRes } from 'smartbox-types';
-import styled from 'styled-components';
+import { translateApiErrorCode } from 'src/utils/trans-form';
 
 const List = styled('ul')({
   margin: 0,

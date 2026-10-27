@@ -1,8 +1,12 @@
-import { BoxMapRes, BoxMapUserRes, BoxStatus, RentStatus, StockRes } from 'smartbox-types';
-import styled, { css } from 'styled-components';
-import Moveable from 'react-moveable';
-import { colorOrDark } from '../../../../../../../utils/color';
 import React, { CSSProperties, useCallback, useEffect, useRef, useState } from 'react';
+import Moveable from 'react-moveable';
+import styled, { css } from 'styled-components';
+
+import { BoxMapRes, BoxMapUserRes, BoxStatus, RentStatus, StockRes } from 'smartbox-types';
+import { Tooltip } from 'src/components/ui';
+import { colorOrDark } from 'src/utils/color';
+import { AdminBoxMapTooltipContent } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Map/AdminBoxMapTooltipContent';
+import { useMapLayoutContext } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Map/MapLayoutContext';
 import {
   BoxMapLayoutUpdate,
   getBoxHeight,
@@ -10,10 +14,7 @@ import {
   getMapBoxFontSize,
   layoutFromMoveableRect,
   normalizeMapPosition,
-} from '../utils/map-layout';
-import { useMapLayoutContext } from '../MapLayoutContext';
-import { Tooltip } from 'src/components/ui';
-import { AdminBoxMapTooltipContent } from '../AdminBoxMapTooltipContent';
+} from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Map/utils/map-layout';
 
 interface Props {
   box: BoxMapRes | BoxMapUserRes;

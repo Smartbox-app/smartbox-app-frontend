@@ -1,1 +1,1 @@
-export * from './useDeleteAccountMutation';
+export * from 'src/mutations/useDeleteAccountMutation/useDeleteAccountMutation';

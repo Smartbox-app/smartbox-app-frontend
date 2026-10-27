@@ -1,5 +1,5 @@
-import { detectBrowserLanguage } from '../i18n/app-language';
-import SessionService from './session-service';
+import { detectBrowserLanguage } from 'src/i18n/app-language';
+import SessionService from 'src/services/session-service';
 
 describe('SessionService language', () => {
   const getItem = localStorage.getItem as jest.Mock;

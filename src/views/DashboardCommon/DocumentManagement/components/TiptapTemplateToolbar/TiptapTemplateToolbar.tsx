@@ -1,12 +1,13 @@
-import React, { useMemo, useState } from 'react';
 import { Editor } from '@tiptap/react';
-import { Toolbar, Button, TemplateSelect, TemplateInput } from '../styled';
+import React, { useMemo, useState } from 'react';
+
 import {
   AGREEMENT_TEMPLATE_VARIABLES,
   buildAddonTemplateVariableOptions,
 } from 'src/config/tiptap';
 import { __ } from 'src/helpers/i18n';
 import { useGetAddonTemplateVariablesQuery } from 'src/queries';
+import { Toolbar, Button, TemplateSelect, TemplateInput } from 'src/views/DashboardCommon/DocumentManagement/components/styled';
 
 type Props = {
   editor: Editor | null;

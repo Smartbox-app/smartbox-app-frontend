@@ -1,12 +1,13 @@
-import * as React from 'react';
-import { __ } from '../../../helpers/i18n';
-import { InputHelp } from '../InputHelp';
-import { InputErrors } from '../InputErrors';
-import styled, { css } from 'styled-components';
-import { getColorForBackground } from '../../../utils/color';
-import { InputLabel } from 'src/components/ui/InputLabel';
 import { FieldAndEventFunction } from 'itf_formbuilder_react';
-import { TranslatableObject } from '../../../utils/errors-trans';
+import * as React from 'react';
+import styled, { css } from 'styled-components';
+
+import { InputErrors } from 'src/components/Common/InputErrors';
+import { InputHelp } from 'src/components/Common/InputHelp';
+import { InputLabel } from 'src/components/ui/InputLabel';
+import { __ } from 'src/helpers/i18n';
+import { getColorForBackground } from 'src/utils/color';
+import { TranslatableObject } from 'src/utils/errors-trans';
 
 export type FormFieldInput = {
   label?: string;
@@ -19,14 +20,14 @@ export type FormFieldInput = {
   onFocus?: FieldAndEventFunction;
   onBlur?: FieldAndEventFunction;
 };
-import { InputSizeProps, resolveInputSize } from '../input-sizes';
+import { InputSizeProps, resolveInputSize } from 'src/components/Common/input-sizes';
 import {
   StyledFieldContainer,
   StyledFieldWrapper,
   StyledNativeSelect,
   StyledTextarea,
   StyledTextInput,
-} from '../input-styled';
+} from 'src/components/Common/input-styled';
 
 interface Props extends InputSizeProps {
   type: string;

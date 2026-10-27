@@ -1,8 +1,9 @@
 import React from 'react';
 import { Switch, Route, Redirect } from 'react-router';
-import { AddTenant } from './Add';
-import List from './List';
-import { AdminTenantSettings } from './TenantSettings';
+
+import { AddTenant } from 'src/views/DashboardAdmin/Management/ClientsManagement/Add';
+import List from 'src/views/DashboardAdmin/Management/ClientsManagement/List';
+import { AdminTenantSettings } from 'src/views/DashboardAdmin/Management/ClientsManagement/TenantSettings';
 
 const ClientsManagement = () => (
   <Switch>

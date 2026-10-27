@@ -1,13 +1,14 @@
+import { Capacitor } from '@capacitor/core';
+import { Preferences } from '@capacitor/preferences';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import ApiService from '../../services/api-service';
-import { LoginDto } from '../../dto/LoginDto';
+
 import { ApiErrorCode } from 'smartbox-types';
+import { LoginDto } from 'src/dto/LoginDto';
+import ApiService from 'src/services/api-service';
 
 type LoginPayload = {
   accessToken?: string;
 };
-import { Capacitor } from '@capacitor/core';
-import { Preferences } from '@capacitor/preferences';
 
 export class LoginMutationError extends Error {
   constructor(

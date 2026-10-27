@@ -1,5 +1,6 @@
 import React from 'react';
-import { ManageTenantSettingsForm } from '../TenantSettingsForm';
+
+import { ManageTenantSettingsForm } from 'src/views/DashboardCommon/ClientManagement/TenantSettingsForm';
 
 type ManageTenantIntegrationsProps = {
   userId?: string;

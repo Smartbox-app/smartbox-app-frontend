@@ -2,7 +2,7 @@ import {
   getCorrectPriceWithTax,
   getCorrectPriceWithTaxForArray,
   getCorrectTaxPercentAmount,
-} from './tax';
+} from 'src/utils/tax';
 
 describe('tax', () => {
   describe('getCorrectTaxPercentAmount', () => {

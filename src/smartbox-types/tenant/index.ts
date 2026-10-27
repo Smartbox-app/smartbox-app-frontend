@@ -1,6 +1,6 @@
-import { LocationSelectType } from '../location';
-import { DebtResolveType } from '../debt';
-import { AccountConfirmationMethod } from './account-confirmation-method';
+import { DebtResolveType } from 'src/smartbox-types/debt';
+import { LocationSelectType } from 'src/smartbox-types/location';
+import { AccountConfirmationMethod } from 'src/smartbox-types/tenant/account-confirmation-method';
 
 export interface TenantEntity {
   id: string;
@@ -53,6 +53,8 @@ export interface TenantEntity {
   homeMessage: string;
   mobileAppAndroidLink: string | null;
   mobileAppIosLink: string | null;
+  showPwaBannerAndroid: boolean;
+  showPwaBannerIos: boolean;
   systemMessage: string;
   useCustomSmtp: boolean;
   smtpHost: string | null;
@@ -135,7 +137,10 @@ export type UpdateTenantCommunicationsReq = UpdateTenantMessagingReq &
   >;
 export type UpdateTenantMobileAppsReq = Pick<
   TenantEntity,
-  'mobileAppAndroidLink' | 'mobileAppIosLink'
+  | 'mobileAppAndroidLink'
+  | 'mobileAppIosLink'
+  | 'showPwaBannerAndroid'
+  | 'showPwaBannerIos'
 >;
 export type UpdateTenantAnalyticsReq = Pick<
   TenantEntity,
@@ -184,7 +189,7 @@ export type SmsPlanetConnectionResponse =
   | { errorMsg: string }
   | { senderFields: string };
 
-export { AccountConfirmationMethod } from './account-confirmation-method';
+export { AccountConfirmationMethod } from 'src/smartbox-types/tenant/account-confirmation-method';
 
 export type TenantSmtpConfig = Pick<
   TenantEntity,

@@ -1,7 +1,7 @@
-import { UserRole, UserStatus, Language } from './user-entity';
-import { ApiErrorCode } from '../apiMessages/errorCodes';
-import { TenantEntity } from '../tenant';
-import { CompanyData, RentStatus, SelectOption } from '..';
+import { CompanyData, RentStatus, SelectOption } from 'src/smartbox-types';
+import { ApiErrorCode } from 'src/smartbox-types/apiMessages/errorCodes';
+import { TenantEntity } from 'src/smartbox-types/tenant';
+import { UserRole, UserStatus, Language } from 'src/smartbox-types/user/user-entity';
 
 export class UserRes {
   id: string;

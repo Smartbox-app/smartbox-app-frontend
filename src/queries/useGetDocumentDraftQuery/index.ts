@@ -1,1 +1,1 @@
-export * from './useGetDocumentDraftQuery';
+export * from 'src/queries/useGetDocumentDraftQuery/useGetDocumentDraftQuery';

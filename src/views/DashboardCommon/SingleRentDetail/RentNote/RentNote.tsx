@@ -1,12 +1,13 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
+
+import { modal } from 'src/actions';
 import { Button } from 'src/components/Branded';
 import { ButtonsContainer } from 'src/components/Layout';
+import { Skeleton, Typography } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
 import { useRentNoteQuery } from 'src/queries';
-import { useDispatch } from 'react-redux';
-import { modal } from 'src/actions';
-import { RentNoteEditModal } from './RentNoteEditModal';
-import { Skeleton, Typography } from 'src/components/ui';
+import { RentNoteEditModal } from 'src/views/DashboardCommon/SingleRentDetail/RentNote/RentNoteEditModal';
 
 interface Props {
   rentId: string;

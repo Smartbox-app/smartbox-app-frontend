@@ -1,11 +1,12 @@
+import { Capacitor } from '@capacitor/core';
 import React from 'react';
 import { useDispatch } from 'react-redux';
+
 import { showModal } from 'src/actions/modal';
+import { RentAgreementModal } from 'src/components/Common/RentAgreementModal';
 import { Button } from 'src/components/ui';
-import ApiService from 'src/services/api-service';
-import { Capacitor } from '@capacitor/core';
-import { RentAgreementModal } from '../../../../components/Common/RentAgreementModal';
 import { Templates } from 'src/icons';
+import ApiService from 'src/services/api-service';
 import { handleFileOpen } from 'src/utils/handle-file-open';
 
 type RentAgreementButtonProps = {

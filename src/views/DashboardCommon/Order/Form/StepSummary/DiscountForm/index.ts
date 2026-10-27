@@ -1,1 +1,1 @@
-export * from './DiscountForm';
+export * from 'src/views/DashboardCommon/Order/Form/StepSummary/DiscountForm/DiscountForm';

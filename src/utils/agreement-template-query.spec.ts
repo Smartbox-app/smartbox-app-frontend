@@ -2,7 +2,7 @@ import {
   agreementTemplateToQueryString,
   buildLegacyAgreementPath,
   buildLegacyAgreementUrl,
-} from './agreement-template-query';
+} from 'src/utils/agreement-template-query';
 
 describe('agreement template query', () => {
   it('drops empty values and serializes addons', () => {

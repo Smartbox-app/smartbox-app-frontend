@@ -1,7 +1,8 @@
-import { useMutation } from '@tanstack/react-query';
-import ApiService from '../../services/api-service';
-import { PayForRentResponse } from 'smartbox-types';
 import { Capacitor } from '@capacitor/core';
+import { useMutation } from '@tanstack/react-query';
+
+import { PayForRentResponse } from 'smartbox-types';
+import ApiService from 'src/services/api-service';
 
 export const usePayForPeriodMutation = () => {
   return useMutation({

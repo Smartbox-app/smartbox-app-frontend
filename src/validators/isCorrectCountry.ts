@@ -1,6 +1,6 @@
 import { registerDecorator, ValidationOptions } from "class-validator";
 
-import { validateCountry } from "./country";
+import { validateCountry } from "src/validators/country";
 
 export function IsCountry(validationOptions?: ValidationOptions) {
   return function (object: object, propertyName: string) {

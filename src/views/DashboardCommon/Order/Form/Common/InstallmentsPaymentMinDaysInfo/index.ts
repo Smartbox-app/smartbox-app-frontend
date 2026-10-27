@@ -1,1 +1,1 @@
-export * from './InstallmentsPaymentMinDaysInfo'
+export * from 'src/views/DashboardCommon/Order/Form/Common/InstallmentsPaymentMinDaysInfo/InstallmentsPaymentMinDaysInfo'

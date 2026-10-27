@@ -1,1 +1,1 @@
-export * from './useUpdateApiAccessMutation';
+export * from 'src/mutations/useUpdateApiAccessMutation/useUpdateApiAccessMutation';

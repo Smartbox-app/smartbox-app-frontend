@@ -1,5 +1,6 @@
 import React from 'react';
 import { useParams } from 'react-router';
+
 import { TenantSettings } from 'src/views/DashboardCommon/TenantSettings';
 
 export const AdminTenantSettings = () => {

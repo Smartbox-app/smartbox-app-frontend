@@ -7,6 +7,7 @@ import {
   IsString,
   IsUUID,
 } from 'class-validator';
+
 import { PublicApiScope } from 'smartbox-types';
 import { errors } from 'src/validation/errors';
 

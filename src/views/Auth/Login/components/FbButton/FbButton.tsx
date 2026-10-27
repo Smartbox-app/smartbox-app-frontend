@@ -1,16 +1,15 @@
-import ApiService from '../../../../../services/api-service';
-import { __ } from '../../../../../helpers/i18n';
-import { useTenant } from '../../../../../hooks/useTenant';
-import { Button } from 'src/components/ui';
-import styled from 'styled-components';
-import { lighten } from 'polished';
-import { getColorForBackground } from 'src/utils/color';
-// import { FacebookLogin } from '@capacitor-community/facebook-login';
 import { Capacitor } from '@capacitor/core';
-
-import { useSocialLoginMutation } from 'src/mutations';
-import { Spinner } from 'src/components/Branded';
 import { SocialLogin } from '@capgo/capacitor-social-login';
+import { lighten } from 'polished';
+import styled from 'styled-components';
+
+import { Spinner } from 'src/components/Branded';
+import { Button } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
+import { useTenant } from 'src/hooks/useTenant';
+import { useSocialLoginMutation } from 'src/mutations';
+import ApiService from 'src/services/api-service';
+import { getColorForBackground } from 'src/utils/color';
 
 const StyledButton = styled(Button)({
   backgroundColor: '#4267b2',

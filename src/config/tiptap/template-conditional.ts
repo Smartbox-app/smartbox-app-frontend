@@ -1,7 +1,8 @@
 import { mergeAttributes, Node } from '@tiptap/core';
 import { ReactNodeViewRenderer } from '@tiptap/react';
-import { TemplateConditionalBranch } from './template-conditional-branch';
-import { TemplateConditionalNodeView } from './TemplateConditionalNodeView';
+
+import { TemplateConditionalBranch } from 'src/config/tiptap/template-conditional-branch';
+import { TemplateConditionalNodeView } from 'src/config/tiptap/TemplateConditionalNodeView';
 
 declare module '@tiptap/core' {
   interface Commands<ReturnType> {

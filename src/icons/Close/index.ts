@@ -1,1 +1,1 @@
-export * from './Close';
+export * from 'src/icons/Close/Close';

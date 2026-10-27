@@ -1,1 +1,1 @@
-export * from './useMyRentDetailsQuery';
+export * from 'src/queries/useMyRentDetailsQuery/useMyRentDetailsQuery';

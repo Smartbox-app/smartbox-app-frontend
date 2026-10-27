@@ -1,10 +1,9 @@
 import React from 'react';
-
-import { Button } from '../../components/Branded';
-import { ButtonsContainer, DashboardContainer, SectionHeader } from '../../components/Layout';
-
 import styled from 'styled-components';
-import { colorOrDark } from '../../utils/color';
+
+import { Button } from 'src/components/Branded';
+import { ButtonsContainer, DashboardContainer, SectionHeader } from 'src/components/Layout';
+import { colorOrDark } from 'src/utils/color';
 
 const StyledApplicationError = styled.h1`
 color: ${props => colorOrDark(props.theme.colors.primary)};

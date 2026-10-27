@@ -1,13 +1,11 @@
 import React from 'react';
+
 import { systemNotificationListTable, TableSchema } from 'smartbox-tables';
-
-import { ApiTable } from '../../../../components/Common';
-
-import { Section } from '../../../../components/Layout';
-import { __ } from '../../../../helpers/i18n';
-import { InteractiveTableSchema } from '../../../../utils/table-schema-utils';
-
+import { ApiTable } from 'src/components/Common';
+import { Section } from 'src/components/Layout';
 import { Header } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
+import { InteractiveTableSchema } from 'src/utils/table-schema-utils';
 
 export const List = () => {
   const scheme: TableSchema = new InteractiveTableSchema(

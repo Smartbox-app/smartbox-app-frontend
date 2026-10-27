@@ -1,26 +1,26 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
+
 import { stocksList } from 'smartbox-tables';
-import { showModal } from '../../../../../actions/modal';
-import { successNotification } from '../../../../../actions/notifications';
-import ApiService from '../../../../../services/api-service';
 import { StockAdminList, UserRole } from 'smartbox-types';
-import { ApiTable } from '../../../../../components/Common';
-import { Button } from '../../../../../components/Branded';
-import { Section, ButtonsContainer } from '../../../../../components/Layout';
-import { __ } from '../../../../../helpers/i18n';
-import { InteractiveTableSchema } from '../../../../../utils/table-schema-utils';
-import { refreshApiTableData } from '../../../../../actions/api-table';
-import { history } from 'src/history';
-import UserService from '../../../../../services/user-service';
-import { useGetMyDetailsQuery } from 'src/queries';
-import { HeaderWithActions, Button as UIButton } from 'src/components/ui';
+import { showModal } from 'src/actions/modal';
+import { Button } from 'src/components/Branded';
+import { ApiTable } from 'src/components/Common';
 import { DeleteStockModal } from 'src/components/Common/DeleteStockModal';
-import { useTenantNaming } from 'src/hooks/useTenantNaming';
 import { DownloadReportModal } from 'src/components/Common/DownloadReportModal';
+import { Section, ButtonsContainer } from 'src/components/Layout';
+import { HeaderWithActions, Button as UIButton } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
+import { history } from 'src/history';
+import { useTenantNaming } from 'src/hooks/useTenantNaming';
+import { useDeleteStockMutation } from 'src/mutations';
+import { useGetMyDetailsQuery } from 'src/queries';
+import UserService from 'src/services/user-service';
+import { InteractiveTableSchema } from 'src/utils/table-schema-utils';
 
 const List = () => {
   const dispatch = useDispatch();
+  const { mutate: deleteStock } = useDeleteStockMutation();
   const { getText } = useTenantNaming();
   const scheme = new InteractiveTableSchema(stocksList);
   const { data: user } = useGetMyDetailsQuery();
@@ -70,21 +70,18 @@ const List = () => {
             address: data.address,
           })}
           approveButtonText="application.yes"
-          approveAction={(stockName) => deleteStock(data, stockName)}
+          approveAction={(stockName) => handleDeleteStock(data, stockName)}
         />,
       ),
     );
   };
 
-  const deleteStock = async (data: StockAdminList, stockName: string) => {
-    await ApiService.callFetch(
-      'DELETE',
-      `stock/${data.id}/${stockName}`,
-      () => {
-        dispatch(successNotification(getText('deleted')));
-        dispatch(refreshApiTableData());
-      },
-    );
+  const handleDeleteStock = (data: StockAdminList, stockName: string) => {
+    deleteStock({
+      stockId: data.id,
+      stockName,
+      successMessage: getText('deleted'),
+    });
   };
 
   return (

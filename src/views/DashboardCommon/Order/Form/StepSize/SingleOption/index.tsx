@@ -1,26 +1,27 @@
 import React, { useState } from 'react';
-
-import './SingleOption.scss';
 import { useDispatch, useSelector } from 'react-redux';
-import { ApplicationState } from '../../../../../../reducers';
-import { Spinner } from '../../../../../../components/Branded';
 import styled, { DefaultTheme } from 'styled-components';
+
 import { BoxGroupUserRes } from 'smartbox-types';
-import { PriceInfo } from '../PriceInfo';
 import {
   setBoxGroup,
   setMaxAdvanceBookingDays,
   setMaxRentPeriod,
   setMinRentPeriod,
-} from '../../../../../../actions/order';
+} from 'src/actions/order';
+import { Spinner } from 'src/components/Branded';
+import { Card } from 'src/components/ui';
+import { ApplicationState } from 'src/reducers';
 import {
   getColorForBackground,
-} from '../../../../../../utils/color';
-import { Card } from 'src/components/ui';
-import { OptionImage } from './components/OptionImage';
-import { OptionData } from './components/OptionData';
-import { OptionActions } from './components/OptionActions';
-import { LeftCounter } from './components/LeftCounter';
+} from 'src/utils/color';
+import { PriceInfo } from 'src/views/DashboardCommon/Order/Form/StepSize/PriceInfo';
+import { LeftCounter } from 'src/views/DashboardCommon/Order/Form/StepSize/SingleOption/components/LeftCounter';
+import { OptionActions } from 'src/views/DashboardCommon/Order/Form/StepSize/SingleOption/components/OptionActions';
+import { OptionData } from 'src/views/DashboardCommon/Order/Form/StepSize/SingleOption/components/OptionData';
+import { OptionImage } from 'src/views/DashboardCommon/Order/Form/StepSize/SingleOption/components/OptionImage';
+
+import 'src/views/DashboardCommon/Order/Form/StepSize/SingleOption/SingleOption.scss';
 
 export type SingleOptionType = {
   name: string;

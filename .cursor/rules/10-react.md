@@ -18,6 +18,92 @@ Do not use class components in new code unless a specific framework or library r
 
 ---
 
+## Prefer existing UI components
+
+Before building custom UI, check `src/components/ui` (and shared `src/components/Common` / `Layout`).
+
+- Reuse an existing primitive when it fits the job
+- Extend an existing primitive only when the need is clearly shared
+- Add a new shared UI component only when reuse across features is justified
+- Feature-local styled wrappers are fine for one-off layout/chrome
+
+Do not reinvent Section, Stack, Header, Button, Spinner, etc. inline.
+
+---
+
+## Prefer styled-components
+
+Prefer `styled-components` for component styling.
+
+Do not introduce new SCSS/CSS modules for UI that can be expressed with styled-components.
+
+Colocate styled primitives with the component that owns them (same file is fine when they are not reused).
+
+Reuse existing design-system / `src/components/ui` primitives before inventing new layout chrome.
+
+```tsx
+// ❌ BAD — new SCSS for a feature view
+import './Diagnostics.scss';
+<div className="diagnostics-card" />
+
+// ✅ GOOD
+const Card = styled.div`
+  /* ... */
+`;
+```
+
+Exception: keep touching an existing SCSS file only when the change is a tiny fix inside an established SCSS-based surface and migrating would be out of scope.
+
+---
+
+## Prefer TanStack Query
+
+Prefer TanStack Query hooks under `src/queries` / `src/mutations` over raw `ApiService` calls inside components.
+
+```tsx
+// ❌ BAD
+const [data, setData] = useState();
+useEffect(() => {
+  ApiService.callFetch('GET', `gate/status/stock/${stockId}`, setData);
+}, [stockId]);
+
+// ✅ GOOD
+const { data, isPending } = useGatesStatusQuery(stockId);
+```
+
+- Reads → `useXQuery` in `src/queries/`
+- Writes → `useXMutation` in `src/mutations/`
+- Polling → `refetchInterval` on the query (not `setInterval` + manual fetch)
+- Keep `ApiService` inside query/mutation `queryFn` / `mutationFn` only
+
+Do not hand-roll loading/error/cache/refetch state when a query hook covers it.
+
+---
+
+## Plan Components as Separate Responsibilities
+
+Do not design a feature as one large block of JSX + fetching + helpers.
+
+Before writing (or when a file grows), split by responsibility:
+
+1. **Data** — query/mutation hooks
+2. **Pure helpers** — status → label/class/icon mappers (plain functions)
+3. **Sections** — one child component per visual block (e.g. internet, gates, alarms)
+4. **Page/container** — wires hooks and composes sections only
+
+```text
+Diagnostics/
+  Diagnostics.tsx              // orchestration
+  InternetDiagnostics.tsx      // one section
+  GatesDiagnostics.tsx
+  AlarmsDiagnostics.tsx
+  diagnostics-health.ts        // pure mappers
+```
+
+Still only one React component per file. Extract early when a section has its own markup, empty state, or data shape — do not wait until the file is unreadable.
+
+---
+
 ## Component Props Types
 
 When a component accepts props, define a specifically named props type using the component name.

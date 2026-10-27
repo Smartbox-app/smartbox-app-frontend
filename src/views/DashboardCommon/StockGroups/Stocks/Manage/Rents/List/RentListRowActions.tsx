@@ -1,15 +1,16 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
+
 import { AdminRentListDetails, UserRole } from 'smartbox-types';
-import { Button } from 'src/components/Branded';
-import { Button as UIButton } from 'src/components/ui';
-import { ButtonsContainer } from 'src/components/Layout';
 import { hideModal, showModal } from 'src/actions/modal';
+import { Button } from 'src/components/Branded';
+import { ButtonsContainer } from 'src/components/Layout';
+import { Button as UIButton } from 'src/components/ui';
+import { history } from 'src/history';
 import { useGetMyDetailsQuery } from 'src/queries';
 import UserService from 'src/services/user-service';
-import { history } from 'src/history';
-import { RentHistoryModal } from './RentHistoryModal';
-import { RentAuthorizationsForRentModal } from '../../RentAuthorizations/modals/RentAuthorizationsForRentModal';
+import { RentAuthorizationsForRentModal } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/RentAuthorizations/modals/RentAuthorizationsForRentModal';
+import { RentHistoryModal } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Rents/List/RentHistoryModal';
 
 type Props = {
   rent: AdminRentListDetails;

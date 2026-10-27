@@ -1,8 +1,9 @@
 import { applyMiddleware, createStore, Store } from 'redux';
-import reduxThunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import reducers, { ApplicationState } from './reducers';
-import { AppDispatch } from './types/app-dispatch';
+import reduxThunk from 'redux-thunk';
+
+import reducers, { ApplicationState } from 'src/reducers';
+import { AppDispatch } from 'src/types/app-dispatch';
 
 const createStoreWithMiddleware = composeWithDevTools(
   applyMiddleware(reduxThunk),

@@ -1,7 +1,6 @@
 import { BoxGroupType } from 'smartbox-types';
-
-import { i18next, t } from '../i18n/i18n';
-import { getBoxGroupTypeLabel } from './box-group-labels';
+import { i18next, t } from 'src/i18n/i18n';
+import { getBoxGroupTypeLabel } from 'src/utils/box-group-labels';
 
 describe('tenant naming', () => {
   afterEach(async () => {

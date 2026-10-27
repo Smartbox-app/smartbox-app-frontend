@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
+
 import { BoxGroupUserRes } from 'smartbox-types';
-import ApiService from '../../services/api-service';
+import ApiService from 'src/services/api-service';
 
 export const boxGroupsForStockQueryKey = (stockId: string) =>
   ['box-group-new', 'all', stockId] as const;

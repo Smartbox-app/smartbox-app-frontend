@@ -1,35 +1,28 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
+import { useParams } from 'react-router';
+
 import { FieldType, boxGroupsList } from 'smartbox-tables';
 import { BoxGroupListRes } from 'smartbox-types';
-import { Alert, ApiTable , ConfirmModal } from '../../../../../../../components/Common';
-import { Button } from '../../../../../../../components/Branded';
+import { showModal } from 'src/actions/modal';
+import { Button } from 'src/components/Branded';
+import { Alert, ApiTable , ConfirmModal } from 'src/components/Common';
 import {
   ButtonsContainer,
-} from '../../../../../../../components/Layout';
-import { __ } from '../../../../../../../helpers/i18n';
-import { InteractiveTableSchema } from '../../../../../../../utils/table-schema-utils';
-import UserService from '../../../../../../../services/user-service';
-import { showModal } from '../../../../../../../actions/modal';
-import ApiService from '../../../../../../../services/api-service';
-import { successNotification } from '../../../../../../../actions/notifications';
-import { refreshApiTableData } from '../../../../../../../actions/api-table';
-import { useParams } from 'react-router';
-import { Edit } from '../Edit';
-import { useGetMyDetailsQuery } from 'src/queries';
+} from 'src/components/Layout';
 import { HeaderWithActions, Section } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
+import { useDeleteBoxGroupMutation } from 'src/mutations';
+import { useGetMyDetailsQuery } from 'src/queries';
+import UserService from 'src/services/user-service';
+import { InteractiveTableSchema } from 'src/utils/table-schema-utils';
+import { Edit } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Groups/Edit';
 
 const List = () => {
   const { data: user } = useGetMyDetailsQuery();
   const dispatch = useDispatch();
+  const { mutate: deleteBoxGroup } = useDeleteBoxGroupMutation();
   const { stockId } = useParams<{ stockId: string }>();
-
-  const deleteGroup = async (boxGroupId: string) => {
-    await ApiService.callFetch('DELETE', `box-group-new/${boxGroupId}`, () => {
-      dispatch(successNotification('application.boxGroupDeleted'));
-      dispatch(refreshApiTableData());
-    });
-  };
 
   const confirmBoxGroupDelete = (groupId: string) => {
     dispatch(
@@ -37,7 +30,7 @@ const List = () => {
         <ConfirmModal
           approveButtonText="application.delete"
           mainText="application.deleteGroupText"
-          approveAction={() => deleteGroup(groupId)}
+          approveAction={() => deleteBoxGroup(groupId)}
         />,
       ),
     );

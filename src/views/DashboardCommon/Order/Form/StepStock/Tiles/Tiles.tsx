@@ -1,16 +1,17 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { order } from '../../../../../../actions';
-import { Section as InsideSection } from '../../../../../../components/Layout';
-import { SingleOption } from './SingleOption';
 
-import '../StepStock.scss';
+import { order } from 'src/actions';
+import { Section as InsideSection } from 'src/components/Layout';
+import { Header, Skeleton } from 'src/components/ui';
 import {
   useGetMyDetailsQuery,
   useGetStockGroupsListQuery,
   useGetStockListQuery,
 } from 'src/queries';
-import { Header, Skeleton } from '../../../../../../components/ui';
+import { SingleOption } from 'src/views/DashboardCommon/Order/Form/StepStock/Tiles/SingleOption';
+
+import 'src/views/DashboardCommon/Order/Form/StepStock/StepStock.scss';
 
 export const Tiles = () => {
   const dispatch = useDispatch();

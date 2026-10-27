@@ -1,15 +1,16 @@
 import { useDispatch } from 'react-redux';
-import { MyRentDetails } from 'smartbox-types';
-import { ButtonsContainer } from '../../../../../components/Layout';
-import UserService from '../../../../../services/user-service';
-import { dateOnly } from '../../../../../utils/format-date';
-import { __ } from '../../../../../helpers/i18n';
-import { clearOrder, updateFormData } from '../../../../../actions/order';
-import { history } from 'src/history';
-import { useGetMyDetailsQuery } from 'src/queries';
 import styled from 'styled-components';
+
+import { MyRentDetails } from 'smartbox-types';
+import { clearOrder, updateFormData } from 'src/actions/order';
+import { ButtonsContainer } from 'src/components/Layout';
 import { Button, Stack, Typography } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
+import { history } from 'src/history';
 import { Wallet } from 'src/icons';
+import { useGetMyDetailsQuery } from 'src/queries';
+import UserService from 'src/services/user-service';
+import { dateOnly } from 'src/utils/format-date';
 
 interface Props {
   rent: MyRentDetails;

@@ -1,25 +1,26 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
+
 import { apiAccessTableSchema } from 'smartbox-tables';
 import { ApiAccessTableRes, CreateApiAccessRes } from 'smartbox-types';
+import { refreshApiTableData } from 'src/actions/api-table';
 import { showModal } from 'src/actions/modal';
 import { successNotification } from 'src/actions/notifications';
-import { refreshApiTableData } from 'src/actions/api-table';
-import { ApiTable, ConfirmModal } from 'src/components/Common';
 import { Button } from 'src/components/Branded';
+import { ApiTable, ConfirmModal } from 'src/components/Common';
 import { ButtonsContainer } from 'src/components/Layout';
 import { HeaderWithActions, Section } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
+import { useApiAccessScopes } from 'src/hooks/useApiAccessScopes';
 import {
   useDeleteApiAccessMutation,
   useRotateApiAccessKeyMutation,
 } from 'src/mutations';
 import { InteractiveTableSchema } from 'src/utils/table-schema-utils';
-import { useApiAccessScopes } from 'src/hooks/useApiAccessScopes';
+import { ApiKeyCreatedModal } from 'src/views/DashboardAdmin/Management/ApiAccess/ApiKeyCreatedModal';
+import { CreateApiAccessModal } from 'src/views/DashboardAdmin/Management/ApiAccess/CreateApiAccessModal';
+import { EditApiAccessModal } from 'src/views/DashboardAdmin/Management/ApiAccess/EditApiAccessModal';
 import { TenantApiAccess } from 'src/views/DashboardTenant/ApiAccess';
-import { CreateApiAccessModal } from '../CreateApiAccessModal';
-import { EditApiAccessModal } from '../EditApiAccessModal';
-import { ApiKeyCreatedModal } from '../ApiKeyCreatedModal';
 
 const List = () => {
   const dispatch = useDispatch();

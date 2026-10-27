@@ -1,3 +1,3 @@
-export * from './user';
-export * from './user-entity';
-export * from './payment-deadline';
+export * from 'src/smartbox-types/user/user';
+export * from 'src/smartbox-types/user/user-entity';
+export * from 'src/smartbox-types/user/payment-deadline';

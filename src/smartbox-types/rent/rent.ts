@@ -1,8 +1,8 @@
-import { RentAgreementType, RentDescription, RentPaymentType, RentStatus, OpenEndedNextPeriodPreview } from './rent-entity';
-import { BoxStatus } from '../box/box-entity';
-import { CompanyData, PaymentDocument, PaymentStatus } from '../payment';
-import { AcceptanceStatuses, SingleAcceptance } from '../addon';
-import { PeriodEntity } from '../period';
+import { AcceptanceStatuses, SingleAcceptance } from 'src/smartbox-types/addon';
+import { BoxStatus } from 'src/smartbox-types/box/box-entity';
+import { CompanyData, PaymentDocument, PaymentStatus } from 'src/smartbox-types/payment';
+import { PeriodEntity } from 'src/smartbox-types/period';
+import { RentAgreementType, RentDescription, RentPaymentType, RentStatus, OpenEndedNextPeriodPreview } from 'src/smartbox-types/rent/rent-entity';
 
 export interface OrderAddons {
   [addonId: string]: {

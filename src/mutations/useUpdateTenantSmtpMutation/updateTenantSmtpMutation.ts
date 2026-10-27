@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import ApiService from '../../services/api-service';
+
+import ApiService from 'src/services/api-service';
 
 export type UpdateTenantSmtpBody = {
   useCustomSmtp: boolean;

@@ -1,5 +1,6 @@
 import { FieldErrors } from 'react-hook-form';
-import { scrollToElement } from './scroll-top';
+
+import { scrollToElement } from 'src/utils/scroll-top';
 
 const getFormFieldElement = (fieldName: string): HTMLElement | null => {
   const byId = document.getElementById(fieldName);

@@ -1,1 +1,1 @@
-export * from './GateAnimation';
+export * from 'src/components/Common/GateAnimation/GateAnimation';

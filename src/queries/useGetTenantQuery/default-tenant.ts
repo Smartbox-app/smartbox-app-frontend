@@ -47,6 +47,8 @@ export const getDefaultTenant = (): TenantForUsers => ({
   namingType: NamingType.Stock,
   mobileAppAndroidLink: null,
   mobileAppIosLink: null,
+  showPwaBannerAndroid: true,
+  showPwaBannerIos: true,
   accountConfirmationMethod: AccountConfirmationMethod.email_link,
   publicAssetsBaseUrl: 'https://storage.googleapis.com/smartbox-app',
   allowFinishGracePeriod: false,

@@ -1,24 +1,23 @@
-import React from 'react';
 import { ItfApiForm } from 'itf_formbuilder_react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
+
 import { StockGroupReq } from 'smartbox-types';
+import { successNotification } from 'src/actions/notifications';
+import { Button, Spinner } from 'src/components/Branded';
 import {
   ButtonsContainer,
   FormContainer,
   Section,
-} from '../../../../../components/Layout';
-import { Button, Spinner } from '../../../../../components/Branded';
-import ApiService from '../../../../../services/api-service';
-import { formOnTranslateString } from '../../../../../utils/trans-form';
-import { history } from 'src/history';
-
-import { successNotification } from '../../../../../actions/notifications';
-import { __ } from '../../../../../helpers/i18n';
-import UserService from '../../../../../services/user-service';
-
-import { mapFields } from '../../../../../utils/fields-mapper';
-import { useGetMyDetailsQuery } from 'src/queries';
+} from 'src/components/Layout';
 import { HeaderWithActions } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
+import { history } from 'src/history';
+import { useGetMyDetailsQuery } from 'src/queries';
+import ApiService from 'src/services/api-service';
+import UserService from 'src/services/user-service';
+import { mapFields } from 'src/utils/fields-mapper';
+import { formOnTranslateString } from 'src/utils/trans-form';
 
 const Add = () => {
   const dispatch = useDispatch();

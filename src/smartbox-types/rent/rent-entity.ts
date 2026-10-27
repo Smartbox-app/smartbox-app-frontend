@@ -1,4 +1,4 @@
-import { CalculatedPriceRes, RentUserData } from '..';
+import { CalculatedPriceRes, RentUserData } from 'src/smartbox-types';
 
 export enum RentPaymentType {
   InAdvance = 'in-advance',

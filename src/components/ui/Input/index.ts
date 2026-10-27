@@ -1,1 +1,1 @@
-export * from './Input';
+export * from 'src/components/ui/Input/Input';

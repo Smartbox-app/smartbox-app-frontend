@@ -1,4 +1,5 @@
 import { IsEmail, IsIn, IsNotEmpty, IsUUID, Matches, ValidateIf } from 'class-validator';
+
 import { errors } from 'src/validation/errors';
 
 export class StaffAddRentAuthorizationFormDto {

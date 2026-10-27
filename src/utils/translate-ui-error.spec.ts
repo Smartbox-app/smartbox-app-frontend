@@ -1,5 +1,5 @@
-import { i18next } from '../i18n/i18n';
-import { translateUiError } from './translate-ui-error';
+import { i18next } from 'src/i18n/i18n';
+import { translateUiError } from 'src/utils/translate-ui-error';
 
 describe('translateUiError', () => {
   afterEach(async () => {

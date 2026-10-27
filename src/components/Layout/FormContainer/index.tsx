@@ -1,7 +1,7 @@
 import React from 'react';
-
-import './FormContainer.scss';
 import styled from 'styled-components';
+
+import 'src/components/Layout/FormContainer/FormContainer.scss';
 
 const StyledFormContainer = styled.div<{ $fullWidth?: boolean }>`
   gap: 8px;

@@ -1,35 +1,57 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators, type AnyAction, type Dispatch } from 'redux';
+import React, { useMemo } from 'react';
+import { useDispatch } from 'react-redux';
+
 import {
   FieldType,
-  TableSchema,
   TableSchemaField,
   tenantsList,
 } from 'smartbox-tables';
 import { UserClientListRes, UserStatus } from 'smartbox-types';
-import { ApiTable } from '../../../../../components/Common';
-import { Button } from '../../../../../components/Branded';
-import { ButtonsContainer } from '../../../../../components/Layout';
-import { __ } from '../../../../../helpers/i18n';
-import { InteractiveTableSchema } from '../../../../../utils/table-schema-utils';
-import { modal, user } from '../../../../../actions';
-import { TenantStatus } from '../Status';
+import { showModal } from 'src/actions/modal';
+import { Button } from 'src/components/Branded';
+import { ApiTable } from 'src/components/Common';
+import { ButtonsContainer } from 'src/components/Layout';
 import { HeaderWithActions, Section } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
 import { history } from 'src/history';
+import { useSetUserStatusMutation } from 'src/mutations';
+import { InteractiveTableSchema } from 'src/utils/table-schema-utils';
+import { TenantStatus } from 'src/views/DashboardAdmin/Management/ClientsManagement/Status';
 
-interface Props {
-  showModal: (content: React.ReactNode) => void;
-  enableUser: (userId: string) => void;
-  blockUser: (userId: string) => void;
-}
+const List = () => {
+  const dispatch = useDispatch();
+  const { mutate: setUserStatus } = useSetUserStatusMutation();
 
-class List extends React.Component<Props> {
-  private scheme: TableSchema;
+  const scheme = useMemo(() => {
+    const getLockButton = (
+      _value: unknown,
+      field: TableSchemaField,
+      userData: UserClientListRes,
+    ) => {
+      if ([UserStatus.blocked, UserStatus.preActive].includes(userData.status)) {
+        return (
+          <Button
+            text="application.active"
+            success
+            click={() =>
+              setUserStatus({ userId: userData.id, status: 'active' })
+            }
+          />
+        );
+      }
 
-  constructor(props: Props) {
-    super(props);
-    this.scheme = new InteractiveTableSchema(tenantsList)
+      return (
+        <Button
+          text="application.block"
+          danger
+          click={() =>
+            setUserStatus({ userId: userData.id, status: 'blocked' })
+          }
+        />
+      );
+    };
+
+    return new InteractiveTableSchema(tenantsList)
       .modifyFieldStatic('status', {
         name: __('application.state'),
         field: 'status',
@@ -37,15 +59,8 @@ class List extends React.Component<Props> {
         defaultSort: true,
         type: FieldType.Custom,
         customRender: (value, field, userData: UserClientListRes) =>
-          this.getLockButton(value, field, userData),
+          getLockButton(value, field, userData),
       })
-      // .addFieldAfter('phone', {
-      //     name: __('application.stockDetails'),
-      //     field: 'stocks',
-      //     mobile: true,
-      //     type: FieldType.Custom,
-      //     customRender: (value, field, userData: UserClientListRes) => <StocksDetails user={userData} />
-      // })
       .addFieldAtTheEnd({
         name: __('application.actions'),
         field: 'actions',
@@ -63,62 +78,35 @@ class List extends React.Component<Props> {
             name: 'application.status',
             type: 'secondary',
             click: (data: UserClientListRes) =>
-              this.props.showModal(
-                <TenantStatus tenantId={data.tenantId!} user={data} />,
+              dispatch(
+                showModal(
+                  <TenantStatus tenantId={data.tenantId!} user={data} />,
+                ),
               ),
           },
         ],
       });
-  }
+  }, [dispatch, setUserStatus]);
 
-  private getLockButton = (
-    _value: unknown,
-    field: TableSchemaField,
-    userData: UserClientListRes,
-  ) => {
-    if ([UserStatus.blocked, UserStatus.preActive].includes(userData.status)) {
-      return (
-        <Button
-          text="application.active"
-          success
-          click={() => this.props.enableUser(userData.id)}
-        />
-      );
-    } 
-      return (
-        <Button
-          text="application.block"
-          danger
-          click={() => this.props.blockUser(userData.id)}
-        />
-      );
-    
-  };
+  return (
+    <Section>
+      <HeaderWithActions
+        actions={
+          <ButtonsContainer>
+            <Button
+              text="application.addTenant"
+              primary
+              to="/admin/management/clients/add"
+            />
+          </ButtonsContainer>
+        }
+      >
+        {__('application.tenantsList')}
+      </HeaderWithActions>
 
-  render() {
-    return (
-      <Section>
-        <HeaderWithActions
-          actions={
-            <ButtonsContainer>
-              <Button
-                text="application.addTenant"
-                primary
-                to="/admin/management/clients/add"
-              />
-            </ButtonsContainer>
-          }
-        >
-          {__('application.tenantsList')}
-        </HeaderWithActions>
+      <ApiTable scheme={scheme} apiEndpointSubUrl="user/tenants" />
+    </Section>
+  );
+};
 
-        <ApiTable scheme={this.scheme} apiEndpointSubUrl="user/tenants" />
-      </Section>
-    );
-  }
-}
-
-const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) =>
-  bindActionCreators({ ...modal, ...user }, dispatch);
-
-export default connect(null, mapDispatchToProps)(List);
+export default List;

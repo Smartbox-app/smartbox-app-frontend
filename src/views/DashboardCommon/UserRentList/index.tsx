@@ -1,15 +1,16 @@
 import React, { useMemo } from 'react';
-import { AdminRentListDetails, RentStatus } from 'smartbox-types';
+
 import { FieldType, rentsList } from 'smartbox-tables';
+import { AdminRentListDetails, RentStatus } from 'smartbox-types';
 import { ApiTable } from 'src/components/Common';
+import { SectionHeader } from 'src/components/Layout';
+import { USER_RENTS_LIST } from 'src/constants/api-table-instances';
 import { __ } from 'src/helpers/i18n';
-import { InteractiveTableSchema } from 'src/utils/table-schema-utils';
 import {
   rentStatusSearchValues,
   translateBoxDisplayStatus,
 } from 'src/utils/box-display-status';
-import { SectionHeader } from 'src/components/Layout';
-import { USER_RENTS_LIST } from 'src/constants/api-table-instances';
+import { InteractiveTableSchema } from 'src/utils/table-schema-utils';
 import { RentListRowActions } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Rents/List/RentListRowActions';
 
 interface Props {

@@ -1,10 +1,9 @@
 import { MyRentList } from 'smartbox-types';
-import { Alert } from '../../../../../components/Common';
-
-import SingleStorage from './SingleStorage';
-
-import './StorageList.scss';
+import { Alert } from 'src/components/Common';
 import { Skeleton } from 'src/components/ui';
+import SingleStorage from 'src/views/DashboardCommon/Welcome/Storage/StorageList/SingleStorage';
+
+import 'src/views/DashboardCommon/Welcome/Storage/StorageList/StorageList.scss';
 
 interface Props {
   list: MyRentList[];

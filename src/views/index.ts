@@ -1,4 +1,4 @@
-import Page404 from './Page404';
-import Welcome from './Welcome';
+import Page404 from 'src/views/Page404';
+import Welcome from 'src/views/Welcome';
 
 export { Page404, Welcome };

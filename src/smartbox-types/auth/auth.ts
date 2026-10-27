@@ -1,4 +1,4 @@
-import { UserRole } from '..';
+import { UserRole } from 'src/smartbox-types';
 
 export interface AuthLoginRequest {
   email: string;

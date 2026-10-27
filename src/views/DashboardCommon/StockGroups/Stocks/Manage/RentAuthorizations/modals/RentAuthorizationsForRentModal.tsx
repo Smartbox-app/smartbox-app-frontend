@@ -1,23 +1,24 @@
 import React, { useCallback, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
+
 import { FieldType, rentAuthorizationsList } from 'smartbox-tables';
 import { AdminRentListDetails, RentAuthorizationListItem } from 'smartbox-types';
-import { ApiTable, ConfirmModal } from 'src/components/Common';
-import { Button } from 'src/components/Branded';
-import { ButtonsContainer } from 'src/components/Layout';
-import { __ } from 'src/helpers/i18n';
-import { InteractiveTableSchema } from 'src/utils/table-schema-utils';
+import { refreshApiTableData } from 'src/actions/api-table';
 import { showModal, hideModal } from 'src/actions/modal';
 import { successNotification } from 'src/actions/notifications';
-import { refreshApiTableData } from 'src/actions/api-table';
-import { useGetMyDetailsQuery } from 'src/queries';
-import { useRevokeRentAuthorizationByStaffMutation } from 'src/mutations';
+import { Button } from 'src/components/Branded';
+import { ApiTable, ConfirmModal } from 'src/components/Common';
+import { RentSummary } from 'src/components/Common/RentSummary/RentSummary';
+import { ButtonsContainer } from 'src/components/Layout';
 import { Modal } from 'src/components/ui';
-import UserService from 'src/services/user-service';
-import { history } from 'src/history';
 import { RENT_AUTHORIZATIONS_MODAL } from 'src/constants/api-table-instances';
-import { StaffAddRentAuthorizationModal } from './StaffAddRentAuthorizationModal';
-import { RentSummary } from '../../../../../../../components/Common/RentSummary/RentSummary';
+import { __ } from 'src/helpers/i18n';
+import { history } from 'src/history';
+import { useRevokeRentAuthorizationByStaffMutation } from 'src/mutations';
+import { useGetMyDetailsQuery } from 'src/queries';
+import UserService from 'src/services/user-service';
+import { InteractiveTableSchema } from 'src/utils/table-schema-utils';
+import { StaffAddRentAuthorizationModal } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/RentAuthorizations/modals/StaffAddRentAuthorizationModal';
 
 type Props = {
   stockId: string;

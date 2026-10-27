@@ -1,5 +1,5 @@
 import { ApiErrorCode } from 'smartbox-types';
-import { formOnTranslateString, translateApiErrorCode } from './trans-form';
+import { formOnTranslateString, translateApiErrorCode } from 'src/utils/trans-form';
 
 describe('formOnTranslateString', () => {
   it('returns an unknown key unchanged', () => {

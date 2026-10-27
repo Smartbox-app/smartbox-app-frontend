@@ -1,13 +1,14 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+
 import { MyRentDetails, RentStatus } from 'smartbox-types';
+import { Alert } from 'src/components/Common';
+import { UserStockMap } from 'src/components/Common/UserStockMap';
 import { Section } from 'src/components/ui';
 import { ApplicationState } from 'src/reducers';
-import Action from '../Action';
-import Details from '../Details';
-import { UserStockMap } from 'src/components/Common/UserStockMap';
-import { Alert } from 'src/components/Common';
-import { OpenEndedNextPrice } from '../OpenEndedNextPrice';
+import Action from 'src/views/DashboardCommon/SingleRentDetail/Action';
+import Details from 'src/views/DashboardCommon/SingleRentDetail/Details';
+import { OpenEndedNextPrice } from 'src/views/DashboardCommon/SingleRentDetail/OpenEndedNextPrice';
 
 export type MainDataProps = {
   singleRent: MyRentDetails;

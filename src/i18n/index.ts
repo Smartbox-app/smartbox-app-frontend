@@ -1,10 +1,10 @@
-export * from './i18n';
-export * from './hooks';
-export * from './types';
+export * from 'src/i18n/i18n';
+export * from 'src/i18n/hooks';
+export * from 'src/i18n/types';
 export type {
   ApplicationResources,
   I18nResourceKey,
   NamingResourceKey,
   NamingTypeKey,
-} from './types/keys';
-export { buildNamingResourceKey } from './types/keys';
+} from 'src/i18n/types/keys';
+export { buildNamingResourceKey } from 'src/i18n/types/keys';

@@ -1,14 +1,15 @@
 import React, { useMemo } from 'react';
+import styled from 'styled-components';
+
 import {
   AddonVariantPriceType,
   SingleAddonVariantForUserWithCorrectedPrice,
   PriceDisplayForClients,
 } from 'smartbox-types';
-import styled from 'styled-components';
-import { __ } from '../../../../../../../helpers/i18n';
-import { formatPeriodQuantity } from '../../../../../../../utils/format-period-quantity';
-import { formatPrice } from '../../../../../../../utils/format-price';
+import { __ } from 'src/helpers/i18n';
 import { useI18n } from 'src/i18n';
+import { formatPeriodQuantity } from 'src/utils/format-period-quantity';
+import { formatPrice } from 'src/utils/format-price';
 
 interface Props {
   display: PriceDisplayForClients;

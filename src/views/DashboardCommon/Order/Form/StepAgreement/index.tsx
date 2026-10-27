@@ -1,8 +1,9 @@
+import { format } from 'date-fns';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
-import { useDispatch, useSelector } from 'react-redux';
 import {
   RentBoxReq,
   ExtendRentalReq,
@@ -12,45 +13,42 @@ import {
   PaymentStatus,
   PaymentDocument,
 } from 'smartbox-types';
-import { Alert } from '../../../../../components/Common';
-import { Spinner } from '../../../../../components/Branded';
-import { setPendingCheckout } from '../../../../../actions/order';
+import { setPendingCheckout } from 'src/actions/order';
+import {
+  AgreementPreview,
+  LegacyAgreementPreview,
+} from 'src/components/AgreementPreview';
+import { Spinner } from 'src/components/Branded';
+import { Alert } from 'src/components/Common';
 import {
   ButtonsContainer,
   SectionHeader,
-} from '../../../../../components/Layout';
+} from 'src/components/Layout';
+import { Button, Section, Stack } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
 import { history } from 'src/history';
-
-import UserService from '../../../../../services/user-service';
-
-import ScrollPosition from './ScrollPosition';
-import { ApplicationState } from '../../../../../reducers';
-
-import './StepAgreement.scss';
+import { useTenant } from 'src/hooks/useTenant';
+import { ArrowLeft, ArrowRight } from 'src/icons';
+import { useCreateRentMutation, useExtendRentMutation } from 'src/mutations';
+import { useGetDocumentByTypeQuery, useGetMyDetailsQuery } from 'src/queries';
+import { ApplicationState } from 'src/reducers';
+import UserService from 'src/services/user-service';
 import {
   getAddonsWithCorrectPrice,
   getCorrectPrice,
   getSimplifiedAddons,
 } from 'src/utils/agreement-checkout-price';
+import { getBoxGroupTypeLabel } from 'src/utils/box-group-labels';
+import { dateOnly } from 'src/utils/format-date';
+import { redirectToIpg } from 'src/utils/payment-form';
 import {
   appendAddonFiles,
   appendCollectionFields,
 } from 'src/utils/rent-form-data';
-import { dateOnly } from '../../../../../utils/format-date';
-import { useGetDocumentByTypeQuery, useGetMyDetailsQuery } from 'src/queries';
-import { useCreateRentMutation, useExtendRentMutation } from 'src/mutations';
-import { Button, Section, Stack } from 'src/components/ui';
-import { ArrowLeft, ArrowRight } from 'src/icons';
-import { redirectToIpg } from 'src/utils/payment-form';
-import { format } from 'date-fns';
 import { textToSimpleMD } from 'src/utils/text-to-simple-md';
-import {
-  AgreementPreview,
-  LegacyAgreementPreview,
-} from 'src/components/AgreementPreview';
-import { __ } from 'src/helpers/i18n';
-import { getBoxGroupTypeLabel } from 'src/utils/box-group-labels';
-import { useTenant } from 'src/hooks/useTenant';
+import ScrollPosition from 'src/views/DashboardCommon/Order/Form/StepAgreement/ScrollPosition';
+
+import 'src/views/DashboardCommon/Order/Form/StepAgreement/StepAgreement.scss';
 
 const StepAgreement = () => {
   const { data: user } = useGetMyDetailsQuery();

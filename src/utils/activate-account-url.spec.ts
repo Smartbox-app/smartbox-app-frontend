@@ -1,7 +1,7 @@
 import {
   buildActivateAccountPath,
   getActivationTokenFromSearch,
-} from './activate-account-url';
+} from 'src/utils/activate-account-url';
 
 describe('activate account url', () => {
   it('encodes the token and reads it back', () => {

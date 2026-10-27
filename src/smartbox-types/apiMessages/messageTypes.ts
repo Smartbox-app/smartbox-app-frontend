@@ -1,5 +1,5 @@
-import {ApiResult} from "./apiResults";
-import {ApiErrorCode} from "./errorCodes";
+import {ApiResult} from "src/smartbox-types/apiMessages/apiResults";
+import {ApiErrorCode} from "src/smartbox-types/apiMessages/errorCodes";
 
 interface ApiMessage {
     result: ApiResult;

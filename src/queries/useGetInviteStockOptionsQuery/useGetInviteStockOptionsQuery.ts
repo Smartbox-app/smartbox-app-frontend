@@ -1,8 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
+
 import {
   fetchStockList,
   stockListQueryKey,
-} from '../useGetStockListQuery/useGetStockListQuery';
+} from 'src/queries/useGetStockListQuery/useGetStockListQuery';
 
 export type InviteStockOption = { label: string; value: string };
 

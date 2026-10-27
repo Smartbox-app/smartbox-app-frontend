@@ -1,13 +1,14 @@
-import type { AppDispatch } from 'src/types/app-dispatch';
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { modal } from '../../../actions';
-import { Modal } from '../../../types/modal';
-import { ApplicationState } from '../../../reducers';
 
-import './Modal.scss';
+import { modal } from 'src/actions';
 import { Modal as UiModal } from 'src/components/ui';
+import { ApplicationState } from 'src/reducers';
+import type { AppDispatch } from 'src/types/app-dispatch';
+import { Modal } from 'src/types/modal';
+
+import 'src/components/Common/Modal/Modal.scss';
 
 interface Props {
   modal: Modal;

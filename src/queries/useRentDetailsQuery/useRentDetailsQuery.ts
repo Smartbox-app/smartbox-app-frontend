@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
+
 import { RentDetailsRes } from 'smartbox-types';
 import ApiService from 'src/services/api-service';
 

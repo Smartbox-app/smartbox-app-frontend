@@ -1,4 +1,5 @@
 import i18next from 'i18next';
+
 import { Language } from 'smartbox-types';
 
 export const SUPPORTED_LANGUAGES = Object.values(Language);

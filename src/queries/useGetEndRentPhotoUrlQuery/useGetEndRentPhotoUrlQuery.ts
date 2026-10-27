@@ -1,10 +1,11 @@
-import { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
+import { useEffect, useState } from 'react';
+
 import {
   endRentPhotoUrlQueryKey,
   fetchEndRentPhotoDownloadUrl,
   loadEndRentPhotoDisplayUrl,
-} from './end-rent-photo-url';
+} from 'src/queries/useGetEndRentPhotoUrlQuery/end-rent-photo-url';
 
 export const useGetEndRentPhotoUrlQuery = (rentId?: string) => {
   const [displayUrl, setDisplayUrl] = useState<string | null>(null);

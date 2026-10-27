@@ -1,16 +1,17 @@
 import React, { useMemo } from 'react';
-import { AdminRentListDetails, RentStatus } from 'smartbox-types';
+import { useParams } from 'react-router';
+
 import { FieldType, rentsList } from 'smartbox-tables';
-import { ApiTable } from '../../../../../../../components/Common';
-import { __ } from '../../../../../../../helpers/i18n';
-import { InteractiveTableSchema } from '../../../../../../../utils/table-schema-utils';
+import { AdminRentListDetails, RentStatus } from 'smartbox-types';
+import { ApiTable } from 'src/components/Common';
+import { Header, Section } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
 import {
   rentStatusSearchValues,
   translateBoxDisplayStatus,
-} from '../../../../../../../utils/box-display-status';
-import { Header, Section } from 'src/components/ui';
-import { RentListRowActions } from './RentListRowActions';
-import { useParams } from 'react-router';
+} from 'src/utils/box-display-status';
+import { InteractiveTableSchema } from 'src/utils/table-schema-utils';
+import { RentListRowActions } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Rents/List/RentListRowActions';
 
 const List = () => {
   const { stockId } = useParams<{ stockId: string }>();

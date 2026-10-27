@@ -1,15 +1,18 @@
 import React, { Fragment, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
+
 import { PaymentDeadlineChange, UpdateSomeonePaymentReq } from 'smartbox-types';
+import { showModal } from 'src/actions/modal';
 import { Button } from 'src/components/Branded';
 import { Alert } from 'src/components/Common';
 import { ButtonsContainer } from 'src/components/Layout';
 import { Header, Modal, Typography } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
+import { currentAppLanguage } from 'src/i18n/app-language';
 import ApiService from 'src/services/api-service';
-import { showModal } from 'src/actions/modal';
-import { useDispatch } from 'react-redux';
-import UserEdit from '..';
+import { BCP47_LOCALE } from 'src/utils/country-locale';
+import UserEdit from 'src/views/DashboardCommon/UsersManagement/List/UserEdit';
 
 type Props = {
   userId: string;
@@ -22,7 +25,7 @@ const daysLabel = (days: number | null) =>
   days == null ? __('application.warehousePaymentTerm') : String(days);
 
 const formatDay = (value: string | Date) =>
-  new Date(value).toLocaleDateString('pl-PL');
+  new Date(value).toLocaleDateString(BCP47_LOCALE[currentAppLanguage()]);
 
 const ChangeLine = styled.li`
   display: grid;

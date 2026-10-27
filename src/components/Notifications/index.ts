@@ -1,4 +1,4 @@
-import Notification from './Notification';
-import NotificationContainer from './NotificationContainer';
+import Notification from 'src/components/Notifications/Notification';
+import NotificationContainer from 'src/components/Notifications/NotificationContainer';
 
 export { Notification, NotificationContainer };

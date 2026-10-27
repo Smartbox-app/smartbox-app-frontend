@@ -7,6 +7,7 @@ import {
   ValidatorConstraint,
   ValidatorConstraintInterface,
 } from 'class-validator';
+
 import { __ } from 'src/helpers/i18n';
 
 @ValidatorConstraint({ name: 'atLeastOne', async: false })

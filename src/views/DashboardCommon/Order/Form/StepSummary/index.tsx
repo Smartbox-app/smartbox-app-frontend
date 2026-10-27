@@ -1,42 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import { FieldErrors, FormProvider, useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
-import { useDispatch, useSelector } from 'react-redux';
 import {
   PaymentDocument,
   RentAgreementType,
   RentPaymentType,
   StockPaymentDocument,
 } from 'smartbox-types';
-import { Spinner } from '../../../../../components/Branded';
-import { ButtonsContainer } from '../../../../../components/Layout';
 import {
-  Alert,
-  CheckBox as ControlledCheckbox,
-} from '../../../../../components/Common';
-import { history } from 'src/history';
-
-import UserService from '../../../../../services/user-service';
-import { ApplicationState } from '../../../../../reducers';
-import { __ } from '../../../../../helpers/i18n';
-import { CompanyDetailsForm } from './CompanyDetailsForm';
-
-import { DiscountsList } from './DiscountsList';
-import SummaryTable from './SummaryTable';
-import TenantDetailsForm from './TenantDetailsForm';
-
-import {
-  calculateOpenEndedPrice,
-  calculatePrice,
-  calculatePriceForRent,
   setBirthDate,
   setRentPaymentDocumentType,
   updateFormData,
-} from '../../../../../actions/order';
-import { useTenant } from '../../../../../hooks/useTenant';
-import { useGetMyDetailsQuery, useMyRentDetailsQuery } from 'src/queries';
-import { RentDataDto } from './TenantDetailsForm/dto/RentDataDto';
+} from 'src/actions/order';
+import { Spinner } from 'src/components/Branded';
+import {
+  Alert,
+  CheckBox as ControlledCheckbox,
+} from 'src/components/Common';
+import { ButtonsContainer } from 'src/components/Layout';
 import {
   CheckBox,
   Button,
@@ -45,15 +28,31 @@ import {
   Stack,
   Form,
 } from 'src/components/ui';
-import { ClassValidatorResolver } from 'src/resolvers/ClassValidatorResolver';
-import { DiscountForm } from './DiscountForm';
-import { ArrowLeft, ArrowRight } from 'src/icons';
-import { textToSimpleMD } from 'src/utils/text-to-simple-md';
-import { ClientSourceForm } from './ClientSourceForm';
-import { PaymentDocumentType } from '../Common/PaymentDocumentType';
+import { __ } from 'src/helpers/i18n';
+import { history } from 'src/history';
+import { useBridgeCalculatedPriceToRedux } from 'src/hooks/useBridgeOrderPriceQuery';
+import { useTenant } from 'src/hooks/useTenant';
 import { useI18n } from 'src/i18n';
-import { scrollToFirstFormError } from 'src/utils/scroll-to-form-error';
+import { ArrowLeft, ArrowRight } from 'src/icons';
+import { useGetMyDetailsQuery, useMyRentDetailsQuery } from 'src/queries';
+import {
+  useBoxGroupPriceQuery,
+  usePriceForRentQuery,
+} from 'src/queries/useRentPriceQueries';
+import { ApplicationState } from 'src/reducers';
+import { ClassValidatorResolver } from 'src/resolvers/ClassValidatorResolver';
+import UserService from 'src/services/user-service';
 import { openEndedFirstPeriodFinish } from 'src/utils/open-ended-period';
+import { scrollToFirstFormError } from 'src/utils/scroll-to-form-error';
+import { textToSimpleMD } from 'src/utils/text-to-simple-md';
+import { PaymentDocumentType } from 'src/views/DashboardCommon/Order/Form/Common/PaymentDocumentType';
+import { ClientSourceForm } from 'src/views/DashboardCommon/Order/Form/StepSummary/ClientSourceForm';
+import { CompanyDetailsForm } from 'src/views/DashboardCommon/Order/Form/StepSummary/CompanyDetailsForm';
+import { DiscountForm } from 'src/views/DashboardCommon/Order/Form/StepSummary/DiscountForm';
+import { DiscountsList } from 'src/views/DashboardCommon/Order/Form/StepSummary/DiscountsList';
+import SummaryTable from 'src/views/DashboardCommon/Order/Form/StepSummary/SummaryTable';
+import TenantDetailsForm from 'src/views/DashboardCommon/Order/Form/StepSummary/TenantDetailsForm';
+import { RentDataDto } from 'src/views/DashboardCommon/Order/Form/StepSummary/TenantDetailsForm/dto/RentDataDto';
 
 const STEP_SUMMARY_FIELD_ORDER: (keyof RentDataDto)[] = [
   'firstName',
@@ -109,6 +108,36 @@ const StepSummary = () => {
   const [discount, setDiscount] = useState<boolean>(false);
   const { data: rent } = useMyRentDetailsQuery(rentId);
 
+  const extensionPriceEnabled = !!rentId && !!endDate && !isOpenEnded;
+  const newRentPriceEnabled =
+    !rentId &&
+    !!boxGroupId &&
+    (isOpenEnded || !!endDate) &&
+    !!stockId;
+
+  const boxGroupPriceQuery = useBoxGroupPriceQuery({
+    boxGroupId,
+    start: startDate,
+    end: endDate ?? undefined,
+    type: pricePaymentType,
+    code: discountCode,
+    openEnded: isOpenEnded,
+    enabled: newRentPriceEnabled,
+  });
+
+  const rentPriceQuery = usePriceForRentQuery({
+    rentId,
+    start: startDate,
+    end: endDate ?? undefined,
+    type: rentPaymentType || RentPaymentType.InAdvance,
+    code: discountCode,
+    enabled: extensionPriceEnabled,
+  });
+
+  useBridgeCalculatedPriceToRedux(
+    extensionPriceEnabled ? rentPriceQuery : boxGroupPriceQuery,
+  );
+
   const defaultValues = {
     firstName: user?.firstName || '',
     lastName: user?.lastName || '',
@@ -160,34 +189,6 @@ const StepSummary = () => {
       history.push(`/${UserService.getSlugByRole(user.role)}/order/step/stock`);
     }
 
-    if (isOpenEnded) {
-      if (!rentId) {
-        dispatch(calculateOpenEndedPrice(boxGroupId, startDate));
-      }
-      return;
-    }
-
-    if (!endDate) return;
-
-    if (rentId) {
-      dispatch(
-        calculatePriceForRent(
-          rentId,
-          startDate,
-          endDate,
-          rentPaymentType || RentPaymentType.InAdvance,
-        ),
-      );
-    } else {
-      dispatch(
-        calculatePrice(
-          boxGroupId,
-          startDate,
-          endDate,
-          pricePaymentType,
-        ),
-      );
-    }
   }, [user]);
 
   useEffect(() => {
@@ -195,39 +196,6 @@ const StepSummary = () => {
 
     dispatch(setBirthDate(new Date(user.birthDate)));
   }, [user]);
-
-  useEffect(() => {
-    if (isOpenEnded) {
-      if (!rentId) {
-        dispatch(calculateOpenEndedPrice(boxGroupId, startDate, discountCode));
-      }
-      return;
-    }
-
-    if (!endDate) return;
-
-    if (rentId) {
-      dispatch(
-        calculatePriceForRent(
-          rentId,
-          startDate,
-          endDate,
-          rentPaymentType || RentPaymentType.InAdvance,
-          discountCode,
-        ),
-      );
-    } else {
-      dispatch(
-        calculatePrice(
-          boxGroupId,
-          startDate,
-          endDate,
-          pricePaymentType,
-          discountCode,
-        ),
-      );
-    }
-  }, [discountCode]);
 
   useEffect(() => {
     if (!stock) return;

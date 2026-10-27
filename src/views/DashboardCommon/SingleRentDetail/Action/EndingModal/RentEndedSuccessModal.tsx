@@ -1,9 +1,10 @@
 import { useDispatch } from 'react-redux';
+import styled from 'styled-components';
+
 import { hideModal } from 'src/actions/modal';
 import { Button, Modal, Typography } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
 import { SuccessCheck } from 'src/icons';
-import styled from 'styled-components';
 
 const Content = styled('div')(({ theme }) => ({
   display: 'flex',

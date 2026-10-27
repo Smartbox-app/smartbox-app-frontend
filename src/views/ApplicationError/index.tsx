@@ -1,17 +1,17 @@
 import React from 'react';
+import styled from 'styled-components';
 
-import { Button } from '../../components/Branded';
+import { Button } from 'src/components/Branded';
 import {
   ButtonsContainer,
   DashboardContainer,
   SectionHeader,
-} from '../../components/Layout';
-import { __ } from '../../helpers/i18n';
-
-import './ApplicationError.scss';
-import styled from 'styled-components';
-import { colorOrDark } from '../../utils/color';
+} from 'src/components/Layout';
+import { __ } from 'src/helpers/i18n';
 import { history } from 'src/history';
+import { colorOrDark } from 'src/utils/color';
+
+import 'src/views/ApplicationError/ApplicationError.scss';
 
 const StyledApplicationError = styled.h1`
   color: ${(props) => colorOrDark(props.theme.colors.primary)};

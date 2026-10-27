@@ -1,10 +1,11 @@
 import React from 'react';
-import { AddonRes, PriceDisplayForClients } from 'smartbox-types';
-import { OrderAddon } from '../../../../../../../reducers/order-reducer';
-import { formatPrice } from '../../../../../../../utils/format-price';
 import styled from 'styled-components';
-import { __ } from '../../../../../../../helpers/i18n';
+
+import { AddonRes, PriceDisplayForClients } from 'smartbox-types';
 import { Header } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
+import { OrderAddon } from 'src/reducers/order-reducer';
+import { formatPrice } from 'src/utils/format-price';
 
 interface Props {
   addonName: string;

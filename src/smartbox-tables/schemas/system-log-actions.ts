@@ -1,4 +1,4 @@
-import { __ } from '../../helpers/i18n';
+import { __ } from 'src/helpers/i18n';
 
 export const translateSystemLogAction = (
   action: string | null | undefined,

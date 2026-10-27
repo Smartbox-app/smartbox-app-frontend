@@ -1,19 +1,21 @@
+import * as Sentry from '@sentry/react';
 import React, { StrictMode } from 'react';
 import ReactDOM from 'react-dom/client';
-import * as Sentry from '@sentry/react';
-import './i18n/i18n';
-import './index.scss';
-import 'font-awesome/css/font-awesome.min.css';
-import App from './App';
-import ApiService from './services/api-service';
-import { unregisterServiceWorkersIfNative } from './utils/unregister-service-workers';
-import { getMobileBuildId } from './utils/mobile-build-id';
-import { syncNativeWebBundleCache } from './utils/sync-native-web-bundle-cache';
-import { isLocalEnvironment } from './utils/environment';
+
+import App from 'src/App';
+import 'src/i18n/i18n';
+import ApiService from 'src/services/api-service';
+import { isLocalEnvironment } from 'src/utils/environment';
+import { getMobileBuildId } from 'src/utils/mobile-build-id';
 import {
   beginPreloadReload,
   reloadWithoutServiceWorker,
-} from './utils/reload-without-service-worker';
+} from 'src/utils/reload-without-service-worker';
+import { syncNativeWebBundleCache } from 'src/utils/sync-native-web-bundle-cache';
+import { unregisterServiceWorkersIfNative } from 'src/utils/unregister-service-workers';
+
+import 'font-awesome/css/font-awesome.min.css';
+import 'src/index.scss';
 
 window.addEventListener('vite:preloadError', (event) => {
   if (!beginPreloadReload()) return;

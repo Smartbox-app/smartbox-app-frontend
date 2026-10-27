@@ -1,6 +1,6 @@
 import { CSSProperties } from 'react';
-import { DefaultTheme } from 'styled-components';
 import { OptionTypeBase, StylesConfig } from 'react-select';
+import { DefaultTheme } from 'styled-components';
 
 export type InputSize = 'small' | 'medium' | 'large';
 

@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import { Button } from '../../../../components/Branded';
-
-import ApiService from '../../../../services/api-service';
 import { useDispatch } from 'react-redux';
+
 import {
   errorNotificationText,
   successNotification,
-} from '../../../../actions/notifications';
+} from 'src/actions/notifications';
+import { Button } from 'src/components/Branded';
 import { ButtonsContainer } from 'src/components/Layout';
+import ApiService from 'src/services/api-service';
 
 interface Props {
   id: string;

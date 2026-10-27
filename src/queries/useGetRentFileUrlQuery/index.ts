@@ -1,1 +1,1 @@
-export * from './rent-file-url';
+export * from 'src/queries/useGetRentFileUrlQuery/rent-file-url';

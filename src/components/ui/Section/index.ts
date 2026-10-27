@@ -1,1 +1,1 @@
-export * from './Section';
+export * from 'src/components/ui/Section/Section';

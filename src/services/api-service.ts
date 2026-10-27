@@ -1,15 +1,14 @@
-import type { AppDispatch } from 'src/types/app-dispatch';
-import { ApiErrorCode, ApiResult } from 'smartbox-types';
 import { Capacitor, CapacitorHttp } from '@capacitor/core';
-import * as notifications from '../actions/notifications';
-import { store } from '../store';
-import { history } from '../history';
 import { Preferences } from '@capacitor/preferences';
 
-import { getApiBaseUrl } from '../config/api-url';
-
-import { getCachedTenant } from '../queries/useGetTenantQuery/tenant-query';
-import { currentAppLanguage } from '../i18n/app-language';
+import { ApiErrorCode, ApiResult } from 'smartbox-types';
+import * as notifications from 'src/actions/notifications';
+import { getApiBaseUrl } from 'src/config/api-url';
+import { history } from 'src/history';
+import { currentAppLanguage } from 'src/i18n/app-language';
+import { getCachedTenant } from 'src/queries/useGetTenantQuery/tenant-query';
+import { store } from 'src/store';
+import type { AppDispatch } from 'src/types/app-dispatch';
 
 const getUrl = async () => getApiBaseUrl();
 

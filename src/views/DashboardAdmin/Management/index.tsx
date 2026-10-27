@@ -1,21 +1,21 @@
 import React from 'react';
 import { Switch, Route, Redirect } from 'react-router';
-import UserService from '../../../services/user-service';
 
-import WorkersManagement from '../../DashboardCommon/WorkersManagement';
-import UsersManagement from '../../DashboardCommon/UsersManagement';
-import { AttachmentManagement } from '../../DashboardCommon/AttachmentManagement';
-import { InvitesSent } from '../../DashboardCommon/InvitesSent';
-import SMS from '../../DashboardCommon/SMS';
-import Settings from './Settings';
-import ClientsManagement from './ClientsManagement';
-import { useGetMyDetailsQuery } from '../../../queries';
-import MobileAppsConfig from './MobileAppsConfig/MobileAppsConfig';
-import ApiAccess from './ApiAccess/ApiAccess';
-import SystemNotificationManagement from 'src/views/DashboardCommon/SystemNotificationManagement';
-import { SystemLogManagement } from 'src/views/DashboardCommon/SystemLogManagement';
-import { DocumentsManagement } from 'src/views/DashboardCommon/DocumentManagement';
+import { useGetMyDetailsQuery } from 'src/queries';
+import UserService from 'src/services/user-service';
+import ApiAccess from 'src/views/DashboardAdmin/Management/ApiAccess/ApiAccess';
+import ClientsManagement from 'src/views/DashboardAdmin/Management/ClientsManagement';
+import MobileAppsConfig from 'src/views/DashboardAdmin/Management/MobileAppsConfig/MobileAppsConfig';
+import Settings from 'src/views/DashboardAdmin/Management/Settings';
+import { AttachmentManagement } from 'src/views/DashboardCommon/AttachmentManagement';
 import { CompaniesManagement } from 'src/views/DashboardCommon/CompanyManagement';
+import { DocumentsManagement } from 'src/views/DashboardCommon/DocumentManagement';
+import { InvitesSent } from 'src/views/DashboardCommon/InvitesSent';
+import SMS from 'src/views/DashboardCommon/SMS';
+import { SystemLogManagement } from 'src/views/DashboardCommon/SystemLogManagement';
+import SystemNotificationManagement from 'src/views/DashboardCommon/SystemNotificationManagement';
+import UsersManagement from 'src/views/DashboardCommon/UsersManagement';
+import WorkersManagement from 'src/views/DashboardCommon/WorkersManagement';
 
 const Management = () => {
   const { data: user } = useGetMyDetailsQuery();

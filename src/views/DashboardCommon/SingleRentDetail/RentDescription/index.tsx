@@ -1,9 +1,10 @@
-import { MyRentDetails, RentAgreementType, RentDescription } from 'smartbox-types';
-import { __ } from '../../../../helpers/i18n';
-import { RentHistory } from '../../RentHistory';
-import { Header, Section, Typography } from 'src/components/ui';
-import { useTenantNaming } from 'src/hooks/useTenantNaming';
 import styled from 'styled-components';
+
+import { MyRentDetails, RentAgreementType, RentDescription } from 'smartbox-types';
+import { Header, Section, Typography } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
+import { useTenantNaming } from 'src/hooks/useTenantNaming';
+import { RentHistory } from 'src/views/DashboardCommon/RentHistory';
 
 interface Props {
   description: RentDescription[];

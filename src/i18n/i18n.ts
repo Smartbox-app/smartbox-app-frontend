@@ -1,15 +1,14 @@
 import i18next from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
-import application from './locales/pl/application';
-import applicationEn from './locales/en/application';
-import applicationCz from './locales/cz/application';
-import applicationUa from './locales/ua/application';
-import applicationDe from './locales/de/application';
-import SessionService from '../services/session-service';
-import type { I18nResourceKey, Options } from './types';
-
-import { allNS, defaultNS } from './constants';
+import { allNS, defaultNS } from 'src/i18n/constants';
+import applicationCz from 'src/i18n/locales/cz/application';
+import applicationDe from 'src/i18n/locales/de/application';
+import applicationEn from 'src/i18n/locales/en/application';
+import application from 'src/i18n/locales/pl/application';
+import applicationUa from 'src/i18n/locales/ua/application';
+import type { I18nResourceKey, Options } from 'src/i18n/types';
+import SessionService from 'src/services/session-service';
 
 export { allNS, defaultNS };
 

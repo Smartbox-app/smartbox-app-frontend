@@ -1,11 +1,13 @@
+import { Capacitor } from '@capacitor/core';
+import { Preferences } from '@capacitor/preferences';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import ApiService from '../../services/api-service';
+
+import { SocialLoginDto } from 'src/dto/SocialLoginDto';
+import ApiService from 'src/services/api-service';
+
 type SocialLoginPayload = {
   accessToken?: string;
 };
-import { Capacitor } from '@capacitor/core';
-import { Preferences } from '@capacitor/preferences';
-import { SocialLoginDto } from 'src/dto/SocialLoginDto';
 
 export const useSocialLoginMutation = () => {
   const queryClient = useQueryClient();

@@ -1,7 +1,8 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+
 import { LocationActivityListItem } from 'smartbox-types';
-import ApiService from 'src/services/api-service';
 import { locationActivityQueryKey } from 'src/queries/useLocationActivityQuery';
+import ApiService from 'src/services/api-service';
 
 export const useToggleLocationActivityMutation = (stockId: string) => {
   const queryClient = useQueryClient();

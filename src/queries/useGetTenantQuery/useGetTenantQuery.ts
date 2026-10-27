@@ -1,10 +1,11 @@
-import { useCallback } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useCallback } from 'react';
+
 import { TenantForClients, TenantForUsers } from 'smartbox-types';
-import ApiService from '../../services/api-service';
+import { getDefaultTenant } from 'src/queries/useGetTenantQuery/default-tenant';
+import { getTenantQueryKey, TENANT_QUERY_KEY } from 'src/queries/useGetTenantQuery/tenant-query';
+import ApiService from 'src/services/api-service';
 import { getHostName } from 'src/utils/hostname';
-import { getDefaultTenant } from './default-tenant';
-import { getTenantQueryKey, TENANT_QUERY_KEY } from './tenant-query';
 
 const TENANT_REFETCH_INTERVAL_MS = 60_000;
 

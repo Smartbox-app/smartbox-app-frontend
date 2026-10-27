@@ -1,1 +1,1 @@
-export * from './StorageDetails';
+export * from 'src/views/DashboardCommon/Welcome/Storage/StorageList/SingleStorage/components/StorageDetails/StorageDetails';

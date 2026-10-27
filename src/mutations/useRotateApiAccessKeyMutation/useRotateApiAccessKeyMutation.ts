@@ -1,6 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
+
 import { CreateApiAccessRes } from 'smartbox-types';
-import ApiService from '../../services/api-service';
+import ApiService from 'src/services/api-service';
 
 export const useRotateApiAccessKeyMutation = () =>
   useMutation({

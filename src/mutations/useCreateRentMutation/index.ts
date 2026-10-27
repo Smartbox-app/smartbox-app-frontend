@@ -1,1 +1,1 @@
-export * from './useCreateRentMutation';
+export * from 'src/mutations/useCreateRentMutation/useCreateRentMutation';

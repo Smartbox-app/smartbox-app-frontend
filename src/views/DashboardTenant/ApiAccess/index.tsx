@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
+
 import { Header, Section, Tabs, Typography } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
 import { useApiAccessEndpoints } from 'src/hooks/useApiAccessEndpoints';
 import { useGetStockOptionsQuery } from 'src/queries';
-import { EndpointDocs } from './EndpointDocs';
-import { GeneralInfo } from './GeneralInfo';
+import { EndpointDocs } from 'src/views/DashboardTenant/ApiAccess/EndpointDocs';
+import { GeneralInfo } from 'src/views/DashboardTenant/ApiAccess/GeneralInfo';
 
 export type TenantApiAccessProps = {
   forAdmin?: boolean;

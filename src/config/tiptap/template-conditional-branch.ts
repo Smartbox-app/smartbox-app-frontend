@@ -1,6 +1,7 @@
 import { mergeAttributes, Node } from '@tiptap/core';
 import { ReactNodeViewRenderer } from '@tiptap/react';
-import { TemplateConditionalBranchNodeView } from './TemplateConditionalBranchNodeView';
+
+import { TemplateConditionalBranchNodeView } from 'src/config/tiptap/TemplateConditionalBranchNodeView';
 
 export const TemplateConditionalBranch = Node.create({
   name: 'templateConditionalBranch',

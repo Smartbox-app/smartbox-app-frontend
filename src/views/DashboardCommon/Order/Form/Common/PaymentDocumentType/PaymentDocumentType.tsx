@@ -1,16 +1,17 @@
-import { __ } from '../../../../../../helpers/i18n';
+import { ChangeEvent, useMemo } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
 import {
   PaymentDocument,
   RentPaymentType,
   StockPaymentDocument,
   StockRes,
 } from 'smartbox-types';
-import { Header, Section } from 'src/components/ui';
-import { useDispatch, useSelector } from 'react-redux';
-import { ApplicationState } from 'src/reducers';
 import { setRentPaymentDocumentType } from 'src/actions/order';
-import { ChangeEvent, useMemo } from 'react';
 import { AsterixRequired, Input } from 'src/components/Common';
+import { Header, Section } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
+import { ApplicationState } from 'src/reducers';
 
 type Props = {
   stock: StockRes;

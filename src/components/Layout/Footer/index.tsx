@@ -1,10 +1,10 @@
 import React from 'react';
-
-import { __ } from '../../../helpers/i18n';
 import styled from 'styled-components';
-import { AppVersion } from '../../../components/AppVersion';
-import { Link, Section, Typography } from '../../ui';
-import { Logo } from '../../Branded';
+
+import { AppVersion } from 'src/components/AppVersion';
+import { Logo } from 'src/components/Branded';
+import { Link, Section, Typography } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
 import { useFileStorage } from 'src/hooks/useFileStorage';
 import { useTenant } from 'src/hooks/useTenant';
 

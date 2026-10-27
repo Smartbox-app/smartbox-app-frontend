@@ -1,12 +1,13 @@
 import styled from 'styled-components';
+
 import { templateLanguage, TemplateListRow } from 'smartbox-types';
 import { Button } from 'src/components/Branded';
 import { Alert } from 'src/components/Common';
+import { ButtonsContainer } from 'src/components/Layout';
 import { Header, Section } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
-import { SingleTemplate } from '../SingleTemplate';
-import { TemplateChannelGroup } from '../types';
-import { ButtonsContainer } from 'src/components/Layout';
+import { SingleTemplate } from 'src/views/DashboardTenant/Templates/List/SingleTemplate';
+import { TemplateChannelGroup } from 'src/views/DashboardTenant/Templates/List/types';
 
 const withLang = (path: string, lang: TemplateListRow['lang']) =>
   `${path}?lang=${templateLanguage(lang)}`;

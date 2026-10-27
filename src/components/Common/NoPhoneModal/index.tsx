@@ -1,8 +1,9 @@
 import React from 'react';
-import { UpdateMe } from '../../../views/DashboardCommon/Profile/Detail/UpdateMe';
+
+import Alert from 'src/components/Common/Alert';
 import { Modal } from 'src/components/ui';
-import Alert from '../Alert';
 import { __ } from 'src/helpers/i18n';
+import { UpdateMe } from 'src/views/DashboardCommon/Profile/Detail/UpdateMe';
 
 const NoPhoneModal = () => (
   <>

@@ -1,20 +1,21 @@
 import { ItfApiForm } from 'itf_formbuilder_react';
 import { useDispatch } from 'react-redux';
-import {
-  ButtonsContainer,
-  FormContainer,
-} from '../../../../../components/Layout';
-import { Button, Spinner } from '../../../../../components/Branded';
-import ApiService from '../../../../../services/api-service';
-import { formOnTranslateString } from '../../../../../utils/trans-form';
-import { history } from 'src/history';
+
+import { successNotification } from 'src/actions/notifications';
+import { Button, Spinner } from 'src/components/Branded';
 import {
   ReactSelectOverride,
   ReactCreatableSelectOverride as ReactCreatableSelect,
-} from '../../../../../components/Common/ReactSelectOverride';
-import { successNotification } from '../../../../../actions/notifications';
-import { mapFields } from '../../../../../utils/fields-mapper';
+} from 'src/components/Common/ReactSelectOverride';
+import {
+  ButtonsContainer,
+  FormContainer,
+} from 'src/components/Layout';
 import { Section } from 'src/components/ui';
+import { history } from 'src/history';
+import ApiService from 'src/services/api-service';
+import { mapFields } from 'src/utils/fields-mapper';
+import { formOnTranslateString } from 'src/utils/trans-form';
 
 type StockSectionFormProps = {
   formId: string;

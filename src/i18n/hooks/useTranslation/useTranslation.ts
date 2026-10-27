@@ -1,8 +1,8 @@
  
 import { useTranslation } from 'react-i18next';
 
-import { defaultNS } from '../../constants';
-import type { I18nResourceKey, Options } from '../../types';
+import { defaultNS } from 'src/i18n/constants';
+import type { I18nResourceKey, Options } from 'src/i18n/types';
 
 const sanitize = (str: string) => {
   const sanitized = str.replace(/[^a-z0-9áéíóúñü .,_'"-]/gim, '');

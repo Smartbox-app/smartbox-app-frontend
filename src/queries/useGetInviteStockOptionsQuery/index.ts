@@ -1,1 +1,1 @@
-export * from './useGetInviteStockOptionsQuery';
+export * from 'src/queries/useGetInviteStockOptionsQuery/useGetInviteStockOptionsQuery';

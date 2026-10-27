@@ -1,1 +1,1 @@
-export * from './useDeleteTemplateMutation';
+export * from 'src/mutations/useDeleteTemplateMutation/useDeleteTemplateMutation';

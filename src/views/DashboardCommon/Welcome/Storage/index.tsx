@@ -1,10 +1,11 @@
 import React from 'react';
+
 import { MyRentList } from 'smartbox-types';
-import StorageList from './StorageList';
-import { Header, Section } from '../../../../components/ui';
-import { __ } from '../../../../helpers/i18n';
+import { Header, Section } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
 import { useTenantNaming } from 'src/hooks/useTenantNaming';
 import type { NamingTypeKey } from 'src/i18n/types/keys';
+import StorageList from 'src/views/DashboardCommon/Welcome/Storage/StorageList';
 
 interface Props {
   myRentList: MyRentList[];

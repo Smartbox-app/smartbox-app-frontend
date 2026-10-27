@@ -1,4 +1,4 @@
-import { pieLegendPercent } from './chart-percent';
+import { pieLegendPercent } from 'src/utils/chart-percent';
 
 describe('pieLegendPercent', () => {
   it('keeps two decimal places, rounding half up', () => {

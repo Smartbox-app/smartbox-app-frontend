@@ -1,12 +1,13 @@
 import React, { forwardRef } from 'react';
-
-import { __ } from '../../../helpers/i18n';
-import './CheckBox.scss';
-import styled from 'styled-components';
-import { getColorForBackground } from '../../../utils/color';
 import { UseFormRegisterReturn } from 'react-hook-form';
-import { ErrorText } from '../ErrorText';
+import styled from 'styled-components';
+
 import { AsterixRequired } from 'src/components/Common';
+import { ErrorText } from 'src/components/ui/ErrorText';
+import { __ } from 'src/helpers/i18n';
+import { getColorForBackground } from 'src/utils/color';
+
+import 'src/components/ui/Checkbox/CheckBox.scss';
 
 export type CheckboxProps = {
   name: string;

@@ -1,11 +1,12 @@
 import React from 'react';
 import PhoneInput from 'react-phone-number-input';
-import { InputErrors } from '../InputErrors';
-import { TranslatableObject } from '../../../utils/errors-trans';
+
+import { InputSizeProps, resolveInputSize } from 'src/components/Common/input-sizes';
+import { StyledPhoneFieldContainer } from 'src/components/Common/input-styled';
+import { InputErrors } from 'src/components/Common/InputErrors';
 import { InputLabel } from 'src/components/ui/InputLabel';
 import { __ } from 'src/helpers/i18n';
-import { InputSizeProps, resolveInputSize } from '../input-sizes';
-import { StyledPhoneFieldContainer } from '../input-styled';
+import { TranslatableObject } from 'src/utils/errors-trans';
 
 interface Props extends InputSizeProps {
   value?: string;

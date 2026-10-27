@@ -1,1 +1,1 @@
-export * from './useGetStockStatisticsQuery';
+export * from 'src/queries/useGetStockStatisticsQuery/useGetStockStatisticsQuery';

@@ -1,12 +1,13 @@
 import { useQuery } from '@tanstack/react-query';
 import { format } from 'date-fns';
+
 import {
   AddonRes,
   CalculatedAddonPriceRes,
   CalculatedPriceRes,
   RentPaymentType,
 } from 'smartbox-types';
-import ApiService from '../../services/api-service';
+import ApiService from 'src/services/api-service';
 
 const formatOnlyDate = (date: Date) => format(date, 'yyyy-MM-dd');
 

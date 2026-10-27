@@ -1,14 +1,15 @@
+import { Capacitor } from '@capacitor/core';
+import { Geolocation, PermissionStatus } from '@capacitor/geolocation';
 import React, { useState, type ComponentProps } from 'react';
 import { useDispatch } from 'react-redux';
+
 import { Coordinate, RentGate } from 'smartbox-types';
-import { OpenGateByForceModal } from 'src/components/Common/OpenGateByForceModal';
 import { modal } from 'src/actions';
-import { requestKsmGateOpenV2 } from 'src/actions/ksm-gate';
-import { Button as UIButton } from 'src/components/ui';
 import { Button as BrandedButton } from 'src/components/Branded';
-import { Geolocation, PermissionStatus } from '@capacitor/geolocation';
-import { Capacitor } from '@capacitor/core';
+import { OpenGateByForceModal } from 'src/components/Common/OpenGateByForceModal';
+import { Button as UIButton } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
+import { useOpenKsmGateMutation } from 'src/mutations';
 
 interface Props {
   gate: RentGate;
@@ -31,6 +32,7 @@ export const KsmGateButton = ({
   disabled = false,
 }: Props) => {
   const dispatch = useDispatch();
+  const { mutate: openKsmGate, isPending } = useOpenKsmGateMutation();
   const [loading, setLoading] = useState(false);
 
   const ensurePermission = async (): Promise<boolean> => {
@@ -87,7 +89,7 @@ export const KsmGateButton = ({
   const tryToOpenGateByLocation = async () => {
     try {
       const location = await getCurrentLocation();
-      dispatch(requestKsmGateOpenV2(gate.id, location));
+      openKsmGate({ gateId: gate.id, geo: location, mode: 'default' });
     } catch (error: unknown) {
       if (error instanceof Error && error.message === 'not_supported') {
         showForceModal({ notSupported: true });
@@ -114,7 +116,7 @@ export const KsmGateButton = ({
   if (layout === 'detail') {
     return (
       <BrandedButton
-        disabled={disabled || loading}
+        disabled={disabled ||loading || isPending}
         text={buttonText}
         type="button"
         success
@@ -125,7 +127,7 @@ export const KsmGateButton = ({
 
   return (
     <UIButton
-      disabled={disabled || loading}
+      disabled={disabled || loading || isPending}
       type="button"
       text={withName ? undefined : 'application.openGate'}
       rawText={

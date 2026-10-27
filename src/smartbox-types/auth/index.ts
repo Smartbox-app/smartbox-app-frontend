@@ -1,1 +1,1 @@
-export * from './auth';
+export * from 'src/smartbox-types/auth/auth';

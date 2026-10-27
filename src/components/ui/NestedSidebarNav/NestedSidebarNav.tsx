@@ -1,7 +1,8 @@
 import { NavLink } from 'react-router-dom';
+import styled, { css } from 'styled-components';
+
 import { __ } from 'src/helpers/i18n';
 import { SidebarNavGroup } from 'src/types/sidebar-nav';
-import styled, { css } from 'styled-components';
 
 export type NestedSidebarNavProps = {
   groups: SidebarNavGroup[];

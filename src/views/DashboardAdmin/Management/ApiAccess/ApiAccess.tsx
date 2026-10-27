@@ -1,6 +1,7 @@
 import React from 'react';
 import { Redirect, Route, Switch } from 'react-router';
-import { List } from './List';
+
+import { List } from 'src/views/DashboardAdmin/Management/ApiAccess/List';
 
 const ApiAccess = () => (
   <Switch>

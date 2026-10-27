@@ -1,9 +1,10 @@
 import React from 'react';
+import styled from 'styled-components';
+
 import { useTenant } from 'src/hooks/useTenant';
 import { useGetVersionQuery } from 'src/queries';
 import { getColorForBackground } from 'src/utils/color';
 import { textToSimpleMD } from 'src/utils/text-to-simple-md';
-import styled from 'styled-components';
 
 const StyledAppMessage = styled.div`
   padding: ${(props) => props.theme.spacing * 4}px;

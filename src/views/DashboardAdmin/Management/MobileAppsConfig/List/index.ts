@@ -1,1 +1,1 @@
-export * from './List'
+export * from 'src/views/DashboardAdmin/Management/MobileAppsConfig/List/List'

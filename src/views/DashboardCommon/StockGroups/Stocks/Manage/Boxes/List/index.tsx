@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
+import { useParams } from 'react-router';
+
 import { FieldType, boxesList } from 'smartbox-tables';
 import {
   AccessControl,
@@ -8,64 +10,38 @@ import {
   RentStatus,
   UserRole,
 } from 'smartbox-types';
-import { Alert, ApiTable , ConfirmModal } from '../../../../../../../components/Common';
-import { Button, Spinner } from '../../../../../../../components/Branded';
+import { showModal } from 'src/actions/modal';
+import { Button, Spinner } from 'src/components/Branded';
+import { Alert, ApiTable , ConfirmModal } from 'src/components/Common';
 import {
   ButtonsContainer,
-} from '../../../../../../../components/Layout';
-import { __ } from '../../../../../../../helpers/i18n';
-import { InteractiveTableSchema } from '../../../../../../../utils/table-schema-utils';
-import { boxDisplayStatusSearchValues } from '../../../../../../../utils/box-display-status';
-import UserService from '../../../../../../../services/user-service';
-import { showModal } from '../../../../../../../actions/modal';
-import ApiService from '../../../../../../../services/api-service';
-import {
-  errorNotificationText,
-  successNotification,
-} from '../../../../../../../actions/notifications';
-import { refreshApiTableData } from '../../../../../../../actions/api-table';
-import { useParams } from 'react-router';
-import { Edit } from '../Edit';
-import BoxDetail from '../../../../../BoxDetail';
-import { BoxStatus as BoxStatusBadge } from './BoxStatus';
-import { AssignRentToUser } from '../../../../../AssignRentToUser';
-import { useGetMyDetailsQuery, useGetStockQuery } from 'src/queries';
+} from 'src/components/Layout';
 import { HeaderWithActions, Section } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
+import {
+  useDeleteBoxMutation,
+  useOpenBoxMutation,
+} from 'src/mutations';
+import { useGetMyDetailsQuery, useGetStockQuery } from 'src/queries';
+import UserService from 'src/services/user-service';
+import { boxDisplayStatusSearchValues } from 'src/utils/box-display-status';
+import { InteractiveTableSchema } from 'src/utils/table-schema-utils';
+import { AssignRentToUser } from 'src/views/DashboardCommon/AssignRentToUser';
+import BoxDetail from 'src/views/DashboardCommon/BoxDetail';
+import { Edit } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Boxes/Edit';
+import { BoxStatus as BoxStatusBadge } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Boxes/List/BoxStatus';
 
 const List = () => {
   const { data: user } = useGetMyDetailsQuery();
   const dispatch = useDispatch();
-  const [isLoading, setIsLoading] = useState(false);
+  const { mutate: deleteBox, isPending: isDeleting } = useDeleteBoxMutation();
+  const { mutate: openBox, isPending: isOpening } = useOpenBoxMutation();
+  const isLoading = isDeleting || isOpening;
   const { stockId } = useParams<{ stockId: string }>();
   const { data: stock } = useGetStockQuery(stockId);
 
   const hasFullAccess =
     !!user && [UserRole.admin, UserRole.client].includes(user.role);
-
-  const deleteBox = async (boxId: string) => {
-    setIsLoading(true);
-    await ApiService.callFetch('DELETE', `box/${boxId}`, () => {
-      dispatch(successNotification('application.boxDeleted'));
-      dispatch(refreshApiTableData());
-    });
-    setIsLoading(false);
-  };
-
-  const openBox = async (boxId: string) => {
-    setIsLoading(true);
-    await ApiService.callFetch(
-      'GET',
-      `box/open/${boxId}`,
-      (isSuccess: boolean) => {
-        if (isSuccess) {
-          dispatch(successNotification('application.boxOpenedSuccessfully'));
-        } else {
-          dispatch(errorNotificationText('application.cannotOpenBox'));
-        }
-      },
-    );
-    setIsLoading(false);
-  };
 
   const confirmBoxDelete = (boxId: string) => {
     dispatch(

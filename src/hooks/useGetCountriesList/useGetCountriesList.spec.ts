@@ -1,5 +1,6 @@
 import { renderHook } from '@testing-library/react';
-import { useGetCountriesList } from './useGetCountriesList';
+
+import { useGetCountriesList } from 'src/hooks/useGetCountriesList/useGetCountriesList';
 
 describe('useGetCountriesList', () => {
   it('should return the countries list', () => {

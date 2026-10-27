@@ -1,11 +1,12 @@
 import styled, { css } from 'styled-components';
+
 import {
   getInputErrorStyles,
   getInputFieldStyles,
   getInputHelpStyles,
   getTextareaFieldStyles,
   InputSize,
-} from './input-sizes';
+} from 'src/components/Common/input-sizes';
 
 export const StyledFieldContainer = styled.div<{
   $noMargin?: boolean;

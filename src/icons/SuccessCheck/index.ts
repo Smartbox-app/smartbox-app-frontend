@@ -1,1 +1,1 @@
-export * from './SuccessCheck';
+export * from 'src/icons/SuccessCheck/SuccessCheck';

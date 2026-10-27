@@ -4,7 +4,7 @@ import {
   getCorrectPriceWithTax,
   getCorrectPriceWithTaxForArray,
   getCorrectTaxPercentAmount,
-} from './tax';
+} from 'src/utils/tax';
 
 export const addonPrice = (
   price: OrderAddon['price'],

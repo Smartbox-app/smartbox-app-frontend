@@ -1,1 +1,1 @@
-export * from './GateButton';
+export * from 'src/views/DashboardCommon/SingleRentDetail/Action/GateButton/GateButton';

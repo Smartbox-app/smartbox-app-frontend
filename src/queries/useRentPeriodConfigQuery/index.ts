@@ -1,1 +1,1 @@
-export * from './useRentPeriodConfigQuery';
+export * from 'src/queries/useRentPeriodConfigQuery/useRentPeriodConfigQuery';

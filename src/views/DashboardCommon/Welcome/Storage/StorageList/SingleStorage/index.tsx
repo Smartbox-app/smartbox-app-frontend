@@ -1,18 +1,16 @@
 import { useState } from 'react';
-import { MyRentList, RentStatus } from 'smartbox-types';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-import UserService from '../../../../../../services/user-service';
-
-import { __ } from '../../../../../../helpers/i18n';
-
-import { useGetMyDetailsQuery } from 'src/queries';
-import { Link } from 'react-router-dom';
-import { StorageHeader } from './components/StorageHeader';
-import { StorageMainInfo } from './components/StorageMainInfo';
-import { StorageDetails } from './components/StorageDetails';
+import { MyRentList, RentStatus } from 'smartbox-types';
 import { Card } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
 import { StockImage } from 'src/icons/StockImage';
+import { useGetMyDetailsQuery } from 'src/queries';
+import UserService from 'src/services/user-service';
+import { StorageDetails } from 'src/views/DashboardCommon/Welcome/Storage/StorageList/SingleStorage/components/StorageDetails';
+import { StorageHeader } from 'src/views/DashboardCommon/Welcome/Storage/StorageList/SingleStorage/components/StorageHeader';
+import { StorageMainInfo } from 'src/views/DashboardCommon/Welcome/Storage/StorageList/SingleStorage/components/StorageMainInfo';
 
 interface Props {
   single: MyRentList;

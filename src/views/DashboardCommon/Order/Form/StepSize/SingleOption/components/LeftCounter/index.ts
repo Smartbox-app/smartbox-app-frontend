@@ -1,1 +1,1 @@
-export * from './LeftCounter';
+export * from 'src/views/DashboardCommon/Order/Form/StepSize/SingleOption/components/LeftCounter/LeftCounter';

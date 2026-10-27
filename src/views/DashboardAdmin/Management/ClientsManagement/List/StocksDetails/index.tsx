@@ -1,8 +1,10 @@
 import React from 'react';
+
 import { UserClientListRes } from 'smartbox-types';
-import { __ } from '../../../../../../helpers/i18n';
-import './StockDetails.scss';
+import { __ } from 'src/helpers/i18n';
 import { useTenantNaming } from 'src/hooks/useTenantNaming';
+
+import 'src/views/DashboardAdmin/Management/ClientsManagement/List/StocksDetails/StockDetails.scss';
 
 interface Props {
     user: UserClientListRes

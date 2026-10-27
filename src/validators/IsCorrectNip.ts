@@ -1,5 +1,6 @@
 import { registerDecorator, ValidationOptions, ValidationArguments } from "class-validator";
-import { validateNip } from "./nip";
+
+import { validateNip } from "src/validators/nip";
 
 type CountryCodeGetter<T extends object> = string | ((obj: T) => string);
 

@@ -1,6 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
+
 import { ApiAccessRes, UpdateApiAccessReq } from 'smartbox-types';
-import ApiService from '../../services/api-service';
+import ApiService from 'src/services/api-service';
 
 export const useUpdateApiAccessMutation = () =>
   useMutation({

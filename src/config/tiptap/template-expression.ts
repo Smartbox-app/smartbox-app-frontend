@@ -1,6 +1,7 @@
 import { mergeAttributes, Node } from '@tiptap/core';
 import { ReactNodeViewRenderer } from '@tiptap/react';
-import { TemplateExpressionNodeView } from './TemplateExpressionNodeView';
+
+import { TemplateExpressionNodeView } from 'src/config/tiptap/TemplateExpressionNodeView';
 
 declare module '@tiptap/core' {
   interface Commands<ReturnType> {

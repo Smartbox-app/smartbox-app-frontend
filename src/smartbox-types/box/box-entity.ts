@@ -1,5 +1,5 @@
-import { SinglePricing } from '../box-group';
-import { RentAgreementType, RentStatus } from '../rent/rent-entity';
+import { SinglePricing } from 'src/smartbox-types/box-group';
+import { RentAgreementType, RentStatus } from 'src/smartbox-types/rent/rent-entity';
 
 export enum BoxStatus {
   free = 'free',

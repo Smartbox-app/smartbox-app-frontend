@@ -1,12 +1,14 @@
 import { generateHTML } from '@tiptap/core';
 import React from 'react';
+import styled from 'styled-components';
+
 import { Spinner } from 'src/components/Branded';
+import { getDocumentEditorExtensions } from 'src/config/tiptap';
+import { __ } from 'src/helpers/i18n';
 import { useTenant } from 'src/hooks/useTenant';
 import { useGetDocumentByTypeQuery } from 'src/queries';
 import ApiService from 'src/services/api-service';
 import { dateOnly } from 'src/utils/format-date';
-import styled from 'styled-components';
-import { getDocumentEditorExtensions } from 'src/config/tiptap';
 
 const Page = styled.main`
   max-width: 1000px;
@@ -68,9 +70,11 @@ export const PrivacyPolicy = () => {
     return (
       <Page>
         <header>
-          <H1>POLITYKA PRYWATNOŚCI</H1>
+          <H1>{__('application.privacyPolicy')}</H1>
         </header>
-        <strong>Ostatnia aktualizacja: {dateOnly(policy.updatedAt)}</strong>
+        <strong>
+          {__('application.tables.lastUpdate')}: {dateOnly(policy.updatedAt)}
+        </strong>
         <div dangerouslySetInnerHTML={{ __html: html }} />
       </Page>
     );

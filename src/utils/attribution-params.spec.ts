@@ -4,7 +4,7 @@ import {
   getStoredAttributionParams,
   pickAttributionParams,
   withAttributionSearch,
-} from './attribution-params';
+} from 'src/utils/attribution-params';
 
 describe('attribution params', () => {
   beforeEach(() => {

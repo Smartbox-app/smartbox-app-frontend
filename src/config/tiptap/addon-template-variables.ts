@@ -1,5 +1,5 @@
 import { AddonTemplateVariableRes } from 'smartbox-types';
-import { TemplateVariableOption } from './template-variables';
+import { TemplateVariableOption } from 'src/config/tiptap/template-variables';
 
 export const normalizeAddonSlug = (slug: string): string =>
   slug.replace(/ /g, '').trim();

@@ -1,1 +1,1 @@
-export * from './DashboardSidebar';
+export * from 'src/components/Layout/DashboardSidebar/DashboardSidebar';

@@ -1,10 +1,11 @@
 import React from 'react';
-
-import './Legend.scss';
-import { __ } from "../../../../../../helpers/i18n";
 import styled from 'styled-components';
-import { colorOrDark } from '../../../../../../utils/color';
+
+import { __ } from "src/helpers/i18n";
 import { useTenantNaming } from 'src/hooks/useTenantNaming';
+import { colorOrDark } from 'src/utils/color';
+
+import 'src/views/DashboardCommon/Welcome/OrdersHistory/History/Legend/Legend.scss';
 
 const StyledActive = styled.p`
   background-color: ${({ theme }) => colorOrDark(theme.colors.primary)};

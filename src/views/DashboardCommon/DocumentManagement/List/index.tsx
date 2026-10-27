@@ -1,14 +1,14 @@
 import React from 'react';
+import styled from 'styled-components';
+
 import { documentListAdmin, documentListClient, FieldType } from 'smartbox-tables';
 import { DocumentListResClient, DocumentType , UserRole } from 'smartbox-types';
-import { history } from 'src/history';
 import { Button } from 'src/components/Branded';
 import { ApiTable } from 'src/components/Common';
 import { ButtonsContainer } from 'src/components/Layout';
 import { HeaderWithActions, Section } from 'src/components/ui';
-import styled from 'styled-components';
-
 import { __ } from 'src/helpers/i18n';
+import { history } from 'src/history';
 import { useGetMyDetailsQuery } from 'src/queries';
 import UserService from 'src/services/user-service';
 import { InteractiveTableSchema } from 'src/utils/table-schema-utils';

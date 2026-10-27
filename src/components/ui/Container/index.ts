@@ -1,1 +1,1 @@
-export * from './Container';
+export * from 'src/components/ui/Container/Container';

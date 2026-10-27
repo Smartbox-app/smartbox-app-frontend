@@ -1,10 +1,9 @@
 import { Language } from 'smartbox-types';
-
-import { i18next } from '../i18n/i18n';
+import { i18next } from 'src/i18n/i18n';
 import {
   formatPeriodQuantity,
   periodPluralForm,
-} from './format-period-quantity';
+} from 'src/utils/format-period-quantity';
 
 describe('periodPluralForm', () => {
   it.each([

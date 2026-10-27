@@ -1,26 +1,27 @@
 import React, { useEffect, useMemo } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
+
 import { Language, UserRole, UserRoleForTenant } from 'smartbox-types';
-import { ButtonsContainer, FormContainer } from 'src/components/Layout';
+import { showModal } from 'src/actions/modal';
+import { successNotification } from 'src/actions/notifications';
 import { Spinner } from 'src/components/Branded';
-import { Form, Button } from 'src/components/ui';
 import { InputSelect } from 'src/components/Common';
-import { __ } from 'src/helpers/i18n';
+import { ButtonsContainer, FormContainer } from 'src/components/Layout';
+import { Form, Button } from 'src/components/ui';
 import { InviteUserFormDto } from 'src/dto/InviteUserFormDto';
-import { ClassValidatorResolver } from 'src/resolvers/ClassValidatorResolver';
+import { __ } from 'src/helpers/i18n';
+import { history } from 'src/history';
+import { useInviteUsersMutation } from 'src/mutations';
 import {
   useGetTenantOptionsQuery,
   useGetInviteStockOptionsQuery,
   useGetMyDetailsQuery,
 } from 'src/queries';
-import { useInviteUsersMutation } from 'src/mutations';
-import { showModal } from 'src/actions/modal';
-import { successNotification } from 'src/actions/notifications';
-import { InviteUsersSuccessModal } from './InviteUsersSuccessModal';
-import { InviteEmailsField } from './InviteEmailsField';
+import { ClassValidatorResolver } from 'src/resolvers/ClassValidatorResolver';
 import UserService from 'src/services/user-service';
-import { history } from 'src/history';
+import { InviteEmailsField } from 'src/views/DashboardCommon/InviteUser/InviteEmailsField';
+import { InviteUsersSuccessModal } from 'src/views/DashboardCommon/InviteUser/InviteUsersSuccessModal';
 
 const LANGUAGE_OPTIONS = [
   { value: Language.pl, label: 'Polski' },

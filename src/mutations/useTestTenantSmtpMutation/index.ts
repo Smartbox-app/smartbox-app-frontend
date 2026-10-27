@@ -1,2 +1,2 @@
-export * from './testTenantSmtpMutation';
-export type { TestTenantSmtpRequestBody } from './testTenantSmtpMutation';
+export * from 'src/mutations/useTestTenantSmtpMutation/testTenantSmtpMutation';
+export type { TestTenantSmtpRequestBody } from 'src/mutations/useTestTenantSmtpMutation/testTenantSmtpMutation';

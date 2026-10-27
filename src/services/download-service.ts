@@ -1,8 +1,9 @@
-import FileSaver from 'file-saver';
-import { Directory, Filesystem } from '@capacitor/filesystem';
-import { Capacitor } from '@capacitor/core';
 import { FileOpener } from '@capacitor-community/file-opener';
-import ApiService from './api-service';
+import { Capacitor } from '@capacitor/core';
+import { Directory, Filesystem } from '@capacitor/filesystem';
+import FileSaver from 'file-saver';
+
+import ApiService from 'src/services/api-service';
 
 const getMimeFromFilename = (filename: string): string => {
   const extension = filename.split('.').pop()?.toLowerCase();

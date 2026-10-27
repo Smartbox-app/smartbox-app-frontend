@@ -1,5 +1,7 @@
 import { isBefore } from 'date-fns';
 import { useEffect, useMemo } from 'react';
+import styled from 'styled-components';
+
 import { MyRentDetails, RentAgreementType } from 'smartbox-types';
 import { SectionHeader } from 'src/components/Layout';
 import { Button, Section } from 'src/components/ui';
@@ -10,7 +12,6 @@ import { usePayForPeriodMutation } from 'src/mutations/usePayForPeriodMutation';
 import { dateOnly } from 'src/utils/format-date';
 import { formatPrice } from 'src/utils/format-price';
 import { redirectToIpg } from 'src/utils/payment-form';
-import styled from 'styled-components';
 
 interface Props {
   rent: MyRentDetails;

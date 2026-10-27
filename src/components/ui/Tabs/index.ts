@@ -1,1 +1,1 @@
-export * from './Tabs';
+export * from 'src/components/ui/Tabs/Tabs';

@@ -1,16 +1,17 @@
+import { subDays } from 'date-fns';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { subDays } from 'date-fns';
-import DateInput from 'src/components/Common/DateInput';
-import { Spinner } from 'src/components/Branded';
-import { Button, Modal, Typography } from 'src/components/ui';
-import { ButtonsContainer } from 'src/components/Layout';
+import styled from 'styled-components';
+
 import { hideModal } from 'src/actions/modal';
 import { successNotification } from 'src/actions/notifications';
-import ApiService from 'src/services/api-service';
+import { Spinner } from 'src/components/Branded';
+import DateInput from 'src/components/Common/DateInput';
+import { ButtonsContainer } from 'src/components/Layout';
+import { Button, Modal, Typography } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
+import ApiService from 'src/services/api-service';
 import { dateOnlyNormalized } from 'src/utils/format-date';
-import styled from 'styled-components';
 
 const StyledContent = styled('div')(({ theme }) => ({
   display: 'flex',

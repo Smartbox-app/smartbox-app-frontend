@@ -1,4 +1,5 @@
 import { useDispatch } from 'react-redux';
+
 import { hideModal } from 'src/actions/modal';
 import { Button, Modal } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';

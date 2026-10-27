@@ -1,5 +1,6 @@
 import styled from 'styled-components';
-import { __ } from '../../../../../../../../helpers/i18n';
+
+import { __ } from 'src/helpers/i18n';
 import { useTenantNaming } from 'src/hooks/useTenantNaming';
 
 export type StorageMainInfoProps = {

@@ -1,8 +1,9 @@
 import { Controller, useFormContext } from 'react-hook-form';
+
 import { InputSelect } from 'src/components/Common';
 import { Section } from 'src/components/ui';
 import { useTenantNaming } from 'src/hooks/useTenantNaming';
-import { RentDataDto } from '../TenantDetailsForm/dto/RentDataDto';
+import { RentDataDto } from 'src/views/DashboardCommon/Order/Form/StepSummary/TenantDetailsForm/dto/RentDataDto';
 
 const clientSourceOptions = [
   {

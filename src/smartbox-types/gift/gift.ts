@@ -1,4 +1,5 @@
-import { GiftType } from './gift-entity';
+import { GiftType } from 'src/smartbox-types/gift/gift-entity';
+
 export class GiftRes {
   id: string;
   code: string;

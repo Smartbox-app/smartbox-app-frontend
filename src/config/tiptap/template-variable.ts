@@ -1,6 +1,7 @@
 import { mergeAttributes, Node } from '@tiptap/core';
 import { ReactNodeViewRenderer } from '@tiptap/react';
-import { TemplateVariableNodeView } from './TemplateVariableNodeView';
+
+import { TemplateVariableNodeView } from 'src/config/tiptap/TemplateVariableNodeView';
 
 declare module '@tiptap/core' {
   interface Commands<ReturnType> {

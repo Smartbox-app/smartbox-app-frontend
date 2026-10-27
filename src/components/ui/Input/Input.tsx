@@ -1,16 +1,17 @@
-import { UseFormRegisterReturn } from 'react-hook-form';
-import { __ } from '../../../helpers/i18n';
-import styled from 'styled-components';
 import { forwardRef } from 'react';
-import { ErrorText } from '../ErrorText';
-import { InputLabel } from '../InputLabel';
-import { Typography } from '../Typography';
+import { UseFormRegisterReturn } from 'react-hook-form';
+import styled from 'styled-components';
+
 import {
   getInputFieldStyles,
   InputSize,
   InputSizeProps,
   resolveInputSize,
 } from 'src/components/Common/input-sizes';
+import { ErrorText } from 'src/components/ui/ErrorText';
+import { InputLabel } from 'src/components/ui/InputLabel';
+import { Typography } from 'src/components/ui/Typography';
+import { __ } from 'src/helpers/i18n';
 
 const StyledContainer = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -89,7 +90,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           placeholder={placeholder ? __(placeholder) : ''}
         />
         {error ? <ErrorText error={error} /> : null}
-        {help ? <StyledHelp>{help}</StyledHelp> : null}
+        {help ? <StyledHelp>{__(help)}</StyledHelp> : null}
       </StyledContainer>
     );
   },

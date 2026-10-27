@@ -1,7 +1,7 @@
 import React from 'react';
-
-import './Bar.scss';
 import styled from 'styled-components';
+
+import 'src/components/Common/ProgressIndicator/Bar/Bar.scss';
 
 interface Props {
   current: number;

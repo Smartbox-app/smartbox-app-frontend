@@ -1,1 +1,1 @@
-export * from './Boxes';
+export * from 'src/icons/Boxes/Boxes';

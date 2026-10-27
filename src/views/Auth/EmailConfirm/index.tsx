@@ -1,24 +1,26 @@
-import  { useEffect, useState } from 'react';
 import { ItfApiForm } from 'itf_formbuilder_react';
+import  { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router';
 import styled from 'styled-components';
+
 import { ActivationStatusRes } from 'smartbox-types';
-import { auth, notifications } from '../../../actions';
-import { Spinner, Logo } from '../../../components/Branded';
-import { ButtonsContainer, FormContainer } from '../../../components/Layout';
+import { notifications } from 'src/actions';
+import { Spinner, Logo } from 'src/components/Branded';
+import { ButtonsContainer, FormContainer } from 'src/components/Layout';
 import {
   Header,
   Section,
   Stack,
   Button,
   Typography
-} from '../../../components/ui';
-import { __ } from '../../../helpers/i18n';
+} from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
 import { history } from 'src/history';
-import ApiService from '../../../services/api-service';
-import { formOnTranslateString } from '../../../utils/trans-form';
-import { mapFields } from '../../../utils/fields-mapper';
+import { useEmailVerificationMutation } from 'src/mutations';
+import ApiService from 'src/services/api-service';
+import { mapFields } from 'src/utils/fields-mapper';
+import { formOnTranslateString } from 'src/utils/trans-form';
 
 type PageState = 'loading' | 'activating' | 'needsPassword' | 'error';
 
@@ -35,6 +37,7 @@ const StyledContent = styled('div')({
 
 const EmailConfirm = () => {
   const dispatch = useDispatch();
+  const { mutate: verifyEmail } = useEmailVerificationMutation();
   const { userId, updateToken } = useParams<{
     userId: string;
     updateToken: string;
@@ -64,7 +67,7 @@ const EmailConfirm = () => {
         }
 
         setPageState('activating');
-        dispatch(auth.emailVerification(userId, updateToken));
+        verifyEmail({ userId, updateToken });
       } catch {
         if (!cancelled) {
           setPageState('error');
@@ -77,7 +80,7 @@ const EmailConfirm = () => {
     return () => {
       cancelled = true;
     };
-  }, [dispatch, userId, updateToken]);
+  }, [userId, updateToken, verifyEmail]);
 
   const customSendFetcher = (
     _formId: string,

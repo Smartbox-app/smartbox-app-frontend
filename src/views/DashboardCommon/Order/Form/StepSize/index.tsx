@@ -1,21 +1,21 @@
 import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
+import { Redirect } from 'react-router';
+
 import { BoxGroupUserRes } from 'smartbox-types';
+import { Alert } from 'src/components/Common';
 import {
   ButtonsContainer,
-} from '../../../../../components/Layout';
-import SingleOption from './SingleOption';
-import { ApplicationState } from '../../../../../reducers';
-
-import UserService from '../../../../../services/user-service';
-
-import './StepSize.scss';
-import { Alert } from '../../../../../components/Common';
-import { useBoxGroupsForStockQuery, useGetMyDetailsQuery } from 'src/queries';
+} from 'src/components/Layout';
 import { Header, Section, Skeleton , Stack, Button } from 'src/components/ui';
-import { ArrowLeft, ArrowRight } from 'src/icons';
 import { useTenantNaming } from 'src/hooks/useTenantNaming';
-import { Redirect } from 'react-router';
+import { ArrowLeft, ArrowRight } from 'src/icons';
+import { useBoxGroupsForStockQuery, useGetMyDetailsQuery } from 'src/queries';
+import { ApplicationState } from 'src/reducers';
+import UserService from 'src/services/user-service';
+import SingleOption from 'src/views/DashboardCommon/Order/Form/StepSize/SingleOption';
+
+import 'src/views/DashboardCommon/Order/Form/StepSize/StepSize.scss';
 
 const StepSize = () => {
   const { stockId, boxGroupId } = useSelector(

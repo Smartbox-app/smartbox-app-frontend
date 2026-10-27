@@ -1,1 +1,1 @@
-export * from './RentAttachedFileButton';
+export * from 'src/components/Common/RentAttachedFileButton/RentAttachedFileButton';

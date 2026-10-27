@@ -1,5 +1,6 @@
 import { useCallback } from 'react';
-import { useTenant } from './useTenant';
+
+import { useTenant } from 'src/hooks/useTenant';
 
 type AssetType =
   | 'logo'

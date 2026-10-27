@@ -7,6 +7,7 @@ import {
   MinLength,
   ValidateIf,
 } from 'class-validator';
+
 import { errors } from 'src/validation/errors';
 import { ValidCharacters } from 'src/validators/areValidCharacters';
 import { IsCustomEmail } from 'src/validators/IsCustomEmail';

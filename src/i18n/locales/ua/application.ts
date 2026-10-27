@@ -1,4 +1,4 @@
-import type plApplication from '../pl/application';
+import type plApplication from 'src/i18n/locales/pl/application';
 
 type LocaleMessages<T> = {
   [K in keyof T]: T[K] extends string ? string : LocaleMessages<T[K]>;
@@ -184,6 +184,32 @@ const application = {
     stockGroups: 'Групи складських комплексів',
     gates: 'Брами',
     alarms: 'Сигналізації',
+    diagnostics: 'Діагностика',
+    diagnosticsInternet: 'Інтернет-з’єднання',
+    diagnosticsGates: 'Статус брам',
+    diagnosticsAlarms: 'Статус сигналізацій',
+    diagnosticsNoInternet: 'Немає даних про з’єднання (недоступно для цього драйвера)',
+    diagnosticsEmpty: 'Немає діагностичних даних для цього об’єкта',
+    diagnosticsNoGates: 'Немає брам для відображення',
+    diagnosticsNoAlarms: 'Немає сигналізацій для відображення',
+    diagnosticsWanPrimary: 'Кабель / Wi‑Fi (основне)',
+    diagnosticsWanLte: 'LTE (резервне)',
+    diagnosticsWanUnknown: 'Невідомо',
+    diagnosticsStatusOk: 'OK',
+    diagnosticsStatusDegraded: 'Обмежено',
+    diagnosticsStatusDown: 'Немає зв’язку',
+    diagnosticsAsOf: 'Дані станом на',
+    diagnosticsLastContact: 'Остання спроба контакту',
+    diagnosticsWanChangedAt: 'Стан лінії з',
+    diagnosticsBus: 'Пристрої на шині',
+    diagnosticsBusKind: 'Тип',
+    diagnosticsBusMaster: 'Master',
+    diagnosticsBusUnit: 'Адреса',
+    diagnosticsBusCovers: 'Скриньки / брами',
+    diagnosticsBusAnswering: 'Відповідає',
+    diagnosticsBusSilent: 'Мовчить',
+    diagnosticsBusUnknown: 'Не перевірено',
+    diagnosticsBusLastAnswered: 'Остання відповідь',
     account: 'Обліковий запис',
     logout: 'Вийти',
     home: 'Головна',
@@ -847,6 +873,9 @@ const application = {
 також аналітичні, промоційні та рекламні інструменти для реклами, дослідження ринку та вивчення
         уподобань користувачів. Користуючись застосунком Smartbox, ви можете дати згоду на файли cookie та
         зазначені вище інструменти. Докладнішу інформацію про файли cookie та ці інструменти ви знайдете в нашій`,
+    cookieConsentTitle: 'Файли cookie',
+    cookieConsentAccept: 'Прийняти',
+    cookieConsentReject: 'Відхилити',
     orderInfo: 'Деталі',
     dontForgetToBringLock: 'Тільки не забудьте взяти власний навісний замок!',
     stocksList: 'Список складських комплексів',
@@ -962,7 +991,7 @@ const application = {
     tenantSettingsCommunications: 'Комунікація',
     tenantSettingsIntegrations: 'Інтеграції',
     tenantSettingsMessaging: 'Повідомлення',
-    tenantSettingsMobileApps: 'Мобільні застосунки',
+    tenantSettingsMobileApps: 'Мобільні застосунки та PWA',
     tenantSettingsAnalytics: 'Аналітика',
     tenantAnalyticsDescription:
       'Після того як ви налаштуєте ідентифікатори GTM і Meta Pixel, застосунок автоматично надсилає події конверсії:',
@@ -1378,6 +1407,7 @@ Advanced Matching (окремо від параметрів нижче, елек
         finish: 'Завершення оренди підтверджено',
         forcePaymentAcceptance: 'Платіж примусово прийнято',
         forcePaymentCancellation: 'Платіж примусово скасовано',
+        markPeriodAsPaid: 'Період позначено як оплачений',
         notifyPaymentSuccess: 'Сповіщення про успішний платіж',
         passcodeIssued: 'Код доступу оренди видано',
         passcodeRotated: 'Код доступу оренди замінено',
@@ -1462,6 +1492,7 @@ Advanced Matching (окремо від параметрів нижче, елек
         updateTenantMessagingByTenant: 'Повідомлення франчайзі оновлено',
         updateTenantMobileAppsByAdmin:
           'Мобільні застосунки оновлено адміністратором',
+        updateTenantMobileAppsByTenant: 'Мобільні застосунки та PWA оновлено',
         uploadAgreementByAdmin: 'Договір франчайзі вивантажено адміністратором',
         uploadAgreementByUser: 'Договір франчайзі вивантажено',
         uploadBackgroundByAdmin: 'Фон франчайзі вивантажено адміністратором',
@@ -1760,6 +1791,7 @@ Advanced Matching (окремо від параметрів нижче, елек
       splitCell: 'Розділити',
       deleteTable: 'Видалити таблицю',
       insertTable: 'Таблиця',
+      link: 'Посилання',
       enterUrl: 'Вкажіть URL',
       insertVariable: 'Вставити змінну',
       insertAddonVariable: 'Вставити змінну додаткової опції',

@@ -1,1 +1,1 @@
-export * from './InfoCircle';
+export * from 'src/icons/InfoCircle/InfoCircle';

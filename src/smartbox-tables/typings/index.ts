@@ -1,1 +1,1 @@
-export * from './tables';
+export * from 'src/smartbox-tables/typings/tables';

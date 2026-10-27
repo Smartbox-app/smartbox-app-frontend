@@ -1,12 +1,12 @@
-import type { TemplateChannelGroup, TemplateSectionRow } from './types';
+import { renderHook } from '@testing-library/react';
+
+import type { TemplateChannelGroup, TemplateSectionRow } from 'src/views/DashboardTenant/Templates/List/types';
+import { useTemplateListQuery } from 'src/queries';
+import { useTemplateSections } from 'src/views/DashboardTenant/Templates/List/useTemplateSections';
 
 jest.mock('src/queries', () => ({
   useTemplateListQuery: jest.fn(),
 }));
-
-import { renderHook } from '@testing-library/react';
-import { useTemplateListQuery } from 'src/queries';
-import { useTemplateSections } from './useTemplateSections';
 
 const mockedQuery = useTemplateListQuery as jest.Mock;
 

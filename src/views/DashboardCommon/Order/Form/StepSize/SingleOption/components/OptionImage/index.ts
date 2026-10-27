@@ -1,1 +1,1 @@
-export * from './OptionImage';
+export * from 'src/views/DashboardCommon/Order/Form/StepSize/SingleOption/components/OptionImage/OptionImage';

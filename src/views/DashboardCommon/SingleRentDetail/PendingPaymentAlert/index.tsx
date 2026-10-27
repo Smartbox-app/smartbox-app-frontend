@@ -1,6 +1,4 @@
 import { MyRentDetails } from 'smartbox-types';
-
-// import './MissingPaymentAlert.scss';
 import { Alert } from 'src/components/Common';
 import { Section } from 'src/components/ui';
 

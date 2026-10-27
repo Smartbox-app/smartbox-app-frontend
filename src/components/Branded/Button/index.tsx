@@ -1,7 +1,9 @@
-import { Button as UIButton } from 'src/components/ui';
-import { __ } from '../../../helpers/i18n';
-import './Button.scss';
 import React from 'react';
+
+import { Button as UIButton } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
+
+import 'src/components/Branded/Button/Button.scss';
 
 interface ButtonProps {
   to?: string;

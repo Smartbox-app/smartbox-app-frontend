@@ -1,25 +1,27 @@
+import { isAfter } from 'date-fns';
 import React, { useMemo } from 'react';
 import { useParams, Redirect } from 'react-router-dom';
-import { RentStatus } from 'smartbox-types';
-
-import Gate from './Gate';
-import { MissingPaymentAlert } from './MissingPaymentAlert';
-import { OpenBox } from './OpenBox';
 import styled from 'styled-components';
 import { Description } from './RentDescription';
 import {
   canDisplayRentAccess,
   canUseRentAccessActions,
 } from 'src/utils/rent';
+
+import { RentStatus } from 'smartbox-types';
 import { Header, PageHeader, Section, Skeleton } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
-import { PeriodUnpaidAlert } from './PeriodUnpaidAlert';
 import { useTenantNaming } from 'src/hooks/useTenantNaming';
-import { PendingPaymentAlert } from './PendingPaymentAlert';
-import { RentAuthorizations } from './RentAuthorizations';
 import { useMyRentDetailsQuery } from 'src/queries';
-import { RentNote } from './RentNote';
-import { MainData } from './MainData';
+import { isRentAccessActive } from 'src/utils/rent';
+import Gate from 'src/views/DashboardCommon/SingleRentDetail/Gate';
+import { MainData } from 'src/views/DashboardCommon/SingleRentDetail/MainData';
+import { MissingPaymentAlert } from 'src/views/DashboardCommon/SingleRentDetail/MissingPaymentAlert';
+import { OpenBox } from 'src/views/DashboardCommon/SingleRentDetail/OpenBox';
+import { PendingPaymentAlert } from 'src/views/DashboardCommon/SingleRentDetail/PendingPaymentAlert';
+import { PeriodUnpaidAlert } from 'src/views/DashboardCommon/SingleRentDetail/PeriodUnpaidAlert';
+import { RentAuthorizations } from 'src/views/DashboardCommon/SingleRentDetail/RentAuthorizations';
+import { RentNote } from 'src/views/DashboardCommon/SingleRentDetail/RentNote';
 
 const StyledGatesHeader = styled.div`
   font-weight: 700;

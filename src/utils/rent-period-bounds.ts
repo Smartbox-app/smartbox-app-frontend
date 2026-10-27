@@ -6,8 +6,9 @@ import {
   isBefore,
   startOfDay,
 } from 'date-fns';
+
 import { RentPaymentType } from 'smartbox-types';
-import { dateOnlyNormalized } from './format-date';
+import { dateOnlyNormalized } from 'src/utils/format-date';
 
 export const initialFixedTermEndDate = (
   startDate: Date,

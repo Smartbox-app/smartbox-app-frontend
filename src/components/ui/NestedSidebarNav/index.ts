@@ -1,1 +1,1 @@
-export * from './NestedSidebarNav';
+export * from 'src/components/ui/NestedSidebarNav/NestedSidebarNav';

@@ -1,21 +1,21 @@
 import React, { useEffect } from 'react';
-
 import { FormProvider, useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
+import { Redirect, useHistory } from 'react-router';
+
+import { UserRole } from 'smartbox-types';
+import { successNotification } from 'src/actions/notifications';
 import { PageHeader, Section } from 'src/components/ui';
 import { DocumentDto } from 'src/dto/DocumentDto';
 import { __ } from 'src/helpers/i18n';
-import { ClassValidatorResolver } from 'src/resolvers/ClassValidatorResolver';
-import { DocumentForm } from '../DocumentForm';
 import {
   useCreateDocumentDraftMutation,
   usePublishDocumentMutation,
 } from 'src/mutations';
-import { useDispatch } from 'react-redux';
-import { Redirect, useHistory } from 'react-router';
-import { successNotification } from 'src/actions/notifications';
 import { useGetMyDetailsQuery } from 'src/queries';
+import { ClassValidatorResolver } from 'src/resolvers/ClassValidatorResolver';
 import UserService from 'src/services/user-service';
-import { UserRole } from 'smartbox-types';
+import { DocumentForm } from 'src/views/DashboardCommon/DocumentManagement/DocumentForm';
 
 export const Add = () => {
   const { data: user } = useGetMyDetailsQuery();

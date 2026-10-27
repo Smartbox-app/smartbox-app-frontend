@@ -1,18 +1,18 @@
 import React, { useMemo } from 'react';
-import { formatPrice } from '../../../../../../utils/format-price';
-import { dateOnlyLocalTime } from '../../../../../../utils/format-date';
-
-import './SummaryTable.scss';
-import { __ } from '../../../../../../helpers/i18n';
 import styled from 'styled-components';
 
 import { AddonRes, CalculatedPriceRes, PriceDisplayForClients } from 'smartbox-types';
-import { OrderAddon } from '../../../../../../reducers/order-reducer';
-import { SelectedVariant } from './SelectedVariant';
-import { colorOrDark } from '../../../../../../utils/color';
+import { Header } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
+import { OrderAddon } from 'src/reducers/order-reducer';
+import { colorOrDark } from 'src/utils/color';
+import { dateOnlyLocalTime } from 'src/utils/format-date';
+import { formatPrice } from 'src/utils/format-price';
 import { openEndedNextInvoiceDate } from 'src/utils/open-ended-period';
 import { sumAddonPricesPerPeriod } from 'src/utils/summary-period-prices';
-import { Header } from 'src/components/ui';
+import { SelectedVariant } from 'src/views/DashboardCommon/Order/Form/StepSummary/SummaryTable/SelectedVariant';
+
+import 'src/views/DashboardCommon/Order/Form/StepSummary/SummaryTable/SummaryTable.scss';
 
 const StyledCell = styled.div`
   color: ${(props) => colorOrDark(props.theme.colors.primary)};

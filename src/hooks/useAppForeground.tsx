@@ -1,6 +1,6 @@
-import { useEffect, useRef } from 'react';
 import { App } from '@capacitor/app';
 import { Capacitor, PluginListenerHandle } from '@capacitor/core';
+import { useEffect, useRef } from 'react';
 
 interface UseAppForegroundOptions {
   /**

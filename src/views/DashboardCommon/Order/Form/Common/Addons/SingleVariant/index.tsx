@@ -1,4 +1,7 @@
 import React, { useMemo } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import styled from 'styled-components';
+
 import {
   AddonRes,
   AddonUserFileRequirementType,
@@ -6,13 +9,11 @@ import {
   SingleAddonVariantForUser,
   SingleAddonVariantForUserWithCorrectedPrice,
 } from 'smartbox-types';
-import styled from 'styled-components';
-import { PriceInfo } from '../PriceInfo';
-import { useDispatch, useSelector } from 'react-redux';
-import { ApplicationState } from '../../../../../../../reducers';
-import { selectAddon, setAddonFile } from '../../../../../../../actions/order';
-import { Indicator } from './components/Indicator';
+import { selectAddon, setAddonFile } from 'src/actions/order';
+import { ApplicationState } from 'src/reducers';
 import { correctAddonVariantPrice } from 'src/utils/addon-variant-price';
+import { PriceInfo } from 'src/views/DashboardCommon/Order/Form/Common/Addons/PriceInfo';
+import { Indicator } from 'src/views/DashboardCommon/Order/Form/Common/Addons/SingleVariant/components/Indicator';
 
 const StyledAddonVariant = styled('li')<{ isSelected: boolean }>(
   ({ isSelected, theme }) => ({

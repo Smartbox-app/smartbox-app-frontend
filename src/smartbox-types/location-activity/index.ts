@@ -8,4 +8,4 @@ export type LocationActivityEntity = {
 
 export type LocationActivityStatus = 'inside' | 'outside';
 
-export * from './location-activity-list-item';
+export * from 'src/smartbox-types/location-activity/location-activity-list-item';

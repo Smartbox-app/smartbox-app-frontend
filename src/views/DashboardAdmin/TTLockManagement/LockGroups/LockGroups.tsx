@@ -1,9 +1,9 @@
 import { lockGroupsList } from 'smartbox-tables';
 import { TTLockGroup } from 'smartbox-types';
-import { history } from 'src/history';
 import { ApiTable } from 'src/components/Common';
 import { Header, Section } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
+import { history } from 'src/history';
 import { InteractiveTableSchema } from 'src/utils/table-schema-utils';
 
 export const LockGroups = () => {

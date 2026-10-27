@@ -1,1 +1,1 @@
-export * from './usePaymentDetailsQuery';
+export * from 'src/queries/usePaymentDetailsQuery/usePaymentDetailsQuery';

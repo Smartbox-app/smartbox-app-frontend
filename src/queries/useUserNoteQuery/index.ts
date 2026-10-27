@@ -1,2 +1,2 @@
-export * from './useUserNoteQuery';
+export * from 'src/queries/useUserNoteQuery/useUserNoteQuery';
 

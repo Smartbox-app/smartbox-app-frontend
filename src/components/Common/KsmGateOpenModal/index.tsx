@@ -1,18 +1,18 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
+
 import {
   ApiErrorCode,
-  KsmGateOpenRequestRes,
   KsmGateOpenRequestStatus,
 } from 'smartbox-types';
-import ApiService from 'src/services/api-service';
 import { modal, notifications } from 'src/actions';
-import { ButtonsContainer } from 'src/components/Layout';
 import { Button, Spinner } from 'src/components/Branded';
+import Alert from 'src/components/Common/Alert';
+import { GateAnimation } from 'src/components/Common/GateAnimation';
+import { ButtonsContainer } from 'src/components/Layout';
 import { Modal } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
-import { GateAnimation } from '../GateAnimation';
-import Alert from '../Alert';
+import { useKsmGateStatusQuery } from 'src/queries/useKsmGateStatusQuery';
 
 const POLL_INTERVAL_MS = 1500;
 
@@ -38,67 +38,40 @@ interface Props {
 
 const KsmGateOpenModal = ({ requestId }: Props) => {
   const dispatch = useDispatch();
-  const [request, setRequest] = useState<KsmGateOpenRequestRes | null>(null);
-  const [loading, setLoading] = useState(true);
-  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const terminalNotifiedRef = useRef(false);
 
-  const stopPolling = useCallback(() => {
-    if (intervalRef.current) {
-      clearInterval(intervalRef.current);
-      intervalRef.current = null;
-    }
-  }, []);
-
-  const pollStatus = useCallback(async () => {
-    const result = await ApiService.callFetch<KsmGateOpenRequestRes>(
-      'GET',
-      `v2/stock/ksm/open-gate/${requestId}`,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      true,
-    );
-
-    if (!result) return;
-
-    setRequest(result);
-    setLoading(false);
-
-    if (TERMINAL_STATUSES.has(result.status)) {
-      stopPolling();
-
-      if (result.status === KsmGateOpenRequestStatus.SUCCESS) {
-        dispatch(notifications.successNotification('notification.gateOpening'));
-      } else if (result.errorCode != null) {
-        dispatch(notifications.errorNotification(result.errorCode));
-      } else {
-        dispatch(
-          notifications.errorNotification(ApiErrorCode.ErrorConnectingToGate),
-        );
-      }
-    }
-  }, [dispatch, requestId, stopPolling]);
+  const { data: request, isPending, isFetching } = useKsmGateStatusQuery(
+    requestId,
+    { refetchInterval: POLL_INTERVAL_MS },
+  );
 
   useEffect(() => {
-    void pollStatus();
-    intervalRef.current = setInterval(() => {
-      void pollStatus();
-    }, POLL_INTERVAL_MS);
+    if (!request || !TERMINAL_STATUSES.has(request.status)) return;
+    if (terminalNotifiedRef.current) return;
+    terminalNotifiedRef.current = true;
 
-    return () => stopPolling();
-  }, [pollStatus, stopPolling]);
+    if (request.status === KsmGateOpenRequestStatus.SUCCESS) {
+      dispatch(notifications.successNotification('notification.gateOpening'));
+    } else if (request.errorCode != null) {
+      dispatch(notifications.errorNotification(request.errorCode));
+    } else {
+      dispatch(
+        notifications.errorNotification(ApiErrorCode.ErrorConnectingToGate),
+      );
+    }
+  }, [dispatch, request]);
 
   const status = request?.status ?? KsmGateOpenRequestStatus.PENDING;
   const isSuccess = status === KsmGateOpenRequestStatus.SUCCESS;
   const isFailed = status === KsmGateOpenRequestStatus.FAILED;
   const isInProgress = !isSuccess && !isFailed;
+  const loading = (isPending || isFetching) && isInProgress;
 
   return (
     <>
       <Modal.Header title={__('application.openingGate')} />
       <Modal.Content>
-        {loading && isInProgress ? <Spinner overlay halfTransparent /> : null}
+        {loading ? <Spinner overlay halfTransparent /> : null}
         {isSuccess ? <GateAnimation /> : null}
         <p>{__(STATUS_MESSAGE_KEYS[status])}</p>
         {request?.errorCode === ApiErrorCode.ErrorConnectingToGate && isFailed ? (

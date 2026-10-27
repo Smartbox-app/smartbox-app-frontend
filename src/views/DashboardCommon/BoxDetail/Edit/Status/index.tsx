@@ -1,31 +1,32 @@
-import React from 'react';
+import { useQueryClient } from '@tanstack/react-query';
 import { ItfApiForm } from 'itf_formbuilder_react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
+
 import {
   BoxDisplayStatus,
   BoxStatus,
   ChangeStatusReq,
   RentStatus,
 } from 'smartbox-types';
-import { hideModal, showModal } from '../../../../../actions/modal';
-import { successNotification } from '../../../../../actions/notifications';
-import { ButtonsContainer } from '../../../../../components/Layout';
-import { Modal } from 'src/components/ui';
-import { __ } from '../../../../../helpers/i18n';
-import { Alert } from '../../../../../components/Common';
-import { Button, Spinner } from '../../../../../components/Branded';
-import ApiService from '../../../../../services/api-service';
-import { formOnTranslateString } from '../../../../../utils/trans-form';
-
-import './Status.scss';
+import { refreshApiTableData } from 'src/actions/api-table';
+import { hideModal, showModal } from 'src/actions/modal';
+import { successNotification } from 'src/actions/notifications';
+import { Button, Spinner } from 'src/components/Branded';
+import { Alert } from 'src/components/Common';
 import {
   ReactSelectOverride,
   ReactCreatableSelectOverride as ReactCreatableSelect,
-} from '../../../../../components/Common/ReactSelectOverride';
-import { refreshApiTableData } from '../../../../../actions/api-table';
-import { mapFields } from '../../../../../utils/fields-mapper';
-import { useQueryClient } from '@tanstack/react-query';
+} from 'src/components/Common/ReactSelectOverride';
+import { ButtonsContainer } from 'src/components/Layout';
+import { Modal } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
 import { stockBoxesQueryKey } from 'src/queries';
+import ApiService from 'src/services/api-service';
+import { mapFields } from 'src/utils/fields-mapper';
+import { formOnTranslateString } from 'src/utils/trans-form';
+
+import 'src/views/DashboardCommon/BoxDetail/Edit/Status/Status.scss';
 
 const STATUSES_REQUIRING_FREE_CONFIRMATION: BoxDisplayStatus[] = [
   RentStatus.rented,

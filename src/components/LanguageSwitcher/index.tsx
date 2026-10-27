@@ -1,14 +1,15 @@
+import { useState } from 'react';
 import styled from 'styled-components';
-import { useGetMyDetailsQuery } from 'src/queries';
-import { useUpdateMyLangMutation } from 'src/mutations/useUpdateMyLangMutation';
+
+import { SidebarButton } from 'src/components/ui/SidebarButton';
 import { i18n } from 'src/helpers/i18n';
 import {
   currentAppLanguage,
   SUPPORTED_LANGUAGES,
   type AppLanguage,
 } from 'src/i18n/app-language';
-import { useState } from 'react';
-import { SidebarButton } from '../ui/SidebarButton';
+import { useUpdateMyLangMutation } from 'src/mutations/useUpdateMyLangMutation';
+import { useGetMyDetailsQuery } from 'src/queries';
 
 const OPTIONS: { value: AppLanguage; label: string }[] = SUPPORTED_LANGUAGES.map(
   (value) => ({ value, label: value.toUpperCase() }),

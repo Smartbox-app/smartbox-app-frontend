@@ -1,4 +1,4 @@
-import { UserRole } from '../user/user-entity';
+import { UserRole } from 'src/smartbox-types/user/user-entity';
 
 export type SystemLogMeta = {
   query?: unknown;

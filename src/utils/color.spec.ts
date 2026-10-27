@@ -1,4 +1,4 @@
-import { colorOrDark, getColorForBackground } from './color';
+import { colorOrDark, getColorForBackground } from 'src/utils/color';
 
 describe('contrast color', () => {
   it('picks black text on light backgrounds and white text on dark ones', () => {

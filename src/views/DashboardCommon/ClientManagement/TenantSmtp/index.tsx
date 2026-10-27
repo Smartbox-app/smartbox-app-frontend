@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
+
+import { successNotification } from 'src/actions/notifications';
 import { Spinner } from 'src/components/Branded';
 import {
   ButtonsContainer,
@@ -16,15 +18,14 @@ import {
   Stack,
 } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
-import { ClassValidatorResolver } from 'src/resolvers/ClassValidatorResolver';
-import { useTenantSmtpConfigQuery } from 'src/queries';
 import {
   useUpdateTenantSmtpMutation,
   useTestTenantSmtpMutation,
 } from 'src/mutations';
-import { successNotification } from 'src/actions/notifications';
-import { TenantSmtpConfigFormDto } from './dto/TenantSmtpConfigFormDto';
 import type { UpdateTenantSmtpBody } from 'src/mutations/useUpdateTenantSmtpMutation';
+import { useTenantSmtpConfigQuery } from 'src/queries';
+import { ClassValidatorResolver } from 'src/resolvers/ClassValidatorResolver';
+import { TenantSmtpConfigFormDto } from 'src/views/DashboardCommon/ClientManagement/TenantSmtp/dto/TenantSmtpConfigFormDto';
 
 interface Props {
   userId?: string;

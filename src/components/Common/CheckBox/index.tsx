@@ -1,12 +1,13 @@
 import React from 'react';
-
-import { TranslatableObject } from '../../../utils/errors-trans';
-import { __ } from '../../../helpers/i18n';
-import { InputErrors } from '../InputErrors';
-import './CheckBox.scss';
-import { InputHelp } from '../InputHelp';
 import styled from 'styled-components';
-import { getColorForBackground } from '../../../utils/color';
+
+import { InputErrors } from 'src/components/Common/InputErrors';
+import { InputHelp } from 'src/components/Common/InputHelp';
+import { __ } from 'src/helpers/i18n';
+import { getColorForBackground } from 'src/utils/color';
+import { TranslatableObject } from 'src/utils/errors-trans';
+
+import 'src/components/Common/CheckBox/CheckBox.scss';
 
 interface Props {
   name: string;

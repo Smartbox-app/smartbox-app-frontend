@@ -1,4 +1,4 @@
-import { findAncestor } from './find-ancestor';
+import { findAncestor } from 'src/utils/find-ancestor';
 
 describe('findAncestor', () => {
   it('walks up to the matching element', () => {

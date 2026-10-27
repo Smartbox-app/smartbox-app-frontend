@@ -1,29 +1,29 @@
+import { useQueryClient } from '@tanstack/react-query';
 import React, { useEffect } from 'react';
-
 import { FormProvider, useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
+import { Redirect, useParams } from 'react-router';
+
+import { UserRole } from 'smartbox-types';
+import { successNotification } from 'src/actions/notifications';
 import { PageHeader, Section } from 'src/components/ui';
 import { DocumentDto } from 'src/dto/DocumentDto';
 import { __ } from 'src/helpers/i18n';
+import { history } from 'src/history';
 import { useTenant } from 'src/hooks/useTenant';
-import { ClassValidatorResolver } from 'src/resolvers/ClassValidatorResolver';
-import { DocumentForm } from '../DocumentForm';
 import {
   usePublishDocumentMutation,
   useSaveDocumentDraftMutation,
 } from 'src/mutations';
-import { useDispatch } from 'react-redux';
-import { Redirect, useParams } from 'react-router';
-import { successNotification } from 'src/actions/notifications';
 import {
   useGetDocumentByIdQuery,
   useGetDocumentDraftQuery,
   useGetMyDetailsQuery,
 } from 'src/queries';
-import UserService from 'src/services/user-service';
-import { UserRole } from 'smartbox-types';
-import { useQueryClient } from '@tanstack/react-query';
 import { documentDraftQueryKey } from 'src/queries/useGetDocumentDraftQuery/useGetDocumentDraftQuery';
-import { history } from 'src/history';
+import { ClassValidatorResolver } from 'src/resolvers/ClassValidatorResolver';
+import UserService from 'src/services/user-service';
+import { DocumentForm } from 'src/views/DashboardCommon/DocumentManagement/DocumentForm';
 
 export const Edit = () => {
   const { data: user } = useGetMyDetailsQuery();

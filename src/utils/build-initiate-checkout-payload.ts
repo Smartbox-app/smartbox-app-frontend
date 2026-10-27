@@ -1,6 +1,6 @@
-import { MetaInitiateCheckoutPayload } from 'src/utils/meta-pixel';
 import { OrderState } from 'src/reducers/order-reducer';
 import { sumEcommerceTrackingValues } from 'src/utils/ecommerce-tracking-values';
+import { MetaInitiateCheckoutPayload } from 'src/utils/meta-pixel';
 
 type InitiateCheckoutContext = {
   boxGroupId: string;

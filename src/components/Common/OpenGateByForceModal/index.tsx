@@ -1,11 +1,16 @@
 import React from 'react';
-import { ButtonsContainer } from '../../Layout';
-import { Button } from '../../Branded';
-import { __ } from "../../../helpers/i18n";
 import { useDispatch } from 'react-redux';
-import { modal, gate, ksmGate } from '../../../actions';
+
 import { Coordinate } from 'smartbox-types';
+import { modal } from 'src/actions';
+import { Button } from 'src/components/Branded';
+import { ButtonsContainer } from 'src/components/Layout';
 import { Modal } from 'src/components/ui';
+import { __ } from "src/helpers/i18n";
+import {
+  useOpenGateMutation,
+  useOpenKsmGateMutation,
+} from 'src/mutations';
 
 interface Props {
     gateId: string;
@@ -18,6 +23,8 @@ interface Props {
 
 const OpenGateByForceModal = ({ gateId, latlon, tooFarAway, notSupported, cantRead, useKsmV2 }: Props) => {
     const dispatch = useDispatch();
+    const { mutate: openGate } = useOpenGateMutation();
+    const { mutate: openKsmGate } = useOpenKsmGateMutation();
     return (
       <>
         <Modal.Header title={__('application.confirmation')} />
@@ -33,9 +40,9 @@ const OpenGateByForceModal = ({ gateId, latlon, tooFarAway, notSupported, cantRe
               success
               click={() => {
                 if (useKsmV2) {
-                  dispatch(ksmGate.requestKsmGateOpenByForceV2(gateId, latlon));
+                  openKsmGate({ gateId, geo: latlon, mode: 'force' });
                 } else {
-                  dispatch(gate.askGateToOpenByForce(gateId, latlon));
+                  openGate({ gateId, geo: latlon, mode: 'force' });
                   dispatch(modal.hideModal());
                 }
               }}

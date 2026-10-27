@@ -1,6 +1,6 @@
 import React from 'react';
 
-import './FieldsGrid.scss';
+import 'src/components/Layout/FieldsGrid/FieldsGrid.scss';
 
 interface Props {
   children: React.ReactNode;

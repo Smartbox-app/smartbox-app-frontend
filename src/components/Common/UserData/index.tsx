@@ -1,18 +1,18 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
+
 import { UserRole } from 'smartbox-types';
+import { showModal } from 'src/actions/modal';
+import { Button } from 'src/components/Branded';
+import { Row } from 'src/components/Common';
 import {
   ButtonsContainer,
   Section,
   SectionHeader,
-} from '../../../components/Layout';
-import { Row } from '../../../components/Common';
-import { useGetMyDetailsQuery } from '../../../queries';
-import { Button } from 'src/components/Branded';
-import { useDispatch } from 'react-redux';
-import { showModal } from 'src/actions/modal';
-import UpdatePass from 'src/views/DashboardCommon/Profile/Detail/UpdatePass';
-
+} from 'src/components/Layout';
+import { useGetMyDetailsQuery } from 'src/queries';
 import { DeleteAccountConfirmation } from 'src/views/DashboardCommon/Profile/Detail/DeleteAccountConfirmation/DeleteAccountConfirmation';
+import UpdatePass from 'src/views/DashboardCommon/Profile/Detail/UpdatePass';
 
 const UserData = () => {
   const { data: user } = useGetMyDetailsQuery();

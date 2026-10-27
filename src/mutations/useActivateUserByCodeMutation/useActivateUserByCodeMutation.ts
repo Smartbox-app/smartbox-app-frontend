@@ -1,6 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
-import ApiService from 'src/services/api-service';
+
 import { ActivateUserByCodeDto } from 'src/dto/ActivateUserByCodeDto';
+import ApiService from 'src/services/api-service';
 
 export const useActivateUserByCodeMutation = () =>
   useMutation({

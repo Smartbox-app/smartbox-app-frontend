@@ -1,4 +1,4 @@
-import { sumEcommerceTrackingValues } from './ecommerce-tracking-values';
+import { sumEcommerceTrackingValues } from 'src/utils/ecommerce-tracking-values';
 
 describe('sumEcommerceTrackingValues', () => {
   it('adds rent and addon gross and net prices', () => {

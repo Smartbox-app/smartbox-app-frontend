@@ -40,6 +40,8 @@ export default defineConfig([
       react: {
         version: 'detect',
       },
+      // Treat absolute app imports as "internal" (same idea as AV's @app-velocity/)
+      'import/internal-regex': '^(src/|smartbox-)',
     },
     rules: {
       ...jsxA11y.configs.recommended.rules,
@@ -51,6 +53,62 @@ export default defineConfig([
       'jsx-a11y/no-static-element-interactions': 'warn',
       'jsx-a11y/interactive-supports-focus': 'warn',
       'import/no-duplicates': 'error',
+      'import/newline-after-import': 'error',
+      // Prefer `src/...` over `../../../...` (sibling `./` still ok)
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            {
+              group: ['../*', '../**'],
+              message:
+                "Use absolute `src/...` (or smartbox-*) imports instead of relative parent paths.",
+            },
+          ],
+        },
+      ],
+      'import/order': [
+        'error',
+        {
+          // no separate `type` group — autofix can't move value imports past top-of-file `import type`
+          groups: [
+            'builtin',
+            'external',
+            'internal',
+            ['parent', 'sibling', 'index'],
+            'object',
+            'unknown',
+          ],
+          pathGroups: [
+            {
+              pattern: 'src/**',
+              group: 'internal',
+            },
+            {
+              pattern: 'smartbox-{tables,types}',
+              group: 'internal',
+            },
+            {
+              pattern: 'src/**/*.{css,scss}',
+              group: 'object',
+              position: 'after',
+            },
+            {
+              pattern: '{.,..}/**/*.{css,scss}',
+              group: 'object',
+              position: 'after',
+            },
+            {
+              pattern: '**/*.{css,scss}',
+              group: 'object',
+              position: 'after',
+            },
+          ],
+          pathGroupsExcludedImportTypes: [],
+          'newlines-between': 'always-and-inside-groups',
+          distinctGroup: false,
+        },
+      ],
       '@typescript-eslint/no-unused-vars': [
         'error',
         {

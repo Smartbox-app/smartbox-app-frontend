@@ -1,17 +1,18 @@
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import { Controller, useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
+
+import { refreshApiTableData } from 'src/actions/api-table';
+import { hideModal } from 'src/actions/modal';
+import { successNotification } from 'src/actions/notifications';
 import { Button } from 'src/components/Branded';
 import { InputPhone, InputSelect } from 'src/components/Common';
 import { ButtonsContainer } from 'src/components/Layout';
 import { Form, Input, Modal } from 'src/components/ui';
-import { __ } from 'src/helpers/i18n';
-import { successNotification } from 'src/actions/notifications';
-import { hideModal } from 'src/actions/modal';
-import { refreshApiTableData } from 'src/actions/api-table';
 import { RENT_AUTHORIZATIONS_MODAL } from 'src/constants/api-table-instances';
-import { useStaffCreateRentAuthorizationMutation } from 'src/mutations';
 import { StaffAddRentAuthorizationFormDto } from 'src/dto/StaffAddRentAuthorizationFormDto';
+import { __ } from 'src/helpers/i18n';
+import { useStaffCreateRentAuthorizationMutation } from 'src/mutations';
 import { ClassValidatorResolver } from 'src/resolvers/ClassValidatorResolver';
 import type { TranslatableObject } from 'src/utils/errors-trans';
 

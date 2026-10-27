@@ -1,6 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
-import { PeriodConfiguration } from 'smartbox-types';
-import ApiService from '../../services/api-service';
+
+import ApiService from 'src/services/api-service';
+
+export type RentPeriodConfigRes = {
+  min: number;
+  max: number;
+};
 
 export const rentPeriodConfigQueryKey = (rentId: string) =>
   ['rent', 'period-config', rentId] as const;
@@ -11,7 +16,7 @@ export const useRentPeriodConfigQuery = (rentId?: string) =>
       ? rentPeriodConfigQueryKey(rentId)
       : ['rent', 'period-config', 'missing'],
     queryFn: () =>
-      ApiService.callFetch<PeriodConfiguration>(
+      ApiService.callFetch<RentPeriodConfigRes>(
         'GET',
         `rent/period-config/${rentId}`,
       ),

@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+
 import { Header, Section, Stack, Typography } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
 import { useTenant } from 'src/hooks/useTenant';

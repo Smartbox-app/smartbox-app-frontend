@@ -1,15 +1,16 @@
 import React from 'react';
-import { useParams } from 'react-router';
-import { BoxMapRes } from 'smartbox-types';
-import { Section } from '../../../../../../components/Layout';
-import { Spinner } from '../../../../../../components/Branded';
-import { MapView } from '../../../../MapView';
 import { useDispatch } from 'react-redux';
-import BoxDetail from '../../../../BoxDetail';
-import { showModal } from '../../../../../../actions/modal';
+import { useParams } from 'react-router';
+
+import { BoxMapRes } from 'smartbox-types';
+import { showModal } from 'src/actions/modal';
+import { Spinner } from 'src/components/Branded';
+import { Section } from 'src/components/Layout';
 import { Header } from 'src/components/ui';
 import { useTenantNaming } from 'src/hooks/useTenantNaming';
 import { useGetStockBoxesQuery, useGetStockQuery } from 'src/queries';
+import BoxDetail from 'src/views/DashboardCommon/BoxDetail';
+import { MapView } from 'src/views/DashboardCommon/MapView';
 
 const Handling = () => {
   const { stockId } = useParams<{ stockId: string }>();

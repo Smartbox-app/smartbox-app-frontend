@@ -1,19 +1,20 @@
 import React, { useMemo } from 'react';
 import ReactSelect from 'react-select';
 import CreatableSelect from 'react-select/creatable';
-import { __ } from '../../../helpers/i18n';
-import { TranslatableObject } from '../../../utils/errors-trans';
-import { InputErrors } from '../InputErrors';
-import { InputHelp } from '../InputHelp';
-import { InputLabel } from 'src/components/ui/InputLabel';
-import { ErrorText } from 'src/components/ui/ErrorText';
+import { useTheme } from 'styled-components';
+
 import {
   getReactSelectStyles,
   InputSizeProps,
   resolveInputSize,
-} from '../input-sizes';
-import { StyledFieldContainer, StyledFieldWrapper } from '../input-styled';
-import { useTheme } from 'styled-components';
+} from 'src/components/Common/input-sizes';
+import { StyledFieldContainer, StyledFieldWrapper } from 'src/components/Common/input-styled';
+import { InputErrors } from 'src/components/Common/InputErrors';
+import { InputHelp } from 'src/components/Common/InputHelp';
+import { ErrorText } from 'src/components/ui/ErrorText';
+import { InputLabel } from 'src/components/ui/InputLabel';
+import { __ } from 'src/helpers/i18n';
+import { TranslatableObject } from 'src/utils/errors-trans';
 
 export type InputSelectOption = {
   label: string;

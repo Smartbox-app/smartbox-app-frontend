@@ -1,8 +1,9 @@
+import styled from 'styled-components';
+
 import { BoxGroupUserRes } from 'smartbox-types';
 import { __ } from 'src/helpers/i18n';
-import { getColorForBackground } from 'src/utils/color';
-import styled from 'styled-components';
 import { ErrorCircle, Alert } from 'src/icons';
+import { getColorForBackground } from 'src/utils/color';
 
 export type LeftCounterProps = {
   option: BoxGroupUserRes;

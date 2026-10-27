@@ -1,1 +1,1 @@
-export * from './useTenantServiceStatusQuery';
+export * from 'src/queries/useTenantServiceStatusQuery/useTenantServiceStatusQuery';

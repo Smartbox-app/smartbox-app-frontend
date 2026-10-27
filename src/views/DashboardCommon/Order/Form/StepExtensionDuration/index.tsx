@@ -1,8 +1,9 @@
-import React, { useEffect, useMemo } from 'react';
-import { useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-
 import { addDays, differenceInCalendarDays } from 'date-fns';
+import React, { useEffect, useMemo } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import styled from 'styled-components';
+
 import {
   AddonUserFileRequirementType,
   DebtResolveType,
@@ -10,21 +11,7 @@ import {
   RentStatus,
   StockPaymentType,
 } from 'smartbox-types';
-import { DateInput } from '../../../../../components/Common';
-import { Spinner } from '../../../../../components/Branded';
-import { ButtonsContainer } from '../../../../../components/Layout';
-import { ApplicationState } from '../../../../../reducers';
-import UserService from '../../../../../services/user-service';
-
-import Price from '../Common/Price';
-
-import './StepDuration.scss';
-
-import styled from 'styled-components';
 import {
-  calculateAddonPrice,
-  calculatePriceForRent,
-  clearAddonPrice,
   clearPaymentDetails,
   setMinDaysForInstallments,
   setOrderFullStock,
@@ -32,18 +19,28 @@ import {
   setRentEndDate,
   setRentPaymentType,
   setRentStartDate,
-} from '../../../../../actions/order';
-import { Addons } from '../Common/Addons';
-import { PaymentType } from '../Common/PaymentType';
+} from 'src/actions/order';
+import { Spinner } from 'src/components/Branded';
+import { DateInput } from 'src/components/Common';
+import { ButtonsContainer } from 'src/components/Layout';
+import { Button, Section, Stack } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
-import { getPeriodConfigForExtendingRent } from '../../../../../actions/single-rent';
+import { history } from 'src/history';
+import { useBridgeRentPeriodConfigToRedux , useBridgeCalculatedPriceToRedux } from 'src/hooks/useBridgeOrderPriceQuery';
+import { useSyncAddonPricesToRedux } from 'src/hooks/useSyncAddonPricesToRedux';
+import { useTenant } from 'src/hooks/useTenant';
+import { useTracking } from 'src/hooks/useTracking';
+import { ArrowRight } from 'src/icons';
 import {
   useGetMyDetailsQuery,
   useGetStockQuery,
   useMyRentDetailsQuery,
+  useRentPeriodConfigQuery,
 } from 'src/queries';
-import { Button, Section, Stack } from 'src/components/ui';
-import { ArrowRight } from 'src/icons';
+import { usePriceForRentQuery } from 'src/queries/useRentPriceQueries';
+import { ApplicationState } from 'src/reducers';
+import UserService from 'src/services/user-service';
+import { buildInitiateCheckoutPayload } from 'src/utils/build-initiate-checkout-payload';
 import { dateOnly } from 'src/utils/format-date';
 import {
   debtOnlyResolvedEnd,
@@ -54,11 +51,12 @@ import {
   isExtensionPeriodAcceptable,
   minPeriodDebtResolvedEnd,
 } from 'src/utils/rent-period-bounds';
-import { useTenant } from 'src/hooks/useTenant';
-import { RentDuration } from '../Common/RentDuration';
-import { history } from 'src/history';
-import { useTracking } from 'src/hooks/useTracking';
-import { buildInitiateCheckoutPayload } from 'src/utils/build-initiate-checkout-payload';
+import { Addons } from 'src/views/DashboardCommon/Order/Form/Common/Addons';
+import { PaymentType } from 'src/views/DashboardCommon/Order/Form/Common/PaymentType';
+import Price from 'src/views/DashboardCommon/Order/Form/Common/Price';
+import { RentDuration } from 'src/views/DashboardCommon/Order/Form/Common/RentDuration';
+
+import 'src/views/DashboardCommon/Order/Form/StepExtensionDuration/StepDuration.scss';
 
 const StyledCalendarPicker = styled.div`
   margin: 0 -10px;
@@ -85,25 +83,37 @@ const StepExtensionDuration = () => {
     loadingPrice,
     rentPaymentType,
     orderAddons,
-    orderAddonsId,
     minRentDaysForInstallments,
     calculatedPrice,
   } = useSelector((state: ApplicationState) => state.order);
 
   const { data: stockData } = useGetStockQuery(rent?.stockId);
 
+  const rentPriceQuery = usePriceForRentQuery({
+    rentId,
+    start: startDate,
+    end: endDate ?? undefined,
+    type: rentPaymentType || RentPaymentType.InAdvance,
+    enabled: !!rentId && !!endDate,
+  });
+  useBridgeCalculatedPriceToRedux(rentPriceQuery);
+
+  const rentPeriodConfigQuery = useRentPeriodConfigQuery(rentId);
+  useBridgeRentPeriodConfigToRedux(rentPeriodConfigQuery);
+
+  useSyncAddonPricesToRedux({
+    orderAddons,
+    startDate,
+    endDate,
+    rentPaymentType,
+    boxGroupId: rent?.boxGroupId,
+  });
+
   useEffect(() => {
     if (stockData) {
       dispatch(setOrderFullStock(stockData));
     }
   }, [stockData, dispatch]);
-
-  // get rent details if it is extended
-  useEffect(() => {
-    if (!rentId) return;
-
-    dispatch(getPeriodConfigForExtendingRent(rentId));
-  }, [rentId, dispatch]);
 
   useEffect(() => {
     if (!rent) return;
@@ -180,23 +190,6 @@ const StepExtensionDuration = () => {
   ]);
 
   useEffect(() => {
-    if (!rentId || !endDate) return;
-    dispatch(
-      calculatePriceForRent(
-        rentId,
-        startDate,
-        endDate,
-        rentPaymentType || RentPaymentType.InAdvance,
-      ),
-    );
-    calculateAllAddons();
-  }, [startDate, endDate, rentId, rentPaymentType]);
-
-  useEffect(() => {
-    calculateAllAddons();
-  }, [orderAddonsId]);
-
-  useEffect(() => {
     if (!stock || rentPaymentType || !rent) return;
 
     dispatch(setMinDaysForInstallments(stock.minRentDaysForInstallments));
@@ -226,25 +219,6 @@ const StepExtensionDuration = () => {
       }
     }
   }, [stock, rentPaymentType, rent]);
-
-  const calculateAllAddons = () => {
-    if (!endDate || !rent) return;
-    Object.keys(orderAddons).forEach((addonId) => {
-      const addon = orderAddons[addonId];
-      if (addon.selectedVariant)
-        dispatch(
-          calculateAddonPrice(
-            addonId,
-            startDate,
-            endDate,
-            rentPaymentType || RentPaymentType.InAdvance,
-            addon.selectedVariant,
-            rent.boxGroupId,
-          ),
-        );
-      else dispatch(clearAddonPrice(addonId));
-    });
-  };
 
   const isDebtOnly =
     !!rent &&

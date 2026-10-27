@@ -1,13 +1,19 @@
-import { useCallback, useEffect, useRef } from 'react';
-import { useLocation } from 'react-router';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import TagManager from 'react-gtm-module';
+import { useLocation } from 'react-router';
+
 import { PaymentDetails, PaymentType } from 'smartbox-types';
-import { useTenant } from 'src/hooks/useTenant';
 import { history } from 'src/history';
+import { useTenant } from 'src/hooks/useTenant';
 import {
   captureAttributionParams,
   ensureAttributionOnUrl,
 } from 'src/utils/attribution-params';
+import {
+  COOKIE_CONSENT_CHANGED_EVENT,
+  hasAcceptedCookieConsent,
+} from 'src/utils/cookie-consent';
+import { sumEcommerceTrackingValues } from 'src/utils/ecommerce-tracking-values';
 import {
   initMetaPixel,
   MetaInitiateCheckoutPayload,
@@ -15,7 +21,6 @@ import {
   trackMetaInitiateCheckout,
   trackMetaPurchase,
 } from 'src/utils/meta-pixel';
-import { sumEcommerceTrackingValues } from 'src/utils/ecommerce-tracking-values';
 
 export type TrackInitiateCheckoutPayload = MetaInitiateCheckoutPayload;
 
@@ -81,7 +86,15 @@ const useTracking = (options: UseTrackingOptions = {}) => {
   const { tenant } = useTenant();
   const location = useLocation();
   const initializedGtmIdRef = useRef<string | null>(null);
+  const [trackingAllowed, setTrackingAllowed] = useState(hasAcceptedCookieConsent);
 
+  useEffect(() => {
+    const sync = () => setTrackingAllowed(hasAcceptedCookieConsent());
+    window.addEventListener(COOKIE_CONSENT_CHANGED_EVENT, sync);
+    return () => window.removeEventListener(COOKIE_CONSENT_CHANGED_EVENT, sync);
+  }, []);
+
+  // First-party: keep campaign params across navigation regardless of ads consent.
   useEffect(() => {
     if (!initialize) return;
 
@@ -90,7 +103,7 @@ const useTracking = (options: UseTrackingOptions = {}) => {
   }, [initialize, location.pathname, location.search]);
 
   useEffect(() => {
-    if (!initialize || !tenant) return;
+    if (!initialize || !trackingAllowed || !tenant) return;
 
     if (tenant.gtmId && initializedGtmIdRef.current !== tenant.gtmId) {
       TagManager.initialize({ gtmId: tenant.gtmId });
@@ -100,9 +113,11 @@ const useTracking = (options: UseTrackingOptions = {}) => {
     if (tenant.metaPixelId) {
       initMetaPixel(tenant.metaPixelId);
     }
-  }, [initialize, tenant?.gtmId, tenant?.metaPixelId]);
+  }, [initialize, trackingAllowed, tenant?.gtmId, tenant?.metaPixelId]);
 
   const trackCompleteRegistration = useCallback((email?: string) => {
+    if (!hasAcceptedCookieConsent()) return;
+
     const user_data = buildUserData(email);
 
     TagManager.dataLayer({
@@ -118,6 +133,8 @@ const useTracking = (options: UseTrackingOptions = {}) => {
 
   const trackInitiateCheckout = useCallback(
     (payload: TrackInitiateCheckoutPayload) => {
+      if (!hasAcceptedCookieConsent()) return;
+
       const valueGross = payload.value_gross ?? payload.value;
       const valueNet = payload.value_net;
       const user_data = buildUserData(payload.email);
@@ -158,6 +175,7 @@ const useTracking = (options: UseTrackingOptions = {}) => {
 
   const trackPurchase = useCallback(
     ({ paymentId, details, email, userId }: TrackPurchaseParams) => {
+      if (!hasAcceptedCookieConsent()) return;
       if (hasTrackedPurchase(paymentId)) return;
 
       const { price, addons, type, name, groupId, area, rentGrossPrice } =

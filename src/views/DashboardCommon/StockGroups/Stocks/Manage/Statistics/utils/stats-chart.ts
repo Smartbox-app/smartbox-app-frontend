@@ -4,7 +4,7 @@ import { __ } from 'src/helpers/i18n';
 import {
   STATUS_STATS_KEYS,
   StockStatusColors,
-} from './stock-status-colors';
+} from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Statistics/utils/stock-status-colors';
 
 export const getStatsText = (total: number, count: number) => {
   const percent = total ? Math.round((count / total) * 100) : 0;

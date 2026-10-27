@@ -1,22 +1,25 @@
 import React from 'react';
-import { FieldType, giftsListTable } from 'smartbox-tables';
 import { useDispatch } from 'react-redux';
+import { useParams } from 'react-router';
+
+import { FieldType, giftsListTable } from 'smartbox-tables';
+import { GiftListRes, GiftType } from 'smartbox-types';
+import { modal } from 'src/actions';
+import { Button } from 'src/components/Branded';
+import { ApiTable, ConfirmModal } from 'src/components/Common';
 import {
   Section,
   ButtonsContainer,
-} from '../../../../../../../components/Layout';
-import { Button } from '../../../../../../../components/Branded';
-import { InteractiveTableSchema } from '../../../../../../../utils/table-schema-utils';
-import { __ } from '../../../../../../../helpers/i18n';
-import { modal, notifications } from '../../../../../../../actions';
-import { StockDiscount } from '../StockDiscount';
-import { GiftModal } from '../GiftModal';
-import { useParams } from 'react-router';
-import { ApiTable, ConfirmModal } from '../../../../../../../components/Common';
-import { GiftListRes, GiftRes, GiftType } from 'smartbox-types';
-import ApiService from '../../../../../../../services/api-service';
-import { refreshApiTableData } from '../../../../../../../actions/api-table';
+} from 'src/components/Layout';
 import { HeaderWithActions } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
+import {
+  useDeleteGiftMutation,
+  useToggleGiftMutation,
+} from 'src/mutations';
+import { InteractiveTableSchema } from 'src/utils/table-schema-utils';
+import { GiftModal } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Discounts/GiftModal';
+import { StockDiscount } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Discounts/StockDiscount';
 
 const getType = (type: GiftType) => {
   switch (type) {
@@ -32,32 +35,8 @@ const getType = (type: GiftType) => {
 const List = () => {
   const { stockId } = useParams<{ stockId: string }>();
   const dispatch = useDispatch();
-
-  const deleteGift = async (id: string) => {
-    await ApiService.callFetch('DELETE', `gift/${id}`, () => {
-      dispatch(notifications.successNotification('application.giftDeleted'));
-      dispatch(refreshApiTableData());
-    });
-  };
-
-  const toggleGift = async (gift: GiftListRes) => {
-    await ApiService.callFetch(
-      'PATCH',
-      `gift/${gift.id}/toggle`,
-      (gift: GiftRes) => {
-        if (gift.active) {
-          dispatch(
-            notifications.successNotification('application.giftActivated'),
-          );
-        } else {
-          dispatch(
-            notifications.successNotification('application.giftDeactivated'),
-          );
-        }
-        dispatch(refreshApiTableData());
-      },
-    );
-  };
+  const { mutate: deleteGift } = useDeleteGiftMutation();
+  const { mutate: toggleGift } = useToggleGiftMutation();
 
   const scheme = new InteractiveTableSchema(giftsListTable)
     .modifyFieldStatic('type', {

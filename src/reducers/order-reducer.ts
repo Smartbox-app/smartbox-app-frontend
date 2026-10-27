@@ -1,3 +1,5 @@
+import { v4 } from 'uuid';
+
 import {
   AcceptanceStatuses,
   AddonRes,
@@ -13,9 +15,8 @@ import {
   SingleAcceptance,
   StockRes,
 } from 'smartbox-types';
-import { FormType } from '../types/order-form';
-import { __ } from '../helpers/i18n';
-import { v4 } from 'uuid';
+import { __ } from 'src/helpers/i18n';
+import { FormType } from 'src/types/order-form';
 
 export type PaymentMethodDetail = {
   id: string;

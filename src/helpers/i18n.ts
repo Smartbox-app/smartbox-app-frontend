@@ -1,6 +1,6 @@
-import { SUPPORTED_LANGUAGES } from '../i18n/app-language';
-import { i18next } from '../i18n/i18n';
-import SessionService from '../services/session-service';
+import { SUPPORTED_LANGUAGES } from 'src/i18n/app-language';
+import { i18next } from 'src/i18n/i18n';
+import SessionService from 'src/services/session-service';
 
 export class I18n {
   loaded = true;

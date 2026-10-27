@@ -1,5 +1,5 @@
-import { __ } from '../../../helpers/i18n';
 import { PageHeader as UIPageHeader } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
 
 interface Props {
   title: string;

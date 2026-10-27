@@ -1,15 +1,16 @@
 import React from 'react';
 import { Route, Redirect, Switch } from 'react-router-dom';
+
 import {
   Main,
   DashboardContainer,
   DashboardSidebar,
-} from '../../components/Layout';
-import Profile from '../DashboardCommon/Profile';
-import ManagementWorker from './ManagementWorker';
-import { StockGroups } from '../DashboardCommon/StockGroups';
+} from 'src/components/Layout';
 import { useDashboardSidebarNav } from 'src/hooks/useDashboardSidebarNav';
 import { withAttributionSearch } from 'src/utils/attribution-params';
+import Profile from 'src/views/DashboardCommon/Profile';
+import { StockGroups } from 'src/views/DashboardCommon/StockGroups';
+import ManagementWorker from 'src/views/DashboardWorker/ManagementWorker';
 
 const DashboardWorker = () => {
   const sidebarGroups = useDashboardSidebarNav();

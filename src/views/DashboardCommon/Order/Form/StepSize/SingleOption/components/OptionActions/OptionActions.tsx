@@ -1,4 +1,5 @@
 import { useDispatch } from 'react-redux';
+
 import { BoxGroupUserRes } from 'smartbox-types';
 import { modal } from 'src/actions';
 import { NotifyWhenAvailableModal } from 'src/components/Common';

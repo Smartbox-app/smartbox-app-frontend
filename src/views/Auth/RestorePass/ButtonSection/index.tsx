@@ -1,5 +1,6 @@
 import React from 'react';
-import { ButtonsContainer } from '../../../../components/Layout';
+
+import { ButtonsContainer } from 'src/components/Layout';
 import { Button } from 'src/components/ui';
 
 interface Props {

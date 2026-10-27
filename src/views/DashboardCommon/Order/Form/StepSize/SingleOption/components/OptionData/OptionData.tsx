@@ -1,9 +1,9 @@
+import styled from 'styled-components';
+
 import { BoxGroupUserRes } from 'smartbox-types';
 import { __ } from 'src/helpers/i18n';
 import { Area, Cube } from 'src/icons';
 import { colorOrDark } from 'src/utils/color';
-import styled from 'styled-components';
-
 // const StyledSizeContainer = styled('div')<{ disabled?: boolean }>(
 //   ({ theme, disabled }) => ({
 //     width: '100%',

@@ -1,17 +1,18 @@
-import { PeriodEntity, RentDescription, RentPaymentType } from 'smartbox-types';
-import { dateOnly } from '../../../utils/format-date';
-import { formatPrice } from '../../../utils/format-price';
-import { __ } from '../../../helpers/i18n';
-import styled from 'styled-components';
-import { RentAttachedFileButton } from 'src/components/Common/RentAttachedFileButton';
+import { isAfter, isBefore } from 'date-fns';
 import { useMemo } from 'react';
-import { RentAgreementButton } from '../SingleRentDetail/RentAgreementButton';
+import styled from 'styled-components';
+
+import { PeriodEntity, RentDescription, RentPaymentType } from 'smartbox-types';
+import { Alert } from 'src/components/Common';
+import { RentAttachedFileButton } from 'src/components/Common/RentAttachedFileButton';
+import { __ } from 'src/helpers/i18n';
+import { dateOnly } from 'src/utils/format-date';
+import { formatPrice } from 'src/utils/format-price';
 import {
   hasViewableAgreementPeriod,
   resolveRentAgreementForDescriptionLine,
 } from 'src/utils/rent-agreement';
-import { isAfter, isBefore } from 'date-fns';
-import { Alert } from 'src/components/Common';
+import { RentAgreementButton } from 'src/views/DashboardCommon/SingleRentDetail/RentAgreementButton';
 
 interface Props {
   description: RentDescription[];
@@ -162,7 +163,11 @@ export const RentHistory = ({
                         {addon.acceptance ? (
                           <p>
                             {addon.acceptance} -{' '}
-                            <strong>{addon.accepted ? 'Tak' : 'Nie'}</strong>
+                            <strong>
+                              {addon.accepted
+                                ? __('application.yes')
+                                : __('application.no')}
+                            </strong>
                           </p>
                         ) : null}
                         {addon.file ? (

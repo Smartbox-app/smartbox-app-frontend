@@ -1,1 +1,1 @@
-export * from './CloseCircle';
+export * from 'src/icons/CloseCircle/CloseCircle';

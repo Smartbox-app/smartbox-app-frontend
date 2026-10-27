@@ -1,24 +1,37 @@
-import React, { useCallback } from 'react';
 import {
   FieldAndEventFunction,
   FormFieldToRender,
 } from 'itf_formbuilder_react';
-import { CheckBox, DateInput, Input, InputPhone, InputSelect } from '..';
-import { formOnTranslateString } from '../../../utils/trans-form';
+import React, { useCallback } from 'react';
+
+import { CheckBox, DateInput, Input, InputPhone, InputSelect } from 'src/components/Common';
+import { AcceptancesField } from 'src/components/Common/AcceptancesField';
+import FileInput from 'src/components/Common/FileInput';
+import { InputSize } from 'src/components/Common/input-sizes';
+import { Link } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
+import { useTenant } from 'src/hooks/useTenant';
+import { useI18n } from 'src/i18n';
+import ApiService from 'src/services/api-service';
+import { SelectOption } from 'src/types/select';
 import {
   TranslatableObject,
   translateErrors,
-} from '../../../utils/errors-trans';
-import { __ } from '../../../helpers/i18n';
-import FileInput from '../FileInput';
-import ApiService from '../../../services/api-service';
-import { SelectOption } from '../../../types/select';
-import { AcceptancesField } from '../AcceptancesField';
-import { Link } from '../../ui';
-import { InputSize } from '../input-sizes';
-import { toDate } from '../../../utils/format-date';
-import { I18nResourceKey, useI18n } from 'src/i18n';
-import { useTenant } from 'src/hooks/useTenant';
+} from 'src/utils/errors-trans';
+import { localizedCountryName } from 'src/utils/country-locale';
+import { toDate } from 'src/utils/format-date';
+import { formOnTranslateString } from 'src/utils/trans-form';
+
+const translateSelectOptionLabel = (
+  name: string,
+  value: string | number,
+): string => {
+  if (typeof value === 'string') {
+    const country = localizedCountryName(value);
+    if (country) return country;
+  }
+  return formOnTranslateString(name);
+};
 
 interface Props {
   fieldHtmlId: string;
@@ -74,7 +87,7 @@ const FieldsMapper = ({
           <Link target="_blank" href="/rules" rel="noreferrer">
             <u>{t('application.statutes')}</u>
           </Link>{' '}
-          i{' '}
+          {t('application.and')}{' '}
           <Link target="_blank" href="/privacy-policy" rel="noreferrer">
             <u>{t('application.privacyPolices')}</u>
           </Link>{' '}
@@ -82,8 +95,8 @@ const FieldsMapper = ({
         </small>
       );
 
-    return t(field.title as unknown as I18nResourceKey);
-  }, []);
+    return __(formOnTranslateString(field.title));
+  }, [t, tenant]);
 
   const getDateInputValue = (value: unknown) => {
     if (value instanceof Date || Array.isArray(value)) return value;
@@ -108,7 +121,7 @@ const FieldsMapper = ({
         <InputPhone
           size={fieldSize}
           errors={translateErrors(errors)}
-          label={field.title}
+          label={formOnTranslateString(field.title)}
           name={fieldHtmlId}
           value={typeof currentValue === 'string' ? currentValue : undefined}
           onChange={onChange}
@@ -120,7 +133,7 @@ const FieldsMapper = ({
           size={fieldSize}
           key={fieldHtmlId}
           type={field.options.type}
-          help={field.descr}
+          help={formOnTranslateString(field.descr)}
           input={{
             label: formOnTranslateString(field.title),
             name: fieldHtmlId,
@@ -142,7 +155,7 @@ const FieldsMapper = ({
           size={fieldSize}
           key={fieldHtmlId}
           type={field.type || field.options.type}
-          help={field.descr}
+          help={formOnTranslateString(field.descr)}
           step={field.options.step}
           input={{
             label: formOnTranslateString(field.title),
@@ -164,7 +177,7 @@ const FieldsMapper = ({
           size={fieldSize}
           key={fieldHtmlId}
           type="textarea"
-          help={field.descr}
+          help={formOnTranslateString(field.descr)}
           input={{
             label: formOnTranslateString(field.title),
             name: fieldHtmlId,
@@ -188,7 +201,7 @@ const FieldsMapper = ({
           checked={Boolean(currentValue)}
           handleChange={() => onChange(!currentValue)}
           errors={translateErrors(errors)}
-          help={field.descr}
+          help={formOnTranslateString(field.descr)}
           label={getCustomCheckboxLabel(field)}
         />
       );
@@ -197,7 +210,7 @@ const FieldsMapper = ({
         <FileInput
           accept={field.options.accept}
           hasImage={field.options.previewUrl}
-          label={field.title}
+          label={formOnTranslateString(field.title)}
           input={{
             name: fieldHtmlId,
             id: fieldHtmlId,
@@ -220,22 +233,25 @@ const FieldsMapper = ({
     case 'staticSelect':
       return (
         <InputSelect
-          label={field.title}
+          label={formOnTranslateString(field.title)}
           name={fieldHtmlId}
           multiple={field.options && field.options.multipleChoices}
-          help={field.descr}
+          help={formOnTranslateString(field.descr)}
           options={
             field.options.possibleValues &&
             field.options.possibleValues.map(
               (val: string | SelectOption, index: number) => {
                 if (typeof val === 'object') {
                   return {
-                    label: __(String(val.name)),
+                    label: translateSelectOptionLabel(
+                      String(val.name),
+                      val.value,
+                    ),
                     value: val.value,
                   };
                 }
                 return {
-                  label: __(val),
+                  label: formOnTranslateString(val),
                   value: index,
                 };
               },
@@ -266,14 +282,14 @@ const FieldsMapper = ({
               ? currentValue
               : undefined
           }
-          placeholder={field.placeholder}
+          placeholder={formOnTranslateString(field.placeholder)}
           errors={translateErrors(errors)}
         />
       );
     case 'dateTime':
       return (
         <DateInput
-          label={field.title}
+          label={formOnTranslateString(field.title)}
           required={field.required}
           value={getDateInputValue(currentValue)}
           name={fieldHtmlId}

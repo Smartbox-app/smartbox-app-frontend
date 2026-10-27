@@ -1,1 +1,1 @@
-export * from './useLoginMutation';
+export * from 'src/mutations/useLoginMutation/useLoginMutation';

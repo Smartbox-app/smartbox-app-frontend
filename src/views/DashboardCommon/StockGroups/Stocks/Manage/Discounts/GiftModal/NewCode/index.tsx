@@ -1,11 +1,12 @@
 import React from 'react';
-import { GiftRes, GiftType } from 'smartbox-types';
-import { __ } from '../../../../../../../../helpers/i18n';
-import { Modal } from 'src/components/ui';
-
-import './NewCode.scss';
 import styled from 'styled-components';
-import { colorOrDark } from '../../../../../../../../utils/color';
+
+import { GiftRes, GiftType } from 'smartbox-types';
+import { Modal } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
+import { colorOrDark } from 'src/utils/color';
+
+import 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Discounts/GiftModal/NewCode/NewCode.scss';
 
 interface Props {
   newCodeProps: GiftRes;

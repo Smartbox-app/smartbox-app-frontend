@@ -1,11 +1,12 @@
+import { lighten } from 'polished';
 import React from 'react';
 import ReactPaginate from 'react-paginate';
-
-import './Pagination.scss';
-import { __ } from "../../../helpers/i18n";
 import styled from 'styled-components';
-import { lighten } from 'polished';
-import { getColorForBackground } from '../../../utils/color';
+
+import { __ } from "src/helpers/i18n";
+import { getColorForBackground } from 'src/utils/color';
+
+import 'src/components/Common/Pagination/Pagination.scss';
 
 interface Props {
   pageCount: number;

@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
+
 import { AddonTemplateVariableRes } from 'smartbox-types';
-import ApiService from '../../services/api-service';
+import ApiService from 'src/services/api-service';
 
 export const addonTemplateVariablesQueryKey = (stockId?: string | null) =>
   ['addon', 'template-variables', stockId] as const;

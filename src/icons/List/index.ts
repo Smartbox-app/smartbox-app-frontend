@@ -1,1 +1,1 @@
-export * from './List';
+export * from 'src/icons/List/List';

@@ -1,10 +1,12 @@
 import React from 'react';
-import { MyRentList, RentStatus } from 'smartbox-types';
-import { dateOnly } from '../../../../../../utils/format-date';
-import { useRent } from 'src/hooks/useRent';
-import './Single.scss';
 import styled from 'styled-components';
-import { colorOrDark } from '../../../../../../utils/color';
+
+import { MyRentList, RentStatus } from 'smartbox-types';
+import { useRent } from 'src/hooks/useRent';
+import { colorOrDark } from 'src/utils/color';
+import { dateOnly } from 'src/utils/format-date';
+
+import 'src/views/DashboardCommon/Welcome/OrdersHistory/History/Single/Single.scss';
 
 export interface SingleHistory {
   createdAt: Date;

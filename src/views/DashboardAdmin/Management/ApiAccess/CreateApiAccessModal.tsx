@@ -1,20 +1,21 @@
 import React from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
+
 import { CreateApiAccessReq, CreateApiAccessRes } from 'smartbox-types';
-import { hideModal, showModal } from 'src/actions/modal';
 import { refreshApiTableData } from 'src/actions/api-table';
-import { Button, Form, Input, Modal } from 'src/components/ui';
+import { hideModal, showModal } from 'src/actions/modal';
+import { Spinner } from 'src/components/Branded';
 import { InputSelect } from 'src/components/Common';
 import { FormContainer } from 'src/components/Layout';
-import { Spinner } from 'src/components/Branded';
+import { Button, Form, Input, Modal } from 'src/components/ui';
 import { CreateApiAccessFormDto } from 'src/dto/CreateApiAccessFormDto';
 import { __ } from 'src/helpers/i18n';
 import { useApiAccessScopes } from 'src/hooks/useApiAccessScopes';
 import { useCreateApiAccessMutation } from 'src/mutations';
 import { useGetTenantOptionsQuery } from 'src/queries';
 import { ClassValidatorResolver } from 'src/resolvers/ClassValidatorResolver';
-import { ApiKeyCreatedModal } from './ApiKeyCreatedModal';
+import { ApiKeyCreatedModal } from 'src/views/DashboardAdmin/Management/ApiAccess/ApiKeyCreatedModal';
 
 export const CreateApiAccessModal = () => {
   const dispatch = useDispatch();

@@ -1,1 +1,1 @@
-export * from './AsterixRequired';
+export * from 'src/components/Common/AsterixRequired/AsterixRequired';

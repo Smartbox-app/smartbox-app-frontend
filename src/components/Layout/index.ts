@@ -1,18 +1,18 @@
-import { Main } from './Main';
-import ButtonsContainer from './ButtonsContainer';
-import { DashboardContainer } from './DashboardContainer';
-import { DashboardSidebar } from './DashboardSidebar';
-import Footer from './Footer';
-import PageHeader from './PageHeader';
-import FormContainer from './FormContainer';
-import Section from './Section';
-import SectionHeader from './SectionHeader';
-import { Navigation } from './Navigation';
-import FieldsColumn from './FieldsColumn';
-import FieldsGrid from './FieldsGrid';
-import FormHeader from './FormHeader';
-import SimpleHeader from './SimpleHeader';
-import MobileLogoContainer from './MobileLogoContainer';
+import ButtonsContainer from 'src/components/Layout/ButtonsContainer';
+import { DashboardContainer } from 'src/components/Layout/DashboardContainer';
+import { DashboardSidebar } from 'src/components/Layout/DashboardSidebar';
+import FieldsColumn from 'src/components/Layout/FieldsColumn';
+import FieldsGrid from 'src/components/Layout/FieldsGrid';
+import Footer from 'src/components/Layout/Footer';
+import FormContainer from 'src/components/Layout/FormContainer';
+import FormHeader from 'src/components/Layout/FormHeader';
+import { Main } from 'src/components/Layout/Main';
+import MobileLogoContainer from 'src/components/Layout/MobileLogoContainer';
+import { Navigation } from 'src/components/Layout/Navigation';
+import PageHeader from 'src/components/Layout/PageHeader';
+import Section from 'src/components/Layout/Section';
+import SectionHeader from 'src/components/Layout/SectionHeader';
+import SimpleHeader from 'src/components/Layout/SimpleHeader';
 
 export {
   Main,

@@ -1,21 +1,14 @@
-import React, { useEffect, useMemo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { getStockDiscountsList } from '../../../../actions/stock';
-import { ApplicationState } from '../../../../reducers';
-import Discounts from './Discounts';
-import { __ } from '../../../../helpers/i18n';
-import { Header, Section } from '../../../../components/ui';
+import React, { useMemo } from 'react';
+
+import { Header, Section } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
 import { useTenantNaming } from 'src/hooks/useTenantNaming';
+import { useStockDiscountsQuery } from 'src/queries';
+import Discounts from 'src/views/DashboardCommon/Welcome/Sale/Discounts';
 
 const Sale = () => {
-  const dispatch = useDispatch();
-  const discountsList = useSelector(
-    (state: ApplicationState) => state.stock.discountsList,
-  );
+  const { data: discountsList = [] } = useStockDiscountsQuery();
   const { getText } = useTenantNaming();
-  useEffect(() => {
-    dispatch(getStockDiscountsList());
-  }, [dispatch]);
 
   const discounts = useMemo(() => {
     return discountsList
@@ -24,7 +17,7 @@ const Sale = () => {
         (d) =>
           `${__('application.discount')} ${d.value}% ${getText('on')} ${d.name}`,
       );
-  }, [discountsList]);
+  }, [discountsList, getText]);
 
   if (discounts.length === 0) return null;
 

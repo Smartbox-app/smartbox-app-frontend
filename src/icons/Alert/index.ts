@@ -1,1 +1,1 @@
-export * from './Alert';
+export * from 'src/icons/Alert/Alert';

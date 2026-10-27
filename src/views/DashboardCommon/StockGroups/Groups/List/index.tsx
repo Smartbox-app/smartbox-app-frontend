@@ -1,21 +1,22 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
+
 import { stockGroupsList } from 'smartbox-tables';
 import { StockGroupData, UserRole } from 'smartbox-types';
-import { showModal } from '../../../../../actions/modal';
-import { successNotification } from '../../../../../actions/notifications';
-import ApiService from '../../../../../services/api-service';
-import { ApiTable, ConfirmModal } from '../../../../../components/Common';
-import { __ } from '../../../../../helpers/i18n';
-import { InteractiveTableSchema } from '../../../../../utils/table-schema-utils';
-import { refreshApiTableData } from '../../../../../actions/api-table';
-import UserService from '../../../../../services/user-service';
-import { history } from 'src/history';
-import { ButtonsContainer, Section } from '../../../../../components/Layout';
-import { Button } from '../../../../../components/Branded';
-import { useGetMyDetailsQuery } from 'src/queries';
+import { refreshApiTableData } from 'src/actions/api-table';
+import { showModal } from 'src/actions/modal';
+import { successNotification } from 'src/actions/notifications';
+import { Button } from 'src/components/Branded';
+import { ApiTable, ConfirmModal } from 'src/components/Common';
+import { ButtonsContainer, Section } from 'src/components/Layout';
 import { HeaderWithActions } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
+import { history } from 'src/history';
 import { useTenantNaming } from 'src/hooks/useTenantNaming';
+import { useGetMyDetailsQuery } from 'src/queries';
+import ApiService from 'src/services/api-service';
+import UserService from 'src/services/user-service';
+import { InteractiveTableSchema } from 'src/utils/table-schema-utils';
 
 const GroupsList = () => {
   const dispatch = useDispatch();

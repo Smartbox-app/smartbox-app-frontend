@@ -1,6 +1,6 @@
 import { PriceDisplayForClients } from 'smartbox-types';
 import { OrderAddon } from 'src/reducers/order-reducer';
-import { buildInitiateCheckoutPayload } from './build-initiate-checkout-payload';
+import { buildInitiateCheckoutPayload } from 'src/utils/build-initiate-checkout-payload';
 
 const addon = (overrides: Partial<OrderAddon> = {}): OrderAddon => ({
   name: 'Insurance',

@@ -1,1 +1,1 @@
-export * from './EndRentPhoto';
+export * from 'src/components/Common/EndRentPhoto/EndRentPhoto';

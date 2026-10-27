@@ -1,6 +1,7 @@
+import styled from 'styled-components';
+
 import { Logo } from 'src/components/Branded';
 import { Typography } from 'src/components/ui';
-import styled from 'styled-components';
 import { __ } from 'src/helpers/i18n';
 
 const StyledContainer = styled('div')({

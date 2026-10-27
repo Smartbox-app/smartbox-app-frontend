@@ -1,1 +1,1 @@
-export * from './RentAgreementModal';
+export * from 'src/components/Common/RentAgreementModal/RentAgreementModal';

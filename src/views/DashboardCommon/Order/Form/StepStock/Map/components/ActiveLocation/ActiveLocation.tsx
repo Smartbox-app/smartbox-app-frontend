@@ -1,10 +1,11 @@
 import { useDispatch, useSelector } from 'react-redux';
+import styled, { keyframes } from 'styled-components';
+
 import { clearSelectedStock } from 'src/actions/order';
 import { Badge, Button, Card, Typography } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
 import { Map } from 'src/icons';
 import { ApplicationState } from 'src/reducers';
-import styled, { keyframes } from 'styled-components';
 
 const fadeIn = keyframes`
 0% {

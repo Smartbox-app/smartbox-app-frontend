@@ -3,7 +3,7 @@ import {
   dateOnlyLocalTime,
   dateOnlyNormalized,
   fullDate,
-} from './format-date';
+} from 'src/utils/format-date';
 
 describe('format-date', () => {
   it('renders a missing date as a dash', () => {

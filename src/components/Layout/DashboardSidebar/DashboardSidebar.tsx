@@ -1,11 +1,12 @@
+import React from 'react';
 import styled from 'styled-components';
-import { NestedSidebarNav } from 'src/components/ui/NestedSidebarNav';
-import { SidebarNavGroup } from 'src/types/sidebar-nav';
+
 import { Logo } from 'src/components/Branded';
+import { NestedSidebarNav } from 'src/components/ui/NestedSidebarNav';
+import { __ } from 'src/helpers/i18n';
 import { Logout } from 'src/icons';
 import { useLogoutMutation } from 'src/mutations';
-import { __ } from 'src/helpers/i18n';
-import React from 'react';
+import { SidebarNavGroup } from 'src/types/sidebar-nav';
 
 export type DashboardSidebarProps = {
   groups: SidebarNavGroup[];

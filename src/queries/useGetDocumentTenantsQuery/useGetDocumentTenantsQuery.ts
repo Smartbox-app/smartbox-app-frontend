@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
-import ApiService from '../../services/api-service';
+
+import ApiService from 'src/services/api-service';
 import { SelectOption } from 'src/types/select';
 
 export const useGetTenantOptionsQuery = (options?: { enabled?: boolean }) => {

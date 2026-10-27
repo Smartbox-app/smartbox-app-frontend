@@ -1,12 +1,23 @@
-import type { AppDispatch } from 'src/types/app-dispatch';
-import 'reflect-metadata';
-
+import { App as CapacitorApp } from '@capacitor/app';
+import { Browser } from '@capacitor/browser';
+import { Capacitor } from '@capacitor/core';
+import { QueryClientProvider } from '@tanstack/react-query';
+import countries from 'i18n-iso-countries';
+import cs from 'i18n-iso-countries/langs/cs.json';
+import de from 'i18n-iso-countries/langs/de.json';
+import en from 'i18n-iso-countries/langs/en.json';
+import pl from 'i18n-iso-countries/langs/pl.json';
+import uk from 'i18n-iso-countries/langs/uk.json';
 import React, { Suspense } from 'react';
 import { Provider } from 'react-redux';
-import ReactSelect from 'react-select';
 import { Route, Router, Switch, Redirect } from 'react-router-dom';
-import { applyFlatpickrLocale } from './i18n/flatpickr-locale';
-import { Page404, Welcome } from './views';
+import ReactSelect from 'react-select';
+import 'reflect-metadata';
+
+import { appStatus } from 'src/actions/app-status';
+import { AppGlobalStyles } from 'src/AppGlobalStyles';
+import AppOffline from 'src/components/AppOffline';
+import { AppWrapper } from 'src/components/AppWrapper';
 import {
   OnlineContent,
   OfflineContent,
@@ -18,62 +29,48 @@ import {
   ErrorBoundary,
   Cookies,
   RouteTenant,
-} from './components/Common';
-
-import { PaymentResult } from './views/DashboardCommon';
-import { NotificationContainer } from './components/Notifications';
-import AppOffline from './components/AppOffline';
-import { appStatus } from './actions/app-status';
+} from 'src/components/Common';
+import BannerAndroid from 'src/components/Common/BannerAndroid';
+import BannerIos from 'src/components/Common/BanneriOS';
+import { RouteGuest } from 'src/components/Common/RouteGuest';
+import { NotificationContainer } from 'src/components/Notifications';
+import { TenantInactiveScreen } from 'src/components/TenantInactiveScreen';
+import { history } from 'src/history';
+import { applyFlatpickrLocale } from 'src/i18n/flatpickr-locale';
+import { CustomThemeProvider } from 'src/providers';
+import { queryClient } from 'src/query-client';
+import { store } from 'src/store';
+import type { AppDispatch } from 'src/types/app-dispatch';
+import { Page404, Welcome } from 'src/views';
+import { PaymentResult } from 'src/views/DashboardCommon';
+import { PrivacyPolicy } from 'src/views/PrivacyPolicy';
+import { Rules } from 'src/views/Rules';
 
 import 'flatpickr/dist/flatpickr.min.css';
-// import "flatpickr/dist/themes/airbnb.css";
-import BannerAndroid from './components/Common/BannerAndroid';
-import BannerIos from './components/Common/BanneriOS';
-import { CustomThemeProvider } from './providers';
-import { AppWrapper } from './components/AppWrapper';
-import { QueryClientProvider } from '@tanstack/react-query';
-import { RouteGuest } from './components/Common/RouteGuest';
-import { App as CapacitorApp } from '@capacitor/app';
-import { Capacitor } from '@capacitor/core';
-import { AppGlobalStyles } from './AppGlobalStyles';
 
-import countries from 'i18n-iso-countries';
-import pl from 'i18n-iso-countries/langs/pl.json';
-import en from 'i18n-iso-countries/langs/en.json';
-import cs from 'i18n-iso-countries/langs/cs.json';
-import uk from 'i18n-iso-countries/langs/uk.json';
-import de from 'i18n-iso-countries/langs/de.json';
-import { PrivacyPolicy } from './views/PrivacyPolicy';
-import { Rules } from './views/Rules';
-import { Browser } from '@capacitor/browser';
-import { store } from './store';
-import { history } from './history';
-import { queryClient } from './query-client';
-import { TenantInactiveScreen } from './components/TenantInactiveScreen';
-
-const EmailConfirm = React.lazy(() => import('./views/Auth/EmailConfirm'));
+const EmailConfirm = React.lazy(() => import('src/views/Auth/EmailConfirm'));
 const Login = React.lazy(() =>
-  import('./views/Auth/Login').then((module) => ({ default: module.Login })),
+  import('src/views/Auth/Login').then((module) => ({ default: module.Login })),
 );
-const Register = React.lazy(() => import('./views/Auth/Register'));
-const RestorePass = React.lazy(() => import('./views/Auth/RestorePass'));
-const UserActivation = React.lazy(() => import('./views/Auth/UserActivation'));
-const EmailSend = React.lazy(() => import('./views/Auth/EmailSend'));
+const Register = React.lazy(() => import('src/views/Auth/Register'));
+const RestorePass = React.lazy(() => import('src/views/Auth/RestorePass'));
+const UserActivation = React.lazy(() => import('src/views/Auth/UserActivation'));
+const EmailSend = React.lazy(() => import('src/views/Auth/EmailSend'));
 
 const TenantActivation = React.lazy(
-  () => import('./views/Auth/TenantActivation'),
+  () => import('src/views/Auth/TenantActivation'),
 );
 const ResendActivationLink = React.lazy(
-  () => import('./views/Auth/ResendActivationLink'),
+  () => import('src/views/Auth/ResendActivationLink'),
 );
 const ActivateAccount = React.lazy(
-  () => import('./views/Auth/ActivateAccount'),
+  () => import('src/views/Auth/ActivateAccount'),
 );
 
-const DashboardAdmin = React.lazy(() => import('./views/DashboardAdmin'));
-const DashboardUser = React.lazy(() => import('./views/DashboardUser'));
-const DashboardTenant = React.lazy(() => import('./views/DashboardTenant'));
-const DashboardWorker = React.lazy(() => import('./views/DashboardWorker'));
+const DashboardAdmin = React.lazy(() => import('src/views/DashboardAdmin'));
+const DashboardUser = React.lazy(() => import('src/views/DashboardUser'));
+const DashboardTenant = React.lazy(() => import('src/views/DashboardTenant'));
+const DashboardWorker = React.lazy(() => import('src/views/DashboardWorker'));
 
 applyFlatpickrLocale();
 
@@ -252,5 +249,5 @@ store.dispatch(
 );
 
 export { ReactSelect };
-export { store } from './store';
+export { store } from 'src/store';
 export default App;

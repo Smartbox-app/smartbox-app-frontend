@@ -1,1 +1,1 @@
-export * from './useLocationActivityMutations';
+export * from 'src/mutations/useLocationActivityMutations/useLocationActivityMutations';

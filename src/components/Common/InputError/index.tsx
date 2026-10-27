@@ -1,7 +1,8 @@
 import React from 'react';
-import { translateUiError } from '../../../utils/translate-ui-error';
-import { InputSizeProps, resolveInputSize } from '../input-sizes';
-import { StyledInputError } from '../input-styled';
+
+import { InputSizeProps, resolveInputSize } from 'src/components/Common/input-sizes';
+import { StyledInputError } from 'src/components/Common/input-styled';
+import { translateUiError } from 'src/utils/translate-ui-error';
 
 interface Props extends InputSizeProps {
   error: string;

@@ -1,8 +1,8 @@
 import React from 'react';
-
-import { __ } from '../../../../helpers/i18n';
 import styled from 'styled-components';
-import { getColorForBackground } from '../../../../utils/color';
+
+import { __ } from 'src/helpers/i18n';
+import { getColorForBackground } from 'src/utils/color';
 
 interface Props {
   value: string;

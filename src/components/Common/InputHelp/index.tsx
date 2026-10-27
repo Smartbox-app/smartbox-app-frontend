@@ -1,7 +1,8 @@
 import React from 'react';
-import { __ } from '../../../helpers/i18n';
-import { InputSizeProps, resolveInputSize } from '../input-sizes';
-import { StyledInputHelp } from '../input-styled';
+
+import { InputSizeProps, resolveInputSize } from 'src/components/Common/input-sizes';
+import { StyledInputHelp } from 'src/components/Common/input-styled';
+import { __ } from 'src/helpers/i18n';
 
 interface Props extends InputSizeProps {
   text: string;

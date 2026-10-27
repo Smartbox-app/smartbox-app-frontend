@@ -1,1 +1,1 @@
-export * from './useRotatePasscodeMutation';
+export * from 'src/mutations/useRotatePasscodeMutation/useRotatePasscodeMutation';

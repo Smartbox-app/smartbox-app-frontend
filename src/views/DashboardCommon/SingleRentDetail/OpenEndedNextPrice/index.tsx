@@ -1,10 +1,11 @@
+import styled from 'styled-components';
+
 import { OpenEndedNextPeriodPreview } from 'smartbox-types';
 import { Alert } from 'src/components/Common';
 import { Header } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
 import { dateOnly } from 'src/utils/format-date';
 import { formatPrice } from 'src/utils/format-price';
-import styled from 'styled-components';
 
 type OpenEndedNextPriceProps = {
   preview: OpenEndedNextPeriodPreview;

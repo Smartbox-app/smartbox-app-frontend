@@ -1,1 +1,1 @@
-export * from './useOpenGateMutation';
+export * from 'src/mutations/useOpenGateMutation/useOpenGateMutation';

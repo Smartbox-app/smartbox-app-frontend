@@ -1,1 +1,1 @@
-export * from './useRotateApiAccessKeyMutation';
+export * from 'src/mutations/useRotateApiAccessKeyMutation/useRotateApiAccessKeyMutation';

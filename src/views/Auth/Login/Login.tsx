@@ -1,40 +1,41 @@
+import { Capacitor } from '@capacitor/core';
+import { Device } from '@capacitor/device';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { LoginDto } from '../../../dto/LoginDto';
-import { ClassValidatorResolver } from '../../../resolvers/ClassValidatorResolver';
-import { Input } from '../../../components/ui/Input';
+import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
+
+import {
+  AccountActivationTokenPayload,
+  ApiErrorCode,
+} from 'smartbox-types';
+import { notifications } from 'src/actions';
+import { AppVersion } from 'src/components/AppVersion';
+import { Logo, PageContent } from 'src/components/Branded';
 import {
   Narrow,
   Section,
   Typography,
   Button,
   Form,
-} from '../../../components/ui';
-import { Logo, PageContent } from '../../../components/Branded';
-import { Stack } from '../../../components/ui/Stack';
-import { __ } from '../../../helpers/i18n';
-import { useTenant } from '../../../hooks/useTenant';
-import { isSmsAccountConfirmation } from 'src/utils/account-confirmation';
-import { buildActivateAccountPath } from 'src/utils/activate-account-url';
-import { FbButton } from './components/FbButton';
-import { AppVersion } from '../../../components/AppVersion';
-import { GoogleButton } from './components/GoogleButton';
-import { MobileAppLinks } from './components/MobileAppLinks';
-import { Capacitor } from '@capacitor/core';
-import { Device } from '@capacitor/device';
-import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import {
-  AccountActivationTokenPayload,
-  ApiErrorCode,
-} from 'smartbox-types';
+} from 'src/components/ui';
+import { Input } from 'src/components/ui/Input';
+import { Stack } from 'src/components/ui/Stack';
+import { LoginDto } from 'src/dto/LoginDto';
+import { __ } from 'src/helpers/i18n';
 import { history } from 'src/history';
-import { notifications } from 'src/actions';
+import { useTenant } from 'src/hooks/useTenant';
 import {
   LoginMutationError,
   useLoginMutation,
-} from '../../../mutations/useLoginMutation';
-import { Link } from 'react-router-dom';
+} from 'src/mutations/useLoginMutation';
+import { ClassValidatorResolver } from 'src/resolvers/ClassValidatorResolver';
+import { isSmsAccountConfirmation } from 'src/utils/account-confirmation';
+import { buildActivateAccountPath } from 'src/utils/activate-account-url';
 import { withAttributionSearch } from 'src/utils/attribution-params';
+import { FbButton } from 'src/views/Auth/Login/components/FbButton';
+import { GoogleButton } from 'src/views/Auth/Login/components/GoogleButton';
+import { MobileAppLinks } from 'src/views/Auth/Login/components/MobileAppLinks';
 
 export const Login = () => {
   const dispatch = useDispatch();

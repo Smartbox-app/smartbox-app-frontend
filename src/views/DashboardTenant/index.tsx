@@ -5,13 +5,13 @@ import {
   Main,
   DashboardContainer,
   DashboardSidebar,
-} from '../../components/Layout';
-import Management from './Management';
-import { Profile } from '../DashboardCommon';
-import { StockGroups } from '../DashboardCommon/StockGroups';
-import { TenantStatus } from './TenantStatus';
+} from 'src/components/Layout';
 import { useDashboardSidebarNav } from 'src/hooks/useDashboardSidebarNav';
 import { withAttributionSearch } from 'src/utils/attribution-params';
+import { Profile } from 'src/views/DashboardCommon';
+import { StockGroups } from 'src/views/DashboardCommon/StockGroups';
+import Management from 'src/views/DashboardTenant/Management';
+import { TenantStatus } from 'src/views/DashboardTenant/TenantStatus';
 
 const DashboardTenant = () => {
   const sidebarGroups = useDashboardSidebarNav();

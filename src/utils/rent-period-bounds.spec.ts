@@ -10,7 +10,7 @@ import {
   isExtensionPeriodAcceptable,
   isNewRentPeriodAcceptable,
   minPeriodDebtResolvedEnd,
-} from './rent-period-bounds';
+} from 'src/utils/rent-period-bounds';
 
 const expectDay = (date: Date, day: number, hours: number) => {
   expect(date.getFullYear()).toBe(2026);

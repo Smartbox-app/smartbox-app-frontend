@@ -1,6 +1,6 @@
 import 'i18next';
 
-import type application from './locales/pl/application';
+import type application from 'src/i18n/locales/pl/application';
 
 declare module 'i18next' {
    

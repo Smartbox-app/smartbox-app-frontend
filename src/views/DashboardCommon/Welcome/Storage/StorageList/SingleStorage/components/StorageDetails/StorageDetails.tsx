@@ -1,6 +1,7 @@
-import { useRent } from 'src/hooks/useRent';
 import styled from 'styled-components';
+
 import { RentAgreementType } from 'smartbox-types';
+import { useRent } from 'src/hooks/useRent';
 import { Calendar, Size } from 'src/icons';
 
 export type StorageDetailsProps = {

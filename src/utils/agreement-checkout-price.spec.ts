@@ -4,7 +4,7 @@ import {
   getAddonsWithCorrectPrice,
   getCorrectPrice,
   getSimplifiedAddons,
-} from './agreement-checkout-price';
+} from 'src/utils/agreement-checkout-price';
 
 const addon = (overrides: Partial<OrderAddon> = {}): OrderAddon => ({
   name: 'Lock',

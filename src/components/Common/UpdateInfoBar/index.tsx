@@ -1,7 +1,8 @@
 import { UpdateActivated, UpdateActivatedReload, UpdateAvailable } from 'react-workbox';
 
-import './UpdateInfoBar.scss';
-import {__} from "../../../helpers/i18n";
+import {__} from "src/helpers/i18n";
+
+import 'src/components/Common/UpdateInfoBar/UpdateInfoBar.scss';
 
 const onUpdateClick = async () => {
   const registration = await navigator.serviceWorker.getRegistration();

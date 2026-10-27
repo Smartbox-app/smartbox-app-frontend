@@ -1,1 +1,1 @@
-export * from './ClientSourceForm';
+export * from 'src/views/DashboardCommon/Order/Form/StepSummary/ClientSourceForm/ClientSourceForm';

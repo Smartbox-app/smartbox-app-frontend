@@ -1,19 +1,19 @@
+import { ItfApiForm } from 'itf_formbuilder_react';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { ItfApiForm } from 'itf_formbuilder_react';
-import { Spinner, Logo } from '../../../components/Branded';
-import { notifications } from '../../../actions';
-import ApiService from '../../../services/api-service';
-import { formOnTranslateString } from '../../../utils/trans-form';
-import { FormContainer } from '../../../components/Layout';
-import { __ } from '../../../helpers/i18n';
-import { history } from 'src/history';
 
-import { mapFieldsBig } from '../../../utils/fields-mapper';
-import { ButtonsSection } from './ButtonsSection';
-import { Header, InfoContent } from '../../../components/ui';
+import { notifications } from 'src/actions';
+import { Spinner, Logo } from 'src/components/Branded';
+import { FormContainer } from 'src/components/Layout';
+import { Header, InfoContent } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
+import { history } from 'src/history';
 import { useTenant } from 'src/hooks/useTenant';
+import ApiService from 'src/services/api-service';
 import { isSmsAccountConfirmation } from 'src/utils/account-confirmation';
+import { mapFieldsBig } from 'src/utils/fields-mapper';
+import { formOnTranslateString } from 'src/utils/trans-form';
+import { ButtonsSection } from 'src/views/Auth/ResendActivationLink/ButtonsSection';
 
 const ResendActivationLink = () => {
   const dispatch = useDispatch();

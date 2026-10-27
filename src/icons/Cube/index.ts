@@ -1,1 +1,1 @@
-export * from './Cube';
+export * from 'src/icons/Cube/Cube';

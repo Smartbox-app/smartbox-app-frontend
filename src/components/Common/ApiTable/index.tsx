@@ -1,29 +1,25 @@
+import { useQuery } from '@tanstack/react-query';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import {
+import styled from 'styled-components';
+
+import { TableResponse ,
   FieldType,
   TableFieldSearchableValues,
   TableSchema,
   TableSchemaField,
 } from 'smartbox-tables';
-import Table from '../Table';
-import DateInput from '../DateInput';
-import { InputSelect } from '../InputSelect';
-import { StyledNativeSelect } from '../input-styled';
-import { Input, Skeleton } from '../../ui';
-import debounce from '../../../utils/debounce';
-import {
-  clearApiTableData,
-  fetchApiTableData,
-  loadingApiTableData,
-} from '../../../actions/api-table';
-import { ApplicationState } from '../../../reducers';
-import { DEFAULT_API_TABLE_INSTANCE_ID } from '../../../constants/api-table-instances';
-
-import './ApiTable.scss';
-import { __ } from '../../../helpers/i18n';
-import styled from 'styled-components';
 import { Spinner } from 'src/components/Branded';
+import DateInput from 'src/components/Common/DateInput';
+import { StyledNativeSelect } from 'src/components/Common/input-styled';
+import { InputSelect } from 'src/components/Common/InputSelect';
+import Table from 'src/components/Common/Table';
+import { Input, Skeleton } from 'src/components/ui';
+import { DEFAULT_API_TABLE_INSTANCE_ID } from 'src/constants/api-table-instances';
+import { __ } from 'src/helpers/i18n';
+import ApiService from 'src/services/api-service';
+import debounce from 'src/utils/debounce';
+
+import 'src/components/Common/ApiTable/ApiTable.scss';
 
 const StyledContainer = styled('div')({
   position: 'relative',
@@ -66,7 +62,10 @@ export interface ApiTableProps {
 /** @deprecated Use ApiTableProps */
 export type ApiTableOwnProps = ApiTableProps;
 
-const emptyTableData = { countTotal: 0, items: [] };
+const emptyTableData: TableResponse<Record<string, unknown>> = {
+  countTotal: 0,
+  items: [],
+};
 
 function getInitialSearchState(scheme: TableSchema) {
   const defaultSearchField = scheme.fields.find(
@@ -227,13 +226,8 @@ export const ApiTable = ({
   selectSearchByField,
   selectSearchByOption,
 }: ApiTableProps) => {
-  const dispatch = useDispatch();
   const resolvedInstanceId = instanceId ?? DEFAULT_API_TABLE_INSTANCE_ID;
-
-  const data = useSelector(
-    (state: ApplicationState) =>
-      state.apiTable.instances[resolvedInstanceId] ?? emptyTableData,
-  );
+  const resolvedMethod = apiEndpointMethod ?? 'GET';
 
   const [searchQuery, setSearchQuery] = useState(
     () => getInitialSearchState(scheme).searchQuery,
@@ -259,12 +253,38 @@ export const ApiTable = ({
     } as Record<string, string>)}`;
   }, [apiEndpointSubUrl, searchBy, searchQuery, page, sortBy, sortDirBack]);
 
+  const [requestUrl, setRequestUrl] = useState<string | null>(null);
+
   const fetch = useCallback(() => {
-    dispatch(loadingApiTableData(resolvedInstanceId));
-    dispatch(
-      fetchApiTableData(buildUrl(), apiEndpointMethod, resolvedInstanceId),
-    );
-  }, [dispatch, buildUrl, apiEndpointMethod, resolvedInstanceId]);
+    setRequestUrl(buildUrl());
+  }, [buildUrl]);
+
+  const { data = emptyTableData, isFetching, isPending } = useQuery({
+    queryKey: ['api-table', resolvedInstanceId, resolvedMethod, requestUrl],
+    queryFn: async () => {
+      if (!requestUrl) return emptyTableData;
+
+      const payload = await ApiService.callFetch<
+        TableResponse<Record<string, unknown>>
+      >(
+        resolvedMethod,
+        requestUrl,
+        undefined,
+        undefined,
+        undefined,
+        true,
+      );
+
+      if (payload && typeof payload === 'object') {
+        return payload;
+      }
+
+      return emptyTableData;
+    },
+    enabled: !!requestUrl,
+    placeholderData: (previousData) => previousData,
+    retry: false,
+  });
 
   const debouncedSearchFetchRef = useRef(
     debounce(() => {
@@ -293,23 +313,20 @@ export const ApiTable = ({
   const skipPageFetchFromSearchRef = useRef(false);
   const pendingSearchResetRef = useRef(false);
   const skipEndpointClearRef = useRef(true);
-  const prevUuidRef = useRef<string | undefined>(undefined);
   const fetchRef = useRef(fetch);
   fetchRef.current = fetch;
 
   useEffect(() => {
-    dispatch(clearApiTableData(resolvedInstanceId));
-    dispatch(loadingApiTableData(resolvedInstanceId));
     fetchRef.current();
-  }, [resolvedInstanceId, dispatch]);
+  }, [resolvedInstanceId]);
 
   useEffect(() => {
     if (skipEndpointClearRef.current) {
       skipEndpointClearRef.current = false;
       return;
     }
-    dispatch(clearApiTableData(resolvedInstanceId));
-  }, [apiEndpointSubUrl, resolvedInstanceId, dispatch]);
+    fetchRef.current();
+  }, [apiEndpointSubUrl]);
 
   useEffect(() => {
     if (skipPageSortFetchRef.current) {
@@ -322,13 +339,6 @@ export const ApiTable = ({
     }
     fetch();
   }, [page, sortBy, sortDirBack, fetch]);
-
-  useEffect(() => {
-    if (data.uuid && prevUuidRef.current && data.uuid !== prevUuidRef.current) {
-      fetch();
-    }
-    prevUuidRef.current = data.uuid;
-  }, [data.uuid, fetch]);
 
   useEffect(() => {
     if (!pendingSearchResetRef.current) return;
@@ -391,8 +401,8 @@ export const ApiTable = ({
     [searchBy, searchQuery, page],
   );
 
-  const showSkeleton = data.loading === true && data.countTotal === 0;
-  const showSpinner = data.loading === true && data.countTotal > 0;
+  const showSkeleton = isPending && data.countTotal === 0;
+  const showSpinner = isFetching && data.countTotal > 0;
 
   return (
     <StyledContainer>

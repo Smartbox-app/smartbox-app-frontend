@@ -1,10 +1,11 @@
 import React, { useEffect, useState, useCallback } from 'react';
+
+import { __ } from 'src/helpers/i18n';
 import { useTenant } from 'src/hooks/useTenant';
+import { IOSShare } from 'src/icons';
 import { hasMobileAppIosLink } from 'src/utils/tenant-mobile-app-links';
 
-import './BanneriOS.scss';
-import { __ } from 'src/helpers/i18n';
-import { IOSShare } from 'src/icons';
+import 'src/components/Common/BanneriOS/BanneriOS.scss';
 
 const BannerIos = () => {
   const { tenant } = useTenant();
@@ -38,7 +39,12 @@ const BannerIos = () => {
     setComponentVisible(false);
   };
 
-  if (hasMobileAppIosLink(tenant) || !isComponentVisible || !isIos) {
+  if (
+    tenant?.showPwaBannerIos === false ||
+    hasMobileAppIosLink(tenant) ||
+    !isComponentVisible ||
+    !isIos
+  ) {
     return null;
   }
 

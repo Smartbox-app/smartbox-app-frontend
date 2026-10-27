@@ -3,7 +3,7 @@ import {
   allowsFixedTerm,
   allowsOpenEnded,
   resolveCheckoutAgreementType,
-} from './agreement-policy';
+} from 'src/utils/agreement-policy';
 
 describe('agreement policy', () => {
   it('allows fixed term unless the stock is open-ended only', () => {

@@ -1,1 +1,1 @@
-export * from './useForcePaymentMutation';
+export * from 'src/mutations/useForcePaymentMutation/useForcePaymentMutation';

@@ -1,1 +1,1 @@
-export * from './ErrorText';
+export * from 'src/components/ui/ErrorText/ErrorText';

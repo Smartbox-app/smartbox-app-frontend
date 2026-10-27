@@ -1,1 +1,1 @@
-export * from './useActivateUserByCodeMutation';
+export * from 'src/mutations/useActivateUserByCodeMutation/useActivateUserByCodeMutation';

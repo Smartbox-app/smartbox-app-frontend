@@ -1,1 +1,1 @@
-export * from './usePublishDocumentMutation';
+export * from 'src/mutations/usePublishDocumentMutation/usePublishDocumentMutation';

@@ -1,20 +1,21 @@
-import React from 'react';
 import { ItfApiForm } from 'itf_formbuilder_react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useLocation, useParams } from 'react-router';
+
+import { TTLockPasscodeReq } from 'smartbox-types';
+import { successNotification } from 'src/actions/notifications';
+import { Button, Spinner } from 'src/components/Branded';
 import {
   ButtonsContainer,
   FormContainer,
-} from '../../../../../components/Layout';
-import { Button, Spinner } from '../../../../../components/Branded';
-import ApiService from '../../../../../services/api-service';
-import { formOnTranslateString } from '../../../../../utils/trans-form';
-import { history } from 'src/history';
-import { successNotification } from '../../../../../actions/notifications';
-import { mapFields } from '../../../../../utils/fields-mapper';
-import { __ } from '../../../../../helpers/i18n';
+} from 'src/components/Layout';
 import { PageHeader, Section } from 'src/components/ui';
-import { TTLockPasscodeReq } from 'smartbox-types';
+import { __ } from 'src/helpers/i18n';
+import { history } from 'src/history';
+import ApiService from 'src/services/api-service';
+import { mapFields } from 'src/utils/fields-mapper';
+import { formOnTranslateString } from 'src/utils/trans-form';
 
 export const Edit = () => {
   const { lockId, passcodeId } = useParams<{

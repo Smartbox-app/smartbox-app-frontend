@@ -1,14 +1,14 @@
 import React from 'react';
 import { Route, Redirect, Switch } from 'react-router-dom';
 
-import { Main, DashboardContainer, DashboardSidebar } from '../../components/Layout';
-import Management from './Management';
-import Profile from '../DashboardCommon/Profile';
-import SingleRentDetail from '../DashboardCommon/SingleRentDetail';
-import { StockGroups } from '../DashboardCommon/StockGroups';
-import { TTLockManagement } from './TTLockManagement';
+import { Main, DashboardContainer, DashboardSidebar } from 'src/components/Layout';
 import { useDashboardSidebarNav } from 'src/hooks/useDashboardSidebarNav';
 import { withAttributionSearch } from 'src/utils/attribution-params';
+import Management from 'src/views/DashboardAdmin/Management';
+import { TTLockManagement } from 'src/views/DashboardAdmin/TTLockManagement';
+import Profile from 'src/views/DashboardCommon/Profile';
+import SingleRentDetail from 'src/views/DashboardCommon/SingleRentDetail';
+import { StockGroups } from 'src/views/DashboardCommon/StockGroups';
 
 const DashboardAdmin = () => {
   const sidebarGroups = useDashboardSidebarNav();

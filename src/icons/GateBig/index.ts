@@ -1,1 +1,1 @@
-export * from './GateBig';
+export * from 'src/icons/GateBig/GateBig';

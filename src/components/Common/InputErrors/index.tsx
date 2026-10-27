@@ -1,7 +1,8 @@
 import React from 'react';
-import { TranslatableObject } from '../../../utils/errors-trans';
-import { InputError } from '../InputError';
-import { InputSizeProps, resolveInputSize } from '../input-sizes';
+
+import { InputSizeProps, resolveInputSize } from 'src/components/Common/input-sizes';
+import { InputError } from 'src/components/Common/InputError';
+import { TranslatableObject } from 'src/utils/errors-trans';
 
 interface Props extends InputSizeProps {
   errors: TranslatableObject[];

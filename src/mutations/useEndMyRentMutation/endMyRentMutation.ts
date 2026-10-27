@@ -1,7 +1,8 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import ApiService from '../../services/api-service';
+
+import { myRentDetailsQueryKey } from 'src/queries';
+import ApiService from 'src/services/api-service';
 import { getEndRentSource } from 'src/utils/can-capture-end-rent-photo';
-import { myRentDetailsQueryKey } from '../../queries';
 
 export const useEndMyRentMutation = () => {
   const queryClient = useQueryClient();

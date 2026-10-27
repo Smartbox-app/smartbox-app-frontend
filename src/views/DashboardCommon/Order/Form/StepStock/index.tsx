@@ -1,26 +1,27 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { order } from '../../../../../actions';
-import { ButtonsContainer } from '../../../../../components/Layout';
-import { ApplicationState } from '../../../../../reducers';
 
-import UserService from '../../../../../services/user-service';
-import './StepStock.scss';
-import { useGetMyDetailsQuery } from 'src/queries';
+import { order } from 'src/actions';
+import { ButtonsContainer } from 'src/components/Layout';
 import {
   Button,
   Header,
   Section,
   Skeleton,
-} from '../../../../../components/ui';
-import { __ } from '../../../../../helpers/i18n';
+} from 'src/components/ui';
 import { Stack } from 'src/components/ui/Stack';
-import { ArrowRight } from 'src/icons';
+import { __ } from 'src/helpers/i18n';
 import { useTenant } from 'src/hooks/useTenant';
-import { LocationSelectType } from 'src/smartbox-types/location';
-import { Tiles } from './Tiles';
-import { Map } from './Map';
 import { useTenantNaming } from 'src/hooks/useTenantNaming';
+import { ArrowRight } from 'src/icons';
+import { useGetMyDetailsQuery } from 'src/queries';
+import { ApplicationState } from 'src/reducers';
+import UserService from 'src/services/user-service';
+import { LocationSelectType } from 'src/smartbox-types/location';
+import { Map } from 'src/views/DashboardCommon/Order/Form/StepStock/Map';
+import { Tiles } from 'src/views/DashboardCommon/Order/Form/StepStock/Tiles';
+
+import 'src/views/DashboardCommon/Order/Form/StepStock/StepStock.scss';
 
 const StepStock = () => {
   const dispatch = useDispatch();

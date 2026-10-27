@@ -1,1 +1,1 @@
-export * from './SidebarButton';
+export * from 'src/components/ui/SidebarButton/SidebarButton';

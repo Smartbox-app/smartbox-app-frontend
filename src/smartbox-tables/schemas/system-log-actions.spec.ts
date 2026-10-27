@@ -1,4 +1,4 @@
-import { translateSystemLogAction } from './system-log-actions';
+import { translateSystemLogAction } from 'src/smartbox-tables/schemas/system-log-actions';
 
 describe('translateSystemLogAction', () => {
   it('returns the Polish label for a known action', () => {

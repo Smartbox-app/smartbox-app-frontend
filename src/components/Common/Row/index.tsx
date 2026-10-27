@@ -1,9 +1,10 @@
 import React from 'react';
-import { __ } from '../../../helpers/i18n';
-
-import './Row.scss';
 import styled from 'styled-components';
-import { colorOrDark } from '../../../utils/color';
+
+import { __ } from 'src/helpers/i18n';
+import { colorOrDark } from 'src/utils/color';
+
+import 'src/components/Common/Row/Row.scss';
 
 interface Props {
   label?: string;

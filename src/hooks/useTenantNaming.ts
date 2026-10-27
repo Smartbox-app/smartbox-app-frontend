@@ -1,11 +1,10 @@
 import { useCallback } from 'react';
-import { NamingType } from 'smartbox-types';
 
+import { NamingType } from 'smartbox-types';
+import { useTenant } from 'src/hooks/useTenant';
 import { buildNamingResourceKey, useI18n } from 'src/i18n';
 import type { Options } from 'src/i18n/types';
 import type { NamingTypeKey } from 'src/i18n/types/keys';
-
-import { useTenant } from './useTenant';
 
 export const useTenantNaming = () => {
   const { tenant } = useTenant();

@@ -1,7 +1,8 @@
 import { ReactNode } from 'react';
 import { NavLink } from 'react-router-dom';
 import styled, { css } from 'styled-components';
-import { __ } from '../../../helpers/i18n';
+
+import { __ } from 'src/helpers/i18n';
 
 type SidebarButtonStyleProps = {
   $small?: boolean;

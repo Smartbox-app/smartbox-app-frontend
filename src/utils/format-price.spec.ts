@@ -1,4 +1,4 @@
-import { formatPrice, formatThousands } from './format-price';
+import { formatPrice, formatThousands } from 'src/utils/format-price';
 
 describe('formatThousands', () => {
   it('groups thousands and uses a decimal comma', () => {

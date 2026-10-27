@@ -1,11 +1,12 @@
 import React from 'react';
-import { ButtonsContainer } from '../../Layout';
-import { Button } from '../../Branded';
-import { __ } from '../../../helpers/i18n';
 import { useDispatch } from 'react-redux';
-import { modal } from '../../../actions';
+
+import { modal } from 'src/actions';
+import { Button } from 'src/components/Branded';
+import Alert from 'src/components/Common/Alert';
+import { ButtonsContainer } from 'src/components/Layout';
 import { Modal } from 'src/components/ui';
-import Alert from '../Alert';
+import { __ } from 'src/helpers/i18n';
 
 const OpenGateTooSoonModal = () => {
   const dispatch = useDispatch();

@@ -1,6 +1,6 @@
-import { RentPaymentType } from "../rent";
-import { PaymentDocument, PaymentStatus, PaymentType } from "./payment-entity";
-import { CalculatedPriceRes } from "../box-group/pricing";
+import { CalculatedPriceRes } from "src/smartbox-types/box-group/pricing";
+import { PaymentDocument, PaymentStatus, PaymentType } from "src/smartbox-types/payment/payment-entity";
+import { RentPaymentType } from "src/smartbox-types/rent";
 
 export interface CompanyData {
   companyName: string;

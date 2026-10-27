@@ -1,1 +1,1 @@
-export * from './RouteGuest';
+export * from 'src/components/Common/RouteGuest/RouteGuest';

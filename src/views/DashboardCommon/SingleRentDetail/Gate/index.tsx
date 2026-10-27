@@ -1,17 +1,19 @@
+import { Capacitor } from '@capacitor/core';
+import { Geolocation, PermissionStatus } from '@capacitor/geolocation';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Coordinate, RentGate } from 'smartbox-types';
-import { Button, Spinner } from '../../../../components/Branded';
-import { gate as gateActions, modal } from '../../../../actions';
-import { isUser } from '../../../../utils/role-check';
-import { OpenGateByForceModal } from '../../../../components/Common/OpenGateByForceModal';
 import styled from 'styled-components';
-import { useGetMyDetailsQuery } from 'src/queries';
-import { Geolocation, PermissionStatus } from '@capacitor/geolocation';
-import { Capacitor } from '@capacitor/core';
+
+import { Coordinate, RentGate } from 'smartbox-types';
+import { modal } from 'src/actions';
+import { Button, Spinner } from 'src/components/Branded';
+import { OpenGateByForceModal } from 'src/components/Common/OpenGateByForceModal';
 import { ButtonsContainer } from 'src/components/Layout';
 import { __ } from 'src/helpers/i18n';
-import { KsmGateButton } from '../Action/KsmGateButton';
+import { useOpenGateMutation } from 'src/mutations';
+import { useGetMyDetailsQuery } from 'src/queries';
+import { isUser } from 'src/utils/role-check';
+import { KsmGateButton } from 'src/views/DashboardCommon/SingleRentDetail/Action/KsmGateButton';
 
 interface Props {
   gate: RentGate;
@@ -47,6 +49,7 @@ const StyledGateDescription = styled.p`
 const Gate = ({ gate, disabled = false }: Props) => {
   const dispatch = useDispatch();
   const { data: user } = useGetMyDetailsQuery();
+  const { mutate: openGate } = useOpenGateMutation();
   const [loading, setLoading] = useState(false);
 
   const handleError = () => {
@@ -101,7 +104,7 @@ const Gate = ({ gate, disabled = false }: Props) => {
   const tryToOpenGateByLocation = async () => {
     try {
       const location = await getCurrentLocation();
-      dispatch(gateActions.askGateToOpen(gate.id, location));
+      openGate({ gateId: gate.id, geo: location, mode: 'default' });
     } catch (error: unknown) {
       if (error instanceof Error && error.message === 'not_supported') {
         dispatch(
@@ -139,7 +142,7 @@ const Gate = ({ gate, disabled = false }: Props) => {
 
     setLoading(true);
     if (!isUser(user!.role)) {
-      dispatch(gateActions.askGateToOpenByStaff(gate.id));
+      openGate({ gateId: gate.id, mode: 'staff' });
       setLoading(false);
     } else {
       tryToOpenGateByLocation();

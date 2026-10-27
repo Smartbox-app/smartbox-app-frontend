@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
+
+import { modal } from 'src/actions';
 import { Button } from 'src/components/Branded';
 import Input from 'src/components/Common/Input';
 import { ButtonsContainer } from 'src/components/Layout';
 import { Modal } from 'src/components/ui';
-import { modal } from 'src/actions';
 import { __ } from 'src/helpers/i18n';
 import { useSetRentNoteMutation } from 'src/mutations';
 

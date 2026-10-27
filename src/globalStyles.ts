@@ -1,8 +1,9 @@
 import { lighten } from 'polished';
 import { createGlobalStyle } from 'styled-components';
-import { getApiBaseUrl } from './config/api-url';
-import { colorOrDark } from './utils/color';
+
 import { TenantForUsers } from 'smartbox-types';
+import { getApiBaseUrl } from 'src/config/api-url';
+import { colorOrDark } from 'src/utils/color';
 
 interface GlobalStyleProps {
   tenant?: TenantForUsers | null;

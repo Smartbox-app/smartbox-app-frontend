@@ -1,4 +1,4 @@
-import { formatPrice } from './format-price';
+import { formatPrice } from 'src/smartbox-tables/utils/format-price';
 
 describe('table formatPrice', () => {
   it('groups thousands, uses a decimal comma, and appends zł', () => {

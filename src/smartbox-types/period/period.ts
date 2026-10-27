@@ -1,4 +1,4 @@
-import { PeriodDescription } from "../rent";
+import { PeriodDescription } from "src/smartbox-types/rent";
 
 /**
  * Raw row from the periods-for-rent table query (`tableBuilder` / getRawMany).

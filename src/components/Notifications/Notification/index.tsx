@@ -1,14 +1,13 @@
-import type { AppDispatch } from 'src/types/app-dispatch';
 import React from 'react';
-
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { notifications } from '../../../actions';
-import { SingleNotification } from '../../../types/notifications';
 
-import { Alert } from '../../Common';
+import { notifications } from 'src/actions';
+import { Alert } from 'src/components/Common';
+import type { AppDispatch } from 'src/types/app-dispatch';
+import { SingleNotification } from 'src/types/notifications';
 
-import './Notification.scss';
+import 'src/components/Notifications/Notification/Notification.scss';
 
 interface Props {
   notification: SingleNotification;

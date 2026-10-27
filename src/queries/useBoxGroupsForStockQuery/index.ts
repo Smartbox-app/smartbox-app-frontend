@@ -1,1 +1,1 @@
-export * from './useBoxGroupsForStockQuery';
+export * from 'src/queries/useBoxGroupsForStockQuery/useBoxGroupsForStockQuery';

@@ -1,1 +1,1 @@
-export * from './useTemplatesQuery';
+export * from 'src/queries/useTemplatesQuery/useTemplatesQuery';

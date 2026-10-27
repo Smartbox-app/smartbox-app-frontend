@@ -1,8 +1,9 @@
 import React from 'react';
+
 import { Header, Link, Section, Typography } from 'src/components/ui';
 import { getApiBaseUrl } from 'src/config/api-url';
 import { __ } from 'src/helpers/i18n';
-import { StyledPre } from './styles';
+import { StyledPre } from 'src/views/DashboardTenant/ApiAccess/styles';
 
 export type GeneralInfoProps = {
   forAdmin?: boolean;

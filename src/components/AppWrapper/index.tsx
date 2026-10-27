@@ -1,34 +1,35 @@
-import React, { useEffect, useRef } from 'react';
-import { useDispatch } from 'react-redux';
-import { useGetVersionQuery, useGetMyDetailsQuery } from '../../queries';
-import { useLogoutMutation } from 'src/mutations/useLogoutMutation';
-import { useUpdateMyLangMutation } from 'src/mutations/useUpdateMyLangMutation';
-import { useLocation } from 'react-router';
-import { scrollTop } from 'src/utils/scroll-top';
-import { Spinner } from '../Branded';
+import { App } from '@capacitor/app';
 import { Capacitor } from '@capacitor/core';
 import { Device } from '@capacitor/device';
-import { App } from '@capacitor/app';
-import { showModal } from '../../actions/modal';
-import { AppOutdatedModal } from './components/AppOutdatedModal';
-import { AppMaintenanceModal } from './components/AppMaintenanceModal';
-import { useTenant } from '../../hooks/useTenant';
-import { useTracking } from '../../hooks/useTracking';
-import { SocialLogin } from '@capgo/capacitor-social-login';
 import { Preferences } from '@capacitor/preferences';
-import styled from 'styled-components';
-import { history } from 'src/history';
-import { queryClient } from 'src/query-client';
-import { clearUserSession } from 'src/actions/auth';
-import { order } from 'src/actions';
-import { withAttributionSearch } from 'src/utils/attribution-params';
+import { SocialLogin } from '@capgo/capacitor-social-login';
 import i18next from 'i18next';
-import SessionService from 'src/services/session-service';
+import React, { useEffect, useRef } from 'react';
+import { useDispatch } from 'react-redux';
+import { useLocation } from 'react-router';
+import styled from 'styled-components';
+
+import { order } from 'src/actions';
+import { clearUserSession } from 'src/actions/auth';
+import { showModal } from 'src/actions/modal';
+import { AppMaintenanceModal } from 'src/components/AppWrapper/components/AppMaintenanceModal';
+import { AppOutdatedModal } from 'src/components/AppWrapper/components/AppOutdatedModal';
+import { Spinner } from 'src/components/Branded';
+import { history } from 'src/history';
+import { useTenant } from 'src/hooks/useTenant';
+import { useTracking } from 'src/hooks/useTracking';
 import { currentAppLanguage, isAppLanguage } from 'src/i18n/app-language';
+import { useLogoutMutation } from 'src/mutations/useLogoutMutation';
+import { useUpdateMyLangMutation } from 'src/mutations/useUpdateMyLangMutation';
+import { useGetVersionQuery, useGetMyDetailsQuery } from 'src/queries';
+import { queryClient } from 'src/query-client';
+import SessionService from 'src/services/session-service';
+import { withAttributionSearch } from 'src/utils/attribution-params';
 import {
   clearPreloadReloadFlag,
   reloadWithoutServiceWorker,
 } from 'src/utils/reload-without-service-worker';
+import { scrollTop } from 'src/utils/scroll-top';
 
 interface Props {
   children: React.ReactNode;

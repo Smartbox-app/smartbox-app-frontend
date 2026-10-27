@@ -1,1 +1,1 @@
-export * from './Gateways'
+export * from 'src/views/DashboardAdmin/TTLockManagement/Gateways/Gateways'

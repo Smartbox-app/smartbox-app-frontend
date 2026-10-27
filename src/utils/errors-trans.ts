@@ -1,4 +1,4 @@
-import { formOnTranslateString } from './trans-form';
+import { formOnTranslateString } from 'src/utils/trans-form';
 
 export interface TranslatableObject {
   messageWithPlaceholders: string;

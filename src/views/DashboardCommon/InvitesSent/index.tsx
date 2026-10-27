@@ -1,23 +1,27 @@
 import { useDispatch } from 'react-redux';
+
 import { invitationList } from 'smartbox-tables';
 import { UserInvitationListItem } from 'smartbox-types';
-import { Section, ButtonsContainer } from '../../../components/Layout';
-import { ApiTable, ConfirmModal } from '../../../components/Common';
-import { Button } from '../../../components/Branded';
-import { InteractiveTableSchema } from '../../../utils/table-schema-utils';
-import { __ } from '../../../helpers/i18n';
-import { HeaderWithActions } from 'src/components/ui';
-import UserService from 'src/services/user-service';
-import { useGetMyDetailsQuery } from 'src/queries';
-import {
-  deleteSentInvitations,
-  resendInvitations,
-} from 'src/actions/invitations';
 import { showModal } from 'src/actions/modal';
+import { Button } from 'src/components/Branded';
+import { ApiTable, ConfirmModal } from 'src/components/Common';
+import { Section, ButtonsContainer } from 'src/components/Layout';
+import { HeaderWithActions } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
+import {
+  useDeleteInvitationMutation,
+  useResendInvitationMutation,
+} from 'src/mutations';
+import { useGetMyDetailsQuery } from 'src/queries';
+import UserService from 'src/services/user-service';
+import { InteractiveTableSchema } from 'src/utils/table-schema-utils';
 
 export const InvitesSent = () => {
   const dispatch = useDispatch();
   const { data: user } = useGetMyDetailsQuery();
+  const { mutate: resendInvitation } = useResendInvitationMutation();
+  const { mutate: deleteInvitation } = useDeleteInvitationMutation();
+
   const scheme = new InteractiveTableSchema(invitationList).addFieldAtTheEnd({
     name: __('application.actions'),
     field: 'actions',
@@ -26,8 +30,7 @@ export const InvitesSent = () => {
       {
         name: 'application.resend',
         type: 'primary',
-        click: (data: UserInvitationListItem) =>
-          dispatch(resendInvitations(data.id)),
+        click: (data: UserInvitationListItem) => resendInvitation(data.id),
       },
       {
         name: 'application.delete',
@@ -39,7 +42,7 @@ export const InvitesSent = () => {
                 approveButtonText="application.delete"
                 mainText="application.doYouWantDeleteInvite"
                 cancelButtonText="application.cancel"
-                approveAction={() => dispatch(deleteSentInvitations(data.id))}
+                approveAction={() => deleteInvitation(data.id)}
               />,
             ),
           ),

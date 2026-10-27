@@ -1,15 +1,16 @@
-import React from 'react';
 import { ItfApiForm } from 'itf_formbuilder_react';
-import { UserRole } from 'smartbox-types';
+import React from 'react';
 import { useDispatch } from 'react-redux';
-import { Button, Spinner } from '../../../../components/Branded';
-import { ButtonsContainer, FormContainer, Section } from '../../../../components/Layout';
-import ApiService from '../../../../services/api-service';
-import { formOnTranslateString } from '../../../../utils/trans-form';
-import { successNotification } from '../../../../actions/notifications';
-import { __ } from '../../../../helpers/i18n';
-import { mapFields } from '../../../../utils/fields-mapper';
+
+import { UserRole } from 'smartbox-types';
+import { successNotification } from 'src/actions/notifications';
+import { Button, Spinner } from 'src/components/Branded';
+import { ButtonsContainer, FormContainer, Section } from 'src/components/Layout';
+import { __ } from 'src/helpers/i18n';
 import { useGetMyDetailsQuery } from 'src/queries';
+import ApiService from 'src/services/api-service';
+import { mapFields } from 'src/utils/fields-mapper';
+import { formOnTranslateString } from 'src/utils/trans-form';
 
 interface Props {
     userId?: string;

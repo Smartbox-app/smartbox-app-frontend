@@ -1,1 +1,1 @@
-export * from './Invitations';
+export * from 'src/icons/Invitations/Invitations';

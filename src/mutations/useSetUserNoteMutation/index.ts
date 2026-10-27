@@ -1,2 +1,2 @@
-export * from './useSetUserNoteMutation';
+export * from 'src/mutations/useSetUserNoteMutation/useSetUserNoteMutation';
 

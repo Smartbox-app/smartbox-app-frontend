@@ -1,8 +1,9 @@
 import React from 'react';
 import { Switch, Route, Redirect, useParams } from 'react-router';
-import UserService from '../../../../../../services/user-service';
+
 import { useGetMyDetailsQuery } from 'src/queries';
-import { List } from './List';
+import UserService from 'src/services/user-service';
+import { List } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Payments/List';
 
 const Payments = () => {
   const { stockId } = useParams<{ stockId: string }>();

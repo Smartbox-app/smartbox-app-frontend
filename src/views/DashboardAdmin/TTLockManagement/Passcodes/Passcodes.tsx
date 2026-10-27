@@ -1,8 +1,9 @@
 import React from 'react';
 import { Switch, Route, Redirect, useParams } from 'react-router';
-import { Add } from './Add';
-import { Edit } from './Edit';
-import { List } from './List';
+
+import { Add } from 'src/views/DashboardAdmin/TTLockManagement/Passcodes/Add';
+import { Edit } from 'src/views/DashboardAdmin/TTLockManagement/Passcodes/Edit';
+import { List } from 'src/views/DashboardAdmin/TTLockManagement/Passcodes/List';
 
 export const Passcodes = () => {
   const { lockId } = useParams<{ lockId: string }>();

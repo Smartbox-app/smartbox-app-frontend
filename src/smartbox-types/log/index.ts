@@ -1,1 +1,1 @@
-export * from './log';
+export * from 'src/smartbox-types/log/log';

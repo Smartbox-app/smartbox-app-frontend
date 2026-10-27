@@ -1,1 +1,1 @@
-export * from './useSetUserStatusMutation';
+export * from 'src/mutations/useSetUserStatusMutation/useSetUserStatusMutation';

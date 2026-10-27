@@ -1,12 +1,13 @@
-import { SingleAcceptance } from 'smartbox-types';
-import { ButtonsContainer } from '../../../components/Layout';
-import { __ } from '../../../helpers/i18n';
-import { Button } from '../../../components/Branded';
-import Input from '../Input';
 import { ChangeEvent } from 'react';
-import CheckBox from '../CheckBox';
 import styled from 'styled-components';
 import { v4 } from 'uuid';
+
+import { SingleAcceptance } from 'smartbox-types';
+import { Button } from 'src/components/Branded';
+import CheckBox from 'src/components/Common/CheckBox';
+import Input from 'src/components/Common/Input';
+import { ButtonsContainer } from 'src/components/Layout';
+import { __ } from 'src/helpers/i18n';
 import { useI18n } from 'src/i18n';
 
 interface Props {

@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import ApiService from 'src/services/api-service';
+
 import { rentNoteQueryKey } from 'src/queries/useRentNoteQuery/useRentNoteQuery';
+import ApiService from 'src/services/api-service';
 
 export const useSetRentNoteMutation = (rentId?: string) => {
   const queryClient = useQueryClient();

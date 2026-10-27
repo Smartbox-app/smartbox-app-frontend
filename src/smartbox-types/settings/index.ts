@@ -1,1 +1,1 @@
-export * from './settings';
+export * from 'src/smartbox-types/settings/settings';

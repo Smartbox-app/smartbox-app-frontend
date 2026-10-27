@@ -1,1 +1,1 @@
-export * from './Percentage';
+export * from 'src/icons/Percentage/Percentage';

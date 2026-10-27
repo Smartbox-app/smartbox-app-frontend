@@ -1,10 +1,11 @@
 import React from 'react';
-import { useTenant } from '../../../hooks/useTenant';
-import { history } from 'src/history';
-import UserService from '../../../services/user-service';
 import styled from 'styled-components';
-import { useGetMyDetailsQuery } from '../../../queries';
+
+import { history } from 'src/history';
 import { useFileStorage } from 'src/hooks/useFileStorage';
+import { useTenant } from 'src/hooks/useTenant';
+import { useGetMyDetailsQuery } from 'src/queries';
+import UserService from 'src/services/user-service';
 
 type LogoWidths = 'large' | 'medium' | 'small';
 

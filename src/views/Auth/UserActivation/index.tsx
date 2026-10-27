@@ -1,21 +1,20 @@
+import { ItfApiForm } from "itf_formbuilder_react";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router";
 
-import { ItfApiForm } from "itf_formbuilder_react";
 import { AddInvitedUserReq } from "smartbox-types";
-import { successNotification } from "../../../actions/notifications";
-import ApiService from "../../../services/api-service";
-
-import { Spinner, Button, PageContent , Logo } from "../../../components/Branded";
-import { formOnTranslateString } from "../../../utils/trans-form";
+import { successNotification } from "src/actions/notifications";
+import { Spinner, Button, PageContent , Logo } from "src/components/Branded";
 import {
   FormContainer,
   ButtonsContainer,
   PageHeader,
-} from "../../../components/Layout";
+} from "src/components/Layout";
+import { __ } from "src/helpers/i18n";
 import { history } from 'src/history';
-import { __ } from "../../../helpers/i18n";
-import { mapFieldsBig } from "../../../utils/fields-mapper";
+import ApiService from "src/services/api-service";
+import { mapFieldsBig } from "src/utils/fields-mapper";
+import { formOnTranslateString } from "src/utils/trans-form";
 
 const UserActivation = () => {
   const dispatch = useDispatch();

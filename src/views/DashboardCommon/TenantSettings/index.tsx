@@ -1,29 +1,30 @@
 import React from 'react';
 import { Redirect, Route, Switch } from 'react-router';
-import { ManageTenantData } from '../ClientManagement/TenantData';
-import { ManageTenantSlides } from '../ClientManagement/Slides';
-import { ManageTenantFonts } from '../ClientManagement/Fonts';
-import { ManageTenantSmtp } from '../ClientManagement/TenantSmtp';
-import { Header, HeaderWithActions, Section, Tabs } from 'src/components/ui';
+
+import { UserRole } from 'smartbox-types';
 import { Button } from 'src/components/Branded';
 import { ButtonsContainer } from 'src/components/Layout';
-import { AppearanceSettings } from './sections/AppearanceSettings';
-import { AgreementsSettings } from './sections/AgreementsSettings';
-import { DocumentsSettings } from './sections/DocumentsSettings';
-import { CommunicationsSettings } from './sections/CommunicationsSettings';
-import { IntegrationsSettings } from './sections/IntegrationsSettings';
-import { MobileAppsSettings } from './sections/MobileAppsSettings';
-import { AnalyticsSettings } from './sections/AnalyticsSettings';
-import { TemplatesSettings } from './sections/TemplatesSettings';
+import { Header, HeaderWithActions, Section, Tabs } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
+import { useGetMyDetailsQuery } from 'src/queries';
+import UserService from 'src/services/user-service';
+import { ManageTenantFonts } from 'src/views/DashboardCommon/ClientManagement/Fonts';
+import { ManageTenantSlides } from 'src/views/DashboardCommon/ClientManagement/Slides';
+import { ManageTenantData } from 'src/views/DashboardCommon/ClientManagement/TenantData';
+import { ManageTenantSmtp } from 'src/views/DashboardCommon/ClientManagement/TenantSmtp';
+import { AgreementsSettings } from 'src/views/DashboardCommon/TenantSettings/sections/AgreementsSettings';
+import { AnalyticsSettings } from 'src/views/DashboardCommon/TenantSettings/sections/AnalyticsSettings';
+import { AppearanceSettings } from 'src/views/DashboardCommon/TenantSettings/sections/AppearanceSettings';
+import { CommunicationsSettings } from 'src/views/DashboardCommon/TenantSettings/sections/CommunicationsSettings';
+import { DocumentsSettings } from 'src/views/DashboardCommon/TenantSettings/sections/DocumentsSettings';
+import { IntegrationsSettings } from 'src/views/DashboardCommon/TenantSettings/sections/IntegrationsSettings';
+import { MobileAppsSettings } from 'src/views/DashboardCommon/TenantSettings/sections/MobileAppsSettings';
+import { TemplatesSettings } from 'src/views/DashboardCommon/TenantSettings/sections/TemplatesSettings';
 import {
   TENANT_SETTINGS_DEFAULT_SEGMENT,
   useTenantSettingsTabs,
-} from './settingsTabs';
-import { TenantSettingsContext } from './TenantSettingsContext';
-import { __ } from 'src/helpers/i18n';
-import UserService from 'src/services/user-service';
-import { useGetMyDetailsQuery } from 'src/queries';
-import { UserRole } from 'smartbox-types';
+} from 'src/views/DashboardCommon/TenantSettings/settingsTabs';
+import { TenantSettingsContext } from 'src/views/DashboardCommon/TenantSettings/TenantSettingsContext';
 
 type TenantSettingsProps = {
   userId?: string;

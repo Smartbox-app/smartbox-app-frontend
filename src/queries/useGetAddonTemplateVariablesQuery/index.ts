@@ -1,1 +1,1 @@
-export * from './useGetAddonTemplateVariablesQuery';
+export * from 'src/queries/useGetAddonTemplateVariablesQuery/useGetAddonTemplateVariablesQuery';

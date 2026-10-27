@@ -1,9 +1,10 @@
 import React from 'react';
+
 import { Header, Stack, Typography } from 'src/components/ui';
 import { getApiBaseUrl } from 'src/config/api-url';
 import { __ } from 'src/helpers/i18n';
 import { ApiEndpointDoc } from 'src/hooks/useApiAccessEndpoints';
-import { StyledPre } from './styles';
+import { StyledPre } from 'src/views/DashboardTenant/ApiAccess/styles';
 
 const getSampleCode = (path: string) => {
   return `fetch('${getApiBaseUrl()}${path}?stockId=STOCK_ID', {

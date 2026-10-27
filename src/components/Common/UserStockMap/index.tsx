@@ -1,8 +1,9 @@
 import React from 'react';
-import { Spinner } from '../../../components/Branded';
-import { MapView } from '../../../views/DashboardCommon/MapView';
-import { __ } from '../../../helpers/i18n';
+
+import { Spinner } from 'src/components/Branded';
+import { __ } from 'src/helpers/i18n';
 import { useGetStockBoxesQuery, useGetStockQuery } from 'src/queries';
+import { MapView } from 'src/views/DashboardCommon/MapView';
 
 interface Props {
   boxId: string;

@@ -1,1 +1,1 @@
-export * from './useSetRentNoteMutation';
+export * from 'src/mutations/useSetRentNoteMutation/useSetRentNoteMutation';

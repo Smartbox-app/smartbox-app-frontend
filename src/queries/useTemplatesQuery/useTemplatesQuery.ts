@@ -1,7 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
+
 import { TemplateEntity, UserRole } from 'smartbox-types';
-import ApiService from '../../services/api-service';
-import { useGetMyDetailsQuery } from '../useGetMyDetailsQuery';
+import { useGetMyDetailsQuery } from 'src/queries/useGetMyDetailsQuery';
+import ApiService from 'src/services/api-service';
 
 export const templatesQueryKey = (tenantId: string) =>
   ['templates', tenantId] as const;

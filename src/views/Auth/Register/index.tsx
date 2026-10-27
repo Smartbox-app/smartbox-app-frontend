@@ -1,15 +1,11 @@
 import React, { useEffect } from 'react';
-
+import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
+import styled from 'styled-components';
 
-import { ButtonsContainer } from '../../../components/Layout';
-
-import { PageContent, Logo } from '../../../components/Branded';
-
-import { modal, notifications } from '../../../actions';
-import { history } from 'src/history';
-import { __ } from '../../../helpers/i18n';
-
+import { modal, notifications } from 'src/actions';
+import { PageContent, Logo } from 'src/components/Branded';
+import { ButtonsContainer } from 'src/components/Layout';
 import {
   Button,
   CheckBox,
@@ -21,16 +17,16 @@ import {
   Stack,
   Typography,
 } from 'src/components/ui';
+import { RegisterDto } from 'src/dto/RegisterDto';
+import { __ } from 'src/helpers/i18n';
+import { history } from 'src/history';
 import { useTenant } from 'src/hooks/useTenant';
 import { useTracking } from 'src/hooks/useTracking';
 import { useRegisterMutation } from 'src/mutations';
-import { RegisterDto } from 'src/dto/RegisterDto';
-import { useForm } from 'react-hook-form';
 import { ClassValidatorResolver } from 'src/resolvers/ClassValidatorResolver';
-import styled from 'styled-components';
-import { AccountRegisteredModal } from './AccountRegisteredModal';
 import { isSmsAccountConfirmation } from 'src/utils/account-confirmation';
 import { buildActivateAccountPath } from 'src/utils/activate-account-url';
+import { AccountRegisteredModal } from 'src/views/Auth/Register/AccountRegisteredModal';
 
 const RegisterForm = styled('div')(({ theme }) => ({
   width: '100%',
@@ -125,7 +121,7 @@ const Register = () => {
                   placeholder="auth.phone_placeholder"
                   error={errors['phone']?.message}
                   required
-                  help="Podaj numer telefonu wraz z numerem kierunkowym (np. +48)"
+                  help="auth.phone_help"
                   {...register('phone')}
                 />
                 <Input
@@ -170,7 +166,7 @@ const Register = () => {
                     <Link target="_blank" href="/rules" rel="noreferrer">
                       <u>{__('application.statutes')}</u>
                     </Link>{' '}
-                    i{' '}
+                    {__('application.and')}{' '}
                     <Link
                       target="_blank"
                       href="/privacy-policy"

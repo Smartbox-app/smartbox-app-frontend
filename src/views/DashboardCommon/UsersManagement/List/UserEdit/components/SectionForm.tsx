@@ -1,10 +1,11 @@
-import React from 'react';
 import { ItfApiForm } from 'itf_formbuilder_react';
+import React from 'react';
+
 import { Button, Spinner } from 'src/components/Branded';
 import { ButtonsContainer, FieldsColumn } from 'src/components/Layout';
 import ApiService from 'src/services/api-service';
-import { formOnTranslateString } from 'src/utils/trans-form';
 import { mapFields } from 'src/utils/fields-mapper';
+import { formOnTranslateString } from 'src/utils/trans-form';
 
 type SectionFormProps = {
   formId: string;

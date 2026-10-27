@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
+
 import { GateHealthCheckStatus, GatesStatusForAdminRes } from 'smartbox-types';
-
-import { fullDate } from '../../../utils/format-date';
-import ApiService from '../../../services/api-service';
-
-import './GateStatus.scss';
-import { __ } from '../../../helpers/i18n';
-import { useTenantNaming } from 'src/hooks/useTenantNaming';
 import { Skeleton } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
+import { useTenantNaming } from 'src/hooks/useTenantNaming';
+import ApiService from 'src/services/api-service';
+import { fullDate } from 'src/utils/format-date';
+
+import 'src/views/DashboardCommon/GateStatus/GateStatus.scss';
 
 interface Props {
   stockId?: string;

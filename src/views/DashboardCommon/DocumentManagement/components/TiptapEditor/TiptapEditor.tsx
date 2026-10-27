@@ -2,12 +2,13 @@ import '@tiptap/extension-table';
 import '@tiptap/extension-text-align';
 import { useEditor, EditorContent } from '@tiptap/react';
 import { useEffect, useMemo, useRef } from 'react';
-import { EditorRoot, EditorToolbarSticky, EditorWrapper } from '../styled';
-import { TiptapMenuBar } from '../TiptapMenuBar';
-import { TiptapTableToolbar } from '../TiptapTableToolbar';
-import { TiptapTemplateToolbar } from '../TiptapTemplateToolbar';
-import { getDocumentEditorExtensions } from 'src/config/tiptap';
+
 import { DocumentType, TiptapDocument } from 'smartbox-types';
+import { getDocumentEditorExtensions } from 'src/config/tiptap';
+import { EditorRoot, EditorToolbarSticky, EditorWrapper } from 'src/views/DashboardCommon/DocumentManagement/components/styled';
+import { TiptapMenuBar } from 'src/views/DashboardCommon/DocumentManagement/components/TiptapMenuBar';
+import { TiptapTableToolbar } from 'src/views/DashboardCommon/DocumentManagement/components/TiptapTableToolbar';
+import { TiptapTemplateToolbar } from 'src/views/DashboardCommon/DocumentManagement/components/TiptapTemplateToolbar';
 
 type Props = {
   value: TiptapDocument;

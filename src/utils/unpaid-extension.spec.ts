@@ -5,7 +5,7 @@ import {
   isUnpaidExtensionStatus,
   isUnpaidPeriodStatus,
   isUnpaidRentStatus,
-} from './unpaid-extension';
+} from 'src/utils/unpaid-extension';
 
 describe('unpaid rent status', () => {
   it('classifies extension, period, and ended-unpaid statuses', () => {

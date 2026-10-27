@@ -1,14 +1,15 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { showModal } from '../../../../actions/modal';
-import { NoPhoneModal } from '../../../../components/Common/NoPhoneModal';
-import { UnpaidRentModal } from '../../../../components/Common/UnpaidRentModal';
-import UserService from '../../../../services/user-service';
+
+import { showModal } from 'src/actions/modal';
+import { NoPhoneModal } from 'src/components/Common/NoPhoneModal';
+import { UnpaidRentModal } from 'src/components/Common/UnpaidRentModal';
+import { Button } from 'src/components/ui';
 import { history } from 'src/history';
-import { useGetMyDetailsQuery, useGetMyRentsQuery } from 'src/queries';
-import { Button } from '../../../../components/ui';
-import { Add } from '../../../../icons';
 import { useTenantNaming } from 'src/hooks/useTenantNaming';
+import { Add } from 'src/icons';
+import { useGetMyDetailsQuery, useGetMyRentsQuery } from 'src/queries';
+import UserService from 'src/services/user-service';
 import { findUnpaidRent } from 'src/utils/unpaid-extension';
 
 export const NewRentButton = () => {

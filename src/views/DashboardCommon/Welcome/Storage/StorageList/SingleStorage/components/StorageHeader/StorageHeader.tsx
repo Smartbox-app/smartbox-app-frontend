@@ -1,11 +1,12 @@
 import styled from 'styled-components';
+
+import { Badge } from 'src/components/ui';
 import {
   ArrowRightCircle,
   ArrowRightCircleHovered,
   Error,
   InfoCircle
-} from '../../../../../../../../icons';
-import { Badge } from 'src/components/ui';
+} from 'src/icons';
 
 const StyledStorageHeader = styled('header')(({ theme }) => ({
   display: 'flex',

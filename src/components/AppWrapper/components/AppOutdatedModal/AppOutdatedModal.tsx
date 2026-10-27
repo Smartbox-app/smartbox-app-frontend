@@ -1,7 +1,8 @@
 import styled from 'styled-components';
-import { __ } from '../../../../helpers/i18n';
-import { Modal, Typography } from '../../../ui';
+
 import { Logo } from 'src/components/Branded';
+import { Modal, Typography } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
 
 const StyledContainer = styled('div')({
   alignItems: 'center',

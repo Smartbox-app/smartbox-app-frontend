@@ -1,5 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
+
 import {
   FieldType,
   TableSchema,
@@ -13,24 +14,24 @@ import {
   UserStatus,
   UserType,
 } from 'smartbox-types';
-import { ApiTable, ConfirmModal } from '../../../../components/Common';
-import { Button } from '../../../../components/Branded';
-import { ButtonsContainer, Section } from '../../../../components/Layout';
-import { __ } from '../../../../helpers/i18n';
-import { InteractiveTableSchema } from '../../../../utils/table-schema-utils';
-import { showModal } from '../../../../actions/modal';
-import UserDetail from './UserDetail';
-import UserEdit from './UserEdit';
-import UserService from '../../../../services/user-service';
-import { useGetMyDetailsQuery } from 'src/queries';
+import { showModal } from 'src/actions/modal';
+import { Button } from 'src/components/Branded';
+import { ApiTable, ConfirmModal } from 'src/components/Common';
+import { ButtonsContainer, Section } from 'src/components/Layout';
+import { HeaderWithActions } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
 import {
   useDeleteUserByForceMutation,
   useDeleteUserMutation,
   useResendUserActivationMutation,
   useSetUserStatusMutation,
 } from 'src/mutations';
-import { HeaderWithActions } from 'src/components/ui';
-import { UserNoteEditModal } from './UserDetail/UserNoteEditModal';
+import { useGetMyDetailsQuery } from 'src/queries';
+import UserService from 'src/services/user-service';
+import { InteractiveTableSchema } from 'src/utils/table-schema-utils';
+import UserDetail from 'src/views/DashboardCommon/UsersManagement/List/UserDetail';
+import { UserNoteEditModal } from 'src/views/DashboardCommon/UsersManagement/List/UserDetail/UserNoteEditModal';
+import UserEdit from 'src/views/DashboardCommon/UsersManagement/List/UserEdit';
 
 const List = () => {
   const dispatch = useDispatch();

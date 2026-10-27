@@ -1,25 +1,26 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
+import { useParams } from 'react-router';
+
 import { FieldType, addonList } from 'smartbox-tables';
 import { AddonListRes, ApiErrorCode } from 'smartbox-types';
-import { Alert, ApiTable, ConfirmModal } from '../../../../../../../components/Common';
-import { Button } from '../../../../../../../components/Branded';
-import { ButtonsContainer } from '../../../../../../../components/Layout';
-import { __ } from '../../../../../../../helpers/i18n';
-import { InteractiveTableSchema } from '../../../../../../../utils/table-schema-utils';
-import UserService from '../../../../../../../services/user-service';
-import { showModal } from '../../../../../../../actions/modal';
+import { refreshApiTableData } from 'src/actions/api-table';
+import { showModal } from 'src/actions/modal';
 import {
   errorNotification,
   successNotification,
-} from '../../../../../../../actions/notifications';
-import { refreshApiTableData } from '../../../../../../../actions/api-table';
-import { useParams } from 'react-router';
-import { Edit } from '../Edit';
-import { useGetMyDetailsQuery } from 'src/queries';
-import { useDeleteAddonMutation } from 'src/mutations';
+} from 'src/actions/notifications';
+import { Button } from 'src/components/Branded';
+import { Alert, ApiTable, ConfirmModal } from 'src/components/Common';
+import { ButtonsContainer } from 'src/components/Layout';
 import { HeaderWithActions, Section } from 'src/components/ui';
-import { CannotDeleteAddonModal } from '../CannotDeleteAddonModal';
+import { __ } from 'src/helpers/i18n';
+import { useDeleteAddonMutation } from 'src/mutations';
+import { useGetMyDetailsQuery } from 'src/queries';
+import UserService from 'src/services/user-service';
+import { InteractiveTableSchema } from 'src/utils/table-schema-utils';
+import { CannotDeleteAddonModal } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Addons/CannotDeleteAddonModal';
+import { Edit } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Addons/Edit';
 
 const List = () => {
   const { data: user } = useGetMyDetailsQuery();

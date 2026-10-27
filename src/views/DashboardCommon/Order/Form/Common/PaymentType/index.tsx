@@ -1,4 +1,3 @@
-import { __ } from '../../../../../../helpers/i18n';
 import {
   MyRentDetails,
   RentPaymentType,
@@ -6,10 +5,11 @@ import {
   StockPaymentType,
   StockRes,
 } from 'smartbox-types';
-import { SinglePaymentType } from './SinglePaymentType';
-import { Header, Section } from 'src/components/ui';
-import { InstallmentsPaymentMinDaysInfo } from '../InstallmentsPaymentMinDaysInfo';
 import { AsterixRequired } from 'src/components/Common';
+import { Header, Section } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
+import { InstallmentsPaymentMinDaysInfo } from 'src/views/DashboardCommon/Order/Form/Common/InstallmentsPaymentMinDaysInfo';
+import { SinglePaymentType } from 'src/views/DashboardCommon/Order/Form/Common/PaymentType/SinglePaymentType';
 
 type Props = {
   stock: StockRes;

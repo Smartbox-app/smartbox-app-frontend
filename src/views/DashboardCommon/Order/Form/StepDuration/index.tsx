@@ -1,9 +1,9 @@
+import { addDays, endOfDay, startOfDay, startOfToday } from 'date-fns';
 import React, { useEffect, useMemo } from 'react';
 import { useForm, Controller } from 'react-hook-form';
-
 import { useDispatch, useSelector } from 'react-redux';
+import styled from 'styled-components';
 
-import { addDays, endOfDay, startOfDay, startOfToday } from 'date-fns';
 import {
   AddonUserFileRequirementType,
   RentAgreementType,
@@ -11,25 +11,7 @@ import {
   StockAgreementType,
   StockPaymentType,
 } from 'smartbox-types';
-import { DateInput } from '../../../../../components/Common';
-import { __ } from '../../../../../helpers/i18n';
-import { StyledInputHelp } from '../../../../../components/Common/input-styled';
-import { Spinner } from '../../../../../components/Branded';
-import { ButtonsContainer } from '../../../../../components/Layout';
-import { ApplicationState } from '../../../../../reducers';
-import UserService from '../../../../../services/user-service';
-
-import Price from '../Common/Price';
-
-import './StepDuration.scss';
-
-import styled from 'styled-components';
 import {
-  calculateAddonPrice,
-  calculateOpenEndedAddonPrice,
-  calculateOpenEndedPrice,
-  calculatePrice,
-  clearAddonPrice,
   clearPaymentDetails,
   setMinDaysForInstallments,
   setOrderFullStock,
@@ -37,25 +19,38 @@ import {
   setRentEndDate,
   setRentPaymentType,
   setRentStartDate,
-} from '../../../../../actions/order';
-import { Addons } from '../Common/Addons';
-import { PaymentType } from '../Common/PaymentType';
-import { AgreementTypeSelect } from '../Common/AgreementTypeSelect';
-import { useGetMyDetailsQuery, useGetStockQuery } from 'src/queries';
+} from 'src/actions/order';
+import { Spinner } from 'src/components/Branded';
+import { DateInput } from 'src/components/Common';
+import { StyledInputHelp } from 'src/components/Common/input-styled';
+import { ButtonsContainer } from 'src/components/Layout';
 import { Button, Section, Stack } from 'src/components/ui';
-import { ArrowLeft, ArrowRight } from 'src/icons';
 import { RentDurationDto } from 'src/dto/RentDurationDto';
-import { ClassValidatorResolver } from 'src/resolvers/ClassValidatorResolver';
-import { RentDuration } from '../Common/RentDuration';
+import { __ } from 'src/helpers/i18n';
 import { history } from 'src/history';
+import { useBridgeCalculatedPriceToRedux } from 'src/hooks/useBridgeOrderPriceQuery';
+import { useSyncAddonPricesToRedux } from 'src/hooks/useSyncAddonPricesToRedux';
 import { useTracking } from 'src/hooks/useTracking';
+import { ArrowLeft, ArrowRight } from 'src/icons';
+import { useGetMyDetailsQuery, useGetStockQuery } from 'src/queries';
+import { useBoxGroupPriceQuery } from 'src/queries/useRentPriceQueries';
+import { ApplicationState } from 'src/reducers';
+import { ClassValidatorResolver } from 'src/resolvers/ClassValidatorResolver';
+import UserService from 'src/services/user-service';
 import { resolveCheckoutAgreementType } from 'src/utils/agreement-policy';
+import { buildInitiateCheckoutPayload } from 'src/utils/build-initiate-checkout-payload';
 import {
   clampedFixedTermEndDate,
   initialFixedTermEndDate,
   isNewRentPeriodAcceptable,
 } from 'src/utils/rent-period-bounds';
-import { buildInitiateCheckoutPayload } from 'src/utils/build-initiate-checkout-payload';
+import { Addons } from 'src/views/DashboardCommon/Order/Form/Common/Addons';
+import { AgreementTypeSelect } from 'src/views/DashboardCommon/Order/Form/Common/AgreementTypeSelect';
+import { PaymentType } from 'src/views/DashboardCommon/Order/Form/Common/PaymentType';
+import Price from 'src/views/DashboardCommon/Order/Form/Common/Price';
+import { RentDuration } from 'src/views/DashboardCommon/Order/Form/Common/RentDuration';
+
+import 'src/views/DashboardCommon/Order/Form/StepDuration/StepDuration.scss';
 
 const StyledCalendarPicker = styled.div`
   justify-content: center;
@@ -88,7 +83,6 @@ const StepDuration = () => {
     endDate,
     loadingPrice,
     orderAddons,
-    orderAddonsId,
     calculatedPrice,
     rentPaymentType,
     agreementType,
@@ -106,6 +100,48 @@ const StepDuration = () => {
   const isOpenEnded = selectedAgreementType === RentAgreementType.OpenEnded;
   const periodDays = stock?.openEndedPeriodDays || 30;
   const paymentMethods = stock?.clientPaymentTypeConfig;
+
+  const priceQueryEnabled = useMemo(() => {
+    if (!minRentPeriod || !boxGroupId) return false;
+    if (isOpenEnded) return !endDate;
+    if (!endDate) return false;
+    return !clampedFixedTermEndDate(
+      startDate,
+      endDate,
+      rentPaymentType,
+      minRentPeriod,
+      maxRentPeriod,
+      minRentDaysForInstallments,
+    );
+  }, [
+    minRentPeriod,
+    boxGroupId,
+    isOpenEnded,
+    endDate,
+    startDate,
+    rentPaymentType,
+    maxRentPeriod,
+    minRentDaysForInstallments,
+  ]);
+
+  const rentPriceQuery = useBoxGroupPriceQuery({
+    boxGroupId,
+    start: startOfDay(startDate),
+    end: endDate ? endOfDay(endDate) : undefined,
+    type: rentPaymentType || RentPaymentType.InAdvance,
+    openEnded: isOpenEnded,
+    enabled: priceQueryEnabled,
+  });
+  useBridgeCalculatedPriceToRedux(rentPriceQuery);
+
+  useSyncAddonPricesToRedux({
+    orderAddons,
+    startDate,
+    endDate,
+    rentPaymentType,
+    boxGroupId,
+    openEnded: isOpenEnded,
+  });
 
   const { data: stockData } = useGetStockQuery(stockId);
 
@@ -131,10 +167,7 @@ const StepDuration = () => {
     if (isOpenEnded) {
       if (endDate) {
         dispatch(setRentEndDate(null));
-        return;
       }
-      dispatch(calculateOpenEndedPrice(boxGroupId, startOfDay(startDate)));
-      calculateAllAddons();
       return;
     }
     if (!endDate) {
@@ -148,8 +181,6 @@ const StepDuration = () => {
       return;
     }
 
-    const startOfStart = startOfDay(startDate);
-    const endOfEnd = endOfDay(endDate);
     const clampedEnd = clampedFixedTermEndDate(
       startDate,
       endDate,
@@ -160,19 +191,7 @@ const StepDuration = () => {
     );
     if (clampedEnd) {
       dispatch(setRentEndDate(clampedEnd));
-      return;
     }
-
-    dispatch(
-      calculatePrice(
-        boxGroupId,
-        startOfStart,
-        endOfEnd,
-        rentPaymentType || RentPaymentType.InAdvance,
-      ),
-    );
-
-    calculateAllAddons();
   }, [
     startDate,
     endDate,
@@ -182,10 +201,6 @@ const StepDuration = () => {
     minRentDaysForInstallments,
     isOpenEnded,
   ]);
-
-  useEffect(() => {
-    calculateAllAddons();
-  }, [orderAddonsId]);
 
   useEffect(() => {
     if (!stock) return;
@@ -216,43 +231,6 @@ const StepDuration = () => {
       }
     }
   }, [stock, isOpenEnded, paymentMethods]);
-
-  const calculateAllAddons = () => {
-    if (isOpenEnded) {
-      Object.keys(orderAddons).forEach((addonId) => {
-        const addon = orderAddons[addonId];
-        if (addon.selectedVariant) {
-          dispatch(
-            calculateOpenEndedAddonPrice(
-              addonId,
-              startDate,
-              addon.selectedVariant,
-              boxGroupId,
-            ),
-          );
-          return;
-        }
-        dispatch(clearAddonPrice(addonId));
-      });
-      return;
-    }
-    if (!endDate) return;
-    Object.keys(orderAddons).forEach((addonId) => {
-      const addon = orderAddons[addonId];
-      if (addon.selectedVariant)
-        dispatch(
-          calculateAddonPrice(
-            addonId,
-            startDate,
-            endDate,
-            rentPaymentType || RentPaymentType.InAdvance,
-            addon.selectedVariant,
-            boxGroupId,
-          ),
-        );
-      else dispatch(clearAddonPrice(addonId));
-    });
-  };
 
   const setMinDate = (addAmount = 0, end?: boolean) => {
     return addDays(end ? startDate : startOfToday(), addAmount);

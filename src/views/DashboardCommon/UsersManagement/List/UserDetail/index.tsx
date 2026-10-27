@@ -1,16 +1,14 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
+
 import { UserListRes, UserRes, UserRole } from 'smartbox-types';
-import { fetchSingleUser } from '../../../../../actions/users';
+import { Spinner } from 'src/components/Branded';
+import { Row } from 'src/components/Common';
 import { Modal } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
-
-import './UserDetail.scss';
-import { ApplicationState } from '../../../../../reducers';
+import { useUserDetailsQuery, useUserNoteQuery } from 'src/queries';
 import UserRentList from 'src/views/DashboardCommon/UserRentList';
-import { Row } from 'src/components/Common';
-import { Spinner } from 'src/components/Branded';
-import { useUserNoteQuery } from 'src/queries';
+
+import 'src/views/DashboardCommon/UsersManagement/List/UserDetail/UserDetail.scss';
 
 interface Props {
   userId: string;
@@ -18,51 +16,47 @@ interface Props {
 }
 
 const UserDetail = ({ userId, userData }: Props) => {
-  const dispatch = useDispatch();
-  const singleUser = useSelector(
-    (state: ApplicationState) => state.user.singleUser,
-  ) as UserRes;
+  const { data: singleUser, isPending: isUserPending } =
+    useUserDetailsQuery(userId);
   const { data: noteData, isPending: isNotePending } = useUserNoteQuery(userId);
 
-  useEffect(() => {
-    dispatch(fetchSingleUser(userId));
-  }, [dispatch, userId]);
+  if (!userData || isUserPending || !singleUser) return <Spinner />;
 
-  if (!userData) return <Spinner />;
+  const userDetails = singleUser as UserRes;
 
   return (
     <>
       <Modal.Header title={__('application.userDetails')} />
       <Modal.Content>
-        <Row label="application.firstName" content={singleUser.firstName} />
-        <Row label="application.lastName" content={singleUser.lastName} />
-        <Row label="application.userRole" content={singleUser.role} />
+        <Row label="application.firstName" content={userDetails.firstName} />
+        <Row label="application.lastName" content={userDetails.lastName} />
+        <Row label="application.userRole" content={userDetails.role} />
 
-        <Row label="application.mail" content={singleUser.email} />
-        <Row label="application.phone" content={singleUser.phone} />
+        <Row label="application.mail" content={userDetails.email} />
+        <Row label="application.phone" content={userDetails.phone} />
 
-        <Row label="application.city" content={singleUser.city} />
-        <Row label="application.street" content={singleUser.street} />
-        <Row label="application.postCode" content={singleUser.postCode} />
+        <Row label="application.city" content={userDetails.city} />
+        <Row label="application.street" content={userDetails.street} />
+        <Row label="application.postCode" content={userDetails.postCode} />
 
-        {singleUser.companyData && singleUser.role === UserRole.user && (
+        {userDetails.companyData && userDetails.role === UserRole.user && (
           <>
             <Row
               label="application.companyName"
-              content={singleUser.companyData.companyName}
+              content={userDetails.companyData.companyName}
             />
-            <Row label="application.nip" content={singleUser.companyData.nip} />
+            <Row label="application.nip" content={userDetails.companyData.nip} />
             <Row
               label="application.city"
-              content={singleUser.companyData.companyCity}
+              content={userDetails.companyData.companyCity}
             />
             <Row
               label="application.street"
-              content={singleUser.companyData.companyStreet}
+              content={userDetails.companyData.companyStreet}
             />
             <Row
               label="application.postCode"
-              content={singleUser.companyData.companyPostCode}
+              content={userDetails.companyData.companyPostCode}
             />
           </>
         )}

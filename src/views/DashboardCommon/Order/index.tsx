@@ -1,25 +1,23 @@
 import React, { useEffect } from 'react';
-
-import { useParams } from 'react-router';
-import { ProgressIndicator } from '../../../components/Common';
-
-import { Form } from './Form/Index';
 import { useDispatch } from 'react-redux';
-import { getStockDiscountsList } from '../../../actions/stock';
-import { showModal } from '../../../actions/modal';
+import { useParams } from 'react-router';
+
 import { RentStatus } from 'smartbox-types';
-import { PageHeader, Section } from '../../../components/ui';
-import { __ } from '../../../helpers/i18n';
+import { showModal } from 'src/actions/modal';
+import { ProgressIndicator } from 'src/components/Common';
+import { UnpaidRentModal } from 'src/components/Common/UnpaidRentModal';
+import { PageHeader, Section } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
+import { history } from 'src/history';
 import { useTenantNaming } from 'src/hooks/useTenantNaming';
 import {
   useGetMyDetailsQuery,
   useGetMyRentsQuery,
   useMyRentDetailsQuery,
 } from 'src/queries';
-import { UnpaidRentModal } from 'src/components/Common/UnpaidRentModal';
-import { history } from 'src/history';
 import UserService from 'src/services/user-service';
 import { findUnpaidRent } from 'src/utils/unpaid-extension';
+import { Form } from 'src/views/DashboardCommon/Order/Form/Index';
 
 export const Order = () => {
   const dispatch = useDispatch();
@@ -35,10 +33,6 @@ export const Order = () => {
   const { data: extendRent } = useMyRentDetailsQuery(rentId);
   const unpaidRent = findUnpaidRent(rentsList);
   const isNewRentFlow = !rentId || step === 'stock' || step === 'size';
-
-  useEffect(() => {
-    dispatch(getStockDiscountsList());
-  }, []);
 
   useEffect(() => {
     if (!user || !isNewRentFlow || loadingRents || !unpaidRent) {

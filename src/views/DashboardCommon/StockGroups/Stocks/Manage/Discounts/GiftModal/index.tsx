@@ -1,8 +1,8 @@
 import React from 'react';
-import { __ } from '../../../../../../../helpers/i18n';
-import { Modal } from 'src/components/ui';
 
-import { Form } from './Form';
+import { Modal } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
+import { Form } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Discounts/GiftModal/Form';
 
 interface Props {
   stockId: string;

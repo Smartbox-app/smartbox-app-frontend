@@ -1,10 +1,11 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { ApplicationState } from '../../../../../../reducers';
-import { order } from '../../../../../../actions';
-import { CheckBox } from '../../../../../../components/Common';
+
+import { order } from 'src/actions';
+import { CheckBox } from 'src/components/Common';
 import { __ } from 'src/helpers/i18n';
 import { useTenant } from 'src/hooks/useTenant';
+import { ApplicationState } from 'src/reducers';
 
 const ScrollPosition = () => {
   const dispatch = useDispatch();

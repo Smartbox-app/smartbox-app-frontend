@@ -1,5 +1,6 @@
 import { CameraErrorCode } from '@capacitor/camera';
-import { isCameraPermissionDenied } from './capture-end-rent-photo';
+
+import { isCameraPermissionDenied } from 'src/utils/capture-end-rent-photo';
 
 describe('isCameraPermissionDenied', () => {
   it('matches the camera permission error and ignores other values', () => {

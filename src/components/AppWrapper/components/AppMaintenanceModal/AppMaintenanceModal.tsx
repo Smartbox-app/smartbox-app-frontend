@@ -1,7 +1,8 @@
 import styled from 'styled-components';
-import { __ } from '../../../../helpers/i18n';
-import { Modal, Typography } from '../../../ui';
-import { Settings } from '../../../../icons';
+
+import { Modal, Typography } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
+import { Settings } from 'src/icons';
 
 const StyledContainer = styled('div')({
   display: 'flex',

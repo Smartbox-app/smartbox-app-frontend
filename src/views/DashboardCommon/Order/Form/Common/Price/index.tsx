@@ -1,15 +1,15 @@
 import React, { useMemo } from 'react';
-import styled from 'styled-components';
-import { formatPrice } from '../../../../../../utils/format-price';
-import { __ } from '../../../../../../helpers/i18n';
-
 import { useSelector } from 'react-redux';
-import { ApplicationState } from '../../../../../../reducers';
+import styled from 'styled-components';
 
-import './Price.scss';
-import { Header, Section } from 'src/components/ui';
 import { PriceDisplayForClients, RentAgreementType } from 'smartbox-types';
+import { Header, Section } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
 import { useI18n } from 'src/i18n';
+import { ApplicationState } from 'src/reducers';
+import { formatPrice } from 'src/utils/format-price';
+
+import 'src/views/DashboardCommon/Order/Form/Common/Price/Price.scss';
 
 const StyledPrice = styled.strong`
   font-size: 40px;

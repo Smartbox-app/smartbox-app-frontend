@@ -1,1 +1,1 @@
-export * from './useGetDocumentByIdQuery';
+export * from 'src/queries/useGetDocumentByIdQuery/useGetDocumentByIdQuery';

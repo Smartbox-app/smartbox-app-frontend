@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
-import ApiService from '../../services/api-service';
+
 import { TenantSmtpConfig } from 'smartbox-types';
+import ApiService from 'src/services/api-service';
 
 export const useTenantSmtpConfigQuery = (tenantOwnerId?: string) => {
   return useQuery({

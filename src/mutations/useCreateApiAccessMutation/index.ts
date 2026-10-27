@@ -1,1 +1,1 @@
-export * from './useCreateApiAccessMutation';
+export * from 'src/mutations/useCreateApiAccessMutation/useCreateApiAccessMutation';

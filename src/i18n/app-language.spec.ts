@@ -1,4 +1,4 @@
-import { detectBrowserLanguage, isAppLanguage } from './app-language';
+import { detectBrowserLanguage, isAppLanguage } from 'src/i18n/app-language';
 
 describe('detectBrowserLanguage', () => {
   it('uses the first supported language in the list', () => {

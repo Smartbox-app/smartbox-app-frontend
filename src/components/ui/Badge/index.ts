@@ -1,1 +1,1 @@
-export * from './Badge';
+export * from 'src/components/ui/Badge/Badge';

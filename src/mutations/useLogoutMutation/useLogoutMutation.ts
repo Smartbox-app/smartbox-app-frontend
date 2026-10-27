@@ -1,12 +1,13 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import ApiService from '../../services/api-service';
-import { useDispatch } from 'react-redux';
-import { notifications, order } from 'src/actions';
 import { Capacitor } from '@capacitor/core';
 import { Preferences } from '@capacitor/preferences';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import i18next from 'i18next';
-import SessionService from 'src/services/session-service';
+import { useDispatch } from 'react-redux';
+
+import { notifications, order } from 'src/actions';
 import { detectBrowserLanguage } from 'src/i18n/app-language';
+import ApiService from 'src/services/api-service';
+import SessionService from 'src/services/session-service';
 
 export const useLogoutMutation = () => {
   const queryClient = useQueryClient();
@@ -22,7 +23,7 @@ export const useLogoutMutation = () => {
       );
 
       dispatch(notifications.successNotification('notification.logOutSuccess'));
-      dispatch({ type: 'REFRESH_API_TABLE' });
+      void queryClient.invalidateQueries({ queryKey: ['api-table'] });
       dispatch({ type: 'REFRESH_API_GRID' });
       dispatch(order.clearOrder());
 

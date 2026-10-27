@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
-import ApiService from '../../services/api-service';
+
 import { MyRentList, RentStatus } from 'smartbox-types';
+import ApiService from 'src/services/api-service';
 
 function sortRentHistory(items: MyRentList[]): MyRentList[] {
   const active: MyRentList[] = [];

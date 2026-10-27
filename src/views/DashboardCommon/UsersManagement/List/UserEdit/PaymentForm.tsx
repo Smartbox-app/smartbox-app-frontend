@@ -1,16 +1,17 @@
-import React, { useRef } from 'react';
 import { ItfApiForm } from 'itf_formbuilder_react';
-import { UpdateSomeonePaymentReq, PaymentDeadlineChange } from 'smartbox-types';
+import React, { useRef } from 'react';
 import { useDispatch } from 'react-redux';
+
+import { UpdateSomeonePaymentReq, PaymentDeadlineChange } from 'smartbox-types';
+import { showModal } from 'src/actions/modal';
 import { Button, Spinner } from 'src/components/Branded';
 import { ButtonsContainer, FieldsColumn } from 'src/components/Layout';
-import { showModal } from 'src/actions/modal';
 import ApiService from 'src/services/api-service';
-import { formOnTranslateString } from 'src/utils/trans-form';
 import { mapFields } from 'src/utils/fields-mapper';
+import { formOnTranslateString } from 'src/utils/trans-form';
 import {
   PaymentDeadlinePreviewModal,
-} from './components/PaymentDeadlinePreviewModal';
+} from 'src/views/DashboardCommon/UsersManagement/List/UserEdit/components/PaymentDeadlinePreviewModal';
 
 type PaymentFormProps = {
   userId: string;

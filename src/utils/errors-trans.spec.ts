@@ -1,4 +1,4 @@
-import { format, translateErrors } from './errors-trans';
+import { format, translateErrors } from 'src/utils/errors-trans';
 
 describe('error translation', () => {
   it('replaces numbered placeholders and leaves missing ones', () => {

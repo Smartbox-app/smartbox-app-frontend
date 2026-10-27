@@ -1,1 +1,1 @@
-export * from './useGetStockGroupsListQuery';
+export * from 'src/queries/useGetStockGroupsListQuery/useGetStockGroupsListQuery';

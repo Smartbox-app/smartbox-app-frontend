@@ -1,7 +1,8 @@
+import styled from 'styled-components';
+
 import { BoxGroupUserRes } from 'smartbox-types';
 import { useFileStorage } from 'src/hooks/useFileStorage';
 import { StockImage } from 'src/icons/StockImage';
-import styled from 'styled-components';
 
 export type OptionImageProps = {
   option: BoxGroupUserRes;

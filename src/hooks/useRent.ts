@@ -1,4 +1,5 @@
 import { useCallback } from 'react';
+
 import { RentAgreementType } from 'smartbox-types';
 import { __ } from 'src/helpers/i18n';
 import { dateOnly } from 'src/utils/format-date';

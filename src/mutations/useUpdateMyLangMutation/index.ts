@@ -1,1 +1,1 @@
-export * from './useUpdateMyLangMutation';
+export * from 'src/mutations/useUpdateMyLangMutation/useUpdateMyLangMutation';

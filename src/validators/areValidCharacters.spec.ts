@@ -1,4 +1,4 @@
-import { hasValidCharacters } from './areValidCharacters';
+import { hasValidCharacters } from 'src/validators/areValidCharacters';
 
 describe('hasValidCharacters', () => {
   it('allows polish letters, digits, and empty values', () => {

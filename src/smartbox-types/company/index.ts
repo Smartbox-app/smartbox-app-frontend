@@ -1,4 +1,4 @@
-import { SelectOption } from '../select';
+import { SelectOption } from 'src/smartbox-types/select';
 
 export interface CompanyEntity {
   id: string;

@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
+
 import { hideModal } from 'src/actions/modal';
 import { ButtonsContainer } from 'src/components/Layout';
 import { Button, Form, Input, Modal, Typography } from 'src/components/ui';

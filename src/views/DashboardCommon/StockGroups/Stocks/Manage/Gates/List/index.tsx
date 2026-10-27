@@ -1,28 +1,30 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { GateAdminList, UserRole } from 'smartbox-types';
+import { useParams } from 'react-router';
+
 import { FieldType, gateList } from 'smartbox-tables';
-import { showModal } from '../../../../../../../actions/modal';
-import { successNotification } from '../../../../../../../actions/notifications';
-import ApiService from '../../../../../../../services/api-service';
-import { ApiTable, ConfirmModal } from '../../../../../../../components/Common';
-import { Button } from '../../../../../../../components/Branded';
+import { GateAdminList, UserRole } from 'smartbox-types';
+import { refreshApiTableData } from 'src/actions/api-table';
+import { showModal } from 'src/actions/modal';
+import { successNotification } from 'src/actions/notifications';
+import { Button } from 'src/components/Branded';
+import { ApiTable, ConfirmModal } from 'src/components/Common';
 import {
   Section,
   ButtonsContainer,
-} from '../../../../../../../components/Layout';
-import { __ } from '../../../../../../../helpers/i18n';
-import { InteractiveTableSchema } from '../../../../../../../utils/table-schema-utils';
-import { refreshApiTableData } from '../../../../../../../actions/api-table';
-import { useParams } from 'react-router';
-import UserService from '../../../../../../../services/user-service';
-import { gate } from '../../../../../../../actions';
-import { useGetMyDetailsQuery } from 'src/queries';
+} from 'src/components/Layout';
 import { HeaderWithActions, Typography } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
+import { useOpenGateMutation } from 'src/mutations';
+import { useGetMyDetailsQuery } from 'src/queries';
+import ApiService from 'src/services/api-service';
+import UserService from 'src/services/user-service';
+import { InteractiveTableSchema } from 'src/utils/table-schema-utils';
 
 const List = () => {
   const { data: user } = useGetMyDetailsQuery();
   const dispatch = useDispatch();
+  const { mutate: openGate } = useOpenGateMutation();
   const scheme = new InteractiveTableSchema(gateList);
   const { stockId } = useParams<{ stockId: string }>();
 
@@ -38,7 +40,7 @@ const List = () => {
         <Button
           success
           text="application.openGate"
-          click={() => openGate(data)}
+          click={() => openGateByStaff(data)}
         />
         {hasFullAccess && data.hasKeypad && data.passcode ? (
           <Button
@@ -65,8 +67,8 @@ const List = () => {
     ),
   });
 
-  const openGate = (data: GateAdminList) => {
-    dispatch(gate.askGateToOpenByStaff(data.id));
+  const openGateByStaff = (data: GateAdminList) => {
+    openGate({ gateId: data.id, mode: 'staff' });
   };
 
   const confirmResetPasscode = (data: GateAdminList) => {

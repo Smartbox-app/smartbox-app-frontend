@@ -1,4 +1,4 @@
-import type { WebViewCachePlugin } from './web-view-cache';
+import type { WebViewCachePlugin } from 'src/plugins/web-view-cache';
 
 export class WebViewCacheWeb implements WebViewCachePlugin {
   async clear(): Promise<void> {

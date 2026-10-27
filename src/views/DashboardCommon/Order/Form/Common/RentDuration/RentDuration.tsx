@@ -1,8 +1,9 @@
 import { differenceInCalendarDays } from 'date-fns';
 import { useSelector } from 'react-redux';
+import styled from 'styled-components';
+
 import { __ } from 'src/helpers/i18n';
 import { ApplicationState } from 'src/reducers';
-import styled from 'styled-components';
 
 const StyledInfo = styled.div`
   text-align: center;

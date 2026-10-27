@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
+
 import { StockStatistics } from 'smartbox-types';
 import ApiService from 'src/services/api-service';
 

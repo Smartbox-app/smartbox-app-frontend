@@ -1,8 +1,9 @@
 import React from 'react';
-import { PageHeader } from '../../../components/Layout';
-import SingleDepartment from './SingleDepartment';
 
-import './Contact.scss';
+import { PageHeader } from 'src/components/Layout';
+import SingleDepartment from 'src/views/DashboardCommon/Contact/SingleDepartment';
+
+import 'src/views/DashboardCommon/Contact/Contact.scss';
 
 const Contact = () => {
   return (

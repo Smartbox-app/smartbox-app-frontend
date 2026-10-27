@@ -1,8 +1,8 @@
 import { ApiErrorCode } from 'smartbox-types';
-import { translateApiErrorCode } from '../../utils/trans-form';
-import { currentAppLanguage } from '../../i18n/app-language';
-import { FieldType, TableSchema } from '../typings';
-import { translateSystemLogAction } from './system-log-actions';
+import { currentAppLanguage } from 'src/i18n/app-language';
+import { translateSystemLogAction } from 'src/smartbox-tables/schemas/system-log-actions';
+import { FieldType, TableSchema } from 'src/smartbox-tables/typings';
+import { translateApiErrorCode } from 'src/utils/trans-form';
 
 export const systemLogAdminTableSchema: TableSchema = {
   countPerPage: 50,

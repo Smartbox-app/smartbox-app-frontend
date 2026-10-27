@@ -1,22 +1,23 @@
 import React, { useCallback, useMemo, useRef, useState } from 'react';
-import styled, { css } from 'styled-components';
-import { SingleBox } from '../StockGroups/Stocks/Manage/Map/SingleBox';
-import { MapGrid } from '../StockGroups/Stocks/Manage/Map/MapGrid';
-import { MapLayoutContext } from '../StockGroups/Stocks/Manage/Map/MapLayoutContext';
-import { BoxMapLayoutItem, BoxMapRes, BoxMapUserRes, StockRes } from 'smartbox-types';
-import { CheckBox } from '../../../components/Common';
-import { useI18n } from 'src/i18n';
-import { Button } from 'src/components/Branded';
-import { ButtonsContainer } from 'src/components/Layout';
 import { useDispatch } from 'react-redux';
+import styled, { css } from 'styled-components';
+
+import { BoxMapLayoutItem, BoxMapRes, BoxMapUserRes, StockRes } from 'smartbox-types';
 import { successNotification } from 'src/actions/notifications';
+import { Button } from 'src/components/Branded';
+import { CheckBox } from 'src/components/Common';
+import { ButtonsContainer } from 'src/components/Layout';
+import { useFileStorage } from 'src/hooks/useFileStorage';
+import { useI18n } from 'src/i18n';
 import { useUpdateBoxesMapLayoutMutation } from 'src/mutations';
+import { MapGrid } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Map/MapGrid';
+import { MapLayoutContext } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Map/MapLayoutContext';
+import { SingleBox } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Map/SingleBox';
 import {
   BoxMapLayoutUpdate,
   getBoxLayoutFromBox,
   isSameBoxLayout,
-} from '../StockGroups/Stocks/Manage/Map/utils/map-layout';
-import { useFileStorage } from 'src/hooks/useFileStorage';
+} from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Map/utils/map-layout';
 
 interface Props {
   boxes: (BoxMapRes | BoxMapUserRes)[];

@@ -1,7 +1,7 @@
-import { Item } from './Item';
-import { Bar } from './Bar';
+import { Bar } from 'src/components/Common/ProgressIndicator/Bar';
+import { Item } from 'src/components/Common/ProgressIndicator/Item';
 
-import './ProgressIndicator.scss';
+import 'src/components/Common/ProgressIndicator/ProgressIndicator.scss';
 
 interface SingleStep {
   value: number;

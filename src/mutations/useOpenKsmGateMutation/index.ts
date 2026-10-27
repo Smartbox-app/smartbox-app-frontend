@@ -1,1 +1,1 @@
-export * from './useOpenKsmGateMutation';
+export * from 'src/mutations/useOpenKsmGateMutation/useOpenKsmGateMutation';

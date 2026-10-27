@@ -1,1 +1,1 @@
-export * from './endMyAgreementMutation';
+export * from 'src/mutations/useEndMyAgreementMutation/endMyAgreementMutation';

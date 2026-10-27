@@ -1,13 +1,14 @@
+import { Capacitor } from '@capacitor/core';
+import { Geolocation, PermissionStatus } from '@capacitor/geolocation';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
+
 import { Coordinate, RentGate } from 'smartbox-types';
-import { OpenGateByForceModal } from 'src/components/Common/OpenGateByForceModal';
 import { modal } from 'src/actions';
-import { askGateToOpen } from 'src/actions/gate';
+import { OpenGateByForceModal } from 'src/components/Common/OpenGateByForceModal';
 import { Button } from 'src/components/ui';
-import { Geolocation, PermissionStatus } from '@capacitor/geolocation';
-import { Capacitor } from '@capacitor/core';
 import { __ } from 'src/helpers/i18n';
+import { useOpenGateMutation } from 'src/mutations';
 
 interface Props {
   gate: RentGate;
@@ -21,6 +22,7 @@ export const GateButton = ({
   disabled = false,
 }: Props) => {
   const dispatch = useDispatch();
+  const { mutate: openGate, isPending } = useOpenGateMutation();
   const [loading, setLoading] = useState(false);
 
   const handleError = () => {
@@ -76,7 +78,7 @@ export const GateButton = ({
   const tryToOpenGateByLocation = async () => {
     try {
       const location = await getCurrentLocation();
-      dispatch(askGateToOpen(gate.id, location));
+      openGate({ gateId: gate.id, geo: location, mode: 'default' });
     } catch (error: unknown) {
       if (error instanceof Error && error.message === 'not_supported') {
         dispatch(
@@ -118,7 +120,7 @@ export const GateButton = ({
 
   return (
     <Button
-      disabled={disabled || loading}
+      disabled={disabled || loading || isPending}
       text={withName ? undefined : 'application.openGate'}
       rawText={
         withName

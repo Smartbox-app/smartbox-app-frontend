@@ -1,9 +1,10 @@
 import React from 'react';
-import styled from 'styled-components';
-import { useTenant } from '../../../hooks/useTenant';
-import { Container } from '../../ui';
 import { useLocation } from 'react-router';
+import styled from 'styled-components';
+
+import { Container } from 'src/components/ui';
 import { useFileStorage } from 'src/hooks/useFileStorage';
+import { useTenant } from 'src/hooks/useTenant';
 
 export type PageContentVariant = 'default' | 'dashboard';
 

@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { ManageTenantSettingsForm } from '../TenantSettingsForm';
-import { __ } from '../../../../helpers/i18n';
+
+import { __ } from 'src/helpers/i18n';
+import { ManageTenantSettingsForm } from 'src/views/DashboardCommon/ClientManagement/TenantSettingsForm';
 
 interface Props {
   userId?: string;

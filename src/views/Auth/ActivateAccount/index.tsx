@@ -1,20 +1,10 @@
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { useLocation } from 'react-router';
 import { useDispatch } from 'react-redux';
-import { ClassValidatorResolver } from 'src/resolvers/ClassValidatorResolver';
-import { ActivateAccountCodeDto } from 'src/dto/ActivateAccountCodeDto';
-import {
-  useActivateUserByCodeMutation,
-  useResendActivationMutation,
-} from 'src/mutations';
-import { useTenant } from 'src/hooks/useTenant';
-import { isSmsAccountConfirmation } from 'src/utils/account-confirmation';
-import {
-  buildActivateAccountPath,
-  getActivationTokenFromSearch,
-} from 'src/utils/activate-account-url';
-import { history } from 'src/history';
+import { useLocation } from 'react-router';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+
 import { notifications } from 'src/actions';
 import { Logo } from 'src/components/Branded';
 import { ButtonsContainer, FormContainer } from 'src/components/Layout';
@@ -27,9 +17,20 @@ import {
   Stack,
   Typography,
 } from 'src/components/ui';
+import { ActivateAccountCodeDto } from 'src/dto/ActivateAccountCodeDto';
 import { __ } from 'src/helpers/i18n';
-import { Link } from 'react-router-dom';
-import styled from 'styled-components';
+import { history } from 'src/history';
+import { useTenant } from 'src/hooks/useTenant';
+import {
+  useActivateUserByCodeMutation,
+  useResendActivationMutation,
+} from 'src/mutations';
+import { ClassValidatorResolver } from 'src/resolvers/ClassValidatorResolver';
+import { isSmsAccountConfirmation } from 'src/utils/account-confirmation';
+import {
+  buildActivateAccountPath,
+  getActivationTokenFromSearch,
+} from 'src/utils/activate-account-url';
 
 const StyledContent = styled('div')({
   maxWidth: 600,

@@ -1,1 +1,1 @@
-export * from './useLogoutMutation';
+export * from 'src/mutations/useLogoutMutation/useLogoutMutation';

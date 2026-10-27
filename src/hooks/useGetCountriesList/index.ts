@@ -1,1 +1,1 @@
-export * from './useGetCountriesList';
+export * from 'src/hooks/useGetCountriesList/useGetCountriesList';

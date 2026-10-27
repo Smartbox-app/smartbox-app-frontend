@@ -1,1 +1,1 @@
-export * from './Header';
+export * from 'src/components/ui/Header/Header';

@@ -1,11 +1,12 @@
 import { subYears } from 'date-fns';
-import { DateInput, InputSelect } from '../../../../../../components/Common';
-import { useTenant } from '../../../../../../hooks/useTenant';
 import { Controller, useFormContext } from 'react-hook-form';
-import { RentDataDto } from './dto/RentDataDto';
+
+import { DateInput, InputSelect } from 'src/components/Common';
 import { Header, Input } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
 import { useGetCountriesList } from 'src/hooks/useGetCountriesList';
+import { useTenant } from 'src/hooks/useTenant';
+import { RentDataDto } from 'src/views/DashboardCommon/Order/Form/StepSummary/TenantDetailsForm/dto/RentDataDto';
 
 interface Props {
   disabled?: boolean;

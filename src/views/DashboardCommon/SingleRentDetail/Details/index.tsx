@@ -1,12 +1,12 @@
 import { MyRentDetails } from 'smartbox-types';
-import { dateOnly, dateOnlyLocalTime } from '../../../../utils/format-date';
-import { __ } from '../../../../helpers/i18n';
-import { translateBoxDisplayStatus } from '../../../../utils/box-display-status';
-import { Row } from '../../../../components/Common';
-
-import './Details.scss';
-import { useTenantNaming } from 'src/hooks/useTenantNaming';
+import { Row } from 'src/components/Common';
+import { __ } from 'src/helpers/i18n';
 import { useRent } from 'src/hooks/useRent';
+import { useTenantNaming } from 'src/hooks/useTenantNaming';
+import { translateBoxDisplayStatus } from 'src/utils/box-display-status';
+import { dateOnly, dateOnlyLocalTime } from 'src/utils/format-date';
+
+import 'src/views/DashboardCommon/SingleRentDetail/Details/Details.scss';
 
 interface Props {
   singleRent: MyRentDetails;

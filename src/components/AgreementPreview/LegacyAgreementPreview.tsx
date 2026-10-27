@@ -1,17 +1,18 @@
+import { Capacitor } from '@capacitor/core';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import styled from 'styled-components';
-import type { AgreementTemplateInput } from 'src/utils/agreement-template-query';
+
 import { Spinner } from 'src/components/Branded';
 import { Alert } from 'src/components/Common';
+import { ButtonsContainer } from 'src/components/Layout';
 import { Button } from 'src/components/ui';
 import { SearchZoomIn } from 'src/icons';
-import { ButtonsContainer } from 'src/components/Layout';
 import ApiService from 'src/services/api-service';
+import type { AgreementTemplateInput } from 'src/utils/agreement-template-query';
 import {
   buildLegacyAgreementPath,
   buildLegacyAgreementUrl,
 } from 'src/utils/agreement-template-query';
-import { Capacitor } from '@capacitor/core';
 import { handleFileOpen } from 'src/utils/handle-file-open';
 
 const AgreementWrapper = styled.div`

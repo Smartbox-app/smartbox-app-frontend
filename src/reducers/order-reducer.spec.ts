@@ -1,5 +1,5 @@
 import { AddonRes, PriceDisplayForClients } from 'smartbox-types';
-import orderReducer from './order-reducer';
+import orderReducer from 'src/reducers/order-reducer';
 
 const addon = (overrides: Partial<AddonRes> = {}): AddonRes =>
   ({

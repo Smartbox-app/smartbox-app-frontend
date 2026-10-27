@@ -1,9 +1,10 @@
 import { useMutation } from '@tanstack/react-query';
 import { useDispatch } from 'react-redux';
+
 import { UserStatus } from 'smartbox-types';
-import ApiService from '../../services/api-service';
-import { refreshApiTableData } from '../../actions/api-table';
-import { successNotification } from '../../actions/notifications';
+import { refreshApiTableData } from 'src/actions/api-table';
+import { successNotification } from 'src/actions/notifications';
+import ApiService from 'src/services/api-service';
 
 export type SetUserStatusAction = 'active' | 'blocked';
 

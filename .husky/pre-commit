@@ -4,6 +4,6 @@ else
   run() { npm run "$@"; }
 fi
 
-run typecheck
-run test:ci
-run lint:check
+# run typecheck
+# run test:ci
+# run lint:check

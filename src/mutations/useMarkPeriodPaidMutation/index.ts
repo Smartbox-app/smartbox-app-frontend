@@ -1,1 +1,1 @@
-export * from './useMarkPeriodPaidMutation';
+export * from 'src/mutations/useMarkPeriodPaidMutation/useMarkPeriodPaidMutation';

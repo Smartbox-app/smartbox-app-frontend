@@ -1,10 +1,17 @@
+import { Capacitor } from '@capacitor/core';
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Capacitor } from '@capacitor/core';
+import styled from 'styled-components';
+
 import { MyRentDetails, RentStatus } from 'smartbox-types';
-import { ConfirmModal } from '../../../../../components/Common';
-import { useEndMyAgreementMutation, useEndMyRentMutation } from 'src/mutations';
+import { hideModal, showModal } from 'src/actions/modal';
+import { errorNotificationText } from 'src/actions/notifications';
+import { ConfirmModal } from 'src/components/Common';
+import { ButtonsContainer } from 'src/components/Layout';
+import { Button, Modal } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
 import { useTenant } from 'src/hooks/useTenant';
+import { useEndMyAgreementMutation, useEndMyRentMutation } from 'src/mutations';
 import { canCaptureEndRentPhoto } from 'src/utils/can-capture-end-rent-photo';
 import {
   captureEndRentPhotoWithCamera,
@@ -15,15 +22,9 @@ import {
   EndRentPhotoTooOldError,
   getFilePhotoTakenAt,
 } from 'src/utils/end-rent-photo-age';
-import { Button, Modal } from 'src/components/ui';
-import { __ } from 'src/helpers/i18n';
-import styled from 'styled-components';
-import { ButtonsContainer } from 'src/components/Layout';
-import { hideModal, showModal } from 'src/actions/modal';
-import { RentEndedSuccessModal } from './RentEndedSuccessModal';
-import { errorNotificationText } from 'src/actions/notifications';
-import { isOpenEndedAgreement, latestPeriodFinishAt } from 'src/utils/rent';
 import { dateOnly } from 'src/utils/format-date';
+import { isOpenEndedAgreement, latestPeriodFinishAt } from 'src/utils/rent';
+import { RentEndedSuccessModal } from 'src/views/DashboardCommon/SingleRentDetail/Action/EndingModal/RentEndedSuccessModal';
 
 type EndingModalProps = {
   rent: MyRentDetails;

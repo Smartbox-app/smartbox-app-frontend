@@ -1,5 +1,6 @@
 import { Browser } from '@capacitor/browser';
 import { Capacitor } from '@capacitor/core';
+
 import { history } from 'src/history';
 import ApiService from 'src/services/api-service';
 

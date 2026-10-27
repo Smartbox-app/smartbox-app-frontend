@@ -1,4 +1,4 @@
-import { StockListRes } from "../stock/stock-entity";
+import { StockListRes } from "src/smartbox-types/stock/stock-entity";
 
 export interface StockGroupEntity {
     id: string;

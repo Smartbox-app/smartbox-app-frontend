@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import ApiService from '../../services/api-service';
-import { myRentDetailsQueryKey } from '../../queries';
+
+import { myRentDetailsQueryKey } from 'src/queries';
+import ApiService from 'src/services/api-service';
 
 export const useEndMyAgreementMutation = () => {
   const queryClient = useQueryClient();

@@ -1,6 +1,7 @@
 import { Browser } from '@capacitor/browser';
 import { Capacitor } from '@capacitor/core';
 import { Preferences } from '@capacitor/preferences';
+
 import { SignedDownloadUrlRes } from 'smartbox-types';
 import ApiService from 'src/services/api-service';
 

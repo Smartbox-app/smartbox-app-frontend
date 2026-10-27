@@ -1,1 +1,1 @@
-export * from './useGetRentAgreementHtmlQuery';
+export * from 'src/queries/useGetRentAgreementHtmlQuery/useGetRentAgreementHtmlQuery';

@@ -1,6 +1,8 @@
 import countries from 'i18n-iso-countries';
 import { useMemo } from 'react';
+
 import { currentAppLanguage, type AppLanguage } from 'src/i18n/app-language';
+import { COUNTRY_LOCALE } from 'src/utils/country-locale';
 
 const PRIORITY_COUNTRIES: Record<AppLanguage, string[]> = {
   pl: ['Polska', 'Ukraina', 'Niemcy', 'Austria'],
@@ -8,15 +10,6 @@ const PRIORITY_COUNTRIES: Record<AppLanguage, string[]> = {
   cz: ['Polsko', 'Ukrajina', 'Německo', 'Rakousko'],
   ua: ['Польща', 'Україна', 'Німеччина', 'Австрія'],
   de: ['Polen', 'Ukraine', 'Deutschland', 'Österreich'],
-};
-
-/** i18n-iso-countries uses ISO 639-1 codes, not the stored app codes. */
-const COUNTRY_LOCALE: Record<AppLanguage, string> = {
-  pl: 'pl',
-  en: 'en',
-  cz: 'cs',
-  ua: 'uk',
-  de: 'de',
 };
 
 export const useGetCountriesList = () => {

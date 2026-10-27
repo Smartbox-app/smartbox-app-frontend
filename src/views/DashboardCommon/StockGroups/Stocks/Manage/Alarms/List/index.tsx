@@ -1,20 +1,20 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { SingleAlarmRes } from 'smartbox-types';
-import { alarmsList } from 'smartbox-tables';
-import { showModal } from '../../../../../../../actions/modal';
-
-import { ApiTable, ConfirmModal } from '../../../../../../../components/Common';
-import { Spinner } from '../../../../../../../components/Branded';
-import { Section } from '../../../../../../../components/Layout';
-import { __ } from '../../../../../../../helpers/i18n';
-import { InteractiveTableSchema } from '../../../../../../../utils/table-schema-utils';
-import { refreshApiTableData } from '../../../../../../../actions/api-table';
 import { useParams } from 'react-router';
+
+import { alarmsList } from 'smartbox-tables';
+import { SingleAlarmRes } from 'smartbox-types';
+import { refreshApiTableData } from 'src/actions/api-table';
+import { showModal } from 'src/actions/modal';
+import { successNotification } from 'src/actions/notifications';
+import { Spinner } from 'src/components/Branded';
+import { ApiTable, ConfirmModal } from 'src/components/Common';
+import { Section } from 'src/components/Layout';
 import { Header, Typography } from 'src/components/ui';
-import ApiService from '../../../../../../../services/api-service';
-import { successNotification } from '../../../../../../../actions/notifications';
-import { LocationActivityList } from '../LocationActivityList';
+import { __ } from 'src/helpers/i18n';
+import ApiService from 'src/services/api-service';
+import { InteractiveTableSchema } from 'src/utils/table-schema-utils';
+import { LocationActivityList } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Alarms/LocationActivityList';
 
 const List = () => {
   const dispatch = useDispatch();

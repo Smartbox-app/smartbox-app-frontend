@@ -1,11 +1,13 @@
-import React, { MouseEvent } from 'react';
 import { FieldAndEventFunction } from 'itf_formbuilder_react';
-import ApiService from '../../../services/api-service';
-import { Button } from '../../Branded/Button';
-import './FileInput.scss';
-import { __ } from '../../../helpers/i18n';
-import { StyledFieldContainer } from '../input-styled';
-import { ButtonsContainer } from '../../../components/Layout';
+import React, { MouseEvent } from 'react';
+
+import { Button } from 'src/components/Branded/Button';
+import { StyledFieldContainer } from 'src/components/Common/input-styled';
+import { ButtonsContainer } from 'src/components/Layout';
+import { __ } from 'src/helpers/i18n';
+import ApiService from 'src/services/api-service';
+
+import 'src/components/Common/FileInput/FileInput.scss';
 
 interface FileFieldInput {
   name?: string;

@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
+
 import ApiService from 'src/services/api-service';
 
 export type RentNote = {

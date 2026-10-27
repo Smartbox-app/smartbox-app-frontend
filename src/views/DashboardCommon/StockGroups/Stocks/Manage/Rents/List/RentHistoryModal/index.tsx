@@ -1,16 +1,16 @@
 import React from 'react';
+
 import {
   AdminRentListDetails,
   RentAgreementType,
   RentDescription,
 } from 'smartbox-types';
-
-import { RentHistory } from '../../../../../../RentHistory';
-import { Spinner } from '../../../../../../../../components/Branded';
+import { Spinner } from 'src/components/Branded';
+import { RentSummary } from 'src/components/Common/RentSummary/RentSummary';
 import { Modal } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
-import { RentSummary } from '../../../../../../../../components/Common/RentSummary/RentSummary';
 import { useRentDetailsQuery } from 'src/queries';
+import { RentHistory } from 'src/views/DashboardCommon/RentHistory';
 
 interface Props {
   description: RentDescription[];

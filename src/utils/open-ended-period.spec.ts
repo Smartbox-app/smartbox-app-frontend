@@ -1,7 +1,7 @@
 import {
   openEndedFirstPeriodFinish,
   openEndedNextInvoiceDate,
-} from './open-ended-period';
+} from 'src/utils/open-ended-period';
 
 const expectLocalDate = (
   date: Date,

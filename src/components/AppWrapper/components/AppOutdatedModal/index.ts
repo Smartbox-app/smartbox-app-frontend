@@ -1,1 +1,1 @@
-export * from './AppOutdatedModal';
+export * from 'src/components/AppWrapper/components/AppOutdatedModal/AppOutdatedModal';

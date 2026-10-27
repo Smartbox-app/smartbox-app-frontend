@@ -1,20 +1,21 @@
+import { Browser } from '@capacitor/browser';
+import { Capacitor } from '@capacitor/core';
 import React, { useCallback, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router';
+
 import { FieldType, periodsForRentList, TableSchema } from 'smartbox-tables';
 import { FakturowniaInvoiceUserRes } from 'smartbox-types';
-import { ApiTable, ConfirmModal } from 'src/components/Common';
-import ApiService from 'src/services/api-service';
 import { showModal } from 'src/actions/modal';
+import { ApiTable, ConfirmModal } from 'src/components/Common';
+import { RentSummary } from 'src/components/Common/RentSummary/RentSummary';
+import { ButtonsContainer } from 'src/components/Layout';
+import { Section, Button as UIButton, Header } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
 import { useMarkPeriodPaidMutation } from 'src/mutations';
-import { Section, Button as UIButton, Header } from 'src/components/ui';
-import { InteractiveTableSchema } from 'src/utils/table-schema-utils';
-import { Capacitor } from '@capacitor/core';
-import { Browser } from '@capacitor/browser';
-import { ButtonsContainer } from 'src/components/Layout';
 import { useRentDetailsQuery } from 'src/queries';
-import { RentSummary } from '../../../../../../../../components/Common/RentSummary/RentSummary';
+import ApiService from 'src/services/api-service';
+import { InteractiveTableSchema } from 'src/utils/table-schema-utils';
 
 type PeriodRow = {
   id: string;

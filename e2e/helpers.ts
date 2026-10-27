@@ -87,7 +87,7 @@ export const submitRegister = async (page: Page) => {
 
 export const hideCookieBar = async (page: Page) => {
   await page.addInitScript(() => {
-    localStorage.setItem('cookies', 'true');
+    localStorage.setItem('cookies', 'accepted');
   });
 };
 

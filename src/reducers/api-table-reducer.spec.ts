@@ -1,5 +1,5 @@
-import { DEFAULT_API_TABLE_INSTANCE_ID } from '../constants/api-table-instances';
-import apiTableReducer from './api-table-reducer';
+import { DEFAULT_API_TABLE_INSTANCE_ID } from 'src/constants/api-table-instances';
+import apiTableReducer from 'src/reducers/api-table-reducer';
 
 const unknown = { type: 'NOPE' } as never;
 

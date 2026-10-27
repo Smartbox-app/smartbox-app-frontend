@@ -1,25 +1,25 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+
 import {
   BoxListRes,
   BoxMapRes,
   BoxStatus,
   RentStatus,
 } from 'smartbox-types';
-import { useDispatch } from 'react-redux';
-import { successNotification } from '../../../actions/notifications';
-import { Row } from '../../../components/Common';
-import { dateOnly } from '../../../utils/format-date';
-import { __ } from '../../../helpers/i18n';
-import { translateBoxDisplayStatus } from '../../../utils/box-display-status';
-
-import { Edit } from './Edit';
-
-import './BoxDetail.scss';
-import { useGetMyDetailsQuery, useRentDetailsQuery } from '../../../queries';
-import { useRotatePasscodeMutation } from '../../../mutations';
-import { useRent } from 'src/hooks/useRent';
-import { Button, Header, Link, Modal, Section, Typography } from 'src/components/ui';
+import { successNotification } from 'src/actions/notifications';
+import { Row } from 'src/components/Common';
 import { EndRentPhoto } from 'src/components/Common/EndRentPhoto';
+import { Button, Header, Link, Modal, Section, Typography } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
+import { useRent } from 'src/hooks/useRent';
+import { useRotatePasscodeMutation } from 'src/mutations';
+import { useGetMyDetailsQuery, useRentDetailsQuery } from 'src/queries';
+import { translateBoxDisplayStatus } from 'src/utils/box-display-status';
+import { dateOnly } from 'src/utils/format-date';
+import { Edit } from 'src/views/DashboardCommon/BoxDetail/Edit';
+
+import 'src/views/DashboardCommon/BoxDetail/BoxDetail.scss';
 
 interface Props {
   box: BoxListRes | BoxMapRes;

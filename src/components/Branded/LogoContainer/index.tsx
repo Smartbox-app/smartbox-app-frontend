@@ -1,7 +1,9 @@
 import React from 'react';
-import { Logo } from '..';
-import { useTenant } from '../../../hooks/useTenant';
-import './LogoContainer.scss';
+
+import { Logo } from 'src/components/Branded';
+import { useTenant } from 'src/hooks/useTenant';
+
+import 'src/components/Branded/LogoContainer/LogoContainer.scss';
 
 interface Props {
     small?: boolean;

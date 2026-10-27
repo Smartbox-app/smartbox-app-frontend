@@ -1,9 +1,10 @@
+import { lighten } from 'polished';
 import React, { createContext, useContext } from 'react';
 import styled from 'styled-components';
-import { lighten } from 'polished';
-import { colorOrDark } from 'src/utils/color';
-import { Header } from '../Header';
+
+import { Header } from 'src/components/ui/Header';
 import { Close } from 'src/icons';
+import { colorOrDark } from 'src/utils/color';
 
 type ModalContextValue = {
   onClose?: () => void;

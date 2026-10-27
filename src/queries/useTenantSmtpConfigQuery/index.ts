@@ -1,1 +1,1 @@
-export * from './useTenantSmtpConfigQuery';
+export * from 'src/queries/useTenantSmtpConfigQuery/useTenantSmtpConfigQuery';

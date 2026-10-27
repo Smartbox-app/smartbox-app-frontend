@@ -1,5 +1,6 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
+
 import { GateBig } from 'src/icons';
 
 const AnimationContainer = styled.div`

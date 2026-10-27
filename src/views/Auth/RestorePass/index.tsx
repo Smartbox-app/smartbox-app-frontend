@@ -1,22 +1,19 @@
+import { ItfApiForm } from 'itf_formbuilder_react';
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { ItfApiForm } from 'itf_formbuilder_react';
 import { useParams } from 'react-router';
+
 import { RestorPwdPetition, RestorPwdReq } from 'smartbox-types';
-
-import { Spinner, Logo } from '../../../components/Branded';
-import { successNotification } from '../../../actions/notifications';
-import ApiService from '../../../services/api-service';
-
-import { formOnTranslateString } from '../../../utils/trans-form';
-import { FormContainer } from '../../../components/Layout';
-import { __ } from '../../../helpers/i18n';
-import { history } from 'src/history';
-
-import ButtonsSection from './ButtonSection';
-
-import { mapFieldsBig } from '../../../utils/fields-mapper';
+import { successNotification } from 'src/actions/notifications';
+import { Spinner, Logo } from 'src/components/Branded';
+import { FormContainer } from 'src/components/Layout';
 import { InfoContent } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
+import { history } from 'src/history';
+import ApiService from 'src/services/api-service';
+import { mapFieldsBig } from 'src/utils/fields-mapper';
+import { formOnTranslateString } from 'src/utils/trans-form';
+import ButtonsSection from 'src/views/Auth/RestorePass/ButtonSection';
 
 const RestorePass = () => {
     const dispatch = useDispatch();

@@ -1,22 +1,23 @@
-import React from 'react';
 import { ItfApiForm } from 'itf_formbuilder_react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
+
+import { AddonReq } from 'smartbox-types';
+import { refreshApiTableData } from 'src/actions/api-table';
+import { hideModal } from 'src/actions/modal';
+import { successNotification } from 'src/actions/notifications';
+import { Button, Spinner } from 'src/components/Branded';
+import { ReactSelectOverride, ReactCreatableSelectOverride as ReactCreatableSelect } from 'src/components/Common/ReactSelectOverride';
 import {
   ButtonsContainer,
   FormContainer,
-} from '../../../../../../../components/Layout';
+} from 'src/components/Layout';
 import { Modal } from 'src/components/ui';
-import { Button, Spinner } from '../../../../../../../components/Branded';
-import ApiService from '../../../../../../../services/api-service';
-import { formOnTranslateString } from '../../../../../../../utils/trans-form';
-import { ReactSelectOverride, ReactCreatableSelectOverride as ReactCreatableSelect } from '../../../../../../../components/Common/ReactSelectOverride';
-import { successNotification } from '../../../../../../../actions/notifications';
-import { __ } from '../../../../../../../helpers/i18n';
-import { mapFields } from '../../../../../../../utils/fields-mapper';
-import { hideModal } from '../../../../../../../actions/modal';
-import { refreshApiTableData } from '../../../../../../../actions/api-table';
-import { AddonReq } from 'smartbox-types';
-import { serializeBoxGroupIds } from '../serialize-box-group-ids';
+import { __ } from 'src/helpers/i18n';
+import ApiService from 'src/services/api-service';
+import { mapFields } from 'src/utils/fields-mapper';
+import { formOnTranslateString } from 'src/utils/trans-form';
+import { serializeBoxGroupIds } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Addons/serialize-box-group-ids';
 
 interface Props {
   id: string;

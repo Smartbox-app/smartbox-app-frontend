@@ -1,2 +1,2 @@
-export * from './useGetDocumentTenantsQuery';
+export * from 'src/queries/useGetDocumentTenantsQuery/useGetDocumentTenantsQuery';
 

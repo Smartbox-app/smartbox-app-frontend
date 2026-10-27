@@ -1,11 +1,11 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { Button, Spinner } from '../../Branded';
-import { hideModal } from '../../../actions/modal';
 
-import { __ } from '../../../helpers/i18n';
-import { Modal } from 'src/components/ui';
+import { hideModal } from 'src/actions/modal';
+import { Button, Spinner } from 'src/components/Branded';
 import { ButtonsContainer } from 'src/components/Layout';
+import { Modal } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
 
 interface Props {
   mainText: string;

@@ -7,7 +7,7 @@ import {
   isRentWithinFinishAt,
   latestPeriodFinishAt,
   resolveRentFinishAt,
-} from './rent';
+} from 'src/utils/rent';
 
 describe('rent dates', () => {
   const now = new Date(2026, 9, 8, 12);

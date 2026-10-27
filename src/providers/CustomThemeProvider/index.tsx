@@ -1,7 +1,8 @@
-import React, { useMemo } from 'react';
-import { useTenant } from '../../hooks/useTenant';
-import { ThemeProvider } from 'styled-components';
 import { lighten } from 'polished';
+import React, { useMemo } from 'react';
+import { ThemeProvider } from 'styled-components';
+
+import { useTenant } from 'src/hooks/useTenant';
 
 interface Props {
   children: React.ReactNode;

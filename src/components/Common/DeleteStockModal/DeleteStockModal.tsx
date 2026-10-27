@@ -1,11 +1,12 @@
-import { useDispatch } from 'react-redux';
-import { Button } from '../../Branded';
-import { __ } from '../../../helpers/i18n';
-import { useTenantNaming } from 'src/hooks/useTenantNaming';
-import { hideModal } from 'src/actions/modal';
-import { Input, Modal } from 'src/components/ui';
 import { useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
+
+import { hideModal } from 'src/actions/modal';
+import { Button } from 'src/components/Branded';
 import { ButtonsContainer } from 'src/components/Layout';
+import { Input, Modal } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
+import { useTenantNaming } from 'src/hooks/useTenantNaming';
 
 interface Props {
   mainText: string;

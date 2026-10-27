@@ -1,4 +1,4 @@
-import { RentStatus } from '../rent/rent-entity';
+import { RentStatus } from 'src/smartbox-types/rent/rent-entity';
 
 export const GATE_ACCESS_ALLOWED_RENT_STATUSES: RentStatus[] = [
   RentStatus.rented,

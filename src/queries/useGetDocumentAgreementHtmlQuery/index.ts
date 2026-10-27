@@ -1,1 +1,1 @@
-export * from './useGetDocumentAgreementHtmlQuery';
+export * from 'src/queries/useGetDocumentAgreementHtmlQuery/useGetDocumentAgreementHtmlQuery';

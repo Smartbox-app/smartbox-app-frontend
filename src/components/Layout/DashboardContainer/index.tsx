@@ -1,13 +1,15 @@
 import React, { ReactNode, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { Footer } from '../index';
-import './DashboardContainer.scss';
 import styled from 'styled-components';
-import { PageContent } from 'src/components/Branded';
-import { List } from 'src/icons';
-import { __ } from 'src/helpers/i18n';
+
 import { AppMessage } from 'src/components/AppMessage';
+import { PageContent } from 'src/components/Branded';
 import { LanguageSwitcher } from 'src/components/LanguageSwitcher';
+import { Footer } from 'src/components/Layout/index';
+import { __ } from 'src/helpers/i18n';
+import { List } from 'src/icons';
+
+import 'src/components/Layout/DashboardContainer/DashboardContainer.scss';
 
 interface Props {
   children: ReactNode;

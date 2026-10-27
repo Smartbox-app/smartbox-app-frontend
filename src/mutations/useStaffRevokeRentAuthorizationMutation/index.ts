@@ -1,1 +1,1 @@
-export * from './useStaffRevokeRentAuthorizationMutation';
+export * from 'src/mutations/useStaffRevokeRentAuthorizationMutation/useStaffRevokeRentAuthorizationMutation';

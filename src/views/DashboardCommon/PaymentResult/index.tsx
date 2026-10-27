@@ -1,14 +1,13 @@
-import { PaymentDetails, PaymentStatus } from 'smartbox-types';
-
-import { __ } from '../../../helpers/i18n';
 import React, { useEffect, useRef, useState } from 'react';
-import { Button, Header, InfoContent, Typography } from 'src/components/ui';
-import { SuccessCheck } from 'src/icons';
 import { useLocation, useParams } from 'react-router';
-import { Logo, Spinner } from 'src/components/Branded';
-import { history } from 'src/history';
 
+import { PaymentDetails, PaymentStatus } from 'smartbox-types';
+import { Logo, Spinner } from 'src/components/Branded';
+import { Button, Header, InfoContent, Typography } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
+import { history } from 'src/history';
 import { useTracking } from 'src/hooks/useTracking';
+import { SuccessCheck } from 'src/icons';
 import {
   useGetMyDetailsQuery,
   usePaymentDetailsQuery,

@@ -1,7 +1,7 @@
 import {
   buildAddonTemplateVariableOptions,
   normalizeAddonSlug,
-} from './addon-template-variables';
+} from 'src/config/tiptap/addon-template-variables';
 
 describe('addon template variables', () => {
   it('removes spaces from a slug', () => {

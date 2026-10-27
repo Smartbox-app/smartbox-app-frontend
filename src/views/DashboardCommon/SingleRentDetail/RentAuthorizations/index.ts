@@ -1,1 +1,1 @@
-export { RentAuthorizations } from './RentAuthorizations';
+export { RentAuthorizations } from 'src/views/DashboardCommon/SingleRentDetail/RentAuthorizations/RentAuthorizations';

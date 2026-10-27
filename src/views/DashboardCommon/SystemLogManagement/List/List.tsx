@@ -1,26 +1,26 @@
 import React, { ReactNode, useMemo } from 'react';
+
 import {
   FieldType,
   systemLogAdminTableSchema,
   systemLogTableSchema,
   TableSchema,
 } from 'smartbox-tables';
-
-import { ApiTable } from '../../../../components/Common';
-import { ButtonsContainer, Section } from '../../../../components/Layout';
-import {
-  HeaderWithActions,
-  Button as UIButton,
-  Typography,
-} from 'src/components/ui';
-import { __ } from '../../../../helpers/i18n';
-import { useGetMyDetailsQuery } from 'src/queries';
 import {
   UserRole,
   SystemLogAdminListItem,
   SystemLogClientListItem,
   SystemLogMeta,
 } from 'smartbox-types';
+import { ApiTable } from 'src/components/Common';
+import { ButtonsContainer, Section } from 'src/components/Layout';
+import {
+  HeaderWithActions,
+  Button as UIButton,
+  Typography,
+} from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
+import { useGetMyDetailsQuery } from 'src/queries';
 import { handleFileOpen } from 'src/utils/handle-file-open';
 import { InteractiveTableSchema } from 'src/utils/table-schema-utils';
 

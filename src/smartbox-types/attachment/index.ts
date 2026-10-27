@@ -1,4 +1,4 @@
-import { TenantEntity } from "../tenant";
+import { TenantEntity } from "src/smartbox-types/tenant";
 
 export type AttachmentEntity = {
   id: string;

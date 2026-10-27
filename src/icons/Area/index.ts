@@ -1,1 +1,1 @@
-export * from './Area';
+export * from 'src/icons/Area/Area';

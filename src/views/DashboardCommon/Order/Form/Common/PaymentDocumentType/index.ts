@@ -1,1 +1,1 @@
-export * from './PaymentDocumentType';
+export * from 'src/views/DashboardCommon/Order/Form/Common/PaymentDocumentType/PaymentDocumentType';

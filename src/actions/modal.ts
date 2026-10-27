@@ -1,5 +1,6 @@
-import type { AppDispatch } from 'src/types/app-dispatch';
 import React from 'react';
+
+import type { AppDispatch } from 'src/types/app-dispatch';
 
 export const showModal = (content: React.ReactNode, isClosable = true, isFullscreen = false) => (dispatch: AppDispatch) => {
   dispatch({

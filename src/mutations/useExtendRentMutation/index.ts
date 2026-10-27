@@ -1,1 +1,1 @@
-export * from './useExtendRentMutation';
+export * from 'src/mutations/useExtendRentMutation/useExtendRentMutation';

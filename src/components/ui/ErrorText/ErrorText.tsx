@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+
 import { translateUiError } from 'src/utils/translate-ui-error';
 
 export type ErrorTextProps = {

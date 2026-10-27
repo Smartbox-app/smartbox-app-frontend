@@ -1,19 +1,19 @@
-import React from 'react';
 import { ItfApiForm } from 'itf_formbuilder_react';
+import React from 'react';
+import { useDispatch } from 'react-redux';
+
 import { AddGiftReq, GiftRes } from 'smartbox-types';
+import { modal, notifications } from 'src/actions';
+import { Button, Spinner } from 'src/components/Branded';
+import { ReactSelectOverride, ReactCreatableSelectOverride as ReactCreatableSelect } from 'src/components/Common/ReactSelectOverride';
 import {
   ButtonsContainer,
   FormContainer,
-} from '../../../../../../../../components/Layout';
-import { Button, Spinner } from '../../../../../../../../components/Branded';
-import ApiService from '../../../../../../../../services/api-service';
-import { formOnTranslateString } from '../../../../../../../../utils/trans-form';
-
-import { NewCode } from '../NewCode';
-import { ReactSelectOverride, ReactCreatableSelectOverride as ReactCreatableSelect } from '../../../../../../../../components/Common/ReactSelectOverride';
-import { useDispatch } from 'react-redux';
-import { modal, notifications } from '../../../../../../../../actions';
-import { mapFields } from '../../../../../../../../utils/fields-mapper';
+} from 'src/components/Layout';
+import ApiService from 'src/services/api-service';
+import { mapFields } from 'src/utils/fields-mapper';
+import { formOnTranslateString } from 'src/utils/trans-form';
+import { NewCode } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Discounts/GiftModal/NewCode';
 
 interface Props {
   stockId: string;

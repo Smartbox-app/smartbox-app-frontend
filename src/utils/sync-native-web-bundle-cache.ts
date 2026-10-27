@@ -1,8 +1,9 @@
 import { App } from '@capacitor/app';
 import { Capacitor } from '@capacitor/core';
 import { Preferences } from '@capacitor/preferences';
-import { WebViewCache } from '../plugins/web-view-cache';
-import { getMobileBuildId } from './mobile-build-id';
+
+import { WebViewCache } from 'src/plugins/web-view-cache';
+import { getMobileBuildId } from 'src/utils/mobile-build-id';
 
 const NATIVE_BUILD_KEY = 'native_build_version';
 const WEB_BUNDLE_KEY = 'web_bundle_id';

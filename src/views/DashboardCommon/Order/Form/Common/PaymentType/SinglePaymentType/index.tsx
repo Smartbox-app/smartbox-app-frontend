@@ -1,10 +1,11 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { RentPaymentType } from 'smartbox-types';
-import { setRentPaymentType } from '../../../../../../../actions/order';
-import { getColorForBackground } from '../../../../../../../utils/color';
 import styled from 'styled-components';
-import { __ } from '../../../../../../../helpers/i18n';
+
+import { RentPaymentType } from 'smartbox-types';
+import { setRentPaymentType } from 'src/actions/order';
+import { __ } from 'src/helpers/i18n';
 import { ApplicationState } from 'src/reducers';
+import { getColorForBackground } from 'src/utils/color';
 
 type Props = {
   type: RentPaymentType;

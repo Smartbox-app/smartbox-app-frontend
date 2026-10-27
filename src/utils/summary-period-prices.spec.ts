@@ -1,4 +1,4 @@
-import { sumAddonPricesPerPeriod } from './summary-period-prices';
+import { sumAddonPricesPerPeriod } from 'src/utils/summary-period-prices';
 
 describe('sumAddonPricesPerPeriod', () => {
   it('sums net and gross prices that share a period index', () => {

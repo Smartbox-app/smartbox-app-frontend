@@ -14,7 +14,7 @@ test('creates an open-ended rent after the payment is accepted', async ({ page }
   await login(page, e2eOpenEnded.email, e2eOpenEnded.password, /\/user/);
   await page.getByRole('button', { name: 'Nowy minimagazyn' }).click();
 
-  await expect(page.getByRole('heading', { name: 'Proszę wybrać obiekt' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Proszę wybrać plac' })).toBeVisible();
   await page.getByText(e2eStockName, { exact: true }).click();
   await clickNext(page);
 

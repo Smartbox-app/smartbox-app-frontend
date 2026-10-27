@@ -1,12 +1,13 @@
 import React from 'react';
-import { Button, LogoContainer, PageContent } from '../../../components/Branded';
+
+import { Button, LogoContainer, PageContent } from 'src/components/Branded';
 import {
     ButtonsContainer,
     FormContainer,
     Section,
     SectionHeader,
-} from '../../../components/Layout';
-import { __ } from '../../../helpers/i18n';
+} from 'src/components/Layout';
+import { __ } from 'src/helpers/i18n';
 
 const EmailSend = () => {
     return (

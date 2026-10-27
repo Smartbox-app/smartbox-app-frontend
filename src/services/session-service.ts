@@ -3,7 +3,7 @@ import {
   detectBrowserLanguage,
   isAppLanguage,
   type AppLanguage,
-} from '../i18n/app-language';
+} from 'src/i18n/app-language';
 
 export default class SessionService {
   static setCurrentLanguage(lang: string) {

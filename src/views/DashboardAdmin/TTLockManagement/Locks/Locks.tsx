@@ -1,20 +1,21 @@
 import React, { useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router';
+
 import { FieldType } from 'smartbox-tables';
 import { TTGatewayLockDeviceList, TTLockDeviceList } from 'smartbox-types';
 import { showModal } from 'src/actions/modal';
 import { successNotification } from 'src/actions/notifications';
+import { Spinner } from 'src/components/Branded';
 import { Alert, ApiTable } from 'src/components/Common';
 import { Header, Section } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
+import { history } from 'src/history';
 import ApiService from 'src/services/api-service';
 import { gatewayLocksList } from 'src/smartbox-tables/schemas/gateway-lock-list.table';
 import { locksList } from 'src/smartbox-tables/schemas/locks-list.table';
 import { InteractiveTableSchema } from 'src/utils/table-schema-utils';
-import { LockDetails } from './components/LockDetails/LockDetails';
-import { history } from 'src/history';
-import { Spinner } from 'src/components/Branded';
+import { LockDetails } from 'src/views/DashboardAdmin/TTLockManagement/Locks/components/LockDetails/LockDetails';
 
 export const Locks = () => {
   const dispatch = useDispatch();

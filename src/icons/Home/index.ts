@@ -1,1 +1,1 @@
-export * from './Home';
+export * from 'src/icons/Home/Home';

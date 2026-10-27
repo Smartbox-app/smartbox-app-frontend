@@ -1,4 +1,4 @@
-import type plApplication from '../pl/application';
+import type plApplication from 'src/i18n/locales/pl/application';
 
 type LocaleMessages<T> = {
   [K in keyof T]: T[K] extends string ? string : LocaleMessages<T[K]>;
@@ -184,6 +184,32 @@ const application = {
     stockGroups: 'Site groups',
     gates: 'Gates',
     alarms: 'Alarms',
+    diagnostics: 'Diagnostics',
+    diagnosticsInternet: 'Internet connection',
+    diagnosticsGates: 'Gate status',
+    diagnosticsAlarms: 'Alarm status',
+    diagnosticsNoInternet: 'No connection data (not available for this driver)',
+    diagnosticsEmpty: 'No diagnostics available for this site',
+    diagnosticsNoGates: 'No gates to display',
+    diagnosticsNoAlarms: 'No alarms to display',
+    diagnosticsWanPrimary: 'Cable / Wi‑Fi (primary)',
+    diagnosticsWanLte: 'LTE (failover)',
+    diagnosticsWanUnknown: 'Unknown',
+    diagnosticsStatusOk: 'OK',
+    diagnosticsStatusDegraded: 'Degraded',
+    diagnosticsStatusDown: 'Down',
+    diagnosticsAsOf: 'Data as of',
+    diagnosticsLastContact: 'Last contact attempt',
+    diagnosticsWanChangedAt: 'Link state since',
+    diagnosticsBus: 'Bus devices',
+    diagnosticsBusKind: 'Kind',
+    diagnosticsBusMaster: 'Master',
+    diagnosticsBusUnit: 'Unit',
+    diagnosticsBusCovers: 'Locks / gates',
+    diagnosticsBusAnswering: 'Answering',
+    diagnosticsBusSilent: 'Silent',
+    diagnosticsBusUnknown: 'Not checked',
+    diagnosticsBusLastAnswered: 'Last answered',
     account: 'Account',
     logout: 'Log out',
     home: 'Home',
@@ -838,6 +864,9 @@ const application = {
       'The app has been updated. Click here to use the latest version and all of its features.',
     privacyPoliceInfo:
       'This application uses cookies to let users use the site effectively, and\nalso analytics, promotional, and advertising tools for advertising, market research, and studying user\n        preferences. By using the Smartbox application, you can consent to cookies and\n        the tools mentioned above. You can find more information about cookies and these tools in our',
+    cookieConsentTitle: 'Cookies',
+    cookieConsentAccept: 'Accept',
+    cookieConsentReject: 'Reject',
     orderInfo: 'Details',
     dontForgetToBringLock: "Just don't forget to bring your own padlock!",
     stocksList: 'Site list',
@@ -951,7 +980,7 @@ const application = {
     tenantSettingsCommunications: 'Communication',
     tenantSettingsIntegrations: 'Integrations',
     tenantSettingsMessaging: 'Messages',
-    tenantSettingsMobileApps: 'Mobile apps',
+    tenantSettingsMobileApps: 'Mobile apps and PWA',
     tenantSettingsAnalytics: 'Analytics',
     tenantAnalyticsDescription:
       'After you configure the GTM and Meta Pixel identifiers, the application automatically sends conversion events:',
@@ -1367,6 +1396,7 @@ Advanced Matching (separate from the parameters below, email hashed in the brows
         finish: 'Rental completion confirmed',
         forcePaymentAcceptance: 'Payment acceptance forced',
         forcePaymentCancellation: 'Payment cancellation forced',
+        markPeriodAsPaid: 'Period marked as paid',
         notifyPaymentSuccess: 'Successful payment notification',
         passcodeIssued: 'Rental access code issued',
         passcodeRotated: 'Rental access code rotated',
@@ -1454,6 +1484,7 @@ Advanced Matching (separate from the parameters below, email hashed in the brows
         updateTenantMessagingByTenant: 'Franchisee messages updated',
         updateTenantMobileAppsByAdmin:
           'Mobile apps updated by an administrator',
+        updateTenantMobileAppsByTenant: 'Mobile apps and PWA updated',
         uploadAgreementByAdmin:
           'Franchisee agreement uploaded by an administrator',
         uploadAgreementByUser: 'Franchisee agreement uploaded',
@@ -1754,6 +1785,7 @@ Advanced Matching (separate from the parameters below, email hashed in the brows
       splitCell: 'Split',
       deleteTable: 'Delete table',
       insertTable: 'Table',
+      link: 'Link',
       enterUrl: 'Enter URL',
       insertVariable: 'Insert variable',
       insertAddonVariable: 'Insert add-on variable',

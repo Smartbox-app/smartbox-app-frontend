@@ -1,8 +1,9 @@
 import React from 'react';
 
-import './SingleDepartment.scss';
-import { Link } from '../../../../components/ui';
-import { __ } from '../../../../helpers/i18n';
+import { Link } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
+
+import 'src/views/DashboardCommon/Contact/SingleDepartment/SingleDepartment.scss';
 
 interface Props {
   name: string;

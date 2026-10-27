@@ -1,2 +1,2 @@
-export * from './useRentNoteQuery';
+export * from 'src/queries/useRentNoteQuery/useRentNoteQuery';
 

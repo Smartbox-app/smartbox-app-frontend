@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import './SingleOption.scss';
 import { useDispatch, useSelector } from 'react-redux';
-import { ApplicationState } from '../../../../../../../reducers';
 import styled from 'styled-components';
-import { setOrderStock } from '../../../../../../../actions/order';
+
+import { setOrderStock } from 'src/actions/order';
 import { Badge, Card, Typography } from 'src/components/ui';
+import { ApplicationState } from 'src/reducers';
+
+import 'src/views/DashboardCommon/Order/Form/StepStock/Tiles/SingleOption/SingleOption.scss';
 
 interface Props {
   name: string;

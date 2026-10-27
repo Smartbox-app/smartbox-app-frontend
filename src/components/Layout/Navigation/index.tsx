@@ -1,12 +1,12 @@
-import { MenuItemType } from '../../../types/menu-item';
-
-import { LogoContainer } from '../../Branded';
-
-import './Navigation.scss';
-import { useLogoutMutation } from 'src/mutations';
 import styled from 'styled-components';
-import { SidebarButton } from '../../ui/SidebarButton';
-import { Logout } from '../../../icons';
+
+import { LogoContainer } from 'src/components/Branded';
+import { SidebarButton } from 'src/components/ui/SidebarButton';
+import { Logout } from 'src/icons';
+import { useLogoutMutation } from 'src/mutations';
+import { MenuItemType } from 'src/types/menu-item';
+
+import 'src/components/Layout/Navigation/Navigation.scss';
 
 interface Props {
   menuItems: MenuItemType[];

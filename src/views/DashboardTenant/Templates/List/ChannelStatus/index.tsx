@@ -1,7 +1,8 @@
 import styled from 'styled-components';
+
 import { templateLanguage, TemplateListRow } from 'smartbox-types';
 import { __ } from 'src/helpers/i18n';
-import { TemplateChannelGroup } from '../types';
+import { TemplateChannelGroup } from 'src/views/DashboardTenant/Templates/List/types';
 
 const ChannelLine = styled('p')(({ theme }) => ({
   margin: `${theme.spacing}px 0 0`,

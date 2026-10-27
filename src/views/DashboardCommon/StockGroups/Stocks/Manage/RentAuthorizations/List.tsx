@@ -1,17 +1,18 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router';
+
 import { FieldType, rentAuthorizationsList } from 'smartbox-tables';
 import { RentAuthorizationListItem } from 'smartbox-types';
-import { ApiTable, ConfirmModal } from 'src/components/Common';
-import { Button } from 'src/components/Branded';
-import { __ } from 'src/helpers/i18n';
-import { InteractiveTableSchema } from 'src/utils/table-schema-utils';
+import { refreshApiTableData } from 'src/actions/api-table';
 import { showModal } from 'src/actions/modal';
 import { successNotification } from 'src/actions/notifications';
-import { refreshApiTableData } from 'src/actions/api-table';
-import { useRevokeRentAuthorizationByStaffMutation } from 'src/mutations';
+import { Button } from 'src/components/Branded';
+import { ApiTable, ConfirmModal } from 'src/components/Common';
 import { Header, Section } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
+import { useRevokeRentAuthorizationByStaffMutation } from 'src/mutations';
+import { InteractiveTableSchema } from 'src/utils/table-schema-utils';
 
 export const RentAuthorizationsList = () => {
   const dispatch = useDispatch();

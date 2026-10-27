@@ -1,21 +1,10 @@
 import { useEffect, useState, useMemo } from 'react';
-import { AccessControl, TenantEntity, UserRole } from 'smartbox-types';
-
 import { Redirect, Route, Switch, useParams } from 'react-router';
-import UserService from '../../../../../services/user-service';
-import { BasicData } from '../../../StockGroups/Stocks/Manage/BasicData';
-import { StockAgreements } from '../../../StockGroups/Stocks/Manage/Agreements';
-import { Boxes } from './Boxes';
-import { Rents } from './Rents';
-import { Map } from './Map';
-import { Groups } from './Groups';
-import { Discounts } from './Discounts';
-import ApiService from '../../../../../services/api-service';
-import { Handling } from './Handling';
-import { Gates } from './Gates';
-import { Addons } from './Addons';
-import { useGetMyDetailsQuery, useGetStockQuery } from 'src/queries';
+
+import { AccessControl, TenantEntity, UserRole } from 'smartbox-types';
 import { PageHeader, Section, Tabs } from 'src/components/ui';
+import { useTenant } from 'src/hooks/useTenant';
+import { useTenantNaming } from 'src/hooks/useTenantNaming';
 import {
   InfoCircle,
   List as ListIcon,
@@ -32,13 +21,25 @@ import {
   Users,
   Settings,
 } from 'src/icons';
+import { useGetMyDetailsQuery, useGetStockQuery } from 'src/queries';
+import ApiService from 'src/services/api-service';
+import UserService from 'src/services/user-service';
 import GateStatus from 'src/views/DashboardCommon/GateStatus';
-import { useTenantNaming } from 'src/hooks/useTenantNaming';
-import { useTenant } from 'src/hooks/useTenant';
-import { Statistics } from './Statistics';
-import { Alarms } from './Alarms';
-import { Payments } from './Payments';
-import { RentAuthorizationsList } from './RentAuthorizations';
+import { Addons } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Addons';
+import { StockAgreements } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Agreements';
+import { Alarms } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Alarms';
+import { BasicData } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/BasicData';
+import { Boxes } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Boxes';
+import { Diagnostics } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Diagnostics';
+import { Discounts } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Discounts';
+import { Gates } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Gates';
+import { Groups } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Groups';
+import { Handling } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Handling';
+import { Map } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Map';
+import { Payments } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Payments';
+import { RentAuthorizationsList } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/RentAuthorizations';
+import { Rents } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Rents';
+import { Statistics } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Statistics';
 
 const publicTenantAllowsAddons = (tenant: object | null | undefined) =>
   Boolean(
@@ -95,6 +96,11 @@ const Manage = () => {
         icon: <Error />,
       });
     }
+    gatesAndAlarms.push({
+      to: `/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/diagnostics`,
+      text: 'application.diagnostics',
+      icon: <HomeWifi />,
+    });
     const elements = hasFullAccess
       ? [
           {
@@ -252,6 +258,10 @@ const Manage = () => {
           <Route
             path={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/:stockId/alarms`}
             component={Alarms}
+          />
+          <Route
+            path={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/:stockId/diagnostics`}
+            component={Diagnostics}
           />
           {hasFullAccess && (
             <Route

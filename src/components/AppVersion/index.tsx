@@ -2,6 +2,7 @@ import { App } from '@capacitor/app';
 import { Capacitor } from '@capacitor/core';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
+
 import { getMobileBuildId } from 'src/utils/mobile-build-id';
 
 type AppVersionVariants = 'default' | 'secondary';

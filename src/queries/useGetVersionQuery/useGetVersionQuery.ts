@@ -1,12 +1,13 @@
-import { useQuery } from '@tanstack/react-query';
-import ApiService from '../../services/api-service';
 import { App } from '@capacitor/app';
 import { Capacitor } from '@capacitor/core';
 import { Device } from '@capacitor/device';
+import { useQuery } from '@tanstack/react-query';
+
 import {
   AppVersionResponse,
   MobileAppConfigResponse,
 } from 'smartbox-types';
+import ApiService from 'src/services/api-service';
 import { AppConfigInfo } from 'src/types/app-config';
 
 export const useGetVersionQuery = () => {

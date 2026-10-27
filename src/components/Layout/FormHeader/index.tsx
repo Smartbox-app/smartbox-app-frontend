@@ -1,8 +1,9 @@
 import React from 'react';
 
-import './FormHeader.scss';
-import {__} from "../../../helpers/i18n";
 import { Header } from 'src/components/ui';
+import {__} from "src/helpers/i18n";
+
+import 'src/components/Layout/FormHeader/FormHeader.scss';
 
 interface Props {
   title: string;

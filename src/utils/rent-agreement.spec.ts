@@ -2,7 +2,7 @@ import { PeriodEntity, RentDescription } from 'smartbox-types';
 import {
   hasViewableAgreementPeriod,
   resolveRentAgreementForDescriptionLine,
-} from './rent-agreement';
+} from 'src/utils/rent-agreement';
 
 const line = (overrides: Partial<RentDescription> = {}): RentDescription =>
   ({

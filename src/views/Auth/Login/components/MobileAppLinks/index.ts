@@ -1,1 +1,1 @@
-export { MobileAppLinks } from './MobileAppLinks';
+export { MobileAppLinks } from 'src/views/Auth/Login/components/MobileAppLinks/MobileAppLinks';

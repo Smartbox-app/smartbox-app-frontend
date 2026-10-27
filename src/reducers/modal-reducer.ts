@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Modal } from '../types/modal';
+import { Modal } from 'src/types/modal';
 
 interface ModalPayload {
     content: React.ReactNode;

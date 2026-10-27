@@ -1,6 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
+
 import { hideModal } from 'src/actions/modal';
 import { successNotification } from 'src/actions/notifications';
 import { Button, Modal, Typography } from 'src/components/ui';

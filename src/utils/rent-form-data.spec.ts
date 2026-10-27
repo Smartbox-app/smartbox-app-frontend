@@ -1,4 +1,4 @@
-import { appendAddonFiles, appendCollectionFields } from './rent-form-data';
+import { appendAddonFiles, appendCollectionFields } from 'src/utils/rent-form-data';
 
 describe('rent form data', () => {
   it('formats dates, serializes objects, and skips empty values', () => {

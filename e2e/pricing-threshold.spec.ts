@@ -7,21 +7,6 @@ const thresholdNetPrice = 200;
 const monthDays = 30;
 const taxRate = 0.23;
 
-const months = [
-  'Styczeń',
-  'Luty',
-  'Marzec',
-  'Kwiecień',
-  'Maj',
-  'Czerwiec',
-  'Lipiec',
-  'Sierpień',
-  'Wrzesień',
-  'Październik',
-  'Listopad',
-  'Grudzień',
-];
-
 const grossLabel = (net: number) => {
   const gross = Math.round(net * (1 + taxRate) * 100) / 100;
   return `${gross.toFixed(2).replace('.', ',')} zł`;
@@ -48,7 +33,7 @@ const openGroupPricing = async (page: Page) => {
     .getByRole('row', { name: new RegExp(e2eStockName) })
     .getByRole('button', { name: /Zarządzaj|Manage/ })
     .click();
-  // exact: avoid matching sidebar "Grupy obiektów"
+  // exact: avoid matching sidebar "Grupy placów"
   await page.getByRole('link', { name: /^Grupy$|^Groups$/, exact: true }).click();
   await page
     .getByRole('row', { name: new RegExp(e2eBoxGroupName) })
@@ -90,29 +75,29 @@ const expectBoxesLeft = async (page: Page, left: number) => {
 const selectFullPeriod = async (page: Page) => {
   const end = new Date();
   end.setDate(end.getDate() + monthDays - 1);
-  const label = `${months[end.getMonth()]} ${end.getDate()}, ${end.getFullYear()}`;
-  const calendar = page.locator('.flatpickr-calendar').nth(1);
-  const day = calendar.locator(
-    `.flatpickr-day[aria-label="${label}"]:not(.prevMonthDay):not(.nextMonthDay)`,
-  );
-  for (let step = 0; step < 14 && (await day.count()) === 0; step += 1) {
-    await calendar.locator('.flatpickr-next-month').click();
-  }
-  const priced = page.waitForResponse(
-    (response) =>
-      response.url().includes('box-group-new/price/') &&
-      response.request().method() === 'GET',
-  );
-  await day.click();
-  await priced;
+  const dateStr = [
+    end.getFullYear(),
+    String(end.getMonth() + 1).padStart(2, '0'),
+    String(end.getDate()).padStart(2, '0'),
+  ].join('-');
+  // Avoid month-nav + day click: Redux price-loading re-renders reset flatpickr to value month
+  await page.locator('input[name="endDate"]').evaluate((el, value) => {
+    const fp = (
+      el as HTMLElement & {
+        _flatpickr?: { setDate: (v: string, trigger?: boolean) => void };
+      }
+    )._flatpickr;
+    if (!fp) throw new Error('flatpickr missing on endDate');
+    fp.setDate(value, true);
+  }, dateStr);
   await expect(
     page.getByText('Ilość dni najmu w wybranym zakresie:').locator('strong'),
-  ).toHaveText(String(monthDays));
+  ).toHaveText(String(monthDays), { timeout: 20_000 });
 };
 
 const readFreeBoxes = async (page: Page) => {
   await page.getByRole('button', { name: 'Nowy minimagazyn' }).click();
-  await expect(page.getByRole('heading', { name: 'Proszę wybrać obiekt' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Proszę wybrać plac' })).toBeVisible();
   const groups = page.waitForResponse(
     (response) =>
       response.url().includes('box-group-new/all/') &&
@@ -134,7 +119,7 @@ const readFreeBoxes = async (page: Page) => {
 const quoteFullMonth = async (page: Page, boxesLeft: number) => {
   await page.goto('/user');
   await page.getByRole('button', { name: 'Nowy minimagazyn' }).click();
-  await expect(page.getByRole('heading', { name: 'Proszę wybrać obiekt' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Proszę wybrać plac' })).toBeVisible();
   await page.getByText(e2eStockName, { exact: true }).click();
   await clickNext(page);
   await expect(
@@ -188,6 +173,7 @@ const expectRentedBoxes = async (page: Page, prices: string[]) => {
 };
 
 test.describe.serial('price thresholds', () => {
+
   test('saves a price threshold on the box group', async ({ page }) => {
     await login(page, e2eAdmin.email, e2eAdmin.password, /\/client/);
     await openGroupPricing(page);

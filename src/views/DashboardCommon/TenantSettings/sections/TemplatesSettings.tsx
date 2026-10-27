@@ -1,6 +1,7 @@
 import React from 'react';
+
+import { useTenantSettingsContext } from 'src/views/DashboardCommon/TenantSettings/TenantSettingsContext';
 import { TemplatesManagement } from 'src/views/DashboardTenant/Templates';
-import { useTenantSettingsContext } from '../TenantSettingsContext';
 
 export const TemplatesSettings = () => {
   const { tenantId, basePath } = useTenantSettingsContext();

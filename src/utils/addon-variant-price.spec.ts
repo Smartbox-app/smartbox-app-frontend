@@ -1,5 +1,5 @@
 import { AddonVariantPriceType } from 'smartbox-types';
-import { correctAddonVariantPrice } from './addon-variant-price';
+import { correctAddonVariantPrice } from 'src/utils/addon-variant-price';
 
 const variant = {
   id: 'v1',

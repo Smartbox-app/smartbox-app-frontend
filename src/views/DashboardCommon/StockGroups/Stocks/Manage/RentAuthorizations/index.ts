@@ -1,1 +1,1 @@
-export { RentAuthorizationsList } from './List';
+export { RentAuthorizationsList } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/RentAuthorizations/List';

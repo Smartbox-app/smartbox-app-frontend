@@ -1,5 +1,6 @@
 import { IsIn, IsObject, IsOptional, IsString, ValidateIf } from 'class-validator';
-import { TiptapDocument, DocumentType } from '../smartbox-types';
+
+import { TiptapDocument, DocumentType } from 'src/smartbox-types';
 
 export const DOCUMENT_TYPES: DocumentType[] = ['privacy-policy', 'rules', 'agreement'];
 

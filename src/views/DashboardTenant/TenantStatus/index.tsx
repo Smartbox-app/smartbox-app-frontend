@@ -1,11 +1,12 @@
+import styled from 'styled-components';
+
 import {
   InvoiceStatus,
   PaymentServiceStatus,
   SmsStatus,
-} from '../../../components/Common';
-import { useGetMyDetailsQuery } from 'src/queries';
+} from 'src/components/Common';
 import { __ } from 'src/helpers/i18n';
-import styled from 'styled-components';
+import { useGetMyDetailsQuery } from 'src/queries';
 
 const StyledTenantStatus = styled.div`
   display: flex;

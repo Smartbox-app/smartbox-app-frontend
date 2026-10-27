@@ -1,4 +1,4 @@
-import { Language } from '../user/user-entity';
+import { Language } from 'src/smartbox-types/user/user-entity';
 
 export enum TemplateType {
   USER_BLOCKED_SMS = 'user_blocked_sms',

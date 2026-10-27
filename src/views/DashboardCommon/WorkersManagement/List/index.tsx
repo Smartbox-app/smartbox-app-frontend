@@ -1,20 +1,20 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
+
 import { FieldType, TableSchemaField, usersList } from 'smartbox-tables';
 import { UserListRes, UserStatus, UserType } from 'smartbox-types';
-import { ApiTable } from '../../../../components/Common';
-import { Button } from '../../../../components/Branded';
-import { ButtonsContainer } from '../../../../components/Layout';
-import { __ } from '../../../../helpers/i18n';
-import { InteractiveTableSchema } from '../../../../utils/table-schema-utils';
-import { isWorker } from '../../../../utils/role-check';
-
-import EditAssign from './EditAssign';
-import { HeaderWithActions, Section } from 'src/components/ui';
-import UserService from 'src/services/user-service';
 import { showModal } from 'src/actions/modal';
-import { useGetMyDetailsQuery } from 'src/queries';
+import { Button } from 'src/components/Branded';
+import { ApiTable } from 'src/components/Common';
+import { ButtonsContainer } from 'src/components/Layout';
+import { HeaderWithActions, Section } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
 import { useSetUserStatusMutation } from 'src/mutations';
+import { useGetMyDetailsQuery } from 'src/queries';
+import UserService from 'src/services/user-service';
+import { isWorker } from 'src/utils/role-check';
+import { InteractiveTableSchema } from 'src/utils/table-schema-utils';
+import EditAssign from 'src/views/DashboardCommon/WorkersManagement/List/EditAssign';
 
 export const List = () => {
   const { data: user } = useGetMyDetailsQuery();

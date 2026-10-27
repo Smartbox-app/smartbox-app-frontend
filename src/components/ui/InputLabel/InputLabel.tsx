@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
-import { AsterixRequired } from 'src/components/Common';
 import styled from 'styled-components';
+
+import { AsterixRequired } from 'src/components/Common';
 
 export type InputLabelProps = {
   labelFor?: string;

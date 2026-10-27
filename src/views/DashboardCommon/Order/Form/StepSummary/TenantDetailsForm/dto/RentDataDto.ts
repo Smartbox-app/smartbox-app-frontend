@@ -5,6 +5,7 @@ import {
   IsPostalCode,
   ValidateIf,
 } from 'class-validator';
+
 import { errors } from 'src/validation/errors';
 import { ValidCharacters } from 'src/validators/areValidCharacters';
 import { IsCountry } from 'src/validators/isCorrectCountry';

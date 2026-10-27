@@ -1,15 +1,16 @@
-import { Link } from 'react-router-dom';
-import { getColorForBackground } from '../../../utils/color';
-import styled, { css, DefaultTheme } from 'styled-components';
-import { __ } from '../../../helpers/i18n';
+import { Browser } from '@capacitor/browser';
+import { Capacitor } from '@capacitor/core';
 import { darken } from 'polished';
 import React, {
   ReactNode,
   useEffect,
   useState,
 } from 'react';
-import { Browser } from '@capacitor/browser';
-import { Capacitor } from '@capacitor/core';
+import { Link } from 'react-router-dom';
+import styled, { css, DefaultTheme } from 'styled-components';
+
+import { __ } from 'src/helpers/i18n';
+import { getColorForBackground } from 'src/utils/color';
 
 type ButtonTypes = 'primary' | 'secondary' | 'tertiary' | 'error' | 'success';
 type ButtonSizes = 'large' | 'medium' | 'small' | 'extrasmall';

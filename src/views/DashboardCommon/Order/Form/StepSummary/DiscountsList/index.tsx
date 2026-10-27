@@ -1,15 +1,14 @@
 import { useDispatch, useSelector } from 'react-redux';
 
-import { ButtonsContainer } from '../../../../../../components/Layout';
-import { __ } from '../../../../../../helpers/i18n';
-import { ApplicationState } from '../../../../../../reducers';
 import { RentAgreementType } from 'smartbox-types';
-
-import './DiscountsList.scss';
-import { resetDiscountCode } from '../../../../../../actions/order';
-import { Button, Header, Section, Typography } from 'src/components/ui';
+import { resetDiscountCode } from 'src/actions/order';
 import { Alert } from 'src/components/Common';
+import { ButtonsContainer } from 'src/components/Layout';
+import { Button, Header, Section, Typography } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
+import { ApplicationState } from 'src/reducers';
 
+import 'src/views/DashboardCommon/Order/Form/StepSummary/DiscountsList/DiscountsList.scss';
 
 const DiscountsList = () => {
   const { calculatedPriceDetails, endDate, discountCode, agreementType } =

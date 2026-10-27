@@ -1,1 +1,1 @@
-export * from './useUpdateDocumentMutation';
+export * from 'src/mutations/useUpdateDocumentMutation/useUpdateDocumentMutation';

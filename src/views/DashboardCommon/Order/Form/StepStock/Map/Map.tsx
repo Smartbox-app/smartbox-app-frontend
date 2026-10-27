@@ -1,16 +1,21 @@
 import { useEffect, useMemo, useRef } from 'react';
-import styled from 'styled-components';
-import { ApplicationState } from 'src/reducers';
 import { useDispatch, useSelector } from 'react-redux';
-import 'mapbox-gl/dist/mapbox-gl.css';
-import { useTenant } from 'src/hooks/useTenant';
-import { useGetStockGroupsListQuery, useGetStockListQuery } from 'src/queries';
-import './Map.scss';
-import { ActiveLocation } from './components/ActiveLocation';
+import styled from 'styled-components';
+
+import type mapboxglType from 'mapbox-gl'; // import type only
+
 import { setOrderStock } from 'src/actions/order';
 import { Skeleton } from 'src/components/ui';
-import type mapboxglType from 'mapbox-gl'; // import type only
 import { useFileStorage } from 'src/hooks/useFileStorage';
+import { useTenant } from 'src/hooks/useTenant';
+import { currentAppLanguage } from 'src/i18n/app-language';
+import { useGetStockGroupsListQuery, useGetStockListQuery } from 'src/queries';
+import { ApplicationState } from 'src/reducers';
+import { MAPBOX_COUNTRY_NAME_FIELD } from 'src/utils/country-locale';
+import { ActiveLocation } from 'src/views/DashboardCommon/Order/Form/StepStock/Map/components/ActiveLocation';
+
+import 'mapbox-gl/dist/mapbox-gl.css';
+import 'src/views/DashboardCommon/Order/Form/StepStock/Map/Map.scss';
 
 let mapboxgl: typeof mapboxglType;
 async function loadMapbox() {
@@ -63,7 +68,10 @@ export const Map = () => {
     mapRef.current = map;
 
     map.on('load', () => {
-      map.setLayoutProperty('country-label', 'text-field', ['get', 'name_pl']);
+      map.setLayoutProperty('country-label', 'text-field', [
+        'get',
+        MAPBOX_COUNTRY_NAME_FIELD[currentAppLanguage()],
+      ]);
 
       addLocations();
     });

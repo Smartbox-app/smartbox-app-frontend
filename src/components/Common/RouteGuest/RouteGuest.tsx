@@ -1,10 +1,11 @@
 import React from 'react';
 import { Redirect, Route } from 'react-router-dom';
+
 import { UserRole } from 'smartbox-types';
 import { AppMessage } from 'src/components/AppMessage';
+import { LanguageSwitcher } from 'src/components/LanguageSwitcher';
 import { useGetMyDetailsQuery } from 'src/queries';
 import { withAttributionSearch } from 'src/utils/attribution-params';
-import { LanguageSwitcher } from 'src/components/LanguageSwitcher';
 
 export type RouteGuestProps = {
   component: React.ComponentType;

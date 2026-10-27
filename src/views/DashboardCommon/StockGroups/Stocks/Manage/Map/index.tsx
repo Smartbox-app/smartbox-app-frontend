@@ -1,12 +1,13 @@
 import React from 'react';
 import { useParams } from 'react-router';
-import { Section } from '../../../../../../components/Layout';
-import { Spinner } from '../../../../../../components/Branded';
-import { MapSettingsForm } from './MapSettingsForm';
-import { MapView } from '../../../../MapView';
+
+import { Spinner } from 'src/components/Branded';
+import { Section } from 'src/components/Layout';
 import { Header } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
 import { useGetStockBoxesQuery, useGetStockQuery } from 'src/queries';
+import { MapView } from 'src/views/DashboardCommon/MapView';
+import { MapSettingsForm } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Map/MapSettingsForm';
 
 const Map = () => {
   const { stockId } = useParams<{ stockId: string }>();

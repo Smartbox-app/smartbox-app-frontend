@@ -1,6 +1,7 @@
 import React from 'react';
-import { BoxDisplayStatus, BoxListRes, BoxStatus, RentStatus, StockRes } from "smartbox-types";
 import styled, { css } from "styled-components";
+
+import { BoxDisplayStatus, BoxListRes, BoxStatus, RentStatus, StockRes } from "smartbox-types";
 import { translateBoxDisplayStatus } from "src/utils/box-display-status";
 
 interface Props {

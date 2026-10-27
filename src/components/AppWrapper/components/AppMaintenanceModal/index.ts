@@ -1,1 +1,1 @@
-export * from './AppMaintenanceModal';
+export * from 'src/components/AppWrapper/components/AppMaintenanceModal/AppMaintenanceModal';

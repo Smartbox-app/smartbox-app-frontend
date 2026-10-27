@@ -1,1 +1,1 @@
-export * from './Checkbox'
+export * from 'src/components/ui/Checkbox/Checkbox'

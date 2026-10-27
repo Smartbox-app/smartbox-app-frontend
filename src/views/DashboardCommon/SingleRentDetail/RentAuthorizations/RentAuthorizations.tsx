@@ -1,21 +1,22 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
+import styled from 'styled-components';
+
 import {
   MyRentDetails,
   RentAuthorizedUserSummary,
   RentStatus,
 } from 'smartbox-types';
+import { showModal } from 'src/actions/modal';
+import { successNotification } from 'src/actions/notifications';
 import { Button, Spinner } from 'src/components/Branded';
+import ConfirmModal from 'src/components/Common/ConfirmModal';
 import { ButtonsContainer } from 'src/components/Layout';
 import { Header } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
-import { successNotification } from 'src/actions/notifications';
-import { showModal } from 'src/actions/modal';
-import ConfirmModal from 'src/components/Common/ConfirmModal';
-import { useRentAuthorizedUsersQuery } from 'src/queries';
 import { useRemoveRentAuthorizedUserMutation } from 'src/mutations';
-import { AddRentAuthorizationModal } from './AddRentAuthorizationModal';
-import styled from 'styled-components';
+import { useRentAuthorizedUsersQuery } from 'src/queries';
+import { AddRentAuthorizationModal } from 'src/views/DashboardCommon/SingleRentDetail/RentAuthorizations/AddRentAuthorizationModal';
 
 function displayName(row: RentAuthorizedUserSummary): string {
   const name = [row.firstName, row.lastName].filter(Boolean).join(' ').trim();

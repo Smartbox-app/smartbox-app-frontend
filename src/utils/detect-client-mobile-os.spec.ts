@@ -1,4 +1,4 @@
-import { getClientMobileOs } from './detect-client-mobile-os';
+import { getClientMobileOs } from 'src/utils/detect-client-mobile-os';
 
 const setUserAgent = (userAgent: string) => {
   Object.defineProperty(navigator, 'userAgent', {

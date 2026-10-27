@@ -1,4 +1,4 @@
-import { PriceDisplayForClients } from "../stock";
+import { PriceDisplayForClients } from "src/smartbox-types/stock";
 
 export enum AddonVariantPriceType {
   Dynamic = 'dynamic',

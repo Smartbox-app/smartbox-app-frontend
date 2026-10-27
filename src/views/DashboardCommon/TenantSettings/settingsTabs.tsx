@@ -1,7 +1,5 @@
 import React, { useMemo } from 'react';
-import UserService from 'src/services/user-service';
-import { useGetMyDetailsQuery } from 'src/queries';
-import { SingleTab } from 'src/types/tab';
+
 import { UserRole } from 'smartbox-types';
 import { useTenant } from 'src/hooks/useTenant';
 import {
@@ -17,6 +15,9 @@ import {
   Calendar,
   Wallet,
 } from 'src/icons';
+import { useGetMyDetailsQuery } from 'src/queries';
+import UserService from 'src/services/user-service';
+import { SingleTab } from 'src/types/tab';
 
 export const TENANT_SETTINGS_DEFAULT_SEGMENT = 'appearance';
 
@@ -81,17 +82,17 @@ export const useTenantSettingsTabs = (
         text: 'application.documents',
         icon: <List />,
       },
+      {
+        to: `${basePath}/mobile-apps`,
+        text: 'application.tenantSettingsMobileApps',
+        icon: <HomeWifi />,
+      },
       ...(isAdmin
         ? [
             {
               to: `${basePath}/templates`,
               text: 'application.templates',
               icon: <Templates />,
-            },
-            {
-              to: `${basePath}/mobile-apps`,
-              text: 'application.tenantSettingsMobileApps',
-              icon: <HomeWifi />,
             },
           ]
         : []),

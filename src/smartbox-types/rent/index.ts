@@ -1,2 +1,2 @@
-export * from './rent-entity';
-export * from './rent';
+export * from 'src/smartbox-types/rent/rent-entity';
+export * from 'src/smartbox-types/rent/rent';

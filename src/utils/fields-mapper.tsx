@@ -1,10 +1,11 @@
-import React from 'react';
-import { FieldsMapper } from '../components/Common';
 import {
   FieldAndEventFunction,
   FormFieldToRender,
 } from 'itf_formbuilder_react';
-import { TranslatableObject } from './errors-trans';
+import React from 'react';
+
+import { FieldsMapper } from 'src/components/Common';
+import { TranslatableObject } from 'src/utils/errors-trans';
 
 export const mapFieldsBig = (
   field: FormFieldToRender,

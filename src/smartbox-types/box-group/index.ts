@@ -1,7 +1,8 @@
-import { PriceResolveType, SinglePricing, SinglePricingForUser } from './pricing';
-import { BoxGroupType } from './box-group-type';
-export * from './pricing';
-export * from './box-group-type';
+import { BoxGroupType } from 'src/smartbox-types/box-group/box-group-type';
+import { PriceResolveType, SinglePricing, SinglePricingForUser } from 'src/smartbox-types/box-group/pricing';
+
+export * from 'src/smartbox-types/box-group/pricing';
+export * from 'src/smartbox-types/box-group/box-group-type';
 
 export interface BoxGroupEntity {
   id: string;

@@ -1,1 +1,1 @@
-export * from './Card';
+export * from 'src/components/ui/Card/Card';

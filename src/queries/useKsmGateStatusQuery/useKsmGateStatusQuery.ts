@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
+
 import { KsmGateOpenRequestRes } from 'smartbox-types';
-import ApiService from '../../services/api-service';
+import ApiService from 'src/services/api-service';
 
 export const ksmGateStatusQueryKey = (requestId: string) =>
   ['ksm-gate', 'status', requestId] as const;

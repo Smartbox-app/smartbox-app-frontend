@@ -11,6 +11,7 @@ import {
   Min,
   ValidateIf,
 } from 'class-validator';
+
 import { errors } from 'src/validation/errors';
 
 export class TenantSmtpConfigFormDto {

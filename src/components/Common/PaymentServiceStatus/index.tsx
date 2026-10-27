@@ -1,4 +1,4 @@
-import Alert from '../Alert';
+import Alert from 'src/components/Common/Alert';
 import { usePaymentServiceStatusQuery } from 'src/queries';
 
 interface Props {

@@ -1,13 +1,12 @@
-import { GateHealthCheckStatus } from './gate-health-check-status';
-import { AccessControl } from '../stock-group';
-
-import { AlarmHealthCheckStatus } from './alarm-health-check-status';
-import { PriceDisplayForClients } from './price-display-for-clients';
+import { AccessControl } from 'src/smartbox-types/stock-group';
+import { AlarmHealthCheckStatus } from 'src/smartbox-types/stock/alarm-health-check-status';
+import { GateHealthCheckStatus } from 'src/smartbox-types/stock/gate-health-check-status';
+import { PriceDisplayForClients } from 'src/smartbox-types/stock/price-display-for-clients';
 import {
   StockAgreementType,
   StockPaymentDocument,
   StockPaymentType,
-} from './stock-entity';
+} from 'src/smartbox-types/stock/stock-entity';
 
 export interface DiscountReq {
   value: number;
@@ -71,6 +70,35 @@ export type SingleAlarmRes = {
 };
 
 export type AlarmsStatusForAdminRes = SingleAlarmRes[];
+
+export type LocationDiagnosticsWanState = 'primary' | 'lte' | 'unknown';
+
+export type LocationDiagnosticsStatus = 'ok' | 'degraded' | 'down';
+
+export type LocationDiagnosticsBusDeviceKind = 'master' | 'slave' | 'elog';
+
+export type LocationDiagnosticsWan = {
+  state: LocationDiagnosticsWanState;
+  changedAt: Date | null;
+};
+
+export type LocationDiagnosticsBusDevice = {
+  kind: LocationDiagnosticsBusDeviceKind;
+  master: string;
+  unit: number | null;
+  covers: string[];
+  answering: boolean | null;
+  lastAnsweredAt: Date | null;
+};
+
+export type LocationDiagnosticsRes = {
+  locationId: number;
+  status: LocationDiagnosticsStatus;
+  asOf: Date | null;
+  lastContactAt: Date | null;
+  wan: LocationDiagnosticsWan;
+  bus: LocationDiagnosticsBusDevice[] | null;
+} | null;
 
 export interface GateAdminList {
   id: string;

@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
-import { Typography, Button } from 'src/components/ui';
-import { InputLabel } from 'src/components/ui/InputLabel';
-import { ErrorText } from 'src/components/ui/ErrorText';
-import { StyledTextInput } from 'src/components/Common/input-styled';
-import { __ } from 'src/helpers/i18n';
-import { errors } from 'src/validation/errors';
 import styled from 'styled-components';
+
 import { resolveInputSize } from 'src/components/Common/input-sizes';
-import { Add } from 'src/icons';
+import { StyledTextInput } from 'src/components/Common/input-styled';
 import { ButtonsContainer } from 'src/components/Layout';
+import { Typography, Button } from 'src/components/ui';
+import { ErrorText } from 'src/components/ui/ErrorText';
+import { InputLabel } from 'src/components/ui/InputLabel';
+import { __ } from 'src/helpers/i18n';
+import { Add } from 'src/icons';
+import { errors } from 'src/validation/errors';
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 

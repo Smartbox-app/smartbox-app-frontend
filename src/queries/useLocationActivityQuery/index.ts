@@ -1,1 +1,1 @@
-export * from './useLocationActivityQuery';
+export * from 'src/queries/useLocationActivityQuery/useLocationActivityQuery';

@@ -1,4 +1,4 @@
-import { __ } from '../helpers/i18n';
+import { __ } from 'src/helpers/i18n';
 
 const MIN_CHARS = /^validation\.min_chars:(\d+)$/;
 

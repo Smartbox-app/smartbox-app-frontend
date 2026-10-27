@@ -1,4 +1,4 @@
-import type application from '../locales/pl/application';
+import type application from 'src/i18n/locales/pl/application';
 
 type Join<L extends string, R extends string> = L extends '' ? R : `${L}.${R}`;
 

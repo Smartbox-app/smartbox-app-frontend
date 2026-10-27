@@ -1,28 +1,29 @@
 import { useEffect } from 'react';
-import { Spinner } from '../../../../../../components/Branded';
-import { ButtonsContainer } from '../../../../../../components/Layout';
 import { useDispatch, useSelector } from 'react-redux';
-import { ApplicationState } from '../../../../../../reducers';
 import styled from 'styled-components';
+
+import { AddonRes, AddonUserFileRequirementType } from 'smartbox-types';
+import {
+  selectAddon,
+  setAddonAcceptance,
+  setAddonFile,
+} from 'src/actions/order';
+import { Spinner } from 'src/components/Branded';
 import {
   Alert,
   AsterixRequired,
   CheckBox,
-} from '../../../../../../components/Common';
-import {
-  fetchAddons,
-  selectAddon,
-  setAddonAcceptance,
-  setAddonFile,
-} from '../../../../../../actions/order';
-import { SingleVariant } from './SingleVariant';
-
-import FileInput from '../../../../../../components/Common/FileInput';
-import { AddonRes, AddonUserFileRequirementType } from 'smartbox-types';
-import { OrderAddon } from 'src/reducers/order-reducer';
+} from 'src/components/Common';
+import FileInput from 'src/components/Common/FileInput';
+import { ButtonsContainer } from 'src/components/Layout';
 import { Button, Header, Section, Typography } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
+import { useBridgeAddonsToRedux } from 'src/hooks/useBridgeOrderPriceQuery';
 import { useFileStorage } from 'src/hooks/useFileStorage';
+import { useAddonsForOrderQuery } from 'src/queries/useRentPriceQueries';
+import { ApplicationState } from 'src/reducers';
+import { OrderAddon } from 'src/reducers/order-reducer';
+import { SingleVariant } from 'src/views/DashboardCommon/Order/Form/Common/Addons/SingleVariant';
 
 const StyledFileDescription = styled('div')(({ theme }) => ({
   background: theme.colors.background.secondary,
@@ -47,10 +48,8 @@ export const Addons = ({ stockId, boxGroupId }: Props) => {
     (state: ApplicationState) => state.order,
   );
   const dispatch = useDispatch();
-
-  const getAddons = () => {
-    dispatch(fetchAddons(stockId, boxGroupId));
-  };
+  const addonsQuery = useAddonsForOrderQuery(stockId, boxGroupId);
+  useBridgeAddonsToRedux(addonsQuery);
 
   const handleAddonAcceptance = (
     addonId: string,
@@ -71,10 +70,6 @@ export const Addons = ({ stockId, boxGroupId }: Props) => {
   ) => {
     dispatch(selectAddon(addonId, variantId, variantName));
   };
-
-  useEffect(() => {
-    getAddons();
-  }, []);
 
   const displayFileInput = (
     { userFileAllowed, userFileText, userFileRequirement }: AddonRes,

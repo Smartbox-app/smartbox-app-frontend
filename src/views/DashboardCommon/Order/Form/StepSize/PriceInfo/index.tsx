@@ -1,11 +1,12 @@
 import React, { useMemo } from 'react';
-import { BoxGroupUserRes } from 'smartbox-types';
 import styled from 'styled-components';
-import { __ } from '../../../../../../helpers/i18n';
-import { formatPeriodQuantity } from '../../../../../../utils/format-period-quantity';
-import { formatPrice } from '../../../../../../utils/format-price';
-import { getColorForBackground } from 'src/utils/color';
+
+import { BoxGroupUserRes } from 'smartbox-types';
+import { __ } from 'src/helpers/i18n';
 import { PriceDisplayForClients } from 'src/smartbox-types/stock/price-display-for-clients';
+import { getColorForBackground } from 'src/utils/color';
+import { formatPeriodQuantity } from 'src/utils/format-period-quantity';
+import { formatPrice } from 'src/utils/format-price';
 
 interface Props {
   disabled?: boolean;

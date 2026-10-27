@@ -1,5 +1,6 @@
 import { ValidationArguments } from 'class-validator';
-import { CustomEmailValidator } from './IsCustomEmail';
+
+import { CustomEmailValidator } from 'src/validators/IsCustomEmail';
 
 const args = {} as ValidationArguments;
 

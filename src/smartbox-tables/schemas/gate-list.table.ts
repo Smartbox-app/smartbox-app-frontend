@@ -1,4 +1,4 @@
-import { FieldType, TableSchema } from '../typings';
+import { FieldType, TableSchema } from 'src/smartbox-tables/typings';
 
 export const gateList: TableSchema = {
   countPerPage: 20,

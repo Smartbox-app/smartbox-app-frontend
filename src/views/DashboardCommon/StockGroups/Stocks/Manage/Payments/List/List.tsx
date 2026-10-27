@@ -1,6 +1,9 @@
+import { Browser } from '@capacitor/browser';
+import { Capacitor } from '@capacitor/core';
 import React, { useCallback, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router';
+
 import {
   FieldType,
   paymentsListAdminTableSchema,
@@ -14,17 +17,15 @@ import {
   FakturowniaInvoiceUserRes,
   PaymentStatus,
 } from 'smartbox-types';
-import { ApiTable, ConfirmModal } from 'src/components/Common';
-import ApiService from 'src/services/api-service';
 import { showModal } from 'src/actions/modal';
-import { __ } from 'src/helpers/i18n';
-import { useGetMyDetailsQuery } from 'src/queries';
-import { useForcePaymentMutation } from 'src/mutations';
-import { InteractiveTableSchema } from 'src/utils/table-schema-utils';
-import { Section, Button as UIButton } from 'src/components/ui';
-import { Capacitor } from '@capacitor/core';
-import { Browser } from '@capacitor/browser';
+import { ApiTable, ConfirmModal } from 'src/components/Common';
 import { ButtonsContainer } from 'src/components/Layout';
+import { Section, Button as UIButton } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
+import { useForcePaymentMutation } from 'src/mutations';
+import { useGetMyDetailsQuery } from 'src/queries';
+import ApiService from 'src/services/api-service';
+import { InteractiveTableSchema } from 'src/utils/table-schema-utils';
 
 const isInvoiceIssued = (invoiceId: string | null | undefined) =>
   !!invoiceId && !['error', 'pending'].includes(invoiceId);

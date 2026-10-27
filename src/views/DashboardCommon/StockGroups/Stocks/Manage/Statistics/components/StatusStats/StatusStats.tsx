@@ -1,13 +1,14 @@
 import React, { useMemo } from 'react';
+
 import { StatsByStatus } from 'smartbox-types';
 import { ColorIndicator, Row } from 'src/components/Common';
 import { StatsWithPieChart } from 'src/components/ui/StatsWithPieChart';
-import { getStatsText, statsByStatusToPieSegments } from '../../utils/stats-chart';
+import { useTenant } from 'src/hooks/useTenant';
+import { getStatsText, statsByStatusToPieSegments } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Statistics/utils/stats-chart';
 import {
   STATUS_STATS_KEYS,
   StockStatusColors,
-} from '../../utils/stock-status-colors';
-import { useTenant } from 'src/hooks/useTenant';
+} from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Statistics/utils/stock-status-colors';
 
 export type StatusStatsProps = {
   stats: StatsByStatus;

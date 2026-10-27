@@ -1,6 +1,7 @@
-import { TableResponse } from 'smartbox-tables';
 import { v4 } from 'uuid';
-import { DEFAULT_API_TABLE_INSTANCE_ID } from '../constants/api-table-instances';
+
+import { TableResponse } from 'smartbox-tables';
+import { DEFAULT_API_TABLE_INSTANCE_ID } from 'src/constants/api-table-instances';
 
 interface ApiTable {
   uuid: string;

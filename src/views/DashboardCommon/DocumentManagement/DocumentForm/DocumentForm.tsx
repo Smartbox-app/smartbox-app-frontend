@@ -1,22 +1,23 @@
 import React, { useEffect } from 'react';
 import { useFormContext, Controller } from 'react-hook-form';
-import { DocumentDto } from 'src/dto/DocumentDto';
+import { useDispatch } from 'react-redux';
+
+import { DocumentType, UserRole } from 'smartbox-types';
+import { showModal } from 'src/actions/modal';
+import { Spinner } from 'src/components/Branded';
+import { InputSelect, Alert, ConfirmModal } from 'src/components/Common';
 import { ButtonsContainer, FormContainer } from 'src/components/Layout';
 import { Button, Form } from 'src/components/ui';
-import { InputSelect, Alert, ConfirmModal } from 'src/components/Common';
-import { TiptapEditor } from '../components/TiptapEditor';
-import { Spinner } from 'src/components/Branded';
+import { DocumentDto } from 'src/dto/DocumentDto';
+import { __ } from 'src/helpers/i18n';
+import { useTenant } from 'src/hooks/useTenant';
 import {
   useGetTenantOptionsQuery,
   useGetMyDetailsQuery,
   useGetStockOptionsQuery,
   useGetCompanyOptionsQuery,
 } from 'src/queries';
-import { DocumentType, UserRole } from 'smartbox-types';
-import { useTenant } from 'src/hooks/useTenant';
-import { useDispatch } from 'react-redux';
-import { showModal } from 'src/actions/modal';
-import { __ } from 'src/helpers/i18n';
+import { TiptapEditor } from 'src/views/DashboardCommon/DocumentManagement/components/TiptapEditor';
 
 export type DocumentFormProps = {
   isLoading: boolean;

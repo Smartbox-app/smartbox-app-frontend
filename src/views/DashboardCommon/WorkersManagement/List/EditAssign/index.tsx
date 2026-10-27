@@ -1,16 +1,17 @@
 import { ItfApiForm } from "itf_formbuilder_react";
 import React from "react";
 import { useDispatch } from "react-redux";
-import { Button, Spinner } from "../../../../../components/Branded";
-import { ButtonsContainer } from "../../../../../components/Layout";
-import ApiService from "../../../../../services/api-service";
-import { formOnTranslateString } from "../../../../../utils/trans-form";
-import { mapFields } from "../../../../../utils/fields-mapper";
-import { Modal } from "src/components/ui";
-import { __ } from "src/helpers/i18n";
+
 import { UpdateWorkerStocksReq } from "smartbox-types";
 import { hideModal } from "src/actions/modal";
 import { successNotification } from "src/actions/notifications";
+import { Button, Spinner } from "src/components/Branded";
+import { ButtonsContainer } from "src/components/Layout";
+import { Modal } from "src/components/ui";
+import { __ } from "src/helpers/i18n";
+import ApiService from "src/services/api-service";
+import { mapFields } from "src/utils/fields-mapper";
+import { formOnTranslateString } from "src/utils/trans-form";
 
 interface Props {
   userId: string;

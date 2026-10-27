@@ -1,1 +1,1 @@
-export * from './TiptapMenuBar';
+export * from 'src/views/DashboardCommon/DocumentManagement/components/TiptapMenuBar/TiptapMenuBar';

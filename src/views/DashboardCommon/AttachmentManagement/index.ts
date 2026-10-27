@@ -1,1 +1,1 @@
-export * from './AttachmentManagament';
+export * from 'src/views/DashboardCommon/AttachmentManagement/AttachmentManagament';

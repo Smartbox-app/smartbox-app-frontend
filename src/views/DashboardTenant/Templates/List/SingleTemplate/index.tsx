@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { ButtonsContainer } from '../../../../../components/Layout';
+
+import { ButtonsContainer } from 'src/components/Layout';
 
 const StyledSingleTemplate = styled('li')<{ $set: boolean; $even: boolean }>(
   ({ $set, theme, $even }) => ({

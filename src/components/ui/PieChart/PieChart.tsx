@@ -1,5 +1,4 @@
 import React, { useMemo } from 'react';
-import styled from 'styled-components';
 import {
   Cell,
   Pie,
@@ -7,6 +6,8 @@ import {
   ResponsiveContainer,
   Tooltip,
 } from 'recharts';
+import styled from 'styled-components';
+
 import { pieLegendPercent } from 'src/utils/chart-percent';
 
 export type PieChartSegment = {

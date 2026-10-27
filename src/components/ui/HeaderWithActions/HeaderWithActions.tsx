@@ -1,6 +1,7 @@
 import { ReactNode } from "react"
 import styled from "styled-components";
-import { Header } from "../Header";
+
+import { Header } from "src/components/ui/Header";
 
 export type HeaderWithActionsProps = {
     children: ReactNode;

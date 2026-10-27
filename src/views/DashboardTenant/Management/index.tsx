@@ -1,20 +1,20 @@
 import React from 'react';
 import { Switch, Route, Redirect } from 'react-router';
-import UserService from '../../../services/user-service';
 
-import UsersManagement from '../../DashboardCommon/UsersManagement';
-import { Settings } from '../Settings';
-import { InvitesSent } from '../../DashboardCommon/InvitesSent';
-import SMS from '../../DashboardCommon/SMS';
-import { TemplatesManagement } from '../Templates';
-import WorkersManagement from '../../DashboardCommon/WorkersManagement';
 import { useGetMyDetailsQuery } from 'src/queries';
+import UserService from 'src/services/user-service';
 import { AttachmentManagement } from 'src/views/DashboardCommon/AttachmentManagement';
-import SystemNotificationManagement from 'src/views/DashboardCommon/SystemNotificationManagement';
-import { DocumentsManagement } from 'src/views/DashboardCommon/DocumentManagement';
-import { SystemLogManagement } from 'src/views/DashboardCommon/SystemLogManagement';
 import { CompaniesManagement } from 'src/views/DashboardCommon/CompanyManagement';
-import { TenantApiAccess } from '../ApiAccess';
+import { DocumentsManagement } from 'src/views/DashboardCommon/DocumentManagement';
+import { InvitesSent } from 'src/views/DashboardCommon/InvitesSent';
+import SMS from 'src/views/DashboardCommon/SMS';
+import { SystemLogManagement } from 'src/views/DashboardCommon/SystemLogManagement';
+import SystemNotificationManagement from 'src/views/DashboardCommon/SystemNotificationManagement';
+import UsersManagement from 'src/views/DashboardCommon/UsersManagement';
+import WorkersManagement from 'src/views/DashboardCommon/WorkersManagement';
+import { TenantApiAccess } from 'src/views/DashboardTenant/ApiAccess';
+import { Settings } from 'src/views/DashboardTenant/Settings';
+import { TemplatesManagement } from 'src/views/DashboardTenant/Templates';
 
 const Management = () => {
   const { data: user } = useGetMyDetailsQuery();

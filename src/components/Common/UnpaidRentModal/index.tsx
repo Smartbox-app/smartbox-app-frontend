@@ -1,8 +1,10 @@
 import React, { useMemo } from 'react';
 import { useDispatch } from 'react-redux';
+
 import { MyRentList } from 'smartbox-types';
 import { modal } from 'src/actions';
 import { clearOrder, updateFormData } from 'src/actions/order';
+import Alert from 'src/components/Common/Alert';
 import { ButtonsContainer } from 'src/components/Layout';
 import { Button, Modal } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
@@ -13,7 +15,6 @@ import {
   isUnpaidPeriodStatus,
   isEndedUnpaidStatus,
 } from 'src/utils/unpaid-extension';
-import Alert from '../Alert';
 
 export type UnpaidRentModalProps = {
   rent: MyRentList;

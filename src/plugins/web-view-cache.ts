@@ -8,5 +8,5 @@ export interface WebViewCachePlugin {
 }
 
 export const WebViewCache = registerPlugin<WebViewCachePlugin>('WebViewCache', {
-  web: () => import('./web-view-cache.web').then((m) => new m.WebViewCacheWeb()),
+  web: () => import('src/plugins/web-view-cache.web').then((m) => new m.WebViewCacheWeb()),
 });

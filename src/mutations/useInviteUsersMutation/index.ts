@@ -1,1 +1,1 @@
-export * from './useInviteUsersMutation';
+export * from 'src/mutations/useInviteUsersMutation/useInviteUsersMutation';

@@ -1,12 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
-import type { AgreementTemplateInput } from 'src/utils/agreement-template-query';
+
 import { Spinner } from 'src/components/Branded';
 import { Alert } from 'src/components/Common';
 import {
   useGetDocumentAgreementHtmlQuery,
   useGetRentAgreementHtmlQuery,
 } from 'src/queries';
+import type { AgreementTemplateInput } from 'src/utils/agreement-template-query';
 
 const PreviewContainer = styled.div`
   width: 100%;

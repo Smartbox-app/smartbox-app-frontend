@@ -1,4 +1,3 @@
-import { Capacitor } from '@capacitor/core';
 import {
   Camera,
   CameraDirection,
@@ -6,6 +5,7 @@ import {
   EncodingType,
   type MediaResult,
 } from '@capacitor/camera';
+import { Capacitor } from '@capacitor/core';
 
 export type EndRentPhotoCapture = {
   file: File;

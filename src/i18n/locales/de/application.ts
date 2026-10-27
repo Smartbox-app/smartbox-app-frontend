@@ -1,4 +1,4 @@
-import type plApplication from '../pl/application';
+import type plApplication from 'src/i18n/locales/pl/application';
 
 type LocaleMessages<T> = {
   [K in keyof T]: T[K] extends string ? string : LocaleMessages<T[K]>;
@@ -185,6 +185,32 @@ const application = {
     stockGroups: 'Lagerstandortgruppen',
     gates: 'Tore',
     alarms: 'Alarme',
+    diagnostics: 'Diagnostik',
+    diagnosticsInternet: 'Internetverbindung',
+    diagnosticsGates: 'Torstatus',
+    diagnosticsAlarms: 'Alarmstatus',
+    diagnosticsNoInternet: 'Keine Verbindungsdaten (für diesen Treiber nicht verfügbar)',
+    diagnosticsEmpty: 'Keine Diagnosedaten für diesen Standort',
+    diagnosticsNoGates: 'Keine Tore zum Anzeigen',
+    diagnosticsNoAlarms: 'Keine Alarme zum Anzeigen',
+    diagnosticsWanPrimary: 'Kabel / Wi‑Fi (primär)',
+    diagnosticsWanLte: 'LTE (Failover)',
+    diagnosticsWanUnknown: 'Unbekannt',
+    diagnosticsStatusOk: 'OK',
+    diagnosticsStatusDegraded: 'Eingeschränkt',
+    diagnosticsStatusDown: 'Offline',
+    diagnosticsAsOf: 'Datenstand',
+    diagnosticsLastContact: 'Letzter Kontaktversuch',
+    diagnosticsWanChangedAt: 'Linkstatus seit',
+    diagnosticsBus: 'Bus-Geräte',
+    diagnosticsBusKind: 'Typ',
+    diagnosticsBusMaster: 'Master',
+    diagnosticsBusUnit: 'Adresse',
+    diagnosticsBusCovers: 'Schließfächer / Tore',
+    diagnosticsBusAnswering: 'Antwortet',
+    diagnosticsBusSilent: 'Still',
+    diagnosticsBusUnknown: 'Nicht geprüft',
+    diagnosticsBusLastAnswered: 'Zuletzt geantwortet',
     account: 'Konto',
     logout: 'Abmelden',
     home: 'Start',
@@ -861,6 +887,9 @@ Klicken Sie hier, um zu aktualisieren.`,
 auch Analyse-, Aktions- und Werbetools für Werbung, Marktforschung und die Untersuchung der
         Benutzerpräferenzen. Mit der Nutzung der Smartbox-Anwendung können Sie Cookies und
         den oben genannten Tools zustimmen. Weitere Informationen zu Cookies und diesen Tools finden Sie in unserer`,
+    cookieConsentTitle: 'Cookies',
+    cookieConsentAccept: 'Akzeptieren',
+    cookieConsentReject: 'Ablehnen',
     orderInfo: 'Details',
     dontForgetToBringLock:
       'Vergessen Sie nur nicht, Ihr eigenes Vorhängeschloss mitzubringen!',
@@ -978,7 +1007,7 @@ auch Analyse-, Aktions- und Werbetools für Werbung, Marktforschung und die Unte
     tenantSettingsCommunications: 'Kommunikation',
     tenantSettingsIntegrations: 'Integrationen',
     tenantSettingsMessaging: 'Nachrichten',
-    tenantSettingsMobileApps: 'Mobile Apps',
+    tenantSettingsMobileApps: 'Mobile Apps und PWA',
     tenantSettingsAnalytics: 'Analysen',
     tenantAnalyticsDescription:
       'Nachdem Sie die Kennungen für GTM und Meta Pixel konfiguriert haben, sendet die Anwendung automatisch Conversion-Ereignisse:',
@@ -1404,6 +1433,7 @@ Advanced Matching (getrennt von den Parametern unten, E-Mail im Browser gehasht)
         finish: 'Abschluss der Miete bestätigt',
         forcePaymentAcceptance: 'Annahme der Zahlung erzwungen',
         forcePaymentCancellation: 'Stornierung der Zahlung erzwungen',
+        markPeriodAsPaid: 'Zeitraum als bezahlt markiert',
         notifyPaymentSuccess: 'Benachrichtigung über erfolgreiche Zahlung',
         passcodeIssued: 'Zugangscode der Miete vergeben',
         passcodeRotated: 'Zugangscode der Miete erneuert',
@@ -1503,6 +1533,7 @@ Advanced Matching (getrennt von den Parametern unten, E-Mail im Browser gehasht)
           'Nachrichten des Franchisenehmers aktualisiert',
         updateTenantMobileAppsByAdmin:
           'Mobile Apps von einem Administrator aktualisiert',
+        updateTenantMobileAppsByTenant: 'Mobile Apps und PWA aktualisiert',
         uploadAgreementByAdmin:
           'Vertrag des Franchisenehmers von einem Administrator hochgeladen',
         uploadAgreementByUser: 'Vertrag des Franchisenehmers hochgeladen',
@@ -1809,6 +1840,7 @@ Advanced Matching (getrennt von den Parametern unten, E-Mail im Browser gehasht)
       splitCell: 'Teilen',
       deleteTable: 'Tabelle löschen',
       insertTable: 'Tabelle',
+      link: 'Link',
       enterUrl: 'URL eingeben',
       insertVariable: 'Variable einfügen',
       insertAddonVariable: 'Zusatzoption-Variable einfügen',

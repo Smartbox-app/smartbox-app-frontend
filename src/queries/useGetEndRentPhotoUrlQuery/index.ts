@@ -1,2 +1,2 @@
-export * from './useGetEndRentPhotoUrlQuery';
-export * from './end-rent-photo-url';
+export * from 'src/queries/useGetEndRentPhotoUrlQuery/useGetEndRentPhotoUrlQuery';
+export * from 'src/queries/useGetEndRentPhotoUrlQuery/end-rent-photo-url';

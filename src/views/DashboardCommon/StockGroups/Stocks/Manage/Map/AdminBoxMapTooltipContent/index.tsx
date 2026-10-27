@@ -1,9 +1,10 @@
 import React from 'react';
+
 import { BoxMapRes, BoxStatus } from 'smartbox-types';
-import { __ } from 'src/helpers/i18n';
 import { TooltipLine } from 'src/components/ui';
-import { translateBoxDisplayStatus } from 'src/utils/box-display-status';
+import { __ } from 'src/helpers/i18n';
 import { useRent } from 'src/hooks/useRent';
+import { translateBoxDisplayStatus } from 'src/utils/box-display-status';
 
 type AdminBoxMapTooltipContentProps = {
   box: BoxMapRes;

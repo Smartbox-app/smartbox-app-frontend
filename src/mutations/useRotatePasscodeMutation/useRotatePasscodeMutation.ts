@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import ApiService from '../../services/api-service';
-import { rentDetailsQueryKey } from '../../queries/useRentDetailsQuery/useRentDetailsQuery';
+
+import { rentDetailsQueryKey } from 'src/queries/useRentDetailsQuery/useRentDetailsQuery';
+import ApiService from 'src/services/api-service';
 
 export const useRotatePasscodeMutation = (rentId?: string) => {
   const queryClient = useQueryClient();

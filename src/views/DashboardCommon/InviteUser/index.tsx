@@ -1,8 +1,9 @@
 import React from 'react';
-import { useGetMyDetailsQuery } from 'src/queries';
+
 import { Header, Section } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
-import { InviteUserForm } from './InviteUserForm';
+import { useGetMyDetailsQuery } from 'src/queries';
+import { InviteUserForm } from 'src/views/DashboardCommon/InviteUser/InviteUserForm';
 
 const InviteUser = () => {
   const { data: user } = useGetMyDetailsQuery();

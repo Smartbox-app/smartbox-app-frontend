@@ -1,24 +1,24 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
+
 import { companyList, companyListAdmin, FieldType } from 'smartbox-tables';
 import { CompanyListAdminRes, CompanyListRes, UserRole } from 'smartbox-types';
-import { history } from 'src/history';
 import { showModal } from 'src/actions/modal';
-import { successNotification } from 'src/actions/notifications';
-import { refreshApiTableData } from 'src/actions/api-table';
 import { Button } from 'src/components/Branded';
 import { ApiTable, ConfirmModal, InvoiceStatus } from 'src/components/Common';
 import { ButtonsContainer } from 'src/components/Layout';
 import { HeaderWithActions, Section } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
+import { history } from 'src/history';
+import { useDeleteCompanyMutation } from 'src/mutations';
 import { useGetMyDetailsQuery } from 'src/queries';
-import ApiService from 'src/services/api-service';
 import UserService from 'src/services/user-service';
 import { InteractiveTableSchema } from 'src/utils/table-schema-utils';
-import { useCanCreateCompany } from '../useCanCreateCompany';
+import { useCanCreateCompany } from 'src/views/DashboardCommon/CompanyManagement/useCanCreateCompany';
 
 export const List = () => {
   const dispatch = useDispatch();
+  const { mutate: deleteCompany } = useDeleteCompanyMutation();
   const { data: user } = useGetMyDetailsQuery();
   const { canCreate } = useCanCreateCompany();
 
@@ -28,13 +28,6 @@ export const List = () => {
   const isAdmin = user.role === UserRole.admin;
   const slug = UserService.getSlugByRole(user.role);
   const basePath = `/${slug}/management/settlements`;
-
-  const deleteCompany = async (companyId: string) => {
-    await ApiService.callFetch('DELETE', `company/${companyId}`, () => {
-      dispatch(successNotification('application.companyDeleted'));
-      dispatch(refreshApiTableData());
-    });
-  };
 
   const confirmCompanyDelete = (data: CompanyListRes | CompanyListAdminRes) => {
     dispatch(

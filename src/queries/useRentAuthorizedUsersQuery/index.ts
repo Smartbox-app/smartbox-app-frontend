@@ -1,1 +1,1 @@
-export * from './useRentAuthorizedUsersQuery';
+export * from 'src/queries/useRentAuthorizedUsersQuery/useRentAuthorizedUsersQuery';

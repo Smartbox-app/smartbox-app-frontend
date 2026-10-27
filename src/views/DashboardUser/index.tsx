@@ -1,16 +1,15 @@
 import React from 'react';
-
 import { Route, Redirect, Switch } from 'react-router-dom';
-import { Main } from '../../components/Layout';
-import MobileLogoContainer from '../../components/Layout/MobileLogoContainer';
-import { Welcome, Order, Profile, Contact } from '../DashboardCommon';
-import { MenuItemType } from '../../types/menu-item';
 
-import { DashboardContainer } from '../../components/Layout/DashboardContainer';
-import { Navigation } from '../../components/Layout/Navigation';
-import SingleRentDetail from '../DashboardCommon/SingleRentDetail';
-import { Home, Settings } from '../../icons';
+import { Main } from 'src/components/Layout';
+import { DashboardContainer } from 'src/components/Layout/DashboardContainer';
+import MobileLogoContainer from 'src/components/Layout/MobileLogoContainer';
+import { Navigation } from 'src/components/Layout/Navigation';
+import { Home, Settings } from 'src/icons';
+import { MenuItemType } from 'src/types/menu-item';
 import { withAttributionSearch } from 'src/utils/attribution-params';
+import { Welcome, Order, Profile, Contact } from 'src/views/DashboardCommon';
+import SingleRentDetail from 'src/views/DashboardCommon/SingleRentDetail';
 
 const DashboardUser = () => {
   const menuItems: MenuItemType[] = [

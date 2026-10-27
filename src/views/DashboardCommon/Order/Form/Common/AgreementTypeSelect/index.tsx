@@ -1,12 +1,13 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { RentAgreementType } from 'smartbox-types';
-import { setRentAgreementType } from '../../../../../../actions/order';
-import { getColorForBackground } from '../../../../../../utils/color';
 import styled from 'styled-components';
-import { __ } from '../../../../../../helpers/i18n';
-import { ApplicationState } from 'src/reducers';
+
+import { RentAgreementType } from 'smartbox-types';
+import { setRentAgreementType } from 'src/actions/order';
 import { Header, Section } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
+import { ApplicationState } from 'src/reducers';
+import { getColorForBackground } from 'src/utils/color';
 
 type AgreementTypeOptionProps = {
   type: RentAgreementType;

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import './FieldsColumn.scss';
+import 'src/components/Layout/FieldsColumn/FieldsColumn.scss';
 
 interface Props {
   children: React.ReactNode;

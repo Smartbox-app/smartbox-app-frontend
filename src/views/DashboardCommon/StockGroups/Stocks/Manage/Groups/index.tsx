@@ -1,11 +1,12 @@
 import React from 'react';
 import { Switch, Route, Redirect, useParams, } from 'react-router';
-import { Add } from './Add';
-import { List } from './List';
-import UserService from '../../../../../../services/user-service';
-import { Map } from '../Map';
-import { Pricing } from './Pricing';
+
 import { useGetMyDetailsQuery } from 'src/queries';
+import UserService from 'src/services/user-service';
+import { Add } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Groups/Add';
+import { List } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Groups/List';
+import { Pricing } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Groups/Pricing';
+import { Map } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Map';
 
 const Groups = () => {
     const { stockId } = useParams<{ stockId: string}>();

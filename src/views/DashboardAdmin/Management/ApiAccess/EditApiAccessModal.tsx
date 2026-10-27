@@ -1,20 +1,21 @@
 import React from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
+
 import { ApiAccessTableRes, UpdateApiAccessReq } from 'smartbox-types';
-import { hideModal } from 'src/actions/modal';
 import { refreshApiTableData } from 'src/actions/api-table';
+import { hideModal } from 'src/actions/modal';
 import { successNotification } from 'src/actions/notifications';
-import { Button, CheckBox, Form, Input, Modal } from 'src/components/ui';
+import { Spinner } from 'src/components/Branded';
 import { DateInput, InputSelect } from 'src/components/Common';
 import { FormContainer } from 'src/components/Layout';
-import { Spinner } from 'src/components/Branded';
+import { Button, CheckBox, Form, Input, Modal } from 'src/components/ui';
 import { UpdateApiAccessFormDto } from 'src/dto/UpdateApiAccessFormDto';
 import { __ } from 'src/helpers/i18n';
+import { useApiAccessScopes } from 'src/hooks/useApiAccessScopes';
 import { useUpdateApiAccessMutation } from 'src/mutations';
 import { ClassValidatorResolver } from 'src/resolvers/ClassValidatorResolver';
 import { dateOnlyNormalized } from 'src/utils/format-date';
-import { useApiAccessScopes } from 'src/hooks/useApiAccessScopes';
 
 type EditApiAccessModalProps = {
   row: ApiAccessTableRes;

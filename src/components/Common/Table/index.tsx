@@ -1,4 +1,7 @@
+import { setLightness } from 'polished';
 import React from 'react';
+import styled from 'styled-components';
+
 import {
   FieldType,
   TableButton,
@@ -6,18 +9,16 @@ import {
   TableSchema,
   TableSchemaField,
 } from 'smartbox-tables';
-import { Alert, Pagination } from '../../Common';
-import { Button } from '../../Branded';
-import { formatPrice } from '../../../utils/format-price';
-
-import './Table.scss';
-import { fullDate } from '../../../utils/format-date';
-import { __ } from '../../../helpers/i18n';
-import styled from 'styled-components';
-import { getColorForBackground } from '../../../utils/color';
-import { setLightness } from 'polished';
+import { Button } from 'src/components/Branded';
+import { Alert, Pagination } from 'src/components/Common';
 import { ButtonsContainer } from 'src/components/Layout';
-import { Link } from '../../ui';
+import { Link } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
+import { getColorForBackground } from 'src/utils/color';
+import { fullDate } from 'src/utils/format-date';
+import { formatPrice } from 'src/utils/format-price';
+
+import 'src/components/Common/Table/Table.scss';
 
 interface Props {
   scheme: TableSchema;

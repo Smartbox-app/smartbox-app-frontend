@@ -1,20 +1,21 @@
-import React from 'react';
 import { useQueryClient } from '@tanstack/react-query';
-import { __ } from '../../../helpers/i18n';
-import Storage from './Storage';
-import Sale from './Sale';
-import OrdersHistory from './OrdersHistory';
-import { NewRentButton } from './NewRentButton/NewRentButton';
+import React from 'react';
+import styled from 'styled-components';
+
+import { Header } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
+import { useAppForeground } from 'src/hooks/useAppForeground';
 import {
   useGetMyDetailsQuery,
 
 } from 'src/queries';
-import styled from 'styled-components';
-import { Header } from '../../../components/ui';
-import { Message } from './Message';
-import { useAppForeground } from 'src/hooks/useAppForeground';
 import { useGetMyAuthorizedRentsQuery } from 'src/queries/useGetMyAuthorizedRents/useGetMyAuthorizedRents';
 import { useGetMyRentsQuery } from 'src/queries/useGetMyRentsQuery/useGetMyRentsQuery';
+import { Message } from 'src/views/DashboardCommon/Welcome/Message';
+import { NewRentButton } from 'src/views/DashboardCommon/Welcome/NewRentButton/NewRentButton';
+import OrdersHistory from 'src/views/DashboardCommon/Welcome/OrdersHistory';
+import Sale from 'src/views/DashboardCommon/Welcome/Sale';
+import Storage from 'src/views/DashboardCommon/Welcome/Storage';
 
 const WelcomeHeader = styled('div')(({ theme }) => ({
   display: 'flex',

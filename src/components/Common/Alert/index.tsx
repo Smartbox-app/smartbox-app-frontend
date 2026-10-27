@@ -1,7 +1,9 @@
 import * as React from 'react';
-import { __ } from '../../../helpers/i18n';
-import './Alert.scss';
 import styled, { DefaultTheme } from 'styled-components';
+
+import { __ } from 'src/helpers/i18n';
+
+import 'src/components/Common/Alert/Alert.scss';
 
 type AlertTypes = 'error' | 'notice' | 'warning' | 'success';
 

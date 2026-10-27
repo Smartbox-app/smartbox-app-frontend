@@ -1,5 +1,6 @@
 import { createContext, useContext } from 'react';
-import { BoxMapLayoutUpdate } from './utils/map-layout';
+
+import { BoxMapLayoutUpdate } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Map/utils/map-layout';
 
 type BoxLayoutResetHandler = () => void;
 

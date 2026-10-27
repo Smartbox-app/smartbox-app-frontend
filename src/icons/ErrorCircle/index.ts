@@ -1,1 +1,1 @@
-export * from './ErrorCircle';
+export * from 'src/icons/ErrorCircle/ErrorCircle';

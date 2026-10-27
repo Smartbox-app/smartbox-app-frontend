@@ -1,1 +1,1 @@
-export * from './useUpdateBoxesMapLayoutMutation';
+export * from 'src/mutations/useUpdateBoxesMapLayoutMutation/useUpdateBoxesMapLayoutMutation';

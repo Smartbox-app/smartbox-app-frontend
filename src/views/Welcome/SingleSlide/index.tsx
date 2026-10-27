@@ -1,10 +1,12 @@
 import React from 'react';
-import { ButtonsContainer } from '../../../components/Layout';
-import { Button } from '../../../components/Branded';
 import styled from 'styled-components';
-import { useTenant } from '../../../hooks/useTenant';
-import './SingleSlide.scss';
+
+import { Button } from 'src/components/Branded';
+import { ButtonsContainer } from 'src/components/Layout';
 import { useFileStorage } from 'src/hooks/useFileStorage';
+import { useTenant } from 'src/hooks/useTenant';
+
+import 'src/views/Welcome/SingleSlide/SingleSlide.scss';
 
 interface Props {
   item: string;

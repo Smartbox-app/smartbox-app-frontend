@@ -1,27 +1,27 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { showModal } from '../../../../actions/modal';
-import { successNotification } from '../../../../actions/notifications';
-import ApiService from '../../../../services/api-service';
+
+import { attachmentList, attachmentListForAdmin } from 'smartbox-tables';
 import {
   AttachmentListAdminRes,
   AttachmentListRes,
   UserRole,
 } from 'smartbox-types';
-import { ApiTable, ConfirmModal } from '../../../../components/Common';
-import { Button } from '../../../../components/Branded';
-import { Section, ButtonsContainer } from '../../../../components/Layout';
-import { __ } from '../../../../helpers/i18n';
-import { InteractiveTableSchema } from '../../../../utils/table-schema-utils';
-import { refreshApiTableData } from '../../../../actions/api-table';
-import UserService from '../../../../services/user-service';
-import { useGetMyDetailsQuery } from 'src/queries';
+import { showModal } from 'src/actions/modal';
+import { Button } from 'src/components/Branded';
+import { ApiTable, ConfirmModal } from 'src/components/Common';
+import { Section, ButtonsContainer } from 'src/components/Layout';
 import { HeaderWithActions } from 'src/components/ui';
-import { attachmentList, attachmentListForAdmin } from 'smartbox-tables';
-import { Edit } from '../Edit';
+import { __ } from 'src/helpers/i18n';
+import { useDeleteAttachmentMutation } from 'src/mutations';
+import { useGetMyDetailsQuery } from 'src/queries';
+import UserService from 'src/services/user-service';
+import { InteractiveTableSchema } from 'src/utils/table-schema-utils';
+import { Edit } from 'src/views/DashboardCommon/AttachmentManagement/Edit';
 
 const List = () => {
   const dispatch = useDispatch();
+  const { mutate: deleteAttachment } = useDeleteAttachmentMutation();
   const { data: user } = useGetMyDetailsQuery();
   const scheme = new InteractiveTableSchema(
     user?.role === UserRole.admin ? attachmentListForAdmin : attachmentList,
@@ -63,19 +63,10 @@ const List = () => {
             name: data.name,
           })}
           approveButtonText="application.yes"
-          approveAction={() => deleteAttachment(data)}
+          approveAction={() => deleteAttachment(data.id)}
         />,
       ),
     );
-  };
-
-  const deleteAttachment = async (
-    data: AttachmentListRes | AttachmentListAdminRes,
-  ) => {
-    await ApiService.callFetch('DELETE', `attachment/${data.id}`, () => {
-      dispatch(successNotification('application.attachmentDeleted'));
-      dispatch(refreshApiTableData());
-    });
   };
 
   return (

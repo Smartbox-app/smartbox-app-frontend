@@ -1,8 +1,9 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
+
 import { UserRole } from 'smartbox-types';
-import { rememberRedirect } from '../../../utils/remeber-redirect';
 import { useGetMyDetailsQuery } from 'src/queries';
+import { rememberRedirect } from 'src/utils/remeber-redirect';
 
 interface Props {
     component: React.ComponentType;

@@ -1,1 +1,1 @@
-export * from './Map';
+export * from 'src/icons/Map/Map';

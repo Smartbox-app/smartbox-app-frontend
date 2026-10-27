@@ -1,7 +1,8 @@
-import React from 'react';
 import { Editor } from '@tiptap/react';
+import React from 'react';
+
 import { __ } from 'src/helpers/i18n';
-import { Toolbar, Button } from '../styled';
+import { Toolbar, Button } from 'src/views/DashboardCommon/DocumentManagement/components/styled';
 
 export const TiptapMenuBar = ({ editor }: { editor: Editor | null }) => {
   if (!editor) return null;
@@ -90,7 +91,7 @@ export const TiptapMenuBar = ({ editor }: { editor: Editor | null }) => {
 
       {/* LINK */}
       <Button active={editor.isActive('link')} onClick={setLink}>
-        Link
+        {__('application.phrases.link')}
       </Button>
 
       <Button onClick={() => editor.chain().focus().unsetLink().run()}>

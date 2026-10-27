@@ -1,6 +1,7 @@
-import React from 'react';
 import { NodeViewContent, NodeViewWrapper } from '@tiptap/react';
 import type { NodeViewProps } from '@tiptap/react';
+import React from 'react';
+
 import { __ } from 'src/helpers/i18n';
 
 export const TemplateConditionalNodeView = ({

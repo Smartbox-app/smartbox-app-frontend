@@ -1,8 +1,9 @@
 import { v4 } from 'uuid';
+
 import { ApiErrorCode } from 'smartbox-types';
-import { SingleNotification } from '../types/notifications';
-import { translateApiErrorCode } from '../utils/trans-form';
-import { currentAppLanguage } from '../i18n/app-language';
+import { currentAppLanguage } from 'src/i18n/app-language';
+import { SingleNotification } from 'src/types/notifications';
+import { translateApiErrorCode } from 'src/utils/trans-form';
 
 interface HideNotification {
   type: 'HIDE_NOTIFICATION';

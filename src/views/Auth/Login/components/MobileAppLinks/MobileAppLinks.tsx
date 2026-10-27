@@ -1,16 +1,17 @@
-import React from 'react';
 import { Capacitor } from '@capacitor/core';
+import React from 'react';
 import styled from 'styled-components';
+
+import { TenantForUsers } from 'smartbox-types';
+import { AppStoreBadge } from 'src/badges/AppStore';
+import { GooglePlayBadge } from 'src/badges/GooglePlay';
 import { Section, Typography } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
-import { TenantForUsers } from 'smartbox-types';
 import { getClientMobileOs } from 'src/utils/detect-client-mobile-os';
 import {
   hasMobileAppAndroidLink,
   hasMobileAppIosLink,
 } from 'src/utils/tenant-mobile-app-links';
-import { AppStoreBadge } from 'src/badges/AppStore';
-import { GooglePlayBadge } from 'src/badges/GooglePlay';
 
 const LinksRow = styled('div')(({ theme }) => ({
   display: 'flex',

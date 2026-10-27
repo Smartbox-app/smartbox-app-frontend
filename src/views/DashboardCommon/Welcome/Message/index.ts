@@ -1,1 +1,1 @@
-export * from './Message';
+export * from 'src/views/DashboardCommon/Welcome/Message/Message';

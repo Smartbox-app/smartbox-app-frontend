@@ -1,8 +1,9 @@
 import React from 'react';
+
+import { BoxDisplayStatus } from 'smartbox-types';
 import { Typography } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
 import { translateBoxDisplayStatus } from 'src/utils/box-display-status';
-import { BoxDisplayStatus } from 'smartbox-types';
 
 type RentSummaryOwner = {
   firstName?: string | null;

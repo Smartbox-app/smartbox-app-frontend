@@ -1,1 +1,1 @@
-export * from './useGetMyAuthorizedRents';
+export * from 'src/queries/useGetMyAuthorizedRents/useGetMyAuthorizedRents';

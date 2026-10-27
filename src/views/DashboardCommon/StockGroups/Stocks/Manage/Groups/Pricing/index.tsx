@@ -1,7 +1,8 @@
 import { useState, useEffect, ChangeEvent } from 'react';
-import { useParams } from 'react-router';
 import { useDispatch } from 'react-redux';
-import ApiService from '../../../../../../../services/api-service';
+import { useParams } from 'react-router';
+import styled from 'styled-components';
+
 import {
   BoxGroupAdminClientRes,
   PriceResolveType,
@@ -9,20 +10,20 @@ import {
   PricingType,
   SinglePricing,
 } from 'smartbox-types';
-import styled from 'styled-components';
+import { successNotification } from 'src/actions/notifications';
+import { Button, Spinner } from 'src/components/Branded';
 import {
   Alert,
   Input,
   InputSelect,
-} from '../../../../../../../components/Common';
+} from 'src/components/Common';
 import {
   ButtonsContainer,
   FormContainer,
-} from '../../../../../../../components/Layout';
-import { Button, Spinner } from '../../../../../../../components/Branded';
-import { __ } from '../../../../../../../helpers/i18n';
-import { successNotification } from '../../../../../../../actions/notifications';
+} from 'src/components/Layout';
 import { Header, Section, Typography } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
+import ApiService from 'src/services/api-service';
 
 const StyledSinglePricing = styled.div`
   display: flex;

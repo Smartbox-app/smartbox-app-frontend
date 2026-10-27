@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
-import ApiService from '../../services/api-service';
+
 import { MyRentDetails } from 'smartbox-types';
+import ApiService from 'src/services/api-service';
 
 export const myRentDetailsQueryKey = (rentId: string) =>
   ['rent', 'my-details', rentId] as const;

@@ -1,2 +1,2 @@
-export * from './gift';
-export * from './gift-entity';
+export * from 'src/smartbox-types/gift/gift';
+export * from 'src/smartbox-types/gift/gift-entity';

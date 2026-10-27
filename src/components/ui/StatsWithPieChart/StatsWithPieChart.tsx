@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { PieChart, PieChartSegment } from '../PieChart';
+
+import { PieChart, PieChartSegment } from 'src/components/ui/PieChart';
 
 const Layout = styled.div`
   display: flex;

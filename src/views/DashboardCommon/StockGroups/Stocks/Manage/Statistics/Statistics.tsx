@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router';
-import { Section } from '../../../../../../components/Layout';
-import { Spinner } from '../../../../../../components/Branded';
 
+import { Spinner } from 'src/components/Branded';
+import { Section } from 'src/components/Layout';
 import { Header, Tabs } from 'src/components/ui';
 import { useTenantNaming } from 'src/hooks/useTenantNaming';
-import { SingleTab } from 'src/types/tab';
 import {
   useGetStockQuery,
   useGetStockStatisticsQuery,
 } from 'src/queries';
-import { RentsStats } from './components/RentsStats';
-import { PaymentsStats } from './components/PaymentsStats';
-import { getStockStatusColors } from './utils/stock-status-colors';
+import { SingleTab } from 'src/types/tab';
+import { PaymentsStats } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Statistics/components/PaymentsStats';
+import { RentsStats } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Statistics/components/RentsStats';
+import { getStockStatusColors } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Statistics/utils/stock-status-colors';
 
 export const Statistics = () => {
   const { stockId } = useParams<{ stockId: string }>();

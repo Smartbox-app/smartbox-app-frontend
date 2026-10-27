@@ -1,1 +1,1 @@
-export * from './useGetDocumentByTypeQuery';
+export * from 'src/queries/useGetDocumentByTypeQuery/useGetDocumentByTypeQuery';

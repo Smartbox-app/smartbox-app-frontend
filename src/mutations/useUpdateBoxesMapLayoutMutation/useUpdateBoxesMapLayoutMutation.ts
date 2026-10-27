@@ -1,7 +1,8 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+
 import { BoxesMapLayoutBatchReq } from 'smartbox-types';
-import ApiService from 'src/services/api-service';
 import { stockBoxesQueryKey } from 'src/queries/useGetStockBoxesQuery/useGetStockBoxesQuery';
+import ApiService from 'src/services/api-service';
 
 export const useUpdateBoxesMapLayoutMutation = (stockId?: string) => {
   const queryClient = useQueryClient();

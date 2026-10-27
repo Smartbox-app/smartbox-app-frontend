@@ -2,7 +2,7 @@ import {
   END_RENT_PHOTO_MAX_AGE_MS,
   assertEndRentPhotoFresh,
   isEndRentPhotoFresh,
-} from './end-rent-photo-age';
+} from 'src/utils/end-rent-photo-age';
 
 describe('end rent photo age', () => {
   const now = new Date('2026-10-08T12:00:00.000Z');

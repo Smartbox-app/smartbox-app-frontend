@@ -1,11 +1,12 @@
 import { useMemo } from 'react';
+
 import { templateLanguage } from 'smartbox-types';
 import { __ } from 'src/helpers/i18n';
 import { useTemplateListQuery } from 'src/queries';
 import {
   TemplateSection,
   TemplateSectionRow,
-} from './types';
+} from 'src/views/DashboardTenant/Templates/List/types';
 
 const groupKey = (row: TemplateSectionRow) =>
   `${row.type}:${row.channel}:${templateLanguage(row.lang)}`;

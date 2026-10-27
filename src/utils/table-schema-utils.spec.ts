@@ -1,5 +1,5 @@
 import { TableSchemaField } from 'smartbox-tables';
-import { InteractiveTableSchema } from './table-schema-utils';
+import { InteractiveTableSchema } from 'src/utils/table-schema-utils';
 
 const field = (name: string): TableSchemaField => ({ name, field: name });
 

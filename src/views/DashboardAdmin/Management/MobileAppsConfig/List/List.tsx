@@ -1,24 +1,23 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { mobileConfigTableSchema } from 'smartbox-tables';
-import { showModal } from '../../../../../actions/modal';
-import { successNotification } from '../../../../../actions/notifications';
-import ApiService from '../../../../../services/api-service';
-import { MobileConfigListDetails } from 'smartbox-types';
-import { ApiTable, ConfirmModal } from '../../../../../components/Common';
-import { Button } from '../../../../../components/Branded';
-import { Section, ButtonsContainer } from '../../../../../components/Layout';
-import { __ } from '../../../../../helpers/i18n';
-import { InteractiveTableSchema } from '../../../../../utils/table-schema-utils';
-import { refreshApiTableData } from '../../../../../actions/api-table';
-import UserService from '../../../../../services/user-service';
-import { useGetMyDetailsQuery } from 'src/queries';
-import { HeaderWithActions } from 'src/components/ui';
 
-import { Edit } from '../Edit';
+import { mobileConfigTableSchema } from 'smartbox-tables';
+import { MobileConfigListDetails } from 'smartbox-types';
+import { showModal } from 'src/actions/modal';
+import { Button } from 'src/components/Branded';
+import { ApiTable, ConfirmModal } from 'src/components/Common';
+import { Section, ButtonsContainer } from 'src/components/Layout';
+import { HeaderWithActions } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
+import { useDeleteMobileConfigMutation } from 'src/mutations';
+import { useGetMyDetailsQuery } from 'src/queries';
+import UserService from 'src/services/user-service';
+import { InteractiveTableSchema } from 'src/utils/table-schema-utils';
+import { Edit } from 'src/views/DashboardAdmin/Management/MobileAppsConfig/Edit';
 
 const List = () => {
   const dispatch = useDispatch();
+  const { mutate: deleteMobileConfig } = useDeleteMobileConfigMutation();
 
   const scheme = new InteractiveTableSchema(mobileConfigTableSchema);
   const { data: user } = useGetMyDetailsQuery();
@@ -47,17 +46,10 @@ const List = () => {
         <ConfirmModal
           mainText="mobileConfig.deleteConfirmation"
           approveButtonText="application.yes"
-          approveAction={() => deleteConfig(data)}
+          approveAction={() => deleteMobileConfig(data.id)}
         />,
       ),
     );
-  };
-
-  const deleteConfig = async (data: MobileConfigListDetails) => {
-    await ApiService.callFetch('DELETE', `mobile-config/${data.id}`, () => {
-      dispatch(successNotification('mobileConfig.deleted'));
-      dispatch(refreshApiTableData());
-    });
   };
 
   return (

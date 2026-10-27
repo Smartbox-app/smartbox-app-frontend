@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { AgreementPreview } from 'src/components/AgreementPreview';
 import { Modal } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';

@@ -1,4 +1,4 @@
-import { RentAgreementType, RentPaymentType } from '../rent';
+import { RentAgreementType, RentPaymentType } from 'src/smartbox-types/rent';
 
 export type ClientDeadlinePeriod = {
   id: string;

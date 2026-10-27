@@ -1,7 +1,6 @@
 import { Language } from 'smartbox-types';
-
-import { __ } from '../helpers/i18n';
-import { currentAppLanguage } from '../i18n/app-language';
+import { __ } from 'src/helpers/i18n';
+import { currentAppLanguage } from 'src/i18n/app-language';
 
 export type PeriodPricingType =
   | 'day'

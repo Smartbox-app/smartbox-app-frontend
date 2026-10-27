@@ -1,4 +1,5 @@
 import { IsNotEmpty, IsString, Length } from 'class-validator';
+
 import { errors } from 'src/validation/errors';
 
 export class ActivateAccountCodeDto {

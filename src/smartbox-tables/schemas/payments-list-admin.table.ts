@@ -1,5 +1,5 @@
 import { PaymentDocument, PaymentStatus, PaymentType } from 'smartbox-types';
-import { FieldType, TableSchema } from '../typings';
+import { FieldType, TableSchema } from 'src/smartbox-tables/typings';
 
 const statusToText: {
   [key: string]: string;

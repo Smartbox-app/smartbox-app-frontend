@@ -1,5 +1,6 @@
 import { isValidElement, ReactElement } from 'react';
-import { textToSimpleMD } from './text-to-simple-md';
+
+import { textToSimpleMD } from 'src/utils/text-to-simple-md';
 
 type BoldNode = ReactElement<{ children: string }>;
 

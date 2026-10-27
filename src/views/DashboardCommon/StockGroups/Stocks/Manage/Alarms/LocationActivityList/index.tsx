@@ -1,21 +1,22 @@
 import React, { useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router';
+
 import { FieldType, locationActivityList } from 'smartbox-tables';
 import { LocationActivityListItem } from 'smartbox-types';
-import { ConfirmModal, Table } from 'src/components/Common';
-import { Spinner , Button } from 'src/components/Branded';
-import { ButtonsContainer, Section } from 'src/components/Layout';
-import { __ } from 'src/helpers/i18n';
-import { InteractiveTableSchema } from 'src/utils/table-schema-utils';
 import { showModal } from 'src/actions/modal';
 import { successNotification } from 'src/actions/notifications';
-import { useLocationActivityQuery } from 'src/queries';
+import { Spinner , Button } from 'src/components/Branded';
+import { ConfirmModal, Table } from 'src/components/Common';
+import { ButtonsContainer, Section } from 'src/components/Layout';
+import { Header, Typography, Button as UIButton } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
 import {
   useClearLocationActivityMutation,
   useToggleLocationActivityMutation,
 } from 'src/mutations';
-import { Header, Typography, Button as UIButton } from 'src/components/ui';
+import { useLocationActivityQuery } from 'src/queries';
+import { InteractiveTableSchema } from 'src/utils/table-schema-utils';
 
 export const LocationActivityList = () => {
   const dispatch = useDispatch();

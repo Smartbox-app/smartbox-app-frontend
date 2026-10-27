@@ -1,25 +1,25 @@
-import React from 'react';
 import { ItfApiForm } from 'itf_formbuilder_react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
+import { useParams } from 'react-router';
+
+import { AddonReq } from 'smartbox-types';
+import { successNotification } from 'src/actions/notifications';
+import { Button, Spinner } from 'src/components/Branded';
+import { ReactSelectOverride, ReactCreatableSelectOverride as ReactCreatableSelect } from 'src/components/Common/ReactSelectOverride';
 import {
   ButtonsContainer,
   FormContainer,
-} from '../../../../../../../components/Layout';
-import { Button, Spinner } from '../../../../../../../components/Branded';
-import ApiService from '../../../../../../../services/api-service';
-import { formOnTranslateString } from '../../../../../../../utils/trans-form';
-import { history } from 'src/history';
-import { ReactSelectOverride, ReactCreatableSelectOverride as ReactCreatableSelect } from '../../../../../../../components/Common/ReactSelectOverride';
-import { successNotification } from '../../../../../../../actions/notifications';
-import { __ } from '../../../../../../../helpers/i18n';
-import UserService from '../../../../../../../services/user-service';
-
-import { mapFields } from '../../../../../../../utils/fields-mapper';
-import { useParams } from 'react-router';
-import { AddonReq } from 'smartbox-types';
-import { useGetMyDetailsQuery } from 'src/queries';
+} from 'src/components/Layout';
 import { HeaderWithActions, Section } from 'src/components/ui';
-import { serializeBoxGroupIds } from '../serialize-box-group-ids';
+import { __ } from 'src/helpers/i18n';
+import { history } from 'src/history';
+import { useGetMyDetailsQuery } from 'src/queries';
+import ApiService from 'src/services/api-service';
+import UserService from 'src/services/user-service';
+import { mapFields } from 'src/utils/fields-mapper';
+import { formOnTranslateString } from 'src/utils/trans-form';
+import { serializeBoxGroupIds } from 'src/views/DashboardCommon/StockGroups/Stocks/Manage/Addons/serialize-box-group-ids';
 
 const Add = () => {
   const dispatch = useDispatch();

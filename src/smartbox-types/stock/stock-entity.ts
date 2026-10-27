@@ -1,4 +1,4 @@
-import type { AccessControl } from '../stock-group';
+import type { AccessControl } from 'src/smartbox-types/stock-group';
 
 /** Field subset of the backend Stock entity used by StockRes / StockListRes. */
 interface Stock {

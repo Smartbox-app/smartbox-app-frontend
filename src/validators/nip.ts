@@ -1,4 +1,5 @@
 import { checkVAT, countries as vatCountries } from 'jsvat';
+
 export const validateNip = (value: string, countryCode: string): boolean => {
   if (!value || !countryCode) return false;
 

@@ -1,4 +1,5 @@
 import { IsNotEmpty } from 'class-validator';
+
 import { errors } from 'src/validation/errors';
 
 export class RentDurationDto {

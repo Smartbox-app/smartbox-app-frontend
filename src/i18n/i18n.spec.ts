@@ -1,9 +1,9 @@
-import application from './locales/pl/application';
-import applicationCz from './locales/cz/application';
-import applicationUa from './locales/ua/application';
-import applicationDe from './locales/de/application';
-import { i18next, t } from './i18n';
-import type { I18nResourceKey } from './types';
+import { i18next, t } from 'src/i18n/i18n';
+import applicationCz from 'src/i18n/locales/cz/application';
+import applicationDe from 'src/i18n/locales/de/application';
+import application from 'src/i18n/locales/pl/application';
+import applicationUa from 'src/i18n/locales/ua/application';
+import type { I18nResourceKey } from 'src/i18n/types';
 
 describe('i18n', () => {
   it('correctly translates value without parameters', () => {

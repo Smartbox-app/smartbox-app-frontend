@@ -1,9 +1,10 @@
 import React from 'react';
+
 import { UserRole } from 'smartbox-types';
 import { useGetMyDetailsQuery } from 'src/queries';
-import { ManageTenantAnalytics } from '../../ClientManagement/TenantAnalytics';
-import { useTenantSettingsContext } from '../TenantSettingsContext';
-import { AnalyticsTrackingGuide } from './AnalyticsTrackingGuide';
+import { ManageTenantAnalytics } from 'src/views/DashboardCommon/ClientManagement/TenantAnalytics';
+import { AnalyticsTrackingGuide } from 'src/views/DashboardCommon/TenantSettings/sections/AnalyticsTrackingGuide';
+import { useTenantSettingsContext } from 'src/views/DashboardCommon/TenantSettings/TenantSettingsContext';
 
 export const AnalyticsSettings = () => {
   const { userId } = useTenantSettingsContext();

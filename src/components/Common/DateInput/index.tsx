@@ -1,28 +1,26 @@
+import { isBefore } from 'date-fns';
+import { darken } from 'polished';
 import React from 'react';
 import Flatpickr from 'react-flatpickr';
-
-import {
-  applyFlatpickrLocale,
-  flatpickrLocale,
-} from 'src/i18n/flatpickr-locale';
-
-import { __ } from '../../../helpers/i18n';
 import styled from 'styled-components';
-import { TranslatableObject } from '../../../utils/errors-trans';
-import { InputErrors } from '../InputErrors';
-import { isBefore } from 'date-fns';
-import { InputLabel } from 'src/components/ui/InputLabel';
-import { ErrorText } from 'src/components/ui/ErrorText';
-import { darken } from 'polished';
-import { getColorForBackground } from 'src/utils/color';
 
 import {
   getInputFieldStyles,
   InputSize,
   InputSizeProps,
   resolveInputSize,
-} from '../input-sizes';
-import { StyledFieldContainer } from '../input-styled';
+} from 'src/components/Common/input-sizes';
+import { StyledFieldContainer } from 'src/components/Common/input-styled';
+import { InputErrors } from 'src/components/Common/InputErrors';
+import { ErrorText } from 'src/components/ui/ErrorText';
+import { InputLabel } from 'src/components/ui/InputLabel';
+import { __ } from 'src/helpers/i18n';
+import {
+  applyFlatpickrLocale,
+  flatpickrLocale,
+} from 'src/i18n/flatpickr-locale';
+import { getColorForBackground } from 'src/utils/color';
+import { TranslatableObject } from 'src/utils/errors-trans';
 
 applyFlatpickrLocale();
 

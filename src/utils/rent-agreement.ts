@@ -1,4 +1,5 @@
 import { isAfter, isBefore } from 'date-fns';
+
 import { PeriodEntity, RentDescription } from 'smartbox-types';
 
 export type ResolvedRentAgreement = {

@@ -1,1 +1,1 @@
-export * from './useCreateDocumentDraftMutation';
+export * from 'src/mutations/useCreateDocumentDraftMutation/useCreateDocumentDraftMutation';

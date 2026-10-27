@@ -1,7 +1,9 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import './Spinner.scss';
-import { colorOrDark } from '../../../utils/color';
+
+import { colorOrDark } from 'src/utils/color';
+
+import 'src/components/Branded/Spinner/Spinner.scss';
 
 interface Props {
     overlay?: boolean;

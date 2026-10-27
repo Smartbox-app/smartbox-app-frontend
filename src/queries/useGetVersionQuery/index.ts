@@ -1,1 +1,1 @@
-export * from './useGetVersionQuery';
+export * from 'src/queries/useGetVersionQuery/useGetVersionQuery';

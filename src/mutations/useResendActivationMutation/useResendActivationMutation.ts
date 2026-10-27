@@ -1,6 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
-import ApiService from 'src/services/api-service';
+
 import { RegisterUserRes } from 'smartbox-types';
+import ApiService from 'src/services/api-service';
 
 export const useResendActivationMutation = () =>
   useMutation({

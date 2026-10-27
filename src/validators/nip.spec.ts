@@ -1,4 +1,4 @@
-import { validateNip } from './nip';
+import { validateNip } from 'src/validators/nip';
 
 describe('validateNip by country', () => {
   it('rejects an empty value or country', () => {

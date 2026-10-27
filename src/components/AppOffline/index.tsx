@@ -1,9 +1,10 @@
 import React from 'react';
-import { __ } from "../../helpers/i18n";
-
-import './AppOffline.scss';
 import styled from 'styled-components';
-import { getColorForBackground } from '../../utils/color';
+
+import { __ } from "src/helpers/i18n";
+import { getColorForBackground } from 'src/utils/color';
+
+import 'src/components/AppOffline/AppOffline.scss';
 
 const StyledAppStatus = styled.div`
 background: ${props => props.theme.colors.primary};
