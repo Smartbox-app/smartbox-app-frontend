@@ -62,6 +62,10 @@ const StyledStartDateField = styled.div`
   flex-direction: column;
 `;
 
+const StyledPriceWrap = styled.div`
+  position: relative;
+`;
+
 const StepDuration = () => {
   const { data: user } = useGetMyDetailsQuery();
   const dispatch = useDispatch();
@@ -376,7 +380,6 @@ const StepDuration = () => {
           <AgreementTypeSelect />
         ) : null}
         <Section>
-          {loadingPrice && <Spinner halfTransparent overlay />}
           <StyledCalendarPicker className="calendars-picker-wrapper">
             <StyledStartDateField>
               <Controller
@@ -442,7 +445,10 @@ const StepDuration = () => {
 
         {stock && !isOpenEnded ? <PaymentType stock={stock} /> : null}
         <Addons stockId={stockId} boxGroupId={boxGroupId} />
-        <Price />
+        <StyledPriceWrap>
+          {loadingPrice && <Spinner halfTransparent overlay />}
+          <Price />
+        </StyledPriceWrap>
         <Section>
           <ButtonsContainer spaceBetween>
             <Button

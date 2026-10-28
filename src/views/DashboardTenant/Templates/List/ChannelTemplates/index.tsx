@@ -21,7 +21,7 @@ const overrideTo = (basePath: string, row: TemplateListRow) =>
   withLang(`${basePath}/manage/${row.channel}/${row.type}/stock`, row.lang);
 
 const Group = styled('div')(({ theme }) => ({
-  marginTop: theme.spacing * 4,
+  marginTop: theme.spacing * 6,
 }));
 
 const StockListHeader = styled('div')(({ theme }) => ({
@@ -51,7 +51,7 @@ export const ChannelTemplates = ({
 
   return (
     <Group>
-      <Header variant="h4">
+      <Header variant="h5">
         {__(
           channel === 'email'
             ? 'application.templatesEmail'
@@ -63,16 +63,13 @@ export const ChannelTemplates = ({
           <ul>
             <SingleTemplate
               type={channelLabel(channel)}
-              title={`${__('application.templateScopeAll')} · ${templateLanguage(group.generic.lang).toUpperCase()}`}
+              title={__('application.templateScopeAll')}
               info={__(
                 group.generic.isDefault
                   ? 'application.defaultTemplateUsed'
                   : 'application.templateSet',
               )}
               isSet={!group.generic.isDefault}
-              preview={
-                group.generic.isDefault ? group.generic.content : undefined
-              }
               even
             >
               <Button

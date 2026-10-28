@@ -1,6 +1,10 @@
 import { renderHook } from '@testing-library/react';
 
-import type { TemplateChannelGroup, TemplateSectionRow } from './types';
+import type {
+  TemplateChannelGroup,
+  TemplateSection,
+  TemplateSectionRow,
+} from './types';
 import { useTemplateListQuery } from 'src/queries';
 import { useTemplateSections } from './useTemplateSections';
 
@@ -26,12 +30,23 @@ const row = (overrides: {
   ...overrides,
 });
 
+const langOf = (
+  section: TemplateSection<TemplateSectionRow>,
+  code: string,
+) => section.languages.find((entry) => entry.lang === code);
+
+const ids = (groups: TemplateChannelGroup<TemplateSectionRow>[]) =>
+  groups.map((group) => group.generic.id);
+
+const stockIds = (group?: TemplateChannelGroup<TemplateSectionRow>) =>
+  group?.stocks.map((stock) => stock.id) ?? [];
+
 describe('useTemplateSections', () => {
   beforeEach(() => {
     mockedQuery.mockReturnValue({ data: [], isPending: false });
   });
 
-  it('groups email and sms that share a label', () => {
+  it('groups email and sms under the same language', () => {
     mockedQuery.mockReturnValue({
       data: [
         row({
@@ -56,17 +71,17 @@ describe('useTemplateSections', () => {
     });
 
     const { result } = renderHook(() => useTemplateSections());
+    const pl = langOf(result.current.sections[0], 'pl');
 
     expect(result.current.sections).toHaveLength(1);
     expect(result.current.sections[0].label).toBe(
       'Automatyczna płatność zakończona porażką',
     );
-    expect(result.current.sections[0].email.map((group: TemplateChannelGroup<TemplateSectionRow>) => group.generic.id)).toEqual([
-      'email',
+    expect(result.current.sections[0].languages.map((entry) => entry.lang)).toEqual([
+      'pl',
     ]);
-    expect(result.current.sections[0].sms[0].stocks.map((stock: TemplateSectionRow) => stock.id)).toEqual([
-      'stock',
-    ]);
+    expect(ids(pl?.email ?? [])).toEqual(['email']);
+    expect(stockIds(pl?.sms[0])).toEqual(['stock']);
   });
 
   it('keeps an email-only template in the email subsection', () => {
@@ -82,12 +97,13 @@ describe('useTemplateSections', () => {
     });
 
     const { result } = renderHook(() => useTemplateSections());
+    const pl = langOf(result.current.sections[0], 'pl');
 
-    expect(result.current.sections[0].email).toHaveLength(1);
-    expect(result.current.sections[0].sms).toHaveLength(0);
+    expect(pl?.email).toHaveLength(1);
+    expect(pl?.sms).toHaveLength(0);
   });
 
-  it('keeps stock templates with the language they were saved in', () => {
+  it('nests stock templates under the language they were saved in', () => {
     mockedQuery.mockReturnValue({
       data: [
         row({ id: 'pl', type: 'new_rental_email', channel: 'email' }),
@@ -112,18 +128,15 @@ describe('useTemplateSections', () => {
     });
 
     const { result } = renderHook(() => useTemplateSections());
-    const email = result.current.sections[0].email;
+    const section = result.current.sections[0];
+    const pl = langOf(section, 'pl');
+    const en = langOf(section, 'en');
 
-    expect(email.map((group: TemplateChannelGroup<TemplateSectionRow>) => group.generic.id)).toEqual([
-      'pl',
-      'en',
-    ]);
-    expect(email[0].stocks.map((stock: TemplateSectionRow) => stock.id)).toEqual([
-      'pl-stock',
-    ]);
-    expect(email[1].stocks.map((stock: TemplateSectionRow) => stock.id)).toEqual([
-      'en-stock',
-    ]);
+    expect(section.languages.map((entry) => entry.lang)).toEqual(['pl', 'en']);
+    expect(ids(pl?.email ?? [])).toEqual(['pl']);
+    expect(stockIds(pl?.email[0])).toEqual(['pl-stock']);
+    expect(ids(en?.email ?? [])).toEqual(['en']);
+    expect(stockIds(en?.email[0])).toEqual(['en-stock']);
   });
 
   it('shows a stock template when that language has no generic row', () => {
@@ -143,12 +156,10 @@ describe('useTemplateSections', () => {
     });
 
     const { result } = renderHook(() => useTemplateSections());
-    const english = result.current.sections[0].email[1];
+    const english = langOf(result.current.sections[0], 'en')?.email[0];
 
-    expect(english.generic.isDefault).toBe(true);
-    expect(english.generic.lang).toBe('en');
-    expect(english.stocks.map((stock: TemplateSectionRow) => stock.id)).toEqual([
-      'en-stock',
-    ]);
+    expect(english?.generic.isDefault).toBe(true);
+    expect(english?.generic.lang).toBe('en');
+    expect(stockIds(english)).toEqual(['en-stock']);
   });
 });

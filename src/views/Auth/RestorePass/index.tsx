@@ -1,5 +1,4 @@
 import { ItfApiForm } from 'itf_formbuilder_react';
-import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router';
 

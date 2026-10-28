@@ -20,7 +20,7 @@ export const useOpenBoxMutation = () => {
         undefined,
         undefined,
         undefined,
-        true,
+        false,
       );
       return !!isSuccess;
     },

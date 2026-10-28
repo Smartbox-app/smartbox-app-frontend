@@ -1,7 +1,7 @@
-import { CompanyData, RentStatus, SelectOption } from 'src/smartbox-types';
-import { ApiErrorCode } from 'src/smartbox-types/apiMessages/errorCodes';
-import { TenantEntity } from 'src/smartbox-types/tenant';
-import { UserRole, UserStatus, Language } from 'src/smartbox-types/user/user-entity';
+import { UserRole, UserStatus, Language } from './user-entity';
+import { ApiErrorCode } from '../apiMessages/errorCodes';
+import { TenantEntity } from '../tenant';
+import { CompanyData, RentStatus, SelectOption } from '..';
 
 export class UserRes {
   id: string;
@@ -153,7 +153,6 @@ export interface AddUserByAdminReq {
   firstName: string;
   lastName: string;
   tenantId?: string;
-  lang?: Language;
 }
 
 export interface ActivateUserReq {
@@ -200,7 +199,6 @@ export interface AddTenantReq {
   phone: string;
   firstName: string;
   lastName: string;
-  lang?: Language;
 }
 
 export interface ChangeRoleReq {

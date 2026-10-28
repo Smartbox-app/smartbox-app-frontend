@@ -452,19 +452,17 @@ export default (
 
     case 'CALCULATE_VARIANT_PRICE_SUCCESS': {
       const { addonId, variantId, price } = action.payload;
+      const addon = state.orderAddons[addonId];
 
-      if (
-        !state.orderAddons[addonId] ||
-        state.orderAddons[addonId].selectedVariant !== variantId
-      )
-        return state;
+      if (!addon || addon.selectedVariant !== variantId) return state;
+      if (addon.price === price) return state;
 
       return {
         ...state,
         orderAddons: {
           ...state.orderAddons,
           [addonId]: {
-            ...state.orderAddons[addonId],
+            ...addon,
             price,
           },
         },
@@ -473,15 +471,16 @@ export default (
 
     case 'CLEAR_ADDON_PRICE': {
       const { addonId } = action.payload;
+      const addon = state.orderAddons[addonId];
 
-      if (!state.orderAddons[addonId]) return state;
+      if (!addon || addon.price == null) return state;
 
       return {
         ...state,
         orderAddons: {
           ...state.orderAddons,
           [addonId]: {
-            ...state.orderAddons[addonId],
+            ...addon,
             price: null,
           },
         },
@@ -489,6 +488,7 @@ export default (
     }
 
     case 'LOADING_PRICE': {
+      if (state.loadingPrice === action.payload) return state;
       return {
         ...state,
         loadingPrice: action.payload,

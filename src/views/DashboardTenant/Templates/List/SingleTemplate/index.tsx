@@ -57,23 +57,10 @@ const StyledTitle = styled('h3')`
   }
 `;
 
-const Preview = styled('pre')(({ theme }) => ({
-  flex: '1 0 100%',
-  margin: 0,
-  maxHeight: 180,
-  overflow: 'auto',
-  whiteSpace: 'pre-wrap',
-  fontFamily: 'inherit',
-  fontSize: '0.85rem',
-  lineHeight: 1.4,
-  color: theme.colors.text.secondary,
-}));
-
 export const SingleTemplate = ({
   type,
   title,
   info,
-  preview,
   isSet,
   even,
   children,
@@ -81,7 +68,6 @@ export const SingleTemplate = ({
   type: string;
   title: string;
   info?: string;
-  preview?: string;
   isSet: boolean;
   even: boolean;
   children: React.ReactNode;
@@ -93,6 +79,5 @@ export const SingleTemplate = ({
       <StyledTitle>{title}</StyledTitle>
     </MainData>
     <ButtonsContainer>{children}</ButtonsContainer>
-    {preview && <Preview>{preview}</Preview>}
   </StyledSingleTemplate>
 );

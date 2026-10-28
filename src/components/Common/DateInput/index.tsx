@@ -1,6 +1,6 @@
 import { isBefore } from 'date-fns';
 import { darken } from 'polished';
-import React from 'react';
+import React, { useCallback, useMemo } from 'react';
 import Flatpickr from 'react-flatpickr';
 import styled from 'styled-components';
 
@@ -99,6 +99,11 @@ const StyledDateContainer = styled(StyledFieldContainer)<{ $size: InputSize }>(
   }),
 );
 
+const dateTime = (value?: Date | null) =>
+  value instanceof Date && !Number.isNaN(value.getTime())
+    ? value.getTime()
+    : undefined;
+
 const DateInput = ({
   name,
   value,
@@ -119,36 +124,65 @@ const DateInput = ({
   allowInput = false,
 }: Props) => {
   const resolvedSize = resolveInputSize({ size, big, compact });
+  const minTime = dateTime(minDate);
+  const maxTime = dateTime(maxDate);
+  const valueTime = Array.isArray(value)
+    ? value.map((entry) => dateTime(entry)).join(',')
+    : dateTime(value as Date | undefined);
+
+  // Stable options/value: react-flatpickr calls flatpickr.set on every options
+  // identity change; new Date() from parents on each Redux price re-render was
+  // resetting the visible month so users could not pick a different day.
+  const options = useMemo(
+    () => ({
+      allowInput,
+      inline,
+      enableTime: false,
+      locale: flatpickrLocale(),
+      ...(allowInput ? { dateFormat: 'd.m.Y' as const } : {}),
+      ...(minTime != null ? { minDate: new Date(minTime) } : {}),
+      ...(maxTime != null ? { maxDate: new Date(maxTime) } : {}),
+    }),
+    [allowInput, inline, minTime, maxTime],
+  );
+
+  const stableValue = useMemo(() => {
+    if (valueTime == null || valueTime === '') return undefined;
+    if (typeof valueTime === 'string' && valueTime.includes(',')) {
+      return valueTime
+        .split(',')
+        .filter(Boolean)
+        .map((entry) => new Date(Number(entry)));
+    }
+    return new Date(Number(valueTime));
+  }, [valueTime]);
+
+  const handleDayCreate = useCallback(
+    (_dates: Date[], _curentDateString: string, _self: unknown, data: { dateObj: Date; classList: DOMTokenList }) => {
+      if (!highlightEnd || !highlightStart) return;
+      const date = data.dateObj;
+      if (!isBefore(date, highlightStart) && isBefore(date, highlightEnd)) {
+        data.classList.add('highlighted');
+      } else {
+        data.classList.remove('highlighted');
+      }
+    },
+    [highlightEnd, highlightStart],
+  );
 
   return (
     <StyledDateContainer $size={resolvedSize} $noMargin>
       <InputLabel labelFor={name} required={required}>{__(label ?? '')}</InputLabel>
       <Flatpickr
-        onDayCreate={(dates, curentDateString, self, data) => {
-          if (!highlightEnd || !highlightStart) return;
-          const date = data.dateObj;
-          if (!isBefore(date, highlightStart) && isBefore(date, highlightEnd)) {
-            data.classList.add('highlighted');
-          } else {
-            data.classList.remove('highlighted');
-          }
-        }}
+        onDayCreate={handleDayCreate}
         name={name}
         ref={register && register({ name })}
         onChange={(data: Date[]) => {
           onChange?.(data);
         }}
         required={required}
-        value={value}
-        options={{
-          allowInput,
-          inline,
-          enableTime: false,
-          locale: flatpickrLocale(),
-          ...(allowInput ? { dateFormat: 'd.m.Y' } : {}),
-          minDate,
-          maxDate,
-        }}
+        value={stableValue}
+        options={options}
       />
       {error ? <ErrorText error={error} /> : null}
       {errors && <InputErrors size={resolvedSize} errors={errors} />}

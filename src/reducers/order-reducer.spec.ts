@@ -67,6 +67,28 @@ describe('order reducer', () => {
       payload: { addonId: 'lock', variantId: 'v1', price, details: [] },
     });
     expect(priced.orderAddons.lock.price).toEqual(price);
+    expect(
+      orderReducer(priced, {
+        type: 'CALCULATE_VARIANT_PRICE_SUCCESS',
+        payload: { addonId: 'lock', variantId: 'v1', price, details: [] },
+      }),
+    ).toBe(priced);
+    expect(
+      orderReducer(priced, {
+        type: 'CLEAR_ADDON_PRICE',
+        payload: { addonId: 'lock' },
+      }).orderAddons.lock.price,
+    ).toBeNull();
+    const cleared = orderReducer(priced, {
+      type: 'CLEAR_ADDON_PRICE',
+      payload: { addonId: 'lock' },
+    });
+    expect(
+      orderReducer(cleared, {
+        type: 'CLEAR_ADDON_PRICE',
+        payload: { addonId: 'lock' },
+      }),
+    ).toBe(cleared);
   });
 
   it('updates one acceptance and ignores an unknown addon', () => {

@@ -15,8 +15,13 @@ export type TemplateChannelGroup<Row extends TemplateSectionRow> = {
   stocks: Row[];
 };
 
-export type TemplateSection<Row extends TemplateSectionRow> = {
-  label: string;
+export type TemplateLanguageSection<Row extends TemplateSectionRow> = {
+  lang: string;
   email: TemplateChannelGroup<Row>[];
   sms: TemplateChannelGroup<Row>[];
+};
+
+export type TemplateSection<Row extends TemplateSectionRow> = {
+  label: string;
+  languages: TemplateLanguageSection<Row>[];
 };

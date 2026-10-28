@@ -1,31 +1,39 @@
 import { useMemo } from 'react';
 
-import { templateLanguage } from 'smartbox-types';
+import { Language, templateLanguage } from 'smartbox-types';
 import { __ } from 'src/helpers/i18n';
 import { useTemplateListQuery } from 'src/queries';
 import {
+  TemplateLanguageSection,
   TemplateSection,
   TemplateSectionRow,
 } from './types';
 
+const languageOrder = Object.values(Language);
+
 const groupKey = (row: TemplateSectionRow) =>
   `${row.type}:${row.channel}:${templateLanguage(row.lang)}`;
+
+const emptyLang = (lang: string): TemplateLanguageSection<TemplateSectionRow> => ({
+  lang,
+  email: [],
+  sms: [],
+});
 
 const groupTemplates = <Row extends TemplateSectionRow>(
   rows: Row[],
 ): TemplateSection<Row>[] => {
-  const byLabel = new Map<string, TemplateSection<Row>>();
+  const byLabel = new Map<string, Map<string, TemplateLanguageSection<Row>>>();
   const seen = new Set<string>();
 
   const push = (generic: Row, stocks: Row[]) => {
     const label = __(`templates.${generic.type}`);
-    const section = byLabel.get(label) ?? {
-      label,
-      email: [],
-      sms: [],
-    };
-    section[generic.channel].push({ generic, stocks });
-    byLabel.set(label, section);
+    const lang = templateLanguage(generic.lang);
+    const languages = byLabel.get(label) ?? new Map();
+    const bucket = languages.get(lang) ?? (emptyLang(lang) as TemplateLanguageSection<Row>);
+    bucket[generic.channel].push({ generic, stocks });
+    languages.set(lang, bucket);
+    byLabel.set(label, languages);
   };
 
   const stocksFor = (generic: TemplateSectionRow) =>
@@ -60,12 +68,16 @@ const groupTemplates = <Row extends TemplateSectionRow>(
       );
     });
 
-  const sections: TemplateSection<Row>[] = [];
-  byLabel.forEach((section) => sections.push(section));
-
-  return sections.sort((left, right) =>
-    left.label.localeCompare(right.label, 'pl'),
-  );
+  return [...byLabel.entries()]
+    .map(([label, languages]) => ({
+      label,
+      languages: [...languages.values()].sort(
+        (left, right) =>
+          languageOrder.indexOf(left.lang as Language) -
+          languageOrder.indexOf(right.lang as Language),
+      ),
+    }))
+    .sort((left, right) => left.label.localeCompare(right.label, 'pl'));
 };
 
 export const useTemplateSections = (tenantId?: string) => {

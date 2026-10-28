@@ -1,8 +1,9 @@
+import { ReactNode } from 'react';
 import styled from 'styled-components';
 
 import { TemplateListRow } from 'smartbox-types';
 import { ChannelStatus } from '../ChannelStatus';
-import { TemplateSection } from '../types';
+import { TemplateLanguageSection, TemplateSection } from '../types';
 
 const Summary = styled('summary')({
   cursor: 'pointer',
@@ -28,7 +29,7 @@ const Marker = styled('span')(({ theme }) => ({
   '&::before': {
     content: '"▸"',
   },
-  'details[open] &::before': {
+  'details[open] > summary &::before': {
     content: '"▾"',
   },
 }));
@@ -42,28 +43,54 @@ const Title = styled('h3')(({ theme }) => ({
 }));
 
 const Info = styled('div')({
-  'details[open] &': {
+  'details[open] > summary &': {
     display: 'none',
   },
 });
+
+const ExpandSummary = ({
+  title,
+  children,
+}: {
+  title: string;
+  children?: ReactNode;
+}) => (
+  <Summary>
+    <TitleRow>
+      <Marker aria-hidden />
+      <Title>{title}</Title>
+    </TitleRow>
+    {children ? <Info>{children}</Info> : null}
+  </Summary>
+);
 
 type SectionSummaryProps = {
   section: TemplateSection<TemplateListRow>;
 };
 
-export const SectionSummary = ({ section }: SectionSummaryProps) => (
-  <Summary>
-    <TitleRow>
-      <Marker aria-hidden />
-      <Title>{section.label}</Title>
-    </TitleRow>
-    <Info>
-      {section.email.length > 0 && (
-        <ChannelStatus channel="email" groups={section.email} />
-      )}
-      {section.sms.length > 0 && (
-        <ChannelStatus channel="sms" groups={section.sms} />
-      )}
-    </Info>
-  </Summary>
+export const SectionSummary = ({ section }: SectionSummaryProps) => {
+  const email = section.languages.flatMap((language) => language.email);
+  const sms = section.languages.flatMap((language) => language.sms);
+
+  return (
+    <ExpandSummary title={section.label}>
+      {email.length > 0 && <ChannelStatus channel="email" groups={email} />}
+      {sms.length > 0 && <ChannelStatus channel="sms" groups={sms} />}
+    </ExpandSummary>
+  );
+};
+
+type LanguageSummaryProps = {
+  language: TemplateLanguageSection<TemplateListRow>;
+};
+
+export const LanguageSummary = ({ language }: LanguageSummaryProps) => (
+  <ExpandSummary title={language.lang.toUpperCase()}>
+    {language.email.length > 0 && (
+      <ChannelStatus channel="email" groups={language.email} />
+    )}
+    {language.sms.length > 0 && (
+      <ChannelStatus channel="sms" groups={language.sms} />
+    )}
+  </ExpandSummary>
 );

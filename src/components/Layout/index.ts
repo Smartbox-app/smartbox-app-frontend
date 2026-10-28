@@ -6,6 +6,7 @@ import FieldsGrid from './FieldsGrid';
 import Footer from './Footer';
 import FormContainer from './FormContainer';
 import FormHeader from './FormHeader';
+import { UnauthorizedRoute } from './UnauthorizedRoute';
 import { Main } from './Main';
 import MobileLogoContainer from './MobileLogoContainer';
 import { Navigation } from './Navigation';
@@ -20,6 +21,7 @@ export {
   DashboardContainer,
   DashboardSidebar,
   Footer,
+  UnauthorizedRoute,
   PageHeader,
   FormContainer,
   Section,

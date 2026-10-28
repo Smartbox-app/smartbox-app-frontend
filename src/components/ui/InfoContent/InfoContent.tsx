@@ -7,7 +7,7 @@ const Content = styled('div')({
   justifyContent: 'center',
   alignItems: 'center',
   textAlign: 'center',
-  minHeight: '100vh',
+  flex: 1,
 });
 
 const Wrapper = styled('div')(({ theme }) => ({
@@ -20,7 +20,8 @@ const Wrapper = styled('div')(({ theme }) => ({
   gap: theme.spacing * 4,
   borderRadius: theme.spacing * 4,
   padding: theme.spacing * 10,
-  width: '100%',
+  // width: '100%',
+  margin: '0px auto',
   '@media(min-width: 768px)': {
     minWidth: 600,
   }

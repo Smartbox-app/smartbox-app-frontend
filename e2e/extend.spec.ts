@@ -28,7 +28,8 @@ test('extends an active paid rent', async ({ page }) => {
       page
         .locator('section')
         .filter({ has: page.getByRole('heading', { name: 'Historia najmu' }) })
-        .getByText(/^Cena - /),
+        .getByText(/^Cena - /)
+        .first(),
     ).toBeVisible();
   }).toPass();
 });

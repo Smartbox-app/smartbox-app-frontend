@@ -62,6 +62,10 @@ const StyledCalendarPicker = styled.div`
   margin: 0 -10px;
 `;
 
+const StyledPriceWrap = styled.div`
+  position: relative;
+`;
+
 const StepExtensionDuration = () => {
   const { data: user } = useGetMyDetailsQuery();
   const dispatch = useDispatch();
@@ -352,7 +356,6 @@ const StepExtensionDuration = () => {
   return (
     <form className="form-step-two">
       <Stack>
-        {loadingPrice && <Spinner halfTransparent overlay />}
         {![
           RentStatus.noPaidExtension,
           RentStatus.noPaidExtensionWithWarning,
@@ -398,7 +401,10 @@ const StepExtensionDuration = () => {
         <Addons stockId={rent.stockId} boxGroupId={rent.boxGroupId} />
 
         {stock ? <PaymentType stock={stock} rent={rent} /> : null}
-        <Price />
+        <StyledPriceWrap>
+          {loadingPrice && <Spinner halfTransparent overlay />}
+          <Price />
+        </StyledPriceWrap>
         <Section>
           <ButtonsContainer spaceBetween>
             <span />

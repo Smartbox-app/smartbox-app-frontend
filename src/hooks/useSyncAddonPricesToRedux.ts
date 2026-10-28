@@ -90,11 +90,14 @@ export const useSyncAddonPricesToRedux = ({
       query.data ? `${query.dataUpdatedAt}:${query.data.variantId}` : 'empty',
     )
     .join('|');
+  const selectionKey = addonEntries
+    .map(([addonId, addon]) => `${addonId}:${addon.selectedVariant ?? ''}`)
+    .join('|');
 
   useEffect(() => {
     addonEntries.forEach(([addonId, addon], index) => {
       if (!addon.selectedVariant) {
-        dispatch(clearAddonPrice(addonId));
+        if (addon.price != null) dispatch(clearAddonPrice(addonId));
         return;
       }
 
@@ -106,5 +109,8 @@ export const useSyncAddonPricesToRedux = ({
         });
       }
     });
-  }, [addonEntries, dispatch, queryResultsSignature, queries]);
+    // queries omitted: useQueries returns a new array every render and was
+    // re-dispatching into Redux in a loop (calendar DOM kept detaching).
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch, queryResultsSignature, selectionKey]);
 };

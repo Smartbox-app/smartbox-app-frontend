@@ -1,4 +1,5 @@
 import { DebtResolveType } from 'src/smartbox-types/debt';
+import { LocalizedStringMap } from 'src/smartbox-types/i18n';
 import { LocationSelectType } from 'src/smartbox-types/location';
 import { AccountConfirmationMethod } from 'src/smartbox-types/tenant/account-confirmation-method';
 
@@ -49,13 +50,17 @@ export interface TenantEntity {
   locationSelectType: LocationSelectType;
   namingType: NamingType;
   agreementDisclaimer: string;
+  agreementDisclaimerI18n: LocalizedStringMap;
   paymentDisclaimer: string;
+  paymentDisclaimerI18n: LocalizedStringMap;
   homeMessage: string;
+  homeMessageI18n: LocalizedStringMap;
   mobileAppAndroidLink: string | null;
   mobileAppIosLink: string | null;
   showPwaBannerAndroid: boolean;
   showPwaBannerIos: boolean;
   systemMessage: string;
+  systemMessageI18n: LocalizedStringMap;
   useCustomSmtp: boolean;
   smtpHost: string | null;
   smtpPort: number | null;
@@ -127,7 +132,17 @@ export type UpdateTenantMessagingReq = Pick<
   | 'paymentDisclaimer'
   | 'homeMessage'
   | 'systemMessage'
->;
+> &
+  Partial<
+    Pick<
+      TenantEntity,
+      | 'agreementDisclaimerI18n'
+      | 'paymentDisclaimerI18n'
+      | 'homeMessageI18n'
+      | 'systemMessageI18n'
+    >
+  > &
+  Record<string, unknown>;
 export type UpdateTenantCommunicationsReq = UpdateTenantMessagingReq &
   Pick<
     TenantEntity,
@@ -168,6 +183,10 @@ export type TenantForUsers = Omit<
   | 'smtpSecure'
   | 'smtpIgnoreTls'
   | 'smtpFromEmail'
+  | 'agreementDisclaimerI18n'
+  | 'paymentDisclaimerI18n'
+  | 'homeMessageI18n'
+  | 'systemMessageI18n'
 > & {
   smsAvailable: boolean;
   /** Resolved method used for new registrations (falls back to email when SMS is not configured). */

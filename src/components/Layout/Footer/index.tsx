@@ -1,3 +1,4 @@
+import { Capacitor } from '@capacitor/core';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -7,6 +8,8 @@ import { Link, Section, Typography } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
 import { useFileStorage } from 'src/hooks/useFileStorage';
 import { useTenant } from 'src/hooks/useTenant';
+import { colorOrDark } from 'src/utils/color';
+import { clearCookieConsent } from 'src/utils/cookie-consent';
 
 const StyledFooter = styled('footer')(({ theme }) => ({
   display: 'flex',
@@ -34,6 +37,17 @@ const Data = styled('div')(({ theme }) => ({
   flexWrap: 'wrap',
 }));
 
+const ManageCookiesButton = styled('button')(({ theme }) => ({
+  color: colorOrDark(theme.colors.primary),
+  fontWeight: 500,
+  textDecoration: 'underline',
+  background: 'none',
+  border: 'none',
+  padding: 0,
+  cursor: 'pointer',
+  fontSize: 14,
+}));
+
 const Footer = () => {
   const { getAssetPath } = useFileStorage();
   const { tenant } = useTenant();
@@ -49,6 +63,11 @@ const Footer = () => {
           <Link target="_blank" href="/privacy-policy" rel="noreferrer">
             {__('application.privacyPolicy')}
           </Link>
+          {!Capacitor.isNativePlatform() && (
+            <ManageCookiesButton type="button" onClick={clearCookieConsent}>
+              {__('application.cookieConsentManage')}
+            </ManageCookiesButton>
+          )}
 
           {tenant?.links.map((link) => (
             <Link

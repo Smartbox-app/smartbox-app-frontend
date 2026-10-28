@@ -9,7 +9,7 @@ import { Header, Section, Typography } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
 import { useDeleteTemplateMutation } from 'src/mutations';
 import { ChannelTemplates } from './ChannelTemplates';
-import { SectionSummary } from './SectionSummary';
+import { LanguageSummary, SectionSummary } from './SectionSummary';
 import { useTemplateSections } from './useTemplateSections';
 
 const Container = styled('div')({
@@ -18,6 +18,13 @@ const Container = styled('div')({
   flexDirection: 'column',
   gap: 16,
 });
+
+const Languages = styled('div')(({ theme }) => ({
+  marginTop: theme.spacing * 2,
+  display: 'flex',
+  flexDirection: 'column',
+  gap: theme.spacing * 2,
+}));
 
 type ListProps = {
   basePath: string;
@@ -72,18 +79,27 @@ export const List = ({ basePath, tenantId }: ListProps) => {
           <Section variant="bordered" key={section.label}>
             <details>
               <SectionSummary section={section} />
-              <ChannelTemplates
-                basePath={basePath}
-                channel="email"
-                groups={section.email}
-                onDelete={confirmDelete}
-              />
-              <ChannelTemplates
-                basePath={basePath}
-                channel="sms"
-                groups={section.sms}
-                onDelete={confirmDelete}
-              />
+              <Languages>
+                {section.languages.map((language) => (
+                  <Section variant="bordered" key={language.lang}>
+                    <details data-template-lang={language.lang}>
+                      <LanguageSummary language={language} />
+                      <ChannelTemplates
+                        basePath={basePath}
+                        channel="email"
+                        groups={language.email}
+                        onDelete={confirmDelete}
+                      />
+                      <ChannelTemplates
+                        basePath={basePath}
+                        channel="sms"
+                        groups={language.sms}
+                        onDelete={confirmDelete}
+                      />
+                    </details>
+                  </Section>
+                ))}
+              </Languages>
             </details>
           </Section>
         ))}

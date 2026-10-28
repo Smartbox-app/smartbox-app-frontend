@@ -125,6 +125,9 @@ export const logout = async (page: Page) => {
 export const rentStatus = (page: Page) =>
   page.locator('.row').filter({ hasText: 'Status wynajmu:' }).locator('.row-content');
 
+export const rentStart = (page: Page) =>
+  page.locator('.row').filter({ hasText: 'Data rozpoczęcia:' }).locator('.row-content');
+
 export const rentFinish = (page: Page) =>
   page.locator('.row').filter({ hasText: 'Data zakończenia:' }).locator('.row-content');
 
@@ -201,4 +204,98 @@ export const clickNext = async (page: Page) => {
     .or(page.getByRole('link', { name: 'Dalej' }));
   await expect(next).toBeEnabled();
   await next.click();
+};
+
+const plMonths = [
+  'Styczeń',
+  'Luty',
+  'Marzec',
+  'Kwiecień',
+  'Maj',
+  'Czerwiec',
+  'Lipiec',
+  'Sierpień',
+  'Wrzesień',
+  'Październik',
+  'Listopad',
+  'Grudzień',
+];
+
+export const formatDayPl = (date: Date) => {
+  const day = String(date.getDate()).padStart(2, '0');
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  return `${day}.${month}.${date.getFullYear()}`;
+};
+
+/** Click a day on an inline flatpickr (new rent end calendar is usually index 1). */
+export const selectInlineCalendarDay = async (
+  page: Page,
+  date: Date,
+  options: {
+    calendarIndex?: number;
+    priceUrlIncludes?: string;
+  } = {},
+) => {
+  const { calendarIndex = 1, priceUrlIncludes = 'box-group-new/price/' } = options;
+  const label = `${plMonths[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`;
+  const calendar = page.locator('.flatpickr-calendar').nth(calendarIndex);
+  const day = calendar.locator(
+    `.flatpickr-day[aria-label="${label}"]:not(.prevMonthDay):not(.nextMonthDay)`,
+  );
+  for (let step = 0; step < 24 && (await day.count()) === 0; step += 1) {
+    await calendar.locator('.flatpickr-next-month').click();
+  }
+  const priced = page.waitForResponse(
+    (response) =>
+      response.url().includes(priceUrlIncludes) &&
+      response.request().method() === 'GET',
+  );
+  await day.click();
+  await priced;
+};
+
+export const expectRentDayCount = async (page: Page, days: number) => {
+  await expect(
+    page.getByText('Ilość dni najmu w wybranym zakresie:').locator('strong'),
+  ).toHaveText(String(days), { timeout: 20_000 });
+};
+
+/** Seeded E2E group: 100 net / month, proportional, 23% tax. */
+export const e2eMonthNetPrice = 100;
+export const e2eTaxRate = 0.23;
+export const e2ePricingMonthDays = 30;
+
+export const dayFromToday = (offset: number) => {
+  const date = new Date();
+  date.setHours(0, 0, 0, 0);
+  date.setDate(date.getDate() + offset);
+  return date;
+};
+
+export const proportionalGrossLabel = (
+  days: number,
+  netPerMonth = e2eMonthNetPrice,
+) => {
+  const gross =
+    Math.round(
+      ((netPerMonth / e2ePricingMonthDays) * days * (1 + e2eTaxRate) +
+        Number.EPSILON) *
+        100,
+    ) / 100;
+  return `${gross.toFixed(2).replace('.', ',')} zł`;
+};
+
+export const grossTotal = (page: Page) =>
+  page
+    .locator('section')
+    .filter({
+      has: page.getByRole('heading', { name: 'Cena brutto za wybrany okres' }),
+    })
+    .locator('strong')
+    .first();
+
+export const expectGrossTotal = async (page: Page, days: number) => {
+  await expect(grossTotal(page)).toHaveText(proportionalGrossLabel(days), {
+    timeout: 20_000,
+  });
 };

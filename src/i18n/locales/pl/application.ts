@@ -868,6 +868,7 @@ const application = {
     cookieConsentTitle: 'Pliki cookies',
     cookieConsentAccept: 'Akceptuję',
     cookieConsentReject: 'Odrzuć',
+    cookieConsentManage: 'Zarządzaj cookies',
     orderInfo: 'Dane',
     dontForgetToBringLock: 'Tylko nie zapomnij o zabraniu własnej kłódki!',
     stocksList: 'Lista placów',

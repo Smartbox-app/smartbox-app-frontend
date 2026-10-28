@@ -168,11 +168,24 @@ const newRental = (page: Page) =>
     has: page.getByRole('heading', { name: 'Nowy wynajem', exact: true }),
   });
 
+const languageBlock = (page: Page, code: string) =>
+  newRental(page).locator(`[data-template-lang="${code.toLowerCase()}"]`);
+
+const expandLanguage = async (page: Page, code: string) => {
+  const block = languageBlock(page, code);
+  await expect(block).toBeVisible();
+  if (!(await block.getAttribute('open'))) {
+    await block.getByRole('heading', { name: code, exact: true }).click();
+  }
+  await expect(block).toHaveAttribute('open', '');
+  await expect(block.getByRole('heading', { name: 'SMS', exact: true })).toBeVisible();
+};
+
 const smsLanguageRow = (page: Page, code: string) =>
-  newRental(page)
+  languageBlock(page, code)
     .getByRole('listitem')
     .filter({ hasText: 'sms' })
-    .filter({ hasText: `Ogólny · ${code}` });
+    .filter({ hasText: 'Ogólny' });
 
 const smsLanguageGroup = (page: Page, code: string) =>
   smsLanguageRow(page, code).locator('xpath=ancestor::div[1]');
@@ -181,11 +194,12 @@ const openTemplateList = async (page: Page) => {
   await page.goto('/client/management/templates/list');
   const section = newRental(page);
   await section.getByRole('heading', { name: 'Nowy wynajem', exact: true }).click();
-  await expect(section.getByRole('heading', { name: 'SMS', exact: true })).toBeVisible();
+  await expect(languageBlock(page, 'PL')).toBeVisible();
 };
 
 const openGenericSms = async (page: Page, code: 'PL' | 'EN') => {
   await openTemplateList(page);
+  await expandLanguage(page, code);
   await smsLanguageRow(page, code).getByRole('link', { name: 'Edytuj' }).click();
   await expect(page).toHaveURL(
     new RegExp(`/manage/sms/new_rental_sms\\?lang=${code.toLowerCase()}$`),
@@ -221,7 +235,7 @@ const openSelect = async (page: Page, label: string) => {
 const chooseSelectOption = (page: Page, name: string) =>
   page.locator('.input-select__option').filter({ hasText: new RegExp(`^${name}$`) }).click();
 
-const selectTemplateLanguage = async (page: Page, name: 'Polski' | 'English', lang: 'pl' | 'en') => {
+const selectTemplateLanguage = async (page: Page, name: 'Polska' | 'English', lang: 'pl' | 'en') => {
   await openSelect(page, 'Język');
   await chooseSelectOption(page, name);
   await expect(page).toHaveURL(new RegExp(`lang=${lang}$`));
@@ -236,6 +250,8 @@ test.describe('template languages', () => {
 
     await openTemplateList(page);
     for (const code of ['PL', 'CZ', 'UA', 'DE', 'EN']) {
+      await expect(languageBlock(page, code)).toBeVisible();
+      await expandLanguage(page, code);
       await expect(smsLanguageRow(page, code)).toBeVisible();
     }
     await expect(smsLanguageRow(page, 'PL').getByText('Domyślny szablon')).toBeVisible();
@@ -249,12 +265,13 @@ test.describe('template languages', () => {
     await expect(message(page)).not.toHaveValue(plContent);
     await saveSms(page, enContent, 'en');
 
-    await selectTemplateLanguage(page, 'Polski', 'pl');
+    await selectTemplateLanguage(page, 'Polska', 'pl');
     await expect(message(page)).toHaveValue(plContent);
     await selectTemplateLanguage(page, 'English', 'en');
     await expect(message(page)).toHaveValue(enContent);
 
     await openTemplateList(page);
+    await expandLanguage(page, 'EN');
     await smsLanguageGroup(page, 'EN').getByRole('link', { name: 'Dodaj' }).click();
     await expect(page).toHaveURL(/\/manage\/sms\/new_rental_sms\/stock\?lang=en$/);
     await expect(page.getByRole('heading', { name: 'Szablon dla placu' })).toBeVisible();
@@ -267,6 +284,8 @@ test.describe('template languages', () => {
     await page.goto('/client/management/templates/list');
     await expect(newRental(page).getByText('Własny szablon (PL, EN)')).toBeVisible();
     await openTemplateList(page);
+    await expandLanguage(page, 'PL');
+    await expandLanguage(page, 'EN');
     await expect(smsLanguageRow(page, 'PL').getByText('Własny szablon')).toBeVisible();
     await expect(smsLanguageRow(page, 'EN').getByText('Własny szablon')).toBeVisible();
     await expect(
@@ -282,6 +301,7 @@ test.describe('template languages', () => {
     await expect(message(page)).toHaveValue(enContent);
 
     await openTemplateList(page);
+    await expandLanguage(page, 'EN');
     await smsLanguageGroup(page, 'EN')
       .getByRole('listitem')
       .filter({ hasText: e2eStockName })

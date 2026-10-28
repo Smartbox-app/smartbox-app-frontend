@@ -1,5 +1,6 @@
 import { BoxGroupType } from 'src/smartbox-types/box-group/box-group-type';
 import { PriceResolveType, SinglePricing, SinglePricingForUser } from 'src/smartbox-types/box-group/pricing';
+import { LocalizedStringMap } from 'src/smartbox-types/i18n';
 
 export * from 'src/smartbox-types/box-group/pricing';
 export * from 'src/smartbox-types/box-group/box-group-type';
@@ -7,6 +8,7 @@ export * from 'src/smartbox-types/box-group/box-group-type';
 export interface BoxGroupEntity {
   id: string;
   name: string;
+  nameI18n: LocalizedStringMap;
   type: BoxGroupType;
   image: string;
   stockId: string;
@@ -39,7 +41,9 @@ export type BoxGroupReq = Pick<
   | 'maxRentPeriod'
   | 'limitToNotify'
   | 'order'
->;
+> & {
+  nameI18n?: LocalizedStringMap;
+} & Record<string, unknown>;
 export type BoxGroupListRes = Pick<
   BoxGroupEntity,
   'id' | 'name' | 'stockId' | 'area' | 'minRentPeriod' | 'maxRentPeriod' | 'pricing' | 'order'

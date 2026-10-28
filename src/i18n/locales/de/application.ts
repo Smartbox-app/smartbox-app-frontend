@@ -890,6 +890,7 @@ auch Analyse-, Aktions- und Werbetools für Werbung, Marktforschung und die Unte
     cookieConsentTitle: 'Cookies',
     cookieConsentAccept: 'Akzeptieren',
     cookieConsentReject: 'Ablehnen',
+    cookieConsentManage: 'Cookies verwalten',
     orderInfo: 'Details',
     dontForgetToBringLock:
       'Vergessen Sie nur nicht, Ihr eigenes Vorhängeschloss mitzubringen!',

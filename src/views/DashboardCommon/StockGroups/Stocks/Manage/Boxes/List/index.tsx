@@ -12,16 +12,11 @@ import {
 } from 'smartbox-types';
 import { showModal } from 'src/actions/modal';
 import { Button, Spinner } from 'src/components/Branded';
-import { Alert, ApiTable , ConfirmModal } from 'src/components/Common';
-import {
-  ButtonsContainer,
-} from 'src/components/Layout';
+import { Alert, ApiTable, ConfirmModal } from 'src/components/Common';
+import { ButtonsContainer } from 'src/components/Layout';
 import { HeaderWithActions, Section } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
-import {
-  useDeleteBoxMutation,
-  useOpenBoxMutation,
-} from 'src/mutations';
+import { useDeleteBoxMutation, useOpenBoxMutation } from 'src/mutations';
 import { useGetMyDetailsQuery, useGetStockQuery } from 'src/queries';
 import UserService from 'src/services/user-service';
 import { boxDisplayStatusSearchValues } from 'src/utils/box-display-status';
@@ -103,8 +98,13 @@ const List = () => {
       mobile: true,
       customRender: (value, field, boxData: BoxListRes) => (
         <ButtonsContainer noWrap>
-          {stock?.boxAccessControl && [AccessControl.keylessbox, AccessControl.ksm].includes(stock.boxAccessControl) && boxData.controlled ? (
+          {stock?.boxAccessControl &&
+          [AccessControl.keylessbox, AccessControl.ksm].includes(
+            stock.boxAccessControl,
+          ) &&
+          boxData.controlled ? (
             <Button
+              success
               text="application.openBox"
               click={() => confirmBoxOpen(boxData.id)}
             />
@@ -174,10 +174,7 @@ const List = () => {
         {__('application.boxesList')}
       </HeaderWithActions>
 
-      <ApiTable
-        scheme={scheme}
-        apiEndpointSubUrl={`box/list/${stockId}`}
-      />
+      <ApiTable scheme={scheme} apiEndpointSubUrl={`box/list/${stockId}`} />
     </Section>
   );
 };

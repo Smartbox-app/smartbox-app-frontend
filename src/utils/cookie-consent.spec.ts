@@ -1,5 +1,6 @@
 import {
   COOKIE_CONSENT_KEY,
+  clearCookieConsent,
   getCookieConsent,
   hasAcceptedCookieConsent,
   setCookieConsent,
@@ -57,6 +58,11 @@ describe('cookie consent', () => {
     setCookieConsent('rejected');
     expect(localStorage.getItem(COOKIE_CONSENT_KEY)).toBe('rejected');
     expect(listener).toHaveBeenCalledTimes(2);
+
+    clearCookieConsent();
+    expect(localStorage.getItem(COOKIE_CONSENT_KEY)).toBeNull();
+    expect(getCookieConsent()).toBeNull();
+    expect(listener).toHaveBeenCalledTimes(3);
 
     window.removeEventListener('cookie-consent-changed', listener);
   });

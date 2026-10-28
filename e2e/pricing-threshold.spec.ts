@@ -1,6 +1,14 @@
 import { expect, Page, test } from '@playwright/test';
 import { e2eAdmin, e2eBoxGroupName, e2eRenter, e2eStockName } from './accounts';
-import { clickNext, expectApiOk, forceAcceptPayments, login, logout } from './helpers';
+import {
+  clickNext,
+  expectApiOk,
+  expectRentDayCount,
+  forceAcceptPayments,
+  login,
+  logout,
+  selectInlineCalendarDay,
+} from './helpers';
 
 const baseNetPrice = 100;
 const thresholdNetPrice = 200;
@@ -74,25 +82,10 @@ const expectBoxesLeft = async (page: Page, left: number) => {
 
 const selectFullPeriod = async (page: Page) => {
   const end = new Date();
+  end.setHours(0, 0, 0, 0);
   end.setDate(end.getDate() + monthDays - 1);
-  const dateStr = [
-    end.getFullYear(),
-    String(end.getMonth() + 1).padStart(2, '0'),
-    String(end.getDate()).padStart(2, '0'),
-  ].join('-');
-  // Avoid month-nav + day click: Redux price-loading re-renders reset flatpickr to value month
-  await page.locator('input[name="endDate"]').evaluate((el, value) => {
-    const fp = (
-      el as HTMLElement & {
-        _flatpickr?: { setDate: (v: string, trigger?: boolean) => void };
-      }
-    )._flatpickr;
-    if (!fp) throw new Error('flatpickr missing on endDate');
-    fp.setDate(value, true);
-  }, dateStr);
-  await expect(
-    page.getByText('Ilość dni najmu w wybranym zakresie:').locator('strong'),
-  ).toHaveText(String(monthDays), { timeout: 20_000 });
+  await selectInlineCalendarDay(page, end, { calendarIndex: 1 });
+  await expectRentDayCount(page, monthDays);
 };
 
 const readFreeBoxes = async (page: Page) => {

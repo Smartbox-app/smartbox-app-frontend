@@ -1,4 +1,5 @@
 import { PriceDisplayForClients } from "src/smartbox-types/stock";
+import { LocalizedStringMap } from 'src/smartbox-types/i18n';
 
 export enum AddonVariantPriceType {
   Dynamic = 'dynamic',
@@ -98,6 +99,7 @@ export interface AddonEntity {
   additionalDescription: string;
   required: boolean;
   name: string;
+  nameI18n: LocalizedStringMap;
   slug: string;
   stockId: string;
   tenantId: string;

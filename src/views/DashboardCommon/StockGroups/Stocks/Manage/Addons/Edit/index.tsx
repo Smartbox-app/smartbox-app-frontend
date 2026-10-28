@@ -17,6 +17,7 @@ import { __ } from 'src/helpers/i18n';
 import ApiService from 'src/services/api-service';
 import { mapFields } from 'src/utils/fields-mapper';
 import { formOnTranslateString } from 'src/utils/trans-form';
+import { appendNameI18nFields } from '../append-name-i18n';
 import { serializeBoxGroupIds } from '../serialize-box-group-ids';
 
 interface Props {
@@ -61,6 +62,10 @@ const Edit = ({ id, stockId }: Props) => {
               formData.append('order', values.order.toString());
               formData.append('active', values.active.toString());
               formData.append('name', values.name);
+              appendNameI18nFields(
+                formData,
+                values as unknown as Record<string, unknown>,
+              );
               formData.append('slug', values.slug);
               formData.append('tax', values.tax);
               formData.append('description', values.description);

@@ -1,4 +1,4 @@
-import type plApplication from 'src/i18n/locales/pl/application';
+import type plApplication from '../pl/application';
 
 type LocaleMessages<T> = {
   [K in keyof T]: T[K] extends string ? string : LocaleMessages<T[K]>;
@@ -867,6 +867,7 @@ const application = {
     cookieConsentTitle: 'Cookies',
     cookieConsentAccept: 'Accept',
     cookieConsentReject: 'Reject',
+    cookieConsentManage: 'Manage cookies',
     orderInfo: 'Details',
     dontForgetToBringLock: "Just don't forget to bring your own padlock!",
     stocksList: 'Site list',

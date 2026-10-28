@@ -37,3 +37,12 @@ export const setCookieConsent = (value: CookieConsent) => {
   }
   window.dispatchEvent(new Event(COOKIE_CONSENT_CHANGED_EVENT));
 };
+
+export const clearCookieConsent = () => {
+  try {
+    localStorage.removeItem(COOKIE_CONSENT_KEY);
+  } catch {
+    // Private mode should not block the UI.
+  }
+  window.dispatchEvent(new Event(COOKIE_CONSENT_CHANGED_EVENT));
+};

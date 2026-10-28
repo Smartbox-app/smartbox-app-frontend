@@ -1,4 +1,4 @@
-import type plApplication from 'src/i18n/locales/pl/application';
+import type plApplication from '../pl/application';
 
 type LocaleMessages<T> = {
   [K in keyof T]: T[K] extends string ? string : LocaleMessages<T[K]>;
@@ -871,6 +871,7 @@ také analytické, propagační a reklamní nástroje pro reklamu, průzkum trhu
     cookieConsentTitle: 'Soubory cookie',
     cookieConsentAccept: 'Přijmout',
     cookieConsentReject: 'Odmítnout',
+    cookieConsentManage: 'Spravovat cookies',
     orderInfo: 'Podrobnosti',
     dontForgetToBringLock: 'Jen nezapomeňte přinést vlastní visací zámek!',
     stocksList: 'Seznam areálů',
