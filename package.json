@@ -74,17 +74,19 @@
     "class-validator": "^0.14.1",
     "date-fns": "4.1.0",
     "date-fns-tz": "^3.2.0",
+    "express": "4.21.1",
     "file-saver": "^2.0.5",
     "font-awesome": "^4.7.0",
     "global": "^4.4.0",
     "history": "^4.10.1",
+    "html-escaper": "3.0.3",
     "i18n-iso-countries": "^7.14.0",
     "i18next": "^26.2.0",
     "inquirer": "^13.1.0",
-    "itf_formbuilder_react": "git+https://gitlab.com/IT.focus/itf_formbuilder_react.git",
     "jsvat": "^2.5.4",
     "mapbox-gl": "^3.14.0",
     "minimist": "^1.2.8",
+    "node-fetch": "2.7.0",
     "polished": "^4.2.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -112,7 +114,8 @@
     "typescript": "~5.7.3",
     "vite": "^7.3.0",
     "vite-plugin-pwa": "^1.2.0",
-    "vite-tsconfig-paths": "^6.0.1"
+    "vite-tsconfig-paths": "^6.0.1",
+    "itf_formbuilder_react": "git+https://gitlab.com/IT.focus/itf_formbuilder_react.git"
   },
   "scripts": {
     "start": "VITE_IS_LOCAL=true && vite",
@@ -131,7 +134,12 @@
     "build-mobile-local": "node ./build-mobile-app.mjs --mode=local",
     "sync-mobile": "node ./scripts/sync-mobile.mjs",
     "android": "node ./scripts/sync-mobile.mjs && npx cap run android",
-    "build-new-prod": "VITE_APP_URL=https://smartbox-app.pl VITE_APP_API_URL=https://api.smartbox-app.pl vite build"
+    "build-new-prod": "VITE_APP_URL=https://smartbox-app.pl VITE_APP_API_URL=https://api.smartbox-app.pl vite build",
+    "build-prod": "yarn build-new-prod",
+    "build-staging": "yarn build-new-prod",
+    "build-ssr": "tsc -p ssr/tsconfig.json",
+    "start:ssr": "node ssr/dist/index.js",
+    "dev:ssr": "yarn build-ssr && yarn start:ssr"
   },
   "browserslist": {
     "production": [
@@ -153,8 +161,11 @@
     "@playwright/test": "^1.64.0",
     "@testing-library/dom": "^10.4.1",
     "@testing-library/react": "^16.3.2",
+    "@types/express": "4.17.21",
+    "@types/html-escaper": "3.0.2",
     "@types/jest": "^30.0.0",
     "@types/node": "^22.10.0",
+    "@types/node-fetch": "2.6.11",
     "@types/react-select": "^3.0.13",
     "@typescript-eslint/eslint-plugin": "^8.29.0",
     "@typescript-eslint/parser": "^8.29.0",
@@ -167,13 +178,13 @@
     "eslint-plugin-react-hooks": "^5.2.0",
     "globals": "^16.0.0",
     "husky": "^9.1.7",
-    "itf_formbuilder_translation_tool": "git+https://gitlab.com/IT.focus/itf_formbuilder_translation_tool.git",
     "jest": "^30.4.2",
     "jest-environment-jsdom": "^30.4.1",
     "lint-staged": "^15.5.0",
     "prettier": "^4.0.0-alpha.10",
     "rollup-plugin-visualizer": "^6.0.5",
-    "typescript-eslint": "^8.29.0"
+    "typescript-eslint": "^8.29.0",
+    "itf_formbuilder_translation_tool": "git+https://gitlab.com/IT.focus/itf_formbuilder_translation_tool.git"
   },
   "lint-staged": {
     "*.{ts,tsx}": "eslint -c eslint.config.mjs"

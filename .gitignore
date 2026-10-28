@@ -4,6 +4,7 @@ node_modules
 build
 .env
 dist
+ssr/dist
 .vite
 /test-results/
 /playwright-report/
