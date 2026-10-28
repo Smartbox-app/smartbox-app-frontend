@@ -24,7 +24,7 @@ import { formOnTranslateString } from 'src/utils/trans-form';
 
 const translateSelectOptionLabel = (
   name: string,
-  value: string | number,
+  value: string | number | boolean,
 ): string => {
   if (typeof value === 'string') {
     const country = localizedCountryName(value);
