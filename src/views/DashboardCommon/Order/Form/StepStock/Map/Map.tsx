@@ -56,8 +56,7 @@ export const Map = () => {
 
   useEffect(() => {
     if (!mapContainerRef.current || !mapboxgl) return;
-    mapboxgl.accessToken =
-      'pk.eyJ1Ijoic21hcnRib3hzdG9yYWdlIiwiYSI6ImNtZ2dkYW01NjA5ankybHM5djFqbjZtNWUifQ.2bn6LvbIw9BeDtAVtsPvrQ';
+    mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 
     const map = new mapboxgl.Map({
       container: mapContainerRef.current,
