@@ -2,6 +2,7 @@ import { ReactNode } from 'react';
 import styled from 'styled-components';
 
 import { TemplateListRow } from 'smartbox-types';
+
 import { ChannelStatus } from '../ChannelStatus';
 import { TemplateLanguageSection, TemplateSection } from '../types';
 

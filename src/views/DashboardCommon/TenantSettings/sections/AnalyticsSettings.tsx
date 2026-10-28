@@ -2,6 +2,7 @@ import React from 'react';
 
 import { UserRole } from 'smartbox-types';
 import { useGetMyDetailsQuery } from 'src/queries';
+
 import { ManageTenantAnalytics } from '../../ClientManagement/TenantAnalytics';
 import { AnalyticsTrackingGuide } from './AnalyticsTrackingGuide';
 import { useTenantSettingsContext } from '../TenantSettingsContext';

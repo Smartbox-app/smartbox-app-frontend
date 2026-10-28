@@ -45,6 +45,7 @@ import UserService from 'src/services/user-service';
 import { openEndedFirstPeriodFinish } from 'src/utils/open-ended-period';
 import { scrollToFirstFormError } from 'src/utils/scroll-to-form-error';
 import { textToSimpleMD } from 'src/utils/text-to-simple-md';
+
 import { PaymentDocumentType } from '../Common/PaymentDocumentType';
 import { ClientSourceForm } from './ClientSourceForm';
 import { CompanyDetailsForm } from './CompanyDetailsForm';

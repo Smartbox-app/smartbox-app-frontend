@@ -10,6 +10,7 @@ import { ButtonsContainer } from 'src/components/Layout';
 import { useFileStorage } from 'src/hooks/useFileStorage';
 import { useI18n } from 'src/i18n';
 import { useUpdateBoxesMapLayoutMutation } from 'src/mutations';
+
 import { MapGrid } from '../StockGroups/Stocks/Manage/Map/MapGrid';
 import { MapLayoutContext } from '../StockGroups/Stocks/Manage/Map/MapLayoutContext';
 import { SingleBox } from '../StockGroups/Stocks/Manage/Map/SingleBox';

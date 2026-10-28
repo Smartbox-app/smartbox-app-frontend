@@ -46,6 +46,7 @@ import {
   appendCollectionFields,
 } from 'src/utils/rent-form-data';
 import { textToSimpleMD } from 'src/utils/text-to-simple-md';
+
 import ScrollPosition from './ScrollPosition';
 
 import './StepAgreement.scss';

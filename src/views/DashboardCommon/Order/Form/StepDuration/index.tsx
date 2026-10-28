@@ -44,6 +44,7 @@ import {
   initialFixedTermEndDate,
   isNewRentPeriodAcceptable,
 } from 'src/utils/rent-period-bounds';
+
 import { Addons } from '../Common/Addons';
 import { AgreementTypeSelect } from '../Common/AgreementTypeSelect';
 import { PaymentType } from '../Common/PaymentType';

@@ -2,6 +2,7 @@ import { AlarmsStatusForAdminRes } from 'smartbox-types';
 import { Header, Section, Stack } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
 import { fullDate } from 'src/utils/format-date';
+
 import {
   getHealthIcon,
   getHealthText,

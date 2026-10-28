@@ -10,6 +10,7 @@ import { dateOnlyLocalTime } from 'src/utils/format-date';
 import { formatPrice } from 'src/utils/format-price';
 import { openEndedNextInvoiceDate } from 'src/utils/open-ended-period';
 import { sumAddonPricesPerPeriod } from 'src/utils/summary-period-prices';
+
 import { SelectedVariant } from './SelectedVariant';
 
 import './SummaryTable.scss';

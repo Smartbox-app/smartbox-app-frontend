@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 import { templateLanguage, TemplateListRow } from 'smartbox-types';
 import { __ } from 'src/helpers/i18n';
+
 import { TemplateChannelGroup } from '../types';
 
 const ChannelLine = styled('p')(({ theme }) => ({

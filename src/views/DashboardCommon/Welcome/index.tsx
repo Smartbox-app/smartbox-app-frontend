@@ -11,6 +11,7 @@ import {
 } from 'src/queries';
 import { useGetMyAuthorizedRentsQuery } from 'src/queries/useGetMyAuthorizedRents/useGetMyAuthorizedRents';
 import { useGetMyRentsQuery } from 'src/queries/useGetMyRentsQuery/useGetMyRentsQuery';
+
 import { Message } from './Message';
 import { NewRentButton } from './NewRentButton/NewRentButton';
 import OrdersHistory from './OrdersHistory';

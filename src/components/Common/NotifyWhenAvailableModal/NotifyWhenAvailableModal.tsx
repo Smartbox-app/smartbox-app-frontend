@@ -6,14 +6,16 @@ import styled from 'styled-components';
 import { BoxGroupUserRes } from 'smartbox-types';
 import { modal, notifications } from 'src/actions';
 import { Spinner } from 'src/components/Branded';
-import { NotificationDto } from './dto/NotificationDto';
-import { useCreateNotificationMutation } from './query/useCreateNotificationMutation';
+
 import { ButtonsContainer } from 'src/components/Layout';
 import { Button, CheckBox, Form, Modal, Typography } from 'src/components/ui';
 import { ErrorText } from 'src/components/ui/ErrorText';
 import { __ } from 'src/helpers/i18n';
 import { useTenant } from 'src/hooks/useTenant';
 import { ClassValidatorResolver } from 'src/resolvers/ClassValidatorResolver';
+
+import { useCreateNotificationMutation } from './query/useCreateNotificationMutation';
+import { NotificationDto } from './dto/NotificationDto';
 
 const StyledContent = styled('div')(({ theme }) => ({
   display: 'flex',

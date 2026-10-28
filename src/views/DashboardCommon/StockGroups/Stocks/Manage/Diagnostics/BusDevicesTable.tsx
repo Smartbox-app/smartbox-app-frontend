@@ -4,6 +4,7 @@ import { LocationDiagnosticsBusDevice } from 'smartbox-types';
 import { Header } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
 import { fullDate } from 'src/utils/format-date';
+
 import { getAnsweringText } from './diagnostics-health';
 
 type BusDevicesTableProps = {

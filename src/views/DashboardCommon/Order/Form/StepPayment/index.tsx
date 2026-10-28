@@ -6,6 +6,7 @@ import { history } from 'src/history';
 import { useGetMyDetailsQuery } from 'src/queries';
 import { ApplicationState } from 'src/reducers';
 import UserService from 'src/services/user-service';
+
 import { PaymentForm } from './PaymentForm';
 
 import './StepPayment.scss';

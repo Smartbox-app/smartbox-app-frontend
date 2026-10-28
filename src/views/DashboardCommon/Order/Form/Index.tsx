@@ -3,6 +3,7 @@ import { Switch, Route } from 'react-router';
 
 import { useGetMyDetailsQuery } from 'src/queries';
 import UserService from 'src/services/user-service';
+
 import StepAgreement from './StepAgreement';
 import StepDuration from './StepDuration';
 import StepExtensionDuration from './StepExtensionDuration';

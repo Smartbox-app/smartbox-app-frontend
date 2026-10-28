@@ -4,6 +4,7 @@ import { Pagination } from 'src/components/Common';
 import { Header, Section } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
 import { useGetMyRentStoryQuery } from 'src/queries';
+
 import History from './History';
 
 const OrdersHistory = () => {

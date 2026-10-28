@@ -21,6 +21,7 @@ import {
   hasDateValue,
   isOpenEndedAgreement,
 } from 'src/utils/rent';
+
 import EndingModal from './EndingModal';
 import { GateButton } from './GateButton';
 import { KsmGateButton } from './KsmGateButton';

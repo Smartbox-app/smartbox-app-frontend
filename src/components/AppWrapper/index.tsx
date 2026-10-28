@@ -12,8 +12,7 @@ import styled from 'styled-components';
 import { order } from 'src/actions';
 import { clearUserSession } from 'src/actions/auth';
 import { showModal } from 'src/actions/modal';
-import { AppMaintenanceModal } from './components/AppMaintenanceModal';
-import { AppOutdatedModal } from './components/AppOutdatedModal';
+
 import { Spinner } from 'src/components/Branded';
 import { history } from 'src/history';
 import { useTenant } from 'src/hooks/useTenant';
@@ -30,6 +29,9 @@ import {
   reloadWithoutServiceWorker,
 } from 'src/utils/reload-without-service-worker';
 import { scrollTop } from 'src/utils/scroll-top';
+
+import { AppOutdatedModal } from './components/AppOutdatedModal';
+import { AppMaintenanceModal } from './components/AppMaintenanceModal';
 
 interface Props {
   children: React.ReactNode;

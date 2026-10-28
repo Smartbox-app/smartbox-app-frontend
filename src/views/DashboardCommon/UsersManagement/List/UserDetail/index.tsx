@@ -6,6 +6,7 @@ import { Row } from 'src/components/Common';
 import { Modal } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
 import { useUserDetailsQuery, useUserNoteQuery } from 'src/queries';
+
 import UserRentList from '../../../UserRentList';
 
 import './UserDetail.scss';

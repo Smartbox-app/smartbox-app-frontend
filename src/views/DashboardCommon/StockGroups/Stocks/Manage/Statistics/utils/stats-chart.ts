@@ -1,6 +1,7 @@
 import { StatsByStatus } from 'smartbox-types';
 import { PieChartSegment } from 'src/components/ui/PieChart';
 import { __ } from 'src/helpers/i18n';
+
 import {
   STATUS_STATS_KEYS,
   StockStatusColors,

@@ -13,6 +13,7 @@ import { ArrowLeft, ArrowRight } from 'src/icons';
 import { useBoxGroupsForStockQuery, useGetMyDetailsQuery } from 'src/queries';
 import { ApplicationState } from 'src/reducers';
 import UserService from 'src/services/user-service';
+
 import SingleOption from './SingleOption';
 
 import './StepSize.scss';

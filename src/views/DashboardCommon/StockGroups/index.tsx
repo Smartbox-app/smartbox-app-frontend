@@ -4,6 +4,7 @@ import { Redirect, Route, Switch } from 'react-router';
 import { UserRole } from 'smartbox-types';
 import { useGetMyDetailsQuery } from 'src/queries';
 import UserService from 'src/services/user-service';
+
 import { Add as AddGroup } from './Groups/Add';
 import { GroupsList } from './Groups/List';
 import { ManageGroup } from './Groups/Manage';

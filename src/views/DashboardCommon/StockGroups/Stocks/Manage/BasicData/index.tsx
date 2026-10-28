@@ -2,6 +2,7 @@ import React from 'react';
 import { useParams } from 'react-router';
 
 import { StockBasicReq } from 'smartbox-types';
+
 import { StockSectionForm } from '../StockSectionForm';
 
 const BasicData = () => {

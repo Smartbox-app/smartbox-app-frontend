@@ -12,6 +12,7 @@ import { currentAppLanguage } from 'src/i18n/app-language';
 import { useGetStockGroupsListQuery, useGetStockListQuery } from 'src/queries';
 import { ApplicationState } from 'src/reducers';
 import { MAPBOX_COUNTRY_NAME_FIELD } from 'src/utils/country-locale';
+
 import { ActiveLocation } from './components/ActiveLocation';
 
 import 'mapbox-gl/dist/mapbox-gl.css';

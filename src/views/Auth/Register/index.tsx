@@ -26,6 +26,7 @@ import { useRegisterMutation } from 'src/mutations';
 import { ClassValidatorResolver } from 'src/resolvers/ClassValidatorResolver';
 import { isSmsAccountConfirmation } from 'src/utils/account-confirmation';
 import { buildActivateAccountPath } from 'src/utils/activate-account-url';
+
 import { AccountRegisteredModal } from './AccountRegisteredModal';
 
 const RegisterForm = styled('div')(({ theme }) => ({

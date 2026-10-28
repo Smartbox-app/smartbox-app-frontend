@@ -7,6 +7,7 @@ import { __ } from 'src/helpers/i18n';
 import { InfoCircle, Stop } from 'src/icons';
 import { useGetMyDetailsQuery } from 'src/queries';
 import UserService from 'src/services/user-service';
+
 import GateStatus from '../../../GateStatus';
 import { BasicData } from './BasicData';
 import { Gates } from './Gates';

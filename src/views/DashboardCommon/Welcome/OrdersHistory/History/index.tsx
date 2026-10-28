@@ -2,6 +2,7 @@ import { MyRentList } from 'smartbox-types';
 import { Alert } from 'src/components/Common';
 import { __ } from 'src/helpers/i18n';
 import { useTenantNaming } from 'src/hooks/useTenantNaming';
+
 import Legend from './Legend';
 import Single from './Single';
 

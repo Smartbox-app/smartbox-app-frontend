@@ -8,6 +8,7 @@ import {
 import { AsterixRequired } from 'src/components/Common';
 import { Header, Section } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
+
 import { InstallmentsPaymentMinDaysInfo } from '../InstallmentsPaymentMinDaysInfo';
 import { SinglePaymentType } from './SinglePaymentType';
 

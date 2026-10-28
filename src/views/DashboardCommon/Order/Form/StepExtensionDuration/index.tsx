@@ -51,6 +51,7 @@ import {
   isExtensionPeriodAcceptable,
   minPeriodDebtResolvedEnd,
 } from 'src/utils/rent-period-bounds';
+
 import { Addons } from '../Common/Addons';
 import { PaymentType } from '../Common/PaymentType';
 import Price from '../Common/Price';

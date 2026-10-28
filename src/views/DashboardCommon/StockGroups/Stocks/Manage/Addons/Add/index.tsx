@@ -19,6 +19,7 @@ import ApiService from 'src/services/api-service';
 import UserService from 'src/services/user-service';
 import { mapFields } from 'src/utils/fields-mapper';
 import { formOnTranslateString } from 'src/utils/trans-form';
+
 import { appendNameI18nFields } from '../append-name-i18n';
 import { serializeBoxGroupIds } from '../serialize-box-group-ids';
 

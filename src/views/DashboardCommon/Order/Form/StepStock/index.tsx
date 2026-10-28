@@ -18,6 +18,7 @@ import { useGetMyDetailsQuery } from 'src/queries';
 import { ApplicationState } from 'src/reducers';
 import UserService from 'src/services/user-service';
 import { LocationSelectType } from 'src/smartbox-types/location';
+
 import { Map } from './Map';
 import { Tiles } from './Tiles';
 

@@ -21,6 +21,7 @@ import { useGetMyDetailsQuery, useGetStockQuery } from 'src/queries';
 import UserService from 'src/services/user-service';
 import { boxDisplayStatusSearchValues } from 'src/utils/box-display-status';
 import { InteractiveTableSchema } from 'src/utils/table-schema-utils';
+
 import { AssignRentToUser } from '../../../../../AssignRentToUser';
 import BoxDetail from '../../../../../BoxDetail';
 import { Edit } from '../Edit';

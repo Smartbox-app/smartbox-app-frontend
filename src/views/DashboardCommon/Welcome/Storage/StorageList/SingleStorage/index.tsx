@@ -8,6 +8,7 @@ import { __ } from 'src/helpers/i18n';
 import { StockImage } from 'src/icons/StockImage';
 import { useGetMyDetailsQuery } from 'src/queries';
 import UserService from 'src/services/user-service';
+
 import { StorageDetails } from './components/StorageDetails';
 import { StorageHeader } from './components/StorageHeader';
 import { StorageMainInfo } from './components/StorageMainInfo';

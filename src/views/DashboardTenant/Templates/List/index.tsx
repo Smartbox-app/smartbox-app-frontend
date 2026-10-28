@@ -8,6 +8,7 @@ import { ConfirmModal } from 'src/components/Common';
 import { Header, Section, Typography } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
 import { useDeleteTemplateMutation } from 'src/mutations';
+
 import { ChannelTemplates } from './ChannelTemplates';
 import { LanguageSummary, SectionSummary } from './SectionSummary';
 import { useTemplateSections } from './useTemplateSections';

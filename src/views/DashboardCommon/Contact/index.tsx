@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { PageHeader } from 'src/components/Layout';
+
 import SingleDepartment from './SingleDepartment';
 
 import './Contact.scss';

@@ -1,4 +1,5 @@
 import { StatsByStatus } from 'smartbox-types';
+
 import {
   getStatsText,
   paymentMonthsToPieSegments,

@@ -25,6 +25,7 @@ import {
 import type { UpdateTenantSmtpBody } from 'src/mutations/useUpdateTenantSmtpMutation';
 import { useTenantSmtpConfigQuery } from 'src/queries';
 import { ClassValidatorResolver } from 'src/resolvers/ClassValidatorResolver';
+
 import { TenantSmtpConfigFormDto } from './dto/TenantSmtpConfigFormDto';
 
 interface Props {

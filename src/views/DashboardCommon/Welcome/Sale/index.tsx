@@ -4,6 +4,7 @@ import { Header, Section } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
 import { useTenantNaming } from 'src/hooks/useTenantNaming';
 import { useStockDiscountsQuery } from 'src/queries';
+
 import Discounts from './Discounts';
 
 const Sale = () => {

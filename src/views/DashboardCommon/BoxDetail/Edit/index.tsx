@@ -1,6 +1,7 @@
 import { BoxDisplayStatus, RentStatus } from 'smartbox-types';
 import { useGetMyDetailsQuery } from 'src/queries';
 import { isAdminOrTenant } from 'src/utils/role-check';
+
 import Position from './Position';
 import Status from './Status';
 

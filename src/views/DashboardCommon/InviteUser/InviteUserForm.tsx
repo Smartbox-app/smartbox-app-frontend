@@ -20,6 +20,7 @@ import {
 } from 'src/queries';
 import { ClassValidatorResolver } from 'src/resolvers/ClassValidatorResolver';
 import UserService from 'src/services/user-service';
+
 import { InviteEmailsField } from './InviteEmailsField';
 import { InviteUsersSuccessModal } from './InviteUsersSuccessModal';
 

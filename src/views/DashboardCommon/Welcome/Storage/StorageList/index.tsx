@@ -1,6 +1,7 @@
 import { MyRentList } from 'smartbox-types';
 import { Alert } from 'src/components/Common';
 import { Skeleton } from 'src/components/ui';
+
 import SingleStorage from './SingleStorage';
 
 import './StorageList.scss';

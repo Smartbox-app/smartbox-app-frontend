@@ -6,6 +6,7 @@ import { Alert } from 'src/components/Common';
 import { ButtonsContainer } from 'src/components/Layout';
 import { Header, Section } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
+
 import { SingleTemplate } from '../SingleTemplate';
 import { TemplateChannelGroup } from '../types';
 

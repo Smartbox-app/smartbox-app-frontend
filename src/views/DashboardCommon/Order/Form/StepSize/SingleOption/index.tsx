@@ -15,6 +15,7 @@ import { ApplicationState } from 'src/reducers';
 import {
   getColorForBackground,
 } from 'src/utils/color';
+
 import { PriceInfo } from '../PriceInfo';
 import { LeftCounter } from './components/LeftCounter';
 import { OptionActions } from './components/OptionActions';

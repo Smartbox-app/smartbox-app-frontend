@@ -24,6 +24,7 @@ import {
 } from 'src/utils/end-rent-photo-age';
 import { dateOnly } from 'src/utils/format-date';
 import { isOpenEndedAgreement, latestPeriodFinishAt } from 'src/utils/rent';
+
 import { RentEndedSuccessModal } from './RentEndedSuccessModal';
 
 type EndingModalProps = {

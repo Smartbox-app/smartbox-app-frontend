@@ -8,6 +8,7 @@ import { Navigation } from 'src/components/Layout/Navigation';
 import { Home, Settings } from 'src/icons';
 import { MenuItemType } from 'src/types/menu-item';
 import { withAttributionSearch } from 'src/utils/attribution-params';
+
 import { Welcome, Order, Profile, Contact } from '../DashboardCommon';
 import SingleRentDetail from '../DashboardCommon/SingleRentDetail';
 
