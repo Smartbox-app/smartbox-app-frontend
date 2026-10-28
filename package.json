@@ -115,7 +115,7 @@
     "vite": "^7.3.0",
     "vite-plugin-pwa": "^1.2.0",
     "vite-tsconfig-paths": "^6.0.1",
-    "itf_formbuilder_react": "git+https://gitlab.com/IT.focus/itf_formbuilder_react.git"
+    "itf_formbuilder_react": "file:./packages/itf_formbuilder_react"
   },
   "scripts": {
     "start": "VITE_IS_LOCAL=true && vite",
@@ -184,7 +184,7 @@
     "prettier": "^4.0.0-alpha.10",
     "rollup-plugin-visualizer": "^6.0.5",
     "typescript-eslint": "^8.29.0",
-    "itf_formbuilder_translation_tool": "git+https://gitlab.com/IT.focus/itf_formbuilder_translation_tool.git"
+    "itf_formbuilder_translation_tool": "file:./packages/itf_formbuilder_translation_tool"
   },
   "lint-staged": {
     "*.{ts,tsx}": "eslint -c eslint.config.mjs"
