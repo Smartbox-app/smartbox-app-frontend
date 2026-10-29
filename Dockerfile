@@ -26,6 +26,6 @@ ENV NODE_ENV=production \
   ENABLE_X_SENDFILE=false \
   FRONTEND_PORT=3204
 
-EXPOSE FRONTEND_PORT
+EXPOSE 3204
 
 CMD ["node", "ssr/dist/index.js"]
