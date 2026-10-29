@@ -42,17 +42,26 @@ async function handleIndex(originalUrl: string, hostname: string, res: Response)
   const html = await readFile(path.join(fePath, 'index.html'), 'utf8');
   let metas: Record<string, string> = { ...config.defaults };
 
-  const identifier = hostname.split('.')[0];
+  // Match SPA: apex (2 labels) → no tenant; subdomain → first label.
+  // Prefer existing ?host= (Apache passes full HTTP_HOST).
+  const labels = hostname.split('.');
+  const identifier = labels.length === 2 ? '' : labels[0];
   const finalUrl = originalUrl.includes('?host')
     ? originalUrl
-    : `${originalUrl}${originalUrl.includes('?') ? '&' : '?'}host=${identifier}`;
+    : `${originalUrl}${originalUrl.includes('?') ? '&' : '?'}host=${encodeURIComponent(identifier || hostname)}`;
 
+  const apiUrl = `${config.apiUrl}${finalUrl}`;
   try {
-    const ans = await fetch(`${config.apiUrl}${finalUrl}`);
-    const data = (await ans.json()) as { payload: Record<string, string> };
-    metas = { ...metas, ...data.payload };
-  } catch {
-    // fall back to defaults
+    const ans = await fetch(apiUrl);
+    if (!ans.ok) {
+      console.warn(`[ssr] meta ${ans.status} hostname=${hostname} url=${apiUrl}`);
+    } else {
+      const data = (await ans.json()) as { payload: Record<string, string> };
+      metas = { ...metas, ...data.payload };
+      console.log(`[ssr] ok hostname=${hostname} title=${metas.title ?? ''}`);
+    }
+  } catch (err) {
+    console.warn(`[ssr] meta fail hostname=${hostname} url=${apiUrl}`, err);
   }
 
   const re = new RegExp(`\\\${(${Object.keys(metas).join('|')})}`, 'gi');
