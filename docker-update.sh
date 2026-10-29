@@ -14,7 +14,8 @@ echo "Starting deployment for $PROJECT (branch=$BRANCH)"
 echo "Building new image (current container still serving)..."
 docker compose -p "$PROJECT" -f "$APP_FILE" build \
   --build-arg "BRANCH=$BRANCH" \
-  --build-arg "VITE_MAPBOX_ACCESS_TOKEN=${VITE_MAPBOX_ACCESS_TOKEN:-}"
+  --build-arg "VITE_MAPBOX_ACCESS_TOKEN=${VITE_MAPBOX_ACCESS_TOKEN:-}" \
+  --build-arg "CACHE_BUST=$(date +%s)"
 
 echo "Replacing $APP_CONTAINER..."
 docker compose -p "$PROJECT" -f "$APP_FILE" down || true

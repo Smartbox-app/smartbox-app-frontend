@@ -10,6 +10,7 @@ services:
       args:
         BRANCH: ${BRANCH:-prod}
         VITE_MAPBOX_ACCESS_TOKEN: ${VITE_MAPBOX_ACCESS_TOKEN:-}
+        CACHE_BUST: ${CACHE_BUST:-0}
 
     ports:
       - "${FRONTEND_PORT:-3204}:${FRONTEND_PORT:-3204}"

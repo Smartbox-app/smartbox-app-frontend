@@ -15,6 +15,8 @@ COPY packages ./packages
 
 RUN yarn install --frozen-lockfile
 
+# Bust code layers every deploy; deps stay cached.
+ARG CACHE_BUST=0
 COPY . .
 
 ENV VITE_MAPBOX_ACCESS_TOKEN=$VITE_MAPBOX_ACCESS_TOKEN
