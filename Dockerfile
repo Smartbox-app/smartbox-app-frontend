@@ -24,8 +24,8 @@ RUN yarn "build-${BRANCH}" && yarn build-ssr
 ENV NODE_ENV=production \
   FE_FILES_PATH=/app/dist \
   ENABLE_X_SENDFILE=false \
-  FRONTEND_PORT=80
+  FRONTEND_PORT=3204
 
-EXPOSE 80
+EXPOSE FRONTEND_PORT
 
 CMD ["node", "ssr/dist/index.js"]
