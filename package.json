@@ -134,6 +134,7 @@
     "build-mobile-local": "node ./build-mobile-app.mjs --mode=local",
     "sync-mobile": "node ./scripts/sync-mobile.mjs",
     "android": "node ./scripts/sync-mobile.mjs && npx cap run android",
+    "build-develop": "VITE_APP_URL=https://api.vps247-smartbox.netcloud24.com VITE_APP_API_URL=https://api.vps247-smartbox.netcloud24.com vite build",
     "build-new-prod": "VITE_APP_URL=https://smartbox-app.pl VITE_APP_API_URL=https://api.smartbox-app.pl vite build",
     "build-prod": "yarn build-new-prod",
     "build-staging": "yarn build-new-prod",

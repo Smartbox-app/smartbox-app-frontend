@@ -18,7 +18,15 @@ export default defineConfig(async () => {
         workbox: {
           skipWaiting: false,
           clientsClaim: false,
+          // Never serve a stale shell after deploy — index.html must hit the network.
           navigateFallback: null,
+          globIgnores: ['**/index.html'],
+          runtimeCaching: [
+            {
+              urlPattern: ({ request }) => request.mode === 'navigate',
+              handler: 'NetworkOnly',
+            },
+          ],
           maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
         },
       }),

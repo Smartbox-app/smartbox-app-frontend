@@ -10,7 +10,35 @@ app.disable('x-powered-by');
 
 const fePath = path.resolve(config.feFilesPath);
 
+const NO_CACHE = 'no-cache, no-store, must-revalidate';
+const IMMUTABLE = 'public, max-age=31536000, immutable';
+
+const setHtmlCacheHeaders = (res: Response) => {
+  res.setHeader('Cache-Control', NO_CACHE);
+  res.setHeader('Pragma', 'no-cache');
+  res.setHeader('Expires', '0');
+};
+
+const isHashedAsset = (relPath: string) =>
+  relPath.startsWith(`static${path.sep}`) ||
+  relPath.startsWith('static/') ||
+  /-[a-zA-Z0-9_-]{8,}\.[a-z0-9]+$/i.test(relPath);
+
+const isEntryOrServiceWorker = (relPath: string) => {
+  const base = path.basename(relPath);
+  return (
+    base === 'index.html' ||
+    base === 'manifest.json' ||
+    base === 'sw.js' ||
+    base === 'service-worker.js' ||
+    base.startsWith('workbox-') ||
+    base.endsWith('.webmanifest')
+  );
+};
+
 async function handleIndex(originalUrl: string, hostname: string, res: Response) {
+  setHtmlCacheHeaders(res);
+
   const html = await readFile(path.join(fePath, 'index.html'), 'utf8');
   let metas: Record<string, string> = { ...config.defaults };
 
@@ -37,11 +65,24 @@ app.get(['/', '/index.html'], (req, res) =>
 
 app.use(
   express.static(fePath, {
-    setHeaders: config.enableXSendfile
-      ? (res, filePath) => {
-          res.setHeader('X-Sendfile', filePath);
-        }
-      : undefined,
+    // index.html is always served by handleIndex with no-cache headers
+    index: false,
+    setHeaders(res, filePath) {
+      const relPath = path.relative(fePath, filePath);
+
+      if (isEntryOrServiceWorker(relPath)) {
+        res.setHeader('Cache-Control', NO_CACHE);
+        res.setHeader('Pragma', 'no-cache');
+      } else if (isHashedAsset(relPath)) {
+        res.setHeader('Cache-Control', IMMUTABLE);
+      } else {
+        res.setHeader('Cache-Control', 'no-cache');
+      }
+
+      if (config.enableXSendfile) {
+        res.setHeader('X-Sendfile', filePath);
+      }
+    },
   }),
 );
 

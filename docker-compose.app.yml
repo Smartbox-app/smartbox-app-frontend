@@ -1,0 +1,37 @@
+services:
+  smartbox-frontend:
+    container_name: smartbox-frontend
+    image: ${CONTAINER_NAME:-smartbox-frontend}
+    restart: always
+
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        BRANCH: ${BRANCH:-prod}
+        VITE_MAPBOX_ACCESS_TOKEN: ${VITE_MAPBOX_ACCESS_TOKEN:-}
+
+    ports:
+      - "${FRONTEND_PORT:-3204}:${FRONTEND_PORT:-3204}"
+
+    env_file:
+      - .env
+
+    environment:
+      FE_FILES_PATH: /app/dist
+      ENABLE_X_SENDFILE: "false"
+      FRONTEND_PORT: ${FRONTEND_PORT:-3204}
+      API_URL: ${API_URL:-https://api.smartbox-app.pl/tenant/ssr}
+
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "node",
+          "-e",
+          "fetch('http://127.0.0.1:'+(process.env.FRONTEND_PORT||3204)+'/').then(r=>process.exit(r.ok||r.status===404?0:1)).catch(()=>process.exit(1))",
+        ]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 15s

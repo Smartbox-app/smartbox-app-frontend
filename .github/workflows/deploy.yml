@@ -41,7 +41,7 @@ jobs:
     needs: check
     runs-on: ubuntu-latest
     steps:
-      - name: Run update.sh on server
+      - name: Docker update on server
         uses: appleboy/ssh-action@v1.2.0
         with:
           host: ${{ secrets.SSH_HOST }}
@@ -50,5 +50,8 @@ jobs:
           script_stop: true
           script: |
             cd "${{ secrets.DEPLOY_PATH }}"
+            git fetch --all
+            git reset --hard "origin/${{ github.ref_name }}"
             export UPDATEDBRANCH="${{ github.ref_name }}"
-            ./update.sh
+            export BRANCH="${{ github.ref_name }}"
+            ./docker-update.sh
