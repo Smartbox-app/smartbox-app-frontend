@@ -26,7 +26,8 @@ services:
       FE_FILES_PATH: /app/dist
       ENABLE_X_SENDFILE: "false"
       FRONTEND_PORT: ${FRONTEND_PORT:-3204}
-      API_URL: ${API_URL:-http://host.docker.internal:3001/tenant/ssr}
+      # Not API_URL — that stays the public URL for other tooling; SSR must hit BE inside Docker
+      SSR_API_URL: ${SSR_API_URL:-http://host.docker.internal:3001/tenant/ssr}
       ROOT_DOMAIN: ${ROOT_DOMAIN:-smartbox-app.pl}
 
     healthcheck:

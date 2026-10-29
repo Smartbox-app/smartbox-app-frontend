@@ -117,5 +117,5 @@ app.all('*', sendIndex);
 
 app.listen(config.fePort, '0.0.0.0', () => {
   console.log(`SSR for ${fePath} listening on 0.0.0.0:${config.fePort}`);
-  console.log(`SSR API_URL=${config.apiUrl} ROOT_DOMAIN=${config.rootDomain}`);
+  console.log(`SSR SSR_API_URL=${config.apiUrl} ROOT_DOMAIN=${config.rootDomain}`);
 });
