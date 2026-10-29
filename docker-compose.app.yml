@@ -23,6 +23,7 @@ services:
       ENABLE_X_SENDFILE: "false"
       FRONTEND_PORT: ${FRONTEND_PORT:-3204}
       API_URL: ${API_URL:-https://api.smartbox-app.pl/tenant/ssr}
+      ROOT_DOMAIN: ${ROOT_DOMAIN:-smartbox-app.pl}
 
     healthcheck:
       test:

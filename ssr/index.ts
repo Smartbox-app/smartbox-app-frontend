@@ -4,9 +4,15 @@ import fetch from 'node-fetch';
 import path from 'path';
 import { readFile } from 'fs/promises';
 import { config } from './config';
+import {
+  hostFromRequest,
+  tenantFromHost,
+  withHostParam,
+} from './tenant-from-host';
 
 const app = express();
 app.disable('x-powered-by');
+app.set('trust proxy', true);
 
 const fePath = path.resolve(config.feFilesPath);
 
@@ -42,26 +48,22 @@ async function handleIndex(originalUrl: string, hostname: string, res: Response)
   const html = await readFile(path.join(fePath, 'index.html'), 'utf8');
   let metas: Record<string, string> = { ...config.defaults };
 
-  // Match SPA: apex (2 labels) → no tenant; subdomain → first label.
-  // Prefer existing ?host= (Apache passes full HTTP_HOST).
-  const labels = hostname.split('.');
-  const identifier = labels.length === 2 ? '' : labels[0];
-  const finalUrl = originalUrl.includes('?host')
-    ? originalUrl
-    : `${originalUrl}${originalUrl.includes('?') ? '&' : '?'}host=${encodeURIComponent(identifier || hostname)}`;
-
+  // Apache may pass ?host=full.HTTP_HOST; BE expects tenant id (first label under ROOT_DOMAIN).
+  const incomingHost = hostFromRequest(originalUrl, hostname);
+  const identifier = tenantFromHost(incomingHost, config.rootDomain);
+  const finalUrl = withHostParam(originalUrl, identifier);
   const apiUrl = `${config.apiUrl}${finalUrl}`;
   try {
-    const ans = await fetch(apiUrl);
+    const ans = await fetch(apiUrl, { timeout: 2500 });
     if (!ans.ok) {
-      console.warn(`[ssr] meta ${ans.status} hostname=${hostname} url=${apiUrl}`);
+      console.warn(`[ssr] meta ${ans.status} host=${incomingHost} tenant=${identifier || '(apex)'} url=${apiUrl}`);
     } else {
       const data = (await ans.json()) as { payload: Record<string, string> };
-      metas = { ...metas, ...data.payload };
-      console.log(`[ssr] ok hostname=${hostname} title=${metas.title ?? ''}`);
+      metas = { ...metas, ...(data.payload ?? {}) };
+      console.log(`[ssr] ok host=${incomingHost} tenant=${identifier || '(apex)'} title=${metas.title ?? ''}`);
     }
   } catch (err) {
-    console.warn(`[ssr] meta fail hostname=${hostname} url=${apiUrl}`, err);
+    console.warn(`[ssr] meta fail host=${incomingHost} url=${apiUrl}`, err);
   }
 
   const re = new RegExp(`\\\${(${Object.keys(metas).join('|')})}`, 'gi');
