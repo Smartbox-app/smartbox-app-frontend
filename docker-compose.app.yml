@@ -15,6 +15,10 @@ services:
     ports:
       - "${FRONTEND_PORT:-3204}:${FRONTEND_PORT:-3204}"
 
+    # Reach host BE (:3001) without hairpin via public DNS (that hang → Apache 502)
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
     env_file:
       - .env
 
@@ -22,7 +26,7 @@ services:
       FE_FILES_PATH: /app/dist
       ENABLE_X_SENDFILE: "false"
       FRONTEND_PORT: ${FRONTEND_PORT:-3204}
-      API_URL: ${API_URL:-https://api.smartbox-app.pl/tenant/ssr}
+      API_URL: ${API_URL:-http://host.docker.internal:3001/tenant/ssr}
       ROOT_DOMAIN: ${ROOT_DOMAIN:-smartbox-app.pl}
 
     healthcheck:
@@ -31,9 +35,9 @@ services:
           "CMD",
           "node",
           "-e",
-          "fetch('http://127.0.0.1:'+(process.env.FRONTEND_PORT||3204)+'/').then(r=>process.exit(r.ok||r.status===404?0:1)).catch(()=>process.exit(1))",
+          "fetch('http://127.0.0.1:'+(process.env.FRONTEND_PORT||3204)+'/healthz').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))",
         ]
       interval: 30s
-      timeout: 3s
+      timeout: 5s
       retries: 3
       start_period: 15s

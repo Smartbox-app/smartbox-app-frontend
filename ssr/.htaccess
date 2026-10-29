@@ -1,10 +1,10 @@
 RewriteEngine on
 # If there was an `api-` at the beginning - redirect it to BE
 RewriteCond %{HTTP_HOST} ^api-
-RewriteRule (.*) http://localhost:3203%{REQUEST_URI} [P]
+RewriteRule (.*) http://localhost:3001%{REQUEST_URI} [P]
 # Special stuff goes to BE
 RewriteCond %{REQUEST_URI} ^/(manifest\.json|favicon\.ico|assets/apple-touch-icon\.png|assets/favicon-32x32\.png|assets/favicon-16x16\.png|assets/safari-pinned-tab\.svg|assets/android-chrome-192x192\.png|assets/android-chrome-512x512\.png)$
-RewriteRule (.*) http://localhost:3203/assets/front?host=%{HTTP_HOST}&url=%{REQUEST_URI} [P]
+RewriteRule (.*) http://localhost:3001/tenant/assets?host=%{HTTP_HOST}&url=%{REQUEST_URI} [P]
 # All the rest goes to FE SSR
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f

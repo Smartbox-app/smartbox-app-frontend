@@ -1,4 +1,4 @@
-import express, { Response } from 'express';
+import express, { Request, Response } from 'express';
 import { escape } from 'html-escaper';
 import fetch from 'node-fetch';
 import path from 'path';
@@ -15,6 +15,7 @@ app.disable('x-powered-by');
 app.set('trust proxy', true);
 
 const fePath = path.resolve(config.feFilesPath);
+const META_TIMEOUT_MS = 2000;
 
 const NO_CACHE = 'no-cache, no-store, must-revalidate';
 const IMMUTABLE = 'public, max-age=31536000, immutable';
@@ -42,26 +43,29 @@ const isEntryOrServiceWorker = (relPath: string) => {
   );
 };
 
+async function loadMetas(apiUrl: string): Promise<Record<string, string>> {
+  const ans = await fetch(apiUrl, { timeout: META_TIMEOUT_MS });
+  if (!ans.ok) throw new Error(`meta ${ans.status}`);
+  const data = (await ans.json()) as { payload?: Record<string, string> };
+  return data.payload ?? {};
+}
+
 async function handleIndex(originalUrl: string, hostname: string, res: Response) {
   setHtmlCacheHeaders(res);
 
   const html = await readFile(path.join(fePath, 'index.html'), 'utf8');
   let metas: Record<string, string> = { ...config.defaults };
 
-  // Apache may pass ?host=full.HTTP_HOST; BE expects tenant id (first label under ROOT_DOMAIN).
   const incomingHost = hostFromRequest(originalUrl, hostname);
   const identifier = tenantFromHost(incomingHost, config.rootDomain);
   const finalUrl = withHostParam(originalUrl, identifier);
   const apiUrl = `${config.apiUrl}${finalUrl}`;
+
   try {
-    const ans = await fetch(apiUrl, { timeout: 2500 });
-    if (!ans.ok) {
-      console.warn(`[ssr] meta ${ans.status} host=${incomingHost} tenant=${identifier || '(apex)'} url=${apiUrl}`);
-    } else {
-      const data = (await ans.json()) as { payload: Record<string, string> };
-      metas = { ...metas, ...(data.payload ?? {}) };
-      console.log(`[ssr] ok host=${incomingHost} tenant=${identifier || '(apex)'} title=${metas.title ?? ''}`);
-    }
+    metas = { ...metas, ...(await loadMetas(apiUrl)) };
+    console.log(
+      `[ssr] ok host=${incomingHost} tenant=${identifier || '(apex)'} title=${metas.title ?? ''}`,
+    );
   } catch (err) {
     console.warn(`[ssr] meta fail host=${incomingHost} url=${apiUrl}`, err);
   }
@@ -70,13 +74,25 @@ async function handleIndex(originalUrl: string, hostname: string, res: Response)
   res.send(html.replace(re, (m) => escape(metas[m.slice(2, -1)] ?? '')));
 }
 
-app.get(['/', '/index.html'], (req, res) =>
-  handleIndex(req.originalUrl, req.hostname, res),
-);
+// Express 4 does not catch async rejections → no response → Apache 502
+const sendIndex = (req: Request, res: Response) => {
+  handleIndex(req.originalUrl, req.hostname, res).catch((err) => {
+    console.error('[ssr] handleIndex', err);
+    if (!res.headersSent) {
+      res.status(500).type('text').send('SSR error');
+    }
+  });
+};
+
+// No meta fetch — used by Docker healthcheck
+app.get('/healthz', (_req, res) => {
+  res.status(200).type('text').send('ok');
+});
+
+app.get(['/', '/index.html'], sendIndex);
 
 app.use(
   express.static(fePath, {
-    // index.html is always served by handleIndex with no-cache headers
     index: false,
     setHeaders(res, filePath) {
       const relPath = path.relative(fePath, filePath);
@@ -97,8 +113,9 @@ app.use(
   }),
 );
 
-app.all('*', (req, res) => handleIndex(req.originalUrl, req.hostname, res));
+app.all('*', sendIndex);
 
 app.listen(config.fePort, '0.0.0.0', () => {
   console.log(`SSR for ${fePath} listening on 0.0.0.0:${config.fePort}`);
+  console.log(`SSR API_URL=${config.apiUrl} ROOT_DOMAIN=${config.rootDomain}`);
 });
