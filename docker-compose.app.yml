@@ -15,7 +15,12 @@ services:
     ports:
       - "${FRONTEND_PORT:-3204}:${FRONTEND_PORT:-3204}"
 
-    # Reach host BE (:3001) without hairpin via public DNS (that hang → Apache 502)
+    # Join NPM's network (name varies per env) → forward to smartbox-frontend:3204
+    networks:
+      - default
+      - proxy
+
+    # Reach host BE (:3001) without hairpin via public DNS
     extra_hosts:
       - "host.docker.internal:host-gateway"
 
@@ -42,3 +47,8 @@ services:
       timeout: 5s
       retries: 3
       start_period: 15s
+
+networks:
+  proxy:
+    name: ${PROXY_NETWORK:-smartbox-proxy}
+    external: true
