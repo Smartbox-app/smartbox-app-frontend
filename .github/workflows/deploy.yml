@@ -54,4 +54,4 @@ jobs:
             git reset --hard "origin/${{ github.ref_name }}"
             export UPDATEDBRANCH="${{ github.ref_name }}"
             export BRANCH="${{ github.ref_name }}"
-            ./docker-update.sh
+            bash docker-update.sh
