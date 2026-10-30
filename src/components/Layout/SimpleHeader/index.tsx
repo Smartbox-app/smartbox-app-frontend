@@ -1,7 +1,8 @@
 import React from 'react';
 
+import {__} from "src/helpers/i18n";
+
 import './SimpleHeader.scss';
-import {__} from "../../../helpers/i18n";
 
 interface Props {
   title: string;

@@ -1,22 +1,18 @@
-import React from 'react';
 import { ItfApiForm } from 'itf_formbuilder_react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
-import ReactCreatableSelect from 'react-select/creatable';
-import {
-  ButtonsContainer,
-  FormContainer,
-  FormHeader,
-} from '../../../../components/Layout';
-import { Button, Spinner } from '../../../../components/Branded';
-import ApiService from '../../../../services/api-service';
-import { formOnTranslateString } from '../../../../utils/trans-form';
-import { ReactSelectOverride } from '../../../../components/Common/ReactSelectOverride';
-import { successNotification } from '../../../../actions/notifications';
-import { __ } from '../../../../helpers/i18n';
-import { mapFields } from '../../../../utils/fields-mapper';
-import { hideModal } from '../../../../actions/modal';
-import { refreshApiTableData } from '../../../../actions/api-table';
-import { AttachmentReq } from 'smartbox-types';
+
+import { refreshApiTableData } from 'src/actions/api-table';
+import { hideModal } from 'src/actions/modal';
+import { successNotification } from 'src/actions/notifications';
+import { Button, Spinner } from 'src/components/Branded';
+import { ReactSelectOverride, ReactCreatableSelectOverride as ReactCreatableSelect } from 'src/components/Common/ReactSelectOverride';
+import { ButtonsContainer, FormContainer } from 'src/components/Layout';
+import { Modal } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
+import ApiService from 'src/services/api-service';
+import { mapFields } from 'src/utils/fields-mapper';
+import { formOnTranslateString } from 'src/utils/trans-form';
 
 interface Props {
   id: string;
@@ -35,16 +31,18 @@ const Edit = ({ id }: Props) => {
   const sendUrl = `attachment/${id}`;
 
   return (
-    <FormContainer>
-      <FormHeader title="application.editAttachment" />
-      <ItfApiForm
+    <>
+      <Modal.Header title={__('application.editAttachment')} />
+      <Modal.Content>
+        <FormContainer>
+        <ItfApiForm
         useFormDataInsteadOfPlainObject
         formId="updateAttachment"
         schemaCacheEnabled={false}
         schemaMayBeDynamic={true}
         loadingInfo={<Spinner transparent />}
         schemaFetcher={() => ApiService.loadForm(fetchUrl)}
-        sendFetcher={(formId: string, values: AttachmentReq) =>
+        sendFetcher={(_formId: string, values: FormData) =>
           ApiService.sendForm(sendUrl, values, 'PATCH')
         }
         submitButton={submitButton}
@@ -59,8 +57,10 @@ const Edit = ({ id }: Props) => {
           ReactSelect: ReactSelectOverride,
           ReactCreatableSelect,
         }}
-      />
-    </FormContainer>
+        />
+        </FormContainer>
+      </Modal.Content>
+    </>
   );
 };
 

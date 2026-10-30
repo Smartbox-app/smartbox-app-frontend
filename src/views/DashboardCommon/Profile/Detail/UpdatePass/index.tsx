@@ -1,18 +1,18 @@
-import React from 'react';
 import { ItfApiForm } from 'itf_formbuilder_react';
-import { connect, useDispatch } from 'react-redux';
-import ReactCreatableSelect from 'react-select/creatable';
-import { bindActionCreators } from 'redux';
-import { AddGiftReq } from 'smartbox-types';
-import { modal, notifications } from '../../../../../actions';
-import { FormContainer, ButtonsContainer, FormHeader, FieldsColumn } from '../../../../../components/Layout';
-import { Button, Spinner } from '../../../../../components/Branded';
-import ApiService from '../../../../../services/api-service';
-import { formOnTranslateString } from '../../../../../utils/trans-form';
-import { ReactSelectOverride } from '../../../../../components/Common/ReactSelectOverride';
+import React from 'react';
+import { useDispatch } from 'react-redux';
+
+import { UpdatePwdReq } from 'smartbox-types';
 import { hideModal } from 'src/actions/modal';
 import { successNotification } from 'src/actions/notifications';
-
+import { Button, Spinner } from 'src/components/Branded';
+import { ReactSelectOverride, ReactCreatableSelectOverride as ReactCreatableSelect } from 'src/components/Common/ReactSelectOverride';
+import { ButtonsContainer, FieldsColumn } from 'src/components/Layout';
+import { Modal } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
+import ApiService from 'src/services/api-service';
+import { mapFields } from 'src/utils/fields-mapper';
+import { formOnTranslateString } from 'src/utils/trans-form';
 
 const UpdatePass = () => {
   const dispatch = useDispatch();
@@ -25,7 +25,7 @@ const UpdatePass = () => {
   const fetchUrl = 'user/form/update-password';
   const sendUrl = 'user/pwd';
 
-  const customSendFetcher = (formId: string, values: AddGiftReq) =>
+  const customSendFetcher = (_formId: string, values: UpdatePwdReq) =>
     ApiService.sendForm(
       sendUrl,
       {
@@ -35,8 +35,9 @@ const UpdatePass = () => {
     );
 
   return (
-    <FormContainer>
-      <FormHeader title="application.changePasswordToService" />
+    <>
+      <Modal.Header title={__('application.changePasswordToService')} />
+      <Modal.Content>
       <FieldsColumn>
         <ItfApiForm
           formId="changePass"
@@ -46,6 +47,7 @@ const UpdatePass = () => {
           schemaFetcher={() => ApiService.loadForm(fetchUrl)}
           sendFetcher={customSendFetcher}
           submitButton={submitButton}
+          onRenderFullField={mapFields}
           onSavedSuccessfully={() => {
             dispatch(successNotification('notification.passChangedSuccess'));
             dispatch(hideModal());
@@ -54,17 +56,9 @@ const UpdatePass = () => {
           thirdPartyComponents={{ ReactSelect: ReactSelectOverride, ReactCreatableSelect }}
         />
       </FieldsColumn>
-    </FormContainer>
+      </Modal.Content>
+    </>
   );
 };
 
-const mapDispatchToProps = (dispatch: any) =>
-  bindActionCreators(
-    {
-      ...modal,
-      ...notifications,
-    },
-    dispatch,
-  );
-
-export default connect(null, mapDispatchToProps)(UpdatePass);
+export default UpdatePass;

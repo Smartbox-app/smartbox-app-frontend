@@ -1,5 +1,6 @@
 import styled from 'styled-components';
-import { __ } from 'src/helpers/i18n';
+
+import { translateUiError } from 'src/utils/translate-ui-error';
 
 export type ErrorTextProps = {
   error: string;
@@ -13,5 +14,5 @@ const StyledErrorText = styled('p')(({ theme }) => ({
 }));
 
 export const ErrorText = ({ error }: ErrorTextProps) => {
-  return <StyledErrorText>{__(error)}</StyledErrorText>;
+  return <StyledErrorText>{translateUiError(error)}</StyledErrorText>;
 };

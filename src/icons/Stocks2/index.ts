@@ -1,1 +1,1 @@
-export * from './Stocks2';
+export * from 'src/icons/Stocks2/Stocks2';

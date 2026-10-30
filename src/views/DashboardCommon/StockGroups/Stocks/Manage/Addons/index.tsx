@@ -1,10 +1,12 @@
 import React from 'react';
 import { Switch, Route, Redirect, useParams } from 'react-router';
+
+import { useGetMyDetailsQuery } from 'src/queries';
+import UserService from 'src/services/user-service';
+
 import { Add } from './Add';
 import { List } from './List';
-import UserService from '../../../../../../services/user-service';
 import { Pricing } from './Pricing';
-import { useGetMyDetailsQuery } from 'src/queries';
 
 const Addons = () => {
   const { stockId } = useParams<{ stockId: string }>();

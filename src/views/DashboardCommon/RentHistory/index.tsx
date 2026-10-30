@@ -1,26 +1,36 @@
-import { PeriodEntity, RentDescription, RentPaymentType } from 'smartbox-types';
-import { dateOnly } from '../../../utils/format-date';
-import { formatPrice } from '../../../utils/format-price';
-import { __ } from '../../../helpers/i18n';
-import styled from 'styled-components';
-import { Button } from '../../../components/Branded';
-import ApiService from '../../../services/api-service';
-import { useMemo } from 'react';
 import { isAfter, isBefore } from 'date-fns';
+import { useMemo } from 'react';
+import styled from 'styled-components';
+
+import { PeriodEntity, RentDescription, RentPaymentType } from 'smartbox-types';
+import { Alert } from 'src/components/Common';
+import { RentAttachedFileButton } from 'src/components/Common/RentAttachedFileButton';
+import { __ } from 'src/helpers/i18n';
+import { dateOnly } from 'src/utils/format-date';
+import { formatPrice } from 'src/utils/format-price';
+import {
+  hasViewableAgreementPeriod,
+  resolveRentAgreementForDescriptionLine,
+} from 'src/utils/rent-agreement';
+
+import { RentAgreementButton } from '../SingleRentDetail/RentAgreementButton';
 
 interface Props {
   description: RentDescription[];
   rentId: string;
-  paymentType: RentPaymentType;
-  periods: PeriodEntity[];
+  paymentType?: RentPaymentType;
+  periods?: PeriodEntity[];
+  decisionFinishAt?: Date;
+  isOpenEnded?: boolean;
 }
 
 const StyledPeriodHeader = styled('h4')({
   color: '#333',
   fontWeight: 700,
   fontSize: '1rem',
-  marginBottom: '10px',
+  margin: 0,
 });
+
 const StyledSubHeader = styled('h4')({
   color: '#333',
   fontWeight: 700,
@@ -28,11 +38,11 @@ const StyledSubHeader = styled('h4')({
   fontSize: '0.95rem',
 });
 
-const StyledSinglePeriod = styled('li')(({ theme }) => ({
+const StyledSinglePeriod = styled('li')({
   marginBottom: '10px',
   paddingBottom: '10px',
-  borderBottom: `1px solid #fbfbfb`,
-}));
+  borderBottom: '1px solid #fbfbfb',
+});
 
 const StyledSinglePaymentPeriod = styled('li')(({ theme }) => ({
   marginBottom: '10px',
@@ -52,6 +62,11 @@ const StyledSingleAddon = styled('li')(({ theme }) => ({
 
 const StyledRentAgreementButton = styled('div')({
   display: 'flex',
+  padding: '16px 0',
+});
+
+const AttachedFileButtonContainer = styled('div')({
+  padding: '8px 0',
 });
 
 const getPaymentTypeLabel = (type: RentPaymentType) => {
@@ -67,7 +82,9 @@ export const RentHistory = ({
   description,
   rentId,
   paymentType,
-  periods,
+  periods = [],
+  decisionFinishAt,
+  isOpenEnded,
 }: Props) => {
   const sortedPeriods = useMemo(() => {
     const periodsCopy = [...periods];
@@ -78,122 +95,143 @@ export const RentHistory = ({
   }, [periods]);
 
   return (
-    <ul>
-      {description.map((line, index) => (
-        <StyledSinglePeriod key={index}>
-          <StyledPeriodHeader>
-            {dateOnly(line.startAt)} - {dateOnly(line.finishAt)}
-          </StyledPeriodHeader>
-          <p>
-            {__('application.price')} - {formatPrice(Number(line.cost))}
-          </p>
-          <p>
-            {__('application.paymentType')} -{' '}
-            {__(getPaymentTypeLabel(line.paymentType || paymentType))}
-          </p>
-          {line.agreement ? (
-            <StyledRentAgreementButton>
-              <Button
-                small
-                primary
-                blank
-                text="application.seeRentAgreement"
-                to={`${ApiService.url}rent/agreement/${rentId}/${index}`}
-              />
-            </StyledRentAgreementButton>
-          ) : null}
+    <>
+      {decisionFinishAt ? (
+        <Alert type="notice">
+          {__('application.phrases.rentEndedEarly')}{' '}
+          <strong>{dateOnly(decisionFinishAt)}</strong>
+        </Alert>
+      ) : null}
+      <ul>
+        {description.map((line, index) => {
+          const resolvedAgreement = resolveRentAgreementForDescriptionLine(
+            line,
+            periods,
+          );
 
-          {line.addons && line.addons.length > 0 ? (
-            <div>
-              <StyledSubHeader>
-                {__('application.selectedAddons')}
-              </StyledSubHeader>
-              <ul>
-                {line.addons.map((addon) => (
-                  <StyledSingleAddon key={addon.id}>
-                    <div>
-                      <strong>{addon.name}</strong>
-                      {(typeof addon.price === 'number' && addon.selectedVariantName) ? (
-                        <>
-                          {' '}
-                          - {addon.selectedVariantName} -{' '}
-                          {formatPrice(Number(addon.price))}
-                        </>
-                      ) : null}
-                    </div>
+          return (
+            <StyledSinglePeriod key={index}>
+              <StyledPeriodHeader>
+                {line.finishAt && !isOpenEnded
+                  ? `${dateOnly(line.startAt)} - ${dateOnly(line.finishAt)}`
+                  : dateOnly(line.startAt)}
+              </StyledPeriodHeader>
+              {hasViewableAgreementPeriod(line, periods) ? (
+                <StyledRentAgreementButton>
+                  <RentAgreementButton
+                    rentId={rentId}
+                    periodIndex={index}
+                    documentId={resolvedAgreement.documentId}
+                    agreement={resolvedAgreement.agreement}
+                  />
+                </StyledRentAgreementButton>
+              ) : null}
 
-                    {addon.acceptance ? (
-                      <p>
-                        {addon.acceptance} -{' '}
-                        <strong>{addon.accepted ? 'Tak' : 'Nie'}</strong>
-                      </p>
-                    ) : null}
-                    {!!addon.acceptances && !!addon.acceptancesStatus
-                      ? addon.acceptances.map((acceptance) => (
-                          <p key={acceptance.id}>
-                            {acceptance.text} -{' '}
+              <p>
+                {__('application.price')} - {formatPrice(Number(line.cost))}
+              </p>
+              {isOpenEnded ? null : (
+                <p>
+                  {__('application.paymentType')} -{' '}
+                  {line.paymentType || paymentType
+                    ? __(
+                        getPaymentTypeLabel((line.paymentType || paymentType)!),
+                      )
+                    : null}
+                </p>
+              )}
+
+              {line.addons && line.addons.length > 0 ? (
+                <div>
+                  <StyledSubHeader>
+                    {__('application.selectedAddons')}
+                  </StyledSubHeader>
+                  <ul>
+                    {line.addons.map((addon) => (
+                      <StyledSingleAddon key={addon.id}>
+                        <div>
+                          <strong>{addon.name}</strong>
+                          {typeof addon.price === 'number' &&
+                          addon.selectedVariantName ? (
+                            <>
+                              {' '}
+                              - {addon.selectedVariantName} -{' '}
+                              {formatPrice(Number(addon.price))}
+                            </>
+                          ) : null}
+                        </div>
+
+                        {addon.acceptance ? (
+                          <p>
+                            {addon.acceptance} -{' '}
                             <strong>
-                              {addon.acceptancesStatus![acceptance.id].accepted
-                                ? 'Tak'
-                                : 'Nie'}
+                              {addon.accepted
+                                ? __('application.yes')
+                                : __('application.no')}
                             </strong>
                           </p>
-                        ))
-                      : null}
-                    {addon.file ? (
-                      <Button
-                        small
-                        blank
-                        primary
-                        to={`${ApiService.url}rent/file/${rentId}/${addon.file}`}
-                        text="application.seeAttachedFile"
-                      />
-                    ) : null}
-                  </StyledSingleAddon>
-                ))}
-              </ul>
-            </div>
-          ) : null}
-          {line.paymentType === RentPaymentType.Installments ? (
-            <>
-              <StyledSubHeader>{__('application.periods')}</StyledSubHeader>
-              <ul>
-                {sortedPeriods
-                  .filter(
-                    (period) =>
-                      !isBefore(
-                        new Date(period.startAt),
-                        new Date(line.startAt),
-                      ) &&
-                      !isAfter(
-                        new Date(period.finishAt),
-                        new Date(line.finishAt),
-                      ),
-                  )
-                  .map((period) => {
-                    console.log(
-                      'PERIOD',
-                      period,
-                      !isBefore(
-                        new Date(period.startAt),
-                        new Date(line.startAt),
-                      ),
-                    );
-                    return (
-                      <StyledSinglePaymentPeriod key={period.id}>
-                        {dateOnly(period.startAt)} - {dateOnly(period.finishAt)}{' '}
-                        - <strong>{formatPrice(period.value)}</strong> -{' '}
-                        {period.paid
-                          ? __('application.periodPaid')
-                          : __('application.periodUnpaid')}
-                      </StyledSinglePaymentPeriod>
-                    );
-                  })}
-              </ul>
-            </>
-          ) : null}
-        </StyledSinglePeriod>
-      ))}
-    </ul>
+                        ) : null}
+                        {addon.file ? (
+                          <AttachedFileButtonContainer>
+                            <RentAttachedFileButton
+                              rentId={rentId}
+                              fileName={addon.file}
+                            />
+                          </AttachedFileButtonContainer>
+                        ) : null}
+                      </StyledSingleAddon>
+                    ))}
+                  </ul>
+                </div>
+              ) : null}
+              {isOpenEnded ||
+              line.paymentType === RentPaymentType.Installments ? (
+                <>
+                  <StyledSubHeader>{__('application.periods')}</StyledSubHeader>
+                  <ul>
+                    {sortedPeriods
+                      .filter((period) => {
+                        if (isOpenEnded) return true;
+                        const startsOnOrAfterLine = !isBefore(
+                          new Date(period.startAt),
+                          new Date(line.startAt),
+                        );
+                        if (!startsOnOrAfterLine) return false;
+                        if (!line.finishAt) return true;
+                        return !isAfter(
+                          new Date(period.finishAt),
+                          new Date(line.finishAt),
+                        );
+                      })
+                      .map((period, index) => {
+                        return (
+                          <StyledSinglePaymentPeriod
+                            key={`${String(period.startAt)}-${String(period.finishAt)}-${index}`}
+                          >
+                            {dateOnly(period.startAt)} -{' '}
+                            {dateOnly(period.finishAt)} -{' '}
+                            <strong>{formatPrice(period.value)}</strong> -{' '}
+                            {period.paid ? (
+                              __('application.periodPaid')
+                            ) : (
+                              <>
+                                {__('application.periodUnpaid')} (
+                                {__('application.periodPaymentTo', {
+                                  date: dateOnly(period.paymentTo),
+                                })}
+                                )
+                              </>
+                            )}
+                          </StyledSinglePaymentPeriod>
+                        );
+                      })}
+                  </ul>
+                </>
+              ) : null}
+            </StyledSinglePeriod>
+          );
+        })}
+      </ul>
+    </>
   );
 };

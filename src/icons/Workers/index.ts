@@ -1,1 +1,1 @@
-export * from './Workers';
+export * from 'src/icons/Workers/Workers';

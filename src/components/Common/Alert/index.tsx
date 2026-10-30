@@ -1,7 +1,9 @@
 import * as React from 'react';
-import { __ } from '../../../helpers/i18n';
-import './Alert.scss';
 import styled, { DefaultTheme } from 'styled-components';
+
+import { __ } from 'src/helpers/i18n';
+
+import './Alert.scss';
 
 type AlertTypes = 'error' | 'notice' | 'warning' | 'success';
 
@@ -28,7 +30,7 @@ const getColorByType = (type: AlertTypes, theme: DefaultTheme) => {
 };
 
 const StyledAlert = styled('div')<{ type: AlertTypes, compact?: boolean }>(({ theme, compact, type }) => ({
-  borderRadius: theme.radius.innerSurface,
+  borderRadius: compact ? theme.radius.innerSurface / 2 : theme.radius.outerSurface,
   display: 'flex',
   alignItems: 'center',
   gap: theme.spacing * 2,

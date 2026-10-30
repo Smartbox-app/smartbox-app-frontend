@@ -1,24 +1,25 @@
 import { UserRole, UserStatus, Language } from './user-entity';
-import { BaseResponse } from '../base/baseRes';
-import { Prop } from '../store/prop.decorator';
-import type { CompanyData } from '../payment';
-import { RentStatus } from '../rent';
+import { ApiErrorCode } from '../apiMessages/errorCodes';
+import { TenantEntity } from '../tenant';
+import { CompanyData, RentStatus, SelectOption } from '..';
 
-export class UserRes extends BaseResponse {
-  @Prop() id: string;
-  @Prop() email: string;
-  @Prop() city: string;
-  @Prop() street: string;
-  @Prop() postCode: string;
-  @Prop() birthDate?: Date;
-  @Prop() phone: string;
-  @Prop() firstName: string;
-  @Prop() lastName: string;
-  @Prop() role: UserRole;
-  @Prop() rentCount: number;
-  @Prop() companyData: CompanyData;
-  @Prop() tenantId: string | null;
-  @Prop() stocks: string[];
+export class UserRes {
+  id: string;
+  email: string;
+  city: string;
+  street: string;
+  country: string;
+  postCode: string;
+  birthDate: Date | null;
+  phone: string;
+  firstName: string;
+  lastName: string;
+  role: UserRole;
+  rentCount: number;
+  companyData: CompanyData;
+  tenantId: string | null;
+  stocks: string[];
+  lang: Language | null;
 }
 
 export interface BoxesSummary {
@@ -33,15 +34,19 @@ export interface StockSummary {
 }
 
 export interface StocksByTenant {
-  [key: string]: StockSummary[]
+  [key: string]: StockSummary[];
 }
 
 export interface UserListRes extends UserRes {
   status: UserStatus;
+  tenant?: string;
+  hasPasswordSet?: boolean;
+  canResendActivationEmail?: boolean;
 }
 
 export interface UserClientListRes {
   id: string;
+  status: UserStatus;
   tenantId: string;
   email: string;
   firstName: string;
@@ -51,17 +56,77 @@ export interface UserClientListRes {
   allowedBoxesCount: number;
   allowedStocksCount: number;
   stocks?: StockSummary[];
+}
 
+/** Row from GET user/invitation-list. Token is excluded by the entity. */
+export interface UserInvitationListItem {
+  id: string;
+  email: string;
+  role: UserRole;
+  stockIds: string[];
+  tenantId: string | null;
+  tenant: TenantEntity;
 }
 
 export interface UpdateUserReq {
   firstName: string;
   lastName: string;
   phone: string;
+  email: string;
   street: string;
   city: string;
   postCode: string;
   companyData: CompanyData;
+  daysForPayment?: number | null;
+  openEndedDaysForPayment?: number | null;
+}
+
+export interface PaymentDeadlinePreviewReq {
+  daysForPayment?: number | null;
+  openEndedDaysForPayment?: number | null;
+}
+
+export interface UpdateSomeoneBasicReq {
+  firstName: string;
+  lastName: string;
+  country: string;
+  street: string;
+  postCode: string;
+  city: string;
+  phone: string;
+  email: string;
+}
+
+export interface UpdateSomeoneCompanyReq {
+  companyData: CompanyData;
+}
+
+export interface UpdateSomeonePaymentReq {
+  daysForPayment?: number | null;
+  openEndedDaysForPayment?: number | null;
+}
+
+export interface UpdateUserBasicReq {
+  firstName: string;
+  lastName: string;
+}
+
+export interface UpdateUserContactReq {
+  phone: string;
+  email: string;
+  street: string;
+  city: string;
+  postCode: string;
+  country: string;
+}
+
+export interface UpdateUserCompanyReq {
+  companyName: string;
+  companyStreet: string;
+  companyCity: string;
+  companyPostCode: string;
+  companyCountry: string;
+  nip: string;
 }
 
 export interface AddUserReq {
@@ -72,6 +137,32 @@ export interface AddUserReq {
   pwd: string;
   pwd2: string;
 }
+
+/** Returned from POST user/new when SMS activation is used. */
+export type RegisterUserRes = {
+  activationToken?: string;
+};
+
+export type AccountActivationTokenPayload = {
+  activationToken: string;
+};
+
+export interface AddUserByAdminReq {
+  email: string;
+  phone: string;
+  firstName: string;
+  lastName: string;
+  tenantId?: string;
+}
+
+export interface ActivateUserReq {
+  pwd?: string;
+  pwd2?: string;
+}
+
+export type ActivationStatusRes = {
+  needsPassword: boolean;
+};
 
 export interface AddInvitedUserReq {
   invitationId: string;
@@ -93,29 +184,30 @@ export interface AddInvitedTenantReq {
   pwd2: string;
 }
 
-export interface InviteWorkerReq {
-  email: string,
-  role: UserRole,
-  tenantId: string,
-  stockIds: string[],
+export interface InviteUserFailure {
+  email: string;
+  errorCode: ApiErrorCode;
+}
+
+export interface InviteUsersRes {
+  invited: string[];
+  failed: InviteUserFailure[];
 }
 
 export interface AddTenantReq {
-    // user data
-    email: string;
-    phone: string;
-    tenantId: string;
-    // tenant data
-    name: string;
+  email: string;
+  phone: string;
+  firstName: string;
+  lastName: string;
 }
 
 export interface ChangeRoleReq {
-  role: UserRole,
-  stocks: string[],
+  role: UserRole;
+  stocks: string[];
 }
 
 export interface UpdatePwdReq {
-  oldPwd: string;
+  oldPwd?: string;
   newPwd: string;
   newPwd2: string;
 }
@@ -123,7 +215,7 @@ export interface UpdatePwdReq {
 export enum UserType {
   staff,
   user,
-  client
+  client,
 }
 
 export interface RestorPwdPetition {
@@ -137,14 +229,17 @@ export interface RestorPwdReq {
   pwd2: string;
 }
 
-export class MyLang extends BaseResponse {
-  @Prop()
+export class MyLang {
+  lang: Language;
+}
+
+export interface UpdateLangReq {
   lang: Language;
 }
 
 export interface UpdateWorkerStocksReq {
   userId: string;
-  stockIds: string[];
+  stockIds: SelectOption[];
 }
 
 export interface UserDetailsRes {
@@ -153,12 +248,14 @@ export interface UserDetailsRes {
   city: string;
   street: string;
   postCode: string;
+  country: string;
   phone: string;
   firstName: string;
   lastName: string;
   rentCount: number;
   companyData: CompanyData;
-  activeRents: ActiveRentsForUserDetails[]
+  note?: string | null;
+  activeRents: ActiveRentsForUserDetails[];
 }
 
 export interface ActiveRentsForUserDetails {

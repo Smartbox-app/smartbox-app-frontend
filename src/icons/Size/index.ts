@@ -1,1 +1,1 @@
-export * from './Size';
+export * from 'src/icons/Size/Size';

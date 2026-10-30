@@ -1,21 +1,28 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import styled, { DefaultTheme } from 'styled-components';
+
+import { BoxGroupUserRes } from 'smartbox-types';
+import {
+  setBoxGroup,
+  setMaxAdvanceBookingDays,
+  setMaxRentPeriod,
+  setMinRentPeriod,
+} from 'src/actions/order';
+import { Spinner } from 'src/components/Branded';
+import { Card } from 'src/components/ui';
+import { ApplicationState } from 'src/reducers';
+import {
+  getColorForBackground,
+} from 'src/utils/color';
+
+import { PriceInfo } from '../PriceInfo';
+import { LeftCounter } from './components/LeftCounter';
+import { OptionActions } from './components/OptionActions';
+import { OptionData } from './components/OptionData';
+import { OptionImage } from './components/OptionImage';
 
 import './SingleOption.scss';
-import { useDispatch, useSelector } from 'react-redux';
-import { ApplicationState } from '../../../../../../reducers';
-import { Spinner } from '../../../../../../components/Branded';
-import styled, { DefaultTheme } from 'styled-components';
-import { BoxGroupUserRes } from 'smartbox-types';
-import { PriceInfo } from '../PriceInfo';
-import { setBoxGroup, setMinRentPeriod } from '../../../../../../actions/order';
-import {
-  colorOrDark,
-  getColorForBackground,
-} from '../../../../../../utils/color';
-import { Card } from 'src/components/ui';
-import { OptionImage } from './components/OptionImage';
-import { OptionData } from './components/OptionData';
-import { OptionNotification } from './components/OptionNotification';
 
 export type SingleOptionType = {
   name: string;
@@ -47,14 +54,9 @@ const StyledSingleOption = styled('div')({
   flex: 1,
   cursor: 'pointer',
   whiteSpace: 'nowrap',
+  minHeight: 450,
   "input[type='radio']": {
     display: 'none',
-  },
-  '@media(min-width: 768px)': {
-    flex: '0 1 calc(50% - 8px)',
-  },
-  '@media(min-width: 800px)': {
-    flex: '0 1 calc(33% - 8px)',
   },
 });
 
@@ -70,20 +72,31 @@ const StyledOptionSize = styled('div')<{
 }>(({ theme, active, disabled }) => ({
   position: 'absolute',
   minWidth: theme.spacing * 8,
-  height: theme.spacing * 8,
-  top: theme.spacing * 3,
-  right: theme.spacing * 3,
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
+  height: theme.spacing * 10,
+  top: theme.spacing * 4,
+  right: theme.spacing * 4,
+  display: 'inline-block',
   fontWeight: 700,
-  padding: theme.spacing * 2,
+  padding: `${theme.spacing * 2}px ${theme.spacing * 4}px`,
   border: active
     ? `1px solid ${theme.colors.primary}`
     : `1px solid ${theme.colors.border.primary}`,
   background: active ? theme.colors.primary : theme.colors.background.primary,
   color: getColor(active || false, disabled || false, theme),
-  borderRadius: theme.spacing * 4,
+  borderRadius: theme.spacing * 5,
+  fontSize: '0.9rem',
+  maxWidth: 150,
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+  whiteSpace: 'nowrap',
+  lineHeight: '22px'
+}));
+
+const StyledCardBottom = styled('div')(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: theme.spacing * 2,
+  width: '100%',
 }));
 
 const SingleOption = ({ singleOptionData, disable }: Props) => {
@@ -104,9 +117,20 @@ const SingleOption = ({ singleOptionData, disable }: Props) => {
     (state: ApplicationState) => state.order.boxGroupId,
   );
 
-  const selectOption = (e: ChangeEvent<HTMLInputElement>) => {
-    dispatch(setBoxGroup(singleOptionData.id, singleOptionData.name, singleOptionData.area ? singleOptionData.area.toString() : ''));
+  const selectOption = () => {
+    dispatch(
+      setBoxGroup(
+        singleOptionData.id,
+        singleOptionData.name,
+        singleOptionData.area ? singleOptionData.area.toString() : '',
+        singleOptionData.type,
+      ),
+    );
     dispatch(setMinRentPeriod(singleOptionData.minRentPeriod));
+    dispatch(
+      setMaxAdvanceBookingDays(singleOptionData.maxAdvanceBookingDays ?? 14),
+    );
+    dispatch(setMaxRentPeriod(singleOptionData.maxRentPeriod));
   };
 
   if (loading) return <Spinner />;
@@ -125,6 +149,10 @@ const SingleOption = ({ singleOptionData, disable }: Props) => {
             >
               {singleOptionData.name}
             </StyledOptionSize>
+            <LeftCounter
+              option={singleOptionData}
+              disabled={!singleOptionData.available || disable}
+            />
             <input
               name={singleOptionData.name}
               type="radio"
@@ -134,15 +162,18 @@ const SingleOption = ({ singleOptionData, disable }: Props) => {
               onChange={selectOption}
               disabled={!singleOptionData.available}
             />
+            <span />
             <OptionImage option={singleOptionData} />
-            <OptionData option={singleOptionData} disable={disable} />
+            <StyledCardBottom>
+              <OptionData option={singleOptionData} disable={disable} />
 
-            <PriceInfo
-              box={singleOptionData}
-              disabled={!singleOptionData.available || disable}
-              active={singleOptionData.id === boxGroupId}
-            />
-            <OptionNotification option={singleOptionData} />
+              <PriceInfo
+                box={singleOptionData}
+                disabled={!singleOptionData.available || disable}
+                active={singleOptionData.id === boxGroupId}
+              />
+              <OptionActions option={singleOptionData} onSelectOption={selectOption}/>
+            </StyledCardBottom>
           </Content>
         </Card>
       </label>

@@ -1,6 +1,6 @@
 @use "sass:math";
-@import '../../../config/variables';
-@import '../../../config/mixins';
+@use '../../../config/variables' as *;
+@use '../../../config/mixins' as *;
 
 .notification {
   

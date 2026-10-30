@@ -1,1 +1,1 @@
-export * from './Wallet';
+export * from 'src/icons/Wallet/Wallet';

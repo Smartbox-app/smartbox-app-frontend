@@ -1,16 +1,16 @@
 import React from 'react';
 import { Switch, Route } from 'react-router';
 
-import UserService from '../../../../services/user-service';
-
-import StepStock from './StepStock';
-import StepSize from './StepSize';
-import StepDuration from './StepDuration';
-import { StepPayment } from './StepPayment';
-import StepAgreement from './StepAgreement';
-import StepSummary from './StepSummary';
-import StepExtensionDuration from './StepExtensionDuration';
 import { useGetMyDetailsQuery } from 'src/queries';
+import UserService from 'src/services/user-service';
+
+import StepAgreement from './StepAgreement';
+import StepDuration from './StepDuration';
+import StepExtensionDuration from './StepExtensionDuration';
+import { StepPayment } from './StepPayment';
+import StepSize from './StepSize';
+import StepStock from './StepStock';
+import StepSummary from './StepSummary';
 
 export const Form = () => {
   const { data: user } = useGetMyDetailsQuery();

@@ -1,10 +1,12 @@
 import styled from 'styled-components';
+
+import { Badge } from 'src/components/ui';
 import {
   ArrowRightCircle,
   ArrowRightCircleHovered,
   Error,
-} from '../../../../../../../../icons';
-import { Badge } from 'src/components/ui';
+  InfoCircle
+} from 'src/icons';
 
 const StyledStorageHeader = styled('header')(({ theme }) => ({
   display: 'flex',
@@ -27,21 +29,28 @@ const StorageIcon = styled('div')<{ isWarning: boolean }>(
 export type StorageHeaderProps = {
   stockName: string;
   isWarning: boolean;
-  hovered: boolean;
+  isNotice: boolean;
+  isHovered: boolean;
 };
 
-const getIcon = (isWarning: boolean, isHovered: boolean) => {
+const getIcon = (isWarning: boolean, isNotice: boolean, isHovered: boolean) => {
   if (isWarning) return <Error />;
   if (isHovered) return <ArrowRightCircleHovered />;
+  if(isNotice) return <InfoCircle />;
   return <ArrowRightCircle />;
 };
 
-export const StorageHeader = ({ stockName, isWarning, isHovered }) => {
+export const StorageHeader = ({
+  stockName,
+  isWarning,
+  isNotice,
+  isHovered,
+}: StorageHeaderProps) => {
   return (
     <StyledStorageHeader>
       <Badge>{stockName}</Badge>
       <StorageIcon isWarning={isWarning}>
-        {getIcon(isWarning, isHovered)}
+        {getIcon(isWarning, isNotice, isHovered)}
       </StorageIcon>
     </StyledStorageHeader>
   );

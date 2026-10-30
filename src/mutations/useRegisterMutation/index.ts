@@ -1,1 +1,1 @@
-export * from './useRegisterMutation';
+export * from 'src/mutations/useRegisterMutation/useRegisterMutation';

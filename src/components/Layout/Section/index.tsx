@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { Section as UISection } from 'src/components/ui';
 
 interface Props {
@@ -8,7 +9,7 @@ interface Props {
   highlight?: boolean;
 }
 
-const Section = ({ children, full, half, highlight }: Props) => (
+const Section = ({ children }: Props) => (
   <UISection>{children}</UISection>
 );
 

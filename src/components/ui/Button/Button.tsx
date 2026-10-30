@@ -1,14 +1,16 @@
-import { Link } from 'react-router-dom';
-import { getColorForBackground } from '../../../utils/color';
-import styled, { css, DefaultTheme, keyframes } from 'styled-components';
-import { __ } from '../../../helpers/i18n';
+import { Browser } from '@capacitor/browser';
+import { Capacitor } from '@capacitor/core';
 import { darken } from 'polished';
 import React, {
-  MouseEventHandler,
   ReactNode,
   useEffect,
   useState,
 } from 'react';
+import { Link } from 'react-router-dom';
+import styled, { css, DefaultTheme } from 'styled-components';
+
+import { __ } from 'src/helpers/i18n';
+import { getColorForBackground } from 'src/utils/color';
 
 type ButtonTypes = 'primary' | 'secondary' | 'tertiary' | 'error' | 'success';
 type ButtonSizes = 'large' | 'medium' | 'small' | 'extrasmall';
@@ -22,6 +24,8 @@ export type ButtonProps = {
   fullWidth?: boolean;
   disabled?: boolean;
   text?: string;
+  rawText?: string;
+  children?: ReactNode;
   iconLeft?: ReactNode;
   iconRight?: ReactNode;
   className?: string;
@@ -55,7 +59,6 @@ const heightBySize = {
   small: 8,
   extrasmall: 6,
 };
-
 
 const getColorByVariant = (variant: ButtonTypes, theme: DefaultTheme) => {
   if (variant === 'primary') return theme.colors.primary;
@@ -141,13 +144,11 @@ const buttonStyles = css<ButtonStyleProps>(
   }),
 );
 
-const StyledButton = styled('button')<ButtonStyleProps>(
-  ({ theme }) => buttonStyles,
-);
+const StyledButton = styled('button')<ButtonStyleProps>(() => buttonStyles);
 
-const StyledA = styled('a')<ButtonStyleProps>(({ theme }) => buttonStyles);
+const StyledA = styled('a')<ButtonStyleProps>(() => buttonStyles);
 
-const StyledLink = styled(Link)<ButtonStyleProps>(({ theme }) => buttonStyles);
+const StyledLink = styled(Link)<ButtonStyleProps>(() => buttonStyles);
 
 export const Button = ({
   to,
@@ -161,6 +162,8 @@ export const Button = ({
   iconLeft,
   iconRight,
   text,
+  rawText,
+  children,
   className,
 }: ButtonProps) => {
   const [clicked, setClicked] = useState(false);
@@ -175,10 +178,12 @@ export const Button = ({
     }, 150);
   };
 
-  const handleLinkClick = (
-    e: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
-  ) => {
+  const handleLinkClick = () => {
     setClicked(true);
+  };
+
+  const handleCapacitorNavigation = (aHref: string) => {
+    Browser.open({ url: aHref });
   };
 
   useEffect(() => {
@@ -200,11 +205,31 @@ export const Button = ({
         disabled={disabled}
       >
         {iconLeft || <span />}
+        {children}
         {text ? __(text) : null}
         {iconRight || <span />}
       </StyledButton>
     );
   if (href) {
+    if (Capacitor.isNativePlatform()) {
+      return (
+        <StyledButton
+          className={className}
+          type={type}
+          variant={variant}
+          fullWidth={fullWidth}
+          onClick={() => handleCapacitorNavigation(href)}
+          clicked={clicked}
+          size={size}
+          disabled={disabled}
+        >
+          {iconLeft || <span />}
+          {children}
+          {text ? __(text) : null}
+          {iconRight || <span />}
+        </StyledButton>
+      );
+    }
     return (
       <StyledA
         className={className}
@@ -218,7 +243,9 @@ export const Button = ({
         clicked={clicked}
       >
         {iconLeft || <span />}
+        {children}
         {text ? __(text) : null}
+        {rawText ?rawText: null}
         {iconRight || <span />}
       </StyledA>
     );
@@ -236,7 +263,9 @@ export const Button = ({
         clicked={clicked}
       >
         {iconLeft || <span />}
+        {children}
         {text ? __(text) : null}
+        {rawText ?rawText: null}
         {iconRight || <span />}
       </StyledLink>
     );
@@ -254,7 +283,9 @@ export const Button = ({
       disabled={disabled}
     >
       {iconLeft || <span />}
+      {children}
       {text ? __(text) : null}
+      {rawText ?rawText: null}
       {iconRight || <span />}
     </StyledButton>
   );

@@ -1,109 +1,110 @@
-import React, { useEffect, useState } from 'react';
-import { Header, PageHeader, Section } from 'src/components/ui';
-import { SingleTemplate } from './SingleTemplate';
-import { TemplateEntity, TemplateType } from 'smartbox-types';
-import ApiService from '../../../../services/api-service';
-import { Spinner } from '../../../../components/Branded';
+import { useDispatch } from 'react-redux';
+import styled from 'styled-components';
+
+import { showModal } from 'src/actions/modal';
+import { successNotification } from 'src/actions/notifications';
+import { Spinner } from 'src/components/Branded';
+import { ConfirmModal } from 'src/components/Common';
+import { Header, Section, Typography } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
+import { useDeleteTemplateMutation } from 'src/mutations';
 
-const emailTemplates = [
-  TemplateType.INVITE_USER_EMAIL,
-  TemplateType.ACCOUNT_ACTIVATED_EMAIL,
-  TemplateType.USER_BLOCKED_EMAIL,
-  TemplateType.USER_UNBLOCKED_EMAIL,
-  TemplateType.RENTAL_EXTENDED_MAIL,
-  TemplateType.NEW_RENTAL_MAIL,
-  TemplateType.NO_PAYMENT_EMAIL,
-  TemplateType.BOX_CHANGED_EMAIL,
-  TemplateType.AUTO_PAYMENT_FAILED_EMAIL,
-  TemplateType.EXTEND_RENTAL_EMAIL,
-  TemplateType.RENTAL_ENDS_IN_3_DAYS_EMAIL,
-  TemplateType.RENTAL_ENDS_TODAY_EMAIL,
-  TemplateType.PERIOD_PAYMENT_EMAIL,
-  TemplateType.NEW_RENTAL_ADMIN_NOTIFICATION_MAIL,
-  TemplateType.RENTAL_EXTENDED_ADMIN_NOTIFICATION_MAIL,
-  TemplateType.RENTAL_PERIOD_PAID_ADMIN_NOTIFICATION_MAIL,
-  TemplateType.RENTAL_PERIOD_PAID_ADMIN_NOTIFICATION_MAIL,
-  TemplateType.NO_PERIOD_PAYMENT_EMAIL,
-  TemplateType.PERIOD_PAYMENT_ENDS_EMAIL,
-  TemplateType.BOX_GROUP_FREE_EMAIL
-];
+import { ChannelTemplates } from './ChannelTemplates';
+import { LanguageSummary, SectionSummary } from './SectionSummary';
+import { useTemplateSections } from './useTemplateSections';
 
-const smsTemplates = [
-  TemplateType.USER_BLOCKED_SMS,
-  TemplateType.USER_UNBLOCKED_SMS,
-  TemplateType.NEW_RENTAL_SMS,
-  TemplateType.RENTAL_EXTENDED_SMS,
-  TemplateType.NO_PAYMENT_SMS,
-  TemplateType.BOX_CHANGED_SMS,
-  TemplateType.AUTO_PAYMENT_FAILED_SMS,
-  TemplateType.EXTEND_RENTAL_SMS,
-  TemplateType.RENTAL_ENDS_IN_3_DAYS_SMS,
-  TemplateType.RENTAL_ENDS_TODAY_SMS,
-  TemplateType.PERIOD_PAYMENT_SMS,
-  TemplateType.RENTAL_PERIOD_PAID_SMS,
-  TemplateType.NO_PERIOD_PAYMENT_SMS,
-  TemplateType.PERIOD_PAYMENT_ENDS_SMS,
-  TemplateType.BOX_GROUP_FREE_SMS
-];
+const Container = styled('div')({
+  maxWidth: 1000,
+  display: 'flex',
+  flexDirection: 'column',
+  gap: 16,
+});
 
-export const List = () => {
-  const [allTemplates, setAllTemplates] = useState<TemplateEntity[]>([]);
-  const [isLoading, setLoading] = useState(true);
+const Languages = styled('div')(({ theme }) => ({
+  marginTop: theme.spacing * 2,
+  display: 'flex',
+  flexDirection: 'column',
+  gap: theme.spacing * 2,
+}));
 
-  const getAllTemplates = async () => {
-    await ApiService.callFetch(
-      'GET',
-      'template/all',
-      (data: TemplateEntity[]) => {
-        setAllTemplates(data);
-      },
-    );
-    setLoading(false);
+type ListProps = {
+  basePath: string;
+  tenantId?: string;
+};
+
+export const List = ({ basePath, tenantId }: ListProps) => {
+  const dispatch = useDispatch();
+  const { sections, isPending } = useTemplateSections(tenantId);
+  const { mutate: deleteTemplate } = useDeleteTemplateMutation();
+
+  const handleResetSuccess = () => {
+    dispatch(successNotification('application.templateReset'));
   };
 
-  const isSet = (templateToCheck: TemplateType) => {
-    const found = allTemplates.find(
-      (template) => template.type === templateToCheck,
-    );
-    if (!found) return false;
-    return !!found.content;
+  const handleDeleteSuccess = () => {
+    dispatch(successNotification('application.templateDeleted'));
   };
 
-  useEffect(() => {
-    getAllTemplates();
-  }, []);
+  const handleDelete = (id: string, reset = false) => {
+    deleteTemplate(
+      { id, tenantId },
+      { onSuccess: reset ? handleResetSuccess : handleDeleteSuccess },
+    );
+  };
+
+  const confirmDelete = (id: string, reset = false) => {
+    dispatch(
+      showModal(
+        <ConfirmModal
+          mainText={
+            reset
+              ? 'application.confirmTemplateReset'
+              : 'application.confirmTemplateDelete'
+          }
+          approveButtonText={
+            reset ? 'application.resetTemplate' : 'application.delete'
+          }
+          approveAction={() => handleDelete(id, reset)}
+        />,
+      ),
+    );
+  };
 
   return (
     <Section>
-      <Header variant="h2">{__('application.templatesList')}</Header>
-      {isLoading && <Spinner overlay />}
-      {!isLoading && (
-        <>
-          <ul>
-            {emailTemplates.map((template, index) => (
-              <SingleTemplate
-                index={index}
-                key={template}
-                type="email"
-                template={template}
-                isSet={isSet(template)}
-              />
-            ))}
-          </ul>
-          <ul>
-            {smsTemplates.map((template, index) => (
-              <SingleTemplate
-                index={index}
-                key={template}
-                type="sms"
-                template={template}
-                isSet={isSet(template)}
-              />
-            ))}
-          </ul>
-        </>
-      )}
+      <Container>
+        <Header variant="h2">{__('application.templatesList')}</Header>
+        <Typography>{__('application.clickToExpandTemplate')}</Typography>
+        {isPending && <Spinner overlay />}
+        {sections.map((section) => (
+          <Section variant="bordered" key={section.label}>
+            <details>
+              <SectionSummary section={section} />
+              <Languages>
+                {section.languages.map((language) => (
+                  <Section variant="bordered" key={language.lang}>
+                    <details data-template-lang={language.lang}>
+                      <LanguageSummary language={language} />
+                      <ChannelTemplates
+                        basePath={basePath}
+                        channel="email"
+                        groups={language.email}
+                        onDelete={confirmDelete}
+                      />
+                      <ChannelTemplates
+                        basePath={basePath}
+                        channel="sms"
+                        groups={language.sms}
+                        onDelete={confirmDelete}
+                      />
+                    </details>
+                  </Section>
+                ))}
+              </Languages>
+            </details>
+          </Section>
+        ))}
+      </Container>
     </Section>
   );
 };

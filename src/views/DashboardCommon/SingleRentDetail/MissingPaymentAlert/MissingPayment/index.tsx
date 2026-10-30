@@ -1,18 +1,16 @@
-import { connect, useDispatch } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { MyRentDetails } from 'smartbox-types';
-import { singleRent } from '../../../../../actions';
-import { ButtonsContainer } from '../../../../../components/Layout';
-import { ApplicationState } from '../../../../../reducers';
-import UserService from '../../../../../services/user-service';
-import { dateOnly } from '../../../../../utils/format-date';
-import { __ } from '../../../../../helpers/i18n';
-import { clearOrder, updateFormData } from '../../../../../actions/order';
-import { history } from '../../../../../App';
-import { useGetMyDetailsQuery } from 'src/queries';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import { Button, Typography } from 'src/components/ui';
+
+import { MyRentDetails } from 'smartbox-types';
+import { clearOrder, updateFormData } from 'src/actions/order';
+import { ButtonsContainer } from 'src/components/Layout';
+import { Button, Stack, Typography } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
+import { history } from 'src/history';
 import { Wallet } from 'src/icons';
+import { useGetMyDetailsQuery } from 'src/queries';
+import UserService from 'src/services/user-service';
+import { dateOnly } from 'src/utils/format-date';
 
 interface Props {
   rent: MyRentDetails;
@@ -66,7 +64,7 @@ const MissingPayment = ({ rent }: Props) => {
           className="fa fa-exclamation-circle notification-marker"
           aria-hidden="true"
         />
-        <div>
+        <Stack>
           <Typography>
             <strong>{__('application.debtOnRent')}</strong>
           </Typography>
@@ -74,7 +72,7 @@ const MissingPayment = ({ rent }: Props) => {
             {__('application.rentFinished')}{' '}
             <strong>{dateOnly(rent.finishAt)}</strong>
           </Typography>
-        </div>
+        </Stack>
       </Info>
       <ButtonsContainer>
         <Button
@@ -82,6 +80,7 @@ const MissingPayment = ({ rent }: Props) => {
           type="button"
           size="large"
           iconLeft={<Wallet />}
+          disabled={rent.pendingPayments}
           variant="error"
           onClick={() => handleDebtPayOff(rent.id)}
         />
@@ -90,16 +89,4 @@ const MissingPayment = ({ rent }: Props) => {
   );
 };
 
-const mapStateToProps = (state: ApplicationState) => ({
-  singleRent: state.rent.singleRent,
-});
-
-const mapDispatchToProps = (dispatch: any) =>
-  bindActionCreators(
-    {
-      ...singleRent,
-    },
-    dispatch,
-  );
-
-export default connect(mapStateToProps, mapDispatchToProps)(MissingPayment);
+export default MissingPayment;

@@ -1,44 +1,62 @@
 import React from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import { ButtonsContainer } from '../../Layout';
-import { Button } from '../../Branded';
-import { modal } from '../../../actions';
+import { useDispatch } from 'react-redux';
 
-import './ConfirmModal.scss';
-import {__} from "../../../helpers/i18n";
+import { hideModal } from 'src/actions/modal';
+import { Button, Spinner } from 'src/components/Branded';
+import { ButtonsContainer } from 'src/components/Layout';
+import { Modal } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
 
 interface Props {
   mainText: string;
+  secondaryText?: string;
   cancelButtonText?: string;
   approveButtonText: string;
-  hideModal: () => void;
   approveAction: () => void;
+  isLoading?: boolean;
 }
 
 const ConfirmModal = ({
   mainText,
+  secondaryText,
   cancelButtonText = 'application.cancel',
   approveButtonText,
   approveAction,
-  hideModal,
-}: Props) => (
-  <div className="confirm-modal-wrapper">
-    <p>{__(mainText)}</p>
-    <ButtonsContainer>
-      <Button click={() => hideModal()} text={cancelButtonText} success />
-      <Button
-        danger
-        click={() => {
-          approveAction();
-          hideModal();
-        }}
-        text={approveButtonText}
-      />
-    </ButtonsContainer>
-  </div>
-);
+  isLoading,
+}: Props) => {
+  const dispatch = useDispatch();
 
-const mapDispatchToProps = (dispatch: any) => bindActionCreators({ ...modal }, dispatch);
+  return (
+  <>
+    <Modal.Header title={__('application.confirmation')} />
+    <Modal.Content>
+      {isLoading ? <Spinner halfTransparent overlay /> : null}
+      <p>{__(mainText)}</p>
+      {secondaryText ? (
+        <p style={{ marginTop: '1rem', fontSize: '0.875rem', opacity: 0.85 }}>
+          {__(secondaryText)}
+        </p>
+      ) : null}
+    </Modal.Content>
+    <Modal.Actions>
+      <ButtonsContainer>
+        <Button
+          click={() => dispatch(hideModal())}
+          text={cancelButtonText}
+          danger
+        />
+        <Button
+          success
+          click={() => {
+            approveAction();
+            dispatch(hideModal());
+          }}
+          text={approveButtonText}
+        />
+      </ButtonsContainer>
+    </Modal.Actions>
+  </>
+  );
+};
 
-export default connect(null, mapDispatchToProps)(ConfirmModal);
+export default ConfirmModal;

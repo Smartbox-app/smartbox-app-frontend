@@ -1,38 +1,42 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+
 import { stocksList } from 'smartbox-tables';
-import { showModal } from '../../../../../actions/modal';
-import { successNotification } from '../../../../../actions/notifications';
-import ApiService from '../../../../../services/api-service';
-import { NamingType, StockAdminList, UserRole } from 'smartbox-types';
-import { ApiTable, ConfirmModal } from '../../../../../components/Common';
-import { Button } from '../../../../../components/Branded';
-import {
-  Section,
-  PageHeader,
-  ButtonsContainer,
-} from '../../../../../components/Layout';
-import { __ } from '../../../../../helpers/i18n';
-import { InteractiveTableSchema } from '../../../../../utils/table-schema-utils';
-import { refreshApiTableData } from '../../../../../actions/api-table';
-import { history } from '../../../../../App';
-import UserService from '../../../../../services/user-service';
-import { ApplicationState } from '../../../../../reducers';
-import { useGetMyDetailsQuery } from 'src/queries';
-import { HeaderWithActions } from 'src/components/ui';
+import { StockAdminList, UserRole } from 'smartbox-types';
+import { showModal } from 'src/actions/modal';
+import { Button } from 'src/components/Branded';
+import { ApiTable } from 'src/components/Common';
 import { DeleteStockModal } from 'src/components/Common/DeleteStockModal';
+import { DownloadReportModal } from 'src/components/Common/DownloadReportModal';
+import { Section, ButtonsContainer } from 'src/components/Layout';
+import { HeaderWithActions, Button as UIButton } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
+import { history } from 'src/history';
 import { useTenantNaming } from 'src/hooks/useTenantNaming';
-import { useTenant } from 'src/hooks/useTenant';
+import { useDeleteStockMutation } from 'src/mutations';
+import { useGetMyDetailsQuery } from 'src/queries';
+import UserService from 'src/services/user-service';
+import { InteractiveTableSchema } from 'src/utils/table-schema-utils';
 
 const List = () => {
   const dispatch = useDispatch();
+  const { mutate: deleteStock } = useDeleteStockMutation();
   const { getText } = useTenantNaming();
-  const { tenant } = useTenant();
   const scheme = new InteractiveTableSchema(stocksList);
   const { data: user } = useGetMyDetailsQuery();
 
   const hasAdminAccess = [UserRole.admin].includes(user!.role);
   const hasFullAccess = [UserRole.admin, UserRole.client].includes(user!.role);
+
+  scheme.removeFields('id');
+
+  const handleReportDownload = () => {
+    dispatch(showModal(<DownloadReportModal reportType="rent" />));
+  };
+
+  const handlePaymentsReportDownload = () => {
+    dispatch(showModal(<DownloadReportModal reportType="payment" />));
+  };
 
   scheme.addFieldAtTheEnd({
     name: __('application.actions'),
@@ -61,18 +65,22 @@ const List = () => {
     dispatch(
       showModal(
         <DeleteStockModal
-          mainText={`Zamierzasz usunąć ${tenant?.namingType === NamingType.Stock ? 'plac' : 'lokalizację'} ${data.name} (${data.address}), czy na pewno chcesz to zrobić? Tej operacji nie da się cofnąć. Potwierdź chęć wykonania tej operacji poprzez wpisanie nazwy ${tenant?.namingType === NamingType.Stock ? 'placu' : 'lokalizacji'} do poniższego pola.`}
+          mainText={getText('confirm_delete', {
+            name: data.name,
+            address: data.address,
+          })}
           approveButtonText="application.yes"
-          approveAction={(stockName) => deleteStock(data, stockName)}
+          approveAction={(stockName) => handleDeleteStock(data, stockName)}
         />,
       ),
     );
   };
 
-  const deleteStock = async (data: StockAdminList, stockName) => {
-    await ApiService.callFetch('DELETE', `stock/${data.id}/${stockName}`, () => {
-      dispatch(successNotification(getText('deleted')));
-      dispatch(refreshApiTableData());
+  const handleDeleteStock = (data: StockAdminList, stockName: string) => {
+    deleteStock({
+      stockId: data.id,
+      stockName,
+      successMessage: getText('deleted'),
     });
   };
 
@@ -87,6 +95,16 @@ const List = () => {
                 primary
                 to={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/add`}
               />
+              <UIButton
+                variant="secondary"
+                text={__('application.downloadReport')}
+                onClick={handleReportDownload}
+              />
+              <UIButton
+                variant="secondary"
+                text={__('application.downloadPaymentsReport')}
+                onClick={handlePaymentsReportDownload}
+              />
             </ButtonsContainer>
           ) : null
         }
@@ -94,7 +112,7 @@ const List = () => {
         {getText('list')}
       </HeaderWithActions>
 
-      <ApiTable scheme={scheme} apiEndpointSubUrl={`stock/admin-list`} />
+      <ApiTable scheme={scheme} apiEndpointSubUrl="stock/admin-list" />
     </Section>
   );
 };

@@ -1,20 +1,32 @@
+import { FieldAndEventFunction } from 'itf_formbuilder_react';
 import React, { MouseEvent } from 'react';
-import { Icon } from '..';
-import ApiService from '../../../services/api-service';
-import { Button } from '../../Branded/Button';
+
+import { Button } from 'src/components/Branded/Button';
+import { StyledFieldContainer } from 'src/components/Common/input-styled';
+import { ButtonsContainer } from 'src/components/Layout';
+import { __ } from 'src/helpers/i18n';
+import ApiService from 'src/services/api-service';
+
 import './FileInput.scss';
-import { __ } from '../../../helpers/i18n';
-import { ButtonsContainer } from '../../../components/Layout';
+
+interface FileFieldInput {
+  name?: string;
+  id?: string;
+  value?: unknown;
+  onChange?(value: unknown): void;
+  onFocus?: FieldAndEventFunction;
+  onBlur?: FieldAndEventFunction;
+}
 
 interface Props {
-  input: any;
-  error?: any;
-  meta?: any;
+  input: FileFieldInput;
+  error?: string;
+  meta?: { error?: string | null; touched?: boolean };
   touched?: boolean;
   placeholder?: string;
   label?: string;
-  value?: any;
-  options?: any[];
+  value?: unknown;
+  options?: { value?: string; name?: string }[];
   readonly?: boolean;
   nomargin?: boolean;
   max?: boolean;
@@ -26,7 +38,7 @@ interface Props {
 }
 
 interface State {
-  currentImg: any;
+  currentImg: string | ArrayBuffer | null;
   imgFileName: string;
   dragging: boolean;
   cantRender: boolean;
@@ -37,8 +49,10 @@ interface State {
 const errorClass = (error: boolean, touched: boolean) =>
   error && touched ? 'is-invalid' : '';
 
-const adaptFileEventToValue = (delegate: any) => (e: any) =>
-  delegate(e && e.target && e.target.files ? e.target.files[0] : e);
+const adaptFileEventToValue =
+  (delegate: FieldAndEventFunction) =>
+  (event: React.ChangeEvent<HTMLInputElement>) =>
+    (delegate as (value: unknown) => void)(event.target.files?.[0] ?? event);
 
 class FileInput extends React.Component<Props, State> {
   fileReader: FileReader;
@@ -54,21 +68,21 @@ class FileInput extends React.Component<Props, State> {
       loadedType: null,
     };
     this.fileReader = new FileReader();
-    this.fileReader.onload = (e: any) => {
+    this.fileReader.onload = (event: ProgressEvent<FileReader>) => {
       this.setState({
-        currentImg: e.target.result,
+        currentImg: event.target?.result ?? null,
         cantRender: false,
       });
     };
   }
 
   async componentDidMount() {
-    const { input, multiple, hasImage } = this.props;
+    const { input, hasImage } = this.props;
 
     if (input.value) {
-      this.fileReader.onload = (e: any) => {
+      this.fileReader.onload = (event: ProgressEvent<FileReader>) => {
         this.setState({
-          currentImg: e.target.result,
+          currentImg: event.target?.result ?? null,
           cantRender: false,
         });
       };
@@ -104,7 +118,9 @@ class FileInput extends React.Component<Props, State> {
 
       try {
         this.fileReader.readAsDataURL(body);
-      } catch (e) {}
+      } catch {
+        // FileReader throws if a read is already in progress.
+      }
     }
   };
 
@@ -115,28 +131,34 @@ class FileInput extends React.Component<Props, State> {
     return this.props.hasImage || this.props.input.value;
   };
 
-  private onDragEnter = (e: any) => {
-    e.preventDefault();
+  private onZoneKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (event.key !== 'Enter' && event.key !== ' ') return;
+    event.preventDefault();
+    event.currentTarget.querySelector<HTMLInputElement>('input[type="file"]')?.click();
+  };
+
+  private onDragEnter = (event: React.DragEvent) => {
+    event.preventDefault();
     this.setState({
       dragging: true,
     });
-    e.stopPropagation();
+    event.stopPropagation();
   };
 
-  private onDragLeave = (e: any) => {
-    e.preventDefault();
+  private onDragLeave = (event: React.DragEvent) => {
+    event.preventDefault();
     this.setState({
       dragging: false,
     });
-    e.stopPropagation();
+    event.stopPropagation();
   };
 
-  private onDrop = (e: any) => {
+  private onDrop = (event: React.DragEvent) => {
     const { multiple, input } = this.props;
-    e.preventDefault();
-    e.stopPropagation();
-    if (e.dataTransfer.files[0]) {
-      const eventFiles = e.dataTransfer.files;
+    event.preventDefault();
+    event.stopPropagation();
+    if (event.dataTransfer.files[0]) {
+      const eventFiles = event.dataTransfer.files;
       this.setState(
         (prev) => ({
           imgFileName: eventFiles[0].name,
@@ -147,28 +169,28 @@ class FileInput extends React.Component<Props, State> {
           ],
         }),
         () => {
-          if (multiple) input.onChange(this.state.loadedFiles);
+          if (multiple) input.onChange?.(this.state.loadedFiles);
         },
       );
     }
 
     if (multiple) {
-      this.fileReader.readAsDataURL(e.dataTransfer.files[0]);
-      this.props.input.onChange(e.dataTransfer.files[0]);
+      this.fileReader.readAsDataURL(event.dataTransfer.files[0]);
+      this.props.input.onChange?.(event.dataTransfer.files[0]);
     } else {
-      this.fileReader.readAsDataURL(e.dataTransfer.files);
-      this.props.input.onChange(e.dataTransfer.files);
+      this.fileReader.readAsDataURL(event.dataTransfer.files[0]);
+      this.props.input.onChange?.(event.dataTransfer.files);
     }
   };
 
-  private onChange = (e: any) => {
+  private onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { multiple, input } = this.props;
 
-    e.preventDefault();
-    e.stopPropagation();
+    event.preventDefault();
+    event.stopPropagation();
 
-    if (e.target.files[0] && e.target.files) {
-      const eventFiles = e.target.files;
+    if (event.target.files?.[0]) {
+      const eventFiles = event.target.files;
       this.setState(
         (prev) => ({
           imgFileName: eventFiles[0].name,
@@ -179,20 +201,20 @@ class FileInput extends React.Component<Props, State> {
           ],
         }),
         () => {
-          if (multiple) input.onChange(this.state.loadedFiles);
+          if (multiple) input.onChange?.(this.state.loadedFiles);
         },
       );
     }
 
-    if (!multiple) input.onChange(e.target.files[0]);
+    if (!multiple) input.onChange?.(event.target.files?.[0]);
   };
 
-  private deleteSelectedFile = (e: any, index: number) => {
+  private deleteSelectedFile = (event: React.MouseEvent, index: number) => {
     const { input } = this.props;
-    e.preventDefault();
+    event.preventDefault();
     this.setState(
       (prev) => ({
-        loadedFiles: prev.loadedFiles.filter((f, i) => i !== index),
+        loadedFiles: prev.loadedFiles.filter((_file, i) => i !== index),
       }),
       () => {
         if (this.state.loadedFiles.length === 0) {
@@ -202,14 +224,14 @@ class FileInput extends React.Component<Props, State> {
             cantRender: false,
           });
         }
-        input.onChange(this.state.loadedFiles);
+        input.onChange?.(this.state.loadedFiles);
       },
     );
   };
 
-  private deleteFile = (e: any) => {
+  private deleteFile = (event: React.MouseEvent) => {
     const { input } = this.props;
-    e.preventDefault();
+    event.preventDefault();
     this.setState(
       {
         currentImg: null,
@@ -217,33 +239,35 @@ class FileInput extends React.Component<Props, State> {
         cantRender: false,
       },
       () => {
-        input.onChange('');
+        input.onChange?.('');
       },
     );
   };
 
   render() {
-    const { accept, multiple, hasImage, input } = this.props;
-    const { cantRender, loadedFiles, currentImg, loadedType } = this.state;
-    const inputCopy = { ...this.props.input };
-
-    delete inputCopy.value;
+    const { accept, multiple, input } = this.props;
+    const { cantRender, loadedFiles, loadedType } = this.state;
+    const { value: _value, ...inputCopy } = this.props.input;
 
     const imgPreview = (
       <div className="img-preview-wrapper">
-        {loadedType === 'image' && (
-          <img className="img-preview" src={this.state.currentImg} />
+        {loadedType === 'image' && typeof this.state.currentImg === 'string' && (
+          <img className="img-preview" src={this.state.currentImg} alt="" />
         )}
         {loadedFiles.length === 0 && (
           <p className="file-name">{this.state.imgFileName}</p>
         )}
         {!cantRender &&
-          input.value &&
-          loadedType !== 'image' &&
-          loadedFiles.length === 0 && (
-            <img className="img-preview" src={this.props.input.value} />
-          )}
-        {cantRender && typeof input.value !== 'object' && input.value && (
+        Boolean(input.value) &&
+        loadedType !== 'image' &&
+        loadedFiles.length === 0 ? (
+            <img
+              className="img-preview"
+              src={typeof this.props.input.value === 'string' ? this.props.input.value : undefined}
+              alt=""
+            />
+          ) : null}
+        {cantRender && typeof input.value === 'string' && input.value && (
           <p>{input.value}</p>
         )}
         {/* {((cantRender && !multiple) ||
@@ -265,20 +289,23 @@ class FileInput extends React.Component<Props, State> {
       </div>
     );
     return (
-      <div className="input-container">
+      <StyledFieldContainer $noMargin={this.props.nomargin}>
         <label>
-          <p className="form-field-title">{__(this.props.label)}</p>
+          <p className="form-field-title">{__(this.props.label ?? '')}</p>
           <div
             className={`file-container ${this.state.dragging ? 'dragging' : ''} ${
               this.props.max ? 'input-max' : ''
-            } ${this.props.nomargin ? 'nomargin' : ''} ${errorClass(
-              this.props.meta.error,
-              this.props.meta.touched,
+            } ${this.props.nomargin ? 'nomargin' : ''            } ${errorClass(
+              Boolean(this.props.meta?.error),
+              Boolean(this.props.meta?.touched),
             )}`}
           >
             <span className="input-name">{this.props.placeholder} </span>
             <div
               className={`file-wrapper ${this.hasImage() ? 'has-image' : ''}`}
+              role="button"
+              tabIndex={0}
+              onKeyDown={this.onZoneKeyDown}
               onDrop={this.onDrop}
               onDragEnter={this.onDragEnter}
               onDragOver={this.onDragEnter}
@@ -297,16 +324,18 @@ class FileInput extends React.Component<Props, State> {
                 disabled={multiple && loadedFiles.length >= 10}
                 // {...(this.props.isNotImage !== true ? { accept: accept || 'image/*' } : { accept: accept || '*' })}
                 accept={accept}
-                className={`input input-file ${this.props.max ? 'input-max' : ''} ${
-                  this.props.nomargin ? 'nomargin' : ''
-                }`}
+                className="input-file"
                 id={this.props.input.name}
                 readOnly={this.props.readonly}
                 placeholder={this.props.placeholder}
                 type="file"
-                {...inputCopy}
+                {...(inputCopy as unknown as React.InputHTMLAttributes<HTMLInputElement>)}
                 onChange={this.onChange}
-                onBlur={adaptFileEventToValue(inputCopy.onBlur)}
+                onBlur={
+                  inputCopy.onBlur
+                    ? adaptFileEventToValue(inputCopy.onBlur)
+                    : undefined
+                }
                 onDrop={this.onDrop}
                 onDragEnter={this.onDragEnter}
                 onDragOver={this.onDragEnter}
@@ -315,7 +344,7 @@ class FileInput extends React.Component<Props, State> {
             </div>
           </div>
         </label>
-        {!multiple && loadedFiles.length === 0 && input.value && (
+        {!multiple && loadedFiles.length === 0 && Boolean(input.value) ? (
           <ButtonsContainer>
             <Button
               text="application.delete"
@@ -324,13 +353,24 @@ class FileInput extends React.Component<Props, State> {
               click={this.deleteFile}
             />
           </ButtonsContainer>
-        )}
+        ) : null}
 
         <ul>
           {loadedFiles.map((file, index) => (
-            <li className="single-selected-file">
+            <li
+              className="single-selected-file"
+              key={
+                typeof file === 'string'
+                  ? file
+                  : `${file.name}-${file.lastModified}-${file.size}`
+              }
+            >
               {typeof file === 'string' && (
-                <img className="single-selected-file-preview" src={file} />
+                <img
+                  className="single-selected-file-preview"
+                  src={file}
+                  alt=""
+                />
               )}
               <span>{file.name}</span>
 
@@ -346,10 +386,10 @@ class FileInput extends React.Component<Props, State> {
             </li>
           ))}
         </ul>
-        {this.props.meta.error && this.props.meta.touched && (
+        {this.props.meta?.error && this.props.meta.touched && (
           <small className="text-danger">{this.props.meta.error}</small>
         )}
-      </div>
+      </StyledFieldContainer>
     );
   }
 }

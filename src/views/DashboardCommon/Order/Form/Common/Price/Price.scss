@@ -1,4 +1,4 @@
-@import '../../../../../../config/variables.scss';
+@use '../../../../../../config/variables.scss' as *;
 
 .price-wrapper {
   margin: $main-spacing*3 auto;

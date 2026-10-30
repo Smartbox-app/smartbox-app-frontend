@@ -1,37 +1,66 @@
 import React from 'react';
-import { AddonRes } from 'smartbox-types';
-import { OrderAddon } from '../../../../../../../reducers/order-reducer';
-import { formatPrice } from '../../../../../../../utils/format-price';
 import styled from 'styled-components';
-import { __ } from '../../../../../../../helpers/i18n';
+
+import { AddonRes, PriceDisplayForClients } from 'smartbox-types';
+import { Header } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
+import { OrderAddon } from 'src/reducers/order-reducer';
+import { formatPrice } from 'src/utils/format-price';
 
 interface Props {
+  addonName: string;
   addons?: AddonRes[];
   orderAddons?: { [addonId: string]: OrderAddon };
   addonId: string;
 }
 
-const StyledSelectedVariant = styled('div')`
-  display: flex;
-  justify-content: space-between;
-  gap: 5px;
+const StyledVariantPrice = styled('div')`
+  font-size: 14px;
+  font-weight: 300;
 `;
 
-export const SelectedVariant = ({ addons, orderAddons, addonId }: Props) => {
+export const SelectedVariant = ({
+  addonName,
+  addons,
+  orderAddons,
+  addonId,
+}: Props) => {
+
+  const formatVariantPrice = (addon: OrderAddon, selectedAddon: AddonRes) => {
+    const addonPricing = (addon.price || [])[0];
+    switch (selectedAddon.display) {
+      case PriceDisplayForClients.gross:
+        return <strong>{formatPrice(addonPricing.grossPrice)}</strong>;
+      case PriceDisplayForClients.net:
+        return <strong>{formatPrice(addonPricing.netPrice)}</strong>;
+      case PriceDisplayForClients.both:
+        return (
+          <>
+            <strong>
+              {formatPrice(addonPricing.grossPrice)} {__('application.gross')}
+            </strong>
+            /{formatPrice(addonPricing.netPrice)} {__('application.net')}
+          </>
+        );
+    }
+  };
+
   if (!addons || !orderAddons)
     return (
-      <StyledSelectedVariant>
+      <>
+        <Header variant="h3">{addonName}</Header>
         <strong>{__('application.variantNotSelected')}</strong>
-      </StyledSelectedVariant>
+      </>
     );
 
   const selectedAddon = addons.find((addon) => addon.id === addonId);
 
   if (!selectedAddon)
     return (
-      <StyledSelectedVariant>
+      <>
+        <Header variant="h3">{addonName}</Header>
         <strong>{__('application.variantNotSelected')}</strong>
-      </StyledSelectedVariant>
+      </>
     );
 
   const selectedVariant = selectedAddon.pricing.find(
@@ -40,22 +69,28 @@ export const SelectedVariant = ({ addons, orderAddons, addonId }: Props) => {
 
   if (!selectedVariant)
     return (
-      <StyledSelectedVariant>
+      <>
+        <Header variant="h3">{addonName}</Header>
         <strong>{__('application.variantNotSelected')}</strong>
-      </StyledSelectedVariant>
+      </>
     );
 
   return (
-    <StyledSelectedVariant>
+    <>
       {selectedVariant ? (
         <>
-          <strong>{selectedVariant.name}</strong>
-          <span>{` - `}</span>
-          <strong>{formatPrice(orderAddons[addonId].price?.value || 0)}</strong>
+          <div>
+            <Header variant="h3">{addonName}</Header>
+            <strong>{selectedVariant.name}</strong>
+          </div>
+
+          <StyledVariantPrice>
+            {formatVariantPrice(orderAddons[addonId], selectedAddon)}
+          </StyledVariantPrice>
         </>
       ) : (
         <strong>{__('application.variantNotSelected')}</strong>
       )}
-    </StyledSelectedVariant>
+    </>
   );
 };

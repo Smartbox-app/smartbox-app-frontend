@@ -1,1 +1,1 @@
-export * from './ArrowLeft';
+export * from 'src/icons/ArrowLeft/ArrowLeft';

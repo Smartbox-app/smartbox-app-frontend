@@ -1,83 +1,16 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useLocation } from "react-router";
-import { NamingType, TenantForUsers } from "smartbox-types";
-import { setTenant as setTenantAction } from '../actions/tenant'
-import ApiService from "../services/api-service";
-import { ApplicationState } from "src/reducers";
-import { LocationSelectType } from "src/smartbox-types/location";
+import { TenantForClients, TenantForUsers } from 'smartbox-types';
+import { useGetTenantQuery } from 'src/queries/useGetTenantQuery';
 
 interface UseTenant {
-    tenant: TenantForUsers | null;
+  tenant: TenantForUsers | TenantForClients | null;
 }
 
 const useTenant = (): UseTenant => {
-    const dispatch = useDispatch();
-    const tenantData = useSelector((state: ApplicationState) => state.tenant);
-    const [tenant, setTenant] = useState<TenantForUsers | null>(tenantData);
-    const location = useLocation();
-    const queryParameters = new URLSearchParams(location.search);
+  const { data: tenant } = useGetTenantQuery();
 
-    useEffect(() => {
-        if (!tenantData) fetchTenantData();
-    }, [])
+  return {
+    tenant: tenant ?? null,
+  };
+};
 
-    useEffect(() => {
-        if (tenantData) setTenant(tenantData);
-    }, [tenantData])
-
-    const fetchTenantData = async () => {
-        const hostname = window.location.hostname.split('.');
-        const clientId = hostname.length === 3 ? hostname[0] : queryParameters.get('clientId');
-
-        if (!clientId) {
-            setDefaults();
-            return;
-        }
-
-        await ApiService.callFetch('GET', `tenant/${clientId}`, (tenantRes: TenantForUsers) => {
-            setTenant(tenantRes);
-            dispatch(setTenantAction(tenantRes));
-        })
-    }
-
-    const setDefaults = () => {
-        setTenant({
-            id: '',
-            identifier: '',
-            colorPrimary: '#0674bd',
-            colorSecondary: '#ffca3c',
-            logo: "/assets/images/Smartbox-logo-color.png",
-            background: "/assets/images/bg.jpg",
-            slides: [],
-            name: 'SmartBox',
-            contactEmail: '',
-            contactPhone: '',
-            fontBold: '',
-            fontLight: '',
-            fontNormal: '',
-            additionalMailInfo: '',
-            tax: '',
-            smsName: '',
-            invoiceServiceApiKey: '',
-            invoiceServiceDomain: '',
-            privacy: '',
-            agreement: '',
-            rules: '',
-            storeId: '',
-            sharedSecret: '',
-            allowAddonsToRent: false,
-            icon: '',
-            useProd: false,
-            birthDateNecessary: false,
-            locationSelectType: LocationSelectType.Tiles,
-            namingType: NamingType.Stock
-        })
-    }
-
-    return {
-        tenant
-    }
-}
-
-export { useTenant }
+export { useTenant };

@@ -1,92 +1,78 @@
-import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import React from 'react';
+
 import { UserListRes, UserRes, UserRole } from 'smartbox-types';
-import { user } from '../../../../../actions';
-import {
-  Section,
-  SectionHeader,
-  SimpleHeader,
-} from '../../../../../components/Layout';
+import { Spinner } from 'src/components/Branded';
+import { Row } from 'src/components/Common';
+import { Modal } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
+import { useUserDetailsQuery, useUserNoteQuery } from 'src/queries';
+
+import UserRentList from '../../../UserRentList';
 
 import './UserDetail.scss';
-import { ApplicationState } from '../../../../../reducers';
-import DataGroup from './DataGroup';
-import UserRentList from 'src/views/DashboardCommon/UserRentList';
-import { Row } from 'src/components/Common';
-import { Spinner } from 'src/components/Branded';
 
 interface Props {
   userId: string;
   userData: UserListRes;
-  fetchSingleUser: (userId: string) => void;
-  singleUser: UserRes | any;
 }
 
-const UserDetail = ({
-  userId,
-  userData,
-  fetchSingleUser,
-  singleUser,
-}: Props) => {
-  useEffect(() => {
-    fetchSingleUser(userId);
-  }, []);
+const UserDetail = ({ userId, userData }: Props) => {
+  const { data: singleUser, isPending: isUserPending } =
+    useUserDetailsQuery(userId);
+  const { data: noteData, isPending: isNotePending } = useUserNoteQuery(userId);
 
-  if (!userData) return <Spinner />;
-  console.log('USER DATA', singleUser);
+  if (!userData || isUserPending || !singleUser) return <Spinner />;
+
+  const userDetails = singleUser as UserRes;
+
   return (
     <>
-      <SectionHeader title="application.userData" />
-      <Row label="application.firstName" content={singleUser.firstName} />
-      <Row label="application.lastName" content={singleUser.lastName} />
-      <Row label="application.userRole" content={singleUser.role} />
+      <Modal.Header title={__('application.userDetails')} />
+      <Modal.Content>
+        <Row label="application.firstName" content={userDetails.firstName} />
+        <Row label="application.lastName" content={userDetails.lastName} />
+        <Row label="application.userRole" content={userDetails.role} />
 
-      <SectionHeader title="application.contactData" />
-      <Row label="application.mail" content={singleUser.email} />
-      <Row label="application.phone" content={singleUser.phone} />
+        <Row label="application.mail" content={userDetails.email} />
+        <Row label="application.phone" content={userDetails.phone} />
 
-      <Row label="application.city" content={singleUser.city} />
-      <Row label="application.street" content={singleUser.street} />
-      <Row label="application.postCode" content={singleUser.postCode} />
+        <Row label="application.city" content={userDetails.city} />
+        <Row label="application.street" content={userDetails.street} />
+        <Row label="application.postCode" content={userDetails.postCode} />
 
-      {singleUser.companyData && singleUser.role === UserRole.user && (
-        <>
-          <SectionHeader title="application.contactCompanyData" />
+        {userDetails.companyData && userDetails.role === UserRole.user && (
+          <>
+            <Row
+              label="application.companyName"
+              content={userDetails.companyData.companyName}
+            />
+            <Row label="application.nip" content={userDetails.companyData.nip} />
+            <Row
+              label="application.city"
+              content={userDetails.companyData.companyCity}
+            />
+            <Row
+              label="application.street"
+              content={userDetails.companyData.companyStreet}
+            />
+            <Row
+              label="application.postCode"
+              content={userDetails.companyData.companyPostCode}
+            />
+          </>
+        )}
+
+        {isNotePending ? null : (
           <Row
-            label="application.companyName"
-            content={singleUser.companyData.companyName}
+            label="application.userNote"
+            content={noteData?.note || __('application.lack')}
           />
-          <Row label="application.nip" content={singleUser.companyData.nip} />
-          <Row
-            label="application.city"
-            content={singleUser.companyData.companyCity}
-          />
-          <Row
-            label="application.street"
-            content={singleUser.companyData.companyStreet}
-          />
-          <Row
-            label="application.postCode"
-            content={singleUser.companyData.companyPostCode}
-          />
-        </>
-      )}
-      <UserRentList rentList={singleUser?.activeRents || []} />
+        )}
+
+        <UserRentList userId={userId} />
+      </Modal.Content>
     </>
   );
 };
 
-const mapStateToProps = (state: ApplicationState) => ({
-  singleUser: state.user.singleUser,
-});
-
-const mapDispatchToProps = (dispatch: any) =>
-  bindActionCreators(
-    {
-      ...user,
-    },
-    dispatch,
-  );
-
-export default connect(mapStateToProps, mapDispatchToProps)(UserDetail);
+export default UserDetail;

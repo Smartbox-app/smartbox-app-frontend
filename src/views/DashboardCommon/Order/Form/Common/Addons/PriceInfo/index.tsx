@@ -1,12 +1,19 @@
-import React from 'react';
-import { AddonPricingType, SingleAddonVariant } from 'smartbox-types';
+import React, { useMemo } from 'react';
 import styled from 'styled-components';
-import { __ } from '../../../../../../../helpers/i18n';
-import { formatPrice } from '../../../../../../../utils/format-price';
+
+import {
+  AddonVariantPriceType,
+  SingleAddonVariantForUserWithCorrectedPrice,
+  PriceDisplayForClients,
+} from 'smartbox-types';
+import { __ } from 'src/helpers/i18n';
+import { useI18n } from 'src/i18n';
+import { formatPeriodQuantity } from 'src/utils/format-period-quantity';
+import { formatPrice } from 'src/utils/format-price';
 
 interface Props {
-  isGross: boolean;
-  variant: SingleAddonVariant;
+  display: PriceDisplayForClients;
+  variant: SingleAddonVariantForUserWithCorrectedPrice;
 }
 
 const StyledPriceInfo = styled('div')(({ theme }) => ({
@@ -21,59 +28,73 @@ const StyledPriceInfo = styled('div')(({ theme }) => ({
   },
 }));
 
-const formatQuantity = (type: AddonPricingType, quantity: number) => {
-  switch (type) {
-    case AddonPricingType.Day: {
-      if (quantity > 1) return 'dni';
-      return 'dzień';
-    }
-    case AddonPricingType.Week: {
-      if (quantity >= 5) return 'tygodni';
-      if (quantity > 1) return 'tygodnie';
-      return 'tydzień';
-    }
+const PriceInfo = ({ variant, display }: Props) => {
+  const {
+    priceType,
+    netPrice: fixedNetPrice,
+    grossPrice: fixedGrossPrice,
+    pricing,
+  } = variant;
+  const { t } = useI18n();
+  const priceInfo = useMemo(() => {
+    const netPrice =
+      priceType === AddonVariantPriceType.Fixed
+        ? fixedNetPrice
+        : pricing[0].netPrice;
+    const grossPrice =
+      priceType === AddonVariantPriceType.Fixed
+        ? fixedGrossPrice
+        : pricing[0].grossPrice;
 
-    case AddonPricingType.Month: {
-      if (quantity >= 5) return 'miesięcy';
-      if (quantity > 1) return 'miesiące';
-      return 'miesiąc';
+    switch (display) {
+      case PriceDisplayForClients.gross:
+        return (
+          <>
+            <strong className="price-value">
+              {formatPrice(grossPrice || 0)}
+            </strong>
+            <span className="price-type">{t('application.gross')}</span>
+          </>
+        );
+      case PriceDisplayForClients.net:
+        return (
+          <>
+            <strong className="price-value">
+              {formatPrice(netPrice || 0)}
+            </strong>
+            <span className="price-type">{t('application.net')}</span>
+          </>
+        );
+      case PriceDisplayForClients.both:
+        return (
+          <>
+            <strong className="price-value">
+              {formatPrice(grossPrice || 0)}
+            </strong>
+            <span className="price-type">{t('application.gross')}</span>/
+            <span className="price-value">{formatPrice(netPrice || 0)}</span>
+            <span className="price-type">{t('application.net')}</span>
+          </>
+        );
     }
+  }, [variant, display]);
 
-    case AddonPricingType.Quarter: {
-      if (quantity >= 5) return 'kwartałów';
-      if (quantity > 1) return 'kwartały';
-      return 'kwartał';
-    }
-
-    case AddonPricingType.HalfYear: {
-      return 'pół roku';
-    }
-
-    case AddonPricingType.Year: {
-      if (quantity >= 5) return 'lat';
-      if (quantity > 1) return 'lata';
-      return 'rok';
-    }
+  if (priceType === AddonVariantPriceType.Fixed) {
+    return <StyledPriceInfo>{priceInfo}</StyledPriceInfo>;
   }
-};
 
-const PriceInfo = ({ variant, isGross }: Props) => {
-  const firstPricing = variant.pricing[0];
+  const firstPricing = pricing[0];
 
-  if (!firstPricing.price || !firstPricing.quantity) return null;
+  if (!firstPricing.price || !firstPricing.quantity || !firstPricing.type) {
+    return null;
+  }
 
   return (
     <StyledPriceInfo>
-      <strong className="price-value">
-        {formatPrice(firstPricing.price || 0)}
-      </strong>
-      <span className="price-type">
-        {isGross ? __('application.gross') : __('application.net')}
-      </span>
-      /
+      {priceInfo}/
       <span>
         {firstPricing.quantity}{' '}
-        {formatQuantity(firstPricing.type, firstPricing.quantity || 0)}
+        {formatPeriodQuantity(firstPricing.type, firstPricing.quantity || 0)}
       </span>
     </StyledPriceInfo>
   );

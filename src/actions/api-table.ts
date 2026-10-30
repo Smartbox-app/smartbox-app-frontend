@@ -1,7 +1,8 @@
-import ApiService from '../services/api-service';
+import { DEFAULT_API_TABLE_INSTANCE_ID } from 'src/constants/api-table-instances';
+import { queryClient } from 'src/query-client';
 
-export const fetchApiTableData = (url: string) => async (dispatch: any) => {
-  await ApiService.get(dispatch, 'FETCH_API_TABLE_DATA_SUCCESS', 'FETCH_API_TABLE_DATA_FAILED', null, null, url);
-};
-
-export const refreshApiTableData = () => ({ type: 'REFRESH_API_TABLE' });
+export const refreshApiTableData =
+  (instanceId = DEFAULT_API_TABLE_INSTANCE_ID) =>
+  () => {
+    void queryClient.invalidateQueries({ queryKey: ['api-table', instanceId] });
+  };

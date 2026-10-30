@@ -1,6 +1,5 @@
-import { PageHeader } from '../../../../components/Layout';
-
-import UserData from '../../../../components/Common/UserData';
+import UserData from 'src/components/Common/UserData';
+import { PageHeader } from 'src/components/Layout';
 
 export const Detail = () => {
   return (

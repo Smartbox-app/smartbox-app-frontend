@@ -1,23 +1,29 @@
-import React from 'react';
-import { bindActionCreators } from 'redux';
-import { ItfApiForm } from 'itf_formbuilder_react';
-import ReactCreatableSelect from 'react-select/creatable';
-import { DiscountReq } from 'smartbox-types';
-import { connect } from 'react-redux';
 import flatpickr from 'flatpickr';
-import { FormContainer, ButtonsContainer, FieldsColumn, PageHeader, Section } from '../../../../components/Layout';
-import { Button, Spinner } from '../../../../components/Branded';
-import ApiService from '../../../../services/api-service';
-import { formOnTranslateString } from '../../../../utils/trans-form';
-import { notifications } from '../../../../actions';
-import { ReactSelectOverride } from '../../../../components/Common/ReactSelectOverride';
-import { __ } from '../../../../helpers/i18n';
+import { ItfApiForm } from 'itf_formbuilder_react';
+import React from 'react';
+import { useDispatch } from 'react-redux';
 
-interface Props {
-  successNotification: (text: string) => void;
-}
+import { UpdateSettingsReq } from 'smartbox-types';
+import { successNotification } from 'src/actions/notifications';
+import { Button, Spinner } from 'src/components/Branded';
+import {
+  ReactSelectOverride,
+  ReactCreatableSelectOverride as ReactCreatableSelect,
+} from 'src/components/Common/ReactSelectOverride';
+import {
+  FormContainer,
+  ButtonsContainer,
+  FieldsColumn,
+  PageHeader,
+  Section,
+} from 'src/components/Layout';
+import { __ } from 'src/helpers/i18n';
+import ApiService from 'src/services/api-service';
+import { mapFields } from 'src/utils/fields-mapper';
+import { formOnTranslateString } from 'src/utils/trans-form';
 
-const SMS = ({ successNotification }: Props) => {
+const SMS = () => {
+  const dispatch = useDispatch();
   const submitButton = (
     <ButtonsContainer>
       <Button text="application.save" type="submit" primary />
@@ -27,40 +33,40 @@ const SMS = ({ successNotification }: Props) => {
   const fetchUrl = 'settings/form';
   const sendUrl = 'settings';
 
-  const customSendFetcher = (formId: string, values: DiscountReq) => ApiService.sendForm(sendUrl, values, 'PATCH');
+  const customSendFetcher = (_formId: string, values: UpdateSettingsReq) =>
+    ApiService.sendForm(sendUrl, values, 'PATCH');
 
   return (
- <>
+    <>
       <PageHeader title="application.settings" />
-      <p>{__('settings.description')}</p>
-      <FormContainer highlight>
-        <FieldsColumn>
-          <ItfApiForm
-            formId="settingsForm"
-            schemaMayBeDynamic={false}
-            schemaCacheEnabled={false}
-            loadingInfo={<Spinner transparent />}
-            schemaFetcher={() => ApiService.loadForm(fetchUrl)}
-            sendFetcher={customSendFetcher}
-            submitButton={submitButton}
-            onSavedSuccessfully={() => {
-              successNotification('settings.saved');
-            }}
-            onTranslateString={formOnTranslateString}
-            thirdPartyComponents={{ ReactSelect: ReactSelectOverride, ReactCreatableSelect, flatpickr }}
-          />
-        </FieldsColumn>
-      </FormContainer>
+      <Section>
+        <p>{__('settings.description')}</p>
+        <FormContainer highlight>
+          <FieldsColumn>
+            <ItfApiForm
+              formId="settingsForm"
+              schemaMayBeDynamic={false}
+              schemaCacheEnabled={false}
+              loadingInfo={<Spinner transparent />}
+              schemaFetcher={() => ApiService.loadForm(fetchUrl)}
+              sendFetcher={customSendFetcher}
+              submitButton={submitButton}
+              onSavedSuccessfully={() => {
+                dispatch(successNotification('settings.saved'));
+              }}
+              onRenderFullField={mapFields}
+              onTranslateString={formOnTranslateString}
+              thirdPartyComponents={{
+                ReactSelect: ReactSelectOverride,
+                ReactCreatableSelect,
+                flatpickr,
+              }}
+            />
+          </FieldsColumn>
+        </FormContainer>
+      </Section>
     </>
   );
 };
 
-const mapDispatchToProps = (dispatch: any) =>
-  bindActionCreators(
-    {
-      ...notifications,
-    },
-    dispatch,
-  );
-
-export default connect(null, mapDispatchToProps)(SMS);
+export default SMS;

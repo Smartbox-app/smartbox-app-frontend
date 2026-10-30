@@ -1,84 +1,72 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { invitationList, TableSchema } from 'smartbox-tables';
-import {
-  PageHeader,
-  Section,
-  ButtonsContainer,
-} from '../../../components/Layout';
-import { ApiTable, ConfirmModal } from '../../../components/Common';
-import { Button } from '../../../components/Branded';
-import { InteractiveTableSchema } from '../../../utils/table-schema-utils';
-import { __ } from '../../../helpers/i18n';
-import { invitations, modal } from '../../../actions';
+import { useDispatch } from 'react-redux';
+
+import { invitationList } from 'smartbox-tables';
+import { UserInvitationListItem } from 'smartbox-types';
+import { showModal } from 'src/actions/modal';
+import { Button } from 'src/components/Branded';
+import { ApiTable, ConfirmModal } from 'src/components/Common';
+import { Section, ButtonsContainer } from 'src/components/Layout';
 import { HeaderWithActions } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
+import {
+  useDeleteInvitationMutation,
+  useResendInvitationMutation,
+} from 'src/mutations';
+import { useGetMyDetailsQuery } from 'src/queries';
+import UserService from 'src/services/user-service';
+import { InteractiveTableSchema } from 'src/utils/table-schema-utils';
 
-interface Props {
-  deleteSentInvitations: (invitationId: string) => void;
-  resendInvitations: (invitationId: string) => void;
-  showModal: (content: React.ReactNode) => void;
-}
+export const InvitesSent = () => {
+  const dispatch = useDispatch();
+  const { data: user } = useGetMyDetailsQuery();
+  const { mutate: resendInvitation } = useResendInvitationMutation();
+  const { mutate: deleteInvitation } = useDeleteInvitationMutation();
 
-class InvitesSent extends React.Component<Props> {
-  private scheme: TableSchema;
-
-  constructor(props: Props) {
-    super(props);
-    this.scheme = new InteractiveTableSchema(invitationList).addFieldAtTheEnd({
-      name: __('application.actions'),
-      field: 'actions',
-      mobile: true,
-      buttons: [
-        {
-          name: 'application.resend',
-          type: 'primary',
-          click: (data: any) => this.props.resendInvitations(data.id),
-        },
-        {
-          name: 'application.delete',
-          type: 'danger',
-          click: (data: any) =>
-            this.props.showModal(
+  const scheme = new InteractiveTableSchema(invitationList).addFieldAtTheEnd({
+    name: __('application.actions'),
+    field: 'actions',
+    mobile: true,
+    buttons: [
+      {
+        name: 'application.resend',
+        type: 'primary',
+        click: (data: UserInvitationListItem) => resendInvitation(data.id),
+      },
+      {
+        name: 'application.delete',
+        type: 'danger',
+        click: (data: UserInvitationListItem) =>
+          dispatch(
+            showModal(
               <ConfirmModal
                 approveButtonText="application.delete"
                 mainText="application.doYouWantDeleteInvite"
                 cancelButtonText="application.cancel"
-                approveAction={() => this.props.deleteSentInvitations(data.id)}
+                approveAction={() => deleteInvitation(data.id)}
               />,
             ),
-        },
-      ],
-    });
-  }
+          ),
+      },
+    ],
+  });
 
-  render() {
-    return (
-      <Section>
-        <HeaderWithActions
-          actions={
-            <ButtonsContainer>
-              <Button
-                text="application.inviteUser"
-                primary
-                to="/admin/management/workers/add"
-              />
-            </ButtonsContainer>
-          }
-        >
-          {__('application.inviteList')}
-        </HeaderWithActions>
+  return (
+    <Section>
+      <HeaderWithActions
+        actions={
+          <ButtonsContainer>
+            <Button
+              text="application.inviteUser"
+              primary
+              to={`/${UserService.getSlugByRole(user!.role)}/management/users/invite`}
+            />
+          </ButtonsContainer>
+        }
+      >
+        {__('application.inviteList')}
+      </HeaderWithActions>
 
-        <ApiTable
-          scheme={this.scheme}
-          apiEndpointSubUrl="user/invitation-list"
-        />
-      </Section>
-    );
-  }
-}
-
-const mapDispatchToProps = (dispatch: any) =>
-  bindActionCreators({ ...invitations, ...modal }, dispatch);
-
-export default connect(null, mapDispatchToProps)(InvitesSent);
+      <ApiTable scheme={scheme} apiEndpointSubUrl="user/invitation-list" />
+    </Section>
+  );
+};

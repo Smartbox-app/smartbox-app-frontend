@@ -1,14 +1,28 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
-import styled from 'styled-components';
-import mapboxgl from 'mapbox-gl';
-import { ApplicationState } from 'src/reducers';
+import { useEffect, useMemo, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import 'mapbox-gl/dist/mapbox-gl.css';
-import ApiService from 'src/services/api-service';
-import { useTenant } from 'src/hooks/useTenant';
-import './Map.scss';
-import { ActiveLocation } from './components/ActiveLocation';
+import styled from 'styled-components';
+
+import type mapboxglType from 'mapbox-gl'; // import type only
+
 import { setOrderStock } from 'src/actions/order';
+import { Skeleton } from 'src/components/ui';
+import { useFileStorage } from 'src/hooks/useFileStorage';
+import { useTenant } from 'src/hooks/useTenant';
+import { currentAppLanguage } from 'src/i18n/app-language';
+import { useGetStockGroupsListQuery, useGetStockListQuery } from 'src/queries';
+import { ApplicationState } from 'src/reducers';
+import { MAPBOX_COUNTRY_NAME_FIELD } from 'src/utils/country-locale';
+
+import { ActiveLocation } from './components/ActiveLocation';
+
+import 'mapbox-gl/dist/mapbox-gl.css';
+import './Map.scss';
+
+let mapboxgl: typeof mapboxglType;
+async function loadMapbox() {
+  mapboxgl = (await import('mapbox-gl')).default;
+  // initialize your map here
+}
 
 const ExternalContainer = styled('div')(({ theme }) => ({
   width: '100%',
@@ -27,29 +41,26 @@ export const Map = () => {
   const mapRef = useRef<unknown>(null);
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const stockId = useSelector((state: ApplicationState) => state.order.stockId);
-  const list = useSelector((state: ApplicationState) => state.stock.list);
-  const groupsList = useSelector(
-    (state: ApplicationState) => state.stockGroup.list,
-  );
+  const { tenant } = useTenant();
+  const { data: stocks = null, isPending: stocksLoading } =
+    useGetStockListQuery();
+  const { data: groups = null, isPending: groupsLoading } =
+    useGetStockGroupsListQuery();
 
   const dispatch = useDispatch();
 
-  const { tenant } = useTenant();
+  const { getAssetPath } = useFileStorage();
 
   useEffect(() => {
-    if (!mapContainerRef.current) return;
-    mapboxgl.accessToken =
-      'pk.eyJ1Ijoic21hcnRib3hzdG9yYWdlIiwiYSI6ImNtZ2dkYW01NjA5ankybHM5djFqbjZtNWUifQ.2bn6LvbIw9BeDtAVtsPvrQ';
+    loadMapbox();
+  }, []);
+
+  useEffect(() => {
+    if (!mapContainerRef.current || !mapboxgl) return;
+    mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 
     const map = new mapboxgl.Map({
       container: mapContainerRef.current,
-      // style: 'mapbox://styles/mapbox/light-v11',
-      // config: {
-      //   basemap: {
-      //     theme: 'monochrome',
-      //   },
-      // },
-
       center: [19.1451, 51.9194], // Poland
       zoom: 5,
     });
@@ -57,7 +68,10 @@ export const Map = () => {
     mapRef.current = map;
 
     map.on('load', () => {
-      map.setLayoutProperty('country-label', 'text-field', ['get', 'name_pl']);
+      map.setLayoutProperty('country-label', 'text-field', [
+        'get',
+        MAPBOX_COUNTRY_NAME_FIELD[currentAppLanguage()],
+      ]);
 
       addLocations();
     });
@@ -65,19 +79,13 @@ export const Map = () => {
     return () => {
       (mapRef.current as mapboxgl.Map).remove();
     };
-  }, [mapContainerRef]);
-
-  const logoUrl = useMemo(() => {
-    if (!tenant) return null;
-    if (!tenant.id) return tenant.logo;
-    return `${ApiService.url}tenant/logo/${tenant.id}`;
-  }, [tenant]);
+  }, [mapContainerRef, stocks, groups]);
 
   const activeStock = useMemo(() => {
-    if (!stockId) return null;
+    if (!stockId || !stocks || !groups) return null;
     const allStocks = [
-      ...list,
-      ...groupsList.map((group) => group.stocks).flat(),
+      ...stocks,
+      ...groups.map((group) => group.stocks).flat(),
     ];
     const fullStock = allStocks.find((stock) => stock.id === stockId);
 
@@ -87,33 +95,37 @@ export const Map = () => {
       name: fullStock.name,
       address: fullStock.address,
     };
-  }, [stockId]);
+  }, [stockId, groups, stocks]);
 
   const addLocations = () => {
-    console.log('LIST', list, groupsList);
     const map = mapRef.current as mapboxgl.Map;
 
+    if (!stocks || !groups) return;
+
     const allStocks = [
-      ...list,
-      ...groupsList.map((group) => group.stocks).flat(),
+      ...stocks,
+      ...groups.map((group) => group.stocks).flat(),
     ];
 
-    for (let stock of allStocks) {
+    for (const stock of allStocks) {
       if (!stock.lat || !stock.lon) continue;
 
       const el = document.createElement('div');
-      el.innerHTML = `<div class="map-marker"><img src=${logoUrl} /><span>${stock.name}</span></div>`;
+      el.innerHTML = `<div class="map-marker"><img src=${getAssetPath('logo', tenant?.logo ?? '')} /><span>${stock.name}</span></div>`;
 
-      const marker = new mapboxgl.Marker({ element: el })
+      new mapboxgl.Marker({ element: el })
         .setLngLat([Number(stock.lon), Number(stock.lat)])
         .addTo(map)
         .getElement()
         .addEventListener('click', () => {
-          console.log('CLICK', stock);
           dispatch(setOrderStock(stock.id, stock.name, stock.address));
         });
     }
   };
+
+  if (groupsLoading || stocksLoading)
+    return <Skeleton height={500} radius={12} />;
+
   return (
     <ExternalContainer>
       {activeStock ? (

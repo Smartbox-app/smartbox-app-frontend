@@ -1,33 +1,19 @@
-import * as appStatus from './app-status';
-import * as auth from './auth';
-import * as modal from './modal';
-import * as notifications from './notifications';
-import * as lang from './lang';
-import * as user from './users';
-import * as order from './order';
-import * as apiTable from './api-table';
-import * as boxes from './boxes';
-import * as singleRent from './single-rent';
-import * as stock from './stock';
-import * as stockGroup from './stock-group';
-import * as gate from './gate';
-import * as invitations from './invitations';
-import * as tenant from './tenant';
+import * as apiTable from 'src/actions/api-table';
+import * as appStatus from 'src/actions/app-status';
+import * as auth from 'src/actions/auth';
+import * as modal from 'src/actions/modal';
+import * as notifications from 'src/actions/notifications';
+import * as order from 'src/actions/order';
+import * as singleRent from 'src/actions/single-rent';
+import * as user from 'src/actions/users';
 
 export {
   appStatus,
   apiTable,
   auth,
-  boxes,
   modal,
   notifications,
-  lang,
   user,
   order,
   singleRent,
-  stock,
-  stockGroup,
-  gate,
-  invitations,
-  tenant
 };

@@ -1,6 +1,6 @@
 @use "sass:math";
-@import '../../../config/variables';
-@import '../../../config/mixins.scss';
+@use '../../../config/variables' as *;
+@use '../../../config/mixins.scss' as *;
 
 .mobile-logo-container {
   order: 0;
@@ -21,7 +21,7 @@
 
   &.small {
     img {
-      height: $main-logo-size / 3.5;
+      height: math.div($main-logo-size, 3.5);
     }
   }
 

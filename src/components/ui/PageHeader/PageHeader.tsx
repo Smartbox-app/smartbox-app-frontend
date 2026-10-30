@@ -1,9 +1,10 @@
 import { ReactNode } from 'react';
-import { Header } from '../Header';
-import { Section } from '../Section';
 import styled from 'styled-components';
-import { ArrowBack } from '../../../icons';
-import { history } from '../../../App';
+
+import { Header } from 'src/components/ui/Header';
+import { Section } from 'src/components/ui/Section';
+import { history } from 'src/history';
+import { ArrowBack } from 'src/icons';
 
 export type PageHeaderProps = {
   children: ReactNode;

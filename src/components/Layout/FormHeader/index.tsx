@@ -1,15 +1,16 @@
 import React from 'react';
 
-import './FormHeader.scss';
-import {__} from "../../../helpers/i18n";
 import { Header } from 'src/components/ui';
+import {__} from "src/helpers/i18n";
+
+import './FormHeader.scss';
 
 interface Props {
   title: string;
   noMargin?: boolean;
 }
 
-const FormHeader = ({ title, noMargin }: Props) => (
+const FormHeader = ({ title }: Props) => (
   <Header variant='h2'>{__(title)}</Header>
 );
 

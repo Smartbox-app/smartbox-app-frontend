@@ -1,27 +1,29 @@
+import { Capacitor } from '@capacitor/core';
+import { Geolocation, PermissionStatus } from '@capacitor/geolocation';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
+
 import { Coordinate, RentGate } from 'smartbox-types';
-import { OpenGateByForceModal } from 'src/components/Common/OpenGateByForceModal';
 import { modal } from 'src/actions';
-import { askGateToOpen } from 'src/actions/gate';
+import { OpenGateByForceModal } from 'src/components/Common/OpenGateByForceModal';
 import { Button } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
+import { useOpenGateMutation } from 'src/mutations';
 
 interface Props {
   gate: RentGate;
+  withName?: boolean;
+  disabled?: boolean;
 }
 
-export const GateButton = ({ gate }: Props) => {
+export const GateButton = ({
+  gate,
+  withName = false,
+  disabled = false,
+}: Props) => {
   const dispatch = useDispatch();
-  const [loading, setLoading] = useState<boolean>(false);
-
-  const openGateByLocation = (position: any) => {
-    const location: Coordinate = {
-      lon: position.coords.longitude,
-      lat: position.coords.latitude,
-    };
-    dispatch(askGateToOpen(gate.id, location));
-    setLoading(false);
-  };
+  const { mutate: openGate, isPending } = useOpenGateMutation();
+  const [loading, setLoading] = useState(false);
 
   const handleError = () => {
     dispatch(
@@ -36,37 +38,97 @@ export const GateButton = ({ gate }: Props) => {
     setLoading(false);
   };
 
-  const tryToOpenGateByLocation = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(openGateByLocation, handleError);
-    } else {
-      dispatch(
-        modal.showModal(
-          <OpenGateByForceModal
-            notSupported
-            gateId={gate.id}
-            latlon={{ lat: '0', lon: '0' }}
-          />,
-        ),
-      );
+  // Check and request permission on native platforms
+  const ensurePermission = async (): Promise<boolean> => {
+    if (!Capacitor.isNativePlatform()) return true;
+
+    const status: PermissionStatus = await Geolocation.checkPermissions();
+    if (status.location === 'granted') return true;
+
+    const request = await Geolocation.requestPermissions();
+    return request.location === 'granted';
+  };
+
+  const getCurrentLocation = async (): Promise<Coordinate> => {
+    if (Capacitor.isNativePlatform()) {
+      const hasPermission = await ensurePermission();
+      if (!hasPermission) throw new Error('permission_denied');
+
+      const position = await Geolocation.getCurrentPosition();
+      return {
+        lat: position.coords.latitude.toString(),
+        lon: position.coords.longitude.toString(),
+      };
+    } else if (navigator.geolocation) {
+      return new Promise<Coordinate>((resolve, reject) => {
+        navigator.geolocation.getCurrentPosition(
+          (pos) =>
+            resolve({
+              lat: pos.coords.latitude.toString(),
+              lon: pos.coords.longitude.toString(),
+            }),
+          reject,
+        );
+      });
+    }
+
+    throw new Error('not_supported');
+  };
+
+  const tryToOpenGateByLocation = async () => {
+    try {
+      const location = await getCurrentLocation();
+      openGate({ gateId: gate.id, geo: location, mode: 'default' });
+    } catch (error: unknown) {
+      if (error instanceof Error && error.message === 'not_supported') {
+        dispatch(
+          modal.showModal(
+            <OpenGateByForceModal
+              notSupported
+              gateId={gate.id}
+              latlon={{ lat: '0', lon: '0' }}
+            />,
+          ),
+        );
+      } else if (
+        error instanceof Error &&
+        error.message === 'permission_denied'
+      ) {
+        dispatch(
+          modal.showModal(
+            <OpenGateByForceModal
+              cantRead
+              gateId={gate.id}
+              latlon={{ lat: '0', lon: '0' }}
+            />,
+          ),
+        );
+      } else {
+        handleError();
+      }
+    } finally {
       setLoading(false);
     }
   };
 
   const handleClick = () => {
-    if (!gate.controlled) return;
+    if (disabled || !gate.controlled) return;
 
     setLoading(true);
-
     tryToOpenGateByLocation();
   };
 
   return (
     <Button
-      disabled={loading}
-      text="application.openGate"
+      disabled={disabled || loading || isPending}
+      text={withName ? undefined : 'application.openGate'}
+      rawText={
+        withName
+          ? __('application.openNamedGate', { name: gate.name })
+          : undefined
+      }
       type="button"
-      variant="primary"
+      variant="success"
       size="small"
       onClick={handleClick}
     />

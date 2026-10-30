@@ -1,1 +1,1 @@
-export * from './SearchZoomIn';
+export * from 'src/icons/SearchZoomIn/SearchZoomIn';

@@ -1,22 +1,30 @@
-import { useEffect, useMemo } from 'react';
-import { Spinner } from '../../../../../../components/Branded';
-import { ButtonsContainer } from '../../../../../../components/Layout';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { ApplicationState } from '../../../../../../reducers';
 import styled from 'styled-components';
-import { Alert, CheckBox } from '../../../../../../components/Common';
+
+import { AddonRes, AddonUserFileRequirementType } from 'smartbox-types';
 import {
-  fetchAddons,
   selectAddon,
   setAddonAcceptance,
   setAddonFile,
-} from '../../../../../../actions/order';
-import { SingleVariant } from './SingleVariant';
-import ApiService from '../../../../../../services/api-service';
-import FileInput from '../../../../../../components/Common/FileInput';
-import { AddonRes, AddonUserFileRequirementType } from 'smartbox-types';
-import { OrderAddon } from 'src/reducers/order-reducer';
+} from 'src/actions/order';
+import { Spinner } from 'src/components/Branded';
+import {
+  Alert,
+  AsterixRequired,
+  CheckBox,
+} from 'src/components/Common';
+import FileInput from 'src/components/Common/FileInput';
+import { ButtonsContainer } from 'src/components/Layout';
 import { Button, Header, Section, Typography } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
+import { useBridgeAddonsToRedux } from 'src/hooks/useBridgeOrderPriceQuery';
+import { useFileStorage } from 'src/hooks/useFileStorage';
+import { useAddonsForOrderQuery } from 'src/queries/useRentPriceQueries';
+import { ApplicationState } from 'src/reducers';
+import { OrderAddon } from 'src/reducers/order-reducer';
+
+import { SingleVariant } from './SingleVariant';
 
 const StyledFileDescription = styled('div')(({ theme }) => ({
   background: theme.colors.background.secondary,
@@ -32,17 +40,17 @@ const StyledUserFileContainer = styled('div')(({ theme }) => ({
 
 interface Props {
   stockId: string;
+  boxGroupId: string;
 }
 
-export const Addons = ({ stockId }: Props) => {
+export const Addons = ({ stockId, boxGroupId }: Props) => {
+  const { getAssetPath } = useFileStorage();
   const { addons, loadingAddons, orderAddons } = useSelector(
     (state: ApplicationState) => state.order,
   );
   const dispatch = useDispatch();
-
-  const getAddons = () => {
-    dispatch(fetchAddons(stockId));
-  };
+  const addonsQuery = useAddonsForOrderQuery(stockId, boxGroupId);
+  useBridgeAddonsToRedux(addonsQuery);
 
   const handleAddonAcceptance = (
     addonId: string,
@@ -63,10 +71,6 @@ export const Addons = ({ stockId }: Props) => {
   ) => {
     dispatch(selectAddon(addonId, variantId, variantName));
   };
-
-  useEffect(() => {
-    getAddons();
-  }, []);
 
   const displayFileInput = (
     { userFileAllowed, userFileText, userFileRequirement }: AddonRes,
@@ -105,7 +109,9 @@ export const Addons = ({ stockId }: Props) => {
     <>
       {sortedAddons.map((addon) => (
         <Section key={addon.id}>
-          <Header variant="h2">{addon.name}</Header>
+          <Header variant="h2">
+            {addon.name} {addon.required ? <AsterixRequired /> : null}
+          </Header>
           {addon.description ? (
             <Typography>{addon.description}</Typography>
           ) : null}
@@ -116,7 +122,7 @@ export const Addons = ({ stockId }: Props) => {
                 <Button
                   text="application.seeFile"
                   size="large"
-                  href={`${ApiService.url}addon/file/${addon.id}/${addon.file}`}
+                  href={getAssetPath('addon', addon.file)}
                 />
               </ButtonsContainer>
             </StyledFileDescription>
@@ -131,8 +137,9 @@ export const Addons = ({ stockId }: Props) => {
                 <SingleVariant
                   key={variant.id}
                   variant={variant}
+                  addon={addon}
                   addonId={addon.id}
-                  isGross={addon.isGross}
+                  display={addon.display}
                 />
               ))}
             </ul>
@@ -140,11 +147,15 @@ export const Addons = ({ stockId }: Props) => {
           {displayFileInput(addon, orderAddons[addon.id]) ? (
             <StyledUserFileContainer>
               <p>{addon.userFileText}</p>
+              <p>{__('application.phrases.maxFileSize', { size: '5MB' })}</p>
               <FileInput
                 input={{
                   value: orderAddons[addon.id].file,
-                  onChange: (file: File | null) =>
-                    handleAddonFile(addon.id, file),
+                  onChange: (file) =>
+                    handleAddonFile(
+                      addon.id,
+                      file instanceof File ? file : null,
+                    ),
                 }}
                 accept=".jpg,.jpeg,.png,.pdf,.docx"
                 multiple={false}
@@ -162,7 +173,12 @@ export const Addons = ({ stockId }: Props) => {
             ? addon.acceptances.map((acceptance) => (
                 <div key={acceptance.id}>
                   <CheckBox
-                    label={acceptance.text}
+                    label={
+                      <>
+                        {acceptance.text}{' '}
+                        {acceptance.required ? <AsterixRequired /> : null}
+                      </>
+                    }
                     name={`acceptance_${acceptance.id}`}
                     checked={
                       orderAddons[addon.id].acceptancesStatus[acceptance.id]

@@ -1,21 +1,27 @@
 import React, { useMemo } from 'react';
-import {
-  AddonUserFileRequirementType,
-  SingleAddonVariant,
-} from 'smartbox-types';
-import styled from 'styled-components';
-import { PriceInfo } from '../PriceInfo';
 import { useDispatch, useSelector } from 'react-redux';
-import { ApplicationState } from '../../../../../../../reducers';
-import { selectAddon, setAddonFile } from '../../../../../../../actions/order';
+import styled from 'styled-components';
+
+import {
+  AddonRes,
+  AddonUserFileRequirementType,
+  PriceDisplayForClients,
+  SingleAddonVariantForUser,
+  SingleAddonVariantForUserWithCorrectedPrice,
+} from 'smartbox-types';
+import { selectAddon, setAddonFile } from 'src/actions/order';
+import { ApplicationState } from 'src/reducers';
+import { correctAddonVariantPrice } from 'src/utils/addon-variant-price';
+
+import { PriceInfo } from '../PriceInfo';
 import { Indicator } from './components/Indicator';
 
 const StyledAddonVariant = styled('li')<{ isSelected: boolean }>(
   ({ isSelected, theme }) => ({
-    padding: theme.spacing * 4,
+    padding: `${theme.spacing * 3}px 0`,
     color: theme.colors.text.primary,
     fontWeight: isSelected ? 500 : 400,
-    marginBottom: 10,
+    // marginBottom: 10,
     borderRadius: 5,
     cursor: 'pointer',
     display: 'flex',
@@ -32,11 +38,11 @@ const StyledAddonVariant = styled('li')<{ isSelected: boolean }>(
   }),
 );
 
-const VariantSelect = styled('div')(({theme}) => ({
+const VariantSelect = styled('div')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
-  gap: theme.spacing * 2
-}))
+  gap: theme.spacing * 2,
+}));
 
 const StyledVariantName = styled('h5')({
   margin: '5px 0',
@@ -44,12 +50,13 @@ const StyledVariantName = styled('h5')({
 });
 
 interface Props {
+  addon: AddonRes;
   addonId: string;
-  isGross: boolean;
-  variant: SingleAddonVariant;
+  display: PriceDisplayForClients;
+  variant: SingleAddonVariantForUser;
 }
 
-export const SingleVariant = ({ variant, addonId, isGross }: Props) => {
+export const SingleVariant = ({ variant, addonId, addon, display }: Props) => {
   const { orderAddons } = useSelector((state: ApplicationState) => state.order);
   const dispatch = useDispatch();
 
@@ -63,7 +70,6 @@ export const SingleVariant = ({ variant, addonId, isGross }: Props) => {
       orderAddons[addonId].userFileRequirement ===
       AddonUserFileRequirementType.RequiredWhenNoVariant
     ) {
-      console.log('reseting file', addonId);
       dispatch(setAddonFile(addonId, null));
     }
     dispatch(
@@ -75,6 +81,12 @@ export const SingleVariant = ({ variant, addonId, isGross }: Props) => {
     );
   };
 
+  const variantWithCorrectedPrice: SingleAddonVariantForUserWithCorrectedPrice =
+    useMemo(
+      () => correctAddonVariantPrice(variant, addon.tax),
+      [variant, addon.tax],
+    );
+
   return (
     <StyledAddonVariant
       isSelected={isSelected}
@@ -85,7 +97,7 @@ export const SingleVariant = ({ variant, addonId, isGross }: Props) => {
         <Indicator selected={isSelected} />
         <StyledVariantName>{variant.name}</StyledVariantName>
       </VariantSelect>
-      <PriceInfo variant={variant} isGross={isGross} />
+      <PriceInfo variant={variantWithCorrectedPrice} display={display} />
     </StyledAddonVariant>
   );
 };

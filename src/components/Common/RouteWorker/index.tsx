@@ -1,27 +1,18 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import { connect, useSelector } from 'react-redux';
-import { bindActionCreators } from 'redux';
+
 import { UserRole } from 'smartbox-types';
-import { stock, stockGroup } from '../../../actions';
-import { rememberRedirect } from '../../../utils/remeber-redirect';
-import { ApplicationState } from '../../../reducers';
 import { useGetMyDetailsQuery } from 'src/queries';
+import { rememberRedirect } from 'src/utils/remeber-redirect';
 
 interface Props {
-    getStockList: () => void;
-    getStockGroupsList: () => void;
-    component: any;
+    component: React.ComponentType;
     exact?: boolean;
     path?: string;
 }
 
-const RouteWorker = ({ exact, path, component, getStockList, getStockGroupsList }: Props) => {
+const RouteWorker = ({ exact, path, component }: Props) => {
   const { data: user } = useGetMyDetailsQuery();
-    useEffect(() => {
-        getStockList();
-        getStockGroupsList();
-    }, []);
 
     if (!user || user.role !== UserRole.worker) {
         return <Route render={() => <Redirect to="/" />} />;
@@ -30,7 +21,4 @@ const RouteWorker = ({ exact, path, component, getStockList, getStockGroupsList 
     return <Route exact={exact} path={path} component={component} />;
 };
 
-
-const mapDispatchToProps = (dispatch: any) => bindActionCreators({ ...stock, ...stockGroup }, dispatch);
-
-export default connect(null, mapDispatchToProps)(RouteWorker);
+export default RouteWorker;

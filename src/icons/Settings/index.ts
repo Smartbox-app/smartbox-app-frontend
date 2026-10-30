@@ -1,1 +1,1 @@
-export * from './Settings';
+export * from 'src/icons/Settings/Settings';

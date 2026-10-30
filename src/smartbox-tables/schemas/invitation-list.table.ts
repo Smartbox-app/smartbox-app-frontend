@@ -1,18 +1,18 @@
-import { FieldType, TableSchema } from '../typings';
+import { FieldType, TableSchema } from 'src/smartbox-tables/typings';
 
 const roleToText: {
   [key: string]: string;
 } = {
-  Administrator: 'Administrator',
-  Pracownik: 'Pracownik',
-  Użytkownik: 'Użytkownik',
+  Administrator: 'application.tables.roleAdministrator',
+  Pracownik: 'application.tables.roleWorker',
+  Użytkownik: 'application.tables.roleUser',
 };
 
 export const invitationList: TableSchema = {
   countPerPage: 20,
   fields: [
     {
-      name: 'Email',
+      name: 'application.tables.email',
       field: 'email',
       mobile: true,
       searchable: true,
@@ -21,7 +21,7 @@ export const invitationList: TableSchema = {
       type: FieldType.Email,
     },
     {
-      name: 'Rola',
+      name: 'application.tables.role',
       field: 'role',
       mobile: true,
       searchable: true,

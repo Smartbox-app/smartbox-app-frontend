@@ -1,9 +1,11 @@
 import React from 'react';
 import { Switch, Route, Redirect } from 'react-router';
-import Add from '../InviteUser';
-import List from './List';
-import UserService from '../../../services/user-service';
+
 import { useGetMyDetailsQuery } from 'src/queries';
+import UserService from 'src/services/user-service';
+
+import Add from '../InviteUser';
+import { List } from './List';
 
 const Workers = () => {
   const { data: user } = useGetMyDetailsQuery();

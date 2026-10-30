@@ -1,18 +1,21 @@
-import { useForm } from 'react-hook-form';
-import { BoxGroupUserRes } from 'smartbox-types';
-import { ButtonsContainer } from 'src/components/Layout';
-import { Button, CheckBox, Form, Typography } from 'src/components/ui';
-import { __ } from 'src/helpers/i18n';
-import { NotificationDto } from './dto/NotificationDto';
-import { ClassValidatorResolver } from 'src/resolvers/ClassValidatorResolver';
+import React, { useEffect } from 'react';
+import { type SubmitHandler, useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
-import { modal, notifications } from 'src/actions';
-import { ErrorText } from 'src/components/ui/ErrorText';
 import styled from 'styled-components';
-import { useCreateNotificationMutation } from './query/useCreateNotificationMutation';
-import { useTenant } from 'src/hooks/useTenant';
+
+import { BoxGroupUserRes } from 'smartbox-types';
+import { modal, notifications } from 'src/actions';
 import { Spinner } from 'src/components/Branded';
-import { useEffect } from 'react';
+
+import { ButtonsContainer } from 'src/components/Layout';
+import { Button, CheckBox, Form, Modal, Typography } from 'src/components/ui';
+import { ErrorText } from 'src/components/ui/ErrorText';
+import { __ } from 'src/helpers/i18n';
+import { useTenant } from 'src/hooks/useTenant';
+import { ClassValidatorResolver } from 'src/resolvers/ClassValidatorResolver';
+
+import { useCreateNotificationMutation } from './query/useCreateNotificationMutation';
+import { NotificationDto } from './dto/NotificationDto';
 
 const StyledContent = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -38,9 +41,9 @@ export const NotifyWhenAvailableModal = ({
     resolver: ClassValidatorResolver(new NotificationDto()),
   });
 
-  const { mutate, isPending, data, error } = useCreateNotificationMutation();
+  const { mutate, isPending, data } = useCreateNotificationMutation();
 
-  const onSubmit = (data: NotificationDto) => {
+  const onSubmit: SubmitHandler<NotificationDto> = (data) => {
     if (!tenant) return;
     mutate({
       email: data.email,
@@ -62,34 +65,35 @@ export const NotifyWhenAvailableModal = ({
   const onClose = () => {
     dispatch(modal.hideModal());
   };
-
-  console.log('ERRORS', errors);
-
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
-      {isPending ? <Spinner overlay halfTransparent /> : null}
-      <StyledContent>
-        <Typography>
-          {__('application.notification_for')}
-          <strong>{option.name}</strong>
-        </Typography>
-        <Typography>{__('application.notification_type')}</Typography>
+      <Modal.Header title={__('application.notificationsAboutBoxes')} />
+      <Modal.Content>
+        {isPending ? <Spinner overlay halfTransparent /> : null}
+        <StyledContent>
+          <Typography>
+            {__('application.notification_for')}
+            <strong>{option.name}</strong>
+          </Typography>
+          <Typography>{__('application.notification_type')}</Typography>
 
-        <CheckBox
-          {...register('email')}
-          label={<Typography>{__('application.email')}</Typography>}
-        />
-
-        {tenant?.smsAvailable ? (
           <CheckBox
-            {...register('sms')}
-            label={<Typography>{__('application.sms')}</Typography>}
+            {...register('email')}
+            label={<Typography>{__('application.email')}</Typography>}
           />
-        ) : null}
-        {errors.atLeastOne?.message ? (
-          <ErrorText error={errors.atLeastOne.message} />
-        ) : null}
 
+          {tenant?.smsAvailable ? (
+            <CheckBox
+              {...register('sms')}
+              label={<Typography>{__('application.sms')}</Typography>}
+            />
+          ) : null}
+          {errors.atLeastOne?.message ? (
+            <ErrorText error={errors.atLeastOne.message} />
+          ) : null}
+        </StyledContent>
+      </Modal.Content>
+      <Modal.Actions>
         <ButtonsContainer>
           <Button
             variant="secondary"
@@ -104,7 +108,7 @@ export const NotifyWhenAvailableModal = ({
             type="submit"
           />
         </ButtonsContainer>
-      </StyledContent>
+      </Modal.Actions>
     </Form>
   );
 };

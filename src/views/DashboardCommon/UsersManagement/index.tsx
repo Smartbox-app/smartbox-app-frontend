@@ -1,10 +1,12 @@
 import React from 'react';
 import { Switch, Route, Redirect } from 'react-router';
+
+import { useGetMyDetailsQuery } from 'src/queries';
+import UserService from 'src/services/user-service';
+
+import { AddUser } from '../AddUser';
 import Invite from '../InviteUser';
 import List from './List';
-import UserService from '../../../services/user-service';
-import { AddUser } from '../AddUser';
-import { useGetMyDetailsQuery } from 'src/queries';
 
 const UsersManagement = () => {
     const { data: user } = useGetMyDetailsQuery();

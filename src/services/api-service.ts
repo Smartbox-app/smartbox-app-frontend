@@ -1,15 +1,56 @@
+import { Capacitor, CapacitorHttp } from '@capacitor/core';
+import { Preferences } from '@capacitor/preferences';
+
 import { ApiErrorCode, ApiResult } from 'smartbox-types';
-import { notifications } from '../actions';
-import { store, history } from '../App';
+import * as notifications from 'src/actions/notifications';
+import { getApiBaseUrl } from 'src/config/api-url';
+import { history } from 'src/history';
+import { currentAppLanguage } from 'src/i18n/app-language';
+import { getCachedTenant } from 'src/queries/useGetTenantQuery/tenant-query';
+import { store } from 'src/store';
+import type { AppDispatch } from 'src/types/app-dispatch';
+
+const getUrl = async () => getApiBaseUrl();
+
+type SuccessHandler<T> = {
+  (payload: T): void;
+} | null;
+type ErrorBody = {
+  form_errors?: unknown;
+  result?: unknown;
+  statusCode?: number;
+  error_code?: string;
+  payload?: unknown;
+};
+type ErrorHandler = {
+  (data: ErrorBody): boolean | void;
+} | null;
+type StatusBody = { statusCode?: number };
+
+const handleUnauthorized = async () => {
+  // queryClient.setQueryData(['my-details'], null);
+  // queryClient.invalidateQueries({ queryKey: ['tenant'] });
+  // store.dispatch(clearUserSession());
+  // store.dispatch(order.clearOrder());
+  // if (Capacitor.isNativePlatform()) {
+  //   await Preferences.clear();
+  // }
+};
 
 export default class ApiService {
-  static url =
-    typeof process.env.REACT_APP_API_URL === 'string'
-      ? `${process.env.REACT_APP_API_URL.trim()}/`
-      : 'http://localhost:3001/';
+  static url = '';
+
+  static setUrl = async () => {
+    this.url = await getUrl();
+  };
+
+  static withLanguage = (headers: { [key: string]: string }) => {
+    headers.lang = currentAppLanguage();
+    return headers;
+  };
 
   static wrapUrlWithTenant = (url: string) => {
-    const tenantIdentifier = store.getState().tenant?.identifier;
+    const tenantIdentifier = getCachedTenant()?.identifier;
 
     if (!tenantIdentifier) return url;
 
@@ -17,30 +58,41 @@ export default class ApiService {
     return `${url}?tenantId=${tenantIdentifier}`;
   };
 
-  static call = async (
-    dispatch: any,
+  static call = async <R = unknown>(
+    dispatch: AppDispatch,
     method: string,
     successAction: string,
     failedAction: string,
-    successCb: any,
-    failedCb: any,
+    successCb: SuccessHandler<R>,
+    failedCb: ErrorHandler,
     url: string,
     loadingAction = 'LOADING',
-    requestData?: any,
+    requestData?: object,
   ) => {
     dispatch({ type: loadingAction, payload: true });
 
-    const headers = {
-      'Content-Type': 'application/json',
-    };
+    const headers: {
+      [key: string]: string;
+    } =
+      requestData && requestData instanceof FormData
+        ? {}
+        : {
+            'Content-Type': 'application/json',
+          };
+
+    if (Capacitor.isNativePlatform()) {
+      const token = await Preferences.get({ key: 'smst_token' });
+      headers.Authorization = `Bearer ${token.value}`;
+    }
+    ApiService.withLanguage(headers);
 
     const wrappedUrl = ApiService.wrapUrlWithTenant(url);
 
     try {
       const response = await fetch(`${ApiService.url}${wrappedUrl}`, {
         method,
-        headers: requestData && requestData instanceof FormData ? {} : headers,
-        credentials: 'include',
+        headers,
+        credentials: !Capacitor.isNativePlatform() ? 'include' : undefined,
         body:
           requestData && requestData instanceof FormData
             ? requestData
@@ -64,8 +116,10 @@ export default class ApiService {
             history.push('/');
           } else {
             dispatch({ type: failedAction, payload: data.result });
-            if (failedCb) failedCb(data);
-            dispatch(notifications.errorNotification(data.error_code));
+            const errorHandled = failedCb ? failedCb(data) === true : false;
+            if (!errorHandled) {
+              dispatch(notifications.errorNotification(data.error_code));
+            }
             setTimeout(
               () => dispatch({ type: loadingAction, payload: false }),
               200,
@@ -76,6 +130,7 @@ export default class ApiService {
           if (ApiService.is404(data)) {
             history.push('/');
           } else if (ApiService.is401(data)) {
+            await handleUnauthorized();
             setTimeout(
               () => dispatch({ type: loadingAction, payload: false }),
               200,
@@ -91,7 +146,7 @@ export default class ApiService {
             );
           }
       }
-    } catch (error) {
+    } catch {
       dispatch(notifications.errorNotification(ApiErrorCode.OtherError));
       dispatch({ type: failedAction, payload: ApiErrorCode.OtherError });
       // if (SessionService.isUserSet()) dispatch(auth.clearUserSession());
@@ -100,24 +155,36 @@ export default class ApiService {
     }
   };
 
-  static callFetch = async <R>(
+  static callFetch = async <R = unknown>(
     method: string,
     url: string,
-    successCb?: any,
-    failedCb?: any,
-    requestData?: any,
+    successCb?: ((payload: R) => void) | null,
+    failedCb?: ((data: ErrorBody) => boolean | void) | null,
+    requestData?: object,
+    throwError?: boolean,
+    muteNotification?: boolean,
   ) => {
-    const headers = {
-      'Content-Type': 'application/json',
-    };
+
+    const headers: {
+      [key: string]: string;
+    } =
+      requestData && requestData instanceof FormData
+        ? {}
+        : {
+            'Content-Type': 'application/json',
+          };
+    if (Capacitor.isNativePlatform()) {
+      const token = await Preferences.get({ key: 'smst_token' });
+      headers.Authorization = `Bearer ${token.value}`;
+    }
+    ApiService.withLanguage(headers);
 
     const wrappedUrl = ApiService.wrapUrlWithTenant(url);
-
     try {
       const response = await fetch(`${ApiService.url}${wrappedUrl}`, {
         method,
-        headers: requestData && requestData instanceof FormData ? {} : headers,
-        credentials: 'include',
+        headers,
+        credentials: !Capacitor.isNativePlatform() ? 'include' : undefined,
         body:
           requestData && requestData instanceof FormData
             ? requestData
@@ -132,57 +199,72 @@ export default class ApiService {
           return data.payload as R;
         case ApiResult.error:
           if (failedCb) failedCb(data);
-          store.dispatch(notifications.errorNotification(data.error_code));
+          if (!muteNotification)
+            store.dispatch(notifications.errorNotification(data.error_code));
+          if (throwError) throw new Error(data.error_code);
           break;
         default:
           if (ApiService.is401(data)) {
-            //
-          } else {
-            store.dispatch(notifications.errorNotification(data.error_code));
-          }
+            await handleUnauthorized();
+          } else if (!muteNotification)
+              store.dispatch(notifications.errorNotification(data.error_code));
       }
     } catch (error) {
-      store.dispatch(notifications.errorNotification(ApiErrorCode.OtherError));
+      if (!muteNotification && !throwError)
+        store.dispatch(
+          notifications.errorNotification(ApiErrorCode.OtherError),
+        );
+      if (throwError) throw error;
     }
   };
 
   static simpleFetch = async (method: string, url: string) => {
-    const headers: any = {
+    const headers: {
+      [key: string]: string;
+    } = {
       'Content-Type': 'application/json',
     };
+
+    if (Capacitor.isNativePlatform()) {
+      const token = await Preferences.get({ key: 'smst_token' });
+      headers.Authorization = `Bearer ${token.value}`;
+    }
+    ApiService.withLanguage(headers);
 
     const wrappedUrl = ApiService.wrapUrlWithTenant(url);
 
     const response = await fetch(wrappedUrl, {
       method,
       headers,
-      credentials: 'include',
+      credentials: !Capacitor.isNativePlatform() ? 'include' : undefined,
     });
 
     return response;
   };
 
   static loadForm = async (url: string) => {
-    return JSON.parse(((await ApiService.callFetch('GET', url)) as any).form);
+    const payload = await ApiService.callFetch<{ form: string }>('GET', url);
+    if (!payload) return {};
+    return JSON.parse(payload.form);
   };
 
-  static sendForm = async (
+  static sendForm = (
     url: string,
-    values: any,
+    values: object,
     method = 'POST',
-    successCb?: any,
-    failedCb?: any,
-  ): Promise<any | void> => {
-    return new Promise(async (resolve, reject) => {
-      await ApiService.callFetch(
+    successCb?: (payload: unknown) => void,
+    failedCb?: (data: ErrorBody) => void,
+  ): Promise<void> => {
+    return new Promise<unknown>((resolve, reject) => {
+      void ApiService.callFetch(
         method,
         url,
-        (payload: any) => {
+        (payload: unknown) => {
           if (successCb) successCb(payload);
 
           resolve(payload);
         },
-        (data: any) => {
+        (data: ErrorBody) => {
           if (data.form_errors) {
             resolve(data);
           } else {
@@ -191,25 +273,25 @@ export default class ApiService {
           }
         },
         values,
-      );
-    });
+      ).catch(reject);
+    }) as Promise<void>;
   };
 
-  static is401 = (response: any) => response.statusCode === 401;
+  static is401 = (response: StatusBody) => response.statusCode === 401;
 
-  static is404 = (response: any) => response.statusCode === 404;
+  static is404 = (response: StatusBody) => response.statusCode === 404;
 
-  static is502 = (response: any) => response.statusCode === 502;
+  static is502 = (response: StatusBody) => response.statusCode === 502;
 
-  static post = async (
-    dispatch: any,
+  static post = async <R = unknown>(
+    dispatch: AppDispatch,
     successAction: string,
     failedAction: string,
-    successCb: any,
-    failedCb: any,
+    successCb: SuccessHandler<R>,
+    failedCb: ErrorHandler,
     url: string,
     loadingAction = 'LOADING',
-    requestData: any,
+    requestData: object,
   ) => {
     await ApiService.call(
       dispatch,
@@ -224,15 +306,15 @@ export default class ApiService {
     );
   };
 
-  static patch = async (
-    dispatch: any,
+  static patch = async <R = unknown>(
+    dispatch: AppDispatch,
     successAction: string,
     failedAction: string,
-    successCb: any,
-    failedCb: any,
+    successCb: SuccessHandler<R>,
+    failedCb: ErrorHandler,
     url: string,
     loadingAction = 'LOADING',
-    requestData?: any,
+    requestData?: object,
   ) => {
     await ApiService.call(
       dispatch,
@@ -247,15 +329,15 @@ export default class ApiService {
     );
   };
 
-  static get = async (
-    dispatch: any,
+  static get = async <R = unknown>(
+    dispatch: AppDispatch,
     successAction: string,
     failedAction: string,
-    successCb: any,
-    failedCb: any,
+    successCb: SuccessHandler<R>,
+    failedCb: ErrorHandler,
     url: string,
     loadingAction = 'LOADING',
-    requestData?: any,
+    requestData?: object,
   ) => {
     await ApiService.call(
       dispatch,
@@ -270,12 +352,12 @@ export default class ApiService {
     );
   };
 
-  static delete = async (
-    dispatch: any,
+  static delete = async <R = unknown>(
+    dispatch: AppDispatch,
     successAction: string,
     failedAction: string,
-    successCb: any,
-    failedCb: any,
+    successCb: SuccessHandler<R>,
+    failedCb: ErrorHandler,
     url: string,
     loadingAction = 'LOADING',
   ) => {
@@ -289,5 +371,51 @@ export default class ApiService {
       url,
       loadingAction,
     );
+  };
+
+  static sendForFile = async (
+    method: string,
+    url: string,
+    data?: object,
+    excludeApiURL = false,
+  ): Promise<{ filename: string; data: string; contentType?: string }> => {
+    const headers: {
+      [key: string]: string;
+    } = {
+      'Content-Type': 'application/json',
+      Accept: 'application/json, text/plain, */*',
+    };
+
+    if (Capacitor.isNativePlatform()) {
+      const token = await Preferences.get({ key: 'smst_token' });
+      headers.Authorization = `Bearer ${token.value}`;
+    }
+    ApiService.withLanguage(headers);
+
+    const capacitorMethod = data ? CapacitorHttp.post : CapacitorHttp.get;
+
+    const wrappedUrl = excludeApiURL
+      ? url
+      : `${ApiService.url}${ApiService.wrapUrlWithTenant(url)}`;
+
+    const response = await capacitorMethod({
+      headers,
+      url: wrappedUrl,
+      responseType: 'blob',
+      data: data ? data : undefined,
+      webFetchExtra: {
+        credentials: !Capacitor.isNativePlatform() ? 'include' : undefined,
+      },
+    });
+    const received = response.data;
+
+    const filename =
+      response.headers['Filename'] || response.headers['filename'];
+
+    return {
+      filename,
+      data: received,
+      contentType: response.headers['Content-Type'] || response.headers['content-type'],
+    };
   };
 }

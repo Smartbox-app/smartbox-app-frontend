@@ -1,77 +1,43 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
+import { useParams } from 'react-router';
+
 import { FieldType, boxesList } from 'smartbox-tables';
 import {
   AccessControl,
   BoxListRes,
-  IStock,
+  BoxStatus,
   RentStatus,
   UserRole,
 } from 'smartbox-types';
-import { Alert, ApiTable } from '../../../../../../../components/Common';
-import { Button, Spinner } from '../../../../../../../components/Branded';
-import {
-  ButtonsContainer,
-  SimpleHeader,
-} from '../../../../../../../components/Layout';
-import { __ } from '../../../../../../../helpers/i18n';
-import { InteractiveTableSchema } from '../../../../../../../utils/table-schema-utils';
-import UserService from '../../../../../../../services/user-service';
-import { showModal } from '../../../../../../../actions/modal';
-import { ConfirmModal } from '../../../../../../../components/Common';
-import ApiService from '../../../../../../../services/api-service';
-import {
-  errorNotificationText,
-  successNotification,
-} from '../../../../../../../actions/notifications';
-import { refreshApiTableData } from '../../../../../../../actions/api-table';
-import { useParams } from 'react-router';
-import { Edit } from '../Edit';
-import BoxDetail from '../../../../../BoxDetail';
-import { BoxStatus } from './BoxStatus';
-import { AssignRentToUser } from '../../../../../AssignRentToUser';
-import { useGetMyDetailsQuery } from 'src/queries';
+import { showModal } from 'src/actions/modal';
+import { Button, Spinner } from 'src/components/Branded';
+import { Alert, ApiTable, ConfirmModal } from 'src/components/Common';
+import { ButtonsContainer } from 'src/components/Layout';
 import { HeaderWithActions, Section } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
+import { useDeleteBoxMutation, useOpenBoxMutation } from 'src/mutations';
+import { useGetMyDetailsQuery, useGetStockQuery } from 'src/queries';
+import UserService from 'src/services/user-service';
+import { boxDisplayStatusSearchValues } from 'src/utils/box-display-status';
+import { InteractiveTableSchema } from 'src/utils/table-schema-utils';
+
+import { AssignRentToUser } from '../../../../../AssignRentToUser';
+import BoxDetail from '../../../../../BoxDetail';
+import { Edit } from '../Edit';
+import { BoxStatus as BoxStatusBadge } from './BoxStatus';
 
 const List = () => {
   const { data: user } = useGetMyDetailsQuery();
   const dispatch = useDispatch();
-  const [stock, setStock] = useState<IStock>();
-  const [isLoading, setIsLoading] = useState(false);
+  const { mutate: deleteBox, isPending: isDeleting } = useDeleteBoxMutation();
+  const { mutate: openBox, isPending: isOpening } = useOpenBoxMutation();
+  const isLoading = isDeleting || isOpening;
   const { stockId } = useParams<{ stockId: string }>();
+  const { data: stock } = useGetStockQuery(stockId);
 
-  const hasFullAccess = [UserRole.admin, UserRole.client].includes(user!.role);
-
-  const getStock = async () => {
-    await ApiService.callFetch('GET', `stock/${stockId}`, (res: IStock) => {
-      setStock(res);
-    });
-  };
-
-  const deleteBox = async (boxId: string) => {
-    setIsLoading(true);
-    await ApiService.callFetch('DELETE', `box/${boxId}`, () => {
-      dispatch(successNotification('application.boxDeleted'));
-      dispatch(refreshApiTableData());
-    });
-    setIsLoading(false);
-  };
-
-  const openBox = async (boxId: string) => {
-    setIsLoading(true);
-    await ApiService.callFetch(
-      'GET',
-      `box/open/${boxId}`,
-      (isSuccess: boolean) => {
-        if (isSuccess) {
-          dispatch(successNotification('application.boxOpenedSuccessfully'));
-        } else {
-          dispatch(errorNotificationText('application.cannotOpenBox'));
-        }
-      },
-    );
-    setIsLoading(false);
-  };
+  const hasFullAccess =
+    !!user && [UserRole.admin, UserRole.client].includes(user.role);
 
   const confirmBoxDelete = (boxId: string) => {
     dispatch(
@@ -97,18 +63,17 @@ const List = () => {
     );
   };
 
-  useEffect(() => {
-    getStock();
-  }, [stockId]);
+  const scheme = new InteractiveTableSchema(boxesList);
+  scheme.highlightRow = (row) => row.status === RentStatus.toCheck;
 
-  const scheme = new InteractiveTableSchema(boxesList)
+  scheme
     .modifyFieldStatic('pricing', {
       name: __('application.pricingIsSet'),
       field: 'pricing',
       mobile: true,
       defaultSort: true,
       type: FieldType.Custom,
-      customRender: (value, field, boxData) =>
+      customRender: (value, field, boxData: BoxListRes) =>
         boxData.pricing && boxData.pricing.length > 0 ? (
           <Alert compact type="success" text="application.yes" />
         ) : (
@@ -120,9 +85,11 @@ const List = () => {
       field: 'status',
       mobile: true,
       defaultSort: true,
+      searchable: true,
+      searchableValues: boxDisplayStatusSearchValues(),
       type: FieldType.Custom,
-      customRender: (value, field, boxData) => (
-        <BoxStatus box={boxData} stock={stock} />
+      customRender: (value, field, boxData: BoxListRes) => (
+        <BoxStatusBadge box={boxData} stock={stock} />
       ),
     })
     .addFieldAtTheEnd({
@@ -132,14 +99,19 @@ const List = () => {
       mobile: true,
       customRender: (value, field, boxData: BoxListRes) => (
         <ButtonsContainer noWrap>
-          {stock?.accessControl === AccessControl.ksm && boxData.controlled ? (
+          {stock?.boxAccessControl &&
+          [AccessControl.keylessbox, AccessControl.ksm].includes(
+            stock.boxAccessControl,
+          ) &&
+          boxData.controlled ? (
             <Button
+              success
               text="application.openBox"
               click={() => confirmBoxOpen(boxData.id)}
             />
           ) : undefined}
           {hasFullAccess &&
-          (!boxData.status || boxData.status === RentStatus.free) ? (
+          (!boxData.status || boxData.status === BoxStatus.free) ? (
             <Button
               secondary
               text="application.assignRent"
@@ -189,12 +161,12 @@ const List = () => {
               <Button
                 text="application.addBox"
                 primary
-                to={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/boxes/add`}
+                to={`/${UserService.getSlugByRole(user.role)}/locations/stocks/${stockId}/boxes/add`}
               />
               <Button
                 text="application.addBoxes"
                 secondary
-                to={`/${UserService.getSlugByRole(user!.role)}/locations/stocks/${stockId}/boxes/add-multiple`}
+                to={`/${UserService.getSlugByRole(user.role)}/locations/stocks/${stockId}/boxes/add-multiple`}
               />
             </ButtonsContainer>
           )

@@ -1,76 +1,87 @@
-import React from 'react';
-import { ItfApiForm } from 'itf_formbuilder_react';
-import { DiscountReq } from 'smartbox-types';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { Button, Spinner } from '../../../../../components/Branded';
-import { ButtonsContainer, FieldsColumn, FormContainer, FormHeader } from '../../../../../components/Layout';
-import ApiService from '../../../../../services/api-service';
-import { formOnTranslateString } from '../../../../../utils/trans-form';
-import { apiTable, modal, notifications } from '../../../../../actions';
-import { __ } from '../../../../../helpers/i18n';
-import { mapFields } from '../../../../../utils/fields-mapper';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 
-interface Props {
+import { refreshApiTableData } from 'src/actions/api-table';
+import { hideModal, showModal } from 'src/actions/modal';
+import { successNotification } from 'src/actions/notifications';
+import { Modal, Tabs } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
+
+import { PaymentForm } from './components/PaymentForm';
+import { SectionForm } from './components/SectionForm';
+
+type Section = 'basic' | 'company' | 'payment';
+
+type UserEditProps = {
   userId: string;
-  hideModal: () => void;
-  refreshApiTableData: () => void;
-  successNotification: (text: string) => void;
-}
+  initialSection?: Section;
+};
 
-const UserEdit = ({ userId, successNotification, hideModal, refreshApiTableData }: Props) => {
-  const submitButton = (
-    <ButtonsContainer>
-      <Button text="application.save" type="submit" primary />
-    </ButtonsContainer>
-  );
+const UserEdit = ({ userId, initialSection = 'basic' }: UserEditProps) => {
+  const dispatch = useDispatch();
+  const [section, setSection] = useState<Section>(initialSection);
 
-  const fetchUrl = `user/form/update-user/${userId}`;
-  const sendUrl = `user/someone/${userId}`;
+  const handleSaved = () => {
+    dispatch(successNotification(__('application.changesSavedSuccess')));
+    dispatch(refreshApiTableData());
+    dispatch(hideModal());
+  };
 
-  const customSendFetcher = (formId: string, values: DiscountReq) => {
-    return ApiService.sendForm(
-      sendUrl,
-      {
-        ...values,
-      },
-      'PATCH',
-    );
+  const handleReturnToPayment = () => {
+    dispatch(showModal(<UserEdit userId={userId} initialSection="payment" />));
   };
 
   return (
-    <FormContainer>
-      <FormHeader title="application.editUserData" />
-      <FieldsColumn>
-        <ItfApiForm
-          formId="editUserForm"
-          schemaMayBeDynamic={false}
-          schemaCacheEnabled={false}
-          loadingInfo={<Spinner transparent />}
-          schemaFetcher={() => ApiService.loadForm(fetchUrl)}
-          sendFetcher={customSendFetcher}
-          submitButton={submitButton}
-          onRenderFullField={mapFields}
-          onSavedSuccessfully={() => {
-            successNotification(__('application.changesSavedSuccess'));
-            refreshApiTableData();
-            hideModal();
-          }}
-          onTranslateString={formOnTranslateString}
+    <>
+      <Modal.Header title={__('application.editUserData')} />
+      <Modal.Content>
+        <Tabs
+          tabs={[
+            {
+              text: 'application.editUserBasicData',
+              active: section === 'basic',
+              onClick: () => setSection('basic'),
+            },
+            {
+              text: 'application.editUserCompanyData',
+              active: section === 'company',
+              onClick: () => setSection('company'),
+            },
+            {
+              text: 'application.editUserPaymentSettings',
+              active: section === 'payment',
+              onClick: () => setSection('payment'),
+            },
+          ]}
         />
-      </FieldsColumn>
-    </FormContainer>
+
+        {section === 'basic' && (
+          <SectionForm
+            formId="editUserBasic"
+            fetchUrl={`user/form/update-user/${userId}/basic`}
+            sendUrl={`user/someone/${userId}/basic`}
+            onSaved={handleSaved}
+          />
+        )}
+        {section === 'company' && (
+          <SectionForm
+            formId="editUserCompany"
+            fetchUrl={`user/form/update-user/${userId}/company`}
+            sendUrl={`user/someone/${userId}/company`}
+            onSaved={handleSaved}
+          />
+        )}
+
+        {section === 'payment' && (
+          <PaymentForm
+            userId={userId}
+            onSaved={handleSaved}
+            onReturnToPayment={handleReturnToPayment}
+          />
+        )}
+      </Modal.Content>
+    </>
   );
 };
 
-const mapDispatchToProps = (dispatch: any) =>
-  bindActionCreators(
-    {
-      ...modal,
-      ...apiTable,
-      ...notifications,
-    },
-    dispatch,
-  );
-
-export default connect(null, mapDispatchToProps)(UserEdit);
+export default UserEdit;

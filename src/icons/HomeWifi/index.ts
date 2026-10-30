@@ -1,1 +1,1 @@
-export * from './HomeWifi';
+export * from 'src/icons/HomeWifi/HomeWifi';

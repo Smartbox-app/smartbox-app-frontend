@@ -1,12 +1,14 @@
 import React from 'react';
 import { Switch, Route, Redirect, useParams } from 'react-router';
+
+import { UserRole } from 'smartbox-types';
+import { useGetMyDetailsQuery } from 'src/queries';
+import UserService from 'src/services/user-service';
+
 import { Add } from './Add';
 import { AddBatch } from './AddBatch';
 import { List } from './List';
-import UserService from '../../../../../../services/user-service';
 import { Map } from '../Map';
-import { UserRole } from 'smartbox-types';
-import { useGetMyDetailsQuery } from 'src/queries';
 
 const Boxes = () => {
   const { stockId } = useParams<{ stockId: string }>();

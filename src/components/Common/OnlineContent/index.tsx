@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { ApplicationState } from '../../../reducers';
+
+import { ApplicationState } from 'src/reducers';
 
 interface Props {
   isOnline: boolean;

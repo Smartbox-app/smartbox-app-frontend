@@ -1,9 +1,13 @@
-import { DateInput } from '../../../../../../components/Common';
-import { useTenant } from '../../../../../../hooks/useTenant';
+import { subYears } from 'date-fns';
 import { Controller, useFormContext } from 'react-hook-form';
-import { RentDataDto } from './dto/RentDataDto';
+
+import { DateInput, InputSelect } from 'src/components/Common';
 import { Header, Input } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
+import { useGetCountriesList } from 'src/hooks/useGetCountriesList';
+import { useTenant } from 'src/hooks/useTenant';
+
+import { RentDataDto } from './dto/RentDataDto';
 
 interface Props {
   disabled?: boolean;
@@ -18,6 +22,8 @@ const TenantDetailsForm = ({ disabled }: Props) => {
     formState: { errors },
   } = useFormContext<RentDataDto>();
 
+  const countriesList = useGetCountriesList();
+
   return (
     <>
       <Header variant="h2">{__('rent.rentier_data')}</Header>
@@ -25,6 +31,7 @@ const TenantDetailsForm = ({ disabled }: Props) => {
         label="rent.first_name"
         placeholder="rent.first_name_placeholder"
         {...register('firstName')}
+        required
         error={errors.firstName?.message}
         disabled
       />
@@ -32,6 +39,7 @@ const TenantDetailsForm = ({ disabled }: Props) => {
         label="rent.last_name"
         placeholder="rent.last_name_placeholder"
         {...register('lastName')}
+        required
         error={errors.lastName?.message}
         disabled
       />
@@ -44,16 +52,36 @@ const TenantDetailsForm = ({ disabled }: Props) => {
               {...field}
               required
               inline={false}
+              allowInput
               name="birthDate"
               error={errors.birthDate?.message}
               label="rent.birth_date"
-              onChange={([selected]) => {
+              maxDate={new Date()}
+              minDate={subYears(new Date(), 120)}
+              onChange={([selected]: Date[]) => {
                 field.onChange(selected);
               }}
             />
           )}
         />
       ) : null}
+      <Controller
+        name="country"
+        control={control}
+        render={({ field, fieldState }) => (
+          <InputSelect
+            name="country"
+            label="rent.country"
+            placeholder="rent.country_placeholder"
+            options={countriesList}
+            value={field.value}
+            onChange={field.onChange}
+            onBlur={field.onBlur}
+            required
+            error={fieldState.error?.message}
+          />
+        )}
+      />
       <Input
         label="rent.street"
         {...register('street')}

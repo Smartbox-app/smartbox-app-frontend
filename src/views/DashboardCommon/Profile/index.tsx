@@ -1,8 +1,9 @@
 import { Switch, Route, Redirect } from 'react-router';
-import UserService from '../../../services/user-service';
+
+import { useGetMyDetailsQuery } from 'src/queries';
+import UserService from 'src/services/user-service';
 
 import { Detail } from './Detail';
-import { useGetMyDetailsQuery } from 'src/queries';
 
 const Profile = () => {
   const { data: user } = useGetMyDetailsQuery();

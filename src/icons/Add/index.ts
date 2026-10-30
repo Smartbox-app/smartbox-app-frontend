@@ -1,1 +1,1 @@
-export * from './Add';
+export * from 'src/icons/Add/Add';

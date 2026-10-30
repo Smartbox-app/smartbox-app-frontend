@@ -1,27 +1,13 @@
-@import '../../../config/variables.scss';
-@import '../../../config/mixins.scss';
+@use '../../../config/variables.scss' as *;
+@use '../../../config/mixins.scss' as *;
 
 .detail-wrapper {
   display: flex;
   flex-direction: column;
   position: relative;
   height: 100%;
+  gap: 0;
 
-  .single {
-    display: flex;
-
-    strong {
-      margin-left: $main-spacing /2;
-    }
-
-    .fa {
-      flex: 0 0 12%;
-      justify-content: center;
-      align-items: center;
-      font-size: 1.3rem;
-      display: flex;
-    }
-  }
   .custom-icon-button {
     display: flex;
     flex-direction: row;

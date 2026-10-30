@@ -1,38 +1,47 @@
 import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { useParams } from 'react-router';
 
-import { withRouter, RouteComponentProps, useParams } from 'react-router';
-import { FormContainer } from '../../../components/Layout';
-import { ProgressIndicator } from '../../../components/Common';
+import { RentStatus } from 'smartbox-types';
+import { showModal } from 'src/actions/modal';
+import { ProgressIndicator } from 'src/components/Common';
+import { UnpaidRentModal } from 'src/components/Common/UnpaidRentModal';
+import { PageHeader, Section } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
+import { history } from 'src/history';
+import { useTenantNaming } from 'src/hooks/useTenantNaming';
+import {
+  useGetMyDetailsQuery,
+  useGetMyRentsQuery,
+  useMyRentDetailsQuery,
+} from 'src/queries';
+import UserService from 'src/services/user-service';
+import { findUnpaidRent } from 'src/utils/unpaid-extension';
 
 import { Form } from './Form/Index';
-import { useDispatch, useSelector } from 'react-redux';
-import { getStockDiscountsList } from '../../../actions/stock';
-import { ApplicationState } from 'src/reducers';
-import { RentStatus } from 'smartbox-types';
-import { getSingleRent } from '../../../actions/single-rent';
-import { PageHeader, Section } from '../../../components/ui';
-import { __ } from '../../../helpers/i18n';
-import { useTenantNaming } from 'src/hooks/useTenantNaming';
 
 export const Order = () => {
   const dispatch = useDispatch();
   const { getText } = useTenantNaming();
-  const { singleRent } = useSelector((state: ApplicationState) => state.rent);
-  const { step, paymentId, rentId } = useParams<{
+  const { data: user } = useGetMyDetailsQuery();
+  const { data: rentsList = [], isPending: loadingRents } =
+    useGetMyRentsQuery();
+  const { step, rentId } = useParams<{
     step: string;
-    paymentId: string;
     rentId?: string;
   }>();
 
-  useEffect(() => {
-    dispatch(getStockDiscountsList());
-  }, []);
+  const { data: extendRent } = useMyRentDetailsQuery(rentId);
+  const unpaidRent = findUnpaidRent(rentsList);
+  const isNewRentFlow = !rentId || step === 'stock' || step === 'size';
 
   useEffect(() => {
-    if (!rentId || paymentId) return;
-
-    dispatch(getSingleRent(rentId));
-  }, [rentId]);
+    if (!user || !isNewRentFlow || loadingRents || !unpaidRent) {
+      return;
+    }
+    dispatch(showModal(<UnpaidRentModal rent={unpaidRent} />));
+    history.replace(`/${UserService.getSlugByRole(user.role)}/main`);
+  }, [user, isNewRentFlow, loadingRents, unpaidRent]);
 
   const getStepByName = (stepName: string) => {
     switch (stepName) {
@@ -54,11 +63,15 @@ export const Order = () => {
   };
 
   const getTitle = () => {
-    if (singleRent && singleRent.status === RentStatus.noPaidExtension)
+    if (extendRent && extendRent.status === RentStatus.noPaidExtension)
       return 'application.debtPayOff';
     if (rentId) return 'application.extendsOrder';
     return 'application.newOrder';
   };
+
+  if (isNewRentFlow && (loadingRents || unpaidRent)) {
+    return null;
+  }
 
   return (
     <>

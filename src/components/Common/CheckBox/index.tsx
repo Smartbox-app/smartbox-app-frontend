@@ -1,12 +1,13 @@
 import React from 'react';
-
-import { TranslatableObject } from '../../../utils/errors-trans';
-import { __ } from '../../../helpers/i18n';
-import { InputErrors } from '../InputErrors';
-import './CheckBox.scss';
-import { InputHelp } from '../InputHelp';
 import styled from 'styled-components';
-import { getColorForBackground } from '../../../utils/color';
+
+import { InputErrors } from 'src/components/Common/InputErrors';
+import { InputHelp } from 'src/components/Common/InputHelp';
+import { __ } from 'src/helpers/i18n';
+import { getColorForBackground } from 'src/utils/color';
+import { TranslatableObject } from 'src/utils/errors-trans';
+
+import './CheckBox.scss';
 
 interface Props {
   name: string;
@@ -57,11 +58,11 @@ const CheckBox = ({
       type="checkbox"
       id={name}
       name={name}
-      onChange={(e: any) => handleChange(e.target.checked)}
+      onChange={(event) => handleChange(event.target.checked)}
       checked={!!checked}
       disabled={disabled}
     />
-    <label htmlFor={name}>{__(label)}</label>
+    <label htmlFor={name}>{label}</label>
     {errors && <InputErrors errors={errors} />}
     {help && <InputHelp text={help} />}
   </StyledCheckbox>

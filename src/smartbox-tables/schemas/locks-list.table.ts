@@ -1,10 +1,10 @@
-import { FieldType, TableSchema } from '../typings';
+import { FieldType, TableSchema } from 'src/smartbox-tables/typings';
 
 export const locksList: TableSchema = {
   countPerPage: 20,
   fields: [
     {
-      name: 'ID',
+      name: 'application.tables.id',
       field: 'lockId',
       mobile: true,
       searchable: false,
@@ -13,7 +13,7 @@ export const locksList: TableSchema = {
       type: FieldType.Text,
     },
     {
-      name: 'Nazwa',
+      name: 'application.tables.name',
       field: 'lockName',
       mobile: true,
       searchable: false,
@@ -22,7 +22,7 @@ export const locksList: TableSchema = {
       type: FieldType.Text,
     },
     {
-      name: 'Alias',
+      name: 'application.tables.alias',
       field: 'lockAlias',
       mobile: true,
       searchable: true,
@@ -31,7 +31,7 @@ export const locksList: TableSchema = {
       type: FieldType.Text,
     },
     {
-      name: 'Stan baterii',
+      name: 'application.tables.battery',
       field: 'electricQuantity',
       mobile: true,
       searchable: false,

@@ -1,9 +1,11 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { clearSelectedStock, setOrderStock } from 'src/actions/order';
-import { Badge, Button, Card, Typography } from 'src/components/ui';
-import { Map, SearchZoomIn } from 'src/icons';
-import { ApplicationState } from 'src/reducers';
 import styled, { keyframes } from 'styled-components';
+
+import { clearSelectedStock } from 'src/actions/order';
+import { Badge, Button, Card, Typography } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
+import { Map } from 'src/icons';
+import { ApplicationState } from 'src/reducers';
 
 const fadeIn = keyframes`
 0% {
@@ -45,10 +47,10 @@ const Content = styled('div')(({ theme }) => ({
   flex: 1,
 }));
 
-const StyledHeader = styled('span')(({theme}) => ({
-    marginBottom: theme.spacing * 2,
-    fontWeight: 700
-}))
+const StyledHeader = styled('span')(({ theme }) => ({
+  marginBottom: theme.spacing * 2,
+  fontWeight: 700,
+}));
 
 export type ActiveLocationProps = {
   id: string;
@@ -61,22 +63,28 @@ export const ActiveLocation = ({ id, name, address }: ActiveLocationProps) => {
   const dispatch = useDispatch();
 
   const cancelChoice = () => {
-    dispatch(clearSelectedStock())
-  }
+    dispatch(clearSelectedStock());
+  };
 
   return (
     <StyledLocation>
       <CardContainer>
         <Card active={id === stockId}>
           <Content>
-            <StyledHeader>Twój wybór</StyledHeader>
+            <StyledHeader>{__('application.phrases.yourChoice')}</StyledHeader>
             <Badge bold variant={id === stockId ? 'primary' : 'default'}>
               {name}
             </Badge>
 
             <Typography>{address}</Typography>
             <hr />
-            <Button size='small' iconLeft={<Map />} text='Chcę zmienić wybór' onClick={cancelChoice} type='button'/>
+            <Button
+              size="small"
+              iconLeft={<Map />}
+              text="application.phrases.changeChoice"
+              onClick={cancelChoice}
+              type="button"
+            />
           </Content>
         </Card>
       </CardContainer>

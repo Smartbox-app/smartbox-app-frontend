@@ -1,15 +1,23 @@
-import React, { useState, useEffect, Suspense } from 'react';
-import { applyMiddleware, createStore } from 'redux';
+import { App as CapacitorApp } from '@capacitor/app';
+import { Browser } from '@capacitor/browser';
+import { Capacitor } from '@capacitor/core';
+import { QueryClientProvider } from '@tanstack/react-query';
+import countries from 'i18n-iso-countries';
+import cs from 'i18n-iso-countries/langs/cs.json';
+import de from 'i18n-iso-countries/langs/de.json';
+import en from 'i18n-iso-countries/langs/en.json';
+import pl from 'i18n-iso-countries/langs/pl.json';
+import uk from 'i18n-iso-countries/langs/uk.json';
+import React, { Suspense } from 'react';
 import { Provider } from 'react-redux';
-import reduxThunk from 'redux-thunk';
-import ReactSelect from 'react-select';
-import { composeWithDevTools } from 'redux-devtools-extension';
 import { Route, Router, Switch, Redirect } from 'react-router-dom';
-import { createBrowserHistory } from 'history';
-import flatpickr from 'flatpickr';
-import { Polish } from 'flatpickr/dist/l10n/pl';
-import reducers from './reducers';
-import { Page404, Welcome } from './views';
+import ReactSelect from 'react-select';
+import 'reflect-metadata';
+
+import { appStatus } from 'src/actions/app-status';
+import { AppGlobalStyles } from 'src/AppGlobalStyles';
+import AppOffline from 'src/components/AppOffline';
+import { AppWrapper } from 'src/components/AppWrapper';
 import {
   OnlineContent,
   OfflineContent,
@@ -21,84 +29,78 @@ import {
   ErrorBoundary,
   Cookies,
   RouteTenant,
-} from './components/Common';
-import { Spinner } from './components/Branded';
-import {
-  EmailConfirm,
-  Login,
-  Register,
-  RestorePass,
-  UserActivation,
-  EmailSend,
-  GoogleAuth,
-  TenantActivation,
-  ResendActivationLink,
-} from './views/Auth';
-import { PaymentResult } from './views/DashboardCommon';
-import { NotificationContainer } from './components/Notifications';
-import AppOffline from './components/AppOffline';
-import { i18n } from './helpers/i18n';
-import { appStatus } from './actions/app-status';
+} from 'src/components/Common';
+import BannerAndroid from 'src/components/Common/BannerAndroid';
+import BannerIos from 'src/components/Common/BanneriOS';
+import { RouteGuest } from 'src/components/Common/RouteGuest';
+import { UnauthorizedRoute } from 'src/components/Layout';
+import { NotificationContainer } from 'src/components/Notifications';
+import { TenantInactiveScreen } from 'src/components/TenantInactiveScreen';
+import { history } from 'src/history';
+import { applyFlatpickrLocale } from 'src/i18n/flatpickr-locale';
+import { CustomThemeProvider } from 'src/providers';
+import { queryClient } from 'src/query-client';
+import { store } from 'src/store';
+import type { AppDispatch } from 'src/types/app-dispatch';
+import { Page404, Welcome } from 'src/views';
+import { PaymentResult } from 'src/views/DashboardCommon';
+import { PrivacyPolicy } from 'src/views/PrivacyPolicy';
+import { Rules } from 'src/views/Rules';
 
 import 'flatpickr/dist/flatpickr.min.css';
-// import "flatpickr/dist/themes/airbnb.css";
-import BannerAndroid from './components/Common/BannerAndroid';
-import BannerIos from './components/Common/BanneriOS';
-import { CustomThemeProvider } from './providers';
-import { AppWrapper } from './components/AppWrapper';
-import { GlobalStyle, GlobalFont } from './globalStyles';
-import { useTenant } from './hooks/useTenant';
-import { PaymentStatus } from 'smartbox-types';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { RouteGuest } from './components/Common/RouteGuest';
 
-const DashboardAdmin = React.lazy(() => import('./views/DashboardAdmin'));
-const DashboardUser = React.lazy(() => import('./views/DashboardUser'));
-const DashboardTenant = React.lazy(() => import('./views/DashboardTenant'));
-const DashboardWorker = React.lazy(() => import('./views/DashboardWorker'));
+const EmailConfirm = React.lazy(() => import('src/views/Auth/EmailConfirm'));
+const Login = React.lazy(() =>
+  import('src/views/Auth/Login').then((module) => ({ default: module.Login })),
+);
+const Register = React.lazy(() => import('src/views/Auth/Register'));
+const RestorePass = React.lazy(() => import('src/views/Auth/RestorePass'));
+const UserActivation = React.lazy(() => import('src/views/Auth/UserActivation'));
+const EmailSend = React.lazy(() => import('src/views/Auth/EmailSend'));
 
-flatpickr.localize(Polish);
-flatpickr.defaultConfig.time_24hr = true;
+const TenantActivation = React.lazy(
+  () => import('src/views/Auth/TenantActivation'),
+);
+const ResendActivationLink = React.lazy(
+  () => import('src/views/Auth/ResendActivationLink'),
+);
+const ActivateAccount = React.lazy(
+  () => import('src/views/Auth/ActivateAccount'),
+);
 
-const createStoreWithMiddleware = composeWithDevTools(
-  applyMiddleware(reduxThunk),
-)(createStore);
+const DashboardAdmin = React.lazy(() => import('src/views/DashboardAdmin'));
+const DashboardUser = React.lazy(() => import('src/views/DashboardUser'));
+const DashboardTenant = React.lazy(() => import('src/views/DashboardTenant'));
+const DashboardWorker = React.lazy(() => import('src/views/DashboardWorker'));
 
-export const store = createStoreWithMiddleware(reducers);
+applyFlatpickrLocale();
 
-const queryClient = new QueryClient();
+countries.registerLocale(pl);
+countries.registerLocale(en);
+countries.registerLocale(cs);
+countries.registerLocale(uk);
+countries.registerLocale(de);
 
-export const history = createBrowserHistory({ basename: '/' });
+CapacitorApp.addListener('appUrlOpen', async ({ url }) => {
+  try {
+    const parsed = new URL(url);
 
-const AppGlobalStyles = () => {
-  const { tenant } = useTenant();
+    // If your app is hosted at https://my-app.com
+    const path = parsed.pathname + parsed.search + parsed.hash;
 
-  return (
-    <>
-      {tenant ? <GlobalFont tenantId={tenant.id} /> : null}
-      <GlobalStyle tenant={tenant} />
-    </>
-  );
-};
+    history.push(path);
+  } finally {
+    try {
+      await Browser.close();
+    } catch {
+      // Ignore if Browser wasn't opened or can't be closed
+    }
+  }
+});
+
+
 
 const App = () => {
-  const [loading, setLoading] = useState(true);
-  const checkI18nLoaded = () => {
-    if (i18n.loaded) {
-      setLoading(false);
-    } else {
-      setTimeout(checkI18nLoaded, 100);
-    }
-  };
-
-  useEffect(() => {
-    const lang = store.getState().lang.current;
-    i18n.load(lang);
-    checkI18nLoaded();
-  }, []);
-
-  if (loading || !i18n.loaded) return null;
-
   return (
     <QueryClientProvider client={queryClient}>
       <Provider store={store}>
@@ -109,96 +111,118 @@ const App = () => {
               <OnlineContent>
                 {/* <UpdateInfoBar /> */}
                 <NotificationContainer />
-
+  
+                {/* <AppMessage /> */}
                 <ErrorBoundary>
-                  <Suspense fallback={<Spinner />}>
+                  <Suspense>
                     <Switch>
-                      <Route
-                        exact
-                        path="/"
-                        render={() => <Redirect to="/login" />}
-                      />
-                      <RouteGuest path="/welcome" component={Welcome} />
-                      <RouteGuest path="/login" component={Login} />
-                      <RouteGuest exact path="/register" component={Register} />
-                      <RouteGuest
-                        path="/register/mail-was-send"
-                        component={EmailSend}
-                      />
-                      <RouteGuest
-                        exact
-                        path="/restore-pass/"
-                        component={RestorePass}
-                      />
-                      <RouteGuest
-                        path="/restore-pass/:userId/:updateToken"
-                        component={RestorePass}
-                      />
-                      <RouteGuest
-                        path="/google-success/:googleToken"
-                        component={GoogleAuth}
-                      />
-                      <RouteGuest
-                        path="/resend-activation-link"
-                        component={ResendActivationLink}
-                      />
-                      <RouteGuest
-                        path="/user-activation/:invitationId/:updateToken"
-                        component={UserActivation}
-                      />
-                      <RouteGuest
-                        path="/tenant-activation/:userId/:updateToken"
-                        component={TenantActivation}
-                      />
-                      <RouteGuest
-                        path="/join-from-invitation/:invitationId/:updateToken"
-                        component={UserActivation}
-                      />
-
-                      <RouteGuest
-                        exact
-                        path="/email-confirmation/:userId/:updateToken"
-                        component={EmailConfirm}
-                      />
-
-                      <Route
-                        path="/payment-success/"
-                        render={() => (
-                          <PaymentResult status={PaymentStatus.accepted} />
-                        )}
-                      />
-                      <Route
-                        path="/payment-failed/"
-                        render={() => (
-                          <PaymentResult status={PaymentStatus.failure} />
-                        )}
-                      />
-                      <Route
-                        path="/payment-pending/"
-                        render={() => (
-                          <PaymentResult status={PaymentStatus.wait} />
-                        )}
-                      />
-                      <Route
-                        path="/payment-error/"
-                        render={() => <PaymentResult />}
-                      />
-
                       <RouteAdmin path="/admin" component={DashboardAdmin} />
                       <RouteWorker path="/worker" component={DashboardWorker} />
                       <RouteUser path="/user" component={DashboardUser} />
                       <RouteTenant path="/client" component={DashboardTenant} />
-
-                      <Route exact path="/404" component={Page404} />
-                      <Route component={Page404} />
+                      <UnauthorizedRoute>
+                        <Switch>
+                          <Route
+                            exact
+                            path="/inactive"
+                            component={TenantInactiveScreen}
+                          />
+                          <Route
+                            exact
+                            path="/"
+                            render={({ location }) => (
+                              <Redirect
+                                to={`/login${location.search || ''}${location.hash || ''}`}
+                              />
+                            )}
+                          />
+                          <RouteGuest path="/welcome" component={Welcome} />
+                          <RouteGuest path="/login" component={Login} />
+                          <RouteGuest
+                            exact
+                            path="/register"
+                            component={Register}
+                          />
+                          <RouteGuest
+                            path="/register/mail-was-send"
+                            component={EmailSend}
+                          />
+                          <RouteGuest
+                            exact
+                            path="/restore-pass"
+                            component={RestorePass}
+                          />
+                          <RouteGuest
+                            path="/restore-pass/:userId/:updateToken"
+                            component={RestorePass}
+                          />
+                          <RouteGuest
+                            path="/resend-activation-link"
+                            component={ResendActivationLink}
+                          />
+                          <RouteGuest
+                            path="/activate-account"
+                            component={ActivateAccount}
+                          />
+                          <RouteGuest
+                            path="/user-activation/:invitationId/:updateToken"
+                            component={UserActivation}
+                          />
+                          <RouteGuest
+                            path="/tenant-activation/:userId/:updateToken"
+                            component={TenantActivation}
+                          />
+                          <RouteGuest
+                            path="/join-from-invitation/:invitationId/:updateToken"
+                            component={UserActivation}
+                          />
+                          <RouteGuest
+                            exact
+                            path="/email-confirmation/:userId/:updateToken"
+                            component={EmailConfirm}
+                          />
+                          <Route
+                            path="/payment/:id"
+                            render={() => <PaymentResult />}
+                          />
+                          <Route
+                            path="/payment-success/"
+                            render={() => <PaymentResult />}
+                          />
+                          <Route
+                            path="/payment-failed/"
+                            render={() => <PaymentResult />}
+                          />
+                          <Route
+                            path="/payment-pending/"
+                            render={() => <PaymentResult />}
+                          />
+                          <Route
+                            path="/payment-error/"
+                            render={() => <PaymentResult />}
+                          />
+                          <Route exact path="/rules" component={Rules} />
+                          <Route
+                            exact
+                            path="/privacy-policy"
+                            component={PrivacyPolicy}
+                          />
+                          <Route exact path="/404" component={Page404} />
+                          <Route component={Page404} />
+                        </Switch>
+                      </UnauthorizedRoute>
                     </Switch>
                   </Suspense>
                 </ErrorBoundary>
 
-                <BannerAndroid />
-                <BannerIos />
+                {!Capacitor.isNativePlatform() ? (
+                  <>
+                    <BannerAndroid />
+                    <BannerIos />
+                    <Cookies />
+                  </>
+                ) : null}
                 <Modal />
-                <Cookies />
               </OnlineContent>
               <OfflineContent>
                 <AppOffline />
@@ -212,9 +236,10 @@ const App = () => {
 };
 
 const listenToWindowEvent =
-  (name: string, mapEventToAction: any) => (dispatch: any) => {
-    const handleEvent = (e: any) => {
-      dispatch(mapEventToAction(e));
+  (name: string, mapEventToAction: (event: Event) => { type: string }) =>
+  (dispatch: AppDispatch) => {
+    const handleEvent = (event: Event) => {
+      dispatch(mapEventToAction(event));
     };
     window.addEventListener(name, handleEvent);
   };
@@ -228,4 +253,5 @@ store.dispatch(
 );
 
 export { ReactSelect };
+export { store } from 'src/store';
 export default App;

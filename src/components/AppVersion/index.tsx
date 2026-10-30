@@ -1,14 +1,18 @@
-import { useMemo } from "react";
-import styled from "styled-components";
+import { App } from '@capacitor/app';
+import { Capacitor } from '@capacitor/core';
+import { useEffect, useState } from 'react';
+import styled from 'styled-components';
 
-type AppVersionVariants = "default" | "secondary";
+import { getMobileBuildId } from 'src/utils/mobile-build-id';
 
-const StyledVersion = styled("div")<{ variant: AppVersionVariants }>(
+type AppVersionVariants = 'default' | 'secondary';
+
+const StyledVersion = styled('div')<{ variant: AppVersionVariants }>(
   ({ theme, variant }) => ({
-    fontSize: "inherit",
-    textAlign: "center",
-    color: variant === "secondary" ? theme.colors.text.disable : "inherit",
-  })
+    fontSize: 'inherit',
+    textAlign: 'center',
+    color: variant === 'secondary' ? theme.colors.text.disable : 'inherit',
+  }),
 );
 
 export type AppVersionProps = {
@@ -16,9 +20,30 @@ export type AppVersionProps = {
 };
 
 export const AppVersion = ({ variant = 'default' }: AppVersionProps) => {
-  const version = useMemo(() => {
-    return localStorage.getItem("v");
+  const [appVersion, setAppVersion] = useState<string>();
+  const mobileBuildId = getMobileBuildId();
+
+  useEffect(() => {
+    const setVersion = async () => {
+      if (Capacitor.isNativePlatform()) {
+        const { version } = await App.getInfo();
+        setAppVersion(version);
+        return;
+      }
+
+      setAppVersion(localStorage.getItem('v') || '-');
+    };
+
+    void setVersion();
   }, []);
 
-  return <StyledVersion variant={variant}>{version}</StyledVersion>;
+  const parts = [appVersion, mobileBuildId].filter(Boolean);
+
+  if (parts.length === 0) return null;
+
+  return (
+    <StyledVersion variant={variant} data-testid="app-version">
+      {parts.join(' | ')}
+    </StyledVersion>
+  );
 };

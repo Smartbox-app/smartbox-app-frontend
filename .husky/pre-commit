@@ -1,0 +1,9 @@
+if command -v yarn >/dev/null 2>&1; then
+  run() { yarn "$@"; }
+else
+  run() { npm run "$@"; }
+fi
+
+# run typecheck
+# run test:ci
+# run lint:check

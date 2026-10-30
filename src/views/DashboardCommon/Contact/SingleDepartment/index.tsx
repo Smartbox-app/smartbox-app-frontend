@@ -1,5 +1,8 @@
 import React from 'react';
 
+import { Link } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
+
 import './SingleDepartment.scss';
 
 interface Props {
@@ -11,14 +14,21 @@ interface Props {
   openHour?: string;
 }
 
-const SingleDepartment = ({ name, phone, mail, organisationRole, closeHour, openHour }: Props) => (
+const SingleDepartment = ({
+  name,
+  phone,
+  mail,
+  organisationRole,
+  closeHour,
+  openHour,
+}: Props) => (
   <div className="department">
     <div className="content">
       <p className="department-row main">
-        <strong>{name}</strong>
+        <strong>{name ? __(name) : null}</strong>
       </p>
       <p className="department-row organisation-role">
-        {organisationRole}{' '}
+        {organisationRole ? __(organisationRole) : null}{' '}
         {closeHour && (
           <>
             <br />{' '}
@@ -30,14 +40,14 @@ const SingleDepartment = ({ name, phone, mail, organisationRole, closeHour, open
       </p>
       <p className="department-row clickable">
         <span className="fa fa-envelope-o" />
-        <a href={`mailto:${mail}`} rel="noopener noreferrer" target="_blank">
+        <Link href={`mailto:${mail}`} rel="noopener noreferrer" target="_blank">
           {mail}
-        </a>
+        </Link>
       </p>
       {phone && (
         <p className="department-row clickable">
           <span className="fa fa-mobile" />
-          <a href={`tel:${phone}`}>{phone}</a>
+          <Link href={`tel:${phone}`}>{phone}</Link>
         </p>
       )}
     </div>

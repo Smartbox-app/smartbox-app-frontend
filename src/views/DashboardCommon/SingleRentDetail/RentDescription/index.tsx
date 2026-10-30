@@ -1,18 +1,27 @@
-import { MyRentDetails, RentDescription, RentUserData } from 'smartbox-types';
-import { __ } from '../../../../helpers/i18n';
-import { RentHistory } from '../../RentHistory';
+import styled from 'styled-components';
+
+import { MyRentDetails, RentAgreementType, RentDescription } from 'smartbox-types';
 import { Header, Section, Typography } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
 import { useTenantNaming } from 'src/hooks/useTenantNaming';
+
+import { RentHistory } from '../../RentHistory';
 
 interface Props {
   description: RentDescription[];
   rent: MyRentDetails;
 }
 
+const StyledClientSource = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+`;
+
 export const Description = ({ description, rent }: Props) => {
   const { getText } = useTenantNaming();
 
-  if(description.length === 0) return null;
+  if (description.length === 0) return null;
 
   const firstRent = description[0];
   const clientSource = firstRent.data?.clientSource;
@@ -20,19 +29,20 @@ export const Description = ({ description, rent }: Props) => {
     <Section>
       <Header variant="h2">{__('application.rentHistory')}</Header>
       {clientSource ? (
-        <div>
-          <strong>{__(getText('client_source'))}</strong>
+        <StyledClientSource>
+          <strong>{getText('client_source')}</strong>
           <Typography>{clientSource}</Typography>{' '}
-        </div>
+        </StyledClientSource>
       ) : (
         ''
       )}
       <RentHistory
         description={description}
         rentId={rent.id}
+        isOpenEnded={rent.agreementType === RentAgreementType.OpenEnded}
         paymentType={rent.paymentType}
-        periods={rent.periods}
-      />
-    </Section>
+        periods={rent.periods ?? []}
+          />
+        </Section>
   );
 };

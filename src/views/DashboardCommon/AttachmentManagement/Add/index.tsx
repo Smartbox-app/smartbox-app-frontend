@@ -1,23 +1,23 @@
-import React from 'react';
 import { ItfApiForm } from 'itf_formbuilder_react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
-import ReactCreatableSelect from 'react-select/creatable';
+
+import { successNotification } from 'src/actions/notifications';
+import { Button, Spinner } from 'src/components/Branded';
+import { ReactSelectOverride, ReactCreatableSelectOverride as ReactCreatableSelect } from 'src/components/Common/ReactSelectOverride';
 import {
   PageHeader,
   ButtonsContainer,
   FormContainer,
   Section,
-} from '../../../../components/Layout';
-import { Button, Spinner } from '../../../../components/Branded';
-import ApiService from '../../../../services/api-service';
-import { formOnTranslateString } from '../../../../utils/trans-form';
-import { history } from '../../../../App';
-import { ReactSelectOverride } from '../../../../components/Common/ReactSelectOverride';
-import { successNotification } from '../../../../actions/notifications';
-import { __ } from '../../../../helpers/i18n';
-import UserService from '../../../../services/user-service';
-import { mapFields } from '../../../../utils/fields-mapper';
+} from 'src/components/Layout';
+import { __ } from 'src/helpers/i18n';
+import { history } from 'src/history';
 import { useGetMyDetailsQuery } from 'src/queries';
+import ApiService from 'src/services/api-service';
+import UserService from 'src/services/user-service';
+import { mapFields } from 'src/utils/fields-mapper';
+import { formOnTranslateString } from 'src/utils/trans-form';
 
 const Add = () => {
   const dispatch = useDispatch();
@@ -44,7 +44,7 @@ const Add = () => {
             schemaMayBeDynamic={true}
             loadingInfo={<Spinner transparent />}
             schemaFetcher={() => ApiService.loadForm(fetchUrl)}
-            sendFetcher={(formId: string, values: any) =>
+            sendFetcher={(_formId: string, values: FormData) =>
               ApiService.sendForm(sendUrl, values)
             }
             submitButton={submitButton}

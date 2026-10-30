@@ -1,28 +1,24 @@
 import { ItfApiForm } from "itf_formbuilder_react";
 import React from "react";
-import { connect } from "react-redux";
-import ReactCreatableSelect from "react-select/creatable";
-import { bindActionCreators } from "redux";
-import { modal, notifications } from "../../../../../actions";
-import { Button, Spinner } from "../../../../../components/Branded";
-import { ReactSelectOverride } from "../../../../../components/Common/ReactSelectOverride";
-import {
-  ButtonsContainer,
-  FormContainer,
-} from "../../../../../components/Layout";
-import ApiService from "../../../../../services/api-service";
-import { formOnTranslateString } from "../../../../../utils/trans-form";
-import { mapFields } from "../../../../../utils/fields-mapper";
-import { Header } from "src/components/ui";
+import { useDispatch } from "react-redux";
+
+import { UpdateWorkerStocksReq } from "smartbox-types";
+import { hideModal } from "src/actions/modal";
+import { successNotification } from "src/actions/notifications";
+import { Button, Spinner } from "src/components/Branded";
+import { ButtonsContainer } from "src/components/Layout";
+import { Modal } from "src/components/ui";
 import { __ } from "src/helpers/i18n";
+import ApiService from "src/services/api-service";
+import { mapFields } from "src/utils/fields-mapper";
+import { formOnTranslateString } from "src/utils/trans-form";
 
 interface Props {
   userId: string;
-  successNotification: (text: string) => void;
-  hideModal: () => void;
 }
 
-const EditAssign = ({ userId, successNotification, hideModal }: Props) => {
+const EditAssign = ({ userId }: Props) => {
+  const dispatch = useDispatch();
   const submitButton = (
     <ButtonsContainer>
       <Button text="application.save" type="submit" primary />
@@ -34,36 +30,32 @@ const EditAssign = ({ userId, successNotification, hideModal }: Props) => {
 
   return (
     <>
-      <Header variant='h1'>{__("application.workerAssignChange")}</Header>
-
-      <FormContainer>
+      <Modal.Header title={__("application.workerAssignChange")} />
+      <Modal.Content>
         <ItfApiForm
           formId="addOrderForm"
           schemaMayBeDynamic={false}
           schemaCacheEnabled={false}
           loadingInfo={<Spinner transparent />}
           schemaFetcher={() => ApiService.loadForm(fetchUrl)}
-          sendFetcher={(formId: string, values: any) =>
+          sendFetcher={(_formId: string, values: UpdateWorkerStocksReq) =>
             ApiService.sendForm(sendUrl, values, "PATCH")
           }
           submitButton={submitButton}
           onSavedSuccessfully={() => {
-            successNotification("notification.userAssigmentChanged");
-            hideModal();
+            dispatch(successNotification("notification.userAssigmentChanged"));
+            dispatch(hideModal());
           }}
           onRenderFullField={mapFields}
           onTranslateString={formOnTranslateString}
           thirdPartyComponents={{
-            ReactSelect: ReactSelectOverride,
-            ReactCreatableSelect,
+            // ReactSelect: ReactSelectOverride,
+            // ReactCreatableSelect,
           }}
         />
-      </FormContainer>
+      </Modal.Content>
     </>
   );
 };
 
-const mapDispatchToProps = (dispatch: any) =>
-  bindActionCreators({ ...notifications, ...modal }, dispatch);
-
-export default connect(null, mapDispatchToProps)(EditAssign);
+export default EditAssign;

@@ -1,16 +1,11 @@
 import React, { useEffect } from 'react';
-import { ItfApiForm } from 'itf_formbuilder_react';
-import { bindActionCreators } from 'redux';
-import { connect, useDispatch, useSelector } from 'react-redux';
-import ApiService from '../../../services/api-service';
-import { ButtonsContainer, FormContainer } from '../../../components/Layout';
-import { LoginLogo } from '../../../components/Common';
-import { Spinner, PageContent, Logo } from '../../../components/Branded';
-import { formOnTranslateString } from '../../../utils/trans-form';
-import { modal, notifications } from '../../../actions';
-import { history } from '../../../App';
-import { __ } from '../../../helpers/i18n';
+import { useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
+import styled from 'styled-components';
 
+import { modal, notifications } from 'src/actions';
+import { PageContent, Logo } from 'src/components/Branded';
+import { ButtonsContainer } from 'src/components/Layout';
 import {
   Button,
   CheckBox,
@@ -22,12 +17,16 @@ import {
   Stack,
   Typography,
 } from 'src/components/ui';
-import { useTenant } from 'src/hooks/useTenant';
-import { useRegisterMutation } from 'src/mutations';
 import { RegisterDto } from 'src/dto/RegisterDto';
-import { useForm } from 'react-hook-form';
+import { __ } from 'src/helpers/i18n';
+import { history } from 'src/history';
+import { useTenant } from 'src/hooks/useTenant';
+import { useTracking } from 'src/hooks/useTracking';
+import { useRegisterMutation } from 'src/mutations';
 import { ClassValidatorResolver } from 'src/resolvers/ClassValidatorResolver';
-import styled from 'styled-components';
+import { isSmsAccountConfirmation } from 'src/utils/account-confirmation';
+import { buildActivateAccountPath } from 'src/utils/activate-account-url';
+
 import { AccountRegisteredModal } from './AccountRegisteredModal';
 
 const RegisterForm = styled('div')(({ theme }) => ({
@@ -49,12 +48,14 @@ const LogoContainer = styled('div')({
 
 const Register = () => {
   const { tenant } = useTenant();
+  const { trackCompleteRegistration } = useTracking();
   const dispatch = useDispatch();
   const {
     mutate: registerUser,
     isPending,
     data,
     isSuccess,
+    variables,
   } = useRegisterMutation();
 
   const {
@@ -71,18 +72,29 @@ const Register = () => {
     registerUser({
       ...data,
       email: data.email.trim(),
-      phone: data.phone.trim()
+      phone: data.phone.trim(),
     });
   };
 
   useEffect(() => {
-    if (!data || !isSuccess) return;
-    dispatch(modal.showModal(<AccountRegisteredModal />));
+    if (!data || !isSuccess || !tenant) return;
+
+    const smsActivation = isSmsAccountConfirmation(tenant);
+
+    trackCompleteRegistration(variables?.email);
+
     dispatch(
       notifications.successNotification('notification.accountRegistered'),
     );
+
+    if (smsActivation && data.activationToken) {
+      history.push(buildActivateAccountPath(data.activationToken));
+      return;
+    }
+
+    dispatch(modal.showModal(<AccountRegisteredModal />));
     history.push('/');
-  }, [data, isSuccess]);
+  }, [data, isSuccess, tenant, variables?.email, dispatch, trackCompleteRegistration]);
 
   if (!tenant) return null;
 
@@ -102,25 +114,29 @@ const Register = () => {
                   label="auth.email"
                   placeholder="auth.email_placeholder"
                   error={errors['email']?.message}
+                  required
                   {...register('email')}
                 />
                 <Input
                   label="auth.phone"
                   placeholder="auth.phone_placeholder"
                   error={errors['phone']?.message}
-                  help='Podaj numer telefonu wraz z numerem kierunkowym (np. +48)'
+                  required
+                  help="auth.phone_help"
                   {...register('phone')}
                 />
                 <Input
                   label="auth.first_name"
                   placeholder="auth.first_name_placeholder"
                   error={errors['firstName']?.message}
+                  required
                   {...register('firstName')}
                 />
                 <Input
                   label="auth.last_name"
                   placeholder="auth.last_name_placeholder"
                   error={errors['lastName']?.message}
+                  required
                   {...register('lastName')}
                 />
                 <Input
@@ -128,6 +144,7 @@ const Register = () => {
                   type="password"
                   placeholder="auth.password_placeholder"
                   error={errors['pwd']?.message}
+                  required
                   {...register('pwd')}
                 />
                 <Input
@@ -135,6 +152,7 @@ const Register = () => {
                   type="password"
                   placeholder="auth.password_placeholder"
                   error={errors['pwd2']?.message}
+                  required
                   {...register('pwd2')}
                 />
               </RegisterForm>
@@ -142,20 +160,17 @@ const Register = () => {
             <Section>
               <CheckBox
                 {...register('rules')}
+                required
                 label={
                   <Typography>
                     {__('application.readTheProvisions')}{' '}
-                    <Link
-                      target="_blank"
-                      href={`${ApiService.url}tenant/rules/${tenant.id}`}
-                      rel="noreferrer"
-                    >
+                    <Link target="_blank" href="/rules" rel="noreferrer">
                       <u>{__('application.statutes')}</u>
                     </Link>{' '}
-                    i{' '}
+                    {__('application.and')}{' '}
                     <Link
                       target="_blank"
-                      href={`${ApiService.url}tenant/privacy/${tenant.id}`}
+                      href="/privacy-policy"
                       rel="noreferrer"
                     >
                       <u>{__('application.privacyPolices')}</u>
@@ -184,10 +199,4 @@ const Register = () => {
   );
 };
 
-const mapDispatchToProps = (dispatch: any): any =>
-  bindActionCreators(
-    { successNotification: notifications.successNotification },
-    dispatch,
-  );
-
-export default connect(null, mapDispatchToProps)(Register);
+export default Register;

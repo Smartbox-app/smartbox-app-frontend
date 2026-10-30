@@ -1,5 +1,7 @@
 import React from 'react';
-import { PageHeader, Section } from '../../../components/Layout';
+
+import { PageHeader } from 'src/components/Layout';
+
 import SingleDepartment from './SingleDepartment';
 
 import './Contact.scss';
@@ -10,7 +12,7 @@ const Contact = () => {
       <PageHeader title="application.welcomeToContact" />
       <div className="department-wrapper">
         <SingleDepartment
-          organisationRole="Biuro obsługi klienta"
+          organisationRole="application.phrases.contactCustomerService"
           name="Adrian Pawłowski"
           phone="731400331"
           mail="kontakt@smartbox-storage.pl"
@@ -19,7 +21,7 @@ const Contact = () => {
         />
 
         <SingleDepartment
-          organisationRole="Pomoc techniczna"
+          organisationRole="application.phrases.contactTechnicalSupport"
           name="Piotr Drobnikowski"
           phone="510298876"
           mail="kontakt@smartbox-storage.pl"
@@ -28,7 +30,7 @@ const Contact = () => {
         />
         <SingleDepartment
           organisationRole=""
-          name="Pomoc ogólna"
+          name="application.phrases.contactGeneralHelp"
           phone=""
           mail="pomoc@smartbox-storage.pl"
         />

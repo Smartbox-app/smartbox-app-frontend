@@ -1,6 +1,8 @@
 import React from 'react';
 
-export const showModal = (content: React.ReactNode, isClosable = true, isFullscreen = false) => (dispatch: any) => {
+import type { AppDispatch } from 'src/types/app-dispatch';
+
+export const showModal = (content: React.ReactNode, isClosable = true, isFullscreen = false) => (dispatch: AppDispatch) => {
   dispatch({
     type: 'PREPARE_MODAL',
     payload: { content, isClosable, isFullscreen },
@@ -13,7 +15,7 @@ export const showModal = (content: React.ReactNode, isClosable = true, isFullscr
   }, 100);
 };
 
-export const hideModal = () => (dispatch: any) => {
+export const hideModal = () => (dispatch: AppDispatch) => {
   dispatch({ type: 'HIDE_MODAL' });
   setTimeout(() => {
     dispatch({ type: 'UNPREPARE_MODAL' });

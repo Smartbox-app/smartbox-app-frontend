@@ -1,9 +1,9 @@
-import Welcome from "./Welcome";
-import { Order } from "./Order";
-import SingleRentDetail from "./SingleRentDetail";
-import Profile from "./Profile";
 import Contact from "./Contact";
+import { Order } from "./Order";
 import { PaymentResult } from "./PaymentResult";
+import Profile from "./Profile";
+import SingleRentDetail from "./SingleRentDetail";
+import Welcome from "./Welcome";
 
 export {
   Welcome,

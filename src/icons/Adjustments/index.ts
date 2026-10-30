@@ -1,1 +1,1 @@
-export * from './Adjustments';
+export * from 'src/icons/Adjustments/Adjustments';

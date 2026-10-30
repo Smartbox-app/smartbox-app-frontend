@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 16"><defs><style>.cls-1{opacity:0.17;}.cls-2{fill:#1b1464;}.cls-3{font-size:6px;font-family:MyriadPro-Regular, Myriad Pro;}</style></defs>
+<g id="Warstwa_2" data-name="Warstwa 2">
+<g id="Warstwa_1-2" data-name="Warstwa 1">
+
+
+<g id="_25" data-name="25">
+  <g class="cls-1">
+    <rect class="cls-2" width="39" height="16"/>
+  </g>
+  <text class="cls-3" transform="translate(16.42 10.12)">25</text>
+</g>
+
+<g id="_26" class='single-box' data-name="26">
+  <g class="cls-1">
+    <rect class="cls-2" x="40.25" width="12" height="16"/>
+  </g>
+  <text class="cls-3" transform="translate(43.17 10.12)">26</text>
+</g>
+
+<g id="_27" class='single-box' data-name="26">
+  <g class="cls-1">
+    <rect class="cls-2" x="60.25" width="12" height="16"/>
+  </g>
+  <text class="cls-3" transform="translate(63.17 10.12)">27</text>
+</g>
+
+</g>
+</g>
+</svg>

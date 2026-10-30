@@ -1,17 +1,18 @@
-import React from 'react';
 import { ItfApiForm } from 'itf_formbuilder_react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
-import ReactCreatableSelect from 'react-select/creatable';
-import { ButtonsContainer, FormContainer, FormHeader } from '../../../../../../../components/Layout';
-import { Button, Spinner } from '../../../../../../../components/Branded';
-import ApiService from '../../../../../../../services/api-service';
-import { formOnTranslateString } from '../../../../../../../utils/trans-form';
-import { ReactSelectOverride } from '../../../../../../../components/Common/ReactSelectOverride';
-import { successNotification } from '../../../../../../../actions/notifications';
-import { __ } from '../../../../../../../helpers/i18n';
-import { mapFields } from '../../../../../../../utils/fields-mapper';
-import { hideModal } from '../../../../../../../actions/modal';
-import { refreshApiTableData } from '../../../../../../../actions/api-table';
+
+import { refreshApiTableData } from 'src/actions/api-table';
+import { hideModal } from 'src/actions/modal';
+import { successNotification } from 'src/actions/notifications';
+import { Button, Spinner } from 'src/components/Branded';
+import { ReactSelectOverride, ReactCreatableSelectOverride as ReactCreatableSelect } from 'src/components/Common/ReactSelectOverride';
+import { ButtonsContainer, FormContainer } from 'src/components/Layout';
+import { Modal } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
+import ApiService from 'src/services/api-service';
+import { mapFields } from 'src/utils/fields-mapper';
+import { formOnTranslateString } from 'src/utils/trans-form';
 
 interface Props {
     id: string;
@@ -31,8 +32,10 @@ const Edit = ({ id, stockId }: Props) => {
     const sendUrl = `box-group-new/${id}`;
 
     return (
-        <FormContainer>
-            <FormHeader title="application.editBoxGroup" />
+        <>
+            <Modal.Header title={__('application.editBoxGroup')} />
+            <Modal.Content>
+            <FormContainer>
             <ItfApiForm
                 formId="updateBoxGroup"
                 schemaCacheEnabled={false}
@@ -54,7 +57,9 @@ const Edit = ({ id, stockId }: Props) => {
                 onTranslateString={formOnTranslateString}
                 thirdPartyComponents={{ ReactSelect: ReactSelectOverride, ReactCreatableSelect }}
             />
-        </FormContainer>
+            </FormContainer>
+            </Modal.Content>
+        </>
     );
 };
 

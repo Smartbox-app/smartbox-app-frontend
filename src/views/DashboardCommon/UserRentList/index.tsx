@@ -1,74 +1,70 @@
-import React from 'react';
-import { RentStatus, ActiveRentsForUserDetails, IStock } from 'smartbox-types';
-import { Alert } from '../../../components/Common';
-import { dateOnly } from '../../../utils/format-date';
+import React, { useMemo } from 'react';
 
-import './UserRentList.scss';
-import { __ } from '../../../helpers/i18n';
-import styled, { css } from 'styled-components';
-import { getColorForBackground } from 'src/utils/color';
+import { FieldType, rentsList } from 'smartbox-tables';
+import { AdminRentListDetails, RentStatus } from 'smartbox-types';
+import { ApiTable } from 'src/components/Common';
 import { SectionHeader } from 'src/components/Layout';
-import { Section } from 'src/components/ui';
+import { USER_RENTS_LIST } from 'src/constants/api-table-instances';
+import { __ } from 'src/helpers/i18n';
+import {
+  rentStatusSearchValues,
+  translateBoxDisplayStatus,
+} from 'src/utils/box-display-status';
+import { InteractiveTableSchema } from 'src/utils/table-schema-utils';
+
+import { RentListRowActions } from '../StockGroups/Stocks/Manage/Rents/List/RentListRowActions';
 
 interface Props {
-  rentList: ActiveRentsForUserDetails[];
+  userId: string;
 }
 
-const getColor = (status?: RentStatus) => {
-  if (!status || status === RentStatus.free) return '#00a45a';
-  if (status === RentStatus.reserved) return '#a51727';
-  if (status === RentStatus.rented) return '#a51727';
-  if (status === RentStatus.toExplain) return '#000';
-  if (status === RentStatus.toCheck) return '#eee';
-  if (status === RentStatus.noPaidExtension) return '#fbb03b';
-  if (status === RentStatus.noPaidPeriod) return '#fbb03b';
-  if (status === RentStatus.noPaidExtensionWithWarning) return '#fbb03b';
-  if (status === RentStatus.outOfService) return '#ccc';
-  if (status === RentStatus.finished) return '#ccc';
-  if (status === RentStatus.failure) return '#a51727';
-  return '#000';
-};
+const UserRentList = ({ userId }: Props) => {
+  const scheme = useMemo(() => {
+    const base = new InteractiveTableSchema(rentsList);
+    base.highlightRow = (row) => row.status === RentStatus.toCheck;
 
-const StyledStatus = styled.div<{ status?: RentStatus }>`
-  border-radius: 2px;
-  font-weight: 700;
-  font-size: 0.8rem;
-  padding: 5px;
-  color: #fff;
-flex: 0 1 100px;
-text-align: center;
-  ${({ status }) => css`
-    background-color: ${getColor(status)};
-    color: ${getColorForBackground(getColor(status))};
-  `};
-`;
-
-const UserRentList = ({ rentList }: Props) => {
-  if (rentList.length === 0) {
-    return <Alert type="notice" text="application.lackOfRent" />;
-  }
-
-  const data =
-    rentList.length > 0 &&
-    rentList.map((s: ActiveRentsForUserDetails) => {
-      return (
-        <div className="single-rent" key={s.id}>
-          <StyledStatus status={s.status}>{s.number}</StyledStatus>
-          <p className="dates-rent">
-            {dateOnly(s.startAt, 5)}-{dateOnly(s.finishAt)}
-          </p>
-          <p>{s.status}</p>
-        </div>
-      );
-    });
+    return base
+      .removeFields(
+        'description',
+        'id',
+        'userId',
+        'firstName',
+        'lastName',
+        'email',
+      )
+      .modifyFieldStatic('status', {
+        searchableValues: rentStatusSearchValues(),
+        customValue: (row: { status?: Parameters<typeof translateBoxDisplayStatus>[0] }) =>
+          translateBoxDisplayStatus(row.status),
+      })
+      .addFieldAfter('number', {
+        name: __('application.stock'),
+        field: 'stockName',
+        mobile: true,
+        searchable: false,
+        sortable: false,
+        defaultSort: false,
+        type: FieldType.Text,
+      })
+      .addFieldAtTheEnd({
+        name: __('application.actions'),
+        field: 'actions',
+        type: FieldType.Custom,
+        mobile: true,
+        customRender: (_value, _field, rentData: AdminRentListDetails) => (
+          <RentListRowActions rent={rentData} />
+        ),
+      });
+  }, []);
 
   return (
     <>
-      <SectionHeader title="application.currentRents" />
-
-      <div className="content">
-        <div className="rent-list">{data}</div>
-      </div>
+      <SectionHeader title="application.history" />
+      <ApiTable
+        scheme={scheme}
+        instanceId={USER_RENTS_LIST}
+        apiEndpointSubUrl={`rent/list-user/${userId}`}
+      />
     </>
   );
 };

@@ -1,5 +1,5 @@
 @use "sass:math";
-@import './variables';
+@use './variables' as *;
 
 %input-base-bordering {
   border: 1px solid $color-disabled;
@@ -20,7 +20,7 @@
   @extend %input-base-bordering;
 
   &:hover {
-    background-color: darken($color-background, 2%);
+    background-color: adjust-lightness($color-background, -2%);
   }
 
   &.is-invalid {
@@ -36,7 +36,7 @@
   }
 
   &:read-only {
-    background-color: darken($color-background, 20%);
+    background-color: adjust-lightness($color-background, -20%);
   }
 }
 
@@ -54,47 +54,14 @@
 }
 
 .form-field-errors {
-  color: lighten($color-danger, 20%);
+  color: adjust-lightness($color-danger, 20%);
   font-size: 0.85rem;
   margin-top: math.div($main-spacing, 4);
 }
 
-.input-container {
-  position: relative;
-  margin-bottom: $main-spacing * 0.5;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  padding: 0;
-
-  &.nomargin {
-    margin-bottom: 0;
-  }
-
-  &.hidden {
-    display: none;
-  }
-  .input-wrapper {
-    position: relative;
-    margin-bottom: math.div($main-spacing, 4);
-    width: 100%;
-    //display: flex;
-    //justify-content: center;
-    //align-items: center;
-    //flex-direction: column;
-
-    label {
-      font-size: 0.8rem;
-      font-weight: 400;
-      display: block;
-      margin-bottom: 5px;
-    }
-  }
-}
-
-.input,
-.flatpickr-input {
-  @extend %input-base;
+.flatpickr-mobile {
+  flex: 1;
+  width: auto
 }
 
 select,
@@ -117,16 +84,16 @@ select,
   margin-left: 5px;
   padding: math.div($main-spacing, 2) $main-spacing;
   cursor: pointer;
-  background-color: lighten($color-background, 20%);
+  background-color: adjust-lightness($color-background, 20%);
 
   &:hover {
-    background-color: lighten(#906090, 10%);
+    background-color: adjust-lightness(#906090, 10%);
   }
 }
 
 .text-danger {
   margin-top: 2px;
-  color: lighten($color-danger, 20%);
+  color: adjust-lightness($color-danger, 20%);
   font-weight: 300;
   margin-bottom: $main-spacing * 0.25;
 }
@@ -150,11 +117,6 @@ select:-webkit-autofill:focus {
   box-shadow: 0 0 0px 1000px $color-background inset;
   transition: background-color 5000s ease-in-out 0s;
   background-color: #fff;
-}
-
-textarea {
-  min-height: 200px;
-  resize: vertical;
 }
 
 [type='checkbox']:checked,
@@ -205,55 +167,6 @@ justify-content: center;
   content: '✓';
 }
 
-
-
-.form-container {
-  [class*='IndicatorsContainer'] {
-    max-height: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  [class*='ValueContainer'] {
-    display: flex;
-    align-content: center;
-  }
-
-  [class*='control'] {
-    @extend %input-base-bordering;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: row;
-    border-radius: 0;
-    outline: none;
-    color: $color-text;
-    width: 100%;
-    transition: 0.3s background-color;
-    box-sizing: border-box;
-    max-height: 40px;
-
-    div {
-      max-height: 40px;
-      display: flex;
-      align-content: center;
-    }
-
-    [class*='placeholder'] {
-      color: $color-text-alter;
-      font-size: 13.333px;
-      
-    }
-  }
-
-  [class*='menu'] {
-    border-radius: 0;
-    padding: 0;
-    
-    font-size: 13.333px;
-  }
-}
 
 .error {
   [class*='control'],

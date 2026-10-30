@@ -1,35 +1,52 @@
 import Alert from './Alert';
-import OnlineContent from './OnlineContent';
-import OfflineContent from './OfflineContent';
-import UpdateInfoBar from './UpdateInfoBar';
-import RouteAdmin from './RouteAdmin';
-import RouteWorker from './RouteWorker';
-import RouteUser from './RouteUser';
-import RouteTenant from './RouteTenant';
-import CheckBox from './CheckBox';
-import Icon from './Icon';
-import Input from './Input';
-import DateInput from './DateInput';
-import ProgressIndicator from './ProgressIndicator';
 import ApiTable from './ApiTable';
-import Table from './Table';
-import Pagination from './Pagination';
-import Modal from './Modal';
-import LoginLogo from './LoginLogo';
+import { AsterixRequired } from './AsterixRequired';
+import CheckBox from './CheckBox';
+import { ColorIndicator } from './ColorIndicator';
 import ConfirmModal from './ConfirmModal';
-import Row from './Row';
-import ErrorBoundary from './ErrorBoundary';
 import Cookies from './Cookies';
+import DateInput from './DateInput';
+import { EndRentPhoto } from './EndRentPhoto';
+import ErrorBoundary from './ErrorBoundary';
 import { FieldsMapper } from './FieldsMapper';
-import { InputPhone } from './InputPhone';
-import { InputHelp } from './InputHelp';
+import Input from './Input';
 import { InputError } from './InputError';
 import { InputErrors } from './InputErrors';
+import { InputHelp } from './InputHelp';
+import { InputPhone } from './InputPhone';
 import { InputSelect } from './InputSelect';
-import { SmsStatus } from './SmsStatus';
 import { InvoiceStatus } from './InvoiceStatus';
+import LoginLogo from './LoginLogo';
+import Modal from './Modal';
 import { NotifyWhenAvailableModal } from './NotifyWhenAvailableModal';
+import OfflineContent from './OfflineContent';
+import OnlineContent from './OnlineContent';
+import Pagination from './Pagination';
+import { PaymentServiceStatus } from './PaymentServiceStatus';
+import ProgressIndicator from './ProgressIndicator';
+import { RentAttachedFileButton } from './RentAttachedFileButton';
+import RouteAdmin from './RouteAdmin';
+import RouteTenant from './RouteTenant';
+import RouteUser from './RouteUser';
+import RouteWorker from './RouteWorker';
+import Row from './Row';
+import { SmsStatus } from './SmsStatus';
+import Table from './Table';
+import UpdateInfoBar from './UpdateInfoBar';
 
+export type { InputSize } from './input-sizes';
+export {
+  DEFAULT_INPUT_SIZE,
+  getInputFieldStyles,
+  getReactSelectStyles,
+  resolveInputSize,
+} from 'src/components/Common/input-sizes';
+export {
+  StyledFieldContainer,
+  StyledNativeSelect,
+  StyledTextInput,
+  StyledTextarea,
+} from 'src/components/Common/input-styled';
 export {
   Alert,
   ApiTable,
@@ -38,6 +55,7 @@ export {
   Pagination,
   Table,
   Row,
+  ColorIndicator,
   OnlineContent,
   OfflineContent,
   UpdateInfoBar,
@@ -47,7 +65,6 @@ export {
   RouteTenant,
   CheckBox,
   ConfirmModal,
-  Icon,
   Input,
   LoginLogo,
   DateInput,
@@ -62,4 +79,8 @@ export {
   SmsStatus,
   InvoiceStatus,
   NotifyWhenAvailableModal,
+  AsterixRequired,
+  PaymentServiceStatus,
+  EndRentPhoto,
+  RentAttachedFileButton,
 };

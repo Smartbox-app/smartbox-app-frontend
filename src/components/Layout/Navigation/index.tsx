@@ -1,12 +1,12 @@
-import { MenuItemType } from '../../../types/menu-item';
+import styled from 'styled-components';
 
-import { LogoContainer } from '../../Branded';
+import { LogoContainer } from 'src/components/Branded';
+import { SidebarButton } from 'src/components/ui/SidebarButton';
+import { Logout } from 'src/icons';
+import { useLogoutMutation } from 'src/mutations';
+import { MenuItemType } from 'src/types/menu-item';
 
 import './Navigation.scss';
-import { useLogoutMutation } from 'src/mutations';
-import styled from 'styled-components';
-import { SidebarButton } from '../../ui/SidebarButton';
-import { Logout } from '../../../icons';
 
 interface Props {
   menuItems: MenuItemType[];
@@ -31,6 +31,7 @@ const StyledNavigationContainer = styled('div')(({ theme }) => ({
 
     boxShadow: 'none',
   },
+  paddingBottom: 'env(safe-area-inset-bottom)'
 }));
 
 const StyledNavigation = styled('nav')(({ theme }) => ({

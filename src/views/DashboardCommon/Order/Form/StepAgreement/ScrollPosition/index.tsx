@@ -1,58 +1,31 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { ApplicationState } from '../../../../../../reducers';
-import { order } from '../../../../../../actions';
-import { CheckBox } from '../../../../../../components/Common';
-import { TenantState } from 'src/reducers/tenant-reducer';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-interface Props {
-  isResignationMarked: boolean;
-  isAgreementAccepted: boolean;
-  tenant: TenantState;
-  formAgreementReaded: () => void;
-  formResignationMarked: () => void;
-}
+import { order } from 'src/actions';
+import { CheckBox } from 'src/components/Common';
+import { __ } from 'src/helpers/i18n';
+import { useTenant } from 'src/hooks/useTenant';
+import { ApplicationState } from 'src/reducers';
 
-class ScrollPosition extends Component<Props> {
-  // private onScroll = (el: any) => {
-  //   if (el.scrollTop > el.children[0].scrollHeight - el.clientHeight) {
-  //     this.props.formAgreementReaded();
-  //   }
-  // };
-  // componentDidMount(): void {
-  //   const el = document.querySelector('.order-agreement-wrapper');
-  //   el && el.addEventListener('scroll', () => this.onScroll(el), false);
-  // }
+const ScrollPosition = () => {
+  const dispatch = useDispatch();
+  const isResignationMarked = useSelector(
+    (state: ApplicationState) => state.order.isResignationMarked,
+  );
+  const { tenant } = useTenant();
 
-  // componentWillUnmount(): void {
-  //   const el = document.querySelector('.order-agreement-wrapper');
-  //   el && el.removeEventListener('scroll', () => this.onScroll(el), false);
-  // }
+  return (
+    <>
+      <CheckBox
+        name="resignation"
+        checked={isResignationMarked}
+        handleChange={() => dispatch(order.formResignationMarked())}
+        label={__('application.phrases.agreementEarlyStart', {
+          name: tenant?.name ?? '',
+        })}
+      />
+    </>
+  );
+};
 
-  render() {
-    const { isResignationMarked, formResignationMarked, isAgreementAccepted, tenant } = this.props;
-    return (
-      <>
-        <CheckBox
-          name="resignation"
-          checked={isResignationMarked}
-          // hide={!isAgreementAccepted}
-          // disabled={!isAgreementAccepted}
-          handleChange={() => formResignationMarked()}
-          label={`Akceptuję warunki Umowy i zgadzam się na rozpoczęcie świadczenia usług ${tenant?.name} przed upływem terminu do odstąpienia od Umowy`}
-        />
-      </>
-    );
-  }
-}
-
-const mapStateToProps = (state: ApplicationState) => ({
-  isResignationMarked: state.order.isResignationMarked,
-  isAgreementAccepted: state.order.isAgreementAccepted,
-  tenant: state.tenant
-});
-
-const mapDispatchToProps = (dispatch: any) => bindActionCreators({ ...order }, dispatch);
-
-export default connect(mapStateToProps, mapDispatchToProps)(ScrollPosition);
+export default ScrollPosition;

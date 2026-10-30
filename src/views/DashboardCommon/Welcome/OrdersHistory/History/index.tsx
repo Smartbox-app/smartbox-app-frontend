@@ -1,12 +1,12 @@
 import { MyRentList } from 'smartbox-types';
-import Single from './Single';
-import { Alert } from '../../../../../components/Common';
-import { __ } from '../../../../../helpers/i18n';
+import { Alert } from 'src/components/Common';
+import { __ } from 'src/helpers/i18n';
+import { useTenantNaming } from 'src/hooks/useTenantNaming';
 
 import Legend from './Legend';
+import Single from './Single';
 
 import './History.scss';
-import { useTenantNaming } from 'src/hooks/useTenantNaming';
 
 interface Props {
   data: MyRentList[];

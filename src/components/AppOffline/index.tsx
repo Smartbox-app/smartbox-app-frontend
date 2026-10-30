@@ -1,9 +1,10 @@
 import React from 'react';
-import { __ } from "../../helpers/i18n";
+import styled from 'styled-components';
+
+import { __ } from "src/helpers/i18n";
+import { getColorForBackground } from 'src/utils/color';
 
 import './AppOffline.scss';
-import styled from 'styled-components';
-import { getColorForBackground } from '../../utils/color';
 
 const StyledAppStatus = styled.div`
 background: ${props => props.theme.colors.primary};
@@ -12,7 +13,6 @@ color: ${props => getColorForBackground(props.theme.colors.primary)};
 
 const AppOffline = () => (
     <StyledAppStatus className="app-status">
-        <span className="app-status-title">Application</span>
         <strong>{__('application.offlineInfo')}</strong>
         <svg
             className="nowifi-icon"

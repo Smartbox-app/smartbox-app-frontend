@@ -1,0 +1,54 @@
+services:
+  smartbox-frontend:
+    container_name: smartbox-frontend
+    image: ${CONTAINER_NAME:-smartbox-frontend}
+    restart: always
+
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        BRANCH: ${BRANCH:-prod}
+        VITE_MAPBOX_ACCESS_TOKEN: ${VITE_MAPBOX_ACCESS_TOKEN:-}
+        CACHE_BUST: ${CACHE_BUST:-0}
+
+    ports:
+      - "${FRONTEND_PORT:-3204}:${FRONTEND_PORT:-3204}"
+
+    # Join NPM's network (name varies per env) → forward to smartbox-frontend:3204
+    networks:
+      - default
+      - proxy
+
+    # Reach host BE (:3001) without hairpin via public DNS
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+    env_file:
+      - .env
+
+    environment:
+      FE_FILES_PATH: /app/dist
+      ENABLE_X_SENDFILE: "false"
+      FRONTEND_PORT: ${FRONTEND_PORT:-3204}
+      # Not API_URL — that stays the public URL for other tooling; SSR must hit BE inside Docker
+      SSR_API_URL: ${SSR_API_URL:-http://host.docker.internal:3001/tenant/ssr}
+      ROOT_DOMAIN: ${ROOT_DOMAIN:-smartbox-app.pl}
+
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "node",
+          "-e",
+          "fetch('http://127.0.0.1:'+(process.env.FRONTEND_PORT||3204)+'/healthz').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))",
+        ]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+
+networks:
+  proxy:
+    name: ${PROXY_NETWORK:-smartbox-proxy}
+    external: true

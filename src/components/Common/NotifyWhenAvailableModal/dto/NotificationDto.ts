@@ -7,13 +7,14 @@ import {
   ValidatorConstraint,
   ValidatorConstraintInterface,
 } from 'class-validator';
+
 import { __ } from 'src/helpers/i18n';
 
 @ValidatorConstraint({ name: 'atLeastOne', async: false })
 export class AtLeastOneSelected implements ValidatorConstraintInterface {
-  validate(dval: any, args: ValidationArguments) {
+  validate(_dval: unknown, args: ValidationArguments) {
     const dto = args.object as NotificationDto;
-    console.log('DTO', dto)
+
     return dto.email === true || dto.sms === true;
   }
 
@@ -24,7 +25,7 @@ export class AtLeastOneSelected implements ValidatorConstraintInterface {
 
 
 export function IsAtleastOneSelected(validationOptions?: ValidationOptions) {
-  return function (object: Object, propertyName: string) {
+  return function (object: object, propertyName: string) {
     registerDecorator({
       target: object.constructor,
       propertyName: propertyName,

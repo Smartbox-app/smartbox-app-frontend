@@ -1,19 +1,19 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
+
 import { UserRole } from 'smartbox-types';
+import { showModal } from 'src/actions/modal';
+import { Button } from 'src/components/Branded';
+import { Row } from 'src/components/Common';
 import {
   ButtonsContainer,
   Section,
   SectionHeader,
-} from '../../../components/Layout';
-import { Row } from '../../../components/Common';
-import { useGetMyDetailsQuery } from '../../../queries';
-import { Button } from 'src/components/Branded';
-import { useDispatch } from 'react-redux';
-import { showModal } from 'src/actions/modal';
-import UpdatePass from 'src/views/DashboardCommon/Profile/Detail/UpdatePass';
-import { UpdateBasic } from 'src/views/DashboardCommon/Profile/Detail/UpdateBasic';
-import { UpdateContact } from 'src/views/DashboardCommon/Profile/Detail/UpdateContact';
-import { UpdateCompany } from 'src/views/DashboardCommon/Profile/Detail/UpdateCompany';
+} from 'src/components/Layout';
+import { useGetMyDetailsQuery } from 'src/queries';
+
+import { DeleteAccountConfirmation } from '../../../views/DashboardCommon/Profile/Detail/DeleteAccountConfirmation/DeleteAccountConfirmation';
+import UpdatePass from '../../../views/DashboardCommon/Profile/Detail/UpdatePass';
 
 const UserData = () => {
   const { data: user } = useGetMyDetailsQuery();
@@ -28,16 +28,15 @@ const UserData = () => {
         <Row label="application.lastName" content={user.lastName} />
         <Row label="application.userRole" content={user.role} />
         <ButtonsContainer>
-          {/* USER CANT CHANGE HIS BASIC DATA */}
-          {/* <Button
-            text="application.edit"
-            primary
-            click={() => dispatch(showModal(<UpdateBasic />))}
-          /> */}
           <Button
             text="application.changPassword"
             primary
             click={() => dispatch(showModal(<UpdatePass />))}
+          />
+          <Button
+            text="application.deleteAccount"
+            danger
+            click={() => dispatch(showModal(<DeleteAccountConfirmation />))}
           />
         </ButtonsContainer>
       </Section>
@@ -47,19 +46,12 @@ const UserData = () => {
         <Row label="application.phone" content={user.phone} />
         {role === UserRole.user && (
           <>
+            <Row label="application.country" content={user.country} />
             <Row label="application.city" content={user.city} />
             <Row label="application.street" content={user.street} />
             <Row label="application.postCode" content={user.postCode} />
           </>
         )}
-          {/* USER CANT CHANGE HIS CONTACT DATA */}
-         {/* <ButtonsContainer>
-          <Button
-            text="application.edit"
-            primary
-            click={() => dispatch(showModal(<UpdateContact />))}
-          />
-        </ButtonsContainer> */}
       </Section>
       {role === UserRole.user && (
         <Section highlight>
@@ -69,6 +61,10 @@ const UserData = () => {
             content={user.companyData.companyName}
           />
           <Row label="application.nip" content={user.companyData.nip} />
+          <Row
+            label="application.country"
+            content={user.companyData.companyCountry}
+          />
           <Row
             label="application.city"
             content={user.companyData.companyCity}
@@ -81,14 +77,6 @@ const UserData = () => {
             label="application.postCode"
             content={user.companyData.companyPostCode}
           />
-            {/* USER CANT CHANGE HIS COMPANY DATA */}
-            {/* <ButtonsContainer>
-          <Button
-            text="application.edit"
-            primary
-            click={() => dispatch(showModal(<UpdateCompany />))}
-          />
-        </ButtonsContainer> */}
         </Section>
       )}
     </>

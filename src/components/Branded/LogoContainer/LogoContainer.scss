@@ -1,5 +1,6 @@
-@import '../../../config/variables';
-@import '../../../config/mixins.scss';
+@use "sass:math";
+@use '../../../config/variables' as *;
+@use '../../../config/mixins.scss' as *;
 
 .logo-container {
   display: none;
@@ -25,7 +26,7 @@
 
   &.small {
     img {
-      height: $main-logo-size / 3.5;
+      height: math.div($main-logo-size, 3.5);
     }
   }
 

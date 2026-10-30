@@ -1,59 +1,50 @@
-import React from 'react';
-import { useDispatch } from 'react-redux';
-import { FieldType, rentsList } from 'smartbox-tables';
-import { AdminRentListDetails } from 'smartbox-types';
-import { ApiTable } from '../../../../../../../components/Common';
-import { Button } from '../../../../../../../components/Branded';
-import { SimpleHeader } from '../../../../../../../components/Layout';
-import { __ } from '../../../../../../../helpers/i18n';
-import { InteractiveTableSchema } from '../../../../../../../utils/table-schema-utils';
-import { showModal } from '../../../../../../../actions/modal';
+import React, { useMemo } from 'react';
 import { useParams } from 'react-router';
-import { RentHistoryModal } from './RentHistoryModal';
+
+import { FieldType, rentsList } from 'smartbox-tables';
+import { AdminRentListDetails, RentStatus } from 'smartbox-types';
+import { ApiTable } from 'src/components/Common';
 import { Header, Section } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
+import {
+  rentStatusSearchValues,
+  translateBoxDisplayStatus,
+} from 'src/utils/box-display-status';
+import { InteractiveTableSchema } from 'src/utils/table-schema-utils';
+
+import { RentListRowActions } from './RentListRowActions';
 
 const List = () => {
-  const dispatch = useDispatch();
   const { stockId } = useParams<{ stockId: string }>();
 
-  const scheme = new InteractiveTableSchema(rentsList)
-    .removeFields('description', 'id', 'userId')
-    .addFieldAtTheEnd({
-      name: __('application.actions'),
-      field: 'actions',
-      type: FieldType.Custom,
-      mobile: true,
-      customRender: (value, field, rentData: AdminRentListDetails) => (
-        <>
-          {rentData.description &&
-          Array.isArray(rentData.description) &&
-          rentData.description.length > 0 ? (
-            <Button
-              primary
-              text="application.rentHistory"
-              click={() =>
-                dispatch(
-                  showModal(
-                    <RentHistoryModal
-                      rent={rentData}
-                      description={rentData.description}
-                    />,
-                  ),
-                )
-              }
-            />
-          ) : undefined}
-        </>
-      ),
-    });
+  const scheme = useMemo(() => {
+    const base = new InteractiveTableSchema(rentsList);
+    base.highlightRow = (row) => row.status === RentStatus.toCheck;
+
+    return base
+      .removeFields('description', 'id', 'userId')
+      .modifyFieldStatic('status', {
+        searchableValues: rentStatusSearchValues(),
+        customValue: (row: {
+          status?: Parameters<typeof translateBoxDisplayStatus>[0];
+        }) => translateBoxDisplayStatus(row.status),
+      })
+      .addFieldAtTheEnd({
+        name: __('application.actions'),
+        field: 'actions',
+        type: FieldType.Custom,
+        mobile: true,
+        customRender: (_value, _field, rentData: AdminRentListDetails) => (
+          <RentListRowActions rent={rentData} />
+        ),
+      });
+  }, []);
 
   return (
     <Section>
       <Header variant="h2">{__('application.stockRents')}</Header>
-      <p>
-        Podsumowanie wynajmów jest wysyłane codziennie na adres e-mail konta
-        franczyzobiorcy.
-      </p>
+      <p>{__('application.phrases.rentsReportNote')}</p>
+
       <ApiTable scheme={scheme} apiEndpointSubUrl={`rent/list/${stockId}`} />
     </Section>
   );

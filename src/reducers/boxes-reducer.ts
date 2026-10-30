@@ -8,9 +8,12 @@ const initialState: Boxes = {
   singleBoxDetail: {
     id: '',
     number: '',
+    createdAt: new Date(),
+    decisionFinishAt: new Date(),
+    isAuthorized: false,
     startAt: new Date(),
     finishAt: new Date(),
-    status: RentStatus.free,
+    status: RentStatus.reserved,
     paymentType: RentPaymentType.InAdvance,
     description: [],
     periods: [],
@@ -35,7 +38,7 @@ interface CleanUp {
 
 type Action =  FetchSingleBoxDetails | CleanUp;
 
-export default (state: Boxes = initialState, action: Action): any => {
+export default (state: Boxes = initialState, action: Action): Boxes => {
   switch (action.type) {
 
     case 'FETCH_SINGLE_BOX_DETAILS_SUCCESS': {
@@ -48,19 +51,7 @@ export default (state: Boxes = initialState, action: Action): any => {
     case 'CLEAN_SINGLE_BOX_DETAILS_SUCCESS': {
       return {
         ...state,
-        singleBoxDetail: {
-          number: '',
-          startAt: new Date(),
-          finishAt: new Date(),
-          status: RentStatus.free,
-          owner: {
-            email: '',
-            firstName: '',
-            lastName: '',
-            rentCount: 0,
-            phone: '',
-          },
-        },
+        singleBoxDetail: initialState.singleBoxDetail,
       };
     }
 

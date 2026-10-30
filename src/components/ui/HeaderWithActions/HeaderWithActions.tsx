@@ -1,6 +1,7 @@
 import { ReactNode } from "react"
 import styled from "styled-components";
-import { Header } from "../Header";
+
+import { Header } from "src/components/ui/Header";
 
 export type HeaderWithActionsProps = {
     children: ReactNode;
@@ -14,7 +15,7 @@ const StyledHeader = styled('div')(({theme}) => ({
     alignItems: 'center',
     flexDirection: 'column',
     justifyContent: 'space-between',
-    padding: `${theme.spacing * 4}px 0`,
+    paddingBottom: `${theme.spacing * 4}px`,
     borderBottom: `1px solid ${theme.colors.border.secondary}`,
     '@media(min-width: 768px)': {
         flexDirection: 'row'

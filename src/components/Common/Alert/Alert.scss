@@ -1,4 +1,4 @@
-@import '../../../config/variables';
+@use '../../../config/variables' as *;
 
 .alert:not(.alert-simple) {
   margin: $main-spacing 0;

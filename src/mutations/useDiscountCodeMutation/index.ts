@@ -1,1 +1,1 @@
-export * from './useDiscountCodeMutation';
+export * from 'src/mutations/useDiscountCodeMutation/useDiscountCodeMutation';

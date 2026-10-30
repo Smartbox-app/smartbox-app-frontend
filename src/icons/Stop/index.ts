@@ -1,1 +1,1 @@
-export * from './Stop';
+export * from 'src/icons/Stop/Stop';

@@ -1,5 +1,5 @@
-@import '../../../config/variables';
-@import '../../../config/mixins.scss';
+@use '../../../config/variables' as *;
+@use '../../../config/mixins.scss' as *;
 
 .notification-container {
   

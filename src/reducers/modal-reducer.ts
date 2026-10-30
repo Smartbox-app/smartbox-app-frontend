@@ -1,6 +1,6 @@
 import React from 'react';
-import { disableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock';
-import { Modal } from '../types/modal';
+
+import { Modal } from 'src/types/modal';
 
 interface ModalPayload {
     content: React.ReactNode;
@@ -43,7 +43,6 @@ export default (state = initialState, action: Action) => {
         case 'UNPREPARE_MODAL':
             return { ...state, isPrepared: false };
         case 'SHOW_MODAL':
-            //   disableBodyScroll(document.querySelector('.modal-contenćt'));
             document.querySelector('#root')?.classList.add('noscroll');
             return {
                 ...state,

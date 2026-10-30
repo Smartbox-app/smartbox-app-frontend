@@ -1,17 +1,19 @@
-import React from 'react';
 import { ItfApiForm } from 'itf_formbuilder_react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
-import ReactCreatableSelect from 'react-select/creatable';
-import { ButtonsContainer, FormContainer, FormHeader } from '../../../../../../../components/Layout';
-import { Button, Spinner } from '../../../../../../../components/Branded';
-import ApiService from '../../../../../../../services/api-service';
-import { formOnTranslateString } from '../../../../../../../utils/trans-form';
-import { ReactSelectOverride } from '../../../../../../../components/Common/ReactSelectOverride';
-import { successNotification } from '../../../../../../../actions/notifications';
-import { __ } from '../../../../../../../helpers/i18n';
-import { mapFields } from '../../../../../../../utils/fields-mapper';
-import { hideModal } from '../../../../../../../actions/modal';
-import { refreshApiTableData } from '../../../../../../../actions/api-table';
+
+import { BoxReq } from 'smartbox-types';
+import { refreshApiTableData } from 'src/actions/api-table';
+import { hideModal } from 'src/actions/modal';
+import { successNotification } from 'src/actions/notifications';
+import { Button, Spinner } from 'src/components/Branded';
+import { ReactSelectOverride, ReactCreatableSelectOverride as ReactCreatableSelect } from 'src/components/Common/ReactSelectOverride';
+import { ButtonsContainer, FormContainer } from 'src/components/Layout';
+import { Modal } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
+import ApiService from 'src/services/api-service';
+import { mapFields } from 'src/utils/fields-mapper';
+import { formOnTranslateString } from 'src/utils/trans-form';
 
 interface Props {
     id: string;
@@ -31,27 +33,31 @@ const Edit = ({ id, stockId }: Props) => {
     const sendUrl = `box/${id}`;
 
     return (
-        <FormContainer>
-            <FormHeader title="application.editBox" />
-            <ItfApiForm
-                formId="updateBox"
-                schemaCacheEnabled={false}
-                schemaMayBeDynamic={true}
-                loadingInfo={<Spinner transparent />}
-                schemaFetcher={() => ApiService.loadForm(fetchUrl)}
-                sendFetcher={(formId: string, values: any) => ApiService.sendForm(sendUrl, { ...values, stockId }, 'PATCH')}
-                submitButton={submitButton}
-                onRenderFullField={mapFields}
-                onSavedSuccessfully={() => {
-                    dispatch(successNotification('application.boxEdited'));
-                    dispatch(hideModal());
-                    dispatch(refreshApiTableData());
-                }}
-                onTranslateString={formOnTranslateString}
-                thirdPartyComponents={{ ReactSelect: ReactSelectOverride, ReactCreatableSelect }}
-            />
-        </FormContainer>
+        <>
+            <Modal.Header title={__('application.editBox')} />
+            <Modal.Content>
+                <FormContainer>
+                <ItfApiForm
+                    formId="updateBox"
+                    schemaCacheEnabled={false}
+                    schemaMayBeDynamic={true}
+                    loadingInfo={<Spinner transparent />}
+                    schemaFetcher={() => ApiService.loadForm(fetchUrl)}
+                    sendFetcher={(_formId: string, values: BoxReq) => ApiService.sendForm(sendUrl, { ...values, stockId }, 'PATCH')}
+                    submitButton={submitButton}
+                    onRenderFullField={mapFields}
+                    onSavedSuccessfully={() => {
+                        dispatch(successNotification('application.boxEdited'));
+                        dispatch(hideModal());
+                        dispatch(refreshApiTableData());
+                    }}
+                    onTranslateString={formOnTranslateString}
+                    thirdPartyComponents={{ ReactSelect: ReactSelectOverride, ReactCreatableSelect }}
+                />
+                </FormContainer>
+            </Modal.Content>
+        </>
     );
 };
 
-export { Edit }
+export { Edit };

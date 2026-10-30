@@ -1,0 +1,136 @@
+import React, { useCallback, useMemo } from 'react';
+import { useDispatch } from 'react-redux';
+
+import { FieldType, rentAuthorizationsList } from 'smartbox-tables';
+import { AdminRentListDetails, RentAuthorizationListItem } from 'smartbox-types';
+import { refreshApiTableData } from 'src/actions/api-table';
+import { showModal, hideModal } from 'src/actions/modal';
+import { successNotification } from 'src/actions/notifications';
+import { Button } from 'src/components/Branded';
+import { ApiTable, ConfirmModal } from 'src/components/Common';
+import { RentSummary } from 'src/components/Common/RentSummary/RentSummary';
+import { ButtonsContainer } from 'src/components/Layout';
+import { Modal } from 'src/components/ui';
+import { RENT_AUTHORIZATIONS_MODAL } from 'src/constants/api-table-instances';
+import { __ } from 'src/helpers/i18n';
+import { history } from 'src/history';
+import { useRevokeRentAuthorizationByStaffMutation } from 'src/mutations';
+import { useGetMyDetailsQuery } from 'src/queries';
+import UserService from 'src/services/user-service';
+import { InteractiveTableSchema } from 'src/utils/table-schema-utils';
+
+import { StaffAddRentAuthorizationModal } from './StaffAddRentAuthorizationModal';
+
+type Props = {
+  stockId: string;
+  rent: AdminRentListDetails;
+};
+
+export const RentAuthorizationsForRentModal = ({ stockId, rent }: Props) => {
+  const dispatch = useDispatch();
+  const { data: user } = useGetMyDetailsQuery();
+  const { mutate: revokeAuthorization } =
+    useRevokeRentAuthorizationByStaffMutation();
+
+  const slug = user ? UserService.getSlugByRole(user.role) : '';
+  const stockAuthorizationsPath = `/${slug}/locations/stocks/${stockId}/authorizations`;
+
+  const onRevokeSucceeded = useCallback(() => {
+    dispatch(successNotification(__('application.rentAuthorizationsRevoked')));
+    dispatch(refreshApiTableData(RENT_AUTHORIZATIONS_MODAL));
+  }, [dispatch, RENT_AUTHORIZATIONS_MODAL]);
+
+  const runRevokeAuthorization = useCallback(
+    (authorizationId: string) => {
+      revokeAuthorization(authorizationId, {
+        onSuccess: onRevokeSucceeded,
+      });
+    },
+    [revokeAuthorization, onRevokeSucceeded],
+  );
+
+  const openRevokeConfirm = useCallback(
+    (authorizationId: string) => {
+      const handleApproveRevoke = () =>
+        runRevokeAuthorization(authorizationId);
+      dispatch(
+        showModal(
+          <ConfirmModal
+            approveButtonText="application.rentAuthorizationsRevoke"
+            mainText="application.rentAuthorizationsRevokeConfirm"
+            approveAction={handleApproveRevoke}
+          />,
+        ),
+      );
+    },
+    [dispatch, runRevokeAuthorization],
+  );
+
+  const openAddAuthorizationModal = useCallback(() => {
+    dispatch(
+      showModal(
+        <StaffAddRentAuthorizationModal
+          rentId={rent.id}
+        />,
+      ),
+    );
+  }, [dispatch, stockId, rent.id]);
+
+  const goToStockAuthorizationsTab = useCallback(() => {
+    dispatch(hideModal());
+    history.push(stockAuthorizationsPath);
+  }, [dispatch, stockAuthorizationsPath]);
+
+  const scheme = useMemo(
+    () =>
+      new InteractiveTableSchema(rentAuthorizationsList)
+        .removeFields('id', 'rentId', 'tenantId', 'startAt', 'finishAt', 'boxNumber')
+        .addFieldAtTheEnd({
+          name: __('application.actions'),
+          field: 'actions',
+          mobile: true,
+          type: FieldType.Custom,
+          customRender: (_v, _f, row: RentAuthorizationListItem) => (
+            <ButtonsContainer max>
+              <Button
+                text="application.rentAuthorizationsRevoke"
+                danger
+                small
+                click={() => openRevokeConfirm(row.id)}
+              />
+            </ButtonsContainer>
+          ),
+        }),
+    [openRevokeConfirm],
+  );
+
+  return (
+    <>
+      <Modal.Header title={__('application.rentAuthorizations')} />
+      <Modal.Content>
+        <RentSummary rent={rent} />
+
+        <ButtonsContainer>
+          <Button
+            text="application.rentAuthorizationsAdd"
+            primary
+            small
+            click={openAddAuthorizationModal}
+          />
+          <Button
+            text="application.rentAuthOpenStockAuthorizationsTab"
+            secondary
+            small
+            click={goToStockAuthorizationsTab}
+          />
+        </ButtonsContainer>
+
+        <ApiTable
+          scheme={scheme}
+          instanceId={RENT_AUTHORIZATIONS_MODAL}
+          apiEndpointSubUrl={`rent/authorizations/${stockId}/${rent.id}`}
+        />
+      </Modal.Content>
+    </>
+  );
+};

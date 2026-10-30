@@ -1,7 +1,22 @@
+import {
+  FieldAndEventFunction,
+  FormFieldToRender,
+} from 'itf_formbuilder_react';
 import React from 'react';
-import { FieldsMapper } from "../components/Common";
 
-export const mapFieldsBig = (field, errors, fieldHtmlId, currentValue, onChange, onFocus, onBlur) => <FieldsMapper
+import { FieldsMapper } from 'src/components/Common';
+import { TranslatableObject } from 'src/utils/errors-trans';
+
+export const mapFieldsBig = (
+  field: FormFieldToRender,
+  errors: TranslatableObject[],
+  fieldHtmlId: string,
+  currentValue: string | number | boolean | object | undefined,
+  onChange: (value: string | number | boolean | object | undefined) => void,
+  onFocus: FieldAndEventFunction,
+  onBlur: FieldAndEventFunction,
+) => (
+  <FieldsMapper
     fieldHtmlId={fieldHtmlId}
     field={field}
     onChange={onChange}
@@ -9,10 +24,20 @@ export const mapFieldsBig = (field, errors, fieldHtmlId, currentValue, onChange,
     onBlur={onBlur}
     currentValue={currentValue}
     errors={errors}
-    big
-/>
+    size="large"
+  />
+);
 
-export const mapFields = (field, errors, fieldHtmlId, currentValue, onChange, onFocus, onBlur) => <FieldsMapper
+export const mapFields = (
+  field: FormFieldToRender,
+  errors: TranslatableObject[],
+  fieldHtmlId: string,
+  currentValue: string | number | boolean | object | undefined,
+  onChange: (value: string | number | boolean | object | undefined) => void,
+  onFocus: FieldAndEventFunction,
+  onBlur: FieldAndEventFunction,
+) => (
+  <FieldsMapper
     fieldHtmlId={fieldHtmlId}
     field={field}
     onChange={onChange}
@@ -20,4 +45,6 @@ export const mapFields = (field, errors, fieldHtmlId, currentValue, onChange, on
     onBlur={onBlur}
     currentValue={currentValue}
     errors={errors}
-/>
+    size="medium"
+  />
+);

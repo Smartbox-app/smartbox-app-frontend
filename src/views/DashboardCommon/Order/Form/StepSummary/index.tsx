@@ -1,37 +1,25 @@
 import React, { useEffect, useState } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
+import { FieldErrors, FormProvider, useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
-import { bindActionCreators } from 'redux';
-import { connect, useDispatch, useSelector } from 'react-redux';
-import { MyRentDetails, PaymentType } from 'smartbox-types';
-import { Spinner } from '../../../../../components/Branded';
-import { order, modal, notifications, user } from '../../../../../actions';
-import { ButtonsContainer } from '../../../../../components/Layout';
+import {
+  PaymentDocument,
+  RentAgreementType,
+  RentPaymentType,
+  StockPaymentDocument,
+} from 'smartbox-types';
+import {
+  setBirthDate,
+  setRentPaymentDocumentType,
+  updateFormData,
+} from 'src/actions/order';
+import { Spinner } from 'src/components/Branded';
 import {
   Alert,
   CheckBox as ControlledCheckbox,
-} from '../../../../../components/Common';
-import { history } from '../../../../../App';
-import { FormType } from '../../../../../types/order-form';
-
-import UserService from '../../../../../services/user-service';
-import { ApplicationState } from '../../../../../reducers';
-import { __ } from '../../../../../helpers/i18n';
-import { CompanyDetailsForm } from './CompanyDetailsForm';
-
-import { DiscountsList } from './DiscountsList';
-import SummaryTable from './SummaryTable';
-import TenantDetailsForm from './TenantDetailsForm';
-
-import {
-  calculatePrice,
-  calculatePriceForRent,
-  setBirthDate,
-} from '../../../../../actions/order';
-import { useTenant } from '../../../../../hooks/useTenant';
-import { useGetMyDetailsQuery } from 'src/queries';
-import { RentDataDto } from './TenantDetailsForm/dto/RentDataDto';
+} from 'src/components/Common';
+import { ButtonsContainer } from 'src/components/Layout';
 import {
   CheckBox,
   Button,
@@ -40,25 +28,59 @@ import {
   Stack,
   Form,
 } from 'src/components/ui';
-import { ClassValidatorResolver } from 'src/resolvers/ClassValidatorResolver';
-import { DiscountForm } from './DiscountForm';
+import { __ } from 'src/helpers/i18n';
+import { history } from 'src/history';
+import { useBridgeCalculatedPriceToRedux } from 'src/hooks/useBridgeOrderPriceQuery';
+import { useTenant } from 'src/hooks/useTenant';
+import { useI18n } from 'src/i18n';
 import { ArrowLeft, ArrowRight } from 'src/icons';
+import { useGetMyDetailsQuery, useMyRentDetailsQuery } from 'src/queries';
+import {
+  useBoxGroupPriceQuery,
+  usePriceForRentQuery,
+} from 'src/queries/useRentPriceQueries';
+import { ApplicationState } from 'src/reducers';
+import { ClassValidatorResolver } from 'src/resolvers/ClassValidatorResolver';
+import UserService from 'src/services/user-service';
+import { openEndedFirstPeriodFinish } from 'src/utils/open-ended-period';
+import { scrollToFirstFormError } from 'src/utils/scroll-to-form-error';
 import { textToSimpleMD } from 'src/utils/text-to-simple-md';
+
+import { PaymentDocumentType } from '../Common/PaymentDocumentType';
 import { ClientSourceForm } from './ClientSourceForm';
-import ApiService from 'src/services/api-service';
+import { CompanyDetailsForm } from './CompanyDetailsForm';
+import { DiscountForm } from './DiscountForm';
+import { DiscountsList } from './DiscountsList';
+import SummaryTable from './SummaryTable';
+import TenantDetailsForm from './TenantDetailsForm';
+import { RentDataDto } from './TenantDetailsForm/dto/RentDataDto';
 
-interface Props {
-  formData: FormType;
-  updateFormData: (data: Partial<FormType>) => void;
-  showModal: (content: React.ReactNode) => void;
-  successNotification: (text: string) => void;
-}
+const STEP_SUMMARY_FIELD_ORDER: (keyof RentDataDto)[] = [
+  'firstName',
+  'lastName',
+  'birthDate',
+  'country',
+  'street',
+  'city',
+  'postCode',
+  'mailToSendInvoice',
+  'phone',
+  'invoiceNeeded',
+  'companyCountry',
+  'companyName',
+  'companyStreet',
+  'companyCity',
+  'companyPostCode',
+  'nip',
+  'clientSource',
+];
 
-const StepSummary = ({ formData, updateFormData }: Props) => {
+const StepSummary = () => {
   const { tenant } = useTenant();
-
+  const { t } = useI18n();
   const dispatch = useDispatch();
   const {
+    stock,
     calculatedPrice,
     addons,
     orderAddons,
@@ -68,29 +90,71 @@ const StepSummary = ({ formData, updateFormData }: Props) => {
     boxGroupId,
     startDate,
     endDate,
+    rentPaymentType,
+    agreementType,
   } = useSelector((state: ApplicationState) => state.order);
 
   const { data: user } = useGetMyDetailsQuery();
   const { rentId } = useParams<{ step: string; rentId: string }>();
+  const isOpenEnded = agreementType === RentAgreementType.OpenEnded;
+  const pricePaymentType = isOpenEnded
+    ? RentPaymentType.InAdvance
+    : rentPaymentType || RentPaymentType.InAdvance;
+  const periodDays = stock?.openEndedPeriodDays || 30;
+  const firstPeriodEnd =
+    isOpenEnded && startDate
+      ? openEndedFirstPeriodFinish(startDate, periodDays)
+      : endDate;
   const isFirstRent = user && !user.rentCount;
   const [discount, setDiscount] = useState<boolean>(false);
-  const [rent, setRent] = useState<MyRentDetails>();
-  const [loading, setLoading] = useState<boolean>(false);
+  const { data: rent } = useMyRentDetailsQuery(rentId);
+
+  const extensionPriceEnabled = !!rentId && !!endDate && !isOpenEnded;
+  const newRentPriceEnabled =
+    !rentId &&
+    !!boxGroupId &&
+    (isOpenEnded || !!endDate) &&
+    !!stockId;
+
+  const boxGroupPriceQuery = useBoxGroupPriceQuery({
+    boxGroupId,
+    start: startDate,
+    end: endDate ?? undefined,
+    type: pricePaymentType,
+    code: discountCode,
+    openEnded: isOpenEnded,
+    enabled: newRentPriceEnabled,
+  });
+
+  const rentPriceQuery = usePriceForRentQuery({
+    rentId,
+    start: startDate,
+    end: endDate ?? undefined,
+    type: rentPaymentType || RentPaymentType.InAdvance,
+    code: discountCode,
+    enabled: extensionPriceEnabled,
+  });
+
+  useBridgeCalculatedPriceToRedux(
+    extensionPriceEnabled ? rentPriceQuery : boxGroupPriceQuery,
+  );
 
   const defaultValues = {
-    paymentType: PaymentType.card,
     firstName: user?.firstName || '',
     lastName: user?.lastName || '',
     street: user?.street || '',
     birthDate: user?.birthDate ? new Date(user?.birthDate) : undefined,
     city: user?.city || '',
+    country: user?.country || '',
     postCode: user?.postCode || '',
     mailToSendInvoice: user?.email || '',
     phone: user?.phone || '',
-
+    withBirthDate: !!tenant?.birthDateNecessary,
+    withClientSource: !rentId && !!tenant?.clientSourceField,
     clientSource: '',
-    nip: user?.companyData.nip || '',
+    nip: user?.companyData?.nip?.trim() || '',
     companyPostCode: user?.companyData.companyPostCode || '',
+    companyCountry: user?.companyData.companyCountry || '',
     companyCity: user?.companyData.companyCity || '',
     companyStreet: user?.companyData.companyStreet || '',
     companyName: user?.companyData.companyName || '',
@@ -99,60 +163,33 @@ const StepSummary = ({ formData, updateFormData }: Props) => {
   const methods = useForm<RentDataDto>({
     defaultValues,
     mode: 'onSubmit',
-    resolver: ClassValidatorResolver(
-      new RentDataDto(!!tenant?.birthDateNecessary),
-    ),
+    resolver: ClassValidatorResolver(new RentDataDto()),
   });
   const {
     handleSubmit,
     register,
     setValue,
     watch,
-    formState: { errors, isValid },
+    formState: { errors },
   } = methods;
 
   const invoiceNeeded = watch('invoiceNeeded');
 
-  // get rent details if it is extended
-  // @TODO - move to react query
-  const getSingleRent = async () => {
-    setLoading(true);
-    await ApiService.callFetch(
-      'GET',
-      `rent/my-details/${rentId}`,
-      (data: MyRentDetails) => {
-        setRent(data);
-      },
-    );
-    setLoading(false);
-  };
-
   useEffect(() => {
-    if (!rentId) return;
-
-    getSingleRent();
-  }, [rentId]);
-
-  useEffect(() => {
-    const lastDescription = rent?.description[rent.description.length - 1];
+    const desc = rent?.description;
+    const lastDescription =
+      desc && desc.length > 0 ? desc[desc.length - 1] : undefined;
     if (lastDescription?.data?.isCompany) {
       setValue('invoiceNeeded', true);
     }
-  }, [rent]);
+  }, [rent, setValue]);
 
   useEffect(() => {
     if (!user) return;
-    if (!rentId && (!stockId || !boxGroupId)) {
+    if (!stock || (!rentId && (!stockId || !boxGroupId))) {
       history.push(`/${UserService.getSlugByRole(user.role)}/order/step/stock`);
     }
 
-    if (!endDate) return;
-
-    if (rentId) {
-      dispatch(calculatePriceForRent(rentId, startDate, endDate));
-    } else {
-      dispatch(calculatePrice(boxGroupId, startDate, endDate));
-    }
   }, [user]);
 
   useEffect(() => {
@@ -162,22 +199,40 @@ const StepSummary = ({ formData, updateFormData }: Props) => {
   }, [user]);
 
   useEffect(() => {
-    if (!endDate) return;
+    if (!stock) return;
 
-    if (rentId) {
-      dispatch(calculatePriceForRent(rentId, startDate, endDate, discountCode));
-    } else {
-      dispatch(calculatePrice(boxGroupId, startDate, endDate, discountCode));
+    if (isOpenEnded || rentPaymentType === RentPaymentType.Installments) {
+      dispatch(setRentPaymentDocumentType(PaymentDocument.Invoice));
+      return;
     }
-  }, [discountCode]);
+
+    switch (stock.paymentDocumentConfig) {
+      case StockPaymentDocument.Invoice: {
+        dispatch(setRentPaymentDocumentType(PaymentDocument.Invoice));
+        break;
+      }
+      case StockPaymentDocument.Receipt: {
+        dispatch(setRentPaymentDocumentType(PaymentDocument.Receipt));
+        break;
+      }
+      default: {
+        dispatch(setRentPaymentDocumentType(PaymentDocument.Receipt));
+        break;
+      }
+    }
+  }, [stock, rentPaymentType, isOpenEnded]);
 
   const onSubmit = (data: RentDataDto) => {
-    if (!isValid) return;
     if (!user) return;
-    updateFormData({ ...data, isCompany: invoiceNeeded });
+    const { withBirthDate: _withBirthDate, withClientSource: _withClientSource, ...rest } = data;
+    dispatch(updateFormData({ ...rest, isCompany: invoiceNeeded }));
     history.push(
       `/${UserService.getSlugByRole(user.role)}/order/step/agreement/${rentId || ''}`,
     );
+  };
+
+  const onInvalid = (formErrors: FieldErrors<RentDataDto>) => {
+    scrollToFirstFormError(formErrors, STEP_SUMMARY_FIELD_ORDER);
   };
 
   return (
@@ -185,37 +240,41 @@ const StepSummary = ({ formData, updateFormData }: Props) => {
       {loadingPrice && <Spinner overlay halfTransparent />}
 
       <Section>
-        {endDate && (
+        {firstPeriodEnd && (
           <>
             <SummaryTable
               dateStart={startDate}
-              dateEnd={endDate}
+              dateEnd={firstPeriodEnd}
               countedPrice={calculatedPrice}
               addons={addons}
               orderAddons={orderAddons}
+              isOpenEnded={isOpenEnded}
+              periodDays={periodDays}
+              invoiceDaysBefore={stock?.openEndedInvoiceDaysBefore || 7}
             />
             <Header variant="h2">{__('rent.discount')}</Header>
             <ControlledCheckbox
               checked={!!discount}
               name="discount"
               handleChange={(checked) => setDiscount(checked)}
-              label="rent.i_have_a_discount"
+              label={t('rent.i_have_a_discount')}
             />
           </>
         )}
       </Section>
 
-      {discount && endDate ? (
+      {discount && firstPeriodEnd ? (
         <DiscountForm
           stockId={stockId}
+          boxGroupId={rent?.boxGroupId || boxGroupId}
           rentStart={startDate}
-          rentEnd={endDate}
+          rentEnd={firstPeriodEnd}
         />
       ) : null}
 
       <DiscountsList />
 
-      <Form onSubmit={handleSubmit(onSubmit)}>
+      <Form onSubmit={handleSubmit(onSubmit, onInvalid)}>
         <FormProvider {...methods}>
           <Stack>
             <Section>
@@ -225,7 +284,10 @@ const StepSummary = ({ formData, updateFormData }: Props) => {
                 </Alert>
               ) : null}
               <TenantDetailsForm disabled={!isFirstRent} />
+            </Section>
 
+            {stock && <PaymentDocumentType stock={stock} />}
+            <Section>
               <Header variant="h2">
                 {__('application.infoToOptionalInvoice')}
               </Header>
@@ -264,19 +326,4 @@ const StepSummary = ({ formData, updateFormData }: Props) => {
   );
 };
 
-const mapStateToProps = (state: ApplicationState) => ({
-  formData: state.order.formData,
-});
-
-const mapDispatchToProps = (dispatch: any) =>
-  bindActionCreators(
-    {
-      ...order,
-      ...modal,
-      ...notifications,
-      ...user,
-    },
-    dispatch,
-  );
-
-export default connect(mapStateToProps, mapDispatchToProps)(StepSummary);
+export default StepSummary;

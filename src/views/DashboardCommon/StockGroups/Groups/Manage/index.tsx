@@ -1,15 +1,16 @@
 import { useMemo } from 'react';
-
 import { Redirect, Route, Switch, useParams } from 'react-router';
-import UserService from '../../../../../services/user-service';
-import { BasicData } from './BasicData';
-import { Gates } from './Gates';
+
 import { UserRole } from 'smartbox-types';
-import { useGetMyDetailsQuery } from 'src/queries';
 import { PageHeader, Section, Tabs } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
 import { InfoCircle, Stop } from 'src/icons';
-import GateStatus from 'src/views/DashboardCommon/GateStatus';
+import { useGetMyDetailsQuery } from 'src/queries';
+import UserService from 'src/services/user-service';
+
+import GateStatus from '../../../GateStatus';
+import { BasicData } from './BasicData';
+import { Gates } from './Gates';
 
 const ManageGroup = () => {
   const { stockGroupId } = useParams<{ stockGroupId: string }>();

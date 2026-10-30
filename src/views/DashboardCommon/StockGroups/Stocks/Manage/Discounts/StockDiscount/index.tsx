@@ -1,32 +1,25 @@
-import React, { useState } from 'react';
-import { ItfApiForm } from 'itf_formbuilder_react';
-import ReactCreatableSelect from 'react-select/creatable';
-import { DiscountReq } from 'smartbox-types';
-import { useDispatch } from 'react-redux';
 import flatpickr from 'flatpickr';
-import { FormContainer, ButtonsContainer, FieldsColumn } from '../../../../../../../components/Layout';
-import { Button, Spinner } from '../../../../../../../components/Branded';
-import ApiService from '../../../../../../../services/api-service';
-import { formOnTranslateString } from '../../../../../../../utils/trans-form';
-import { notifications } from '../../../../../../../actions';
-import { ReactSelectOverride } from '../../../../../../../components/Common/ReactSelectOverride';
+import { ItfApiForm } from 'itf_formbuilder_react';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router';
-import { mapFields } from '../../../../../../../utils/fields-mapper';
-import { successNotification } from '../../../../../../../actions/notifications';
-import styled from 'styled-components';
+
+import { DiscountReq } from 'smartbox-types';
+import { notifications } from 'src/actions';
+import { successNotification } from 'src/actions/notifications';
+import { Button, Spinner } from 'src/components/Branded';
+import { ReactSelectOverride, ReactCreatableSelectOverride as ReactCreatableSelect } from 'src/components/Common/ReactSelectOverride';
+import { FormContainer, ButtonsContainer, FieldsColumn } from 'src/components/Layout';
 import { Header } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
 import { useTenantNaming } from 'src/hooks/useTenantNaming';
-
-const StyledWrapper = styled.div`
-border-bottom: 1px solid ${props => props.theme.colors.primary};
-margin-bottom: 15px;
-padding-bottom: 15px;
-`
+import ApiService from 'src/services/api-service';
+import { mapFields } from 'src/utils/fields-mapper';
+import { formOnTranslateString } from 'src/utils/trans-form';
 
 const StockDiscount = () => {
     const dispatch = useDispatch();
-    const [loading, setLoading] = useState<boolean>(false);
+    const [, setLoading] = useState<boolean>(false);
     const { stockId } = useParams<{ stockId: string }>();
     const {getText} = useTenantNaming();
 

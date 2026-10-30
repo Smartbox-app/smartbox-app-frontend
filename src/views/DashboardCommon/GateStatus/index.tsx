@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
+
 import { GateHealthCheckStatus, GatesStatusForAdminRes } from 'smartbox-types';
-import { Spinner } from '../../../components/Branded';
-import { fullDate } from '../../../utils/format-date';
-import ApiService from '../../../services/api-service';
+import { Skeleton } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
+import { useTenantNaming } from 'src/hooks/useTenantNaming';
+import ApiService from 'src/services/api-service';
+import { fullDate } from 'src/utils/format-date';
 
 import './GateStatus.scss';
-import { __ } from '../../../helpers/i18n';
-import { useTenantNaming } from 'src/hooks/useTenantNaming';
 
 interface Props {
   stockId?: string;
@@ -89,7 +90,13 @@ const GateStatus = ({ stockId, stockGroupId }: Props) => {
     }
   };
 
-  if (!status) return <Spinner />;
+  if (!status)
+    return (
+      <div className="gate-status">
+        <Skeleton radius={2} height={83} width="350px" />
+      </div>
+    );
+  if (!status || status.length === 0) return null;
 
   return (
     <div className="gate-status">

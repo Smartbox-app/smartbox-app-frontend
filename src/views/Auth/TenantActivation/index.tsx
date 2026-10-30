@@ -1,19 +1,18 @@
-import React from 'react';
 import { ItfApiForm } from 'itf_formbuilder_react';
-import { AddInvitedTenantReq, AddInvitedUserReq } from 'smartbox-types';
-import ApiService from '../../../services/api-service';
-
-import { Spinner, Button, PageContent } from '../../../components/Branded';
-import { Logo } from '../../../components/Branded';
-import { formOnTranslateString } from '../../../utils/trans-form';
-import { FormContainer, ButtonsContainer } from '../../../components/Layout';
-import { history } from '../../../App';
-import { __ } from '../../../helpers/i18n';
-import { mapFieldsBig } from '../../../utils/fields-mapper';
-import { useParams } from 'react-router';
+import React from 'react';
 import { useDispatch } from 'react-redux';
-import { successNotification } from '../../../actions/notifications';
-import { PageHeader } from '../../../components/ui';
+import { useParams } from 'react-router';
+
+import { AddInvitedTenantReq } from 'smartbox-types';
+import { successNotification } from 'src/actions/notifications';
+import { Spinner, Button, PageContent , Logo } from 'src/components/Branded';
+import { FormContainer, ButtonsContainer } from 'src/components/Layout';
+import { PageHeader } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
+import { history } from 'src/history';
+import ApiService from 'src/services/api-service';
+import { mapFieldsBig } from 'src/utils/fields-mapper';
+import { formOnTranslateString } from 'src/utils/trans-form';
 
 const TenantActivation = () => {
   const loadUrl = 'user/form/add-invited-tenant';
@@ -72,4 +71,4 @@ const TenantActivation = () => {
   );
 };
 
-export { TenantActivation };
+export default TenantActivation;

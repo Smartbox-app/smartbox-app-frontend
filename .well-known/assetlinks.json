@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.smartbox.aplikacja.app",
+      "sha256_cert_fingerprints": [
+        "FB:25:6D:64:AE:12:1E:D8:CC:C7:D2:92:15:8A:13:BE:38:40:F6:97:04:CF:48:22:CE:FB:66:EB:63:3A:AA:9F"
+      ]
+    }
+  }
+]

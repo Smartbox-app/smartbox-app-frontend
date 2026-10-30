@@ -1,1 +1,1 @@
-export * from './usePayForPeriodMutation';
+export * from 'src/mutations/usePayForPeriodMutation/usePayForPeriodMutation';

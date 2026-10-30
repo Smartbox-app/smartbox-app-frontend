@@ -1,5 +1,5 @@
 @use "sass:math";
-@import '../../../config/variables';
+@use '../../../config/variables' as *;
 
 .pagination {
   margin: $main-spacing 0;

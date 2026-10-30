@@ -1,11 +1,11 @@
-import React, { useCallback } from 'react';
-import { TenantForUsers } from 'smartbox-types';
-import { useTenant } from '../../../hooks/useTenant';
-import { history } from '../../../App';
-import UserService from '../../../services/user-service';
-import ApiService from '../../../services/api-service';
+import React from 'react';
 import styled from 'styled-components';
-import { useGetMyDetailsQuery } from '../../../queries';
+
+import { history } from 'src/history';
+import { useFileStorage } from 'src/hooks/useFileStorage';
+import { useTenant } from 'src/hooks/useTenant';
+import { useGetMyDetailsQuery } from 'src/queries';
+import UserService from 'src/services/user-service';
 
 type LogoWidths = 'large' | 'medium' | 'small';
 
@@ -39,15 +39,8 @@ export type LogoProps = {
 
 const Logo = ({ width = 'large' }: LogoProps) => {
   const { tenant } = useTenant();
+  const { getAssetPath } = useFileStorage();
   const { data: user } = useGetMyDetailsQuery();
-
-  const getTenantLogoPath = useCallback(
-    (tenant: TenantForUsers) => {
-      if (!tenant.id) return tenant.logo;
-      return `${ApiService.url}tenant/logo/${tenant.id}`;
-    },
-    [tenant],
-  );
 
   const handleLogoClick = () => {
     if (user) history.push(`/${UserService.getSlugByRole(user.role)}`);
@@ -59,7 +52,7 @@ const Logo = ({ width = 'large' }: LogoProps) => {
   return (
     <LogoContainer width={width}>
       <StyledLogo
-        src={getTenantLogoPath(tenant)}
+        src={getAssetPath('logo', tenant.logo)}
         onError={({ currentTarget }) => (currentTarget.style.display = 'none')}
         alt={tenant.name}
         onClick={handleLogoClick}

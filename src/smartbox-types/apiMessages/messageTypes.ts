@@ -1,5 +1,5 @@
-import {ApiResult} from "./apiResults";
-import {ApiErrorCode} from "./errorCodes";
+import {ApiResult} from "src/smartbox-types/apiMessages/apiResults";
+import {ApiErrorCode} from "src/smartbox-types/apiMessages/errorCodes";
 
 interface ApiMessage {
     result: ApiResult;
@@ -8,8 +8,9 @@ interface ApiMessage {
 export interface ApiErrorMessage extends ApiMessage{
     error_code: ApiErrorCode;
     details?: string;
-    form_errors?: any;
+    form_errors?: unknown;
     error_log_id?: string;
+    payload?: unknown;
 }
 
 export interface ApiOkMessage<T> extends ApiMessage{

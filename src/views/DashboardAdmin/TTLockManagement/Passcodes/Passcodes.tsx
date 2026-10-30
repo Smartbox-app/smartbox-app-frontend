@@ -1,20 +1,33 @@
-import { useParams } from 'react-router';
-import { lockPasscodesList } from 'smartbox-tables';
-import { ApiTable } from 'src/components/Common';
-import { Header, Section } from 'src/components/ui';
-import { __ } from 'src/helpers/i18n';
-import { InteractiveTableSchema } from 'src/utils/table-schema-utils';
+import React from 'react';
+import { Switch, Route, Redirect, useParams } from 'react-router';
 
+import { Add } from './Add';
+import { Edit } from './Edit';
+import { List } from './List';
 
 export const Passcodes = () => {
-  const { lockId } = useParams<{ lockId?: string }>();
- 
-  const scheme = new InteractiveTableSchema(lockPasscodesList );
-
+  const { lockId } = useParams<{ lockId: string }>();
   return (
-    <Section>
-      <Header variant="h2">{__('application.lockPasscodes')}</Header>
-      <ApiTable scheme={scheme} apiEndpointSubUrl={`driver/locks/${lockId}/passcodes`} />
-    </Section>
+    <Switch>
+      <Route
+        exact
+        path="/admin/drivers/locks/:lockId/passcodes"
+        render={() => (
+          <Redirect to={`/admin/drivers/locks/${lockId}/passcodes/list`} />
+        )}
+      />
+      <Route
+        path="/admin/drivers/locks/:lockId/passcodes/add"
+        component={Add}
+      />
+      <Route
+        path="/admin/drivers/locks/:lockId/passcodes/:passcodeId/edit"
+        component={Edit}
+      />
+      <Route
+        path="/admin/drivers/locks/:lockId/passcodes/list"
+        component={List}
+      />
+    </Switch>
   );
 };

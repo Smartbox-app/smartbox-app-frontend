@@ -1,46 +1,35 @@
 import React from 'react';
 import { Route, Redirect, Switch } from 'react-router-dom';
-import { Main, Section } from '../../components/Layout';
-import { DashboardContainer } from '../../components/Layout/DashboardContainer';
-import MobileLogoContainer from '../../components/Layout/MobileLogoContainer';
-import { MenuItemType } from '../../types/menu-item';
-import { Navigation } from '../../components/Layout/Navigation';
+
+import {
+  Main,
+  DashboardContainer,
+  DashboardSidebar,
+} from 'src/components/Layout';
+import { useDashboardSidebarNav } from 'src/hooks/useDashboardSidebarNav';
+import { withAttributionSearch } from 'src/utils/attribution-params';
+
 import Profile from '../DashboardCommon/Profile';
-import ManagementWorker from './ManagementWorker';
 import { StockGroups } from '../DashboardCommon/StockGroups';
-import { Settings, Stocks } from '../../icons';
-import { useTenantNaming } from 'src/hooks/useTenantNaming';
+import ManagementWorker from './ManagementWorker';
 
 const DashboardWorker = () => {
-  const { getText } = useTenantNaming();
-  const menuItems: MenuItemType[] = [
-    {
-      icon: <Settings />,
-      text: 'application.management',
-      to: '/worker/management',
-    },
-    {
-      icon: <Stocks />,
-      text: getText('many'),
-      to: '/worker/locations',
-    },
-    {
-      icon: <Settings />,
-      text: 'application.account',
-      to: '/worker/profile',
-    },
-  ];
+  const sidebarGroups = useDashboardSidebarNav();
 
   return (
-    <DashboardContainer>
-      <MobileLogoContainer />
-      <Navigation menuItems={menuItems} />
+    <DashboardContainer
+      sidebar={<DashboardSidebar groups={sidebarGroups} />}
+    >
       <Main>
         <Switch>
           <Route
             exact
             path="/worker"
-            render={() => <Redirect to="/worker/management" />}
+            render={() => (
+              <Redirect
+                to={withAttributionSearch('/worker/management/users/list')}
+              />
+            )}
           />
           <Route path="/worker/management/" component={ManagementWorker} />
           <Route path="/worker/profile" component={Profile} />

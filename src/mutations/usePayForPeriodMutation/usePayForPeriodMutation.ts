@@ -1,6 +1,8 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import ApiService from '../../services/api-service';
+import { Capacitor } from '@capacitor/core';
+import { useMutation } from '@tanstack/react-query';
+
 import { PayForRentResponse } from 'smartbox-types';
+import ApiService from 'src/services/api-service';
 
 export const usePayForPeriodMutation = () => {
   return useMutation({
@@ -14,7 +16,7 @@ export const usePayForPeriodMutation = () => {
     }) => {
       const response = await ApiService.callFetch<PayForRentResponse>(
         'post',
-        `rent/pay-period/${rentId}/${periodId}`,
+        `rent/pay-period/${rentId}/${periodId}?source=${Capacitor.isNativePlatform() ? 'mobile' : 'web'}`,
         null,
         null,
       );

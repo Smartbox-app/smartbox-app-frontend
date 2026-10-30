@@ -1,10 +1,17 @@
-import { UseFormRegisterReturn } from 'react-hook-form';
-import { __ } from '../../../helpers/i18n';
-import styled from 'styled-components';
 import { forwardRef } from 'react';
-import { ErrorText } from '../ErrorText';
-import { InputLabel } from '../InputLabel';
-import { Typography } from '../Typography';
+import { UseFormRegisterReturn } from 'react-hook-form';
+import styled from 'styled-components';
+
+import {
+  getInputFieldStyles,
+  InputSize,
+  InputSizeProps,
+  resolveInputSize,
+} from 'src/components/Common/input-sizes';
+import { ErrorText } from 'src/components/ui/ErrorText';
+import { InputLabel } from 'src/components/ui/InputLabel';
+import { Typography } from 'src/components/ui/Typography';
+import { __ } from 'src/helpers/i18n';
 
 const StyledContainer = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -20,25 +27,12 @@ const StyledHelp = styled(Typography)({
   fontWeight: 400,
 });
 
-const StyledInput = styled('input')<{ error: boolean; disabled: boolean }>(
-  ({ theme, disabled, error }) => ({
-    fontSize: 14,
-    lineHeight: '20px',
-    color: theme.colors.text.primary,
-    background: disabled
-      ? theme.colors.border.disable
-      : theme.colors.background.white,
-    padding: `${theme.spacing * 3}px ${theme.spacing * 5}px`,
-    border: `1px solid ${error ? theme.colors.danger : theme.colors.border.primary}`,
-    borderRadius: theme.radius.outerSurface,
-    height: theme.spacing * 12,
-    '&::placeholder': {
-      color: theme.colors.text.tertiary,
-    },
-    '&:focus': {
-      borderColor: theme.colors.primary,
-    },
-  }),
+const StyledInput = styled('input')<{
+  $size: InputSize;
+  $error: boolean;
+  $disabled: boolean;
+}>(({ theme, $size, $error, $disabled }) =>
+  getInputFieldStyles(theme, $size, { error: $error, disabled: $disabled }),
 );
 
 export type InputProps = {
@@ -47,7 +41,11 @@ export type InputProps = {
   type?: string;
   error?: string;
   help?: string;
-} & UseFormRegisterReturn;
+  value?: string;
+  defaultValue?: string;
+  autoComplete?: string;
+} & InputSizeProps &
+  UseFormRegisterReturn;
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
   (
@@ -59,26 +57,45 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       disabled,
       type = 'text',
       name,
+      value,
+      defaultValue,
+      autoComplete,
+      size,
+      big,
+      compact,
       ...register
     },
     ref,
   ) => {
+    const resolvedSize = resolveInputSize({ size, big, compact });
+
     return (
       <StyledContainer>
-        <InputLabel labelFor={name}>{__(label)}</InputLabel>
+        <InputLabel required={register.required} labelFor={name}>
+          {__(label)}
+        </InputLabel>
         <StyledInput
           {...register}
           disabled={!!disabled}
-          error={!!error}
+          $size={resolvedSize}
+          $error={!!error}
+          $disabled={!!disabled}
           name={name}
           id={name}
           ref={ref}
           type={type}
+          value={value}
+          defaultValue={defaultValue}
+          autoComplete={autoComplete}
           placeholder={placeholder ? __(placeholder) : ''}
         />
         {error ? <ErrorText error={error} /> : null}
-        {help ? <StyledHelp>{help}</StyledHelp> : null}
+        {help ? <StyledHelp>{__(help)}</StyledHelp> : null}
       </StyledContainer>
     );
   },
 );
+
+Input.displayName = 'Input';
+
+export type { InputSize };

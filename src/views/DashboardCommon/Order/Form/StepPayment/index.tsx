@@ -1,14 +1,15 @@
 import React, { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { UserRes } from 'smartbox-types';
-import UserService from '../../../../../services/user-service';
-import { ApplicationState } from '../../../../../reducers';
-import { history } from '../../../../../App';
+import { useParams } from 'react-router-dom';
+
+import { history } from 'src/history';
+import { useGetMyDetailsQuery } from 'src/queries';
+import { ApplicationState } from 'src/reducers';
+import UserService from 'src/services/user-service';
+
+import { PaymentForm } from './PaymentForm';
 
 import './StepPayment.scss';
-import { PaymentForm } from './PaymentForm';
-import { useGetMyDetailsQuery } from 'src/queries';
 
 export const StepPayment = () => {
   const { data: user } = useGetMyDetailsQuery();

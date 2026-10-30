@@ -1,1 +1,1 @@
-export * from './Error';
+export * from 'src/icons/Error/Error';

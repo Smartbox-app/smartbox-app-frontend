@@ -1,45 +1,52 @@
-import React from "react";
-import { ItfApiForm } from "itf_formbuilder_react";
-import { connect, useDispatch } from "react-redux";
-import ReactCreatableSelect from "react-select/creatable";
-import { bindActionCreators } from "redux";
-import { ChangeStatusReq, StockList } from "smartbox-types";
-import { boxes, modal, notifications, stock } from "../../../../../actions";
-import {
-  FormContainer,
-  ButtonsContainer,
-} from "../../../../../components/Layout";
-import { Alert } from "../../../../../components/Common";
-import { Button, Spinner } from "../../../../../components/Branded";
-import { ApplicationState } from "../../../../../reducers";
-import ApiService from "../../../../../services/api-service";
-import { formOnTranslateString } from "../../../../../utils/trans-form";
+import { useQueryClient } from '@tanstack/react-query';
+import { ItfApiForm } from 'itf_formbuilder_react';
+import React from 'react';
+import { useDispatch } from 'react-redux';
 
-import "./Status.scss";
-import { ReactSelectOverride } from "../../../../../components/Common/ReactSelectOverride";
-import { refreshApiTableData } from "../../../../../actions/api-table";
-import { mapFields } from "../../../../../utils/fields-mapper";
+import {
+  BoxDisplayStatus,
+  BoxStatus,
+  ChangeStatusReq,
+  RentStatus,
+} from 'smartbox-types';
+import { refreshApiTableData } from 'src/actions/api-table';
+import { hideModal, showModal } from 'src/actions/modal';
+import { successNotification } from 'src/actions/notifications';
+import { Button, Spinner } from 'src/components/Branded';
+import { Alert } from 'src/components/Common';
+import {
+  ReactSelectOverride,
+  ReactCreatableSelectOverride as ReactCreatableSelect,
+} from 'src/components/Common/ReactSelectOverride';
+import { ButtonsContainer } from 'src/components/Layout';
+import { Modal } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
+import { stockBoxesQueryKey } from 'src/queries';
+import ApiService from 'src/services/api-service';
+import { mapFields } from 'src/utils/fields-mapper';
+import { formOnTranslateString } from 'src/utils/trans-form';
+
+import './Status.scss';
+
+const STATUSES_REQUIRING_FREE_CONFIRMATION: BoxDisplayStatus[] = [
+  RentStatus.rented,
+  RentStatus.toCheck,
+  RentStatus.toExplain,
+];
+
+const hasSelectedStatus = (status: ChangeStatusReq['status'] | undefined) =>
+  status !== null && status !== undefined && String(status).length > 0;
 
 interface Props {
   selectedBoxId: string;
   stockId: string;
-  hideModal: () => void;
-  successNotification: (text: string) => void;
-  showModal: (content: React.ReactNode) => void;
   rentId?: string;
-  callback?: () => void;
+  currentStatus: BoxDisplayStatus;
 }
 
-const Status = ({
-  selectedBoxId,
-  hideModal,
-  successNotification,
-  stockId,
-  rentId,
-  showModal,
-  callback,
-}: Props) => {
+const Status = ({ selectedBoxId, stockId, rentId, currentStatus }: Props) => {
   const dispatch = useDispatch();
+  const queryClient = useQueryClient();
 
   const submitButton = (
     <ButtonsContainer>
@@ -47,55 +54,78 @@ const Status = ({
     </ButtonsContainer>
   );
 
-  if (!stock) return null;
+  const fetchUrl = rentId
+    ? `rent/form/change-box-status/${selectedBoxId}/${rentId}`
+    : `rent/form/change-box-status/${selectedBoxId}`;
+  const sendUrl = `rent/status/${stockId}/${rentId || ''}`;
 
-  const fetchUrl = `rent/form/change-status/${rentId || ""}`;
-  const sendUrl = `rent/status/${stockId}/${rentId || ""}`;
+  const submitStatusChange = (values: ChangeStatusReq) => {
+    ApiService.sendForm(
+      sendUrl,
+      {
+        ...values,
+        boxId: selectedBoxId,
+      } as ChangeStatusReq,
+      'PATCH',
+      () => {
+        dispatch(successNotification('notification.userStatusChanged'));
+        dispatch(refreshApiTableData());
+        queryClient.invalidateQueries({
+          queryKey: stockBoxesQueryKey(stockId),
+        });
+        dispatch(hideModal());
+      },
+    );
+  };
 
-  const customSendFetcher = (formId: string, values: ChangeStatusReq) => {
-    showModal(
-      <>
-        {values.status === null || values.status.length === 0 ? (
-          <Alert type="error" text="application.notChooseStatus" />
-        ) : (
-          <div className="modal-alert-wrapper">
+  const customSendFetcher = (_formId: string, values: ChangeStatusReq) => {
+    const isFreeingOccupyingRent =
+      values.status === BoxStatus.free &&
+      STATUSES_REQUIRING_FREE_CONFIRMATION.includes(currentStatus);
+
+    dispatch(
+      showModal(
+        <>
+          <Modal.Header title={__('application.confirmation')} />
+          <Modal.Content>
             <Alert
               type="warning"
               text="application.userWillNotGetMailWithInformation"
             />
-            <Alert type="notice" text="application.actionCanNotBeUnDone" />
-          </div>
-        )}
-
-        <ButtonsContainer>
-          <Button text="application.cancel" danger click={() => hideModal()} />
-          <Button
-            success
-            type="submit"
-            text="application.understood"
-            disabled={values.status === null || values.status.length === 0}
-            click={async () => {
-              await hideModal();
-              await ApiService.sendForm(
-                sendUrl,
-                {
-                  ...values,
-                  boxId: selectedBoxId,
-                } as ChangeStatusReq,
-                "PATCH"
-              );
-              await successNotification("notification.userStatusChanged");
-              dispatch(refreshApiTableData());
-              if (callback) callback();
-            }}
-          />
-        </ButtonsContainer>
-      </>
+            {isFreeingOccupyingRent ? (
+              <Alert
+                type="error"
+                text="application.confirmFreeBoxIrreversible"
+              />
+            ) : (
+              <Alert
+                type="notice"
+                text="application.confirmChangeStatusAction"
+              />
+            )}
+          </Modal.Content>
+          <Modal.Actions>
+            <ButtonsContainer>
+              <Button
+                text="application.cancel"
+                danger
+                click={() => dispatch(hideModal())}
+              />
+              <Button
+                success
+                type="submit"
+                text="application.yes"
+                click={() => submitStatusChange(values)}
+              />
+            </ButtonsContainer>
+          </Modal.Actions>
+        </>,
+      ),
     );
   };
 
   return (
-    <FormContainer className="box-status-form">
+    <>
       <ItfApiForm
         formId="box-status-form"
         schemaMayBeDynamic={false}
@@ -106,28 +136,20 @@ const Status = ({
         loadingInfo={<Spinner transparent />}
         onTranslateString={formOnTranslateString}
         onRenderFullField={mapFields}
+        onValidateField={(field) => {
+          if (field.id === 'status' && !hasSelectedStatus(field.value)) {
+            return __('application.notChooseStatus');
+          }
+          return undefined as never;
+        }}
         thirdPartyComponents={{
           ReactSelect: ReactSelectOverride,
           ReactCreatableSelect,
         }}
       />
-      <p>
-        Skrytku posiadające nieopłacone przedłużenie nie mogą być bezpośrednio
-        zwolnione ani wyłączone z użytku - najpierw należy zweryfikować kwestię
-        wynajmu.
-      </p>
-    </FormContainer>
+      <p>{__('application.phrases.boxUnpaidExtensionWarning')}</p>
+    </>
   );
 };
 
-const mapStateToProps = (state: ApplicationState) => ({
-  stocks: state.stock.list,
-});
-
-const mapDispatchToProps = (dispatch: any) =>
-  bindActionCreators(
-    { ...stock, ...modal, ...notifications, ...boxes },
-    dispatch
-  );
-
-export default connect(mapStateToProps, mapDispatchToProps)(Status);
+export default Status;

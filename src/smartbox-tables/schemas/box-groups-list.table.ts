@@ -1,10 +1,10 @@
-import { FieldType, TableSchema } from '../typings';
+import { FieldType, TableSchema } from 'src/smartbox-tables/typings';
 
 export const boxGroupsList: TableSchema = {
   countPerPage: 20,
   fields: [
     {
-      name: 'Nazwa',
+      name: 'application.tables.name',
       field: 'name',
       mobile: true,
       searchable: true,
@@ -13,17 +13,17 @@ export const boxGroupsList: TableSchema = {
       type: FieldType.Text,
     },
     {
-      name: 'Powierzchnia',
+      name: 'application.tables.area',
       field: 'area',
       mobile: true,
       searchable: true,
       sortable: true,
       defaultSort: true,
       type: FieldType.Text,
-      oppositeSortDir: true
+      oppositeSortDir: true,
     },
     {
-      name: 'Cennik',
+      name: 'application.tables.priceList',
       field: 'pricing',
       mobile: true,
       searchable: false,
@@ -32,8 +32,17 @@ export const boxGroupsList: TableSchema = {
       type: FieldType.Custom,
     },
     {
-      name: 'Minimalny okres wynajmu',
+      name: 'application.tables.minRentPeriod',
       field: 'minRentPeriod',
+      mobile: true,
+      searchable: true,
+      sortable: true,
+      defaultSort: false,
+      type: FieldType.Text,
+    },
+    {
+      name: 'application.tables.maxRentPeriod',
+      field: 'maxRentPeriod',
       mobile: true,
       searchable: true,
       sortable: true,

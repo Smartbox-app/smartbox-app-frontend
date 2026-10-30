@@ -1,17 +1,16 @@
-import React from "react";
 import { ItfApiForm } from "itf_formbuilder_react";
+import React from "react";
+import { useDispatch } from "react-redux";
+
 import { UserRole } from "smartbox-types";
-import { useDispatch, useSelector } from "react-redux";
-import { Button, Spinner } from "../../../../components/Branded";
-import { ButtonsContainer, Section } from "../../../../components/Layout";
-import ApiService from "../../../../services/api-service";
-import { formOnTranslateString } from "../../../../utils/trans-form";
-import { ApplicationState } from "../../../../reducers";
-import { successNotification } from "../../../../actions/notifications";
-import { __ } from "../../../../helpers/i18n";
-import { mapFields } from "../../../../utils/fields-mapper";
-import { useTenant } from "../../../../hooks/useTenant";
+import { successNotification } from "src/actions/notifications";
+import { Button, Spinner } from "src/components/Branded";
+import { ButtonsContainer, FormContainer, Section } from "src/components/Layout";
+import { __ } from "src/helpers/i18n";
 import { useGetMyDetailsQuery } from "src/queries";
+import ApiService from "src/services/api-service";
+import { mapFields } from "src/utils/fields-mapper";
+import { formOnTranslateString } from "src/utils/trans-form";
 
 interface Props {
   userId?: string;
@@ -20,7 +19,6 @@ interface Props {
 const ManageTenantLogo = ({ userId }: Props) => {
   const dispatch = useDispatch();
   const { data: user } = useGetMyDetailsQuery();
-  const { tenant } = useTenant();
   if (!user) return null;
 
   const fetchUrl =
@@ -38,12 +36,13 @@ const ManageTenantLogo = ({ userId }: Props) => {
     </ButtonsContainer>
   );
 
-  const customSendFetcher = (formId: string, values) => {
+  const customSendFetcher = (_formId: string, values: FormData) => {
     return ApiService.sendForm(sendUrl, values, "POST");
   };
 
   return (
-    <Section highlight>
+    <Section highlight half>
+      <FormContainer>
       <ItfApiForm
         formId="tenantLogoForm"
         schemaMayBeDynamic={false}
@@ -60,6 +59,7 @@ const ManageTenantLogo = ({ userId }: Props) => {
         }}
         onTranslateString={formOnTranslateString}
       />
+      </FormContainer>
     </Section>
   );
 };

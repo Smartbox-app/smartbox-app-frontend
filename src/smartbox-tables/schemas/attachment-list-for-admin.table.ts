@@ -1,10 +1,10 @@
-import { FieldType, TableSchema } from '../typings';
+import { FieldType, TableSchema } from 'src/smartbox-tables/typings';
 
 export const attachmentListForAdmin: TableSchema = {
   countPerPage: 20,
   fields: [
     {
-      name: 'ID',
+      name: 'application.tables.id',
       field: 'id',
       mobile: true,
       searchable: false,
@@ -13,7 +13,7 @@ export const attachmentListForAdmin: TableSchema = {
       type: FieldType.Text,
     },
     {
-      name: 'Nazwa',
+      name: 'application.tables.name',
       field: 'name',
       mobile: true,
       searchable: true,
@@ -22,7 +22,7 @@ export const attachmentListForAdmin: TableSchema = {
       type: FieldType.Text,
     },
     {
-      name: 'Franczyzobiorca',
+      name: 'application.tables.franchisee',
       field: 'tenant',
       mobile: true,
       searchable: true,

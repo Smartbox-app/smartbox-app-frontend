@@ -1,34 +1,30 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import styled from 'styled-components';
-import { lighten } from 'polished';
-import { modal } from '../../../actions';
-import { Modal } from '../../../types/modal';
-import { ApplicationState } from '../../../reducers';
+
+import { modal } from 'src/actions';
+import { Modal as UiModal } from 'src/components/ui';
+import { ApplicationState } from 'src/reducers';
+import type { AppDispatch } from 'src/types/app-dispatch';
+import { Modal } from 'src/types/modal';
 
 import './Modal.scss';
-import ModalContent from './ModalContent';
-import { colorOrDark } from '../../../utils/color';
-
 
 interface Props {
   modal: Modal;
   hideModal: () => void;
 }
 
-const StyledModalExit = styled.span`
-    color: ${props => colorOrDark(props.theme.colors.primary)};
-
-    &:hover {
-        color: ${props => lighten(0.2, colorOrDark(props.theme.colors.primary))};
-      }
-`
-
 class ModalWrapper extends React.Component<Props> {
-  private handleClickOutside = (e: any) => {
+  private handleClickOutside = (event: React.MouseEvent<HTMLDivElement>) => {
     const { modal, hideModal } = this.props;
-    if (e.target.id === 'modal' && modal.isClosable) hideModal();
+    if (
+      event.target instanceof Element &&
+      event.target.id === 'modal' &&
+      modal.isClosable
+    ) {
+      hideModal();
+    }
   };
 
   render() {
@@ -36,6 +32,7 @@ class ModalWrapper extends React.Component<Props> {
     if (!modal.isVisible && !modal.isPrepared) {
       return null;
     }
+
     return (
       <>
         <div
@@ -44,14 +41,12 @@ class ModalWrapper extends React.Component<Props> {
           onMouseDown={this.handleClickOutside}
         >
           <div className="modal-body">
-            <ModalContent>
+            <UiModal
+              onClose={modal.isClosable ? hideModal : undefined}
+              closable={modal.isClosable}
+            >
               {modal.content}
-              {modal.isClosable && (
-                <StyledModalExit className="modal-exit" role="button" tabIndex={0} onClick={() => hideModal()}>
-                  &times;
-                </StyledModalExit>
-              )}
-            </ModalContent>
+            </UiModal>
           </div>
         </div>
       </>
@@ -63,6 +58,6 @@ const mapStateToProps = (state: ApplicationState) => ({
   modal: state.modal,
 });
 
-const mapDispatchToProps = (dispatch: any) => bindActionCreators({ ...modal }, dispatch);
+const mapDispatchToProps = (dispatch: AppDispatch) => bindActionCreators({ ...modal }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(ModalWrapper);

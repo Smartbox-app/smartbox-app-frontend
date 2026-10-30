@@ -1,1 +1,1 @@
-export * from './Manage';
+export * from 'src/icons/Manage/Manage';

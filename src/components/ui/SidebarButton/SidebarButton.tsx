@@ -1,10 +1,15 @@
 import { ReactNode } from 'react';
 import { NavLink } from 'react-router-dom';
 import styled, { css } from 'styled-components';
-import { __ } from '../../../helpers/i18n';
 
-const sidebarButtonStyles = css(({ theme }) => ({
-  padding: `${theme.spacing * 2}px ${theme.spacing * 4}px`,
+import { __ } from 'src/helpers/i18n';
+
+type SidebarButtonStyleProps = {
+  $small?: boolean;
+};
+
+const sidebarButtonStyles = css<SidebarButtonStyleProps>(({ theme, $small }) => ({
+  padding: `${theme.spacing * ($small ? 1 : 2)}px ${theme.spacing * ($small ? 2 : 4)}px`,
   background: theme.colors.background.primary,
   border: `1px solid ${theme.colors.background.primary}`,
   display: 'flex',
@@ -15,7 +20,7 @@ const sidebarButtonStyles = css(({ theme }) => ({
   color: theme.colors.text.primary,
   borderRadius: theme.radius.outerSurface,
   cursor: 'pointer',
-
+  minHeight: $small ? 32 : 42,
   fontSize: 14,
   svg: {
     fill: theme.colors.icon.grey.primary,
@@ -41,10 +46,10 @@ const sidebarButtonStyles = css(({ theme }) => ({
     },
   },
   transition: '.3s all',
-  flex: 1,
+  flex: $small ? '0 0 auto' : 1,
 
   '@media(min-width: 768px)': {
-    flex: '0 1 auto',
+    flex: $small ? '0 0 auto' : '0 1 auto',
     flexDirection: 'row',
     boxShadow: theme.shadows.primary,
     '&:hover': {
@@ -64,13 +69,19 @@ const sidebarButtonStyles = css(({ theme }) => ({
   },
 }));
 
-const StyledSidebarButton = styled('button')(() => sidebarButtonStyles);
-const StyledSidebarLink = styled(NavLink)(() => sidebarButtonStyles);
+const StyledSidebarButton = styled('button')<SidebarButtonStyleProps>(
+  () => sidebarButtonStyles,
+);
+const StyledSidebarLink = styled(NavLink)<SidebarButtonStyleProps>(
+  () => sidebarButtonStyles,
+);
 
 export type SidebarButtonProps = {
   to?: string;
-  icon: ReactNode;
-  text: string;
+  icon?: ReactNode;
+  text?: string;
+  children?: ReactNode;
+  small?: boolean;
   onClick?: () => void;
 };
 
@@ -78,19 +89,23 @@ export const SidebarButton = ({
   to,
   icon,
   text,
+  children,
   onClick,
+  small,
 }: SidebarButtonProps) => {
   if (to)
     return (
-      <StyledSidebarLink to={to}>
+      <StyledSidebarLink to={to} $small={small}>
         {icon}
-        {__(text)}
+        {children}
+        {text ? __(text) : null}
       </StyledSidebarLink>
     );
   return (
-    <StyledSidebarButton onClick={onClick}>
+    <StyledSidebarButton onClick={onClick} $small={small}>
       {icon}
-      {__(text)}
+      {children}
+      {text ? __(text) : null}
     </StyledSidebarButton>
   );
 };

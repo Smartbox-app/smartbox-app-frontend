@@ -1,10 +1,11 @@
 import React from 'react';
+import styled from 'styled-components';
+
+import { __ } from "src/helpers/i18n";
+import { useTenantNaming } from 'src/hooks/useTenantNaming';
+import { colorOrDark } from 'src/utils/color';
 
 import './Legend.scss';
-import { __ } from "../../../../../../helpers/i18n";
-import styled from 'styled-components';
-import { colorOrDark } from '../../../../../../utils/color';
-import { useTenantNaming } from 'src/hooks/useTenantNaming';
 
 const StyledActive = styled.p`
   background-color: ${({ theme }) => colorOrDark(theme.colors.primary)};
@@ -12,6 +13,7 @@ const StyledActive = styled.p`
 
 const Legend = () => {
   const {getText} = useTenantNaming();
+  return (
   <div className="history-legend">
     <div className='single-legend-entry'>
       <StyledActive className="legend-color" />
@@ -26,6 +28,7 @@ const Legend = () => {
       <p className="legend-desc">{__('application.finished')}</p>
     </div>
   </div>
+  );
 }
 
 export default Legend;

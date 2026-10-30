@@ -116,3 +116,28 @@ export interface TTLockGatewayListResponse {
   pages: number;
   total: number;
 }
+
+export interface TTLockPasscode {
+  keyboardPwdId: string;
+  lockId: string;
+  keyboardPwd: string;
+  keyboardPwdName: string;
+  startDate: number;
+  endDate: number;
+  /** True when this code is the rent passcode and must be rotated, not deleted. */
+  assignedToRent?: boolean;
+}
+
+export interface TTLockPasscodeListResponse {
+  list: TTLockPasscode[];
+  pageNo: number;
+  pages: number;
+  total: number;
+}
+
+export interface TTLockPasscodeReq {
+  passcode: string;
+  name: string;
+  startDate?: Date;
+  endDate?: Date;
+}

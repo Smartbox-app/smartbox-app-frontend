@@ -15,6 +15,7 @@ export interface FormType {
   street: string;
   city: string;
   postCode: string;
+  country: string;
   phone: string;
   birthDate?: Date;
   clientSource?: string;
@@ -24,5 +25,6 @@ export interface FormType {
   companyStreet?: string;
   companyCity?: string;
   companyPostCode?: string;
+  companyCountry?: string;
   nip?: string;
 }

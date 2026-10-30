@@ -6,9 +6,12 @@ export class InteractiveTableSchema implements TableSchema {
 
   public fields: TableSchemaField[] = [];
 
+  public highlightRow?: (row: Record<string, unknown>) => boolean;
+
   constructor(schema: TableSchema) {
     this.countPerPage = schema.countPerPage;
     this.fields = schema.fields;
+    this.highlightRow = schema.highlightRow;
   }
 
   removeFields(...fieldNames: string[]): InteractiveTableSchema {

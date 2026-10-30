@@ -1,141 +1,95 @@
-import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import React from 'react';
 import { Switch, Route, Redirect } from 'react-router';
-import { ApplicationState } from '../../../reducers';
-import UserService from '../../../services/user-service';
 
-import UsersManagement from '../../DashboardCommon/UsersManagement';
-import { Settings } from '../Settings';
-import InvitesSent from '../../DashboardCommon/InvitesSent';
-import ApiService from '../../../services/api-service';
-import SMS from '../../DashboardCommon/SMS';
-import { TemplatesManagement } from '../Templates';
-import WorkersManagement from '../../DashboardCommon/WorkersManagement';
 import { useGetMyDetailsQuery } from 'src/queries';
-import { SingleTab } from 'src/types/tab';
-import {
-  Adjustments,
-  Boxes,
-  Invitations,
-  Message,
-  Templates,
-  Users,
-  Workers,
-} from 'src/icons';
-import { Section, Tabs } from 'src/components/ui';
-import { AttachmentManagement } from 'src/views/DashboardCommon/AttachmentManagement';
+import UserService from 'src/services/user-service';
+
+import { AttachmentManagement } from '../../DashboardCommon/AttachmentManagement';
+import { CompaniesManagement } from '../../DashboardCommon/CompanyManagement';
+import { DocumentsManagement } from '../../DashboardCommon/DocumentManagement';
+import { InvitesSent } from '../../DashboardCommon/InvitesSent';
+import SMS from '../../DashboardCommon/SMS';
+import { SystemLogManagement } from '../../DashboardCommon/SystemLogManagement';
+import SystemNotificationManagement from '../../DashboardCommon/SystemNotificationManagement';
+import UsersManagement from '../../DashboardCommon/UsersManagement';
+import WorkersManagement from '../../DashboardCommon/WorkersManagement';
+import { TenantApiAccess } from '../ApiAccess';
+import { Settings } from '../Settings';
+import { TemplatesManagement } from '../Templates';
 
 const Management = () => {
   const { data: user } = useGetMyDetailsQuery();
-  const tenant = useSelector((state: ApplicationState) => state.tenant);
-
-  const [smsStatus, setSmsStatus] = useState<boolean>();
-
-  const getStatus = async () => {
-    if (!tenant) return;
-    ApiService.callFetch(
-      'GET',
-      `tenant/sms-service-status/${tenant.id}`,
-      (response: boolean) => setSmsStatus(response),
-    );
-  };
-
-  useEffect(() => {
-    getStatus();
-  }, []);
 
   if (!user) return null;
 
-  const getTabs = () => {
-    const tabs: SingleTab[] = [
-      {
-        to: `/${UserService.getSlugByRole(user.role)}/management/users/list`,
-        text: 'application.users',
-        icon: <Users />,
-      },
-      {
-        to: `/${UserService.getSlugByRole(user.role)}/management/workers`,
-        text: 'application.workers',
-        icon: <Workers />,
-      },
-      {
-        to: `/${UserService.getSlugByRole(user.role)}/management/invitations`,
-        text: 'application.invitations',
-        icon: <Invitations />,
-      },
-      {
-        to: `/${UserService.getSlugByRole(user.role)}/management/settings`,
-        text: 'application.settings',
-        icon: <Adjustments />,
-      },
-      {
-        to: `/${UserService.getSlugByRole(user.role)}/management/templates`,
-        text: 'application.templates',
-        icon: <Templates />,
-      },
-      {
-        to: `/${UserService.getSlugByRole(user.role)}/management/attachments`,
-        text: 'application.attachments',
-        icon: <Boxes />,
-      },
-    ];
-
-    if (smsStatus) {
-      tabs.push({
-        to: `/${UserService.getSlugByRole(user.role)}/management/sms`,
-        text: 'application.sendSms',
-        icon: <Message />,
-      });
-    }
-
-    return tabs;
-  };
   return (
-    <>
-      <Section>
-        <Tabs tabs={getTabs()} />
-      </Section>
-
-      <Switch>
-        <Route
-          exact
-          path={`/${UserService.getSlugByRole(user.role)}/management`}
-          render={() => (
-            <Redirect
-              to={`/${UserService.getSlugByRole(user.role)}/management/users`}
-            />
-          )}
-        />
-        <Route
-          path={`/${UserService.getSlugByRole(user.role)}/management/workers`}
-          component={WorkersManagement}
-        />
-        <Route
-          path={`/${UserService.getSlugByRole(user.role)}/management/users`}
-          component={UsersManagement}
-        />
-        <Route
-          path={`/${UserService.getSlugByRole(user.role)}/management/settings`}
-          component={Settings}
-        />
-        <Route
-          path={`/${UserService.getSlugByRole(user.role)}/management/invitations`}
-          component={InvitesSent}
-        />
-        <Route
-          path={`/${UserService.getSlugByRole(user.role)}/management/templates`}
-          component={TemplatesManagement}
-        />
-        <Route
-          path={`/${UserService.getSlugByRole(user.role)}/management/sms`}
-          component={SMS}
-        />
-        <Route
-          path={`/${UserService.getSlugByRole(user.role)}/management/attachments`}
-          component={AttachmentManagement}
-        />
-      </Switch>
-    </>
+    <Switch>
+      <Route
+        exact
+        path={`/${UserService.getSlugByRole(user.role)}/management`}
+        render={() => (
+          <Redirect
+            to={`/${UserService.getSlugByRole(user.role)}/management/users`}
+          />
+        )}
+      />
+      <Route
+        path={`/${UserService.getSlugByRole(user.role)}/management/workers`}
+        component={WorkersManagement}
+      />
+      <Route
+        path={`/${UserService.getSlugByRole(user.role)}/management/users`}
+        component={UsersManagement}
+      />
+      <Route
+        path={`/${UserService.getSlugByRole(user.role)}/management/settlements`}
+        component={CompaniesManagement}
+      />
+      <Route
+        path={`/${UserService.getSlugByRole(user.role)}/management/settings`}
+        component={Settings}
+      />
+      <Route
+        path={`/${UserService.getSlugByRole(user.role)}/management/api-access`}
+        component={TenantApiAccess}
+      />
+      <Route
+        path={`/${UserService.getSlugByRole(user.role)}/management/invitations`}
+        component={InvitesSent}
+      />
+      <Route
+        path={`/${UserService.getSlugByRole(user.role)}/management/templates`}
+        component={TemplatesManagement}
+      />
+      <Route
+        path={`/${UserService.getSlugByRole(user.role)}/management/sms`}
+        component={SMS}
+      />
+      <Route
+        path={`/${UserService.getSlugByRole(user.role)}/management/notifications`}
+        component={SystemNotificationManagement}
+      />
+      <Route
+        path={`/${UserService.getSlugByRole(user.role)}/management/system-logs`}
+        component={SystemLogManagement}
+      />
+      <Route
+        path={`/${UserService.getSlugByRole(user.role)}/management/attachments`}
+        component={AttachmentManagement}
+      />
+      <Route
+        path={`/${UserService.getSlugByRole(user.role)}/management/documents`}
+        component={DocumentsManagement}
+      />
+      <Route
+        path={`/${UserService.getSlugByRole(user.role)}/management/companies`}
+        render={() => (
+          <Redirect
+            to={`/${UserService.getSlugByRole(user.role)}/management/settlements`}
+          />
+        )}
+      />
+    </Switch>
   );
 };
 

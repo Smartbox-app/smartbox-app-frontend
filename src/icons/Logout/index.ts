@@ -1,1 +1,1 @@
-export * from './Logout';
+export * from 'src/icons/Logout/Logout';

@@ -1,123 +1,113 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import React, { useMemo } from 'react';
+import { useDispatch } from 'react-redux';
+
 import {
   FieldType,
-  TableSchema,
   TableSchemaField,
   tenantsList,
 } from 'smartbox-tables';
-import { IUser, UserClientListRes, UserStatus } from 'smartbox-types';
-import { ApiTable } from '../../../../../components/Common';
-import { Button } from '../../../../../components/Branded';
-import { ButtonsContainer } from '../../../../../components/Layout';
-import { __ } from '../../../../../helpers/i18n';
-import { InteractiveTableSchema } from '../../../../../utils/table-schema-utils';
-import { modal, user } from '../../../../../actions';
-import UserDetail from './UserDetail';
-import { TenantEdit } from '../Edit';
-import { StocksDetails } from './StocksDetails';
+import { UserClientListRes, UserStatus } from 'smartbox-types';
+import { showModal } from 'src/actions/modal';
+import { Button } from 'src/components/Branded';
+import { ApiTable } from 'src/components/Common';
+import { ButtonsContainer } from 'src/components/Layout';
+import { HeaderWithActions, Section } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
+import { history } from 'src/history';
+import { useSetUserStatusMutation } from 'src/mutations';
+import { InteractiveTableSchema } from 'src/utils/table-schema-utils';
+
 import { TenantStatus } from '../Status';
-import { PageHeader, Section } from 'src/components/ui';
 
-interface Props {
-  showModal: (content: React.ReactNode) => void;
-  enableUser: (userId: string) => void;
-  blockUser: (userId: string) => void;
-}
+const List = () => {
+  const dispatch = useDispatch();
+  const { mutate: setUserStatus } = useSetUserStatusMutation();
 
-class List extends React.Component<Props> {
-  private scheme: TableSchema;
+  const scheme = useMemo(() => {
+    const getLockButton = (
+      _value: unknown,
+      field: TableSchemaField,
+      userData: UserClientListRes,
+    ) => {
+      if ([UserStatus.blocked, UserStatus.preActive].includes(userData.status)) {
+        return (
+          <Button
+            text="application.active"
+            success
+            click={() =>
+              setUserStatus({ userId: userData.id, status: 'active' })
+            }
+          />
+        );
+      }
 
-  constructor(props: Props) {
-    super(props);
-    this.scheme = new InteractiveTableSchema(tenantsList)
+      return (
+        <Button
+          text="application.block"
+          danger
+          click={() =>
+            setUserStatus({ userId: userData.id, status: 'blocked' })
+          }
+        />
+      );
+    };
+
+    return new InteractiveTableSchema(tenantsList)
       .modifyFieldStatic('status', {
         name: __('application.state'),
         field: 'status',
         mobile: true,
         defaultSort: true,
         type: FieldType.Custom,
-        customRender: (value, field, userData) =>
-          this.getLockButton(value, field, userData),
+        customRender: (value, field, userData: UserClientListRes) =>
+          getLockButton(value, field, userData),
       })
-      // .addFieldAfter('phone', {
-      //     name: __('application.stockDetails'),
-      //     field: 'stocks',
-      //     mobile: true,
-      //     type: FieldType.Custom,
-      //     customRender: (value, field, userData: UserClientListRes) => <StocksDetails user={userData} />
-      // })
       .addFieldAtTheEnd({
         name: __('application.actions'),
         field: 'actions',
         mobile: true,
         buttons: [
-          // {
-          //     name: 'application.userDetails',
-          //     type: 'primary',
-          //     click: (data: UserListRes) => this.props.showModal(<UserDetail userId={data.id} userData={data} />),
-          // },
           {
-            name: 'application.edit',
+            name: 'application.settings',
             type: 'primary',
             click: (data: UserClientListRes) =>
-              this.props.showModal(<TenantEdit userId={data.id} />),
+              history.push(
+                `/admin/management/clients/${data.id}/${data.tenantId}/settings`,
+              ),
           },
           {
             name: 'application.status',
             type: 'secondary',
             click: (data: UserClientListRes) =>
-              this.props.showModal(
-                <TenantStatus tenantId={data.tenantId!} user={data} />,
+              dispatch(
+                showModal(
+                  <TenantStatus tenantId={data.tenantId!} user={data} />,
+                ),
               ),
           },
         ],
       });
-  }
+  }, [dispatch, setUserStatus]);
 
-  private getLockButton = (
-    value: boolean,
-    field: TableSchemaField,
-    userData: IUser,
-  ) => {
-    if ([UserStatus.blocked, UserStatus.preActive].includes(userData.status)) {
-      return (
-        <Button
-          text="application.active"
-          success
-          click={() => this.props.enableUser(userData.id)}
-        />
-      );
-    } else {
-      return (
-        <Button
-          text="application.block"
-          danger
-          click={() => this.props.blockUser(userData.id)}
-        />
-      );
-    }
-  };
+  return (
+    <Section>
+      <HeaderWithActions
+        actions={
+          <ButtonsContainer>
+            <Button
+              text="application.addTenant"
+              primary
+              to="/admin/management/clients/add"
+            />
+          </ButtonsContainer>
+        }
+      >
+        {__('application.tenantsList')}
+      </HeaderWithActions>
 
-  render() {
-    return (
-      <Section>
-        <PageHeader>{__('application.tenantsList')}</PageHeader>
-        <ButtonsContainer>
-          <Button
-            text="application.addTenant"
-            primary
-            to="/admin/management/clients/add"
-          />
-        </ButtonsContainer>
-        <ApiTable scheme={this.scheme} apiEndpointSubUrl={`user/tenants`} />
-      </Section>
-    );
-  }
-}
+      <ApiTable scheme={scheme} apiEndpointSubUrl="user/tenants" />
+    </Section>
+  );
+};
 
-const mapDispatchToProps = (dispatch: any) =>
-  bindActionCreators({ ...modal, ...user }, dispatch);
-
-export default connect(null, mapDispatchToProps)(List);
+export default List;

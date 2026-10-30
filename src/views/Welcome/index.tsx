@@ -1,9 +1,12 @@
 import Swiper from 'react-id-swiper';
-import SingleSlide from './SingleSlide';
-import { useTenant } from '../../hooks/useTenant';
-import './Welcome.scss';
 import styled from 'styled-components';
-import { getColorForBackground } from '../../utils/color';
+
+import { useTenant } from 'src/hooks/useTenant';
+import { getColorForBackground } from 'src/utils/color';
+
+import SingleSlide from './SingleSlide';
+
+import './Welcome.scss';
 
 const StyledWelcomeContainer = styled.div`
 .swiper-pagination-bullet-active {

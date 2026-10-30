@@ -1,11 +1,11 @@
 import React from 'react';
 import { Redirect, Route, Switch } from 'react-router';
-import UserService from '../../../services/user-service';
+
+import { useGetMyDetailsQuery } from 'src/queries';
+import UserService from 'src/services/user-service';
 
 import { Add } from './Add';
 import { List } from './List';
-
-import { useGetMyDetailsQuery } from 'src/queries';
 
 const AttachmentManagement = () => {
   const { data: user } = useGetMyDetailsQuery();

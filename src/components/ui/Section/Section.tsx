@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import styled, { DefaultTheme } from 'styled-components';
 
-type SectionVariants = 'default' | 'transparent';
+type SectionVariants = 'default' | 'transparent' | 'bordered';
 type SectionWidths = 'full' | 'half';
 type SectionDirections = 'horizontal' | 'vertical';
 type SectionAlignments = 'center' | 'default';
@@ -9,9 +9,17 @@ type SectionAlignments = 'center' | 'default';
 const getBackgroundByVariant = (
   variant: SectionVariants,
   theme: DefaultTheme,
-) => {
+) => {  
   if (variant === 'transparent') return 'transparent';
   return theme.colors.background.white;
+};
+
+const getBorderByVariant = (
+  variant: SectionVariants,
+  _theme: DefaultTheme,
+) => {  
+  if (variant === 'bordered') return `1px solid rgba(0, 0, 0, 0.08)`;
+  return 'none';
 };
 
 const getShadowByVariant = (variant: SectionVariants, theme: DefaultTheme) => {
@@ -33,20 +41,22 @@ const StyledSection = styled('section')<{
   display: 'flex',
   flexDirection: direction === 'vertical' ? 'column' : 'row',
   background: getBackgroundByVariant(variant, theme),
-  padding: `${theme.spacing * 6}px ${theme.spacing * 4}px`,
+  padding: `${theme.spacing * 5}px ${theme.spacing * 4}px`,
   boxShadow: getShadowByVariant(variant, theme),
-  borderRadius: theme.radius.outerSurface,
-  gap: theme.spacing * 4,
+  borderRadius: theme.radius.innerSurface,
+  border: getBorderByVariant(variant, theme),
+  gap: theme.spacing * 6,
   alignItems: align === 'center' ? 'center' : undefined,
   width: getWidth(width),
   margin: '0 auto',
   '@media(min-width: 768px)': {
     padding: theme.spacing * 8,
+    borderRadius: theme.radius.outerSurface,
   }
 }));
 
 export type SectionProps = {
-  variant?: 'default' | 'transparent';
+  variant?: 'default' | 'transparent' | 'bordered';
   direction?: 'horizontal' | 'vertical';
   width?: SectionWidths;
   align?: SectionAlignments;

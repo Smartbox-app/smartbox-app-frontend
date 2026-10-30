@@ -1,1 +1,1 @@
-export * from './Message';
+export * from 'src/icons/Message/Message';

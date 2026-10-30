@@ -1,21 +1,17 @@
+import { useQueryClient } from '@tanstack/react-query';
+import { ItfApiForm } from 'itf_formbuilder_react';
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { ItfApiForm } from 'itf_formbuilder_react';
-import ReactCreatableSelect from 'react-select/creatable';
-import { AddGiftReq } from 'smartbox-types';
-import {
-  FormContainer,
-  ButtonsContainer,
-  FieldsColumn,
-} from '../../../../../components/Layout';
-import { Button, Spinner } from '../../../../../components/Branded';
-import ApiService from '../../../../../services/api-service';
-import { formOnTranslateString } from '../../../../../utils/trans-form';
-import { modal } from '../../../../../actions';
-import { ReactSelectOverride } from '../../../../../components/Common/ReactSelectOverride';
-import { mapFields } from '../../../../../utils/fields-mapper';
-import { useQueryClient } from '@tanstack/react-query';
+
+import { UpdateUserReq } from 'smartbox-types';
+import { modal } from 'src/actions';
 import { successNotification } from 'src/actions/notifications';
+import { Button, Spinner } from 'src/components/Branded';
+import { ReactSelectOverride, ReactCreatableSelectOverride as ReactCreatableSelect } from 'src/components/Common/ReactSelectOverride';
+import { ButtonsContainer, FieldsColumn } from 'src/components/Layout';
+import ApiService from 'src/services/api-service';
+import { mapFields } from 'src/utils/fields-mapper';
+import { formOnTranslateString } from 'src/utils/trans-form';
 
 export const UpdateMe = () => {
   const queryClient = useQueryClient();
@@ -38,7 +34,7 @@ export const UpdateMe = () => {
   const fetchUrl = 'user/form/update-me';
   const sendUrl = 'user/me';
 
-  const customSendFetcher = (formId: string, values: AddGiftReq) =>
+  const customSendFetcher = (_formId: string, values: Pick<UpdateUserReq, 'phone'>) =>
     ApiService.sendForm(
       sendUrl,
       {
@@ -48,9 +44,8 @@ export const UpdateMe = () => {
     );
 
   return (
-    <FormContainer>
-      <FieldsColumn>
-        <ItfApiForm
+    <FieldsColumn>
+      <ItfApiForm
           formId="EditUserProfileData"
           schemaMayBeDynamic={false}
           schemaCacheEnabled={false}
@@ -70,7 +65,6 @@ export const UpdateMe = () => {
             ReactCreatableSelect,
           }}
         />
-      </FieldsColumn>
-    </FormContainer>
+    </FieldsColumn>
   );
 };

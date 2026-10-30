@@ -1,24 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
+import { Redirect } from 'react-router';
+
 import { BoxGroupUserRes } from 'smartbox-types';
+import { Alert } from 'src/components/Common';
 import {
-  FormContainer,
   ButtonsContainer,
-} from '../../../../../components/Layout';
+} from 'src/components/Layout';
+import { Header, Section, Skeleton , Stack, Button } from 'src/components/ui';
+import { useTenantNaming } from 'src/hooks/useTenantNaming';
+import { ArrowLeft, ArrowRight } from 'src/icons';
+import { useBoxGroupsForStockQuery, useGetMyDetailsQuery } from 'src/queries';
+import { ApplicationState } from 'src/reducers';
+import UserService from 'src/services/user-service';
+
 import SingleOption from './SingleOption';
-import { ApplicationState } from '../../../../../reducers';
-import FormHeader from '../../../../../components/Layout/FormHeader';
-import UserService from '../../../../../services/user-service';
-import ApiService from '../../../../../services/api-service';
 
 import './StepSize.scss';
-import { Alert } from '../../../../../components/Common';
-import { useGetMyDetailsQuery } from 'src/queries';
-import { Header, Section } from 'src/components/ui';
-import { __ } from 'src/helpers/i18n';
-import { Stack, Button } from 'src/components/ui';
-import { ArrowLeft, ArrowRight } from 'src/icons';
-import { useTenantNaming } from 'src/hooks/useTenantNaming';
 
 const StepSize = () => {
   const { stockId, boxGroupId } = useSelector(
@@ -26,17 +24,8 @@ const StepSize = () => {
   );
   const { data: user } = useGetMyDetailsQuery();
   const { getText } = useTenantNaming();
-  const [boxGroups, setBoxGroups] = useState<BoxGroupUserRes[]>([]);
-
-  useEffect(() => {
-    ApiService.callFetch(
-      'GET',
-      `box-group-new/all/${stockId}`,
-      (boxes: BoxGroupUserRes[]) => {
-        setBoxGroups(boxes);
-      },
-    );
-  }, []);
+  const { data: boxGroups = [], isPending: loading } =
+    useBoxGroupsForStockQuery(stockId);
 
   const getSortingCriteria = (a: BoxGroupUserRes, b: BoxGroupUserRes) => {
     if (a.order && b.order) return a.order - b.order;
@@ -44,18 +33,34 @@ const StepSize = () => {
     return a.name > b.name ? 1 : -1;
   };
 
-  const options = [...boxGroups]
-    .sort((a, b) => getSortingCriteria(a, b))
-    .map((data: BoxGroupUserRes) => (
-      <SingleOption key={data.id} singleOptionData={data} />
-    ));
+  const options = useMemo(
+    () =>
+      [...boxGroups]
+        .sort((a, b) => getSortingCriteria(a, b))
+        .map((data: BoxGroupUserRes) => (
+          <SingleOption key={data.id} singleOptionData={data} />
+        )),
+    [boxGroups],
+  );
+
+  if (!stockId) return <Redirect to="/user/order/step/stock" />;
 
   return (
     <form>
       <Stack>
         <Section>
           <Header variant="h2">{getText('please_pick_box_size')}</Header>{' '}
-          <div className="options-wrapper">{options}</div>
+          <div className="options-wrapper">
+            {loading ? (
+              <>
+                <Skeleton radius={16} height={450} />
+                <Skeleton radius={16} height={450} />
+                <Skeleton radius={16} height={450} />
+              </>
+            ) : (
+              options
+            )}
+          </div>
           {boxGroups.length === 0 && (
             <Alert type="notice" text={getText('no_boxes')} />
           )}

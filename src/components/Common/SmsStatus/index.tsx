@@ -1,23 +1,22 @@
-import React, { useEffect, useState } from "react"
-import ApiService from "../../../services/api-service";
-import Alert from "../Alert";
-
-import './SmsStatus.scss';
+import Alert from 'src/components/Common/Alert';
+import { useSmsServiceStatusQuery } from 'src/queries';
 
 interface Props {
-    tenantId: string;
+  tenantId: string;
 }
 
 export const SmsStatus = ({ tenantId }: Props) => {
-    const [status, setStatus] = useState<boolean>();
+  const { data: status, isPending } = useSmsServiceStatusQuery(tenantId);
 
-    const getStatus = async () => {
-        ApiService.callFetch('GET', `tenant/sms-service-status/${tenantId}`, (response: boolean) => setStatus(response));
-    }
+  if (isPending || status === undefined) return null;
 
-    useEffect(() => {
-        getStatus();
-    }, []);
-
-    return <div className="tenant-sms-status"><Alert simple type={status ? 'success' : 'error'} text={status ? 'application.smsConnectionOk' : 'application.smsConnectionBad'} /></div>
-}
+  return (
+    <Alert
+      compact
+      type={status ? 'success' : 'error'}
+      text={
+        status ? 'application.smsConnectionOk' : 'application.smsConnectionBad'
+      }
+    />
+  );
+};

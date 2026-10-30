@@ -1,6 +1,6 @@
 @use "sass:math";
-@import '../../../config/variables';
-@import '../../../config/mixins';
+@use '../../../config/variables' as *;
+@use '../../../config/mixins' as *;
 
 .gate-status {
   width: 100%;
@@ -31,26 +31,26 @@
       background-color: $color-success;
 
       .status-icon {
-        background-color: darken($color-success, 5%);
+        background-color: adjust-lightness($color-success, -5%);
       }
     }
     &.slow {
       background-color: $color-warning;
       .status-icon {
-        background-color: darken($color-warning, 5%);
+        background-color: adjust-lightness($color-warning, -5%);
       }
     }
     &.connection-lost {
       background-color: $color-danger;
       .status-icon {
-        background-color: darken($color-danger, 5%);
+        background-color: adjust-lightness($color-danger, -5%);
       }
     }
   }
 
   .status-icon,
   .status-body {
-    padding: $main-spacing /2;
+    padding: math.div($main-spacing, 2);
     display: flex;
     flex-direction: column;
     justify-content: center;

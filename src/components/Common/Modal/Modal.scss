@@ -1,6 +1,6 @@
 @use "sass:math";
-@import '../../../config/mixins';
-@import '../../../config/variables';
+@use '../../../config/mixins' as *;
+@use '../../../config/variables' as *;
 
 .modal {
   position: fixed;
@@ -15,7 +15,7 @@
   z-index: 998;
   animation-name: showModal;
   animation-duration: 0.15s;
-  transition: opacity $transition-time/2 ease-in-out;
+  transition: opacity math.div($transition-time, 2) ease-in-out;
   opacity: 0;
 
   &.visible {
@@ -37,16 +37,16 @@
     position: relative;
     z-index: 1000;
     overflow: auto;
-    max-width: 600px;
+    max-width: 95vw;
     width: 100%;
     position: relative;
     transform: scale(0.9);
-    transition: transform $transition-time/2 ease-in-out;
+    transition: transform math.div($transition-time, 2) ease-in-out;
     max-height: 80%;
-    border-radius: 24px;
-    p {
-      max-width: 768px;
-      font-size: 0.9rem;
+    border-radius: 16px;
+
+    @media (min-width: 768px) {
+      max-width: 600px;
     }
   }
 

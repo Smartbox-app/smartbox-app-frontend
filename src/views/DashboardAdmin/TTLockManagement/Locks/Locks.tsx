@@ -1,6 +1,7 @@
-import { useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router';
+
 import { FieldType } from 'smartbox-tables';
 import { TTGatewayLockDeviceList, TTLockDeviceList } from 'smartbox-types';
 import { showModal } from 'src/actions/modal';
@@ -9,12 +10,13 @@ import { Spinner } from 'src/components/Branded';
 import { Alert, ApiTable } from 'src/components/Common';
 import { Header, Section } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
+import { history } from 'src/history';
 import ApiService from 'src/services/api-service';
 import { gatewayLocksList } from 'src/smartbox-tables/schemas/gateway-lock-list.table';
 import { locksList } from 'src/smartbox-tables/schemas/locks-list.table';
 import { InteractiveTableSchema } from 'src/utils/table-schema-utils';
+
 import { LockDetails } from './components/LockDetails/LockDetails';
-import { history } from 'src/App';
 
 export const Locks = () => {
   const dispatch = useDispatch();
@@ -22,7 +24,7 @@ export const Locks = () => {
     type?: string;
     groupOrGatewayId?: string;
   }>();
-  const [loading, setLoading] = useState<boolean>(false);
+  const [actionLoading, setActionLoading] = useState<boolean>(false);
   const scheme = new InteractiveTableSchema(
     type === 'gateway' ? gatewayLocksList : locksList,
   );
@@ -67,7 +69,8 @@ export const Locks = () => {
         {
           name: 'application.lockPasscodes',
           type: 'secondary',
-          click: (data: TTLockDeviceList) => history.push(`/admin/drivers/locks/${data.lockId}/passcodes`),
+          click: (data: TTLockDeviceList) =>
+            history.push(`/admin/drivers/locks/${data.lockId}/passcodes`),
         },
         {
           name: 'application.unlock',
@@ -82,9 +85,9 @@ export const Locks = () => {
       ],
     });
 
-    if(type ==='gateway') {
-      scheme.modifyFieldStatic('rssi', {
-      name: 'Sygnał bramki',
+  if (type === 'gateway') {
+    scheme.modifyFieldStatic('rssi', {
+      name: 'application.tables.gatewaySignal',
       field: 'rssi',
       mobile: true,
       defaultSort: true,
@@ -93,42 +96,42 @@ export const Locks = () => {
         if (lock.rssi > -75)
           return (
             <Alert compact type="success">
-              Silny&nbsp;({lock.rssi})
+              {__('application.phrases.signalStrong')}&nbsp;({lock.rssi})
             </Alert>
           );
         if (lock.electricQuantity > -85)
           return (
             <Alert compact type="warning">
-              Średni&nbsp;({lock.rssi})
+              {__('application.phrases.signalAverage')}&nbsp;({lock.rssi})
             </Alert>
           );
         return (
           <Alert compact type="error">
-            Słaby&nbsp;({lock.rssi})
+            {__('application.phrases.signalWeak')}&nbsp;({lock.rssi})
           </Alert>
         );
       },
-    })
-    }
+    });
+  }
 
-    const openDetails = (lock: TTLockDeviceList) => {
-      dispatch(showModal(<LockDetails id={lock.lockId} />))
-    }
+  const openDetails = (lock: TTLockDeviceList) => {
+    dispatch(showModal(<LockDetails id={lock.lockId} />));
+  };
 
   const openLock = async (data: TTLockDeviceList) => {
-    setLoading(true);
+    setActionLoading(true);
     await ApiService.callFetch('PATCH', `driver/open/${data.lockId}`, () => {
       dispatch(successNotification('application.lockOpened'));
     });
-    setLoading(false);
+    setActionLoading(false);
   };
 
   const closeLock = async (data: TTLockDeviceList) => {
-    setLoading(true);
+    setActionLoading(true);
     await ApiService.callFetch('PATCH', `driver/close/${data.lockId}`, () => {
       dispatch(successNotification('application.lockClosed'));
     });
-    setLoading(false);
+    setActionLoading(false);
   };
 
   const url = useMemo(() => {
@@ -141,9 +144,9 @@ export const Locks = () => {
 
   return (
     <Section>
+      {actionLoading ? <Spinner halfTransparent overlay /> : null}
       <Header variant="h2">{__('application.locks')}</Header>
-      {loading && <Spinner overlay halfTransparent />}
-      <ApiTable scheme={scheme} apiEndpointSubUrl={url} />
+      <ApiTable scheme={scheme} apiEndpointSubUrl={url || 'driver/locks'} />
     </Section>
   );
 };

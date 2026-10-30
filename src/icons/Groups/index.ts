@@ -1,1 +1,1 @@
-export * from './Groups';
+export * from 'src/icons/Groups/Groups';

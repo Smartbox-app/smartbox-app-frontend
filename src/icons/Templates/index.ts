@@ -1,1 +1,1 @@
-export * from './Templates';
+export * from 'src/icons/Templates/Templates';

@@ -1,6 +1,6 @@
 @use "sass:math";
-@import '../../../config/variables.scss';
-@import '../../../config/mixins.scss';
+@use '../../../config/variables.scss' as *;
+@use '../../../config/mixins.scss' as *;
 
 .update-info-bar {
   background-color: $color-primary;
@@ -16,7 +16,7 @@
   box-shadow: 0 0 math.div($main-spacing, 2) math.div($main-spacing, 4) rgba(0, 0, 0, 0.5);
   @include safe-top(0);
   &:hover {
-    background-color: lighten($color-primary, 10%);
+    background-color: adjust-lightness($color-primary, 10%);
   }
 
   .update-info-icon {

@@ -1,4 +1,4 @@
-import { formOnTranslateString } from './trans-form';
+import { formOnTranslateString } from 'src/utils/trans-form';
 
 export interface TranslatableObject {
   messageWithPlaceholders: string;
@@ -6,21 +6,24 @@ export interface TranslatableObject {
   params: string[];
 }
 
-export const format = (s: string, params: any[]) => {
-  return s.replace(/{(\d+)}/g, (match, number) => {
-    return typeof params[number] != 'undefined' ? params[number] : match;
+export const format = (s: string, params: string[]) => {
+  return s.replace(/{(\d+)}/g, (match: string, number: string) => {
+    const value = params[Number(number)];
+    return typeof value !== 'undefined' ? value : match;
   });
 };
 
-export const translateErrors = (data: TranslatableObject[]) => {
-  if (data.length >= 1) {
-    const returnData: TranslatableObject = {
-      messageWithPlaceholders: formOnTranslateString(data[0].messageWithPlaceholders),
-      messageCompiled: format(formOnTranslateString(data[0].messageWithPlaceholders), data[0].params),
-      params: data[0].params,
-    };
-    return [returnData];
-  } else {
-    return data;
-  }
+const translateError = (error: TranslatableObject): TranslatableObject => {
+  const messageWithPlaceholders = formOnTranslateString(
+    error.messageWithPlaceholders,
+  );
+
+  return {
+    messageWithPlaceholders,
+    messageCompiled: format(messageWithPlaceholders, error.params),
+    params: error.params,
+  };
 };
+
+export const translateErrors = (data: TranslatableObject[]) =>
+  data.map(translateError);

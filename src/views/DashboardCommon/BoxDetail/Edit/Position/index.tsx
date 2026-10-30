@@ -1,32 +1,31 @@
-import React from 'react';
 import { ItfApiForm } from 'itf_formbuilder_react';
-import { connect, useDispatch } from 'react-redux';
-import ReactCreatableSelect from 'react-select/creatable';
-import { bindActionCreators } from 'redux';
-import { ChangeStatusReq } from 'smartbox-types';
-import { boxes, modal, notifications } from '../../../../../actions';
-import { FormContainer, ButtonsContainer } from '../../../../../components/Layout';
-import { Alert, FieldsMapper } from '../../../../../components/Common';
-import { Button, Spinner } from '../../../../../components/Branded';
-import ApiService from '../../../../../services/api-service';
-import { formOnTranslateString } from '../../../../../utils/trans-form';
-import { __ } from '../../../../../helpers/i18n';
+import React from 'react';
+import { useDispatch } from 'react-redux';
+
+import { ChangeBoxReq } from 'smartbox-types';
+import { refreshApiTableData } from 'src/actions/api-table';
+import { hideModal, showModal } from 'src/actions/modal';
+import { successNotification } from 'src/actions/notifications';
+import { Button, Spinner } from 'src/components/Branded';
+import { Alert } from 'src/components/Common';
+import {
+  ReactSelectOverride,
+  ReactCreatableSelectOverride as ReactCreatableSelect,
+} from 'src/components/Common/ReactSelectOverride';
+import { ButtonsContainer } from 'src/components/Layout';
+import { Modal } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
+import ApiService from 'src/services/api-service';
+import { mapFields } from 'src/utils/fields-mapper';
+import { formOnTranslateString } from 'src/utils/trans-form';
 
 import './Position.scss';
-import { ReactSelectOverride } from '../../../../../components/Common/ReactSelectOverride';
-import { mapFields } from '../../../../../utils/fields-mapper';
-import { refreshApiTableData } from '../../../../../actions/api-table';
 
 interface Props {
   rentId: string;
-  stockId: string;
-  hideModal: () => void;
-  successNotification: (text: string) => void;
-  showModal: (content: React.ReactNode) => void;
-  callback?: () => void;
 }
 
-const Position = ({ rentId, stockId, successNotification, hideModal, showModal, callback }: Props) => {
+const Position = ({ rentId }: Props) => {
   const dispatch = useDispatch();
 
   const submitButton = (
@@ -38,40 +37,59 @@ const Position = ({ rentId, stockId, successNotification, hideModal, showModal, 
   const fetchUrl = `rent/form/change-user-box/${rentId}`;
   const sendUrl = `rent/user-box/${rentId}`;
 
-  const customSendFetcher = (formId: string, values: ChangeStatusReq) => {
-    showModal(
+  const customSendFetcher = (_formId: string, values: ChangeBoxReq) => {
+    dispatch(showModal(
       <>
-        <div className="modal-alert-wrapper">
-          <Alert type="notice" text="application.userWillGetMailWithInformation" />
-          <Alert type="notice" text="application.actionCanNotBeUnDone" />
-        </div>
-        <ButtonsContainer max>
-          <Button text="application.cancel" danger click={() => hideModal()} />
-          <Button
-            success
-            type="submit"
-            text="application.understood"
-            click={async () => {
-              hideModal();
-              await ApiService.sendForm(
-                sendUrl,
-                {
-                  ...values,
-                },
-                'PATCH',
-              );
-              successNotification('notification.userMovedSuccess');
-              if(callback) callback();
-              dispatch(refreshApiTableData());
-            }}
+        <Modal.Header title={__('application.confirmation')} />
+        <Modal.Content>
+          <Alert
+            type="notice"
+            text="application.userWillGetMailWithInformation"
           />
-        </ButtonsContainer>
+          <Alert type="notice" text="application.actionCanNotBeUnDone" />
+          <Alert
+            type="notice"
+            text="application.boxMoveAgreementAddendumNotice"
+          />
+        </Modal.Content>
+        <Modal.Actions>
+          <ButtonsContainer max>
+            <Button
+              text="application.cancel"
+              danger
+              click={() => dispatch(hideModal())}
+            />
+            <Button
+              success
+              type="submit"
+              text="application.understood"
+              click={() =>
+                ApiService.sendForm(
+                  sendUrl,
+                  {
+                    ...values,
+                  },
+                  'PATCH',
+                  () => {
+                    dispatch(successNotification('notification.userMovedSuccess'));
+                    dispatch(refreshApiTableData());
+                    dispatch(hideModal());
+                  },
+                )
+              }
+            />
+          </ButtonsContainer>
+        </Modal.Actions>
       </>,
-    );
+    ));
   };
 
   return (
-    <FormContainer className="box-status-form">
+    <>
+      <Alert
+        type="notice"
+        text="application.boxMoveAgreementAddendumNotice"
+      />
       <ItfApiForm
         formId="change-user-box"
         schemaMayBeDynamic={false}
@@ -81,18 +99,18 @@ const Position = ({ rentId, stockId, successNotification, hideModal, showModal, 
         submitButton={submitButton}
         loadingInfo={<Spinner transparent />}
         onSavedSuccessfully={() => {
-          hideModal();
+          dispatch(hideModal());
           dispatch(refreshApiTableData());
-          if(callback) callback();
         }}
         onTranslateString={formOnTranslateString}
-        thirdPartyComponents={{ ReactSelect: ReactSelectOverride, ReactCreatableSelect }}
+        thirdPartyComponents={{
+          ReactSelect: ReactSelectOverride,
+          ReactCreatableSelect,
+        }}
         onRenderFullField={mapFields}
       />
-    </FormContainer>
+    </>
   );
 };
 
-const mapDispatchToProps = (dispatch: any) => bindActionCreators({ ...modal, ...boxes, ...notifications }, dispatch);
-
-export default connect(null, mapDispatchToProps)(Position);
+export default Position;

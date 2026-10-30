@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="google" content="notranslate" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, user-scalable=no, viewport-fit=cover"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/assets/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/assets/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/assets/favicon-16x16.png"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+      rel="stylesheet"
+    />
+
+    <meta name="description" content="Magazyny samoobsługowe na wynajem" />
+    <!--
+      manifest.json provides metadata used when your web app is installed on a
+      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
+    -->
+    <link rel="manifest" href="/manifest.json" />
+
+    <title>${title}</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+
+      .ie-eleven {
+        width: 100vw;
+        height: 100vh;
+        background-color: #ffffff;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        font-family: 'Tahoma', sans-serif;
+        color: #000000;
+      }
+
+      .ie-eleven .logo-container {
+        width: 768px;
+        height: 200px;
+        overflow: hidden;
+        margin-bottom: 20px;
+      }
+
+      .ie-eleven img {
+        max-width: 768px;
+        max-height: 200px;
+      }
+
+      .ie-eleven .messages {
+        margin-bottom: 10px;
+      }
+
+      .ie-eleven .link {
+        text-decoration: none;
+        font-weight: bold;
+        margin-bottom: 20px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+
+    <div id="root"></div>
+    <script type="module" src="/src/index.tsx"></script>
+    <!--
+      This HTML file is a template.
+      If you open it directly in the browser, you will see an empty page.
+
+      You can add webfonts, meta tags, or analytics to this file.
+      The build step will place the bundled scripts into the <body> tag.
+
+      To begin the development, run `npm start` or `yarn start`.
+      To create a production bundle, use `npm run build` or `yarn build`.
+    -->
+    <script>
+      // Internet Explorer 6-11
+      const isIE = document.documentMode;
+      if (isIE) {
+        var logoContainer = document.createElement('div');
+        logoContainer.classList.add('logo-container');
+
+        var oImg = document.createElement('img');
+        oImg.setAttribute('src', '/assets/images/Smartbox-logo-color.png');
+        logoContainer.appendChild(oImg);
+
+        var elemDiv = document.createElement('div');
+        elemDiv.classList.add('ie-eleven');
+        elemDiv.appendChild(logoContainer);
+
+        var messages = document.createElement('p');
+        messages.classList.add('messages');
+        messages.innerText =
+          'Twoja przeglądarka nie może otworzyć tej strony. Prosimy o skorzystanie np. z Google Chrome.';
+        elemDiv.appendChild(messages);
+
+        var link = document.createElement('a');
+        link.classList.add('messages');
+        link.classList.add('link');
+        link.setAttribute('href', 'https://www.google.com/chrome/');
+        link.setAttribute('target', '_blank');
+        link.innerText = '(kliknij tutaj, aby pobrać)';
+        elemDiv.appendChild(link);
+
+        var messages2 = document.createElement('p');
+        messages2.classList.add('messages');
+        messages2.innerText = 'W razie wątpliwości zadzwoń: ';
+        elemDiv.appendChild(messages2);
+
+        var phone = document.createElement('a');
+        phone.classList.add('messages');
+        phone.classList.add('link');
+        phone.setAttribute('href', 'tel:0048665519467');
+        phone.innerText = '0048 665 519 467';
+        elemDiv.appendChild(phone);
+
+        var messages3 = document.createElement('p');
+        messages3.classList.add('messages');
+        messages3.innerText = 'lub napisz:';
+        elemDiv.appendChild(messages3);
+
+        var mail = document.createElement('a');
+        mail.classList.add('messages');
+        mail.classList.add('link');
+        mail.setAttribute('href', 'mailto:pomoc@smartbox.pl');
+        mail.innerText = 'pomoc@smartbox.pl';
+        elemDiv.appendChild(mail);
+
+        document.body.appendChild(elemDiv);
+      }
+    </script>
+  </body>
+</html>

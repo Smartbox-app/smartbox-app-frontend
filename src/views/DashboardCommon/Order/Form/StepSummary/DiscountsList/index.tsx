@@ -1,22 +1,22 @@
 import { useDispatch, useSelector } from 'react-redux';
 
-import { ButtonsContainer } from '../../../../../../components/Layout';
-import { __ } from '../../../../../../helpers/i18n';
-import { ApplicationState } from '../../../../../../reducers';
+import { RentAgreementType } from 'smartbox-types';
+import { resetDiscountCode } from 'src/actions/order';
+import { Alert } from 'src/components/Common';
+import { ButtonsContainer } from 'src/components/Layout';
+import { Button, Header, Section, Typography } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
+import { ApplicationState } from 'src/reducers';
 
 import './DiscountsList.scss';
-import { resetDiscountCode } from '../../../../../../actions/order';
-import { Button, Header, Section, Typography } from 'src/components/ui';
-import { Alert } from 'src/components/Common';
-
 
 const DiscountsList = () => {
-  const { calculatedPriceDetails, endDate, discountCode } = useSelector(
-    (state: ApplicationState) => state.order,
-  );
+  const { calculatedPriceDetails, endDate, discountCode, agreementType } =
+    useSelector((state: ApplicationState) => state.order);
   const dispatch = useDispatch();
+  const isOpenEnded = agreementType === RentAgreementType.OpenEnded;
 
-  if (!endDate) return null;
+  if (!isOpenEnded && !endDate) return null;
 
   return (
     <Section>

@@ -1,1 +1,1 @@
-export * from './period';
+export * from 'src/smartbox-types/period/period';

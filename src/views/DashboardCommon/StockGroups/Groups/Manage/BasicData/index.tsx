@@ -1,17 +1,16 @@
-import React from 'react';
 import { ItfApiForm } from 'itf_formbuilder_react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
-import ReactCreatableSelect from 'react-select/creatable';
-import { ButtonsContainer, FormContainer } from '../../../../../../components/Layout';
-import { Button, Spinner } from '../../../../../../components/Branded';
-import ApiService from '../../../../../../services/api-service';
-import { formOnTranslateString } from '../../../../../../utils/trans-form';
-import { ReactSelectOverride } from '../../../../../../components/Common/ReactSelectOverride';
-import { successNotification } from '../../../../../../actions/notifications';
 import { useParams } from 'react-router';
-import { mapFields } from '../../../../../../utils/fields-mapper';
-import { StockGroupReq } from 'smartbox-types';
 
+import { StockGroupReq } from 'smartbox-types';
+import { successNotification } from 'src/actions/notifications';
+import { Button, Spinner } from 'src/components/Branded';
+import { ReactSelectOverride, ReactCreatableSelectOverride as ReactCreatableSelect } from 'src/components/Common/ReactSelectOverride';
+import { ButtonsContainer, FormContainer } from 'src/components/Layout';
+import ApiService from 'src/services/api-service';
+import { mapFields } from 'src/utils/fields-mapper';
+import { formOnTranslateString } from 'src/utils/trans-form';
 
 const BasicData = () => {
     const dispatch = useDispatch();

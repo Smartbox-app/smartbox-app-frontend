@@ -1,12 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { SingleNotification } from '../../../types/notifications';
-import { ApplicationState } from '../../../reducers';
+import Notification from 'src/components/Notifications/Notification';
+import { ApplicationState } from 'src/reducers';
+import { SingleNotification } from 'src/types/notifications';
 
-import Notification from '../Notification';
-
-import './NotificationContainer.scss';
+import 'src/components/Notifications/NotificationContainer/NotificationContainer.scss';
 
 interface Props {
   notifications: SingleNotification[];

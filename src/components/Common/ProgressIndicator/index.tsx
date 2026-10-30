@@ -1,5 +1,5 @@
-import { Item } from './Item';
 import { Bar } from './Bar';
+import { Item } from './Item';
 
 import './ProgressIndicator.scss';
 

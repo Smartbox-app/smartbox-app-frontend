@@ -1,18 +1,16 @@
-import { connect } from "react-redux";
-import { RentStatus, UserRes } from "smartbox-types";
-import { ApplicationState } from "../../../../reducers";
-import { isAdminOrTenant } from "../../../../utils/role-check";
+import { BoxDisplayStatus, RentStatus } from 'smartbox-types';
+import { useGetMyDetailsQuery } from 'src/queries';
+import { isAdminOrTenant } from 'src/utils/role-check';
 
-import Position from "./Position";
-import Status from "./Status";
-import "./Edit.scss";
-import { Alert } from "../../../../components/Common";
-import { useGetMyDetailsQuery } from "../../../../queries";
+import Position from './Position';
+import Status from './Status';
+
+import './Edit.scss';
 
 interface Props {
   selectedBoxId: string;
   rentId: string;
-  singleBoxDetailStatus: RentStatus;
+  singleBoxDetailStatus: BoxDisplayStatus;
   display: boolean;
   stockId: string;
   callback?: () => void;
@@ -24,23 +22,22 @@ export const Edit = ({
   singleBoxDetailStatus,
   display,
   stockId,
-  callback,
 }: Props) => {
   const { data: user } = useGetMyDetailsQuery();
   if (!user) return null;
+  if (singleBoxDetailStatus === RentStatus.reserved) return null;
   return (
-    <div className={`edit-wrapper ${display && "show-me"}`}>
-      <Alert text="application.changesIrreversible" type="notice" />
+    <div className={`edit-wrapper ${display && 'show-me'}`}>
       <Status
-        callback={callback}
         selectedBoxId={selectedBoxId}
         stockId={stockId}
         rentId={rentId}
+        currentStatus={singleBoxDetailStatus}
       />
       {isAdminOrTenant(user.role) &&
-        rentId !== "" &&
+        rentId !== '' &&
         singleBoxDetailStatus === RentStatus.rented && (
-          <Position callback={callback} rentId={rentId} stockId={stockId} />
+          <Position rentId={rentId} />
         )}
     </div>
   );

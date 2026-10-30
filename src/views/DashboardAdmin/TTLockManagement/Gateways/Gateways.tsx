@@ -1,10 +1,9 @@
 import { FieldType, gatewayList } from 'smartbox-tables';
 import { TTLockGateway } from 'smartbox-types';
-import { history } from 'src/App';
 import { Alert, ApiTable } from 'src/components/Common';
 import { Header, Section } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
-
+import { history } from 'src/history';
 import { InteractiveTableSchema } from 'src/utils/table-schema-utils';
 
 export const Gateways = () => {
@@ -41,7 +40,7 @@ export const Gateways = () => {
   return (
     <Section>
       <Header variant="h2">{__('application.gateways')}</Header>
-      <ApiTable scheme={scheme} apiEndpointSubUrl={`driver/gateways`} />
+      <ApiTable scheme={scheme} apiEndpointSubUrl="driver/gateways" />
     </Section>
   );
 };

@@ -1,9 +1,9 @@
 import { lockGroupsList } from 'smartbox-tables';
 import { TTLockGroup } from 'smartbox-types';
-import { history } from 'src/App';
 import { ApiTable } from 'src/components/Common';
 import { Header, Section } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
+import { history } from 'src/history';
 import { InteractiveTableSchema } from 'src/utils/table-schema-utils';
 
 export const LockGroups = () => {
@@ -26,7 +26,7 @@ export const LockGroups = () => {
   return (
     <Section>
       <Header variant="h2">{__('application.lockGroups')}</Header>
-      <ApiTable scheme={scheme} apiEndpointSubUrl={`driver/groups/`} />
+      <ApiTable scheme={scheme} apiEndpointSubUrl="driver/groups/" />
     </Section>
   );
 };

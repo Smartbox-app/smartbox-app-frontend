@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
-import { getColorForBackground } from 'src/utils/color';
 import styled, { DefaultTheme } from 'styled-components';
+
+import { getColorForBackground } from 'src/utils/color';
 
 type BadgeVariants = 'default' | 'primary' | 'secondary';
 

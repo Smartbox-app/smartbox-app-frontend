@@ -1,0 +1,1 @@
+export * from 'src/queries/useGetMyRentsQuery/useGetMyRentsQuery';

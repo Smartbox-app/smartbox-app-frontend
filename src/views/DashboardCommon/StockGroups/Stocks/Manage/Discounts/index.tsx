@@ -1,8 +1,10 @@
 import React from 'react';
 import { Switch, Route, Redirect, useParams, } from 'react-router';
-import { List } from './List';
-import UserService from '../../../../../../services/user-service';
+
 import { useGetMyDetailsQuery } from 'src/queries';
+import UserService from 'src/services/user-service';
+
+import { List } from './List';
 
 const Discounts = () => {
     const { stockId } = useParams<{ stockId: string }>();

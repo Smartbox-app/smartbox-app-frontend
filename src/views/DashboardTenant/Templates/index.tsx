@@ -1,36 +1,49 @@
 import React from 'react';
 import { Switch, Route, Redirect } from 'react-router';
 
-import { List } from './List';
-import UserService from '../../../services/user-service';
-import { useSelector } from 'react-redux';
-import { ApplicationState } from '../../../reducers';
-import { Manage } from './Manage';
 import { useGetMyDetailsQuery } from 'src/queries';
+import UserService from 'src/services/user-service';
 
-const TemplatesManagement = () => {
+import { List } from './List';
+import { Manage } from './Manage';
+
+type TemplatesManagementProps = {
+  basePath?: string;
+  tenantId?: string;
+};
+
+const TemplatesManagement = ({
+  basePath: basePathOverride,
+  tenantId,
+}: TemplatesManagementProps) => {
   const { data: user } = useGetMyDetailsQuery();
 
   if (!user) return null;
+
+  const basePath =
+    basePathOverride ??
+    `/${UserService.getSlugByRole(user.role)}/management/templates`;
 
   return (
     <Switch>
       <Route
         exact
-        path={`/${UserService.getSlugByRole(user.role)}/management/templates`}
+        path={basePath}
+        render={() => <Redirect to={`${basePath}/list`} />}
+      />
+      <Route
+        path={`${basePath}/list`}
+        render={() => <List basePath={basePath} tenantId={tenantId} />}
+      />
+      <Route
+        path={`${basePath}/manage/:type/:template/stock/:id?`}
         render={() => (
-          <Redirect
-            to={`/${UserService.getSlugByRole(user.role)}/management/templates/list`}
-          />
+          <Manage forStock basePath={basePath} tenantId={tenantId} />
         )}
       />
       <Route
-        path={`/${UserService.getSlugByRole(user.role)}/management/templates/list`}
-        component={List}
-      />
-      <Route
-        path={`/${UserService.getSlugByRole(user.role)}/management/templates/manage/:type/:template`}
-        component={Manage}
+        path={`${basePath}/manage/:type/:template`}
+        render={() => <Manage basePath={basePath} tenantId={tenantId} />}
       />
     </Switch>
   );

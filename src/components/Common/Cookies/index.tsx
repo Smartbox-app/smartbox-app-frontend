@@ -1,45 +1,65 @@
-import React, { useState } from 'react';
-import './Cookies.scss';
-import { __ } from '../../../helpers/i18n';
-import styled from 'styled-components';
-import { darken } from 'polished';
-import { getColorForBackground } from '../../../utils/color';
+import React, { useEffect, useState } from 'react';
 
-const StyledCookieWrapper = styled.div`
-  background-color: ${props => props.theme.colors.primary};
-  color: ${props => getColorForBackground(props.theme.colors.primary)};
-  border-top: 3px solid ${props => darken(0.05, props.theme.colors.primary)};
-`
+import { Button } from 'src/components/Branded';
+import { ButtonsContainer } from 'src/components/Layout';
+import { Link, Modal } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
+import {
+  COOKIE_CONSENT_CHANGED_EVENT,
+  getCookieConsent,
+  setCookieConsent,
+} from 'src/utils/cookie-consent';
+
+import 'src/components/Common/Modal/Modal.scss';
 
 const Cookies = () => {
-  const areAccepted = () => {
-    try {
-      return JSON.parse(localStorage.getItem('cookies') || 'false');
-    } catch (e) {
-      return false;
-    }
-  };
+  const [undecided, setUndecided] = useState(() => getCookieConsent() === null);
 
-  const [accepted, setAccepted] = useState<boolean>(areAccepted());
+  useEffect(() => {
+    const sync = () => setUndecided(getCookieConsent() === null);
+    window.addEventListener(COOKIE_CONSENT_CHANGED_EVENT, sync);
+    return () => window.removeEventListener(COOKIE_CONSENT_CHANGED_EVENT, sync);
+  }, []);
 
-  const accept = () => {
-    localStorage.setItem('cookies', JSON.stringify(true));
-    setAccepted(true);
-  };
+  if (!undecided) return null;
 
   return (
-    <StyledCookieWrapper className={`cookies-information ${accepted ? 'hide-cookies-bar' : ''}`}>
-      <p>
-        {__('application.privacyPoliceInfo')}{' '}
-        <a target="_blank" href="/assets/2022_01_01_Polityka_Prywatnosci_SmartBox.pdf">
-          <u>{__('application.privacyPolicy1')}</u>
-        </a>
-        .
-      </p>
-      <span className="exit" onClick={accept}>
-        &times;
-      </span>
-    </StyledCookieWrapper>
+    <div
+      className="modal visible"
+      id="cookie-consent-modal"
+      role="dialog"
+      aria-modal="true"
+      style={{ zIndex: 1100 }}
+    >
+      <div className="modal-body">
+        <Modal closable={false}>
+          <Modal.Header title={__('application.cookieConsentTitle')} />
+          <Modal.Content>
+            <p>
+              {__('application.privacyPoliceInfo')}{' '}
+              <Link target="_blank" href="/privacy-policy" rel="noreferrer">
+                <u>{__('application.privacyPolicy1')}</u>
+              </Link>
+              .
+            </p>
+          </Modal.Content>
+          <Modal.Actions>
+            <ButtonsContainer>
+              <Button
+                secondary
+                text="application.cookieConsentReject"
+                click={() => setCookieConsent('rejected')}
+              />
+              <Button
+                primary
+                text="application.cookieConsentAccept"
+                click={() => setCookieConsent('accepted')}
+              />
+            </ButtonsContainer>
+          </Modal.Actions>
+        </Modal>
+      </div>
+    </div>
   );
 };
 

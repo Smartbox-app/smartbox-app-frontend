@@ -1,3 +1,5 @@
+import { PriceDisplayForClients } from "src/smartbox-types/stock";
+
 export enum PricingType {
   Day = 'day',
   Week = 'week',
@@ -7,13 +9,24 @@ export enum PricingType {
   Year = 'year',
 }
 
+export interface PriceThreshold {
+  boxesLeft: number | null;
+  price: number | null;
+}
+
 export interface SinglePricing {
   type: PricingType;
   quantity: number | null;
   price: number | null;
-  // only in response to user
-  isGross?: boolean;
+  thresholds?: PriceThreshold[];
 }
+
+export type SinglePricingForUser = Omit<SinglePricing, 'thresholds'> & {
+  display: PriceDisplayForClients;
+  netPrice: number;
+  grossPrice: number;
+  isGross: boolean;
+};
 
 export enum PriceResolveType {
   Proportional = 'proportional',
@@ -27,7 +40,13 @@ export interface PricingReq {
 }
 
 export interface CalculatedPriceRes {
-  price: { value: number; isGross: boolean };
+  price: {
+    value: number;
+    isGross: boolean;
+    netPrice: number;
+    grossPrice: number;
+    display: PriceDisplayForClients;
+  }[];
   details: string[];
   error?: string;
 }

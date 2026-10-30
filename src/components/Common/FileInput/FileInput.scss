@@ -1,5 +1,5 @@
 @use 'sass:math';
-@import '../../../config/variables'; 
+@use '../../../config/variables' as *; 
 
 .file-wrapper {
   border: 1px dashed $color-primary;
@@ -8,7 +8,7 @@
   cursor: pointer;
   transition: $transition-time;
   border-radius: math.div($main-spacing, 2);
-  background-color: rgba(darken($color-background, 0%), 0.1);
+  background-color: rgba(adjust-lightness($color-background, -0%), 0.1);
   &:hover {
     background-color: rgba(($color-primary), 0.1);
   }

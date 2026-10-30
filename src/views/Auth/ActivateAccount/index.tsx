@@ -1,0 +1,165 @@
+import { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
+import { useLocation } from 'react-router';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+
+import { notifications } from 'src/actions';
+import { Logo } from 'src/components/Branded';
+import { ButtonsContainer, FormContainer } from 'src/components/Layout';
+import {
+  Button,
+  Form,
+  Header,
+  Input,
+  Section,
+  Stack,
+  Typography,
+} from 'src/components/ui';
+import { ActivateAccountCodeDto } from 'src/dto/ActivateAccountCodeDto';
+import { __ } from 'src/helpers/i18n';
+import { history } from 'src/history';
+import { useTenant } from 'src/hooks/useTenant';
+import {
+  useActivateUserByCodeMutation,
+  useResendActivationMutation,
+} from 'src/mutations';
+import { ClassValidatorResolver } from 'src/resolvers/ClassValidatorResolver';
+import { isSmsAccountConfirmation } from 'src/utils/account-confirmation';
+import {
+  buildActivateAccountPath,
+  getActivationTokenFromSearch,
+} from 'src/utils/activate-account-url';
+
+const StyledContent = styled('div')({
+  maxWidth: 600,
+  margin: '0 auto',
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'center',
+  height: '100vh',
+  gap: 24,
+});
+
+const ActivateAccount = () => {
+  const dispatch = useDispatch();
+  const { tenant } = useTenant();
+  const location = useLocation();
+  const activationToken = getActivationTokenFromSearch(location.search) ?? '';
+
+  const { mutate: activate, isPending: activating } =
+    useActivateUserByCodeMutation();
+  const { mutate: resend, isPending: resending } =
+    useResendActivationMutation();
+
+  const {
+    handleSubmit,
+    register,
+    formState: { errors, isValid },
+  } = useForm<ActivateAccountCodeDto>({
+    mode: 'onSubmit',
+    resolver: ClassValidatorResolver(new ActivateAccountCodeDto()),
+    defaultValues: { code: '' },
+  });
+
+  useEffect(() => {
+    if (!tenant) return;
+    if (!isSmsAccountConfirmation(tenant)) {
+      history.replace('/resend-activation-link');
+      return;
+    }
+    if (!activationToken) {
+      history.replace('/login');
+    }
+  }, [tenant, activationToken]);
+
+  const onSubmit = (data: ActivateAccountCodeDto) => {
+    if (!isValid || !activationToken) return;
+    activate(
+      { activationToken, code: data.code },
+      {
+        onSuccess: () => {
+          dispatch(
+            notifications.successNotification(
+              'notification.accountHasBeenActivated',
+            ),
+          );
+          history.push('/login');
+        },
+      },
+    );
+  };
+
+  const onResend = () => {
+    if (!activationToken) return;
+    resend(activationToken, {
+      onSuccess: (result) => {
+        const nextToken = result?.activationToken ?? activationToken;
+        if (result?.activationToken && nextToken !== activationToken) {
+          history.replace(buildActivateAccountPath(nextToken));
+        }
+        if (!result) return;
+        dispatch(
+          notifications.successNotification(
+            __('application.activationSmsCodeSent'),
+          ),
+        );
+      },
+    });
+  };
+
+  if (!tenant || !isSmsAccountConfirmation(tenant) || !activationToken) {
+    return null;
+  }
+
+  return (
+    <StyledContent>
+      <Logo width="medium" />
+      <Section variant="bordered">
+        <Header variant="h2">{__('application.activateAccountBySms')}</Header>
+        <Typography>{__('application.activateAccountBySmsHint')}</Typography>
+
+        <FormContainer fullWidth>
+         
+            <Form onSubmit={handleSubmit(onSubmit)}>
+              <Stack>
+                <Input
+                  label="application.activationCode"
+                  placeholder="application.activationCodePlaceholder"
+                  error={errors.code?.message}
+                  required
+                  autoComplete="one-time-code"
+                  {...register('code')}
+                />
+
+                <ButtonsContainer center column>
+                  <Button
+                    text="application.activateAccount"
+                    type="submit"
+                    size="large"
+                    disabled={activating}
+                  />
+                  <Button
+                    text="application.resendActivationSms"
+                    type="button"
+                    variant="secondary"
+                    size="large"
+                    disabled={resending}
+                    onClick={onResend}
+                  />
+                  <Typography>
+                    <Link to="/login">{__('application.back')}</Link>
+                  </Typography>
+                </ButtonsContainer>
+              </Stack>
+            </Form>
+
+        </FormContainer>
+      </Section>
+    </StyledContent>
+  );
+};
+
+export default ActivateAccount;

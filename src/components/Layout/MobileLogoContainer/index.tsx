@@ -1,5 +1,6 @@
 import React from 'react';
-import { Logo } from '../../Branded';
+
+import { Logo } from 'src/components/Branded';
 
 import './MobileLogoContainer.scss';
 
@@ -13,7 +14,7 @@ const MobileLogoContainer = ({
   small,
   onlyBottomMargin,
   className,
-}: Props): any => (
+}: Props) => (
   <div
     className={`mobile-logo-container ${className || ''} ${small ? 'small' : ''} ${
       onlyBottomMargin ? 'only-bottom-margin' : ''

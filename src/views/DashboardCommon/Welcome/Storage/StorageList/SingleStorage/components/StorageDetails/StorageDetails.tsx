@@ -1,10 +1,13 @@
 import styled from 'styled-components';
-import { Calendar, Size } from '../../../../../../../../icons';
-import { dateOnly } from '../../../../../../../../utils/format-date';
+
+import { RentAgreementType } from 'smartbox-types';
+import { useRent } from 'src/hooks/useRent';
+import { Calendar, Size } from 'src/icons';
 
 export type StorageDetailsProps = {
   size: number;
-  date: Date;
+  date?: Date | string | null;
+  agreementType?: RentAgreementType | null;
 };
 
 const StyledDetails = styled('footer')(({ theme }) => ({
@@ -26,12 +29,17 @@ const Detail = styled('div')(({ theme }) => ({
   gap: theme.spacing * 2,
 }));
 
-export const StorageDetails = ({ size, date }: StorageDetailsProps) => {
+export const StorageDetails = ({
+  size,
+  date,
+  agreementType,
+}: StorageDetailsProps) => {
+  const { formatFinishAt } = useRent();
   return (
     <StyledDetails>
       <Detail>
         <Calendar />
-        {dateOnly(date)}
+        {formatFinishAt(date, agreementType)}
       </Detail>
       <Detail>
         <Size />

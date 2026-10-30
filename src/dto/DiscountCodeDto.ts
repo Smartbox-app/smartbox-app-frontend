@@ -1,4 +1,5 @@
-import { IsEmail, IsNotEmpty, MinLength } from 'class-validator';
+import { IsNotEmpty } from 'class-validator';
+
 import { __ } from 'src/helpers/i18n';
 import { errors } from 'src/validation/errors';
 

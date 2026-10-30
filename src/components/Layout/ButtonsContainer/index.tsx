@@ -1,12 +1,13 @@
 import React from 'react';
+import styled from 'styled-components';
 
 import './ButtonsContainer.scss';
-import styled from 'styled-components';
 
 interface Props {
   children: React.ReactNode;
   max?: boolean;
   center?: boolean;
+  left?: boolean;
   className?: string;
   column?: boolean;
   spaceBetween?: boolean;
@@ -27,10 +28,11 @@ const ButtonsContainer = ({
   column,
   spaceBetween,
   center,
+  left,
   className,
 }: Props) => (
   <StyledButtonsContainer
-    className={`buttons-container ${max ? 'max' : ''} ${noWrap ? 'no-wrap' : ''} ${center ? 'center' : ''} ${column ? 'column' : ''} ${
+    className={`buttons-container ${max ? 'max' : ''} ${noWrap ? 'no-wrap' : ''} ${center ? 'center' : ''} ${left ? 'left' : ''} ${column ? 'column' : ''} ${
       spaceBetween ? 'space-between' : ''
     } ${className || ''}`}
   >

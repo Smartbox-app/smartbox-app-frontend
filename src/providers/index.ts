@@ -1,3 +1,3 @@
-import { CustomThemeProvider } from "./CustomThemeProvider";
+import { CustomThemeProvider } from "src/providers/CustomThemeProvider";
 
-export { CustomThemeProvider }
+export { CustomThemeProvider };

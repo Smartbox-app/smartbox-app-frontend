@@ -1,26 +1,27 @@
-import React from 'react';
 import { ItfApiForm } from 'itf_formbuilder_react';
-import { useDispatch, useSelector } from 'react-redux';
-import ReactCreatableSelect from 'react-select/creatable';
+import React from 'react';
+import { useDispatch } from 'react-redux';
+import { useParams } from 'react-router';
+
+import { AddonReq } from 'smartbox-types';
+import { successNotification } from 'src/actions/notifications';
+import { Button, Spinner } from 'src/components/Branded';
+import { ReactSelectOverride, ReactCreatableSelectOverride as ReactCreatableSelect } from 'src/components/Common/ReactSelectOverride';
 import {
   ButtonsContainer,
   FormContainer,
-  SimpleHeader,
-} from '../../../../../../../components/Layout';
-import { Button, Spinner } from '../../../../../../../components/Branded';
-import ApiService from '../../../../../../../services/api-service';
-import { formOnTranslateString } from '../../../../../../../utils/trans-form';
-import { history } from '../../../../../../../App';
-import { ReactSelectOverride } from '../../../../../../../components/Common/ReactSelectOverride';
-import { successNotification } from '../../../../../../../actions/notifications';
-import { __ } from '../../../../../../../helpers/i18n';
-import UserService from '../../../../../../../services/user-service';
-import { ApplicationState } from '../../../../../../../reducers';
-import { mapFields } from '../../../../../../../utils/fields-mapper';
-import { useParams } from 'react-router';
-import { AddonReq } from 'smartbox-types';
-import { useGetMyDetailsQuery } from 'src/queries';
+} from 'src/components/Layout';
 import { HeaderWithActions, Section } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
+import { history } from 'src/history';
+import { useGetMyDetailsQuery } from 'src/queries';
+import ApiService from 'src/services/api-service';
+import UserService from 'src/services/user-service';
+import { mapFields } from 'src/utils/fields-mapper';
+import { formOnTranslateString } from 'src/utils/trans-form';
+
+import { appendNameI18nFields } from '../append-name-i18n';
+import { serializeBoxGroupIds } from '../serialize-box-group-ids';
 
 const Add = () => {
   const dispatch = useDispatch();
@@ -34,7 +35,7 @@ const Add = () => {
     </ButtonsContainer>
   );
 
-  const fetchUrl = 'addon/form';
+  const fetchUrl = `addon/form/${stockId}`;
   const sendUrl = 'addon';
 
   return (
@@ -71,6 +72,10 @@ const Add = () => {
             formData.append('order', values.order.toString());
             formData.append('active', values.active.toString());
             formData.append('name', values.name);
+            appendNameI18nFields(
+              formData,
+              values as unknown as Record<string, unknown>,
+            );
             formData.append('slug', values.slug);
             formData.append('tax', values.tax);
             formData.append('description', values.description);
@@ -84,10 +89,12 @@ const Add = () => {
               'userFileAllowed',
               values.userFileAllowed.toString(),
             );
+            formData.append('noPricing', values.noPricing.toString());
             formData.append(
-              'noPricing',
-              values.noPricing.toString(),
+              'boxGroupIds',
+              serializeBoxGroupIds(values.boxGroupIds),
             );
+            formData.append('newRentOnly', values.newRentOnly.toString());
             formData.append(
               'userFileRequirement',
               values.userFileRequirement || '',

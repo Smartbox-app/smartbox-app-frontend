@@ -1,18 +1,17 @@
 import { useState } from 'react';
-import { MyRentList, RentStatus } from 'smartbox-types';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-import UserService from '../../../../../../services/user-service';
-
-import { __ } from '../../../../../../helpers/i18n';
-
+import { MyRentList, RentStatus } from 'smartbox-types';
+import { Card } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
+import { StockImage } from 'src/icons/StockImage';
 import { useGetMyDetailsQuery } from 'src/queries';
-import { Link } from 'react-router-dom';
+import UserService from 'src/services/user-service';
+
+import { StorageDetails } from './components/StorageDetails';
 import { StorageHeader } from './components/StorageHeader';
 import { StorageMainInfo } from './components/StorageMainInfo';
-import { StorageDetails } from './components/StorageDetails';
-import { Card } from 'src/components/ui';
-import { StockImage } from 'src/icons/StockImage';
 
 interface Props {
   single: MyRentList;
@@ -38,22 +37,34 @@ const SingleStorage = ({ single }: Props) => {
   const isWarning = [
     RentStatus.noPaidExtension,
     RentStatus.noPaidExtensionWithWarning,
-    RentStatus.noPaidPeriod
+    RentStatus.noPaidPeriod,
+    RentStatus.endedUnpaid,
   ].includes(single.status);
+
+  const isNotice = [
+    RentStatus.pendingFinish,
+    RentStatus.awaitingFinish,
+  ].includes(single.status);
+
   return (
     <StyledStorage
       onMouseEnter={handleHover}
       onMouseLeave={handleBlur}
       to={`/${UserService.getSlugByRole(user!.role)}/single-rent/${single.id}`}
     >
-      <Card warning={isWarning} hovered={isHovered} image={<StockImage />}>
+      <Card warning={isWarning} notice={isNotice} hovered={isHovered} image={<StockImage />}>
         <StorageHeader
           isWarning={isWarning}
           isHovered={isHovered}
+          isNotice={isNotice}
           stockName={single.stockName}
         />
         <StorageMainInfo identifier={single.number} isWarning={isWarning} />
-        <StorageDetails size={single.size} date={single.finishAt} />
+        <StorageDetails
+          size={single.size}
+          date={single.finishAt}
+          agreementType={single.agreementType}
+        />
       </Card>
     </StyledStorage>
     // </div>

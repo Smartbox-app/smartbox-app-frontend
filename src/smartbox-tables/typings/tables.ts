@@ -1,3 +1,5 @@
+import type { ReactNode } from 'react';
+
 export enum FieldType {
     Text,
     Custom,
@@ -14,8 +16,8 @@ export enum FieldType {
 export interface TableButton {
     name: string,
     type: string,
-    to?: string | ((data?: any) => string),
-    click?: any,
+    to?: string | ((data?: unknown) => string),
+    click?(data?: unknown): void,
 }
 
 export interface TableFieldSearchableValues {
@@ -27,8 +29,8 @@ export interface TableSchemaField {
     name: string;
     field: string;
     type?: FieldType; // defaults to Text
-    customValue?: (values: any, field: TableSchemaField) => any;
-    customRender?: (value: any, field: TableSchemaField, allValues: any) => any;
+    customValue?(values: unknown, field: TableSchemaField): unknown;
+    customRender?(value: unknown, field: TableSchemaField, allValues: unknown): ReactNode;
     mobile?: boolean;
     link?: boolean;
     sortable?: boolean;
@@ -39,12 +41,14 @@ export interface TableSchemaField {
     searchableValues?: TableFieldSearchableValues;
     defaultSearch?: string|number;
     alias?: string;
+    entityFieldName?: string;
     sortType?: string;
 }
 
 export interface TableSchema {
     countPerPage: number;
     fields: TableSchemaField[];
+    highlightRow?: (row: Record<string, unknown>) => boolean;
 }
 
 export interface TableQuery {

@@ -1,10 +1,13 @@
+import React from 'react';
+
 import { Button as UIButton } from 'src/components/ui';
-import { __ } from '../../../helpers/i18n';
+import { __ } from 'src/helpers/i18n';
+
 import './Button.scss';
 
 interface ButtonProps {
   to?: string;
-  click?: any;
+  click?: (event: React.MouseEvent<HTMLButtonElement>) => void;
   primary?: boolean;
   secondary?: boolean;
   danger?: boolean;
@@ -24,15 +27,8 @@ interface ButtonProps {
   onlyIcon?: boolean;
 }
 
-enum ButtonType {
-  Submit = 'submit',
-  Button = 'button',
-  Reset = 'reset',
-}
-
 const Button = (props: ButtonProps) => {
   const {
-    className,
     danger,
     primary,
     secondary,
@@ -40,17 +36,12 @@ const Button = (props: ButtonProps) => {
     tertiary,
     small,
     disabled,
-    outline,
     big,
-    auto,
     to,
     type,
     blank,
     click,
     text,
-    rounded,
-    icon,
-    onlyIcon,
   } = props;
 
   const getSize = () => {
@@ -71,7 +62,7 @@ const Button = (props: ButtonProps) => {
       return 'button';
   }
 
-  return <UIButton variant={getVariant()} to={blank ? undefined : to} href={blank ? to : undefined} onClick={click} text={text} size={getSize()} type={getType()}/>;
+  return <UIButton variant={getVariant()} to={blank ? undefined : to} href={blank ? to : undefined} onClick={click} text={text} size={getSize()} type={getType()} disabled={disabled}/>;
 };
 
 export { Button };

@@ -1,1 +1,1 @@
-export * from './useGetMyDetailsQuery';
+export * from 'src/queries/useGetMyDetailsQuery/useGetMyDetailsQuery';

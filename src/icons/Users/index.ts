@@ -1,1 +1,1 @@
-export * from './Users';
+export * from 'src/icons/Users/Users';

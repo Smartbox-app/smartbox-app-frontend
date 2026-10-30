@@ -1,54 +1,39 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router';
-import ApiService from '../../../../../../services/api-service';
-import { BoxMapRes, IStock } from 'smartbox-types';
-import { Section, SimpleHeader } from '../../../../../../components/Layout';
-import { Spinner } from '../../../../../../components/Branded';
-import { MapView } from '../../../../MapView';
+import React from 'react';
 import { useDispatch } from 'react-redux';
-import BoxDetail from '../../../../BoxDetail';
-import { showModal } from '../../../../../../actions/modal';
+import { useParams } from 'react-router';
+
+import { BoxMapRes } from 'smartbox-types';
+import { showModal } from 'src/actions/modal';
+import { Spinner } from 'src/components/Branded';
+import { Section } from 'src/components/Layout';
 import { Header } from 'src/components/ui';
-import { __ } from 'src/helpers/i18n';
 import { useTenantNaming } from 'src/hooks/useTenantNaming';
+import { useGetStockBoxesQuery, useGetStockQuery } from 'src/queries';
+
+import BoxDetail from '../../../../BoxDetail';
+import { MapView } from '../../../../MapView';
 
 const Handling = () => {
-    const { stockId } = useParams<{ stockId: string }>();
-    const [stock, setStock] = useState<IStock>();
-    const [boxes, setBoxes] = useState<BoxMapRes[]>([]);
-    const [loading, setLoading] = useState<boolean>(true);
-    const dispatch = useDispatch();
-    const {getText} = useTenantNaming();
+  const { stockId } = useParams<{ stockId: string }>();
+  const dispatch = useDispatch();
+  const { getText } = useTenantNaming();
+  const { data: stock, isPending: stockLoading } = useGetStockQuery(stockId);
+  const { data: boxes = [], isPending: boxesLoading } =
+    useGetStockBoxesQuery(stockId);
 
-    const getBoxes = async () => {
-        await ApiService.callFetch('GET', `box/all/${stockId}`, (data: BoxMapRes[]) => {
-            setBoxes(data);
-        })
-        setLoading(false);
+  const handleBoxDetails = (box: BoxMapRes) => {
+    if (!stock) return;
+    dispatch(showModal(<BoxDetail box={box} stockId={stock.id} />));
+  };
 
-    }
+  if (stockLoading || boxesLoading || !stock) return <Spinner />;
 
-    const getStock = async () => {
-        await ApiService.callFetch('GET', `stock/${stockId}`, (res: IStock) => {
-            setStock(res);
-        })
-    }
-
-    const handleBoxDetails = (box: BoxMapRes) => {
-        dispatch(showModal(<BoxDetail box={box} stockId={stock!.id} callback={getBoxes} />))
-    }
-
-    useEffect(() => {
-        getStock();
-        getBoxes();
-    }, [])
-
-    if (loading || !stock) return <Spinner />
-
-    return <Section>
-        <Header variant='h2'>{getText('handling')}</Header>
-        <MapView stock={stock} boxes={boxes} admin onBoxClick={handleBoxDetails} />
+  return (
+    <Section>
+      <Header variant="h2">{getText('handling')}</Header>
+      <MapView stock={stock} boxes={boxes} admin onBoxClick={handleBoxDetails} />
     </Section>
-}
+  );
+};
 
-export { Handling }
+export { Handling };

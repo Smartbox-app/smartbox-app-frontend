@@ -1,7 +1,5 @@
-import { RentPaymentType } from 'smartbox-types';
-import ApiService from '../services/api-service';
-import { FormType } from '../types/order-form';
-import { format } from 'date-fns';
+import { PaymentDocument, PayForRentResponse, RentAgreementType, RentPaymentType, StockRes, BoxGroupType } from 'smartbox-types';
+import { FormType } from 'src/types/order-form';
 
 export const updateFormData = (data: Partial<FormType>) => ({
   type: 'FORM_STEP_SUCCESS',
@@ -24,6 +22,11 @@ export const formResignationMarked = () => ({
 
 export const clearOrder = () => ({ type: 'CLEAR_ORDER' });
 
+export const setPendingCheckout = (payload: PayForRentResponse | null) => ({
+  type: 'SET_PENDING_CHECKOUT',
+  payload,
+});
+
 export const clearPaymentDetails = () => ({
   type: 'CLEAR_PAYMENT_METHOD_SUCCESS',
 });
@@ -37,20 +40,38 @@ export const setOrderStock = (
   type: 'SET_ORDER_STOCK',
   payload: { stockId, stockAddress, stockName },
 });
+export const setOrderFullStock = (stock: StockRes) => ({
+  type: 'SET_ORDER_FULL_STOCK',
+  payload: { stock },
+});
+
 export const clearSelectedStock = () => ({ type: 'CLEAR_ORDER_STOCK' });
-export const setBoxGroup = (boxGroupId: string, boxGroupName: string, boxGroupArea: string) => ({
+export const setBoxGroup = (
+  boxGroupId: string,
+  boxGroupName: string,
+  boxGroupArea: string,
+  boxGroupType: BoxGroupType = BoxGroupType.storage,
+) => ({
   type: 'SET_ORDER_BOX_GROUP',
-  payload: { boxGroupId, boxGroupName, boxGroupArea },
+  payload: { boxGroupId, boxGroupName, boxGroupArea, boxGroupType },
 });
 export const setMinRentPeriod = (days: number) => ({
   type: 'SET_MIN_RENT_PERIOD',
+  payload: days,
+});
+export const setMaxRentPeriod = (days: number) => ({
+  type: 'SET_MAX_RENT_PERIOD',
+  payload: days,
+});
+export const setMaxAdvanceBookingDays = (days: number) => ({
+  type: 'SET_MAX_ADVANCE_BOOKING_DAYS',
   payload: days,
 });
 export const setRentStartDate = (date: Date) => ({
   type: 'SET_RENT_START_DATE',
   payload: date,
 });
-export const setRentEndDate = (date: Date) => ({
+export const setRentEndDate = (date: Date | null) => ({
   type: 'SET_RENT_END_DATE',
   payload: date,
 });
@@ -60,66 +81,27 @@ export const setRentPaymentType = (paymentType: RentPaymentType) => ({
   payload: paymentType,
 });
 
-const formatOnlyDate = (date: Date) => format(date, "yyyy-MM-dd")
+export const setRentAgreementType = (agreementType: RentAgreementType) => ({
+  type: 'SET_RENT_AGREEMENT_TYPE',
+  payload: agreementType,
+});
 
-export const calculatePrice =
-  (boxGroupId: string, start: Date, end: Date, code?: string) =>
-  async (dispatch: any) => {
-    await ApiService.get(
-      dispatch,
-      'CALCULATE_RENT_PRICE_SUCCESS',
-      'CALCULATE_RENT_PRICE_FAILED',
-      null,
-      null,
-      `box-group-new/price/${boxGroupId}/${formatOnlyDate(start)}/${formatOnlyDate(end)}/${code || ''}`,
-      'LOADING_PRICE',
-    );
-  };
+export const setRentPaymentDocumentType = (
+  paymentType: PaymentDocument,
+) => ({
+  type: 'SET_RENT_PAYMENT_DOCUMENT_TYPE',
+  payload: paymentType,
+});
 
-export const calculatePriceForRent =
-  (rentId: string, start: Date, end: Date, code?: string) =>
-  async (dispatch: any) => {
-    await ApiService.get(
-      dispatch,
-      'CALCULATE_RENT_PRICE_SUCCESS',
-      'CALCULATE_RENT_PRICE_FAILED',
-      null,
-      null,
-      `box-group-new/price-for-rent/${rentId}/${formatOnlyDate(start)}/${formatOnlyDate(end)}/${code || ''}`,
-      'LOADING_PRICE',
-    );
-  };
+export const setMinDaysForInstallments = (days: number | null) => ({
+  type: 'SET_MIN_DAYS_FOR_INSTALLMENTS',
+  payload: days,
+});
 
 export const clearAddonPrice = (addonId: string) => ({
   type: 'CLEAR_ADDON_PRICE',
   payload: { addonId },
 });
-
-export const calculateAddonPrice =
-  (addonId: string, start: Date, end: Date, variantId: string) =>
-  async (dispatch: any) => {
-    await ApiService.get(
-      dispatch,
-      'CALCULATE_VARIANT_PRICE_SUCCESS',
-      'CALCULATE_VARIANT_PRICE_FAILED',
-      null,
-      null,
-      `addon/price/${addonId}/${formatOnlyDate(start)}/${formatOnlyDate(end)}/${variantId}`,
-      'LOADING_VARIANT_PRICE',
-    );
-  };
-
-export const fetchAddons = (stockId: string) => async (dispatch: any) => {
-  await ApiService.get(
-    dispatch,
-    'FETCH_ADDONS_SUCCESS',
-    'FETCH_ADDONS_FAILED',
-    null,
-    null,
-    `addon/all/${stockId}`,
-    'LOADING_ADDONS',
-  );
-};
 
 export const selectAddon = (
   addonId: string,

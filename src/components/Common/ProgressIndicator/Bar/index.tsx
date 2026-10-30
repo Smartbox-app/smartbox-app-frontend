@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
+import styled from 'styled-components';
 
 import './Bar.scss';
-import styled from 'styled-components';
 
 interface Props {
   current: number;

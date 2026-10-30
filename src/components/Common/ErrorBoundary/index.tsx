@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+
 import ApplicationError from '../../../views/ApplicationError';
 
 interface State {
@@ -9,18 +10,17 @@ interface Props {
 }
 
 class ErrorBoundary extends Component<Props, State> {
-  constructor(props: any) {
+  constructor(props: Props) {
     super(props);
     this.state = { hasError: false };
   }
 
-  static getDerivedStateFromError(error: any) {
+  static getDerivedStateFromError(_error: Error) {
     return { hasError: true };
   }
 
-  componentDidCatch(error: any, errorInfo: any) {
-    console.log('error', error);
-    console.log('errorInfo', errorInfo);
+  componentDidCatch(error: Error, _errorInfo: React.ErrorInfo) {
+    console.error('ERROR', error);
   }
 
   render() {

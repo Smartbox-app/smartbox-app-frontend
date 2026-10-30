@@ -1,17 +1,19 @@
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { Button, Form, Input, Section } from 'src/components/ui';
-import { setDiscountCode } from 'src/actions/order';
-import { notifications } from 'src/actions';
-import { __ } from 'src/helpers/i18n';
 import { useForm } from 'react-hook-form';
-import { DiscountCodeDto } from 'src/dto/DiscountCodeDto';
-import { ClassValidatorResolver } from 'src/resolvers/ClassValidatorResolver';
-import { useDiscountCodeMutation } from 'src/mutations';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
+
+import { notifications } from 'src/actions';
+import { setDiscountCode } from 'src/actions/order';
+import { Button, Form, Input, Section } from 'src/components/ui';
+import { DiscountCodeDto } from 'src/dto/DiscountCodeDto';
+import { __ } from 'src/helpers/i18n';
+import { useDiscountCodeMutation } from 'src/mutations';
+import { ClassValidatorResolver } from 'src/resolvers/ClassValidatorResolver';
 
 interface Props {
   stockId: string;
+  boxGroupId: string;
   rentStart: Date;
   rentEnd: Date;
 }
@@ -27,7 +29,7 @@ const DiscountRow = styled('div')(({ theme }) => ({
   }
 }));
 
-export const DiscountForm = ({ stockId, rentEnd, rentStart }: Props) => {
+export const DiscountForm = ({ stockId, boxGroupId, rentEnd, rentStart }: Props) => {
   const {
     handleSubmit,
     reset,
@@ -39,7 +41,7 @@ export const DiscountForm = ({ stockId, rentEnd, rentStart }: Props) => {
   });
   const dispatch = useDispatch();
 
-  const { mutate, isPending, data } = useDiscountCodeMutation(stockId);
+  const { mutate, data } = useDiscountCodeMutation(stockId, boxGroupId);
 
   const onSubmit = (data: DiscountCodeDto) => {
     if (!isValid) return;

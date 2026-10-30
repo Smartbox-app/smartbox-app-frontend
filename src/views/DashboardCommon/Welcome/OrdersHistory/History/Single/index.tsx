@@ -1,10 +1,12 @@
 import React from 'react';
-import { MyRentList, RentStatus } from 'smartbox-types';
-import { __ } from '../../../../../../helpers/i18n';
-import { dateOnly } from '../../../../../../utils/format-date';
-import './Single.scss';
 import styled from 'styled-components';
-import { colorOrDark } from '../../../../../../utils/color';
+
+import { MyRentList, RentStatus } from 'smartbox-types';
+import { useRent } from 'src/hooks/useRent';
+import { colorOrDark } from 'src/utils/color';
+import { dateOnly } from 'src/utils/format-date';
+
+import './Single.scss';
 
 export interface SingleHistory {
   createdAt: Date;
@@ -41,14 +43,18 @@ const colorStatusCalc = (s: string): string => {
   }
 };
 
-const Single = ({ single }: Props) => (
+const Single = ({ single }: Props) => {
+  const { formatFinishAt, resolveRentFinishAt } = useRent();
+
+  return (
   <StyledLine className={`history-line ${colorStatusCalc(single.status)}`}>
     <span className="line-cell period">
-      {dateOnly(single.startAt, 5)} - {dateOnly(single.finishAt)}
+      {dateOnly(single.startAt, 5)} - {formatFinishAt(resolveRentFinishAt(single), single.agreementType)}
     </span>
     <span className="line-cell number">{single.number}</span>
     <span className="line-cell size small">{single.size} m²</span>
     <span className="line-cell stock last">{single.stockName}</span>
   </StyledLine>
-);
+  );
+};
 export default Single;

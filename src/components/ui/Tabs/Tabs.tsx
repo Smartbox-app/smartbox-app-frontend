@@ -1,32 +1,37 @@
 import { NavLink } from 'react-router-dom';
+import styled, { css } from 'styled-components';
+
 import { __ } from 'src/helpers/i18n';
 import { SingleTab } from 'src/types/tab';
-import styled, { css } from 'styled-components';
 
 export type TabsProps = {
   tabs: SingleTab[];
 };
 
 const StyledTabs = styled('div')(({ theme }) => ({
-  display: 'flex',
-  gap: theme.spacing * 2,
-  flexWrap: 'wrap',
+  '@media (min-width: 768px)': {
+    display: 'flex',
+    gap: theme.spacing * 2,
+    flexWrap: 'wrap',
+  },
 }));
 
 const tabStyles = css<{ active?: boolean }>(({ theme, active }) => ({
   display: 'flex',
   alignItems: 'center',
-  justifyContent: 'center',
+  // justifyContent: 'center',
 
-  fontSize: 14,
+  fontSize: 12,
   gap: theme.spacing,
-  padding: theme.spacing * 2,
+  padding: theme.spacing,
   color: active ? theme.colors.primary : theme.colors.text.primary,
   svg: {
+    width: theme.spacing * 5,
+    height: theme.spacing * 5,
     fill: active ? theme.colors.primary : theme.colors.text.primary,
   },
   cursor: 'pointer',
-  borderBottom: `1px solid ${active ? theme.colors.primary : theme.colors.text.primary}`,
+
   '&:link, &:visited, &:hover, &:active': {
     color: active ? theme.colors.primary : theme.colors.text.primary,
     svg: {
@@ -40,10 +45,15 @@ const tabStyles = css<{ active?: boolean }>(({ theme, active }) => ({
       fill: theme.colors.primary,
     },
   },
+  '@media (min-width: 768px)': {
+    fontSize: 14,
+    padding: theme.spacing * 2,
+    borderBottom: `1px solid ${active ? theme.colors.primary : theme.colors.text.primary}`,
+  },
 }));
 
-const StyledTab = styled('div')(({ theme }) => tabStyles);
-const StyledTabLink = styled(NavLink)(({ theme }) => tabStyles);
+const StyledTab = styled('div')(() => tabStyles);
+const StyledTabLink = styled(NavLink)(() => tabStyles);
 
 export const Tabs = ({ tabs }: TabsProps) => {
   return (

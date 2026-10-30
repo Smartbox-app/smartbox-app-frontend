@@ -1,12 +1,12 @@
-import { useDispatch } from 'react-redux';
-import { ButtonsContainer } from '../../Layout';
-import { Button } from '../../Branded';
-
-import './DeleteStockModal.scss';
-import { __ } from '../../../helpers/i18n';
-import { hideModal } from 'src/actions/modal';
-import { Input } from 'src/components/ui';
 import { useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
+
+import { hideModal } from 'src/actions/modal';
+import { Button } from 'src/components/Branded';
+import { ButtonsContainer } from 'src/components/Layout';
+import { Input, Modal } from 'src/components/ui';
+import { __ } from 'src/helpers/i18n';
+import { useTenantNaming } from 'src/hooks/useTenantNaming';
 
 interface Props {
   mainText: string;
@@ -22,26 +22,32 @@ export const DeleteStockModal = ({
   approveAction,
 }: Props) => {
   const dispatch = useDispatch();
+  const { getText } = useTenantNaming();
   const { register, getValues } = useForm<{ stockName: string }>();
   return (
-    <div className="confirm-modal-wrapper">
-      <p>{mainText}</p>
-      <Input {...register('stockName')} label='Nazwa placu' />
-      <ButtonsContainer>
-        <Button
-          click={() => dispatch(hideModal())}
-          text={cancelButtonText}
-          success
-        />
-        <Button
-          danger
-          click={() => {
-            approveAction(getValues('stockName') || '');
-            dispatch(hideModal());
-          }}
-          text={approveButtonText}
-        />
-      </ButtonsContainer>
-    </div>
+    <>
+      <Modal.Header title={__('application.confirmation')} />
+      <Modal.Content>
+        <p>{__(mainText)}</p>
+        <Input {...register('stockName')} label={getText('name_of')} />
+      </Modal.Content>
+      <Modal.Actions>
+        <ButtonsContainer>
+          <Button
+            click={() => dispatch(hideModal())}
+            text={cancelButtonText}
+            success
+          />
+          <Button
+            danger
+            click={() => {
+              approveAction(getValues('stockName') || '');
+              dispatch(hideModal());
+            }}
+            text={approveButtonText}
+          />
+        </ButtonsContainer>
+      </Modal.Actions>
+    </>
   );
 };

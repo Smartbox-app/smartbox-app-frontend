@@ -1,19 +1,24 @@
 import React from 'react';
+import styled from 'styled-components';
 
-import { Button } from '../../components/Branded';
-import { ButtonsContainer } from '../../components/Layout';
-import { __ } from '../../helpers/i18n';
+import { Button } from 'src/components/Branded';
+import { ButtonsContainer, DashboardContainer, SectionHeader } from 'src/components/Layout';
+import { colorOrDark } from 'src/utils/color';
 
-import './Page404.scss';
+const StyledApplicationError = styled.h1`
+color: ${props => colorOrDark(props.theme.colors.primary)};
+`
 
 const Page404 = () => (
-  <div className="page-not-found">
-    <h1>404</h1>
-    <h2>{__('application.404Text')}</h2>
-    <ButtonsContainer>
-      <Button primary rounded to="/" text='application.backToHome' />
-    </ButtonsContainer>
-  </div>
+    <DashboardContainer>
+        <div className="application-error">
+            <StyledApplicationError>{404}</StyledApplicationError>
+            <SectionHeader title='application.404Text' />
+            <ButtonsContainer>
+                <Button primary rounded to="/" text='application.backToHome' />
+            </ButtonsContainer>
+        </div>
+    </DashboardContainer>
 );
 
 export default Page404;

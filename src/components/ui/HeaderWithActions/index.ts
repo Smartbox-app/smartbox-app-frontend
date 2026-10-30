@@ -1,1 +1,1 @@
-export* from './HeaderWithActions';
+export* from 'src/components/ui/HeaderWithActions/HeaderWithActions';

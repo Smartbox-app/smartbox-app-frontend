@@ -1,15 +1,17 @@
 import { isBefore } from 'date-fns';
 import { useEffect, useMemo } from 'react';
-import { MyRentDetails } from 'smartbox-types';
+import styled from 'styled-components';
+
+import { MyRentDetails, RentAgreementType } from 'smartbox-types';
 import { SectionHeader } from 'src/components/Layout';
 import { Button, Section } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
+import { useTenant } from 'src/hooks/useTenant';
 import { Wallet } from 'src/icons';
 import { usePayForPeriodMutation } from 'src/mutations/usePayForPeriodMutation';
 import { dateOnly } from 'src/utils/format-date';
 import { formatPrice } from 'src/utils/format-price';
-import { prepareAndSentPaymentForm } from 'src/utils/payment-form';
-import styled from 'styled-components';
+import { redirectToIpg } from 'src/utils/payment-form';
 
 interface Props {
   rent: MyRentDetails;
@@ -36,18 +38,10 @@ const StyledMissingPeriodPayment = styled('li')(({ theme }) => ({
   },
 }));
 
-const Info = styled('div')(({ theme }) => ({
-  display: 'flex',
-  gap: theme.spacing * 2,
-}));
-
-const StyledIcon = styled('span')(({ theme }) => ({
-  paddingTop: theme.spacing / 4,
-  color: theme.colors.surface.error.primary,
-}));
-
 // @TODO HANDLE
 export const PeriodUnpaidAlert = ({ rent }: Props) => {
+  const { tenant } = useTenant();
+  const tenantId = tenant?.id;
   const {
     mutate: payForPeriod,
     isPending,
@@ -56,10 +50,12 @@ export const PeriodUnpaidAlert = ({ rent }: Props) => {
   } = usePayForPeriodMutation();
 
   const unpaidPeriods = useMemo(() => {
-    return rent.periods
+    return (rent.periods ?? [])
       .filter(
         (period) =>
-          isBefore(new Date(period.startAt), new Date()) && !period.paid,
+          (rent.agreementType === RentAgreementType.OpenEnded &&
+            !period.paid) ||
+          (isBefore(new Date(period.startAt), new Date()) && !period.paid),
       )
       .sort((a, b) =>
         isBefore(new Date(a.startAt), new Date(b.startAt)) ? 1 : -1,
@@ -71,34 +67,43 @@ export const PeriodUnpaidAlert = ({ rent }: Props) => {
   };
 
   useEffect(() => {
-    if (!isSuccess || !data) return;
+    if (!isSuccess || !data || !tenantId) return;
 
-    prepareAndSentPaymentForm(data);
-  }, [isSuccess, data]);
+    redirectToIpg(tenantId, data.paymentId);
+  }, [isSuccess, data, tenantId]);
 
   if (unpaidPeriods.length === 0) return null;
 
   return (
     <Section>
-      <SectionHeader title="Nieopłacone okresy" />
+      <SectionHeader title="application.phrases.unpaidPeriods" />
       <StyledMissingPeriodLists>
-        {unpaidPeriods.map((period) => (
-          <StyledMissingPeriodPayment key={period.id}>
-            <div>
-              {dateOnly(period.startAt)} - {dateOnly(period.finishAt)} -{' '}
-              <strong>{formatPrice(period.value)}</strong>
-            </div>
-            <Button
-              variant="error"
-              type="button"
-              size="large"
-              iconLeft={<Wallet />}
-              disabled={isPending || !!data || !period.invoiceId}
-              onClick={() => pay(period.id)}
-              text={__('application.pay')}
-            />
-          </StyledMissingPeriodPayment>
-        ))}
+        {unpaidPeriods.map((period, index) => {
+          const periodId =
+            'id' in period && typeof period.id === 'string'
+              ? period.id
+              : undefined;
+
+          return (
+            <StyledMissingPeriodPayment key={periodId ?? index}>
+              <div>
+                {dateOnly(period.startAt)} - {dateOnly(period.finishAt)} -{' '}
+                <strong>{formatPrice(period.value)}</strong>
+              </div>
+              <Button
+                variant="error"
+                type="button"
+                size="large"
+                iconLeft={<Wallet />}
+                disabled={isPending || !!data || !period.invoiceId || !periodId}
+                onClick={() => {
+                  if (periodId) pay(periodId);
+                }}
+                text={__('application.pay')}
+              />
+            </StyledMissingPeriodPayment>
+          );
+        })}
       </StyledMissingPeriodLists>
     </Section>
   );
