@@ -55,6 +55,7 @@ const Welcome = () => {
   return (
     <>
       <WelcomeHeader>
+        DEBUG MESSAGE
         <Header variant="main">
           {__('application.hi')} {user.firstName}
         </Header>
