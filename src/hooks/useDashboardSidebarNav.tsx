@@ -147,6 +147,11 @@ const getAdminSidebarNavGroups = ({
           text: 'application.systemLogs',
           icon: <List />,
         },
+        {
+          to: `${managementBase}/system-alerts`,
+          text: 'application.systemAlerts',
+          icon: <List />,
+        },
       ],
     },
     ...getLocationsNavGroups({ slug, getText }),
@@ -232,6 +237,11 @@ const getClientSidebarNavGroups = ({
       text: 'application.systemLogs',
       icon: <List />,
     },
+    // {
+    //   to: `${managementBase}/system-alerts`,
+    //   text: 'application.systemAlerts',
+    //   icon: <List />,
+    // },
   ];
 
   if (apiAccessEnabled) {

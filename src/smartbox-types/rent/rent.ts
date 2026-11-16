@@ -1,4 +1,5 @@
 import { AcceptanceStatuses, SingleAcceptance } from 'src/smartbox-types/addon';
+import { BoxGroupType } from 'src/smartbox-types/box-group';
 import { BoxStatus } from 'src/smartbox-types/box/box-entity';
 import { CompanyData, PaymentDocument, PaymentStatus } from 'src/smartbox-types/payment';
 import { PeriodEntity } from 'src/smartbox-types/period';
@@ -239,6 +240,7 @@ export type MyRentDetails = {
   stockId: string;
   boxId: string;
   boxGroupId: string;
+  boxGroupType: BoxGroupType;
   boxNumber: string;
   boxAdditionalInfo: string;
   number: string;

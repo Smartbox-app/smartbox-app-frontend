@@ -1,6 +1,8 @@
 import {
   RentAgreementType,
+  RentPaymentType,
   StockAgreementType,
+  StockPaymentType,
 } from 'smartbox-types';
 
 export const allowsFixedTerm = (allowed?: StockAgreementType) =>
@@ -23,4 +25,18 @@ export const resolveCheckoutAgreementType = (
     return RentAgreementType.FixedTerm;
   }
   return selected || RentAgreementType.FixedTerm;
+};
+
+export const resolveCheckoutPaymentType = (
+  config: StockPaymentType | undefined,
+  selected: RentPaymentType | null,
+  openEnded: boolean,
+): RentPaymentType => {
+  if (openEnded || config === StockPaymentType.Installments) {
+    return RentPaymentType.Installments;
+  }
+  if (config === StockPaymentType.Both) {
+    return selected || RentPaymentType.InAdvance;
+  }
+  return RentPaymentType.InAdvance;
 };

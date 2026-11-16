@@ -5,11 +5,11 @@ import { FieldType, TableSchemaField, usersList } from 'smartbox-tables';
 import { UserListRes, UserStatus, UserType } from 'smartbox-types';
 import { showModal } from 'src/actions/modal';
 import { Button } from 'src/components/Branded';
-import { ApiTable } from 'src/components/Common';
+import { ApiTable, ConfirmModal } from 'src/components/Common';
 import { ButtonsContainer } from 'src/components/Layout';
 import { HeaderWithActions, Section } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
-import { useSetUserStatusMutation } from 'src/mutations';
+import { useDeleteUserMutation, useSetUserStatusMutation } from 'src/mutations';
 import { useGetMyDetailsQuery } from 'src/queries';
 import UserService from 'src/services/user-service';
 import { isWorker } from 'src/utils/role-check';
@@ -19,8 +19,21 @@ import EditAssign from './EditAssign';
 export const List = () => {
   const { data: user } = useGetMyDetailsQuery();
   const { mutate: setUserStatus } = useSetUserStatusMutation();
+  const { mutate: deleteUser } = useDeleteUserMutation();
 
   const dispatch = useDispatch();
+
+  const confirmUserDelete = (userId: string) => {
+    dispatch(
+      showModal(
+        <ConfirmModal
+          approveButtonText="application.delete"
+          mainText="application.deleteWorkerText"
+          approveAction={() => deleteUser(userId)}
+        />,
+      ),
+    );
+  };
 
   const scheme = new InteractiveTableSchema(usersList)
     .modifyFieldStatic('status', {
@@ -40,6 +53,21 @@ export const List = () => {
       sortable: true,
       customRender: (value, field, userData: UserListRes) =>
         getAssignButton(value, field, userData),
+    })
+    .addFieldAtTheEnd({
+      name: __('application.actions'),
+      field: 'actions',
+      mobile: true,
+      type: FieldType.Custom,
+      customRender: (_value, _field, userData: UserListRes) => (
+        <ButtonsContainer noWrap>
+          <Button
+            danger
+            text="application.delete"
+            click={() => confirmUserDelete(userData.id)}
+          />
+        </ButtonsContainer>
+      ),
     });
 
   const getAssignButton = (

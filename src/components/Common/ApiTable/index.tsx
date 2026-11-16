@@ -16,6 +16,7 @@ import Table from 'src/components/Common/Table';
 import { Input, Skeleton } from 'src/components/ui';
 import { DEFAULT_API_TABLE_INSTANCE_ID } from 'src/constants/api-table-instances';
 import { __ } from 'src/helpers/i18n';
+import { useGetTenantQuery } from 'src/queries/useGetTenantQuery';
 import ApiService from 'src/services/api-service';
 import debounce from 'src/utils/debounce';
 
@@ -228,6 +229,8 @@ export const ApiTable = ({
 }: ApiTableProps) => {
   const resolvedInstanceId = instanceId ?? DEFAULT_API_TABLE_INSTANCE_ID;
   const resolvedMethod = apiEndpointMethod ?? 'GET';
+  const tenantQuery = useGetTenantQuery();
+  const tenantIdentifier = tenantQuery.data?.identifier ?? '';
 
   const [searchQuery, setSearchQuery] = useState(
     () => getInitialSearchState(scheme).searchQuery,
@@ -260,9 +263,15 @@ export const ApiTable = ({
   }, [buildUrl]);
 
   const { data = emptyTableData, isFetching, isPending } = useQuery({
-    queryKey: ['api-table', resolvedInstanceId, resolvedMethod, requestUrl],
+    queryKey: [
+      'api-table',
+      resolvedInstanceId,
+      resolvedMethod,
+      tenantIdentifier,
+      requestUrl,
+    ],
     queryFn: async () => {
-      if (!requestUrl) return emptyTableData;
+      if (!requestUrl) throw new Error('Missing table url');
 
       const payload = await ApiService.callFetch<
         TableResponse<Record<string, unknown>>
@@ -275,13 +284,15 @@ export const ApiTable = ({
         true,
       );
 
-      if (payload && typeof payload === 'object') {
-        return payload;
+      if (!payload || typeof payload !== 'object') {
+        throw new Error('Table request failed');
       }
 
-      return emptyTableData;
+      return payload;
     },
-    enabled: !!requestUrl,
+    // Global staleTime would keep a tenant-less empty payload for 30s.
+    staleTime: 0,
+    enabled: !!requestUrl && !tenantQuery.isPending,
     placeholderData: (previousData) => previousData,
     retry: false,
   });
@@ -401,7 +412,7 @@ export const ApiTable = ({
     [searchBy, searchQuery, page],
   );
 
-  const showSkeleton = isPending && data.countTotal === 0;
+  const showSkeleton = (isPending || isFetching) && data.countTotal === 0;
   const showSpinner = isFetching && data.countTotal > 0;
 
   return (

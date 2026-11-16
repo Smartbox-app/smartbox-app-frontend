@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 
 import { refreshApiTableData } from 'src/actions/api-table';
 import { successNotification } from 'src/actions/notifications';
+import { queryClient } from 'src/query-client';
 import ApiService from 'src/services/api-service';
 
 type DeleteStockVariables = {
@@ -25,6 +26,8 @@ export const useDeleteStockMutation = () => {
     onSuccess: (_data, variables) => {
       dispatch(successNotification(variables.successMessage));
       dispatch(refreshApiTableData());
+      void queryClient.invalidateQueries({ queryKey: ['stock'] });
+      void queryClient.invalidateQueries({ queryKey: ['stock-group'] });
     },
   });
 };

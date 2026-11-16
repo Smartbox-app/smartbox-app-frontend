@@ -56,6 +56,6 @@ export const useGetVersionQuery = () => {
       }
     },
     retry: false,
-    refetchInterval: 3000,
+    refetchInterval: 60_000,
   });
 };

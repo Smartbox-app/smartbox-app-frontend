@@ -91,13 +91,41 @@ export type LocationDiagnosticsBusDevice = {
   lastAnsweredAt: Date | null;
 };
 
-export type LocationDiagnosticsRes = {
+export type LocationDiagnosticsLink = {
   locationId: number;
   status: LocationDiagnosticsStatus;
   asOf: Date | null;
   lastContactAt: Date | null;
   wan: LocationDiagnosticsWan;
   bus: LocationDiagnosticsBusDevice[] | null;
+};
+
+export type LocationDiagnosticsDoorState = 'open' | 'closed' | 'unknown';
+
+export type LocationDiagnosticsDoor = {
+  lockId: string;
+  boxId: string | null;
+  identifier: string | null;
+  state: LocationDiagnosticsDoorState;
+  observedAt: Date | null;
+};
+
+export type LocationDiagnosticsGate = {
+  id: string;
+  ident: string;
+  isOpen: boolean | null;
+};
+
+export type LocationDiagnosticsRes = {
+  locationId: number;
+  status: LocationDiagnosticsStatus | null;
+  asOf: Date | null;
+  lastContactAt: Date | null;
+  wan: LocationDiagnosticsWan | null;
+  bus: LocationDiagnosticsBusDevice[] | null;
+  doors: LocationDiagnosticsDoor[] | null;
+  doorsSyncedAt: Date | null;
+  gates: LocationDiagnosticsGate[];
 } | null;
 
 export interface GateAdminList {

@@ -210,8 +210,18 @@ const application = {
     diagnosticsBusSilent: 'Мовчить',
     diagnosticsBusUnknown: 'Не перевірено',
     diagnosticsBusLastAnswered: 'Остання відповідь',
+    diagnosticsDoors: 'Двері скриньок',
+    diagnosticsDoorName: 'Скринька',
+    diagnosticsDoorState: 'Стан',
+    diagnosticsDoorObserved: 'Зчитано',
+    diagnosticsDoorUnavailable: 'Не вдалося зчитати стан дверей',
+    diagnosticsNoDoors: 'Немає дверних контактів',
+    diagnosticsOpen: 'Відчинено',
+    diagnosticsClosed: 'Зачинено',
+    diagnosticsUnknown: 'Невідомо',
     account: 'Обліковий запис',
     logout: 'Вийти',
+    logoutEverywhere: 'Вийти на всіх пристроях',
     home: 'Головна',
     edit: 'Редагувати',
     back: 'Назад',
@@ -294,6 +304,7 @@ const application = {
     users: 'Користувачі',
     deleteUserText:
       'Ви впевнені, що хочете видалити цього користувача? Користувача з активними орендами видалити не можна.',
+    deleteWorkerText: 'Ви впевнені, що хочете видалити цього працівника?',
     deleteUserByForceText:
       'Ви впевнені, що хочете видалити цього користувача? Якщо в користувача є активні оренди, їх буде автоматично завершено, а користувача видалено.',
     tenants: 'Франчайзі',
@@ -999,9 +1010,9 @@ const application = {
     tenantAnalyticsEventSignUp:
       'Реєстрація облікового запису — сторінка /register (після успішної реєстрації). GTM: sign_up з user_data.email. Meta Pixel: CompleteRegistration з Advanced Matching (em — електронна пошта). Ідентифікатор користувача не надсилається, оскільки реєстрація його не повертає.',
     tenantAnalyticsEventBeginCheckout:
-      'Початок замовлення — підтвердження дат оренди в новому замовленні (/order/step/duration) або під час продовження (/order/step/duration/:rentId). GTM: begin_checkout з user_id, user_data.email і payment_type (new_rent або extension). Meta Pixel: InitiateCheckout з електронною поштою, external_id, contents і payment_type (Advanced Matching; value = брутто; також value_gross і value_net)',
+      'Початок замовлення — підтвердження дат оренди в новому замовленні (/order/step/duration) або під час продовження (/order/step/duration/:rentId). GTM: begin_checkout з user_id, user_data.email, location і payment_type (new_rent або extension). Meta Pixel: InitiateCheckout з електронною поштою, external_id, contents і payment_type (Advanced Matching; value = брутто; також value_gross і value_net)',
     tenantAnalyticsEventPurchase:
-      'Завершення платежу — сторінка результату платежу (/payment/:id), один раз для кожного ID платежу. GTM: purchase з user_id, user_data.email і payment_type (new_rent, extension, period_payment; розширені конверсії Google Ads). Meta Pixel: Purchase з адресою електронної пошти, external_id, order_id і payment_type (Advanced Matching; value = брутто; також value_gross і value_net)',
+      'Завершення платежу — сторінка результату платежу (/payment/:id), один раз для кожного ID платежу. GTM: purchase з user_id, user_data.email, location і payment_type (new_rent, extension, period_payment; розширені конверсії Google Ads). Meta Pixel: Purchase для new_rent, RentExtension для extension, RentPeriodPayment для period_payment — кожна з адресою електронної пошти, external_id і order_id (Advanced Matching; value = брутто; також value_gross і value_net)',
     tenantAnalyticsReadonlyIntro:
       'Ці події надсилаються автоматично. Канал використовується лише тоді, коли для цього франчайзі задано його ідентифікатор.',
     tenantAnalyticsAdvancedMatching:
@@ -1036,6 +1047,7 @@ Advanced Matching (окремо від події, електронну пошт
   "user_id": "<ID користувача>",
   "user_data": { "email": "<електронна пошта>" },
   "payment_type": "new_rent | extension",
+  "location": "<локація>",
   "value_gross": "<брутто>",
   "value_net": "<нетто>",
   "ecommerce": {
@@ -1084,6 +1096,7 @@ Advanced Matching (окремо від параметрів нижче, елек
   "user_id": "<ID користувача>",
   "user_data": { "email": "<електронна пошта>" },
   "payment_type": "new_rent | extension | period_payment",
+  "location": "<локація>",
   "value_gross": "<брутто>",
   "value_net": "<нетто>",
   "ecommerce": {
@@ -1109,7 +1122,9 @@ Advanced Matching (окремо від параметрів нижче, елек
     ]
   }
 }`,
-    tenantAnalyticsPayloadMetaPurchase: `Purchase
+    tenantAnalyticsPayloadMetaPurchase: `new_rent → Purchase
+extension → RentExtension (власна подія)
+period_payment → RentPeriodPayment (власна подія)
 eventID: <ID платежу> (дедуплікація з Conversions API, не параметр події)
 Advanced Matching (окремо від параметрів нижче, електронну пошту хешовано в браузері):
   em: <електронна пошта>
@@ -1313,6 +1328,17 @@ Advanced Matching (окремо від параметрів нижче, елек
     systemLogs: 'Системні журнали',
     systemLogsRetentionInfo:
       'Журнали, старші за 30 днів, видаляються автоматично.',
+    systemAlerts: 'Попередження',
+    markAlertRead: 'Позначити як прочитане',
+    alertMarkedRead: 'Попередження позначено як прочитане',
+    alertTypes: {
+      invoice_issue: 'Помилка рахунку',
+      payment_verify: 'Перевірка оплати',
+    },
+    alertStatus: {
+      open: 'Відкрите',
+      read: 'Прочитане',
+    },
     systemLogActions: {
       addon: {
         create: 'Додаткову опцію створено',
@@ -1442,6 +1468,9 @@ Advanced Matching (окремо від параметрів нижче, елек
       },
       'system-notification': {
         create: 'Системне сповіщення створено',
+      },
+      'system-alert': {
+        read: 'Попередження позначено як прочитане',
       },
       template: {
         delete: 'Шаблон видалено',
@@ -1602,6 +1631,10 @@ Advanced Matching (окремо від параметрів нижче, елек
     batteryStatus: 'Рівень заряду',
     lockDetails: 'Подробиці',
     passcode: 'Код доступу',
+    passcodeGate: 'Код доступу до брами',
+    passcodeBoxStorage: 'Код доступу до мініскладу',
+    passcodeBoxLocker: 'Код доступу до скриньки',
+    passcodeBoxParking: 'Код доступу до паркомісця',
     lockPasscodes: 'Коди доступу',
     addLockPasscode: 'Додати код доступу',
     addPasscode: 'Додати код доступу',
@@ -1724,6 +1757,7 @@ Advanced Matching (окремо від параметрів нижче, елек
       action: 'Дія',
       error: 'Помилка',
       meta: 'Мета',
+      message: 'Повідомлення',
       ip: 'IP',
       mac: 'MAC',
       site: 'Складський комплекс',
@@ -1915,6 +1949,7 @@ Advanced Matching (окремо від параметрів нижче, елек
     accountRegistered: 'Обліковий запис зареєстровано',
     stockDiscountCreated: 'Знижку створено',
     logOutSuccess: 'Успішно вийшли',
+    logOutEverywhereSuccess: 'Вийшли на всіх пристроях',
     discCodeCreated: 'Код знижки створено',
     userBlocked: 'Користувача заблоковано',
     userUnblocked: 'Користувача розблоковано',

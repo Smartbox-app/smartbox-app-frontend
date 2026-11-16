@@ -14,8 +14,8 @@ export type RentDescriptionAddon = {
   id: string;
   name: string;
   slug: string;
-  selectedVariantName: string;
-  selectedVariantId: string;
+  selectedVariantName: string | null;
+  selectedVariantId: string | null;
   acceptance?: string;
   accepted: boolean;
   price: string;

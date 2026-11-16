@@ -3,6 +3,8 @@ import { useDispatch } from 'react-redux';
 
 import { refreshApiTableData } from 'src/actions/api-table';
 import { successNotification } from 'src/actions/notifications';
+import { myRentDetailsQueryKey, rentDetailsQueryKey } from 'src/queries';
+import { queryClient } from 'src/query-client';
 import ApiService from 'src/services/api-service';
 
 export type ForcePaymentAction = 'accept' | 'cancel';
@@ -41,6 +43,14 @@ export const useForcePaymentMutation = (
         ),
       );
       dispatch(refreshApiTableData());
+      void queryClient.invalidateQueries({ queryKey: ['payment'] });
+      void queryClient.invalidateQueries({ queryKey: ['my-rents'] });
+      void queryClient.invalidateQueries({
+        queryKey: myRentDetailsQueryKey(variables.rentId),
+      });
+      void queryClient.invalidateQueries({
+        queryKey: rentDetailsQueryKey(variables.rentId),
+      });
       options?.onSuccess?.();
     },
   });

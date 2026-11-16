@@ -139,6 +139,7 @@ const useTracking = (options: UseTrackingOptions = {}) => {
       const valueNet = payload.value_net;
       const user_data = buildUserData(payload.email);
       const payment_type = payload.payment_type;
+      const location = payload.location;
       const lineItems = payload.items?.length ? payload.items : [];
 
       clearEcommerce();
@@ -148,6 +149,7 @@ const useTracking = (options: UseTrackingOptions = {}) => {
           ...(payload.userId ? { user_id: payload.userId } : {}),
           ...(user_data ? { user_data } : {}),
           ...(payment_type ? { payment_type } : {}),
+          ...(location ? { location } : {}),
           value_gross: valueGross,
           ...(valueNet != null ? { value_net: valueNet } : {}),
           ecommerce: {
@@ -208,6 +210,7 @@ const useTracking = (options: UseTrackingOptions = {}) => {
       ];
       const user_data = buildUserData(email);
       const payment_type = toTrackingPaymentType(type);
+      const location = details.stockName || undefined;
 
       clearEcommerce();
       TagManager.dataLayer({
@@ -216,6 +219,7 @@ const useTracking = (options: UseTrackingOptions = {}) => {
           ...(userId ? { user_id: userId } : {}),
           ...(user_data ? { user_data } : {}),
           ...(payment_type ? { payment_type } : {}),
+          ...(location ? { location } : {}),
           value_gross: valueGross,
           value_net: valueNet,
           ecommerce: {

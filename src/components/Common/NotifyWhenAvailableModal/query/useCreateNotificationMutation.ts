@@ -1,6 +1,8 @@
 import { useMutation } from '@tanstack/react-query';
 
 import { NotificationEntity } from 'smartbox-types';
+import { queryClient } from 'src/query-client';
+import ApiService from 'src/services/api-service';
 
 type NotificationReq = {
   email: boolean;
@@ -8,7 +10,6 @@ type NotificationReq = {
   boxGroupId: string;
   tenantId: string;
 };
-import ApiService from 'src/services/api-service';
 
 export const useCreateNotificationMutation = () => {
   return useMutation({
@@ -23,6 +24,9 @@ export const useCreateNotificationMutation = () => {
       );
 
       return response;
+    },
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: ['api-table'] });
     },
   });
 };

@@ -51,5 +51,6 @@ export * from 'src/mutations/useResendUserActivationMutation';
 export * from 'src/mutations/useSetUserStatusMutation';
 export * from 'src/mutations/useDeleteInvitationMutation';
 export * from 'src/mutations/useResendInvitationMutation';
+export * from 'src/mutations/useMarkAlertReadMutation';
 export * from 'src/mutations/useEmailVerificationMutation';
 export * from 'src/mutations/useRotatePasscodeMutation';

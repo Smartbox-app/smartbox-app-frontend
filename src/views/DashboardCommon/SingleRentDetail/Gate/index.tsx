@@ -158,7 +158,9 @@ const Gate = ({ gate, disabled = false }: Props) => {
   const gateButton = (
     <StyledGateContainer>
       {loading && <Spinner overlay halfTransparent />}
-      <h4>{gate.name}</h4>
+      <h4>
+        <span className="fa fa-sign-in" /> {gate.name}
+      </h4>
       {gate.description && (
         <StyledGateDescription>
           <span className="fa fa-info-circle gate-info-icon" />{' '}
@@ -169,7 +171,8 @@ const Gate = ({ gate, disabled = false }: Props) => {
         <div className="slide-to-open">
           {gate.passcode ? (
             <p>
-              {__('application.passcode')}: <strong>{gate.passcode}</strong>
+              <span className="fa fa-lock" /> {__('application.passcodeGate')}:{' '}
+              <strong>{gate.passcode}</strong>
             </p>
           ) : null}
           <ButtonsContainer left>

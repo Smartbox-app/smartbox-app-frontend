@@ -210,8 +210,18 @@ const application = {
     diagnosticsBusSilent: 'Silent',
     diagnosticsBusUnknown: 'Not checked',
     diagnosticsBusLastAnswered: 'Last answered',
+    diagnosticsDoors: 'Box doors',
+    diagnosticsDoorName: 'Box',
+    diagnosticsDoorState: 'State',
+    diagnosticsDoorObserved: 'Read at',
+    diagnosticsDoorUnavailable: 'Door state could not be read',
+    diagnosticsNoDoors: 'No door contacts reported',
+    diagnosticsOpen: 'Open',
+    diagnosticsClosed: 'Closed',
+    diagnosticsUnknown: 'Unknown',
     account: 'Account',
     logout: 'Log out',
+    logoutEverywhere: 'Log out everywhere',
     home: 'Home',
     edit: 'Edit',
     back: 'Back',
@@ -294,6 +304,7 @@ const application = {
     users: 'Users',
     deleteUserText:
       'Are you sure you want to delete this user? A user with active rentals cannot be deleted.',
+    deleteWorkerText: 'Are you sure you want to delete this employee?',
     deleteUserByForceText:
       'Are you sure you want to delete this user? If the user has any active rentals, they will be ended automatically and the user will be deleted.',
     tenants: 'Franchisees',
@@ -988,9 +999,9 @@ const application = {
     tenantAnalyticsEventSignUp:
       'Account registration — the /register page (after a successful registration). GTM: sign_up with user_data.email. Meta Pixel: CompleteRegistration with Advanced Matching (em — email). The user identifier is not sent, because registration does not return it.',
     tenantAnalyticsEventBeginCheckout:
-      'Start of an order — confirming rental dates in a new order (/order/step/duration) or when extending (/order/step/duration/:rentId). GTM: begin_checkout with user_id, user_data.email, and payment_type (new_rent or extension). Meta Pixel: InitiateCheckout with email, external_id, contents, and payment_type (Advanced Matching; value = gross; also value_gross and value_net)',
+      'Start of an order — confirming rental dates in a new order (/order/step/duration) or when extending (/order/step/duration/:rentId). GTM: begin_checkout with user_id, user_data.email, location, and payment_type (new_rent or extension). Meta Pixel: InitiateCheckout with email, external_id, contents, and payment_type (Advanced Matching; value = gross; also value_gross and value_net)',
     tenantAnalyticsEventPurchase:
-      'Payment completion — the payment result page (/payment/:id), once per payment id. GTM: purchase with user_id, user_data.email, and payment_type (new_rent, extension, period_payment; Google Ads enhanced conversions). Meta Pixel: Purchase with the email address, external_id, order_id, and payment_type (Advanced Matching; value = gross; also value_gross and value_net)',
+      'Payment completion — the payment result page (/payment/:id), once per payment id. GTM: purchase with user_id, user_data.email, location, and payment_type (new_rent, extension, period_payment; Google Ads enhanced conversions). Meta Pixel: Purchase for new_rent, RentExtension for extension, RentPeriodPayment for period_payment, each with the email address, external_id, and order_id (Advanced Matching; value = gross; also value_gross and value_net)',
     tenantAnalyticsReadonlyIntro:
       'These events are sent automatically. A channel is used only when its identifier has been set for this tenant.',
     tenantAnalyticsAdvancedMatching:
@@ -1025,6 +1036,7 @@ Advanced Matching (separate from the event, email hashed in the browser):
   "user_id": "<user id>",
   "user_data": { "email": "<email>" },
   "payment_type": "new_rent | extension",
+  "location": "<location>",
   "value_gross": "<gross>",
   "value_net": "<net>",
   "ecommerce": {
@@ -1073,6 +1085,7 @@ Advanced Matching (separate from the parameters below, email hashed in the brows
   "user_id": "<user id>",
   "user_data": { "email": "<email>" },
   "payment_type": "new_rent | extension | period_payment",
+  "location": "<location>",
   "value_gross": "<gross>",
   "value_net": "<net>",
   "ecommerce": {
@@ -1098,7 +1111,9 @@ Advanced Matching (separate from the parameters below, email hashed in the brows
     ]
   }
 }`,
-    tenantAnalyticsPayloadMetaPurchase: `Purchase
+    tenantAnalyticsPayloadMetaPurchase: `new_rent → Purchase
+extension → RentExtension (custom event)
+period_payment → RentPeriodPayment (custom event)
 eventID: <payment id> (deduplication with the Conversions API, not an event parameter)
 Advanced Matching (separate from the parameters below, email hashed in the browser):
   em: <email>
@@ -1302,6 +1317,17 @@ Advanced Matching (separate from the parameters below, email hashed in the brows
     systemLogs: 'System logs',
     systemLogsRetentionInfo:
       'Logs older than 30 days are deleted automatically.',
+    systemAlerts: 'Alerts',
+    markAlertRead: 'Mark as read',
+    alertMarkedRead: 'Alert marked as read',
+    alertTypes: {
+      invoice_issue: 'Invoice issue',
+      payment_verify: 'Payment verification',
+    },
+    alertStatus: {
+      open: 'Open',
+      read: 'Read',
+    },
     systemLogActions: {
       addon: {
         create: 'Add-on created',
@@ -1431,6 +1457,9 @@ Advanced Matching (separate from the parameters below, email hashed in the brows
       },
       'system-notification': {
         create: 'System notification created',
+      },
+      'system-alert': {
+        read: 'Alert marked as read',
       },
       template: {
         delete: 'Template deleted',
@@ -1595,6 +1624,10 @@ Advanced Matching (separate from the parameters below, email hashed in the brows
     batteryStatus: 'Battery level',
     lockDetails: 'Details',
     passcode: 'Access code',
+    passcodeGate: 'Gate access code',
+    passcodeBoxStorage: 'Access code for the storage unit',
+    passcodeBoxLocker: 'Access code for the locker',
+    passcodeBoxParking: 'Access code for the parking space',
     lockPasscodes: 'Access codes',
     addLockPasscode: 'Add access code',
     addPasscode: 'Add access code',
@@ -1717,6 +1750,7 @@ Advanced Matching (separate from the parameters below, email hashed in the brows
       action: 'Action',
       error: 'Error',
       meta: 'Meta',
+      message: 'Message',
       ip: 'IP',
       mac: 'MAC',
       site: 'Site',
@@ -1908,6 +1942,7 @@ Advanced Matching (separate from the parameters below, email hashed in the brows
     accountRegistered: 'Account registered',
     stockDiscountCreated: 'Discount created',
     logOutSuccess: 'Logged out successfully',
+    logOutEverywhereSuccess: 'Logged out on all devices',
     discCodeCreated: 'Discount code created',
     userBlocked: 'User blocked',
     userUnblocked: 'User unblocked',

@@ -1,5 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 
+import { queryClient } from 'src/query-client';
 import ApiService from 'src/services/api-service';
 
 export const useDeleteApiAccessMutation = () =>
@@ -14,5 +15,8 @@ export const useDeleteApiAccessMutation = () =>
         undefined,
         true,
       );
+    },
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: ['api-table'] });
     },
   });

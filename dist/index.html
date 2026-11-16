@@ -83,17 +83,34 @@
         margin-bottom: 20px;
       }
     </style>
-    <script type="module" crossorigin src="/static/js/index-DkvKeVuR.js"></script>
-    <link rel="modulepreload" crossorigin href="/static/js/recharts-Dnh_r8Zi.js">
-    <link rel="modulepreload" crossorigin href="/static/js/react-id-swiper-CXiBo7Dx.js">
-    <link rel="modulepreload" crossorigin href="/static/js/react-moveable-B95zX3AV.js">
-    <link rel="stylesheet" crossorigin href="/static/css/index-XydLXEOH.css">
+    <script type="module" crossorigin src="/static/js/index-COFM8qO9.js"></script>
+    <link rel="modulepreload" crossorigin href="/static/js/react-486-rl2D.js">
+    <link rel="modulepreload" crossorigin href="/static/js/recharts-9_czrh-i.js">
+    <link rel="modulepreload" crossorigin href="/static/js/react-id-swiper-CzgcJtkk.js">
+    <link rel="modulepreload" crossorigin href="/static/js/react-moveable-Ba1VB-f5.js">
+    <link rel="stylesheet" crossorigin href="/static/css/index-BHo6EJwb.css">
   <script id="vite-plugin-pwa:register-sw" src="/registerSW.js"></script></head>
 
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
 
     <div id="root"></div>
+    <script>
+      (function () {
+        var key = 'sb-asset-reload';
+        function recover() {
+          var url = new URL(location.href);
+          if (url.searchParams.get('sb-recover') === '1') return;
+          try {
+            if (sessionStorage.getItem(key)) return;
+            sessionStorage.setItem(key, '1');
+          } catch (e) {}
+          url.searchParams.set('sb-recover', '1');
+          location.replace(url.toString());
+        }
+        window.addEventListener('vite:preloadError', recover);
+      })();
+    </script>
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.

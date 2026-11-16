@@ -210,8 +210,18 @@ const application = {
     diagnosticsBusSilent: 'Mlčí',
     diagnosticsBusUnknown: 'Nezkontrolováno',
     diagnosticsBusLastAnswered: 'Poslední odpověď',
+    diagnosticsDoors: 'Dveře schránek',
+    diagnosticsDoorName: 'Schránka',
+    diagnosticsDoorState: 'Stav',
+    diagnosticsDoorObserved: 'Odečet',
+    diagnosticsDoorUnavailable: 'Stav dveří se nepodařilo načíst',
+    diagnosticsNoDoors: 'Žádné dveřní kontakty',
+    diagnosticsOpen: 'Otevřeno',
+    diagnosticsClosed: 'Zavřeno',
+    diagnosticsUnknown: 'Neznámý',
     account: 'Účet',
     logout: 'Odhlásit se',
+    logoutEverywhere: 'Odhlásit se všude',
     home: 'Domů',
     edit: 'Upravit',
     back: 'Zpět',
@@ -293,6 +303,7 @@ const application = {
     users: 'Uživatelé',
     deleteUserText:
       'Opravdu chcete tohoto uživatele smazat? Uživatele s aktivními pronájmy nelze smazat.',
+    deleteWorkerText: 'Opravdu chcete tohoto zaměstnance smazat?',
     deleteUserByForceText:
       'Opravdu chcete tohoto uživatele smazat? Pokud má uživatel aktivní pronájmy, budou automaticky ukončeny a uživatel bude smazán.',
     tenants: 'Franšízanti',
@@ -993,9 +1004,9 @@ také analytické, propagační a reklamní nástroje pro reklamu, průzkum trhu
     tenantAnalyticsEventSignUp:
       'Registrace účtu — stránka /register (po úspěšné registraci). GTM: sign_up s user_data.email. Meta Pixel: CompleteRegistration s Advanced Matching (em — e-mail). Identifikátor uživatele se neodesílá, protože jej registrace nevrací.',
     tenantAnalyticsEventBeginCheckout:
-      'Začátek objednávky — potvrzení dat pronájmu v nové objednávce (/order/step/duration) nebo při prodlužování (/order/step/duration/:rentId). GTM: begin_checkout s user_id, user_data.email a payment_type (new_rent nebo extension). Meta Pixel: InitiateCheckout s e-mailem, external_id, contents a payment_type (Advanced Matching; value = brutto; také value_gross a value_net)',
+      'Začátek objednávky — potvrzení dat pronájmu v nové objednávce (/order/step/duration) nebo při prodlužování (/order/step/duration/:rentId). GTM: begin_checkout s user_id, user_data.email, location a payment_type (new_rent nebo extension). Meta Pixel: InitiateCheckout s e-mailem, external_id, contents a payment_type (Advanced Matching; value = brutto; také value_gross a value_net)',
     tenantAnalyticsEventPurchase:
-      'Dokončení platby — stránka výsledku platby (/payment/:id), jednou pro každé ID platby. GTM: purchase s user_id, user_data.email a payment_type (new_rent, extension, period_payment; rozšířené konverze Google Ads). Meta Pixel: Purchase s e-mailovou adresou, external_id, order_id a payment_type (Advanced Matching; value = brutto; také value_gross a value_net)',
+      'Dokončení platby — stránka výsledku platby (/payment/:id), jednou pro každé ID platby. GTM: purchase s user_id, user_data.email, location a payment_type (new_rent, extension, period_payment; rozšířené konverze Google Ads). Meta Pixel: Purchase pro new_rent, RentExtension pro extension, RentPeriodPayment pro period_payment — každé s e-mailovou adresou, external_id a order_id (Advanced Matching; value = brutto; také value_gross a value_net)',
     tenantAnalyticsReadonlyIntro:
       'Tyto události se odesílají automaticky. Kanál se použije pouze tehdy, když je pro tohoto franšízanta nastaven jeho identifikátor.',
     tenantAnalyticsAdvancedMatching:
@@ -1029,6 +1040,7 @@ Advanced Matching (odděleně od události, e-mail zahashovaný v prohlížeči)
   "user_id": "<ID uživatele>",
   "user_data": { "email": "<e-mail>" },
   "payment_type": "new_rent | extension",
+  "location": "<lokalita>",
   "value_gross": "<brutto>",
   "value_net": "<netto>",
   "ecommerce": {
@@ -1077,6 +1089,7 @@ Advanced Matching (odděleně od parametrů níže, e-mail zahashovaný v prohl�
   "user_id": "<ID uživatele>",
   "user_data": { "email": "<e-mail>" },
   "payment_type": "new_rent | extension | period_payment",
+  "location": "<lokalita>",
   "value_gross": "<brutto>",
   "value_net": "<netto>",
   "ecommerce": {
@@ -1102,7 +1115,9 @@ Advanced Matching (odděleně od parametrů níže, e-mail zahashovaný v prohl�
     ]
   }
 }`,
-    tenantAnalyticsPayloadMetaPurchase: `Purchase
+    tenantAnalyticsPayloadMetaPurchase: `new_rent → Purchase
+extension → RentExtension (vlastní událost)
+period_payment → RentPeriodPayment (vlastní událost)
 eventID: <ID platby> (deduplikace s Conversions API, není parametr události)
 Advanced Matching (odděleně od parametrů níže, e-mail zahashovaný v prohlížeči):
   em: <e-mail>
@@ -1306,6 +1321,17 @@ Advanced Matching (odděleně od parametrů níže, e-mail zahashovaný v prohl�
     systemLogs: 'Systémové protokoly',
     systemLogsRetentionInfo:
       'Protokoly starší než 30 dnů se mažou automaticky.',
+    systemAlerts: 'Výstrahy',
+    markAlertRead: 'Označit jako přečtené',
+    alertMarkedRead: 'Výstraha označena jako přečtená',
+    alertTypes: {
+      invoice_issue: 'Chyba faktury',
+      payment_verify: 'Ověření platby',
+    },
+    alertStatus: {
+      open: 'Otevřená',
+      read: 'Přečtená',
+    },
     systemLogActions: {
       addon: {
         create: 'Doplněk vytvořen',
@@ -1435,6 +1461,9 @@ Advanced Matching (odděleně od parametrů níže, e-mail zahashovaný v prohl�
       },
       'system-notification': {
         create: 'Systémové oznámení vytvořeno',
+      },
+      'system-alert': {
+        read: 'Výstraha označena jako přečtená',
       },
       template: {
         delete: 'Šablona smazána',
@@ -1598,6 +1627,10 @@ Advanced Matching (odděleně od parametrů níže, e-mail zahashovaný v prohl�
     batteryStatus: 'Úroveň baterie',
     lockDetails: 'Podrobnosti',
     passcode: 'Přístupový kód',
+    passcodeGate: 'Přístupový kód k bráně',
+    passcodeBoxStorage: 'Přístupový kód k miniskladu',
+    passcodeBoxLocker: 'Přístupový kód ke schránce',
+    passcodeBoxParking: 'Přístupový kód k parkovacímu místu',
     lockPasscodes: 'Přístupové kódy',
     addLockPasscode: 'Přidat přístupový kód',
     addPasscode: 'Přidat přístupový kód',
@@ -1720,6 +1753,7 @@ Advanced Matching (odděleně od parametrů níže, e-mail zahashovaný v prohl�
       action: 'Akce',
       error: 'Chyba',
       meta: 'Meta',
+      message: 'Zpráva',
       ip: 'IP',
       mac: 'MAC',
       site: 'Skladovací areál',
@@ -1910,6 +1944,7 @@ Advanced Matching (odděleně od parametrů níže, e-mail zahashovaný v prohl�
     accountRegistered: 'Účet zaregistrován',
     stockDiscountCreated: 'Sleva vytvořena',
     logOutSuccess: 'Úspěšně odhlášeno',
+    logOutEverywhereSuccess: 'Odhlášeno na všech zařízeních',
     discCodeCreated: 'Slevový kód vytvořen',
     userBlocked: 'Uživatel zablokován',
     userUnblocked: 'Uživatel odblokován',

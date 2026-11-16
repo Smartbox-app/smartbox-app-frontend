@@ -4,6 +4,8 @@ import { useDispatch } from 'react-redux';
 import { UserStatus } from 'smartbox-types';
 import { refreshApiTableData } from 'src/actions/api-table';
 import { successNotification } from 'src/actions/notifications';
+import { userDetailsQueryKey } from 'src/queries';
+import { queryClient } from 'src/query-client';
 import ApiService from 'src/services/api-service';
 
 export type SetUserStatusAction = 'active' | 'blocked';
@@ -45,6 +47,9 @@ export const useSetUserStatusMutation = (
         ),
       );
       dispatch(refreshApiTableData());
+      void queryClient.invalidateQueries({
+        queryKey: userDetailsQueryKey(variables.userId),
+      });
       options?.onSuccess?.();
     },
   });

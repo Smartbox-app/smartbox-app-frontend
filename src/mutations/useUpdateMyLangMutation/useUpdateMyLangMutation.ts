@@ -1,6 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 
 import type { AppLanguage } from 'src/i18n/app-language';
+import { queryClient } from 'src/query-client';
 import ApiService from 'src/services/api-service';
 import SessionService from 'src/services/session-service';
 
@@ -16,6 +17,9 @@ export const useUpdateMyLangMutation = () => {
         true,
       );
       SessionService.setCurrentLanguage(lang);
+    },
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: ['my-details'] });
     },
   });
 };

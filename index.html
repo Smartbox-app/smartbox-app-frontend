@@ -89,6 +89,22 @@
     <noscript>You need to enable JavaScript to run this app.</noscript>
 
     <div id="root"></div>
+    <script>
+      (function () {
+        var key = 'sb-asset-reload';
+        function recover() {
+          var url = new URL(location.href);
+          if (url.searchParams.get('sb-recover') === '1') return;
+          try {
+            if (sessionStorage.getItem(key)) return;
+            sessionStorage.setItem(key, '1');
+          } catch (e) {}
+          url.searchParams.set('sb-recover', '1');
+          location.replace(url.toString());
+        }
+        window.addEventListener('vite:preloadError', recover);
+      })();
+    </script>
     <script type="module" src="/src/index.tsx"></script>
     <!--
       This HTML file is a template.

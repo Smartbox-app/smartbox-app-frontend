@@ -111,6 +111,8 @@ const Register = () => {
               <RegisterForm>
                 <Input
                   label="auth.email"
+                  type="email"
+                  autoComplete="username"
                   placeholder="auth.email_placeholder"
                   error={errors['email']?.message}
                   required
@@ -141,6 +143,7 @@ const Register = () => {
                 <Input
                   label="auth.password"
                   type="password"
+                  autoComplete="new-password"
                   placeholder="auth.password_placeholder"
                   error={errors['pwd']?.message}
                   required
@@ -149,6 +152,7 @@ const Register = () => {
                 <Input
                   label="auth.password_confirmation"
                   type="password"
+                  autoComplete="new-password"
                   placeholder="auth.password_placeholder"
                   error={errors['pwd2']?.message}
                   required

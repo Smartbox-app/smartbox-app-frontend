@@ -27,16 +27,18 @@ export const useBridgeCalculatedPriceToRedux = (
 };
 
 export const useBridgeAddonsToRedux = (
-  query: Pick<UseQueryResult<AddonRes[]>, 'data' | 'isFetching'>,
+  query: Pick<UseQueryResult<AddonRes[]>, 'data' | 'isLoading'>,
 ) => {
   const dispatch = useDispatch();
 
+  // isLoading, not isFetching: a window-focus refetch (mobile file picker
+  // closing) must not unmount the addon form and drop the chosen file.
   useEffect(() => {
     dispatch({
       type: 'LOADING_ADDONS',
-      payload: query.isFetching,
+      payload: query.isLoading,
     });
-  }, [dispatch, query.isFetching]);
+  }, [dispatch, query.isLoading]);
 
   useEffect(() => {
     if (query.data) {

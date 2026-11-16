@@ -1,5 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 
+import { queryClient } from 'src/query-client';
 import ApiService from 'src/services/api-service';
 
 export const useRevokeRentAuthorizationByStaffMutation = () =>
@@ -14,5 +15,9 @@ export const useRevokeRentAuthorizationByStaffMutation = () =>
         undefined,
         true,
       );
+    },
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: ['api-table'] });
+      void queryClient.invalidateQueries({ queryKey: ['rent-authorized-users'] });
     },
   });

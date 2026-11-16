@@ -72,5 +72,6 @@ export const buildInitiateCheckoutPayload = (
     num_items: items.length,
     payment_type: context.paymentType,
     items,
+    location: context.stockName || undefined,
   };
 };

@@ -1,6 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 
 import { ApiAccessRes, UpdateApiAccessReq } from 'smartbox-types';
+import { queryClient } from 'src/query-client';
 import ApiService from 'src/services/api-service';
 
 export const useUpdateApiAccessMutation = () =>
@@ -23,5 +24,8 @@ export const useUpdateApiAccessMutation = () =>
       );
 
       return response;
+    },
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: ['api-table'] });
     },
   });

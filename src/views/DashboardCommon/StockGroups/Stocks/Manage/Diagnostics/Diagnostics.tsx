@@ -10,6 +10,7 @@ import {
   useLocationDiagnosticsQuery,
 } from 'src/queries';
 import { AlarmsDiagnostics } from './AlarmsDiagnostics';
+import { DoorsDiagnostics } from './DoorsDiagnostics';
 import { GatesDiagnostics } from './GatesDiagnostics';
 import { InternetDiagnostics } from './InternetDiagnostics';
 
@@ -35,18 +36,29 @@ export const Diagnostics = () => {
 
   const gates = gatesQuery.data ?? [];
   const alarms = alarmsQuery.data ?? [];
-  const internet = internetQuery.data ?? null;
+  const diagnostics = internetQuery.data ?? null;
+  const openById = Object.fromEntries(
+    (diagnostics?.gates ?? []).map((gate) => [gate.id, gate.isOpen]),
+  );
 
-  const hasAny = Boolean(internet) || gates.length > 0 || alarms.length > 0;
+  const hasAny =
+    Boolean(diagnostics) || gates.length > 0 || alarms.length > 0;
 
   return (
     <Section>
       <Stack>
         <Header variant="h2">{__('application.diagnostics')}</Header>
         {!hasAny ? <Empty>{__('application.diagnosticsEmpty')}</Empty> : null}
-        <GatesDiagnostics gates={gates} />
-        {internet ? <InternetDiagnostics internet={internet} /> : null}
-       
+        <GatesDiagnostics gates={gates} openById={openById} />
+        {diagnostics ? (
+          <DoorsDiagnostics
+            doors={diagnostics.doors}
+            syncedAt={diagnostics.doorsSyncedAt}
+          />
+        ) : null}
+        {diagnostics?.wan && diagnostics.status ? (
+          <InternetDiagnostics internet={diagnostics} />
+        ) : null}
         <AlarmsDiagnostics alarms={alarms} />
       </Stack>
     </Section>

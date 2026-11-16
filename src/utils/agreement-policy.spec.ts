@@ -1,8 +1,14 @@
-import { RentAgreementType, StockAgreementType } from 'smartbox-types';
+import {
+  RentAgreementType,
+  RentPaymentType,
+  StockAgreementType,
+  StockPaymentType,
+} from 'smartbox-types';
 import {
   allowsFixedTerm,
   allowsOpenEnded,
   resolveCheckoutAgreementType,
+  resolveCheckoutPaymentType,
 } from 'src/utils/agreement-policy';
 
 describe('agreement policy', () => {
@@ -42,5 +48,29 @@ describe('agreement policy', () => {
     expect(resolveCheckoutAgreementType(StockAgreementType.Both, null)).toBe(
       RentAgreementType.FixedTerm,
     );
+  });
+
+  it('drops installments on a dated contract when the stock is upfront only', () => {
+    expect(
+      resolveCheckoutPaymentType(
+        StockPaymentType.InAdvance,
+        RentPaymentType.Installments,
+        false,
+      ),
+    ).toBe(RentPaymentType.InAdvance);
+    expect(
+      resolveCheckoutPaymentType(
+        StockPaymentType.InAdvance,
+        RentPaymentType.Installments,
+        true,
+      ),
+    ).toBe(RentPaymentType.Installments);
+    expect(
+      resolveCheckoutPaymentType(
+        StockPaymentType.Both,
+        RentPaymentType.Installments,
+        false,
+      ),
+    ).toBe(RentPaymentType.Installments);
   });
 });

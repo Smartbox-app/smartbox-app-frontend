@@ -108,6 +108,13 @@ export const RentHistory = ({
             periods,
           );
 
+          const selectedAddons = (line.addons ?? []).filter(
+            (addon) =>
+              addon.selectedVariantId ||
+              addon.selectedVariantName ||
+              addon.file,
+          );
+
           return (
             <StyledSinglePeriod key={index}>
               <StyledPeriodHeader>
@@ -140,13 +147,13 @@ export const RentHistory = ({
                 </p>
               )}
 
-              {line.addons && line.addons.length > 0 ? (
+              {selectedAddons.length > 0 ? (
                 <div>
                   <StyledSubHeader>
                     {__('application.selectedAddons')}
                   </StyledSubHeader>
                   <ul>
-                    {line.addons.map((addon) => (
+                    {selectedAddons.map((addon) => (
                       <StyledSingleAddon key={addon.id}>
                         <div>
                           <strong>{addon.name}</strong>

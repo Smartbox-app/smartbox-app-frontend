@@ -87,6 +87,7 @@ export const Addons = ({ stockId, boxGroupId }: Props) => {
 
   useEffect(() => {
     addons.forEach((addon) => {
+      if (orderAddons[addon.id]?.selectedVariant) return;
       const defaultVariant = addon.pricing.find((variant) => variant.default);
       if (defaultVariant) {
         selectVariant(addon.id, defaultVariant.id, defaultVariant.name);

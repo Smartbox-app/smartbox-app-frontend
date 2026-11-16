@@ -1,6 +1,9 @@
 import { BoxGroupType } from 'smartbox-types';
 import { i18next, t } from 'src/i18n/i18n';
-import { getBoxGroupTypeLabel } from 'src/utils/box-group-labels';
+import {
+  getBoxGroupTypeLabel,
+  getBoxPasscodeLabel,
+} from 'src/utils/box-group-labels';
 
 describe('tenant naming', () => {
   afterEach(async () => {
@@ -29,6 +32,39 @@ describe('tenant naming', () => {
       );
     },
   );
+});
+
+describe('box passcode labels', () => {
+  afterEach(async () => {
+    await i18next.changeLanguage('pl');
+  });
+
+  it.each(['pl', 'en', 'cz', 'ua', 'de'])(
+    'uses a different label per group type in %s',
+    async (language) => {
+      await i18next.changeLanguage(language);
+      const labels = [
+        getBoxPasscodeLabel(BoxGroupType.storage),
+        getBoxPasscodeLabel(BoxGroupType.locker),
+        getBoxPasscodeLabel(BoxGroupType.parking),
+      ];
+      expect(new Set(labels).size).toBe(3);
+      labels.forEach((label) => expect(label).not.toMatch(/^application\./));
+    },
+  );
+
+  it('uses the genitive after "do" in Polish', async () => {
+    expect(getBoxPasscodeLabel(BoxGroupType.storage)).toBe(
+      'Kod dostępu do minimagazynu',
+    );
+    expect(getBoxPasscodeLabel(BoxGroupType.locker)).toBe(
+      'Kod dostępu do skrytki',
+    );
+    expect(getBoxPasscodeLabel(BoxGroupType.parking)).toBe(
+      'Kod dostępu do miejsca parkingowego',
+    );
+    expect(t('application.passcodeGate')).toBe('Kod dostępu do bramy');
+  });
 });
 
 describe('box group type labels', () => {

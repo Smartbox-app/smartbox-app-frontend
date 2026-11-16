@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { myRentDetailsQueryKey } from 'src/queries';
+import { myRentDetailsQueryKey, rentDetailsQueryKey } from 'src/queries';
 import ApiService from 'src/services/api-service';
 import { getEndRentSource } from 'src/utils/can-capture-end-rent-photo';
 
@@ -41,8 +41,14 @@ export const useEndMyRentMutation = () => {
     onSuccess: (_data, { rentId }) => {
       queryClient.invalidateQueries({ queryKey: ['my-rents'] });
       queryClient.invalidateQueries({ queryKey: ['my-rent-story'] });
+      queryClient.invalidateQueries({ queryKey: ['my-authorized-rents'] });
+      queryClient.invalidateQueries({ queryKey: ['api-table'] });
+      queryClient.invalidateQueries({ queryKey: ['stock'] });
       queryClient.invalidateQueries({
         queryKey: myRentDetailsQueryKey(rentId),
+      });
+      queryClient.invalidateQueries({
+        queryKey: rentDetailsQueryKey(rentId),
       });
       queryClient.invalidateQueries({
         queryKey: ['rent-authorized-users', rentId],

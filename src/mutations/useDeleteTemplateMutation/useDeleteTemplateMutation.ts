@@ -1,6 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { templateListQueryKey } from 'src/queries';
 import ApiService from 'src/services/api-service';
 
 export type DeleteTemplateVariables = {
@@ -11,13 +10,8 @@ export type DeleteTemplateVariables = {
 export const useDeleteTemplateMutation = () => {
   const queryClient = useQueryClient();
 
-  const handleSuccess = (
-    _data: unknown,
-    { tenantId }: DeleteTemplateVariables,
-  ) => {
-    queryClient.invalidateQueries({
-      queryKey: templateListQueryKey(tenantId),
-    });
+  const handleSuccess = () => {
+    queryClient.invalidateQueries({ queryKey: ['templates'] });
   };
 
   return useMutation({

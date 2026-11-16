@@ -2,7 +2,9 @@ import { isAfter } from 'date-fns';
 import React, { useMemo } from 'react';
 import { useParams, Redirect } from 'react-router-dom';
 import styled from 'styled-components';
+import { BoxGroupType } from 'smartbox-types';
 import { Description } from './RentDescription';
+import { getBoxPasscodeLabel } from 'src/utils/box-group-labels';
 import {
   canDisplayRentAccess,
   canUseRentAccessActions,
@@ -27,6 +29,12 @@ const StyledGatesHeader = styled.div`
   font-weight: 700;
   margin: 0;
 `;
+
+const BOX_ICONS: Record<BoxGroupType, string> = {
+  [BoxGroupType.storage]: 'fa-cube',
+  [BoxGroupType.locker]: 'fa-archive',
+  [BoxGroupType.parking]: 'fa-car',
+};
 
 const StyledBoxContainer = styled.div`
   border-left: 4px solid ${({ theme }) => theme.colors.primary};
@@ -99,12 +107,6 @@ const SingleRentDetail = () => {
       {displayAccess ? (
         <Section>
           <Header variant="h2">{__('application.access')}</Header>
-          {singleRent.passcode ? (
-            <div>
-              <Header variant="h3">{__('application.passcode')}</Header>
-              <strong>{singleRent.passcode}</strong>
-            </div>
-          ) : null}
           {singleRent.gates && singleRent.gates.length > 0 && (
             <StyledGatesHeader>{__('application.gates')}</StyledGatesHeader>
           )}
@@ -115,15 +117,29 @@ const SingleRentDetail = () => {
               disabled={!accessActionsEnabled}
             />
           ))}
-          {singleRent.controlled && (
+          {(singleRent.controlled || singleRent.passcode) && (
             <>
               <StyledGatesHeader>{getText('box')}</StyledGatesHeader>
               <StyledBoxContainer>
-                <h4>{singleRent.number}</h4>
-                <OpenBox
-                  id={singleRent.boxId}
-                  disabled={!accessActionsEnabled}
-                />
+                <h4>
+                  <span
+                    className={`fa ${BOX_ICONS[singleRent.boxGroupType] ?? 'fa-cube'}`}
+                  />{' '}
+                  {singleRent.number}
+                </h4>
+                {singleRent.passcode ? (
+                  <p>
+                    <span className="fa fa-lock" />{' '}
+                    {getBoxPasscodeLabel(singleRent.boxGroupType)}:{' '}
+                    <strong>{singleRent.passcode}</strong>
+                  </p>
+                ) : null}
+                {singleRent.controlled ? (
+                  <OpenBox
+                    id={singleRent.boxId}
+                    disabled={!accessActionsEnabled}
+                  />
+                ) : null}
               </StyledBoxContainer>
             </>
           )}

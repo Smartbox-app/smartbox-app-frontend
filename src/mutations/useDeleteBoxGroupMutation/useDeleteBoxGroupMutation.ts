@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 
 import { refreshApiTableData } from 'src/actions/api-table';
 import { successNotification } from 'src/actions/notifications';
+import { queryClient } from 'src/query-client';
 import ApiService from 'src/services/api-service';
 
 export const useDeleteBoxGroupMutation = () => {
@@ -16,6 +17,7 @@ export const useDeleteBoxGroupMutation = () => {
     onSuccess: () => {
       dispatch(successNotification('application.boxGroupDeleted'));
       dispatch(refreshApiTableData());
+      void queryClient.invalidateQueries({ queryKey: ['box-group-new'] });
     },
   });
 };

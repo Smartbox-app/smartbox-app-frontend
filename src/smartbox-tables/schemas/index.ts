@@ -29,6 +29,7 @@ export * from 'src/smartbox-tables/schemas/company-list-admin.table';
 export * from 'src/smartbox-tables/schemas/document-list-client.table';
 export * from 'src/smartbox-tables/schemas/document-list-admin.table';
 export * from 'src/smartbox-tables/schemas/system-log.table';
+export * from 'src/smartbox-tables/schemas/system-alert.table';
 export * from 'src/smartbox-tables/schemas/system-log-admin.table';
 export * from 'src/smartbox-tables/schemas/location-activity-list.table';
 export * from 'src/smartbox-tables/schemas/payments-list-client.table';

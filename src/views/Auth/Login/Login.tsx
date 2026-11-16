@@ -119,6 +119,8 @@ export const Login = () => {
             <Section>
               <Input
                 label="auth.email"
+                type="email"
+                autoComplete="username"
                 placeholder="auth.email_placeholder"
                 error={errors['email']?.message}
                 {...register('email')}
@@ -126,6 +128,7 @@ export const Login = () => {
               <Input
                 label="auth.password"
                 type="password"
+                autoComplete="current-password"
                 placeholder="auth.password_placeholder"
                 error={errors['pwd']?.message}
                 {...register('pwd')}

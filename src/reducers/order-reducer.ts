@@ -571,11 +571,13 @@ export default (
       const orderAddons: { [addonId: string]: OrderAddon } = {};
 
       action.payload.forEach((addon) => {
+        const previous = state.orderAddons[addon.id];
         const acceptanceStatuses: AcceptanceStatuses = {};
 
         addon.acceptances.forEach((acceptance) => {
           acceptanceStatuses[acceptance.id] = {
-            accepted: false,
+            accepted:
+              previous?.acceptancesStatus[acceptance.id]?.accepted ?? false,
           };
         });
 
@@ -589,10 +591,10 @@ export default (
           userFileAllowed: addon.userFileAllowed,
           noPricing: addon.noPricing,
           userFileRequirement: addon.userFileRequirement,
-          selectedVariant: null,
-          selectedVariantName: null,
-          price: null,
-          file: null,
+          selectedVariant: previous?.selectedVariant ?? null,
+          selectedVariantName: previous?.selectedVariantName ?? null,
+          price: previous?.price ?? null,
+          file: previous?.file ?? null,
         };
       });
       return {

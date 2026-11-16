@@ -13,6 +13,7 @@ import { DocumentsManagement } from '../../DashboardCommon/DocumentManagement';
 import { InvitesSent } from '../../DashboardCommon/InvitesSent';
 import SMS from '../../DashboardCommon/SMS';
 import { SystemLogManagement } from '../../DashboardCommon/SystemLogManagement';
+import SystemAlertManagement from '../../DashboardCommon/SystemAlertManagement';
 import SystemNotificationManagement from '../../DashboardCommon/SystemNotificationManagement';
 import UsersManagement from '../../DashboardCommon/UsersManagement';
 import WorkersManagement from '../../DashboardCommon/WorkersManagement';
@@ -72,6 +73,10 @@ const Management = () => {
       <Route
         path={`/${UserService.getSlugByRole(user.role)}/management/system-logs`}
         component={SystemLogManagement}
+      />
+      <Route
+        path={`/${UserService.getSlugByRole(user.role)}/management/system-alerts`}
+        component={SystemAlertManagement}
       />
       <Route
         path={`/${UserService.getSlugByRole(user.role)}/management/documents`}

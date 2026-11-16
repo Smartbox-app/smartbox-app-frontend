@@ -1,5 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 
+import { queryClient } from 'src/query-client';
 import ApiService from 'src/services/api-service';
 
 type CreateStaffRentAuthorizationReq = {
@@ -20,5 +21,11 @@ export const useStaffCreateRentAuthorizationMutation = () =>
         body,
         true,
       );
+    },
+    onSuccess: (_data, { rentId }) => {
+      void queryClient.invalidateQueries({ queryKey: ['api-table'] });
+      void queryClient.invalidateQueries({
+        queryKey: ['rent-authorized-users', rentId],
+      });
     },
   });

@@ -14,9 +14,16 @@ import {
 
 type GatesDiagnosticsProps = {
   gates: GatesStatusForAdminRes;
+  openById?: Record<string, boolean | null>;
 };
 
-export const GatesDiagnostics = ({ gates }: GatesDiagnosticsProps) => {
+const gateOpenText = (isOpen: boolean | null) => {
+  if (isOpen === true) return __('application.diagnosticsOpen');
+  if (isOpen === false) return __('application.diagnosticsClosed');
+  return __('application.diagnosticsUnknown');
+};
+
+export const GatesDiagnostics = ({ gates, openById }: GatesDiagnosticsProps) => {
   if (!gates.length) return null;
 
   return (
@@ -39,6 +46,12 @@ export const GatesDiagnostics = ({ gates }: GatesDiagnosticsProps) => {
                 {__('application.lastConnection')}:{' '}
                 {fullDate(gate.lastConnection)}
               </div>
+              {openById && gate.id in openById ? (
+                <div>
+                  {__('application.diagnosticsDoorState')}:{' '}
+                  {gateOpenText(openById[gate.id])}
+                </div>
+              ) : null}
               <div>{getHealthText(gate.status)}</div>
             </DiagnosticsStatusCard>
           ))}

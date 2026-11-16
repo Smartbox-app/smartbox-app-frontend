@@ -2,6 +2,7 @@ import { useMutation } from '@tanstack/react-query';
 
 import { DocumentRes } from 'smartbox-types';
 import { DocumentDto } from 'src/dto/DocumentDto';
+import { queryClient } from 'src/query-client';
 import ApiService from 'src/services/api-service';
 
 export const useSaveDocumentDraftMutation = (id: string) => {
@@ -18,6 +19,10 @@ export const useSaveDocumentDraftMutation = (id: string) => {
       );
 
       return response;
+    },
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: ['document'] });
+      void queryClient.invalidateQueries({ queryKey: ['api-table'] });
     },
   });
 };

@@ -71,6 +71,7 @@ describe('buildInitiateCheckoutPayload', () => {
       content_ids: ['bg-1', 'insurance'],
       num_items: 2,
       payment_type: 'extension',
+      location: 'Centrum',
     });
     expect(payload?.contents).toEqual([
       { id: 'bg-1', quantity: 1, item_price: 100 },

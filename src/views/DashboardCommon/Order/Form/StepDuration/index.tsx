@@ -9,7 +9,6 @@ import {
   RentAgreementType,
   RentPaymentType,
   StockAgreementType,
-  StockPaymentType,
 } from 'smartbox-types';
 import {
   clearPaymentDetails,
@@ -37,7 +36,10 @@ import { useBoxGroupPriceQuery } from 'src/queries/useRentPriceQueries';
 import { ApplicationState } from 'src/reducers';
 import { ClassValidatorResolver } from 'src/resolvers/ClassValidatorResolver';
 import UserService from 'src/services/user-service';
-import { resolveCheckoutAgreementType } from 'src/utils/agreement-policy';
+import {
+  resolveCheckoutAgreementType,
+  resolveCheckoutPaymentType,
+} from 'src/utils/agreement-policy';
 import { buildInitiateCheckoutPayload } from 'src/utils/build-initiate-checkout-payload';
 import {
   clampedFixedTermEndDate,
@@ -211,30 +213,15 @@ const StepDuration = () => {
 
     dispatch(setMinDaysForInstallments(stock.minRentDaysForInstallments));
 
-    if (isOpenEnded) {
-      if (rentPaymentType !== RentPaymentType.Installments) {
-        dispatch(setRentPaymentType(RentPaymentType.Installments));
-      }
-      return;
+    const nextPaymentType = resolveCheckoutPaymentType(
+      paymentMethods || stock.clientPaymentTypeConfig,
+      rentPaymentType,
+      isOpenEnded,
+    );
+    if (rentPaymentType !== nextPaymentType) {
+      dispatch(setRentPaymentType(nextPaymentType));
     }
-
-    if (rentPaymentType) return;
-
-    switch (paymentMethods || stock.clientPaymentTypeConfig) {
-      case StockPaymentType.InAdvance: {
-        dispatch(setRentPaymentType(RentPaymentType.InAdvance));
-        break;
-      }
-      case StockPaymentType.Installments: {
-        dispatch(setRentPaymentType(RentPaymentType.Installments));
-        break;
-      }
-      default: {
-        dispatch(setRentPaymentType(RentPaymentType.InAdvance));
-        break;
-      }
-    }
-  }, [stock, isOpenEnded, paymentMethods]);
+  }, [stock, isOpenEnded, paymentMethods, rentPaymentType]);
 
   const setMinDate = (addAmount = 0, end?: boolean) => {
     return addDays(end ? startDate : startOfToday(), addAmount);

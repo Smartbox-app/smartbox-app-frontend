@@ -26,6 +26,7 @@ export * from 'src/smartbox-types/mobile-config';
 export * from 'src/smartbox-types/documents';
 export * from 'src/smartbox-types/company';
 export * from 'src/smartbox-types/system-log';
+export * from 'src/smartbox-types/system-alert';
 export * from 'src/smartbox-types/api-access';
 export * from 'src/smartbox-types/constants';
 export * from 'src/smartbox-types/i18n';

@@ -32,7 +32,10 @@ const MetaItem = styled.div({
   },
 });
 
-export const InternetDiagnostics = ({ internet }: InternetDiagnosticsProps) => (
+export const InternetDiagnostics = ({ internet }: InternetDiagnosticsProps) => {
+  if (!internet.wan || !internet.status) return null;
+
+  return (
   <Section variant="bordered">
     <Stack>
       <Header variant="h3">{__('application.diagnosticsInternet')}</Header>
@@ -62,4 +65,5 @@ export const InternetDiagnostics = ({ internet }: InternetDiagnosticsProps) => (
       {internet.bus?.length ? <BusDevicesTable devices={internet.bus} /> : null}
     </Stack>
   </Section>
-);
+  );
+};

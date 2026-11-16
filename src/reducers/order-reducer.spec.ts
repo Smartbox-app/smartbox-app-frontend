@@ -45,6 +45,40 @@ describe('order reducer', () => {
     });
   });
 
+  it('keeps the chosen file and variant when addons are fetched again', () => {
+    const loaded = orderReducer(undefined, {
+      type: 'FETCH_ADDONS_SUCCESS',
+      payload: [addon({ id: 'lock', userFileAllowed: true })],
+    });
+    const selected = orderReducer(loaded, {
+      type: 'SELECT_ADDON',
+      payload: { addonId: 'lock', variantId: 'v1', variantName: 'Standard' },
+    });
+    const file = new File(['photo'], 'photo.jpg');
+    const withFile = orderReducer(selected, {
+      type: 'SET_ADDON_FILE',
+      payload: { addonId: 'lock', file },
+    });
+    const accepted = orderReducer(withFile, {
+      type: 'SET_ADDON_ACCEPTANCE',
+      payload: { addonId: 'lock', acceptanceId: 'acc-1', checked: true },
+    });
+
+    const refetched = orderReducer(accepted, {
+      type: 'FETCH_ADDONS_SUCCESS',
+      payload: [addon({ id: 'lock', name: 'Padlock plus', userFileAllowed: true })],
+    });
+
+    expect(refetched.orderAddons.lock).toMatchObject({
+      name: 'Padlock plus',
+      selectedVariant: 'v1',
+      selectedVariantName: 'Standard',
+      file,
+      acceptancesStatus: { 'acc-1': { accepted: true } },
+    });
+    expect(refetched.orderAddons.optional).toBeUndefined();
+  });
+
   it('stores a variant price only when that variant is still selected', () => {
     const withAddons = orderReducer(undefined, {
       type: 'FETCH_ADDONS_SUCCESS',

@@ -10,6 +10,7 @@ import {
   Section,
   SectionHeader,
 } from 'src/components/Layout';
+import { useLogoutMutation } from 'src/mutations';
 import { useGetMyDetailsQuery } from 'src/queries';
 import { DeleteAccountConfirmation } from '../../../views/DashboardCommon/Profile/Detail/DeleteAccountConfirmation/DeleteAccountConfirmation';
 import UpdatePass from '../../../views/DashboardCommon/Profile/Detail/UpdatePass';
@@ -17,6 +18,7 @@ import UpdatePass from '../../../views/DashboardCommon/Profile/Detail/UpdatePass
 const UserData = () => {
   const { data: user } = useGetMyDetailsQuery();
   const dispatch = useDispatch();
+  const { mutate: logoutEverywhere } = useLogoutMutation();
   if (!user) return null;
   const { role } = user;
   return (
@@ -31,6 +33,10 @@ const UserData = () => {
             text="application.changPassword"
             primary
             click={() => dispatch(showModal(<UpdatePass />))}
+          />
+          <Button
+            text="application.logoutEverywhere"
+            click={() => logoutEverywhere(true)}
           />
           <Button
             text="application.deleteAccount"

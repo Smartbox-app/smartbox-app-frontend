@@ -60,7 +60,7 @@ const List = () => {
       showModal(
         <ConfirmModal
           approveButtonText="application.delete"
-          mainText="application.deleteUserText"
+          mainText="application.deleteUserByForceText"
           approveAction={() => deleteUserByForce(userId)}
         />,
       ),

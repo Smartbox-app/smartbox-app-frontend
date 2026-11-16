@@ -1,6 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 
 import type { InviteUsersRes, Language, UserRole } from 'smartbox-types';
+import { queryClient } from 'src/query-client';
 import ApiService from 'src/services/api-service';
 
 type InviteWorkerReq = {
@@ -25,5 +26,8 @@ export const useInviteUsersMutation = () =>
       );
 
       return response ?? { invited: [], failed: [] };
+    },
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: ['api-table'] });
     },
   });

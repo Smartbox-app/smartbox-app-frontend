@@ -25,10 +25,7 @@ import { useGetVersionQuery, useGetMyDetailsQuery } from 'src/queries';
 import { queryClient } from 'src/query-client';
 import SessionService from 'src/services/session-service';
 import { withAttributionSearch } from 'src/utils/attribution-params';
-import {
-  clearPreloadReloadFlag,
-  reloadWithoutServiceWorker,
-} from 'src/utils/reload-without-service-worker';
+import { reloadWithoutServiceWorker } from 'src/utils/reload-without-service-worker';
 import { scrollTop } from 'src/utils/scroll-top';
 
 interface Props {
@@ -61,10 +58,7 @@ const AppWrapper = ({ children }: Props) => {
     if (!latestVersion) return;
 
     const currentVersion = localStorage.getItem('v');
-    if (currentVersion === latestVersion) {
-      clearPreloadReloadFlag();
-      return;
-    }
+    if (currentVersion === latestVersion) return;
     if (versionReloadTriggeredRef.current) return;
 
     versionReloadTriggeredRef.current = true;

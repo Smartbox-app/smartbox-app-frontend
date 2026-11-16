@@ -30,11 +30,3 @@ export const beginPreloadReload = (): boolean => {
     return false;
   }
 };
-
-export const clearPreloadReloadFlag = () => {
-  try {
-    sessionStorage.removeItem(PRELOAD_RELOAD_KEY);
-  } catch {
-    // sessionStorage can throw when storage is blocked
-  }
-};

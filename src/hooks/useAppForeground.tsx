@@ -48,24 +48,32 @@ export function useAppForeground(
       });
     }
 
-    // 🌍 Web / PWA lifecycle
+    // Focus is omitted: it also fires when devtools takes focus and was
+    // starting a second fetch on top of the visibility refetch.
     const onVisibilityChange = () => {
       if (!document.hidden) run();
     };
 
-    const onFocus = () => run();
-
     document.addEventListener('visibilitychange', onVisibilityChange);
-    window.addEventListener('focus', onFocus);
 
     return () => {
       capListener?.remove();
       document.removeEventListener('visibilitychange', onVisibilityChange);
-      window.removeEventListener('focus', onFocus);
     };
   };
 
   useEffect(() => {
-    setUpListener();
+    let remove = () => {};
+    let disposed = false;
+
+    void setUpListener().then((cleanup) => {
+      if (disposed) cleanup();
+      else remove = cleanup;
+    });
+
+    return () => {
+      disposed = true;
+      remove();
+    };
   }, []);
 }

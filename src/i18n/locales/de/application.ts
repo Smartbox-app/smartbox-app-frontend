@@ -211,8 +211,18 @@ const application = {
     diagnosticsBusSilent: 'Still',
     diagnosticsBusUnknown: 'Nicht geprüft',
     diagnosticsBusLastAnswered: 'Zuletzt geantwortet',
+    diagnosticsDoors: 'Boxentüren',
+    diagnosticsDoorName: 'Box',
+    diagnosticsDoorState: 'Status',
+    diagnosticsDoorObserved: 'Gelesen um',
+    diagnosticsDoorUnavailable: 'Türstatus konnte nicht gelesen werden',
+    diagnosticsNoDoors: 'Keine Türkontakte gemeldet',
+    diagnosticsOpen: 'Offen',
+    diagnosticsClosed: 'Geschlossen',
+    diagnosticsUnknown: 'Unbekannt',
     account: 'Konto',
     logout: 'Abmelden',
+    logoutEverywhere: 'Überall abmelden',
     home: 'Start',
     edit: 'Bearbeiten',
     back: 'Zurück',
@@ -296,6 +306,7 @@ const application = {
     users: 'Benutzer',
     deleteUserText:
       'Möchten Sie diesen Benutzer wirklich löschen? Ein Benutzer mit aktiven Mieten kann nicht gelöscht werden.',
+    deleteWorkerText: 'Möchten Sie diesen Mitarbeiter wirklich löschen?',
     deleteUserByForceText:
       'Möchten Sie diesen Benutzer wirklich löschen? Wenn der Benutzer aktive Mieten hat, werden diese automatisch beendet und der Benutzer wird gelöscht.',
     tenants: 'Franchisenehmer',
@@ -1015,9 +1026,9 @@ auch Analyse-, Aktions- und Werbetools für Werbung, Marktforschung und die Unte
     tenantAnalyticsEventSignUp:
       'Kontoregistrierung — die Seite /register (nach einer erfolgreichen Registrierung). GTM: sign_up mit user_data.email. Meta Pixel: CompleteRegistration mit Advanced Matching (em — E-Mail). Die Benutzerkennung wird nicht gesendet, weil die Registrierung sie nicht zurückgibt.',
     tenantAnalyticsEventBeginCheckout:
-      'Beginn einer Bestellung — Bestätigung der Mietdaten bei einer neuen Bestellung (/order/step/duration) oder bei einer Verlängerung (/order/step/duration/:rentId). GTM: begin_checkout mit user_id, user_data.email und payment_type (new_rent oder extension). Meta Pixel: InitiateCheckout mit E-Mail, external_id, contents und payment_type (Advanced Matching; value = brutto; außerdem value_gross und value_net)',
+      'Beginn einer Bestellung — Bestätigung der Mietdaten bei einer neuen Bestellung (/order/step/duration) oder bei einer Verlängerung (/order/step/duration/:rentId). GTM: begin_checkout mit user_id, user_data.email, location und payment_type (new_rent oder extension). Meta Pixel: InitiateCheckout mit E-Mail, external_id, contents und payment_type (Advanced Matching; value = brutto; außerdem value_gross und value_net)',
     tenantAnalyticsEventPurchase:
-      'Zahlungsabschluss — die Seite mit dem Zahlungsergebnis (/payment/:id), einmal pro Zahlungs-ID. GTM: purchase mit user_id, user_data.email und payment_type (new_rent, extension, period_payment; erweiterte Conversions in Google Ads). Meta Pixel: Purchase mit der E-Mail-Adresse, external_id, order_id und payment_type (Advanced Matching; value = brutto; außerdem value_gross und value_net)',
+      'Zahlungsabschluss — die Seite mit dem Zahlungsergebnis (/payment/:id), einmal pro Zahlungs-ID. GTM: purchase mit user_id, user_data.email, location und payment_type (new_rent, extension, period_payment; erweiterte Conversions in Google Ads). Meta Pixel: Purchase für new_rent, RentExtension für extension, RentPeriodPayment für period_payment, jeweils mit E-Mail-Adresse, external_id und order_id (Advanced Matching; value = brutto; außerdem value_gross und value_net)',
     tenantAnalyticsReadonlyIntro:
       'Diese Ereignisse werden automatisch gesendet. Ein Kanal wird nur verwendet, wenn seine Kennung für diesen Franchisenehmer festgelegt wurde.',
     tenantAnalyticsAdvancedMatching:
@@ -1052,6 +1063,7 @@ Advanced Matching (getrennt vom Ereignis, E-Mail im Browser gehasht):
   "user_id": "<Benutzer-ID>",
   "user_data": { "email": "<E-Mail>" },
   "payment_type": "new_rent | extension",
+  "location": "<Standort>",
   "value_gross": "<brutto>",
   "value_net": "<netto>",
   "ecommerce": {
@@ -1100,6 +1112,7 @@ Advanced Matching (getrennt von den Parametern unten, E-Mail im Browser gehasht)
   "user_id": "<Benutzer-ID>",
   "user_data": { "email": "<E-Mail>" },
   "payment_type": "new_rent | extension | period_payment",
+  "location": "<Standort>",
   "value_gross": "<brutto>",
   "value_net": "<netto>",
   "ecommerce": {
@@ -1125,7 +1138,9 @@ Advanced Matching (getrennt von den Parametern unten, E-Mail im Browser gehasht)
     ]
   }
 }`,
-    tenantAnalyticsPayloadMetaPurchase: `Purchase
+    tenantAnalyticsPayloadMetaPurchase: `new_rent → Purchase
+extension → RentExtension (benutzerdefiniertes Ereignis)
+period_payment → RentPeriodPayment (benutzerdefiniertes Ereignis)
 eventID: <Zahlungs-ID> (Deduplizierung mit der Conversions API, kein Ereignisparameter)
 Advanced Matching (getrennt von den Parametern unten, E-Mail im Browser gehasht):
   em: <E-Mail>
@@ -1339,6 +1354,17 @@ Advanced Matching (getrennt von den Parametern unten, E-Mail im Browser gehasht)
     systemLogs: 'Systemprotokolle',
     systemLogsRetentionInfo:
       'Protokolle, die älter als 30 Tage sind, werden automatisch gelöscht.',
+    systemAlerts: 'Warnungen',
+    markAlertRead: 'Als gelesen markieren',
+    alertMarkedRead: 'Warnung als gelesen markiert',
+    alertTypes: {
+      invoice_issue: 'Rechnungsfehler',
+      payment_verify: 'Zahlungsprüfung',
+    },
+    alertStatus: {
+      open: 'Offen',
+      read: 'Gelesen',
+    },
     systemLogActions: {
       addon: {
         create: 'Zusatzoption erstellt',
@@ -1469,6 +1495,9 @@ Advanced Matching (getrennt von den Parametern unten, E-Mail im Browser gehasht)
       },
       'system-notification': {
         create: 'Systembenachrichtigung erstellt',
+      },
+      'system-alert': {
+        read: 'Warnung als gelesen markiert',
       },
       template: {
         delete: 'Vorlage gelöscht',
@@ -1650,6 +1679,10 @@ Advanced Matching (getrennt von den Parametern unten, E-Mail im Browser gehasht)
     batteryStatus: 'Batteriestand',
     lockDetails: 'Details',
     passcode: 'Zugangscode',
+    passcodeGate: 'Zugangscode für das Tor',
+    passcodeBoxStorage: 'Zugangscode für das Minilager',
+    passcodeBoxLocker: 'Zugangscode für das Schließfach',
+    passcodeBoxParking: 'Zugangscode für den Stellplatz',
     lockPasscodes: 'Zugangscodes',
     addLockPasscode: 'Zugangscode hinzufügen',
     addPasscode: 'Zugangscode hinzufügen',
@@ -1772,6 +1805,7 @@ Advanced Matching (getrennt von den Parametern unten, E-Mail im Browser gehasht)
       action: 'Aktion',
       error: 'Fehler',
       meta: 'Meta',
+      message: 'Nachricht',
       ip: 'IP',
       mac: 'MAC',
       site: 'Lagerstandort',
@@ -1965,6 +1999,7 @@ Advanced Matching (getrennt von den Parametern unten, E-Mail im Browser gehasht)
     accountRegistered: 'Konto registriert',
     stockDiscountCreated: 'Rabatt erstellt',
     logOutSuccess: 'Erfolgreich abgemeldet',
+    logOutEverywhereSuccess: 'Auf allen Geräten abgemeldet',
     discCodeCreated: 'Rabattcode erstellt',
     userBlocked: 'Benutzer gesperrt',
     userUnblocked: 'Benutzer entsperrt',
