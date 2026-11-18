@@ -27,6 +27,46 @@ type ErrorHandler = {
 } | null;
 type StatusBody = { statusCode?: number };
 
+let webRefresh: Promise<boolean> | null = null;
+
+const refreshWebSession = (requestUrl: string): Promise<boolean> => {
+  if (Capacitor.isNativePlatform()) return Promise.resolve(false);
+  const path = requestUrl.split('?')[0];
+  if (
+    path === 'auth/refresh' ||
+    path === 'auth/login' ||
+    path === 'auth/social-login'
+  ) {
+    return Promise.resolve(false);
+  }
+  if (!webRefresh) {
+    webRefresh = postWebRefresh().finally(() => {
+      webRefresh = null;
+    });
+  }
+  return webRefresh;
+};
+
+const postWebRefresh = async () => {
+  try {
+    if (!ApiService.url) await ApiService.setUrl();
+    const headers: { [key: string]: string } = {
+      'Content-Type': 'application/json',
+    };
+    ApiService.withLanguage(headers);
+    const response = await fetch(`${ApiService.url}auth/refresh`, {
+      method: 'POST',
+      headers,
+      credentials: 'include',
+      body: '{}',
+    });
+    const data = await response.json();
+    return data?.result === ApiResult.ok;
+  } catch {
+    return false;
+  }
+};
+
 const handleUnauthorized = async () => {
   // queryClient.setQueryData(['my-details'], null);
   // queryClient.invalidateQueries({ queryKey: ['tenant'] });
@@ -68,7 +108,8 @@ export default class ApiService {
     url: string,
     loadingAction = 'LOADING',
     requestData?: object,
-  ) => {
+    retried = false,
+  ): Promise<void> => {
     dispatch({ type: loadingAction, payload: true });
 
     const headers: {
@@ -130,6 +171,20 @@ export default class ApiService {
           if (ApiService.is404(data)) {
             history.push('/');
           } else if (ApiService.is401(data)) {
+            if (!retried && (await refreshWebSession(url))) {
+              return ApiService.call(
+                dispatch,
+                method,
+                successAction,
+                failedAction,
+                successCb,
+                failedCb,
+                url,
+                loadingAction,
+                requestData,
+                true,
+              );
+            }
             await handleUnauthorized();
             setTimeout(
               () => dispatch({ type: loadingAction, payload: false }),
@@ -163,7 +218,8 @@ export default class ApiService {
     requestData?: object,
     throwError?: boolean,
     muteNotification?: boolean,
-  ) => {
+    retried = false,
+  ): Promise<R | undefined> => {
 
     const headers: {
       [key: string]: string;
@@ -205,6 +261,18 @@ export default class ApiService {
           break;
         default:
           if (ApiService.is401(data)) {
+            if (!retried && (await refreshWebSession(url))) {
+              return ApiService.callFetch<R>(
+                method,
+                url,
+                successCb,
+                failedCb,
+                requestData,
+                throwError,
+                muteNotification,
+                true,
+              );
+            }
             await handleUnauthorized();
           } else if (!muteNotification)
               store.dispatch(notifications.errorNotification(data.error_code));
@@ -218,7 +286,11 @@ export default class ApiService {
     }
   };
 
-  static simpleFetch = async (method: string, url: string) => {
+  static simpleFetch = async (
+    method: string,
+    url: string,
+    retried = false,
+  ): Promise<Response> => {
     const headers: {
       [key: string]: string;
     } = {
@@ -238,6 +310,14 @@ export default class ApiService {
       headers,
       credentials: !Capacitor.isNativePlatform() ? 'include' : undefined,
     });
+
+    if (
+      response.status === 401 &&
+      !retried &&
+      (await refreshWebSession(url))
+    ) {
+      return ApiService.simpleFetch(method, url, true);
+    }
 
     return response;
   };
@@ -378,6 +458,7 @@ export default class ApiService {
     url: string,
     data?: object,
     excludeApiURL = false,
+    retried = false,
   ): Promise<{ filename: string; data: string; contentType?: string }> => {
     const headers: {
       [key: string]: string;
@@ -407,6 +488,11 @@ export default class ApiService {
         credentials: !Capacitor.isNativePlatform() ? 'include' : undefined,
       },
     });
+
+    if (response.status === 401 && !retried && (await refreshWebSession(url))) {
+      return ApiService.sendForFile(method, url, data, excludeApiURL, true);
+    }
+
     const received = response.data;
 
     const filename =

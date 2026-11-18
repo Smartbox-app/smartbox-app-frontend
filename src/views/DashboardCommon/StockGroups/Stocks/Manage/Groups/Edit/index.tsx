@@ -13,6 +13,7 @@ import { __ } from 'src/helpers/i18n';
 import ApiService from 'src/services/api-service';
 import { mapFields } from 'src/utils/fields-mapper';
 import { formOnTranslateString } from 'src/utils/trans-form';
+import { formDataWithNameI18n } from '../../Addons/append-name-i18n';
 
 interface Props {
     id: string;
@@ -40,13 +41,13 @@ const Edit = ({ id, stockId }: Props) => {
                 formId="updateBoxGroup"
                 schemaCacheEnabled={false}
                 schemaMayBeDynamic={true}
-                useFormDataInsteadOfPlainObject
                 loadingInfo={<Spinner transparent />}
                 schemaFetcher={() => ApiService.loadForm(fetchUrl)}
-                sendFetcher={(formId: string, values: FormData) => {
-                    values.set('stockId', stockId);
-                    return ApiService.sendForm(sendUrl, values, 'PATCH')}
-                }
+                sendFetcher={(_formId: string, values: Record<string, unknown>) => {
+                    const formData = formDataWithNameI18n(values);
+                    formData.set('stockId', stockId);
+                    return ApiService.sendForm(sendUrl, formData, 'PATCH');
+                }}
                 submitButton={submitButton}
                 onRenderFullField={mapFields}
                 onSavedSuccessfully={() => {

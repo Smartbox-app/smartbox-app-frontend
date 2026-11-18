@@ -12,6 +12,7 @@ export enum TemplateType {
   RENTAL_PERIOD_PAID_ADMIN_NOTIFICATION_MAIL = 'rental_period_paid_admin_notification_email',
   NEW_RENTAL_MAIL = 'new_rental_email',
   NEW_RENTAL_ADMIN_NOTIFICATION_MAIL = 'new_rental_admin_notification_email',
+  NEW_RENT_PAYMENT_FAILED_ADMIN_NOTIFICATION_MAIL = 'new_rent_payment_failed_admin_notification_email',
   NEW_RENTAL_SMS = 'new_rental_sms',
   RENT_ENDED_MAIL = 'rent_ended_email',
   RENT_ENDED_ADMIN_NOTIFICATION_MAIL = 'rent_ended_admin_notification_email',

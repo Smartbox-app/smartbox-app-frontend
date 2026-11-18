@@ -25,11 +25,16 @@ export const useLoginMutation = () => {
   return useMutation({
     mutationKey: ['login'],
     mutationFn: async (dto: LoginDto) => {
+      // Native omits session=refresh until it can store the refresh token.
+      // Remove the flag once every supported app can refresh.
+      const loginQuery = Capacitor.isNativePlatform()
+        ? 'source=mobile'
+        : 'session=refresh';
       const response = await new Promise<LoginPayload | undefined>(
         (resolve, reject) => {
           ApiService.callFetch<LoginPayload>(
             'post',
-            `auth/login${Capacitor.isNativePlatform() ? '?source=mobile' : ''}`,
+            `auth/login?${loginQuery}`,
             (payload: LoginPayload) => resolve(payload),
             (data) =>
               reject(

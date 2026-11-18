@@ -159,6 +159,8 @@ const application = {
     sign_in_fb: 'Увійти через Facebook',
     sign_in_google: 'Увійти через Google',
     viewDocument: 'Переглянути документ',
+    retryInvoice: 'Виставити рахунок повторно',
+    retryInvoiceSent: 'Запит на виставлення рахунку надіслано.',
     forcePaymentAcceptance: 'Примусово прийняти платіж',
     forcePaymentAcceptanceConfirm:
       'Ви впевнені, що хочете примусово прийняти цей платіж?',
@@ -1416,6 +1418,7 @@ Advanced Matching (окремо від параметрів нижче, елек
       payment: {
         accepted: 'Платіж прийнято',
         downloadReport: 'Звіт про платежі завантажено',
+        retryInvoice: 'Повторне виставлення рахунку',
         getDetails: 'Деталі платежу',
         getStatus: 'Статус платежу перевірено',
       },
@@ -2020,6 +2023,8 @@ Advanced Matching (окремо від параметрів нижче, елек
     period_payment_sms: 'Рахунок виставлено за період оренди',
     new_rental_admin_notification_email:
       'Повідомлення адміністратору про нову оренду',
+    new_rent_payment_failed_admin_notification_email:
+      'Повідомлення адміністратору про невдалу першу оплату нової оренди',
     rental_extended_admin_notification_email:
       'Повідомлення адміністратору про продовжену оренду',
     no_period_payment_email: 'Немає платежу за період оренди',
@@ -2095,6 +2100,7 @@ Advanced Matching (окремо від параметрів нижче, елек
     boxTypeYourGenitive:
       'Тип оренди - "вашої складської комірки/вашої комірки/вашого паркомісця"',
     name: 'Ім’я користувача',
+    fullName: 'Ім’я та прізвище користувача',
     company: 'Назва компанії',
     phone: 'Контактний номер компанії',
     email: 'Контактна електронна адреса компанії',

@@ -44,6 +44,7 @@ export * from 'src/mutations/useDeleteAttachmentMutation';
 export * from 'src/mutations/useDeleteMobileConfigMutation';
 export * from 'src/mutations/useGiftMutations';
 export * from 'src/mutations/useForcePaymentMutation';
+export * from 'src/mutations/useRetryInvoiceMutation';
 export * from 'src/mutations/useMarkPeriodPaidMutation';
 export * from 'src/mutations/useDeleteUserMutation';
 export * from 'src/mutations/useDeleteUserByForceMutation';

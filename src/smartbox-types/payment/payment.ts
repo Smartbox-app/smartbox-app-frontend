@@ -90,6 +90,8 @@ export type PaymentAdminListItem = {
   document: PaymentDocument;
   invoiceId: string;
   invoiceNumber: string;
+  lastInvoicingTry: Date | string | null;
+  canForceStatus: boolean;
   orderId: string;
   rentId: string | null;
   periodId: string | null;
@@ -115,6 +117,8 @@ export type PaymentClientListItem = Pick<
   | 'document'
   | 'invoiceId'
   | 'invoiceNumber'
+  | 'lastInvoicingTry'
+  | 'canForceStatus'
   | 'orderId'
   | 'rentId'
   | 'periodId'

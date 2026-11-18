@@ -7,6 +7,7 @@ import {
   CalculatedPriceRes,
   RentPaymentType,
 } from 'smartbox-types';
+import { currentAppLanguage } from 'src/i18n/app-language';
 import ApiService from 'src/services/api-service';
 
 const formatOnlyDate = (date: Date) => format(date, 'yyyy-MM-dd');
@@ -172,8 +173,11 @@ export const useAddonPriceQuery = ({
   });
 };
 
-export const addonsForOrderQueryKey = (stockId: string, boxGroupId: string) =>
-  ['addon', 'all', stockId, boxGroupId] as const;
+export const addonsForOrderQueryKey = (
+  stockId: string,
+  boxGroupId: string,
+  lang = currentAppLanguage(),
+) => ['addon', 'all', stockId, boxGroupId, lang] as const;
 
 export const useAddonsForOrderQuery = (
   stockId?: string,

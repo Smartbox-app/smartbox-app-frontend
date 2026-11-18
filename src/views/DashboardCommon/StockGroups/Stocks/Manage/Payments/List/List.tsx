@@ -22,20 +22,26 @@ import { ApiTable, ConfirmModal } from 'src/components/Common';
 import { ButtonsContainer } from 'src/components/Layout';
 import { Section, Button as UIButton } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
-import { useForcePaymentMutation } from 'src/mutations';
+import { useForcePaymentMutation, useRetryInvoiceMutation } from 'src/mutations';
 import { useGetMyDetailsQuery } from 'src/queries';
 import ApiService from 'src/services/api-service';
 import { InteractiveTableSchema } from 'src/utils/table-schema-utils';
 
+const INVOICE_RETRY_AFTER_MS = 10 * 60 * 1000;
+
 const isInvoiceIssued = (invoiceId: string | null | undefined) =>
   !!invoiceId && !['error', 'pending'].includes(invoiceId);
 
-const isPaymentPending = (
+const canRetryInvoice = (
   row: PaymentAdminListItem | PaymentClientListItem,
 ) => {
-  if (row.rentId == null || row.rentId === '') return false;
-  const s = row.status as PaymentStatus | string | number;
-  return Number(s) === PaymentStatus.wait;
+  if (Number(row.status) !== PaymentStatus.accepted) return false;
+  if (!row.lastInvoicingTry) return false;
+  if (isInvoiceIssued(row.invoiceId)) return false;
+  return (
+    Date.now() - new Date(row.lastInvoicingTry).getTime() >=
+    INVOICE_RETRY_AFTER_MS
+  );
 };
 
 export const List = () => {
@@ -43,6 +49,8 @@ export const List = () => {
   const { stockId } = useParams<{ stockId: string }>();
   const { data: user } = useGetMyDetailsQuery();
   const { mutate: forcePayment } = useForcePaymentMutation();
+  const { mutate: retryInvoice, isPending: isRetryingInvoice } =
+    useRetryInvoiceMutation();
 
   const handleViewDocument = useCallback(async (paymentId: string) => {
     const payload = await ApiService.callFetch<FakturowniaInvoiceUserRes>(
@@ -113,9 +121,10 @@ export const List = () => {
         row: PaymentAdminListItem | PaymentClientListItem,
       ) => {
         const canView = isInvoiceIssued(row.invoiceId);
-        const canForce = isPaymentPending(row);
+        const canForce = row.canForceStatus === true;
+        const canRetry = canRetryInvoice(row);
 
-        if (!canView && !canForce) {
+        if (!canView && !canForce && !canRetry) {
           return '-';
         }
 
@@ -127,6 +136,15 @@ export const List = () => {
                 type="button"
                 text="application.viewDocument"
                 onClick={() => handleViewDocument(row.id)}
+              />
+            ) : null}
+            {canRetry ? (
+              <UIButton
+                variant="primary"
+                type="button"
+                text="application.retryInvoice"
+                disabled={isRetryingInvoice}
+                onClick={() => retryInvoice(row.id)}
               />
             ) : null}
             {canForce ? (
@@ -160,6 +178,8 @@ export const List = () => {
     handleViewDocument,
     confirmForcePaymentAcceptance,
     confirmForcePaymentCancellation,
+    retryInvoice,
+    isRetryingInvoice,
   ]);
 
   if (!user || !scheme) return null;

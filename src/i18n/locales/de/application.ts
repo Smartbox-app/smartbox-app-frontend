@@ -160,6 +160,8 @@ const application = {
     sign_in_fb: 'Mit Facebook anmelden',
     sign_in_google: 'Mit Google anmelden',
     viewDocument: 'Dokument anzeigen',
+    retryInvoice: 'Rechnung erneut ausstellen',
+    retryInvoiceSent: 'Die Anfrage zur Rechnungsstellung wurde gesendet.',
     forcePaymentAcceptance: 'Annahme der Zahlung erzwingen',
     forcePaymentAcceptanceConfirm:
       'Möchten Sie die Annahme dieser Zahlung wirklich erzwingen?',
@@ -1442,6 +1444,7 @@ Advanced Matching (getrennt von den Parametern unten, E-Mail im Browser gehasht)
       payment: {
         accepted: 'Zahlung angenommen',
         downloadReport: 'Zahlungsbericht heruntergeladen',
+        retryInvoice: 'Rechnungserstellung erneut angestoßen',
         getDetails: 'Zahlungsdetails',
         getStatus: 'Zahlungsstatus geprüft',
       },
@@ -2070,6 +2073,8 @@ Advanced Matching (getrennt von den Parametern unten, E-Mail im Browser gehasht)
     period_payment_sms: 'Rechnung für einen Mietzeitraum ausgestellt',
     new_rental_admin_notification_email:
       'Nachricht an die Administration über eine neue Miete',
+    new_rent_payment_failed_admin_notification_email:
+      'Nachricht an die Administration über eine fehlgeschlagene erste Zahlung für eine neue Miete',
     rental_extended_admin_notification_email:
       'Nachricht an die Administration über eine verlängerte Miete',
     no_period_payment_email: 'Keine Zahlung für den Mietzeitraum',
@@ -2146,6 +2151,7 @@ Advanced Matching (getrennt von den Parametern unten, E-Mail im Browser gehasht)
     boxTypeYourGenitive:
       'Mietart - "Ihrer Lagereinheit/Ihres Schließfachs/Ihres Stellplatzes"',
     name: 'Vorname des Benutzers',
+    fullName: 'Vor- und Nachname des Benutzers',
     company: 'Firmenname',
     phone: 'Kontaktnummer des Unternehmens',
     email: 'Kontakt-E-Mail des Unternehmens',

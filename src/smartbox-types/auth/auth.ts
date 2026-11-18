@@ -5,6 +5,10 @@ export interface AuthLoginRequest {
   pwd: string;
 }
 
+export interface AuthRefreshRequest {
+  refreshToken?: string;
+}
+
 export interface AuthLoginResult {
   login: string,
   firstName: string,

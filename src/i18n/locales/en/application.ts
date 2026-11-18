@@ -159,6 +159,8 @@ const application = {
     sign_in_fb: 'Sign in with Facebook',
     sign_in_google: 'Sign in with Google',
     viewDocument: 'View document',
+    retryInvoice: 'Issue invoice again',
+    retryInvoiceSent: 'The invoice request was sent.',
     forcePaymentAcceptance: 'Force payment acceptance',
     forcePaymentAcceptanceConfirm:
       'Are you sure you want to force acceptance of this payment?',
@@ -1405,6 +1407,7 @@ Advanced Matching (separate from the parameters below, email hashed in the brows
       payment: {
         accepted: 'Payment accepted',
         downloadReport: 'Payment report downloaded',
+        retryInvoice: 'Invoice issue retried',
         getDetails: 'Payment details',
         getStatus: 'Payment status checked',
       },
@@ -2012,6 +2015,8 @@ Advanced Matching (separate from the parameters below, email hashed in the brows
     period_payment_email: 'Invoice issued for a rental period',
     period_payment_sms: 'Invoice issued for a rental period',
     new_rental_admin_notification_email: 'Admin message about a new rental',
+    new_rent_payment_failed_admin_notification_email:
+      'Admin message about a failed first payment for a new rental',
     rental_extended_admin_notification_email:
       'Admin message about an extended rental',
     no_period_payment_email: 'No payment for the rental period',
@@ -2087,6 +2092,7 @@ Advanced Matching (separate from the parameters below, email hashed in the brows
     boxTypeYourGenitive:
       'Rental type - "your storage unit/your locker/your parking space"',
     name: 'User first name',
+    fullName: 'User full name',
     company: 'Company name',
     phone: 'Company contact number',
     email: 'Company contact email',

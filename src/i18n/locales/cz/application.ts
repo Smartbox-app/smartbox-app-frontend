@@ -159,6 +159,8 @@ const application = {
     sign_in_fb: 'Přihlásit se přes Facebook',
     sign_in_google: 'Přihlásit se přes Google',
     viewDocument: 'Zobrazit dokument',
+    retryInvoice: 'Vystavit fakturu znovu',
+    retryInvoiceSent: 'Požadavek na vystavení faktury byl odeslán.',
     forcePaymentAcceptance: 'Vynutit přijetí platby',
     forcePaymentAcceptanceConfirm:
       'Opravdu chcete vynutit přijetí této platby?',
@@ -1409,6 +1411,7 @@ Advanced Matching (odděleně od parametrů níže, e-mail zahashovaný v prohl�
       payment: {
         accepted: 'Platba přijata',
         downloadReport: 'Sestava plateb stažena',
+        retryInvoice: 'Opakované vystavení faktury',
         getDetails: 'Podrobnosti platby',
         getStatus: 'Stav platby zkontrolován',
       },
@@ -2015,6 +2018,8 @@ Advanced Matching (odděleně od parametrů níže, e-mail zahashovaný v prohl�
     period_payment_sms: 'Faktura vystavena za období pronájmu',
     new_rental_admin_notification_email:
       'Zpráva pro administrátora o novém pronájmu',
+    new_rent_payment_failed_admin_notification_email:
+      'Zpráva pro administrátora o neúspěšné první platbě za nový pronájem',
     rental_extended_admin_notification_email:
       'Zpráva pro administrátora o prodlouženém pronájmu',
     no_period_payment_email: 'Žádná platba za období pronájmu',
@@ -2090,6 +2095,7 @@ Advanced Matching (odděleně od parametrů níže, e-mail zahashovaný v prohl�
     boxTypeYourGenitive:
       'Typ pronájmu - "vaší skladovací jednotky/vaší úložné schránky/vašeho parkovacího místa"',
     name: 'Jméno uživatele',
+    fullName: 'Jméno a příjmení uživatele',
     company: 'Název společnosti',
     phone: 'Kontaktní telefon společnosti',
     email: 'Kontaktní e-mail společnosti',

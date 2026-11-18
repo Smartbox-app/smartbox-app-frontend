@@ -153,6 +153,8 @@ const application = {
     sign_in_fb: 'Zaloguj się z Facebook',
     sign_in_google: 'Zaloguj się z Google',
     viewDocument: 'Zobacz dokument',
+    retryInvoice: 'Wystaw fakturę ponownie',
+    retryInvoiceSent: 'Prośba o wystawienie faktury została wysłana.',
     forcePaymentAcceptance: 'Wymuś akceptację płatności',
     forcePaymentAcceptanceConfirm:
       'Czy na pewno chcesz wymusić akceptację tej płatności?',
@@ -1407,6 +1409,7 @@ Advanced Matching (osobno od parametrów poniżej, e-mail hashowany w przegląda
       payment: {
         accepted: 'Akceptacja płatności',
         downloadReport: 'Pobranie raportu płatności',
+        retryInvoice: 'Ponowienie wystawienia faktury',
         getDetails: 'Szczegóły płatności',
         getStatus: 'Sprawdzenie statusu płatności',
       },
@@ -2026,6 +2029,8 @@ Advanced Matching (osobno od parametrów poniżej, e-mail hashowany w przegląda
     period_payment_sms: 'Wystawienie faktury za okres wynajmu',
     new_rental_admin_notification_email:
       'Wiadomość do administracji o nowym wynajmnie',
+    new_rent_payment_failed_admin_notification_email:
+      'Wiadomość do administracji o nieudanej pierwszej płatności za nowy wynajem',
     rental_extended_admin_notification_email:
       'Wiadomość do administracji o przedłużonym wynajmie',
     no_period_payment_email: 'Brak płatności za okres wynajmu',
@@ -2103,6 +2108,7 @@ Advanced Matching (osobno od parametrów poniżej, e-mail hashowany w przegląda
     boxTypeYourGenitive:
       'Rodzaj wynajmu - "Twojego minimagazynu/Twojej skrytki/Twojego miejsca parkingowego"',
     name: 'Imię użytkownika',
+    fullName: 'Imię i nazwisko użytkownika',
     company: 'Nazwa firmy',
     phone: 'Nr kontaktowy do firmy',
     email: 'Email kontaktowy do firmy',

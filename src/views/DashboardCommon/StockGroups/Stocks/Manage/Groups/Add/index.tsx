@@ -17,6 +17,7 @@ import ApiService from 'src/services/api-service';
 import UserService from 'src/services/user-service';
 import { mapFields } from 'src/utils/fields-mapper';
 import { formOnTranslateString } from 'src/utils/trans-form';
+import { formDataWithNameI18n } from '../../Addons/append-name-i18n';
 
 const Add = () => {
   const dispatch = useDispatch();
@@ -54,12 +55,12 @@ const Add = () => {
           formId="addBoxGroup"
           schemaCacheEnabled={false}
           schemaMayBeDynamic={true}
-          useFormDataInsteadOfPlainObject
           loadingInfo={<Spinner transparent />}
           schemaFetcher={() => ApiService.loadForm(fetchUrl)}
-          sendFetcher={(formId: string, values: FormData) => {
-            values.set('stockId', stockId);
-            return ApiService.sendForm(sendUrl, values);
+          sendFetcher={(_formId: string, values: Record<string, unknown>) => {
+            const formData = formDataWithNameI18n(values);
+            formData.set('stockId', stockId);
+            return ApiService.sendForm(sendUrl, formData);
           }}
           submitButton={submitButton}
           onRenderFullField={mapFields}

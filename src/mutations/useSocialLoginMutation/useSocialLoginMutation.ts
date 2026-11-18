@@ -16,7 +16,8 @@ export const useSocialLoginMutation = () => {
     mutationFn: async (dto: SocialLoginDto) => {
       const response = await ApiService.callFetch<SocialLoginPayload>(
         'post',
-        `auth/social-login`,
+        // Same opt-in as password login. See useLoginMutation.
+        `auth/social-login${Capacitor.isNativePlatform() ? '' : '?session=refresh'}`,
         null,
         null,
         dto,
