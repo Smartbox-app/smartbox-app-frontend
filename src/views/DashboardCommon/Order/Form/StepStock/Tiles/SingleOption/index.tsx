@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { useLocation } from 'react-router';
 import styled from 'styled-components';
 
-import { setOrderStock } from 'src/actions/order';
+import { setPendingCheckout } from 'src/actions/order';
 import { Badge, Card, Typography } from 'src/components/ui';
-import { ApplicationState } from 'src/reducers';
+import { setStockSearchParam } from 'src/views/DashboardCommon/Order/Form/StepStock/stock-search';
 
 import './SingleOption.scss';
 
@@ -51,10 +52,12 @@ export const SingleOption = ({ name, address, value, disable }: Props) => {
     setHovered(false);
   };
   const dispatch = useDispatch();
-  const stockId = useSelector((state: ApplicationState) => state.order.stockId);
+  const { search } = useLocation();
+  const stockId = new URLSearchParams(search).get('stock');
 
   const selectOption = () => {
-    dispatch(setOrderStock(value, name, address));
+    setStockSearchParam(value);
+    dispatch(setPendingCheckout(null));
   };
 
   return (

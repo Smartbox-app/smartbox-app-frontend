@@ -6,6 +6,7 @@ import { AppMessage } from 'src/components/AppMessage';
 import { PageContent } from 'src/components/Branded';
 import { LanguageSwitcher } from 'src/components/LanguageSwitcher';
 import { Footer } from 'src/components/Layout/index';
+import { Fab } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
 import { List } from 'src/icons';
 
@@ -75,33 +76,6 @@ const StyledMobileMenuFab = styled.div(({ theme }) => ({
     right: `calc(${theme.spacing * 3}px + env(safe-area-inset-right))`,
     bottom: `calc(${theme.spacing * 3}px + env(safe-area-inset-bottom))`,
     zIndex: 100,
-  },
-}));
-
-const StyledMenuButton = styled.button(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  width: 64,
-  height: 64,
-  padding: 0,
-  border: 'none',
-  borderRadius: '50%',
-  background: theme.colors.background.primary,
-  boxShadow: theme.shadows.primary,
-  cursor: 'pointer',
-
-  svg: {
-    fill: theme.colors.icon.grey.primary,
-    width: 32,
-    height: 32,
-  },
-
-  '&:hover': {
-    background: theme.colors.border.secondary,
-    svg: {
-      fill: theme.colors.icon.primary,
-    },
   },
 }));
 
@@ -190,14 +164,14 @@ export const DashboardContainer = ({ children, sidebar }: Props) => {
           {pageContent}
         </StyledPageContentArea>
         <StyledMobileMenuFab>
-          <StyledMenuButton
-            type="button"
+          <Fab
+            variant="secondary"
             aria-expanded={mobileNavOpen}
             aria-label={__('application.management')}
             onClick={() => setMobileNavOpen((open) => !open)}
           >
             <List />
-          </StyledMenuButton>
+          </Fab>
         </StyledMobileMenuFab>
       </StyledDashboardContent>
     </StyledDashboardShell>

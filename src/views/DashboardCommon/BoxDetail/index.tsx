@@ -154,7 +154,7 @@ const BoxDetail = ({
                               variant="primary"
                               text="application.yes"
                               disabled={rotating}
-                              onClick={() => void rotatePasscode()}
+                              onClick={() => rotatePasscode()}
                             />
                             <Button
                               size="small"

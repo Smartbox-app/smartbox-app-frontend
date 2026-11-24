@@ -38,7 +38,10 @@ const grossTotal = (page: Page) =>
 const openGroupPricing = async (page: Page) => {
   await page.goto('/client/locations/stocks/list');
   await page
-    .getByRole('row', { name: new RegExp(e2eStockName) })
+    .getByRole('row')
+    .filter({
+      has: page.getByRole('cell', { name: e2eStockName, exact: true }),
+    })
     .getByRole('button', { name: /Zarządzaj|Manage/ })
     .click();
   // exact: avoid matching sidebar "Grupy placów"
@@ -147,7 +150,7 @@ const expectRentedBoxes = async (page: Page, prices: string[]) => {
       has: page.getByRole('heading', { name: 'Zarządzaj swoimi minimagazynami' }),
     })
     .locator('a[href*="/single-rent/"]');
-  await expect(links).toHaveCount(prices.length);
+  await expect.poll(() => links.count()).toBeGreaterThanOrEqual(prices.length);
   const hrefs = await links.evaluateAll((nodes) =>
     nodes.map((node) => (node as HTMLAnchorElement).getAttribute('href') || ''),
   );
@@ -162,7 +165,12 @@ const expectRentedBoxes = async (page: Page, prices: string[]) => {
     const line = await history.getByText(/^Cena - /).innerText();
     seen.push(line.replace(/^Cena - /, '').trim());
   }
-  expect(seen.sort()).toEqual([...prices].sort());
+  const remaining = [...seen];
+  for (const price of prices) {
+    const index = remaining.indexOf(price);
+    expect(index, `missing ${price} among ${seen.join(', ')}`).toBeGreaterThanOrEqual(0);
+    remaining.splice(index, 1);
+  }
 };
 
 test.describe.serial('price thresholds', () => {

@@ -40,7 +40,9 @@ export const e2eBlocked = {
 };
 
 export const e2eStockName = 'E2E Plac';
+export const e2eOtherStockName = 'E2E Osiedle';
 export const e2eBoxGroupName = 'E2E 4m';
+export const e2eOtherBoxGroupName = 'E2E 2m';
 export const e2eExtensionBoxIdentifier = 'E2E-EXT';
 export const e2eDebtBoxIdentifier = 'E2E-DEBT';
 export const e2ePreviewBoxIdentifier = 'E2E-VIEW';

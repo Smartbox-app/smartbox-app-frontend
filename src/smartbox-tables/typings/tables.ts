@@ -43,6 +43,8 @@ export interface TableSchemaField {
     alias?: string;
     entityFieldName?: string;
     sortType?: string;
+    /** Included in CSV export only; never rendered as a table column. */
+    exportOnly?: boolean;
 }
 
 export interface TableSchema {

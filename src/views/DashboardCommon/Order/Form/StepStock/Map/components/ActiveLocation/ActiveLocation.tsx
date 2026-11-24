@@ -1,11 +1,10 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useLocation } from 'react-router';
 import styled, { keyframes } from 'styled-components';
 
-import { clearSelectedStock } from 'src/actions/order';
 import { Badge, Button, Card, Typography } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
 import { Map } from 'src/icons';
-import { ApplicationState } from 'src/reducers';
+import { setStockSearchParam } from 'src/views/DashboardCommon/Order/Form/StepStock/stock-search';
 
 const fadeIn = keyframes`
 0% {
@@ -59,11 +58,11 @@ export type ActiveLocationProps = {
 };
 
 export const ActiveLocation = ({ id, name, address }: ActiveLocationProps) => {
-  const stockId = useSelector((state: ApplicationState) => state.order.stockId);
-  const dispatch = useDispatch();
+  const { search } = useLocation();
+  const stockId = new URLSearchParams(search).get('stock');
 
   const cancelChoice = () => {
-    dispatch(clearSelectedStock());
+    setStockSearchParam(null);
   };
 
   return (

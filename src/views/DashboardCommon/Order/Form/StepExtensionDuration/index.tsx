@@ -14,8 +14,6 @@ import {
 import {
   clearPaymentDetails,
   setMinDaysForInstallments,
-  setOrderFullStock,
-  setOrderStock,
   setRentEndDate,
   setRentPaymentType,
   setRentStartDate,
@@ -25,7 +23,6 @@ import { DateInput } from 'src/components/Common';
 import { ButtonsContainer } from 'src/components/Layout';
 import { Button, Section, Stack } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
-import { history } from 'src/history';
 import { useBridgeRentPeriodConfigToRedux , useBridgeCalculatedPriceToRedux } from 'src/hooks/useBridgeOrderPriceQuery';
 import { useSyncAddonPricesToRedux } from 'src/hooks/useSyncAddonPricesToRedux';
 import { useTenant } from 'src/hooks/useTenant';
@@ -33,13 +30,14 @@ import { useTracking } from 'src/hooks/useTracking';
 import { ArrowRight } from 'src/icons';
 import {
   useGetMyDetailsQuery,
-  useGetStockQuery,
   useMyRentDetailsQuery,
+  useStockForOrderQuery,
   useRentPeriodConfigQuery,
 } from 'src/queries';
 import { usePriceForRentQuery } from 'src/queries/useRentPriceQueries';
 import { ApplicationState } from 'src/reducers';
-import UserService from 'src/services/user-service';
+import { useOrderStep } from 'src/views/DashboardCommon/Order/RouteWithIndicator';
+import { useOrderPaths } from 'src/views/DashboardCommon/Order/useOrderPaths';
 import { buildInitiateCheckoutPayload } from 'src/utils/build-initiate-checkout-payload';
 import { dateOnly } from 'src/utils/format-date';
 import {
@@ -51,10 +49,10 @@ import {
   isExtensionPeriodAcceptable,
   minPeriodDebtResolvedEnd,
 } from 'src/utils/rent-period-bounds';
-import { Addons } from '../Common/Addons';
-import { PaymentType } from '../Common/PaymentType';
-import Price from '../Common/Price';
-import { RentDuration } from '../Common/RentDuration';
+import { Addons } from 'src/views/DashboardCommon/Order/Form/Common/Addons';
+import { PaymentType } from 'src/views/DashboardCommon/Order/Form/Common/PaymentType';
+import Price from 'src/views/DashboardCommon/Order/Form/Common/Price';
+import { RentDuration } from 'src/views/DashboardCommon/Order/Form/Common/RentDuration';
 
 import './StepDuration.scss';
 
@@ -67,7 +65,9 @@ const StyledPriceWrap = styled.div`
 `;
 
 const StepExtensionDuration = () => {
+  useOrderStep('duration');
   const { data: user } = useGetMyDetailsQuery();
+  const { goToSummary } = useOrderPaths();
   const dispatch = useDispatch();
   const { trackInitiateCheckout } = useTracking();
   const { rentId } = useParams<{ step: string; rentId?: string }>();
@@ -81,7 +81,6 @@ const StepExtensionDuration = () => {
   );
   // box groupId is used directly only when new rent is created
   const {
-    stock,
     startDate,
     endDate,
     loadingPrice,
@@ -91,7 +90,7 @@ const StepExtensionDuration = () => {
     calculatedPrice,
   } = useSelector((state: ApplicationState) => state.order);
 
-  const { data: stockData } = useGetStockQuery(rent?.stockId);
+  const { data: stock } = useStockForOrderQuery(rent?.stockId);
 
   const rentPriceQuery = usePriceForRentQuery({
     rentId,
@@ -114,17 +113,10 @@ const StepExtensionDuration = () => {
   });
 
   useEffect(() => {
-    if (stockData) {
-      dispatch(setOrderFullStock(stockData));
-    }
-  }, [stockData, dispatch]);
-
-  useEffect(() => {
     if (!rent) return;
 
     dispatch(setRentStartDate(extensionStartFromFinish(rent.finishAt ?? null)));
-    dispatch(setOrderStock(rent.stockId, rent.stockName, rent.stockAddress));
-  }, [rent]);
+  }, [dispatch, rent]);
 
   useEffect(() => {
     if (!rent || !minRentPeriod || !tenant) return;
@@ -331,8 +323,6 @@ const StepExtensionDuration = () => {
   if (!rent || !minRentPeriod || maxRentPeriod === null)
     return <Spinner overlay />;
 
-  const summaryPath = `/${UserService.getSlugByRole(user.role)}/order/step/summary/${rentId}`;
-
   const handleContinue = () => {
     const payload = buildInitiateCheckoutPayload(
       { calculatedPrice, orderAddons },
@@ -350,7 +340,7 @@ const StepExtensionDuration = () => {
         userId: user.id,
       });
     }
-    history.push(summaryPath);
+    if (rentId) goToSummary({ rentId });
   };
 
   return (

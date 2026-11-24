@@ -109,6 +109,8 @@ const application = {
       boxes_list: 'Seznam úložných schránek',
       boxes_groups: 'Skupiny',
       boxes: 'Úložné schránky',
+      not_found: 'Hledanou lokalitu se nepodařilo najít.',
+      back_to_select: 'Zpět na výběr lokality',
     },
     stock: {
       client_source: 'Jak jste se o nás dozvěděli?',
@@ -149,6 +151,8 @@ const application = {
       boxes_list: 'Seznam úložných schránek',
       boxes_groups: 'Skupiny',
       boxes: 'Skladovací jednotky',
+      not_found: 'Hledaný skladovací areál se nepodařilo najít.',
+      back_to_select: 'Zpět na výběr areálu',
     },
     stock_group: {
       list: 'Seznam skupin areálů',
@@ -278,6 +282,10 @@ const application = {
     manage: 'Spravovat',
     move: 'Přesunout',
     contact: 'Kontakt',
+    call: 'Zavolat',
+    whatsapp: 'WhatsApp',
+    openQuickContact: 'Otevřít rychlý kontakt',
+    closeQuickContact: 'Zavřít rychlý kontakt',
     min8Char: 'Alespoň 8 znaků',
     select: 'Vybrat',
     selectNoOptions: 'Žádné možnosti',
@@ -841,6 +849,7 @@ const application = {
     goToOrder: 'Přejít ke smlouvě',
     goToProfile: 'Přejít do profilu',
     orderAgreement: 'Nájemní smlouva',
+    orderSelectionErrorTitle: 'Něco se pokazilo',
     orderAgreementAcceptation:
       'Chcete-li pokračovat, přečtěte si smlouvu a přijměte požadované souhlasy.',
     agreementPreviewError: 'Náhled smlouvy se nepodařilo načíst.',
@@ -953,6 +962,7 @@ také analytické, propagační a reklamní nástroje pro reklamu, průzkum trhu
     rentSummaryOwner: 'vlastník:',
     downloadReport: 'Stáhnout sestavu',
     downloadPaymentsReport: 'Stáhnout sestavu plateb',
+    exportCsv: 'Exportovat CSV',
     selectReportDate: 'Vyberte den sestavy',
     reportWillBeSentToEmail:
       'Sestava bude po dokončení odeslána na e-mailovou adresu propojenou s vaším účtem.',
@@ -1006,7 +1016,7 @@ také analytické, propagační a reklamní nástroje pro reklamu, průzkum trhu
     tenantAnalyticsEventSignUp:
       'Registrace účtu — stránka /register (po úspěšné registraci). GTM: sign_up s user_data.email. Meta Pixel: CompleteRegistration s Advanced Matching (em — e-mail). Identifikátor uživatele se neodesílá, protože jej registrace nevrací.',
     tenantAnalyticsEventBeginCheckout:
-      'Začátek objednávky — potvrzení dat pronájmu v nové objednávce (/order/step/duration) nebo při prodlužování (/order/step/duration/:rentId). GTM: begin_checkout s user_id, user_data.email, location a payment_type (new_rent nebo extension). Meta Pixel: InitiateCheckout s e-mailem, external_id, contents a payment_type (Advanced Matching; value = brutto; také value_gross a value_net)',
+      'Začátek objednávky — potvrzení dat pronájmu v nové objednávce (/order/:stockId/:boxGroupId/duration) nebo při prodlužování (/order/rent/:rentId/duration). GTM: begin_checkout s user_id, user_data.email, location a payment_type (new_rent nebo extension). Meta Pixel: InitiateCheckout s e-mailem, external_id, contents a payment_type (Advanced Matching; value = brutto; také value_gross a value_net)',
     tenantAnalyticsEventPurchase:
       'Dokončení platby — stránka výsledku platby (/payment/:id), jednou pro každé ID platby. GTM: purchase s user_id, user_data.email, location a payment_type (new_rent, extension, period_payment; rozšířené konverze Google Ads). Meta Pixel: Purchase pro new_rent, RentExtension pro extension, RentPeriodPayment pro period_payment — každé s e-mailovou adresou, external_id a order_id (Advanced Matching; value = brutto; také value_gross a value_net)',
     tenantAnalyticsReadonlyIntro:
@@ -1024,7 +1034,7 @@ také analytické, propagační a reklamní nástroje pro reklamu, průzkum trhu
     tenantAnalyticsSignUpWhen: 'Po úspěšné registraci na stránce /register.',
     tenantAnalyticsBeginCheckoutTitle: 'Zahájení objednávky',
     tenantAnalyticsBeginCheckoutWhen:
-      'Po potvrzení dat pronájmu a pokračování uživatele v nové objednávce (/order/step/duration) nebo při prodlužování pronájmu (/order/step/duration/:rentId).',
+      'Po potvrzení dat pronájmu a pokračování uživatele v nové objednávce (/order/:stockId/:boxGroupId/duration) nebo při prodlužování pronájmu (/order/rent/:rentId/duration).',
     tenantAnalyticsPurchaseTitle: 'Platba dokončena',
     tenantAnalyticsPurchaseWhen:
       'Na stránce výsledku platby (/payment/:id), jednou, když je stav platby přijat.',
@@ -2090,6 +2100,11 @@ Advanced Matching (odděleně od parametrů níže, e-mail zahashovaný v prohl�
     rent_ended_sms: 'Pronájem ukončen',
     rent_ended_admin_notification_email:
       'Zpráva pro administrátora o ukončeném pronájmu',
+    registration_no_rent_sms:
+      'SMS 2h po registraci, pokud nepronajal',
+    first_gate_open_follow_up_sms: 'SMS 2h po prvním otevření brány',
+    rent_ended_follow_up_sms: 'SMS 2h po ukončení pronájmu',
+    contract_anniversary_sms: 'SMS k výročí uzavření smlouvy',
     boxTypeNoun: 'Typ pronájmu - "skladovací jednotky/úložné schránky/parkovacího místa"',
     boxTypeAccusative: 'Typ pronájmu - "skladovací jednotku/úložnou schránku/parkovací místo"',
     boxTypeYourGenitive:
@@ -2112,6 +2127,7 @@ Advanced Matching (odděleně od parametrů níže, e-mail zahashovaný v prohl�
     size: 'Velikost úložné schránky',
     stock: 'Skladovací areál',
     daysToRecoverAccess: 'Počet dní na obnovení přístupu',
+    years: 'Počet let od uzavření smlouvy',
   },
 } satisfies LocaleMessages<typeof plApplication>;
 

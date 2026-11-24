@@ -222,8 +222,10 @@ class Table extends React.Component<Props> {
       return <Alert type="notice" text="application.lackOfDataToShow" />;
     }
 
+    const fields = this.props.scheme.fields.filter((f) => !f.exportOnly);
+
     if (desktop) {
-      const headers = this.props.scheme.fields.map(
+      const headers = fields.map(
         (header: TableSchemaField) => (
           <th
             className={`${header.mobile ? 'mobile' : ''} `}
@@ -244,7 +246,7 @@ class Table extends React.Component<Props> {
             true
           }
         >
-          {this.props.scheme.fields.map((header: TableSchemaField) => (
+          {fields.map((header: TableSchemaField) => (
             <td
               className={`${header.mobile ? 'mobile' : ''} `}
               key={`${header.field}_${rowIndex} `}
@@ -300,7 +302,7 @@ class Table extends React.Component<Props> {
               onClick={() => this.toggleRow(rowIndex)}
               key={rowIndex}
             >
-              {this.props.scheme.fields.map(
+              {fields.map(
                 (header: TableSchemaField, index: number) => (
                   <div
                     key={header.field || index}

@@ -109,6 +109,8 @@ const application = {
       boxes_list: 'Список комірок',
       boxes_groups: 'Групи',
       boxes: 'Комірки',
+      not_found: 'Локацію, яку ви шукаєте, не знайдено.',
+      back_to_select: 'Повернутися до вибору локації',
     },
     stock: {
       client_source: 'Як ви дізналися про нас?',
@@ -149,6 +151,8 @@ const application = {
       boxes_list: 'Список комірок',
       boxes_groups: 'Групи',
       boxes: 'Складські комірки',
+      not_found: 'Складський комплекс, який ви шукаєте, не знайдено.',
+      back_to_select: 'Повернутися до вибору складського комплексу',
     },
     stock_group: {
       list: 'Список груп складських комплексів',
@@ -279,6 +283,10 @@ const application = {
     manage: 'Керувати',
     move: 'Перемістити',
     contact: 'Контакт',
+    call: 'Зателефонувати',
+    whatsapp: 'WhatsApp',
+    openQuickContact: 'Відкрити швидкий контакт',
+    closeQuickContact: 'Закрити швидкий контакт',
     min8Char: 'Щонайменше 8 символів',
     select: 'Обрати',
     selectNoOptions: 'Немає варіантів',
@@ -844,6 +852,7 @@ const application = {
     goToOrder: 'Перейти до договору',
     goToProfile: 'Перейти до профілю',
     orderAgreement: 'Договір оренди',
+    orderSelectionErrorTitle: 'Щось пішло не так',
     orderAgreementAcceptation:
       'Щоб продовжити, прочитайте договір і прийміть обов’язкові згоди.',
     agreementPreviewError: 'Не вдалося завантажити перегляд договору.',
@@ -959,6 +968,7 @@ const application = {
     rentSummaryOwner: 'власник:',
     downloadReport: 'Завантажити звіт',
     downloadPaymentsReport: 'Завантажити звіт про платежі',
+    exportCsv: 'Експорт CSV',
     selectReportDate: 'Виберіть день звіту',
     reportWillBeSentToEmail:
       'Звіт буде надіслано на адресу електронної пошти, пов’язану з вашим обліковим записом, щойно він буде готовий.',
@@ -1012,7 +1022,7 @@ const application = {
     tenantAnalyticsEventSignUp:
       'Реєстрація облікового запису — сторінка /register (після успішної реєстрації). GTM: sign_up з user_data.email. Meta Pixel: CompleteRegistration з Advanced Matching (em — електронна пошта). Ідентифікатор користувача не надсилається, оскільки реєстрація його не повертає.',
     tenantAnalyticsEventBeginCheckout:
-      'Початок замовлення — підтвердження дат оренди в новому замовленні (/order/step/duration) або під час продовження (/order/step/duration/:rentId). GTM: begin_checkout з user_id, user_data.email, location і payment_type (new_rent або extension). Meta Pixel: InitiateCheckout з електронною поштою, external_id, contents і payment_type (Advanced Matching; value = брутто; також value_gross і value_net)',
+      'Початок замовлення — підтвердження дат оренди в новому замовленні (/order/:stockId/:boxGroupId/duration) або під час продовження (/order/rent/:rentId/duration). GTM: begin_checkout з user_id, user_data.email, location і payment_type (new_rent або extension). Meta Pixel: InitiateCheckout з електронною поштою, external_id, contents і payment_type (Advanced Matching; value = брутто; також value_gross і value_net)',
     tenantAnalyticsEventPurchase:
       'Завершення платежу — сторінка результату платежу (/payment/:id), один раз для кожного ID платежу. GTM: purchase з user_id, user_data.email, location і payment_type (new_rent, extension, period_payment; розширені конверсії Google Ads). Meta Pixel: Purchase для new_rent, RentExtension для extension, RentPeriodPayment для period_payment — кожна з адресою електронної пошти, external_id і order_id (Advanced Matching; value = брутто; також value_gross і value_net)',
     tenantAnalyticsReadonlyIntro:
@@ -1031,7 +1041,7 @@ const application = {
       'Після успішної реєстрації на сторінці /register.',
     tenantAnalyticsBeginCheckoutTitle: 'Початок замовлення',
     tenantAnalyticsBeginCheckoutWhen:
-      'Після підтвердження дат оренди та продовження користувачем у новому замовленні (/order/step/duration) або під час продовження оренди (/order/step/duration/:rentId).',
+      'Після підтвердження дат оренди та продовження користувачем у новому замовленні (/order/:stockId/:boxGroupId/duration) або під час продовження оренди (/order/rent/:rentId/duration).',
     tenantAnalyticsPurchaseTitle: 'Платіж завершено',
     tenantAnalyticsPurchaseWhen:
       'На сторінці результату платежу (/payment/:id), один раз, коли статус платежу прийнято.',
@@ -2095,6 +2105,11 @@ Advanced Matching (окремо від параметрів нижче, елек
     rent_ended_sms: 'Оренду завершено',
     rent_ended_admin_notification_email:
       'Повідомлення адміністратору про завершену оренду',
+    registration_no_rent_sms:
+      'SMS через 2 год після реєстрації, якщо не орендував',
+    first_gate_open_follow_up_sms: 'SMS через 2 год після першого відкриття брами',
+    rent_ended_follow_up_sms: 'SMS через 2 год після завершення оренди',
+    contract_anniversary_sms: 'SMS у річницю укладення договору',
     boxTypeNoun: 'Тип оренди - "складської комірки/комірки/паркомісця"',
     boxTypeAccusative: 'Тип оренди - "складську комірку/комірку/паркомісце"',
     boxTypeYourGenitive:
@@ -2117,6 +2132,7 @@ Advanced Matching (окремо від параметрів нижче, елек
     size: 'Розмір комірки',
     stock: 'Складський комплекс',
     daysToRecoverAccess: 'Кількість днів для відновлення доступу',
+    years: 'Кількість років від укладення договору',
   },
 } satisfies LocaleMessages<typeof plApplication>;
 

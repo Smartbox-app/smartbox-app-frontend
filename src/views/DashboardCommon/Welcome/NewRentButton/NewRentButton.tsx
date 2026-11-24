@@ -5,11 +5,10 @@ import { showModal } from 'src/actions/modal';
 import { NoPhoneModal } from 'src/components/Common/NoPhoneModal';
 import { UnpaidRentModal } from 'src/components/Common/UnpaidRentModal';
 import { Button } from 'src/components/ui';
-import { history } from 'src/history';
 import { useTenantNaming } from 'src/hooks/useTenantNaming';
 import { Add } from 'src/icons';
 import { useGetMyDetailsQuery, useGetMyRentsQuery } from 'src/queries';
-import UserService from 'src/services/user-service';
+import { useOrderPaths } from 'src/views/DashboardCommon/Order/useOrderPaths';
 import { findUnpaidRent } from 'src/utils/unpaid-extension';
 
 export const NewRentButton = () => {
@@ -18,6 +17,7 @@ export const NewRentButton = () => {
   const { data: rentsList = [], isPending: loadingRents } =
     useGetMyRentsQuery();
   const { getText } = useTenantNaming();
+  const { goToStockSelect } = useOrderPaths();
 
   const handleNewRent = () => {
     if (loadingRents || !user) return;
@@ -31,7 +31,7 @@ export const NewRentButton = () => {
     if (!user.phone || user.phone.length < 7) {
       dispatch(showModal(<NoPhoneModal />));
     } else {
-      history.push(`/${UserService.getSlugByRole(user.role)}/order/step/stock`);
+      goToStockSelect();
     }
   };
 

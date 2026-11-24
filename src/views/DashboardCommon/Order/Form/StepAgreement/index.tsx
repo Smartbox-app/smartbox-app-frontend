@@ -30,9 +30,16 @@ import { history } from 'src/history';
 import { useTenant } from 'src/hooks/useTenant';
 import { ArrowLeft, ArrowRight } from 'src/icons';
 import { useCreateRentMutation, useExtendRentMutation } from 'src/mutations';
-import { useGetDocumentByTypeQuery, useGetMyDetailsQuery } from 'src/queries';
+import {
+  useGetDocumentByTypeQuery,
+  useGetMyDetailsQuery,
+  useMyRentDetailsQuery,
+} from 'src/queries';
 import { ApplicationState } from 'src/reducers';
-import UserService from 'src/services/user-service';
+import { OrderLoadError } from 'src/views/DashboardCommon/Order/OrderLoadError';
+import { useOrderStep } from 'src/views/DashboardCommon/Order/RouteWithIndicator';
+import { useOrderPaths } from 'src/views/DashboardCommon/Order/useOrderPaths';
+import { useOrderSelection } from 'src/views/DashboardCommon/Order/useOrderSelection';
 import {
   getAddonsWithCorrectPrice,
   getCorrectPrice,
@@ -46,12 +53,15 @@ import {
   appendCollectionFields,
 } from 'src/utils/rent-form-data';
 import { textToSimpleMD } from 'src/utils/text-to-simple-md';
+
 import ScrollPosition from './ScrollPosition';
 
 import './StepAgreement.scss';
 
 const StepAgreement = () => {
+  useOrderStep('agreement');
   const { data: user } = useGetMyDetailsQuery();
+  const { goToStockSelect, goToSummary } = useOrderPaths();
   const dispatch = useDispatch();
   const order = useSelector((state: ApplicationState) => state.order);
   const formData = order.formData;
@@ -63,14 +73,27 @@ const StepAgreement = () => {
   const { mutateAsync: createRent } = useCreateRentMutation();
   const { mutateAsync: extendRentMutate } = useExtendRentMutation();
 
-  const { rentId } = useParams<{ step: string; rentId?: string }>();
+  const {
+    rentId,
+    stockId: pathStockId,
+    boxGroupId: pathBoxGroupId,
+  } = useParams<{
+    rentId?: string;
+    stockId?: string;
+    boxGroupId?: string;
+  }>();
+  const { data: rent } = useMyRentDetailsQuery(rentId);
+  const stockId = pathStockId || rent?.stockId;
+  const boxGroupId = pathBoxGroupId || rent?.boxGroupId;
+  const { stock, boxGroup, pending, failed } = useOrderSelection(
+    stockId,
+    boxGroupId,
+  );
   const isOpenEnded = order.agreementType === RentAgreementType.OpenEnded;
   useEffect(() => {
-    if (!user) return;
-    if (!order.boxGroupId && !rentId) {
-      history.push(`/${UserService.getSlugByRole(user.role)}/order/step/stock`);
-    }
-  }, []);
+    if (!user || rentId) return;
+    if (!pathStockId || !pathBoxGroupId) goToStockSelect();
+  }, [goToStockSelect, pathBoxGroupId, pathStockId, rentId, user]);
 
   const proceedToPayment = (
     response: PayForRentResponse,
@@ -186,6 +209,8 @@ const StepAgreement = () => {
     const finishAt = isOpenEnded
       ? ''
       : (order.endDate && dateOnly(order.endDate)) || null;
+    const area =
+      boxGroup?.area != null ? String(boxGroup.area) : String(rent?.size ?? '');
 
     return {
       finishAt,
@@ -213,18 +238,21 @@ const StepAgreement = () => {
       date: dateOnly(new Date()),
       startAt: dateOnly(order.startDate),
       email: user?.email || undefined,
-      size: order.boxGroupName,
-      area: order.boxGroupArea,
-      stockName: order.stockName,
-      stockAddress: order.stockAddress,
+      size: boxGroup?.name || '',
+      area,
+      stockName: stock?.name || rent?.stockName || '',
+      stockAddress: stock?.address || rent?.stockAddress || '',
     };
   };
 
   const onBack = () => {
     if (!user) return;
-    history.push(
-      `/${UserService.getSlugByRole(user.role)}/order/step/summary/${rentId || ''}`,
-    );
+    if (rentId) goToSummary({ rentId });
+    else if (pathStockId && pathBoxGroupId) {
+      goToSummary({ stockId: pathStockId, boxGroupId: pathBoxGroupId });
+    } else {
+      goToStockSelect();
+    }
   };
 
   const agreementTemplate = useMemo(() => {
@@ -234,11 +262,12 @@ const StepAgreement = () => {
       ...values,
       addons: simplifiedAddons,
     };
-  }, [formData, order, tenant, user]);
+  }, [boxGroup, formData, order, rent, stock, tenant, user]);
 
   useEffect(() => {
     if (rentId || pendingCheckout?.rentId) return;
-    if (!user || !tenant || !order.boxGroupId) return;
+    if (pending || failed) return;
+    if (!user || !tenant || !stockId || !boxGroupId) return;
     if (!isOpenEnded && !order.endDate) return;
     if (isOpenEnded && !order.startDate) return;
     if (creatingRentRef.current) return;
@@ -282,8 +311,8 @@ const StepAgreement = () => {
     const dataCollectionRent: RentBoxReq = {
       ...commonCollection,
       startAt: formatOnlyDate(order.startDate),
-      stockId: order.stockId,
-      boxGroupId: order.boxGroupId,
+      stockId,
+      boxGroupId,
       agreementType: order.agreementType || RentAgreementType.FixedTerm,
       ...(isOpenEnded ? { finishAt: null } : {}),
     };
@@ -293,10 +322,22 @@ const StepAgreement = () => {
         creatingRentRef.current = false;
       },
     );
-  }, [user, tenant, rentId, pendingCheckout?.rentId, order.boxGroupId, order.endDate]);
+  }, [
+    failed,
+    pending,
+    user,
+    tenant,
+    rentId,
+    pendingCheckout?.rentId,
+    boxGroupId,
+    order.endDate,
+  ]);
 
   const { data: agreementDocument, isLoading: isAgreementDocumentLoading } =
-    useGetDocumentByTypeQuery('agreement', order.stockId);
+    useGetDocumentByTypeQuery('agreement', stockId);
+
+  if (pathStockId && pathBoxGroupId && pending) return null;
+  if (pathStockId && pathBoxGroupId && failed) return <OrderLoadError />;
 
   if (!tenant) return null;
 
@@ -329,7 +370,7 @@ const StepAgreement = () => {
         <AgreementPreview
           source="template"
           template={agreementTemplate}
-          stockId={order.stockId}
+          stockId={stockId}
         />
       );
     }
@@ -346,7 +387,7 @@ const StepAgreement = () => {
           {pendingCheckout?.rentId ? (
             <Alert type="notice">
               {__('application.orderAssignedBox', {
-                type: getBoxGroupTypeLabel(order.boxGroupType),
+                type: getBoxGroupTypeLabel(boxGroup?.type ?? rent?.boxGroupType),
               })}
             </Alert>
           ) : null}

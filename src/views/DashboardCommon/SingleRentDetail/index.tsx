@@ -134,7 +134,7 @@ const SingleRentDetail = () => {
                     <strong>{singleRent.passcode}</strong>
                   </p>
                 ) : null}
-                {singleRent.controlled ? (
+                {singleRent.controlled && [RentStatus.rented, RentStatus.awaitingFinish].includes(singleRent.status) ? (
                   <OpenBox
                     id={singleRent.boxId}
                     disabled={!accessActionsEnabled}

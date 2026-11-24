@@ -6,14 +6,12 @@ import {
   AddonUserFileRequirementType,
   CalculatedAddonPriceRes,
   CalculatedPriceRes,
-  BoxGroupType,
   PayForRentResponse,
   PaymentDocument,
   PriceDisplayForClients,
   RentAgreementType,
   RentPaymentType,
   SingleAcceptance,
-  StockRes,
 } from 'smartbox-types';
 import { __ } from 'src/helpers/i18n';
 import { FormType } from 'src/types/order-form';
@@ -44,14 +42,6 @@ export type OrderAddon = {
 
 export type OrderState = {
   // refactored
-  stock: StockRes | null;
-  stockId: string;
-  stockName: string;
-  stockAddress: string;
-  boxGroupId: string;
-  boxGroupName: string;
-  boxGroupArea: string;
-  boxGroupType: BoxGroupType;
   minRentPeriod: number | null;
   maxAdvanceBookingDays: number | null;
   maxRentPeriod: number | null;
@@ -84,36 +74,6 @@ export type OrderState = {
   isResignationMarked: boolean;
   pendingCheckout: PayForRentResponse | null;
 };
-
-interface SetOrderStock {
-  type: 'SET_ORDER_STOCK';
-  payload: {
-    stockId: string;
-    stockName: string;
-    stockAddress: string;
-  };
-}
-
-interface SetOrderFullStock {
-  type: 'SET_ORDER_FULL_STOCK';
-  payload: {
-    stock: StockRes;
-  };
-}
-
-interface ClearOrderStock {
-  type: 'CLEAR_ORDER_STOCK';
-}
-
-interface SetOrderBoxGroup {
-  type: 'SET_ORDER_BOX_GROUP';
-  payload: {
-    boxGroupId: string;
-    boxGroupName: string;
-    boxGroupArea: string;
-    boxGroupType: BoxGroupType;
-  };
-}
 
 interface SetMinRentPeriod {
   type: 'SET_MIN_RENT_PERIOD';
@@ -266,10 +226,6 @@ interface FetchRentPeriodConfig {
 
 type Action =
   // refactored
-  | SetOrderStock
-  | SetOrderFullStock
-  | ClearOrderStock
-  | SetOrderBoxGroup
   | SetMinRentPeriod
   | SetMaxRentPeriod
   | SetMaxAdvanceBookingDays
@@ -303,14 +259,6 @@ type Action =
 
 const initialState: OrderState = {
   // refactored
-  stock: null,
-  stockId: '',
-  stockName: '',
-  stockAddress: '',
-  boxGroupId: '',
-  boxGroupName: '',
-  boxGroupArea: '',
-  boxGroupType: BoxGroupType.storage,
   minRentPeriod: null,
   maxAdvanceBookingDays: null,
   maxRentPeriod: null,
@@ -363,43 +311,6 @@ export default (
   action: Action,
 ): OrderState => {
   switch (action.type) {
-    case 'SET_ORDER_STOCK': {
-      return {
-        ...state,
-        stockId: action.payload.stockId,
-        stockName: action.payload.stockName,
-        stockAddress: action.payload.stockAddress,
-        pendingCheckout: null,
-      };
-    }
-
-    case 'SET_ORDER_FULL_STOCK': {
-      return {
-        ...state,
-        stock: action.payload.stock,
-      };
-    }
-
-    case 'CLEAR_ORDER_STOCK': {
-      return {
-        ...state,
-        stockId: '',
-        stockName: '',
-        stockAddress: '',
-      };
-    }
-
-    case 'SET_ORDER_BOX_GROUP': {
-      return {
-        ...state,
-        boxGroupId: action.payload.boxGroupId,
-        boxGroupName: action.payload.boxGroupName,
-        boxGroupArea: action.payload.boxGroupArea,
-        boxGroupType: action.payload.boxGroupType,
-        pendingCheckout: null,
-      };
-    }
-
     case 'SET_MIN_RENT_PERIOD': {
       return {
         ...state,

@@ -1,4 +1,4 @@
-import { PaymentDocument, PayForRentResponse, RentAgreementType, RentPaymentType, StockRes, BoxGroupType } from 'smartbox-types';
+import { PaymentDocument, PayForRentResponse, RentAgreementType, RentPaymentType } from 'smartbox-types';
 import { FormType } from 'src/types/order-form';
 
 export const updateFormData = (data: Partial<FormType>) => ({
@@ -31,30 +31,6 @@ export const clearPaymentDetails = () => ({
   type: 'CLEAR_PAYMENT_METHOD_SUCCESS',
 });
 
-// refactored
-export const setOrderStock = (
-  stockId: string,
-  stockName: string,
-  stockAddress: string,
-) => ({
-  type: 'SET_ORDER_STOCK',
-  payload: { stockId, stockAddress, stockName },
-});
-export const setOrderFullStock = (stock: StockRes) => ({
-  type: 'SET_ORDER_FULL_STOCK',
-  payload: { stock },
-});
-
-export const clearSelectedStock = () => ({ type: 'CLEAR_ORDER_STOCK' });
-export const setBoxGroup = (
-  boxGroupId: string,
-  boxGroupName: string,
-  boxGroupArea: string,
-  boxGroupType: BoxGroupType = BoxGroupType.storage,
-) => ({
-  type: 'SET_ORDER_BOX_GROUP',
-  payload: { boxGroupId, boxGroupName, boxGroupArea, boxGroupType },
-});
 export const setMinRentPeriod = (days: number) => ({
   type: 'SET_MIN_RENT_PERIOD',
   payload: days,

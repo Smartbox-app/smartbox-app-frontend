@@ -2,6 +2,7 @@ import { addDays, endOfDay, startOfDay, startOfToday } from 'date-fns';
 import React, { useEffect, useMemo } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router';
 import styled from 'styled-components';
 
 import {
@@ -13,7 +14,6 @@ import {
 import {
   clearPaymentDetails,
   setMinDaysForInstallments,
-  setOrderFullStock,
   setRentAgreementType,
   setRentEndDate,
   setRentPaymentType,
@@ -26,16 +26,18 @@ import { ButtonsContainer } from 'src/components/Layout';
 import { Button, Section, Stack } from 'src/components/ui';
 import { RentDurationDto } from 'src/dto/RentDurationDto';
 import { __ } from 'src/helpers/i18n';
-import { history } from 'src/history';
 import { useBridgeCalculatedPriceToRedux } from 'src/hooks/useBridgeOrderPriceQuery';
 import { useSyncAddonPricesToRedux } from 'src/hooks/useSyncAddonPricesToRedux';
 import { useTracking } from 'src/hooks/useTracking';
 import { ArrowLeft, ArrowRight } from 'src/icons';
-import { useGetMyDetailsQuery, useGetStockQuery } from 'src/queries';
+import { useGetMyDetailsQuery } from 'src/queries';
 import { useBoxGroupPriceQuery } from 'src/queries/useRentPriceQueries';
 import { ApplicationState } from 'src/reducers';
 import { ClassValidatorResolver } from 'src/resolvers/ClassValidatorResolver';
-import UserService from 'src/services/user-service';
+import { OrderLoadError } from 'src/views/DashboardCommon/Order/OrderLoadError';
+import { useOrderStep } from 'src/views/DashboardCommon/Order/RouteWithIndicator';
+import { useOrderPaths } from 'src/views/DashboardCommon/Order/useOrderPaths';
+import { useOrderSelection } from 'src/views/DashboardCommon/Order/useOrderSelection';
 import {
   resolveCheckoutAgreementType,
   resolveCheckoutPaymentType,
@@ -46,11 +48,11 @@ import {
   initialFixedTermEndDate,
   isNewRentPeriodAcceptable,
 } from 'src/utils/rent-period-bounds';
-import { Addons } from '../Common/Addons';
-import { AgreementTypeSelect } from '../Common/AgreementTypeSelect';
-import { PaymentType } from '../Common/PaymentType';
-import Price from '../Common/Price';
-import { RentDuration } from '../Common/RentDuration';
+import { Addons } from 'src/views/DashboardCommon/Order/Form/Common/Addons';
+import { AgreementTypeSelect } from 'src/views/DashboardCommon/Order/Form/Common/AgreementTypeSelect';
+import { PaymentType } from 'src/views/DashboardCommon/Order/Form/Common/PaymentType';
+import Price from 'src/views/DashboardCommon/Order/Form/Common/Price';
+import { RentDuration } from 'src/views/DashboardCommon/Order/Form/Common/RentDuration';
 
 import './StepDuration.scss';
 
@@ -69,22 +71,23 @@ const StyledPriceWrap = styled.div`
 `;
 
 const StepDuration = () => {
+  useOrderStep('duration');
   const { data: user } = useGetMyDetailsQuery();
+  const { goToSize, goToSummary } = useOrderPaths();
   const dispatch = useDispatch();
   const { trackInitiateCheckout } = useTracking();
-  const minRentPeriod = useSelector(
-    (state: ApplicationState) => state.order.minRentPeriod,
-  );
-  const maxRentPeriod = useSelector(
-    (state: ApplicationState) => state.order.maxRentPeriod,
-  );
-  const maxAdvanceBookingDays = useSelector(
-    (state: ApplicationState) => state.order.maxAdvanceBookingDays,
-  );
-  // box groupId is used directly only when new rent is created
-  const {
-    stock,
+  const { stockId = '', boxGroupId = '' } = useParams<{
+    stockId: string;
+    boxGroupId: string;
+  }>();
+  const { stock, boxGroup, pending, failed } = useOrderSelection(
     stockId,
+    boxGroupId,
+  );
+  const minRentPeriod = boxGroup?.minRentPeriod ?? null;
+  const maxRentPeriod = boxGroup?.maxRentPeriod ?? null;
+  const maxAdvanceBookingDays = boxGroup?.maxAdvanceBookingDays ?? null;
+  const {
     startDate,
     endDate,
     loadingPrice,
@@ -93,10 +96,6 @@ const StepDuration = () => {
     rentPaymentType,
     agreementType,
     minRentDaysForInstallments,
-    boxGroupId,
-    boxGroupName,
-    boxGroupArea,
-    stockName,
   } = useSelector((state: ApplicationState) => state.order);
 
   const selectedAgreementType = resolveCheckoutAgreementType(
@@ -148,14 +147,6 @@ const StepDuration = () => {
     boxGroupId,
     openEnded: isOpenEnded,
   });
-
-  const { data: stockData } = useGetStockQuery(stockId);
-
-  useEffect(() => {
-    if (stockData) {
-      dispatch(setOrderFullStock(stockData));
-    }
-  }, [stockData, dispatch]);
 
   useEffect(() => {
     if (!stock) return;
@@ -335,18 +326,18 @@ const StepDuration = () => {
     minRentDaysForInstallments,
   ]);
 
-  if (!user || !minRentPeriod || maxRentPeriod === null) return null;
+  if (failed) return <OrderLoadError />;
 
-  const summaryPath = `/${UserService.getSlugByRole(user.role)}/order/step/summary`;
+  if (!user || pending || !boxGroup || !minRentPeriod) return null;
 
   const handleContinue = () => {
     const payload = buildInitiateCheckoutPayload(
       { calculatedPrice, orderAddons },
       {
         boxGroupId,
-        boxGroupName,
-        boxGroupArea,
-        stockName,
+        boxGroupName: boxGroup.name,
+        boxGroupArea: boxGroup.area ? String(boxGroup.area) : '',
+        stockName: stock?.name,
         paymentType: 'new_rent',
       },
     );
@@ -357,7 +348,7 @@ const StepDuration = () => {
         userId: user.id,
       });
     }
-    history.push(summaryPath);
+    goToSummary({ stockId, boxGroupId });
   };
 
   return (
@@ -444,7 +435,7 @@ const StepDuration = () => {
               text="application.back"
               type="button"
               iconLeft={<ArrowLeft />}
-              to={`/${UserService.getSlugByRole(user.role)}/order/step/stock`}
+              onClick={() => goToSize(stockId, boxGroupId)}
             />
             <Button
               type="button"

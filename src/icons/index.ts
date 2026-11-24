@@ -24,7 +24,9 @@ export * from 'src/icons/Invitations';
 export * from 'src/icons/Workers';
 export * from 'src/icons/Templates';
 export * from 'src/icons/Message';
+export * from 'src/icons/Phone';
 export * from 'src/icons/Stocks2';
+
 export * from 'src/icons/Stop';
 export * from 'src/icons/HomeWifi';
 export * from 'src/icons/List';

@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Redirect, Route } from 'react-router-dom';
 
 import { UserRole } from 'smartbox-types';
 import { AppMessage } from 'src/components/AppMessage';
 import { LanguageSwitcher } from 'src/components/LanguageSwitcher';
 import { useGetMyDetailsQuery } from 'src/queries';
-import { withAttributionSearch } from 'src/utils/attribution-params';
+import { appendAttributionSearch, withAttributionSearch } from 'src/utils/attribution-params';
+import { clearRememberedRedirect, getRememberedRedirect } from 'src/utils/remeber-redirect';
 
 export type RouteGuestProps = {
   component: React.ComponentType;
@@ -15,9 +16,20 @@ export type RouteGuestProps = {
 
 export const RouteGuest = ({ component, exact, path }: RouteGuestProps) => {
   const { data: user } = useGetMyDetailsQuery();
+  const remembered = user ? getRememberedRedirect() : null;
+  const returnTo =
+    remembered && remembered.role === user?.role ? remembered.to : null;
+
+  useEffect(() => {
+    if (returnTo) clearRememberedRedirect();
+  }, [returnTo]);
 
   if (user) {
-    switch (user!.role) {
+    if (returnTo) {
+      return <Redirect to={appendAttributionSearch(returnTo)} />;
+    }
+
+    switch (user.role) {
       case UserRole.admin:
         return <Redirect to={withAttributionSearch('/admin')} />;
       case UserRole.user:

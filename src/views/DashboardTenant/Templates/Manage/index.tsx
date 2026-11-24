@@ -427,6 +427,28 @@ const allowedTags = {
     'boxTypeAccusative',
     'boxTypeYourGenitive',
   ],
+  [TemplateType.REGISTRATION_NO_RENT_SMS]: ['name', 'company'],
+  [TemplateType.FIRST_GATE_OPEN_FOLLOW_UP_SMS]: ['name', 'company'],
+  [TemplateType.RENT_ENDED_FOLLOW_UP_SMS]: [
+    'name',
+    'number',
+    'company',
+    'rentFrom',
+    'rentUntil',
+    'boxTypeNoun',
+    'boxTypeAccusative',
+    'boxTypeYourGenitive',
+  ],
+  [TemplateType.CONTRACT_ANNIVERSARY_SMS]: [
+    'name',
+    'number',
+    'company',
+    'rentFrom',
+    'years',
+    'boxTypeNoun',
+    'boxTypeAccusative',
+    'boxTypeYourGenitive',
+  ],
 };
 
 function templateTitleKey(forStock: boolean, stockScoped: boolean) {

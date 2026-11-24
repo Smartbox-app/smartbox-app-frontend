@@ -61,6 +61,19 @@ export const getAttributionSearch = (): string => {
   return result ? `?${result}` : '';
 };
 
+export const appendAttributionSearch = (path: string): string => {
+  const [pathname, existingSearch = ''] = path.split('?');
+  const params = new URLSearchParams(existingSearch);
+  const attribution = new URLSearchParams(getAttributionSearch().slice(1));
+
+  attribution.forEach((value, key) => {
+    if (!params.has(key)) params.set(key, value);
+  });
+
+  const query = params.toString();
+  return query ? `${pathname}?${query}` : pathname;
+};
+
 export const withAttributionSearch = (path: string): string => {
   const [pathname, existingSearch = ''] = path.split('?');
   const existing = pickAttributionParams(existingSearch);

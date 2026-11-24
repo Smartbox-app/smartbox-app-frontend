@@ -1,4 +1,5 @@
 import {
+  appendAttributionSearch,
   captureAttributionParams,
   getAttributionSearch,
   getStoredAttributionParams,
@@ -48,5 +49,13 @@ describe('attribution params', () => {
       '/order?utm_campaign=spring&utm_source=ad',
     );
     expect(withAttributionSearch('/order')).toBe('/order?utm_campaign=spring');
+  });
+
+  it('keeps a preselected box group when attribution is added', () => {
+    captureAttributionParams('?utm_source=ad');
+
+    expect(
+      appendAttributionSearch('/user/order/stock-1?group=group-1'),
+    ).toBe('/user/order/stock-1?group=group-1&utm_source=ad');
   });
 });

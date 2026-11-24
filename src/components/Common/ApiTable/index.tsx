@@ -68,11 +68,16 @@ const emptyTableData: TableResponse<Record<string, unknown>> = {
   items: [],
 };
 
+function visibleSchemeFields(scheme: TableSchema): TableSchemaField[] {
+  return scheme.fields.filter((f) => !f.exportOnly);
+}
+
 function getInitialSearchState(scheme: TableSchema) {
-  const defaultSearchField = scheme.fields.find(
+  const fields = visibleSchemeFields(scheme);
+  const defaultSearchField = fields.find(
     (field) => ['string', 'number'].indexOf(typeof field.defaultSearch) > -1,
   );
-  const defaultSortField = scheme.fields.find((f) => f.defaultSort === true) as
+  const defaultSortField = fields.find((f) => f.defaultSort === true) as
     | TableSchemaField
     | undefined;
 
@@ -310,9 +315,9 @@ export const ApiTable = ({
     if (sortBy !== '') {
       return { sortBy, sortDirBack };
     }
-    const field = scheme.fields.find((f) => f.defaultSort === true) as
-      | TableSchemaField
-      | undefined;
+    const field = visibleSchemeFields(scheme).find(
+      (f) => f.defaultSort === true,
+    ) as TableSchemaField | undefined;
     if (!field) return null;
     return {
       sortBy: field.field,
@@ -421,7 +426,7 @@ export const ApiTable = ({
       {data &&
         (data.countTotal > 0 || searchQuery) &&
         searchComponent(
-          scheme.fields,
+          visibleSchemeFields(scheme),
           { searchBy, searchQuery },
           handleSearchChange,
           selectSearchByField,

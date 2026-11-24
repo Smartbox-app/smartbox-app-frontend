@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import {
@@ -15,6 +15,7 @@ import {
   UserType,
 } from 'smartbox-types';
 import { showModal } from 'src/actions/modal';
+import { successNotification } from 'src/actions/notifications';
 import { Button } from 'src/components/Branded';
 import { ApiTable, ConfirmModal } from 'src/components/Common';
 import { ButtonsContainer, Section } from 'src/components/Layout';
@@ -27,6 +28,7 @@ import {
   useSetUserStatusMutation,
 } from 'src/mutations';
 import { useGetMyDetailsQuery } from 'src/queries';
+import ApiService from 'src/services/api-service';
 import UserService from 'src/services/user-service';
 import { InteractiveTableSchema } from 'src/utils/table-schema-utils';
 import UserDetail from './UserDetail';
@@ -40,8 +42,28 @@ const List = () => {
   const { mutate: deleteUserByForce } = useDeleteUserByForceMutation();
   const { mutate: resendActivationEmail } = useResendUserActivationMutation();
   const { mutate: setUserStatus } = useSetUserStatusMutation();
+  const [exportingCsv, setExportingCsv] = useState(false);
 
   const hasFullAccess = [UserRole.admin, UserRole.client].includes(user!.role);
+
+  const requestUsersCsvExport = async () => {
+    setExportingCsv(true);
+    try {
+      await ApiService.callFetch(
+        'GET',
+        `user/export/csv/${UserType.user}`,
+        () => {
+          dispatch(successNotification(__('application.reportQueuedForEmail')));
+        },
+        undefined,
+        undefined,
+        undefined,
+        true,
+      );
+    } finally {
+      setExportingCsv(false);
+    }
+  };
 
   const confirmUserDelete = (userId: string) => {
     dispatch(
@@ -182,7 +204,12 @@ const List = () => {
               primary
               to={`/${UserService.getSlugByRole(user!.role)}/management/users/invite`}
             />
-            {/* <Button text='application.historyWorker' secondary to={`/${UserService.getSlugByRole(user.role)}/management/workers/history`} /> */}
+            <Button
+              text="application.exportCsv"
+              secondary
+              disabled={exportingCsv}
+              click={() => void requestUsersCsvExport()}
+            />
           </ButtonsContainer>
         }
       >

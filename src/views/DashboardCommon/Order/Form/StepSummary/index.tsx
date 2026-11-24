@@ -29,23 +29,30 @@ import {
   Form,
 } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
-import { history } from 'src/history';
 import { useBridgeCalculatedPriceToRedux } from 'src/hooks/useBridgeOrderPriceQuery';
 import { useTenant } from 'src/hooks/useTenant';
 import { useI18n } from 'src/i18n';
 import { ArrowLeft, ArrowRight } from 'src/icons';
-import { useGetMyDetailsQuery, useMyRentDetailsQuery } from 'src/queries';
+import {
+  useGetMyDetailsQuery,
+  useMyRentDetailsQuery,
+  useStockForOrderQuery,
+} from 'src/queries';
 import {
   useBoxGroupPriceQuery,
   usePriceForRentQuery,
 } from 'src/queries/useRentPriceQueries';
 import { ApplicationState } from 'src/reducers';
 import { ClassValidatorResolver } from 'src/resolvers/ClassValidatorResolver';
-import UserService from 'src/services/user-service';
+import { OrderLoadError } from 'src/views/DashboardCommon/Order/OrderLoadError';
+import { useOrderStep } from 'src/views/DashboardCommon/Order/RouteWithIndicator';
+import { useOrderPaths } from 'src/views/DashboardCommon/Order/useOrderPaths';
+import { useOrderSelection } from 'src/views/DashboardCommon/Order/useOrderSelection';
 import { openEndedFirstPeriodFinish } from 'src/utils/open-ended-period';
 import { scrollToFirstFormError } from 'src/utils/scroll-to-form-error';
 import { textToSimpleMD } from 'src/utils/text-to-simple-md';
-import { PaymentDocumentType } from '../Common/PaymentDocumentType';
+import { PaymentDocumentType } from 'src/views/DashboardCommon/Order/Form/Common/PaymentDocumentType';
+
 import { ClientSourceForm } from './ClientSourceForm';
 import { CompanyDetailsForm } from './CompanyDetailsForm';
 import { DiscountForm } from './DiscountForm';
@@ -75,18 +82,16 @@ const STEP_SUMMARY_FIELD_ORDER: (keyof RentDataDto)[] = [
 ];
 
 const StepSummary = () => {
+  useOrderStep('summary');
   const { tenant } = useTenant();
   const { t } = useI18n();
   const dispatch = useDispatch();
   const {
-    stock,
     calculatedPrice,
     addons,
     orderAddons,
     loadingPrice,
     discountCode,
-    stockId,
-    boxGroupId,
     startDate,
     endDate,
     rentPaymentType,
@@ -94,7 +99,21 @@ const StepSummary = () => {
   } = useSelector((state: ApplicationState) => state.order);
 
   const { data: user } = useGetMyDetailsQuery();
-  const { rentId } = useParams<{ step: string; rentId: string }>();
+  const { goToStockSelect, goToDuration, goToAgreement } = useOrderPaths();
+  const {
+    rentId,
+    stockId: pathStockId,
+    boxGroupId: pathBoxGroupId,
+  } = useParams<{
+    rentId?: string;
+    stockId?: string;
+    boxGroupId?: string;
+  }>();
+  const { data: rent } = useMyRentDetailsQuery(rentId);
+  const stockId = pathStockId || rent?.stockId;
+  const boxGroupId = pathBoxGroupId || rent?.boxGroupId;
+  const { data: stock } = useStockForOrderQuery(stockId);
+  const selection = useOrderSelection(pathStockId, pathBoxGroupId);
   const isOpenEnded = agreementType === RentAgreementType.OpenEnded;
   const pricePaymentType = isOpenEnded
     ? RentPaymentType.InAdvance
@@ -106,7 +125,6 @@ const StepSummary = () => {
       : endDate;
   const isFirstRent = user && !user.rentCount;
   const [discount, setDiscount] = useState<boolean>(false);
-  const { data: rent } = useMyRentDetailsQuery(rentId);
 
   const extensionPriceEnabled = !!rentId && !!endDate && !isOpenEnded;
   const newRentPriceEnabled =
@@ -184,12 +202,9 @@ const StepSummary = () => {
   }, [rent, setValue]);
 
   useEffect(() => {
-    if (!user) return;
-    if (!stock || (!rentId && (!stockId || !boxGroupId))) {
-      history.push(`/${UserService.getSlugByRole(user.role)}/order/step/stock`);
-    }
-
-  }, [user]);
+    if (!user || rentId) return;
+    if (!pathStockId || !pathBoxGroupId) goToStockSelect();
+  }, [goToStockSelect, pathBoxGroupId, pathStockId, rentId, user]);
 
   useEffect(() => {
     if (!user || !user.birthDate) return;
@@ -225,14 +240,20 @@ const StepSummary = () => {
     if (!user) return;
     const { withBirthDate: _withBirthDate, withClientSource: _withClientSource, ...rest } = data;
     dispatch(updateFormData({ ...rest, isCompany: invoiceNeeded }));
-    history.push(
-      `/${UserService.getSlugByRole(user.role)}/order/step/agreement/${rentId || ''}`,
-    );
+    if (rentId) goToAgreement({ rentId });
+    else if (pathStockId && pathBoxGroupId) {
+      goToAgreement({ stockId: pathStockId, boxGroupId: pathBoxGroupId });
+    } else {
+      goToStockSelect();
+    }
   };
 
   const onInvalid = (formErrors: FieldErrors<RentDataDto>) => {
     scrollToFirstFormError(formErrors, STEP_SUMMARY_FIELD_ORDER);
   };
+
+  if (pathStockId && pathBoxGroupId && selection.pending) return null;
+  if (selection.failed) return <OrderLoadError />;
 
   return (
     <Stack>
@@ -262,7 +283,7 @@ const StepSummary = () => {
         )}
       </Section>
 
-      {discount && firstPeriodEnd ? (
+      {discount && firstPeriodEnd && stockId && boxGroupId ? (
         <DiscountForm
           stockId={stockId}
           boxGroupId={rent?.boxGroupId || boxGroupId}
@@ -305,9 +326,18 @@ const StepSummary = () => {
                 <Button
                   size="large"
                   variant="secondary"
+                  type="button"
                   text="application.back"
                   iconLeft={<ArrowLeft />}
-                  to={`/${UserService.getSlugByRole(user!.role)}/order/step/duration/${rentId || ''}`}
+                  onClick={() => {
+                    if (rentId) goToDuration({ rentId });
+                    else if (pathStockId && pathBoxGroupId) {
+                      goToDuration({
+                        stockId: pathStockId,
+                        boxGroupId: pathBoxGroupId,
+                      });
+                    }
+                  }}
                 />
                 <Button
                   type="submit"

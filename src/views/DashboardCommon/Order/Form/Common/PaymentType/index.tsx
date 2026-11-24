@@ -2,17 +2,18 @@ import {
   MyRentDetails,
   RentPaymentType,
   RentStatus,
+  StockOrderRes,
   StockPaymentType,
-  StockRes,
 } from 'smartbox-types';
 import { AsterixRequired } from 'src/components/Common';
 import { Header, Section } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
-import { InstallmentsPaymentMinDaysInfo } from '../InstallmentsPaymentMinDaysInfo';
+import { InstallmentsPaymentMinDaysInfo } from 'src/views/DashboardCommon/Order/Form/Common/InstallmentsPaymentMinDaysInfo/InstallmentsPaymentMinDaysInfo';
+
 import { SinglePaymentType } from './SinglePaymentType';
 
 type Props = {
-  stock: StockRes;
+  stock: StockOrderRes;
   rent?: MyRentDetails;
 };
 

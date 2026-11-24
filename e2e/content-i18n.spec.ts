@@ -78,7 +78,10 @@ const chooseAccountLanguage = async (page: Page, code: 'EN' | 'PL') => {
 const openGroupEdit = async (page: Page) => {
   await page.goto('/client/locations/stocks/list');
   await page
-    .getByRole('row', { name: new RegExp(e2eStockName) })
+    .getByRole('row')
+    .filter({
+      has: page.getByRole('cell', { name: e2eStockName, exact: true }),
+    })
     .getByRole('button', { name: /Zarządzaj|Manage/ })
     .click();
   await page.getByRole('link', { name: /^Grupy$|^Groups$/, exact: true }).click();
@@ -92,7 +95,10 @@ const openGroupEdit = async (page: Page) => {
 const openAddonEdit = async (page: Page) => {
   await page.goto('/client/locations/stocks/list');
   await page
-    .getByRole('row', { name: new RegExp(e2eStockName) })
+    .getByRole('row')
+    .filter({
+      has: page.getByRole('cell', { name: e2eStockName, exact: true }),
+    })
     .getByRole('button', { name: /Zarządzaj|Manage/ })
     .click();
   await page.getByRole('link', { name: /^Dodatki$|^Addons$/, exact: true }).click();

@@ -21,7 +21,7 @@ export const useMarkAlertReadMutation = (
     },
     onSuccess: () => {
       dispatch(successNotification('application.alertMarkedRead'));
-      void queryClient.invalidateQueries({ queryKey: ['api-table'] });
+      queryClient.invalidateQueries({ queryKey: ['api-table'] });
       options?.onSuccess?.();
     },
   });

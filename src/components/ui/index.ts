@@ -3,6 +3,7 @@ export * from './Input';
 export * from './Link';
 export * from './Typography';
 export * from './Button';
+export * from './Fab';
 export * from './Narrow';
 export * from './Form';
 export * from './Container';

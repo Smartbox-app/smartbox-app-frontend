@@ -72,6 +72,10 @@ export enum TemplateType {
   OPEN_ENDED_RECOVER_ACCESS_ENDS_IN_2_DAYS_SMS = 'open_ended_recover_access_ends_in_2_days_sms',
   OPEN_ENDED_RECOVER_ACCESS_ENDS_TODAY_EMAIL = 'open_ended_recover_access_ends_today_email',
   OPEN_ENDED_RECOVER_ACCESS_ENDS_TODAY_SMS = 'open_ended_recover_access_ends_today_sms',
+  REGISTRATION_NO_RENT_SMS = 'registration_no_rent_sms',
+  FIRST_GATE_OPEN_FOLLOW_UP_SMS = 'first_gate_open_follow_up_sms',
+  RENT_ENDED_FOLLOW_UP_SMS = 'rent_ended_follow_up_sms',
+  CONTRACT_ANNIVERSARY_SMS = 'contract_anniversary_sms',
 }
 
 const tenantOnlyTemplateTypes = new Set<TemplateType>([
@@ -82,6 +86,8 @@ const tenantOnlyTemplateTypes = new Set<TemplateType>([
   TemplateType.USER_BLOCKED_SMS,
   TemplateType.USER_UNBLOCKED_EMAIL,
   TemplateType.USER_UNBLOCKED_SMS,
+  TemplateType.REGISTRATION_NO_RENT_SMS,
+  TemplateType.FIRST_GATE_OPEN_FOLLOW_UP_SMS,
 ]);
 
 export const stockScopedTemplateTypes = new Set(

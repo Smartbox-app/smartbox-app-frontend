@@ -109,6 +109,8 @@ const application = {
       boxes_list: 'Locker list',
       boxes_groups: 'Groups',
       boxes: 'Lockers',
+      not_found: 'The location you are looking for was not found.',
+      back_to_select: 'Back to location selection',
     },
     stock: {
       client_source: 'How did you hear about us?',
@@ -149,6 +151,8 @@ const application = {
       boxes_list: 'Locker list',
       boxes_groups: 'Groups',
       boxes: 'Storage units',
+      not_found: 'The site you are looking for was not found.',
+      back_to_select: 'Back to site selection',
     },
     stock_group: {
       list: 'Site group list',
@@ -279,6 +283,10 @@ const application = {
     manage: 'Manage',
     move: 'Move',
     contact: 'Contact',
+    call: 'Call',
+    whatsapp: 'WhatsApp',
+    openQuickContact: 'Open quick contact',
+    closeQuickContact: 'Close quick contact',
     min8Char: 'At least 8 characters',
     select: 'Select',
     selectNoOptions: 'No options',
@@ -839,6 +847,7 @@ const application = {
     goToOrder: 'Go to the agreement',
     goToProfile: 'Go to profile',
     orderAgreement: 'Rental agreement',
+    orderSelectionErrorTitle: 'Something went wrong',
     orderAgreementAcceptation:
       'To continue, read the agreement and accept the required consents.',
     agreementPreviewError: 'Could not load the agreement preview.',
@@ -948,6 +957,7 @@ const application = {
     rentSummaryOwner: 'owner:',
     downloadReport: 'Download report',
     downloadPaymentsReport: 'Download payments report',
+    exportCsv: 'Export CSV',
     selectReportDate: 'Select the report day',
     reportWillBeSentToEmail:
       'The report will be sent to the email address linked to your account when it is ready.',
@@ -1001,7 +1011,7 @@ const application = {
     tenantAnalyticsEventSignUp:
       'Account registration — the /register page (after a successful registration). GTM: sign_up with user_data.email. Meta Pixel: CompleteRegistration with Advanced Matching (em — email). The user identifier is not sent, because registration does not return it.',
     tenantAnalyticsEventBeginCheckout:
-      'Start of an order — confirming rental dates in a new order (/order/step/duration) or when extending (/order/step/duration/:rentId). GTM: begin_checkout with user_id, user_data.email, location, and payment_type (new_rent or extension). Meta Pixel: InitiateCheckout with email, external_id, contents, and payment_type (Advanced Matching; value = gross; also value_gross and value_net)',
+      'Start of an order — confirming rental dates in a new order (/order/:stockId/:boxGroupId/duration) or when extending (/order/rent/:rentId/duration). GTM: begin_checkout with user_id, user_data.email, location, and payment_type (new_rent or extension). Meta Pixel: InitiateCheckout with email, external_id, contents, and payment_type (Advanced Matching; value = gross; also value_gross and value_net)',
     tenantAnalyticsEventPurchase:
       'Payment completion — the payment result page (/payment/:id), once per payment id. GTM: purchase with user_id, user_data.email, location, and payment_type (new_rent, extension, period_payment; Google Ads enhanced conversions). Meta Pixel: Purchase for new_rent, RentExtension for extension, RentPeriodPayment for period_payment, each with the email address, external_id, and order_id (Advanced Matching; value = gross; also value_gross and value_net)',
     tenantAnalyticsReadonlyIntro:
@@ -1020,7 +1030,7 @@ const application = {
       'After a successful registration on the /register page.',
     tenantAnalyticsBeginCheckoutTitle: 'Checkout started',
     tenantAnalyticsBeginCheckoutWhen:
-      'After the rental dates are confirmed and the user continues in a new order (/order/step/duration) or when extending a rental (/order/step/duration/:rentId).',
+      'After the rental dates are confirmed and the user continues in a new order (/order/:stockId/:boxGroupId/duration) or when extending a rental (/order/rent/:rentId/duration).',
     tenantAnalyticsPurchaseTitle: 'Payment completed',
     tenantAnalyticsPurchaseWhen:
       'On the payment result page (/payment/:id), once, when the payment status is accepted.',
@@ -2087,6 +2097,11 @@ Advanced Matching (separate from the parameters below, email hashed in the brows
     rent_ended_email: 'Rental ended',
     rent_ended_sms: 'Rental ended',
     rent_ended_admin_notification_email: 'Admin message about an ended rental',
+    registration_no_rent_sms:
+      'SMS 2h after registration if no rental',
+    first_gate_open_follow_up_sms: 'SMS 2h after first gate open',
+    rent_ended_follow_up_sms: 'SMS 2h after rental ended',
+    contract_anniversary_sms: 'SMS on contract anniversary',
     boxTypeNoun: 'Rental type - "storage unit/locker/parking space"',
     boxTypeAccusative: 'Rental type - "storage unit/locker/parking space"',
     boxTypeYourGenitive:
@@ -2109,6 +2124,7 @@ Advanced Matching (separate from the parameters below, email hashed in the brows
     size: 'Locker size',
     stock: 'Site',
     daysToRecoverAccess: 'Number of days to recover access',
+    years: 'Years since the contract started',
   },
 } satisfies LocaleMessages<typeof plApplication>;
 

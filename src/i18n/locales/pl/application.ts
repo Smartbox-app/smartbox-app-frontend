@@ -103,6 +103,8 @@ const application = {
       boxes_list: 'Lista skrytek',
       boxes_groups: 'Grupy',
       boxes: 'Skrytki',
+      not_found: 'Nie znaleziono lokalizacji, której szukasz.',
+      back_to_select: 'Wróć do wyboru lokalizacji',
     },
     stock: {
       client_source: 'Skąd o nas wiesz?',
@@ -143,6 +145,8 @@ const application = {
       boxes_list: 'Lista skrytek',
       boxes_groups: 'Grupy',
       boxes: 'Minimagazyny',
+      not_found: 'Nie znaleziono placu, którego szukasz.',
+      back_to_select: 'Wróć do wyboru placu',
     },
     stock_group: {
       list: 'Lista grup placów',
@@ -273,6 +277,10 @@ const application = {
     manage: 'Zarządzaj',
     move: 'Przenieś',
     contact: 'Kontakt',
+    call: 'Zadzwoń',
+    whatsapp: 'WhatsApp',
+    openQuickContact: 'Otwórz szybki kontakt',
+    closeQuickContact: 'Zamknij szybki kontakt',
     min8Char: 'Minimum 8 znaków',
     select: 'Wybierz',
     selectNoOptions: 'Brak opcji',
@@ -840,6 +848,7 @@ const application = {
     goToOrder: 'Przejdź do umowy',
     goToProfile: 'Przejdź do profilu',
     orderAgreement: 'Umowa wynajmu',
+    orderSelectionErrorTitle: 'Coś poszło nie tak',
     orderAgreementAcceptation:
       'Aby kontynuować zapoznaj się z umową oraz zaakceptuj wymagane zgody.',
     agreementPreviewError: 'Nie udało się wczytać podglądu umowy.',
@@ -950,6 +959,7 @@ const application = {
     rentSummaryOwner: 'właściciel:',
     downloadReport: 'Pobierz raport',
     downloadPaymentsReport: 'Pobierz raport płatności',
+    exportCsv: 'Eksportuj CSV',
     selectReportDate: 'Wybierz dzień raportu',
     reportWillBeSentToEmail:
       'Raport zostanie wysłany na adres e-mail powiązany z Twoim kontem, gdy będzie gotowy.',
@@ -1003,7 +1013,7 @@ const application = {
     tenantAnalyticsEventSignUp:
       'Rejestracja konta — strona /register (po pomyślnej rejestracji). GTM: sign_up z user_data.email. Meta Pixel: CompleteRegistration z Advanced Matching (em — e-mail). Identyfikator użytkownika nie jest wysyłany, bo rejestracja go nie zwraca.',
     tenantAnalyticsEventBeginCheckout:
-      'Rozpoczęcie zamówienia — potwierdzenie dat wynajmu w nowym zamówieniu (/order/step/duration) albo przy przedłużeniu (/order/step/duration/:rentId). GTM: begin_checkout z user_id, user_data.email, location i payment_type (new_rent albo extension), Meta Pixel: InitiateCheckout z e-mail, external_id, contents i payment_type (Advanced Matching; value = brutto; dodatkowo value_gross i value_net)',
+      'Rozpoczęcie zamówienia — potwierdzenie dat wynajmu w nowym zamówieniu (/order/:stockId/:boxGroupId/duration) albo przy przedłużeniu (/order/rent/:rentId/duration). GTM: begin_checkout z user_id, user_data.email, location i payment_type (new_rent albo extension), Meta Pixel: InitiateCheckout z e-mail, external_id, contents i payment_type (Advanced Matching; value = brutto; dodatkowo value_gross i value_net)',
     tenantAnalyticsEventPurchase:
       'Zakończenie płatności — strona wyniku płatności (/payment/:id), raz na id płatności. GTM: purchase z user_id, user_data.email, location i payment_type (new_rent, extension, period_payment; rozszerzone konwersje Google Ads). Meta Pixel: Purchase dla new_rent, RentExtension dla extension, RentPeriodPayment dla period_payment — każde z adresem e-mail, external_id i order_id (Advanced Matching; value = brutto; dodatkowo value_gross i value_net)',
     tenantAnalyticsReadonlyIntro:
@@ -1021,7 +1031,7 @@ const application = {
     tenantAnalyticsSignUpWhen: 'Po pomyślnej rejestracji na stronie /register.',
     tenantAnalyticsBeginCheckoutTitle: 'Rozpoczęcie zamówienia',
     tenantAnalyticsBeginCheckoutWhen:
-      'Po potwierdzeniu dat wynajmu i przejściu dalej w nowym zamówieniu (/order/step/duration) albo przy przedłużeniu wynajmu (/order/step/duration/:rentId).',
+      'Po potwierdzeniu dat wynajmu i przejściu dalej w nowym zamówieniu (/order/:stockId/:boxGroupId/duration) albo przy przedłużeniu wynajmu (/order/rent/:rentId/duration).',
     tenantAnalyticsPurchaseTitle: 'Zakończenie płatności',
     tenantAnalyticsPurchaseWhen:
       'Na stronie wyniku płatności (/payment/:id), jeden raz, gdy status płatności to zaakceptowana.',
@@ -2102,6 +2112,11 @@ Advanced Matching (osobno od parametrów poniżej, e-mail hashowany w przegląda
     rent_ended_sms: 'Wynajem zakończony',
     rent_ended_admin_notification_email:
       'Wiadomość do administracji o zakończeniu wynajmu',
+    registration_no_rent_sms:
+      'SMS 2h po rejestracji, jeśli nie wynajął',
+    first_gate_open_follow_up_sms: 'SMS 2h po pierwszym otwarciu bramy',
+    rent_ended_follow_up_sms: 'SMS 2h po zakończeniu najmu',
+    contract_anniversary_sms: 'SMS w rocznicę zawarcia umowy',
     boxTypeNoun: 'Rodzaj wynajmu - "minimagazynu/skrytki/miejsca parkingowego"',
     boxTypeAccusative:
       'Rodzaj wynajmu - "minimagazyn/skrytkę/miejsce parkingowe"',
@@ -2125,6 +2140,7 @@ Advanced Matching (osobno od parametrów poniżej, e-mail hashowany w przegląda
     size: 'Rozmiar skrytki',
     stock: 'Plac',
     daysToRecoverAccess: 'Liczba dni na odzyskanie dostępu',
+    years: 'Liczba lat od zawarcia umowy',
   },
 } as const;
 

@@ -1,17 +1,19 @@
 import { useEffect, useMemo, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { useLocation } from 'react-router';
 import styled from 'styled-components';
 
 import type mapboxglType from 'mapbox-gl'; // import type only
 
-import { setOrderStock } from 'src/actions/order';
+import { setPendingCheckout } from 'src/actions/order';
+import { setStockSearchParam } from 'src/views/DashboardCommon/Order/Form/StepStock/stock-search';
 import { Skeleton } from 'src/components/ui';
 import { useFileStorage } from 'src/hooks/useFileStorage';
 import { useTenant } from 'src/hooks/useTenant';
 import { currentAppLanguage } from 'src/i18n/app-language';
 import { useGetStockGroupsListQuery, useGetStockListQuery } from 'src/queries';
-import { ApplicationState } from 'src/reducers';
 import { MAPBOX_COUNTRY_NAME_FIELD } from 'src/utils/country-locale';
+
 import { ActiveLocation } from './components/ActiveLocation';
 
 import 'mapbox-gl/dist/mapbox-gl.css';
@@ -39,7 +41,8 @@ const MapContainer = styled('div')({
 export const Map = () => {
   const mapRef = useRef<unknown>(null);
   const mapContainerRef = useRef<HTMLDivElement>(null);
-  const stockId = useSelector((state: ApplicationState) => state.order.stockId);
+  const { search } = useLocation();
+  const stockId = new URLSearchParams(search).get('stock');
   const { tenant } = useTenant();
   const { data: stocks = null, isPending: stocksLoading } =
     useGetStockListQuery();
@@ -118,7 +121,8 @@ export const Map = () => {
         .addTo(map)
         .getElement()
         .addEventListener('click', () => {
-          dispatch(setOrderStock(stock.id, stock.name, stock.address));
+          setStockSearchParam(stock.id);
+          dispatch(setPendingCheckout(null));
         });
     }
   };

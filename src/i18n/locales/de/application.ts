@@ -110,6 +110,8 @@ const application = {
       boxes_list: 'Schließfachliste',
       boxes_groups: 'Gruppen',
       boxes: 'Schließfächer',
+      not_found: 'Der gesuchte Standort wurde nicht gefunden.',
+      back_to_select: 'Zurück zur Standortauswahl',
     },
     stock: {
       client_source: 'Wie haben Sie von uns erfahren?',
@@ -150,6 +152,8 @@ const application = {
       boxes_list: 'Schließfachliste',
       boxes_groups: 'Gruppen',
       boxes: 'Lagereinheiten',
+      not_found: 'Der gesuchte Lagerstandort wurde nicht gefunden.',
+      back_to_select: 'Zurück zur Lagerstandortauswahl',
     },
     stock_group: {
       list: 'Liste der Lagerstandortgruppen',
@@ -281,6 +285,10 @@ const application = {
     manage: 'Verwalten',
     move: 'Verschieben',
     contact: 'Kontakt',
+    call: 'Anrufen',
+    whatsapp: 'WhatsApp',
+    openQuickContact: 'Schnellkontakt öffnen',
+    closeQuickContact: 'Schnellkontakt schließen',
     min8Char: 'Mindestens 8 Zeichen',
     select: 'Auswählen',
     selectNoOptions: 'Keine Optionen',
@@ -857,6 +865,7 @@ const application = {
     goToOrder: 'Weiter zum Vertrag',
     goToProfile: 'Zum Profil',
     orderAgreement: 'Mietvertrag',
+    orderSelectionErrorTitle: 'Etwas ist schiefgelaufen',
     orderAgreementAcceptation:
       'Lesen Sie zum Fortfahren den Vertrag und akzeptieren Sie die erforderlichen Einwilligungen.',
     agreementPreviewError: 'Die Vertragsvorschau konnte nicht geladen werden.',
@@ -975,6 +984,7 @@ auch Analyse-, Aktions- und Werbetools für Werbung, Marktforschung und die Unte
     rentSummaryOwner: 'Inhaber:',
     downloadReport: 'Bericht herunterladen',
     downloadPaymentsReport: 'Zahlungsbericht herunterladen',
+    exportCsv: 'CSV exportieren',
     selectReportDate: 'Berichtstag auswählen',
     reportWillBeSentToEmail:
       'Der Bericht wird an die mit Ihrem Konto verknüpfte E-Mail-Adresse gesendet, sobald er bereit ist.',
@@ -1028,7 +1038,7 @@ auch Analyse-, Aktions- und Werbetools für Werbung, Marktforschung und die Unte
     tenantAnalyticsEventSignUp:
       'Kontoregistrierung — die Seite /register (nach einer erfolgreichen Registrierung). GTM: sign_up mit user_data.email. Meta Pixel: CompleteRegistration mit Advanced Matching (em — E-Mail). Die Benutzerkennung wird nicht gesendet, weil die Registrierung sie nicht zurückgibt.',
     tenantAnalyticsEventBeginCheckout:
-      'Beginn einer Bestellung — Bestätigung der Mietdaten bei einer neuen Bestellung (/order/step/duration) oder bei einer Verlängerung (/order/step/duration/:rentId). GTM: begin_checkout mit user_id, user_data.email, location und payment_type (new_rent oder extension). Meta Pixel: InitiateCheckout mit E-Mail, external_id, contents und payment_type (Advanced Matching; value = brutto; außerdem value_gross und value_net)',
+      'Beginn einer Bestellung — Bestätigung der Mietdaten bei einer neuen Bestellung (/order/:stockId/:boxGroupId/duration) oder bei einer Verlängerung (/order/rent/:rentId/duration). GTM: begin_checkout mit user_id, user_data.email, location und payment_type (new_rent oder extension). Meta Pixel: InitiateCheckout mit E-Mail, external_id, contents und payment_type (Advanced Matching; value = brutto; außerdem value_gross und value_net)',
     tenantAnalyticsEventPurchase:
       'Zahlungsabschluss — die Seite mit dem Zahlungsergebnis (/payment/:id), einmal pro Zahlungs-ID. GTM: purchase mit user_id, user_data.email, location und payment_type (new_rent, extension, period_payment; erweiterte Conversions in Google Ads). Meta Pixel: Purchase für new_rent, RentExtension für extension, RentPeriodPayment für period_payment, jeweils mit E-Mail-Adresse, external_id und order_id (Advanced Matching; value = brutto; außerdem value_gross und value_net)',
     tenantAnalyticsReadonlyIntro:
@@ -1047,7 +1057,7 @@ auch Analyse-, Aktions- und Werbetools für Werbung, Marktforschung und die Unte
       'Nach einer erfolgreichen Registrierung auf der Seite /register.',
     tenantAnalyticsBeginCheckoutTitle: 'Bestellung begonnen',
     tenantAnalyticsBeginCheckoutWhen:
-      'Nachdem die Mietdaten bestätigt wurden und der Benutzer in einer neuen Bestellung (/order/step/duration) oder bei der Verlängerung einer Miete (/order/step/duration/:rentId) fortfährt.',
+      'Nachdem die Mietdaten bestätigt wurden und der Benutzer in einer neuen Bestellung (/order/:stockId/:boxGroupId/duration) oder bei der Verlängerung einer Miete (/order/rent/:rentId/duration) fortfährt.',
     tenantAnalyticsPurchaseTitle: 'Zahlung abgeschlossen',
     tenantAnalyticsPurchaseWhen:
       'Auf der Seite mit dem Zahlungsergebnis (/payment/:id), einmal, wenn der Zahlungsstatus akzeptiert ist.',
@@ -2146,6 +2156,11 @@ Advanced Matching (getrennt von den Parametern unten, E-Mail im Browser gehasht)
     rent_ended_sms: 'Miete beendet',
     rent_ended_admin_notification_email:
       'Nachricht an die Administration über eine beendete Miete',
+    registration_no_rent_sms:
+      'SMS 2 Std. nach Registrierung ohne Miete',
+    first_gate_open_follow_up_sms: 'SMS 2 Std. nach erstem Toröffnen',
+    rent_ended_follow_up_sms: 'SMS 2 Std. nach Mietende',
+    contract_anniversary_sms: 'SMS am Vertragsjubiläum',
     boxTypeNoun: 'Mietart - "der Lagereinheit/des Schließfachs/des Stellplatzes"',
     boxTypeAccusative: 'Mietart - "Lagereinheit/Schließfach/Stellplatz"',
     boxTypeYourGenitive:
@@ -2168,6 +2183,7 @@ Advanced Matching (getrennt von den Parametern unten, E-Mail im Browser gehasht)
     size: 'Größe des Schließfachs',
     stock: 'Lagerstandort',
     daysToRecoverAccess: 'Anzahl der Tage zur Wiederherstellung des Zugangs',
+    years: 'Jahre seit Vertragsbeginn',
   },
 } satisfies LocaleMessages<typeof plApplication>;
 

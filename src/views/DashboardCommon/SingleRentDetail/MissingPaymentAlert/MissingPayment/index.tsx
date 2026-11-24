@@ -6,10 +6,8 @@ import { clearOrder, updateFormData } from 'src/actions/order';
 import { ButtonsContainer } from 'src/components/Layout';
 import { Button, Stack, Typography } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
-import { history } from 'src/history';
 import { Wallet } from 'src/icons';
-import { useGetMyDetailsQuery } from 'src/queries';
-import UserService from 'src/services/user-service';
+import { useOrderPaths } from 'src/views/DashboardCommon/Order/useOrderPaths';
 import { dateOnly } from 'src/utils/format-date';
 
 interface Props {
@@ -44,7 +42,7 @@ const StyledIcon = styled('span')(({ theme }) => ({
 // @TODO HANDLE
 const MissingPayment = ({ rent }: Props) => {
   // const { pricing } = usePricing();
-  const { data: user } = useGetMyDetailsQuery();
+  const { goToDuration } = useOrderPaths();
   const dispatch = useDispatch();
 
   const handleDebtPayOff = (rentId: string) => {
@@ -52,9 +50,7 @@ const MissingPayment = ({ rent }: Props) => {
     dispatch(
       updateFormData({ size: rent.size.toString(), stock: rent.stockId }),
     );
-    history.push(
-      `/${UserService.getSlugByRole(user!.role)}/order/step/duration/${rentId}`,
-    );
+    goToDuration({ rentId });
   };
 
   return (

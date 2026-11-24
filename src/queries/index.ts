@@ -17,6 +17,8 @@ export * from 'src/queries/useGetInviteStockOptionsQuery';
 export * from 'src/queries/useGetStockListQuery';
 export * from 'src/queries/useGetStockGroupsListQuery';
 export * from 'src/queries/useBoxGroupsForStockQuery';
+export * from 'src/queries/useBoxGroupForOrderQuery';
+export * from 'src/queries/useStockForOrderQuery';
 export * from 'src/queries/useRentPeriodConfigQuery';
 export * from 'src/queries/usePaymentStatusQuery';
 export * from 'src/queries/usePaymentDetailsQuery';

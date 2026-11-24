@@ -39,7 +39,15 @@ const DashboardUser = () => {
           <Route path="/user/main" component={Welcome} />
           <Route path="/user/profile" component={Profile} />
           <Route path="/user/contact" component={Contact} />
-          <Route path="/user/order/step/:step/:rentId?" component={Order} />
+          <Route
+            path="/user/order/step"
+            render={({ location }) => (
+              <Redirect
+                to={withAttributionSearch(`/user/order${location.search}`)}
+              />
+            )}
+          />
+          <Route path="/user/order" component={Order} />
           <Route
             exact
             path="/user/single-rent/:orderId"

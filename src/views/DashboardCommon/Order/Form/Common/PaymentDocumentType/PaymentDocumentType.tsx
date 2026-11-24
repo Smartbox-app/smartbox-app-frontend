@@ -5,7 +5,7 @@ import {
   PaymentDocument,
   RentPaymentType,
   StockPaymentDocument,
-  StockRes,
+  StockOrderRes,
 } from 'smartbox-types';
 import { setRentPaymentDocumentType } from 'src/actions/order';
 import { AsterixRequired, Input } from 'src/components/Common';
@@ -14,7 +14,7 @@ import { __ } from 'src/helpers/i18n';
 import { ApplicationState } from 'src/reducers';
 
 type Props = {
-  stock: StockRes;
+  stock: StockOrderRes;
 };
 
 export const PaymentDocumentType = ({ stock }: Props) => {

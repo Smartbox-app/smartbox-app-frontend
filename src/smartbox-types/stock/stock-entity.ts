@@ -109,6 +109,19 @@ export type StockListRes = Pick<
   | 'lon'
 >;
 
+export type StockOrderRes = Pick<
+  Stock,
+  | 'id'
+  | 'name'
+  | 'address'
+  | 'clientPaymentTypeConfig'
+  | 'allowedAgreementType'
+  | 'openEndedPeriodDays'
+  | 'openEndedInvoiceDaysBefore'
+  | 'minRentDaysForInstallments'
+  | 'paymentDocumentConfig'
+>;
+
 export interface Coordinate {
   lat: string;
   lon: string;

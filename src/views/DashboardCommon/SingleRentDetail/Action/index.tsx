@@ -9,11 +9,9 @@ import { Alert } from 'src/components/Common';
 import { ButtonsContainer } from 'src/components/Layout';
 import { Button, Tabs } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
-import { history } from 'src/history';
 import { Calendar, CloseCircle, InfoCircle, Map } from 'src/icons';
-import { useGetMyDetailsQuery } from 'src/queries';
 import { ApplicationState } from 'src/reducers';
-import UserService from 'src/services/user-service';
+import { useOrderPaths } from 'src/views/DashboardCommon/Order/useOrderPaths';
 import { dateOnly } from 'src/utils/format-date';
 import {
   canDisplayRentAccess,
@@ -21,6 +19,7 @@ import {
   hasDateValue,
   isOpenEndedAgreement,
 } from 'src/utils/rent';
+
 import EndingModal from './EndingModal';
 import { GateButton } from './GateButton';
 import { KsmGateButton } from './KsmGateButton';
@@ -35,14 +34,12 @@ const Action = ({ rent, isAuthorizedViewer = false }: Props) => {
   const showUserStockMap = useSelector(
     (state: ApplicationState) => state.rent.showUserStockMap,
   );
-  const { data: user } = useGetMyDetailsQuery();
+  const { goToDuration } = useOrderPaths();
 
   const handleExtendingOrderData = (rentId: string) => {
     dispatch(clearOrder());
     dispatch(updateFormData({ size: rent.size.toString(), stock: rent.stockId }));
-    history.push(
-      `/${UserService.getSlugByRole(user!.role)}/order/step/duration/${rentId}`,
-    );
+    goToDuration({ rentId });
   };
 
   const canExtendRent = useMemo(() => {

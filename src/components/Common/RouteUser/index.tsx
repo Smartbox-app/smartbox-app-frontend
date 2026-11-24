@@ -3,6 +3,7 @@ import { Route, Redirect } from "react-router-dom";
 
 import { UserRole } from "smartbox-types";
 import { useGetMyDetailsQuery } from "src/queries";
+import { withAttributionSearch } from "src/utils/attribution-params";
 import { rememberRedirect } from "src/utils/remeber-redirect";
 
 interface Props {
@@ -12,12 +13,23 @@ interface Props {
 }
 
 const RouteUser = ({ exact, path, component }: Props) => {
-  const { data: user } = useGetMyDetailsQuery();
+  const { data: user, isPending } = useGetMyDetailsQuery();
 
-  if (!user || user.role !== UserRole.user) {
+  if (isPending) return null;
+
+  if (!user) {
+    rememberRedirect(UserRole.user);
+    return (
+      <Route
+        render={() => <Redirect to={withAttributionSearch("/login")} />}
+      />
+    );
+  }
+
+  if (user.role !== UserRole.user) {
     return <Route render={() => <Redirect to="/" />} />;
   }
-  rememberRedirect(UserRole.user);
+
   return <Route exact={exact} path={path} component={component} />;
 };
 

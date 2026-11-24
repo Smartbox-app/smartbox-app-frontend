@@ -1,21 +1,19 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useLocation } from 'react-router';
 import styled, { DefaultTheme } from 'styled-components';
 
 import { BoxGroupUserRes } from 'smartbox-types';
-import {
-  setBoxGroup,
-  setMaxAdvanceBookingDays,
-  setMaxRentPeriod,
-  setMinRentPeriod,
-} from 'src/actions/order';
+import { setPendingCheckout } from 'src/actions/order';
 import { Spinner } from 'src/components/Branded';
 import { Card } from 'src/components/ui';
+import { history } from 'src/history';
 import { ApplicationState } from 'src/reducers';
 import {
   getColorForBackground,
 } from 'src/utils/color';
-import { PriceInfo } from '../PriceInfo';
+import { PriceInfo } from 'src/views/DashboardCommon/Order/Form/StepSize/PriceInfo';
+
 import { LeftCounter } from './components/LeftCounter';
 import { OptionActions } from './components/OptionActions';
 import { OptionData } from './components/OptionData';
@@ -109,27 +107,23 @@ const SingleOption = ({ singleOptionData, disable }: Props) => {
     setHovered(false);
   };
   const dispatch = useDispatch();
+  const { search } = useLocation();
   const loading = useSelector(
     (state: ApplicationState) => state.spinner.loading,
   );
-  const boxGroupId = useSelector(
-    (state: ApplicationState) => state.order.boxGroupId,
-  );
+  const selectedGroupId = new URLSearchParams(search).get('group');
+  const selected =
+    selectedGroupId === singleOptionData.id && singleOptionData.available;
 
   const selectOption = () => {
-    dispatch(
-      setBoxGroup(
-        singleOptionData.id,
-        singleOptionData.name,
-        singleOptionData.area ? singleOptionData.area.toString() : '',
-        singleOptionData.type,
-      ),
-    );
-    dispatch(setMinRentPeriod(singleOptionData.minRentPeriod));
-    dispatch(
-      setMaxAdvanceBookingDays(singleOptionData.maxAdvanceBookingDays ?? 14),
-    );
-    dispatch(setMaxRentPeriod(singleOptionData.maxRentPeriod));
+    if (!singleOptionData.available) return;
+    const params = new URLSearchParams(history.location.search);
+    params.set('group', singleOptionData.id);
+    history.replace({
+      pathname: history.location.pathname,
+      search: `?${params.toString()}`,
+    });
+    dispatch(setPendingCheckout(null));
   };
 
   if (loading) return <Spinner />;
@@ -139,11 +133,11 @@ const SingleOption = ({ singleOptionData, disable }: Props) => {
         <Card
           disabled={!singleOptionData.available || disable}
           hovered={isHovered}
-          active={singleOptionData.id === boxGroupId}
+          active={selected}
         >
           <Content>
             <StyledOptionSize
-              active={singleOptionData.id === boxGroupId}
+              active={selected}
               disabled={!singleOptionData.available || disable}
             >
               {singleOptionData.name}
@@ -157,7 +151,7 @@ const SingleOption = ({ singleOptionData, disable }: Props) => {
               type="radio"
               value={singleOptionData.id}
               id={singleOptionData.id}
-              checked={singleOptionData.id === boxGroupId}
+              checked={selected}
               onChange={selectOption}
               disabled={!singleOptionData.available}
             />
@@ -169,7 +163,7 @@ const SingleOption = ({ singleOptionData, disable }: Props) => {
               <PriceInfo
                 box={singleOptionData}
                 disabled={!singleOptionData.available || disable}
-                active={singleOptionData.id === boxGroupId}
+                active={selected}
               />
               <OptionActions option={singleOptionData} onSelectOption={selectOption}/>
             </StyledCardBottom>

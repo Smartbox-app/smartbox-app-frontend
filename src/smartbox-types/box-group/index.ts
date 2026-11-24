@@ -48,6 +48,19 @@ export type BoxGroupListRes = Pick<
   BoxGroupEntity,
   'id' | 'name' | 'stockId' | 'area' | 'minRentPeriod' | 'maxRentPeriod' | 'pricing' | 'order'
 >;
+export type BoxGroupOrderRes = Pick<
+  BoxGroupEntity,
+  | 'id'
+  | 'stockId'
+  | 'name'
+  | 'type'
+  | 'minRentPeriod'
+  | 'maxAdvanceBookingDays'
+> & {
+  area: number | null;
+  maxRentPeriod: number | null;
+};
+
 export type BoxGroupUserRes = Pick<
   BoxGroupEntity,
   | 'id'

@@ -11,6 +11,7 @@ import { __ } from 'src/helpers/i18n';
 import { history } from 'src/history';
 import { useGetMyDetailsQuery } from 'src/queries';
 import UserService from 'src/services/user-service';
+import { useOrderPaths } from 'src/views/DashboardCommon/Order/useOrderPaths';
 import {
   isUnpaidPeriodStatus,
   isEndedUnpaidStatus,
@@ -23,6 +24,7 @@ export type UnpaidRentModalProps = {
 export const UnpaidRentModal = ({ rent }: UnpaidRentModalProps) => {
   const dispatch = useDispatch();
   const { data: user } = useGetMyDetailsQuery();
+  const { goToDuration } = useOrderPaths();
 
   const close = () => {
     dispatch(modal.hideModal());
@@ -43,9 +45,7 @@ export const UnpaidRentModal = ({ rent }: UnpaidRentModalProps) => {
     dispatch(
       updateFormData({ size: rent.size.toString(), stock: rent.stockId }),
     );
-    history.push(
-      `/${UserService.getSlugByRole(user.role)}/order/step/duration/${rent.id}`,
-    );
+    goToDuration({ rentId: rent.id });
   };
 
   const status = useMemo(() => {

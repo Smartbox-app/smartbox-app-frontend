@@ -147,7 +147,10 @@ const pendingPayments = (page: Page, email: string) =>
 export const forceAcceptPayments = async (page: Page, email: string, count = 1) => {
   await page.goto('/client/locations/stocks/list');
   await page
-    .getByRole('row', { name: new RegExp(e2eStockName) })
+    .getByRole('row')
+    .filter({
+      has: page.getByRole('cell', { name: e2eStockName, exact: true }),
+    })
     .getByRole('button', { name: manageStockButton })
     .click();
   await page.getByRole('link', { name: paymentsLink, exact: true }).click();

@@ -1,6 +1,5 @@
-import React, { useMemo } from 'react';
-import { useSelector } from 'react-redux';
-import { Redirect } from 'react-router';
+import React, { useEffect, useMemo } from 'react';
+import { useLocation, useParams } from 'react-router';
 
 import { BoxGroupUserRes } from 'smartbox-types';
 import { Alert } from 'src/components/Common';
@@ -11,20 +10,28 @@ import { Header, Section, Skeleton , Stack, Button } from 'src/components/ui';
 import { useTenantNaming } from 'src/hooks/useTenantNaming';
 import { ArrowLeft, ArrowRight } from 'src/icons';
 import { useBoxGroupsForStockQuery, useGetMyDetailsQuery } from 'src/queries';
-import { ApplicationState } from 'src/reducers';
-import UserService from 'src/services/user-service';
+import { useOrderStep } from 'src/views/DashboardCommon/Order/RouteWithIndicator';
+import { useOrderPaths } from 'src/views/DashboardCommon/Order/useOrderPaths';
+
 import SingleOption from './SingleOption';
 
 import './StepSize.scss';
 
 const StepSize = () => {
-  const { stockId, boxGroupId } = useSelector(
-    (state: ApplicationState) => state.order,
-  );
+  useOrderStep('size');
+  const { stockId } = useParams<{ stockId: string }>();
+  const { search } = useLocation();
   const { data: user } = useGetMyDetailsQuery();
+  const { goToStockSelect, goToDuration } = useOrderPaths();
   const { getText } = useTenantNaming();
   const { data: boxGroups = [], isPending: loading } =
     useBoxGroupsForStockQuery(stockId);
+  const requestedGroupId = new URLSearchParams(search).get('group');
+  const boxGroupId = boxGroups.some(
+    (group) => group.id === requestedGroupId && group.available,
+  )
+    ? requestedGroupId
+    : null;
 
   const getSortingCriteria = (a: BoxGroupUserRes, b: BoxGroupUserRes) => {
     if (a.order && b.order) return a.order - b.order;
@@ -42,7 +49,11 @@ const StepSize = () => {
     [boxGroups],
   );
 
-  if (!stockId) return <Redirect to="/user/order/step/stock" />;
+  useEffect(() => {
+    if (!stockId) goToStockSelect();
+  }, [stockId, goToStockSelect]);
+
+  if (!stockId || !user) return null;
 
   return (
     <form>
@@ -70,14 +81,17 @@ const StepSize = () => {
             <Button
               variant="secondary"
               size="large"
+              type="button"
               text="application.back"
-              to="/user/order/step/stock"
+              onClick={() => goToStockSelect(stockId)}
               iconLeft={<ArrowLeft />}
             />
             <Button
-              type="submit"
+              type="button"
               size="large"
-              to={`/${UserService.getSlugByRole(user!.role)}/order/step/duration`}
+              onClick={() =>
+                boxGroupId && goToDuration({ stockId, boxGroupId })
+              }
               text="application.next"
               iconRight={<ArrowRight />}
               disabled={!boxGroupId}

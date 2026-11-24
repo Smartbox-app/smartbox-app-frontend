@@ -14,7 +14,7 @@ export const useLogoutMutation = () => {
   const dispatch = useDispatch();
   return useMutation({
     mutationKey: ['login'],
-    mutationFn: async (everywhere = false) => {
+    mutationFn: async (everywhere: boolean = false) => {
       const response = await ApiService.callFetch(
         'get',
         everywhere ? 'auth/logout-all' : 'auth/logout',
@@ -29,7 +29,7 @@ export const useLogoutMutation = () => {
             : 'notification.logOutSuccess',
         ),
       );
-      void queryClient.invalidateQueries({ queryKey: ['api-table'] });
+      queryClient.invalidateQueries({ queryKey: ['api-table'] });
       dispatch({ type: 'REFRESH_API_GRID' });
       dispatch(order.clearOrder());
 

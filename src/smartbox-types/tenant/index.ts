@@ -45,6 +45,11 @@ export interface TenantEntity {
   newRentNotification: boolean;
   rentExtendedNotification: boolean;
   rentEndedNotification: boolean;
+  newRentPaymentFailedNotification: boolean;
+  registrationNoRentSms: boolean;
+  firstGateOpenFollowUpSms: boolean;
+  rentEndedFollowUpSms: boolean;
+  contractAnniversarySms: boolean;
   accountConfirmationMethod: AccountConfirmationMethod;
   debtResolveType: DebtResolveType;
   locationSelectType: LocationSelectType;
@@ -149,6 +154,11 @@ export type UpdateTenantCommunicationsReq = UpdateTenantMessagingReq &
     | 'newRentNotification'
     | 'rentExtendedNotification'
     | 'rentEndedNotification'
+    | 'newRentPaymentFailedNotification'
+    | 'registrationNoRentSms'
+    | 'firstGateOpenFollowUpSms'
+    | 'rentEndedFollowUpSms'
+    | 'contractAnniversarySms'
   >;
 export type UpdateTenantMobileAppsReq = Pick<
   TenantEntity,
