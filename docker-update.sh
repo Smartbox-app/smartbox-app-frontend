@@ -17,11 +17,7 @@ docker compose -p "$PROJECT" -f "$APP_FILE" build \
   --build-arg "VITE_MAPBOX_ACCESS_TOKEN=${VITE_MAPBOX_ACCESS_TOKEN:-}" \
   --build-arg "CACHE_BUST=$(date +%s)"
 
-echo "Replacing $APP_CONTAINER..."
-docker compose -p "$PROJECT" -f "$APP_FILE" down || true
-docker rm -f "$APP_CONTAINER" 2>/dev/null || true
-
-echo "Starting replacement container..."
+echo "Recreating $APP_CONTAINER..."
 docker compose -p "$PROJECT" -f "$APP_FILE" up -d --force-recreate --no-build
 
 echo "Waiting for container to become healthy..."

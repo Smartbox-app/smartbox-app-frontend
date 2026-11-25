@@ -47,7 +47,6 @@ import {
   extensionMinSelectableDate,
   extensionStartFromFinish,
   isExtensionPeriodAcceptable,
-  minPeriodDebtResolvedEnd,
 } from 'src/utils/rent-period-bounds';
 import { Addons } from 'src/views/DashboardCommon/Order/Form/Common/Addons';
 import { PaymentType } from 'src/views/DashboardCommon/Order/Form/Common/PaymentType';
@@ -137,17 +136,21 @@ const StepExtensionDuration = () => {
       unpaidExtension &&
       tenant.debtResolveType === DebtResolveType.MinPeriod
     ) {
+      // period-config returns the forced debt length as min (== max)
       dispatch(
         setRentEndDate(
-          minPeriodDebtResolvedEnd(
-            new Date(),
+          extensionMinimumEnd(
             rent.finishAt ?? null,
             minRentPeriod,
+            new Date(),
           ),
         ),
       );
       return;
     }
+
+    // MinPeriodExtendable falls through: period-config already returns the
+    // debt-adjusted minimum, so the user can keep a longer selected end date.
 
     const difference = endDate
       ? differenceInCalendarDays(endDate, startDate)
@@ -216,13 +219,21 @@ const StepExtensionDuration = () => {
     }
   }, [stock, rentPaymentType, rent]);
 
-  const isDebtOnly =
+  const isUnpaidExtension =
     !!rent &&
     [
       RentStatus.noPaidExtension,
       RentStatus.noPaidExtensionWithWarning,
-    ].includes(rent.status) &&
-    tenant?.debtResolveType === DebtResolveType.DebtOnly;
+    ].includes(rent.status);
+
+  const isDebtOnly =
+    isUnpaidExtension && tenant?.debtResolveType === DebtResolveType.DebtOnly;
+
+  const isDebtExtendable =
+    isUnpaidExtension &&
+    tenant?.debtResolveType === DebtResolveType.MinPeriodExtendable;
+
+  const showDurationPicker = !isUnpaidExtension || isDebtExtendable;
 
   const setMinDate = (addAmount = 0) => {
     if (!rent) return;
@@ -301,12 +312,8 @@ const StepExtensionDuration = () => {
       maxRentPeriod,
       rentPaymentType,
       minRentDaysForInstallments,
-      unpaidExtension:
-        !!rent &&
-        [
-          RentStatus.noPaidExtension,
-          RentStatus.noPaidExtensionWithWarning,
-        ].includes(rent.status),
+      // Fixed debt modes skip length checks; extendable debt uses period bounds.
+      unpaidExtension: isUnpaidExtension && !isDebtExtendable,
     });
   }, [
     rent,
@@ -316,6 +323,8 @@ const StepExtensionDuration = () => {
     maxRentPeriod,
     rentPaymentType,
     minRentDaysForInstallments,
+    isUnpaidExtension,
+    isDebtExtendable,
   ]);
 
   if (!user) return null;
@@ -346,10 +355,7 @@ const StepExtensionDuration = () => {
   return (
     <form className="form-step-two">
       <Stack>
-        {![
-          RentStatus.noPaidExtension,
-          RentStatus.noPaidExtensionWithWarning,
-        ].includes(rent.status) ? (
+        {showDurationPicker ? (
           <Section>
             <StyledCalendarPicker className="calendars-picker-wrapper">
               <DateInput
@@ -372,11 +378,7 @@ const StepExtensionDuration = () => {
             <RentDuration />
           </Section>
         ) : null}
-        {rent &&
-        [
-          RentStatus.noPaidExtension,
-          RentStatus.noPaidExtensionWithWarning,
-        ].includes(rent.status) ? (
+        {isUnpaidExtension ? (
           <Section>
             <p>
               {__('application.phrases.payingOverdue')}{' '}

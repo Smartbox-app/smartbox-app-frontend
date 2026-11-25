@@ -180,6 +180,25 @@ describe('period acceptance', () => {
       }),
     ).toBe(false);
   });
+
+  it('validates length for extendable debt the same way as a normal extension', () => {
+    expect(
+      isExtensionPeriodAcceptable({
+        hasRent: true,
+        ...bounds,
+        unpaidExtension: false,
+        endDate: new Date(2026, 9, 7),
+      }),
+    ).toBe(true);
+    expect(
+      isExtensionPeriodAcceptable({
+        hasRent: true,
+        ...bounds,
+        unpaidExtension: false,
+        endDate: new Date(2026, 9, 5),
+      }),
+    ).toBe(false);
+  });
 });
 
 describe('extension dates', () => {
@@ -199,9 +218,9 @@ describe('extension dates', () => {
     expectDay(minPeriodDebtResolvedEnd(new Date(2026, 9, 10, 12), finish, 7), 15, 23);
   });
 
-  it('moves a past minimum end to the day after today', () => {
+  it('keeps a future minimum end and clamps a past one to today', () => {
     expectDay(extensionMinimumEnd(finish, 7, new Date(2026, 9, 2, 12)), 8, 23);
-    expectDay(extensionMinimumEnd(finish, 7, later), 21, 23);
+    expectDay(extensionMinimumEnd(finish, 7, later), 20, 23);
   });
 
   it('limits the selectable range for a debt-only extension to today', () => {
