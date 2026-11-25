@@ -1,4 +1,4 @@
-import express, { Request, Response } from 'express';
+import express, { NextFunction, Request, Response } from 'express';
 import { escape } from 'html-escaper';
 import fetch from 'node-fetch';
 import path from 'path';
@@ -16,6 +16,20 @@ app.set('trust proxy', true);
 
 const fePath = path.resolve(config.feFilesPath);
 const META_TIMEOUT_MS = 2000;
+const ASSET_TIMEOUT_MS = 3000;
+
+/** Paths that used to be proxied to BE by Apache (.htaccess); must not hit static defaults. */
+const TENANT_ASSET_PATHS = new Set([
+  '/manifest.json',
+  '/favicon.ico',
+  '/favicon.png',
+  '/assets/apple-touch-icon.png',
+  '/assets/favicon-32x32.png',
+  '/assets/favicon-16x16.png',
+  '/assets/safari-pinned-tab.svg',
+  '/assets/android-chrome-192x192.png',
+  '/assets/android-chrome-512x512.png',
+]);
 
 const NO_CACHE = 'no-cache, no-store, must-revalidate';
 const IMMUTABLE = 'public, max-age=31536000, immutable';
@@ -84,12 +98,64 @@ const sendIndex = (req: Request, res: Response) => {
   });
 };
 
+/** Proxy tenant icons/manifest to BE (replaces Apache .htaccess under Docker/NPM). */
+const proxyTenantAsset = (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  if (req.method !== 'GET' && req.method !== 'HEAD') return next();
+  if (!TENANT_ASSET_PATHS.has(req.path)) return next();
+
+  const incomingHost = hostFromRequest(req.originalUrl, req.hostname);
+  const identifier = tenantFromHost(incomingHost, config.rootDomain);
+  // Apex / unknown host → fall through to packaged defaults
+  if (!identifier) return next();
+
+  const assetUrl =
+    `${config.assetsUrl}?host=${encodeURIComponent(identifier)}` +
+    `&url=${encodeURIComponent(req.path)}`;
+
+  fetch(assetUrl, { timeout: ASSET_TIMEOUT_MS })
+    .then(async (ans) => {
+      if (!ans.ok) {
+        console.warn(
+          `[ssr] asset miss host=${incomingHost} tenant=${identifier} path=${req.path} status=${ans.status}`,
+        );
+        return next();
+      }
+
+      const contentType = ans.headers.get('content-type');
+      if (contentType) res.setHeader('Content-Type', contentType);
+      res.setHeader('Cache-Control', NO_CACHE);
+      res.setHeader('Pragma', 'no-cache');
+
+      if (req.method === 'HEAD') {
+        res.status(ans.status).end();
+        return;
+      }
+
+      const buffer = await ans.buffer();
+      res.status(ans.status).send(buffer);
+    })
+    .catch((err) => {
+      console.warn(
+        `[ssr] asset fail host=${incomingHost} tenant=${identifier} path=${req.path}`,
+        err,
+      );
+      next();
+    });
+};
+
 // No meta fetch — used by Docker healthcheck
 app.get('/healthz', (_req, res) => {
   res.status(200).type('text').send('ok');
 });
 
 app.get(['/', '/index.html'], sendIndex);
+
+// Before express.static so packaged favicon/manifest do not win for tenants
+app.use(proxyTenantAsset);
 
 app.use(
   express.static(fePath, {
@@ -117,5 +183,7 @@ app.all('*', sendIndex);
 
 app.listen(config.fePort, '0.0.0.0', () => {
   console.log(`SSR for ${fePath} listening on 0.0.0.0:${config.fePort}`);
-  console.log(`SSR SSR_API_URL=${config.apiUrl} ROOT_DOMAIN=${config.rootDomain}`);
+  console.log(
+    `SSR SSR_API_URL=${config.apiUrl} SSR_ASSETS_URL=${config.assetsUrl} ROOT_DOMAIN=${config.rootDomain}`,
+  );
 });
