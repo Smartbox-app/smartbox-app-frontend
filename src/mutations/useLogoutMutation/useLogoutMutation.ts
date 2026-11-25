@@ -1,6 +1,10 @@
 import { Capacitor } from '@capacitor/core';
 import { Preferences } from '@capacitor/preferences';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import {
+  useMutation,
+  useQueryClient,
+  type MutateOptions,
+} from '@tanstack/react-query';
 import i18next from 'i18next';
 import { useDispatch } from 'react-redux';
 
@@ -12,9 +16,9 @@ import SessionService from 'src/services/session-service';
 export const useLogoutMutation = () => {
   const queryClient = useQueryClient();
   const dispatch = useDispatch();
-  return useMutation({
+  const mutation = useMutation({
     mutationKey: ['login'],
-    mutationFn: async (everywhere: boolean = false) => {
+    mutationFn: async (everywhere: boolean) => {
       const response = await ApiService.callFetch(
         'get',
         everywhere ? 'auth/logout-all' : 'auth/logout',
@@ -33,7 +37,7 @@ export const useLogoutMutation = () => {
       dispatch({ type: 'REFRESH_API_GRID' });
       dispatch(order.clearOrder());
 
-      if(Capacitor.isNativePlatform()) {
+      if (Capacitor.isNativePlatform()) {
         Preferences.clear();
       }
 
@@ -50,4 +54,17 @@ export const useLogoutMutation = () => {
       }
     },
   });
+
+  // React Query requires variables unless typed as void; keep logout() callable.
+  const mutate = (
+    everywhere: boolean = false,
+    options?: MutateOptions<unknown, Error, boolean, unknown>,
+  ) => mutation.mutate(everywhere, options);
+
+  const mutateAsync = (
+    everywhere: boolean = false,
+    options?: MutateOptions<unknown, Error, boolean, unknown>,
+  ) => mutation.mutateAsync(everywhere, options);
+
+  return { ...mutation, mutate, mutateAsync };
 };
