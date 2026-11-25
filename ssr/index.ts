@@ -98,6 +98,29 @@ const sendIndex = (req: Request, res: Response) => {
   });
 };
 
+const beAssetUrl = (identifier: string, assetPath: string) =>
+  `${config.assetsUrl}?host=${encodeURIComponent(identifier)}` +
+  `&url=${encodeURIComponent(assetPath)}`;
+
+/** Paths to ask BE for; favicon.* falls back to a PNG path BE has always supported. */
+const assetPathsToTry = (requestPath: string): string[] => {
+  if (requestPath === '/favicon.ico' || requestPath === '/favicon.png') {
+    return [requestPath, '/assets/favicon-32x32.png'];
+  }
+  return [requestPath];
+};
+
+const fetchTenantAsset = async (identifier: string, assetPath: string) => {
+  const ans = await fetch(beAssetUrl(identifier, assetPath), {
+    timeout: ASSET_TIMEOUT_MS,
+  });
+  if (!ans.ok) return null;
+  // BE may 404 as JSON {}; never treat that as an icon body
+  const contentType = ans.headers.get('content-type') || '';
+  if (contentType.includes('application/json')) return null;
+  return ans;
+};
+
 /** Proxy tenant icons/manifest to BE (replaces Apache .htaccess under Docker/NPM). */
 const proxyTenantAsset = (
   req: Request,
@@ -112,39 +135,51 @@ const proxyTenantAsset = (
   // Apex / unknown host → fall through to packaged defaults
   if (!identifier) return next();
 
-  const assetUrl =
-    `${config.assetsUrl}?host=${encodeURIComponent(identifier)}` +
-    `&url=${encodeURIComponent(req.path)}`;
+  (async () => {
+    let ans = null;
+    let usedPath = req.path;
 
-  fetch(assetUrl, { timeout: ASSET_TIMEOUT_MS })
-    .then(async (ans) => {
-      if (!ans.ok) {
-        console.warn(
-          `[ssr] asset miss host=${incomingHost} tenant=${identifier} path=${req.path} status=${ans.status}`,
-        );
-        return next();
+    for (const assetPath of assetPathsToTry(req.path)) {
+      ans = await fetchTenantAsset(identifier, assetPath);
+      if (ans) {
+        usedPath = assetPath;
+        break;
       }
+    }
 
-      const contentType = ans.headers.get('content-type');
-      if (contentType) res.setHeader('Content-Type', contentType);
-      res.setHeader('Cache-Control', NO_CACHE);
-      res.setHeader('Pragma', 'no-cache');
-
-      if (req.method === 'HEAD') {
-        res.status(ans.status).end();
-        return;
-      }
-
-      const buffer = await ans.buffer();
-      res.status(ans.status).send(buffer);
-    })
-    .catch((err) => {
+    if (!ans) {
       console.warn(
-        `[ssr] asset fail host=${incomingHost} tenant=${identifier} path=${req.path}`,
-        err,
+        `[ssr] asset miss host=${incomingHost} tenant=${identifier} path=${req.path}`,
       );
-      next();
-    });
+      // Do NOT fall through to packaged favicon — that is why every subdomain looked identical
+      res.status(404).end();
+      return;
+    }
+
+    const contentType = ans.headers.get('content-type');
+    if (contentType) res.setHeader('Content-Type', contentType);
+    res.setHeader('Cache-Control', NO_CACHE);
+    res.setHeader('Pragma', 'no-cache');
+
+    if (req.method === 'HEAD') {
+      res.status(200).end();
+      return;
+    }
+
+    const buffer = await ans.buffer();
+    if (usedPath !== req.path) {
+      console.log(
+        `[ssr] asset fallback host=${incomingHost} tenant=${identifier} ${req.path} → ${usedPath}`,
+      );
+    }
+    res.status(200).send(buffer);
+  })().catch((err) => {
+    console.warn(
+      `[ssr] asset fail host=${incomingHost} tenant=${identifier} path=${req.path}`,
+      err,
+    );
+    if (!res.headersSent) res.status(404).end();
+  });
 };
 
 // No meta fetch — used by Docker healthcheck
