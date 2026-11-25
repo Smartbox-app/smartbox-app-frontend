@@ -8,6 +8,7 @@ import { Header, HeaderWithActions, Section, Tabs } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
 import { useGetMyDetailsQuery } from 'src/queries';
 import UserService from 'src/services/user-service';
+
 import { ManageTenantFonts } from '../ClientManagement/Fonts';
 import { ManageTenantSlides } from '../ClientManagement/Slides';
 import { ManageTenantData } from '../ClientManagement/TenantData';

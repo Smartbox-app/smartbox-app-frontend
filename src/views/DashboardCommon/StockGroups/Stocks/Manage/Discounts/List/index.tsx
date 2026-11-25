@@ -18,6 +18,7 @@ import {
   useToggleGiftMutation,
 } from 'src/mutations';
 import { InteractiveTableSchema } from 'src/utils/table-schema-utils';
+
 import { GiftModal } from '../GiftModal';
 import { StockDiscount } from '../StockDiscount';
 

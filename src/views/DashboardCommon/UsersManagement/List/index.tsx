@@ -31,6 +31,7 @@ import { useGetMyDetailsQuery } from 'src/queries';
 import ApiService from 'src/services/api-service';
 import UserService from 'src/services/user-service';
 import { InteractiveTableSchema } from 'src/utils/table-schema-utils';
+
 import UserDetail from './UserDetail';
 import { UserNoteEditModal } from './UserDetail/UserNoteEditModal';
 import UserEdit from './UserEdit';

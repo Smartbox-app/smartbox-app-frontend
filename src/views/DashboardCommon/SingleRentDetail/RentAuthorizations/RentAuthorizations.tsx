@@ -16,6 +16,7 @@ import { Header } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
 import { useRemoveRentAuthorizedUserMutation } from 'src/mutations';
 import { useRentAuthorizedUsersQuery } from 'src/queries';
+
 import { AddRentAuthorizationModal } from './AddRentAuthorizationModal';
 
 function displayName(row: RentAuthorizedUserSummary): string {

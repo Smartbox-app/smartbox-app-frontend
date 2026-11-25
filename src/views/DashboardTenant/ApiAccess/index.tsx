@@ -4,6 +4,7 @@ import { Header, Section, Tabs, Typography } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
 import { useApiAccessEndpoints } from 'src/hooks/useApiAccessEndpoints';
 import { useGetStockOptionsQuery } from 'src/queries';
+
 import { EndpointDocs } from './EndpointDocs';
 import { GeneralInfo } from './GeneralInfo';
 

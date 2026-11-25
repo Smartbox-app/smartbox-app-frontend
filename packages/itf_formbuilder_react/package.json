@@ -1,0 +1,34 @@
+{
+  "name": "itf_formbuilder_react",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "itf_formbuilder": "file:../itf_formbuilder"
+  },
+  "devDependencies": {
+    "@types/flatpickr": "^3.1.2",
+    "@types/react": "^16.8.5",
+    "@types/react-dom": "^16.8.2",
+    "@types/react-select": "^2.0.18",
+    "typescript": "^3.8.3"
+  },
+  "private": true,
+  "peerDependencies": {
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
+  }
+}

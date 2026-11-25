@@ -16,6 +16,7 @@ import { useDeleteBoxGroupMutation } from 'src/mutations';
 import { useGetMyDetailsQuery } from 'src/queries';
 import UserService from 'src/services/user-service';
 import { InteractiveTableSchema } from 'src/utils/table-schema-utils';
+
 import { Edit } from '../Edit';
 
 const List = () => {

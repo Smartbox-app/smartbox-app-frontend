@@ -6,6 +6,7 @@ import { Alert } from 'src/components/Common';
 import { UserStockMap } from 'src/components/Common/UserStockMap';
 import { Section } from 'src/components/ui';
 import { ApplicationState } from 'src/reducers';
+
 import Action from '../Action';
 import Details from '../Details';
 import { OpenEndedNextPrice } from '../OpenEndedNextPrice';

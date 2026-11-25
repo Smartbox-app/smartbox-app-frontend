@@ -4,6 +4,7 @@ import { StatsByStatus } from 'smartbox-types';
 import { ColorIndicator, Row } from 'src/components/Common';
 import { StatsWithPieChart } from 'src/components/ui/StatsWithPieChart';
 import { useTenant } from 'src/hooks/useTenant';
+
 import { getStatsText, statsByStatusToPieSegments } from '../../utils/stats-chart';
 import {
   STATUS_STATS_KEYS,

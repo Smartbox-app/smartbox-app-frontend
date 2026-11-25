@@ -10,6 +10,7 @@ import {
   useGetStockStatisticsQuery,
 } from 'src/queries';
 import { SingleTab } from 'src/types/tab';
+
 import { PaymentsStats } from './components/PaymentsStats';
 import { RentsStats } from './components/RentsStats';
 import { getStockStatusColors } from './utils/stock-status-colors';

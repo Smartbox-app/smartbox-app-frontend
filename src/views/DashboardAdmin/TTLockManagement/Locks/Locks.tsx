@@ -15,6 +15,7 @@ import ApiService from 'src/services/api-service';
 import { gatewayLocksList } from 'src/smartbox-tables/schemas/gateway-lock-list.table';
 import { locksList } from 'src/smartbox-tables/schemas/locks-list.table';
 import { InteractiveTableSchema } from 'src/utils/table-schema-utils';
+
 import { LockDetails } from './components/LockDetails/LockDetails';
 
 export const Locks = () => {

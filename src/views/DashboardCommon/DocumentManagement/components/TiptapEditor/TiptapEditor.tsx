@@ -5,6 +5,7 @@ import { useEffect, useMemo, useRef } from 'react';
 
 import { DocumentType, TiptapDocument } from 'smartbox-types';
 import { getDocumentEditorExtensions } from 'src/config/tiptap';
+
 import { EditorRoot, EditorToolbarSticky, EditorWrapper } from '../styled';
 import { TiptapMenuBar } from '../TiptapMenuBar';
 import { TiptapTableToolbar } from '../TiptapTableToolbar';

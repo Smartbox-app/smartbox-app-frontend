@@ -6,6 +6,7 @@ import { Section } from 'src/components/Layout';
 import { Header } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
 import { useGetStockBoxesQuery, useGetStockQuery } from 'src/queries';
+
 import { MapView } from '../../../../MapView';
 import { MapSettingsForm } from './MapSettingsForm';
 

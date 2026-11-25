@@ -54,19 +54,6 @@ export default defineConfig([
       'jsx-a11y/interactive-supports-focus': 'warn',
       'import/no-duplicates': 'error',
       'import/newline-after-import': 'error',
-      // Prefer `src/...` over `../../../...` (sibling `./` still ok)
-      'no-restricted-imports': [
-        'error',
-        {
-          patterns: [
-            {
-              group: ['../*', '../**'],
-              message:
-                "Use absolute `src/...` (or smartbox-*) imports instead of relative parent paths.",
-            },
-          ],
-        },
-      ],
       'import/order': [
         'error',
         {

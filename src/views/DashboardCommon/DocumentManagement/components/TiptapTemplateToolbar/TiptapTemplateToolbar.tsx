@@ -7,6 +7,7 @@ import {
 } from 'src/config/tiptap';
 import { __ } from 'src/helpers/i18n';
 import { useGetAddonTemplateVariablesQuery } from 'src/queries';
+
 import { Toolbar, Button, TemplateSelect, TemplateInput } from '../styled';
 
 type Props = {

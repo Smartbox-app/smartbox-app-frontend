@@ -12,6 +12,7 @@ import {
 } from 'src/components/Layout';
 import { useLogoutMutation } from 'src/mutations';
 import { useGetMyDetailsQuery } from 'src/queries';
+
 import { DeleteAccountConfirmation } from '../../../views/DashboardCommon/Profile/Detail/DeleteAccountConfirmation/DeleteAccountConfirmation';
 import UpdatePass from '../../../views/DashboardCommon/Profile/Detail/UpdatePass';
 

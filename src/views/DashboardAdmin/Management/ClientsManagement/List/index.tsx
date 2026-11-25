@@ -16,6 +16,7 @@ import { __ } from 'src/helpers/i18n';
 import { history } from 'src/history';
 import { useSetUserStatusMutation } from 'src/mutations';
 import { InteractiveTableSchema } from 'src/utils/table-schema-utils';
+
 import { TenantStatus } from '../Status';
 
 const List = () => {

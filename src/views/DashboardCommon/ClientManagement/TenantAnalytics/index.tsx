@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { __ } from 'src/helpers/i18n';
+
 import { ManageTenantSettingsForm } from '../TenantSettingsForm';
 
 interface Props {

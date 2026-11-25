@@ -2,6 +2,7 @@ import React from 'react';
 
 import { Modal } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
+
 import { Form } from './Form';
 
 interface Props {

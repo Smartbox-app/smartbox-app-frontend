@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import { useTenant } from 'src/hooks/useTenant';
 import { getColorForBackground } from 'src/utils/color';
+
 import SingleSlide from './SingleSlide';
 
 import './Welcome.scss';

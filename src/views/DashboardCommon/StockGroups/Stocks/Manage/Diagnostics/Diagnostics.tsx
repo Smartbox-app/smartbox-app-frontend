@@ -9,6 +9,7 @@ import {
   useGatesStatusForStockQuery,
   useLocationDiagnosticsQuery,
 } from 'src/queries';
+
 import { AlarmsDiagnostics } from './AlarmsDiagnostics';
 import { DoorsDiagnostics } from './DoorsDiagnostics';
 import { GatesDiagnostics } from './GatesDiagnostics';

@@ -12,6 +12,7 @@ import {
 import { selectAddon, setAddonFile } from 'src/actions/order';
 import { ApplicationState } from 'src/reducers';
 import { correctAddonVariantPrice } from 'src/utils/addon-variant-price';
+
 import { PriceInfo } from '../PriceInfo';
 import { Indicator } from './components/Indicator';
 

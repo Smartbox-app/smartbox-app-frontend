@@ -9,6 +9,7 @@ import { Section } from 'src/components/Layout';
 import { Header } from 'src/components/ui';
 import { useTenantNaming } from 'src/hooks/useTenantNaming';
 import { useGetStockBoxesQuery, useGetStockQuery } from 'src/queries';
+
 import BoxDetail from '../../../../BoxDetail';
 import { MapView } from '../../../../MapView';
 

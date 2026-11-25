@@ -10,18 +10,26 @@ export default defineConfig(async () => {
     base: '/',
     plugins: [
       VitePWA({
-        // Prompt keeps the update bar for later deploys. skipWaiting is still
-        // on so a broken worker cannot sit in the "waiting" state: the blank
-        // page never sends the message that would activate it.
+        // Prompt keeps the update bar for later deploys. skipWaiting/clientsClaim
+        // stay false so a new worker does not activate mid-tab and break hashed
+        // assets still in use. Navigations are NetworkOnly so index.html is never
+        // served from a stale precache after deploy.
         registerType: 'prompt',
         manifest: false,
         injectManifest: {
           injectionPoint: undefined,
         },
         workbox: {
-          skipWaiting: true,
-          clientsClaim: true,
+          skipWaiting: false,
+          clientsClaim: false,
           navigateFallback: null,
+          globIgnores: ['**/index.html'],
+          runtimeCaching: [
+            {
+              urlPattern: ({ request }) => request.mode === 'navigate',
+              handler: 'NetworkOnly',
+            },
+          ],
           maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
         },
       }),

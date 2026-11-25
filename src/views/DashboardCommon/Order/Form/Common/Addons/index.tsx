@@ -23,6 +23,7 @@ import { useFileStorage } from 'src/hooks/useFileStorage';
 import { useAddonsForOrderQuery } from 'src/queries/useRentPriceQueries';
 import { ApplicationState } from 'src/reducers';
 import { OrderAddon } from 'src/reducers/order-reducer';
+
 import { SingleVariant } from './SingleVariant';
 
 const StyledFileDescription = styled('div')(({ theme }) => ({

@@ -11,6 +11,7 @@ import {
   translateBoxDisplayStatus,
 } from 'src/utils/box-display-status';
 import { InteractiveTableSchema } from 'src/utils/table-schema-utils';
+
 import { RentListRowActions } from './RentListRowActions';
 
 const List = () => {

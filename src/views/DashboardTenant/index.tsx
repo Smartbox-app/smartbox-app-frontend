@@ -8,6 +8,7 @@ import {
 } from 'src/components/Layout';
 import { useDashboardSidebarNav } from 'src/hooks/useDashboardSidebarNav';
 import { withAttributionSearch } from 'src/utils/attribution-params';
+
 import { Profile } from '../DashboardCommon';
 import { StockGroups } from '../DashboardCommon/StockGroups';
 import Management from './Management';

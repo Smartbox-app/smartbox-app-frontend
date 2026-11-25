@@ -2,6 +2,7 @@ import { Redirect, Route, Switch } from 'react-router';
 
 import { useGetMyDetailsQuery } from 'src/queries';
 import UserService from 'src/services/user-service';
+
 import { InvitesSent } from '../../DashboardCommon/InvitesSent';
 import UsersManagement from '../../DashboardCommon/UsersManagement';
 

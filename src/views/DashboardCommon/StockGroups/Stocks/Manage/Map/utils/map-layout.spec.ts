@@ -1,4 +1,5 @@
 import { BoxMapRes, StockRes } from 'smartbox-types';
+
 import {
   getBoxHeight,
   getBoxLayoutFromBox,

@@ -19,6 +19,7 @@ import { useDeleteAddonMutation } from 'src/mutations';
 import { useGetMyDetailsQuery } from 'src/queries';
 import UserService from 'src/services/user-service';
 import { InteractiveTableSchema } from 'src/utils/table-schema-utils';
+
 import { CannotDeleteAddonModal } from '../CannotDeleteAddonModal';
 import { Edit } from '../Edit';
 

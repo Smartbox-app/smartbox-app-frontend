@@ -9,6 +9,7 @@ import {
   useGetStockGroupsListQuery,
   useGetStockListQuery,
 } from 'src/queries';
+
 import { SingleOption } from './SingleOption';
 
 import '../StepStock.scss';

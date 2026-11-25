@@ -2,6 +2,7 @@ import { Spinner } from 'src/components/Branded';
 import { Alert, Row } from 'src/components/Common';
 import { Modal } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
+
 import { useGetLockDetailsQuery } from '../../queries/useGetLockDetailsQuery';
 
 export type LockDetailsProps = {

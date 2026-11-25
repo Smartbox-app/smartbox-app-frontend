@@ -24,6 +24,7 @@ import {
 import { useGetMyDetailsQuery, useGetStockQuery } from 'src/queries';
 import ApiService from 'src/services/api-service';
 import UserService from 'src/services/user-service';
+
 import GateStatus from '../../../GateStatus';
 import { Addons } from './Addons';
 import { StockAgreements } from './Agreements';

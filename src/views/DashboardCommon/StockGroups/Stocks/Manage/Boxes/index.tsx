@@ -4,6 +4,7 @@ import { Switch, Route, Redirect, useParams } from 'react-router';
 import { UserRole } from 'smartbox-types';
 import { useGetMyDetailsQuery } from 'src/queries';
 import UserService from 'src/services/user-service';
+
 import { Add } from './Add';
 import { AddBatch } from './AddBatch';
 import { List } from './List';

@@ -33,6 +33,7 @@ import { ClassValidatorResolver } from 'src/resolvers/ClassValidatorResolver';
 import { isSmsAccountConfirmation } from 'src/utils/account-confirmation';
 import { buildActivateAccountPath } from 'src/utils/activate-account-url';
 import { withAttributionSearch } from 'src/utils/attribution-params';
+
 import { FbButton } from './components/FbButton';
 import { GoogleButton } from './components/GoogleButton';
 import { MobileAppLinks } from './components/MobileAppLinks';

@@ -3,6 +3,7 @@ import { Switch, Route, Redirect } from 'react-router';
 
 import { useGetMyDetailsQuery } from 'src/queries';
 import UserService from 'src/services/user-service';
+
 import { List } from './List';
 import { Manage } from './Manage';
 

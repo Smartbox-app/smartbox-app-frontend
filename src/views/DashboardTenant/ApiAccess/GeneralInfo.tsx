@@ -3,6 +3,7 @@ import React from 'react';
 import { Header, Link, Section, Typography } from 'src/components/ui';
 import { getApiBaseUrl } from 'src/config/api-url';
 import { __ } from 'src/helpers/i18n';
+
 import { StyledPre } from './styles';
 
 export type GeneralInfoProps = {

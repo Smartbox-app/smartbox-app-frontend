@@ -12,6 +12,7 @@ import { history } from 'src/history';
 import ApiService from 'src/services/api-service';
 import { mapFieldsBig } from 'src/utils/fields-mapper';
 import { formOnTranslateString } from 'src/utils/trans-form';
+
 import ButtonsSection from './ButtonSection';
 
 const RestorePass = () => {

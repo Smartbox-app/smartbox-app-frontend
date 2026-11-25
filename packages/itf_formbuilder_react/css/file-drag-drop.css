@@ -1,0 +1,74 @@
+.input-container .file-container {
+  border: 1px dotted #4f4f4f;
+  transition: 0.3s background-color;
+  display: block;
+  cursor: pointer;
+  position: relative;
+  margin: 5px;
+}
+
+.input-container .file-container:hover {
+  background-color: #afafaf;
+}
+
+
+.input-container .file-container.dragging {
+  background-color: #757a77;
+}
+
+.input-container .file-container .file-wrapper {
+  padding: 20px;
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: center;
+  align-items: center;
+}
+
+.input-container .file-container.has-image {
+  padding: 10px;
+}
+
+.input-container .file-container .img-preview-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-content: space-around;
+  max-width: 100%;
+}
+
+.input-container .file-container .img-preview-wrapper .img-preview {
+  object-fit: contain;
+  max-width: 100%;
+  max-height: 300px;
+}
+
+.input-container .file-container .input-name {
+  top: 0;
+  left: 0;
+  padding: 3px;
+  background: #949494;
+  display: flex;
+  align-items: center;
+  font-weight: 400;
+}
+
+.input-container .file-container .file-icon {
+  height: 1rem;
+  margin-right: 5px;
+}
+
+.input-container .file-container input {
+  position: absolute;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.0001;
+}
+
+
+.input-container .file-name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
+}

@@ -1,6 +1,7 @@
 import { MyRentDetails, RentStatus } from 'smartbox-types';
 import { Alert } from 'src/components/Common';
 import { Section } from 'src/components/ui';
+
 import MissingPayment from './MissingPayment';
 
 interface Props {

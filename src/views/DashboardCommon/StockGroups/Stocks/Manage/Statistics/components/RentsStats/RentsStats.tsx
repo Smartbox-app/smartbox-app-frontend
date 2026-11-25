@@ -2,6 +2,7 @@ import { StockStatistics } from 'smartbox-types';
 import { Header, Section, Typography } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
 import { useI18n } from 'src/i18n';
+
 import { StatusStats } from '../StatusStats';
 import { getStatsText } from '../../utils/stats-chart';
 import { StockStatusColors } from '../../utils/stock-status-colors';

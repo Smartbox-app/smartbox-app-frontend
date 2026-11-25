@@ -14,6 +14,7 @@ import { useDeleteCompanyMutation } from 'src/mutations';
 import { useGetMyDetailsQuery } from 'src/queries';
 import UserService from 'src/services/user-service';
 import { InteractiveTableSchema } from 'src/utils/table-schema-utils';
+
 import { useCanCreateCompany } from '../useCanCreateCompany';
 
 export const List = () => {

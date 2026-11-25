@@ -5,6 +5,7 @@ import { Switch, Route, Redirect, useParams } from 'react-router';
 import { refreshApiTableData } from 'src/actions/api-table';
 import { useGetMyDetailsQuery } from 'src/queries';
 import UserService from 'src/services/user-service';
+
 import { List } from './List';
 
 const Alarms = () => {
