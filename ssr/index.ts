@@ -1,6 +1,6 @@
 import express, { NextFunction, Request, Response } from 'express';
 import { escape } from 'html-escaper';
-import fetch from 'node-fetch';
+import fetch, { Response as FetchResponse } from 'node-fetch';
 import path from 'path';
 import { readFile } from 'fs/promises';
 import { config } from './config';
@@ -98,27 +98,60 @@ const sendIndex = (req: Request, res: Response) => {
   });
 };
 
+const isManifestPath = (p: string) => p === '/manifest.json';
+const isIconPath = (p: string) => TENANT_ASSET_PATHS.has(p) && !isManifestPath(p);
+
 const beAssetUrl = (identifier: string, assetPath: string) =>
   `${config.assetsUrl}?host=${encodeURIComponent(identifier)}` +
   `&url=${encodeURIComponent(assetPath)}`;
 
-/** Paths to ask BE for; favicon.* falls back to a PNG path BE has always supported. */
-const assetPathsToTry = (requestPath: string): string[] => {
-  if (requestPath === '/favicon.ico' || requestPath === '/favicon.png') {
-    return [requestPath, '/assets/favicon-32x32.png'];
-  }
-  return [requestPath];
-};
-
-const fetchTenantAsset = async (identifier: string, assetPath: string) => {
-  const ans = await fetch(beAssetUrl(identifier, assetPath), {
+/** Resolve tenant icon on the public CDN (BE /tenant/assets pipe is broken in prod). */
+async function resolvePublicIconUrl(
+  identifier: string,
+): Promise<string | null> {
+  const ans = await fetch(`${config.tenantApiBase}/${encodeURIComponent(identifier)}`, {
     timeout: ASSET_TIMEOUT_MS,
   });
   if (!ans.ok) return null;
-  // BE may 404 as JSON {}; never treat that as an icon body
-  const contentType = ans.headers.get('content-type') || '';
-  if (contentType.includes('application/json')) return null;
-  return ans;
+  const data = (await ans.json()) as {
+    payload?: { icon?: string; publicAssetsBaseUrl?: string };
+  };
+  const icon = data.payload?.icon;
+  const base = data.payload?.publicAssetsBaseUrl?.replace(/\/$/, '');
+  if (!icon || !base) return null;
+  return `${base}/icon/${icon}`;
+}
+
+const sendUpstream = async (
+  ans: FetchResponse,
+  req: Request,
+  res: Response,
+) => {
+  // Follow one redirect (BE may 302 to GCS after fix)
+  if ([301, 302, 307, 308].includes(ans.status)) {
+    const location = ans.headers.get('location');
+    if (location) {
+      res.setHeader('Cache-Control', NO_CACHE);
+      res.redirect(302, location);
+      return;
+    }
+  }
+
+  if (!ans.ok) {
+    throw new Error(`upstream ${ans.status}`);
+  }
+
+  const contentType = ans.headers.get('content-type');
+  if (contentType) res.setHeader('Content-Type', contentType);
+  res.setHeader('Cache-Control', NO_CACHE);
+  res.setHeader('Pragma', 'no-cache');
+
+  if (req.method === 'HEAD') {
+    res.status(200).end();
+    return;
+  }
+
+  res.status(200).send(await ans.buffer());
 };
 
 /** Proxy tenant icons/manifest to BE (replaces Apache .htaccess under Docker/NPM). */
@@ -136,49 +169,69 @@ const proxyTenantAsset = (
   if (!identifier) return next();
 
   (async () => {
-    let ans = null;
-    let usedPath = req.path;
-
-    for (const assetPath of assetPathsToTry(req.path)) {
-      ans = await fetchTenantAsset(identifier, assetPath);
-      if (ans) {
-        usedPath = assetPath;
-        break;
+    // 1) Manifest — always from BE (JSON is expected)
+    if (isManifestPath(req.path)) {
+      const ans = await fetch(beAssetUrl(identifier, req.path), {
+        timeout: ASSET_TIMEOUT_MS,
+        redirect: 'manual',
+      });
+      if (!ans.ok) {
+        console.warn(
+          `[ssr] manifest miss host=${incomingHost} tenant=${identifier} status=${ans.status}`,
+        );
+        return next();
       }
+      await sendUpstream(ans, req, res);
+      return;
     }
 
-    if (!ans) {
+    // 2) Icons — try BE (may redirect to CDN); if that fails, resolve CDN ourselves
+    if (isIconPath(req.path)) {
+      try {
+        const ans = await fetch(beAssetUrl(identifier, req.path), {
+          timeout: ASSET_TIMEOUT_MS,
+          redirect: 'manual',
+        });
+        const contentType = ans.headers.get('content-type') || '';
+        const looksLikeImage =
+          ans.ok && !contentType.includes('application/json');
+        const isRedirect = [301, 302, 307, 308].includes(ans.status);
+
+        if (looksLikeImage || isRedirect) {
+          await sendUpstream(ans, req, res);
+          return;
+        }
+      } catch (err) {
+        console.warn(
+          `[ssr] asset be fail host=${incomingHost} tenant=${identifier} path=${req.path}`,
+          err,
+        );
+      }
+
+      const publicUrl = await resolvePublicIconUrl(identifier);
+      if (publicUrl) {
+        console.log(
+          `[ssr] icon cdn host=${incomingHost} tenant=${identifier} path=${req.path}`,
+        );
+        res.setHeader('Cache-Control', NO_CACHE);
+        res.redirect(302, publicUrl);
+        return;
+      }
+
       console.warn(
-        `[ssr] asset miss host=${incomingHost} tenant=${identifier} path=${req.path}`,
+        `[ssr] icon miss host=${incomingHost} tenant=${identifier} path=${req.path}`,
       );
-      // Do NOT fall through to packaged favicon — that is why every subdomain looked identical
-      res.status(404).end();
-      return;
+      // No tenant icon → packaged default is fine
+      return next();
     }
 
-    const contentType = ans.headers.get('content-type');
-    if (contentType) res.setHeader('Content-Type', contentType);
-    res.setHeader('Cache-Control', NO_CACHE);
-    res.setHeader('Pragma', 'no-cache');
-
-    if (req.method === 'HEAD') {
-      res.status(200).end();
-      return;
-    }
-
-    const buffer = await ans.buffer();
-    if (usedPath !== req.path) {
-      console.log(
-        `[ssr] asset fallback host=${incomingHost} tenant=${identifier} ${req.path} → ${usedPath}`,
-      );
-    }
-    res.status(200).send(buffer);
+    next();
   })().catch((err) => {
     console.warn(
       `[ssr] asset fail host=${incomingHost} tenant=${identifier} path=${req.path}`,
       err,
     );
-    if (!res.headersSent) res.status(404).end();
+    if (!res.headersSent) next();
   });
 };
 
