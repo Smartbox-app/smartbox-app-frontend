@@ -56,7 +56,7 @@ const Welcome = () => {
     <>
       <WelcomeHeader>
         <Header variant="main">
-          TEST {__('application.hi')} {user.firstName}
+          {__('application.hi')} {user.firstName}
         </Header>
         <NewRentButton />
       </WelcomeHeader>
