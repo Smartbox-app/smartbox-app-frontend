@@ -160,10 +160,12 @@ export const extensionMinimumEnd = (
   now: Date,
 ) => {
   const newEnd = addDays(warsawMidnight(finishAt), days);
-  const newEndOrToday = isBefore(newEnd, now)
-    ? startOfDay(addDays(now, 1))
-    : newEnd;
-  return endOfDay(newEndOrToday);
+  // Only bump forward when the min end day is before today (same rule as
+  // extensionMinSelectableDate). Ending today is valid and covers debt through today.
+  if (isBefore(newEnd, startOfDay(now))) {
+    return endOfDay(now);
+  }
+  return endOfDay(newEnd);
 };
 
 export const extensionMinSelectableDate = (input: {

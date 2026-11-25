@@ -109,7 +109,10 @@ export const login = async (
 };
 
 export const openMyBox = async (page: Page, identifier: string) => {
-  await page.getByRole('link', { name: new RegExp(identifier) }).click();
+  // exact: avoid E2E-DEBT-S also matching E2E-DEBT-S-EXT
+  await page
+    .getByRole('heading', { name: `Minimagazyn ${identifier}`, exact: true })
+    .click();
 };
 
 export const logout = async (page: Page) => {

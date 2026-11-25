@@ -44,7 +44,10 @@ export const e2eOtherStockName = 'E2E Osiedle';
 export const e2eBoxGroupName = 'E2E 4m';
 export const e2eOtherBoxGroupName = 'E2E 2m';
 export const e2eExtensionBoxIdentifier = 'E2E-EXT';
-export const e2eDebtBoxIdentifier = 'E2E-DEBT';
+export const e2eDebtShortBoxIdentifier = 'E2E-DEBT-S';
+export const e2eDebtShortExtendBoxIdentifier = 'E2E-DEBT-S-EXT';
+export const e2eDebtLongBoxIdentifier = 'E2E-DEBT-L';
+export const e2eDebtLongExtendBoxIdentifier = 'E2E-DEBT-L-EXT';
 export const e2ePreviewBoxIdentifier = 'E2E-VIEW';
 export const e2eAgreementPreviewText = 'E2E podglad umowy';
 
