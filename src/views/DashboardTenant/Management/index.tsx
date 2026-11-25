@@ -10,7 +10,7 @@ import { DocumentsManagement } from '../../DashboardCommon/DocumentManagement';
 import { InvitesSent } from '../../DashboardCommon/InvitesSent';
 import SMS from '../../DashboardCommon/SMS';
 import { SystemLogManagement } from '../../DashboardCommon/SystemLogManagement';
-import SystemAlertManagement from '../../DashboardCommon/SystemAlertManagement';
+// import SystemAlertManagement from '../../DashboardCommon/SystemAlertManagement';
 import SystemNotificationManagement from '../../DashboardCommon/SystemNotificationManagement';
 import UsersManagement from '../../DashboardCommon/UsersManagement';
 import WorkersManagement from '../../DashboardCommon/WorkersManagement';

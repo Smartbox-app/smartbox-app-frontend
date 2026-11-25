@@ -47,6 +47,35 @@ export const doorStateText = (state: LocationDiagnosticsDoorState) => {
   }
 };
 
+const DoorsContent = ({ doors }: { doors: LocationDiagnosticsDoor[] | null }) => {
+  if (doors == null) {
+    return <Note>{__('application.diagnosticsDoorUnavailable')}</Note>;
+  }
+  if (doors.length === 0) {
+    return <Note>{__('application.diagnosticsNoDoors')}</Note>;
+  }
+  return (
+    <Table>
+      <thead>
+        <tr>
+          <th>{__('application.diagnosticsDoorName')}</th>
+          <th>{__('application.diagnosticsDoorState')}</th>
+          <th>{__('application.diagnosticsDoorObserved')}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {doors.map((door) => (
+          <tr key={door.lockId}>
+            <td>{door.identifier || door.lockId}</td>
+            <td>{doorStateText(door.state)}</td>
+            <td>{door.observedAt ? fullDate(door.observedAt) : '—'}</td>
+          </tr>
+        ))}
+      </tbody>
+    </Table>
+  );
+};
+
 export const DoorsDiagnostics = ({ doors, syncedAt }: DoorsDiagnosticsProps) => (
   <Section variant="bordered">
     <Stack>
@@ -56,30 +85,7 @@ export const DoorsDiagnostics = ({ doors, syncedAt }: DoorsDiagnosticsProps) => 
           {__('application.diagnosticsAsOf')}: {fullDate(syncedAt)}
         </Note>
       ) : null}
-      {doors == null ? (
-        <Note>{__('application.diagnosticsDoorUnavailable')}</Note>
-      ) : doors.length === 0 ? (
-        <Note>{__('application.diagnosticsNoDoors')}</Note>
-      ) : (
-        <Table>
-          <thead>
-            <tr>
-              <th>{__('application.diagnosticsDoorName')}</th>
-              <th>{__('application.diagnosticsDoorState')}</th>
-              <th>{__('application.diagnosticsDoorObserved')}</th>
-            </tr>
-          </thead>
-          <tbody>
-            {doors.map((door) => (
-              <tr key={door.lockId}>
-                <td>{door.identifier || door.lockId}</td>
-                <td>{doorStateText(door.state)}</td>
-                <td>{door.observedAt ? fullDate(door.observedAt) : '—'}</td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
-      )}
+      <DoorsContent doors={doors} />
     </Stack>
   </Section>
 );

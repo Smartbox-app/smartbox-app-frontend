@@ -1,21 +1,24 @@
-import { isAfter } from 'date-fns';
-import React, { useMemo } from 'react';
+// import { isAfter } from 'date-fns';
+import { useMemo } from 'react';
 import { useParams, Redirect } from 'react-router-dom';
 import styled from 'styled-components';
-import { BoxGroupType } from 'smartbox-types';
-import { Description } from './RentDescription';
+
+import { BoxGroupType , RentStatus } from 'smartbox-types';
+
 import { getBoxPasscodeLabel } from 'src/utils/box-group-labels';
 import {
   canDisplayRentAccess,
   canUseRentAccessActions,
+//  isRentAccessActive 
 } from 'src/utils/rent';
 
-import { RentStatus } from 'smartbox-types';
 import { Header, PageHeader, Section, Skeleton } from 'src/components/ui';
 import { __ } from 'src/helpers/i18n';
 import { useTenantNaming } from 'src/hooks/useTenantNaming';
 import { useMyRentDetailsQuery } from 'src/queries';
-import { isRentAccessActive } from 'src/utils/rent';
+
+import { Description } from './RentDescription';
+
 import Gate from './Gate';
 import { MainData } from './MainData';
 import { MissingPaymentAlert } from './MissingPaymentAlert';

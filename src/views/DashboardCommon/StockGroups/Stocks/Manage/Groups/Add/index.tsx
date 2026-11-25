@@ -17,6 +17,7 @@ import ApiService from 'src/services/api-service';
 import UserService from 'src/services/user-service';
 import { mapFields } from 'src/utils/fields-mapper';
 import { formOnTranslateString } from 'src/utils/trans-form';
+
 import { formDataWithNameI18n } from '../../Addons/append-name-i18n';
 
 const Add = () => {
