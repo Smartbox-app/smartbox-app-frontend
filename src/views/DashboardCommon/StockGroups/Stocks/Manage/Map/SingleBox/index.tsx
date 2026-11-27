@@ -1,3 +1,4 @@
+import { darken } from 'polished';
 import React, { CSSProperties, useCallback, useEffect, useRef, useState } from 'react';
 import Moveable from 'react-moveable';
 import styled, { css } from 'styled-components';
@@ -36,6 +37,16 @@ const commonStyles = css`
   cursor: pointer;
 `;
 
+const boxChrome = css`
+  border-radius: ${({ theme }) => theme.spacing * 2}px;
+  box-shadow: ${({ theme }) => theme.shadows.box};
+`;
+
+const statusFill = (color: string) => css`
+  background: linear-gradient(135deg, ${color}, ${darken(0.08, color)});
+  border-color: transparent;
+`;
+
 const StyledDraggableContent = styled.div<{
   width?: number;
 }>`
@@ -48,7 +59,8 @@ const StyledDraggableContent = styled.div<{
   justify-content: center;
   pointer-events: none;
   font-size: ${(props) => getMapBoxFontSize(props.width || 0)}px;
-  text-align: center';
+  text-align: center;
+  ${boxChrome}
 `;
 
 const StyledBox = styled.div<{
@@ -62,6 +74,7 @@ const StyledBox = styled.div<{
   font-size: ${(props) => getMapBoxFontSize(props.width || 0)}px;
   text-align: center;
   ${commonStyles}
+  ${boxChrome}
   ${(props) =>
     props.status &&
     css`
@@ -71,76 +84,76 @@ const StyledBox = styled.div<{
 ${(props) =>
     props.status === BoxStatus.free &&
     css`
-      background-color: ${props.stock.colorFree};
+      ${statusFill(props.stock.colorFree)}
     `};
   ${(props) =>
     props.status === RentStatus.reserved &&
     css`
-      background-color: ${props.stock.colorReserved};
+      ${statusFill(props.stock.colorReserved)}
     `};
   ${(props) =>
     !props.user &&
     props.status === RentStatus.rented &&
     css`
-      background-color: ${props.stock.colorRented};
+      ${statusFill(props.stock.colorRented)}
     `};
   ${(props) =>
     props.status === RentStatus.toExplain &&
     css`
-      background-color: ${props.stock.colorToExplain};
+      ${statusFill(props.stock.colorToExplain)}
     `};
   ${(props) =>
     props.status === RentStatus.toCheck &&
     css`
-      background-color: ${props.stock.colorToCheck};
+      ${statusFill(props.stock.colorToCheck)}
     `};
   ${(props) =>
     props.status === RentStatus.noPaidExtension &&
     css`
-      background-color: ${props.stock.colorNoPaidExtension};
+      ${statusFill(props.stock.colorNoPaidExtension)}
     `};
   ${(props) =>
     props.status === RentStatus.noPaidPeriod &&
     css`
-      background-color: ${props.stock.colorNoPaidPeriod};
+      ${statusFill(props.stock.colorNoPaidPeriod)}
     `};
   ${(props) =>
     props.status === RentStatus.noPaidExtensionWithWarning &&
     css`
-      background-color: ${props.stock.colorNoPaidExtensionWithWarning};
+      ${statusFill(props.stock.colorNoPaidExtensionWithWarning)}
     `};
   ${(props) =>
     props.status === BoxStatus.outOfService &&
     css`
-      background-color: ${props.stock.colorOutOfService};
+      ${statusFill(props.stock.colorOutOfService)}
     `};
   ${(props) =>
     props.status === RentStatus.finished &&
     css`
-      background-color: ${props.stock.colorFinished};
+      ${statusFill(props.stock.colorFinished)}
     `};
   ${(props) =>
     props.status === RentStatus.failure &&
     css`
-      background-color: ${props.stock.colorFailure};
+      ${statusFill(props.stock.colorFailure)}
     `};
   ${(props) =>
     (props.status === RentStatus.pendingFinish ||
       props.status === RentStatus.awaitingFinish) &&
     css`
-      background-color: ${props.stock.colorPendingFinish};
+      ${statusFill(props.stock.colorPendingFinish)}
     `};
   ${(props) =>
     props.status === RentStatus.endedUnpaid &&
     css`
-      background-color: ${props.stock.colorNoPaidPeriod};
+      ${statusFill(props.stock.colorNoPaidPeriod)}
     `};
 
   ${(props) =>
     props.user &&
     props.status &&
     css`
-      background-color: ${props.theme.colors.success};
+      ${statusFill(props.theme.colors.success)}
     `}
 `;
 
