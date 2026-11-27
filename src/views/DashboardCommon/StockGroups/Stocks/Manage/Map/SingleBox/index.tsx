@@ -1,9 +1,21 @@
 import { darken } from 'polished';
-import React, { CSSProperties, useCallback, useEffect, useRef, useState } from 'react';
+import React, {
+  CSSProperties,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import Moveable from 'react-moveable';
 import styled, { css } from 'styled-components';
 
-import { BoxMapRes, BoxMapUserRes, BoxStatus, RentStatus, StockRes } from 'smartbox-types';
+import {
+  BoxMapRes,
+  BoxMapUserRes,
+  BoxStatus,
+  RentStatus,
+  StockRes,
+} from 'smartbox-types';
 import { Tooltip } from 'src/components/ui';
 import { colorOrDark } from 'src/utils/color';
 
@@ -28,7 +40,6 @@ interface Props {
   editable?: boolean;
   onBoxClick?: (box: BoxMapRes) => void;
 }
-
 
 const commonStyles = css`
   display: flex;
@@ -69,11 +80,27 @@ const StyledBox = styled.div<{
   user?: boolean;
   width?: number;
 }>`
-  background: #fff;
-  border: 1px solid ${(props) => props.theme.colors.primary};
+  // background: #fff;
+  // border: 1px solid ${(props) => props.theme.colors.primary};
   font-size: ${(props) => getMapBoxFontSize(props.width || 0)}px;
   text-align: center;
+  padding: 0.5px;
   ${commonStyles}
+`;
+
+const StyledContent = styled.div<{
+  status: RentStatus | BoxStatus | null;
+  stock: StockRes;
+  user?: boolean;
+  width?: number;
+}>`
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  border: 1px solid ${(props) => props.theme.colors.primary};
   ${boxChrome}
   ${(props) =>
     props.status &&
@@ -155,14 +182,6 @@ ${(props) =>
     css`
       ${statusFill(props.theme.colors.success)}
     `}
-`;
-
-const StyledContent = styled.div`
-  height: 100%;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 `;
 
 const SingleBox = ({
@@ -310,7 +329,14 @@ const SingleBox = ({
             admin ? <AdminBoxMapTooltipContent box={box as BoxMapRes} /> : null
           }
         >
-          <StyledContent>{box.identifier}</StyledContent>
+          <StyledContent
+            status={getBoxStatus(box)}
+            user={user}
+            stock={stock}
+            width={getBoxWidth(box, stock)}
+          >
+            {box.identifier}
+          </StyledContent>
         </Tooltip>
       </StyledBox>
     );
