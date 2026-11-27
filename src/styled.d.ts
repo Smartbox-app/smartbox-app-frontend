@@ -5,6 +5,7 @@ declare module 'styled-components' {
     spacing: number;
     shadows: {
       primary: string;
+      box: string;
     };
     radius: {
       outerSurface: number;
