@@ -769,6 +769,18 @@ const application = {
       'Obniż wartość ustalonego okresu najmu o wartość procentową [%]',
     giftReducePeriodToPrice:
       'Obniż wartość ustalonego okresu najmu okres do podanej ceny',
+    discountCodeHelpTitle: 'Jak liczony jest kod',
+    discountCodeHelpIntro:
+      'Przykład: jeden okres ma 30 dni i kosztuje 1000 zł. Dni kodu schodzą po kolei. W umowie bezterminowej kolejny okres dostaje tylko dni, które zostały. W umowie na czas określony te dni są liczone od razu na cały najem, a przedłużenie potrzebuje osobnego kodu.',
+    discountCodeHelpPercentTitle: 'Procent: 50% na 90 dni',
+    discountCodeHelpPercent:
+      'Każde 30 dni w tych 90 kosztuje połowę, czyli 500 zł. Trzeci okres też jest za 500 zł, bo zostały jeszcze 30 dni. Czwarty okres jest już za 1000 zł. Na 75 dni trzeci okres ma tylko 15 dni zniżki i kosztuje 750 zł. Na 60 albo 45 dni trzeci okres jest już za pełne 1000 zł.',
+    discountCodeHelpToPriceTitle: 'Do podanej ceny: 300 zł na 90 dni',
+    discountCodeHelpToPrice:
+      '300 zł to cena całych 90 dni, nie jednego okresu. 30 dni to 30/90 × 300 = 100 zł, więc trzeci okres też kosztuje 100 zł. Na 75 dni zostaje 15 dni: (15/75) × 300 plus 15 dni pełnej ceny, czyli 60 + 500 = 560 zł. Na 60 albo 45 dni trzeci okres jest już za 1000 zł.',
+    discountCodeHelpValueTitle: 'Kwota: minus 300 zł',
+    discountCodeHelpValue:
+      '300 zł jest odejmowane raz, od pierwszego okresu: 1000 − 300 = 700 zł. Każdy następny okres kosztuje 1000 zł. Ten rodzaj nie ma liczby dni, bo zniżka nie przechodzi na kolejne okresy.',
     giftCodeGenerated: 'Wygenerowano kod',
     minRentPeriod: 'Minimalny okres wynajmu',
     maxRentPeriod: 'Maksymalny okres wynajmu',
