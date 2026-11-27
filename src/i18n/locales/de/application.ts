@@ -784,6 +784,18 @@ const application = {
       'Betrag des festgelegten Mietzeitraums um einen Prozentsatz verringern [%]',
     giftReducePeriodToPrice:
       'Betrag des festgelegten Mietzeitraums auf den angegebenen Preis verringern',
+    discountCodeHelpTitle: 'Wie ein Code berechnet wird',
+    discountCodeHelpIntro:
+      'Beispiel: ein Zeitraum hat 30 Tage und kostet 1000. Die Tage des Codes werden der Reihe nach verbraucht. Bei einem unbefristeten Vertrag bekommt der nächste Zeitraum nur die übrigen Tage. Bei einem befristeten Vertrag gelten diese Tage sofort für die ganze Miete, und eine Verlängerung braucht einen eigenen Code.',
+    discountCodeHelpPercentTitle: 'Prozent: 50% für 90 Tage',
+    discountCodeHelpPercent:
+      'Jeweils 30 Tage innerhalb dieser 90 kosten die Hälfte, also 500. Der dritte Zeitraum kostet ebenfalls 500, weil noch 30 Tage übrig sind. Der vierte Zeitraum kostet bereits 1000. Bei 75 Tagen hat der dritte Zeitraum nur 15 vergünstigte Tage und kostet 750. Bei 60 oder 45 Tagen kostet der dritte Zeitraum bereits die vollen 1000.',
+    discountCodeHelpToPriceTitle: 'Auf einen Preis senken: 300 für 90 Tage',
+    discountCodeHelpToPrice:
+      '300 ist der Preis der ganzen 90 Tage, nicht eines Zeitraums. 30 Tage sind 30/90 × 300 = 100, also kostet der dritte Zeitraum ebenfalls 100. Bei 75 Tagen bleiben 15 Tage: (15/75) × 300 plus 15 Tage zum vollen Preis, also 60 + 500 = 560. Bei 60 oder 45 Tagen kostet der dritte Zeitraum bereits 1000.',
+    discountCodeHelpValueTitle: 'Betrag: minus 300',
+    discountCodeHelpValue:
+      '300 wird einmal abgezogen, vom ersten Zeitraum: 1000 − 300 = 700. Jeder weitere Zeitraum kostet 1000. Diese Art hat keine Tageszahl, weil der Rabatt nicht weiterläuft.',
     giftCodeGenerated: 'Code erzeugt',
     minRentPeriod: 'Mindestmietdauer',
     maxRentPeriod: 'Höchstmietdauer',

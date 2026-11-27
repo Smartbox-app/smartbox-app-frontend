@@ -289,9 +289,9 @@ const SingleBox = ({
   }, [editable, box.id, mapLayoutContext, applyLayoutToElement]);
 
   const handleClickOutside = (e: Event) => {
-    const eventTarget = e.target as HTMLElement;
-
-    if (eventTarget.className.includes(`box-${box.id}`)) return;
+    const className = (e.target as Element | null)?.className;
+    if (typeof className === 'string' && className.includes(`box-${box.id}`))
+      return;
 
     setTarget(null);
   };

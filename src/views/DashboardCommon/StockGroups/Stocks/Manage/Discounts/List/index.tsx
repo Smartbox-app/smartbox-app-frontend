@@ -19,6 +19,7 @@ import {
 } from 'src/mutations';
 import { InteractiveTableSchema } from 'src/utils/table-schema-utils';
 
+import { CodeHelp } from '../CodeHelp';
 import { GiftModal } from '../GiftModal';
 import { StockDiscount } from '../StockDiscount';
 
@@ -115,6 +116,8 @@ const List = () => {
         >
           {__('application.discountsCodes')}
         </HeaderWithActions>
+
+        <CodeHelp />
 
         <ApiTable scheme={scheme} apiEndpointSubUrl={`gift/list/${stockId}`} />
       </Section>

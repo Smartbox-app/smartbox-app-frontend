@@ -8,11 +8,14 @@ import ApiService from 'src/services/api-service';
 import { isLocalEnvironment } from 'src/utils/environment';
 import { getMobileBuildId } from 'src/utils/mobile-build-id';
 import { registerServiceWorker } from 'src/utils/register-service-worker';
+import { installStaleChunkReload } from 'src/utils/reload-without-service-worker';
 import { syncNativeWebBundleCache } from 'src/utils/sync-native-web-bundle-cache';
 import { unregisterServiceWorkersIfNative } from 'src/utils/unregister-service-workers';
 
 import 'font-awesome/css/font-awesome.min.css';
 import 'src/index.scss';
+
+installStaleChunkReload();
 
 const bootstrap = async () => {
   unregisterServiceWorkersIfNative();

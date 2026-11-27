@@ -768,6 +768,18 @@ const application = {
       'Reduce the set rental period amount by a percentage [%]',
     giftReducePeriodToPrice:
       'Reduce the set rental period amount to the given price',
+    discountCodeHelpTitle: 'How a code is calculated',
+    discountCodeHelpIntro:
+      'Example: one period is 30 days and costs 1000. Code days are spent in order. On an open-ended agreement the next period gets only the days that are left. On a fixed-term agreement those days are applied to the whole rental at once, and an extension needs its own code.',
+    discountCodeHelpPercentTitle: 'Percent: 50% for 90 days',
+    discountCodeHelpPercent:
+      'Each 30 days within those 90 costs half, 500. The third period is also 500, because 30 days are still left. The fourth period is already 1000. For 75 days the third period has only 15 discounted days and costs 750. For 60 or 45 days the third period is already the full 1000.',
+    discountCodeHelpToPriceTitle: 'Reduce to a price: 300 for 90 days',
+    discountCodeHelpToPrice:
+      '300 is the price of the whole 90 days, not of one period. 30 days is 30/90 × 300 = 100, so the third period also costs 100. For 75 days, 15 days are left: (15/75) × 300 plus 15 days at the full price, which is 60 + 500 = 560. For 60 or 45 days the third period is already 1000.',
+    discountCodeHelpValueTitle: 'Amount: minus 300',
+    discountCodeHelpValue:
+      '300 is taken off once, from the first period: 1000 − 300 = 700. Every later period costs 1000. This type has no day count, because the discount does not continue.',
     giftCodeGenerated: 'Code generated',
     minRentPeriod: 'Minimum rental period',
     maxRentPeriod: 'Maximum rental period',

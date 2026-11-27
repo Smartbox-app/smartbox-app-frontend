@@ -771,6 +771,18 @@ const application = {
       'Snížit částku nastaveného období pronájmu o procenta [%]',
     giftReducePeriodToPrice:
       'Snížit částku nastaveného období pronájmu na uvedenou cenu',
+    discountCodeHelpTitle: 'Jak se kód počítá',
+    discountCodeHelpIntro:
+      'Příklad: jedno období má 30 dní a stojí 1000. Dny kódu se čerpají postupně. U smlouvy na dobu neurčitou dostane další období jen dny, které zbyly. U smlouvy na dobu určitou se tyto dny započítají hned na celý pronájem a prodloužení potřebuje vlastní kód.',
+    discountCodeHelpPercentTitle: 'Procenta: 50% na 90 dní',
+    discountCodeHelpPercent:
+      'Každých 30 dní z těchto 90 stojí polovinu, tedy 500. Třetí období je také za 500, protože zbývá ještě 30 dní. Čtvrté období je už za 1000. Na 75 dní má třetí období jen 15 zvýhodněných dní a stojí 750. Na 60 nebo 45 dní je třetí období už za plných 1000.',
+    discountCodeHelpToPriceTitle: 'Snížení na cenu: 300 na 90 dní',
+    discountCodeHelpToPrice:
+      '300 je cena celých 90 dní, ne jednoho období. 30 dní je 30/90 × 300 = 100, takže třetí období také stojí 100. Na 75 dní zbývá 15 dní: (15/75) × 300 plus 15 dní za plnou cenu, tedy 60 + 500 = 560. Na 60 nebo 45 dní je třetí období už za 1000.',
+    discountCodeHelpValueTitle: 'Částka: minus 300',
+    discountCodeHelpValue:
+      '300 se odečte jednou, z prvního období: 1000 − 300 = 700. Každé další období stojí 1000. Tento typ nemá počet dní, protože sleva nepokračuje.',
     giftCodeGenerated: 'Kód vygenerován',
     minRentPeriod: 'Minimální doba pronájmu',
     maxRentPeriod: 'Maximální doba pronájmu',
