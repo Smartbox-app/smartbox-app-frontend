@@ -24,7 +24,7 @@ import { useGetVersionQuery, useGetMyDetailsQuery } from 'src/queries';
 import { queryClient } from 'src/query-client';
 import SessionService from 'src/services/session-service';
 import { withAttributionSearch } from 'src/utils/attribution-params';
-import { reloadWithoutServiceWorker } from 'src/utils/reload-without-service-worker';
+import { reloadForNewVersion } from 'src/utils/reload-without-service-worker';
 import { scrollTop } from 'src/utils/scroll-top';
 
 import { AppOutdatedModal } from './components/AppOutdatedModal';
@@ -65,7 +65,7 @@ const AppWrapper = ({ children }: Props) => {
 
     versionReloadTriggeredRef.current = true;
     localStorage.setItem('v', latestVersion);
-    reloadWithoutServiceWorker();
+    reloadForNewVersion();
   };
 
   const handleAndroidVersion = (
