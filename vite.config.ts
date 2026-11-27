@@ -1,5 +1,4 @@
 import { defineConfig, type PluginOption } from 'vite';
-import { VitePWA } from 'vite-plugin-pwa';
 import { createViteConfig } from './vite.config.base';
 
 export default defineConfig(async () => {
@@ -8,33 +7,7 @@ export default defineConfig(async () => {
   return createViteConfig({
     // '/' so chunk preloads stay /static/js/... . base "." produced .static/js/... and every lazy import failed.
     base: '/',
-    plugins: [
-      VitePWA({
-        // Prompt keeps the update bar for later deploys. skipWaiting/clientsClaim
-        // stay false so a new worker does not activate mid-tab and break hashed
-        // assets still in use. Navigations are NetworkOnly so index.html is never
-        // served from a stale precache after deploy.
-        registerType: 'prompt',
-        manifest: false,
-        injectManifest: {
-          injectionPoint: undefined,
-        },
-        workbox: {
-          skipWaiting: false,
-          clientsClaim: false,
-          navigateFallback: null,
-          globIgnores: ['**/index.html'],
-          runtimeCaching: [
-            {
-              urlPattern: ({ request }) => request.mode === 'navigate',
-              handler: 'NetworkOnly',
-            },
-          ],
-          maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
-        },
-      }),
-      visualizer({ open: true }) as PluginOption,
-    ],
+    plugins: [visualizer({ open: true }) as PluginOption],
     build: {
       rollupOptions: {
         output: {

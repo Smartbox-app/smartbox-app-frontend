@@ -7,24 +7,16 @@ import 'src/i18n/i18n';
 import ApiService from 'src/services/api-service';
 import { isLocalEnvironment } from 'src/utils/environment';
 import { getMobileBuildId } from 'src/utils/mobile-build-id';
-import { beginPreloadReload } from 'src/utils/reload-without-service-worker';
+import { registerServiceWorker } from 'src/utils/register-service-worker';
 import { syncNativeWebBundleCache } from 'src/utils/sync-native-web-bundle-cache';
 import { unregisterServiceWorkersIfNative } from 'src/utils/unregister-service-workers';
 
 import 'font-awesome/css/font-awesome.min.css';
 import 'src/index.scss';
 
-window.addEventListener('vite:preloadError', () => {
-  if (!beginPreloadReload()) return;
-
-  const url = new URL(window.location.href);
-  if (url.searchParams.get('sb-recover') === '1') return;
-  url.searchParams.set('sb-recover', '1');
-  window.location.replace(url.toString());
-});
-
 const bootstrap = async () => {
   unregisterServiceWorkersIfNative();
+  registerServiceWorker();
 
   const mobileBuildId = getMobileBuildId();
   if (mobileBuildId) {
